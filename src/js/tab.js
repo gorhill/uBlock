@@ -884,7 +884,7 @@ vAPI.Tabs = class extends vAPI.Tabs {
         const { frameId, tabId, url } = details;
         if ( frameId === 0 ) {
             µb.tabContextManager.commit(tabId, url);
-            const pageStore = µb.bindTabToPageStore(tabId, 'tabCommitted');
+            const pageStore = µb.bindTabToPageStore(tabId, 'tabCommitted', details);
             if ( pageStore !== null ) {
                 pageStore.journalAddRootFrame('committed', url);
             }
@@ -910,7 +910,7 @@ vAPI.Tabs = class extends vAPI.Tabs {
         if ( !tab.url || tab.url === '' ) { return; }
         if ( !changeInfo.url ) { return; }
         µBlock.tabContextManager.commit(tabId, changeInfo.url);
-        µBlock.bindTabToPageStore(tabId, 'tabUpdated');
+        µBlock.bindTabToPageStore(tabId, 'tabUpdated', tab);
     }
 };
 
@@ -921,7 +921,7 @@ vAPI.tabs = new vAPI.Tabs();
 
 // Create an entry for the tab if it doesn't exist.
 
-µBlock.bindTabToPageStore = function(tabId, context) {
+µBlock.bindTabToPageStore = function(tabId, context, details = undefined) {
     this.updateToolbarIcon(tabId, 0b111);
 
     // Do not create a page store for URLs which are of no interests
@@ -935,8 +935,7 @@ vAPI.tabs = new vAPI.Tabs();
 
     // Tab is not bound
     if ( pageStore === undefined ) {
-        this.updateTitle(tabId);
-        pageStore = this.PageStore.factory(tabId, context);
+        pageStore = this.PageStore.factory(tabId, details);
         this.pageStores.set(tabId, pageStore);
         this.pageStoresToken = Date.now();
         return pageStore;
@@ -958,9 +957,8 @@ vAPI.tabs = new vAPI.Tabs();
     // Rebind according to context. We rebind even if the URL did not change,
     // as maybe the tab was force-reloaded, in which case the page stats must
     // be all reset.
-    pageStore.reuse(context);
+    pageStore.reuse(context, details);
 
-    this.updateTitle(tabId);
     this.pageStoresToken = Date.now();
 
     return pageStore;
@@ -1089,58 +1087,6 @@ vAPI.tabs = new vAPI.Tabs();
             newParts |= currentParts;
         }
         tabIdToDetails.set(tabId, newParts);
-    };
-})();
-
-/******************************************************************************/
-
-µBlock.updateTitle = (( ) => {
-    const tabIdToCount = new Map();
-    const delay = 499;
-
-    const updateTitle = async function(tabId) {
-        let count = tabIdToCount.get(tabId);
-        if ( count === undefined ) { return; }
-        tabIdToCount.delete(tabId);
-        const tab = await vAPI.tabs.get(tabId);
-        if ( tab instanceof Object === false || tab.discarded === true ) {
-            return;
-        }
-        const µb = µBlock;
-        const pageStore = µb.pageStoreFromTabId(tabId);
-        if ( pageStore === null ) { return; }
-        // Firefox needs this: if you detach a tab, the new tab won't have
-        // its rawURL set. Concretely, this causes the logger to report an
-        // entry to itself in the logger's tab selector.
-        // TODO: Investigate for a fix vAPI-side.
-        pageStore.rawURL = tab.url;
-        µb.pageStoresToken = Date.now();
-        // https://github.com/gorhill/uMatrix/issues/225
-        //   Sometimes title changes while page is loading.
-        const settled =
-            typeof tab.title === 'string' &&
-            tab.title !== '' &&
-            tab.title === pageStore.title;
-        pageStore.title = tab.title || tab.url || '';
-        if ( settled ) { return; }
-        if ( tabIdToCount.has(tabId) ) { return; }
-        count -= 1;
-        if ( count === 0 ) { return; }
-        tabIdToCount.set(tabId, count);
-        updateTitleAsync(tabId);
-    };
-
-    const updateTitleAsync = function(tabId) {
-        vAPI.setTimeout(( ) => { updateTitle(tabId); }, delay);
-    };
-
-    return function(tabId) {
-        if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
-        const count = tabIdToCount.get(tabId);
-        tabIdToCount.set(tabId, 5);
-        if ( count === undefined ) {
-            updateTitleAsync(tabId);
-        }
     };
 })();
 

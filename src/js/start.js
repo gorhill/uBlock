@@ -69,7 +69,7 @@ const initializeTabs = async function() {
             if ( tab.discarded === true ) { continue; }
             const { id, url } = tab;
             µb.tabContextManager.commit(id, url);
-            µb.bindTabToPageStore(id);
+            µb.bindTabToPageStore(id, 'tabCommitted', tab);
             // https://github.com/chrisaljoudi/uBlock/issues/129
             //   Find out whether content scripts need to be injected
             //   programmatically. This may be necessary for web pages which

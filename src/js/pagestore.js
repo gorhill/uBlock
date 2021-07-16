@@ -328,7 +328,7 @@ const HostnameDetailsMap = class extends Map {
 /******************************************************************************/
 
 const PageStore = class {
-    constructor(tabId, context) {
+    constructor(tabId, details) {
         this.extraData = new Map();
         this.journal = [];
         this.journalTimer = undefined;
@@ -337,15 +337,15 @@ const PageStore = class {
         this.netFilteringCache = NetFilteringResultCache.factory();
         this.hostnameDetailsMap = new HostnameDetailsMap();
         this.counts = new CountDetails();
-        this.init(tabId, context);
+        this.init(tabId, details);
     }
 
-    static factory(tabId, context) {
+    static factory(tabId, details) {
         let entry = PageStore.junkyard.pop();
         if ( entry === undefined ) {
-            entry = new PageStore(tabId, context);
+            entry = new PageStore(tabId, details);
         } else {
-            entry.init(tabId, context);
+            entry.init(tabId, details);
         }
         return entry;
     }
@@ -354,7 +354,7 @@ const PageStore = class {
     //   The context is used to determine whether we report behavior change
     //   to the logger.
 
-    init(tabId) {
+    init(tabId, details) {
         const tabContext = µb.tabContextManager.mustLookup(tabId);
         this.tabId = tabId;
 
@@ -368,7 +368,6 @@ const PageStore = class {
         }
 
         this.tabHostname = tabContext.rootHostname;
-        this.title = tabContext.rawURL;
         this.rawURL = tabContext.rawURL;
         this.hostnameDetailsMap.reset();
         this.contentLastModified = 0;
@@ -385,13 +384,17 @@ const PageStore = class {
         this.frames = new Map();
         this.setFrameURL({ url: tabContext.rawURL });
 
+        if ( this.titleFromDetails(details) === false ) {
+            this.title = tabContext.rawURL;
+        }
+
         // Evaluated on-demand
         this._noCosmeticFiltering = undefined;
 
         return this;
     }
 
-    reuse(context) {
+    reuse(context, details) {
         // When force refreshing a page, the page store data needs to be reset.
 
         // If the hostname changes, we can't merely just update the context.
@@ -411,6 +414,7 @@ const PageStore = class {
             // URL changed, force a re-evaluation of filtering switch
             this.rawURL = tabContext.rawURL;
             this.setFrameURL({ url: this.rawURL });
+            this.titleFromDetails(details);
             return this;
         }
 
@@ -420,7 +424,7 @@ const PageStore = class {
             this.largeMediaTimer = null;
         }
         this.disposeFrameStores();
-        this.init(this.tabId, context);
+        this.init(this.tabId, details);
         return this;
     }
 
@@ -448,6 +452,14 @@ const PageStore = class {
             PageStore.junkyard.push(this);
         }
         return null;
+    }
+
+    titleFromDetails(details) {
+        if ( details instanceof Object && details.title !== undefined ) {
+            this.title = details.title;
+            return true;
+        }
+        return false;
     }
 
     disposeFrameStores() {
