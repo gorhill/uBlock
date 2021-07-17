@@ -32,18 +32,30 @@
 
 
 
-/// abort-current-inline-script.js
+/// abort-current-script.js
+/// alias acs.js
+/// alias abort-current-inline-script.js
 /// alias acis.js
 (function() {
     const target = '{{1}}';
     if ( target === '' || target === '{{1}}' ) { return; }
+    const reRegexEscape = /[.*+?^${}()|[\]\\]/g;
     const needle = '{{2}}';
-    let reText = '.?';
-    if ( needle !== '' && needle !== '{{2}}' ) {
-        reText = /^\/.+\/$/.test(needle)
-            ? needle.slice(1,-1)
-            : needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
+    const reText = (( ) => {
+        if ( needle === '' || needle === '{{2}}' ) { return /^/; }
+        if ( /^\/.+\/$/.test(needle) ) {
+            return new RegExp(needle.slice(1,-1));
+        }
+        return new RegExp(needle.replace(reRegexEscape, '\\$&'));
+    })();
+    const context = '{{3}}';
+    const reContext = (( ) => {
+        if ( context === '' || context === '{{3}}' ) { return /^$/; }
+        if ( /^\/.+\/$/.test(context) ) {
+            return new RegExp(context.slice(1,-1));
+        }
+        return new RegExp(context.replace(reRegexEscape, '\\$&'));
+    })();
     const thisScript = document.currentScript;
     const re = new RegExp(reText);
     const chain = target.split('.');
@@ -70,7 +82,7 @@
         const e = document.currentScript;
         if (
             e instanceof HTMLScriptElement &&
-            e.src === '' &&
+            reContext.test(e.src) &&
             e !== thisScript &&
             re.test(e.textContent)
         ) {
