@@ -41,7 +41,7 @@
     if ( target === '' || target === '{{1}}' ) { return; }
     const reRegexEscape = /[.*+?^${}()|[\]\\]/g;
     const needle = '{{2}}';
-    const reText = (( ) => {
+    const reNeedle = (( ) => {
         if ( needle === '' || needle === '{{2}}' ) { return /^/; }
         if ( /^\/.+\/$/.test(needle) ) {
             return new RegExp(needle.slice(1,-1));
@@ -57,7 +57,6 @@
         return new RegExp(context.replace(reRegexEscape, '\\$&'));
     })();
     const thisScript = document.currentScript;
-    const re = new RegExp(reText);
     const chain = target.split('.');
     let owner = window;
     let prop;
@@ -84,7 +83,7 @@
             e instanceof HTMLScriptElement &&
             reContext.test(e.src) &&
             e !== thisScript &&
-            re.test(e.textContent)
+            reNeedle.test(e.textContent)
         ) {
             throw new ReferenceError(magic);
         }
