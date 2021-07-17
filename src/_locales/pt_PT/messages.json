@@ -84,7 +84,7 @@
     "description": "English: on this page"
   },
   "popupBlockedStats": {
-    "message": "{{count}} ou {{percent}}%",
+    "message": "{{count}} ({{percent}}%)",
     "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
@@ -328,7 +328,7 @@
     "description": "English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt": {
-    "message": "Ativar suporte à nuvem",
+    "message": "Ativar suporte para armazenamento na nuvem",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
@@ -400,7 +400,7 @@
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
-    "message": "Atualizar automaticamente as listas dos filtros.",
+    "message": "Atualizar automaticamente listas de filtros",
     "description": "A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow": {
@@ -412,7 +412,7 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
-    "message": "Analisar e aplicar filtros cosméticos.",
+    "message": "Analisar e aplicar filtros cosméticos",
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
@@ -420,7 +420,7 @@
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
-    "message": "Ignorar filtros cosméticos genéricos.",
+    "message": "Ignorar filtros cosméticos genéricos",
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
@@ -972,7 +972,7 @@
     "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
-    "message": "Por causa do seguinte filtro",
+    "message": "Por causa do seguinte filtro:",
     "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {

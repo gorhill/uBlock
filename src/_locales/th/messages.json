@@ -120,11 +120,11 @@
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "เปิดแอปโทรศัพท์",
+    "message": "เปิดบันทึกการทำงาน",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Toggle the blocking of all popups for this site",
+    "message": "เปลี่ยนสถานะการบล็อกป็อบอัพบนเว็บไชต์นี้",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
@@ -136,7 +136,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Toggle the blocking of large media elements for this site",
+    "message": "เปลี่ยนสถานะการบล็อกองค์ประกอบ media ขนาดใหญ่บนเว็บไชต์นี้",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
@@ -152,7 +152,7 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Click to disable cosmetic filtering on this site",
+    "message": "คลิกเพื่อปิดการใช้ฟิลเตอร์บนเว็บไซต์นี้",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
@@ -164,7 +164,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Click to block remote fonts on this site",
+    "message": "คลิกเพื่อบล็อกฟอนต์จากเว็บไซต์นี้",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
@@ -172,11 +172,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Click to disable JavaScript on this site",
+    "message": "กดเพื่อปิดการใช้งาน JavaScript บนเว็บไซต์นี้",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Click to no longer disable JavaScript on this site",
+    "message": "กดเพื่อยกเลิกการบล็อก JavaScript บนเว็บไซต์นี้",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
@@ -184,15 +184,15 @@
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
-    "message": "Large media elements",
+    "message": "องค์ประกอบ media ขนาดใหญ่",
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
-    "message": "Cosmetic filtering",
+    "message": "ฟิลเตอร์",
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
-    "message": "Remote fonts",
+    "message": "ฟอนต์ที่เว็บไชต์กำหนด",
     "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
@@ -200,23 +200,23 @@
     "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
-    "message": "More",
+    "message": "เพิ่มเติม",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton_v2": {
-    "message": "Less",
+    "message": "แสดงน้อยลง",
     "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
-    "message": "Global rules: this column is for rules which apply to all sites.",
+    "message": "กฏทั่วเว็บ: คอลัมน์นี้มีไว้สำหรับกฏที่ใช้กับทุกเว็บไซต์",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Local rules: this column is for rules which apply to the current site only.\nLocal rules override global rules.",
+    "message": "กฏเว็บเดียว: คอลัมน์นี้มีไว้สําหรับกฏบนเว็บไซต์นี้เท่านั้น\nกฏเว็บเดียวจะถูกใช้งานก่อนกฏครอบคลุม",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
-    "message": "Click to make your changes permanent.",
+    "message": "คลิกเพื่อให้ทําให้การเปลี่ยนแปลงถาวร",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
@@ -232,15 +232,15 @@
     "description": ""
   },
   "popup3pAnyRulePrompt": {
-    "message": "3rd-party",
+    "message": "บุคคลที่ 3",
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "3rd-party CSS/images",
+    "message": "CSS/รูปภาพ บุคคลที่ 3",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
-    "message": "inline scripts",
+    "message": "สคริปท์อินไลน์",
     "description": ""
   },
   "popup1pScriptRulePrompt": {
@@ -248,19 +248,19 @@
     "description": ""
   },
   "popup3pScriptRulePrompt": {
-    "message": "สคริปบุคคลที่3",
+    "message": "สคริปท์บุคคลที่3",
     "description": ""
   },
   "popup3pFrameRulePrompt": {
-    "message": "3rd-party frames",
+    "message": "กรอบบุคคลที่3",
     "description": ""
   },
   "popupHitDomainCountPrompt": {
-    "message": "domains connected",
+    "message": "โดเมนที่เชื่อมต่อ",
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
-    "message": "{{count}} out of {{total}}",
+    "message": "{{count}} ใน {{total}}",
     "description": "appears in popup"
   },
   "popupVersion": {
@@ -268,11 +268,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilterTip": {
-    "message": "↑: Emphasize rows which have 3rd-party scripts",
+    "message": "↑: เน้นแถวที่มีสคริพท์บุคคลที่ 3",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party scripts' cell"
   },
   "popup3pFrameFilterTip": {
-    "message": "↑: Emphasize rows which have 3rd-party frames",
+    "message": "↑: เน้นแถวที่มีเฟรมบุคคลที่ 3",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party frames' cell"
   },
   "pickerCreate": {
@@ -292,27 +292,27 @@
     "description": "Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters": {
-    "message": "Network filters",
+    "message": "ฟิลเตอร์เครื่อข่าย",
     "description": "English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters": {
-    "message": "Cosmetic filters",
+    "message": "ฟิลเตอร์",
     "description": "English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint": {
-    "message": "Click, Ctrl-click",
+    "message": "คลิก, Ctrl-คลิก",
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Block element...",
+    "message": "บล็อคองค์ประกอบ",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
-    "message": "Hide placeholders of blocked elements",
+    "message": "ซ่อนตัวยึดตําแหน่งขององค์ประกอบที่ถูกบล็อก",
     "description": "English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt": {
-    "message": "Show the number of blocked requests on the icon",
+    "message": "แสดงจำนวนคำขอเครือข่ายที่ถูกปฏิเสธบนไอคอน",
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
@@ -324,11 +324,11 @@
     "description": "English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt": {
-    "message": "Color-blind friendly",
+    "message": "เป็นมิตรกับคนตาบอดสี",
     "description": "English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt": {
-    "message": "Enable cloud storage support",
+    "message": "เปิดการเก็บข้อมูลบน Cloud",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
@@ -860,11 +860,11 @@
     "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
-    "message": "Support",
+    "message": "ช่วยเหลือ",
     "description": "A link for where to get support"
   },
   "aboutIssues": {
-    "message": "Issue tracker",
+    "message": "ติดตามปัญหา",
     "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
@@ -872,7 +872,7 @@
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "ผู้มีส่วนร่วม",
+    "message": "ผู้ร่วมพัฒนา",
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
@@ -1040,7 +1040,7 @@
     "description": "for generic 'Revert' buttons"
   },
   "genericBytes": {
-    "message": "bytes",
+    "message": "ไบต์",
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
@@ -1076,15 +1076,15 @@
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "storageUsed": {
-    "message": "Storage used: {{value}} {{unit}}",
+    "message": "หน่วยความจำที่ใช้: {{value}} {{unit}}",
     "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
   },
   "KB": {
-    "message": "KB",
+    "message": "กิโลไบต์",
     "description": "short for 'kilobytes'"
   },
   "MB": {
-    "message": "MB",
+    "message": "เมกะไบต์",
     "description": "short for 'megabytes'"
   },
   "GB": {
