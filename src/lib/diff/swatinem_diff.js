@@ -28,6 +28,7 @@
   diff_match_patch, as expected by CodeMirror.
 
   2018-12-20 gorhill:
+  ===================
   There was an issue causing the wrong diff data to be issued, for instance
   when diff-ing these two URLs on a character granularity basis (failure
   point is marked):
@@ -60,8 +61,10 @@
 
   So I will assume this was the issue.
 
-  TODO:
-  - Apply other changes which were applied to the original code
+  2021-07-17 gorhill:
+  ===================
+  Added pure diff() method which natively deals with arrays and other minor
+  changes related to ES6.
   
 **/
 
@@ -77,15 +80,20 @@
 
     context.diff_match_patch.prototype.diff_main = function(a, b) {
         if ( a === b ) { return [ [ 0, a ] ]; }
-        var aa = a.match(/\n|[^\n]+\n?/g) || [];
-        var bb = b.match(/\n|[^\n]+\n?/g) || [];
-        var d = new Diff(aa, bb, eqlDefault);
+        const aa = a.match(/\n|[^\n]+\n?/g) || [];
+        const bb = b.match(/\n|[^\n]+\n?/g) || [];
+        const d = new Diff(aa, bb);
         return d.editscript();
     };
 
-    function eqlDefault(a, b) { return a === b; }
+    context.diff_match_patch.prototype.diff = function(a, b) {
+        const d = new Diff(a, b);
+        return d.editscript();
+    };
 
-    function Diff(a, b, eql) {
+    const eqlDefault = (a, b) => a === b;
+
+    function Diff(a, b, eql = eqlDefault) {
         this.a = a;
         this.b = b;
         this.eql = eql;
@@ -101,10 +109,10 @@
     }
 
     Diff.prototype.editscript = function Diff_editscript() {
-        var moda = this.moda, modb = this.modb;
+        const moda = this.moda, modb = this.modb;
         var astart = 0, aend = moda.length;
         var bstart = 0, bend = modb.length;
-        var result = [];
+        const result = [];
         while (astart < aend || bstart < bend) {
             if (astart < aend && bstart < bend) {
                 if (!moda[astart] && !modb[bstart]) {
@@ -131,7 +139,7 @@
     };
 
     Diff.prototype.lcs = function Diff_lcs(astart, aend, bstart, bend) {
-        var a = this.a, b = this.b, eql = this.eql;
+        const a = this.a, b = this.b, eql = this.eql;
         // separate common head
         while (astart < aend && bstart < bend && eql(a[astart], b[bstart])) {
             astart++; bstart++;
@@ -154,7 +162,7 @@
                 astart++;
             }
         } else {
-            var snake = this.snake(astart, aend, bstart, bend);
+            const snake = this.snake(astart, aend, bstart, bend);
 
             this.lcs(astart, snake.x, bstart, snake.y);
             this.lcs(snake.x, aend, snake.y, bend);
@@ -162,27 +170,27 @@
     };
 
     Diff.prototype.snake = function Diff_snake(astart, aend, bstart, bend) {
-        var a = this.a, b = this.b, eql = this.eql;
+        const a = this.a, b = this.b, eql = this.eql;
 
-        var N = aend - astart,
-            M = bend - bstart;
+        const N = aend - astart;
+        const M = bend - bstart;
 
-        var kdown = astart - bstart;
-        var kup   = aend   - bend;
+        const kdown = astart - bstart;
+        const kup   = aend   - bend;
 
-        var delta = N - M;
-        var deltaOdd = delta & 1;
+        const delta = N - M;
+        const deltaOdd = delta & 1;
 
-        var down = this.down;
+        const down = this.down;
         down[kdown + 1] = astart;
-        var up = this.up;
+        const up = this.up;
         up[kup - 1] = aend;
 
-        var Dmax = (N + M + 1) / 2;
-        for (var D = 0; D <= Dmax; D++) {
-            var k, x, y;
+        const Dmax = (N + M + 1) / 2;
+        for (let D = 0; D <= Dmax; D++) {
             // forward path
-            for (k = kdown - D; k <= kdown + D; k += 2) {
+            for (let k = kdown - D; k <= kdown + D; k += 2) {
+                let x;
                 if (k === kdown - D) {
                     x = down[k + 1]; // down
                 } else {
@@ -191,7 +199,7 @@
                         x = down[k + 1]; // down
                     }
                 }
-                y = x - k;
+                let y = x - k;
 
                 while (x < aend && y < bend && eql(a[x], b[y])) {
                     x++; y++; // diagonal
@@ -210,7 +218,8 @@
             }
 
             // reverse path
-            for (k = kup - D; k <= kup + D; k += 2) {
+            for (let k = kup - D; k <= kup + D; k += 2) {
+                let x;
                 if (k === kup + D) {
                     x = up[k - 1]; // up
                 } else {
@@ -219,7 +228,7 @@
                         x = up[k - 1]; // up
                     }
                 }
-                y = x - k;
+                let y = x - k;
 
                 while (x > astart && y > bstart && eql(a[x - 1], b[y - 1])) {
                     x--; y--; // diagonal

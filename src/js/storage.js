@@ -331,14 +331,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     this.netWhitelistModifyTime = Date.now();
 };
 
-/*******************************************************************************
-
-    TODO(seamless migration):
-    The code related to 'remoteBlacklist' can be removed when I am confident
-    all users have moved to a version of uBO which no longer depends on
-    the property 'remoteBlacklists, i.e. v1.11 and beyond.
-
-**/
+/******************************************************************************/
 
 µBlock.loadSelectedFilterLists = async function() {
     const bin = await vAPI.storage.get('selectedFilterLists');
@@ -559,6 +552,8 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     if ( options.killCache ) {
         browser.webRequest.handlerBehaviorChanged();
     }
+
+    vAPI.messaging.broadcast({ what: 'userFiltersUpdated' });
 };
 
 µBlock.createUserFilters = function(details) {
@@ -1281,7 +1276,6 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     };
 
     const destroy = function() {
-        µb.cacheStorage.remove('selfie'); // TODO: obsolete, remove eventually.
         µb.assets.remove(/^selfie\//);
         µb.selfieIsInvalid = true;
         createTimer = vAPI.setTimeout(( ) => {

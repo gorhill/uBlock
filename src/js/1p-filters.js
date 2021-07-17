@@ -108,17 +108,72 @@ const userFiltersChanged = function(changed) {
 
 /******************************************************************************/
 
-const renderUserFilters = async function() {
+// https://github.com/gorhill/uBlock/issues/3704
+//   Merge changes to user filters occurring in the background with changes
+//   made in the editor. The code assumes that no deletion occurred in the
+//   background.
+
+const threeWayMerge = function(newContent) {
+    const prvContent = cachedUserFilters.trim().split(/\n/);
+    const differ = new self.diff_match_patch();
+    const newChanges = differ.diff(
+        prvContent,
+        newContent.trim().split(/\n/)
+    );
+    const usrChanges = differ.diff(
+        prvContent,
+        getEditorText().trim().split(/\n/)
+    );
+    const out = [];
+    let i = 0, j = 0, k = 0;
+    while ( i < prvContent.length ) {
+        for ( ; j < newChanges.length; j++ ) {
+            const change = newChanges[j];
+            if ( change[0] !== 1 ) { break; }
+            out.push(change[1]);
+        }
+        for ( ; k < usrChanges.length; k++ ) {
+            const change = usrChanges[k];
+            if ( change[0] !== 1 ) { break; }
+            out.push(change[1]);
+        }
+        if ( k === usrChanges.length || usrChanges[k][0] !== -1 ) {
+            out.push(prvContent[i]);
+        }
+        i += 1; j += 1; k += 1;
+    }
+    for ( ; j < newChanges.length; j++ ) {
+        const change = newChanges[j];
+        if ( change[0] !== 1 ) { continue; }
+        out.push(change[1]);
+    }
+    for ( ; k < usrChanges.length; k++ ) {
+        const change = usrChanges[k];
+        if ( change[0] !== 1 ) { continue; }
+        out.push(change[1]);
+    }
+    return out.join('\n');
+};
+
+/******************************************************************************/
+
+const renderUserFilters = async function(merge = false) {
     const details = await vAPI.messaging.send('dashboard', {
         what: 'readUserFilters',
     });
     if ( details instanceof Object === false || details.error ) { return; }
 
-    let content = details.content.trim();
-    cachedUserFilters = content;
-    setEditorText(content);
+    const newContent = details.content.trim();
 
-    userFiltersChanged(false);
+    if ( merge && self.hasUnsavedData() ) {
+        setEditorText(threeWayMerge(newContent));
+        userFiltersChanged(true);
+    } else {
+        setEditorText(newContent);
+        userFiltersChanged(false);
+    }
+
+    cachedUserFilters = newContent;
 };
 
 /******************************************************************************/
@@ -240,21 +295,26 @@ uDom('#exportUserFiltersToFile').on('click', exportUserFiltersToFile);
 uDom('#userFiltersApply').on('click', ( ) => { applyChanges(); });
 uDom('#userFiltersRevert').on('click', revertChanges);
 
-// https://github.com/gorhill/uBlock/issues/3706
-//   Save/restore cursor position
-//
-// CodeMirror reference: https://codemirror.net/doc/manual.html#api_selection
-{
-    let curline = 0;
-    let timer;
+(async ( ) => {
+    await renderUserFilters();
 
-    renderUserFilters().then(( ) => {
-        cmEditor.clearHistory();
-        return vAPI.localStorage.getItemAsync('myFiltersCursorPosition');
-    }).then(line => {
+    cmEditor.clearHistory();
+
+    // https://github.com/gorhill/uBlock/issues/3706
+    //   Save/restore cursor position
+    {
+        const line =
+            await vAPI.localStorage.getItemAsync('myFiltersCursorPosition');
         if ( typeof line === 'number' ) {
             cmEditor.setCursor(line, 0);
         }
+    }
+
+    // https://github.com/gorhill/uBlock/issues/3706
+    //   Save/restore cursor position
+    {
+        let curline = 0;
+        let timer;
         cmEditor.on('cursorActivity', ( ) => {
             if ( timer !== undefined ) { return; }
             if ( cmEditor.getCursor().line === curline ) { return; }
@@ -264,8 +324,29 @@ uDom('#userFiltersRevert').on('click', revertChanges);
                 vAPI.localStorage.setItem('myFiltersCursorPosition', curline);
             }, 701);
         });
+    }
+
+    // https://github.com/gorhill/uBlock/issues/3704
+    //   Merge changes to user filters occurring in the background
+    vAPI.broadcastListener.add(msg => {
+        switch ( msg.what ) {
+        case 'userFiltersUpdated': {
+            cmEditor.startOperation();
+            const scroll = cmEditor.getScrollInfo();
+            const selections = cmEditor.listSelections();
+            renderUserFilters(true).then(( ) => {
+                cmEditor.clearHistory();
+                cmEditor.setSelection(selections[0].anchor, selections[0].head);
+                cmEditor.scrollTo(scroll.left, scroll.top);
+                cmEditor.endOperation();
+            });
+            break;
+        }
+        default:
+            break;
+        }
     });
-}
+})();
 
 cmEditor.on('changes', userFiltersChanged);
 CodeMirror.commands.save = applyChanges;
