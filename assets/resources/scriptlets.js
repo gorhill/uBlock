@@ -77,16 +77,35 @@
     }
     const magic = String.fromCharCode(Date.now() % 26 + 97) +
                   Math.floor(Math.random() * 982451653 + 982451653).toString(36);
-    const validate = function() {
-        const e = document.currentScript;
-        if (
-            e instanceof HTMLScriptElement &&
-            reContext.test(e.src) &&
-            e !== thisScript &&
-            reNeedle.test(e.textContent)
-        ) {
-            throw new ReferenceError(magic);
+    const scriptTexts = new WeakMap();
+    const getScriptText = elem => {
+        let text = elem.textContent;
+        if ( text.trim() !== '' ) { return text; }
+        if ( scriptTexts.has(elem) ) { return scriptTexts.get(elem); }
+        const [ , mime, content ] =
+            /^data:([^,]*),(.+)$/.exec(elem.src.trim()) ||
+            [ '', '', '' ];
+        try {
+            switch ( true ) {
+            case mime.endsWith(';base64'):
+                text = self.atob(content);
+                break;
+            default:
+                text = self.decodeURIComponent(content);
+                break;
+            }
+        } catch(ex) {
         }
+        scriptTexts.set(elem, text);
+        return text;
+    };
+    const validate = ( ) => {
+        const e = document.currentScript;
+        if ( e instanceof HTMLScriptElement === false ) { return; }
+        if ( reContext.test(e.src) === false ) { return; }
+        if ( e === thisScript ) { return; }
+        if ( reNeedle.test(getScriptText(e)) === false ) { return; }
+        throw new ReferenceError(magic);
     };
     Object.defineProperty(owner, prop, {
         get: function() {
@@ -106,7 +125,7 @@
     });
     const oe = window.onerror;
     window.onerror = function(msg) {
-        if ( typeof msg === 'string' && msg.indexOf(magic) !== -1 ) {
+        if ( typeof msg === 'string' && msg.includes(magic) ) {
             return true;
         }
         if ( oe instanceof Function ) {
