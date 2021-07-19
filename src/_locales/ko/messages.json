@@ -892,11 +892,11 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "uBO's own filter lists are freely hosted on the following <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
+    "message": "아래 <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a>에서 uBO의 필터 목록을 무료로 호스팅해 줍니다:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "A randomly picked CDN will be used when a filter list needs to be updated",
+    "message": "필터 목록을 업데이트할 때 무작위로 선택된 CDN이 쓰입니다.",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {

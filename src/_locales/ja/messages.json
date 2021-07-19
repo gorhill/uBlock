@@ -892,11 +892,11 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "uBO's own filter lists are freely hosted on the following <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
+    "message": "uBlock Origin のフィルターリストは以下の <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a> を使って無料でホストされています:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "A randomly picked CDN will be used when a filter list needs to be updated",
+    "message": "ランダムに選択された CDN がフィルターリストの更新に使用されます",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {

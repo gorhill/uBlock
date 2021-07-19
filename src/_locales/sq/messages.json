@@ -848,7 +848,7 @@
     "description": "Label for radio-button to pick export text format"
   },
   "aboutPrivacyPolicy": {
-    "message": "Politika e privatësisë",
+    "message": "Politikat e konfidencialitetit",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {
@@ -892,11 +892,11 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "uBO's own filter lists are freely hosted on the following <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
+    "message": "Listat e filtrave të uBO mundësohen falas në <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN-të</a> e mëposhtme:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "A randomly picked CDN will be used when a filter list needs to be updated",
+    "message": "Kur lista e filtrave duhet përditësuar, CDN-ja do të zgjidhet në mënyrë rastësore",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {

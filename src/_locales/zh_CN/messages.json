@@ -892,11 +892,11 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "uBO's own filter lists are freely hosted on the following <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
+    "message": "uBO 本身提供的过滤规则列表免费托管于下列 <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a>：",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "A randomly picked CDN will be used when a filter list needs to be updated",
+    "message": "需要更新过滤规则列表时会随机选用一个 CDN",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {

@@ -896,7 +896,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "A randomly picked CDN will be used when a filter list needs to be updated",
+    "message": "CDN ที่สุ่มเลือกจะถูกใช้เมื่อจำเป็นต้องอัปเดตรายการตัวกรอง",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {

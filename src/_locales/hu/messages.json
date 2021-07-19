@@ -892,11 +892,11 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "uBO's own filter lists are freely hosted on the following <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
+    "message": "Az uBO saját szűrőlistáit a következő ingyenes <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN-ek (angol)</a> szolgáltatják:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "A randomly picked CDN will be used when a filter list needs to be updated",
+    "message": "A szűrőlisták frissítéséhez egy véletlenszerűen kiválasztott CDN-t használ a bővítmény",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
