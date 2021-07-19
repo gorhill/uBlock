@@ -1086,11 +1086,13 @@ vAPI.messaging = {
         }
         proxy(response) {
             // https://github.com/chrisaljoudi/uBlock/issues/383
-            if ( this.messaging.ports.has(this.port.name) ) {
+            try {
                 this.port.postMessage({
                     msgId: this.msgId,
                     msg: response !== undefined ? response : null,
                 });
+            } catch (ex) {
+                this.messaging.onPortDisconnect(this.port);
             }
             // Store for reuse
             this.port = null;
