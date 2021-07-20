@@ -378,7 +378,7 @@ const buildAllFirewallRows = function() {
 
         const hnDetails = hostnameDict[des] || {};
         const isDomain = des === hnDetails.domain;
-        const prettyDomainName = des.startsWith('xn--')
+        const prettyDomainName = des.includes('xn--')
             ? punycode.toUnicode(des)
             : des;
         const isPunycoded = prettyDomainName !== des;
