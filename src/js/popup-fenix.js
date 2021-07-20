@@ -60,7 +60,7 @@ const domainsHitStr = vAPI.i18n('popupHitDomainCount');
 let popupData = {};
 let dfPaneBuilt = false;
 let dfHotspots = null;
-let allHostnameRows = [];
+const allHostnameRows = [];
 let cachedPopupHash = '';
 
 // https://github.com/gorhill/uBlock/issues/2550
@@ -378,7 +378,9 @@ const buildAllFirewallRows = function() {
 
         const hnDetails = hostnameDict[des] || {};
         const isDomain = des === hnDetails.domain;
-        const prettyDomainName = punycode.toUnicode(des);
+        const prettyDomainName = des.startsWith('xn--')
+            ? punycode.toUnicode(des)
+            : des;
         const isPunycoded = prettyDomainName !== des;
 
         if ( isDomain && row.childElementCount < 4 ) {
@@ -388,7 +390,7 @@ const buildAllFirewallRows = function() {
         }
 
         const span = row.querySelector('span:first-of-type');
-        span.querySelector('span').textContent = prettyDomainName;
+        span.querySelector(':scope > span > span').textContent = prettyDomainName;
 
         const classList = row.classList;
 
@@ -407,7 +409,8 @@ const buildAllFirewallRows = function() {
         classList.toggle('isRootContext', des === pageHostname);
         classList.toggle('is3p', hnDetails.domain !== pageDomain);
         classList.toggle('isDomain', isDomain);
-        classList.toggle('isSubDomain', !isDomain);
+        classList.toggle('hasSubdomains', isDomain && hnDetails.hasSubdomains);
+        classList.toggle('isSubdomain', !isDomain);
         const { counts } = hnDetails;
         classList.toggle('allowed', gtz(counts.allowed.any));
         classList.toggle('blocked', gtz(counts.blocked.any));
@@ -470,17 +473,17 @@ const renderPrivacyExposure = function() {
     let allDomainCount = 0;
     let touchedDomainCount = 0;
 
-    allHostnameRows = [];
+    allHostnameRows.length = 0;
 
     // Sort hostnames. First-party hostnames must always appear at the top
     // of the list.
-    const desHostnameDone = {};
-    const keys = Object.keys(popupData.hostnameDict)
-                       .sort(hostnameCompare);
+    const { hostnameDict } = popupData;
+    const desHostnameDone = new Set();
+    const keys = Object.keys(hostnameDict).sort(hostnameCompare);
     for ( const des of keys ) {
         // Specific-type rules -- these are built-in
-        if ( des === '*' || desHostnameDone.hasOwnProperty(des) ) { continue; }
-        const hnDetails = popupData.hostnameDict[des];
+        if ( des === '*' || desHostnameDone.has(des) ) { continue; }
+        const hnDetails = hostnameDict[des];
         const { domain, counts } = hnDetails;
         if ( allDomains.hasOwnProperty(domain) === false ) {
             allDomains[domain] = false;
@@ -492,8 +495,16 @@ const renderPrivacyExposure = function() {
                 touchedDomainCount += 1;
             }
         }
+        const dnDetails = hostnameDict[domain];
+        if ( dnDetails !== undefined ) {
+            if ( des !== domain ) {
+                dnDetails.hasSubdomains = true;
+            } else if ( dnDetails.hasSubdomains === undefined ) {
+                dnDetails.hasSubdomains = false;
+            }
+        }
         allHostnameRows.push(des);
-        desHostnameDone[des] = true;
+        desHostnameDone.add(des);
     }
 
     const summary = domainsHitStr

@@ -280,8 +280,8 @@ body[data-more=""] #lessButton {
 #firewall > div:first-child ~ div[data-des="*"] {
     display: none;
     }
-#firewall:not(.expanded) > div.isSubDomain:not(.expandException):not(.isRootContext),
-#firewall.expanded > div.isSubDomain.expandException:not(.isRootContext) {
+#firewall:not(.expanded) > div.isSubdomain:not(.expandException):not(.isRootContext),
+#firewall.expanded > div.isSubdomain.expandException:not(.isRootContext) {
     display: none;
     }
 #firewall > div > span,
@@ -369,8 +369,16 @@ body[data-more=""] #lessButton {
     font-family: monospace;
     text-align: center;
     }
-#firewall > div.isDomain > span:first-of-type {
+#firewall > div.isDomain > span:first-of-type > span {
+    pointer-events: none;
+    }
+#firewall > div.isDomain > span:first-of-type > span > span {
     font-weight: 600;
+    pointer-events: auto;
+    }
+#firewall > div.isDomain.hasSubdomains > span:first-of-type > span::before {
+    color: var(--default-ink-a40);
+    content: '\2026\A0';
     }
 #firewall > div:first-of-type > span:first-of-type::before {
     color: var(--fg-0-50);
@@ -381,8 +389,8 @@ body[data-more=""] #lessButton {
     content: '\2012';
     }
 #firewall > div[data-des="*"] > span:nth-of-type(3),
-#firewall > div.isSubDomain > span:nth-of-type(3),
-#firewall > div.isSubDomain.isRootContext > span:nth-of-type(3),
+#firewall > div.isSubdomain > span:nth-of-type(3),
+#firewall > div.isSubdomain.isRootContext > span:nth-of-type(3),
 #firewall.expanded > div:not(.expandException) > span:nth-of-type(3),
 #firewall:not(.expanded) > div.expandException > span:nth-of-type(3),
 #firewall:not(.expanded) > div.isDomain:not(.expandException) > span:nth-of-type(4),
