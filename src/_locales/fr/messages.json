@@ -896,7 +896,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "Un RDC choisi aléatoirement sera utilisé lorsqu'une liste de filtres doit être mise à jour",
+    "message": "Un RDC choisi aléatoirement est utilisé lorsqu'une liste de filtres doit être mise à jour",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
