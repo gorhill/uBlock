@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Konačno, efikasan bloker. Štedljiv na procesoru i memoriji.",
+    "message": "Konačno, efikasan bloker. Štedljiv na procesor i memoriju",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
@@ -892,11 +892,11 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "uBO's own filter lists are freely hosted on the following <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
+    "message": "Sopstveni zapisi filtera uBO-a su besplatno gostovani na sljedećim <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN-ovima</a>:\n",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "A randomly picked CDN is used when a filter list needs to be updated",
+    "message": "Slučajno odabrani CDN će biti korišten kada zapis filtera treba biti ažuriran",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {

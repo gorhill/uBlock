@@ -896,7 +896,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "Bir filtre listesinin güncellenmesi gerektiğinde rastgele seçilen bir CDN kullanılacaktır",
+    "message": "Bir filtre listesinin güncellenmesi gerektiğinde rastgele seçilen bir CDN kullanılır",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {

@@ -892,7 +892,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "Własne listy filtrów uBO są dowolnie hostowane w następujących sieciach <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a>:",
+    "message": "Własne listy filtrów uBO są dobrowolnie hostowane w następujących sieciach <a href=\"https://pl.wikipedia.org/wiki/Content_delivery_network\">CDN</a>:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
