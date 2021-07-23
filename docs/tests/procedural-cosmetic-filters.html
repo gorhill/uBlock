@@ -210,7 +210,7 @@
     const fragment = document.createDocumentFragment();
     for ( const node of document.querySelectorAll('code') ) {
         const div = document.createElement('div');
-        div.textContent = `${hostname}##${node.textContent}`;
+        div.textContent = `${hostname}#?#${node.textContent}`;
         fragment.appendChild(div);
     }
     const parent = document.querySelector('.filters');
