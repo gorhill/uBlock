@@ -102,6 +102,8 @@ const PSelectorMinTextLengthTask = class {
     }
 };
 
+// https://github.com/AdguardTeam/ExtendedCss/issues/31#issuecomment-302391277
+//   Prepend `:scope ` if needed.
 const PSelectorSpathTask = class {
     constructor(task) {
         this.spath = task[1];
