@@ -123,6 +123,11 @@
 
 /******************************************************************************/
 
+// https://www.reddit.com/r/uBlockOrigin/comments/oq6kt5/ubo_loads_generic_filter_instead_of_specific/
+//   Ensure blocks of content are sorted in ascending id order, such that the
+//   specific cosmetic filters will be found (and thus reported) before the
+//   generic ones.
+
 µBlock.CompiledLineIO = {
     serialize: JSON.stringify,
     unserialize: JSON.parse,
@@ -156,8 +161,10 @@
             return this;
         }
         toString() {
-            let result = [];
-            for ( let [ id, lines ] of this.blocks ) {
+            const result = [];
+            const sortedBlocks =
+                Array.from(this.blocks).sort((a, b) => a[0] - b[0]);
+            for ( const [ id, lines ] of sortedBlocks ) {
                 if ( lines.length === 0 ) { continue; }
                 result.push(
                     this.io.blockStartPrefix + id,
