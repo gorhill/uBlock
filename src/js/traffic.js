@@ -23,9 +23,12 @@
 
 /******************************************************************************/
 
-// Start isolation from global scope
+import {
+    entityFromDomain,
+    isNetworkURI,
+} from './uri-utils.js';
 
-µBlock.webRequest = (( ) => {
+import µBlock from './background.js';
 
 /******************************************************************************/
 
@@ -37,20 +40,11 @@
 let dontCacheResponseHeaders =
     vAPI.webextFlavor.soup.has('firefox');
 
-// https://github.com/gorhill/uMatrix/issues/967#issuecomment-373002011
-//   This can be removed once Firefox 60 ESR is released.
-let cantMergeCSPHeaders =
-    vAPI.webextFlavor.soup.has('firefox') && vAPI.webextFlavor.major < 59;
-
-
 // The real actual webextFlavor value may not be set in stone, so listen
 // for possible future changes.
 window.addEventListener('webextFlavor', function() {
     dontCacheResponseHeaders =
         vAPI.webextFlavor.soup.has('firefox');
-    cantMergeCSPHeaders =
-        vAPI.webextFlavor.soup.has('firefox') &&
-        vAPI.webextFlavor.major < 59;
 }, { once: true });
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/1553
@@ -269,7 +263,7 @@ const shouldStrictBlock = function(fctxt, loggerEnabled) {
     const snfe = µb.staticNetFilteringEngine;
 
     // Explicit filtering: `document` option
-    const rs = snfe.matchString(fctxt, 0b0011);
+    const rs = snfe.matchRequest(fctxt, 0b0011);
     const is = rs === 1 && snfe.isBlockImportant();
     let lds;
     if ( rs !== 0 || loggerEnabled ) {
@@ -291,7 +285,7 @@ const shouldStrictBlock = function(fctxt, loggerEnabled) {
 
     // Implicit filtering: no `document` option
     fctxt.type = 'no_type';
-    let rg = snfe.matchString(fctxt, 0b0011);
+    let rg = snfe.matchRequest(fctxt, 0b0011);
     fctxt.type = 'main_frame';
     const ig = rg === 1 && snfe.isBlockImportant();
     let ldg;
@@ -382,7 +376,7 @@ const onBeforeBehindTheSceneRequest = function(fctxt) {
 
     if (
         fctxt.tabOrigin.endsWith('-scheme') === false &&
-        µb.URI.isNetworkURI(fctxt.tabOrigin) ||
+        isNetworkURI(fctxt.tabOrigin) ||
         µb.userSettings.advancedUserEnabled ||
         fctxt.itype === fctxt.CSP_REPORT
     ) {
@@ -836,7 +830,7 @@ const filterDocument = (( ) => {
             url: fctxt.url,
             hostname: hostname,
             domain: domain,
-            entity: µb.URI.entityFromDomain(domain),
+            entity: entityFromDomain(domain),
             selectors: undefined,
             buffer: null,
             mime: 'text/html',
@@ -997,17 +991,6 @@ const injectCSP = function(fctxt, pageStore, responseHeaders) {
     //   Firefox 58/webext and less can't merge CSP headers, so we will merge
     //   them here.
 
-    if ( cantMergeCSPHeaders ) {
-        const i = headerIndexFromName(
-            'content-security-policy',
-            responseHeaders
-        );
-        if ( i !== -1 ) {
-            cspSubsets.unshift(responseHeaders[i].value.trim());
-            responseHeaders.splice(i, 1);
-        }
-    }
-
     responseHeaders.push({
         name: 'Content-Security-Policy',
         value: cspSubsets.join(', ')
@@ -1139,7 +1122,9 @@ const strictBlockBypasser = {
 
 /******************************************************************************/
 
-return {
+// Export
+
+µBlock.webRequest = {
     start: (( ) => {
         vAPI.net = new vAPI.Net();
         vAPI.net.suspend();
@@ -1160,9 +1145,5 @@ return {
         strictBlockBypasser.bypass(hostname);
     },
 };
-
-/******************************************************************************/
-
-})();
 
 /******************************************************************************/

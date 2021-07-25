@@ -22,6 +22,17 @@
 'use strict';
 
 /******************************************************************************/
+
+import {
+    domainFromHostname,
+    hostnameFromURI,
+    isNetworkURI,
+    originFromURI,
+} from './uri-utils.js';
+
+import µBlock from './background.js';
+
+/******************************************************************************/
 /******************************************************************************/
 
 // https://github.com/gorhill/httpswitchboard/issues/303
@@ -33,26 +44,30 @@
 //   hostname. This way, for a specific scheme you can create scope with
 //   rules which will apply only to that scheme.
 
-µBlock.normalizePageURL = function(tabId, pageURL) {
-    if ( tabId < 0 ) {
-        return 'http://behind-the-scene/';
-    }
-    const uri = this.URI.set(pageURL);
-    const scheme = uri.scheme;
-    if ( scheme === 'https' || scheme === 'http' ) {
-        return uri.normalizedURI();
-    }
+µBlock.normalizeTabURL = (( ) => {
+    const tabURLNormalizer = new URL('about:blank');
 
-    let fakeHostname = scheme + '-scheme';
+    return (tabId, tabURL) => {
+        if ( tabId < 0 ) {
+            return 'http://behind-the-scene/';
+        }
+        tabURLNormalizer.href = tabURL;
+        const protocol = tabURLNormalizer.protocol.slice(0, -1);
+        if ( protocol === 'https' || protocol === 'http' ) {
+            return tabURLNormalizer.href;
+        }
 
-    if ( uri.hostname !== '' ) {
-        fakeHostname = uri.hostname + '.' + fakeHostname;
-    } else if ( scheme === 'about' && uri.path !== '' ) {
-        fakeHostname = uri.path + '.' + fakeHostname;
-    }
+        let fakeHostname = protocol + '-scheme';
 
-    return `http://${fakeHostname}/`;
-};
+        if ( tabURLNormalizer.hostname !== '' ) {
+            fakeHostname = tabURLNormalizer.hostname + '.' + fakeHostname;
+        } else if ( protocol === 'about' && protocol.pathname !== '' ) {
+            fakeHostname = tabURLNormalizer.pathname + '.' + fakeHostname;
+        }
+
+        return `http://${fakeHostname}/`;
+    };
+})();
 
 /******************************************************************************/
 
@@ -114,7 +129,7 @@
         //   Don't block if uBO is turned off in popup's context
         if (
             µb.getNetFilteringSwitch(targetURL) === false ||
-            µb.getNetFilteringSwitch(µb.normalizePageURL(0, targetURL)) === false
+            µb.getNetFilteringSwitch(µb.normalizeTabURL(0, targetURL)) === false
         ) {
             return 0;
         }
@@ -192,7 +207,7 @@
         }
 
         fctxt.type = popupType;
-        const result = µb.staticNetFilteringEngine.matchString(fctxt, 0b0001);
+        const result = µb.staticNetFilteringEngine.matchRequest(fctxt, 0b0001);
         if ( result !== 0 ) {
             fctxt.filter = µb.staticNetFilteringEngine.toLogData();
             return result;
@@ -257,7 +272,7 @@
         //   For now, a "broad" filter is one which does not touch any part of
         //   the hostname part of the opener URL.
         let popunderURL = rootOpenerURL,
-            popunderHostname = µb.URI.hostnameFromURI(popunderURL);
+            popunderHostname = hostnameFromURI(popunderURL);
         if ( popunderHostname === '' ) { return 0; }
 
         result = mapPopunderResult(
@@ -270,7 +285,7 @@
 
         // https://github.com/gorhill/uBlock/issues/1598
         //   Try to find a match against origin part of the opener URL.
-        popunderURL = µb.URI.originFromURI(popunderURL);
+        popunderURL = originFromURI(popunderURL);
         if ( popunderURL === '' ) { return 0; }
 
         return mapPopunderResult(
@@ -305,7 +320,7 @@
         // https://github.com/gorhill/uBlock/issues/1538
         if (
             µb.getNetFilteringSwitch(
-                µb.normalizePageURL(openerTabId, rootOpenerURL)
+                µb.normalizeTabURL(openerTabId, rootOpenerURL)
             ) === false
         ) {
             return;
@@ -662,11 +677,11 @@ housekeep itself.
         }
         const stackEntry = this.stack[this.stack.length - 1];
         this.rawURL = stackEntry.url;
-        this.normalURL = µb.normalizePageURL(this.tabId, this.rawURL);
-        this.origin = µb.URI.originFromURI(this.normalURL);
-        this.rootHostname = µb.URI.hostnameFromURI(this.origin);
+        this.normalURL = µb.normalizeTabURL(this.tabId, this.rawURL);
+        this.origin = originFromURI(this.normalURL);
+        this.rootHostname = hostnameFromURI(this.origin);
         this.rootDomain =
-            µb.URI.domainFromHostname(this.rootHostname) ||
+            domainFromHostname(this.rootHostname) ||
             this.rootHostname;
     };
 
@@ -794,10 +809,10 @@ housekeep itself.
         const entry = new TabContext(vAPI.noTabId);
         entry.stack.push(new StackEntry('', true));
         entry.rawURL = '';
-        entry.normalURL = µb.normalizePageURL(entry.tabId);
-        entry.origin = µb.URI.originFromURI(entry.normalURL);
-        entry.rootHostname = µb.URI.hostnameFromURI(entry.origin);
-        entry.rootDomain = µb.URI.domainFromHostname(entry.rootHostname);
+        entry.normalURL = µb.normalizeTabURL(entry.tabId);
+        entry.origin = originFromURI(entry.normalURL);
+        entry.rootHostname = hostnameFromURI(entry.origin);
+        entry.rootDomain = domainFromHostname(entry.rootHostname);
     }
 
     // Context object, typically to be used to feed filtering engines.
@@ -894,7 +909,7 @@ vAPI.Tabs = class extends vAPI.Tabs {
         pageStore.setFrameURL(details);
         if (
             µb.canInjectScriptletsNow &&
-            µb.URI.isNetworkURI(url) &&
+            isNetworkURI(url) &&
             pageStore.getNetFilteringSwitch()
         ) {
             µb.scriptletFilteringEngine.injectNow(details);

@@ -21,6 +21,16 @@
 
 'use strict';
 
+/******************************************************************************/
+
+import {
+    domainFromHostname,
+    hostnameFromURI,
+    isNetworkURI,
+} from './uri-utils.js';
+
+import µBlock from './background.js';
+
 /*******************************************************************************
 
 A PageRequestStore object is used to store net requests in two ways:
@@ -29,11 +39,6 @@ To record distinct net requests
 To create a log of net requests
 
 **/
-
-{
-
-// start of private namespace
-// >>>>>
 
 /******************************************************************************/
 
@@ -188,9 +193,8 @@ const FrameStore = class {
         this.clickToLoad = false;
         this.rawURL = frameURL;
         if ( frameURL !== undefined ) {
-            this.hostname = vAPI.hostnameFromURI(frameURL);
-            this.domain =
-                vAPI.domainFromHostname(this.hostname) || this.hostname;
+            this.hostname = hostnameFromURI(frameURL);
+            this.domain = domainFromHostname(this.hostname) || this.hostname;
         }
         // Evaluated on-demand
         // - 0b01: specific cosmetic filtering
@@ -213,7 +217,7 @@ const FrameStore = class {
         }
         this._cosmeticFilteringBits = 0b11;
         {
-            const result = µb.staticNetFilteringEngine.matchStringReverse(
+            const result = µb.staticNetFilteringEngine.matchRequestReverse(
                 'specifichide',
                 this.rawURL
             );
@@ -232,7 +236,7 @@ const FrameStore = class {
             }
         }
         {
-            const result = µb.staticNetFilteringEngine.matchStringReverse(
+            const result = µb.staticNetFilteringEngine.matchRequestReverse(
                 'generichide',
                 this.rawURL
             );
@@ -600,7 +604,7 @@ const PageStore = class {
     getAllHostnameDetails() {
         if (
             this.hostnameDetailsMap.has(this.tabHostname) === false &&
-            µb.URI.isNetworkURI(this.rawURL)
+            isNetworkURI(this.rawURL)
         ) {
             this.hostnameDetailsMap.set(
                 this.tabHostname,
@@ -651,12 +655,12 @@ const PageStore = class {
             if (
                 this.journalLastUncommitted !== -1 &&
                 this.journalLastUncommitted < this.journalLastCommitted &&
-                this.journalLastUncommittedOrigin === vAPI.hostnameFromURI(url)
+                this.journalLastUncommittedOrigin === hostnameFromURI(url)
             ) {
                 this.journalLastCommitted = this.journalLastUncommitted;
             }
         } else if ( type === 'uncommitted' ) {
-            const newOrigin = vAPI.hostnameFromURI(url);
+            const newOrigin = hostnameFromURI(url);
             if (
                 this.journalLastUncommitted === -1 ||
                 this.journalLastUncommittedOrigin !== newOrigin
@@ -807,7 +811,7 @@ const PageStore = class {
         // Static filtering has lowest precedence.
         const snfe = µb.staticNetFilteringEngine;
         if ( result === 0 || result === 3 ) {
-            result = snfe.matchString(fctxt);
+            result = snfe.matchRequest(fctxt);
             if ( result !== 0 ) {
                 if ( loggerEnabled ) {
                     fctxt.setFilter(snfe.toLogData());
@@ -912,7 +916,10 @@ const PageStore = class {
     }
 
     redirectBlockedRequest(fctxt) {
-        const directives = µb.staticNetFilteringEngine.redirectRequest(fctxt);
+        const directives = µb.staticNetFilteringEngine.redirectRequest(
+            µb.redirectEngine,
+            fctxt
+        );
         if ( directives === undefined ) { return; }
         if ( µb.logger.enabled !== true ) { return; }
         fctxt.pushFilters(directives.map(a => a.logData()));
@@ -1062,7 +1069,7 @@ const PageStore = class {
             }
         }
         if ( exceptCname === undefined ) {
-            const result = µb.staticNetFilteringEngine.matchStringReverse(
+            const result = µb.staticNetFilteringEngine.matchRequestReverse(
                 'cname',
                 frameStore instanceof Object
                     ? frameStore.rawURL
@@ -1083,7 +1090,7 @@ const PageStore = class {
     }
 
     getBlockedResources(request, response) {
-        const normalURL = µb.normalizePageURL(this.tabId, request.frameURL);
+        const normalURL = µb.normalizeTabURL(this.tabId, request.frameURL);
         const resources = request.resources;
         const fctxt = µb.filteringContext;
         fctxt.fromTabId(this.tabId)
@@ -1124,8 +1131,3 @@ PageStore.junkyardMax = 10;
 µb.PageStore = PageStore;
 
 /******************************************************************************/
-
-// <<<<<
-// end of private namespace
-
-}

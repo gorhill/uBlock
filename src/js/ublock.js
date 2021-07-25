@@ -22,12 +22,12 @@
 'use strict';
 
 /******************************************************************************/
+
+import { hostnameFromURI } from './uri-utils.js';
+import µBlock from './background.js';
+
 /******************************************************************************/
-
-{
-
-// *****************************************************************************
-// start of local namespace
+/******************************************************************************/
 
 // https://github.com/chrisaljoudi/uBlock/issues/405
 // Be more flexible with whitelist syntax
@@ -91,7 +91,7 @@ const matchBucket = function(url, hostname, bucket, start) {
 /******************************************************************************/
 
 µBlock.getNetFilteringSwitch = function(url) {
-    const hostname = this.URI.hostnameFromURI(url);
+    const hostname = hostnameFromURI(url);
     let key = hostname;
     for (;;) {
         if ( matchBucket(url, hostname, this.netWhitelist.get(key)) !== -1 ) {
@@ -121,7 +121,7 @@ const matchBucket = function(url, hostname, bucket, start) {
     const netWhitelist = this.netWhitelist;
     const pos = url.indexOf('#');
     let targetURL = pos !== -1 ? url.slice(0, pos) : url;
-    const targetHostname = this.URI.hostnameFromURI(targetURL);
+    const targetHostname = hostnameFromURI(targetURL);
     let key = targetHostname;
     let directive = scope === 'page' ? targetURL : targetHostname;
 
@@ -281,12 +281,6 @@ const matchBucket = function(url, hostname, bucket, start) {
 µBlock.reWhitelistBadHostname = /[^a-z0-9.\-_\[\]:]/;
 µBlock.reWhitelistHostnameExtractor = /([a-z0-9.\-_\[\]]+)(?::[\d*]+)?\/(?:[^\x00-\x20\/]|$)[^\x00-\x20]*$/;
 
-// end of local namespace
-// *****************************************************************************
-
-}
-
-/******************************************************************************/
 /******************************************************************************/
 
 µBlock.changeUserSettings = function(name, value) {

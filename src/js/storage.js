@@ -19,9 +19,24 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global punycode, publicSuffixList */
-
 'use strict';
+
+/******************************************************************************/
+
+import '../lib/publicsuffixlist/publicsuffixlist.js';
+import '../lib/punycode.js';
+
+import globals from './globals.js';
+import { hostnameFromURI } from './uri-utils.js';
+import { sparseBase64 } from './base64-custom.js';
+import { LineIterator } from './text-iterators.js';
+import { StaticFilteringParser } from './static-filtering-parser.js';
+import µBlock from './background.js';
+
+import {
+    CompiledListReader,
+    CompiledListWriter,
+} from './static-filtering-io.js';
 
 /******************************************************************************/
 
@@ -242,7 +257,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
 µBlock.hiddenSettingsFromString = function(raw) {
     const out = Object.assign({}, this.hiddenSettingsDefault);
-    const lineIter = new this.LineIterator(raw);
+    const lineIter = new LineIterator(raw);
     while ( lineIter.eot() === false ) {
         const line = lineIter.next();
         const matches = /^\s*(\S+)\s+(.+)$/.exec(line);
@@ -561,7 +576,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     // https://github.com/gorhill/uBlock/issues/1786
     if ( details.docURL === undefined ) { return; }
     this.cosmeticFilteringEngine.removeFromSelectorCache(
-        vAPI.hostnameFromURI(details.docURL)
+        hostnameFromURI(details.docURL)
     );
 };
 
@@ -929,12 +944,12 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 /******************************************************************************/
 
 µBlock.compileFilters = function(rawText, details = {}) {
-    const writer = new this.CompiledLineIO.Writer();
+    const writer = new CompiledListWriter();
 
     // Populate the writer with information potentially useful to the
     // client compilers.
     if ( details.assetKey ) {
-        writer.properties.set('assetKey', details.assetKey);
+        writer.properties.set('name', details.assetKey);
     }
     const expertMode =
         details.assetKey !== this.userFiltersPath ||
@@ -944,8 +959,8 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     //    https://adblockplus.org/en/filters
     const staticNetFilteringEngine = this.staticNetFilteringEngine;
     const staticExtFilteringEngine = this.staticExtFilteringEngine;
-    const lineIter = new this.LineIterator(this.preparseDirectives.prune(rawText));
-    const parser = new vAPI.StaticFilteringParser({ expertMode });
+    const lineIter = new LineIterator(this.preparseDirectives.prune(rawText));
+    const parser = new StaticFilteringParser({ expertMode });
 
     parser.setMaxTokenLength(staticNetFilteringEngine.MAX_TOKEN_LENGTH);
 
@@ -973,7 +988,14 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         if ( parser.patternHasUnicode() && parser.toASCII() === false ) {
             continue;
         }
-        staticNetFilteringEngine.compile(parser, writer);
+        if ( staticNetFilteringEngine.compile(parser, writer) ) { continue; }
+        if ( staticNetFilteringEngine.error !== undefined ) {
+            this.logger.writeOne({
+                realm: 'message',
+                type: 'error',
+                text: staticNetFilteringEngine.error
+            });
+        }
     }
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1365
@@ -993,8 +1015,8 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
 µBlock.applyCompiledFilters = function(rawText, firstparty) {
     if ( rawText === '' ) { return; }
-    const reader = new this.CompiledLineIO.Reader(rawText);
-    this.staticNetFilteringEngine.fromCompiledContent(reader);
+    const reader = new CompiledListReader(rawText);
+    this.staticNetFilteringEngine.fromCompiled(reader);
     this.staticExtFilteringEngine.fromCompiledContent(reader, {
         skipGenericCosmetic: this.userSettings.ignoreGenericCosmeticFilters,
         skipCosmetic: !firstparty && !this.userSettings.parseAllABPHideFilters
@@ -1162,13 +1184,14 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 /******************************************************************************/
 
 µBlock.loadPublicSuffixList = async function() {
+    const psl = globals.publicSuffixList;
     if ( this.hiddenSettings.disableWebAssembly !== true ) {
-        publicSuffixList.enableWASM();
+        psl.enableWASM('/lib/publicsuffixlist');
     }
 
     try {
         const result = await this.assets.get(`compiled/${this.pslAssetKey}`);
-        if ( publicSuffixList.fromSelfie(result.content, this.base64) ) {
+        if ( psl.fromSelfie(result.content, sparseBase64) ) {
             return;
         }
     } catch (ex) {
@@ -1182,11 +1205,9 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 };
 
 µBlock.compilePublicSuffixList = function(content) {
-    publicSuffixList.parse(content, punycode.toASCII);
-    this.assets.put(
-        'compiled/' + this.pslAssetKey,
-        publicSuffixList.toSelfie(µBlock.base64)
-    );
+    const psl = globals.publicSuffixList;
+    psl.parse(content, globals.punycode.toASCII);
+    this.assets.put(`compiled/${this.pslAssetKey}`, psl.toSelfie(sparseBase64));
 };
 
 /******************************************************************************/
@@ -1218,6 +1239,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
                 'selfie/staticExtFilteringEngine'
             ),
             µb.staticNetFilteringEngine.toSelfie(
+                µb.assets,
                 'selfie/staticNetFilteringEngine'
             ),
         ]);
@@ -1261,6 +1283,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
                     'selfie/staticExtFilteringEngine'
                 ),
                 µb.staticNetFilteringEngine.fromSelfie(
+                    µb.assets,
                     'selfie/staticNetFilteringEngine'
                 ),
             ]);

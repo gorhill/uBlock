@@ -23,7 +23,13 @@
 
 /******************************************************************************/
 
-µBlock.cosmeticFilteringEngine = (( ) => {
+import {
+    domainFromHostname,
+    entityFromDomain,
+    hostnameFromURI,
+} from './uri-utils.js';
+
+import µBlock from './background.js';
 
 /******************************************************************************/
 
@@ -253,7 +259,6 @@ const FilterContainer = function() {
 // Reset all, thus reducing to a minimum memory footprint of the context.
 
 FilterContainer.prototype.reset = function() {
-    this.µburi = µb.URI;
     this.frozen = false;
     this.acceptedCount = 0;
     this.discardedCount = 0;
@@ -369,7 +374,6 @@ FilterContainer.prototype.compile = function(parser, writer) {
 /******************************************************************************/
 
 FilterContainer.prototype.compileGenericSelector = function(parser, writer) {
-    writer.select(µb.compiledCosmeticSection + COMPILED_GENERIC_SECTION);
     if ( parser.isException() ) {
         this.compileGenericUnhideSelector(parser, writer);
     } else {
@@ -385,13 +389,16 @@ FilterContainer.prototype.compileGenericHideSelector = function(
 ) {
     const { raw, compiled, pseudoclass } = parser.result;
     if ( compiled === undefined ) {
-        const who = writer.properties.get('assetKey') || '?';
+        const who = writer.properties.get('name') || '?';
         µb.logger.writeOne({
             realm: 'message',
             type: 'error',
             text: `Invalid generic cosmetic filter in ${who}: ${raw}`
         });
+        return;
     }
+
+    writer.select(µb.compiledCosmeticSection + COMPILED_GENERIC_SECTION);
 
     const type = compiled.charCodeAt(0);
     let key;
@@ -429,7 +436,7 @@ FilterContainer.prototype.compileGenericHideSelector = function(
         if ( µb.hiddenSettings.allowGenericProceduralFilters === true ) {
             return this.compileSpecificSelector(parser, '', false, writer);
         }
-        const who = writer.properties.get('assetKey') || '?';
+        const who = writer.properties.get('name') || '?';
         µb.logger.writeOne({
             realm: 'message',
             type: 'error',
@@ -485,7 +492,7 @@ FilterContainer.prototype.compileGenericUnhideSelector = function(
     // Procedural cosmetic filters are acceptable as generic exception filters.
     const { raw, compiled } = parser.result;
     if ( compiled === undefined ) {
-        const who = writer.properties.get('assetKey') || '?';
+        const who = writer.properties.get('name') || '?';
         µb.logger.writeOne({
             realm: 'message',
             type: 'error',
@@ -493,6 +500,8 @@ FilterContainer.prototype.compileGenericUnhideSelector = function(
         });
         return;
     }
+
+    writer.select(µb.compiledCosmeticSection + COMPILED_SPECIFIC_SECTION);
 
     // https://github.com/chrisaljoudi/uBlock/issues/497
     //   All generic exception filters are stored as hostname-based filter
@@ -511,10 +520,9 @@ FilterContainer.prototype.compileSpecificSelector = function(
     not,
     writer
 ) {
-    writer.select(µb.compiledCosmeticSection + COMPILED_SPECIFIC_SECTION);
     const { raw, compiled, exception } = parser.result;
     if ( compiled === undefined ) {
-        const who = writer.properties.get('assetKey') || '?';
+        const who = writer.properties.get('name') || '?';
         µb.logger.writeOne({
             realm: 'message',
             type: 'error',
@@ -522,6 +530,8 @@ FilterContainer.prototype.compileSpecificSelector = function(
         });
         return;
     }
+
+    writer.select(µb.compiledCosmeticSection + COMPILED_SPECIFIC_SECTION);
 
     // https://github.com/chrisaljoudi/uBlock/issues/145
     let unhide = exception ? 1 : 0;
@@ -1146,9 +1156,9 @@ FilterContainer.prototype.benchmark = async function() {
         const request = requests[i];
         if ( request.cpt !== 'main_frame' ) { continue; }
         count += 1;
-        details.hostname = µb.URI.hostnameFromURI(request.url);
-        details.domain = µb.URI.domainFromHostname(details.hostname);
-        details.entity = µb.URI.entityFromDomain(details.domain);
+        details.hostname = hostnameFromURI(request.url);
+        details.domain = domainFromHostname(details.hostname);
+        details.entity = entityFromDomain(details.domain);
         void this.retrieveSpecificSelectors(details, options);
     }
     const t1 = self.performance.now();
@@ -1159,10 +1169,8 @@ FilterContainer.prototype.benchmark = async function() {
 
 /******************************************************************************/
 
-return new FilterContainer();
+// Export
 
-/******************************************************************************/
-
-})();
+µBlock.cosmeticFilteringEngine = new FilterContainer();
 
 /******************************************************************************/

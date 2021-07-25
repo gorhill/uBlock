@@ -24,6 +24,13 @@
 'use strict';
 
 /******************************************************************************/
+
+import './codemirror/ubo-static-filtering.js';
+
+import { hostnameFromURI } from './uri-utils.js';
+import { StaticFilteringParser } from './static-filtering-parser.js';
+
+/******************************************************************************/
 /******************************************************************************/
 
 (( ) => {
@@ -144,7 +151,7 @@ const renderRange = function(id, value, invert = false) {
 const userFilterFromCandidate = function(filter) {
     if ( filter === '' || filter === '!' ) { return; }
 
-    const hn = vAPI.hostnameFromURI(docURL.href);
+    const hn = hostnameFromURI(docURL.href);
 
     // Cosmetic filter?
     if ( reCosmeticAnchor.test(filter) ) {
@@ -828,7 +835,7 @@ const startPicker = function() {
     $id('candidateFilters').addEventListener('click', onCandidateClicked);
     $stor('#resultsetDepth input').addEventListener('input', onDepthChanged);
     $stor('#resultsetSpecificity input').addEventListener('input', onSpecificityChanged);
-    staticFilteringParser = new vAPI.StaticFilteringParser({ interactive: true });
+    staticFilteringParser = new StaticFilteringParser({ interactive: true });
 };
 
 /******************************************************************************/

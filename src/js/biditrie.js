@@ -23,11 +23,6 @@
 
 'use strict';
 
-// *****************************************************************************
-// start of local namespace
-
-{
-
 /*******************************************************************************
 
   A BidiTrieContainer is mostly a large buffer in which distinct but related
@@ -130,7 +125,7 @@ const toSegmentInfo = (aL, l, r) => ((r - l) << 24) | (aL + l);
 const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
 
 
-µBlock.BidiTrieContainer = class {
+const BidiTrieContainer = class {
 
     constructor(extraHandler) {
         const len = PAGE_SIZE * 4;
@@ -697,10 +692,10 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
         return -1;
     }
 
-    async enableWASM() {
+    async enableWASM(modulePath) {
         if ( typeof WebAssembly !== 'object' ) { return false; }
         if ( this.wasmMemory instanceof WebAssembly.Memory ) { return true; }
-        const module = await getWasmModule();
+        const module = await getWasmModule(modulePath);
         if ( module instanceof WebAssembly.Module === false ) { return false; }
         const memory = new WebAssembly.Memory({
             initial: roundToPageSize(this.buf8.length) >>> 16
@@ -828,7 +823,7 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
 
 */
 
-µBlock.BidiTrieContainer.prototype.STrieRef = class {
+BidiTrieContainer.prototype.STrieRef = class {
     constructor(container, iroot, size) {
         this.container = container;
         this.iroot = iroot;
@@ -930,20 +925,7 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
 const getWasmModule = (( ) => {
     let wasmModulePromise;
 
-    // The directory from which the current script was fetched should also
-    // contain the related WASM file. The script is fetched from a trusted
-    // location, and consequently so will be the related WASM file.
-    let workingDir;
-    {
-        const url = new URL(document.currentScript.src);
-        const match = /[^\/]+$/.exec(url.pathname);
-        if ( match !== null ) {
-            url.pathname = url.pathname.slice(0, match.index);
-        }
-        workingDir = url.href;
-    }
-
-    return async function() {
+    return async function(modulePath) {
         if ( wasmModulePromise instanceof Promise ) {
             return wasmModulePromise;
         }
@@ -967,19 +949,18 @@ const getWasmModule = (( ) => {
         if ( uint8s[0] !== 1 ) { return; }
 
         wasmModulePromise = fetch(
-            workingDir + 'wasm/biditrie.wasm',
+            `${modulePath}/wasm/biditrie.wasm`,
             { mode: 'same-origin' }
         ).then(
             WebAssembly.compileStreaming
         ).catch(reason => {
-            log.info(reason);
+            console.info(reason);
         });
 
         return wasmModulePromise;
     };
 })();
 
-// end of local namespace
-// *****************************************************************************
+/******************************************************************************/
 
-}
+export { BidiTrieContainer };

@@ -21,6 +21,12 @@
 
 'use strict';
 
+/******************************************************************************/
+
+import '../lib/regexanalyzer/regex.js';
+
+import globals from './globals.js';
+
 /*******************************************************************************
 
     The goal is for the static filtering parser to avoid external
@@ -65,9 +71,6 @@
     of parsing.
 
 **/
-
-{
-// >>>>> start of local scope
 
 /******************************************************************************/
 
@@ -116,7 +119,7 @@ const Parser = class {
         // https://github.com/uBlockOrigin/uBlock-issues/issues/1146
         //   From https://codemirror.net/doc/manual.html#option_specialChars
         this.reInvalidCharacters = /[\x00-\x1F\x7F-\x9F\xAD\u061C\u200B-\u200F\u2028\u2029\uFEFF\uFFF9-\uFFFC]/;
-        this.punycoder = new URL(self.location);
+        this.punycoder = new URL(globals.location);
         // TODO: mind maxTokenLength
         this.reGoodRegexToken
             = /[^\x01%0-9A-Za-z][%0-9A-Za-z]{7,}|[^\x01%0-9A-Za-z][%0-9A-Za-z]{1,6}[^\x01%0-9A-Za-z]/;
@@ -1299,7 +1302,11 @@ Parser.prototype.SelectorCompiler = class {
             [ 'matches-css-before', ':matches-css-before' ],
         ]);
         this.reSimpleSelector = /^[#.][A-Za-z_][\w-]*$/;
-        this.div = document.createElement('div');
+        this.div = (( ) => {
+            if ( typeof document !== 'object' ) { return null; }
+            if ( document instanceof Object === false ) { return null; }
+            return document.createElement('div');
+        })();
         this.rePseudoElement = /:(?::?after|:?before|:-?[a-z][a-z-]*[a-z])$/;
         this.reProceduralOperator = new RegExp([
             '^(?:',
@@ -1424,6 +1431,7 @@ Parser.prototype.SelectorCompiler = class {
         if ( pos !== -1 ) {
             return this.cssSelectorType(s.slice(0, pos)) === 1 ? 3 : 0;
         }
+        if ( this.div === null ) { return 1; }
         try {
             this.div.matches(`${s}, ${s}:not(#foo)`);
         } catch (ex) {
@@ -1533,6 +1541,7 @@ Parser.prototype.SelectorCompiler = class {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/668
     compileStyleProperties(s) {
         if ( /url\(|\\/i.test(s) ) { return; }
+        if ( this.div === null ) { return s; }
         this.div.style.cssText = s;
         if ( this.div.style.cssText === '' ) { return; }
         this.div.style.cssText = '';
@@ -2874,7 +2883,7 @@ Parser.regexUtils = Parser.prototype.regexUtils = (( ) => {
         return '\x01';
     };
 
-    const Regex = self.Regex;
+    const Regex = globals.Regex;
     if (
         Regex instanceof Object === false ||
         Regex.Analyzer instanceof Object === false
@@ -2914,13 +2923,6 @@ Parser.regexUtils = Parser.prototype.regexUtils = (( ) => {
 
 /******************************************************************************/
 
-if ( typeof vAPI === 'object' && vAPI !== null ) {
-    vAPI.StaticFilteringParser = Parser;
-} else {
-    self.StaticFilteringParser = Parser;
-}
+const StaticFilteringParser = Parser;
 
-/******************************************************************************/
-
-// <<<<< end of local scope
-}
+export { StaticFilteringParser };

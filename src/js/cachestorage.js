@@ -25,6 +25,10 @@
 
 /******************************************************************************/
 
+import µBlock from './background.js';
+
+/******************************************************************************/
+
 // The code below has been originally manually imported from:
 // Commit: https://github.com/nikrolls/uBlock-Edge/commit/d1538ea9bea89d507219d3219592382eee306134
 // Commit date: 29 October 2016

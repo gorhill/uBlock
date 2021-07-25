@@ -19,17 +19,23 @@
     Home: https://github.com/gorhill/uMatrix
 */
 
-/* global diff_match_patch, CodeMirror, uDom, uBlockDashboard */
+/* global CodeMirror, diff_match_patch, uDom, uBlockDashboard */
 
 'use strict';
 
 /******************************************************************************/
 
-(( ) => {
+import '../lib/publicsuffixlist/publicsuffixlist.js';
+
+import globals from './globals.js';
+import { hostnameFromURI } from './uri-utils.js';
+
+import './codemirror/ubo-dynamic-filtering.js';
 
 /******************************************************************************/
 
-const psl = self.publicSuffixList;
+const publicSuffixList = globals.publicSuffixList;
+
 const hostnameToDomainMap = new Map();
 
 const mergeView = new CodeMirror.MergeView(
@@ -376,8 +382,8 @@ const onFilterChanged = (( ) => {
     };
 
     return function() {
-        if ( timer !== undefined ) { self.cancelIdleCallback(timer); }
-        timer = self.requestIdleCallback(process, { timeout: 773 });
+        if ( timer !== undefined ) { globals.cancelIdleCallback(timer); }
+        timer = globals.requestIdleCallback(process, { timeout: 773 });
     };
 })();
 
@@ -393,7 +399,9 @@ const onPresentationChanged = (( ) => {
     const sortNormalizeHn = function(hn) {
         let domain = hostnameToDomainMap.get(hn);
         if ( domain === undefined ) {
-            domain = /(\d|\])$/.test(hn) ? hn : psl.getDomain(hn);
+            domain = /(\d|\])$/.test(hn)
+                ? hn
+                : publicSuffixList.getDomain(hn);
             hostnameToDomainMap.set(hn, domain);
         }
         let normalized = domain || hn;
@@ -424,7 +432,7 @@ const onPresentationChanged = (( ) => {
         } else if ( (match = reUrlRule.exec(rule)) !== null ) {
             type = '\x10FFFF';
             srcHn = sortNormalizeHn(match[1]);
-            desHn = sortNormalizeHn(vAPI.hostnameFromURI(match[2]));
+            desHn = sortNormalizeHn(hostnameFromURI(match[2]));
             extra = match[3];
         }
         if ( sortType === 0 ) {
@@ -499,13 +507,13 @@ const onPresentationChanged = (( ) => {
             const mode = origPane.doc.getMode();
             mode.sortType = sortType;
             mode.setHostnameToDomainMap(hostnameToDomainMap);
-            mode.setPSL(psl);
+            mode.setPSL(publicSuffixList);
         }
         {
             const mode = editPane.doc.getMode();
             mode.sortType = sortType;
             mode.setHostnameToDomainMap(hostnameToDomainMap);
-            mode.setPSL(psl);
+            mode.setPSL(publicSuffixList);
         }
         sort(origPane.modified);
         sort(editPane.modified);
@@ -547,8 +555,8 @@ const onTextChanged = (( ) => {
     };
 
     return function(now) {
-        if ( timer !== undefined ) { self.cancelIdleCallback(timer); }
-        timer = now ? process() : self.requestIdleCallback(process, { timeout: 57 });
+        if ( timer !== undefined ) { globals.cancelIdleCallback(timer); }
+        timer = now ? process() : globals.requestIdleCallback(process, { timeout: 57 });
     };
 })();
 
@@ -617,11 +625,11 @@ const editSaveHandler = function() {
 
 /******************************************************************************/
 
-self.cloud.onPush = function() {
+globals.cloud.onPush = function() {
     return thePanes.orig.original.join('\n');
 };
 
-self.cloud.onPull = function(data, append) {
+globals.cloud.onPull = function(data, append) {
     if ( typeof data !== 'string' ) { return; }
     applyDiff(
         false,
@@ -632,7 +640,7 @@ self.cloud.onPull = function(data, append) {
 
 /******************************************************************************/
 
-self.hasUnsavedData = function() {
+globals.hasUnsavedData = function() {
     return mergeView.editor().isClean(cleanEditToken) === false;
 };
 
@@ -643,7 +651,7 @@ vAPI.messaging.send('dashboard', {
 }).then(details => {
     thePanes.orig.original = details.permanentRules;
     thePanes.edit.original = details.sessionRules;
-    psl.fromSelfie(details.pslSelfie);
+    publicSuffixList.fromSelfie(details.pslSelfie);
     onPresentationChanged(true);
 });
 
@@ -667,6 +675,4 @@ uDom('#ruleFilter #diffCollapse').on('click', ev => {
 mergeView.editor().on('updateDiff', ( ) => { onTextChanged(); });
 
 /******************************************************************************/
-
-})();
 

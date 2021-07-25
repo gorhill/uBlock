@@ -23,8 +23,8 @@
 
 /******************************************************************************/
 
-{
-// >>>>> start of local scope
+import { entityFromDomain } from './uri-utils.js';
+import µBlock from './background.js';
 
 /******************************************************************************/
 
@@ -157,7 +157,7 @@ api.apply = function(fctxt, headers) {
     if ( hostname === '' ) { return; }
 
     const domain = fctxt.getDomain();
-    let entity = µb.URI.entityFromDomain(domain);
+    let entity = entityFromDomain(domain);
     if ( entity !== '' ) {
         entity = `${hostname.slice(0, -domain.length)}${entity}`;
     } else {
@@ -218,11 +218,10 @@ api.fromSelfie = function(selfie) {
     filterDB.fromSelfie(selfie);
 };
 
-µb.httpheaderFilteringEngine = api;
-
 /******************************************************************************/
 
-// <<<<< end of local scope
-}
+// Export
+
+µb.httpheaderFilteringEngine = api;
 
 /******************************************************************************/

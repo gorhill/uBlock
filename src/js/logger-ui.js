@@ -25,7 +25,8 @@
 
 /******************************************************************************/
 
-(( ) => {
+import globals from './globals.js';
+import { hostnameFromURI } from './uri-utils.js';
 
 /******************************************************************************/
 
@@ -33,7 +34,7 @@
 //       accumulated over time.
 
 const messaging = vAPI.messaging;
-const logger = self.logger = { ownerId: Date.now() };
+const logger = globals.logger = { ownerId: Date.now() };
 const logDate = new Date();
 const logDateTimezoneOffset = logDate.getTimezoneOffset() * 60000;
 const loggerEntries = [];
@@ -1677,8 +1678,8 @@ const reloadTab = function(ev) {
         const aliasURL = text ? aliasURLFromID(text) : '';
         if ( aliasURL !== '' ) {
             rows[8].children[1].textContent =
-                vAPI.hostnameFromURI(aliasURL) + ' \u21d2\n\u2003' +
-                vAPI.hostnameFromURI(canonicalURL);
+                hostnameFromURI(aliasURL) + ' \u21d2\n\u2003' +
+                hostnameFromURI(canonicalURL);
             rows[9].children[1].textContent = aliasURL;
         } else {
             rows[8].style.display = 'none';
@@ -2891,5 +2892,3 @@ if ( self.location.search.includes('popup=1') ) {
 }
 
 /******************************************************************************/
-
-})();

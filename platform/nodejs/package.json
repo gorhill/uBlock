@@ -1,0 +1,25 @@
+{
+  "name": "uBO-snfe",
+  "version": "0.1.0",
+  "description": "To create a working instance of uBlock's static network filtering engine",
+  "type": "module",
+  "main": "main.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gorhill/uBlock.git"
+  },
+  "keywords": [
+    "uBlock",
+    "uBO",
+    "adblock"
+  ],
+  "author": "Raymond Hill",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/gorhill/uBlock/issues"
+  },
+  "homepage": "https://github.com/gorhill/uBlock#readme"
+}

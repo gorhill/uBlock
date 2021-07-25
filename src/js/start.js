@@ -23,6 +23,10 @@
 
 /******************************************************************************/
 
+import µBlock from './background.js';
+
+/******************************************************************************/
+
 // Load all: executed once.
 
 (async ( ) => {
@@ -33,7 +37,6 @@ const µb = µBlock;
 /******************************************************************************/
 
 vAPI.app.onShutdown = function() {
-    const µb = µBlock;
     µb.staticFilteringReverseLookup.shutdown();
     µb.assets.updateStop();
     µb.staticNetFilteringEngine.reset();
@@ -317,7 +320,7 @@ try {
     }
 
     if ( µb.hiddenSettings.disableWebAssembly !== true ) {
-        µb.staticNetFilteringEngine.enableWASM().then(( ) => {
+        µb.staticNetFilteringEngine.enableWASM('/js').then(( ) => {
             log.info(`WASM modules ready ${Date.now()-vAPI.T0} ms after launch`);
         });
     }
@@ -445,7 +448,7 @@ if (
 browser.runtime.onUpdateAvailable.addListener(details => {
     const toInt = vAPI.app.intFromVersion;
     if (
-        µBlock.hiddenSettings.extensionUpdateForceReload === true ||
+        µb.hiddenSettings.extensionUpdateForceReload === true ||
         toInt(details.version) <= toInt(vAPI.app.version)
     ) {
         vAPI.app.restart();

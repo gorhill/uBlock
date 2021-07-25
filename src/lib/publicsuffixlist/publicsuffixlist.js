@@ -16,6 +16,8 @@
 /* jshint browser:true, esversion:6, laxbreak:true, undef:true, unused:true */
 /* globals WebAssembly, console, exports:true, module */
 
+'use strict';
+
 /*******************************************************************************
 
     Reference:
@@ -44,8 +46,6 @@
 
 (function(context) {
 // >>>>>>>> start of anonymous namespace
-
-'use strict';
 
 /*******************************************************************************
 
@@ -81,13 +81,11 @@ let hostnameArg = EMPTY_STRING;
 /******************************************************************************/
 
 const fireChangedEvent = function() {
-    if (
-        window instanceof Object &&
-        window.dispatchEvent instanceof Function &&
-        window.CustomEvent instanceof Function
-    ) {
-        window.dispatchEvent(new CustomEvent('publicSuffixListChanged'));
-    }
+    if ( typeof window !== 'object' ) { return; }
+    if ( window instanceof Object === false ) { return; }
+    if ( window.dispatchEvent instanceof Function === false ) { return; }
+    if ( window.CustomEvent instanceof Function === false ) { return; }
+    window.dispatchEvent(new CustomEvent('publicSuffixListChanged'));
 };
 
 /******************************************************************************/
@@ -531,22 +529,9 @@ const fromSelfie = function(selfie, decoder) {
 // used should the WASM module be unavailable for whatever reason.
 
 const enableWASM = (function() {
-    // The directory from which the current script was fetched should also
-    // contain the related WASM file. The script is fetched from a trusted
-    // location, and consequently so will be the related WASM file.
-    let workingDir;
-    {
-        const url = new URL(document.currentScript.src);
-        const match = /[^\/]+$/.exec(url.pathname);
-        if ( match !== null ) {
-            url.pathname = url.pathname.slice(0, match.index);
-        }
-        workingDir = url.href;
-    }
-
     let memory;
 
-    return function() {
+    return function(modulePath) {
         if ( getPublicSuffixPosWASM instanceof Function ) {
             return Promise.resolve(true);
         }
@@ -568,7 +553,7 @@ const enableWASM = (function() {
         }
 
         return fetch(
-            workingDir + 'wasm/publicsuffixlist.wasm',
+            `${modulePath}/wasm/publicsuffixlist.wasm`,
             { mode: 'same-origin' }
         ).then(response => {
             const pageCount = pslBuffer8 !== undefined
@@ -624,8 +609,6 @@ const disableWASM = function() {
 
 /******************************************************************************/
 
-context = context || window;
-
 context.publicSuffixList = {
     version: '2.0',
     parse,
@@ -644,4 +627,14 @@ if ( typeof module !== 'undefined' ) {
 /******************************************************************************/
 
 // <<<<<<<< end of anonymous namespace
-})(this);
+})(
+    (root => {
+        if ( root !== undefined ) { return root; }
+        // jshint ignore:start
+        if ( typeof self !== 'undefined' ) { return self; }
+        if ( typeof window !== 'undefined' ) { return window; }
+        if ( typeof global !== 'undefined' ) { return global; }
+        // jshint ignore:end
+        throw new Error('unable to locate global object');
+    })(this)
+);

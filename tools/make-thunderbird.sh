@@ -13,7 +13,7 @@ echo "*** uBlock0.thunderbird: copying common files"
 bash ./tools/copy-common-files.sh  $DES
 
 echo "*** uBlock0.firefox: Copying firefox-specific files"
-cp platform/firefox/*.js           $DES/js/
+cp platform/firefox/*.js $DES/js/
 
 echo "*** uBlock0.firefox: Copying thunderbird-specific files"
 cp platform/thunderbird/manifest.json $DES/

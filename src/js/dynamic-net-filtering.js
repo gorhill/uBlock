@@ -19,17 +19,22 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global punycode */
 /* jshint bitwise: false */
 
 'use strict';
 
 /******************************************************************************/
 
-{
-// >>>>> start of local scope
+import '../lib/punycode.js';
+
+import globals from './globals.js';
+import { domainFromHostname } from './uri-utils.js';
+import { LineIterator } from './text-iterators.js';
+import µBlock from './background.js';
 
 /******************************************************************************/
+
+const punycode = globals.punycode;
 
 const supportedDynamicTypes = {
            '3p': true,
@@ -88,8 +93,6 @@ const is3rdParty = function(srcHostname, desHostname) {
     return desHostname.length !== srcDomain.length &&
            desHostname.charAt(desHostname.length - srcDomain.length - 1) !== '.';
 };
-
-const domainFromHostname = µBlock.URI.domainFromHostname;
 
 /******************************************************************************/
 
@@ -429,7 +432,7 @@ const Matrix = class {
 
 
     fromString(text, append) {
-        const lineIter = new µBlock.LineIterator(text);
+        const lineIter = new LineIterator(text);
         if ( append !== true ) { this.reset(); }
         while ( lineIter.eot() === false ) {
             this.addFromRuleParts(lineIter.next().trim().split(/\s+/));
@@ -541,12 +544,9 @@ Matrix.prototype.magicId = 1;
 
 /******************************************************************************/
 
+// Export
+
 µBlock.Firewall = Matrix;
-
-// <<<<< end of local scope
-}
-
-/******************************************************************************/
 
 µBlock.sessionFirewall = new µBlock.Firewall();
 µBlock.permanentFirewall = new µBlock.Firewall();

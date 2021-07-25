@@ -19,8 +19,22 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-
 'use strict';
+
+/******************************************************************************/
+
+import globals from './globals.js';
+
+import {
+    domainFromHostname,
+    hostnameFromURI,
+    originFromURI,
+} from './uri-utils.js';
+
+import { FilteringContext } from './filtering-context.js';
+import { CompiledListWriter } from './static-filtering-io.js';
+import { StaticFilteringParser } from './static-filtering-parser.js';
+import { staticNetFilteringEngine } from './static-net-filtering.js';
 
 /******************************************************************************/
 
@@ -30,201 +44,315 @@ if ( vAPI.webextFlavor === undefined ) {
     vAPI.webextFlavor = { major: 0, soup: new Set([ 'ublock' ]) };
 }
 
+/******************************************************************************/
+
+const hiddenSettingsDefault = {
+    allowGenericProceduralFilters: false,
+    assetFetchTimeout: 30,
+    autoCommentFilterTemplate: '{{date}} {{origin}}',
+    autoUpdateAssetFetchPeriod: 120,
+    autoUpdateDelayAfterLaunch: 180,
+    autoUpdatePeriod: 4,
+    benchmarkDatasetURL: 'unset',
+    blockingProfiles: '11111/#F00 11010/#C0F 11001/#00F 00001',
+    cacheStorageAPI: 'unset',
+    cacheStorageCompression: true,
+    cacheControlForFirefox1376932: 'no-cache, no-store, must-revalidate',
+    cloudStorageCompression: true,
+    cnameIgnoreList: 'unset',
+    cnameIgnore1stParty: true,
+    cnameIgnoreExceptions: true,
+    cnameIgnoreRootDocument: true,
+    cnameMaxTTL: 120,
+    cnameReplayFullURL: false,
+    cnameUncloak: true,
+    cnameUncloakProxied: false,
+    consoleLogLevel: 'unset',
+    debugScriptlets: false,
+    debugScriptletInjector: false,
+    disableWebAssembly: false,
+    extensionUpdateForceReload: false,
+    filterAuthorMode: false,
+    filterOnHeaders: false,
+    loggerPopupType: 'popup',
+    manualUpdateAssetFetchPeriod: 500,
+    popupFontSize: 'unset',
+    popupPanelDisabledSections: 0,
+    popupPanelLockedSections: 0,
+    popupPanelHeightMode: 0,
+    requestJournalProcessPeriod: 1000,
+    selfieAfter: 3,
+    strictBlockingBypassDuration: 120,
+    suspendTabsUntilReady: 'unset',
+    uiPopupConfig: 'undocumented',
+    uiFlavor: 'unset',
+    uiStyles: 'unset',
+    uiTheme: 'unset',
+    updateAssetBypassBrowserCache: false,
+    userResourcesLocation: 'unset',
+};
+
+const userSettingsDefault = {
+    advancedUserEnabled: false,
+    alwaysDetachLogger: true,
+    autoUpdate: true,
+    cloudStorageEnabled: false,
+    cnameUncloakEnabled: true,
+    collapseBlocked: true,
+    colorBlindFriendly: false,
+    contextMenuEnabled: true,
+    dynamicFilteringEnabled: false,
+    externalLists: '',
+    firewallPaneMinimized: true,
+    hyperlinkAuditingDisabled: true,
+    ignoreGenericCosmeticFilters: vAPI.webextFlavor.soup.has('mobile'),
+    importedLists: [],
+    largeMediaSize: 50,
+    parseAllABPHideFilters: true,
+    popupPanelSections: 0b111,
+    prefetchingDisabled: true,
+    requestLogMaxEntries: 1000,
+    showIconBadge: true,
+    tooltipsDisabled: false,
+    webrtcIPAddressHidden: false,
+};
+
+const µBlock = {  // jshint ignore:line
+    userSettingsDefault: userSettingsDefault,
+    userSettings: Object.assign({}, userSettingsDefault),
+
+    hiddenSettingsDefault: hiddenSettingsDefault,
+    hiddenSettingsAdmin: {},
+    hiddenSettings: Object.assign({}, hiddenSettingsDefault),
+
+    noDashboard: false,
+
+    // Features detection.
+    privacySettingsSupported: vAPI.browserSettings instanceof Object,
+    cloudStorageSupported: vAPI.cloud instanceof Object,
+    canFilterResponseData: typeof browser.webRequest.filterResponseData === 'function',
+    canInjectScriptletsNow: vAPI.webextFlavor.soup.has('chromium'),
+
+    // https://github.com/chrisaljoudi/uBlock/issues/180
+    // Whitelist directives need to be loaded once the PSL is available
+    netWhitelist: new Map(),
+    netWhitelistModifyTime: 0,
+    netWhitelistDefault: [
+        'about-scheme',
+        'chrome-extension-scheme',
+        'chrome-scheme',
+        'edge-scheme',
+        'moz-extension-scheme',
+        'opera-scheme',
+        'vivaldi-scheme',
+        'wyciwyg-scheme',   // Firefox's "What-You-Cache-Is-What-You-Get"
+    ],
+
+    localSettings: {
+        blockedRequestCount: 0,
+        allowedRequestCount: 0,
+    },
+    localSettingsLastModified: 0,
+    localSettingsLastSaved: 0,
+
+    // Read-only
+    systemSettings: {
+        compiledMagic: 37,  // Increase when compiled format changes
+        selfieMagic: 37,    // Increase when selfie format changes
+    },
+
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/759#issuecomment-546654501
+    //   The assumption is that cache storage state reflects whether
+    //   compiled or selfie assets are available or not. The properties
+    //   below is to no longer rely on this assumption -- though it's still
+    //   not clear how the assumption could be wrong, and it's still not
+    //   clear whether relying on those properties will really solve the
+    //   issue. It's just an attempt at hardening.
+    compiledFormatChanged: false,
+    selfieIsInvalid: false,
+
+    compiledCosmeticSection: 200,
+    compiledScriptletSection: 300,
+    compiledHTMLSection: 400,
+    compiledHTTPHeaderSection: 500,
+    compiledSentinelSection: 1000,
+    compiledBadSubsection: 1,
+
+    restoreBackupSettings: {
+        lastRestoreFile: '',
+        lastRestoreTime: 0,
+        lastBackupFile: '',
+        lastBackupTime: 0,
+    },
+
+    commandShortcuts: new Map(),
+
+    // Allows to fully customize uBO's assets, typically set through admin
+    // settings. The content of 'assets.json' will also tell which filter
+    // lists to enable by default when uBO is first installed.
+    assetsBootstrapLocation: undefined,
+
+    userFiltersPath: 'user-filters',
+    pslAssetKey: 'public_suffix_list.dat',
+
+    selectedFilterLists: [],
+    availableFilterLists: {},
+    badLists: new Map(),
+
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/974
+    //   This can be used to defer filtering decision-making.
+    readyToFilter: false,
+
+    pageStores: new Map(),
+    pageStoresToken: 0,
+
+    storageQuota: vAPI.storage.QUOTA_BYTES,
+    storageUsed: 0,
+
+    noopFunc: function(){},
+
+    apiErrorCount: 0,
+
+    maybeGoodPopup: {
+        tabId: 0,
+        url: '',
+    },
+
+    epickerArgs: {
+        eprom: null,
+        mouse: false,
+        target: '',
+        zap: false,
+    },
+
+    scriptlets: {},
+
+    cspNoInlineScript: "script-src 'unsafe-eval' * blob: data:",
+    cspNoScripting: 'script-src http: https:',
+    cspNoInlineFont: 'font-src *',
+
+    liveBlockingProfiles: [],
+    blockingProfileColorCache: new Map(),
+};
+
+µBlock.domainFromHostname = domainFromHostname;
+µBlock.hostnameFromURI = hostnameFromURI;
+
+µBlock.FilteringContext = class extends FilteringContext {
+    duplicate() {
+        return (new µBlock.FilteringContext(this));
+    }
+
+    fromTabId(tabId) {
+        const tabContext = µBlock.tabContextManager.mustLookup(tabId);
+        this.tabOrigin = tabContext.origin;
+        this.tabHostname = tabContext.rootHostname;
+        this.tabDomain = tabContext.rootDomain;
+        this.tabId = tabContext.tabId;
+        return this;
+    }
+
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/459
+    //   In case of a request for frame and if ever no context is specified,
+    //   assume the origin of the context is the same as the request itself.
+    fromWebrequestDetails(details) {
+        const tabId = details.tabId;
+        this.type = details.type;
+        if ( this.itype === this.MAIN_FRAME && tabId > 0 ) {
+            µBlock.tabContextManager.push(tabId, details.url);
+        }
+        this.fromTabId(tabId); // Must be called AFTER tab context management
+        this.realm = '';
+        this.id = details.requestId;
+        this.setURL(details.url);
+        this.aliasURL = details.aliasURL || undefined;
+        if ( this.itype !== this.SUB_FRAME ) {
+            this.docId = details.frameId;
+            this.frameId = -1;
+        } else {
+            this.docId = details.parentFrameId;
+            this.frameId = details.frameId;
+        }
+        if ( this.tabId > 0 ) {
+            if ( this.docId === 0 ) {
+                this.docOrigin = this.tabOrigin;
+                this.docHostname = this.tabHostname;
+                this.docDomain = this.tabDomain;
+            } else if ( details.documentUrl !== undefined ) {
+                this.setDocOriginFromURL(details.documentUrl);
+            } else {
+                const pageStore = µBlock.pageStoreFromTabId(this.tabId);
+                const docStore = pageStore && pageStore.getFrameStore(this.docId);
+                if ( docStore ) {
+                    this.setDocOriginFromURL(docStore.rawURL);
+                } else {
+                    this.setDocOrigin(this.tabOrigin);
+                }
+            }
+        } else if ( details.documentUrl !== undefined ) {
+            const origin = originFromURI(
+                µBlock.normalizeTabURL(0, details.documentUrl)
+            );
+            this.setDocOrigin(origin).setTabOrigin(origin);
+        } else if ( this.docId === -1 || (this.itype & this.FRAME_ANY) !== 0 ) {
+            const origin = originFromURI(this.url);
+            this.setDocOrigin(origin).setTabOrigin(origin);
+        } else {
+            this.setDocOrigin(this.tabOrigin);
+        }
+        this.redirectURL = undefined;
+        this.filter = undefined;
+        return this;
+    }
+
+    getTabOrigin() {
+        if ( this.tabOrigin === undefined ) {
+            const tabContext = µBlock.tabContextManager.mustLookup(this.tabId);
+            this.tabOrigin = tabContext.origin;
+            this.tabHostname = tabContext.rootHostname;
+            this.tabDomain = tabContext.rootDomain;
+        }
+        return super.getTabOrigin();
+    }
+
+    getTabHostname() {
+        if ( this.tabHostname === undefined ) {
+            this.tabHostname = hostnameFromURI(this.getTabOrigin());
+        }
+        return super.getTabHostname();
+    }
+
+    toLogger() {
+        this.tstamp = Date.now();
+        if ( this.domain === undefined ) {
+            void this.getDomain();
+        }
+        if ( this.docDomain === undefined ) {
+            void this.getDocDomain();
+        }
+        if ( this.tabDomain === undefined ) {
+            void this.getTabDomain();
+        }
+        const logger = µBlock.logger;
+        const filters = this.filter;
+        // Many filters may have been applied to the current context
+        if ( Array.isArray(filters) === false ) {
+            return logger.writeOne(this);
+        }
+        for ( const filter of filters ) {
+            this.filter = filter;
+            logger.writeOne(this);
+        }
+    }
+};
+
+µBlock.filteringContext = new µBlock.FilteringContext();
+µBlock.CompiledListWriter = CompiledListWriter;
+µBlock.StaticFilteringParser = StaticFilteringParser;
+µBlock.staticNetFilteringEngine = staticNetFilteringEngine;
+
+globals.µBlock = µBlock;
 
 /******************************************************************************/
 
-const µBlock = (( ) => { // jshint ignore:line
-
-    const hiddenSettingsDefault = {
-        allowGenericProceduralFilters: false,
-        assetFetchTimeout: 30,
-        autoCommentFilterTemplate: '{{date}} {{origin}}',
-        autoUpdateAssetFetchPeriod: 120,
-        autoUpdateDelayAfterLaunch: 180,
-        autoUpdatePeriod: 4,
-        benchmarkDatasetURL: 'unset',
-        blockingProfiles: '11111/#F00 11010/#C0F 11001/#00F 00001',
-        cacheStorageAPI: 'unset',
-        cacheStorageCompression: true,
-        cacheControlForFirefox1376932: 'no-cache, no-store, must-revalidate',
-        cloudStorageCompression: true,
-        cnameIgnoreList: 'unset',
-        cnameIgnore1stParty: true,
-        cnameIgnoreExceptions: true,
-        cnameIgnoreRootDocument: true,
-        cnameMaxTTL: 120,
-        cnameReplayFullURL: false,
-        cnameUncloak: true,
-        cnameUncloakProxied: false,
-        consoleLogLevel: 'unset',
-        debugScriptlets: false,
-        debugScriptletInjector: false,
-        disableWebAssembly: false,
-        extensionUpdateForceReload: false,
-        filterAuthorMode: false,
-        filterOnHeaders: false,
-        loggerPopupType: 'popup',
-        manualUpdateAssetFetchPeriod: 500,
-        popupFontSize: 'unset',
-        popupPanelDisabledSections: 0,
-        popupPanelLockedSections: 0,
-        popupPanelHeightMode: 0,
-        requestJournalProcessPeriod: 1000,
-        selfieAfter: 3,
-        strictBlockingBypassDuration: 120,
-        suspendTabsUntilReady: 'unset',
-        uiPopupConfig: 'undocumented',
-        uiFlavor: 'unset',
-        uiStyles: 'unset',
-        uiTheme: 'unset',
-        updateAssetBypassBrowserCache: false,
-        userResourcesLocation: 'unset',
-    };
-
-    const userSettingsDefault = {
-        advancedUserEnabled: false,
-        alwaysDetachLogger: true,
-        autoUpdate: true,
-        cloudStorageEnabled: false,
-        cnameUncloakEnabled: true,
-        collapseBlocked: true,
-        colorBlindFriendly: false,
-        contextMenuEnabled: true,
-        dynamicFilteringEnabled: false,
-        externalLists: '',
-        firewallPaneMinimized: true,
-        hyperlinkAuditingDisabled: true,
-        ignoreGenericCosmeticFilters: vAPI.webextFlavor.soup.has('mobile'),
-        importedLists: [],
-        largeMediaSize: 50,
-        parseAllABPHideFilters: true,
-        popupPanelSections: 0b111,
-        prefetchingDisabled: true,
-        requestLogMaxEntries: 1000,
-        showIconBadge: true,
-        tooltipsDisabled: false,
-        webrtcIPAddressHidden: false,
-    };
-
-    return {
-        userSettingsDefault: userSettingsDefault,
-        userSettings: Object.assign({}, userSettingsDefault),
-
-        hiddenSettingsDefault: hiddenSettingsDefault,
-        hiddenSettingsAdmin: {},
-        hiddenSettings: Object.assign({}, hiddenSettingsDefault),
-
-        noDashboard: false,
-
-        // Features detection.
-        privacySettingsSupported: vAPI.browserSettings instanceof Object,
-        cloudStorageSupported: vAPI.cloud instanceof Object,
-        canFilterResponseData: typeof browser.webRequest.filterResponseData === 'function',
-        canInjectScriptletsNow: vAPI.webextFlavor.soup.has('chromium'),
-
-        // https://github.com/chrisaljoudi/uBlock/issues/180
-        // Whitelist directives need to be loaded once the PSL is available
-        netWhitelist: new Map(),
-        netWhitelistModifyTime: 0,
-        netWhitelistDefault: [
-            'about-scheme',
-            'chrome-extension-scheme',
-            'chrome-scheme',
-            'edge-scheme',
-            'moz-extension-scheme',
-            'opera-scheme',
-            'vivaldi-scheme',
-            'wyciwyg-scheme',   // Firefox's "What-You-Cache-Is-What-You-Get"
-        ],
-
-        localSettings: {
-            blockedRequestCount: 0,
-            allowedRequestCount: 0,
-        },
-        localSettingsLastModified: 0,
-        localSettingsLastSaved: 0,
-
-        // Read-only
-        systemSettings: {
-            compiledMagic: 37,  // Increase when compiled format changes
-            selfieMagic: 37,    // Increase when selfie format changes
-        },
-
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/759#issuecomment-546654501
-        //   The assumption is that cache storage state reflects whether
-        //   compiled or selfie assets are available or not. The properties
-        //   below is to no longer rely on this assumption -- though it's still
-        //   not clear how the assumption could be wrong, and it's still not
-        //   clear whether relying on those properties will really solve the
-        //   issue. It's just an attempt at hardening.
-        compiledFormatChanged: false,
-        selfieIsInvalid: false,
-
-        compiledNetworkSection: 100,
-        compiledCosmeticSection: 200,
-        compiledScriptletSection: 300,
-        compiledHTMLSection: 400,
-        compiledHTTPHeaderSection: 500,
-        compiledSentinelSection: 1000,
-        compiledBadSubsection: 1,
-
-        restoreBackupSettings: {
-            lastRestoreFile: '',
-            lastRestoreTime: 0,
-            lastBackupFile: '',
-            lastBackupTime: 0,
-        },
-
-        commandShortcuts: new Map(),
-
-        // Allows to fully customize uBO's assets, typically set through admin
-        // settings. The content of 'assets.json' will also tell which filter
-        // lists to enable by default when uBO is first installed.
-        assetsBootstrapLocation: undefined,
-
-        userFiltersPath: 'user-filters',
-        pslAssetKey: 'public_suffix_list.dat',
-
-        selectedFilterLists: [],
-        availableFilterLists: {},
-        badLists: new Map(),
-
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/974
-        //   This can be used to defer filtering decision-making.
-        readyToFilter: false,
-
-        pageStores: new Map(),
-        pageStoresToken: 0,
-
-        storageQuota: vAPI.storage.QUOTA_BYTES,
-        storageUsed: 0,
-
-        noopFunc: function(){},
-
-        apiErrorCount: 0,
-
-        maybeGoodPopup: {
-            tabId: 0,
-            url: '',
-        },
-
-        epickerArgs: {
-            eprom: null,
-            mouse: false,
-            target: '',
-            zap: false,
-        },
-
-        scriptlets: {},
-
-        cspNoInlineScript: "script-src 'unsafe-eval' * blob: data:",
-        cspNoScripting: 'script-src http: https:',
-        cspNoInlineFont: 'font-src *',
-
-        liveBlockingProfiles: [],
-        blockingProfileColorCache: new Map(),
-    };
-
-})();
-
-/******************************************************************************/
+export default µBlock;

@@ -100,59 +100,6 @@ vAPI.webextFlavor = {
 
 /******************************************************************************/
 
-{
-    const punycode = self.punycode;
-    const reCommonHostnameFromURL  = /^https?:\/\/([0-9a-z_][0-9a-z._-]*[0-9a-z])\//;
-    const reAuthorityFromURI       = /^(?:[^:\/?#]+:)?(\/\/[^\/?#]+)/;
-    const reHostFromNakedAuthority = /^[0-9a-z._-]+[0-9a-z]$/i;
-    const reHostFromAuthority      = /^(?:[^@]*@)?([^:]+)(?::\d*)?$/;
-    const reIPv6FromAuthority      = /^(?:[^@]*@)?(\[[0-9a-f:]+\])(?::\d*)?$/i;
-    const reMustNormalizeHostname  = /[^0-9a-z._-]/;
-
-    vAPI.hostnameFromURI = function(uri) {
-        let matches = reCommonHostnameFromURL.exec(uri);
-        if ( matches !== null ) { return matches[1]; }
-        matches = reAuthorityFromURI.exec(uri);
-        if ( matches === null ) { return ''; }
-        const authority = matches[1].slice(2);
-        if ( reHostFromNakedAuthority.test(authority) ) {
-            return authority.toLowerCase();
-        }
-        matches = reHostFromAuthority.exec(authority);
-        if ( matches === null ) {
-            matches = reIPv6FromAuthority.exec(authority);
-            if ( matches === null ) { return ''; }
-        }
-        let hostname = matches[1];
-        while ( hostname.endsWith('.') ) {
-            hostname = hostname.slice(0, -1);
-        }
-        if ( reMustNormalizeHostname.test(hostname) ) {
-            hostname = punycode.toASCII(hostname.toLowerCase());
-        }
-        return hostname;
-    };
-
-    const reHostnameFromNetworkURL =
-        /^(?:http|ws|ftp)s?:\/\/([0-9a-z_][0-9a-z._-]*[0-9a-z])(?::\d+)?\//;
-
-    vAPI.hostnameFromNetworkURL = function(url) {
-        const matches = reHostnameFromNetworkURL.exec(url);
-        return matches !== null ? matches[1] : '';
-    };
-
-    const psl = self.publicSuffixList;
-    const reIPAddressNaive = /^\d+\.\d+\.\d+\.\d+$|^\[[\da-zA-Z:]+\]$/;
-
-    vAPI.domainFromHostname = function(hostname) {
-        return reIPAddressNaive.test(hostname)
-            ? hostname
-            : psl.getDomain(hostname);
-    };
-}
-
-/******************************************************************************/
-
 vAPI.download = function(details) {
     if ( !details.url ) { return; }
     const a = document.createElement('a');

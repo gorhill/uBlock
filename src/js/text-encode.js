@@ -23,6 +23,10 @@
 
 /******************************************************************************/
 
+import µBlock from './background.js';
+
+/******************************************************************************/
+
 µBlock.textEncode = (function() {
 
     if ( µBlock.canFilterResponseData !== true ) { return; }

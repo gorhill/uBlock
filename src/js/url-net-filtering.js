@@ -23,20 +23,19 @@
 
 /******************************************************************************/
 
-// The purpose of log filtering is to create ad hoc filtering rules, to
-// diagnose and assist in the creation of custom filters.
-
-µBlock.URLNetFiltering = (( ) => {
+import { LineIterator } from './text-iterators.js';
+import µBlock from './background.js';
 
 /*******************************************************************************
 
-buckets: map of [hostname + type]
-     bucket: array of rule entries, sorted from shorter to longer url
-rule entry: { url, action }
+    The purpose of log filtering is to create ad hoc filtering rules, to
+    diagnose and assist in the creation of custom filters.
+
+    buckets: map of [hostname + type]
+         bucket: array of rule entries, sorted from shorter to longer url
+    rule entry: { url, action }
 
 *******************************************************************************/
-
-/******************************************************************************/
 
 const actionToNameMap = {
     1: 'block',
@@ -330,7 +329,7 @@ URLNetFiltering.prototype.toString = function() {
 
 URLNetFiltering.prototype.fromString = function(text) {
     this.reset();
-    const lineIter = new µBlock.LineIterator(text);
+    const lineIter = new LineIterator(text);
     while ( lineIter.eot() === false ) {
         this.addFromRuleParts(lineIter.next().trim().split(/\s+/));
     }
@@ -371,15 +370,11 @@ URLNetFiltering.prototype.removeFromRuleParts = function(parts) {
 
 /******************************************************************************/
 
-return URLNetFiltering;
+// Export
 
-/******************************************************************************/
+µBlock.URLNetFiltering = URLNetFiltering;
 
-})();
-
-/******************************************************************************/
-
-µBlock.sessionURLFiltering = new µBlock.URLNetFiltering();
-µBlock.permanentURLFiltering = new µBlock.URLNetFiltering();
+µBlock.sessionURLFiltering = new URLNetFiltering();
+µBlock.permanentURLFiltering = new URLNetFiltering();
 
 /******************************************************************************/

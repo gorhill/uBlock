@@ -19,9 +19,12 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+'use strict';
+
 /******************************************************************************/
 
-'use strict';
+import { hostnameFromURI } from './uri-utils.js';
+import µBlock from './background.js';
 
 /******************************************************************************/
 
@@ -71,11 +74,11 @@ const relaxBlockingMode = (( ) => {
         if ( tab instanceof Object === false || tab.id <= 0 ) { return; }
 
         const µb = µBlock;
-        const normalURL = µb.normalizePageURL(tab.id, tab.url);
+        const normalURL = µb.normalizeTabURL(tab.id, tab.url);
 
         if ( µb.getNetFilteringSwitch(normalURL) === false ) { return; }
 
-        const hn = µb.URI.hostnameFromURI(normalURL);
+        const hn = hostnameFromURI(normalURL);
         const curProfileBits = µb.blockingModeFromHostname(hn);
         let newProfileBits;
         for ( const profile of µb.liveBlockingProfiles ) {

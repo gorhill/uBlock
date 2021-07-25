@@ -23,11 +23,6 @@
 
 'use strict';
 
-// *****************************************************************************
-// start of local namespace
-
-{
-
 /*******************************************************************************
 
   The original prototype was to develop an idea I had about using jump indices
@@ -461,10 +456,10 @@ const HNTrieContainer = class {
         return n === hr || hn.charCodeAt(hl-1) === 0x2E /* '.' */;
     }
 
-    async enableWASM() {
+    async enableWASM(modulePath) {
         if ( typeof WebAssembly !== 'object' ) { return false; }
         if ( this.wasmMemory instanceof WebAssembly.Memory ) { return true; }
-        const module = await getWasmModule();
+        const module = await getWasmModule(modulePath);
         if ( module instanceof WebAssembly.Module === false ) { return false; }
         const memory = new WebAssembly.Memory({ initial: 2 });
         const instance = await WebAssembly.instantiate(module, {
@@ -772,20 +767,7 @@ HNTrieContainer.prototype.HNTrieRef.prototype.needle = '';
 const getWasmModule = (( ) => {
     let wasmModulePromise;
 
-    // The directory from which the current script was fetched should also
-    // contain the related WASM file. The script is fetched from a trusted
-    // location, and consequently so will be the related WASM file.
-    let workingDir;
-    {
-        const url = new URL(document.currentScript.src);
-        const match = /[^\/]+$/.exec(url.pathname);
-        if ( match !== null ) {
-            url.pathname = url.pathname.slice(0, match.index);
-        }
-        workingDir = url.href;
-    }
-
-    return async function() {
+    return async function(modulePath) {
         if ( wasmModulePromise instanceof Promise ) {
             return wasmModulePromise;
         }
@@ -809,7 +791,7 @@ const getWasmModule = (( ) => {
         if ( uint8s[0] !== 1 ) { return; }
 
         wasmModulePromise = fetch(
-            workingDir + 'wasm/hntrie.wasm',
+            `${modulePath}/wasm/hntrie.wasm`,
             { mode: 'same-origin' }
         ).then(
             WebAssembly.compileStreaming
@@ -823,9 +805,4 @@ const getWasmModule = (( ) => {
 
 /******************************************************************************/
 
-µBlock.HNTrieContainer = HNTrieContainer;
-
-// end of local namespace
-// *****************************************************************************
-
-}
+export { HNTrieContainer };

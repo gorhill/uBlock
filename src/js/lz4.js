@@ -23,6 +23,10 @@
 
 'use strict';
 
+/******************************************************************************/
+
+import µBlock from './background.js';
+
 /*******************************************************************************
 
     Experimental support for storage compression.
@@ -31,9 +35,6 @@
     https://github.com/uBlockOrigin/uBlock-issues/issues/141#issuecomment-407737186
 
 **/
-
-{
-// >>>> Start of private namespace
 
 /******************************************************************************/
 
@@ -198,6 +199,3 @@ const decodeValue = function(inputArray) {
 };
 
 /******************************************************************************/
-
-// <<<< End of private namespace
-}

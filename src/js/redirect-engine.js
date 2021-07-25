@@ -23,9 +23,9 @@
 
 /******************************************************************************/
 
-µBlock.redirectEngine = (( ) => {
+import { LineIterator } from './text-iterators.js';
+import µBlock from './background.js';
 
-/******************************************************************************/
 /******************************************************************************/
 
 // The resources referenced below are found in ./web_accessible_resources/
@@ -356,7 +356,7 @@ RedirectEngine.prototype.resourceContentFromName = function(name, mime) {
 //   Append newlines to raw text to ensure processing of trailing resource.
 
 RedirectEngine.prototype.resourcesFromString = function(text) {
-    const lineIter = new µBlock.LineIterator(
+    const lineIter = new LineIterator(
         removeTopCommentBlock(text) + '\n\n'
     );
     const reNonEmptyLine = /\S/;
@@ -584,10 +584,9 @@ RedirectEngine.prototype.invalidateResourcesSelfie = function() {
 };
 
 /******************************************************************************/
+
+// Export
+
+µBlock.redirectEngine = new RedirectEngine();
+
 /******************************************************************************/
-
-return new RedirectEngine();
-
-/******************************************************************************/
-
-})();

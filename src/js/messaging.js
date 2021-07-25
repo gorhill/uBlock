@@ -19,10 +19,27 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/******************************************************************************/
+'use strict';
+
 /******************************************************************************/
 
-'use strict';
+import '../lib/publicsuffixlist/publicsuffixlist.js';
+import '../lib/punycode.js';
+
+import globals from './globals.js';
+
+import {
+    domainFromHostname,
+    domainFromURI,
+    entityFromDomain,
+    hostnameFromURI,
+    isNetworkURI,
+} from './uri-utils.js';
+
+import { StaticFilteringParser } from './static-filtering-parser.js';
+import µBlock from './background.js';
+
+/******************************************************************************/
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/710
 //   Listeners have a name and a "privileged" status.
@@ -51,12 +68,11 @@ const clickToLoad = function(request, sender) {
 };
 
 const getDomainNames = function(targets) {
-    const µburi = µb.URI;
     return targets.map(target => {
         if ( typeof target !== 'string' ) { return ''; }
         return target.indexOf('/') !== -1
-            ? µburi.domainFromURI(target) || ''
-            : µburi.domainFromHostname(target) || target;
+            ? domainFromURI(target) || ''
+            : domainFromHostname(target) || target;
     });
 };
 
@@ -98,8 +114,13 @@ const onMessage = function(request, sender, callback) {
         return;
 
     case 'sfneBenchmark':
-        µb.staticNetFilteringEngine.benchmark().then(result => {
-            callback(result);
+        µb.loadBenchmarkDataset().then(requests => {
+            µb.staticNetFilteringEngine.benchmark(
+                requests,
+                { redirectEngine: µb.redirectEngine }
+            ).then(result => {
+                callback(result);
+            });
         });
         return;
 
@@ -244,7 +265,7 @@ const getHostnameDict = function(hostnameDetailsMap, out) {
     for ( const hnDetails of hostnameDetailsMap.values() ) {
         const hostname = hnDetails.hostname;
         if ( hnDict[hostname] !== undefined ) { continue; }
-        const domain = vAPI.domainFromHostname(hostname) || hostname;
+        const domain = domainFromHostname(hostname) || hostname;
         const dnDetails =
             hostnameDetailsMap.get(domain) || { counts: createCounts() };
         if ( hnDict[domain] === undefined ) {
@@ -336,7 +357,7 @@ const popupDataFromTabId = function(tabId, tabTitle) {
         getHostnameDict(pageStore.getAllHostnameDetails(), r);
         r.contentLastModified = pageStore.contentLastModified;
         getFirewallRules(rootHostname, r);
-        r.canElementPicker = µb.URI.isNetworkURI(r.rawURL);
+        r.canElementPicker = isNetworkURI(r.rawURL);
         r.noPopups = µb.sessionSwitches.evaluateZ(
             'no-popups',
             rootHostname
@@ -568,9 +589,9 @@ const retrieveContentScriptParameters = async function(sender, request) {
 
     request.tabId = tabId;
     request.frameId = frameId;
-    request.hostname = µb.URI.hostnameFromURI(request.url);
-    request.domain = µb.URI.domainFromHostname(request.hostname);
-    request.entity = µb.URI.entityFromDomain(request.domain);
+    request.hostname = hostnameFromURI(request.url);
+    request.domain = domainFromHostname(request.hostname);
+    request.entity = entityFromDomain(request.domain);
 
     response.specificCosmeticFilters =
         µb.cosmeticFilteringEngine.retrieveSpecificSelectors(request, response);
@@ -597,7 +618,7 @@ const retrieveContentScriptParameters = async function(sender, request) {
     //   effective URL is available here in `request.url`.
     if (
         µb.canInjectScriptletsNow === false ||
-        µb.URI.isNetworkURI(sender.frameURL) === false
+        isNetworkURI(sender.frameURL) === false
     ) {
         response.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
     }
@@ -1017,16 +1038,15 @@ const resetUserData = async function() {
 
 // Filter lists
 const prepListEntries = function(entries) {
-    const µburi = µb.URI;
     for ( const k in entries ) {
         if ( entries.hasOwnProperty(k) === false ) { continue; }
         const entry = entries[k];
         if ( typeof entry.supportURL === 'string' && entry.supportURL !== '' ) {
-            entry.supportName = µburi.hostnameFromURI(entry.supportURL);
+            entry.supportName = hostnameFromURI(entry.supportURL);
         } else if ( typeof entry.homeURL === 'string' && entry.homeURL !== '' ) {
-            const hn = µburi.hostnameFromURI(entry.homeURL);
+            const hn = hostnameFromURI(entry.homeURL);
             entry.supportURL = `http://${hn}/`;
-            entry.supportName = µburi.domainFromHostname(hn);
+            entry.supportName = domainFromHostname(hn);
         }
     }
 };
@@ -1059,7 +1079,7 @@ const getLists = async function(callback) {
 
 // TODO: also return origin of embedded frames?
 const getOriginHints = function() {
-    const punycode = self.punycode;
+    const punycode = globals.punycode;
     const out = new Set();
     for ( const tabId of µb.pageStores.keys() ) {
         if ( tabId === -1 ) { continue; }
@@ -1088,7 +1108,7 @@ const getRules = function() {
                 µb.sessionSwitches.toArray(),
                 µb.sessionURLFiltering.toArray()
             ),
-        pslSelfie: self.publicSuffixList.toSelfie(),
+        pslSelfie: globals.publicSuffixList.toSelfie(),
     };
 };
 
@@ -1393,7 +1413,7 @@ const getURLFilteringData = function(details) {
 };
 
 const compileTemporaryException = function(filter) {
-    const parser = new vAPI.StaticFilteringParser();
+    const parser = new StaticFilteringParser();
     parser.analyze(filter);
     if ( parser.shouldDiscard() ) { return; }
     return µb.staticExtFilteringEngine.compileTemporary(parser);

@@ -25,8 +25,7 @@
 
 /******************************************************************************/
 
-{
-// >>>>> start of local scope
+import { StaticFilteringParser } from '../static-filtering-parser.js';
 
 /******************************************************************************/
 
@@ -40,9 +39,6 @@ let hintHelperRegistered = false;
 /******************************************************************************/
 
 CodeMirror.defineMode('ubo-static-filtering', function() {
-    const StaticFilteringParser = typeof vAPI === 'object'
-        ? vAPI.StaticFilteringParser
-        : self.StaticFilteringParser;
     if ( StaticFilteringParser instanceof Object === false ) { return; }
     const parser = new StaticFilteringParser({ interactive: true });
 
@@ -417,9 +413,6 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
 //   https://codemirror.net/demo/complete.html
 
 const initHints = function() {
-    const StaticFilteringParser = typeof vAPI === 'object'
-        ? vAPI.StaticFilteringParser
-        : self.StaticFilteringParser;
     if ( StaticFilteringParser instanceof Object === false ) { return; }
 
     const parser = new StaticFilteringParser();
@@ -799,11 +792,6 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
             };
         });
     });
-}
-
-/******************************************************************************/
-
-// <<<<< end of local scope
 }
 
 /******************************************************************************/

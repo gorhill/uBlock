@@ -13,12 +13,12 @@ bash ./tools/copy-common-files.sh  $DES
 
 # Chromium-specific
 echo "*** uBlock0.opera: Copying chromium-specific files"
-cp platform/chromium/*.js          $DES/js/
-cp platform/chromium/*.html        $DES/
+cp platform/chromium/*.js   $DES/js/
+cp platform/chromium/*.html $DES/
 
 # Opera-specific
 echo "*** uBlock0.opera: Copying opera-specific files"
-cp platform/opera/manifest.json    $DES/
+cp platform/opera/manifest.json $DES/
 
 rm -r $DES/_locales/az
 rm -r $DES/_locales/cv

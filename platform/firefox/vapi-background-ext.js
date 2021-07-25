@@ -25,29 +25,16 @@
 
 /******************************************************************************/
 
+import {
+    domainFromHostname,
+    hostnameFromNetworkURL,
+} from './uri-utils.js';
+
+/******************************************************************************/
+
 (( ) => {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/407
     if ( vAPI.webextFlavor.soup.has('firefox') === false ) { return; }
-
-    // https://github.com/gorhill/uBlock/issues/2950
-    // Firefox 56 does not normalize URLs to ASCII, uBO must do this itself.
-    // https://bugzilla.mozilla.org/show_bug.cgi?id=945240
-    const evalMustPunycode = ( ) => {
-        return vAPI.webextFlavor.soup.has('firefox') &&
-               vAPI.webextFlavor.major < 57;
-    };
-
-    let mustPunycode = evalMustPunycode();
-
-    // The real actual webextFlavor value may not be set in stone, so listen
-    // for possible future changes.
-    window.addEventListener('webextFlavor', ( ) => {
-        mustPunycode = evalMustPunycode();
-    }, { once: true });
-
-    const punycode = self.punycode;
-    const reAsciiHostname  = /^https?:\/\/[0-9a-z_.:@-]+[/?#]/;
-    const parsedURL = new URL('about:blank');
 
     // Canonical name-uncloaking feature.
     let cnameUncloakEnabled = browser.dns instanceof Object;
@@ -144,14 +131,6 @@
             }
         }
         normalizeDetails(details) {
-            if ( mustPunycode && !reAsciiHostname.test(details.url) ) {
-                parsedURL.href = details.url;
-                details.url = details.url.replace(
-                    parsedURL.hostname,
-                    punycode.toASCII(parsedURL.hostname)
-                );
-            }
-
             const type = details.type;
 
             if ( type === 'imageset' ) {
@@ -231,7 +210,7 @@
             if (
                 cname !== '' &&
                 this.cnameIgnore1stParty &&
-                vAPI.domainFromHostname(cname) === vAPI.domainFromHostname(hn)
+                domainFromHostname(cname) === domainFromHostname(hn)
             ) {
                 cname = '';
             }
@@ -284,7 +263,7 @@
             ) {
                 return;
             }
-            const hn = vAPI.hostnameFromNetworkURL(details.url);
+            const hn = hostnameFromNetworkURL(details.url);
             const cname = this.cnames.get(hn);
             if ( cname === '' ) { return; }
             if ( cname !== undefined ) {

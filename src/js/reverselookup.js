@@ -400,8 +400,8 @@ if (
         if ( typeof rawFilter !== 'string' || rawFilter === '' ) { return; }
 
         const µb = µBlock;
-        const writer = new µb.CompiledLineIO.Writer();
-        const parser = new vAPI.StaticFilteringParser();
+        const writer = new µb.CompiledListWriter();
+        const parser = new µb.StaticFilteringParser();
         parser.setMaxTokenLength(µb.staticNetFilteringEngine.MAX_TOKEN_LENGTH);
         parser.analyze(rawFilter);
 
@@ -435,20 +435,20 @@ if (
         await initWorker();
 
         const id = messageId++;
-        const hostname = µBlock.URI.hostnameFromURI(details.url);
+        const hostname = µBlock.hostnameFromURI(details.url);
 
         worker.postMessage({
             what: 'fromCosmeticFilter',
             id: id,
-            domain: µBlock.URI.domainFromHostname(hostname),
+            domain: µBlock.domainFromHostname(hostname),
             hostname: hostname,
             ignoreGeneric:
-                µBlock.staticNetFilteringEngine.matchStringReverse(
+                µBlock.staticNetFilteringEngine.matchRequestReverse(
                     'generichide',
                     details.url
                 ) === 2,
             ignoreSpecific:
-                µBlock.staticNetFilteringEngine.matchStringReverse(
+                µBlock.staticNetFilteringEngine.matchRequestReverse(
                     'specifichide',
                     details.url
                 ) === 2,
