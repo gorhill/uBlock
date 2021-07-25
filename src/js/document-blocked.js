@@ -104,9 +104,8 @@ uDom.nodeFromId('why').textContent = details.fs;
 /******************************************************************************/
 
 // https://github.com/gorhill/uBlock/issues/691
-// Parse URL to extract as much useful information as possible. This is useful
-// to assist the user in deciding whether to navigate to the web page.
-
+//   Parse URL to extract as much useful information as possible. This is
+//   useful to assist the user in deciding whether to navigate to the web page.
 (( ) => {
     if ( typeof URL !== 'function' ) { return; }
 
@@ -136,36 +135,25 @@ uDom.nodeFromId('why').textContent = details.fs;
         return li;
     };
 
-    const safeDecodeURIComponent = function(s) {
-        try {
-            s = decodeURIComponent(s);
-        } catch (ex) {
-        }
-        return s;
-    };
-
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1649
     //   Limit recursion.
     const renderParams = function(parentNode, rawURL, depth = 0) {
-        const a = document.createElement('a');
-        a.href = rawURL;
-        if ( a.search.length === 0 ) { return false; }
+        let url;
+        try {
+            url = new URL(rawURL);
+        } catch(ex) {
+            return false;
+        }
 
-        let pos = rawURL.indexOf('?');
-        const li = liFromParam(
-            vAPI.i18n('docblockedNoParamsPrompt'),
-            rawURL.slice(0, pos)
-        );
+        const search = url.search.slice(1);
+        if ( search === '' ) { return false; }
+
+        url.search = '';
+        const li = liFromParam(vAPI.i18n('docblockedNoParamsPrompt'), url.href);
         parentNode.appendChild(li);
 
-        const params = a.search.slice(1).split('&');
-        for ( const param of params ) {
-            let pos = param.indexOf('=');
-            if ( pos === -1 ) {
-                pos = param.length;
-            }
-            const name = safeDecodeURIComponent(param.slice(0, pos));
-            const value = safeDecodeURIComponent(param.slice(pos + 1));
+        const params = new self.URLSearchParams(search);
+        for ( const [ name, value ] of params ) {
             const li = liFromParam(name, value);
             if ( depth < 2 && reURL.test(value) ) {
                 const ul = document.createElement('ul');
@@ -174,6 +162,7 @@ uDom.nodeFromId('why').textContent = details.fs;
             }
             parentNode.appendChild(li);
         }
+
         return true;
     };
 
