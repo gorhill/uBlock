@@ -369,7 +369,6 @@ FilterContainer.prototype.compile = function(parser, writer) {
 /******************************************************************************/
 
 FilterContainer.prototype.compileGenericSelector = function(parser, writer) {
-    writer.select(µb.compiledCosmeticSection + COMPILED_GENERIC_SECTION);
     if ( parser.isException() ) {
         this.compileGenericUnhideSelector(parser, writer);
     } else {
@@ -391,7 +390,10 @@ FilterContainer.prototype.compileGenericHideSelector = function(
             type: 'error',
             text: `Invalid generic cosmetic filter in ${who}: ${raw}`
         });
+        return;
     }
+
+    writer.select(µb.compiledCosmeticSection + COMPILED_GENERIC_SECTION);
 
     const type = compiled.charCodeAt(0);
     let key;
@@ -494,6 +496,8 @@ FilterContainer.prototype.compileGenericUnhideSelector = function(
         return;
     }
 
+    writer.select(µb.compiledCosmeticSection + COMPILED_SPECIFIC_SECTION);
+
     // https://github.com/chrisaljoudi/uBlock/issues/497
     //   All generic exception filters are stored as hostname-based filter
     //   whereas the hostname is the empty string (which matches all
@@ -511,7 +515,6 @@ FilterContainer.prototype.compileSpecificSelector = function(
     not,
     writer
 ) {
-    writer.select(µb.compiledCosmeticSection + COMPILED_SPECIFIC_SECTION);
     const { raw, compiled, exception } = parser.result;
     if ( compiled === undefined ) {
         const who = writer.properties.get('assetKey') || '?';
@@ -522,6 +525,8 @@ FilterContainer.prototype.compileSpecificSelector = function(
         });
         return;
     }
+
+    writer.select(µb.compiledCosmeticSection + COMPILED_SPECIFIC_SECTION);
 
     // https://github.com/chrisaljoudi/uBlock/issues/145
     let unhide = exception ? 1 : 0;
