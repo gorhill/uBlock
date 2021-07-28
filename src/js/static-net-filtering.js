@@ -3396,8 +3396,6 @@ FilterContainer.prototype.freeze = function() {
     const filterBucketId = FilterBucket.fid;
     const unserialize = CompiledListReader.unserialize;
 
-    const t0 = Date.now();
-
     for ( const line of this.goodFilters ) {
         if ( this.badFilters.has(line) ) {
             this.discardedCount += 1;
@@ -3487,8 +3485,6 @@ FilterContainer.prototype.freeze = function() {
             this.optimize();
         }, { timeout: 5000 });
     }
-
-    console.info(`staticNetFilteringEngine.freeze() took ${Date.now()-t0} ms`);
 };
 
 /******************************************************************************/
@@ -3498,8 +3494,6 @@ FilterContainer.prototype.optimize = function() {
         globals.cancelIdleCallback(this.optimizeTimerId);
         this.optimizeTimerId = undefined;
     }
-
-    const t0 = Date.now();
 
     for ( let bits = 0, n = this.categories.length; bits < n; bits++ ) {
         const bucket = this.categories[bits];
@@ -3523,8 +3517,6 @@ FilterContainer.prototype.optimize = function() {
     for ( let i = filterUnitWritePtr, n = filterUnits.length; i < n; i++ ) {
         filterUnits[i] = null;
     }
-
-    console.info(`staticNetFilteringEngine.optimize() took ${Date.now()-t0} ms`);
 };
 
 /******************************************************************************/
@@ -4477,9 +4469,7 @@ FilterContainer.prototype.benchmark = async function(requests, options = {}) {
         return text;
     }
 
-    const print = log.print;
-
-    print(`Benchmarking staticNetFilteringEngine.matchRequest()...`);
+    console.info(`Benchmarking staticNetFilteringEngine.matchRequest()...`);
 
     const fctxt = new FilteringContext();
 
@@ -4489,12 +4479,12 @@ FilterContainer.prototype.benchmark = async function(requests, options = {}) {
         fctxt.setDocOriginFromURL(request.frameUrl);
         fctxt.setType(request.cpt);
         const r = this.matchRequest(fctxt);
-        print(`Result=${r}:`);
-        print(`\ttype=${fctxt.type}`);
-        print(`\turl=${fctxt.url}`);
-        print(`\tdocOrigin=${fctxt.getDocOrigin()}`);
+        console.info(`Result=${r}:`);
+        console.info(`\ttype=${fctxt.type}`);
+        console.info(`\turl=${fctxt.url}`);
+        console.info(`\tdocOrigin=${fctxt.getDocOrigin()}`);
         if ( r !== 0 ) {
-            console.log(this.toLogData());
+            console.info(this.toLogData());
         }
         return;
     }
@@ -4524,11 +4514,11 @@ FilterContainer.prototype.benchmark = async function(requests, options = {}) {
         matchCount += 1;
         if ( recorded !== undefined ) { recorded.push(r); }
         if ( expected !== undefined && r !== expected[i] ) {
-            print(`Mismatch with reference results at ${i}:`);
-            print(`\tExpected ${expected[i]}, got ${r}:`);
-            print(`\ttype=${fctxt.type}`);
-            print(`\turl=${fctxt.url}`);
-            print(`\tdocOrigin=${fctxt.getDocOrigin()}`);
+            console.info(`Mismatch with reference results at ${i}:`);
+            console.info(`\tExpected ${expected[i]}, got ${r}:`);
+            console.info(`\ttype=${fctxt.type}`);
+            console.info(`\turl=${fctxt.url}`);
+            console.info(`\tdocOrigin=${fctxt.getDocOrigin()}`);
         }
         if ( r !== 1 ) {
             if ( this.hasQuery(fctxt) ) {
@@ -4564,7 +4554,7 @@ FilterContainer.prototype.benchmark = async function(requests, options = {}) {
         );
     }
     const s = output.join('\n');
-    print(s);
+    console.info(s);
     return s;
 };
 
@@ -4576,9 +4566,9 @@ FilterContainer.prototype.test = async function(docURL, type, url) {
     fctxt.setType(type);
     fctxt.setURL(url);
     const r = this.matchRequest(fctxt);
-    console.log(`${r}`);
+    console.info(`${r}`);
     if ( r !== 0 ) {
-        console.log(this.toLogData());
+        console.info(this.toLogData());
     }
 };
 
@@ -4643,7 +4633,7 @@ FilterContainer.prototype.bucketHistogram = function() {
     results.sort((a, b) => {
         return b.size - a.size;
     });
-    console.log(results);
+    console.info(results);
 };
 
 /*******************************************************************************
@@ -4733,7 +4723,7 @@ FilterContainer.prototype.filterClassHistogram = function() {
     const results = Array.from(filterClassDetails.values()).sort((a, b) => {
         return b.count - a.count;
     });
-    console.log(results);
+    console.info(results);
 };
 
 /******************************************************************************/
@@ -4772,14 +4762,12 @@ FilterContainer.prototype.tokenHistograms = async function(requests) {
         hitTokenMap.delete(token);
     }
     const tophits = Array.from(hitTokenMap).sort(customSort).slice(0, 100);
-    console.log('Misses:', JSON.stringify(topmisses));
-    console.log('Hits:', JSON.stringify(tophits));
+    console.info('Misses:', JSON.stringify(topmisses));
+    console.info('Hits:', JSON.stringify(tophits));
 };
 
 /******************************************************************************/
 
 const staticNetFilteringEngine = new FilterContainer();
 
-/******************************************************************************/
-
-export { staticNetFilteringEngine };
+export default staticNetFilteringEngine;

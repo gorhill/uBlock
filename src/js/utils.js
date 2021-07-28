@@ -23,12 +23,13 @@
 
 /******************************************************************************/
 
+import io from './assets.js';
+import µb from './background.js';
 import { LineIterator } from './text-iterators.js';
-import µBlock from './background.js';
 
 /******************************************************************************/
 
-µBlock.formatCount = function(count) {
+µb.formatCount = function(count) {
     if ( typeof count !== 'number' ) {
         return '';
     }
@@ -53,7 +54,7 @@ import µBlock from './background.js';
 
 /******************************************************************************/
 
-µBlock.dateNowToSensibleString = function() {
+µb.dateNowToSensibleString = function() {
     const now = new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000);
     return now.toISOString().replace(/\.\d+Z$/, '')
                             .replace(/:/g, '.')
@@ -62,7 +63,7 @@ import µBlock from './background.js';
 
 /******************************************************************************/
 
-µBlock.openNewTab = function(details) {
+µb.openNewTab = function(details) {
     if ( details.url.startsWith('logger-ui.html') ) {
         if ( details.shiftKey ) {
             this.changeUserSettings(
@@ -92,7 +93,7 @@ import µBlock from './background.js';
 
 /******************************************************************************/
 
-µBlock.MRUCache = class {
+µb.MRUCache = class {
     constructor(size) {
         this.size = size;
         this.array = [];
@@ -136,13 +137,13 @@ import µBlock from './background.js';
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
 
-µBlock.escapeRegex = function(s) {
+µb.escapeRegex = function(s) {
     return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 };
 
 /******************************************************************************/
 
-µBlock.decomposeHostname = (( ) => {
+µb.decomposeHostname = (( ) => {
     // For performance purpose, as simple tests as possible
     const reHostnameVeryCoarse = /[g-z_-]/;
     const reIPv4VeryCoarse = /\.\d+$/;
@@ -196,7 +197,7 @@ import µBlock from './background.js';
 
 // TODO: evaluate using TextEncoder/TextDecoder
 
-µBlock.orphanizeString = function(s) {
+µb.orphanizeString = function(s) {
     return JSON.parse(JSON.stringify(s));
 };
 
@@ -217,10 +218,6 @@ import µBlock from './background.js';
 // From uBO's dev console, launch the benchmark:
 //   µBlock.staticNetFilteringEngine.benchmark();
 //
-// The advanced setting `consoleLogLevel` must be set to `info` to see the
-// results in uBO's dev console, see:
-//   https://github.com/gorhill/uBlock/wiki/Advanced-settings#consoleloglevel
-//
 // The usual browser dev tools can be used to obtain useful profiling
 // data, i.e. start the profiler, call the benchmark method from the
 // console, then stop the profiler when it completes.
@@ -232,7 +229,7 @@ import µBlock from './background.js';
 // Rename ./tmp/requests.json.gz to something else if you no longer want
 // ./assets/requests.json in the build.
 
-µBlock.loadBenchmarkDataset = (( ) => {
+µb.loadBenchmarkDataset = (( ) => {
     let datasetPromise;
     let ttlTimer;
 
@@ -251,13 +248,13 @@ import µBlock from './background.js';
             return datasetPromise;
         }
 
-        const datasetURL = µBlock.hiddenSettings.benchmarkDatasetURL;
+        const datasetURL = µb.hiddenSettings.benchmarkDatasetURL;
         if ( datasetURL === 'unset' ) {
             console.info(`No benchmark dataset available.`);
             return Promise.resolve();
         }
         console.info(`Loading benchmark dataset...`);
-        datasetPromise = µBlock.assets.fetchText(datasetURL).then(details => {
+        datasetPromise = io.fetchText(datasetURL).then(details => {
             console.info(`Parsing benchmark dataset...`);
             const requests = [];
             const lineIter = new LineIterator(details.content);
@@ -288,7 +285,7 @@ import µBlock from './background.js';
 
 /******************************************************************************/
 
-µBlock.fireDOMEvent = function(name) {
+µb.fireDOMEvent = function(name) {
     if (
         window instanceof Object &&
         window.dispatchEvent instanceof Function &&
@@ -302,7 +299,7 @@ import µBlock from './background.js';
 
 // TODO: properly compare arrays
 
-µBlock.getModifiedSettings = function(edit, orig = {}) {
+µb.getModifiedSettings = function(edit, orig = {}) {
     const out = {};
     for ( const prop in edit ) {
         if ( orig.hasOwnProperty(prop) && edit[prop] !== orig[prop] ) {
@@ -312,7 +309,7 @@ import µBlock from './background.js';
     return out;
 };
 
-µBlock.settingValueFromString = function(orig, name, s) {
+µb.settingValueFromString = function(orig, name, s) {
     if ( typeof name !== 'string' || typeof s !== 'string' ) { return; }
     if ( orig.hasOwnProperty(name) === false ) { return; }
     let r;

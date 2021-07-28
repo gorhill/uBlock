@@ -28,9 +28,9 @@
 import '../lib/punycode.js';
 
 import globals from './globals.js';
+import µb from './background.js';
 import { domainFromHostname } from './uri-utils.js';
 import { LineIterator } from './text-iterators.js';
-import µBlock from './background.js';
 
 /******************************************************************************/
 
@@ -266,7 +266,7 @@ const Matrix = class {
 
 
     evaluateCellZ(srcHostname, desHostname, type) {
-        µBlock.decomposeHostname(srcHostname, this.decomposedSource);
+        µb.decomposeHostname(srcHostname, this.decomposedSource);
         this.type = type;
         const bitOffset = typeBitOffsets[type];
         for ( const shn of this.decomposedSource ) {
@@ -296,7 +296,7 @@ const Matrix = class {
         // Precedence: from most specific to least specific
 
         // Specific-destination, any party, any type
-        µBlock.decomposeHostname(desHostname, this.decomposedDestination);
+        µb.decomposeHostname(desHostname, this.decomposedDestination);
         for ( const dhn of this.decomposedDestination ) {
             if ( dhn === '*' ) { break; }
             this.y = dhn;
@@ -509,13 +509,13 @@ const Matrix = class {
 
 
     async benchmark() {
-        const requests = await µBlock.loadBenchmarkDataset();
+        const requests = await µb.loadBenchmarkDataset();
         if ( Array.isArray(requests) === false || requests.length === 0 ) {
-            log.print('No requests found to benchmark');
+            console.info('No requests found to benchmark');
             return;
         }
-        log.print(`Benchmarking sessionFirewall.evaluateCellZY()...`);
-        const fctxt = µBlock.filteringContext.duplicate();
+        console.info(`Benchmarking sessionFirewall.evaluateCellZY()...`);
+        const fctxt = µb.filteringContext.duplicate();
         const t0 = self.performance.now();
         for ( const request of requests ) {
             fctxt.setURL(request.url);
@@ -529,8 +529,8 @@ const Matrix = class {
         }
         const t1 = self.performance.now();
         const dur = t1 - t0;
-        log.print(`Evaluated ${requests.length} requests in ${dur.toFixed(0)} ms`);
-        log.print(`\tAverage: ${(dur / requests.length).toFixed(3)} ms per request`);
+        console.info(`Evaluated ${requests.length} requests in ${dur.toFixed(0)} ms`);
+        console.info(`\tAverage: ${(dur / requests.length).toFixed(3)} ms per request`);
     }
 };
 
@@ -544,11 +544,9 @@ Matrix.prototype.magicId = 1;
 
 /******************************************************************************/
 
-// Export
+const sessionFirewall = new Matrix();
+const permanentFirewall = new Matrix();
 
-µBlock.Firewall = Matrix;
-
-µBlock.sessionFirewall = new µBlock.Firewall();
-µBlock.permanentFirewall = new µBlock.Firewall();
+export { permanentFirewall, sessionFirewall };
 
 /******************************************************************************/

@@ -796,7 +796,7 @@ const getWasmModule = (( ) => {
         ).then(
             WebAssembly.compileStreaming
         ).catch(reason => {
-            log.info(reason);
+            console.info(reason);
         });
 
         return wasmModulePromise;

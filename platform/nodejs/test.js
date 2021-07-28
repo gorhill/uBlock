@@ -51,7 +51,7 @@ function fetch(listName) {
         }
     */
 
-    pslInit();
+    await pslInit();
 
     const snfe = await Promise.all([
         fetch('easylist'),

@@ -23,17 +23,22 @@
 
 /******************************************************************************/
 
+import logger from './logger.js';
+import µb from './background.js';
+
+import {
+    StaticExtFilteringHostnameDB,
+    StaticExtFilteringSessionDB,
+} from './static-ext-filtering-db.js';
+
 import {
     domainFromHostname,
     entityFromDomain,
     hostnameFromURI,
 } from './uri-utils.js';
 
-import µBlock from './background.js';
-
 /******************************************************************************/
 
-const µb = µBlock;
 const cosmeticSurveyingMissCountMax =
     parseInt(vAPI.localStorage.getItem('cosmeticSurveyingMissCountMax'), 10) ||
     15;
@@ -205,10 +210,10 @@ const FilterContainer = function() {
     this.selectorCacheTimer = null;
 
     // specific filters
-    this.specificFilters = new µb.staticExtFilteringEngine.HostnameBasedDB(2);
+    this.specificFilters = new StaticExtFilteringHostnameDB(2);
 
     // temporary filters
-    this.sessionFilterDB = new µb.staticExtFilteringEngine.SessionDB();
+    this.sessionFilterDB = new StaticExtFilteringSessionDB();
 
     // low generic cosmetic filters, organized by id/class then simple/complex.
     this.lowlyGeneric = Object.create(null);
@@ -390,7 +395,7 @@ FilterContainer.prototype.compileGenericHideSelector = function(
     const { raw, compiled, pseudoclass } = parser.result;
     if ( compiled === undefined ) {
         const who = writer.properties.get('name') || '?';
-        µb.logger.writeOne({
+        logger.writeOne({
             realm: 'message',
             type: 'error',
             text: `Invalid generic cosmetic filter in ${who}: ${raw}`
@@ -437,7 +442,7 @@ FilterContainer.prototype.compileGenericHideSelector = function(
             return this.compileSpecificSelector(parser, '', false, writer);
         }
         const who = writer.properties.get('name') || '?';
-        µb.logger.writeOne({
+        logger.writeOne({
             realm: 'message',
             type: 'error',
             text: `Invalid generic cosmetic filter in ${who}: ##${raw}`
@@ -493,7 +498,7 @@ FilterContainer.prototype.compileGenericUnhideSelector = function(
     const { raw, compiled } = parser.result;
     if ( compiled === undefined ) {
         const who = writer.properties.get('name') || '?';
-        µb.logger.writeOne({
+        logger.writeOne({
             realm: 'message',
             type: 'error',
             text: `Invalid cosmetic filter in ${who}: #@#${raw}`
@@ -523,7 +528,7 @@ FilterContainer.prototype.compileSpecificSelector = function(
     const { raw, compiled, exception } = parser.result;
     if ( compiled === undefined ) {
         const who = writer.properties.get('name') || '?';
-        µb.logger.writeOne({
+        logger.writeOne({
             realm: 'message',
             type: 'error',
             text: `Invalid cosmetic filter in ${who}: ##${raw}`
@@ -1169,8 +1174,8 @@ FilterContainer.prototype.benchmark = async function() {
 
 /******************************************************************************/
 
-// Export
+const cosmeticFilteringEngine = new FilterContainer();
 
-µBlock.cosmeticFilteringEngine = new FilterContainer();
+export default cosmeticFilteringEngine;
 
 /******************************************************************************/

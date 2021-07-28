@@ -29,10 +29,10 @@ import './lib/punycode.js';
 import './lib/publicsuffixlist/publicsuffixlist.js';
 
 import globals from './js/globals.js';
+import snfe from './js/static-net-filtering.js';
 import { FilteringContext } from './js/filtering-context.js';
 import { LineIterator } from './js/text-iterators.js';
 import { StaticFilteringParser } from './js/static-filtering-parser.js';
-import { staticNetFilteringEngine } from './js/static-net-filtering.js';
 
 import {
     CompiledListReader,
@@ -41,33 +41,31 @@ import {
 
 /******************************************************************************/
 
-function compileList(rawText, writer) {
+function compileList(rawText, writer, options = {}) {
     const lineIter = new LineIterator(rawText);
     const parser = new StaticFilteringParser(true);
+    const events = Array.isArray(options.events) ? options.events : undefined;
 
-    parser.setMaxTokenLength(staticNetFilteringEngine.MAX_TOKEN_LENGTH);
+    parser.setMaxTokenLength(snfe.MAX_TOKEN_LENGTH);
 
     while ( lineIter.eot() === false ) {
         let line = lineIter.next();
-
         while ( line.endsWith(' \\') ) {
             if ( lineIter.peek(4) !== '    ' ) { break; }
             line = line.slice(0, -2).trim() + lineIter.next().trim();
         }
         parser.analyze(line);
-
         if ( parser.shouldIgnore() ) { continue; }
         if ( parser.category !== parser.CATStaticNetFilter ) { continue; }
         if ( parser.patternHasUnicode() && parser.toASCII() === false ) {
             continue;
         }
-        if ( staticNetFilteringEngine.compile(parser, writer) ) { continue; }
-        if ( staticNetFilteringEngine.error !== undefined ) {
-            console.info(JSON.stringify({
-                realm: 'message',
+        if ( snfe.compile(parser, writer) ) { continue; }
+        if ( snfe.error !== undefined && events !== undefined ) {
+            options.events.push({
                 type: 'error',
-                text: staticNetFilteringEngine.error
-            }));
+                text: snfe.error
+            });
         }
     }
 
@@ -79,13 +77,13 @@ function applyList(name, raw) {
     writer.properties.set('name', name);
     const compiled = compileList(raw, writer);
     const reader = new CompiledListReader(compiled);
-    staticNetFilteringEngine.fromCompiled(reader);
+    snfe.fromCompiled(reader);
 }
 
 function enableWASM(path) {
     return Promise.all([
         globals.publicSuffixList.enableWASM(`${path}/lib/publicsuffixlist`),
-        staticNetFilteringEngine.enableWASM(`${path}/js`),
+        snfe.enableWASM(`${path}/js`),
     ]);
 }
 
@@ -94,35 +92,32 @@ function pslInit(raw) {
         const require = createRequire(import.meta.url); // jshint ignore:line
         raw = require('./data/effective_tld_names.json');
         if ( typeof raw !== 'string' || raw.trim() === '' ) {
-            console.info('Unable to populate public suffix list');
+            console.error('Unable to populate public suffix list');
             return;
         }
     }
     globals.publicSuffixList.parse(raw, globals.punycode.toASCII);
-    console.info('Public suffix list populated');
 }
 
-function restart(lists) {
+function restart(lists, options = {}) {
     // Remove all filters
     reset();
 
     if ( Array.isArray(lists) && lists.length !== 0 ) {
         // Populate filtering engine with filter lists
         for ( const { name, raw } of lists ) {
-            applyList(name, raw);
+            applyList(name, raw, options);
         }
         // Commit changes
-        staticNetFilteringEngine.freeze();
-        staticNetFilteringEngine.optimize();
+        snfe.freeze();
+        snfe.optimize();
     }
 
-    console.info('Static network filtering engine populated');
-
-    return staticNetFilteringEngine;
+    return snfe;
 }
 
 function reset() {
-    staticNetFilteringEngine.reset();
+    snfe.reset();
 }
 
 export {

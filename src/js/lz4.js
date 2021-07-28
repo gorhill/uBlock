@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-import µBlock from './background.js';
+import µb from './background.js';
 
 /*******************************************************************************
 
@@ -46,7 +46,7 @@ let ttlTimer;
 let ttlDelay = 60000;
 
 const init = function() {
-    ttlDelay = µBlock.hiddenSettings.autoUpdateAssetFetchPeriod * 1000 + 15000;
+    ttlDelay = µb.hiddenSettings.autoUpdateAssetFetchPeriod * 1000 + 15000;
     if ( lz4CodecInstance === null ) {
         return Promise.resolve(null);
     }
@@ -55,7 +55,7 @@ const init = function() {
     }
     if ( pendingInitialization === undefined ) {
         let flavor;
-        if ( µBlock.hiddenSettings.disableWebAssembly === true ) {
+        if ( µb.hiddenSettings.disableWebAssembly === true ) {
             flavor = 'js';
         }
         pendingInitialization = lz4BlockCodec.createInstance(flavor)
@@ -155,7 +155,7 @@ const decodeValue = function(inputArray) {
     return s;
 };
 
-µBlock.lz4Codec = {
+const lz4Codec = {
     // Arguments:
     //   dataIn: must be a string
     // Returns:
@@ -197,5 +197,9 @@ const decodeValue = function(inputArray) {
         ttlManage(0);
     },
 };
+
+/******************************************************************************/
+
+export default lz4Codec;
 
 /******************************************************************************/

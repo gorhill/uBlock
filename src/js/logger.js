@@ -23,10 +23,6 @@
 
 /******************************************************************************/
 
-import µBlock from './background.js';
-
-/******************************************************************************/
-
 let buffer = null;
 let lastReadTime = 0;
 let writePtr = 0;
@@ -40,10 +36,10 @@ const janitor = ( ) => {
         buffer !== null &&
         lastReadTime < (Date.now() - logBufferObsoleteAfter)
     ) {
-        api.enabled = false;
+        logger.enabled = false;
         buffer = null;
         writePtr = 0;
-        api.ownerId = undefined;
+        logger.ownerId = undefined;
         vAPI.messaging.broadcast({ what: 'loggerDisabled' });
     }
     if ( buffer !== null ) {
@@ -58,7 +54,7 @@ const boxEntry = function(details) {
     return JSON.stringify(details);
 };
 
-const api = {
+const logger = {
     enabled: false,
     ownerId: undefined,
     writeOne: function(details) {
@@ -87,8 +83,6 @@ const api = {
 
 /******************************************************************************/
 
-// Export
-
-µBlock.logger = api;
+export default logger;
 
 /******************************************************************************/

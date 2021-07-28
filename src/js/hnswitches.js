@@ -28,8 +28,8 @@
 import '../lib/punycode.js';
 
 import globals from './globals.js';
+import µb from './background.js';
 import { LineIterator } from './text-iterators.js';
-import µBlock from './background.js';
 
 /******************************************************************************/
 
@@ -228,7 +228,7 @@ HnSwitches.prototype.evaluateZ = function(switchName, hostname) {
         return false;
     }
     this.n = switchName;
-    µBlock.decomposeHostname(hostname, this.decomposedSource);
+    µb.decomposeHostname(hostname, this.decomposedSource);
     for ( const shn of this.decomposedSource ) {
         let bits = this.switches.get(shn);
         if ( bits !== undefined ) {
@@ -323,11 +323,9 @@ HnSwitches.prototype.removeFromRuleParts = function(parts) {
 
 /******************************************************************************/
 
-// Export
+const sessionSwitches = new HnSwitches();
+const permanentSwitches = new HnSwitches();
 
-µBlock.HnSwitches = HnSwitches;
-
-µBlock.sessionSwitches = new HnSwitches();
-µBlock.permanentSwitches = new HnSwitches();
+export { permanentSwitches, sessionSwitches };
 
 /******************************************************************************/

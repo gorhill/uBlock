@@ -23,28 +23,35 @@
 
 /******************************************************************************/
 
+import logger from './logger.js';
+import µb from './background.js';
+import { redirectEngine } from './redirect-engine.js';
+import { sessionFirewall } from './dynamic-net-filtering.js';
+
+import {
+    StaticExtFilteringHostnameDB,
+    StaticExtFilteringSessionDB,
+} from './static-ext-filtering-db.js';
+
 import {
     domainFromHostname,
     entityFromDomain,
     hostnameFromURI,
 } from './uri-utils.js';
 
-import µBlock from './background.js';
-
 /******************************************************************************/
 
-const µb = µBlock;
 const duplicates = new Set();
 const scriptletCache = new µb.MRUCache(32);
 const reEscapeScriptArg = /[\\'"]/g;
 
-const scriptletDB = new µb.staticExtFilteringEngine.HostnameBasedDB(1);
-const sessionScriptletDB = new µb.staticExtFilteringEngine.SessionDB();
+const scriptletDB = new StaticExtFilteringHostnameDB(1);
+const sessionScriptletDB = new StaticExtFilteringSessionDB();
 
 let acceptedCount = 0;
 let discardedCount = 0;
 
-const api = {
+const scriptletFilteringEngine = {
     get acceptedCount() {
         return acceptedCount;
     },
@@ -132,7 +139,7 @@ const normalizeRawFilter = function(rawFilter) {
     if ( end === -1 ) { end = rawEnd; }
     const token = rawToken.slice(0, end).trim();
     const alias = token.endsWith('.js') ? token.slice(0, -3) : token;
-    let normalized = µb.redirectEngine.aliases.get(`${alias}.js`);
+    let normalized = redirectEngine.aliases.get(`${alias}.js`);
     normalized = normalized === undefined
         ? alias
         : normalized.slice(0, -3);
@@ -212,7 +219,7 @@ const patchScriptlet = function(content, args) {
 };
 
 const logOne = function(isException, token, details) {
-    µBlock.filteringContext
+    µb.filteringContext
         .duplicate()
         .fromTabId(details.tabId)
         .setRealm('extended')
@@ -226,19 +233,19 @@ const logOne = function(isException, token, details) {
         .toLogger();
 };
 
-api.reset = function() {
+scriptletFilteringEngine.reset = function() {
     scriptletDB.clear();
     duplicates.clear();
     acceptedCount = 0;
     discardedCount = 0;
 };
 
-api.freeze = function() {
+scriptletFilteringEngine.freeze = function() {
     duplicates.clear();
     scriptletDB.collectGarbage();
 };
 
-api.compile = function(parser, writer) {
+scriptletFilteringEngine.compile = function(parser, writer) {
     writer.select(µb.compiledScriptletSection);
 
     // Only exception filters are allowed to be global.
@@ -272,7 +279,7 @@ api.compile = function(parser, writer) {
     }
 };
 
-api.compileTemporary = function(parser) {
+scriptletFilteringEngine.compileTemporary = function(parser) {
     return {
         session: sessionScriptletDB,
         selector: parser.result.compiled,
@@ -284,7 +291,7 @@ api.compileTemporary = function(parser) {
 //     ^                  ^
 //     4                 -1
 
-api.fromCompiledContent = function(reader) {
+scriptletFilteringEngine.fromCompiledContent = function(reader) {
     reader.select(µb.compiledScriptletSection);
 
     while ( reader.next() ) {
@@ -301,7 +308,7 @@ api.fromCompiledContent = function(reader) {
     }
 };
 
-api.getSession = function() {
+scriptletFilteringEngine.getSession = function() {
     return sessionScriptletDB;
 };
 
@@ -309,11 +316,8 @@ const $scriptlets = new Set();
 const $exceptions = new Set();
 const $scriptletToCodeMap = new Map();
 
-api.retrieve = function(request) {
+scriptletFilteringEngine.retrieve = function(request) {
     if ( scriptletDB.size === 0 ) { return; }
-
-    const reng = µb.redirectEngine;
-    if ( !reng ) { return; }
 
     const hostname = request.hostname;
 
@@ -334,16 +338,14 @@ api.retrieve = function(request) {
     //   Do not inject scriptlets if the site is under an `allow` rule.
     if (
         µb.userSettings.advancedUserEnabled &&
-        µb.sessionFirewall.evaluateCellZY(hostname, hostname, '*') === 2
+        sessionFirewall.evaluateCellZY(hostname, hostname, '*') === 2
     ) {
         return;
     }
 
-    const loggerEnabled = µb.logger.enabled;
-
     // Wholly disable scriptlet injection?
     if ( $exceptions.has('') ) {
-        if ( loggerEnabled ) {
+        if ( logger.enabled ) {
             logOne(true, '', request);
         }
         return;
@@ -351,7 +353,7 @@ api.retrieve = function(request) {
 
     $scriptletToCodeMap.clear();
     for ( const rawToken of $scriptlets ) {
-        lookupScriptlet(rawToken, reng, $scriptletToCodeMap);
+        lookupScriptlet(rawToken, redirectEngine, $scriptletToCodeMap);
     }
     if ( $scriptletToCodeMap.size === 0 ) { return; }
 
@@ -362,7 +364,7 @@ api.retrieve = function(request) {
         if ( isException === false ) {
             out.push(code);
         }
-        if ( loggerEnabled ) {
+        if ( logger.enabled ) {
             logOne(isException, rawToken, request);
         }
     }
@@ -390,11 +392,11 @@ api.retrieve = function(request) {
     return out.join('\n');
 };
 
-api.hasScriptlet = function(hostname, exceptionBit, scriptlet) {
+scriptletFilteringEngine.hasScriptlet = function(hostname, exceptionBit, scriptlet) {
     return scriptletDB.hasStr(hostname, exceptionBit, scriptlet);
 };
 
-api.injectNow = function(details) {
+scriptletFilteringEngine.injectNow = function(details) {
     if ( typeof details.frameId !== 'number' ) { return; }
     const request = {
         tabId: details.tabId,
@@ -406,7 +408,7 @@ api.injectNow = function(details) {
     };
     request.domain = domainFromHostname(request.hostname);
     request.entity = entityFromDomain(request.domain);
-    const scriptlets = µb.scriptletFilteringEngine.retrieve(request);
+    const scriptlets = this.retrieve(request);
     if ( scriptlets === undefined ) { return; }
     let code = contentscriptCode.assemble(request.hostname, scriptlets);
     if ( µb.hiddenSettings.debugScriptletInjector ) {
@@ -420,21 +422,21 @@ api.injectNow = function(details) {
     });
 };
 
-api.toSelfie = function() {
+scriptletFilteringEngine.toSelfie = function() {
     return scriptletDB.toSelfie();
 };
 
-api.fromSelfie = function(selfie) {
+scriptletFilteringEngine.fromSelfie = function(selfie) {
     scriptletDB.fromSelfie(selfie);
 };
 
-api.benchmark = async function() {
+scriptletFilteringEngine.benchmark = async function() {
     const requests = await µb.loadBenchmarkDataset();
     if ( Array.isArray(requests) === false || requests.length === 0 ) {
-        log.print('No requests found to benchmark');
+        console.info('No requests found to benchmark');
         return;
     }
-    log.print('Benchmarking scriptletFilteringEngine.retrieve()...');
+    console.info('Benchmarking scriptletFilteringEngine.retrieve()...');
     const details = {
         domain: '',
         entity: '',
@@ -456,14 +458,12 @@ api.benchmark = async function() {
     }
     const t1 = self.performance.now();
     const dur = t1 - t0;
-    log.print(`Evaluated ${count} requests in ${dur.toFixed(0)} ms`);
-    log.print(`\tAverage: ${(dur / count).toFixed(3)} ms per request`);
+    console.info(`Evaluated ${count} requests in ${dur.toFixed(0)} ms`);
+    console.info(`\tAverage: ${(dur / count).toFixed(3)} ms per request`);
 };
 
 /******************************************************************************/
 
-// Export
-
-µBlock.scriptletFilteringEngine = api;
+export default scriptletFilteringEngine;
 
 /******************************************************************************/

@@ -23,8 +23,8 @@
 
 /******************************************************************************/
 
+import µb from './background.js';
 import { LineIterator } from './text-iterators.js';
-import µBlock from './background.js';
 
 /*******************************************************************************
 
@@ -200,7 +200,7 @@ URLNetFiltering.prototype.evaluateZ = function(context, target, type) {
     if ( this.rules.size === 0 ) {
         return 0;
     }
-    µBlock.decomposeHostname(context, this.decomposedSource);
+    µb.decomposeHostname(context, this.decomposedSource);
     for ( let shn of this.decomposedSource ) {
         this.context = shn;
         let entries = this.rules.get(shn + ' ' + type);
@@ -370,11 +370,9 @@ URLNetFiltering.prototype.removeFromRuleParts = function(parts) {
 
 /******************************************************************************/
 
-// Export
+const sessionURLFiltering = new URLNetFiltering();
+const permanentURLFiltering = new URLNetFiltering();
 
-µBlock.URLNetFiltering = URLNetFiltering;
-
-µBlock.sessionURLFiltering = new URLNetFiltering();
-µBlock.permanentURLFiltering = new URLNetFiltering();
+export { permanentURLFiltering, sessionURLFiltering };
 
 /******************************************************************************/

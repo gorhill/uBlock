@@ -24,17 +24,14 @@
 /******************************************************************************/
 
 import globals from './globals.js';
+import logger from './logger.js';
+import { FilteringContext } from './filtering-context.js';
 
 import {
     domainFromHostname,
     hostnameFromURI,
     originFromURI,
 } from './uri-utils.js';
-
-import { FilteringContext } from './filtering-context.js';
-import { CompiledListWriter } from './static-filtering-io.js';
-import { StaticFilteringParser } from './static-filtering-parser.js';
-import { staticNetFilteringEngine } from './static-net-filtering.js';
 
 /******************************************************************************/
 
@@ -333,7 +330,6 @@ const µBlock = {  // jshint ignore:line
         if ( this.tabDomain === undefined ) {
             void this.getTabDomain();
         }
-        const logger = µBlock.logger;
         const filters = this.filter;
         // Many filters may have been applied to the current context
         if ( Array.isArray(filters) === false ) {
@@ -347,9 +343,6 @@ const µBlock = {  // jshint ignore:line
 };
 
 µBlock.filteringContext = new µBlock.FilteringContext();
-µBlock.CompiledListWriter = CompiledListWriter;
-µBlock.StaticFilteringParser = StaticFilteringParser;
-µBlock.staticNetFilteringEngine = staticNetFilteringEngine;
 
 globals.µBlock = µBlock;
 

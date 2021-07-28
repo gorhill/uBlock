@@ -23,15 +23,21 @@
 
 /******************************************************************************/
 
+import logger from './logger.js';
+import µb from './background.js';
 import { entityFromDomain } from './uri-utils.js';
-import µBlock from './background.js';
+import { sessionFirewall } from './dynamic-net-filtering.js';
+
+import {
+    StaticExtFilteringHostnameDB,
+    StaticExtFilteringSessionDB,
+} from './static-ext-filtering-db.js';
 
 /******************************************************************************/
 
-const µb = µBlock;
 const duplicates = new Set();
-const filterDB = new µb.staticExtFilteringEngine.HostnameBasedDB(1);
-const sessionFilterDB = new µb.staticExtFilteringEngine.SessionDB();
+const filterDB = new StaticExtFilteringHostnameDB(1);
+const sessionFilterDB = new StaticExtFilteringSessionDB();
 
 const $headers = new Set();
 const $exceptions = new Set();
@@ -62,7 +68,7 @@ const logOne = function(isException, token, fctxt) {
         .toLogger();
 };
 
-const api = {
+const httpheaderFilteringEngine = {
     get acceptedCount() {
         return acceptedCount;
     },
@@ -71,19 +77,19 @@ const api = {
     }
 };
 
-api.reset = function() {
+httpheaderFilteringEngine.reset = function() {
     filterDB.clear();
     duplicates.clear();
     acceptedCount = 0;
     discardedCount = 0;
 };
 
-api.freeze = function() {
+httpheaderFilteringEngine.freeze = function() {
     duplicates.clear();
     filterDB.collectGarbage();
 };
 
-api.compile = function(parser, writer) {
+httpheaderFilteringEngine.compile = function(parser, writer) {
     writer.select(µb.compiledHTTPHeaderSection);
 
     const { compiled, exception } = parser.result;
@@ -117,7 +123,7 @@ api.compile = function(parser, writer) {
     }
 };
 
-api.compileTemporary = function(parser) {
+httpheaderFilteringEngine.compileTemporary = function(parser) {
     return {
         session: sessionFilterDB,
         selector: parser.result.compiled.slice(15, -1),
@@ -129,7 +135,7 @@ api.compileTemporary = function(parser) {
 //                ^   ^
 //               15  -1
 
-api.fromCompiledContent = function(reader) {
+httpheaderFilteringEngine.fromCompiledContent = function(reader) {
     reader.select(µb.compiledHTTPHeaderSection);
 
     while ( reader.next() ) {
@@ -146,11 +152,11 @@ api.fromCompiledContent = function(reader) {
     }
 };
 
-api.getSession = function() {
+httpheaderFilteringEngine.getSession = function() {
     return sessionFilterDB;
 };
 
-api.apply = function(fctxt, headers) {
+httpheaderFilteringEngine.apply = function(fctxt, headers) {
     if ( filterDB.size === 0 ) { return; }
 
     const hostname = fctxt.getHostname();
@@ -178,13 +184,12 @@ api.apply = function(fctxt, headers) {
     //   Do not filter response headers if the site is under an `allow` rule.
     if (
         µb.userSettings.advancedUserEnabled &&
-        µb.sessionFirewall.evaluateCellZY(hostname, hostname, '*') === 2
+        sessionFirewall.evaluateCellZY(hostname, hostname, '*') === 2
     ) {
         return;
     }
 
     const hasGlobalException = $exceptions.has('');
-    const loggerEnabled = µb.logger.enabled;
 
     let modified = false;
 
@@ -194,13 +199,13 @@ api.apply = function(fctxt, headers) {
             if ( i === -1 ) { break; }
             const isExcepted = hasGlobalException || $exceptions.has(name);
             if ( isExcepted ) {
-                if ( loggerEnabled ) {
+                if ( logger.enabled ) {
                     logOne(true, hasGlobalException ? '' : name, fctxt);
                 }
                 break;
             }
             headers.splice(i, 1);
-            if ( loggerEnabled ) {
+            if ( logger.enabled ) {
                 logOne(false, name, fctxt);
             }
             modified = true;
@@ -210,18 +215,16 @@ api.apply = function(fctxt, headers) {
     return modified;
 };
 
-api.toSelfie = function() {
+httpheaderFilteringEngine.toSelfie = function() {
     return filterDB.toSelfie();
 };
 
-api.fromSelfie = function(selfie) {
+httpheaderFilteringEngine.fromSelfie = function(selfie) {
     filterDB.fromSelfie(selfie);
 };
 
 /******************************************************************************/
 
-// Export
-
-µb.httpheaderFilteringEngine = api;
+export default httpheaderFilteringEngine;
 
 /******************************************************************************/

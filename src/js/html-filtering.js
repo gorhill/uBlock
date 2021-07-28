@@ -23,22 +23,28 @@
 
 /******************************************************************************/
 
-import µBlock from './background.js';
+import logger from './logger.js';
+import µb from './background.js';
+import { sessionFirewall } from './dynamic-net-filtering.js';
+
+import {
+    StaticExtFilteringHostnameDB,
+    StaticExtFilteringSessionDB,
+} from './static-ext-filtering-db.js';
 
 /******************************************************************************/
 
-const µb = µBlock;
 const pselectors = new Map();
 const duplicates = new Set();
 
-const filterDB = new µb.staticExtFilteringEngine.HostnameBasedDB(2);
-const sessionFilterDB = new µb.staticExtFilteringEngine.SessionDB();
+const filterDB = new StaticExtFilteringHostnameDB(2);
+const sessionFilterDB = new StaticExtFilteringSessionDB();
 
 let acceptedCount = 0;
 let discardedCount = 0;
 let docRegister;
 
-const api = {
+const htmlFilteringEngine = {
     get acceptedCount() {
         return acceptedCount;
     },
@@ -237,7 +243,7 @@ PSelector.prototype.operatorToTaskMap = new Map([
 PSelector.prototype.invalid = false;
 
 const logOne = function(details, exception, selector) {
-    µBlock.filteringContext
+    µb.filteringContext
         .duplicate()
         .fromTabId(details.tabId)
         .setRealm('extended')
@@ -263,7 +269,7 @@ const applyProceduralSelector = function(details, selector) {
         node.remove();
         modified = true;
     }
-    if ( modified && µb.logger.enabled ) {
+    if ( modified && logger.enabled ) {
         logOne(details, 0, pselector.raw);
     }
     return modified;
@@ -276,13 +282,13 @@ const applyCSSSelector = function(details, selector) {
         node.remove();
         modified = true;
     }
-    if ( modified && µb.logger.enabled ) {
+    if ( modified && logger.enabled ) {
         logOne(details, 0, selector);
     }
     return modified;
 };
 
-api.reset = function() {
+htmlFilteringEngine.reset = function() {
     filterDB.clear();
     pselectors.clear();
     duplicates.clear();
@@ -290,16 +296,16 @@ api.reset = function() {
     discardedCount = 0;
 };
 
-api.freeze = function() {
+htmlFilteringEngine.freeze = function() {
     duplicates.clear();
     filterDB.collectGarbage();
 };
 
-api.compile = function(parser, writer) {
+htmlFilteringEngine.compile = function(parser, writer) {
     const { raw, compiled, exception } = parser.result;
     if ( compiled === undefined ) {
         const who = writer.properties.get('name') || '?';
-        µb.logger.writeOne({
+        logger.writeOne({
             realm: 'message',
             type: 'error',
             text: `Invalid HTML filter in ${who}: ##${raw}`
@@ -325,14 +331,14 @@ api.compile = function(parser, writer) {
     }
 };
 
-api.compileTemporary = function(parser) {
+htmlFilteringEngine.compileTemporary = function(parser) {
     return {
         session: sessionFilterDB,
         selector: parser.result.compiled,
     };
 };
 
-api.fromCompiledContent = function(reader) {
+htmlFilteringEngine.fromCompiledContent = function(reader) {
     // Don't bother loading filters if stream filtering is not supported.
     if ( µb.canFilterResponseData === false ) { return; }
 
@@ -351,11 +357,11 @@ api.fromCompiledContent = function(reader) {
     }
 };
 
-api.getSession = function() {
+htmlFilteringEngine.getSession = function() {
     return sessionFilterDB;
 };
 
-api.retrieve = function(details) {
+htmlFilteringEngine.retrieve = function(details) {
     const hostname = details.hostname;
 
     const plains = new Set();
@@ -384,7 +390,7 @@ api.retrieve = function(details) {
     //   Do not filter if the site is under an `allow` rule.
     if (
         µb.userSettings.advancedUserEnabled &&
-        µb.sessionFirewall.evaluateCellZY(hostname, hostname, '*') === 2
+        sessionFirewall.evaluateCellZY(hostname, hostname, '*') === 2
     ) {
         return;
     }
@@ -413,7 +419,7 @@ api.retrieve = function(details) {
     }
 };
 
-api.apply = function(doc, details) {
+htmlFilteringEngine.apply = function(doc, details) {
     docRegister = doc;
     let modified = false;
     for ( const selector of details.selectors.plains ) {
@@ -430,19 +436,17 @@ api.apply = function(doc, details) {
     return modified;
 };
 
-api.toSelfie = function() {
+htmlFilteringEngine.toSelfie = function() {
     return filterDB.toSelfie();
 };
 
-api.fromSelfie = function(selfie) {
+htmlFilteringEngine.fromSelfie = function(selfie) {
     filterDB.fromSelfie(selfie);
     pselectors.clear();
 };
 
 /******************************************************************************/
 
-// Export
-
-µBlock.htmlFilteringEngine = api;
+export default htmlFilteringEngine;
 
 /******************************************************************************/

@@ -23,13 +23,20 @@
 
 /******************************************************************************/
 
+import contextMenu from './contextmenu.js';
+import logger from './logger.js';
+import staticNetFilteringEngine from './static-net-filtering.js';
+import µb from './background.js';
+import { redirectEngine } from './redirect-engine.js';
+import { sessionFirewall } from './dynamic-net-filtering.js';
+import { sessionSwitches } from './hnswitches.js';
+import { sessionURLFiltering } from './url-net-filtering.js';
+
 import {
     domainFromHostname,
     hostnameFromURI,
     isNetworkURI,
 } from './uri-utils.js';
-
-import µBlock from './background.js';
 
 /*******************************************************************************
 
@@ -39,10 +46,6 @@ To record distinct net requests
 To create a log of net requests
 
 **/
-
-/******************************************************************************/
-
-const µb = µBlock;
 
 /******************************************************************************/
 
@@ -217,18 +220,18 @@ const FrameStore = class {
         }
         this._cosmeticFilteringBits = 0b11;
         {
-            const result = µb.staticNetFilteringEngine.matchRequestReverse(
+            const result = staticNetFilteringEngine.matchRequestReverse(
                 'specifichide',
                 this.rawURL
             );
-            if ( result !== 0 && µb.logger.enabled ) {
-                µBlock.filteringContext
+            if ( result !== 0 && logger.enabled ) {
+                µb.filteringContext
                     .duplicate()
                     .fromTabId(tabId)
                     .setURL(this.rawURL)
                     .setRealm('network')
                     .setType('specifichide')
-                    .setFilter(µb.staticNetFilteringEngine.toLogData())
+                    .setFilter(staticNetFilteringEngine.toLogData())
                     .toLogger();
             }
             if ( result === 2 ) {
@@ -236,18 +239,18 @@ const FrameStore = class {
             }
         }
         {
-            const result = µb.staticNetFilteringEngine.matchRequestReverse(
+            const result = staticNetFilteringEngine.matchRequestReverse(
                 'generichide',
                 this.rawURL
             );
-            if ( result !== 0 && µb.logger.enabled ) {
-                µBlock.filteringContext
+            if ( result !== 0 && logger.enabled ) {
+                µb.filteringContext
                     .duplicate()
                     .fromTabId(tabId)
                     .setURL(this.rawURL)
                     .setRealm('network')
                     .setType('generichide')
-                    .setFilter(µb.staticNetFilteringEngine.toLogData())
+                    .setFilter(staticNetFilteringEngine.toLogData())
                     .toLogger();
             }
             if ( result === 2 ) {
@@ -559,18 +562,18 @@ const PageStore = class {
         if ( this._noCosmeticFiltering === undefined ) {
             this._noCosmeticFiltering = this.getNetFilteringSwitch() === false;
             if ( this._noCosmeticFiltering === false ) {
-                this._noCosmeticFiltering = µb.sessionSwitches.evaluateZ(
+                this._noCosmeticFiltering = sessionSwitches.evaluateZ(
                     'no-cosmetic-filtering',
                     this.tabHostname
                 ) === true;
-                if ( this._noCosmeticFiltering && µb.logger.enabled ) {
+                if ( this._noCosmeticFiltering && logger.enabled ) {
                     µb.filteringContext
                         .duplicate()
                         .fromTabId(this.tabId)
                         .setURL(this.rawURL)
                         .setRealm('cosmetic')
                         .setType('dom')
-                        .setFilter(µb.sessionSwitches.toLogData())
+                        .setFilter(sessionSwitches.toLogData())
                         .toLogger();
                 }
             }
@@ -620,12 +623,12 @@ const PageStore = class {
             allFrames: true,
             runAt: 'document_idle',
         });
-        µb.contextMenu.update(this.tabId);
+        contextMenu.update(this.tabId);
     }
 
     temporarilyAllowLargeMediaElements(state) {
         this.largeMediaCount = 0;
-        µb.contextMenu.update(this.tabId);
+        contextMenu.update(this.tabId);
         if ( state ) {
             this.allowLargeMediaElementsUntil = 0;
             this.allowLargeMediaElementsRegex = undefined;
@@ -784,32 +787,32 @@ const PageStore = class {
         }
 
         const requestType = fctxt.type;
-        const loggerEnabled = µb.logger.enabled;
+        const loggerEnabled = logger.enabled;
 
         // Dynamic URL filtering.
-        let result = µb.sessionURLFiltering.evaluateZ(
+        let result = sessionURLFiltering.evaluateZ(
             fctxt.getTabHostname(),
             fctxt.url,
             requestType
         );
         if ( result !== 0 && loggerEnabled ) {
-            fctxt.filter = µb.sessionURLFiltering.toLogData();
+            fctxt.filter = sessionURLFiltering.toLogData();
         }
 
         // Dynamic hostname/type filtering.
         if ( result === 0 && µb.userSettings.advancedUserEnabled ) {
-            result = µb.sessionFirewall.evaluateCellZY(
+            result = sessionFirewall.evaluateCellZY(
                 fctxt.getTabHostname(),
                 fctxt.getHostname(),
                 requestType
             );
             if ( result !== 0 && result !== 3 && loggerEnabled ) {
-                fctxt.filter = µb.sessionFirewall.toLogData();
+                fctxt.filter = sessionFirewall.toLogData();
             }
         }
 
         // Static filtering has lowest precedence.
-        const snfe = µb.staticNetFilteringEngine;
+        const snfe = staticNetFilteringEngine;
         if ( result === 0 || result === 3 ) {
             result = snfe.matchRequest(fctxt);
             if ( result !== 0 ) {
@@ -873,19 +876,19 @@ const PageStore = class {
 
         if ( this.getNetFilteringSwitch(fctxt) === false ) { return 0; }
 
-        let result = µb.staticNetFilteringEngine.matchHeaders(fctxt, headers);
+        let result = staticNetFilteringEngine.matchHeaders(fctxt, headers);
         if ( result === 0 ) { return 0; }
 
-        const loggerEnabled = µb.logger.enabled;
+        const loggerEnabled = logger.enabled;
         if ( loggerEnabled ) {
-            fctxt.filter = µb.staticNetFilteringEngine.toLogData();
+            fctxt.filter = staticNetFilteringEngine.toLogData();
         }
 
         // Dynamic filtering allow rules
         // URL filtering
         if (
             result === 1 &&
-            µb.sessionURLFiltering.evaluateZ(
+            sessionURLFiltering.evaluateZ(
                 fctxt.getTabHostname(),
                 fctxt.url,
                 fctxt.type
@@ -893,14 +896,14 @@ const PageStore = class {
         ) {
             result = 2;
             if ( loggerEnabled ) {
-                fctxt.filter = µb.sessionURLFiltering.toLogData();
+                fctxt.filter = sessionURLFiltering.toLogData();
             }
         }
         // Hostname filtering
         if (
             result === 1 &&
             µb.userSettings.advancedUserEnabled &&
-            µb.sessionFirewall.evaluateCellZY(
+            sessionFirewall.evaluateCellZY(
                 fctxt.getTabHostname(),
                 fctxt.getHostname(),
                 fctxt.type
@@ -908,7 +911,7 @@ const PageStore = class {
         ) {
             result = 2;
             if ( loggerEnabled ) {
-                fctxt.filter = µb.sessionFirewall.toLogData();
+                fctxt.filter = sessionFirewall.toLogData();
             }
         }
 
@@ -916,24 +919,24 @@ const PageStore = class {
     }
 
     redirectBlockedRequest(fctxt) {
-        const directives = µb.staticNetFilteringEngine.redirectRequest(
-            µb.redirectEngine,
+        const directives = staticNetFilteringEngine.redirectRequest(
+            redirectEngine,
             fctxt
         );
         if ( directives === undefined ) { return; }
-        if ( µb.logger.enabled !== true ) { return; }
+        if ( logger.enabled !== true ) { return; }
         fctxt.pushFilters(directives.map(a => a.logData()));
         if ( fctxt.redirectURL === undefined ) { return; }
         fctxt.pushFilter({
             source: 'redirect',
-            raw: µb.redirectEngine.resourceNameRegister
+            raw: redirectEngine.resourceNameRegister
         });
     }
 
     redirectNonBlockedRequest(fctxt) {
-        const directives = µb.staticNetFilteringEngine.filterQuery(fctxt);
+        const directives = staticNetFilteringEngine.filterQuery(fctxt);
         if ( directives === undefined ) { return; }
-        if ( µb.logger.enabled !== true ) { return; }
+        if ( logger.enabled !== true ) { return; }
         fctxt.pushFilters(directives.map(a => a.logData()));
         if ( fctxt.redirectURL === undefined ) { return; }
         fctxt.pushFilter({
@@ -944,13 +947,13 @@ const PageStore = class {
 
     filterCSPReport(fctxt) {
         if (
-            µb.sessionSwitches.evaluateZ(
+            sessionSwitches.evaluateZ(
                 'no-csp-reports',
                 fctxt.getHostname()
             )
         ) {
-            if ( µb.logger.enabled ) {
-                fctxt.filter = µb.sessionSwitches.toLogData();
+            if ( logger.enabled ) {
+                fctxt.filter = sessionSwitches.toLogData();
             }
             return 1;
         }
@@ -962,13 +965,13 @@ const PageStore = class {
             this.remoteFontCount += 1;
         }
         if (
-            µb.sessionSwitches.evaluateZ(
+            sessionSwitches.evaluateZ(
                 'no-remote-fonts',
                 fctxt.getTabHostname()
             ) !== false
         ) {
-            if ( µb.logger.enabled ) {
-                fctxt.filter = µb.sessionSwitches.toLogData();
+            if ( logger.enabled ) {
+                fctxt.filter = sessionSwitches.toLogData();
             }
             return 1;
         }
@@ -982,15 +985,15 @@ const PageStore = class {
         }
         if (
             netFiltering === false ||
-            µb.sessionSwitches.evaluateZ(
+            sessionSwitches.evaluateZ(
                 'no-scripting',
                 fctxt.getTabHostname()
             ) === false
         ) {
             return 0;
         }
-        if ( µb.logger.enabled ) {
-            fctxt.filter = µb.sessionSwitches.toLogData();
+        if ( logger.enabled ) {
+            fctxt.filter = sessionSwitches.toLogData();
         }
         return 1;
     }
@@ -1019,7 +1022,7 @@ const PageStore = class {
             return 0;
         }
         if (
-            µb.sessionSwitches.evaluateZ(
+            sessionSwitches.evaluateZ(
                 'no-large-media',
                 fctxt.getTabHostname()
             ) !== true
@@ -1039,8 +1042,8 @@ const PageStore = class {
             }, 500);
         }
 
-        if ( µb.logger.enabled ) {
-            fctxt.filter = µb.sessionSwitches.toLogData();
+        if ( logger.enabled ) {
+            fctxt.filter = sessionSwitches.toLogData();
         }
 
         return 1;
@@ -1069,14 +1072,14 @@ const PageStore = class {
             }
         }
         if ( exceptCname === undefined ) {
-            const result = µb.staticNetFilteringEngine.matchRequestReverse(
+            const result = staticNetFilteringEngine.matchRequestReverse(
                 'cname',
                 frameStore instanceof Object
                     ? frameStore.rawURL
                     : fctxt.getDocOrigin()
             );
             exceptCname = result === 2
-                ? µb.staticNetFilteringEngine.toLogData()
+                ? staticNetFilteringEngine.toLogData()
                 : false;
             if ( frameStore instanceof Object ) {
                 frameStore.exceptCname = exceptCname;
@@ -1128,6 +1131,6 @@ PageStore.prototype.collapsibleResources = new Set([
 PageStore.junkyard = [];
 PageStore.junkyardMax = 10;
 
-µb.PageStore = PageStore;
-
 /******************************************************************************/
+
+export { PageStore };
