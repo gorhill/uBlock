@@ -41,6 +41,7 @@ jobs:
           tools/make-chromium.sh ${{ steps.release_info.outputs.VERSION }}
           tools/make-firefox.sh ${{ steps.release_info.outputs.VERSION }}
           tools/make-thunderbird.sh ${{ steps.release_info.outputs.VERSION }}
+          tools/make-nodejs.sh ${{ steps.release_info.outputs.VERSION }}
       - name: Upload Chromium package
         uses: actions/upload-release-asset@v1
         env:
@@ -67,4 +68,13 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.thunderbird.xpi
           asset_name: uBlock0_${{ steps.release_info.outputs.VERSION }}.thunderbird.xpi
+          asset_content_type: application/octet-stream
+      - name: Upload NodeJS package
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.nodejs.zip
+          asset_name: uBlock0_${{ steps.release_info.outputs.VERSION }}.nodejs.zip
           asset_content_type: application/octet-stream
