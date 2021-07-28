@@ -23,6 +23,8 @@
 
 /******************************************************************************/
 
+import { createRequire } from 'module';
+
 import './lib/punycode.js';
 import './lib/publicsuffixlist/publicsuffixlist.js';
 
@@ -89,8 +91,12 @@ function enableWASM(path) {
 
 function pslInit(raw) {
     if ( typeof raw !== 'string' || raw.trim() === '' ) {
-        console.info('Unable to populate public suffix list');
-        return;
+        const require = createRequire(import.meta.url); // jshint ignore:line
+        raw = require('./data/effective_tld_names.json');
+        if ( typeof raw !== 'string' || raw.trim() === '' ) {
+            console.info('Unable to populate public suffix list');
+            return;
+        }
     }
     globals.publicSuffixList.parse(raw, globals.punycode.toASCII);
     console.info('Public suffix list populated');

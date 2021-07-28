@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-import { readFile } from 'fs';
+import { createRequire } from 'module';
 
 import {
     FilteringContext,
@@ -35,15 +35,10 @@ import {
 
 /******************************************************************************/
 
-function fetch(path) {
-    return new Promise((resolve, reject) => {
-        readFile(path, 'utf8', (err, data) => {
-            if ( err ) {
-                reject(err);
-            } else {
-                resolve(data);
-            }
-        });
+function fetch(listName) {
+    return new Promise(resolve => {
+        const require = createRequire(import.meta.url); // jshint ignore:line
+        resolve(require(`./data/${listName}.json`));
     });
 }
 
@@ -56,13 +51,11 @@ function fetch(path) {
         }
     */
 
-    await fetch('./data/effective_tld_names.dat').then(pslRaw => {
-        pslInit(pslRaw);
-    });
+    pslInit();
 
     const snfe = await Promise.all([
-        fetch('./data/easylist.txt'),
-        fetch('./data/easyprivacy.txt'),
+        fetch('easylist'),
+        fetch('easyprivacy'),
     ]).then(rawLists => {
         return restart([
             { name: 'easylist', raw: rawLists[0] },
