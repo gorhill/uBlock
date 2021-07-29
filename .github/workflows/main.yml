@@ -19,9 +19,7 @@ jobs:
           persist-credentials: false
       - name: Clone uAssets
         run: |
-          pushd ..
-          git clone --depth 1 https://github.com/uBlockOrigin/uAssets.git
-          popd
+          git submodule update --depth 1 --init
       # https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
       - name: Get release information
         id: release_info

@@ -25,9 +25,9 @@ cp -R src/lib/publicsuffixlist $DES/lib/
 cp -R src/lib/regexanalyzer    $DES/lib/
 
 mkdir -p $DES/data
-cp -R ../uAssets/thirdparties/publicsuffix.org/list/* \
+cp -R submodules/uAssets/thirdparties/publicsuffix.org/list/* \
       $DES/data
-cp -R ../uAssets/thirdparties/easylist-downloads.adblockplus.org/* \
+cp -R submodules/uAssets/thirdparties/easylist-downloads.adblockplus.org/* \
       $DES/data
 
 cp platform/browser/*.html $DES/

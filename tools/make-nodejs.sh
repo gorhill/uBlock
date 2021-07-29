@@ -21,15 +21,8 @@ cp -R src/lib/punycode.js      $DES/lib/
 cp -R src/lib/publicsuffixlist $DES/lib/
 cp -R src/lib/regexanalyzer    $DES/lib/
 
-# Use existing uAssets, or git-clone a temporary one
-if [ -d "../uAssets" ]; then
-    UASSETS=../uAssets
-else
-    echo "*** ../uAssets not present, git-cloning..."
-    TMPDIR=$(mktemp -d)
-    UASSETS=$TMPDIR/uAssets
-    git clone --depth=1 https://github.com/uBlockOrigin/uAssets.git $UASSETS
-fi
+git submodule update --depth 1 --init
+UASSETS=submodules/uAssets
 
 # https://github.com/uBlockOrigin/uBlock-issues/issues/1664#issuecomment-888332409
 THIRDPARTY=$UASSETS/thirdparties/publicsuffix.org
@@ -41,12 +34,6 @@ node -pe "JSON.stringify(fs.readFileSync('$THIRDPARTY/easylist.txt', 'utf8'))" \
     > $DES/data/easylist.json
 node -pe "JSON.stringify(fs.readFileSync('$THIRDPARTY/easyprivacy.txt', 'utf8'))" \
     > $DES/data/easyprivacy.json
-
-# Remove temporary git-clone uAssets
-if [ -n "$TMPDIR" ]; then
-    echo "*** Removing temporary $TMPDIR"
-    rm -rf $TMPDIR
-fi
 
 cp platform/nodejs/*.js   $DES/
 cp platform/nodejs/*.json $DES/
