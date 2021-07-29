@@ -86,7 +86,6 @@
             if ( Array.isArray(dl) ) {
                 dl.push = item => doCallback(item);
                 const q = dl.slice();
-                dl.length = 0;
                 for ( const item of q ) {
                     doCallback(item);
                 }
