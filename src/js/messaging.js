@@ -64,6 +64,8 @@ import {
     sessionURLFiltering,
 } from './url-net-filtering.js';
 
+import './benchmarks.js';
+
 /******************************************************************************/
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/710
@@ -137,13 +139,8 @@ const onMessage = function(request, sender, callback) {
         return;
 
     case 'sfneBenchmark':
-        µb.loadBenchmarkDataset().then(requests => {
-            staticNetFilteringEngine.benchmark(
-                requests,
-                { redirectEngine }
-            ).then(result => {
-                callback(result);
-            });
+        µb.benchmarkStaticNetFiltering({ redirectEngine }).then(result => {
+            callback(result);
         });
         return;
 

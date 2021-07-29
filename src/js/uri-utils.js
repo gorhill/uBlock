@@ -54,26 +54,32 @@ const reHostnameFromNetworkURL =
     /^(?:http|ws|ftp)s?:\/\/([0-9a-z_][0-9a-z._-]*[0-9a-z])(?::\d+)?\//;
 const reIPAddressNaive =
     /^\d+\.\d+\.\d+\.\d+$|^\[[\da-zA-Z:]+\]$/;
+const reNetworkURI =
+    /^(?:ftps?|https?|wss?):\/\//;
+
+// For performance purpose, as simple tests as possible
+const reIPv4VeryCoarse = /\.\d+$/;
+const reHostnameVeryCoarse = /[g-z_\-]/;
 
 /******************************************************************************/
 
-const domainFromHostname = function(hostname) {
+function domainFromHostname(hostname) {
     return reIPAddressNaive.test(hostname)
         ? hostname
         : psl.getDomain(hostname);
-};
+}
 
-const domainFromURI = function(uri) {
+function domainFromURI(uri) {
     if ( !uri ) { return ''; }
     return domainFromHostname(hostnameFromURI(uri));
-};
+}
 
-const entityFromDomain = function(domain) {
+function entityFromDomain(domain) {
     const pos = domain.indexOf('.');
     return pos !== -1 ? domain.slice(0, pos) + '.*' : '';
-};
+}
 
-const hostnameFromURI = function(uri) {
+function hostnameFromURI(uri) {
     let matches = reCommonHostnameFromURL.exec(uri);
     if ( matches !== null ) { return matches[1]; }
     matches = reAuthorityFromURI.exec(uri);
@@ -95,27 +101,73 @@ const hostnameFromURI = function(uri) {
         hostname = punycode.toASCII(hostname.toLowerCase());
     }
     return hostname;
-};
+}
 
-const hostnameFromNetworkURL = function(url) {
+function hostnameFromNetworkURL(url) {
     const matches = reHostnameFromNetworkURL.exec(url);
     return matches !== null ? matches[1] : '';
-};
+}
 
-const originFromURI = function(uri) {
+function originFromURI(uri) {
     const matches = reOriginFromURI.exec(uri);
     return matches !== null ? matches[0].toLowerCase() : '';
-};
+}
 
-const isNetworkURI = function(uri) {
+function isNetworkURI(uri) {
     return reNetworkURI.test(uri);
-};
+}
 
-const reNetworkURI = /^(?:ftps?|https?|wss?):\/\//;
+/******************************************************************************/
+
+function toBroaderHostname(hostname) {
+    const pos = hostname.indexOf('.');
+    if ( pos !== -1 ) {
+        return hostname.slice(pos + 1);
+    }
+    return hostname !== '*' && hostname !== '' ? '*' : '';
+}
+
+function toBroaderIPv4Address(ipaddress) {
+    if ( ipaddress === '*' || ipaddress === '' ) { return ''; }
+    const pos = ipaddress.lastIndexOf('.');
+    if ( pos === -1 ) { return '*'; }
+    return ipaddress.slice(0, pos);
+}
+
+function toBroaderIPv6Address(ipaddress) {
+    return ipaddress !== '*' && ipaddress !== '' ? '*' : '';
+}
+
+function decomposeHostname(hostname, out) {
+    if ( out.length !== 0 && out[0] === hostname ) {
+        return out;
+    }
+    let broadenFn;
+    if ( reHostnameVeryCoarse.test(hostname) === false ) {
+        if ( reIPv4VeryCoarse.test(hostname) ) {
+            broadenFn = toBroaderIPv4Address;
+        } else if ( hostname.startsWith('[') ) {
+            broadenFn = toBroaderIPv6Address;
+        }
+    }
+    if ( broadenFn === undefined ) {
+        broadenFn = toBroaderHostname;
+    }
+    out[0] = hostname;
+    let i = 1;
+    for (;;) {
+        hostname = broadenFn(hostname);
+        if ( hostname === '' ) { break; }
+        out[i++] = hostname;
+    }
+    out.length = i;
+    return out;
+}
 
 /******************************************************************************/
 
 export {
+    decomposeHostname,
     domainFromHostname,
     domainFromURI,
     entityFromDomain,

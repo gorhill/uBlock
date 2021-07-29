@@ -282,6 +282,9 @@ const FilteringContext = class {
     }
 
     getTabHostname() {
+        if ( this.tabHostname === undefined ) {
+            this.tabHostname = hostnameFromURI(this.getTabOrigin());
+        }
         return this.tabHostname;
     }
 

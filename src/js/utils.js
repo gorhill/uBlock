@@ -23,9 +23,7 @@
 
 /******************************************************************************/
 
-import io from './assets.js';
 import µb from './background.js';
-import { LineIterator } from './text-iterators.js';
 
 /******************************************************************************/
 
@@ -143,145 +141,11 @@ import { LineIterator } from './text-iterators.js';
 
 /******************************************************************************/
 
-µb.decomposeHostname = (( ) => {
-    // For performance purpose, as simple tests as possible
-    const reHostnameVeryCoarse = /[g-z_-]/;
-    const reIPv4VeryCoarse = /\.\d+$/;
-
-    const toBroaderHostname = function(hostname) {
-        const pos = hostname.indexOf('.');
-        if ( pos !== -1 ) {
-            return hostname.slice(pos + 1);
-        }
-        return hostname !== '*' && hostname !== '' ? '*' : '';
-    };
-
-    const toBroaderIPv4Address = function(ipaddress) {
-        if ( ipaddress === '*' || ipaddress === '' ) { return ''; }
-        const pos = ipaddress.lastIndexOf('.');
-        if ( pos === -1 ) { return '*'; }
-        return ipaddress.slice(0, pos);
-    };
-
-    const toBroaderIPv6Address = function(ipaddress) {
-        return ipaddress !== '*' && ipaddress !== '' ? '*' : '';
-    };
-
-    return function decomposeHostname(hostname, decomposed) {
-        if ( decomposed.length === 0 || decomposed[0] !== hostname ) {
-            let broaden;
-            if ( reHostnameVeryCoarse.test(hostname) === false ) {
-                if ( reIPv4VeryCoarse.test(hostname) ) {
-                    broaden = toBroaderIPv4Address;
-                } else if ( hostname.startsWith('[') ) {
-                    broaden = toBroaderIPv6Address;
-                }
-            }
-            if ( broaden === undefined ) {
-                broaden = toBroaderHostname;
-            }
-            decomposed[0] = hostname;
-            let i = 1;
-            for (;;) {
-                hostname = broaden(hostname);
-                if ( hostname === '' ) { break; }
-                decomposed[i++] = hostname;
-            }
-            decomposed.length = i;
-        }
-        return decomposed;
-    };
-})();
-
-/******************************************************************************/
-
 // TODO: evaluate using TextEncoder/TextDecoder
 
 µb.orphanizeString = function(s) {
     return JSON.parse(JSON.stringify(s));
 };
-
-/******************************************************************************/
-
-// The requests.json.gz file can be downloaded from:
-//   https://cdn.cliqz.com/adblocking/requests_top500.json.gz
-//
-// Which is linked from:
-//   https://whotracks.me/blog/adblockers_performance_study.html
-//
-// Copy the file into ./tmp/requests.json.gz
-//
-// If the file is present when you build uBO using `make-[target].sh` from
-// the shell, the resulting package will have `./assets/requests.json`, which
-// will be looked-up by the method below to launch a benchmark session.
-//
-// From uBO's dev console, launch the benchmark:
-//   µBlock.staticNetFilteringEngine.benchmark();
-//
-// The usual browser dev tools can be used to obtain useful profiling
-// data, i.e. start the profiler, call the benchmark method from the
-// console, then stop the profiler when it completes.
-//
-// Keep in mind that the measurements at the blog post above where obtained
-// with ONLY EasyList. The CPU reportedly used was:
-//   https://www.cpubenchmark.net/cpu.php?cpu=Intel+Core+i7-6600U+%40+2.60GHz&id=2608
-//
-// Rename ./tmp/requests.json.gz to something else if you no longer want
-// ./assets/requests.json in the build.
-
-µb.loadBenchmarkDataset = (( ) => {
-    let datasetPromise;
-    let ttlTimer;
-
-    return function() {
-        if ( ttlTimer !== undefined ) {
-            clearTimeout(ttlTimer);
-            ttlTimer = undefined;
-        }
-
-        vAPI.setTimeout(( ) => {
-            ttlTimer = undefined;
-            datasetPromise = undefined;
-        }, 5 * 60 * 1000);
-
-        if ( datasetPromise !== undefined ) {
-            return datasetPromise;
-        }
-
-        const datasetURL = µb.hiddenSettings.benchmarkDatasetURL;
-        if ( datasetURL === 'unset' ) {
-            console.info(`No benchmark dataset available.`);
-            return Promise.resolve();
-        }
-        console.info(`Loading benchmark dataset...`);
-        datasetPromise = io.fetchText(datasetURL).then(details => {
-            console.info(`Parsing benchmark dataset...`);
-            const requests = [];
-            const lineIter = new LineIterator(details.content);
-            while ( lineIter.eot() === false ) {
-                let request;
-                try {
-                    request = JSON.parse(lineIter.next());
-                } catch(ex) {
-                }
-                if ( request instanceof Object === false ) { continue; }
-                if ( !request.frameUrl || !request.url ) { continue; }
-                if ( request.cpt === 'document' ) {
-                    request.cpt = 'main_frame';
-                } else if ( request.cpt === 'xhr' ) {
-                    request.cpt = 'xmlhttprequest';
-                }
-                requests.push(request);
-            }
-            return requests;
-        }).catch(details => {
-            console.info(`Not found: ${details.url}`);
-            datasetPromise = undefined;
-        });
-
-        return datasetPromise;
-    };
-})();
 
 /******************************************************************************/
 

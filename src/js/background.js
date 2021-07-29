@@ -312,13 +312,6 @@ const µBlock = {  // jshint ignore:line
         return super.getTabOrigin();
     }
 
-    getTabHostname() {
-        if ( this.tabHostname === undefined ) {
-            this.tabHostname = hostnameFromURI(this.getTabOrigin());
-        }
-        return super.getTabHostname();
-    }
-
     toLogger() {
         this.tstamp = Date.now();
         if ( this.domain === undefined ) {

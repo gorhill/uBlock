@@ -23,8 +23,8 @@
 
 /******************************************************************************/
 
-import µb from './background.js';
 import { LineIterator } from './text-iterators.js';
+import { decomposeHostname } from './uri-utils.js';
 
 /*******************************************************************************
 
@@ -200,7 +200,7 @@ URLNetFiltering.prototype.evaluateZ = function(context, target, type) {
     if ( this.rules.size === 0 ) {
         return 0;
     }
-    µb.decomposeHostname(context, this.decomposedSource);
+    decomposeHostname(context, this.decomposedSource);
     for ( let shn of this.decomposedSource ) {
         this.context = shn;
         let entries = this.rules.get(shn + ' ' + type);

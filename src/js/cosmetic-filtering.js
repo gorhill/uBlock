@@ -31,12 +31,6 @@ import {
     StaticExtFilteringSessionDB,
 } from './static-ext-filtering-db.js';
 
-import {
-    domainFromHostname,
-    entityFromDomain,
-    hostnameFromURI,
-} from './uri-utils.js';
-
 /******************************************************************************/
 
 const cosmeticSurveyingMissCountMax =
@@ -1133,43 +1127,6 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
 
 FilterContainer.prototype.getFilterCount = function() {
     return this.acceptedCount - this.discardedCount;
-};
-
-/******************************************************************************/
-
-FilterContainer.prototype.benchmark = async function() {
-    const requests = await µb.loadBenchmarkDataset();
-    if ( Array.isArray(requests) === false || requests.length === 0 ) {
-        console.info('No requests found to benchmark');
-        return;
-    }
-    console.info('Benchmarking cosmeticFilteringEngine.retrieveSpecificSelectors()...');
-    const details = {
-        tabId: undefined,
-        frameId: undefined,
-        hostname: '',
-        domain: '',
-        entity: '',
-    };
-    const options = {
-        noSpecificCosmeticFiltering: false,
-        noGenericCosmeticFiltering: false,
-    };
-    let count = 0;
-    const t0 = self.performance.now();
-    for ( let i = 0; i < requests.length; i++ ) {
-        const request = requests[i];
-        if ( request.cpt !== 'main_frame' ) { continue; }
-        count += 1;
-        details.hostname = hostnameFromURI(request.url);
-        details.domain = domainFromHostname(details.hostname);
-        details.entity = entityFromDomain(details.domain);
-        void this.retrieveSpecificSelectors(details, options);
-    }
-    const t1 = self.performance.now();
-    const dur = t1 - t0;
-    console.info(`Evaluated ${count} requests in ${dur.toFixed(0)} ms`);
-    console.info(`\tAverage: ${(dur / count).toFixed(3)} ms per request`);
 };
 
 /******************************************************************************/

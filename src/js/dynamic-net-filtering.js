@@ -28,9 +28,12 @@
 import '../lib/punycode.js';
 
 import globals from './globals.js';
-import µb from './background.js';
-import { domainFromHostname } from './uri-utils.js';
 import { LineIterator } from './text-iterators.js';
+
+import {
+    decomposeHostname,
+    domainFromHostname,
+} from './uri-utils.js';
 
 /******************************************************************************/
 
@@ -266,7 +269,7 @@ const Matrix = class {
 
 
     evaluateCellZ(srcHostname, desHostname, type) {
-        µb.decomposeHostname(srcHostname, this.decomposedSource);
+        decomposeHostname(srcHostname, this.decomposedSource);
         this.type = type;
         const bitOffset = typeBitOffsets[type];
         for ( const shn of this.decomposedSource ) {
@@ -296,7 +299,7 @@ const Matrix = class {
         // Precedence: from most specific to least specific
 
         // Specific-destination, any party, any type
-        µb.decomposeHostname(desHostname, this.decomposedDestination);
+        decomposeHostname(desHostname, this.decomposedDestination);
         for ( const dhn of this.decomposedDestination ) {
             if ( dhn === '*' ) { break; }
             this.y = dhn;
@@ -505,32 +508,6 @@ const Matrix = class {
         this.rules = new Map(selfie.rules);
         this.changed = true;
         return true;
-    }
-
-
-    async benchmark() {
-        const requests = await µb.loadBenchmarkDataset();
-        if ( Array.isArray(requests) === false || requests.length === 0 ) {
-            console.info('No requests found to benchmark');
-            return;
-        }
-        console.info(`Benchmarking sessionFirewall.evaluateCellZY()...`);
-        const fctxt = µb.filteringContext.duplicate();
-        const t0 = self.performance.now();
-        for ( const request of requests ) {
-            fctxt.setURL(request.url);
-            fctxt.setTabOriginFromURL(request.frameUrl);
-            fctxt.setType(request.cpt);
-            this.evaluateCellZY(
-                fctxt.getTabHostname(),
-                fctxt.getHostname(),
-                fctxt.type
-            );
-        }
-        const t1 = self.performance.now();
-        const dur = t1 - t0;
-        console.info(`Evaluated ${requests.length} requests in ${dur.toFixed(0)} ms`);
-        console.info(`\tAverage: ${(dur / requests.length).toFixed(3)} ms per request`);
     }
 };
 

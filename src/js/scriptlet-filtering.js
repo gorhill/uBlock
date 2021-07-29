@@ -430,38 +430,6 @@ scriptletFilteringEngine.fromSelfie = function(selfie) {
     scriptletDB.fromSelfie(selfie);
 };
 
-scriptletFilteringEngine.benchmark = async function() {
-    const requests = await µb.loadBenchmarkDataset();
-    if ( Array.isArray(requests) === false || requests.length === 0 ) {
-        console.info('No requests found to benchmark');
-        return;
-    }
-    console.info('Benchmarking scriptletFilteringEngine.retrieve()...');
-    const details = {
-        domain: '',
-        entity: '',
-        hostname: '',
-        tabId: 0,
-        url: '',
-    };
-    let count = 0;
-    const t0 = self.performance.now();
-    for ( let i = 0; i < requests.length; i++ ) {
-        const request = requests[i];
-        if ( request.cpt !== 'main_frame' ) { continue; }
-        count += 1;
-        details.url = request.url;
-        details.hostname = hostnameFromURI(request.url);
-        details.domain = domainFromHostname(details.hostname);
-        details.entity = entityFromDomain(details.domain);
-        void this.retrieve(details);
-    }
-    const t1 = self.performance.now();
-    const dur = t1 - t0;
-    console.info(`Evaluated ${count} requests in ${dur.toFixed(0)} ms`);
-    console.info(`\tAverage: ${(dur / count).toFixed(3)} ms per request`);
-};
-
 /******************************************************************************/
 
 export default scriptletFilteringEngine;

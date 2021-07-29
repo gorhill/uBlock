@@ -28,8 +28,8 @@
 import '../lib/punycode.js';
 
 import globals from './globals.js';
-import µb from './background.js';
 import { LineIterator } from './text-iterators.js';
+import { decomposeHostname } from './uri-utils.js';
 
 /******************************************************************************/
 
@@ -228,7 +228,7 @@ HnSwitches.prototype.evaluateZ = function(switchName, hostname) {
         return false;
     }
     this.n = switchName;
-    µb.decomposeHostname(hostname, this.decomposedSource);
+    decomposeHostname(hostname, this.decomposedSource);
     for ( const shn of this.decomposedSource ) {
         let bits = this.switches.get(shn);
         if ( bits !== undefined ) {
