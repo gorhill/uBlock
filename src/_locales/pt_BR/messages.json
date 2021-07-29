@@ -268,11 +268,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilterTip": {
-    "message": "↑: Enfatizar as linhas as quais tem scripts de terceiros",
+    "message": "↑: Realçar linhas que contêm scripts de terceiros",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party scripts' cell"
   },
   "popup3pFrameFilterTip": {
-    "message": "↑: Enfatizar as linhas as quais tem frames de terceiros",
+    "message": "↑: Realçar linhas que contêm frames de terceiros",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party frames' cell"
   },
   "pickerCreate": {
@@ -892,7 +892,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "As próprias de filtros do uBO estão hospedadas gratuitamente nos seguintes <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
+    "message": "As listas de filtros do uBO estão hospedadas gratuitamente nos seguintes <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
@@ -1056,7 +1056,7 @@
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Subscrever na lista de filtros...",
+    "message": "Inscrever-se na lista de filtros...",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {

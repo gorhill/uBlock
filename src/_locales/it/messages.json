@@ -892,11 +892,11 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "Gli elenchi di filtri di uBO sono liberamente ospitati sul seguente <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a>:",
+    "message": "Gli elenchi di filtri di uBO sono liberamente ospitati sulla seguente <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a>:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "Un CDN selezionato a caso verrà utilizzato quando è necessario aggiornare un elenco di filtri",
+    "message": "Una CDN selezionata casualmente verrà utilizzata quando è necessario aggiornare un elenco di filtri",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {

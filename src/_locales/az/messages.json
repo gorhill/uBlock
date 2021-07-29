@@ -228,7 +228,7 @@
     "description": ""
   },
   "popupImageRulePrompt": {
-    "message": "şəkillər",
+    "message": "təsvirlər",
     "description": ""
   },
   "popup3pAnyRulePrompt": {
@@ -236,7 +236,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "3-cü tərəf CSS/şəkillər",
+    "message": "3-cü tərəf CSS/təsvirlər",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -284,11 +284,11 @@
     "description": "English: Pick"
   },
   "pickerQuit": {
-    "message": "Çıx",
+    "message": "Çıxış",
     "description": "English: Quit"
   },
   "pickerPreview": {
-    "message": "İlkin baxış",
+    "message": "Önbaxış",
     "description": "Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters": {
@@ -312,7 +312,7 @@
     "description": "English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt": {
-    "message": "Əngəllənmiş sorğuların sayını piktoqramda göstər",
+    "message": "Əngəllənən tələb sayını nişan üstündə göstər",
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
