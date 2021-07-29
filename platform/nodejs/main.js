@@ -81,14 +81,16 @@ function applyList(name, raw) {
 }
 
 async function enableWASM() {
-    const wasmModuleFetcher = async function(path) {
-        return new Promise(async (resolve, reject) => {
+    const wasmModuleFetcher = function(path) {
+        return new Promise((resolve, reject) => {
             const require = createRequire(import.meta.url); // jshint ignore:line
             const fs = require('fs');
             fs.readFile(`${path}.wasm`, null, (err, data) => {
                 if ( err ) { return reject(err); }
                 return globals.WebAssembly.compile(data).then(module => {
                     resolve(module);
+                }).catch(reason => {
+                    reject(reason);
                 });
             });
         });
