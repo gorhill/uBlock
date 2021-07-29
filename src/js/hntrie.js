@@ -456,10 +456,10 @@ const HNTrieContainer = class {
         return n === hr || hn.charCodeAt(hl-1) === 0x2E /* '.' */;
     }
 
-    async enableWASM(modulePath) {
+    async enableWASM(wasmModuleFetcher, path) {
         if ( typeof WebAssembly !== 'object' ) { return false; }
         if ( this.wasmMemory instanceof WebAssembly.Memory ) { return true; }
-        const module = await getWasmModule(modulePath);
+        const module = await getWasmModule(wasmModuleFetcher, path);
         if ( module instanceof WebAssembly.Module === false ) { return false; }
         const memory = new WebAssembly.Memory({ initial: 2 });
         const instance = await WebAssembly.instantiate(module, {
@@ -483,6 +483,7 @@ const HNTrieContainer = class {
         this.buf32 = new Uint32Array(this.buf.buffer);
         this.matches = this.matchesWASM = instance.exports.matches;
         this.add = this.addWASM = instance.exports.add;
+        return true;
     }
 
     //--------------------------------------------------------------------------
@@ -767,17 +768,12 @@ HNTrieContainer.prototype.HNTrieRef.prototype.needle = '';
 const getWasmModule = (( ) => {
     let wasmModulePromise;
 
-    return async function(modulePath) {
+    return async function(wasmModuleFetcher, path) {
         if ( wasmModulePromise instanceof Promise ) {
             return wasmModulePromise;
         }
 
-        if (
-            typeof WebAssembly !== 'object' ||
-            typeof WebAssembly.compileStreaming !== 'function'
-        ) {
-            return;
-        }
+        if ( typeof WebAssembly !== 'object' ) { return; }
 
         // Soft-dependency on vAPI so that the code here can be used outside of
         // uBO (i.e. tests, benchmarks)
@@ -790,12 +786,7 @@ const getWasmModule = (( ) => {
         uint32s[0] = 1;
         if ( uint8s[0] !== 1 ) { return; }
 
-        wasmModulePromise = fetch(
-            `${modulePath}/wasm/hntrie.wasm`,
-            { mode: 'same-origin' }
-        ).then(
-            WebAssembly.compileStreaming
-        ).catch(reason => {
+        wasmModulePromise = wasmModuleFetcher(`${path}hntrie`).catch(reason => {
             console.info(reason);
         });
 

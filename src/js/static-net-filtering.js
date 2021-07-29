@@ -4448,12 +4448,14 @@ FilterContainer.prototype.getFilterCount = function() {
 
 /******************************************************************************/
 
-FilterContainer.prototype.enableWASM = function(modulePath) {
+FilterContainer.prototype.enableWASM = function(wasmModuleFetcher, path) {
     return Promise.all([
-        bidiTrie.enableWASM(modulePath),
-        filterOrigin.trieContainer.enableWASM(modulePath),
-        FilterHostnameDict.trieContainer.enableWASM(modulePath),
-    ]);
+        bidiTrie.enableWASM(wasmModuleFetcher, path),
+        filterOrigin.trieContainer.enableWASM(wasmModuleFetcher, path),
+        FilterHostnameDict.trieContainer.enableWASM(wasmModuleFetcher, path),
+    ]).then(results => {
+        return results.every(a => a === true);
+    });
 };
 
 /******************************************************************************/

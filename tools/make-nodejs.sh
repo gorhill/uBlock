@@ -16,6 +16,9 @@ cp src/js/static-filtering-io.js     $DES/js
 cp src/js/text-iterators.js          $DES/js
 cp src/js/uri-utils.js               $DES/js
 
+mkdir -p $DES/js/wasm
+cp src/js/wasm/*                     $DES/js/wasm/
+
 mkdir -p $DES/lib
 cp -R src/lib/punycode.js      $DES/lib/
 cp -R src/lib/publicsuffixlist $DES/lib/

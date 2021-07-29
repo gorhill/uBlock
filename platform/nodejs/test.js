@@ -28,6 +28,7 @@
 import { createRequire } from 'module';
 
 import {
+    enableWASM,
     FilteringContext,
     pslInit,
     restart,
@@ -43,13 +44,14 @@ function fetch(listName) {
 }
 
 (async ( ) => {
-    /*
-     * WASM require fetch(), not present in Node
-        try {
-            await enableWASM('//ublock/dist/build/uBlock0.nodejs');
-        } catch(ex) {
+    try {
+        const result = await enableWASM();
+        if ( result !== true ) {
+            console.log('Failed to enable all WASM code paths');
         }
-    */
+    } catch(ex) {
+        console.log(ex);
+    }
 
     await pslInit();
 

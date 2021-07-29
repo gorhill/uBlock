@@ -25,6 +25,7 @@
 
 import cacheStorage from './cachestorage.js';
 import contextMenu from './contextmenu.js';
+import globals from './globals.js';
 import io from './assets.js';
 import lz4Codec from './lz4.js';
 import staticExtFilteringEngine from './static-ext-filtering.js';
@@ -343,7 +344,15 @@ try {
     }
 
     if ( µb.hiddenSettings.disableWebAssembly !== true ) {
-        staticNetFilteringEngine.enableWASM('/js').then(( ) => {
+        const wasmModuleFetcher = async function(path) {
+            return fetch(`${path}.wasm`, { mode: 'same-origin' }).then(
+                globals.WebAssembly.compileStreaming
+            ).catch(reason => {
+                ubolog(reason);
+            });
+        };
+        staticNetFilteringEngine.enableWASM(wasmModuleFetcher, './js/wasm/').then(result => {
+            if ( result !== true ) { return; }
             ubolog(`WASM modules ready ${Date.now()-vAPI.T0} ms after launch`);
         });
     }

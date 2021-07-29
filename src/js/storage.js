@@ -1194,17 +1194,36 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
 µb.loadPublicSuffixList = async function() {
     const psl = globals.publicSuffixList;
+
+    // WASM is nice but not critical
     if ( this.hiddenSettings.disableWebAssembly !== true ) {
-        psl.enableWASM('/lib/publicsuffixlist');
+        const wasmModuleFetcher = function(path) {
+            return fetch( `${path}.wasm`, {
+                mode: 'same-origin'
+            }).then(
+                globals.WebAssembly.compileStreaming
+            ).catch(reason => {
+                ubolog(reason);
+            });
+        };
+        let result = false;
+        try {
+            result = await psl.enableWASM(wasmModuleFetcher,
+                './lib/publicsuffixlist/wasm/'
+            );
+        } catch(reason) {
+            ubolog(reason);
+        }
+        if ( result ) {
+            ubolog(`WASM PSL ready ${Date.now()-vAPI.T0} ms after launch`);
+        }
     }
 
     try {
         const result = await io.get(`compiled/${this.pslAssetKey}`);
-        if ( psl.fromSelfie(result.content, sparseBase64) ) {
-            return;
-        }
-    } catch (ex) {
-        ubolog(ex);
+        if ( psl.fromSelfie(result.content, sparseBase64) ) { return; }
+    } catch (reason) {
+        ubolog(reason);
     }
 
     const result = await io.get(this.pslAssetKey);

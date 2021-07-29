@@ -80,11 +80,35 @@ function applyList(name, raw) {
     snfe.fromCompiled(reader);
 }
 
-function enableWASM(path) {
-    return Promise.all([
-        globals.publicSuffixList.enableWASM(`${path}/lib/publicsuffixlist`),
-        snfe.enableWASM(`${path}/js`),
-    ]);
+async function enableWASM() {
+    const wasmModuleFetcher = async function(path) {
+        return new Promise(async (resolve, reject) => {
+            const require = createRequire(import.meta.url); // jshint ignore:line
+            const fs = require('fs');
+            fs.readFile(`${path}.wasm`, null, (err, data) => {
+                if ( err ) { return reject(err); }
+                return globals.WebAssembly.compile(data).then(module => {
+                    resolve(module);
+                });
+            });
+        });
+    };
+    try {
+        const results = await Promise.all([
+            globals.publicSuffixList.enableWASM(
+                wasmModuleFetcher,
+                './lib/publicsuffixlist/wasm/'
+            ),
+            snfe.enableWASM(
+                wasmModuleFetcher,
+                './js/wasm/'
+            ),
+        ]);
+        return results.every(a => a === true);
+    } catch(reason) {
+        console.info(reason);
+    }
+    return false;
 }
 
 function pslInit(raw) {
