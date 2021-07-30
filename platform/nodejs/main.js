@@ -123,6 +123,7 @@ function pslInit(raw) {
         }
     }
     globals.publicSuffixList.parse(raw, globals.punycode.toASCII);
+    return globals.publicSuffixList;
 }
 
 function restart(lists, options = {}) {
