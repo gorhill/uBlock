@@ -2,6 +2,8 @@
 #
 # This script assumes a linux environment
 
+set -e
+
 echo "*** Update submodules"
 
 git submodule update --remote

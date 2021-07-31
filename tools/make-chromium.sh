@@ -2,6 +2,8 @@
 #
 # This script assumes a linux environment
 
+set -e
+
 echo "*** uBlock0.chromium: Creating web store package"
 
 DES=dist/build/uBlock0.chromium

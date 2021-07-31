@@ -2,6 +2,8 @@
 #
 # This script assumes a linux environment
 
+set -e
+
 echo "*** uBlock0.opera: Creating web store package"
 
 DES=dist/build/uBlock0.opera
