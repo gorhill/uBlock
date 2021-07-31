@@ -34,7 +34,7 @@ install-nodejs-link: dist/build/uBlock0.nodejs
 	npm install dist/build/uBlock0.nodejs --no-save
 
 dist/build/uBlock0.nodejs.tgz: dist/build/uBlock0.nodejs
-	tar czf dist/build/uBlock0.nodejs.tgz --strip-components 2 dist/build/uBlock0.nodejs
+	cd dist/build && tar czf uBlock0.nodejs.tgz uBlock0.nodejs
 
 # Install the Node.js package.
 install-nodejs: dist/build/uBlock0.nodejs.tgz
