@@ -2,6 +2,8 @@
 #
 # This script assumes a linux environment
 
+set -e
+
 echo "*** uBlock0.firefox: Creating web store package"
 
 BLDIR=dist/build

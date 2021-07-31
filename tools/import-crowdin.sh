@@ -2,6 +2,8 @@
 #
 # This script assumes a linux environment
 
+set -e
+
 echo "*** uBlock: Importing from Crowdin archive"
 
 SRC=~/Downloads/crowdin

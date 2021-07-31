@@ -2,6 +2,8 @@
 #
 # This script assumes a linux environment
 
+set -e
+
 DES=$1
 
 bash ./tools/make-assets.sh        $DES

@@ -2,6 +2,8 @@
 #
 # This script assumes a linux environment
 
+set -e
+
 echo "*** uBlock0.thunderbird: Creating web store package"
 
 BLDIR=dist/build
