@@ -24,8 +24,11 @@
 /******************************************************************************/
 
 import io from './assets.js';
-import µb from './background.js';
-import { LineIterator } from './text-iterators.js';
+
+import {
+    LineIterator,
+    orphanizeString,
+} from './text-utils.js';
 
 /******************************************************************************/
 
@@ -409,7 +412,7 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
         // No more data, add the resource.
         const name = this.aliases.get(fields[0]) || fields[0];
         const mime = fields[1];
-        const content = µb.orphanizeString(
+        const content = orphanizeString(
             fields.slice(2).join(encoded ? '' : '\n')
         );
         this.resources.set(

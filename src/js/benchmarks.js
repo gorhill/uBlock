@@ -30,8 +30,8 @@ import scriptletFilteringEngine from './scriptlet-filtering.js';
 import staticNetFilteringEngine from './static-net-filtering.js';
 import µb from './background.js';
 import { FilteringContext } from './filtering-context.js';
+import { LineIterator } from './text-utils.js';
 import { sessionFirewall } from './dynamic-net-filtering.js';
-import { LineIterator } from './text-iterators.js';
 
 import {
     domainFromHostname,

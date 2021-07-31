@@ -36,7 +36,6 @@ import staticFilteringReverseLookup from './reverselookup.js';
 import staticNetFilteringEngine from './static-net-filtering.js';
 import µb from './background.js';
 import { hostnameFromURI } from './uri-utils.js';
-import { LineIterator } from './text-iterators.js';
 import { permanentFirewall } from './dynamic-net-filtering.js';
 import { permanentSwitches } from './hnswitches.js';
 import { permanentURLFiltering } from './url-net-filtering.js';
@@ -49,6 +48,11 @@ import {
     CompiledListReader,
     CompiledListWriter,
 } from './static-filtering-io.js';
+
+import {
+    LineIterator,
+    orphanizeString,
+} from './text-utils.js';
 
 /******************************************************************************/
 
@@ -898,10 +902,6 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
 // https://github.com/gorhill/uBlock/issues/3406
 //   Lower minimum update period to 1 day.
-// https://bugs.chromium.org/p/v8/issues/detail?id=2869
-//   orphanizeString is to work around String.slice() potentially causing
-//   the whole raw filter list to be held in memory just because we cut out
-//   the title as a substring.
 
 µb.extractFilterListMetadata = function(assetKey, raw) {
     const listEntry = this.availableFilterLists[assetKey];
@@ -914,13 +914,13 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         let matches = head.match(/(?:^|\n)(?:!|# )[\t ]*Title[\t ]*:([^\n]+)/i);
         const title = matches && matches[1].trim() || '';
         if ( title !== '' && title !== listEntry.title ) {
-            listEntry.title = this.orphanizeString(title);
+            listEntry.title = orphanizeString(title);
             io.registerAssetSource(assetKey, { title });
         }
         matches = head.match(/(?:^|\n)(?:!|# )[\t ]*Homepage[\t ]*:[\t ]*(https?:\/\/\S+)\s/i);
         const supportURL = matches && matches[1] || '';
         if ( supportURL !== '' && supportURL !== listEntry.supportURL ) {
-            listEntry.supportURL = this.orphanizeString(supportURL);
+            listEntry.supportURL = orphanizeString(supportURL);
             io.registerAssetSource(assetKey, { supportURL });
         }
     }

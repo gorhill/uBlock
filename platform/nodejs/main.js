@@ -31,7 +31,7 @@ import './lib/publicsuffixlist/publicsuffixlist.js';
 import globals from './js/globals.js';
 import snfe from './js/static-net-filtering.js';
 import { FilteringContext } from './js/filtering-context.js';
-import { LineIterator } from './js/text-iterators.js';
+import { LineIterator } from './js/text-utils.js';
 import { StaticFilteringParser } from './js/static-filtering-parser.js';
 
 import {

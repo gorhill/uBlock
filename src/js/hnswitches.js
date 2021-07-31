@@ -28,7 +28,7 @@
 import '../lib/punycode.js';
 
 import globals from './globals.js';
-import { LineIterator } from './text-iterators.js';
+import { LineIterator } from './text-utils.js';
 import { decomposeHostname } from './uri-utils.js';
 
 /******************************************************************************/

@@ -27,6 +27,7 @@ import contextMenu from './contextmenu.js';
 import logger from './logger.js';
 import staticNetFilteringEngine from './static-net-filtering.js';
 import µb from './background.js';
+import { orphanizeString } from './text-utils.js';
 import { redirectEngine } from './redirect-engine.js';
 import { sessionFirewall } from './dynamic-net-filtering.js';
 import { sessionSwitches } from './hnswitches.js';
@@ -468,7 +469,7 @@ const PageStore = class {
         ) {
             return false;
         }
-        this.title = µb.orphanizeString(details.title.slice(0, 128));
+        this.title = orphanizeString(details.title.slice(0, 128));
         return true;
     }
 

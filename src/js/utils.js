@@ -141,14 +141,6 @@ import µb from './background.js';
 
 /******************************************************************************/
 
-// TODO: evaluate using TextEncoder/TextDecoder
-
-µb.orphanizeString = function(s) {
-    return JSON.parse(JSON.stringify(s));
-};
-
-/******************************************************************************/
-
 µb.fireDOMEvent = function(name) {
     if (
         window instanceof Object &&
