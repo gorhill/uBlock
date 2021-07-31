@@ -16,13 +16,20 @@ cp src/js/static-filtering-io.js     $DES/js
 cp src/js/text-iterators.js          $DES/js
 cp src/js/uri-utils.js               $DES/js
 
-mkdir -p $DES/js/wasm
-cp src/js/wasm/*                     $DES/js/wasm/
-
 mkdir -p $DES/lib
 cp -R src/lib/punycode.js      $DES/lib/
-cp -R src/lib/publicsuffixlist $DES/lib/
 cp -R src/lib/regexanalyzer    $DES/lib/
+cp -R src/lib/publicsuffixlist $DES/lib/
+
+# Convert wasm modules into json arrays
+mkdir -p $DES/js/wasm
+cp src/js/wasm/*                     $DES/js/wasm/
+node -pe "JSON.stringify(Array.from(fs.readFileSync('src/js/wasm/hntrie.wasm')))" \
+    > $DES/js/wasm/hntrie.wasm.json
+node -pe "JSON.stringify(Array.from(fs.readFileSync('src/js/wasm/biditrie.wasm')))" \
+    > $DES/js/wasm/biditrie.wasm.json
+node -pe "JSON.stringify(Array.from(fs.readFileSync('src/lib/publicsuffixlist/wasm/publicsuffixlist.wasm')))" \
+    > $DES/lib/publicsuffixlist/wasm/publicsuffixlist.wasm.json
 
 git submodule update --depth 1 --init
 UASSETS=submodules/uAssets
