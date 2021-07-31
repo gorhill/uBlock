@@ -97,9 +97,12 @@ vAPI.messaging = {
     //   as world-ending, i.e. stay around. Except for embedded frames.
 
     disconnectListener: function() {
+        void browser.runtime.lastError;
         this.port = null;
         if ( window !== window.top ) {
             vAPI.shutdown.exec();
+        } else {
+            this.destroyPort();
         }
     },
     disconnectListenerBound: null,
@@ -129,11 +132,10 @@ vAPI.messaging = {
     messageListenerBound: null,
 
     canDestroyPort: function() {
-        return this.pending.size === 0 &&
-            (
-                this.extensions.length === 0 ||
-                this.extensions.every(e => e.canDestroyPort())
-            );
+        return this.pending.size === 0 && (
+            this.extensions.length === 0 ||
+            this.extensions.every(e => e.canDestroyPort())
+        );
     },
 
     mustDestroyPort: function() {
