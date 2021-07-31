@@ -42,7 +42,14 @@
         if ( meta === null ) { return; }
         let match = reMetaContent.exec(meta.getAttribute('content'));
         if ( match === null || match[3].trim() === '' ) { return; }
-        let url = new URL(match[3], document.baseURI);
+
+        let url;
+        try {
+            url = new URL(match[3], document.baseURI);
+        } catch(ex) {
+            return;
+        }
+
         if ( reSafeURL.test(url.href) === false ) { return; }
         redirectTimer = setTimeout(( ) => {
                 location.assign(url.href);
