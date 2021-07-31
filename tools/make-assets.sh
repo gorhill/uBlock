@@ -2,6 +2,8 @@
 #
 # This script assumes a linux environment
 
+set -e
+
 DES=$1/assets
 
 echo "*** Packaging assets in $DES... "
