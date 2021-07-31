@@ -44,5 +44,9 @@ install-nodejs: dist/build/uBlock0.nodejs.tgz
 uninstall-nodejs:
 	npm uninstall uBO-snfe --no-save
 
+# Update submodules.
+update-submodules:
+	tools/update-submodules.sh
+
 clean:
 	rm -rf dist/build
