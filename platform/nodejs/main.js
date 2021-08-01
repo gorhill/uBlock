@@ -101,6 +101,20 @@ async function enableWASM() {
 function pslInit(raw) {
     if ( typeof raw !== 'string' || raw.trim() === '' ) {
         const require = createRequire(import.meta.url); // jshint ignore:line
+
+        let serialized = null;
+
+        // Use serialized version if available
+        try {
+            serialized = require('./build/publicsuffixlist.json');
+        } catch (error) {
+        }
+
+        if (serialized !== null) {
+            globals.publicSuffixList.fromSelfie(serialized);
+            return globals.publicSuffixList;
+        }
+
         raw = require('./data/effective_tld_names.json');
         if ( typeof raw !== 'string' || raw.trim() === '' ) {
             console.error('Unable to populate public suffix list');
