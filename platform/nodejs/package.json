@@ -5,7 +5,7 @@
   "type": "module",
   "main": "main.js",
   "scripts": {
-    "install": "node install.js",
+    "install": "node install.js && rollup main.js --file bundle.min.cjs --format cjs --context global --plugin terser",
     "test": "node test.js"
   },
   "repository": {
@@ -22,5 +22,9 @@
   "bugs": {
     "url": "https://github.com/gorhill/uBlock/issues"
   },
-  "homepage": "https://github.com/gorhill/uBlock#readme"
+  "homepage": "https://github.com/gorhill/uBlock#readme",
+  "dependencies": {
+    "rollup": "^2.55.1",
+    "rollup-plugin-terser": "^7.0.2"
+  }
 }
