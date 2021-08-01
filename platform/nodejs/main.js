@@ -146,6 +146,14 @@ function reset() {
     snfe.reset();
 }
 
+// rollup.js needs module.exports to be set back to the local exports object.
+// This is because some of the code (e.g. publicsuffixlist.js) sets
+// module.exports. Once all included files are written like ES modules, using
+// export statements, this should no longer be necessary.
+if (typeof module !== 'undefined' && typeof exports !== 'undefined') {
+  module.exports = exports;
+}
+
 export {
     FilteringContext,
     enableWASM,
