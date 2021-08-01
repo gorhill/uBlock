@@ -23,7 +23,7 @@
 
 /******************************************************************************/
 
-import '../lib/publicsuffixlist/publicsuffixlist.js';
+import psl from '../lib/publicsuffixlist/publicsuffixlist.js';
 import '../lib/punycode.js';
 
 import globals from './globals.js';
@@ -33,7 +33,6 @@ import globals from './globals.js';
 // Originally:
 // https://github.com/gorhill/uBlock/blob/8b5733a58d3acf9fb62815e14699c986bd1c2fdc/src/js/uritools.js
 
-const psl = globals.publicSuffixList;
 const punycode = globals.punycode;
 
 const reCommonHostnameFromURL =

@@ -26,7 +26,7 @@
 import { createRequire } from 'module';
 
 import './lib/punycode.js';
-import './lib/publicsuffixlist/publicsuffixlist.js';
+import psl from './lib/publicsuffixlist/publicsuffixlist.js';
 
 import globals from './js/globals.js';
 import snfe from './js/static-net-filtering.js';
@@ -88,7 +88,7 @@ async function enableWASM() {
     };
     try {
         const results = await Promise.all([
-            globals.publicSuffixList.enableWASM(wasmModuleFetcher, './lib/publicsuffixlist/wasm/'),
+            psl.enableWASM(wasmModuleFetcher, './lib/publicsuffixlist/wasm/'),
             snfe.enableWASM(wasmModuleFetcher, './js/wasm/'),
         ]);
         return results.every(a => a === true);
@@ -111,8 +111,8 @@ function pslInit(raw) {
         }
 
         if (serialized !== null) {
-            globals.publicSuffixList.fromSelfie(serialized);
-            return globals.publicSuffixList;
+            psl.fromSelfie(serialized);
+            return psl;
         }
 
         raw = require('./data/effective_tld_names.json');
@@ -121,8 +121,8 @@ function pslInit(raw) {
             return;
         }
     }
-    globals.publicSuffixList.parse(raw, globals.punycode.toASCII);
-    return globals.publicSuffixList;
+    psl.parse(raw, globals.punycode.toASCII);
+    return psl;
 }
 
 function restart(lists, options = {}) {

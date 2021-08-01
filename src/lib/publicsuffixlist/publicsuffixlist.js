@@ -43,7 +43,7 @@
 
 /******************************************************************************/
 
-(function(context) {
+const publicSuffixList = (function(context) {
 // >>>>>>>> start of anonymous namespace
 
 /*******************************************************************************
@@ -614,11 +614,7 @@ context.publicSuffixList = {
     disableWASM, enableWASM,
 };
 
-if ( typeof module !== 'undefined' ) { 
-    module.exports = context.publicSuffixList;
-} else if ( typeof exports !== 'undefined' ) {
-    exports = context.publicSuffixList;
-}
+return context.publicSuffixList;
 
 /******************************************************************************/
 
@@ -634,3 +630,5 @@ if ( typeof module !== 'undefined' ) {
         throw new Error('unable to locate global object');
     })(this)
 );
+
+export default publicSuffixList;

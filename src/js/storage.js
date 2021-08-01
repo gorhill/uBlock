@@ -23,7 +23,7 @@
 
 /******************************************************************************/
 
-import '../lib/publicsuffixlist/publicsuffixlist.js';
+import psl from '../lib/publicsuffixlist/publicsuffixlist.js';
 import '../lib/punycode.js';
 
 import cosmeticFilteringEngine from './cosmetic-filtering.js';
@@ -1193,8 +1193,6 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 /******************************************************************************/
 
 µb.loadPublicSuffixList = async function() {
-    const psl = globals.publicSuffixList;
-
     // WASM is nice but not critical
     if ( this.hiddenSettings.disableWebAssembly !== true ) {
         const wasmModuleFetcher = function(path) {
@@ -1233,7 +1231,6 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 };
 
 µb.compilePublicSuffixList = function(content) {
-    const psl = globals.publicSuffixList;
     psl.parse(content, globals.punycode.toASCII);
     io.put(`compiled/${this.pslAssetKey}`, psl.toSelfie(sparseBase64));
 };
