@@ -5,6 +5,7 @@
   "type": "module",
   "main": "main.js",
   "scripts": {
+    "install": "node install.js",
     "test": "node test.js"
   },
   "repository": {
