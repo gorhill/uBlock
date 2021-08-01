@@ -39,13 +39,13 @@ UASSETS=submodules/uAssets
 # https://github.com/uBlockOrigin/uBlock-issues/issues/1664#issuecomment-888332409
 THIRDPARTY=$UASSETS/thirdparties/publicsuffix.org
 mkdir -p $DES/data
-node -pe "JSON.stringify(fs.readFileSync('$THIRDPARTY/list/effective_tld_names.dat', 'utf8'))" \
-    > $DES/data/effective_tld_names.json
 THIRDPARTY=$UASSETS/thirdparties/easylist-downloads.adblockplus.org
 node -pe "JSON.stringify(fs.readFileSync('$THIRDPARTY/easylist.txt', 'utf8'))" \
     > $DES/data/easylist.json
 node -pe "JSON.stringify(fs.readFileSync('$THIRDPARTY/easyprivacy.txt', 'utf8'))" \
     > $DES/data/easyprivacy.json
+# https://github.com/cliqz-oss/adblocker/pull/2091#issuecomment-890545926
+node ./tools/make-psl.json.js
 
 cp platform/nodejs/*.js   $DES/
 cp platform/nodejs/*.json $DES/
