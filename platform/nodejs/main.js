@@ -25,6 +25,7 @@
 
 import { createRequire } from 'module';
 
+import './lib/punycode.js';
 import './lib/publicsuffixlist/publicsuffixlist.js';
 
 import globals from './js/globals.js';
@@ -97,10 +98,16 @@ async function enableWASM() {
     return false;
 }
 
-function pslInit() {
-    const require = createRequire(import.meta.url); // jshint ignore:line
-    const json = require('./data/publicsuffixlist.json');
-    globals.publicSuffixList.fromSelfie(json);
+function pslInit(raw) {
+    if ( typeof raw !== 'string' || raw.trim() === '' ) {
+        const require = createRequire(import.meta.url); // jshint ignore:line
+        raw = require('./data/effective_tld_names.json');
+        if ( typeof raw !== 'string' || raw.trim() === '' ) {
+            console.error('Unable to populate public suffix list');
+            return;
+        }
+    }
+    globals.publicSuffixList.parse(raw, globals.punycode.toASCII);
     return globals.publicSuffixList;
 }
 
