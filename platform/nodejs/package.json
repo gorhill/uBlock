@@ -1,5 +1,5 @@
 {
-  "name": "uBO-snfe",
+  "name": "ubo-snfe",
   "version": "0.1.0",
   "description": "To create a working instance of uBlock's static network filtering engine",
   "type": "module",
