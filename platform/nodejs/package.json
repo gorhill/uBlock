@@ -1,7 +1,7 @@
 {
-  "name": "ubo-snfe",
+  "name": "@gorhill/ubo-core",
   "version": "0.1.0",
-  "description": "To create a working instance of uBlock's static network filtering engine",
+  "description": "To create a working instance of uBlock Origin's static network filtering engine",
   "type": "module",
   "main": "main.js",
   "scripts": {
