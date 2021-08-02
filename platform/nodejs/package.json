@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "description": "To create a working instance of uBlock Origin's static network filtering engine",
   "type": "module",
-  "main": "main.js",
+  "main": "index.js",
   "scripts": {
-    "install": "node install.js && rollup main.js --file bundle.min.cjs --format cjs --context global --plugin terser",
+    "install": "node install.js",
     "test": "node test.js"
   },
   "repository": {
@@ -23,8 +23,8 @@
     "url": "https://github.com/gorhill/uBlock/issues"
   },
   "homepage": "https://github.com/gorhill/uBlock#readme",
-  "dependencies": {
-    "rollup": "^2.55.1",
-    "rollup-plugin-terser": "^7.0.2"
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.14.4"
   }
 }

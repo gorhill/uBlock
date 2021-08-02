@@ -25,7 +25,7 @@
 
 import fs from 'fs';
 
-import { pslInit } from './main.js';
+import { pslInit } from './index.js';
 
 /******************************************************************************/
 

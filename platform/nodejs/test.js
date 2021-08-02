@@ -32,7 +32,7 @@ import {
     FilteringContext,
     pslInit,
     restart,
-} from './main.js';
+} from './index.js';
 
 /******************************************************************************/
 
