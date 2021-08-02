@@ -892,11 +892,11 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "uBO's own filter lists are freely hosted on the following <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
+    "message": "uBO:n omat suodatinlistat toimitetaan ilmaiseksi seuraavien <a href=\"https://fi.wikipedia.org/wiki/Sis%C3%A4ll%C3%B6njakeluverkko\">jakeluverkkojen</a> välityksellä:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "A randomly picked CDN is used when a filter list needs to be updated",
+    "message": "Suodatinlistojen päivityksiin käytetään satunnaista jakeluverkkoa",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {

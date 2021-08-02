@@ -116,7 +116,7 @@
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "进入元素选择过滤模式",
+    "message": "进入元素选择器模式",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
@@ -124,7 +124,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "是否禁止此网站弹出任何窗口",
+    "message": "是否禁止此网站的所有弹出窗口",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
@@ -364,7 +364,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "屏蔽大于 {{input}} kB 的媒体元素",
+    "message": "屏蔽大于 {{input}} KB 的媒体元素",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -580,7 +580,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "您的列表中针对 µBlock 的主机名将被禁用。每行一条规则。无效的主机名将直接被忽略。",
+    "message": "白名单中的规则适用的页面不会被 uBlock₀ 过滤或阻挡。每行一条规则。无效的规则将被忽略。",
     "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
@@ -888,7 +888,7 @@
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "外部依赖（兼容 GPLv3 协议）：",
+    "message": "外部依赖（与 GPLv3 协议兼容）：",
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
