@@ -1,0 +1,18 @@
+{
+    "env": {
+        "es2021": true,
+        "node": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "rules": {
+        "indent": [ "warn", 4 ],
+        "getter-return": "off",
+        "no-control-regex": "off",
+        "no-empty": [ "error", { "allowEmptyCatch": true } ],
+        "no-useless-escape": "off"
+    }
+}

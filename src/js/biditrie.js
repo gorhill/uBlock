@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* globals WebAssembly */
+/* globals WebAssembly vAPI */
 
 'use strict';
 
@@ -223,7 +223,7 @@ const BidiTrieContainer = class {
             }
             if ( al === aR ) { return 0; }
         }
-        return 0;
+        return 0; // eslint-disable-line no-unreachable
     }
 
     matchesLeft(icell, ar, r) {
@@ -267,7 +267,7 @@ const BidiTrieContainer = class {
                 if ( icell === 0 ) { return 0; }
             }
         }
-        return 0;
+        return 0; // eslint-disable-line no-unreachable
     }
 
     matchesExtra(l, r, ix) {
@@ -513,6 +513,7 @@ const BidiTrieContainer = class {
                     }
                     // TODO: we should never reach here because there will
                     // always be a boundary cell.
+                    // eslint-disable-next-line no-debugger
                     debugger; // jshint ignore:line
                     // boundary cell + needle remainder
                     inext = this.addCell(0, 0, 0);

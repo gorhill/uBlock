@@ -54,6 +54,8 @@ cp platform/nodejs/*.js   $DES/
 cp platform/nodejs/*.json $DES/
 cp LICENSE.txt            $DES/
 
+eslint -c platform/nodejs/eslintrc.json $DES/js $DES/*.js
+
 if [ "$1" = all ]; then
     echo "*** uBlock0.nodejs: Creating plain package..."
     pushd $(dirname $DES/) > /dev/null
