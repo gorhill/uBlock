@@ -25,6 +25,12 @@
 
 import { createRequire } from 'module';
 
+import { readFileSync } from 'fs';
+import { dirname, resolve } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
 import './lib/punycode.js';
 import './lib/publicsuffixlist/publicsuffixlist.js';
 
@@ -40,6 +46,10 @@ import {
 } from './js/static-filtering-io.js';
 
 /******************************************************************************/
+
+function loadJSON(path) {
+    return JSON.parse(readFileSync(resolve(__dirname, path), 'utf8'));
+}
 
 function compileList(rawText, writer, options = {}) {
     const lineIter = new LineIterator(rawText);
@@ -106,8 +116,13 @@ function pslInit(raw) {
 
         // Use serialized version if available
         try {
-            serialized = require('./build/publicsuffixlist.json');
+            // Use loadJSON() because require() would keep the string in memory.
+            serialized = loadJSON('build/publicsuffixlist.json');
         } catch (error) {
+            if (process.env.npm_lifecycle_event !== 'install') {
+                // This should never happen except during package installation.
+                console.error(error);
+            }
         }
 
         if (serialized !== null) {
