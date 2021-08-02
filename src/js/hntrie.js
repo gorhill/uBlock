@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* globals WebAssembly */
+/* globals WebAssembly vAPI */
 
 'use strict';
 
