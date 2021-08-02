@@ -35,7 +35,6 @@ import {
     hostnameFromNetworkURL,
 } from './uri-utils.js';
 
-
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#browser_compatibility
 //
 // This import would be best done dynamically, but since dynamic imports are
@@ -4287,22 +4286,20 @@ FilterContainer.prototype.redirectRequest = function(redirectEngine, fctxt) {
     const highest = directives.length - 1;
     // More than a single directive means more work.
     if ( highest !== 0 ) {
-        directives.sort(
-            FilterContainer.compareRedirectRequests.bind(this, redirectEngine)
-        );
+        directives.sort((a, b) => compareRedirectRequests(redirectEngine, a, b));
     }
     // Redirect to highest-ranked directive
     const directive = directives[highest];
     if ( (directive.bits & AllowAction) === 0 ) {
         const { token } =
-            FilterContainer.parseRedirectRequestValue(directive.modifier);
+            parseRedirectRequestValue(directive.modifier);
         fctxt.redirectURL = redirectEngine.tokenToURL(fctxt, token);
         if ( fctxt.redirectURL === undefined ) { return; }
     }
     return directives;
 };
 
-FilterContainer.parseRedirectRequestValue = function(modifier) {
+const parseRedirectRequestValue = function(modifier) {
     if ( modifier.cache === undefined ) {
         modifier.cache =
             StaticFilteringParser.parseRedirectValue(modifier.value);
@@ -4310,12 +4307,12 @@ FilterContainer.parseRedirectRequestValue = function(modifier) {
     return modifier.cache;
 };
 
-FilterContainer.compareRedirectRequests = function(redirectEngine, a, b) {
+const compareRedirectRequests = function(redirectEngine, a, b) {
     const { token: atok, priority: aint, bits: abits } =
-        FilterContainer.parseRedirectRequestValue(a.modifier);
+        parseRedirectRequestValue(a.modifier);
     if ( redirectEngine.hasToken(atok) === false ) { return -1; }
     const { token: btok, priority: bint, bits: bbits } =
-        FilterContainer.parseRedirectRequestValue(b.modifier);
+        parseRedirectRequestValue(b.modifier);
     if ( redirectEngine.hasToken(btok) === false ) { return 1; }
     if ( abits !== bbits ) {
         if ( (abits & Important) !== 0 ) { return 1; }

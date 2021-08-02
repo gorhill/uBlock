@@ -140,7 +140,7 @@ const onVersionReady = function(lastVersion) {
 
     // Since built-in resources may have changed since last version, we
     // force a reload of all resources.
-    redirectEngine.invalidateResourcesSelfie();
+    redirectEngine.invalidateResourcesSelfie(io);
 
     // https://github.com/LiCybora/NanoDefenderFirefox/issues/196
     //   Toggle on the blocking of CSP reports by default for Firefox.

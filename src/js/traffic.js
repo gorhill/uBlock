@@ -61,6 +61,12 @@ const supportsFloc = document.interestCohort instanceof Function;
 
 /******************************************************************************/
 
+const patchLocalRedirectURL = url => url.charCodeAt(0) === 0x2F /* '/' */
+    ? vAPI.getURL(url)
+    : url;
+
+/******************************************************************************/
+
 // Intercept and filter web requests.
 
 const onBeforeRequest = function(details) {
@@ -102,7 +108,7 @@ const onBeforeRequest = function(details) {
     // Redirected
 
     if ( fctxt.redirectURL !== undefined ) {
-        return { redirectUrl: fctxt.redirectURL };
+        return { redirectUrl: patchLocalRedirectURL(fctxt.redirectURL) };
     }
 
     // Not redirected
@@ -208,7 +214,7 @@ const onBeforeRootFrameRequest = function(fctxt) {
     // Redirected
 
     if ( fctxt.redirectURL !== undefined ) {
-        return { redirectUrl: fctxt.redirectURL };
+        return { redirectUrl: patchLocalRedirectURL(fctxt.redirectURL) };
     }
 
     // Not blocked
@@ -414,7 +420,7 @@ const onBeforeBehindTheSceneRequest = function(fctxt) {
     // Redirected
 
     if ( fctxt.redirectURL !== undefined ) {
-        return { redirectUrl: fctxt.redirectURL };
+        return { redirectUrl: patchLocalRedirectURL(fctxt.redirectURL) };
     }
 
     // Blocked?

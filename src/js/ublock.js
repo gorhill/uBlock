@@ -25,6 +25,7 @@
 
 import contextMenu from './contextmenu.js';
 import cosmeticFilteringEngine from './cosmetic-filtering.js';
+import io from './assets.js';
 import µb from './background.js';
 import { hostnameFromURI } from './uri-utils.js';
 import { redirectEngine } from './redirect-engine.js';
@@ -423,7 +424,7 @@ const matchBucket = function(url, hostname, bucket, start) {
     this.hiddenSettings = hs;
     this.saveHiddenSettings();
     if ( mustReloadResources ) {
-        redirectEngine.invalidateResourcesSelfie();
+        redirectEngine.invalidateResourcesSelfie(io);
         this.loadRedirectResources();
     }
     this.fireDOMEvent('hiddenSettingsChanged');

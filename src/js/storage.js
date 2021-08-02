@@ -1151,11 +1151,19 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
 µb.loadRedirectResources = async function() {
     try {
-        const success = await redirectEngine.resourcesFromSelfie();
+        const success = await redirectEngine.resourcesFromSelfie(io);
         if ( success === true ) { return true; }
 
+        const fetcher = (path, options = undefined) => {
+            if ( path.startsWith('/web_accessible_resources/') ) {
+                path += `?secret=${vAPI.warSecret()}`;
+                return io.fetch(path, options);
+            }
+            return io.fetchText(path);
+        };
+
         const fetchPromises = [
-            redirectEngine.loadBuiltinResources()
+            redirectEngine.loadBuiltinResources(fetcher)
         ];
 
         const userResourcesLocation = this.hiddenSettings.userResourcesLocation;
@@ -1182,7 +1190,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         }
 
         redirectEngine.resourcesFromString(content);
-        redirectEngine.selfieFromResources();
+        redirectEngine.selfieFromResources(io);
     } catch(ex) {
         ubolog(ex);
         return false;
@@ -1617,7 +1625,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
                 this.hiddenSettings.userResourcesLocation !== 'unset' ||
                 vAPI.webextFlavor.soup.has('devbuild')
             ) {
-                redirectEngine.invalidateResourcesSelfie();
+                redirectEngine.invalidateResourcesSelfie(io);
             }
             this.loadFilterLists();
         }

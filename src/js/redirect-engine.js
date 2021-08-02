@@ -23,8 +23,6 @@
 
 /******************************************************************************/
 
-import io from './assets.js';
-
 import {
     LineIterator,
     orphanizeString,
@@ -204,6 +202,14 @@ const mimeFromName = function(name) {
     }
 };
 
+// vAPI.warSecret() is optional, it could be absent in some environments,
+// i.e. nodejs for example. Probably the best approach is to have the
+// "web_accessible_resources secret" added outside by the client of this
+// module, but for now I just want to remove an obstacle to modularization.
+const warSecret = typeof vAPI === 'object' && vAPI !== null
+    ? vAPI.warSecret
+    : ( ) => '';
+
 /******************************************************************************/
 /******************************************************************************/
 
@@ -230,13 +236,19 @@ const RedirectEntry = class {
             fctxt instanceof Object &&
             fctxt.type !== 'xmlhttprequest'
         ) {
-            let url = `${this.warURL}?secret=${vAPI.warSecret()}`;
+            const params = [];
+            const secret = warSecret();
+            if ( secret !== '' ) { params.push(`secret=${secret}`); }
             if ( this.params !== undefined ) {
                 for ( const name of this.params ) {
                     const value = fctxt[name];
                     if ( value === undefined ) { continue; }
-                    url += `&${name}=${encodeURIComponent(value)}`;
+                    params.push(`${name}=${encodeURIComponent(value)}`);
                 }
+            }
+            let url = `${this.warURL}`;
+            if ( params.length !== 0 ) {
+                url += `?${params.join('&')}`;
             }
             return url;
         }
@@ -439,18 +451,18 @@ const removeTopCommentBlock = function(text) {
 
 /******************************************************************************/
 
-RedirectEngine.prototype.loadBuiltinResources = function() {
+RedirectEngine.prototype.loadBuiltinResources = function(fetcher) {
     this.resources = new Map();
     this.aliases = new Map();
 
     const fetches = [
-        io.fetchText(
+        fetcher(
             '/assets/resources/scriptlets.js'
         ).then(result => {
             const content = result.content;
-            if ( typeof content === 'string' && content.length !== 0 ) {
-                this.resourcesFromString(content);
-            }
+            if ( typeof content !== 'string' ) { return; }
+            if ( content.length === 0 ) { return; }
+            this.resourcesFromString(content);
         }),
     ];
 
@@ -459,7 +471,7 @@ RedirectEngine.prototype.loadBuiltinResources = function() {
         const entry = RedirectEntry.fromSelfie({
             mime: mimeFromName(name),
             data,
-            warURL: vAPI.getURL(`/web_accessible_resources/${name}`),
+            warURL: `/web_accessible_resources/${name}`,
             params: details.params,
         });
         this.resources.set(name, entry);
@@ -506,10 +518,9 @@ RedirectEngine.prototype.loadBuiltinResources = function() {
             continue;
         }
         fetches.push(
-            io.fetch(
-                `/web_accessible_resources/${name}?secret=${vAPI.warSecret()}`,
-                { responseType: details.data }
-            ).then(
+            fetcher(`/web_accessible_resources/${name}`, {
+                responseType: details.data
+            }).then(
                 result => process(result)
             )
         );
@@ -545,21 +556,22 @@ RedirectEngine.prototype.getResourceDetails = function() {
 
 /******************************************************************************/
 
-const resourcesSelfieVersion = 5;
+const RESOURCES_SELFIE_VERSION = 6;
+const RESOURCES_SELFIE_NAME = 'compiled/redirectEngine/resources';
 
-RedirectEngine.prototype.selfieFromResources = function() {
-    io.put(
-        'compiled/redirectEngine/resources',
+RedirectEngine.prototype.selfieFromResources = function(storage) {
+    storage.put(
+        RESOURCES_SELFIE_NAME,
         JSON.stringify({
-            version: resourcesSelfieVersion,
+            version: RESOURCES_SELFIE_VERSION,
             aliases: Array.from(this.aliases),
             resources: Array.from(this.resources),
         })
     );
 };
 
-RedirectEngine.prototype.resourcesFromSelfie = async function() {
-    const result = await io.get('compiled/redirectEngine/resources');
+RedirectEngine.prototype.resourcesFromSelfie = async function(storage) {
+    const result = await storage.get(RESOURCES_SELFIE_NAME);
     let selfie;
     try {
         selfie = JSON.parse(result.content);
@@ -567,7 +579,7 @@ RedirectEngine.prototype.resourcesFromSelfie = async function() {
     }
     if (
         selfie instanceof Object === false ||
-        selfie.version !== resourcesSelfieVersion ||
+        selfie.version !== RESOURCES_SELFIE_VERSION ||
         Array.isArray(selfie.resources) === false
     ) {
         return false;
@@ -580,8 +592,8 @@ RedirectEngine.prototype.resourcesFromSelfie = async function() {
     return true;
 };
 
-RedirectEngine.prototype.invalidateResourcesSelfie = function() {
-    io.remove('compiled/redirectEngine/resources');
+RedirectEngine.prototype.invalidateResourcesSelfie = function(storage) {
+    storage.remove(RESOURCES_SELFIE_NAME);
 };
 
 /******************************************************************************/
