@@ -56,7 +56,10 @@ cp platform/nodejs/*.js   $DES/
 cp platform/nodejs/*.json $DES/
 cp LICENSE.txt            $DES/
 
-eslint -c platform/nodejs/eslintrc.json $DES/js $DES/*.js
+# Ignore eslint when building with GitHub Actions
+if [ -z "$GITHUB_REF" ]; then
+    eslint -c platform/nodejs/eslintrc.json $DES/js $DES/*.js
+fi
 
 if [ "$1" = all ]; then
     echo "*** uBlock0.nodejs: Creating plain package..."
