@@ -1312,7 +1312,7 @@ Parser.prototype.SelectorCompiler = class {
         this.rePseudoElement = /:(?::?after|:?before|:-?[a-z][a-z-]*[a-z])$/;
         this.reProceduralOperator = new RegExp([
             '^(?:',
-                Array.from(parser.proceduralOperatorTokens.keys()).join('|'), // eslint-disable-line indent
+            Array.from(parser.proceduralOperatorTokens.keys()).join('|'),
             ')\\('
         ].join(''));
         this.reEatBackslashes = /\\([()])/g;
