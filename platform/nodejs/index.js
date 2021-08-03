@@ -119,13 +119,13 @@ function pslInit(raw) {
             // Use loadJSON() because require() would keep the string in memory.
             serialized = loadJSON('build/publicsuffixlist.json');
         } catch (error) {
-            if (process.env.npm_lifecycle_event !== 'install') {
+            if ( process.env.npm_lifecycle_event !== 'install' ) {
                 // This should never happen except during package installation.
                 console.error(error);
             }
         }
 
-        if (serialized !== null) {
+        if ( serialized !== null ) {
             globals.publicSuffixList.fromSelfie(serialized);
             return globals.publicSuffixList;
         }
@@ -165,7 +165,7 @@ function reset() {
 // This is because some of the code (e.g. publicsuffixlist.js) sets
 // module.exports. Once all included files are written like ES modules, using
 // export statements, this should no longer be necessary.
-if (typeof module !== 'undefined' && typeof exports !== 'undefined') {
+if ( typeof module !== 'undefined' && typeof exports !== 'undefined' ) {
     module.exports = exports;
 }
 
