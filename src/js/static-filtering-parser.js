@@ -2448,9 +2448,10 @@ const NetOptionsIterator = class {
                 assigned &&
                     hasNoBits(descriptor, OPTMayAssign | OPTMustAssign) ||
                 assigned === false &&
-                    hasBits(descriptor, OPTMustAssign) &&
-                    (this.exception === false ||
-                     hasNoBits(descriptor, OPTAllowMayAssign))
+                    hasBits(descriptor, OPTMustAssign) && (
+                        this.exception === false ||
+                        hasNoBits(descriptor, OPTAllowMayAssign)
+                    )
             ) {
                 descriptor = OPTTokenInvalid;
             }

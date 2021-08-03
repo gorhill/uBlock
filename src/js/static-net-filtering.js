@@ -3269,10 +3269,12 @@ const FilterParser = class {
 
     isJustOrigin() {
         return this.optionUnitBits === this.DOMAIN_BIT &&
-            this.isRegex === false &&
-            (this.pattern === '*' ||
-             (this.anchor === 0b010 &&
-              /^(?:http[s*]?:(?:\/\/)?)$/.test(this.pattern))) &&
+            this.isRegex === false && (
+                this.pattern === '*' || (
+                    this.anchor === 0b010 &&
+                    /^(?:http[s*]?:(?:\/\/)?)$/.test(this.pattern)
+                )
+            ) &&
             this.domainOpt.indexOf('~') === -1;
     }
 
