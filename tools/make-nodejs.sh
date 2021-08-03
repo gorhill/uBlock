@@ -6,6 +6,8 @@ set -e
 
 DES=dist/build/uBlock0.nodejs
 
+rm -rf $DES
+
 mkdir -p $DES/js
 cp src/js/base64-custom.js           $DES/js
 cp src/js/biditrie.js                $DES/js
@@ -46,9 +48,6 @@ node -pe "JSON.stringify(fs.readFileSync('$THIRDPARTY/easylist.txt', 'utf8'))" \
     > $DES/data/easylist.json
 node -pe "JSON.stringify(fs.readFileSync('$THIRDPARTY/easyprivacy.txt', 'utf8'))" \
     > $DES/data/easyprivacy.json
-
-rm -rf $DES/build
-mkdir -p $DES/build
 
 cp platform/nodejs/*.js   $DES/
 cp platform/nodejs/*.json $DES/

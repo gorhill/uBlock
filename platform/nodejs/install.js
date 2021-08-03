@@ -29,5 +29,6 @@ import { pslInit } from './index.js';
 
 /******************************************************************************/
 
+fs.mkdirSync('./build', { recursive: true });
 fs.writeFileSync('./build/publicsuffixlist.json',
                  JSON.stringify(pslInit().toSelfie()));
