@@ -2437,22 +2437,7 @@ const NetOptionsIterator = class {
                 descriptor = netOptionTokenDescriptors.get(token);
             }
             // Validate option according to context
-            if (
-                descriptor === undefined ||
-                ltok !== lopt &&
-                    hasNoBits(descriptor, OPTCanNegate) ||
-                this.exception &&
-                    hasBits(descriptor, OPTBlockOnly) ||
-                this.exception === false &&
-                    hasBits(descriptor, OPTAllowOnly) ||
-                assigned &&
-                    hasNoBits(descriptor, OPTMayAssign | OPTMustAssign) ||
-                assigned === false &&
-                    hasBits(descriptor, OPTMustAssign) && (
-                        this.exception === false ||
-                        hasNoBits(descriptor, OPTAllowMayAssign)
-                    )
-            ) {
+            if ( !this.optionIsValidInContext(descriptor, ltok !== lopt, assigned) ) {
                 descriptor = OPTTokenInvalid;
             }
             // Keep track of which options are present: any given option can
@@ -2664,6 +2649,30 @@ const NetOptionsIterator = class {
         }
         this.readPtr = i + 6;
         return this;
+    }
+
+    optionIsValidInContext(descriptor, negated, assigned) {
+        if ( descriptor === undefined ) {
+            return false;
+        }
+        if ( negated && hasNoBits(descriptor, OPTCanNegate) )  {
+            return false;
+        }
+        if ( this.exception && hasBits(descriptor, OPTBlockOnly) ) {
+            return false;
+        }
+        if ( this.exception === false && hasBits(descriptor, OPTAllowOnly) ) {
+            return false;
+        }
+        if ( assigned && hasNoBits(descriptor, OPTMayAssign | OPTMustAssign) ) {
+            return false;
+        }
+        if ( assigned === false && hasBits(descriptor, OPTMustAssign) ) {
+            if ( this.exception === false || hasNoBits(descriptor, OPTAllowMayAssign) ) {
+                return false;
+            }
+        }
+        return true;
     }
 };
 
