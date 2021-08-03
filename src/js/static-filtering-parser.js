@@ -2448,10 +2448,9 @@ const NetOptionsIterator = class {
                 assigned &&
                     hasNoBits(descriptor, OPTMayAssign | OPTMustAssign) ||
                 assigned === false &&
-                    hasBits(descriptor, OPTMustAssign) && (
-                        this.exception === false ||
-                        hasNoBits(descriptor, OPTAllowMayAssign)
-                    )
+                    hasBits(descriptor, OPTMustAssign) &&
+                    (this.exception === false ||
+                     hasNoBits(descriptor, OPTAllowMayAssign))
             ) {
                 descriptor = OPTTokenInvalid;
             }
@@ -2806,81 +2805,81 @@ Parser.regexUtils = Parser.prototype.regexUtils = (( ) => {
 
     const toTokenizableStr = node => {
         switch ( node.type ) {
-            case 1: /* T_SEQUENCE, 'Sequence' */ {
-                let s = '';
-                for ( let i = 0; i < node.val.length; i++ ) {
-                    s += toTokenizableStr(node.val[i]);
+        case 1: /* T_SEQUENCE, 'Sequence' */ {
+            let s = '';
+            for ( let i = 0; i < node.val.length; i++ ) {
+                s += toTokenizableStr(node.val[i]);
+            }
+            return s;
+        }
+        case 2: /* T_ALTERNATION, 'Alternation' */
+        case 8: /* T_CHARGROUP, 'CharacterGroup' */ {
+            let firstChar = 0;
+            let lastChar = 0;
+            for ( let i = 0; i < node.val.length; i++ ) {
+                const s = toTokenizableStr(node.val[i]);
+                if ( firstChar === 0 && firstCharCodeClass(s) === 1 ) {
+                    firstChar = 1;
                 }
-                return s;
-            }
-            case 2: /* T_ALTERNATION, 'Alternation' */
-            case 8: /* T_CHARGROUP, 'CharacterGroup' */ {
-                let firstChar = 0;
-                let lastChar = 0;
-                for ( let i = 0; i < node.val.length; i++ ) {
-                    const s = toTokenizableStr(node.val[i]);
-                    if ( firstChar === 0 && firstCharCodeClass(s) === 1 ) {
-                        firstChar = 1;
-                    }
-                    if ( lastChar === 0 && lastCharCodeClass(s) === 1 ) {
-                        lastChar = 1;
-                    }
-                    if ( firstChar === 1 && lastChar === 1 ) { break; }
+                if ( lastChar === 0 && lastCharCodeClass(s) === 1 ) {
+                    lastChar = 1;
                 }
-                return String.fromCharCode(firstChar, lastChar);
+                if ( firstChar === 1 && lastChar === 1 ) { break; }
             }
-            case 4: /* T_GROUP, 'Group' */ {
-                if ( node.flags.NegativeLookAhead === 1 ) { return '\x01'; }
-                if ( node.flags.NegativeLookBehind === 1 ) { return '\x01'; }
-                return toTokenizableStr(node.val);
-            }
-            case 16: /* T_QUANTIFIER, 'Quantifier' */ {
-                const s = toTokenizableStr(node.val);
-                const first = firstCharCodeClass(s);
-                const last = lastCharCodeClass(s);
-                if ( node.flags.min === 0 && first === 0 && last === 0 ) {
-                    return '';
-                }
-                return String.fromCharCode(first, last);
-            }
-            case 64: /* T_HEXCHAR, 'HexChar' */ {
-                return String.fromCharCode(parseInt(node.val.slice(1), 16));
-            }
-            case 128: /* T_SPECIAL, 'Special' */ {
-                const flags = node.flags;
-                if (
-                    flags.EndCharGroup === 1 || // dangling `]`
-                    flags.EndGroup === 1 ||     // dangling `)`
-                    flags.EndRepeats === 1      // dangling `}`
-                ) {
-                    throw new Error('Unmatched bracket');
-                }
-                return flags.MatchEnd === 1 ||
-                       flags.MatchStart === 1 ||
-                       flags.MatchWordBoundary === 1
-                    ? '\x00'
-                    : '\x01';
-            }
-            case 256: /* T_CHARS, 'Characters' */ {
-                for ( let i = 0; i < node.val.length; i++ ) {
-                    if ( firstCharCodeClass(node.val[i]) === 1 ) {
-                        return '\x01';
-                    }
-                }
-                return '\x00';
-            }
-            // Ranges are assumed to always involve token-related characters.
-            case 512: /* T_CHARRANGE, 'CharacterRange' */ {
-                return '\x01';
-            }
-            case 1024: /* T_STRING, 'String' */ {
-                return node.val;
-            }
-            case 2048: /* T_COMMENT, 'Comment' */ {
+            return String.fromCharCode(firstChar, lastChar);
+        }
+        case 4: /* T_GROUP, 'Group' */ {
+            if ( node.flags.NegativeLookAhead === 1 ) { return '\x01'; }
+            if ( node.flags.NegativeLookBehind === 1 ) { return '\x01'; }
+            return toTokenizableStr(node.val);
+        }
+        case 16: /* T_QUANTIFIER, 'Quantifier' */ {
+            const s = toTokenizableStr(node.val);
+            const first = firstCharCodeClass(s);
+            const last = lastCharCodeClass(s);
+            if ( node.flags.min === 0 && first === 0 && last === 0 ) {
                 return '';
             }
-            default:
-                break;
+            return String.fromCharCode(first, last);
+        }
+        case 64: /* T_HEXCHAR, 'HexChar' */ {
+            return String.fromCharCode(parseInt(node.val.slice(1), 16));
+        }
+        case 128: /* T_SPECIAL, 'Special' */ {
+            const flags = node.flags;
+            if (
+                flags.EndCharGroup === 1 || // dangling `]`
+                flags.EndGroup === 1 ||     // dangling `)`
+                flags.EndRepeats === 1      // dangling `}`
+            ) {
+                throw new Error('Unmatched bracket');
+            }
+            return flags.MatchEnd === 1 ||
+                   flags.MatchStart === 1 ||
+                   flags.MatchWordBoundary === 1
+                ? '\x00'
+                : '\x01';
+        }
+        case 256: /* T_CHARS, 'Characters' */ {
+            for ( let i = 0; i < node.val.length; i++ ) {
+                if ( firstCharCodeClass(node.val[i]) === 1 ) {
+                    return '\x01';
+                }
+            }
+            return '\x00';
+        }
+        // Ranges are assumed to always involve token-related characters.
+        case 512: /* T_CHARRANGE, 'CharacterRange' */ {
+            return '\x01';
+        }
+        case 1024: /* T_STRING, 'String' */ {
+            return node.val;
+        }
+        case 2048: /* T_COMMENT, 'Comment' */ {
+            return '';
+        }
+        default:
+            break;
         }
         return '\x01';
     };

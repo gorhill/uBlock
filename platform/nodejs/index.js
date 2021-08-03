@@ -166,7 +166,7 @@ function reset() {
 // module.exports. Once all included files are written like ES modules, using
 // export statements, this should no longer be necessary.
 if (typeof module !== 'undefined' && typeof exports !== 'undefined') {
-  module.exports = exports;
+    module.exports = exports;
 }
 
 export {
