@@ -39,17 +39,11 @@ import { webRequest } from './traffic.js';
 import {
     permanentFirewall,
     sessionFirewall,
-} from './dynamic-net-filtering.js';
-
-import {
     permanentSwitches,
     sessionSwitches,
-} from './hnswitches.js';
-
-import {
     permanentURLFiltering,
     sessionURLFiltering,
-} from './url-net-filtering.js';
+} from './filtering-engines.js';
 
 /******************************************************************************/
 

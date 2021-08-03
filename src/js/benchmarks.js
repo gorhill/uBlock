@@ -31,7 +31,7 @@ import staticNetFilteringEngine from './static-net-filtering.js';
 import µb from './background.js';
 import { FilteringContext } from './filtering-context.js';
 import { LineIterator } from './text-utils.js';
-import { sessionFirewall } from './dynamic-net-filtering.js';
+import { sessionFirewall } from './filtering-engines.js';
 
 import {
     domainFromHostname,

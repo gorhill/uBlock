@@ -44,12 +44,11 @@ import { webRequest } from './traffic.js';
 import {
     permanentFirewall,
     sessionFirewall,
-} from './dynamic-net-filtering.js';
-
-import {
     permanentSwitches,
     sessionSwitches,
-} from './hnswitches.js';
+    permanentURLFiltering,
+    sessionURLFiltering,
+} from './filtering-engines.js';
 
 import {
     domainFromHostname,
@@ -58,11 +57,6 @@ import {
     hostnameFromURI,
     isNetworkURI,
 } from './uri-utils.js';
-
-import {
-    permanentURLFiltering,
-    sessionURLFiltering,
-} from './url-net-filtering.js';
 
 import './benchmarks.js';
 
@@ -488,10 +482,11 @@ const onMessage = function(request, sender, callback) {
         break;
 
     case 'revertFirewallRules':
+        // TODO: use Set() to message around sets of hostnames
         sessionFirewall.copyRules(
             permanentFirewall,
             request.srcHostname,
-            request.desHostnames
+            Object.assign(Object.create(null), request.desHostnames)
         );
         sessionSwitches.copyRules(
             permanentSwitches,
@@ -507,11 +502,12 @@ const onMessage = function(request, sender, callback) {
         break;
 
     case 'saveFirewallRules':
+        // TODO: use Set() to message around sets of hostnames
         if (
             permanentFirewall.copyRules(
                 sessionFirewall,
                 request.srcHostname,
-                request.desHostnames
+                Object.assign(Object.create(null), request.desHostnames)
             )
         ) {
             µb.savePermanentFirewallRules();

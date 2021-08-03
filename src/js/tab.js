@@ -29,9 +29,12 @@ import scriptletFilteringEngine from './scriptlet-filtering.js';
 import staticNetFilteringEngine from './static-net-filtering.js';
 import µb from './background.js';
 import { PageStore } from './pagestore.js';
-import { sessionFirewall } from './dynamic-net-filtering.js';
-import { sessionSwitches } from './hnswitches.js';
-import { sessionURLFiltering } from './url-net-filtering.js';
+
+import {
+    sessionFirewall,
+    sessionSwitches,
+    sessionURLFiltering,
+} from './filtering-engines.js';
 
 import {
     domainFromHostname,

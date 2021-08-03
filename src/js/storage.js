@@ -36,13 +36,16 @@ import staticFilteringReverseLookup from './reverselookup.js';
 import staticNetFilteringEngine from './static-net-filtering.js';
 import µb from './background.js';
 import { hostnameFromURI } from './uri-utils.js';
-import { permanentFirewall } from './dynamic-net-filtering.js';
-import { permanentSwitches } from './hnswitches.js';
-import { permanentURLFiltering } from './url-net-filtering.js';
 import { redirectEngine } from './redirect-engine.js';
 import { sparseBase64 } from './base64-custom.js';
 import { StaticFilteringParser } from './static-filtering-parser.js';
 import { ubolog, ubologSet } from './console.js';
+
+import {
+    permanentFirewall,
+    permanentSwitches,
+    permanentURLFiltering,
+} from './filtering-engines.js';
 
 import {
     CompiledListReader,

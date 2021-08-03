@@ -152,13 +152,9 @@ CodeMirror.defineMode('ubo-dynamic-filtering', ( ) => {
         match = reToken.exec(string);
         if ( match === null ) { return; }
         // hostname or url
-        const isURLRule = isSwitchRule === false && match[0].includes('://');
+        const isURLRule = isSwitchRule === false && match[0].indexOf('://') > 0;
         if ( isURLRule ) {
-            if ( isSwitchRule ) {
-                string = addMatchSlice(match, 'error');
-            } else {
-                string = addMatchSlice(match, sortType === 2 ? 'sortkey' : null);
-            }
+            string = addMatchSlice(match, sortType === 2 ? 'sortkey' : null);
         } else if ( isValidHostname(match[0]) === false ) {
             string = addMatchSlice(match, 'error');
         } else if ( sortType === 1 && isSwitchRule || sortType === 2 ) {

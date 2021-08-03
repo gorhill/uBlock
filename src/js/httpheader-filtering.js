@@ -26,7 +26,7 @@
 import logger from './logger.js';
 import µb from './background.js';
 import { entityFromDomain } from './uri-utils.js';
-import { sessionFirewall } from './dynamic-net-filtering.js';
+import { sessionFirewall } from './filtering-engines.js';
 
 import {
     StaticExtFilteringHostnameDB,
