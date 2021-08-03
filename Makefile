@@ -9,19 +9,19 @@ assets := $(wildcard submodules/uAssets/* \
 
 all: chromium firefox nodejs
 
-dist/build/uBlock0.chromium: $(sources) $(platform) $(assets)
+dist/build/uBlock0.chromium: tools/make-chromium.sh $(sources) $(platform) $(assets)
 	tools/make-chromium.sh
 
 # Build the extension for Chromium.
 chromium: dist/build/uBlock0.chromium
 
-dist/build/uBlock0.firefox: $(sources) $(platform) $(assets)
+dist/build/uBlock0.firefox: tools/make-firefox.sh $(sources) $(platform) $(assets)
 	tools/make-firefox.sh all
 
 # Build the extension for Firefox.
 firefox: dist/build/uBlock0.firefox
 
-dist/build/uBlock0.nodejs: $(sources) $(platform) $(assets)
+dist/build/uBlock0.nodejs: tools/make-nodejs.sh $(sources) $(platform) $(assets)
 	tools/make-nodejs.sh
 
 # Build the Node.js package.
