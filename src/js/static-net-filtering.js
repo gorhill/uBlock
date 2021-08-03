@@ -3268,14 +3268,13 @@ const FilterParser = class {
     }
 
     isJustOrigin() {
-        return this.optionUnitBits === this.DOMAIN_BIT &&
-            this.isRegex === false && (
-                this.pattern === '*' || (
-                    this.anchor === 0b010 &&
-                    /^(?:http[s*]?:(?:\/\/)?)$/.test(this.pattern)
-                )
-            ) &&
-            this.domainOpt.indexOf('~') === -1;
+        if ( this.optionUnitBits !== this.DOMAIN_BIT ) { return false; }
+        if ( this.isRegex ) { return false; }
+        if ( this.domainOpt.includes('~') ) { return false; }
+        if ( this.pattern === '*' ) { return true; }
+        if ( this.anchor !== 0b010 ) { return false; }
+        if ( /^(?:http[s*]?:(?:\/\/)?)$/.test(this.pattern) ) { return true; }
+        return false;
     }
 
     domainIsEntity(s) {
