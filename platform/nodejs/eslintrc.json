@@ -19,7 +19,8 @@
             "ObjectExpression": "off",
             "ignoreComments": true,
             "ignoredNodes": [
-              "AssignmentExpression:has(Literal)"
+              "AssignmentExpression:has(Literal)",
+              "LogicalExpression"
             ]
           }
         ],
