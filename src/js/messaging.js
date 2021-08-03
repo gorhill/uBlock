@@ -37,6 +37,7 @@ import staticExtFilteringEngine from './static-ext-filtering.js';
 import staticFilteringReverseLookup from './reverselookup.js';
 import staticNetFilteringEngine from './static-net-filtering.js';
 import µb from './background.js';
+import { denseBase64 } from './base64-custom.js';
 import { redirectEngine } from './redirect-engine.js';
 import { StaticFilteringParser } from './static-filtering-parser.js';
 import { webRequest } from './traffic.js';
@@ -810,7 +811,7 @@ const fromBase64 = function(encoded) {
     }
     let u8array;
     try {
-        u8array = µb.denseBase64.decode(encoded);
+        u8array = denseBase64.decode(encoded);
     } catch(ex) {
     }
     return Promise.resolve(u8array !== undefined ? u8array : encoded);
@@ -818,7 +819,7 @@ const fromBase64 = function(encoded) {
 
 const toBase64 = function(data) {
     const value = data instanceof Uint8Array
-        ? µb.denseBase64.encode(data)
+        ? denseBase64.encode(data)
         : data;
     return Promise.resolve(value);
 };
