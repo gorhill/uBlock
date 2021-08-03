@@ -9,7 +9,21 @@
         "sourceType": "module"
     },
     "rules": {
-        "indent": [ "warn", 4 ],
+        "indent": [
+          "warn",
+          4,
+          {
+            "ArrayExpression": "first",
+            "CallExpression": { "arguments": "first" },
+            "MemberExpression": "off",
+            "ObjectExpression": "off",
+            "ignoreComments": true,
+            "ignoredNodes": [
+              "AssignmentExpression:has(Literal)",
+              "LogicalExpression"
+            ]
+          }
+        ],
         "getter-return": "off",
         "no-control-regex": "off",
         "no-empty": [ "error", { "allowEmptyCatch": true } ],
