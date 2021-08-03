@@ -26,7 +26,10 @@
 
 /******************************************************************************/
 
-const browser = self.browser;
+import { ubolog } from './console.js';
+
+/******************************************************************************/
+
 const manifest = browser.runtime.getManifest();
 
 vAPI.cantWebsocket =
@@ -1137,7 +1140,7 @@ vAPI.messaging = {
         }
 
         // Auxiliary process to main process: no handler
-        log.info(
+        ubolog(
             `vAPI.messaging.onPortMessage > unhandled request: ${JSON.stringify(request.msg)}`,
             request
         );
