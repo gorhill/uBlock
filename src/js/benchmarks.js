@@ -199,6 +199,47 @@ const loadBenchmarkDataset = (( ) => {
 
 /******************************************************************************/
 
+µb.tokenHistograms = async function() {
+    const requests = await loadBenchmarkDataset();
+    if ( Array.isArray(requests) === false || requests.length === 0 ) {
+        console.info('No requests found to benchmark');
+        return;
+    }
+
+    console.info(`Computing token histograms...`);
+
+    const fctxt = new FilteringContext();
+    const missTokenMap = new Map();
+    const hitTokenMap = new Map();
+    const reTokens = /[0-9a-z%]{2,}/g;
+
+    for ( let i = 0; i < requests.length; i++ ) {
+        const request = requests[i];
+        fctxt.setURL(request.url);
+        fctxt.setDocOriginFromURL(request.frameUrl);
+        fctxt.setType(request.cpt);
+        const r = staticNetFilteringEngine.matchRequest(fctxt);
+        for ( let [ keyword ] of request.url.toLowerCase().matchAll(reTokens) ) {
+            const token = keyword.slice(0, 7);
+            if ( r === 0 ) {
+                missTokenMap.set(token, (missTokenMap.get(token) || 0) + 1);
+            } else if ( r === 1 ) {
+                hitTokenMap.set(token, (hitTokenMap.get(token) || 0) + 1);
+            }
+        }
+    }
+    const customSort = (a, b) => b[1] - a[1];
+    const topmisses = Array.from(missTokenMap).sort(customSort).slice(0, 100);
+    for ( const [ token ] of topmisses ) {
+        hitTokenMap.delete(token);
+    }
+    const tophits = Array.from(hitTokenMap).sort(customSort).slice(0, 100);
+    console.info('Misses:', JSON.stringify(topmisses));
+    console.info('Hits:', JSON.stringify(tophits));
+};
+
+/******************************************************************************/
+
 µb.benchmarkDynamicNetFiltering = async function() {
     const requests = await loadBenchmarkDataset();
     if ( Array.isArray(requests) === false || requests.length === 0 ) {

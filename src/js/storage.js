@@ -973,6 +973,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     //    https://adblockplus.org/en/filters
     const lineIter = new LineIterator(this.preparseDirectives.prune(rawText));
     const parser = new StaticFilteringParser({ expertMode });
+    const compiler = staticNetFilteringEngine.createCompiler(parser);
 
     parser.setMaxTokenLength(staticNetFilteringEngine.MAX_TOKEN_LENGTH);
 
@@ -1000,12 +1001,12 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         if ( parser.patternHasUnicode() && parser.toASCII() === false ) {
             continue;
         }
-        if ( staticNetFilteringEngine.compile(parser, writer) ) { continue; }
-        if ( staticNetFilteringEngine.error !== undefined ) {
+        if ( compiler.compile(parser, writer) ) { continue; }
+        if ( compiler.error !== undefined ) {
             logger.writeOne({
                 realm: 'message',
                 type: 'error',
-                text: staticNetFilteringEngine.error
+                text: compiler.error
             });
         }
     }

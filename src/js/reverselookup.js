@@ -137,9 +137,8 @@ const fromNetFilter = async function(rawFilter) {
     parser.setMaxTokenLength(staticNetFilteringEngine.MAX_TOKEN_LENGTH);
     parser.analyze(rawFilter);
 
-    if ( staticNetFilteringEngine.compile(parser, writer) === false ) {
-        return;
-    }
+    const compiler = staticNetFilteringEngine.createCompiler(parser);
+    if ( compiler.compile(parser, writer) === false ) { return; }
 
     await initWorker();
 

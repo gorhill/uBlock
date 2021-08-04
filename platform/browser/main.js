@@ -27,10 +27,10 @@ import './lib/publicsuffixlist/publicsuffixlist.js';
 import './lib/punycode.js';
 
 import globals from './js/globals.js';
+import staticNetFilteringEngine from './js/static-net-filtering.js';
 import { FilteringContext } from './js/filtering-context.js';
 import { LineIterator } from './js/text-utils.js';
 import { StaticFilteringParser } from './js/static-filtering-parser.js';
-import { staticNetFilteringEngine } from './js/static-net-filtering.js';
 
 import {
     CompiledListReader,
@@ -42,6 +42,7 @@ import {
 function compileList(rawText, writer) {
     const lineIter = new LineIterator(rawText);
     const parser = new StaticFilteringParser(true);
+    const compiler = staticNetFilteringEngine.createCompiler(parser);
 
     parser.setMaxTokenLength(staticNetFilteringEngine.MAX_TOKEN_LENGTH);
 
@@ -59,12 +60,12 @@ function compileList(rawText, writer) {
         if ( parser.patternHasUnicode() && parser.toASCII() === false ) {
             continue;
         }
-        if ( staticNetFilteringEngine.compile(parser, writer) ) { continue; }
-        if ( staticNetFilteringEngine.error !== undefined ) {
+        if ( compiler.compile(parser, writer) ) { continue; }
+        if ( compiler.error !== undefined ) {
             console.info(JSON.stringify({
                 realm: 'message',
                 type: 'error',
-                text: staticNetFilteringEngine.error
+                text: compiler.error
             }));
         }
     }

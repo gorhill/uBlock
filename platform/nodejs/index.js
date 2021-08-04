@@ -54,6 +54,7 @@ function loadJSON(path) {
 function compileList(rawText, writer, options = {}) {
     const lineIter = new LineIterator(rawText);
     const parser = new StaticFilteringParser(true);
+    const compiler = snfe.createCompiler(parser);
     const events = Array.isArray(options.events) ? options.events : undefined;
 
     parser.setMaxTokenLength(snfe.MAX_TOKEN_LENGTH);
@@ -70,11 +71,11 @@ function compileList(rawText, writer, options = {}) {
         if ( parser.patternHasUnicode() && parser.toASCII() === false ) {
             continue;
         }
-        if ( snfe.compile(parser, writer) ) { continue; }
-        if ( snfe.error !== undefined && events !== undefined ) {
+        if ( compiler.compile(parser, writer) ) { continue; }
+        if ( compiler.error !== undefined && events !== undefined ) {
             options.events.push({
                 type: 'error',
-                text: snfe.error
+                text: compiler.error
             });
         }
     }

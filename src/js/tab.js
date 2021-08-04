@@ -231,14 +231,13 @@ const onPopupUpdated = (( ) => {
         popunderHostname,
         result
     ) {
-        if (
-            fctxt.filter === undefined ||
-            fctxt.filter !== 'static' ||
-            fctxt.filter.token === staticNetFilteringEngine.noTokenHash
-        ) {
+        if ( fctxt.filter === undefined || fctxt.filter !== 'static' ) {
             return 0;
         }
-        if ( fctxt.filter.token === staticNetFilteringEngine.dotTokenHash ) {
+        if ( fctxt.filter.isUntokenized() ) {
+            return 0;
+        }
+        if ( fctxt.filter.isPureHostname() ) {
             return result;
         }
         const re = new RegExp(fctxt.filter.regex, 'i');
