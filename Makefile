@@ -1,4 +1,4 @@
-.PHONY: all clean install chromium firefox nodejs install-nodejs-link install-nodejs uninstall-nodejs
+.PHONY: all clean lint install chromium firefox nodejs install-nodejs-link install-nodejs uninstall-nodejs
 
 sources := $(wildcard src/* src/*/* src/*/*/* src/*/*/*/*)
 platform := $(wildcard platform/* platform/*/*)
@@ -43,6 +43,11 @@ install-nodejs: dist/build/uBlock0.nodejs.tgz
 # Uninstall the Node.js package.
 uninstall-nodejs:
 	npm uninstall '@gorhill/ubo-core' --no-save
+
+lint: nodejs
+	eslint -c platform/nodejs/eslintrc.json \
+		dist/build/uBlock0.nodejs/js \
+		dist/build/uBlock0.nodejs/*.js
 
 # Update submodules.
 update-submodules:
