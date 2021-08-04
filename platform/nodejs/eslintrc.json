@@ -9,6 +9,7 @@
         "sourceType": "module"
     },
     "rules": {
+        "eqeqeq": [ "warn", "always" ],
         "indent": [
           "warn",
           4,
@@ -26,6 +27,11 @@
         "getter-return": "off",
         "no-control-regex": "off",
         "no-empty": [ "error", { "allowEmptyCatch": true } ],
-        "no-useless-escape": "off"
+        "no-promise-executor-return": [ "error" ],
+        "no-template-curly-in-string": [ "error" ],
+        "no-unreachable-loop": [ "error" ],
+        "no-useless-backreference": [ "error" ],
+        "no-useless-escape": "off",
+        "require-atomic-updates": [ "warn" ]
     }
 }
