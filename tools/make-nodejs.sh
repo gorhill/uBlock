@@ -54,6 +54,7 @@ node -pe "JSON.stringify(fs.readFileSync('$THIRDPARTY/easyprivacy.txt', 'utf8'))
 
 cp platform/nodejs/*.js   $DES/
 cp platform/nodejs/*.json $DES/
+cp platform/nodejs/README $DES/
 cp LICENSE.txt            $DES/
 
 if [ "$1" = all ]; then
