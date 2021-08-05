@@ -52,10 +52,10 @@ node -pe "JSON.stringify(fs.readFileSync('$THIRDPARTY/easylist.txt', 'utf8'))" \
 node -pe "JSON.stringify(fs.readFileSync('$THIRDPARTY/easyprivacy.txt', 'utf8'))" \
     > $DES/data/easyprivacy.json
 
-cp platform/nodejs/*.js   $DES/
-cp platform/nodejs/*.json $DES/
-cp platform/nodejs/README $DES/
-cp LICENSE.txt            $DES/
+cp platform/nodejs/*.js      $DES/
+cp platform/nodejs/*.json    $DES/
+cp platform/nodejs/README.md $DES/
+cp LICENSE.txt               $DES/
 
 if [ "$1" = all ]; then
     echo "*** uBlock0.nodejs: Creating plain package..."
