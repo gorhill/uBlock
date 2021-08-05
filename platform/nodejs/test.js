@@ -32,7 +32,7 @@ import {
     enableWASM,
     FilteringContext,
     pslInit,
-    restart,
+    useRawLists,
 } from './index.js';
 
 /******************************************************************************/
@@ -60,7 +60,7 @@ function fetch(listName) {
         fetch('easylist'),
         fetch('easyprivacy'),
     ]).then(rawLists => {
-        return restart([
+        return useRawLists([
             { name: 'easylist', raw: rawLists[0] },
             { name: 'easyprivacy', raw: rawLists[1] },
         ]);
@@ -93,9 +93,6 @@ function fetch(listName) {
     if ( snfe.matchRequest(fctxt) !== 0 ) {
         console.log(snfe.toLogData());
     }
-
-    // Remove all filters
-    restart();
 
     process.exit();
 })();
