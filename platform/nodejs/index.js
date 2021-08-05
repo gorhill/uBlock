@@ -133,6 +133,10 @@ function pslInit(raw) {
     return globals.publicSuffixList;
 }
 
+function createCompiler(parser) {
+    return snfe.createCompiler(parser);
+}
+
 async function useCompiledLists(lists) {
     // Remove all filters
     reset();
@@ -169,7 +173,7 @@ async function useRawLists(lists, options = {}) {
         return snfe;
     }
 
-    const compiler = snfe.createCompiler(new StaticFilteringParser());
+    const compiler = createCompiler(new StaticFilteringParser());
 
     const consumeList = list => {
         const writer = new CompiledListWriter();
@@ -209,6 +213,7 @@ export {
     FilteringContext,
     enableWASM,
     pslInit,
+    createCompiler,
     useCompiledLists,
     useRawLists,
 };
