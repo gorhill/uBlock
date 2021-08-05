@@ -138,7 +138,7 @@ const fromNetFilter = async function(rawFilter) {
     parser.analyze(rawFilter);
 
     const compiler = staticNetFilteringEngine.createCompiler(parser);
-    if ( compiler.compile(parser, writer) === false ) { return; }
+    if ( compiler.compile(writer) === false ) { return; }
 
     await initWorker();
 

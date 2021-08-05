@@ -2675,6 +2675,7 @@ const urlTokenizer = new (class {
 
 class FilterCompiler {
     constructor(parser, other = undefined) {
+        this.parser = parser;
         if ( other !== undefined ) {
             return Object.assign(this, other);
         }
@@ -2810,11 +2811,10 @@ class FilterCompiler {
             [ 'crop',1431 ],
             [ 'new',1412],
         ]);
-        this.reset(parser);
+        this.reset();
     }
 
-    reset(parser) {
-        this.parser = parser;
+    reset() {
         this.action = BlockAction;
         // anchor: bit vector
         //   0000 (0x0): no anchoring
@@ -3078,67 +3078,67 @@ class FilterCompiler {
         return true;
     }
 
-    process(parser) {
+    process() {
         // important!
-        this.reset(parser);
+        this.reset();
 
-        if ( parser.hasError() ) {
+        if ( this.parser.hasError() ) {
             return this.FILTER_INVALID;
         }
 
         // Filters which pattern is a single character other than `*` and have
         // no narrowing options are discarded as invalid.
-        if ( parser.patternIsDubious() ) {
+        if ( this.parser.patternIsDubious() ) {
             return this.FILTER_INVALID;
         }
 
         // block or allow filter?
         // Important: this must be executed before parsing options
-        if ( parser.isException() ) {
+        if ( this.parser.isException() ) {
             this.action = AllowAction;
         }
 
-        this.isPureHostname = parser.patternIsPlainHostname();
+        this.isPureHostname = this.parser.patternIsPlainHostname();
 
         // Plain hostname? (from HOSTS file)
-        if ( this.isPureHostname && parser.hasOptions() === false ) {
-            this.pattern = parser.patternToLowercase();
+        if ( this.isPureHostname && this.parser.hasOptions() === false ) {
+            this.pattern = this.parser.patternToLowercase();
             this.anchor |= 0b100;
             return this.FILTER_OK;
         }
 
         // options
-        if ( parser.hasOptions() && this.processOptions() === false ) {
+        if ( this.parser.hasOptions() && this.processOptions() === false ) {
             return this.FILTER_UNSUPPORTED;
         }
 
         // regex?
-        if ( parser.patternIsRegex() ) {
+        if ( this.parser.patternIsRegex() ) {
             this.isRegex = true;
             // https://github.com/gorhill/uBlock/issues/1246
             //   If the filter is valid, use the corrected version of the
             //   source string -- this ensure reverse-lookup will work fine.
-            this.pattern = this.normalizeRegexSource(parser.getNetPattern());
+            this.pattern = this.normalizeRegexSource(this.parser.getNetPattern());
             if ( this.pattern === '' ) {
                 return this.FILTER_UNSUPPORTED;
             }
             return this.FILTER_OK;
         }
 
-        const pattern = parser.patternIsMatchAll()
+        const pattern = this.parser.patternIsMatchAll()
             ? '*'
-            : parser.patternToLowercase();
+            : this.parser.patternToLowercase();
 
-        if ( parser.patternIsLeftHostnameAnchored() ) {
+        if ( this.parser.patternIsLeftHostnameAnchored() ) {
             this.anchor |= 0b100;
-        } else if ( parser.patternIsLeftAnchored() ) {
+        } else if ( this.parser.patternIsLeftAnchored() ) {
             this.anchor |= 0b010;
         }
-        if ( parser.patternIsRightAnchored() ) {
+        if ( this.parser.patternIsRightAnchored() ) {
             this.anchor |= 0b001;
         }
 
-        if ( parser.patternHasWildcard() ) {
+        if ( this.parser.patternHasWildcard() ) {
             this.firstWildcardPos = pattern.indexOf('*');
             if ( this.firstWildcardPos !== -1 ) {
                 this.secondWildcardPos =
@@ -3146,7 +3146,7 @@ class FilterCompiler {
             }
         }
 
-        if ( parser.patternHasCaret() ) {
+        if ( this.parser.patternHasCaret() ) {
             this.firstCaretPos = pattern.indexOf('^');
             if ( this.firstCaretPos !== -1 ) {
                 this.secondCaretPos =
@@ -3294,8 +3294,8 @@ class FilterCompiler {
                s.charCodeAt(l-2) === 0x2E /* '.' */;
     }
 
-    compile(parser, writer) {
-        const r = this.process(parser);
+    compile(writer) {
+        const r = this.process();
 
         // Ignore non-static network filters
         if ( r === this.FILTER_INVALID ) { return false; }
@@ -3303,7 +3303,7 @@ class FilterCompiler {
         // Ignore filters with unsupported options
         if ( r === this.FILTER_UNSUPPORTED ) {
             const who = writer.properties.get('name') || '?';
-            this.error = `Invalid network filter in ${who}: ${parser.raw}`;
+            this.error = `Invalid network filter in ${who}: ${this.parser.raw}`;
             return false;
         }
 
@@ -3316,8 +3316,8 @@ class FilterCompiler {
         // Reminder:
         //   `redirect=` is a combination of a `redirect-rule` filter and a
         //   block filter.
-        if ( this.modifyType === parser.OPTTokenRedirect ) {
-            this.modifyType = parser.OPTTokenRedirectRule;
+        if ( this.modifyType === this.parser.OPTTokenRedirect ) {
+            this.modifyType = this.parser.OPTTokenRedirectRule;
             const parsedBlock = this.clone();
             parsedBlock.modifyType = undefined;
             parsedBlock.optionUnitBits &= ~this.REDIRECT_BIT;

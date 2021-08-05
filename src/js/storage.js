@@ -1001,7 +1001,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         if ( parser.patternHasUnicode() && parser.toASCII() === false ) {
             continue;
         }
-        if ( compiler.compile(parser, writer) ) { continue; }
+        if ( compiler.compile(writer) ) { continue; }
         if ( compiler.error !== undefined ) {
             logger.writeOne({
                 realm: 'message',

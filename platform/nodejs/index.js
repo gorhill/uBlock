@@ -51,13 +51,15 @@ function loadJSON(path) {
     return JSON.parse(readFileSync(resolve(__dirname, path), 'utf8'));
 }
 
-function compileList(rawText, writer, options = {}) {
-    const lineIter = new LineIterator(rawText);
-    const parser = new StaticFilteringParser(true);
-    const compiler = snfe.createCompiler(parser);
+function compileList(list, compiler, writer, options = {}) {
+    const lineIter = new LineIterator(list.raw);
     const events = Array.isArray(options.events) ? options.events : undefined;
 
-    parser.setMaxTokenLength(snfe.MAX_TOKEN_LENGTH);
+    if ( list.name ) {
+        writer.properties.set('name', list.name);
+    }
+
+    const { parser } = compiler;
 
     while ( lineIter.eot() === false ) {
         let line = lineIter.next();
@@ -71,7 +73,7 @@ function compileList(rawText, writer, options = {}) {
         if ( parser.patternHasUnicode() && parser.toASCII() === false ) {
             continue;
         }
-        if ( compiler.compile(parser, writer) ) { continue; }
+        if ( compiler.compile(writer) ) { continue; }
         if ( compiler.error !== undefined && events !== undefined ) {
             options.events.push({
                 type: 'error',
@@ -79,16 +81,6 @@ function compileList(rawText, writer, options = {}) {
             });
         }
     }
-
-    return writer.toString();
-}
-
-function applyList(name, raw) {
-    const writer = new CompiledListWriter();
-    writer.properties.set('name', name);
-    const compiled = compileList(raw, writer);
-    const reader = new CompiledListReader(compiled);
-    snfe.fromCompiled(reader);
 }
 
 async function enableWASM() {
@@ -141,19 +133,62 @@ function pslInit(raw) {
     return globals.publicSuffixList;
 }
 
-function restart(lists, options = {}) {
+async function useCompiledLists(lists) {
     // Remove all filters
     reset();
 
-    if ( Array.isArray(lists) && lists.length !== 0 ) {
-        // Populate filtering engine with filter lists
-        for ( const { name, raw } of lists ) {
-            applyList(name, raw, options);
-        }
-        // Commit changes
-        snfe.freeze();
-        snfe.optimize();
+    if ( Array.isArray(lists) === false || lists.length === 0 ) {
+        return snfe;
     }
+
+    const consumeList = list => {
+        snfe.fromCompiled(new CompiledListReader(list.compiled));
+    };
+
+    // Populate filtering engine with filter lists
+    const promises = [];
+    for ( const list of lists ) {
+        const promise = list instanceof Promise ? list : Promise.resolve(list);
+        promises.push(promise.then(list => consumeList(list)));
+    }
+
+    await Promise.all(promises);
+
+    // Commit changes
+    snfe.freeze();
+    snfe.optimize();
+
+    return snfe;
+}
+
+async function useRawLists(lists, options = {}) {
+    // Remove all filters
+    reset();
+
+    if ( Array.isArray(lists) === false || lists.length === 0 ) {
+        return snfe;
+    }
+
+    const compiler = snfe.createCompiler(new StaticFilteringParser());
+
+    const consumeList = list => {
+        const writer = new CompiledListWriter();
+        compileList(list, compiler, writer, options);
+        snfe.fromCompiled(new CompiledListReader(writer.toString()));
+    };
+
+    // Populate filtering engine with filter lists
+    const promises = [];
+    for ( const list of lists ) {
+        const promise = list instanceof Promise ? list : Promise.resolve(list);
+        promises.push(promise.then(list => consumeList(list)));
+    }
+
+    await Promise.all(promises);
+
+    // Commit changes
+    snfe.freeze();
+    snfe.optimize();
 
     return snfe;
 }
@@ -174,5 +209,6 @@ export {
     FilteringContext,
     enableWASM,
     pslInit,
-    restart,
+    useCompiledLists,
+    useRawLists,
 };
