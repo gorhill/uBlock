@@ -1,6 +1,8 @@
-[![Build](https://travis-ci.org/gorhill/uBlock.svg?branch=master)](https://travis-ci.org/gorhill/uBlock)
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/ublock/localized.svg)](https://crowdin.com/project/ublock)
 [![License](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/gorhill/uBlock/blob/master/LICENSE.txt)
+[![NPM](https://img.shields.io/npm/v/@gorhill/ubo-core)](https://www.npmjs.com/package/@gorhill/ubo-core)
+[![Firefox](https://img.shields.io/amo/rating/ublock-origin?label=Firefox)](https://addons.mozilla.org/firefox/addon/ublock-origin/)
+[![Chrome](https://img.shields.io/chrome-web-store/stars/cjpalhdlnbpafiamejdnhcphjbkeiagm?label=Chrome)](https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm)
 
 *** 
 
