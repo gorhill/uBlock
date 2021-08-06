@@ -44,7 +44,7 @@ function fetch(listName) {
     });
 }
 
-(async ( ) => {
+async function main() {
     try {
         const result = await enableWASM();
         if ( result !== true ) {
@@ -56,15 +56,10 @@ function fetch(listName) {
 
     await pslInit();
 
-    const snfe = await Promise.all([
-        fetch('easylist'),
-        fetch('easyprivacy'),
-    ]).then(rawLists => {
-        return useRawLists([
-            { name: 'easylist', raw: rawLists[0] },
-            { name: 'easyprivacy', raw: rawLists[1] },
-        ]);
-    });
+    const snfe = await useRawLists([
+        fetch('easylist').then(raw => ({ name: 'easylist', raw })),
+        fetch('easyprivacy').then(raw => ({ name: 'easyprivacy', raw })),
+    ]);
 
     // Reuse filtering context: it's what uBO does
     const fctxt = new FilteringContext();
@@ -95,6 +90,8 @@ function fetch(listName) {
     }
 
     process.exit();
-})();
+}
+
+main();
 
 /******************************************************************************/
