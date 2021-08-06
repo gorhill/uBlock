@@ -16,7 +16,8 @@ This package uses [native JavaScript modules](https://developer.mozilla.org/en-U
 
 The package contains uBO's static network filtering engine ("SNFE"), which
 purpose is to parse and enforce filter lists. The matching algorithm is highly
-efficient, and especially optimized to for large lists of hostnames.
+efficient, and _especially_ optimized to match against large sets of pure
+hostnames.
 
 The SNFE can be fed filter lists from a variety of sources, such as [EasyList/EasyPrivacy](https://easylist.to/), 
 [uBlock filters](https://github.com/uBlockOrigin/uAssets/tree/master/filters), 
@@ -39,47 +40,58 @@ If you must import as a NodeJS module:
 const { FilteringContext, pslInit, useRawLists } await import from '@gorhill/ubo-core';
 ```
 
+uBO's SNFE works best with a properly initialized Public Suffix List database,
+since it needs to evaluate whether a network request to match is either 1st-
+or 3rd-party to the context in which it is fired:
 
-async function main() {
-    // Initialize the internal Public Suffix List database, which is necessary
-    // for the filtering engine to assess whether a network request is
-    // 3rd-party to the context from which it is fired.
-    await pslInit();
+```js
+await pslInit();
+```
 
-    // Feed EasyList and EasyPrivacy to the filtering engine. A list is
-    // an object exposing the property `raw`, which contains the raw text of
-    // the filter lists.
-    const snfe = await useRawLists([
-        fetch('easylist').then(raw => ({ name: 'easylist', raw })),
-        fetch('easyprivacy').then(raw => ({ name: 'easyprivacy', raw })),
-    ]);
+Now feed the SNFE with filter lists -- `useRawLists()` accepts an array of
+objects (or promises to object) which expose the raw text of a list
+through the `raw` property, and optionally the name of the list through the
+`name` property (how you fetch the lists is up to you):
 
-    // Reuse a single instance of filtering context used for matching
-    const fctxt = new FilteringContext();
+```js
+const snfe = await useRawLists([
+    fetch('easylist').then(raw => ({ name: 'easylist', raw })),
+    fetch('easyprivacy').then(raw => ({ name: 'easyprivacy', raw })),
+]);
+```
 
-    // Tests
-    // Not blocked
-    fctxt.setDocOriginFromURL('https://www.bloomberg.com/');
-    fctxt.setURL('https://www.bloomberg.com/tophat/assets/v2.6.1/that.css');
-    fctxt.setType('stylesheet');
-    if ( snfe.matchRequest(fctxt) !== 0 ) {
-        console.log(snfe.toLogData());
-    }
+`useRawLists()` returns a reference to the SNFE, which you can use later to
+match network requests. First we need a filtering context instance, which is
+required as an argument to match networkrequests:
 
-    // Blocked
-    fctxt.setDocOriginFromURL('https://www.bloomberg.com/');
-    fctxt.setURL('https://securepubads.g.doubleclick.net/tag/js/gpt.js');
-    fctxt.setType('script');
-    if ( snfe.matchRequest(fctxt) !== 0 ) {
-        console.log(snfe.toLogData());
-    }
+```js
+const fctxt = new FilteringContext();
+```
 
-    // Unblocked
-    fctxt.setDocOriginFromURL('https://www.bloomberg.com/');
-    fctxt.setURL('https://sourcepointcmp.bloomberg.com/ccpa.js');
-    fctxt.setType('script');
-    if ( snfe.matchRequest(fctxt) !== 0 ) {
-        console.log(snfe.toLogData());
-    }
+Now we are ready to match network requests:
+
+```js
+// Not blocked
+fctxt.setDocOriginFromURL('https://www.bloomberg.com/');
+fctxt.setURL('https://www.bloomberg.com/tophat/assets/v2.6.1/that.css');
+fctxt.setType('stylesheet');
+if ( snfe.matchRequest(fctxt) !== 0 ) {
+    console.log(snfe.toLogData());
+}
+
+// Blocked
+fctxt.setDocOriginFromURL('https://www.bloomberg.com/');
+fctxt.setURL('https://securepubads.g.doubleclick.net/tag/js/gpt.js');
+fctxt.setType('script');
+if ( snfe.matchRequest(fctxt) !== 0 ) {
+    console.log(snfe.toLogData());
+}
+
+// Unblocked
+fctxt.setDocOriginFromURL('https://www.bloomberg.com/');
+fctxt.setURL('https://sourcepointcmp.bloomberg.com/ccpa.js');
+fctxt.setType('script');
+if ( snfe.matchRequest(fctxt) !== 0 ) {
+    console.log(snfe.toLogData());
 }
 ```
