@@ -5,7 +5,7 @@ no external dependencies.
 
 ## Installation
 
-Install: `npm install --save @gorhill/ubo-core`
+Install: `npm install @gorhill/ubo-core`
 
 This is a very early version and the API is subject to change at any time.
 
@@ -62,7 +62,7 @@ const snfe = await useRawLists([
 
 `useRawLists()` returns a reference to the SNFE, which you can use later to
 match network requests. First we need a filtering context instance, which is
-required as an argument to match networkrequests:
+required as an argument to match network requests:
 
 ```js
 const fctxt = new FilteringContext();
