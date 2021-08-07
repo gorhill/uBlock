@@ -201,6 +201,51 @@ function reset() {
     snfe.reset();
 }
 
+/******************************************************************************/
+
+let pslInitialized = false;
+let staticNetFilteringEngineInstance = null;
+
+class StaticNetFilteringEngine {
+    constructor() {
+        if ( staticNetFilteringEngineInstance !== null ) {
+            throw new Error('Only a single instance is supported.');
+        }
+
+        staticNetFilteringEngineInstance = this;
+
+        this._context = new FilteringContext();
+    }
+
+    async useLists(lists) {
+        await useRawLists(lists);
+    }
+
+    matchRequest({ url, originURL, type }) {
+        this._context.setDocOriginFromURL(originURL);
+        this._context.setURL(url);
+        this._context.setType(type);
+
+        return snfe.matchRequest(this._context);
+    }
+
+    toLogData() {
+        return snfe.toLogData();
+    }
+}
+
+StaticNetFilteringEngine.initialize = async function initialize() {
+    if ( !pslInitialized ) {
+        if ( !pslInit() ) {
+            throw new Error('Failed to initialize public suffix list.');
+        }
+
+        pslInitialized = true;
+    }
+};
+
+/******************************************************************************/
+
 // rollup.js needs module.exports to be set back to the local exports object.
 // This is because some of the code (e.g. publicsuffixlist.js) sets
 // module.exports. Once all included files are written like ES modules, using
@@ -211,6 +256,7 @@ if ( typeof module !== 'undefined' && typeof exports !== 'undefined' ) {
 
 export {
     FilteringContext,
+    StaticNetFilteringEngine,
     enableWASM,
     pslInit,
     createCompiler,
