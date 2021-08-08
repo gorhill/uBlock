@@ -30,9 +30,7 @@ import { createRequire } from 'module';
 
 import {
     enableWASM,
-    FilteringContext,
-    pslInit,
-    useRawLists,
+    StaticNetFilteringEngine,
 } from './index.js';
 
 /******************************************************************************/
@@ -54,39 +52,46 @@ async function main() {
         console.log(ex);
     }
 
-    await pslInit();
+    await StaticNetFilteringEngine.initialize();
 
-    const snfe = await useRawLists([
+    const engine = new StaticNetFilteringEngine();
+
+    await engine.useLists([
         fetch('easylist').then(raw => ({ name: 'easylist', raw })),
         fetch('easyprivacy').then(raw => ({ name: 'easyprivacy', raw })),
     ]);
 
-    // Reuse filtering context: it's what uBO does
-    const fctxt = new FilteringContext();
+    let result = null;
 
     // Tests
     // Not blocked
-    fctxt.setDocOriginFromURL('https://www.bloomberg.com/');
-    fctxt.setURL('https://www.bloomberg.com/tophat/assets/v2.6.1/that.css');
-    fctxt.setType('stylesheet');
-    if ( snfe.matchRequest(fctxt) !== 0 ) {
-        console.log(snfe.toLogData());
+    result = engine.matchRequest({
+      originURL: 'https://www.bloomberg.com/',
+      url: 'https://www.bloomberg.com/tophat/assets/v2.6.1/that.css',
+      type: 'stylesheet'
+    });
+    if ( result !== 0 ) {
+        console.log(engine.toLogData());
     }
 
     // Blocked
-    fctxt.setDocOriginFromURL('https://www.bloomberg.com/');
-    fctxt.setURL('https://securepubads.g.doubleclick.net/tag/js/gpt.js');
-    fctxt.setType('script');
-    if ( snfe.matchRequest(fctxt) !== 0 ) {
-        console.log(snfe.toLogData());
+    result = engine.matchRequest({
+      originURL: 'https://www.bloomberg.com/',
+      url: 'https://securepubads.g.doubleclick.net/tag/js/gpt.js',
+      type: 'script'
+    });
+    if ( result !== 0 ) {
+        console.log(engine.toLogData());
     }
 
     // Unblocked
-    fctxt.setDocOriginFromURL('https://www.bloomberg.com/');
-    fctxt.setURL('https://sourcepointcmp.bloomberg.com/ccpa.js');
-    fctxt.setType('script');
-    if ( snfe.matchRequest(fctxt) !== 0 ) {
-        console.log(snfe.toLogData());
+    result = engine.matchRequest({
+      originURL: 'https://www.bloomberg.com/',
+      url: 'https://sourcepointcmp.bloomberg.com/ccpa.js',
+      type: 'script'
+    });
+    if ( result !== 0 ) {
+        console.log(engine.toLogData());
     }
 
     process.exit();
