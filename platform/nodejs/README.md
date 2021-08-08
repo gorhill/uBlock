@@ -28,70 +28,69 @@ and also lists of domain names or hosts file format (i.e. block lists from [The 
 ## Usage
 
 At the moment, there can be only one instance of the static network filtering
-engine, which API must be imported as follow:
+engine ("SNFE"), which proxy API must be imported as follow:
 
 ```js
-import { FilteringContext, pslInit, useRawLists } from '@gorhill/ubo-core';
+import { StaticNetFilteringEngine } from '@gorhill/ubo-core';
 ```
 
 If you must import as a NodeJS module:
 
 ```js
-const { FilteringContext, pslInit, useRawLists } await import from '@gorhill/ubo-core';
+const { StaticNetFilteringEngine } await import from '@gorhill/ubo-core';
 ```
 
-uBO's SNFE works best with a properly initialized Public Suffix List database,
-since it needs to evaluate whether a network request to match is either 1st-
-or 3rd-party to the context in which it is fired:
+
+Create an instance of SNFE:
 
 ```js
-await pslInit();
+const snfe = StaticNetFilteringEngine.create();
 ```
 
-Now feed the SNFE with filter lists -- `useRawLists()` accepts an array of
+Feed the SNFE with filter lists -- `useLists()` accepts an array of
 objects (or promises to object) which expose the raw text of a list
 through the `raw` property, and optionally the name of the list through the
 `name` property (how you fetch the lists is up to you):
 
 ```js
-const snfe = await useRawLists([
+await snfe.useLists([
     fetch('easylist').then(raw => ({ name: 'easylist', raw })),
     fetch('easyprivacy').then(raw => ({ name: 'easyprivacy', raw })),
 ]);
-```
-
-`useRawLists()` returns a reference to the SNFE, which you can use later to
-match network requests. First we need a filtering context instance, which is
-required as an argument to match network requests:
-
-```js
-const fctxt = new FilteringContext();
 ```
 
 Now we are ready to match network requests:
 
 ```js
 // Not blocked
-fctxt.setDocOriginFromURL('https://www.bloomberg.com/');
-fctxt.setURL('https://www.bloomberg.com/tophat/assets/v2.6.1/that.css');
-fctxt.setType('stylesheet');
-if ( snfe.matchRequest(fctxt) !== 0 ) {
+if ( snfe.matchRequest({
+    originURL: 'https://www.bloomberg.com/',
+    url: 'https://www.bloomberg.com/tophat/assets/v2.6.1/that.css',
+    type: 'stylesheet'
+}) !== 0 ) {
     console.log(snfe.toLogData());
 }
 
 // Blocked
-fctxt.setDocOriginFromURL('https://www.bloomberg.com/');
-fctxt.setURL('https://securepubads.g.doubleclick.net/tag/js/gpt.js');
-fctxt.setType('script');
-if ( snfe.matchRequest(fctxt) !== 0 ) {
+if ( snfe.matchRequest({
+    originURL: 'https://www.bloomberg.com/',
+    url: 'https://securepubads.g.doubleclick.net/tag/js/gpt.js',
+    type: 'script'
+}) !== 0 ) {
     console.log(snfe.toLogData());
 }
 
 // Unblocked
-fctxt.setDocOriginFromURL('https://www.bloomberg.com/');
-fctxt.setURL('https://sourcepointcmp.bloomberg.com/ccpa.js');
-fctxt.setType('script');
-if ( snfe.matchRequest(fctxt) !== 0 ) {
+if ( snfe.matchRequest({
+    originURL: 'https://www.bloomberg.com/',
+    url: 'https://sourcepointcmp.bloomberg.com/ccpa.js',
+    type: 'script'
+}) !== 0 ) {
     console.log(snfe.toLogData());
 }
 ```
+
+It is possible to pre-parse filter lists and save the intermediate results for 
+later use -- useful to speed up the loading of filter lists. This will be 
+documented eventually, but if you feel adventurous, you can look at the code 
+and use this capability now if you figure out the details.

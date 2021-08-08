@@ -52,16 +52,14 @@ async function main() {
         console.log(ex);
     }
 
-    await StaticNetFilteringEngine.initialize();
-
-    const engine = new StaticNetFilteringEngine();
+    const engine = await StaticNetFilteringEngine.create();
 
     await engine.useLists([
         fetch('easylist').then(raw => ({ name: 'easylist', raw })),
         fetch('easyprivacy').then(raw => ({ name: 'easyprivacy', raw })),
     ]);
 
-    let result = null;
+    let result = 0;
 
     // Tests
     // Not blocked

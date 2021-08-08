@@ -150,6 +150,13 @@ const FilteringContext = class {
         return this;
     }
 
+    fromDetails({ originURL, url, type }) {
+        this.setDocOriginFromURL(originURL);
+        this.setURL(url);
+        this.setType(type);
+        return this;
+    }
+
     duplicate() {
         return (new FilteringContext(this));
     }
