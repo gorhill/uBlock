@@ -337,7 +337,7 @@ try {
         vAPI.net.suspend();
     }
 
-    if ( µb.hiddenSettings.disableWebAssembly !== true ) {
+    if ( vAPI.canWASM && µb.hiddenSettings.disableWebAssembly !== true ) {
         const wasmModuleFetcher = function(path) {
             return fetch(`${path}.wasm`, { mode: 'same-origin' }).then(
                 globals.WebAssembly.compileStreaming

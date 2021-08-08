@@ -1208,7 +1208,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     const psl = globals.publicSuffixList;
 
     // WASM is nice but not critical
-    if ( this.hiddenSettings.disableWebAssembly !== true ) {
+    if ( vAPI.canWASM && this.hiddenSettings.disableWebAssembly !== true ) {
         const wasmModuleFetcher = function(path) {
             return fetch( `${path}.wasm`, {
                 mode: 'same-origin'

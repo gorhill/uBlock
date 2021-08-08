@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* globals WebAssembly vAPI */
-
 'use strict';
 
 /*******************************************************************************
@@ -457,20 +455,28 @@ const HNTrieContainer = class {
     }
 
     async enableWASM(wasmModuleFetcher, path) {
-        if ( typeof WebAssembly !== 'object' ) { return false; }
-        if ( this.wasmMemory instanceof WebAssembly.Memory ) { return true; }
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
+        const globals = (( ) => {
+            // jshint ignore:start
+            if ( typeof globalThis !== 'undefined' ) { return globalThis; }
+            if ( typeof self !== 'undefined' ) { return self; }
+            if ( typeof global !== 'undefined' ) { return global; }
+            // jshint ignore:end
+            return {};
+        })();
+        const WASM = globals.WebAssembly || null;
+        if ( WASM === null ) { return false; }
+        if ( this.wasmMemory instanceof WASM.Memory ) { return true; }
         const module = await getWasmModule(wasmModuleFetcher, path);
-        if ( module instanceof WebAssembly.Module === false ) { return false; }
-        const memory = new WebAssembly.Memory({ initial: 2 });
-        const instance = await WebAssembly.instantiate(module, {
+        if ( module instanceof WASM.Module === false ) { return false; }
+        const memory = new WASM.Memory({ initial: 2 });
+        const instance = await WASM.instantiate(module, {
             imports: {
                 memory,
                 growBuf: this.growBuf.bind(this, 24, 256)
             }
         });
-        if ( instance instanceof WebAssembly.Instance === false ) {
-            return false;
-        }
+        if ( instance instanceof WASM.Instance === false ) { return false; }
         this.wasmMemory = memory;
         const curPageCount = memory.buffer.byteLength >>> 16;
         const newPageCount = roundToPageSize(this.buf.byteLength) >>> 16;
@@ -536,10 +542,7 @@ const HNTrieContainer = class {
 
     resizeBuf(bufLen, char0) {
         bufLen = roundToPageSize(bufLen);
-        if (
-            bufLen === this.buf.length &&
-            char0 === this.buf32[CHAR0_SLOT]
-        ) {
+        if ( bufLen === this.buf.length && char0 === this.buf32[CHAR0_SLOT] ) {
             return;
         }
         const charDataLen = this.buf32[CHAR1_SLOT] - this.buf32[CHAR0_SLOT];
@@ -772,12 +775,6 @@ const getWasmModule = (( ) => {
         if ( wasmModulePromise instanceof Promise ) {
             return wasmModulePromise;
         }
-
-        if ( typeof WebAssembly !== 'object' ) { return; }
-
-        // Soft-dependency on vAPI so that the code here can be used outside of
-        // uBO (i.e. tests, benchmarks)
-        if ( typeof vAPI === 'object' && vAPI.canWASM !== true ) { return; }
 
         // The wasm module will work only if CPU is natively little-endian,
         // as we use native uint32 array in our js code.
