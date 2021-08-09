@@ -85,8 +85,8 @@ function pslInit(raw) {
         // Use loadJSON() because require() would keep the string in memory.
         serialized = loadJSON('build/publicsuffixlist.json');
     } catch (error) {
-        if ( process.env.npm_lifecycle_event !== 'install' ) {
-            // This should never happen except during package installation.
+        if ( process.env.npm_lifecycle_event !== 'build' ) {
+            // This should never happen except during package building.
             console.error(error);
         }
     }
