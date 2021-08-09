@@ -101,6 +101,7 @@ function pslInit(raw) {
         console.error('Unable to populate public suffix list');
         return;
     }
+    globals.publicSuffixList.parse(raw, globals.punycode.toASCII);
     return globals.publicSuffixList;
 }
 
