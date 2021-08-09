@@ -197,7 +197,7 @@
         br_if $noSegment
         ;; if ( this.buf32[icell+2] === 0 ) {
         get_local $icell
-        i32.load
+        i32.load offset=8
         i32.eqz
         if
             ;; if ( ineedle === 0 || this.buf[ineedle-1] === 0x2E ) {
