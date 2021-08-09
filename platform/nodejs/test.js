@@ -42,23 +42,7 @@ function fetch(listName) {
     });
 }
 
-async function main() {
-    try {
-        const result = await enableWASM();
-        if ( result !== true ) {
-            console.log('Failed to enable all WASM code paths');
-        }
-    } catch(ex) {
-        console.log(ex);
-    }
-
-    const engine = await StaticNetFilteringEngine.create();
-
-    await engine.useLists([
-        fetch('easylist').then(raw => ({ name: 'easylist', raw })),
-        fetch('easyprivacy').then(raw => ({ name: 'easyprivacy', raw })),
-    ]);
-
+function runTests(engine) {
     let result = 0;
 
     // Tests
@@ -91,6 +75,35 @@ async function main() {
     if ( result !== 0 ) {
         console.log(engine.toLogData());
     }
+}
+
+async function main() {
+    try {
+        const result = await enableWASM();
+        if ( result !== true ) {
+            console.log('Failed to enable all WASM code paths');
+        }
+    } catch(ex) {
+        console.log(ex);
+    }
+
+    const engine = await StaticNetFilteringEngine.create();
+
+    await engine.useLists([
+        fetch('easylist').then(raw => ({ name: 'easylist', raw })),
+        fetch('easyprivacy').then(raw => ({ name: 'easyprivacy', raw })),
+    ]);
+
+    runTests(engine);
+
+    const serialized = await engine.serialize();
+    engine.useLists([]);
+
+    runTests(engine);
+
+    await engine.deserialize(serialized);
+
+    runTests(engine);
 
     process.exit();
 }
