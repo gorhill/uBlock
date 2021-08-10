@@ -896,7 +896,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "Koristit će se slučajno odabrani CDN kada treba ažurirati popis filtera",
+    "message": "Koristit će se slučajno odabrani CDN za ažuriranje popisa filtera",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {

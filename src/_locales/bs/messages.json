@@ -76,7 +76,7 @@
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
-    "message": "blokirani zahtjevi",
+    "message": "zahtjeva blokirano",
     "description": "English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt": {
@@ -84,7 +84,7 @@
     "description": "English: on this page"
   },
   "popupBlockedStats": {
-    "message": "{{count}} ili {{percent}}%",
+    "message": "{{count}} ({{percent}}%)",
     "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
@@ -148,15 +148,15 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Uključite/isključite eststsko filtriranje za ovaj sajt",
+    "message": "Uključite/isključite estetsko filtriranje za ovaj sajt",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Kliknite da isključite eststsko filtriranje za ovaj sajt",
+    "message": "Kliknite da isključite estetsko filtriranje za ovaj sajt",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Kliknite da uključite eststsko filtriranje za ovaj sajt",
+    "message": "Kliknite da uključite estetsko filtriranje za ovaj sajt",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -256,7 +256,7 @@
     "description": ""
   },
   "popupHitDomainCountPrompt": {
-    "message": "povezani domeni",
+    "message": "povezane domene",
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
@@ -416,7 +416,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "Estetski filteri služe za sakrivanje elementa na web stranici koji se smatraju izglednim smjetnjama, i koji ne mogu biti blokirani filtratorima zasnovanih od mrežnih zahtjeva.",
+    "message": "Estetski filteri služe za sakrivanje elementa na web stranici koji se smatraju izglednim smjetnjama, i koji ne mogu biti blokirani filterima zasnovanih od mrežnih zahtjeva.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -428,7 +428,7 @@
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
-    "message": "Lists of blocked hosts",
+    "message": "Lista blokiranih hostova",
     "description": "English: Lists of blocked hosts"
   },
   "3pApplyChanges": {
@@ -448,7 +448,7 @@
     "description": "English: Privacy"
   },
   "3pGroupMalware": {
-    "message": "Zlonamjerni domeni",
+    "message": "Zlonamjerne domene",
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {
@@ -536,7 +536,7 @@
     "description": "Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave": {
-    "message": "Spasi",
+    "message": "Spremi",
     "description": "Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard": {
@@ -556,7 +556,7 @@
     "description": "default file name to use"
   },
   "rulesHint": {
-    "message": "Spisak/popis vaših dinamičkih pravila za filtriranje.",
+    "message": "Lista vaših dinamičkih pravila za filtriranje.",
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
@@ -620,15 +620,15 @@
     "description": "Appears in the logger's tab selector"
   },
   "logBehindTheScene": {
-    "message": "Iza zavjese",
+    "message": "Bez tabova",
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
-    "message": "Trenutna kartica",
+    "message": "Trenutni tab",
     "description": "Appears in the logger's tab selector"
   },
   "loggerReloadTip": {
-    "message": "Ponovo učitajte sadržaj kartice",
+    "message": "Ponovo učitaj sadržaj taba",
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
@@ -640,31 +640,31 @@
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
-    "message": "uBlock Origin wiki: bilježak",
+    "message": "uBlock Origin wiki: zapisnik",
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
-    "message": "Očistite bilješke",
+    "message": "Očistite zapise",
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
-    "message": "Pauzirajte bilješke (odbacite sve dolazne podatke)",
+    "message": "Pauzirajte zapise (odbacite sve dolazne podatke)",
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {
-    "message": "Pokrenite bilješke",
+    "message": "Pokrenite zapise",
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "Uključite/isključite filtriranje bilješka",
+    "message": "Uključite/isključite filtriranje zapisa",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
-    "message": "filtrirajte sadržaj bilješka",
+    "message": "filtrirajte sadržaj zapisa",
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
-    "message": "Postavke fitriranja bilješka",
+    "message": "Postavke filtriranja zapisa",
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {
@@ -672,7 +672,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinEventful": {
-    "message": "eventful",
+    "message": "puno događaja",
     "description": "A keyword in the built-in row filtering expression: all items corresponding to uBO doing something (blocked, allowed, redirected, etc.)"
   },
   "loggerRowFiltererBuiltinBlocked": {
@@ -684,7 +684,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinModified": {
-    "message": "izmjenuto",
+    "message": "Izmjenjeno:",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
@@ -724,7 +724,7 @@
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
-    "message": "Tip",
+    "message": "Vrsta",
     "description": "Label to identify the type of an entry"
   },
   "loggerEntryDetailsURL": {
@@ -740,7 +740,7 @@
     "description": "Label for the context selector"
   },
   "loggerURLFilteringTypeLabel": {
-    "message": "Tip:",
+    "message": "Vrsta:",
     "description": "Label for the type selector"
   },
   "loggerStaticFilteringHeader": {
@@ -760,11 +760,11 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType": {
-    "message": "tip “{{type}}”",
+    "message": "vrsta “{{type}}”",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyType": {
-    "message": "bilo koji tip",
+    "message": "bilo koja vrsta",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin": {
@@ -788,7 +788,7 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Statični filter nije pronađen u nijedno od trenutno uključenih filterskih listi",
+    "message": "Statični filter nije pronađen u nijednoj od trenutno uključenih filterskih listi",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
@@ -796,15 +796,15 @@
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
-    "message": "Spasite unose iz zadnje/ih {{input}} minute/a",
+    "message": "Spremite unose iz zadnje/ih {{input}} minute/a",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "Spasite najviše {{input}} učitavanja stranica po kartici",
+    "message": "Spremite najviše {{input}} učitavanja stranica po kartici",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
-    "message": "Spasite najviše {{input}} unosa po kartici",
+    "message": "Spremite najviše {{input}} unosa po kartici",
     "description": "A logger setting"
   },
   "loggerSettingPerEntryLineCount": {
@@ -892,7 +892,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "Sopstveni zapisi filtera uBO-a su besplatno gostovani na sljedećim <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN-ovima</a>:\n",
+    "message": "Sopstveni zapisi filtera uBO-a su besplatno hostani na sljedećim <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN-ovima</a>:\n",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
@@ -916,7 +916,7 @@
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
-    "message": "Sve vaše postavke će je biti prebrisane koristeći rezervnu kopiju sa postavkama sačuvanim {{time}}, i uBlock₀ će se ponovno pokrenuti. \n\nPrepisati sve postojeće postavke sa rezervnom kopijom postavkih?",
+    "message": "Sve vaše postavke će je biti prebrisane koristeći rezervnu kopiju sa postavkama sačuvanim {{time}}, i uBlock₀ će se ponovno pokrenuti. \n\nPrepisati sve postojeće postavke sa rezervnom kopijom postavki?",
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {
@@ -968,7 +968,7 @@
     "description": "Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
-    "message": "Pokaži Dnevnik",
+    "message": "Pokaži zapisnik",
     "description": "Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
@@ -1068,11 +1068,11 @@
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "(De)aktivacija zaključanog scrollanja",
+    "message": "(De)aktivacija zaključanog pomicanja",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
-    "message": "Kopirano u međuspremnik",
+    "message": "Kopiraj u međuspremnik",
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "toggleBlockingProfile": {
@@ -1080,7 +1080,7 @@
     "description": "Label for keyboard shortcut used to toggle blocking profile"
   },
   "relaxBlockingMode": {
-    "message": "Relaksirano mod blokiranja",
+    "message": "Relaksiran mod blokiranja",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "storageUsed": {
@@ -1104,7 +1104,7 @@
     "description": "Message used in frame placeholders"
   },
   "dummy": {
-    "message": "This entry must be the last one",
+    "message": "Ova stavka mora biti posljednja",
     "description": "so we dont need to deal with comma for last entry"
   }
 }

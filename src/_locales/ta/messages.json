@@ -944,7 +944,7 @@
     "description": "English: a minute ago"
   },
   "elapsedManyMinutesAgo": {
-    "message": "{{value}} நிமிடம் முன்பு",
+    "message": "{{value}} நிமிடங்கள் முன்பு",
     "description": "English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo": {

@@ -896,7 +896,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "Një CDN e zgjedhur në mënyrë rastësore do të përdoret kur një listë filtrash ka nevojë për përditësim",
+    "message": "CDN-ja do të zgjidhet në mënyrë rastësore kur lista e filtrave ka nevojë për përditësim.",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
