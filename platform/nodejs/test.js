@@ -26,6 +26,7 @@
 
 /******************************************************************************/
 
+import { strict as assert } from 'assert';
 import { createRequire } from 'module';
 
 import {
@@ -92,9 +93,13 @@ async function doSNFE() {
     const serialized = await engine.serialize();
     engine.useLists([]);
 
+    assert.notDeepEqual(await engine.serialize(), serialized);
+
     testSNFE(engine);
 
     await engine.deserialize(serialized);
+
+    assert.deepEqual(await engine.serialize(), serialized);
 
     testSNFE(engine);
 }
