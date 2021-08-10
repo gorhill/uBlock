@@ -94,3 +94,65 @@ It is possible to pre-parse filter lists and save the intermediate results for
 later use -- useful to speed up the loading of filter lists. This will be 
 documented eventually, but if you feel adventurous, you can look at the code 
 and use this capability now if you figure out the details.
+
+---
+
+## Extras
+
+You can directly use specific APIs exposed by this package, here are some of 
+them, which are used internally by uBO's SNFE.
+
+### `HNTrieContainer`
+
+A well optimised [compressed trie](https://en.wikipedia.org/wiki/Trie#Compressing_tries) 
+container specialized to specifically store and lookup hostnames.
+
+The matching algorithm is designed for hostnames, i.e. the hostname labels 
+making up a hostname are matched from right to left, such that `www.example.org` 
+with be a match if `example.org` is stored into the trie, while 
+`anotherexample.org` won't be a match.
+
+`HNTrieContainer` is designed to store a large number of hostnames with CPU and 
+memory efficiency as a main concern -- and is a key component of uBO.
+
+To create and use a standalone `HNTrieContainer` object:
+
+```js
+import HNTrieContainer from '@gorhill/ubo-core/js/hntrie.js';
+
+const trieContainer = new HNTrieContainer();
+
+const aTrie = trieContainer.createOne();
+aTrie.add('example.org');
+aTrie.add('example.com');
+
+const anotherTrie = trieContainer.createOne();
+anotherTrie.add('foo.invalid');
+anotherTrie.add('bar.invalid');
+
+// matches() return the position at which the match starts, or -1 when
+// there is no match.
+
+// Matches: return 4
+console.log("aTrie.matches('www.example.org')", aTrie.matches('www.example.org'));
+
+// Does not match: return -1
+console.log("aTrie.matches('www.foo.invalid')", aTrie.matches('www.foo.invalid'));
+
+// Does not match: return -1
+console.log("anotherTrie.matches('www.example.org')", anotherTrie.matches('www.example.org'));
+
+// Matches: return 0
+console.log("anotherTrie.matches('foo.invalid')", anotherTrie.matches('foo.invalid'));
+```
+
+The `reset()` method must be used to remove all the tries from a trie container, 
+you can't remove a single trie from the container.
+
+```js
+hntrieContainer.reset();
+```
+
+When you reset a trie container, you can't use the reference to prior instances 
+of trie, i.e. `aTrie` and `anotherTrie` are no longer valid and shouldn't be 
+used following a reset.

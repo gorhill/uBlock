@@ -26,9 +26,9 @@
 /******************************************************************************/
 
 import globals from './globals.js';
+import HNTrieContainer from './hntrie.js';
 import { sparseBase64 } from './base64-custom.js';
 import { BidiTrieContainer } from './biditrie.js';
-import { HNTrieContainer } from './hntrie.js';
 import { StaticFilteringParser } from './static-filtering-parser.js';
 import { CompiledListReader } from './static-filtering-io.js';
 
