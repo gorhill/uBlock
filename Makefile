@@ -1,4 +1,4 @@
-.PHONY: all clean lint chromium firefox nodejs
+.PHONY: all clean test lint chromium firefox nodejs
 
 sources := $(wildcard src/* src/*/* src/*/*/* src/*/*/*/*)
 platform := $(wildcard platform/* platform/*/*)
@@ -31,6 +31,9 @@ lint: nodejs
 	eslint -c platform/nodejs/eslintrc.json \
 		dist/build/uBlock0.nodejs/js \
 		dist/build/uBlock0.nodejs/*.js
+
+test: nodejs
+	cd dist/build/uBlock0.nodejs && npm run test
 
 # Update submodules.
 update-submodules:
