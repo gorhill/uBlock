@@ -57,6 +57,10 @@ cp platform/nodejs/*.json    $DES/
 cp platform/nodejs/README.md $DES/
 cp LICENSE.txt               $DES/
 
+cd $DES
+npm run build
+cd -
+
 if [ "$1" = all ]; then
     echo "*** uBlock0.nodejs: Creating plain package..."
     pushd $(dirname $DES/) > /dev/null

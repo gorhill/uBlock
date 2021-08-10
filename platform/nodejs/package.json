@@ -5,7 +5,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "install": "node install.js",
+    "build": "node build.js",
     "test": "node test.js"
   },
   "repository": {
