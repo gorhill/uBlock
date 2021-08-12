@@ -73,6 +73,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.nodejs.zip
-          asset_name: uBlock0_${{ steps.release_info.outputs.VERSION }}.nodejs.zip
+          asset_path: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.nodejs.tgz
+          asset_name: uBlock0_${{ steps.release_info.outputs.VERSION }}.nodejs.tgz
           asset_content_type: application/octet-stream
