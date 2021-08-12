@@ -59,6 +59,8 @@ cp LICENSE.txt               $DES/
 
 cd $DES
 npm run build
+tarballname=$(npm pack 2> /dev/null)
+mv $tarballname ../uBlock0.nodejs.tgz
 cd -
 
 if [ "$1" = all ]; then
