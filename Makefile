@@ -28,12 +28,10 @@ dist/build/uBlock0.nodejs: tools/make-nodejs.sh $(sources) $(platform) $(assets)
 nodejs: dist/build/uBlock0.nodejs
 
 lint: nodejs
-	eslint -c platform/nodejs/eslintrc.json \
-		dist/build/uBlock0.nodejs/js \
-		dist/build/uBlock0.nodejs/*.js
+	cd dist/build/uBlock0.nodejs && npm install && npm run lint
 
 test: nodejs
-	cd dist/build/uBlock0.nodejs && npm run test
+	cd dist/build/uBlock0.nodejs && npm install && npm run test
 
 # Update submodules.
 update-submodules:

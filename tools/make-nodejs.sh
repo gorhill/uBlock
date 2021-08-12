@@ -52,6 +52,7 @@ node -pe "JSON.stringify(fs.readFileSync('$THIRDPARTY/easylist.txt', 'utf8'))" \
 node -pe "JSON.stringify(fs.readFileSync('$THIRDPARTY/easyprivacy.txt', 'utf8'))" \
     > $DES/data/easyprivacy.json
 
+cp platform/nodejs/.*.json   $DES/
 cp platform/nodejs/*.js      $DES/
 cp platform/nodejs/*.json    $DES/
 cp platform/nodejs/README.md $DES/

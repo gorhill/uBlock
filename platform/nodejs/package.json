@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "build": "node build.js",
+    "lint": "eslint js/ *.js",
     "test": "node test.js"
   },
   "repository": {
@@ -27,5 +28,8 @@
   "engines": {
     "node": ">=14.0.0",
     "npm": ">=6.14.4"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0"
   }
 }
