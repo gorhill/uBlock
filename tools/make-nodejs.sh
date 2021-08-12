@@ -60,19 +60,13 @@ cp LICENSE.txt               $DES/
 cd $DES
 npm run build
 tarballname=$(npm pack 2> /dev/null)
-mv $tarballname ../uBlock0.nodejs.tgz
-cd -
-
-if [ "$1" = all ]; then
-    echo "*** uBlock0.nodejs: Creating plain package..."
-    pushd $(dirname $DES/) > /dev/null
-    zip uBlock0.nodejs.zip -qr $(basename $DES/)/*
-    popd > /dev/null
-elif [ -n "$1" ]; then
+if [ "$1" ]; then
     echo "*** uBlock0.nodejs: Creating versioned package..."
-    pushd $(dirname $DES/) > /dev/null
-    zip uBlock0_"$1".nodejs.zip -qr $(basename $DES/)/*
-    popd > /dev/null
+    mv $tarballname ../uBlock0_"$1".nodejs.tgz
+else
+    echo "*** uBlock0.nodejs: Creating plain package..."
+    mv $tarballname ../uBlock0.nodejs.tgz
 fi
+cd -
 
 echo "*** uBlock0.nodejs: Package done."
