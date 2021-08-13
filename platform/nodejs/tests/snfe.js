@@ -76,21 +76,23 @@ describe('SNFE', () => {
         }
     }
 
-    beforeEach(async () => {
+    before(async () => {
         engine = await StaticNetFilteringEngine.create();
-
-        await engine.useLists([
-            fetch('easylist').then(raw => ({ name: 'easylist', raw })),
-            fetch('easyprivacy').then(raw => ({ name: 'easyprivacy', raw })),
-        ]);
     });
 
     describe('Basic', async () => {
+        beforeEach(async () => {
+            await engine.useLists([
+                fetch('easylist').then(raw => ({ name: 'easylist', raw })),
+                fetch('easyprivacy').then(raw => ({ name: 'easyprivacy', raw })),
+            ]);
+        });
+
         it ('should work', async () => {
             testSNFE(engine);
 
             const serialized = await engine.serialize();
-            engine.useLists([]);
+            await engine.useLists([]);
 
             assert.notDeepEqual(await engine.serialize(), serialized);
 
@@ -101,6 +103,42 @@ describe('SNFE', () => {
             assert.deepEqual(await engine.serialize(), serialized);
 
             testSNFE(engine);
+        });
+    });
+
+    describe('Filter loading', () => {
+        beforeEach(async () => {
+            // This is in lieu of a constructor for a non-singleton.
+            await engine.useLists([]);
+        });
+
+        it('should not reject on no lists', async () => {
+            await assert.doesNotReject(engine.useLists([]));
+        });
+
+        it('should not reject on one empty list', async () => {
+            await assert.doesNotReject(engine.useLists([
+                { name: 'easylist', raw: '' },
+            ]));
+        });
+
+        it('should not reject on one list containing one filter', async () => {
+            await assert.doesNotReject(engine.useLists([
+                { name: 'easylist', raw: '/foo^' },
+            ]));
+        });
+
+        it('should not reject on one list containing multiple filters', async () => {
+            await assert.doesNotReject(engine.useLists([
+                { name: 'easylist', raw: '/foo^\n||example.com^' },
+            ]));
+        });
+
+        it('should not reject on multiple lists containing multiple filters', async () => {
+            await assert.doesNotReject(engine.useLists([
+                { name: 'easylist', raw: '/foo^\n||example.com^' },
+                { name: 'easyprivacy', raw: '||example.net/bar/\n^bar.js?' },
+            ]));
         });
     });
 });
