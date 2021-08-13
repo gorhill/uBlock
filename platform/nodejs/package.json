@@ -7,7 +7,7 @@
   "scripts": {
     "build": "node build.js",
     "lint": "eslint js/ *.js",
-    "test": "node test.js"
+    "test": "mocha tests"
   },
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
     "npm": ">=6.14.4"
   },
   "devDependencies": {
-    "eslint": "^7.32.0"
+    "eslint": "^7.32.0",
+    "mocha": "^9.0.3"
   }
 }
