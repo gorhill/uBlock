@@ -113,31 +113,52 @@ describe('SNFE', () => {
         });
 
         it('should not reject on no lists', async () => {
-            await assert.doesNotReject(engine.useLists([]));
+            await engine.useLists([]);
         });
 
         it('should not reject on one empty list', async () => {
-            await assert.doesNotReject(engine.useLists([
+            await engine.useLists([
                 { name: 'easylist', raw: '' },
-            ]));
+            ]);
         });
 
         it('should not reject on one list containing one filter', async () => {
-            await assert.doesNotReject(engine.useLists([
+            await engine.useLists([
                 { name: 'easylist', raw: '/foo^' },
-            ]));
+            ]);
         });
 
         it('should not reject on one list containing multiple filters', async () => {
-            await assert.doesNotReject(engine.useLists([
+            await engine.useLists([
                 { name: 'easylist', raw: '/foo^\n||example.com^' },
-            ]));
+            ]);
         });
 
         it('should not reject on multiple lists containing multiple filters', async () => {
-            await assert.doesNotReject(engine.useLists([
+            await engine.useLists([
                 { name: 'easylist', raw: '/foo^\n||example.com^' },
                 { name: 'easyprivacy', raw: '||example.net/bar/\n^bar.js?' },
+            ]);
+        });
+
+        it('should not reject on promised-based lists', async () => {
+            await engine.useLists([
+                Promise.resolve({ name: 'easylist', raw: '/foo^\n||example.com^' }),
+                Promise.resolve({ name: 'easyprivacy', raw: '||example.net/bar/\n^bar.js?' }),
+            ]);
+        });
+
+        it('should reject on promised-based lists in which a promise is rejected', async () => {
+            await assert.rejects(engine.useLists([
+                Promise.reject({ name: 'easylist', raw: '/foo^\n||example.com^' }),
+                Promise.resolve({ name: 'easyprivacy', raw: '||example.net/bar/\n^bar.js?' }),
+            ]));
+        });
+
+        it('should reject on promised-based lists in which all promises are rejected', async () => {
+            await assert.rejects(engine.useLists([
+                Promise.reject({ name: 'easylist', raw: '/foo^\n||example.com^' }),
+                Promise.reject({ name: 'easyprivacy', raw: '||example.net/bar/\n^bar.js?' }),
             ]));
         });
     });
