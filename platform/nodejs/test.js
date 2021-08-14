@@ -27,7 +27,9 @@
 /******************************************************************************/
 
 import { strict as assert } from 'assert';
+import { spawn } from "child_process";
 import { createRequire } from 'module';
+import { promisify } from 'util';
 
 import {
     enableWASM,
@@ -131,6 +133,10 @@ async function doHNTrie() {
     console.log("anotherTrie.matches('foo.invalid')", anotherTrie.matches('foo.invalid'));
 }
 
+async function spawnMocha() {
+    await promisify(spawn)('mocha', [ 'tests' ], { stdio: [ 'inherit', 'inherit', 'inherit' ] });
+}
+
 async function main() {
     try {
         const result = await enableWASM();
@@ -144,7 +150,9 @@ async function main() {
     await doSNFE();
     await doHNTrie();
 
-    process.exit();
+    if ( process.argv[2] === '--mocha' ) {
+        await spawnMocha();
+    }
 }
 
 main();
