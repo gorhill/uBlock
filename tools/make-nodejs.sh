@@ -79,7 +79,7 @@ fi
 cd -
 
 # Restore saved npm dependencies
-if [ -n "$TMPDIR" ]; then
+if [ -d "$TMPDIR/node_modules" ]; then
     mv "$TMPDIR/node_modules" "$DES/node_modules"
     rmdir "$TMPDIR"
 fi
