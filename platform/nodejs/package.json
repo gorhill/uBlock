@@ -7,7 +7,7 @@
   "scripts": {
     "build": "node build.js",
     "lint": "eslint js/ *.js",
-    "test": "mocha tests"
+    "test": "node test.js --mocha"
   },
   "repository": {
     "type": "git",
