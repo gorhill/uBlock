@@ -128,4 +128,53 @@ describe('SNFE', () => {
             ]));
         });
     });
+
+    describe('Serialization', () => {
+        beforeEach(async () => {
+            const globals = { URL, setTimeout, clearTimeout };
+
+            const { StaticNetFilteringEngine } = await createWorld('./index.js', { globals });
+
+            engine = await StaticNetFilteringEngine.create();
+        });
+
+        it('should not reject with no lists', async () => {
+            await engine.useLists([]);
+
+            await engine.serialize();
+        });
+
+        it('should not reject with one empty list', async () => {
+            await engine.useLists([
+                { name: 'easylist', raw: '' },
+            ]);
+
+            await engine.serialize();
+        });
+
+        it('should not reject with one list containing one filter', async () => {
+            await engine.useLists([
+                { name: 'easylist', raw: '/foo^' },
+            ]);
+
+            await engine.serialize();
+        });
+
+        it('should not reject with one list containing multiple filters', async () => {
+            await engine.useLists([
+                { name: 'easylist', raw: '/foo^\n||example.com^' },
+            ]);
+
+            await engine.serialize();
+        });
+
+        it('should not reject with multiple lists containing multiple filters', async () => {
+            await engine.useLists([
+                { name: 'easylist', raw: '/foo^\n||example.com^' },
+                { name: 'easyprivacy', raw: '||example.net/bar/\n^bar.js?' },
+            ]);
+
+            await engine.serialize();
+        });
+    });
 });
