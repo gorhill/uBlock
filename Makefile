@@ -1,4 +1,8 @@
-.PHONY: all clean test lint chromium firefox npm
+# https://stackoverflow.com/a/6273809
+run_options := $(filter-out $@,$(MAKECMDGOALS))
+
+.PHONY: all clean test lint chromium firefox npm dig \
+	compare maxcost mincost record wasm
 
 sources := $(wildcard src/* src/*/* src/*/*/* src/*/*/*/*)
 platform := $(wildcard platform/* platform/*/*)
@@ -37,7 +41,10 @@ dist/build/uBlock0.dig: tools/make-nodejs.sh $(sources) $(platform) $(assets)
 	tools/make-dig.sh
 
 dig: dist/build/uBlock0.dig
-	cd dist/build/uBlock0.dig && npm install && npm run test
+	cd dist/build/uBlock0.dig && npm install
+
+dig-snfe: dig
+	cd dist/build/uBlock0.dig && npm run snfe $(run_options)
 
 # Update submodules.
 update-submodules:
@@ -45,3 +52,16 @@ update-submodules:
 
 clean:
 	rm -rf dist/build
+
+
+# Not real targets, just convenient for auto-completion at shell prompt
+compare:
+	@echo
+maxcost:
+	@echo
+mincost:
+	@echo
+record:
+	@echo
+wasm:
+	@echo
