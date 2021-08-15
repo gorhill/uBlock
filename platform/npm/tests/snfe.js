@@ -39,6 +39,36 @@ process.on('warning', warning => {
 let engine = null;
 
 describe('SNFE', () => {
+    describe('Initialization', () => {
+        let StaticNetFilteringEngine = null;
+
+        beforeEach(async () => {
+            const module = await createWorld('./index.js', { globals: { URL } });
+
+            StaticNetFilteringEngine = module.StaticNetFilteringEngine;
+        });
+
+        it('should not reject on first attempt', async () => {
+            await StaticNetFilteringEngine.create();
+        });
+
+        it('should reject on second attempt', async () => {
+            await StaticNetFilteringEngine.create();
+            await assert.rejects(StaticNetFilteringEngine.create());
+        });
+
+        it('should reject on third attempt', async () => {
+            await StaticNetFilteringEngine.create();
+
+            try {
+                await StaticNetFilteringEngine.create();
+            } catch (error) {
+            }
+
+            await assert.rejects(StaticNetFilteringEngine.create());
+        });
+    });
+
     describe('Filter loading', () => {
         beforeEach(async () => {
             const globals = { URL, setTimeout, clearTimeout };
