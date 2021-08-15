@@ -95,8 +95,7 @@ function pslInit(raw) {
         return globals.publicSuffixList;
     }
 
-    const require = createRequire(import.meta.url); // jshint ignore:line
-    raw = require('./data/effective_tld_names.json');
+    raw = readFileSync(resolve(__dirname, './assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat'), 'utf8')
     if ( typeof raw !== 'string' || raw.trim() === '' ) {
         console.error('Unable to populate public suffix list');
         return;
@@ -203,14 +202,14 @@ class MockStorage {
 }
 
 const fctx = new FilteringContext();
-let snfeInstance = null;
+let snfeProxyInstance = null;
 
 class StaticNetFilteringEngine {
     constructor() {
-        if ( snfeInstance !== null ) {
+        if ( snfeProxyInstance !== null ) {
             throw new Error('Only a single instance is supported.');
         }
-        snfeInstance = this;
+        snfeProxyInstance = this;
     }
 
     async useLists(lists) {
@@ -252,6 +251,11 @@ class StaticNetFilteringEngine {
         }
 
         return instance;
+    }
+
+    static release() {
+        useLists([]);
+        snfeProxyInstance = null;
     }
 }
 

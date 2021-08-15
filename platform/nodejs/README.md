@@ -102,7 +102,7 @@ and use this capability now if you figure out the details.
 You can directly use specific APIs exposed by this package, here are some of 
 them, which are used internally by uBO's SNFE.
 
-### `HNTrieContainer`
+### HNTrieContainer
 
 A well optimised [compressed trie](https://en.wikipedia.org/wiki/Trie#Compressing_tries) 
 container specialized to specifically store and lookup hostnames.

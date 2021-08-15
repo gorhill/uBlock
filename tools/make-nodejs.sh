@@ -4,18 +4,7 @@
 
 set -e
 
-DES=dist/build/uBlock0.nodejs
-
-TMPDIR=tmp
-mkdir -p $TMPDIR
-
-# Save existing npm dependencies if present so that we do not have to fetch
-# them all again
-if [ -d "$DES/node_modules" ]; then
-    mv "$DES/node_modules" "$TMPDIR/node_modules"
-fi
-
-rm -rf $DES
+DES=$1
 
 mkdir -p $DES/js
 cp src/js/base64-custom.js           $DES/js
@@ -47,42 +36,6 @@ node -pe "JSON.stringify(Array.from(fs.readFileSync('src/js/wasm/biditrie.wasm')
 node -pe "JSON.stringify(Array.from(fs.readFileSync('src/lib/publicsuffixlist/wasm/publicsuffixlist.wasm')))" \
     > $DES/lib/publicsuffixlist/wasm/publicsuffixlist.wasm.json
 
-git submodule update --depth 1 --init
-UASSETS=submodules/uAssets
-
-# https://github.com/uBlockOrigin/uBlock-issues/issues/1664#issuecomment-888332409
-THIRDPARTY=$UASSETS/thirdparties/publicsuffix.org
-mkdir -p $DES/data
-node -pe "JSON.stringify(fs.readFileSync('$THIRDPARTY/list/effective_tld_names.dat', 'utf8'))" \
-    > $DES/data/effective_tld_names.json
-THIRDPARTY=$UASSETS/thirdparties/easylist-downloads.adblockplus.org
-node -pe "JSON.stringify(fs.readFileSync('$THIRDPARTY/easylist.txt', 'utf8'))" \
-    > $DES/data/easylist.json
-node -pe "JSON.stringify(fs.readFileSync('$THIRDPARTY/easyprivacy.txt', 'utf8'))" \
-    > $DES/data/easyprivacy.json
-
-cp platform/nodejs/.*.json   $DES/
 cp platform/nodejs/*.js      $DES/
-cp platform/nodejs/*.json    $DES/
 cp platform/nodejs/README.md $DES/
 cp LICENSE.txt               $DES/
-cp -R platform/nodejs/tests  $DES/
-
-cd $DES
-npm run build
-tarballname=$(npm pack 2> /dev/null)
-if [ "$1" ]; then
-    echo "*** uBlock0.nodejs: Creating versioned package..."
-    mv $tarballname ../uBlock0_"$1".nodejs.tgz
-else
-    echo "*** uBlock0.nodejs: Creating plain package..."
-    mv $tarballname ../uBlock0.nodejs.tgz
-fi
-cd -
-
-# Restore saved npm dependencies
-if [ -d "$TMPDIR/node_modules" ]; then
-    mv "$TMPDIR/node_modules" "$DES/node_modules"
-fi
-
-echo "*** uBlock0.nodejs: Package done."
