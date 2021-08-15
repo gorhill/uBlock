@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "build": "node build.js",
-    "lint": "eslint js/ *.js",
+    "lint": "eslint js/ *.js tests/",
     "test": "node test.js --mocha"
   },
   "repository": {
