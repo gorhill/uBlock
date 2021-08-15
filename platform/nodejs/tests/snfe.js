@@ -24,22 +24,28 @@
 /******************************************************************************/
 
 import { strict as assert } from 'assert';
+import process from 'process';
 
-import {
-    StaticNetFilteringEngine,
-} from '../index.js';
+import { createWorld } from 'esm-world';
+
+process.on('warning', warning => {
+    // Ignore warnings about experimental features like
+    // --experimental-vm-modules
+    if ( warning.name !== 'ExperimentalWarning' ) {
+        console.warn(warning.stack);
+    }
+});
 
 let engine = null;
 
 describe('SNFE', () => {
-    before(async () => {
-        engine = await StaticNetFilteringEngine.create();
-    });
-
     describe('Filter loading', () => {
         beforeEach(async () => {
-            // This is in lieu of a constructor for a non-singleton.
-            await engine.useLists([]);
+            const globals = { URL, setTimeout, clearTimeout };
+
+            const { StaticNetFilteringEngine } = await createWorld('./index.js', { globals });
+
+            engine = await StaticNetFilteringEngine.create();
         });
 
         it('should not reject on no lists', async () => {

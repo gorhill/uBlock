@@ -134,7 +134,7 @@ async function doHNTrie() {
 }
 
 async function spawnMocha() {
-    await promisify(spawn)('mocha', [ 'tests' ], { stdio: [ 'inherit', 'inherit', 'inherit' ] });
+    await promisify(spawn)('mocha', [ '--experimental-vm-modules', '--no-warnings', 'tests' ], { stdio: [ 'inherit', 'inherit', 'inherit' ] });
 }
 
 async function main() {
