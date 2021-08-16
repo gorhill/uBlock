@@ -6,14 +6,8 @@ set -e
 
 DES="dist/build/uBlock0.npm"
 
-TMPDIR=tmp
-mkdir -p $TMPDIR
-
-# Save existing npm dependencies if present so that we do not have to fetch
-# them all again
-if [ -d "$DES/node_modules" ]; then
-    mv "$DES/node_modules" "$TMPDIR/node_modules"
-fi
+TMPDIR="$PWD/tmp"
+mkdir -p "$TMPDIR/node_modules"
 
 rm -rf $DES
 
@@ -40,11 +34,7 @@ else
     echo "*** uBlock0.npm: Creating plain package..."
     mv $tarballname ../uBlock0.npm.tgz
 fi
+ln -sf "$TMPDIR/node_modules"
 cd -
-
-# Restore saved npm dependencies
-if [ -d "$TMPDIR/node_modules" ]; then
-    mv "$TMPDIR/node_modules" "$DES/node_modules"
-fi
 
 echo "*** uBlock0.npm: Package done."

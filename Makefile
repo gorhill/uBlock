@@ -51,7 +51,7 @@ update-submodules:
 	tools/update-submodules.sh
 
 clean:
-	rm -rf dist/build
+	rm -rf dist/build tmp/node_modules
 
 
 # Not real targets, just convenient for auto-completion at shell prompt
