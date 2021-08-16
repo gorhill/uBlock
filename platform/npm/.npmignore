@@ -1,2 +1,5 @@
 assets/
+coverage/
 tests/
+.eslintrc.json
+test.js
