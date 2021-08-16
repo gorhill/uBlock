@@ -32,7 +32,7 @@
   "devDependencies": {
     "c8": "^7.8.0",
     "eslint": "^7.32.0",
-    "esm-world": "github:mjethani/esm-world#0e5a77a5c0cb22de28616bba9ed7247dee218fb3",
+    "esm-world": "0.1.1",
     "mocha": "^9.0.3",
     "scaling-palm-tree": "github:mjethani/scaling-palm-tree#15cf1ab37e038771e1ff8005edc46d95f176739f"
   }

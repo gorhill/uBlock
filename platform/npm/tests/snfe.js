@@ -24,17 +24,10 @@
 /******************************************************************************/
 
 import { strict as assert } from 'assert';
-import process from 'process';
 
 import { createWorld } from 'esm-world';
 
-process.on('warning', warning => {
-    // Ignore warnings about experimental features like
-    // --experimental-vm-modules
-    if ( warning.name !== 'ExperimentalWarning' ) {
-        console.warn(warning.stack);
-    }
-});
+import './_common.js';
 
 let engine = null;
 

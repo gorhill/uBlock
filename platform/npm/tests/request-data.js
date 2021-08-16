@@ -29,6 +29,10 @@ import { createRequire } from 'module';
 import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 
+import { createWorld } from 'esm-world';
+
+import './_common.js';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const require = createRequire(import.meta.url);
@@ -59,46 +63,40 @@ describe('Request data', () => {
         texttrack: 'other',
     };
 
-    let enableWASM = null;
-    let engine = null;
-
-    before(async () => {
-        const module = await import('../index.js');
-        enableWASM = module.enableWASM;
-
-        engine = await module.StaticNetFilteringEngine.create();
-
-        await engine.useLists([
-            read('./data/assets/ublock/badware.txt')
-                .then(raw => ({ name: 'badware', raw })),
-            read('./data/assets/ublock/filters.txt')
-                .then(raw => ({ name: 'filters', raw })),
-            read('./data/assets/ublock/filters-2020.txt')
-                .then(raw => ({ name: 'filters-2020', raw })),
-            read('./data/assets/ublock/filters-2021.txt')
-                .then(raw => ({ name: 'filters-2021', raw })),
-            read('./data/assets/ublock/privacy.txt')
-                .then(raw => ({ name: 'privacy', raw })),
-            read('./data/assets/ublock/resource-abuse.txt')
-                .then(raw => ({ name: 'resource-abuse', raw })),
-            read('./data/assets/ublock/unbreak.txt')
-                .then(raw => ({ name: 'unbreak.txt', raw })),
-            read('./data/assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt')
-                .then(raw => ({ name: 'easylist', raw })),
-            read('./data/assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt')
-                .then(raw => ({ name: 'easyprivacy', raw })),
-            read('./data/assets/thirdparties/pgl.yoyo.org/as/serverlist')
-                .then(raw => ({ name: 'PGL', raw })),
-            read('./data/assets/thirdparties/urlhaus-filter/urlhaus-filter-online.txt')
-                .then(raw => ({ name: 'urlhaus', raw })),
-        ]);
-    });
-
-    // False must go first:
-    // https://github.com/gorhill/uBlock/pull/3828#issuecomment-899470383
     for ( let wasm of [ false, true ] ) {
         context(`${wasm ? 'Wasm on' : 'Wasm off'}`, () => {
+            let engine = null;
+
             before(async () => {
+                const { StaticNetFilteringEngine, enableWASM } = await createWorld('./index.js', { globals: global });
+
+                engine = await StaticNetFilteringEngine.create();
+
+                await engine.useLists([
+                    read('./data/assets/ublock/badware.txt')
+                        .then(raw => ({ name: 'badware', raw })),
+                    read('./data/assets/ublock/filters.txt')
+                        .then(raw => ({ name: 'filters', raw })),
+                    read('./data/assets/ublock/filters-2020.txt')
+                        .then(raw => ({ name: 'filters-2020', raw })),
+                    read('./data/assets/ublock/filters-2021.txt')
+                        .then(raw => ({ name: 'filters-2021', raw })),
+                    read('./data/assets/ublock/privacy.txt')
+                        .then(raw => ({ name: 'privacy', raw })),
+                    read('./data/assets/ublock/resource-abuse.txt')
+                        .then(raw => ({ name: 'resource-abuse', raw })),
+                    read('./data/assets/ublock/unbreak.txt')
+                        .then(raw => ({ name: 'unbreak.txt', raw })),
+                    read('./data/assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt')
+                        .then(raw => ({ name: 'easylist', raw })),
+                    read('./data/assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt')
+                        .then(raw => ({ name: 'easyprivacy', raw })),
+                    read('./data/assets/thirdparties/pgl.yoyo.org/as/serverlist')
+                        .then(raw => ({ name: 'PGL', raw })),
+                    read('./data/assets/thirdparties/urlhaus-filter/urlhaus-filter-online.txt')
+                        .then(raw => ({ name: 'urlhaus', raw })),
+                ]);
+
                 if ( wasm ) {
                     assert(await enableWASM());
                 }
