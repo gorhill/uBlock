@@ -297,9 +297,6 @@ class LogData {
             isRegex: false,
         };
         filterUnits[iunit].logData(logData);
-        if ( (categoryBits & Important) !== 0 ) {
-            logData.options.unshift('important');
-        }
         if ( (categoryBits & ThirdParty) !== 0 ) {
             logData.options.unshift('3p');
         } else if ( (categoryBits & FirstParty) !== 0 ) {
@@ -596,6 +593,42 @@ const FilterTrue = class {
 };
 
 registerFilterClass(FilterTrue);
+
+/******************************************************************************/
+
+// The only purpose of this class is so that the `important` filter
+// option is added to the logged raw filter.
+
+const FilterImportant = class {
+    match() {
+        return true;
+    }
+
+    logData(details) {
+        details.options.unshift('important');
+    }
+
+    toSelfie() {
+        return FilterImportant.compile();
+    }
+
+    static compile() {
+        return [ FilterImportant.fid ];
+    }
+
+    static fromCompiled() {
+        return new FilterImportant();
+    }
+
+    static fromSelfie() {
+        return new FilterImportant();
+    }
+
+    static keyFromArgs() {
+    }
+};
+
+registerFilterClass(FilterImportant);
 
 /******************************************************************************/
 
@@ -3398,6 +3431,11 @@ class FilterCompiler {
             units.push(FilterAnchorRight.compile());
         }
 
+        // Important
+        if ( (this.action & Important) !== 0 ) {
+            units.push(FilterImportant.compile());
+        }
+
         // Strict partiness
         if ( this.strictParty !== 0 ) {
             units.push(FilterStrictParty.compile(this));
@@ -3434,7 +3472,19 @@ class FilterCompiler {
         const fdata = units.length === 1
             ? units[0]
             : FilterCompositeAll.compile(units);
+
         this.compileToAtomicFilter(fdata, writer);
+
+        // Add block-important filters to the block realm, so as to avoid
+        // to unconditionally match against the block-important realm for
+        // every network request. Block-important filters are quite rare so
+        // the block-important realm should be checked when and only when
+        // there is a matched exception filter, which important filters are
+        // meant to override.
+        if ( (this.action & BlockImportant) !== 0 ) {
+            this.action &= ~Important;
+            this.compileToAtomicFilter(fdata, writer);
+        }
     }
 
     compileToAtomicFilter(fdata, writer) {
@@ -4202,15 +4252,14 @@ FilterContainer.prototype.matchRequest = function(fctxt, modifiers = 0) {
     $docEntity.reset();
     $requestHostname = fctxt.getHostname();
 
-    // Important block realm.
-    if ( this.realmMatchString(BlockImportant, typeValue, partyBits) ) {
-        return 1;
-    }
-
-    // Evaluate block realm before allow realm.
+    // Evaluate block realm before allow realm, and allow realm before
+    // block-important realm, i.e. by order of likelihood of a match.
     const r = this.realmMatchString(BlockAction, typeValue, partyBits);
     if ( r || (modifiers & 0b0010) !== 0 ) {
         if ( this.realmMatchString(AllowAction, typeValue, partyBits) ) {
+            if ( this.realmMatchString(BlockImportant, typeValue, partyBits) ) {
+                return 1;
+            }
             return 2;
         }
         if ( r ) { return 1; }
