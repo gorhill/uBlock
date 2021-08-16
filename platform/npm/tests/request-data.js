@@ -59,12 +59,14 @@ describe('Request data', () => {
         texttrack: 'other',
     };
 
+    let enableWASM = null;
     let engine = null;
 
     before(async () => {
-        const { StaticNetFilteringEngine } = await import('../index.js');
+        const module = await import('../index.js');
+        enableWASM = module.enableWASM;
 
-        engine = await StaticNetFilteringEngine.create();
+        engine = await module.StaticNetFilteringEngine.create();
 
         await engine.useLists([
             read('./data/assets/ublock/badware.txt')
@@ -92,14 +94,26 @@ describe('Request data', () => {
         ]);
     });
 
-    for ( let i = 0; i < requests.length; i++ ) {
-        const { url, frameUrl, cpt } = requests[i];
-        const request = { url, originURL: frameUrl, type: typeMap[cpt] };
+    // False must go first:
+    // https://github.com/gorhill/uBlock/pull/3828#issuecomment-899470383
+    for ( let wasm of [ false, true ] ) {
+        context(`${wasm ? 'Wasm on' : 'Wasm off'}`, () => {
+            before(async () => {
+                if ( wasm ) {
+                    assert(await enableWASM());
+                }
+            });
 
-        const expected = results[i];
+            for ( let i = 0; i < requests.length; i++ ) {
+                const { url, frameUrl, cpt } = requests[i];
+                const request = { url, originURL: frameUrl, type: typeMap[cpt] };
 
-        it(`should ${expected === 1 ? 'block' : 'allow'} ${request.type} URL ${request.url} from origin ${request.originURL}`, () => {
-            assert.equal(engine.matchRequest(request), expected);
+                const expected = results[i];
+
+                it(`should ${expected === 1 ? 'block' : 'allow'} ${request.type} URL ${request.url} from origin ${request.originURL}`, () => {
+                    assert.equal(engine.matchRequest(request), expected);
+                });
+            }
         });
     }
 });
