@@ -866,10 +866,8 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         this.badLists.has(assetKey) === false
     ) {
         const compiledDetails = await io.get(compiledPath);
-        if (
-            parseInt(compiledDetails.content, 10) ===
-            this.systemSettings.compiledMagic
-        ) {
+        const compilerVersion = `${this.systemSettings.compiledMagic}\n`;
+        if ( compiledDetails.content.startsWith(compilerVersion) ) {
             compiledDetails.assetKey = assetKey;
             return compiledDetails;
         }
