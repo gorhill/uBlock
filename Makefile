@@ -32,10 +32,10 @@ dist/build/uBlock0.npm: tools/make-nodejs.sh $(sources) $(platform) $(assets)
 npm: dist/build/uBlock0.npm
 
 lint: npm
-	cd dist/build/uBlock0.npm && npm install && npm run lint
+	cd dist/build/uBlock0.npm && npm run lint
 
 test: npm
-	cd dist/build/uBlock0.npm && npm install && npm run test
+	cd dist/build/uBlock0.npm && npm run test
 
 dist/build/uBlock0.dig: tools/make-nodejs.sh $(sources) $(platform) $(assets)
 	tools/make-dig.sh

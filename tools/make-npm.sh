@@ -35,6 +35,9 @@ else
     mv $tarballname ../uBlock0.npm.tgz
 fi
 ln -sf "$TMPDIR/node_modules"
+if [ -z "$GITHUB_ACTIONS" ]; then
+    npm install
+fi
 cd -
 
 echo "*** uBlock0.npm: Package done."
