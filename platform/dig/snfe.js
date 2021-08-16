@@ -221,12 +221,12 @@ async function bench() {
     }
 
     if ( MAXCOST ) {
-        const costly = results.sort((a,b) => b[1].t - a[1].t).slice(0, 100);
+        const costly = results.sort((a,b) => b[1].t - a[1].t).slice(0, 1000);
         write('data/snfe.maxcost.json', JSON.stringify(costly, null, 2));
     }
 
     if ( MINCOST ) {
-        const costly = results.sort((a,b) => a[1].t - b[1].t).slice(0, 100);
+        const costly = results.sort((a,b) => a[1].t - b[1].t).slice(0, 1000);
         write('data/snfe.mincost.json', JSON.stringify(costly, null, 2));
     }
 
