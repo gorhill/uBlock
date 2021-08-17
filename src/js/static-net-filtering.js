@@ -297,6 +297,9 @@ class LogData {
             isRegex: false,
         };
         filterUnits[iunit].logData(logData);
+        if ( (categoryBits & Important) !== 0 ) {
+            logData.options.unshift('important');
+        }
         if ( (categoryBits & ThirdParty) !== 0 ) {
             logData.options.unshift('3p');
         } else if ( (categoryBits & FirstParty) !== 0 ) {
@@ -3477,7 +3480,7 @@ class FilterCompiler {
         // the block-important realm should be checked when and only when
         // there is a matched exception filter, which important filters are
         // meant to override.
-        if ( (this.action & BlockImportant) !== 0 ) {
+        if ( (this.action & ActionBitsMask) === BlockImportant ) {
             this.action &= ~Important;
             units.push(FilterImportant.compile());
             this.compileToAtomicFilter(
