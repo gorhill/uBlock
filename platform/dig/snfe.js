@@ -42,9 +42,32 @@ const FLAGS = process.argv.slice(2);
 const COMPARE = FLAGS.includes('compare');
 const MAXCOST = FLAGS.includes('maxcost');
 const MINCOST = FLAGS.includes('mincost');
+const MODIFIERS = FLAGS.includes('modifiers');
 const RECORD = FLAGS.includes('record');
 const WASM = FLAGS.includes('wasm');
 const NEED_RESULTS = COMPARE || MAXCOST || MINCOST || RECORD;
+
+// This maps puppeteer types to WebRequest types
+const WEBREQUEST_OPTIONS = {
+    // Consider document requests as sub_document. This is because the request
+    // dataset does not contain sub_frame or main_frame but only 'document' and
+    // different blockers have different behaviours.
+    document: 'sub_frame',
+    stylesheet: 'stylesheet',
+    image: 'image',
+    media: 'media',
+    font: 'font',
+    script: 'script',
+    xhr: 'xmlhttprequest',
+    fetch: 'xmlhttprequest',
+    websocket: 'websocket',
+    ping: 'ping',
+    // other
+    other: 'other',
+    eventsource: 'other',
+    manifest: 'other',
+    texttrack: 'other',
+};
 
 /******************************************************************************/
 
@@ -65,6 +88,76 @@ async function write(path, data) {
 }
 
 /******************************************************************************/
+
+async function matchRequests(engine, requests) {
+    const results = [];
+    const details = {
+        r: 0,
+        f: undefined,
+        type: '',
+        url: '',
+        originURL: '',
+        t: 0,
+    };
+
+    let notBlockedCount = 0;
+    let blockedCount = 0;
+    let unblockedCount = 0;
+
+    const start = process.hrtime.bigint();
+
+    for ( let i = 0; i < requests.length; i++ ) {
+        const request = requests[i];
+        const reqstart = process.hrtime.bigint();
+        details.type = WEBREQUEST_OPTIONS[request.cpt];
+        details.url = request.url;
+        details.originURL = request.frameUrl;
+        const r = engine.matchRequest(details);
+        if ( r === 0 ) {
+            notBlockedCount += 1;
+        } else if ( r === 1 ) {
+            blockedCount += 1;
+        } else {
+            unblockedCount += 1;
+        }
+        if ( NEED_RESULTS !== true ) { continue; }
+        const reqstop = process.hrtime.bigint();
+        details.r = r;
+        details.f = r !== 0 ? engine.toLogData().raw : undefined;
+        details.t = Math.round(Number(reqstop - reqstart) / 10) / 100;
+        results.push([ i, Object.assign({}, details) ]);
+    }
+
+    const stop = process.hrtime.bigint();
+
+    console.log(`Matched ${requests.length} requests in ${nanoToMilli(stop - start)}`);
+    console.log(`\tNot blocked: ${notBlockedCount} requests`);
+    console.log(`\tBlocked: ${blockedCount} requests`);
+    console.log(`\tUnblocked: ${unblockedCount} requests`);
+    console.log(`\tAverage: ${nanoToMicro((stop - start) / BigInt(requests.length))} per request`);
+
+    if ( RECORD ) {
+        write('data/snfe.json', JSON.stringify(results, null, 2));
+    }
+
+    if ( COMPARE ) {
+        const diffs = await compare(results);
+        if ( Array.isArray(diffs) ) {
+            write('data/snfe.diffs.json', JSON.stringify(diffs, null, 2));
+        }
+        console.log(`Compare: ${diffs.length} requests differ`);
+    }
+
+    if ( MAXCOST ) {
+        const costly = results.slice().sort((a,b) => b[1].t - a[1].t).slice(0, 1000);
+        write('data/snfe.maxcost.json', JSON.stringify(costly, null, 2));
+    }
+
+    if ( MINCOST ) {
+        const costly = results.slice().sort((a,b) => a[1].t - b[1].t).slice(0, 1000);
+        write('data/snfe.mincost.json', JSON.stringify(costly, null, 2));
+    }
+}
 
 async function compare(results) {
     let before;
@@ -89,6 +182,119 @@ async function compare(results) {
 
 /******************************************************************************/
 
+async function matchRequestModifiers(engine, requests) {
+    const results = {
+        'csp': [],
+        'redirect-rule': [],
+        'removeparam': [],
+    };
+
+    const details = {
+        f: undefined,
+        type: '',
+        url: '',
+        originURL: '',
+        t: 0,
+    };
+
+    let modifiedCount = 0;
+
+    const start = process.hrtime.bigint();
+    for ( let i = 0; i < requests.length; i++ ) {
+        const request = requests[i];
+        details.type = WEBREQUEST_OPTIONS[request.cpt];
+        details.url = request.url;
+        details.originURL = request.frameUrl;
+        const r = engine.matchRequest(details);
+        if ( r !== 1 && details.type === 'sub_frame' ) {
+            const reqstart = process.hrtime.bigint();
+            const directives = engine.matchAndFetchModifiers(details, 'csp');
+            if ( directives !== undefined ) {
+                modifiedCount += 1;
+                if ( NEED_RESULTS ) {
+                    const reqstop = process.hrtime.bigint();
+                    details.f = directives.map(a => a.logData().raw).sort().join('    ');
+                    details.t = Math.round(Number(reqstop - reqstart) / 10) / 100;
+                    results['csp'].push([ i, Object.assign({}, details) ]);
+                }
+            }
+        }
+        if ( r === 1 ) {
+            const reqstart = process.hrtime.bigint();
+            const directives = engine.matchAndFetchModifiers(details, 'redirect-rule');
+            if ( directives !== undefined ) {
+                modifiedCount += 1;
+                if ( NEED_RESULTS ) {
+                    const reqstop = process.hrtime.bigint();
+                    details.f = directives.map(a => a.logData().raw).sort().join('    ');
+                    details.t = Math.round(Number(reqstop - reqstart) / 10) / 100;
+                    results['redirect-rule'].push([ i, Object.assign({}, details) ]);
+                }
+            }
+        }
+        if ( r !== 1 !== details.url.includes('?') ) {
+            const reqstart = process.hrtime.bigint();
+            const directives = engine.matchAndFetchModifiers(details, 'removeparam');
+            if ( directives !== undefined ) {
+                modifiedCount += 1;
+                if ( NEED_RESULTS ) {
+                    const reqstop = process.hrtime.bigint();
+                    details.f = directives.map(a => a.logData().raw).sort().join('    ');
+                    details.t = Math.round(Number(reqstop - reqstart) / 10) / 100;
+                    results['removeparam'].push([ i, Object.assign({}, details) ]);
+                }
+            }
+        }
+    }
+    const stop = process.hrtime.bigint();
+
+    console.log(`Matched-modified ${requests.length} requests in ${nanoToMilli(stop - start)}`);
+    console.log(`\t${modifiedCount} modifiers found`);
+    console.log(`\tAverage: ${nanoToMicro((stop - start) / BigInt(requests.length))} per matched-modified request`);
+
+    if ( RECORD ) {
+        write('data/snfe.modifiers.json', JSON.stringify(results, null, 2));
+    }
+
+    if ( COMPARE ) {
+        const diffs = await compareModifiers(results);
+        if ( Array.isArray(diffs) ) {
+            write('data/snfe.modifiers.diffs.json', JSON.stringify(diffs, null, 2));
+        }
+        console.log(`Compare: ${diffs.length} modified requests differ`);
+    }
+}
+
+async function compareModifiers(afterResults) {
+    let beforeResults;
+    try {
+        const raw = await read('data/snfe.modifiers.json');
+        beforeResults = JSON.parse(raw);
+    } catch(ex) {
+        console.log(ex);
+        console.log('Nothing to compare');
+        return;
+    }
+    const diffs = [];
+    for ( const modifier of [ 'csp', 'redirect-rule', 'removeparam' ] ) {
+        const before = new Map(beforeResults[modifier]);
+        const after = new Map(afterResults[modifier]);
+        for ( const [ i, b ] of before ) {
+            const a = after.get(i);
+            if ( a !== undefined && a.f === b.f ) { continue; }
+            diffs.push([ i, { before: b, after: a || null } ]);
+        }
+        for ( const [ i, a ] of after ) {
+            const b = before.get(i);
+            if ( b !== undefined ) { continue; }
+            diffs.push([ i, { before: b || null, after: a } ]);
+        }
+    }
+    return diffs;
+}
+
+/******************************************************************************/
+
 async function bench() {
     if ( WASM ) {
         try {
@@ -100,28 +306,6 @@ async function bench() {
             console.log(ex);
         }
     }
-
-    // This maps puppeteer types to WebRequest types
-    const WEBREQUEST_OPTIONS = {
-        // Consider document requests as sub_document. This is because the request
-        // dataset does not contain sub_frame or main_frame but only 'document' and
-        // different blockers have different behaviours.
-        document: 'sub_frame',
-        stylesheet: 'stylesheet',
-        image: 'image',
-        media: 'media',
-        font: 'font',
-        script: 'script',
-        xhr: 'xmlhttprequest',
-        fetch: 'xmlhttprequest',
-        websocket: 'websocket',
-        ping: 'ping',
-        // other
-        other: 'other',
-        eventsource: 'other',
-        manifest: 'other',
-        texttrack: 'other',
-    };
 
     const require = createRequire(import.meta.url); // jshint ignore:line
     const requests = await require('./node_modules/scaling-palm-tree/requests.json');
@@ -155,79 +339,20 @@ async function bench() {
     let stop = process.hrtime.bigint();
     console.log(`Filter lists parsed-compiled-loaded in ${nanoToMilli(stop - start)}`);
 
-    const details = {
-        r: 0,
-        f: undefined,
-        type: '',
-        url: '',
-        originURL: '',
-        t: 0,
-    };
-
     // Dry run to let JS engine optimize hot JS code paths
-    for ( let i = 0; i < requests.length; i++ ) {
+    for ( let i = 0; i < requests.length; i += 8 ) {
         const request = requests[i];
-        details.type = WEBREQUEST_OPTIONS[request.cpt];
-        details.url = request.url;
-        details.originURL = request.frameUrl;
-        void engine.matchRequest(details);
+        void engine.matchRequest({
+            type: WEBREQUEST_OPTIONS[request.cpt],
+            url: request.url,
+            originURL: request.frameUrl,
+        });
     }
 
-    const results = [];
-    let notBlockedCount = 0;
-    let blockedCount = 0;
-    let unblockedCount = 0;
-
-    start = process.hrtime.bigint();
-    for ( let i = 0; i < requests.length; i++ ) {
-        const request = requests[i];
-        const reqstart = process.hrtime.bigint();
-        details.type = WEBREQUEST_OPTIONS[request.cpt];
-        details.url = request.url;
-        details.originURL = request.frameUrl;
-        const r = engine.matchRequest(details);
-        if ( r === 0 ) {
-            notBlockedCount += 1;
-        } else if ( r === 1 ) {
-            blockedCount += 1;
-        } else {
-            unblockedCount += 1;
-        }
-        if ( NEED_RESULTS !== true ) { continue; }
-        const reqstop = process.hrtime.bigint();
-        details.r = r;
-        details.f = r !== 0 ? engine.toLogData().raw : undefined;
-        details.t = Math.round(Number(reqstop - reqstart) / 10) / 100;
-        results.push([ i, Object.assign({}, details) ]);
-    }
-    stop = process.hrtime.bigint();
-
-    console.log(`Matched ${requests.length} requests in ${nanoToMilli(stop - start)}`);
-    console.log(`\tNot blocked: ${notBlockedCount} requests`);
-    console.log(`\tBlocked: ${blockedCount} requests`);
-    console.log(`\tUnblocked: ${unblockedCount} requests`);
-    console.log(`\tAverage: ${nanoToMicro((stop - start) / BigInt(requests.length))} per request`);
-
-    if ( RECORD ) {
-        write('data/snfe.json', JSON.stringify(results, null, 2));
-    }
-
-    if ( COMPARE ) {
-        const diffs = await compare(results);
-        if ( Array.isArray(diffs) ) {
-            write('data/snfe.diffs.json', JSON.stringify(diffs, null, 2));
-        }
-        console.log(`Compare: ${diffs.length} requests differ`);
-    }
-
-    if ( MAXCOST ) {
-        const costly = results.sort((a,b) => b[1].t - a[1].t).slice(0, 1000);
-        write('data/snfe.maxcost.json', JSON.stringify(costly, null, 2));
-    }
-
-    if ( MINCOST ) {
-        const costly = results.sort((a,b) => a[1].t - b[1].t).slice(0, 1000);
-        write('data/snfe.mincost.json', JSON.stringify(costly, null, 2));
+    if ( MODIFIERS === false ) {
+        matchRequests(engine, requests);
+    } else {
+        matchRequestModifiers(engine, requests);
     }
 
     StaticNetFilteringEngine.release();

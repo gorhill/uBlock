@@ -221,6 +221,10 @@ class StaticNetFilteringEngine {
         return snfe.matchRequest(fctx.fromDetails(details));
     }
 
+    matchAndFetchModifiers(details, modifier) {
+        return snfe.matchAndFetchModifiers(fctx.fromDetails(details), modifier);
+    }
+
     toLogData() {
         return snfe.toLogData();
     }

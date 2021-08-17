@@ -2,7 +2,7 @@
 run_options := $(filter-out $@,$(MAKECMDGOALS))
 
 .PHONY: all clean test lint chromium firefox npm dig \
-	compare maxcost mincost record wasm
+	compare maxcost mincost modifiers record wasm
 
 sources := $(wildcard src/* src/*/* src/*/*/* src/*/*/*/*)
 platform := $(wildcard platform/* platform/*/*)
@@ -63,6 +63,8 @@ compare:
 maxcost:
 	@echo
 mincost:
+	@echo
+modifiers:
 	@echo
 record:
 	@echo
