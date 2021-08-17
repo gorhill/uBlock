@@ -7,7 +7,8 @@
   "scripts": {
     "build": "node build.js",
     "lint": "eslint js/ *.js tests/*.js",
-    "test": "c8 --include=index.js --include=js/**/*.js node test.js --mocha"
+    "test": "c8 --include=index.js --include=js/**/*.js node test.js --mocha",
+    "test-full-battery": "c8 --include=index.js --include=js/**/*.js node test.js --mocha --full-battery"
   },
   "repository": {
     "type": "git",
