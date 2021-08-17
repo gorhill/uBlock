@@ -206,11 +206,12 @@ async function matchRequestModifiers(engine, requests) {
         details.url = request.url;
         details.originURL = request.frameUrl;
         const r = engine.matchRequest(details);
+        let modified = false;
         if ( r !== 1 && details.type === 'sub_frame' ) {
             const reqstart = process.hrtime.bigint();
             const directives = engine.matchAndFetchModifiers(details, 'csp');
             if ( directives !== undefined ) {
-                modifiedCount += 1;
+                modified = true;
                 if ( NEED_RESULTS ) {
                     const reqstop = process.hrtime.bigint();
                     details.f = directives.map(a => a.logData().raw).sort().join('    ');
@@ -223,7 +224,7 @@ async function matchRequestModifiers(engine, requests) {
             const reqstart = process.hrtime.bigint();
             const directives = engine.matchAndFetchModifiers(details, 'redirect-rule');
             if ( directives !== undefined ) {
-                modifiedCount += 1;
+                modified = true;
                 if ( NEED_RESULTS ) {
                     const reqstop = process.hrtime.bigint();
                     details.f = directives.map(a => a.logData().raw).sort().join('    ');
@@ -232,11 +233,11 @@ async function matchRequestModifiers(engine, requests) {
                 }
             }
         }
-        if ( r !== 1 !== details.url.includes('?') ) {
+        if ( r !== 1 && engine.hasQuery(details) ) {
             const reqstart = process.hrtime.bigint();
             const directives = engine.matchAndFetchModifiers(details, 'removeparam');
             if ( directives !== undefined ) {
-                modifiedCount += 1;
+                modified = true;
                 if ( NEED_RESULTS ) {
                     const reqstop = process.hrtime.bigint();
                     details.f = directives.map(a => a.logData().raw).sort().join('    ');
@@ -245,12 +246,15 @@ async function matchRequestModifiers(engine, requests) {
                 }
             }
         }
+        if ( modified ) {
+            modifiedCount += 1;
+        }
     }
     const stop = process.hrtime.bigint();
 
     console.log(`Matched-modified ${requests.length} requests in ${nanoToMilli(stop - start)}`);
     console.log(`\t${modifiedCount} modifiers found`);
-    console.log(`\tAverage: ${nanoToMicro((stop - start) / BigInt(requests.length))} per matched-modified request`);
+    console.log(`\tAverage: ${nanoToMicro((stop - start) / BigInt(requests.length))} per request`);
 
     if ( RECORD ) {
         write('data/snfe.modifiers.json', JSON.stringify(results, null, 2));
