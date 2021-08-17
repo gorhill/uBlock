@@ -19,41 +19,33 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* eslint-disable-next-line no-redeclare */
-/* globals process */
-
 'use strict';
 
 /******************************************************************************/
 
-import { spawn } from "child_process";
-import { promisify } from 'util';
+import { strict as assert } from 'assert';
 
-/******************************************************************************/
+import { createWorld } from 'esm-world';
 
-async function spawnMocha() {
-    const files = [
-        'tests/wasm.js',
-        'tests/snfe.js',
-    ];
+import './_common.js';
 
-    const options = [];
+describe('WASM', () => {
+    context('WebAssembly available', () => {
+        it('should fulfill with true', async () => {
+            const { enableWASM } = await createWorld('./index.js', { globals: { URL, WebAssembly } });
 
-    if ( process.argv[3] === '--full-battery' ) {
-        files.push('tests/request-data.js');
+            assert.equal(await enableWASM(), true);
+        });
+    });
 
-        options.push('--reporter', 'progress');
-    }
+    context('WebAssembly not available', () => {
+        it('should fulfill with false', async () => {
+            // WebAssembly must be set to undefined explicitly; otherwise
+            // createWorld() ends up using the global WebAssembly object
+            // anyway.
+            const { enableWASM } = await createWorld('./index.js', { globals: { URL, WebAssembly: undefined } });
 
-    await promisify(spawn)('mocha', [ '--experimental-vm-modules', '--no-warnings', ...files, ...options ], { stdio: [ 'inherit', 'inherit', 'inherit' ] });
-}
-
-async function main() {
-    if ( process.argv[2] === '--mocha' ) {
-        await spawnMocha();
-    }
-}
-
-main();
-
-/******************************************************************************/
+            assert.equal(await enableWASM(), false);
+        });
+    });
+});
