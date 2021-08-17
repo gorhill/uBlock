@@ -40,6 +40,9 @@ test: npm
 test-full-battery: npm
 	cd dist/build/uBlock0.npm && npm run test-full-battery
 
+check-leaks: npm
+	cd dist/build/uBlock0.npm && npm run check-leaks
+
 dist/build/uBlock0.dig: tools/make-nodejs.sh $(sources) $(platform) $(assets)
 	tools/make-dig.sh
 
