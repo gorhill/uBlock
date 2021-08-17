@@ -124,6 +124,18 @@ describe('SNFE', () => {
                         Promise.reject({ name: 'easyprivacy', raw: '||example.net/bar/\n^bar.js?' }),
                     ]));
                 });
+
+                it('should not reject on second call in sequence', async () => {
+                    await engine.useLists([
+                        Promise.resolve({ name: 'easylist', raw: '/foo^\n||example.com^' }),
+                        Promise.resolve({ name: 'easyprivacy', raw: '||example.net/bar/\n^bar.js?' }),
+                    ]);
+
+                    await engine.useLists([
+                        Promise.resolve({ name: 'easylist', raw: '/foo^\n||example.com^' }),
+                        Promise.resolve({ name: 'easyprivacy', raw: '||example.net/bar/\n^bar.js?' }),
+                    ]);
+                });
             });
 
             describe('Serialization', () => {
