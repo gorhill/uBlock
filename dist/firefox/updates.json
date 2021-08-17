@@ -4,7 +4,7 @@
    "updates": [
     {
      "version": "1.37.3.9",
-     "browser_specific_settings": { "gecko": { "strict_min_version": "57" } },
+     "browser_specific_settings": { "gecko": { "strict_min_version": "60" } },
      "update_link": "https://github.com/gorhill/uBlock/releases/download/1.37.3b9/uBlock0_1.37.3b9.firefox.signed.xpi"
     }
    ]
