@@ -19,33 +19,16 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* eslint-disable-next-line no-redeclare */
-/* globals process */
-
 'use strict';
 
 /******************************************************************************/
 
-import { spawn } from "child_process";
-import { promisify } from 'util';
+import process from 'process';
 
-/******************************************************************************/
-
-async function spawnMocha() {
-    const files = [
-        'tests/snfe.js',
-        'tests/request-data.js',
-    ];
-
-    await promisify(spawn)('mocha', [ '--experimental-vm-modules', '--no-warnings', ...files, '--reporter', 'progress' ], { stdio: [ 'inherit', 'inherit', 'inherit' ] });
-}
-
-async function main() {
-    if ( process.argv[2] === '--mocha' ) {
-        await spawnMocha();
+process.on('warning', warning => {
+    // Ignore warnings about experimental features like
+    // --experimental-vm-modules
+    if ( warning.name !== 'ExperimentalWarning' ) {
+        console.warn(warning.stack);
     }
-}
-
-main();
-
-/******************************************************************************/
+});
