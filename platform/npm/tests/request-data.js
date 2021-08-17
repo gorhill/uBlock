@@ -70,6 +70,10 @@ describe('Request data', () => {
             before(async () => {
                 const { StaticNetFilteringEngine, enableWASM } = await createWorld('./index.js', { globals: global });
 
+                if ( wasm ) {
+                    assert(await enableWASM());
+                }
+
                 engine = await StaticNetFilteringEngine.create();
 
                 await engine.useLists([
@@ -96,10 +100,6 @@ describe('Request data', () => {
                     read('./data/assets/thirdparties/urlhaus-filter/urlhaus-filter-online.txt')
                         .then(raw => ({ name: 'urlhaus', raw })),
                 ]);
-
-                if ( wasm ) {
-                    assert(await enableWASM());
-                }
             });
 
             for ( let i = 0; i < requests.length; i++ ) {

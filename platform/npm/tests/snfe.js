@@ -29,199 +29,197 @@ import { createWorld } from 'esm-world';
 
 import './_common.js';
 
-let engine = null;
-
 describe('SNFE', () => {
-    describe('Initialization', () => {
-        let StaticNetFilteringEngine = null;
+    for ( let wasm of [ false, true ] ) {
+        context(`${wasm ? 'Wasm on' : 'Wasm off'}`, () => {
+            let module = null;
+            let engine = null;
 
-        beforeEach(async () => {
-            const module = await createWorld('./index.js', { globals: { URL } });
+            beforeEach(async () => {
+                module = await createWorld('./index.js', { globals: global });
 
-            StaticNetFilteringEngine = module.StaticNetFilteringEngine;
+                if ( wasm ) {
+                    assert(await module.enableWASM());
+                }
+            });
+
+            afterEach(() => {
+                engine = null;
+                module = null;
+            });
+
+            describe('Initialization', () => {
+                it('should not reject on first attempt', async () => {
+                    await module.StaticNetFilteringEngine.create();
+                });
+
+                it('should reject on second attempt', async () => {
+                    await module.StaticNetFilteringEngine.create();
+                    await assert.rejects(module.StaticNetFilteringEngine.create());
+                });
+
+                it('should reject on third attempt', async () => {
+                    await module.StaticNetFilteringEngine.create();
+
+                    try {
+                        await module.StaticNetFilteringEngine.create();
+                    } catch (error) {
+                    }
+
+                    await assert.rejects(module.StaticNetFilteringEngine.create());
+                });
+            });
+
+            describe('Filter loading', () => {
+                beforeEach(async () => {
+                    engine = await module.StaticNetFilteringEngine.create();
+                });
+
+                it('should not reject on no lists', async () => {
+                    await engine.useLists([]);
+                });
+
+                it('should not reject on one empty list', async () => {
+                    await engine.useLists([
+                        { name: 'easylist', raw: '' },
+                    ]);
+                });
+
+                it('should not reject on one list containing one filter', async () => {
+                    await engine.useLists([
+                        { name: 'easylist', raw: '/foo^' },
+                    ]);
+                });
+
+                it('should not reject on one list containing multiple filters', async () => {
+                    await engine.useLists([
+                        { name: 'easylist', raw: '/foo^\n||example.com^' },
+                    ]);
+                });
+
+                it('should not reject on multiple lists containing multiple filters', async () => {
+                    await engine.useLists([
+                        { name: 'easylist', raw: '/foo^\n||example.com^' },
+                        { name: 'easyprivacy', raw: '||example.net/bar/\n^bar.js?' },
+                    ]);
+                });
+
+                it('should not reject on promised-based lists', async () => {
+                    await engine.useLists([
+                        Promise.resolve({ name: 'easylist', raw: '/foo^\n||example.com^' }),
+                        Promise.resolve({ name: 'easyprivacy', raw: '||example.net/bar/\n^bar.js?' }),
+                    ]);
+                });
+
+                it('should reject on promised-based lists in which a promise is rejected', async () => {
+                    await assert.rejects(engine.useLists([
+                        Promise.reject({ name: 'easylist', raw: '/foo^\n||example.com^' }),
+                        Promise.resolve({ name: 'easyprivacy', raw: '||example.net/bar/\n^bar.js?' }),
+                    ]));
+                });
+
+                it('should reject on promised-based lists in which all promises are rejected', async () => {
+                    await assert.rejects(engine.useLists([
+                        Promise.reject({ name: 'easylist', raw: '/foo^\n||example.com^' }),
+                        Promise.reject({ name: 'easyprivacy', raw: '||example.net/bar/\n^bar.js?' }),
+                    ]));
+                });
+            });
+
+            describe('Serialization', () => {
+                beforeEach(async () => {
+                    engine = await module.StaticNetFilteringEngine.create();
+                });
+
+                it('should not reject with no lists', async () => {
+                    await engine.useLists([]);
+
+                    await engine.serialize();
+                });
+
+                it('should not reject with one empty list', async () => {
+                    await engine.useLists([
+                        { name: 'easylist', raw: '' },
+                    ]);
+
+                    await engine.serialize();
+                });
+
+                it('should not reject with one list containing one filter', async () => {
+                    await engine.useLists([
+                        { name: 'easylist', raw: '/foo^' },
+                    ]);
+
+                    await engine.serialize();
+                });
+
+                it('should not reject with one list containing multiple filters', async () => {
+                    await engine.useLists([
+                        { name: 'easylist', raw: '/foo^\n||example.com^' },
+                    ]);
+
+                    await engine.serialize();
+                });
+
+                it('should not reject with multiple lists containing multiple filters', async () => {
+                    await engine.useLists([
+                        { name: 'easylist', raw: '/foo^\n||example.com^' },
+                        { name: 'easyprivacy', raw: '||example.net/bar/\n^bar.js?' },
+                    ]);
+
+                    await engine.serialize();
+                });
+            });
+
+            describe('Deserialization', () => {
+                beforeEach(async () => {
+                    engine = await module.StaticNetFilteringEngine.create();
+                });
+
+                it('should not reject with no lists', async () => {
+                    await engine.useLists([]);
+
+                    const serialized = await engine.serialize();
+                    await engine.deserialize(serialized);
+                });
+
+                it('should not reject with one empty list', async () => {
+                    await engine.useLists([
+                        { name: 'easylist', raw: '' },
+                    ]);
+
+                    const serialized = await engine.serialize();
+                    await engine.deserialize(serialized);
+                });
+
+                it('should not reject with one list containing one filter', async () => {
+                    await engine.useLists([
+                        { name: 'easylist', raw: '/foo^' },
+                    ]);
+
+                    const serialized = await engine.serialize();
+                    await engine.deserialize(serialized);
+                });
+
+                it('should not reject with one list containing multiple filters', async () => {
+                    await engine.useLists([
+                        { name: 'easylist', raw: '/foo^\n||example.com^' },
+                    ]);
+
+                    const serialized = await engine.serialize();
+                    await engine.deserialize(serialized);
+                });
+
+                it('should not reject with multiple lists containing multiple filters', async () => {
+                    await engine.useLists([
+                        { name: 'easylist', raw: '/foo^\n||example.com^' },
+                        { name: 'easyprivacy', raw: '||example.net/bar/\n^bar.js?' },
+                    ]);
+
+                    const serialized = await engine.serialize();
+                    await engine.deserialize(serialized);
+                });
+            });
         });
-
-        it('should not reject on first attempt', async () => {
-            await StaticNetFilteringEngine.create();
-        });
-
-        it('should reject on second attempt', async () => {
-            await StaticNetFilteringEngine.create();
-            await assert.rejects(StaticNetFilteringEngine.create());
-        });
-
-        it('should reject on third attempt', async () => {
-            await StaticNetFilteringEngine.create();
-
-            try {
-                await StaticNetFilteringEngine.create();
-            } catch (error) {
-            }
-
-            await assert.rejects(StaticNetFilteringEngine.create());
-        });
-    });
-
-    describe('Filter loading', () => {
-        beforeEach(async () => {
-            const globals = { URL, setTimeout, clearTimeout };
-
-            const { StaticNetFilteringEngine } = await createWorld('./index.js', { globals });
-
-            engine = await StaticNetFilteringEngine.create();
-        });
-
-        it('should not reject on no lists', async () => {
-            await engine.useLists([]);
-        });
-
-        it('should not reject on one empty list', async () => {
-            await engine.useLists([
-                { name: 'easylist', raw: '' },
-            ]);
-        });
-
-        it('should not reject on one list containing one filter', async () => {
-            await engine.useLists([
-                { name: 'easylist', raw: '/foo^' },
-            ]);
-        });
-
-        it('should not reject on one list containing multiple filters', async () => {
-            await engine.useLists([
-                { name: 'easylist', raw: '/foo^\n||example.com^' },
-            ]);
-        });
-
-        it('should not reject on multiple lists containing multiple filters', async () => {
-            await engine.useLists([
-                { name: 'easylist', raw: '/foo^\n||example.com^' },
-                { name: 'easyprivacy', raw: '||example.net/bar/\n^bar.js?' },
-            ]);
-        });
-
-        it('should not reject on promised-based lists', async () => {
-            await engine.useLists([
-                Promise.resolve({ name: 'easylist', raw: '/foo^\n||example.com^' }),
-                Promise.resolve({ name: 'easyprivacy', raw: '||example.net/bar/\n^bar.js?' }),
-            ]);
-        });
-
-        it('should reject on promised-based lists in which a promise is rejected', async () => {
-            await assert.rejects(engine.useLists([
-                Promise.reject({ name: 'easylist', raw: '/foo^\n||example.com^' }),
-                Promise.resolve({ name: 'easyprivacy', raw: '||example.net/bar/\n^bar.js?' }),
-            ]));
-        });
-
-        it('should reject on promised-based lists in which all promises are rejected', async () => {
-            await assert.rejects(engine.useLists([
-                Promise.reject({ name: 'easylist', raw: '/foo^\n||example.com^' }),
-                Promise.reject({ name: 'easyprivacy', raw: '||example.net/bar/\n^bar.js?' }),
-            ]));
-        });
-    });
-
-    describe('Serialization', () => {
-        beforeEach(async () => {
-            const globals = { URL, setTimeout, clearTimeout };
-
-            const { StaticNetFilteringEngine } = await createWorld('./index.js', { globals });
-
-            engine = await StaticNetFilteringEngine.create();
-        });
-
-        it('should not reject with no lists', async () => {
-            await engine.useLists([]);
-
-            await engine.serialize();
-        });
-
-        it('should not reject with one empty list', async () => {
-            await engine.useLists([
-                { name: 'easylist', raw: '' },
-            ]);
-
-            await engine.serialize();
-        });
-
-        it('should not reject with one list containing one filter', async () => {
-            await engine.useLists([
-                { name: 'easylist', raw: '/foo^' },
-            ]);
-
-            await engine.serialize();
-        });
-
-        it('should not reject with one list containing multiple filters', async () => {
-            await engine.useLists([
-                { name: 'easylist', raw: '/foo^\n||example.com^' },
-            ]);
-
-            await engine.serialize();
-        });
-
-        it('should not reject with multiple lists containing multiple filters', async () => {
-            await engine.useLists([
-                { name: 'easylist', raw: '/foo^\n||example.com^' },
-                { name: 'easyprivacy', raw: '||example.net/bar/\n^bar.js?' },
-            ]);
-
-            await engine.serialize();
-        });
-    });
-
-    describe('Deserialization', () => {
-        beforeEach(async () => {
-            const globals = { URL, setTimeout, clearTimeout };
-
-            const { StaticNetFilteringEngine } = await createWorld('./index.js', { globals });
-
-            engine = await StaticNetFilteringEngine.create();
-        });
-
-        it('should not reject with no lists', async () => {
-            await engine.useLists([]);
-
-            const serialized = await engine.serialize();
-            await engine.deserialize(serialized);
-        });
-
-        it('should not reject with one empty list', async () => {
-            await engine.useLists([
-                { name: 'easylist', raw: '' },
-            ]);
-
-            const serialized = await engine.serialize();
-            await engine.deserialize(serialized);
-        });
-
-        it('should not reject with one list containing one filter', async () => {
-            await engine.useLists([
-                { name: 'easylist', raw: '/foo^' },
-            ]);
-
-            const serialized = await engine.serialize();
-            await engine.deserialize(serialized);
-        });
-
-        it('should not reject with one list containing multiple filters', async () => {
-            await engine.useLists([
-                { name: 'easylist', raw: '/foo^\n||example.com^' },
-            ]);
-
-            const serialized = await engine.serialize();
-            await engine.deserialize(serialized);
-        });
-
-        it('should not reject with multiple lists containing multiple filters', async () => {
-            await engine.useLists([
-                { name: 'easylist', raw: '/foo^\n||example.com^' },
-                { name: 'easyprivacy', raw: '||example.net/bar/\n^bar.js?' },
-            ]);
-
-            const serialized = await engine.serialize();
-            await engine.deserialize(serialized);
-        });
-    });
+    }
 });
