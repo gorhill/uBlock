@@ -37,6 +37,9 @@ lint: npm
 test: npm
 	cd dist/build/uBlock0.npm && npm run test
 
+test-full-battery: npm
+	cd dist/build/uBlock0.npm && npm run test-full-battery
+
 dist/build/uBlock0.dig: tools/make-nodejs.sh $(sources) $(platform) $(assets)
 	tools/make-dig.sh
 

@@ -34,10 +34,17 @@ import { promisify } from 'util';
 async function spawnMocha() {
     const files = [
         'tests/snfe.js',
-        'tests/request-data.js',
     ];
 
-    await promisify(spawn)('mocha', [ '--experimental-vm-modules', '--no-warnings', ...files, '--reporter', 'progress' ], { stdio: [ 'inherit', 'inherit', 'inherit' ] });
+    const options = [];
+
+    if ( process.argv[3] === '--full-battery' ) {
+        files.push('tests/request-data.js');
+
+        options.push('--reporter', 'progress');
+    }
+
+    await promisify(spawn)('mocha', [ '--experimental-vm-modules', '--no-warnings', ...files, ...options ], { stdio: [ 'inherit', 'inherit', 'inherit' ] });
 }
 
 async function main() {
