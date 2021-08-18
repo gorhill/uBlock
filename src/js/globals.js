@@ -27,13 +27,25 @@
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
 
-const globals = (( ) => {
+const realGlobals = (( ) => {
     // jshint ignore:start
     if ( typeof globalThis !== 'undefined' ) { return globalThis; }
     if ( typeof self !== 'undefined' ) { return self; }
     if ( typeof global !== 'undefined' ) { return global; }
     // jshint ignore:end
+    throw new Error('unable to locate global object');
 })();
+
+// Make a shallow copy so as not to pollute the global namespace.
+const globals = Object.assign({}, realGlobals);
+
+if ( 'WebAssembly' in realGlobals ) {
+    globals.WebAssembly = realGlobals.WebAssembly;
+}
+
+if ( 'URLSearchParams' in realGlobals ) {
+    globals.URLSearchParams = realGlobals.URLSearchParams;
+}
 
 // https://en.wikipedia.org/wiki/.invalid
 if ( globals.location === undefined ) {
