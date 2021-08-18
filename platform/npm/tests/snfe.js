@@ -143,43 +143,43 @@ describe('SNFE', () => {
                     engine = await module.StaticNetFilteringEngine.create();
                 });
 
-                it('should not reject with no lists', async () => {
+                it('should fulfill with string with no lists', async () => {
                     await engine.useLists([]);
 
-                    await engine.serialize();
+                    assert.equal(typeof await engine.serialize(), 'string');
                 });
 
-                it('should not reject with one empty list', async () => {
+                it('should fulfill with string with one empty list', async () => {
                     await engine.useLists([
                         { name: 'easylist', raw: '' },
                     ]);
 
-                    await engine.serialize();
+                    assert.equal(typeof await engine.serialize(), 'string');
                 });
 
-                it('should not reject with one list containing one filter', async () => {
+                it('should fulfill with string with one list containing one filter', async () => {
                     await engine.useLists([
                         { name: 'easylist', raw: '/foo^' },
                     ]);
 
-                    await engine.serialize();
+                    assert.equal(typeof await engine.serialize(), 'string');
                 });
 
-                it('should not reject with one list containing multiple filters', async () => {
+                it('should fulfill with string with one list containing multiple filters', async () => {
                     await engine.useLists([
                         { name: 'easylist', raw: '/foo^\n||example.com^' },
                     ]);
 
-                    await engine.serialize();
+                    assert.equal(typeof await engine.serialize(), 'string');
                 });
 
-                it('should not reject with multiple lists containing multiple filters', async () => {
+                it('should fulfill with string with multiple lists containing multiple filters', async () => {
                     await engine.useLists([
                         { name: 'easylist', raw: '/foo^\n||example.com^' },
                         { name: 'easyprivacy', raw: '||example.net/bar/\n^bar.js?' },
                     ]);
 
-                    await engine.serialize();
+                    assert.equal(typeof await engine.serialize(), 'string');
                 });
             });
 
