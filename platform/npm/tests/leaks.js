@@ -19,35 +19,12 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* globals WebAssembly */
-
 'use strict';
 
 /******************************************************************************/
 
-import { strict as assert } from 'assert';
-
-import { createWorld } from 'esm-world';
-
-import './_common.js';
-
-describe('WASM', () => {
-    context('WebAssembly available', () => {
-        it('should fulfill with true', async () => {
-            const { enableWASM } = await createWorld('./index.js', { globals: { URL, WebAssembly } });
-
-            assert.equal(await enableWASM(), true);
-        });
-    });
-
-    context('WebAssembly not available', () => {
-        it('should fulfill with false', async () => {
-            // WebAssembly must be set to undefined explicitly; otherwise
-            // createWorld() ends up using the global WebAssembly object
-            // anyway.
-            const { enableWASM } = await createWorld('./index.js', { globals: { URL, WebAssembly: undefined } });
-
-            assert.equal(await enableWASM(), false);
-        });
+describe('Leaks', () => {
+    it('should not leak', async () => {
+        await import('../index.js');
     });
 });

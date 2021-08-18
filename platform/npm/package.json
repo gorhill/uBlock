@@ -8,7 +8,8 @@
     "build": "node build.js",
     "lint": "eslint js/ *.js tests/*.js",
     "test": "c8 --include=index.js --include=js/**/*.js node test.js --mocha",
-    "test-full-battery": "c8 --include=index.js --include=js/**/*.js node test.js --mocha --full-battery"
+    "test-full-battery": "c8 --include=index.js --include=js/**/*.js node test.js --mocha --full-battery",
+    "check-leaks": "mocha --check-leaks tests/leaks.js"
   },
   "repository": {
     "type": "git",
