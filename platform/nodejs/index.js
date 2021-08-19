@@ -221,8 +221,8 @@ class StaticNetFilteringEngine {
         snfeProxyInstance = this;
     }
 
-    async useLists(lists) {
-        await useLists(lists);
+    useLists(lists) {
+        return useLists(lists);
     }
 
     matchRequest(details) {
