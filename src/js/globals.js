@@ -35,21 +35,6 @@ const globals = (( ) => {
     // jshint ignore:end
 })();
 
-// https://en.wikipedia.org/wiki/.invalid
-if ( globals.location === undefined ) {
-    globals.location = new URL('https://ublock0.invalid/');
-}
-
-// https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback
-if ( globals.requestIdleCallback === undefined ) {
-    globals.requestIdleCallback = function(callback) {
-        return globals.setTimeout(callback, 1);
-    };
-    globals.cancelIdleCallback = function(handle) {
-        return globals.clearTimeout(handle);
-    };
-}
-
 /******************************************************************************/
 
 export default globals;

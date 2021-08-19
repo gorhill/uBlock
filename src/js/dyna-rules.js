@@ -382,8 +382,8 @@ const onFilterChanged = (( ) => {
     };
 
     return function() {
-        if ( timer !== undefined ) { globals.cancelIdleCallback(timer); }
-        timer = globals.requestIdleCallback(process, { timeout: 773 });
+        if ( timer !== undefined ) { self.cancelIdleCallback(timer); }
+        timer = self.requestIdleCallback(process, { timeout: 773 });
     };
 })();
 
@@ -555,8 +555,8 @@ const onTextChanged = (( ) => {
     };
 
     return function(now) {
-        if ( timer !== undefined ) { globals.cancelIdleCallback(timer); }
-        timer = now ? process() : globals.requestIdleCallback(process, { timeout: 57 });
+        if ( timer !== undefined ) { self.cancelIdleCallback(timer); }
+        timer = now ? process() : self.requestIdleCallback(process, { timeout: 57 });
     };
 })();
 
