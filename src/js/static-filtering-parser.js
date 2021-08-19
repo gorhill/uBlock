@@ -121,7 +121,7 @@ const Parser = class {
         // https://github.com/uBlockOrigin/uBlock-issues/issues/1146
         //   From https://codemirror.net/doc/manual.html#option_specialChars
         this.reInvalidCharacters = /[\x00-\x1F\x7F-\x9F\xAD\u061C\u200B-\u200F\u2028\u2029\uFEFF\uFFF9-\uFFFC]/;
-        this.punycoder = new URL(globals.location);
+        this.punycoder = new URL('https://ublock0.invalid/');
         // TODO: mind maxTokenLength
         this.reGoodRegexToken
             = /[^\x01%0-9A-Za-z][%0-9A-Za-z]{7,}|[^\x01%0-9A-Za-z][%0-9A-Za-z]{1,6}[^\x01%0-9A-Za-z]/;
