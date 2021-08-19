@@ -26,6 +26,7 @@
 /******************************************************************************/
 
 import globals from './globals.js';
+import { queueTask, dropTask } from './tasks.js';
 import HNTrieContainer from './hntrie.js';
 import { sparseBase64 } from './base64-custom.js';
 import { BidiTrieContainer } from './biditrie.js';
@@ -3544,7 +3545,7 @@ const FilterContainer = function() {
     this.selfieVersion = '1';
 
     this.MAX_TOKEN_LENGTH = MAX_TOKEN_LENGTH;
-    this.optimizeTimerId = undefined;
+    this.optimizeTaskId = undefined;
     // As long as CategoryCount is reasonably low, we will use an array to
     // store buckets using category bits as index. If ever CategoryCount
     // becomes too large, we can just go back to using a Map.
@@ -3590,9 +3591,9 @@ FilterContainer.prototype.reset = function() {
     filterSequenceWritePtr = FILTER_SEQUENCES_MIN;
 
     // Cancel potentially pending optimization run.
-    if ( this.optimizeTimerId !== undefined ) {
-        globals.cancelIdleCallback(this.optimizeTimerId);
-        this.optimizeTimerId = undefined;
+    if ( this.optimizeTaskId !== undefined ) {
+        dropTask(this.optimizeTaskId);
+        this.optimizeTaskId = undefined;
     }
 
     // Runtime registers
@@ -3690,20 +3691,20 @@ FilterContainer.prototype.freeze = function() {
     // Optimizing is not critical for the static network filtering engine to
     // work properly, so defer this until later to allow for reduced delay to
     // readiness when no valid selfie is available.
-    if ( this.optimizeTimerId === undefined ) {
-        this.optimizeTimerId = globals.requestIdleCallback(( ) => {
-            this.optimizeTimerId = undefined;
+    if ( this.optimizeTaskId === undefined ) {
+        this.optimizeTaskId = queueTask(( ) => {
+            this.optimizeTaskId = undefined;
             this.optimize();
-        }, { timeout: 5000 });
+        });
     }
 };
 
 /******************************************************************************/
 
 FilterContainer.prototype.optimize = function() {
-    if ( this.optimizeTimerId !== undefined ) {
-        globals.cancelIdleCallback(this.optimizeTimerId);
-        this.optimizeTimerId = undefined;
+    if ( this.optimizeTaskId !== undefined ) {
+        dropTask(this.optimizeTaskId);
+        this.optimizeTaskId = undefined;
     }
 
     for ( let bits = 0, n = this.categories.length; bits < n; bits++ ) {
