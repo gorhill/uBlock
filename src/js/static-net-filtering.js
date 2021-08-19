@@ -25,7 +25,6 @@
 
 /******************************************************************************/
 
-import globals from './globals.js';
 import { queueTask, dropTask } from './tasks.js';
 import HNTrieContainer from './hntrie.js';
 import { sparseBase64 } from './base64-custom.js';
@@ -4368,7 +4367,7 @@ FilterContainer.prototype.filterQuery = function(fctxt) {
     let hpos = url.indexOf('#', qpos + 1);
     if ( hpos === -1 ) { hpos = url.length; }
     const params = new Map(
-        new globals.URLSearchParams(url.slice(qpos + 1, hpos))
+        new URLSearchParams(url.slice(qpos + 1, hpos))
     );
     const inParamCount = params.size;
     const out = [];
