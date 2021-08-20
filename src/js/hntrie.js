@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* globals self */
+/* globals WebAssembly */
 
 'use strict';
 
@@ -450,28 +450,18 @@ const HNTrieContainer = class {
     }
 
     async enableWASM(wasmModuleFetcher, path) {
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
-        const globals = (( ) => {
-            if ( typeof self !== 'undefined' ) { return self; }
-            // jshint ignore:start
-            if ( typeof globalThis !== 'undefined' ) { return globalThis; }
-            if ( typeof global !== 'undefined' ) { return global; }
-            // jshint ignore:end
-            return {};
-        })();
-        const WASM = globals.WebAssembly || null;
-        if ( WASM === null ) { return false; }
-        if ( this.wasmMemory instanceof WASM.Memory ) { return true; }
+        if ( typeof WebAssembly === 'undefined' ) { return false; }
+        if ( this.wasmMemory instanceof WebAssembly.Memory ) { return true; }
         const module = await getWasmModule(wasmModuleFetcher, path);
-        if ( module instanceof WASM.Module === false ) { return false; }
-        const memory = new WASM.Memory({ initial: 2 });
-        const instance = await WASM.instantiate(module, {
+        if ( module instanceof WebAssembly.Module === false ) { return false; }
+        const memory = new WebAssembly.Memory({ initial: 2 });
+        const instance = await WebAssembly.instantiate(module, {
             imports: {
                 memory,
                 growBuf: this.growBuf.bind(this, 24, 256)
             }
         });
-        if ( instance instanceof WASM.Instance === false ) { return false; }
+        if ( instance instanceof WebAssembly.Instance === false ) { return false; }
         this.wasmMemory = memory;
         const curPageCount = memory.buffer.byteLength >>> 16;
         const newPageCount = roundToPageSize(this.buf.byteLength) >>> 16;
