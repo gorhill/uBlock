@@ -12,7 +12,8 @@
 		"vAPI": false,
 		"webext": false,
 		"µBlock": false,
-		"URLSearchParams": false
+		"URLSearchParams": false,
+		"WebAssembly": false
 	},
 	"laxbreak": true,
 	"newcap": false,
