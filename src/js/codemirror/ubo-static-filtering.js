@@ -417,9 +417,8 @@ const initHints = function() {
 
     const parser = new StaticFilteringParser();
     const proceduralOperatorNames = new Map(
-        Array.from(parser.proceduralOperatorTokens).filter(item => {
-            return (item[1] & 0b01) !== 0;
-        })
+        Array.from(parser.proceduralOperatorTokens)
+             .filter(item => (item[1] & 0b01) !== 0)
     );
     const excludedHints = new Set([
         'genericblock',

@@ -102,6 +102,21 @@ const PSelectorMinTextLengthTask = class {
     }
 };
 
+const PSelectorMatchesPathTask = class {
+    constructor(task) {
+        let arg0 = task[1], arg1;
+        if ( Array.isArray(task[1]) ) {
+            arg1 = arg0[1]; arg0 = arg0[0];
+        }
+        this.needle = new RegExp(arg0, arg1);
+    }
+    transpose(node, output) {
+        if ( this.needle.test(self.location.pathname) ) {
+            output.push(node);
+        }
+    }
+};
+
 // https://github.com/AdguardTeam/ExtendedCss/issues/31#issuecomment-302391277
 //   Prepend `:scope ` if needed.
 const PSelectorSpathTask = class {
@@ -232,6 +247,7 @@ const PSelector = class {
                 [ ':matches-css', PSelectorMatchesCSSTask ],
                 [ ':matches-css-after', PSelectorMatchesCSSAfterTask ],
                 [ ':matches-css-before', PSelectorMatchesCSSBeforeTask ],
+                [ ':matches-path', PSelectorMatchesPathTask ],
                 [ ':min-text-length', PSelectorMinTextLengthTask ],
                 [ ':not', PSelectorIfNotTask ],
                 [ ':nth-ancestor', PSelectorUpwardTask ],

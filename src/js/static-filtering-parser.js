@@ -1618,6 +1618,7 @@ Parser.prototype.SelectorCompiler = class {
             case ':spath':
                 raw.push(task[1]);
                 break;
+            case ':matches-path':
             case ':min-text-length':
             case ':upward':
             case ':watch-attr':
@@ -1793,6 +1794,8 @@ Parser.prototype.SelectorCompiler = class {
             return this.compileCSSDeclaration(args);
         case ':matches-css-before':
             return this.compileCSSDeclaration(args);
+        case ':matches-path':
+            return this.compileText(args);
         case ':min-text-length':
             return this.compileInteger(args);
         case ':not':
@@ -1826,6 +1829,7 @@ Parser.prototype.proceduralOperatorTokens = new Map([
     [ 'matches-css', 0b11 ],
     [ 'matches-css-after', 0b11 ],
     [ 'matches-css-before', 0b11 ],
+    [ 'matches-path', 0b01 ],
     [ 'min-text-length', 0b01 ],
     [ 'not', 0b01 ],
     [ 'nth-ancestor', 0b00 ],
