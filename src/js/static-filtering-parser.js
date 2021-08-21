@@ -1588,6 +1588,7 @@ Parser.prototype.SelectorCompiler = class {
                 raw.push(`:has(${this.decompileProcedural(task[1])})`);
                 break;
             case ':has-text':
+            case ':matches-path':
                 if ( Array.isArray(task[1]) ) {
                     value = `/${task[1][0]}/${task[1][1]}`;
                 } else {
@@ -1596,7 +1597,7 @@ Parser.prototype.SelectorCompiler = class {
                         value = `/${task[1]}/`;
                     }
                 }
-                raw.push(`:has-text(${value})`);
+                raw.push(`${task[0]}(${value})`);
                 break;
             case ':matches-css':
             case ':matches-css-after':
@@ -1618,7 +1619,6 @@ Parser.prototype.SelectorCompiler = class {
             case ':spath':
                 raw.push(task[1]);
                 break;
-            case ':matches-path':
             case ':min-text-length':
             case ':upward':
             case ':watch-attr':
