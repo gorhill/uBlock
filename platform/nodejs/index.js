@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* globals WebAssembly */
+
 'use strict';
 
 /******************************************************************************/
@@ -57,7 +59,7 @@ async function enableWASM() {
     const wasmModuleFetcher = function(path) {
         const require = createRequire(import.meta.url); // jshint ignore:line
         const wasm = new Uint8Array(require(`${path}.wasm.json`));
-        return globals.WebAssembly.compile(wasm);
+        return WebAssembly.compile(wasm);
     };
     try {
         const results = await Promise.all([
