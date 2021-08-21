@@ -111,7 +111,7 @@ const PSelectorMatchesPathTask = class {
         this.needle = new RegExp(arg0, arg1);
     }
     transpose(node, output) {
-        if ( this.needle.test(self.location.pathname) ) {
+        if ( this.needle.test(self.location.pathname + self.location.search) ) {
             output.push(node);
         }
     }
