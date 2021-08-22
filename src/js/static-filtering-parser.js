@@ -25,9 +25,7 @@
 
 /******************************************************************************/
 
-import '../lib/regexanalyzer/regex.js';
-
-import globals from './globals.js';
+import Regex from '../lib/regexanalyzer/regex.js';
 
 /*******************************************************************************
 
@@ -2898,7 +2896,6 @@ Parser.regexUtils = Parser.prototype.regexUtils = (( ) => {
         return '\x01';
     };
 
-    const Regex = globals.Regex;
     if (
         Regex instanceof Object === false ||
         Regex.Analyzer instanceof Object === false
