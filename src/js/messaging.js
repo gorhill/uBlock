@@ -24,7 +24,7 @@
 /******************************************************************************/
 
 import '../lib/publicsuffixlist/publicsuffixlist.js';
-import '../lib/punycode.js';
+import punycode from '../lib/punycode.js';
 
 import cacheStorage from './cachestorage.js';
 import cosmeticFilteringEngine from './cosmetic-filtering.js';
@@ -1087,7 +1087,6 @@ const getLists = async function(callback) {
 
 // TODO: also return origin of embedded frames?
 const getOriginHints = function() {
-    const punycode = globals.punycode;
     const out = new Set();
     for ( const tabId of µb.pageStores.keys() ) {
         if ( tabId === -1 ) { continue; }

@@ -24,7 +24,7 @@
 /******************************************************************************/
 
 import './lib/publicsuffixlist/publicsuffixlist.js';
-import './lib/punycode.js';
+import punycode from './lib/punycode.js';
 
 import globals from './js/globals.js';
 import staticNetFilteringEngine from './js/static-net-filtering.js';
@@ -93,7 +93,7 @@ function pslInit(raw) {
         console.info('Unable to populate public suffix list');
         return;
     }
-    globals.publicSuffixList.parse(raw, globals.punycode.toASCII);
+    globals.publicSuffixList.parse(raw, punycode.toASCII);
     console.info('Public suffix list populated');
 }
 

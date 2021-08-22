@@ -25,13 +25,13 @@
 
 /******************************************************************************/
 
-import globals from './globals.js';
+import punycode from '../lib/punycode.js';
+
 import { decomposeHostname } from './uri-utils.js';
 import { LineIterator } from './text-utils.js';
 
 /******************************************************************************/
 
-const punycode = globals.punycode || undefined;
 const decomposedSource = [];
 
 // Object.create(null) is used below to eliminate worries about unexpected

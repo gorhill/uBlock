@@ -24,7 +24,7 @@
 /******************************************************************************/
 
 import '../lib/publicsuffixlist/publicsuffixlist.js';
-import '../lib/punycode.js';
+import punycode from '../lib/punycode.js';
 
 import cosmeticFilteringEngine from './cosmetic-filtering.js';
 import globals from './globals.js';
@@ -1244,7 +1244,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
 µb.compilePublicSuffixList = function(content) {
     const psl = globals.publicSuffixList;
-    psl.parse(content, globals.punycode.toASCII);
+    psl.parse(content, punycode.toASCII);
     io.put(`compiled/${this.pslAssetKey}`, psl.toSelfie(sparseBase64));
 };
 
