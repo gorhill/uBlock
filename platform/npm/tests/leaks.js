@@ -24,7 +24,7 @@
 /******************************************************************************/
 
 describe('Leaks', () => {
-    it('should not leak', async () => {
+    it('should not leak global variables', async () => {
         await import('../index.js');
     });
 });

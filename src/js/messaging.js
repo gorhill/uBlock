@@ -23,12 +23,11 @@
 
 /******************************************************************************/
 
-import '../lib/publicsuffixlist/publicsuffixlist.js';
+import publicSuffixList from '../lib/publicsuffixlist/publicsuffixlist.js';
 import punycode from '../lib/punycode.js';
 
 import cacheStorage from './cachestorage.js';
 import cosmeticFilteringEngine from './cosmetic-filtering.js';
-import globals from './globals.js';
 import logger from './logger.js';
 import lz4Codec from './lz4.js';
 import io from './assets.js';
@@ -1115,7 +1114,7 @@ const getRules = function() {
                 sessionSwitches.toArray(),
                 sessionURLFiltering.toArray()
             ),
-        pslSelfie: globals.publicSuffixList.toSelfie(),
+        pslSelfie: publicSuffixList.toSelfie(),
     };
 };
 
