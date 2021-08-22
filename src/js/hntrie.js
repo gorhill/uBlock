@@ -732,11 +732,7 @@ HNTrieContainer.prototype.HNTrieRef = class {
                         i0 += 1;
                     }
                     this.icell = this.container.buf32[this.icell+1];
-                    if ( this.icell === 0 ) {
-                        return this.toHostname();
-                    }
-                    if ( this.container.buf32[this.icell+2] === 0 ) {
-                        this.icell = this.container.buf32[this.icell+1];
+                    if ( (v & 0x80) !== 0 ) {
                         return this.toHostname();
                     }
                 }
@@ -748,7 +744,7 @@ HNTrieContainer.prototype.HNTrieRef = class {
                 return this;
             },
             container: this.container,
-            icell: this.iroot,
+            icell: this.container.buf32[this.iroot],
             charBuf: new Uint8Array(256),
             charPtr: 256,
             forks: [],
