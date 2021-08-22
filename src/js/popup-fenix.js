@@ -19,9 +19,11 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global punycode, uDom */
+/* global uDom */
 
 'use strict';
+
+import punycode from '../lib/punycode.js';
 
 /******************************************************************************/
 

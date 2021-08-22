@@ -23,7 +23,8 @@
 
 /******************************************************************************/
 
-import globals from './globals.js';
+import punycode from '../lib/punycode.js';
+
 import { LineIterator } from './text-utils.js';
 
 import {
@@ -32,8 +33,6 @@ import {
 } from './uri-utils.js';
 
 /******************************************************************************/
-
-const punycode = globals.punycode || undefined;
 
 // Object.create(null) is used below to eliminate worries about unexpected
 // property names in prototype chain -- and this way we don't have to use

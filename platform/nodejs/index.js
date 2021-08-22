@@ -33,7 +33,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-import './lib/punycode.js';
+import punycode from './lib/punycode.js';
 import './lib/publicsuffixlist/publicsuffixlist.js';
 
 import globals from './js/globals.js';
@@ -77,7 +77,7 @@ async function enableWASM() {
 
 function pslInit(raw) {
     if ( typeof raw === 'string' && raw.trim() !== '' ) {
-        globals.publicSuffixList.parse(raw, globals.punycode.toASCII);
+        globals.publicSuffixList.parse(raw, punycode.toASCII);
         return globals.publicSuffixList;
     }
 
@@ -105,7 +105,7 @@ function pslInit(raw) {
         console.error('Unable to populate public suffix list');
         return;
     }
-    globals.publicSuffixList.parse(raw, globals.punycode.toASCII);
+    globals.publicSuffixList.parse(raw, punycode.toASCII);
     return globals.publicSuffixList;
 }
 
