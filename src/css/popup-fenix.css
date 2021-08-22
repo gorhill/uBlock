@@ -591,6 +591,11 @@ body:not([data-more~="e"]) [data-more="e"] {
     display: none;
     }
 
+:root #firewall-vspacer {
+    display: none;
+    height: calc(6 * var(--popup-gap));
+    }
+
 /* popup-in-tab mode, useful for screenshots */
 :root.desktop.intab body {
     overflow: auto;
@@ -616,6 +621,9 @@ body:not([data-more~="e"]) [data-more="e"] {
     max-width: unset;
     min-width: unset;
     overflow-y: hidden;
+    }
+:root.portrait #firewall-vspacer {
+    display: block;
     }
 
 /* touch-driven devices */
