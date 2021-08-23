@@ -24,7 +24,6 @@
 /******************************************************************************/
 
 import cosmeticFilteringEngine from './cosmetic-filtering.js';
-import globals from './globals.js';
 import io from './assets.js';
 import scriptletFilteringEngine from './scriptlet-filtering.js';
 import staticNetFilteringEngine from './static-net-filtering.js';
@@ -73,11 +72,11 @@ const loadBenchmarkDataset = (( ) => {
 
     return function() {
         if ( ttlTimer !== undefined ) {
-            globals.clearTimeout(ttlTimer);
+            clearTimeout(ttlTimer);
             ttlTimer = undefined;
         }
 
-        globals.setTimeout(( ) => {
+        setTimeout(( ) => {
             ttlTimer = undefined;
             datasetPromise = undefined;
         }, 5 * 60 * 1000);
@@ -155,7 +154,7 @@ const loadBenchmarkDataset = (( ) => {
         return;
     }
 
-    const t0 = globals.performance.now();
+    const t0 = performance.now();
     let matchCount = 0;
     let blockCount = 0;
     let allowCount = 0;
@@ -181,7 +180,7 @@ const loadBenchmarkDataset = (( ) => {
             staticNetFilteringEngine.redirectRequest(redirectEngine, fctxt);
         }
     }
-    const t1 = globals.performance.now();
+    const t1 = performance.now();
     const dur = t1 - t0;
 
     const output = [
@@ -248,7 +247,7 @@ const loadBenchmarkDataset = (( ) => {
     }
     console.info(`Benchmarking sessionFirewall.evaluateCellZY()...`);
     const fctxt = new FilteringContext();
-    const t0 = globals.performance.now();
+    const t0 = performance.now();
     for ( const request of requests ) {
         fctxt.setURL(request.url);
         fctxt.setTabOriginFromURL(request.frameUrl);
@@ -259,7 +258,7 @@ const loadBenchmarkDataset = (( ) => {
             fctxt.type
         );
     }
-    const t1 = globals.performance.now();
+    const t1 = performance.now();
     const dur = t1 - t0;
     console.info(`Evaluated ${requests.length} requests in ${dur.toFixed(0)} ms`);
     console.info(`\tAverage: ${(dur / requests.length).toFixed(3)} ms per request`);
@@ -286,7 +285,7 @@ const loadBenchmarkDataset = (( ) => {
         noGenericCosmeticFiltering: false,
     };
     let count = 0;
-    const t0 = globals.performance.now();
+    const t0 = performance.now();
     for ( let i = 0; i < requests.length; i++ ) {
         const request = requests[i];
         if ( request.cpt !== 'main_frame' ) { continue; }
@@ -296,7 +295,7 @@ const loadBenchmarkDataset = (( ) => {
         details.entity = entityFromDomain(details.domain);
         void cosmeticFilteringEngine.retrieveSpecificSelectors(details, options);
     }
-    const t1 = globals.performance.now();
+    const t1 = performance.now();
     const dur = t1 - t0;
     console.info(`Evaluated ${count} requests in ${dur.toFixed(0)} ms`);
     console.info(`\tAverage: ${(dur / count).toFixed(3)} ms per request`);
@@ -319,7 +318,7 @@ const loadBenchmarkDataset = (( ) => {
         url: '',
     };
     let count = 0;
-    const t0 = globals.performance.now();
+    const t0 = performance.now();
     for ( let i = 0; i < requests.length; i++ ) {
         const request = requests[i];
         if ( request.cpt !== 'main_frame' ) { continue; }
@@ -330,7 +329,7 @@ const loadBenchmarkDataset = (( ) => {
         details.entity = entityFromDomain(details.domain);
         void scriptletFilteringEngine.retrieve(details);
     }
-    const t1 = globals.performance.now();
+    const t1 = performance.now();
     const dur = t1 - t0;
     console.info(`Evaluated ${count} requests in ${dur.toFixed(0)} ms`);
     console.info(`\tAverage: ${(dur / count).toFixed(3)} ms per request`);
