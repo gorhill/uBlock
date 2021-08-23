@@ -11,7 +11,6 @@ cp src/js/base64-custom.js           $DES/js
 cp src/js/biditrie.js                $DES/js
 cp src/js/dynamic-net-filtering.js   $DES/js
 cp src/js/filtering-context.js       $DES/js
-cp src/js/globals.js                 $DES/js
 cp src/js/hnswitches.js              $DES/js
 cp src/js/hntrie.js                  $DES/js
 cp src/js/static-filtering-parser.js $DES/js

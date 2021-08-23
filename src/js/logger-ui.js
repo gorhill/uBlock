@@ -25,7 +25,6 @@
 
 /******************************************************************************/
 
-import globals from './globals.js';
 import { hostnameFromURI } from './uri-utils.js';
 
 /******************************************************************************/
@@ -34,7 +33,7 @@ import { hostnameFromURI } from './uri-utils.js';
 //       accumulated over time.
 
 const messaging = vAPI.messaging;
-const logger = globals.logger = { ownerId: Date.now() };
+const logger = self.logger = { ownerId: Date.now() };
 const logDate = new Date();
 const logDateTimezoneOffset = logDate.getTimezoneOffset() * 60000;
 const loggerEntries = [];
