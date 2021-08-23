@@ -23,7 +23,6 @@
 
 /******************************************************************************/
 
-import globals from './globals.js';
 import logger from './logger.js';
 import { FilteringContext } from './filtering-context.js';
 
@@ -337,7 +336,7 @@ const µBlock = {  // jshint ignore:line
 
 µBlock.filteringContext = new µBlock.FilteringContext();
 
-globals.µBlock = µBlock;
+self.µBlock = µBlock;
 
 /******************************************************************************/
 
