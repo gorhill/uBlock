@@ -23,10 +23,9 @@
 
 /******************************************************************************/
 
-import './lib/publicsuffixlist/publicsuffixlist.js';
+import publicSuffixList from './lib/publicsuffixlist/publicsuffixlist.js';
 import punycode from './lib/punycode.js';
 
-import globals from './js/globals.js';
 import staticNetFilteringEngine from './js/static-net-filtering.js';
 import { FilteringContext } from './js/filtering-context.js';
 import { LineIterator } from './js/text-utils.js';
@@ -83,7 +82,7 @@ function applyList(name, raw) {
 
 function enableWASM(path) {
     return Promise.all([
-        globals.publicSuffixList.enableWASM(`${path}/lib/publicsuffixlist`),
+        publicSuffixList.enableWASM(`${path}/lib/publicsuffixlist`),
         staticNetFilteringEngine.enableWASM(`${path}/js`),
     ]);
 }
@@ -93,7 +92,7 @@ function pslInit(raw) {
         console.info('Unable to populate public suffix list');
         return;
     }
-    globals.publicSuffixList.parse(raw, punycode.toASCII);
+    publicSuffixList.parse(raw, punycode.toASCII);
     console.info('Public suffix list populated');
 }
 

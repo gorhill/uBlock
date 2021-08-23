@@ -19,15 +19,16 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* globals WebAssembly */
+
 'use strict';
 
 /******************************************************************************/
 
-import '../lib/publicsuffixlist/publicsuffixlist.js';
+import publicSuffixList from '../lib/publicsuffixlist/publicsuffixlist.js';
 import punycode from '../lib/punycode.js';
 
 import cosmeticFilteringEngine from './cosmetic-filtering.js';
-import globals from './globals.js';
 import io from './assets.js';
 import logger from './logger.js';
 import lz4Codec from './lz4.js';
@@ -1203,7 +1204,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 /******************************************************************************/
 
 µb.loadPublicSuffixList = async function() {
-    const psl = globals.publicSuffixList;
+    const psl = publicSuffixList;
 
     // WASM is nice but not critical
     if ( vAPI.canWASM && this.hiddenSettings.disableWebAssembly !== true ) {
@@ -1211,7 +1212,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
             return fetch( `${path}.wasm`, {
                 mode: 'same-origin'
             }).then(
-                globals.WebAssembly.compileStreaming
+                WebAssembly.compileStreaming
             ).catch(reason => {
                 ubolog(reason);
             });
@@ -1243,7 +1244,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 };
 
 µb.compilePublicSuffixList = function(content) {
-    const psl = globals.publicSuffixList;
+    const psl = publicSuffixList;
     psl.parse(content, punycode.toASCII);
     io.put(`compiled/${this.pslAssetKey}`, psl.toSelfie(sparseBase64));
 };

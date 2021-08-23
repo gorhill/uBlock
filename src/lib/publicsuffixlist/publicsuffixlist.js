@@ -43,7 +43,7 @@
 
 /******************************************************************************/
 
-(function(context) {
+export default (function() {
 // >>>>>>>> start of anonymous namespace
 
 /*******************************************************************************
@@ -605,32 +605,16 @@ const disableWASM = function() {
 
 /******************************************************************************/
 
-context.publicSuffixList = {
+return ({
     version: '2.0',
     parse,
     getDomain,
     getPublicSuffix,
     toSelfie, fromSelfie,
     disableWASM, enableWASM,
-};
-
-if ( typeof module !== 'undefined' ) { 
-    module.exports = context.publicSuffixList;
-} else if ( typeof exports !== 'undefined' ) {
-    exports = context.publicSuffixList;
-}
+});
 
 /******************************************************************************/
 
 // <<<<<<<< end of anonymous namespace
-})(
-    (root => {
-        if ( root !== undefined ) { return root; }
-        // jshint ignore:start
-        if ( typeof self !== 'undefined' ) { return self; }
-        if ( typeof window !== 'undefined' ) { return window; }
-        if ( typeof global !== 'undefined' ) { return global; }
-        // jshint ignore:end
-        throw new Error('unable to locate global object');
-    })(this)
-);
+})();
