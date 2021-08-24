@@ -842,25 +842,26 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
         const entry = this.lowlyGeneric[type];
         const selectors = request[entry.canonical];
         if ( Array.isArray(selectors) === false ) { continue; }
-        for ( const selector of selectors ) {
-            if ( entry.simple.has(selector) === false ) { continue; }
-            const bucket = entry.complex.get(selector);
-            if ( bucket === undefined ) {
-                if ( safeOnly ) { continue; }
-                const simpleSelector = entry.prefix + selector;
-                if ( previousHits.has(simpleSelector) ) { continue; }
-                simpleSelectors.add(simpleSelector);
-                continue;
-            }
-            if ( Array.isArray(bucket) === false ) {
+        for ( const identifier of selectors ) {
+            if ( entry.simple.has(identifier) === false ) { continue; }
+            const bucket = entry.complex.get(identifier);
+            if ( typeof bucket === 'string' ) {
                 if ( previousHits.has(bucket) ) { continue; }
                 complexSelectors.add(bucket);
                 continue;
             }
-            for ( const selector of bucket ) {
-                if ( previousHits.has(selector) ) { continue; }
-                complexSelectors.add(selector);
+            const simpleSelector = entry.prefix + identifier;
+            if ( Array.isArray(bucket) ) {
+                for ( const complexSelector of bucket ) {
+                    if ( previousHits.has(complexSelector) ) { continue; }
+                    if ( safeOnly && complexSelector === simpleSelector ) { continue; }
+                    complexSelectors.add(complexSelector);
+                }
+                continue;
             }
+            if ( previousHits.has(simpleSelector) ) { continue; }
+            if ( safeOnly ) { continue; }
+            simpleSelectors.add(simpleSelector);
         }
     }
 
