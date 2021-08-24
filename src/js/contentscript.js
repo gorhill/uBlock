@@ -982,14 +982,14 @@ vAPI.DOMFilterer = class {
         accepted: 0,
         iterated: 0,
         stopped: false,
-        add: function(nodes) {
+        add(nodes) {
             if ( nodes.length === 0 || this.accepted >= maxSurveyNodes ) {
                 return;
             }
             this.nodeLists.push(nodes);
             this.accepted += nodes.length;
         },
-        next: function() {
+        next() {
             if ( this.nodeLists.length === 0 || this.stopped ) { return 0; }
             const nodeLists = this.nodeLists;
             let ib = 0;
@@ -1018,7 +1018,7 @@ vAPI.DOMFilterer = class {
             }
             return ib;
         },
-        hasNodes: function() {
+        hasNodes() {
             return this.nodeLists.length !== 0;
         },
     };
@@ -1032,46 +1032,46 @@ vAPI.DOMFilterer = class {
     // http://www.w3.org/TR/2014/REC-html5-20141028/infrastructure.html#space-separated-tokens
     // http://jsperf.com/enumerate-classes/6
 
+    const idFromNode = (node, out) => {
+        const raw = node.id;
+        if ( typeof raw !== 'string' || raw.length === 0 ) { return; }
+        const s = raw.trim();
+        if ( queriedIds.has(s) || s.length === 0 ) { return; }
+        out.push(s);
+        queriedIds.add(s);
+    };
+
+    const classesFromNode = (node, out) => {
+        const s = node.className;
+        if ( typeof s !== 'string' || s.length === 0 ) { return; }
+        if ( reWhitespace.test(s) === false ) {
+            if ( queriedClasses.has(s) ) { return; }
+            out.push(s);
+            queriedClasses.add(s);
+            return;
+        }
+        for ( const s of node.classList.values() ) {
+            if ( queriedClasses.has(s) ) { continue; }
+            out.push(s);
+            queriedClasses.add(s);
+        }
+    };
+
     const surveyPhase1 = function() {
         //console.time('dom surveyor/surveying');
         const t0 = performance.now();
-        const rews = reWhitespace;
         const ids = [];
         const classes = [];
         const nodes = pendingNodes.buffer;
         const deadline = t0 + maxSurveyTimeSlice;
-        let qids = queriedIds;
-        let qcls = queriedClasses;
         let processed = 0;
         for (;;) {
             const n = pendingNodes.next();
             if ( n === 0 ) { break; }
             for ( let i = 0; i < n; i++ ) {
                 const node = nodes[i]; nodes[i] = null;
-                let v = node.id;
-                if ( typeof v === 'string' && v.length !== 0 ) {
-                    v = v.trim();
-                    if ( qids.has(v) === false && v.length !== 0 ) {
-                        ids.push(v); qids.add(v);
-                    }
-                }
-                let vv = node.className;
-                if ( typeof vv === 'string' && vv.length !== 0 ) {
-                    if ( rews.test(vv) === false ) {
-                        if ( qcls.has(vv) === false ) {
-                            classes.push(vv); qcls.add(vv);
-                        }
-                    } else {
-                        vv = node.classList;
-                        let j = vv.length;
-                        while ( j-- ) {
-                            const v = vv[j];
-                            if ( qcls.has(v) === false ) {
-                                classes.push(v); qcls.add(v);
-                            }
-                        }
-                    }
-                }
+                idFromNode(node, ids);
+                classesFromNode(node, classes);
             }
             processed += n;
             if ( performance.now() >= deadline ) { break; }
@@ -1084,8 +1084,7 @@ vAPI.DOMFilterer = class {
             messaging.send('contentscript', {
                 what: 'retrieveGenericCosmeticSelectors',
                 hostname,
-                ids,
-                classes,
+                ids, classes,
                 exceptions: domFilterer.exceptions,
                 cost: surveyCost,
             }).then(response => {
@@ -1164,19 +1163,40 @@ vAPI.DOMFilterer = class {
             }
             //console.time('dom surveyor/dom layout created');
             domFilterer = vAPI.domFilterer;
-            pendingNodes.add(document.querySelectorAll('[id],[class]'));
+            pendingNodes.add(document.querySelectorAll(
+                '[id]:not(html):not(body),[class]:not(html):not(body)'
+            ));
             surveyTimer.start();
+            // https://github.com/uBlockOrigin/uBlock-issues/issues/1692
+            //   Look-up safe-only selectors to mitigate probability of
+            //   html/body elements of erroneously being targeted.
+            const ids = [], classes = [];
+            idFromNode(document.documentElement, ids);
+            idFromNode(document.body, ids);
+            classesFromNode(document.documentElement, classes);
+            classesFromNode(document.body, classes);
+            if ( ids.length !== 0 || classes.length !== 0 ) {
+                messaging.send('contentscript', {
+                    what: 'retrieveGenericCosmeticSelectors',
+                    hostname,
+                    ids, classes,
+                    exceptions: domFilterer.exceptions,
+                    safeOnly: true,
+                }).then(response => {
+                    surveyPhase3(response);
+                });
+            }
             //console.timeEnd('dom surveyor/dom layout created');
         },
         onDOMChanged: function(addedNodes) {
             if ( addedNodes.length === 0 ) { return; }
             //console.time('dom surveyor/dom layout changed');
-            let i = addedNodes.length;
-            while ( i-- ) {
-                const node = addedNodes[i];
+            for ( const node of addedNodes ) {
                 pendingNodes.add([ node ]);
                 if ( node.firstElementChild === null ) { continue; }
-                pendingNodes.add(node.querySelectorAll('[id],[class]'));
+                pendingNodes.add(node.querySelectorAll(
+                    '[id]:not(html):not(body),[class]:not(html):not(body)'
+                ));
             }
             if ( pendingNodes.hasNodes() ) {
                 surveyTimer.start(1);

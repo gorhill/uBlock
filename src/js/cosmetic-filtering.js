@@ -829,6 +829,7 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
     if ( this.acceptedCount === 0 ) { return; }
     if ( !request.ids && !request.classes ) { return; }
 
+    const { safeOnly = false } = request;
     //console.time('cosmeticFilteringEngine.retrieveGenericSelectors');
 
     const simpleSelectors = this.$simpleSet;
@@ -841,24 +842,24 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
         const entry = this.lowlyGeneric[type];
         const selectors = request[entry.canonical];
         if ( Array.isArray(selectors) === false ) { continue; }
-        for ( let selector of selectors ) {
+        for ( const selector of selectors ) {
             if ( entry.simple.has(selector) === false ) { continue; }
             const bucket = entry.complex.get(selector);
-            if ( bucket !== undefined ) {
-                if ( Array.isArray(bucket) ) {
-                    for ( const selector of bucket ) {
-                        if ( previousHits.has(selector) === false ) {
-                            complexSelectors.add(selector);
-                        }
-                    }
-                } else if ( previousHits.has(bucket) === false ) {
-                    complexSelectors.add(bucket);
-                }
-            } else {
-                selector = entry.prefix + selector;
-                if ( previousHits.has(selector) === false ) {
-                    simpleSelectors.add(selector);
-                }
+            if ( bucket === undefined ) {
+                if ( safeOnly ) { continue; }
+                const simpleSelector = entry.prefix + selector;
+                if ( previousHits.has(simpleSelector) ) { continue; }
+                simpleSelectors.add(simpleSelector);
+                continue;
+            }
+            if ( Array.isArray(bucket) === false ) {
+                if ( previousHits.has(bucket) ) { continue; }
+                complexSelectors.add(bucket);
+                continue;
+            }
+            for ( const selector of bucket ) {
+                if ( previousHits.has(selector) ) { continue; }
+                complexSelectors.add(selector);
             }
         }
     }
