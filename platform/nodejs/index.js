@@ -62,7 +62,7 @@ async function enableWASM() {
     };
     try {
         const results = await Promise.all([
-            publicSuffixList.enableWASM(wasmModuleFetcher, './lib/publicsuffixlist/wasm/'),
+            publicSuffixList.enableWASM(),
             snfe.enableWASM(wasmModuleFetcher, './js/wasm/'),
         ]);
         return results.every(a => a === true);

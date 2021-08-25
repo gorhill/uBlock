@@ -82,7 +82,7 @@ function applyList(name, raw) {
 
 function enableWASM(path) {
     return Promise.all([
-        publicSuffixList.enableWASM(`${path}/lib/publicsuffixlist`),
+        publicSuffixList.enableWASM(),
         staticNetFilteringEngine.enableWASM(`${path}/js`),
     ]);
 }

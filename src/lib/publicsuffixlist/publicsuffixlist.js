@@ -530,7 +530,7 @@ const fromSelfie = function(selfie, decoder) {
 const enableWASM = (( ) => {
     let wasmPromise;
 
-    const getWasmInstance = async function(wasmModuleFetcher, path) {
+    const getWasmInstance = async function() {
         if ( typeof WebAssembly !== 'object' ) { return false; }
         // The wasm code will work only if CPU is natively little-endian,
         // as we use native uint32 array in our js code.
@@ -540,7 +540,8 @@ const enableWASM = (( ) => {
         if ( uint8s[0] !== 1 ) { return false; }
 
         try {
-            const module = await wasmModuleFetcher(`${path}publicsuffixlist`);
+            const { default: bytes } = await import('./wasm/publicsuffixlist.wasm.js');
+            const module = await WebAssembly.compile(new Uint8Array(bytes));
             if (  module instanceof WebAssembly.Module === false ) {
                 return false;
             }
@@ -578,10 +579,10 @@ const enableWASM = (( ) => {
         return false;
     };
 
-    return async function(wasmModuleFetcher, path) {
+    return async function() {
         if ( getPublicSuffixPosWASM instanceof Function ) { return true; }
         if ( wasmPromise instanceof Promise === false ) {
-            wasmPromise = getWasmInstance(wasmModuleFetcher, path);
+            wasmPromise = getWasmInstance();
         }
         return wasmPromise;
     };

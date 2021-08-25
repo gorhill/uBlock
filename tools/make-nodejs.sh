@@ -33,8 +33,6 @@ node -pe "JSON.stringify(Array.from(fs.readFileSync('src/js/wasm/hntrie.wasm')))
     > $DES/js/wasm/hntrie.wasm.json
 node -pe "JSON.stringify(Array.from(fs.readFileSync('src/js/wasm/biditrie.wasm')))" \
     > $DES/js/wasm/biditrie.wasm.json
-node -pe "JSON.stringify(Array.from(fs.readFileSync('src/lib/publicsuffixlist/wasm/publicsuffixlist.wasm')))" \
-    > $DES/lib/publicsuffixlist/wasm/publicsuffixlist.wasm.json
 
 cp platform/nodejs/*.js      $DES/
 cp platform/nodejs/README.md $DES/
