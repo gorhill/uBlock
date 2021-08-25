@@ -26,7 +26,7 @@ cp -R $DES/_locales/nb     $DES/_locales/no
 rm $DES/img/icon_128.png
 
 echo "*** uBlock0.firefox: Generating meta..."
-python tools/make-firefox-meta.py $DES/
+python3 tools/make-firefox-meta.py $DES/
 
 if [ "$1" = all ]; then
     echo "*** uBlock0.firefox: Creating package..."
