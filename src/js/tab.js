@@ -913,11 +913,7 @@ vAPI.Tabs = class extends vAPI.Tabs {
         const pageStore = µb.pageStoreFromTabId(tabId);
         if ( pageStore === null ) { return; }
         pageStore.setFrameURL(details);
-        if (
-            µb.canInjectScriptletsNow &&
-            isNetworkURI(url) &&
-            pageStore.getNetFilteringSwitch()
-        ) {
+        if ( isNetworkURI(url) && pageStore.getNetFilteringSwitch() ) {
             scriptletFilteringEngine.injectNow(details);
         }
     }

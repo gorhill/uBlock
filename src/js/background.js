@@ -127,7 +127,6 @@ const µBlock = {  // jshint ignore:line
     privacySettingsSupported: vAPI.browserSettings instanceof Object,
     cloudStorageSupported: vAPI.cloud instanceof Object,
     canFilterResponseData: typeof browser.webRequest.filterResponseData === 'function',
-    canInjectScriptletsNow: vAPI.webextFlavor.soup.has('chromium'),
 
     // https://github.com/chrisaljoudi/uBlock/issues/180
     // Whitelist directives need to be loaded once the PSL is available
