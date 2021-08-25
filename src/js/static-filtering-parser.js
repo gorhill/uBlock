@@ -1539,8 +1539,13 @@ Parser.prototype.SelectorCompiler = class {
     }
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/668
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1693
+    //   Forbid instances of:
+    //   - `url(`
+    //   - backslashes `\`
+    //   - opening comment `/*`
     compileStyleProperties(s) {
-        if ( /url\(|\\/i.test(s) ) { return; }
+        if ( /url\(|\\|\/\*/i.test(s) ) { return; }
         if ( this.div === null ) { return s; }
         this.div.style.cssText = s;
         if ( this.div.style.cssText === '' ) { return; }
