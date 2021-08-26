@@ -627,7 +627,10 @@ const retrieveContentScriptParameters = async function(sender, request) {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/688#issuecomment-748179731
     //   For non-network URIs, scriptlet injection is deferred to here. The
     //   effective URL is available here in `request.url`.
-    if ( isNetworkURI(sender.frameURL) === false ) {
+    if (
+        µb.canInjectScriptletsNow === false ||
+        isNetworkURI(sender.frameURL) === false
+    ) {
         response.scriptlets = scriptletFilteringEngine.retrieve(request);
     }
 
