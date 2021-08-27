@@ -27,7 +27,7 @@ let buffer = null;
 let lastReadTime = 0;
 let writePtr = 0;
 
-// After 60 seconds without being read, a buffer will be considered
+// After 30 seconds without being read, a buffer will be considered
 // unused, and thus removed from memory.
 const logBufferObsoleteAfter = 30 * 1000;
 
