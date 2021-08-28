@@ -39,13 +39,14 @@
 ;;  + u32: offset to array of children
 ;;  = 12 bytes
 ;;
-;;                                     // i32 /  i8
-;; const HOSTNAME_SLOT       = 0;      // jshint ignore:line
-;; const LABEL_INDICES_SLOT  = 256;    //  -- / 256
-;; const RULES_PTR_SLOT      = 100;    // 100 / 400
-;; const CHARDATA_PTR_SLOT   = 101;    // 101 / 404
-;; const EMPTY_STRING        = '';
-;; const SELFIE_MAGIC        = 2;
+;;                                      // i32 /  i8
+;; const HOSTNAME_SLOT         = 0;     // jshint ignore:line
+;; const LABEL_INDICES_SLOT    = 256;   //  -- / 256
+;; const RULES_PTR_SLOT        = 100;   // 100 / 400
+;; const SUFFIX_NOT_FOUND_SLOT = 399;   //  -- / 399
+;; const CHARDATA_PTR_SLOT     = 101;   // 101 / 404
+;; const EMPTY_STRING          = '';
+;; const SELFIE_MAGIC          = 2;
 ;;
 
 ;;
@@ -247,6 +248,7 @@
         ;; // 2. If no rules match, the prevailing rule is "*".
         ;; if ( iFound === 0 ) {
         ;;     if ( buf8[iCandidates + 1 << 2] !== 0x2A /* '*' */ ) { break; }
+        ;;     buf8[SUFFIX_NOT_FOUND_SLOT] = 1;
         ;;     iFound = iCandidates;
         ;; }
         get_local $iFound
@@ -257,6 +259,9 @@
             i32.const 0x2A
             i32.ne
             br_if $labelLookupDone
+            i32.const 399
+            i32.const 1
+            i32.store8
             get_local $iCandidates
             set_local $iFound
         end
