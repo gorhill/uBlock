@@ -41,11 +41,12 @@ import { enableWASM, StaticNetFilteringEngine } from './index.js';
 const FLAGS = process.argv.slice(2);
 const COMPARE = FLAGS.includes('compare');
 const MAXCOST = FLAGS.includes('maxcost');
+const MEDCOST = FLAGS.includes('medcost');
 const MINCOST = FLAGS.includes('mincost');
 const MODIFIERS = FLAGS.includes('modifiers');
 const RECORD = FLAGS.includes('record');
 const WASM = FLAGS.includes('wasm');
-const NEED_RESULTS = COMPARE || MAXCOST || MINCOST || RECORD;
+const NEED_RESULTS = COMPARE || MAXCOST || MEDCOST || MINCOST || RECORD;
 
 // This maps puppeteer types to WebRequest types
 const WEBREQUEST_OPTIONS = {
@@ -153,8 +154,14 @@ async function matchRequests(engine, requests) {
         write('data/snfe.maxcost.json', JSON.stringify(costly, null, 2));
     }
 
+    if ( MEDCOST ) {
+        const median = results.length >>> 1;
+        const costly = results.slice().sort((a,b) => b[1].t - a[1].t).slice(median - 500, median + 500);
+        write('data/snfe.medcost.json', JSON.stringify(costly, null, 2));
+    }
+
     if ( MINCOST ) {
-        const costly = results.slice().sort((a,b) => a[1].t - b[1].t).slice(0, 1000);
+        const costly = results.slice().sort((a,b) => b[1].t - a[1].t).slice(-1000);
         write('data/snfe.mincost.json', JSON.stringify(costly, null, 2));
     }
 }

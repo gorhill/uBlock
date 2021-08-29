@@ -21,10 +21,13 @@
     "adblock",
     "trie"
   ],
-  "author": "Raymond Hill",
+  "author": "Raymond Hill (https://github.com/gorhill)",
   "license": "GPL-3.0-or-later",
+  "contributors": [
+    "Manish Jethani <code@manishjethani.io>"
+  ],
   "bugs": {
-    "url": "https://github.com/gorhill/uBlock/issues"
+    "url": "https://github.com/uBlockOrigin/uBlock-issues/issues"
   },
   "homepage": "https://github.com/gorhill/uBlock#readme",
   "engines": {
