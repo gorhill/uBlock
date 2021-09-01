@@ -932,21 +932,24 @@
                 prevSetter = odesc.set;
             }
         }
-        Object.defineProperty(owner, prop, {
-            configurable,
-            get() {
-                if ( prevGetter !== undefined ) {
-                    prevGetter();
+        try {
+            Object.defineProperty(owner, prop, {
+                configurable,
+                get() {
+                    if ( prevGetter !== undefined ) {
+                        prevGetter();
+                    }
+                    return handler.getter(); // cValue
+                },
+                set(a) {
+                    if ( prevSetter !== undefined ) {
+                        prevSetter(a);
+                    }
+                    handler.setter(a);
                 }
-                return handler.getter(); // cValue
-            },
-            set(a) {
-                if ( prevSetter !== undefined ) {
-                    prevSetter(a);
-                }
-                handler.setter(a);
-            }
-        });
+            });
+        } catch(ex) {
+        }
     };
     const trapChain = function(owner, chain) {
         const pos = chain.indexOf('.');
