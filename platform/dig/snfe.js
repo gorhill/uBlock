@@ -182,7 +182,13 @@ async function compare(results) {
         const a = before.get(i);
         const b = after.get(i);
         if ( a.r === b.r ) { continue; }
-        diffs.push([ i, { before: a, after: b } ]);
+        diffs.push([ i, {
+            type: a.type,
+            url: a.url,
+            originURL: a.originURL,
+            before: { r: a.r, f: a.f, t: a.t },
+            after: { r: b.r, f: b.f, t: b.t },
+        }]);
     }
     return diffs;
 }
