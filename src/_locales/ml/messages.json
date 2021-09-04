@@ -268,11 +268,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilterTip": {
-    "message": "↑: Emphasize rows which have 3rd-party scripts",
+    "message": "↑: മൂന്നാം കക്ഷി സ്ക്രിപ്റ്റുകൾ ഉള്ള വരികൾ izeന്നിപ്പറയുക",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party scripts' cell"
   },
   "popup3pFrameFilterTip": {
-    "message": "↑: Emphasize rows which have 3rd-party frames",
+    "message": "↑: മൂന്നാം കക്ഷി ഫ്രെയിമുകളുള്ള വരികൾക്ക് പ്രാധാന്യം നൽകുക",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party frames' cell"
   },
   "pickerCreate": {
@@ -848,7 +848,7 @@
     "description": "Label for radio-button to pick export text format"
   },
   "aboutPrivacyPolicy": {
-    "message": "Privacy policy",
+    "message": "സ്വകാര്യതാ നയം",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {
@@ -892,11 +892,11 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "uBO's own filter lists are freely hosted on the following <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
+    "message": "uBO- യുടെ സ്വന്തം ഫിൽട്ടർ ലിസ്റ്റുകൾ ഇനിപ്പറയുന്നവയിൽ സ്വതന്ത്രമായി ഹോസ്റ്റുചെയ്യുന്നു <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "A randomly picked CDN is used when a filter list needs to be updated",
+    "message": "ഒരു ഫിൽട്ടർ ലിസ്റ്റ് അപ്ഡേറ്റ് ചെയ്യേണ്ടിവരുമ്പോൾ ക്രമരഹിതമായി തിരഞ്ഞെടുത്ത CDN ഉപയോഗിക്കുന്നു",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
@@ -1056,7 +1056,7 @@
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Subscribe to filter list...",
+    "message": "ഫിൽട്ടർ ലിസ്റ്റിലേക്ക് സബ്സ്ക്രൈബ് ചെയ്യുക ...",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {

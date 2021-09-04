@@ -848,7 +848,7 @@
     "description": "Label for radio-button to pick export text format"
   },
   "aboutPrivacyPolicy": {
-    "message": "Privacy policy",
+    "message": "గోప్యతా విధానం",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {
@@ -892,11 +892,11 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "uBO's own filter lists are freely hosted on the following <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
+    "message": "uBO యొక్క సొంత ఫిల్టర్ జాబితాలు కింది వాటిలో ఉచితంగా హోస్ట్ చేయబడతాయి <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "A randomly picked CDN is used when a filter list needs to be updated",
+    "message": "ఫిల్టర్ జాబితాను అప్‌డేట్ చేయాల్సిన అవసరం వచ్చినప్పుడు యాదృచ్ఛికంగా ఎంచుకున్న CDN ఉపయోగించబడుతుంది",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
@@ -1056,7 +1056,7 @@
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Subscribe to filter list...",
+    "message": "ఫిల్టర్ జాబితాకు సభ్యత్వం పొందండి ...",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {

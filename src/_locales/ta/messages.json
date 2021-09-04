@@ -892,11 +892,11 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "uBO's own filter lists are freely hosted on the following <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
+    "message": "uBO வின் சொந்த வடிகட்டி பட்டியல்கள் பின்வருவனவற்றில் இலவசமாக வழங்கப்படுகின்றன <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "A randomly picked CDN is used when a filter list needs to be updated",
+    "message": "வடிகட்டி பட்டியலைப் புதுப்பிக்க வேண்டியிருக்கும் போது சீரற்ற முறையில் தேர்ந்தெடுக்கப்பட்ட CDN பயன்படுத்தப்படுகிறது",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
