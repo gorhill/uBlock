@@ -29,11 +29,10 @@ import { createRequire } from 'module';
 
 import { readFileSync } from 'fs';
 import { dirname, resolve } from 'path';
-import { fileURLToPath } from 'url';
+import { domainToASCII, fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-import punycode from './lib/punycode.js';
 import publicSuffixList from './lib/publicsuffixlist/publicsuffixlist.js';
 
 import snfe from './js/static-net-filtering.js';
@@ -76,7 +75,7 @@ async function enableWASM() {
 
 function pslInit(raw) {
     if ( typeof raw === 'string' && raw.trim() !== '' ) {
-        publicSuffixList.parse(raw, punycode.toASCII);
+        publicSuffixList.parse(raw, domainToASCII);
         return publicSuffixList;
     }
 
@@ -104,7 +103,7 @@ function pslInit(raw) {
         console.error('Unable to populate public suffix list');
         return;
     }
-    publicSuffixList.parse(raw, punycode.toASCII);
+    publicSuffixList.parse(raw, domainToASCII);
     return publicSuffixList;
 }
 
