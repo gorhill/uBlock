@@ -7,7 +7,7 @@ set -e
 echo "*** Update submodules"
 
 git submodule update --remote
-if [ `git diff --quiet ./submodules/` ]; then
+if [[ $(git diff ./submodules/) ]]; then
     git add -u submodules/
     git commit -m 'Update submodules'
     git push origin master
