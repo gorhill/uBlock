@@ -180,7 +180,7 @@ async function useLists(lists, options = {}) {
 
     useLists.promise = Promise.all(promises);
     await useLists.promise;
-    useLists.promise = null;
+    useLists.promise = null; // eslint-disable-line require-atomic-updates
 
     // Commit changes
     snfe.freeze();
