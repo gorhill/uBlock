@@ -1168,6 +1168,87 @@
 })();
 
 
+/// no-xhr-if.js
+(function() {
+    const xhrInstances = new WeakMap();
+    let arg1 = '{{1}}';
+    if ( arg1 === '{{1}}' ) { arg1 = ''; }
+    const needles = [];
+    for ( const condition of arg1.split(/\s+/) ) {
+        if ( condition === '' ) { continue; }
+        const pos = condition.indexOf(':');
+        let key, value;
+        if ( pos !== -1 ) {
+            key = condition.slice(0, pos);
+            value = condition.slice(pos + 1);
+        } else {
+            key = 'url';
+            value = condition;
+        }
+        if ( value === '' ) {
+            value = '^';
+        } else if ( value.startsWith('/') && value.endsWith('/') ) {
+            value = value.slice(1, -1);
+        } else {
+            value = value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+        needles.push({ key, re: new RegExp(value) });
+    }
+    const log = needles.length === 0 ? console.log.bind(console) : undefined;
+    self.XMLHttpRequest = class extends self.XMLHttpRequest {
+        open(...args) {
+            if ( log !== undefined ) {
+                log(`uBO: xhr.open(${args.join(', ')})`);
+            } else {
+                const argNames = [ 'method', 'url' ];
+                const haystack = new Map();
+                for ( let i = 0; i < args.length && i < argNames.length; i++  ) {
+                    haystack.set(argNames[i], args[i]);
+                }
+                if ( haystack.size !== 0 ) {
+                    let matches = true;
+                    for ( const { key, re } of needles ) {
+                        matches = re.test(haystack.get(key) || '');
+                        if ( matches === false ) { break; }
+                    }
+                    if ( matches ) {
+                        xhrInstances.set(this, haystack);
+                    }
+                }
+            }
+            return super.open(...args);
+        }
+        send(...args) {
+            const haystack = xhrInstances.get(this);
+            if ( haystack === undefined ) {
+                return super.send(...args);
+            }
+            Object.defineProperties(this, {
+                readyState: { value: 4, writable: false },
+                response: { value: '', writable: false },
+                responseText: { value: '', writable: false },
+                responseURL: { value: haystack.get('url'), writable: false },
+                responseXML: { value: '', writable: false },
+                status: { value: 200, writable: false },
+                statusText: { value: 'OK', writable: false },
+            });
+            if ( this.onreadystatechange !== null ) {
+                setTimeout(( ) => {
+                    const ev = new Event('readystatechange');
+                    this.onreadystatechange.call(this, ev);
+                }, 1);
+            }
+            if ( this.onload !== null ) {
+                setTimeout(( ) => {
+                    const ev = new Event('load');
+                    this.onload.call(this, ev);
+                }, 1);
+            }
+        }
+    };
+})();
+
+
 // https://github.com/gorhill/uBlock/issues/1228
 /// window.name-defuser
 (function() {
