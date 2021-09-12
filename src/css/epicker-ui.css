@@ -66,8 +66,11 @@ html#ublock0-epicker,
     color: var(--button-preferred-ink);
 }
 #ublock0-epicker #move {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAD0lEQVQI12NgwAH+MxANACsZAQAWO6hBAAAAAElFTkSuQmCC');
     cursor: grab;
     flex-grow: 1;
+    margin: 2px 4px;
+    opacity: 0.2;
     }
 #ublock0-epicker aside.moving #move {
     cursor: grabbing;
