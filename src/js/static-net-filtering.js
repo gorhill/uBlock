@@ -4366,9 +4366,20 @@ FilterContainer.prototype.filterQuery = function(fctxt) {
     if ( qpos === -1 ) { return; }
     let hpos = url.indexOf('#', qpos + 1);
     if ( hpos === -1 ) { hpos = url.length; }
-    const params = new Map(
-        new URLSearchParams(url.slice(qpos + 1, hpos))
-    );
+    const params = new Map();
+    const query = url.slice(qpos + 1, hpos);
+    for ( let i = 0; i < query.length; ) {
+        let pos = query.indexOf('&', i);
+        if ( pos === -1 ) { pos = query.length; }
+        const kv = query.slice(i, pos);
+        i = pos + 1;
+        pos = kv.indexOf('=');
+        if ( pos !== -1 ) {
+            params.set(kv.slice(0, pos), kv.slice(pos + 1));
+        } else {
+            params.set(kv, '');
+        }
+    }
     const inParamCount = params.size;
     const out = [];
     for ( const directive of directives ) {
@@ -4405,7 +4416,10 @@ FilterContainer.prototype.filterQuery = function(fctxt) {
         }
         if ( re === undefined ) { continue; }
         let filtered = false;
-        for ( const [ key, value ] of params ) {
+        for ( const [ key, raw ] of params ) {
+            let value = raw;
+            try { value = decodeURIComponent(value); }
+            catch(ex) { }
             if ( re.test(`${key}=${value}`) === not ) { continue; }
             if ( isException === false ) { params.delete(key); }
             filtered = true;
@@ -4419,7 +4433,7 @@ FilterContainer.prototype.filterQuery = function(fctxt) {
         fctxt.redirectURL = url.slice(0, qpos);
         if ( params.size !== 0 ) {
             fctxt.redirectURL += '?' + Array.from(params).map(a =>
-                a[1] === '' ? a[0] : `${a[0]}=${encodeURIComponent(a[1])}`
+                a[1] === '' ? a[0] : `${a[0]}=${a[1]}`
             ).join('&');
         }
         if ( hpos !== url.length ) {
