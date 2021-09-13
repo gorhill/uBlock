@@ -524,11 +524,6 @@ const filtersFrom = function(x, y) {
         x = undefined;
     }
 
-    // Network filter from element which was clicked.
-    if ( first !== null ) {
-        netFilterFromElement(first);
-    }
-
     // Cosmetic filter candidates from ancestors.
     // https://github.com/gorhill/uBlock/issues/2519
     // https://github.com/uBlockOrigin/uBlock-issues/issues/17
@@ -549,23 +544,15 @@ const filtersFrom = function(x, y) {
     }
 
     // https://github.com/gorhill/uBlock/issues/1545
-    //   Network filter candidates from all other elements found at
-    //   point (x, y).
+    //   Network filter candidates from all other elements found at [x,y].
     if ( typeof x === 'number' ) {
-        const attrName = vAPI.sessionId + '-clickblind';
-        elem = first;
-        while ( elem !== null ) {
-            const previous = elem;
-            elem.setAttribute(attrName, '');
-            elem = elementFromPoint(x, y);
-            if ( elem === null || elem === previous ) { break; }
+        const magicAttr = `${vAPI.sessionId}-clickblind`;
+        pickerRoot.setAttribute(magicAttr, '');
+        const elems = document.elementsFromPoint(x, y);
+        pickerRoot.removeAttribute(magicAttr);
+        for ( const elem of elems ) {
             netFilterFromElement(elem);
         }
-        for ( const elem of document.querySelectorAll(`[${attrName}]`) ) {
-            elem.removeAttribute(attrName);
-        }
-
-        netFilterFromElement(document.body);
     }
 
     return netFilterCandidates.length + cosmeticFilterCandidates.length;
