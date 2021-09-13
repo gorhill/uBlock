@@ -896,7 +896,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "Um CDN selecionado aleatoriamente será usado quando uma lista de filtros precisar ser atualizada",
+    "message": "Um CDN aleatório será utilizado quando uma lista de filtros precisar ser atualizada",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
