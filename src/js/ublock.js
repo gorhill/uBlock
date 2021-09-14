@@ -394,11 +394,6 @@ const matchBucket = function(url, hostname, bucket, start) {
             vAPI.browserSettings.set({ 'prefetching': !value });
         }
         break;
-    case 'webrtcIPAddressHidden':
-        if ( this.privacySettingsSupported ) {
-            vAPI.browserSettings.set({ 'webrtcIPAddress': !value });
-        }
-        break;
     default:
         break;
     }
