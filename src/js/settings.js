@@ -255,6 +255,12 @@ const onUserSettingsReceived = function(details) {
         });
     }
 
+    if ( details.canLeakLocalIPAddresses === true ) {
+        uDom('[data-setting-name="webrtcIPAddressHidden"]')
+            .ancestors('div.li')
+            .css('display', '');
+    }
+
     uDom('[data-i18n="settingsNoLargeMediaPrompt"] > input[type="number"]')
         .attr('data-setting-name', 'largeMediaSize')
         .attr('data-setting-type', 'input');

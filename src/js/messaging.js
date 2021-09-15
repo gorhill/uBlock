@@ -225,11 +225,12 @@ const onMessage = function(request, sender, callback) {
 
     case 'userSettings':
         response = µb.changeUserSettings(request.name, request.value);
-        if (
-            vAPI.net.canUncloakCnames !== true &&
-            response instanceof Object
-        ) {
-            response.cnameUncloakEnabled = undefined;
+        if ( response instanceof Object ) {
+            if ( vAPI.net.canUncloakCnames !== true ) {
+                response.cnameUncloakEnabled = undefined;
+            }
+            response.canLeakLocalIPAddresses =
+                vAPI.browserSettings.canLeakLocalIPAddresses === true;
         }
         break;
 

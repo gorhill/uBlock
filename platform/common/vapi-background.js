@@ -122,82 +122,8 @@ vAPI.browserSettings = (( ) => {
     if ( bp instanceof Object === false ) { return; }
 
     return {
-        // Whether the WebRTC-related privacy API is crashy is an open question
-        // only for Chromium proper (because it can be compiled without the
-        // WebRTC feature): hence avoid overhead of the evaluation (which uses
-        // an iframe) for platforms where it's a non-issue.
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/9
-        //   Some Chromium builds are made to look like a Chrome build.
-        webRTCSupported: vAPI.webextFlavor.soup.has('chromium') === false || undefined,
-
-        // Calling with `true` means IP address leak is not prevented.
-        // https://github.com/gorhill/uBlock/issues/533
-        //   We must first check wether this Chromium-based browser was compiled
-        //   with WebRTC support. To do this, we use an iframe, this way the
-        //   empty RTCPeerConnection object we create to test for support will
-        //   be properly garbage collected. This prevents issues such as
-        //   a computer unable to enter into sleep mode, as reported in the
-        //   Chrome store:
-        // https://github.com/gorhill/uBlock/issues/533#issuecomment-167931681
-        setWebrtcIPAddress: function(setting) {
-            // We don't know yet whether this browser supports WebRTC: find out.
-            if ( this.webRTCSupported === undefined ) {
-                // If asked to leave WebRTC setting alone at this point in the
-                // code, this means we never grabbed the setting in the first
-                // place.
-                if ( setting ) { return; }
-                this.webRTCSupported = { setting: setting };
-                let iframe = document.createElement('iframe');
-                const messageHandler = ev => {
-                    if ( ev.origin !== self.location.origin ) { return; }
-                    window.removeEventListener('message', messageHandler);
-                    const setting = this.webRTCSupported.setting;
-                    this.webRTCSupported = ev.data === 'webRTCSupported';
-                    this.setWebrtcIPAddress(setting);
-                    iframe.parentNode.removeChild(iframe);
-                    iframe = null;
-                };
-                window.addEventListener('message', messageHandler);
-                iframe.src = 'is-webrtc-supported.html';
-                document.body.appendChild(iframe);
-                return;
-            }
-
-            // We are waiting for a response from our iframe. This makes the code
-            // safe to re-entrancy.
-            if ( typeof this.webRTCSupported === 'object' ) {
-                this.webRTCSupported.setting = setting;
-                return;
-            }
-
-            // https://github.com/gorhill/uBlock/issues/533
-            // WebRTC not supported: `webRTCMultipleRoutesEnabled` can NOT be
-            // safely accessed. Accessing the property will cause full browser
-            // crash.
-            if ( this.webRTCSupported !== true ) { return; }
-
-            const bpn = bp.network;
-
-            if ( setting ) {
-                bpn.webRTCIPHandlingPolicy.clear({
-                    scope: 'regular',
-                });
-            } else {
-                // https://github.com/uBlockOrigin/uAssets/issues/333#issuecomment-289426678
-                //   Leverage virtuous side-effect of strictest setting.
-                // https://github.com/gorhill/uBlock/issues/3009
-                //   Firefox currently works differently, use
-                //   `default_public_interface_only` for now.
-                // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/privacy/network#Browser_compatibility
-                //   Firefox 70+ supports `disable_non_proxied_udp`
-                const value =
-                    vAPI.webextFlavor.soup.has('firefox') === false ||
-                    vAPI.webextFlavor.major < 70
-                        ? 'default_public_interface_only'
-                        : 'disable_non_proxied_udp';
-                bpn.webRTCIPHandlingPolicy.set({ value, scope: 'regular' });
-            }
-        },
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/1723#issuecomment-919913361
+        canLeakLocalIPAddresses: vAPI.webextFlavor.soup.has('mobile'),
 
         set: function(details) {
             for ( const setting in details ) {
@@ -234,7 +160,17 @@ vAPI.browserSettings = (( ) => {
                     break;
 
                 case 'webrtcIPAddress':
-                    this.setWebrtcIPAddress(!!details[setting]);
+                    if ( this.canLeakLocalIPAddresses === false ) { return; }
+                    if ( !!details[setting] ) {
+                        bp.network.webRTCIPHandlingPolicy.clear({
+                            scope: 'regular',
+                        });
+                    } else {
+                        bp.network.webRTCIPHandlingPolicy.set({
+                            value: 'default_public_interface_only',
+                            scope: 'regular'
+                        });
+                    }
                     break;
 
                 default:
