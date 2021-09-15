@@ -212,6 +212,7 @@ const onUserSettingsReady = function(fetched) {
         vAPI.browserSettings.set({
             'hyperlinkAuditing': !µb.userSettings.hyperlinkAuditingDisabled,
             'prefetching': !µb.userSettings.prefetchingDisabled,
+            'webrtcIPAddress': !µb.userSettings.webrtcIPAddressHidden
         });
     }
 

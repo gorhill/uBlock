@@ -110,6 +110,7 @@ const userSettingsDefault = {
     requestLogMaxEntries: 1000,
     showIconBadge: true,
     tooltipsDisabled: false,
+    webrtcIPAddressHidden: false,
 };
 
 const µBlock = {  // jshint ignore:line

@@ -176,6 +176,7 @@ const onLocalDataReceived = function(details) {
     if ( details.privacySettingsSupported === false ) {
         uDom('[data-setting-name="prefetchingDisabled"]').attr('disabled', '');
         uDom('[data-setting-name="hyperlinkAuditingDisabled"]').attr('disabled', '');
+        uDom('[data-setting-name="webrtcIPAddressHidden"]').attr('disabled', '');
     }
 };
 
