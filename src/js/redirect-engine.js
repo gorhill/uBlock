@@ -80,6 +80,9 @@ const redirectableResources = new Map([
     [ 'empty', {
         data: 'text',   // Important!
     } ],
+    [ 'fingerprint2.js', {
+        data: 'text',
+    } ],
     [ 'google-analytics_analytics.js', {
         alias: [
             'google-analytics.com/analytics.js',

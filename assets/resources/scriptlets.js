@@ -1554,25 +1554,6 @@
 })();
 
 
-// https://github.com/uBlockOrigin/uAssets/issues/2912
-/// fingerprint2.js
-(function() {
-    let browserId = '';
-    for ( let i = 0; i < 8; i++ ) {
-        browserId += (Math.random() * 0x10000 + 0x1000 | 0).toString(16).slice(-4);
-    }
-    const fp2 = function(){};
-    fp2.get = function(opts, cb) {
-        if ( !cb  ) { cb = opts; }
-        setTimeout(( ) => { cb(browserId, []); }, 1);
-    };
-    fp2.prototype = {
-        get: fp2.get
-    };
-    window.Fingerprint2 = fp2;
-})();
-
-
 // https://github.com/NanoAdblocker/NanoFilters/issues/149
 /// cookie-remover.js
 (function() {
