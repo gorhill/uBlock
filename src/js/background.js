@@ -72,6 +72,7 @@ const hiddenSettingsDefault = {
     filterOnHeaders: false,
     loggerPopupType: 'popup',
     manualUpdateAssetFetchPeriod: 500,
+    modifyWebextFlavor: 'unset',
     popupFontSize: 'unset',
     popupPanelDisabledSections: 0,
     popupPanelLockedSections: 0,

@@ -248,6 +248,57 @@ const onCacheSettingsReady = async function(fetched) {
 
 /******************************************************************************/
 
+const onHiddenSettingsReady = async function() {
+    // Maybe customize webext flavor
+    if ( µb.hiddenSettings.modifyWebextFlavor !== 'unset' ) {
+        const tokens = µb.hiddenSettings.modifyWebextFlavor.split(/\s+/);
+        for ( const token of tokens ) {
+            switch ( token[0] ) {
+            case '+':
+                vAPI.webextFlavor.soup.add(token.slice(1));
+                break;
+            case '-':
+                vAPI.webextFlavor.soup.delete(token.slice(1));
+                break;
+            default:
+                vAPI.webextFlavor.soup.add(token);
+                break;
+            }
+        }
+        ubolog(`Override default webext flavor with ${tokens}`);
+    }
+
+    // Maybe override current network listener suspend state
+    if ( µb.hiddenSettings.suspendTabsUntilReady === 'no' ) {
+        vAPI.net.unsuspend(true);
+    } else if ( µb.hiddenSettings.suspendTabsUntilReady === 'yes' ) {
+        vAPI.net.suspend();
+    }
+
+    // Maybe disable WebAssembly
+    if ( vAPI.canWASM && µb.hiddenSettings.disableWebAssembly !== true ) {
+        const wasmModuleFetcher = function(path) {
+            return fetch(`${path}.wasm`, { mode: 'same-origin' }).then(
+                WebAssembly.compileStreaming
+            ).catch(reason => {
+                ubolog(reason);
+            });
+        };
+        staticNetFilteringEngine.enableWASM(wasmModuleFetcher, './js/wasm/').then(result => {
+            if ( result !== true ) { return; }
+            ubolog(`WASM modules ready ${Date.now()-vAPI.T0} ms after launch`);
+        });
+    }
+
+    // Matbe override default cache storage
+    const cacheBackend = await cacheStorage.select(
+        µb.hiddenSettings.cacheStorageAPI
+    );
+    ubolog(`Backend storage for cache will be ${cacheBackend}`);
+};
+
+/******************************************************************************/
+
 const onFirstFetchReady = function(fetched, adminExtra) {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/507
     //   Firefox-specific: somehow `fetched` is undefined under certain
@@ -327,33 +378,8 @@ try {
     ubolog(`Admin settings ready ${Date.now()-vAPI.T0} ms after launch`);
 
     await µb.loadHiddenSettings();
+    onHiddenSettingsReady();
     ubolog(`Hidden settings ready ${Date.now()-vAPI.T0} ms after launch`);
-
-    // Maybe override current network listener suspend state
-    if ( µb.hiddenSettings.suspendTabsUntilReady === 'no' ) {
-        vAPI.net.unsuspend(true);
-    } else if ( µb.hiddenSettings.suspendTabsUntilReady === 'yes' ) {
-        vAPI.net.suspend();
-    }
-
-    if ( vAPI.canWASM && µb.hiddenSettings.disableWebAssembly !== true ) {
-        const wasmModuleFetcher = function(path) {
-            return fetch(`${path}.wasm`, { mode: 'same-origin' }).then(
-                WebAssembly.compileStreaming
-            ).catch(reason => {
-                ubolog(reason);
-            });
-        };
-        staticNetFilteringEngine.enableWASM(wasmModuleFetcher, './js/wasm/').then(result => {
-            if ( result !== true ) { return; }
-            ubolog(`WASM modules ready ${Date.now()-vAPI.T0} ms after launch`);
-        });
-    }
-
-    const cacheBackend = await cacheStorage.select(
-        µb.hiddenSettings.cacheStorageAPI
-    );
-    ubolog(`Backend storage for cache will be ${cacheBackend}`);
 
     const adminExtra = await vAPI.adminStorage.get('toAdd');
     ubolog(`Extra admin settings ready ${Date.now()-vAPI.T0} ms after launch`);
