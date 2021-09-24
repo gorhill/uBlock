@@ -3067,6 +3067,7 @@ class FilterCompiler {
                 break;
             case this.parser.OPTTokenImportant:
                 if ( this.action === AllowAction ) { return false; }
+                this.optionUnitBits |= this.IMPORTANT_BIT;
                 this.action = BlockImportant;
                 break;
             // Used by Adguard:
@@ -3574,14 +3575,15 @@ class FilterCompiler {
     }
 }
 
-FilterCompiler.prototype.DOMAIN_BIT       = 0b00000001;
-FilterCompiler.prototype.DENYALLOW_BIT    = 0b00000010;
-FilterCompiler.prototype.HEADER_BIT       = 0b00000100;
-FilterCompiler.prototype.STRICT_PARTY_BIT = 0b00001000;
-FilterCompiler.prototype.CSP_BIT          = 0b00010000;
-FilterCompiler.prototype.QUERYPRUNE_BIT   = 0b00100000;
-FilterCompiler.prototype.REDIRECT_BIT     = 0b01000000;
-FilterCompiler.prototype.NOT_TYPE_BIT     = 0b10000000;
+FilterCompiler.prototype.DOMAIN_BIT       = 0b000000001;
+FilterCompiler.prototype.DENYALLOW_BIT    = 0b000000010;
+FilterCompiler.prototype.HEADER_BIT       = 0b000000100;
+FilterCompiler.prototype.STRICT_PARTY_BIT = 0b000001000;
+FilterCompiler.prototype.CSP_BIT          = 0b000010000;
+FilterCompiler.prototype.QUERYPRUNE_BIT   = 0b000100000;
+FilterCompiler.prototype.REDIRECT_BIT     = 0b001000000;
+FilterCompiler.prototype.NOT_TYPE_BIT     = 0b010000000;
+FilterCompiler.prototype.IMPORTANT_BIT    = 0b100000000;
 
 FilterCompiler.prototype.FILTER_OK          = 0;
 FilterCompiler.prototype.FILTER_INVALID     = 1;

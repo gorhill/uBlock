@@ -232,6 +232,24 @@ describe('SNFE', () => {
                     await engine.deserialize(serialized);
                 });
             });
+
+
+            describe('Filter matching', () => {
+                beforeEach(async () => {
+                    engine = await module.StaticNetFilteringEngine.create();
+                });
+
+                it('should match block-important pure-hostname filter', async () => {
+                    await engine.useLists([
+                        { name: 'test', raw: '@@||example.com^\n||example.com^$important' },
+                    ]);
+                    engine.matchRequest({
+                        originURL: 'https://www.example.com/',
+                        type: 'main_frame',
+                        url: 'https://www.example.com/',
+                    });
+                });
+            });
         });
     }
 });
