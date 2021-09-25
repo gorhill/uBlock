@@ -37,7 +37,7 @@ import { StaticNetFilteringEngine } from '@gorhill/ubo-core';
 If you must import as a NodeJS module:
 
 ```js
-const { StaticNetFilteringEngine } await import from '@gorhill/ubo-core';
+const { StaticNetFilteringEngine } = await import('@gorhill/ubo-core');
 ```
 
 
