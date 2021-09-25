@@ -3546,15 +3546,17 @@ class FilterCompiler {
 
     compileToAtomicFilter(fdata, writer) {
         const catBits = this.action | this.party;
-        let { typeBits } = this;
+        let { notTypeBits, typeBits } = this;
 
         // Typeless
         if ( typeBits === 0 ) {
             writer.push([ catBits, this.tokenHash, fdata ]);
             return;
         }
-        // If all network types are set, create a typeless filter
-        if ( (typeBits & allNetworkTypesBits) === allNetworkTypesBits ) {
+        // If all network types are set, create a typeless filter. Excluded
+        // network types are tested at match time, se we act as if they are
+        // set.
+        if ( ((typeBits | notTypeBits) & allNetworkTypesBits) === allNetworkTypesBits ) {
             writer.push([ catBits, this.tokenHash, fdata ]);
             typeBits &= ~allNetworkTypesBits;
             if ( typeBits === 0 ) { return; }
