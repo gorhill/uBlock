@@ -723,6 +723,27 @@
 })();
 
 
+/// refresh-defuser.js
+// https://www.reddit.com/r/uBlockOrigin/comments/q0frv0/while_reading_a_sports_article_i_was_redirected/hf7wo9v/
+(function() {
+    const arg1 = '{{1}}';
+    const defuse = ( ) => {
+        const meta = document.querySelector('meta[http-equiv="refresh" i][content]');
+        if ( meta === null ) { return; }
+        const s = arg1 === '' || arg1 === '{{1}}'
+            ? meta.getAttribute('content')
+            : arg1;
+        const ms = Math.max(parseFloat(s) || 0, 0) * 1000;
+        setTimeout(( ) => { window.stop(); }, ms);
+    };
+    if ( document.readyState === 'loading' ) {
+        document.addEventListener('DOMContentLoaded', defuse, { once: true });
+    } else {
+        defuse();
+    }
+})();
+
+
 /// remove-attr.js
 /// alias ra.js
 (function() {
