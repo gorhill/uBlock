@@ -237,6 +237,10 @@ class StaticNetFilteringEngine {
         return snfe.hasQuery(details);
     }
 
+    isBlockImportant() {
+        return snfe.isBlockImportant();
+    }
+
     toLogData() {
         return snfe.toLogData();
     }
