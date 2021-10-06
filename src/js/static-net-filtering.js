@@ -195,6 +195,7 @@ let $docDomain = '';
 let $tokenBeg = 0;
 let $patternMatchLeft = 0;
 let $patternMatchRight = 0;
+let $isBlockImportant = false;
 
 const $docEntity = {
     entity: undefined,
@@ -298,9 +299,6 @@ class LogData {
             isRegex: false,
         };
         filterUnits[iunit].logData(logData);
-        if ( (categoryBits & Important) !== 0 ) {
-            logData.options.unshift('important');
-        }
         if ( (categoryBits & ThirdParty) !== 0 ) {
             logData.options.unshift('3p');
         } else if ( (categoryBits & FirstParty) !== 0 ) {
@@ -605,7 +603,7 @@ registerFilterClass(FilterTrue);
 
 const FilterImportant = class {
     match() {
-        return true;
+        return ($isBlockImportant = true);
     }
 
     logData(details) {
@@ -3522,6 +3520,14 @@ class FilterCompiler {
             this.action |= HEADERS;
         }
 
+        // Important
+        //
+        // IMPORTANT: must always appear at the end of the sequence, so as to
+        // ensure $isBlockImportant is set only for matching filters.
+        if ( (this.optionUnitBits & this.IMPORTANT_BIT) !== 0 ) {
+            units.push(FilterImportant.compile());
+        }
+
         // Modifier
         //
         // IMPORTANT: the modifier unit MUST always appear first in a sequence
@@ -3545,7 +3551,6 @@ class FilterCompiler {
         // meant to override.
         if ( (this.action & ActionBitsMask) === BlockImportant ) {
             this.action &= ~Important;
-            units.push(FilterImportant.compile());
             this.compileToAtomicFilter(
                 FilterCompositeAll.compile(units),
                 writer
@@ -4259,6 +4264,7 @@ FilterContainer.prototype.matchRequestReverse = function(type, url) {
     $requestURL = urlTokenizer.setURL(url);
     $requestURLRaw = url;
     $requestTypeValue = (typeBits & TypeBitsMask) >>> TypeBitsOffset;
+    $isBlockImportant = false;
     this.$filterUnit = 0;
 
     // These registers will be used by various filters
@@ -4327,11 +4333,13 @@ FilterContainer.prototype.matchRequest = function(fctxt, modifiers = 0) {
     $docEntity.reset();
     $requestHostname = fctxt.getHostname();
     $requestTypeValue = (typeBits & TypeBitsMask) >>> TypeBitsOffset;
+    $isBlockImportant = false;
 
     // Evaluate block realm before allow realm, and allow realm before
     // block-important realm, i.e. by order of likelihood of a match.
     const r = this.realmMatchString(BlockAction, typeBits, partyBits);
     if ( r || (modifiers & 0b0010) !== 0 ) {
+        if ( $isBlockImportant ) { return 1; }
         if ( this.realmMatchString(AllowAction, typeBits, partyBits) ) {
             if ( this.realmMatchString(BlockImportant, typeBits, partyBits) ) {
                 return 1;
@@ -4538,7 +4546,7 @@ FilterContainer.prototype.toLogData = function() {
 /******************************************************************************/
 
 FilterContainer.prototype.isBlockImportant = function() {
-    return (this.$catBits & ActionBitsMask) === BlockImportant;
+    return this.$filterUnit !== 0 && $isBlockImportant;
 };
 
 /******************************************************************************/
