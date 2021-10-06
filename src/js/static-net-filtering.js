@@ -2955,15 +2955,20 @@ class FilterCompiler {
     // Be ready to handle multiple negated types
 
     processTypeOption(id, not) {
-        const typeBit = id !== -1
-            ? this.tokenIdToNormalizedType.get(id)
-            : allTypesBits;
+        if ( id !== -1 ) {
+            const typeBit = this.tokenIdToNormalizedType.get(id);
+            if ( not ) {
+                this.notTypeBits |= typeBit;
+            } else {
+                this.typeBits |= typeBit;
+            }
+            return;
+        }
+        // `all` option
         if ( not ) {
-            this.notTypeBits |= typeBit;
-            this.typeBits &= ~typeBit;
+            this.notTypeBits |= allTypesBits;
         } else {
-            this.typeBits |= typeBit;
-            this.notTypeBits &= ~typeBit;
+            this.typeBits |= allTypesBits;
         }
     }
 
@@ -3140,7 +3145,11 @@ class FilterCompiler {
         //   - no network type is present -- i.e. all network types are
         //     implicitly toggled on
         if ( this.notTypeBits !== 0 ) {
-            this.typeBits &= ~this.notTypeBits;
+            if ( (this.typeBits && allNetworkTypesBits) === allNetworkTypesBits ) {
+                this.typeBits &= ~this.notTypeBits | allNetworkTypesBits;
+            } else {
+                this.typeBits &= ~this.notTypeBits;
+            }
             this.optionUnitBits |= this.NOT_TYPE_BIT;
         }
 
@@ -3546,7 +3555,7 @@ class FilterCompiler {
 
     compileToAtomicFilter(fdata, writer) {
         const catBits = this.action | this.party;
-        let { notTypeBits, typeBits } = this;
+        let { typeBits } = this;
 
         // Typeless
         if ( typeBits === 0 ) {
@@ -3556,7 +3565,7 @@ class FilterCompiler {
         // If all network types are set, create a typeless filter. Excluded
         // network types are tested at match time, se we act as if they are
         // set.
-        if ( ((typeBits | notTypeBits) & allNetworkTypesBits) === allNetworkTypesBits ) {
+        if ( (typeBits & allNetworkTypesBits) === allNetworkTypesBits ) {
             writer.push([ catBits, this.tokenHash, fdata ]);
             typeBits &= ~allNetworkTypesBits;
             if ( typeBits === 0 ) { return; }

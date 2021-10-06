@@ -288,9 +288,21 @@ describe('SNFE', () => {
                     assert(engine.isBlockImportant());
                 });
 
-                it('should block all except stylesheets', async () => {
+                it('should block all except stylesheets #1', async () => {
                     await engine.useLists([
                         { name: 'test', raw: '||example.com^$~stylesheet,all' },
+                    ]);
+                    const r = engine.matchRequest({
+                        originURL: 'https://www.example.com/',
+                        type: 'stylesheet',
+                        url: 'https://www.example.com/',
+                    });
+                    assert.strictEqual(r, 0);
+                });
+
+                it('should block all except stylesheets #2', async () => {
+                    await engine.useLists([
+                        { name: 'test', raw: '||example.com^$all,~stylesheet' },
                     ]);
                     const r = engine.matchRequest({
                         originURL: 'https://www.example.com/',
