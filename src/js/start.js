@@ -23,6 +23,18 @@
 
 /******************************************************************************/
 
+import './vapi-common.js';
+import './vapi-background.js';
+import './vapi-background-ext.js';
+
+// The following modules are loaded here until their content is better organized
+import './commands.js';
+import './messaging.js';
+import './storage.js';
+import './tab.js';
+import './ublock.js';
+import './utils.js';
+
 import cacheStorage from './cachestorage.js';
 import contextMenu from './contextmenu.js';
 import io from './assets.js';
@@ -31,9 +43,9 @@ import staticExtFilteringEngine from './static-ext-filtering.js';
 import staticFilteringReverseLookup from './reverselookup.js';
 import staticNetFilteringEngine from './static-net-filtering.js';
 import µb from './background.js';
+import webRequest from './traffic.js';
 import { redirectEngine } from './redirect-engine.js';
 import { ubolog } from './console.js';
-import { webRequest } from './traffic.js';
 
 import {
     permanentFirewall,

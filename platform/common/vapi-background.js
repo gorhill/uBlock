@@ -26,6 +26,7 @@
 
 /******************************************************************************/
 
+import webext from './webext.js';
 import { ubolog } from './console.js';
 
 /******************************************************************************/
@@ -1251,50 +1252,6 @@ vAPI.Net = class {
     }
     canSuspend() {
         return false;
-    }
-    async benchmark() {
-        if ( typeof µBlock !== 'object' ) { return; }
-        const requests = await µBlock.loadBenchmarkDataset();
-        if ( Array.isArray(requests) === false || requests.length === 0 ) {
-            console.info('No requests found to benchmark');
-            return;
-        }
-        const mappedTypes = new Map([
-            [ 'document', 'main_frame' ],
-            [ 'subdocument', 'sub_frame' ],
-        ]);
-        console.info('vAPI.net.onBeforeSuspendableRequest()...');
-        const t0 = self.performance.now();
-        const promises = [];
-        const details = {
-            documentUrl: '',
-            tabId: -1,
-            parentFrameId: -1,
-            frameId: 0,
-            type: '',
-            url: '',
-        };
-        for ( const request of requests ) {
-            details.documentUrl = request.frameUrl;
-            details.tabId = -1;
-            details.parentFrameId = -1;
-            details.frameId = 0;
-            details.type = mappedTypes.get(request.cpt) || request.cpt;
-            details.url = request.url;
-            if ( details.type === 'main_frame' ) { continue; }
-            promises.push(this.onBeforeSuspendableRequest(details));
-        }
-        return Promise.all(promises).then(results => {
-            let blockCount = 0;
-            for ( const r of results ) {
-                if ( r !== undefined ) { blockCount += 1; }
-            }
-            const t1 = self.performance.now();
-            const dur = t1 - t0;
-            console.info(`Evaluated ${requests.length} requests in ${dur.toFixed(0)} ms`);
-            console.info(`\tBlocked ${blockCount} requests`);
-            console.info(`\tAverage: ${(dur / requests.length).toFixed(3)} ms per request`);
-        });
     }
 };
 

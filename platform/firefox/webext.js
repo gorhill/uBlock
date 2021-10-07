@@ -21,4 +21,4 @@
 
 'use strict';
 
-const webext = browser; // jshint ignore:line
+export default browser;

@@ -27,6 +27,7 @@ import contextMenu from './contextmenu.js';
 import logger from './logger.js';
 import staticNetFilteringEngine from './static-net-filtering.js';
 import µb from './background.js';
+import webext from './webext.js';
 import { orphanizeString } from './text-utils.js';
 import { redirectEngine } from './redirect-engine.js';
 
@@ -639,7 +640,10 @@ const PageStore = class {
         } else {
             this.allowLargeMediaElementsUntil = Date.now();
         }
-        µb.scriptlets.injectDeep(this.tabId, 'load-large-media-all');
+        vAPI.tabs.executeScript(this.tabId, {
+            file: '/js/scriptlets/load-large-media-all.js',
+            allFrames: true,
+        });
     }
 
     // https://github.com/gorhill/uBlock/issues/2053

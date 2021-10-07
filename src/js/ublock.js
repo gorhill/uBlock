@@ -627,7 +627,7 @@ const matchBucket = function(url, hostname, bucket, start) {
     return bits;
 };
 
-µb.parseBlockingProfiles = (( ) => {
+{
     const parse = function() {
         const s = µb.hiddenSettings.blockingProfiles;
         const profiles = [];
@@ -648,77 +648,6 @@ const matchBucket = function(url, hostname, bucket, start) {
     parse();
 
     self.addEventListener('hiddenSettingsChanged', ( ) => { parse(); });
-
-    return parse;
-})();
-
-/******************************************************************************/
-
-µb.scriptlets = (function() {
-    const pendingEntries = new Map();
-
-    const Entry = class {
-        constructor(tabId, scriptlet, callback) {
-            this.tabId = tabId;
-            this.scriptlet = scriptlet;
-            this.callback = callback;
-            this.timer = vAPI.setTimeout(this.service.bind(this), 1000);
-        }
-        service(response) {
-            if ( this.timer !== null ) {
-                clearTimeout(this.timer);
-                this.timer = null;
-            }
-            pendingEntries.delete(makeKey(this.tabId, this.scriptlet));
-            this.callback(response);
-        }
-    };
-
-    const makeKey = function(tabId, scriptlet) {
-        return tabId + ' ' + scriptlet;
-    };
-
-    const report = function(tabId, scriptlet, response) {
-        const key = makeKey(tabId, scriptlet);
-        const entry = pendingEntries.get(key);
-        if ( entry === undefined ) { return; }
-        entry.service(response);
-    };
-
-    const inject = function(tabId, scriptlet, callback) {
-        if ( typeof callback === 'function' ) {
-            if ( vAPI.isBehindTheSceneTabId(tabId) ) {
-                callback();
-                return;
-            }
-            const key = makeKey(tabId, scriptlet);
-            const entry = pendingEntries.get(key);
-            if ( entry !== undefined ) {
-                if ( callback !== entry.callback ) {
-                    callback();
-                }
-                return;
-            }
-            pendingEntries.set(key, new Entry(tabId, scriptlet, callback));
-        }
-        vAPI.tabs.executeScript(tabId, {
-            file: `/js/scriptlets/${scriptlet}.js`
-        });
-    };
-
-    // TODO: think about a callback mechanism.
-    const injectDeep = function(tabId, scriptlet) {
-        vAPI.tabs.executeScript(tabId, {
-            file: `/js/scriptlets/${scriptlet}.js`,
-            allFrames: true
-        });
-    };
-
-    return {
-        inject: inject,
-        injectDeep: injectDeep,
-        report: report
-    };
-})();
+}
 
 /******************************************************************************/

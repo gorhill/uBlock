@@ -24,9 +24,6 @@
 // `webext` is a promisified api of `chrome`. Entries are added as
 // the promisification of uBO progress.
 
-const webext = (( ) => {        // jshint ignore:line
-// >>>>> start of private scope
-
 const promisifyNoFail = function(thisArg, fnName, outFn = r => r) {
     const fn = thisArg[fnName];
     return function() {
@@ -164,7 +161,4 @@ if ( chrome.tabs.removeCSS instanceof Function ) {
     webext.tabs.removeCSS = promisifyNoFail(chrome.tabs, 'removeCSS');
 }
 
-return webext;
-
-// <<<<< end of private scope
-})();
+export default webext;

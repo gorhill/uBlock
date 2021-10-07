@@ -28,6 +28,7 @@ import logger from './logger.js';
 import scriptletFilteringEngine from './scriptlet-filtering.js';
 import staticNetFilteringEngine from './static-net-filtering.js';
 import µb from './background.js';
+import webext from './webext.js';
 import { PageStore } from './pagestore.js';
 
 import {

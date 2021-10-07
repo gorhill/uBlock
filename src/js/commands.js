@@ -23,8 +23,8 @@
 
 /******************************************************************************/
 
-import { hostnameFromURI } from './uri-utils.js';
 import µb from './background.js';
+import { hostnameFromURI } from './uri-utils.js';
 
 /******************************************************************************/
 

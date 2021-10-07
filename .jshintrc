@@ -6,12 +6,8 @@
 	"globals": {
 		"browser": false,    // global variable in Firefox, Edge
 		"chrome": false,     // global variable in Chromium, Chrome, Opera
-		"log": false,
-		"safari": false,
 		"self": false,
 		"vAPI": false,
-		"webext": false,
-		"µBlock": false,
 		"URLSearchParams": false,
 		"WebAssembly": false
 	},

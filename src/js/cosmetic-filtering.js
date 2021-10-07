@@ -23,6 +23,7 @@
 
 /******************************************************************************/
 
+import './utils.js';
 import logger from './logger.js';
 import µb from './background.js';
 

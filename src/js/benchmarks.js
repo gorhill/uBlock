@@ -28,6 +28,7 @@ import io from './assets.js';
 import scriptletFilteringEngine from './scriptlet-filtering.js';
 import staticNetFilteringEngine from './static-net-filtering.js';
 import µb from './background.js';
+import webRequest from './traffic.js';
 import { FilteringContext } from './filtering-context.js';
 import { LineIterator } from './text-utils.js';
 import { sessionFirewall } from './filtering-engines.js';
@@ -333,6 +334,52 @@ const loadBenchmarkDataset = (( ) => {
     const dur = t1 - t0;
     console.info(`Evaluated ${count} requests in ${dur.toFixed(0)} ms`);
     console.info(`\tAverage: ${(dur / count).toFixed(3)} ms per request`);
+};
+
+/******************************************************************************/
+
+µb.benchmarkOnBeforeRequest = async function() {
+    const requests = await loadBenchmarkDataset();
+    if ( Array.isArray(requests) === false || requests.length === 0 ) {
+        console.info('No requests found to benchmark');
+        return;
+    }
+    const mappedTypes = new Map([
+        [ 'document', 'main_frame' ],
+        [ 'subdocument', 'sub_frame' ],
+    ]);
+    console.info('webRequest.onBeforeRequest()...');
+    const t0 = self.performance.now();
+    const promises = [];
+    const details = {
+        documentUrl: '',
+        tabId: -1,
+        parentFrameId: -1,
+        frameId: 0,
+        type: '',
+        url: '',
+    };
+    for ( const request of requests ) {
+        details.documentUrl = request.frameUrl;
+        details.tabId = -1;
+        details.parentFrameId = -1;
+        details.frameId = 0;
+        details.type = mappedTypes.get(request.cpt) || request.cpt;
+        details.url = request.url;
+        if ( details.type === 'main_frame' ) { continue; }
+        promises.push(webRequest.onBeforeRequest(details));
+    }
+    return Promise.all(promises).then(results => {
+        let blockCount = 0;
+        for ( const r of results ) {
+            if ( r !== undefined ) { blockCount += 1; }
+        }
+        const t1 = self.performance.now();
+        const dur = t1 - t0;
+        console.info(`Evaluated ${requests.length} requests in ${dur.toFixed(0)} ms`);
+        console.info(`\tBlocked ${blockCount} requests`);
+        console.info(`\tAverage: ${(dur / requests.length).toFixed(3)} ms per request`);
+    });
 };
 
 /******************************************************************************/

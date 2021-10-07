@@ -27,6 +27,7 @@
 
 import lz4Codec from './lz4.js';
 import µb from './background.js';
+import webext from './webext.js';
 
 /******************************************************************************/
 
