@@ -579,12 +579,14 @@ const matchBucket = function(url, hostname, bucket, start) {
     case 'no-scripting':
         this.updateToolbarIcon(details.tabId, 0b100);
         break;
-    case 'no-cosmetic-filtering':
-        this.scriptlets.injectDeep(
-            details.tabId,
-            details.state ? 'cosmetic-off' : 'cosmetic-on'
-        );
+    case 'no-cosmetic-filtering': {
+        const scriptlet = details.state ? 'cosmetic-off' : 'cosmetic-on';
+        vAPI.tabs.executeScript(details.tabId, {
+            file: `/js/scriptlets/${scriptlet}.js`,
+            allFrames: true,
+        });
         break;
+    }
     case 'no-large-media':
         const pageStore = this.pageStoreFromTabId(details.tabId);
         if ( pageStore !== null ) {
