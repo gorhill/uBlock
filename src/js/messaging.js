@@ -1170,7 +1170,7 @@ const modifyRuleset = function(details) {
     }
 };
 
-// Shortcuts pane
+// Shortcuts
 const getShortcuts = function(callback) {
     if ( µb.canUseShortcuts === false ) {
         return callback([]);
@@ -1204,6 +1204,136 @@ const setShortcut = function(details) {
     vAPI.storage.set({ commandShortcuts: Array.from(µb.commandShortcuts) });
 };
 
+// Support
+const getSupportData = async function() {
+    const diffArrays = function(modified, original) {
+        const modifiedSet = new Set(modified);
+        const originalSet = new Set(original);
+        let added = [];
+        let removed = [];
+        for ( const item of modifiedSet ) {
+            if ( originalSet.has(item) ) { continue; }
+            added.push(item);
+        }
+        for ( const item of originalSet ) {
+            if ( modifiedSet.has(item) ) { continue; }
+            removed.push(item);
+        }
+        if ( added.length === 0 ) {
+            added = undefined;
+        }
+        if ( removed.length === 0 ) {
+            removed = undefined;
+        }
+        if ( added !== undefined || removed !== undefined ) {
+            return { added, removed };
+        }
+    };
+
+    let modifiedUserSettings = µb.getModifiedSettings(
+        µb.userSettings,
+        µb.userSettingsDefault
+    );
+    delete modifiedUserSettings.externalLists;
+    delete modifiedUserSettings.importedLists;
+    if ( Object.keys(modifiedUserSettings).length === 0 ) {
+        modifiedUserSettings = 'none';
+    }
+
+    let modifiedHiddenSettings = µb.getModifiedSettings(
+        µb.hiddenSettings,
+        µb.hiddenSettingsDefault
+    );
+    if ( Object.keys(modifiedHiddenSettings).length === 0 ) {
+        modifiedHiddenSettings = 'none';
+    }
+
+    let filterset = [];
+    const userFilters = await µb.loadUserFilters();
+    for ( const line of userFilters.content.split(/\s*\n+\s*/) ) {
+        if ( /^($|![^#])/.test(line) ) { continue; }
+        filterset.push(line);
+    }
+    if ( filterset.length === 0 ) {
+        filterset = undefined;
+    }
+
+    const lists = await io.metadata();
+    let defaultListset = {};
+    let addedListset = {};
+    let removedListset = {};
+    for ( const listKey in lists ) {
+        if ( lists.hasOwnProperty(listKey) === false ) { continue; }
+        const list = lists[listKey];
+        if ( list.content !== 'filters' ) { continue; }
+        const daysSinceUpdated = Math.floor((
+            Date.now() -
+            list.writeTime
+        ) / 864000) / 100;
+        const daysBeforeNextUpdate = Math.floor((
+            list.writeTime +
+            list.updateAfter * 86400000 -
+            Date.now()
+        ) / 864000) / 100;
+        const listDetails = {
+            title: list.title,
+            daysSinceUpdated,
+            daysBeforeNextUpdate,
+        };
+        const used = µb.selectedFilterLists.includes(listKey);
+        if ( list.isDefault ) {
+            if ( used ) {
+                defaultListset[listKey] = listDetails;
+            } else {
+                removedListset[listKey] = null;
+            }
+        } else if ( used ) {
+            addedListset[listKey] = listDetails;
+        }
+    }
+    if ( Object.keys(defaultListset).length === 0 ) {
+        defaultListset = undefined;
+    }
+    if ( Object.keys(addedListset).length === 0 ) {
+        addedListset = undefined;
+    }
+    if ( Object.keys(removedListset).length === 0 ) {
+        removedListset = undefined;
+    }
+
+    return {
+        browserFlavor: Array.from(vAPI.webextFlavor.soup).join(' '),
+        browserVersion: vAPI.webextFlavor.major,
+        extensionId: vAPI.i18n('@@extension_id'),
+        extensionName: vAPI.app.name,
+        extensionVersion: vAPI.app.version,
+        modifiedUserSettings,
+        modifiedHiddenSettings,
+        listset: {
+            'default': defaultListset,
+            added: addedListset,
+            removed: removedListset,
+        },
+        filterset,
+        trustedset: diffArrays(
+            µb.arrayFromWhitelist(µb.netWhitelist),
+            µb.netWhitelistDefault
+        ),
+        hostRuleset: diffArrays(
+            sessionFirewall.toArray(),
+            µb.dynamicFilteringDefault
+        ),
+        switchRuleset: diffArrays(
+            sessionSwitches.toArray(),
+            µb.hostnameSwitchesDefault
+        ),
+        urlRuleset: diffArrays(
+            sessionURLFiltering.toArray(),
+            []
+        ),
+    };
+};
+
 const onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
@@ -1222,6 +1352,13 @@ const onMessage = function(request, sender, callback) {
 
     case 'getShortcuts':
         return getShortcuts(callback);
+
+    case 'getSupportData': {
+        getSupportData().then(response => {
+            callback(response);
+        });
+        return;
+    }
 
     case 'readUserFilters':
         return µb.loadUserFilters().then(result => {

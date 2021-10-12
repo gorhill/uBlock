@@ -353,19 +353,9 @@ const fromFetch = function(to, fetched) {
 
 const createDefaultProps = function() {
     const fetchableProps = {
-        'dynamicFilteringString': [
-            'behind-the-scene * * noop',
-            'behind-the-scene * image noop',
-            'behind-the-scene * 3p noop',
-            'behind-the-scene * inline-script noop',
-            'behind-the-scene * 1p-script noop',
-            'behind-the-scene * 3p-script noop',
-            'behind-the-scene * 3p-frame noop',
-        ].join('\n'),
+        'dynamicFilteringString': µb.dynamicFilteringDefault.join('\n'),
         'urlFilteringString': '',
-        'hostnameSwitchesString': [
-            'no-large-media: behind-the-scene false',
-        ].join('\n'),
+        'hostnameSwitchesString': µb.hostnameSwitchesDefault.join('\n'),
         'lastRestoreFile': '',
         'lastRestoreTime': 0,
         'lastBackupFile': '',

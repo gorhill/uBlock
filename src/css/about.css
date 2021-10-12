@@ -1,14 +1,6 @@
 body {
     margin-bottom: 6rem;
     }
-.entries {
-    margin: 0.5em 0;
-    margin-inline-start: 2em;
-    -webkit-margin-start: 2em;
-    }
-.entry {
-    margin: 0.5em 0;
-    }
 #dev {
     align-items: flex-start;
     display: none;
