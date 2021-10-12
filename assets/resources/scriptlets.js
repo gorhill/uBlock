@@ -788,7 +788,7 @@
         rmattr();
         if ( /\bstay\b/.test(behavior) === false ) { return; }
         const observer = new MutationObserver(mutationHandler);
-        observer.observe(document.documentElement, {
+        observer.observe(document, {
             attributes: true,
             attributeFilter: tokens,
             childList: true,
@@ -847,7 +847,7 @@
         rmclass();
         if ( /\bstay\b/.test(behavior) === false ) { return; }
         const observer = new MutationObserver(mutationHandler);
-        observer.observe(document.documentElement, {
+        observer.observe(document, {
             attributes: true,
             attributeFilter: [ 'class' ],
             childList: true,
@@ -1555,7 +1555,7 @@
         asyncTimer = window.requestAnimationFrame(cleanVideo);
     };
     var observer = new MutationObserver(cleanVideoAsync);
-    observer.observe(document.documentElement, { childList: true, subtree: true });
+    observer.observe(document, { childList: true, subtree: true });
 })();
 
 
