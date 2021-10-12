@@ -1171,11 +1171,11 @@ vAPI.DOMFilterer = class {
             //   Look-up safe-only selectors to mitigate probability of
             //   html/body elements of erroneously being targeted.
             const ids = [], classes = [];
-            if (document.documentElement) {
+            if (document.documentElement !== null) {
                 idFromNode(document.documentElement, ids);
                 classesFromNode(document.documentElement, classes);
             }
-            if (document.body) {
+            if (document.body !== null) {
                 idFromNode(document.body, ids);
                 classesFromNode(document.body, classes);
             }
