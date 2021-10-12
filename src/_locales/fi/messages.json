@@ -55,6 +55,10 @@
     "message": "Tietoja",
     "description": "appears as tab name in dashboard"
   },
+  "supportPageName": {
+    "message": "Support",
+    "description": "appears as tab name in dashboard"
+  },
   "assetViewerPageName": {
     "message": "uBlock₀ — Elementtien valitsin",
     "description": "Title for the asset viewer page"
@@ -776,7 +780,7 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant": {
-    "message": "paitsi jos",
+    "message": "paitsi kun",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartImportant": {

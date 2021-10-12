@@ -55,6 +55,10 @@
     "message": "Про програму",
     "description": "appears as tab name in dashboard"
   },
+  "supportPageName": {
+    "message": "Support",
+    "description": "appears as tab name in dashboard"
+  },
   "assetViewerPageName": {
     "message": "uBlock₀ – Переглядач ресурсів",
     "description": "Title for the asset viewer page"
@@ -1072,7 +1076,7 @@
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
-    "message": "Скопіювати до буферу",
+    "message": "Скопіювати до буферу обміну",
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "toggleBlockingProfile": {

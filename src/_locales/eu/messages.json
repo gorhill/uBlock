@@ -55,6 +55,10 @@
     "message": "Honi buruz",
     "description": "appears as tab name in dashboard"
   },
+  "supportPageName": {
+    "message": "Support",
+    "description": "appears as tab name in dashboard"
+  },
   "assetViewerPageName": {
     "message": "uBlock₀ — Aktibo-ikuslea",
     "description": "Title for the asset viewer page"
@@ -268,11 +272,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilterTip": {
-    "message": "↑: Emphasize rows which have 3rd-party scripts",
+    "message": "↑: Garrantzia eman hirugarrenen scriptak dituzten lerroei",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party scripts' cell"
   },
   "popup3pFrameFilterTip": {
-    "message": "↑: Emphasize rows which have 3rd-party frames",
+    "message": "↑: Garrantzia eman hirugarrenen markoak dituzten lerroei",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party frames' cell"
   },
   "pickerCreate": {
@@ -380,7 +384,7 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsUncloakCnamePrompt": {
-    "message": "Uncloak canonical names",
+    "message": "Erakutsi izen kanonikoak",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsLastRestorePrompt": {
@@ -848,7 +852,7 @@
     "description": "Label for radio-button to pick export text format"
   },
   "aboutPrivacyPolicy": {
-    "message": "Privacy policy",
+    "message": "Pribatutasun politika",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {
@@ -892,11 +896,11 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "uBO's own filter lists are freely hosted on the following <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
+    "message": "uBOren iragazki zerrendan <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a> hauetan daude:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "A randomly picked CDN is used when a filter list needs to be updated",
+    "message": "Ausaz aukeratutako CDN bat erabiltzen da iragazki zerrenda bat eguneratu behar denean",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
@@ -1056,7 +1060,7 @@
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Subscribe to filter list...",
+    "message": "Harpidetu iragazki zerrenda batera...",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {

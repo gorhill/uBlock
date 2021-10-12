@@ -55,6 +55,10 @@
     "message": "Ընդլայնման մասին",
     "description": "appears as tab name in dashboard"
   },
+  "supportPageName": {
+    "message": "Support",
+    "description": "appears as tab name in dashboard"
+  },
   "assetViewerPageName": {
     "message": "uBlock₀ — Ակտիվների դիտակ",
     "description": "Title for the asset viewer page"
@@ -332,7 +336,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Ես հմուտ օգտվող եմ (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'> կարդալը պարտադիր է</a>)",
+    "message": "Ես հմուտ օգտվող եմ (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>կարդալը պարտադիր է</a>)",
     "description": ""
   },
   "settingsAdvancedUserSettings": {
@@ -892,11 +896,11 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "uBO's own filter lists are freely hosted on the following <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
+    "message": "uBO-ի սեփական զտիչների ցանկերն ազատորեն տեղաբաշխված են հետևյալ <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN-երում</a>.",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "A randomly picked CDN is used when a filter list needs to be updated",
+    "message": "Զտիչների ցանկը թարմացնելիս օգտագործվում է պատահականորեն ընտրված CDN",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {

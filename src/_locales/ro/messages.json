@@ -55,6 +55,10 @@
     "message": "Despre",
     "description": "appears as tab name in dashboard"
   },
+  "supportPageName": {
+    "message": "Support",
+    "description": "appears as tab name in dashboard"
+  },
   "assetViewerPageName": {
     "message": "uBlock₀ — Vizualizator de resurse",
     "description": "Title for the asset viewer page"

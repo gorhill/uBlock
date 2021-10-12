@@ -55,6 +55,10 @@
     "message": "À propos",
     "description": "appears as tab name in dashboard"
   },
+  "supportPageName": {
+    "message": "Support",
+    "description": "appears as tab name in dashboard"
+  },
   "assetViewerPageName": {
     "message": "uBlock₀ — Visionneuse d'éléments",
     "description": "Title for the asset viewer page"

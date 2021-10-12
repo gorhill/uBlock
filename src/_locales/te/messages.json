@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "నేను నమ్మే సైట్ల జాబితా",
+    "message": "నమ్మే సైట్లు",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -53,6 +53,10 @@
   },
   "aboutPageName": {
     "message": "మా గురించి",
+    "description": "appears as tab name in dashboard"
+  },
+  "supportPageName": {
+    "message": "Support",
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
@@ -188,7 +192,7 @@
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
-    "message": "సౌందర్య వడపోత",
+    "message": "నిశ్చలాత్మక వడపోత",
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
@@ -200,7 +204,7 @@
     "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
-    "message": "ఎక్కువ",
+    "message": "మరిన్ని",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton_v2": {

@@ -55,6 +55,10 @@
     "message": "O rozšíření",
     "description": "appears as tab name in dashboard"
   },
+  "supportPageName": {
+    "message": "Support",
+    "description": "appears as tab name in dashboard"
+  },
   "assetViewerPageName": {
     "message": "uBlock₀ — Prohlížeč zdrojů",
     "description": "Title for the asset viewer page"

@@ -55,6 +55,10 @@
     "message": "எம்மைப் பற்றி",
     "description": "appears as tab name in dashboard"
   },
+  "supportPageName": {
+    "message": "Support",
+    "description": "appears as tab name in dashboard"
+  },
   "assetViewerPageName": {
     "message": "uBlock -- உடைமை பார்வையாளர்",
     "description": "Title for the asset viewer page"

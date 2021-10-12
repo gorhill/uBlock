@@ -55,6 +55,10 @@
     "message": "정보",
     "description": "appears as tab name in dashboard"
   },
+  "supportPageName": {
+    "message": "Support",
+    "description": "appears as tab name in dashboard"
+  },
   "assetViewerPageName": {
     "message": "uBlock₀ — Asset 뷰어",
     "description": "Title for the asset viewer page"

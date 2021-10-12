@@ -55,6 +55,10 @@
     "message": "Mengenai",
     "description": "appears as tab name in dashboard"
   },
+  "supportPageName": {
+    "message": "Support",
+    "description": "appears as tab name in dashboard"
+  },
   "assetViewerPageName": {
     "message": "uBlock₀ — Pertonton aset",
     "description": "Title for the asset viewer page"
@@ -464,7 +468,7 @@
     "description": "English: Regions, languages"
   },
   "3pGroupCustom": {
-    "message": "Kustom",
+    "message": "Tersuai",
     "description": "English: Custom"
   },
   "3pImport": {
@@ -1028,7 +1032,7 @@
     "description": ""
   },
   "cloudDeviceNamePrompt": {
-    "message": "Nama alat ini:",
+    "message": "Nama peranti ini:",
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {

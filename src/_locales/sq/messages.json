@@ -55,6 +55,10 @@
     "message": "Info",
     "description": "appears as tab name in dashboard"
   },
+  "supportPageName": {
+    "message": "Support",
+    "description": "appears as tab name in dashboard"
+  },
   "assetViewerPageName": {
     "message": "uBlock₀ — Ilustruesi i aseteve",
     "description": "Title for the asset viewer page"
@@ -212,7 +216,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Rregullat lokale: rregullat në këtë shtyllë aplikohen vetëm për këtë uebsajtin dhe kanë përparësi mbi rregullat globale.",
+    "message": "Rregullat lokale: rregullat në këtë shtyllë aplikohen vetëm për këtë uebsajtin dhe kanë më përparësi se rregullat globale.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -256,7 +260,7 @@
     "description": ""
   },
   "popupHitDomainCountPrompt": {
-    "message": "domene të kontaktuara",
+    "message": "domenet që janë lidhur",
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
@@ -416,7 +420,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "Filtrat kozmetikë shërbejnë për të fshehur nga ana vizive elementet e padëshirueshme të faqes, të cilat nuk bllokohen me metodën standarde të filtrimit sipas kërkesës.",
+    "message": "Filtrat kozmetikë shërbejnë për të fshehur nga ana vizive elementet e padëshirueshme të faqes të cilat nuk bllokohen me metodën standarde të filtrimit sipas kërkesës.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -424,7 +428,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "Filtrat kozmetikë jospecifikë janë filtra kozmetikë të cilët aplikohen për të gjitha faqet e internetit. Aktivizimi i këtij opsioni eliminon peshën e tepërt te memoria dhe procesori.\n\nKy opsion rekomandohet për aparatet kompjuterike jo shumë të shpejta.",
+    "message": "Filtrat kozmetikë jospecifikë janë filtra të cilët aplikohen për të gjitha faqet e internetit. Aktivizimi i këtij opsioni eliminon peshën e tepërt te memoria dhe procesori.\n\nKy opsion rekomandohet për aparatet kompjuterike jo shumë të shpejta.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -516,11 +520,11 @@
     "description": "English: Apply changes"
   },
   "rulesPermanentHeader": {
-    "message": "Rregulla të përhershme",
+    "message": "Rregullat e përhershme",
     "description": "header"
   },
   "rulesTemporaryHeader": {
-    "message": "Rregulla të përkohshme",
+    "message": "Rregullat e përkohshme",
     "description": "header"
   },
   "rulesRevert": {
@@ -748,7 +752,7 @@
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "{{action}} kërkesat e {{type}} {{br}}që korrespondojnë me adresën {{url}} {{br}}dhe që e kanë origjinën {{origin}},{{br}}{{importance}} ekziston një filtër përjashtues i ngjashëm.",
+    "message": "{{action}} kërkesat e {{type}} {{br}}që korrespondojnë me adresën {{url}} {{br}}dhe që e kanë origjinën {{origin}},{{br}}{{importance}} ekziston një filtër përjashtues i njëjtë.",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
