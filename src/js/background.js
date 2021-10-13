@@ -114,6 +114,24 @@ const userSettingsDefault = {
     webrtcIPAddressHidden: false,
 };
 
+const dynamicFilteringDefault = [
+    'behind-the-scene * * noop',
+    'behind-the-scene * image noop',
+    'behind-the-scene * 3p noop',
+    'behind-the-scene * inline-script noop',
+    'behind-the-scene * 1p-script noop',
+    'behind-the-scene * 3p-script noop',
+    'behind-the-scene * 3p-frame noop',
+];
+
+const hostnameSwitchesDefault = [
+    'no-large-media: behind-the-scene false',
+];
+// https://github.com/LiCybora/NanoDefenderFirefox/issues/196
+if ( vAPI.webextFlavor.soup.has('firefox') ) {
+    hostnameSwitchesDefault.push('no-csp-reports: * true');
+}
+
 const µBlock = {  // jshint ignore:line
     userSettingsDefault: userSettingsDefault,
     userSettings: Object.assign({}, userSettingsDefault),
@@ -122,18 +140,8 @@ const µBlock = {  // jshint ignore:line
     hiddenSettingsAdmin: {},
     hiddenSettings: Object.assign({}, hiddenSettingsDefault),
 
-    dynamicFilteringDefault: [
-        'behind-the-scene * * noop',
-        'behind-the-scene * image noop',
-        'behind-the-scene * 3p noop',
-        'behind-the-scene * inline-script noop',
-        'behind-the-scene * 1p-script noop',
-        'behind-the-scene * 3p-script noop',
-        'behind-the-scene * 3p-frame noop',
-    ],
-    hostnameSwitchesDefault: [
-        'no-large-media: behind-the-scene false',
-    ],
+    dynamicFilteringDefault,
+    hostnameSwitchesDefault,
 
     noDashboard: false,
 

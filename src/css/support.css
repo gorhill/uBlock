@@ -1,3 +1,7 @@
 body {
     margin-bottom: 6rem;
     }
+
+.cm-string.cm-property {
+    color: black;
+    }

@@ -363,10 +363,6 @@ const createDefaultProps = function() {
         'netWhitelist': µb.netWhitelistDefault,
         'version': '0.0.0.0'
     };
-    // https://github.com/LiCybora/NanoDefenderFirefox/issues/196
-    if ( vAPI.webextFlavor.soup.has('firefox') ) {
-        fetchableProps.hostnameSwitchesString += '\nno-csp-reports: * true';
-    }
     toFetch(µb.localSettings, fetchableProps);
     toFetch(µb.restoreBackupSettings, fetchableProps);
     return fetchableProps;
@@ -380,7 +376,7 @@ try {
     ubolog(`Admin settings ready ${Date.now()-vAPI.T0} ms after launch`);
 
     await µb.loadHiddenSettings();
-    onHiddenSettingsReady();
+    await onHiddenSettingsReady();
     ubolog(`Hidden settings ready ${Date.now()-vAPI.T0} ms after launch`);
 
     const adminExtra = await vAPI.adminStorage.get('toAdd');
