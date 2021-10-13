@@ -32,12 +32,13 @@ import { hostnameFromURI } from './uri-utils.js';
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/386
 //   Firefox 74 and above has complete shotcut assignment user interface.
-µb.canUpdateShortcuts =
+µb.canUpdateShortcuts = false;
+
+if (
     µb.canUseShortcuts &&
     vAPI.webextFlavor.soup.has('firefox') &&
-    typeof vAPI.commands.update === 'function';
-
-if ( µb.canUpdateShortcuts ) {
+    typeof vAPI.commands.update === 'function'
+) {
     self.addEventListener(
         'webextFlavor',
         ( ) => {
