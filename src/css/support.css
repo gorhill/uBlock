@@ -2,6 +2,36 @@ body {
     margin-bottom: 6rem;
     }
 
+.supportEntry {
+    display: flex;
+    margin-top: 1em;
+    }
+.supportEntry > div:first-of-type {
+    flex-grow: 1;
+    }
+.supportEntry > div:last-of-type {
+    align-items: center;
+    display: flex;
+    }
+.supportEntry h3 {
+    margin-top: 0;
+    }
+
+button {
+    margin-inline-end: 1em;
+        -webkit-margin-end: 1em;
+    }
+
+body.redacted #redactButton {
+    display: none;
+    }
+#unredactButton {
+    display: none;
+    }
+body.redacted #unredactButton {
+    display: inline;
+    }
+
 .cm-string.cm-property {
     color: black;
     }

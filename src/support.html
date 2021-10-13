@@ -14,10 +14,53 @@
 <link rel="stylesheet" href="css/codemirror.css">
 </head>
 
-<body>
+<body class="redacted">
 
 <div class="body">
-    <p>This page contains technical information which is useful to investigate issues.<br><b>Important:</b> you may want to redact private or sensitive information before posting the support data to a public forum.</p>
+    <div class="supportEntry">
+        <div>
+            <h3>Documentation</h3>
+            <p>Read the documentation to learn more about all of uBlock Origin's features.
+        </div>
+        <div>
+            <button type="button" data-url="https://github.com/gorhill/uBlock/wiki">Open</button>
+        </div>
+    </div>
+    <hr>
+    <div class="supportEntry">
+        <div>
+            <h3>Questions and support</h3>
+            <p>Answers to questions and other kinds of help support is provided on the subreddit /r/uBlockOrigin.
+        </div>
+        <div>
+            <button type="button" data-url="https://old.reddit.com/r/uBlockOrigin/">Open</button>
+        </div>
+    </div>
+    <hr>
+    <div class="supportEntry">
+        <div>
+            <h3>Filter issues/website is broken</h3>
+            <p>Report any issues with specific websites to uAssets issue tracker.
+            <p><b>Important:</b> Avoid using other similarly-purposed blockers along with uBlock Origin, as this may cause filter issues on specific websites.
+        </div>
+        <div>
+            <button type="button" data-url="https://github.com/uBlockOrigin/uAssets/issues">Open</button>
+        </div>
+    </div>
+    <hr>
+    <div class="supportEntry">
+        <div>
+            <h3>Bug report</h3>
+            <p>File a bug report.
+        </div>
+        <div>
+            <button type="button" data-url="https://github.com/uBlockOrigin/uBlock-issues/issues/new?assignees=&labels=&template=bug_report.yml">Open</button>
+        </div>
+    </div>
+    <hr>
+    <h3>Troubleshooting Information</h3>
+    <p>Below is technical information that might be useful when volunteers are trying to help you solve a problem. <p><b>Important:</b> you may want to redact private or sensitive information before posting to a public forum. Redacted technical information may make it more difficult to solve a problem.
+    <p><button id="redactButton" type="button">Redact</button><button id="unredactButton" type="button">Unredact</button><button id="selectAllButton" type="button">Select all</button>
     <div id="supportData" class="codeMirrorContainer"></div>
 </div>
 

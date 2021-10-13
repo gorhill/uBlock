@@ -1276,7 +1276,9 @@ const getSupportData = async function() {
             Date.now()
         ) / 864000) / 100;
         const listDetails = {
-            title: list.title,
+            title: list.title !== '' && list.title !== listKey
+                ? list.title
+                : undefined,
             daysSinceUpdated,
             daysBeforeNextUpdate,
         };

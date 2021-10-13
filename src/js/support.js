@@ -19,25 +19,121 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global CodeMirror, uBlockDashboard */
+/* global CodeMirror, uBlockDashboard, uDom */
 
 'use strict';
 
 /******************************************************************************/
 
+let supportData;
+
+const sensitiveValues = [
+    'filterset',
+    'modifiedHiddenSettings.userResourcesLocation',
+    'trustedset.added',
+    'hostRuleset.added',
+    'switchRuleset.added',
+    'urlRuleset.added',
+];
+
+const sensitiveKeys = [
+    'listset.added',
+];
+
+/******************************************************************************/
+
+function redactValue(data, prop) {
+    if ( data instanceof Object === false ) { return; }
+    const pos = prop.indexOf('.');
+    if ( pos !== -1 ) {
+        return redactValue(data[prop.slice(0, pos)], prop.slice(pos + 1));
+    }
+    let value = data[prop];
+    if ( value === undefined ) { return; }
+    if ( Array.isArray(value) ) {
+        value = `[array of ${value.length} redacted]`;
+    } else {
+        value = '[redacted]';
+    }
+    data[prop] = value;
+}
+
+function redactKeys(data, prop) {
+    if ( data instanceof Object === false ) { return; }
+    const pos = prop.indexOf('.');
+    if ( pos !== -1 ) {
+        return redactKeys(data[prop.slice(0, pos)], prop.slice(pos + 1));
+    }
+    const obj = data[prop];
+    if ( obj instanceof Object === false ) { return; }
+    let count = 1;
+    for ( const key in obj ) {
+        if ( key.startsWith('file://') === false ) { continue; }
+        const newkey = `[list name ${count} redacted]`;
+        obj[newkey] = obj[key];
+        obj[key] = undefined; 
+        count += 1;
+    }
+}
+
+function showData() {
+    const shownData = JSON.parse(JSON.stringify(supportData));
+    if ( document.body.classList.contains('redacted') ) {
+        sensitiveValues.forEach(prop => { redactValue(shownData, prop); });
+        sensitiveKeys.forEach(prop => { redactKeys(shownData, prop); });
+
+        // Redact list entries which could be hosted locally
+        
+    }
+    cmEditor.setValue(JSON.stringify(shownData, null, 2));
+}
+
+/******************************************************************************/
+
+const cmEditor = new CodeMirror(document.getElementById('supportData'), {
+    autofocus: true,
+    lineWrapping: true,
+    mode: { name: 'javascript', json: true },
+    styleActiveLine: true,
+});
+
+uBlockDashboard.patchCodeMirrorEditor(cmEditor);
+
+/******************************************************************************/
+
 (async ( ) => {
-    const cmEditor = new CodeMirror(document.getElementById('supportData'), {
-        autofocus: true,
-        lineWrapping: true,
-        mode: { name: 'javascript', json: true },
-        styleActiveLine: true,
-    });
-
-    uBlockDashboard.patchCodeMirrorEditor(cmEditor);
-
-    const supportData = await vAPI.messaging.send('dashboard', {
+    supportData = await vAPI.messaging.send('dashboard', {
         what: 'getSupportData',
     });
 
-    cmEditor.setValue(JSON.stringify(supportData, null, 2));
+    // Remove unnecessary information
+    if ( supportData.modifiedHiddenSettings instanceof Object ) {
+        const o = supportData.modifiedHiddenSettings;
+        o.benchmarkDatasetURL = undefined;
+    }
+
+    showData();
+
+    uDom('button[data-url]').on('click', ev => {
+        const url = ev.target.getAttribute('data-url');
+        if ( typeof url !== 'string' || url === '' ) { return; }
+        vAPI.messaging.send('default', {
+            what: 'gotoURL',
+            details: { url, select: true },
+        });
+    });
+
+    uDom('#redactButton').on('click', ( ) => {
+        document.body.classList.add('redacted');
+        showData();
+    });
+
+    uDom('#unredactButton').on('click', ( ) => {
+        document.body.classList.remove('redacted');
+        showData();
+    });
+
+    uDom('#selectAllButton').on('click', ( ) => {
+        cmEditor.execCommand('selectAll');
+    });
 })();
