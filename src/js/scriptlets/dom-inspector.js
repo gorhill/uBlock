@@ -264,7 +264,7 @@ const domLayout = (function() {
                 continue;
             }
             // sibling
-            if (node instanceof Element) {
+            if ( node instanceof Element ) {
                 if ( node.nextElementSibling === null ) {
                     do {
                         node = stack.pop();
@@ -549,7 +549,7 @@ const cosmeticFilterMapper = (function() {
 
     const reset = function() {
         roRedNodes.clear();
-        if (document.documentElement !== null) {
+        if ( document.documentElement !== null ) {
             incremental(document.documentElement);
         }
     };

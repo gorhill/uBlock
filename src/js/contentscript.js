@@ -473,9 +473,7 @@ vAPI.injectScriptlet = function(doc, text) {
     } catch (ex) {
     }
     if ( script ) {
-        if ( script.parentNode ) {
-            script.parentNode.removeChild(script);
-        }
+        script.remove();
         script.textContent = '';
     }
 };
@@ -1171,11 +1169,11 @@ vAPI.DOMFilterer = class {
             //   Look-up safe-only selectors to mitigate probability of
             //   html/body elements of erroneously being targeted.
             const ids = [], classes = [];
-            if (document.documentElement !== null) {
+            if ( document.documentElement !== null ) {
                 idFromNode(document.documentElement, ids);
                 classesFromNode(document.documentElement, classes);
             }
-            if (document.body !== null) {
+            if ( document.body !== null ) {
                 idFromNode(document.body, ids);
                 classesFromNode(document.body, classes);
             }

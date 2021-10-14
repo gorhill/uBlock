@@ -74,7 +74,9 @@
         }
     }
 
-    if ( surveyResults.scriptCount === -1 ) {
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1756
+    //   Mind that there might be no body element.
+    if ( surveyResults.scriptCount === -1 && document.body !== null ) {
         surveyResults.scriptCount = 0;
         const onHandlers = new Set([
             'onabort', 'onblur', 'oncancel', 'oncanplay',

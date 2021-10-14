@@ -1534,27 +1534,27 @@
 
 /// damoh-defuser.js
 (function() {
-    var handled = new WeakSet();
-    var asyncTimer;
-    var cleanVideo = function() {
+    const handled = new WeakSet();
+    let asyncTimer;
+    const cleanVideo = function() {
         asyncTimer = undefined;
-        var v = document.querySelector('video');
+        const v = document.querySelector('video');
         if ( v === null ) { return; }
         if ( handled.has(v) ) { return; }
         handled.add(v);
         v.pause();
         v.controls = true;
-        var el = v.querySelector('meta[itemprop="contentURL"][content]');
+        let el = v.querySelector('meta[itemprop="contentURL"][content]');
         if ( el === null ) { return; }
         v.src = el.getAttribute('content');
         el = v.querySelector('meta[itemprop="thumbnailUrl"][content]');
         if ( el !== null ) { v.poster = el.getAttribute('content'); }
     };
-    var cleanVideoAsync = function() {
+    const cleanVideoAsync = function() {
         if ( asyncTimer !== undefined ) { return; }
         asyncTimer = window.requestAnimationFrame(cleanVideo);
     };
-    var observer = new MutationObserver(cleanVideoAsync);
+    const observer = new MutationObserver(cleanVideoAsync);
     observer.observe(document, { childList: true, subtree: true });
 })();
 
