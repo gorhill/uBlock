@@ -1572,7 +1572,7 @@
                 url.includes('gql') &&
                 init instanceof Object &&
                 init.headers instanceof Object &&
-                typeof init.body == 'string' &&
+                typeof init.body === 'string' &&
                 init.body.includes('PlaybackAccessToken')
             ) {
                 const { headers } = init;
