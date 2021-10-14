@@ -42,6 +42,7 @@
             <h3>Filter issues/website is broken</h3>
             <p>Report any issues with specific websites to uAssets issue tracker.
             <p><b>Important:</b> Avoid using other similarly-purposed blockers along with uBlock Origin, as this may cause filter issues on specific websites.
+            <p><b>Tip:</b> <a href="#" data-url="logger-ui.html">The logger</a> is the primary tool to diagnose filter-related issues.
         </div>
         <div>
             <button type="button" data-url="https://github.com/uBlockOrigin/uAssets/issues">Open</button>
@@ -59,14 +60,13 @@
     </div>
     <hr>
     <h3>Troubleshooting Information</h3>
-    <p>Below is technical information that might be useful when volunteers are trying to help you solve a problem. <p><b>Important:</b> you may want to redact private or sensitive information before posting to a public forum. Redacted technical information may make it more difficult to solve a problem.
+    <p>Below is technical information that might be useful when volunteers are trying to help you solve a problem. <p><b>Important:</b> You may want to redact private or sensitive information before posting to a public forum. Redacted information may make it more difficult to solve a problem. The information is redacted by default.
     <p><button id="redactButton" type="button">Redact</button><button id="unredactButton" type="button">Unredact</button><button id="selectAllButton" type="button">Select all</button>
     <div id="supportData" class="codeMirrorContainer"></div>
 </div>
 
 <script src="lib/codemirror/lib/codemirror.js"></script>
 <script src="lib/codemirror/addon/selection/active-line.js"></script>
-<script src="lib/codemirror/mode/javascript/javascript.js"></script>
 
 <script src="js/vapi.js"></script>
 <script src="js/vapi-common.js"></script>

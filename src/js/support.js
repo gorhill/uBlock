@@ -85,7 +85,19 @@ function showData() {
         // Redact list entries which could be hosted locally
         
     }
-    cmEditor.setValue(JSON.stringify(shownData, null, 2));
+    const text = JSON.stringify(shownData, null, 2)
+        .split('\n')
+        .slice(1, -1)
+        .map(v => {
+            return v
+                .replace( /^(   *)"/, '  $1')
+                .replace( /^( +.*[^\\])(?:": "|": \{$|": \[$|": )/, '$1: ')
+                .replace( /(?:"|"|\}|\]),?$/, '');
+        })
+        .filter(v => v.trim() !== '')
+        .join('\n');
+    cmEditor.setValue(text + '\n');
+    cmEditor.clearHistory();
 }
 
 /******************************************************************************/
@@ -93,7 +105,6 @@ function showData() {
 const cmEditor = new CodeMirror(document.getElementById('supportData'), {
     autofocus: true,
     lineWrapping: true,
-    mode: { name: 'javascript', json: true },
     styleActiveLine: true,
 });
 
@@ -114,13 +125,14 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 
     showData();
 
-    uDom('button[data-url]').on('click', ev => {
+    uDom('[data-url]').on('click', ev => {
         const url = ev.target.getAttribute('data-url');
         if ( typeof url !== 'string' || url === '' ) { return; }
         vAPI.messaging.send('default', {
             what: 'gotoURL',
             details: { url, select: true },
         });
+        ev.preventDefault();
     });
 
     uDom('#redactButton').on('click', ( ) => {

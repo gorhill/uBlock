@@ -1258,7 +1258,7 @@ const getSupportData = async function() {
         filterset = undefined;
     }
 
-    const lists = await io.metadata();
+    const lists = µb.availableFilterLists;
     let defaultListset = {};
     let addedListset = {};
     let removedListset = {};
@@ -1266,23 +1266,26 @@ const getSupportData = async function() {
         if ( lists.hasOwnProperty(listKey) === false ) { continue; }
         const list = lists[listKey];
         if ( list.content !== 'filters' ) { continue; }
-        const daysSinceUpdated = Math.floor((
-            Date.now() -
-            list.writeTime
-        ) / 864000) / 100;
-        const daysBeforeNextUpdate = Math.floor((
-            list.writeTime +
-            list.updateAfter * 86400000 -
-            Date.now()
-        ) / 864000) / 100;
-        const listDetails = {
-            title: list.title !== '' && list.title !== listKey
-                ? list.title
-                : undefined,
-            daysSinceUpdated,
-            daysBeforeNextUpdate,
-        };
         const used = µb.selectedFilterLists.includes(listKey);
+        const listDetails = {};
+        if ( used ) {
+            if ( typeof list.entryCount === 'number' ) {
+                listDetails['filters used/total'] =
+                    `${list.entryUsedCount} / ${list.entryCount}`;
+            }
+            if ( typeof list.writeTime === 'number' ) {
+                const last = Math.floor((
+                    list.writeTime -
+                    Date.now()
+                ) / 864000) / 100;
+                const next = Math.floor((
+                    list.writeTime +
+                    list.updateAfter * 86400000 -
+                    Date.now()
+                ) / 864000) / 100;
+                listDetails['updated last/next (days)'] = `${last} / ${next}`;
+            }
+        }
         if ( list.isDefault ) {
             if ( used ) {
                 defaultListset[listKey] = listDetails;
