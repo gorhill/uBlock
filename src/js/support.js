@@ -146,6 +146,7 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
     });
 
     uDom('#selectAllButton').on('click', ( ) => {
+        cmEditor.focus();
         cmEditor.execCommand('selectAll');
     });
 })();
