@@ -1571,7 +1571,9 @@
                 typeof url === 'string' &&
                 url.includes('gql') &&
                 init instanceof Object &&
-                init.headers instanceof Object
+                init.headers instanceof Object &&
+                typeof init.body == 'string' &&
+                init.body.includes('PlaybackAccessToken')
             ) {
                 const { headers } = init;
                 if ( typeof headers['X-Device-Id'] === 'string' ) {
