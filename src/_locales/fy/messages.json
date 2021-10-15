@@ -56,7 +56,7 @@
     "description": "appears as tab name in dashboard"
   },
   "supportPageName": {
-    "message": "Support",
+    "message": "Stipe",
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
@@ -900,7 +900,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "As in filterlist bywurke wurde moat, wurdt in willekeurich keazen CDN brûkt",
+    "message": "As in filterlist bywurke wurde moat, wurdt samar in CDN brûkt",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
