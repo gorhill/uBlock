@@ -27,8 +27,15 @@
 
 let supportData;
 
+const uselessKeys = [
+    'modifiedUserSettings.popupPanelSections',
+    'modifiedUserSettings.externalLists',
+    'modifiedUserSettings.importedLists',
+];
+
 const sensitiveValues = [
     'filterset',
+    'modifiedUserSettings.popupPanelSections',
     'modifiedHiddenSettings.userResourcesLocation',
     'trustedset.added',
     'hostRuleset.added',
@@ -42,6 +49,16 @@ const sensitiveKeys = [
 
 /******************************************************************************/
 
+function removeKey(data, prop) {
+    if ( data instanceof Object === false ) { return; }
+    const pos = prop.indexOf('.');
+    if ( pos !== -1 ) {
+        const key = prop.slice(0, pos);
+        return removeKey(data[key], prop.slice(pos + 1));
+    }
+    delete data[prop];
+}
+
 function redactValue(data, prop) {
     if ( data instanceof Object === false ) { return; }
     const pos = prop.indexOf('.');
@@ -51,7 +68,11 @@ function redactValue(data, prop) {
     let value = data[prop];
     if ( value === undefined ) { return; }
     if ( Array.isArray(value) ) {
-        value = `[array of ${value.length} redacted]`;
+        if ( value.length !== 0 ) {
+            value = `[array of ${value.length} redacted]`;
+        } else {
+            value = '[empty]';
+        }
     } else {
         value = '[redacted]';
     }
@@ -76,14 +97,39 @@ function redactKeys(data, prop) {
     }
 }
 
+function patchEmptiness(data, prop) {
+    const entry = data[prop];
+    if ( Array.isArray(entry) && entry.length === 0 ) {
+        data[prop] = '[empty]';
+        return;
+    }
+    if ( entry instanceof Object === false ) { return; }
+    if ( Object.keys(entry).length === 0 ) {
+        data[prop] = '[none]';
+        return;
+    }
+    for ( const key in entry ) {
+        patchEmptiness(entry, key);
+    }
+}
+
+function addDetailsToReportURL(id) {
+    const text = cmEditor.getValue();
+    const elem = uDom.nodeFromId(id);
+    const url = new URL(elem.getAttribute('data-url'));
+    url.searchParams.set('configuration', `<details>\n\n${text}\n</details>`);
+    elem.setAttribute('data-url', url);
+}
+
 function showData() {
     const shownData = JSON.parse(JSON.stringify(supportData));
+    uselessKeys.forEach(prop => { removeKey(shownData, prop); });
     if ( document.body.classList.contains('redacted') ) {
         sensitiveValues.forEach(prop => { redactValue(shownData, prop); });
         sensitiveKeys.forEach(prop => { redactKeys(shownData, prop); });
-
-        // Redact list entries which could be hosted locally
-        
+    }
+    for ( const prop in shownData ) {
+        patchEmptiness(shownData, prop);
     }
     const text = JSON.stringify(shownData, null, 2)
         .split('\n')
@@ -95,9 +141,13 @@ function showData() {
                 .replace( /(?:"|"|\}|\]),?$/, '');
         })
         .filter(v => v.trim() !== '')
-        .join('\n');
-    cmEditor.setValue(text + '\n');
+        .join('\n') + '\n';
+
+    cmEditor.setValue(text);
     cmEditor.clearHistory();
+
+    addDetailsToReportURL('filterReport');
+    addDetailsToReportURL('bugReport');
 }
 
 /******************************************************************************/
@@ -126,11 +176,12 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
     showData();
 
     uDom('[data-url]').on('click', ev => {
-        const url = ev.target.getAttribute('data-url');
+        const elem = ev.target.closest('[data-url]');
+        const url = elem.getAttribute('data-url');
         if ( typeof url !== 'string' || url === '' ) { return; }
         vAPI.messaging.send('default', {
             what: 'gotoURL',
-            details: { url, select: true },
+            details: { url, select: true, index: -1 },
         });
         ev.preventDefault();
     });

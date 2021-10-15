@@ -1230,32 +1230,21 @@ const getSupportData = async function() {
         }
     };
 
-    let modifiedUserSettings = µb.getModifiedSettings(
+    const modifiedUserSettings = µb.getModifiedSettings(
         µb.userSettings,
         µb.userSettingsDefault
     );
-    delete modifiedUserSettings.externalLists;
-    delete modifiedUserSettings.importedLists;
-    if ( Object.keys(modifiedUserSettings).length === 0 ) {
-        modifiedUserSettings = 'none';
-    }
 
-    let modifiedHiddenSettings = µb.getModifiedSettings(
+    const modifiedHiddenSettings = µb.getModifiedSettings(
         µb.hiddenSettings,
         µb.hiddenSettingsDefault
     );
-    if ( Object.keys(modifiedHiddenSettings).length === 0 ) {
-        modifiedHiddenSettings = 'none';
-    }
 
     let filterset = [];
     const userFilters = await µb.loadUserFilters();
     for ( const line of userFilters.content.split(/\s*\n+\s*/) ) {
         if ( /^($|![^#])/.test(line) ) { continue; }
         filterset.push(line);
-    }
-    if ( filterset.length === 0 ) {
-        filterset = undefined;
     }
 
     const lists = µb.availableFilterLists;
@@ -1317,22 +1306,22 @@ const getSupportData = async function() {
         modifiedUserSettings,
         modifiedHiddenSettings,
         listset: {
-            'default': defaultListset,
-            added: addedListset,
             removed: removedListset,
+            added: addedListset,
+            default: defaultListset,
         },
-        filterset,
         trustedset: diffArrays(
             µb.arrayFromWhitelist(µb.netWhitelist),
             µb.netWhitelistDefault
         ),
-        hostRuleset: diffArrays(
-            sessionFirewall.toArray(),
-            µb.dynamicFilteringDefault
-        ),
+        filterset,
         switchRuleset: diffArrays(
             sessionSwitches.toArray(),
             µb.hostnameSwitchesDefault
+        ),
+        hostRuleset: diffArrays(
+            sessionFirewall.toArray(),
+            µb.dynamicFilteringDefault
         ),
         urlRuleset: diffArrays(
             sessionURLFiltering.toArray(),

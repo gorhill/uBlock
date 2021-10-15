@@ -21,6 +21,10 @@ button {
     margin-inline-end: 1em;
         -webkit-margin-end: 1em;
     }
+span[data-url] {
+    color: var(--link-ink);
+    cursor: pointer;
+    }
 
 body.redacted #redactButton {
     display: none;

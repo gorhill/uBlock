@@ -26,13 +26,6 @@
 /******************************************************************************/
 
 (async ( ) => {
-    document.querySelector(
-        '[href="logger-ui.html"]'
-    ).addEventListener(
-        'click',
-        self.uBlockDashboard.openOrSelectPage
-    );
-
     const appData = await vAPI.messaging.send('dashboard', {
         what: 'getAppData',
     });
