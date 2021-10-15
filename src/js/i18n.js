@@ -39,35 +39,14 @@
 //   No HTML entities are allowed, there is code to handle existing HTML
 //   entities already present in translation files until they are all gone.
 
-const reSafeTags = /^([\s\S]*?)<(b|code|em|i|span)>(.+?)<\/\2>([\s\S]*)$/;
-const reSafeLink = /^([\s\S]*?)<(a href=['"]https:\/\/[^'" <>]+['"])>(.+?)<\/a>([\s\S]*)$/;
-const reLink = /^a href=(['"])(https:\/\/[^'"]+)\1$/;
-
-const safeTextToTagNode = function(text) {
-    if ( text.lastIndexOf('a ', 0) === 0 ) {
-        const matches = reLink.exec(text);
-        if ( matches === null ) { return null; }
-        const node = document.createElement('a');
-        node.setAttribute('href', matches[2]);
-        return node;
-    }
-    // Firefox extension validator warns if using a variable as argument for
-    // document.createElement().
-    switch ( text ) {
-    case 'b':
-        return document.createElement('b');
-    case 'code':
-        return document.createElement('code');
-    case 'em':
-        return document.createElement('em');
-    case 'i':
-        return document.createElement('i');
-    case 'span':
-        return document.createElement('span');
-    default:
-        break;
-    }
-};
+const allowedTags = new Set([
+    'a',
+    'b',
+    'code',
+    'em',
+    'i',
+    'span',
+]);
 
 const expandHtmlEntities = (( ) => {
     const entities = new Map([
@@ -124,21 +103,20 @@ const safeTextToDOM = function(text, parent) {
     text = text.replace(/^<p>|<\/p>/g, '')
                .replace(/<p>/g, '\n\n');
     // Parse allowed HTML tags.
-    let matches = reSafeTags.exec(text);
-    if ( matches === null ) {
-        matches = reSafeLink.exec(text);
-        if ( matches === null ) {
-            parent.appendChild(safeTextToTextNode(text));
-            return;
+    const domParser = new DOMParser();
+    const parsedDoc = domParser.parseFromString(text, 'text/html');
+    for (;;) {
+        const node = parsedDoc.body.firstChild;
+        if ( node === null ) { break; }
+        if (
+            node.nodeType === 3 ||
+            node.nodeType === 1 && allowedTags.has(node.localName)
+        ) {
+            parent.appendChild(node);
+        } else {
+            node.remove();
         }
     }
-    const fragment = document.createDocumentFragment();
-    safeTextToDOM(matches[1], fragment);
-    let node = safeTextToTagNode(matches[2]);
-    safeTextToDOM(matches[3], node);
-    fragment.appendChild(node);
-    safeTextToDOM(matches[4], fragment);
-    parent.appendChild(fragment);
 };
 
 /******************************************************************************/
