@@ -232,7 +232,7 @@ const domLayout = (function() {
     };
 
     const domNodeFactory = function(level, node) {
-        var localName = node.localName;
+        const localName = node.localName;
         if ( skipTagNames.has(localName) ) { return null; }
         // skip uBlock's own nodes
         if ( node.classList.contains(sessionId) ) { return null; }
@@ -245,14 +245,14 @@ const domLayout = (function() {
     // Collect layout data.
 
     const getLayoutData = function() {
-        var layout = [];
-        var stack = [];
-        var node = document;
-        var domNode;
-        var lvl = 0;
+        const layout = [];
+        const stack = [];
+        let lvl = 0;
+        let node = document.documentElement;
+        if ( node === null ) { return layout; }
 
         for (;;) {
-            domNode = domNodeFactory(lvl, node);
+            const domNode = domNodeFactory(lvl, node);
             if ( domNode !== null ) {
                 layout.push(domNode);
             }
