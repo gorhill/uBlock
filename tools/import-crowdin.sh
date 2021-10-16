@@ -78,7 +78,7 @@ cp $SRC/zh-TW/messages.json $DES/zh_TW/messages.json
 # uBO does not use `$`, so any instance of `$` must be investigated.
 # See https://issues.adblockplus.org/ticket/6666
 echo "*** uBlock: Instances of '\$':"
-grep -FR "$" $DES/
+grep -FR "$" $DES/ || true
 
 #
 
