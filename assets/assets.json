@@ -485,8 +485,7 @@
 		"cdnURLs": [
 			"https://gitcdn.xyz/repo/EasyList-Lithuania/easylist_lithuania/master/easylistlithuania.txt",
 			"https://cdn.jsdelivr.net/gh/EasyList-Lithuania/easylist_lithuania@master/easylistlithuania.txt",
-			"https://cdn.statically.io/gl/DandelionSprout/easylist_lithuania/raw/master/easylistlithuania.txt",
-			"https://raw.githubusercontent.com/EasyList-Lithuania/easylist_lithuania/master/easylistlithuania.txt"
+			"https://cdn.statically.io/gl/DandelionSprout/easylist_lithuania/raw/master/easylistlithuania.txt"
 		],
 		"supportURL": "https://github.com/EasyList-Lithuania/easylist_lithuania"
 	},
@@ -520,8 +519,7 @@
 		"cdnURLs": [
 			"https://gitcdn.xyz/repo/DandelionSprout/adfilt/master/NorwegianList.txt",
 			"https://cdn.jsdelivr.net/gh/DandelionSprout/adfilt@master/NorwegianList.txt",
-			"https://cdn.statically.io/gl/DandelionSprout/adfilt/master/NorwegianList.txt",
-			"https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianList.txt"
+			"https://cdn.statically.io/gl/DandelionSprout/adfilt/master/NorwegianList.txt"
 		],
 		"supportURL": "https://github.com/DandelionSprout/adfilt"
 	},
