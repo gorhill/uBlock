@@ -75,6 +75,20 @@ const safeTextToTextNode = function(text) {
     return document.createTextNode(expandHtmlEntities(text));
 };
 
+const sanitizeElement = function(node) {
+    if ( allowedTags.has(node.localName) === false ) { return null; }
+    node.removeAttribute('style');
+    let child = node.firstElementChild;
+    while ( child !== null ) {
+        const next = child.nextElementSibling;
+        if ( sanitizeElement(child) === null ) {
+            child.remove();
+        }
+        child = next;
+    }
+    return node;
+};
+
 const safeTextToDOM = function(text, parent) {
     if ( text === '' ) { return; }
 
@@ -97,6 +111,7 @@ const safeTextToDOM = function(text, parent) {
         }
         return;
     }
+
     // Slow path.
     // `<p>` no longer allowed. Code below can be removed once all <p>'s are
     // gone from translation files.
@@ -105,17 +120,21 @@ const safeTextToDOM = function(text, parent) {
     // Parse allowed HTML tags.
     const domParser = new DOMParser();
     const parsedDoc = domParser.parseFromString(text, 'text/html');
-    for (;;) {
-        const node = parsedDoc.body.firstChild;
-        if ( node === null ) { break; }
-        if (
-            node.nodeType === 3 ||
-            node.nodeType === 1 && allowedTags.has(node.localName)
-        ) {
+    let node = parsedDoc.body.firstChild;
+    while ( node !== null ) {
+        const next = node.nextSibling;
+        switch ( node.nodeType ) {
+        case 1: // element
+            if ( sanitizeElement(node) === null ) { break; }
             parent.appendChild(node);
-        } else {
-            node.remove();
+            break;
+        case 3: // text
+            parent.appendChild(node);
+            break;
+        default:
+            break;
         }
+        node = next;
     }
 };
 
