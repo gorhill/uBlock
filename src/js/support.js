@@ -114,10 +114,13 @@ function patchEmptiness(data, prop) {
 }
 
 function addDetailsToReportURL(id) {
-    const text = cmEditor.getValue();
+    const text = cmEditor.getValue().replace(/^    /gm, '');
     const elem = uDom.nodeFromId(id);
     const url = new URL(elem.getAttribute('data-url'));
-    url.searchParams.set('configuration', `<details>\n\n${text}\n</details>`);
+    url.searchParams.set(
+        'configuration',
+        '<details>\n\n```yaml\n' + text + '\n```\n</details>'
+    );
     elem.setAttribute('data-url', url);
 }
 
@@ -138,7 +141,7 @@ function showData() {
             return v
                 .replace( /^(   *)"/, '  $1')
                 .replace( /^( +.*[^\\])(?:": "|": \{$|": \[$|": )/, '$1: ')
-                .replace( /(?:"|"|\}|\]),?$/, '');
+                .replace( /(?:",?|\},?|\],?|,)$/, '');
         })
         .filter(v => v.trim() !== '')
         .join('\n') + '\n';
