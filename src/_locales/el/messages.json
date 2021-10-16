@@ -852,59 +852,59 @@
     "description": "Label for radio-button to pick export text format"
   },
   "supportOpenButton": {
-    "message": "Open",
+    "message": "Άνοιγμα",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportS1H": {
-    "message": "Documentation",
+    "message": "Οδηγίες",
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Read the documentation at <code>uBlock/wiki</code> to learn about all of uBlock Origin's features.",
+    "message": "Διαβάστε τις οδηγίες στο <code>uBlock/wiki</code> για να μάθετε για όλες τις δυνατότητες του uBlock Origin.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
-    "message": "Questions and support",
+    "message": "Ερωτήσεις και υποστήριξη",
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
-    "message": "Answers to questions and other kinds of help support is provided on the subreddit <code>/r/uBlockOrigin</code>.",
+    "message": "Απαντήσεις σε ερωτήσεις και άλλα είδη υποστήριξης βοήθειας παρέχονται στο subreddit <code>/r/uBlockOrigin</code>.",
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "Filter issues/website is broken",
+    "message": "Προβλήματα φίλτρου/ιστότοπος είναι κατεστραμμένος",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Report filter issues with specific websites to <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. Requires a GitHub account.",
+    "message": "Αναφέρετε προβλήματα φίλτρου με συγκεκριμένους ιστότοπους στο <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. Απαιτείται λογαριασμός GitHub.",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Important:</b> Avoid using other similarly-purposed blockers along with uBlock Origin, as this may cause filter issues on specific websites.",
+    "message": "<b>Σημαντικό:</b> Αποφύγετε τη χρήση άλλων blocker με παρόμοιο σκοπό μαζί με το uBlock Origin, καθώς αυτό μπορεί να προκαλέσει προβλήματα φιλτραρίσματος σε συγκεκριμένους ιστότοπους.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Tips:</b> Be sure your filter lists are up to date. <span data-url=\"logger-ui.html#_\">The logger</span> is the primary tool to diagnose filter-related issues.",
+    "message": "<b>Συμβουλές:</b> Βεβαιωθείτε ότι οι λίστες φίλτρων σας είναι ενημερωμένες. <span data-url=\"logger-ui.html#_\">Ο καταγραφέας</span> είναι το κύριο εργαλείο για τη διάγνωση προβλημάτων που σχετίζονται με το φίλτρο.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
-    "message": "Bug report",
+    "message": "Αναφορά σφαλμάτων",
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Report issues with uBlock Origin itself to <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>. Requires a GitHub account.",
+    "message": "Αναφέρετε προβλήματα με το ίδιο το uBlock Origin στο <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>. Απαιτείται λογαριασμός GitHub.",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting Information",
+    "message": "Πληροφορίες αντιμετώπισης προβλημάτων",
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "Below is technical information that might be useful when volunteers are trying to help you solve a problem.",
+    "message": "Παρακάτω υπάρχουν τεχνικές πληροφορίες που μπορεί να είναι χρήσιμες όταν εθελοντές προσπαθούν να σας βοηθήσουν να λύσετε ένα πρόβλημα.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Important:</b> Potentially private or sensitive information is redacted by default. Redacted information may make it more difficult to solve a problem.",
+    "message": "<b>Σημαντικό:</b> Πιθανώς ιδιωτικές ή ευαίσθητες πληροφορίες αναπροσαρμόζονται από προεπιλογή. Οι αναδιατυπωμένες πληροφορίες ενδέχεται να δυσκολέψουν την επίλυση ενός προβλήματος.",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportRedact": {
@@ -1132,7 +1132,7 @@
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "genericSelectAll": {
-    "message": "Select all",
+    "message": "Επιλογή όλων",
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleBlockingProfile": {
