@@ -191,25 +191,44 @@
 		"title": "Online Malicious URL Blocklist",
 		"contentURL": [
 			"https://curben.gitlab.io/malware-filter/urlhaus-filter-online.txt",
-			"https://raw.githubusercontent.com/curbengh/urlhaus-filter/master/urlhaus-filter-online.txt",
 			"assets/thirdparties/urlhaus-filter/urlhaus-filter-online.txt"
 		],
 		"cdnURLs": [
 			"https://cdn.statically.io/gl/curben/urlhaus-filter/master/urlhaus-filter-online.txt",
+			"https://raw.githubusercontent.com/curbengh/urlhaus-filter/master/urlhaus-filter-online.txt",
 			"https://gitcdn.xyz/repo/curbengh/urlhaus-filter/master/urlhaus-filter-online.txt",
 			"https://cdn.jsdelivr.net/gh/curbengh/urlhaus-filter/urlhaus-filter-online.txt",
-			"https://raw.githubusercontent.com/curbengh/urlhaus-filter/master/urlhaus-filter-online.txt",
 			"https://curben.gitlab.io/malware-filter/urlhaus-filter-online.txt"
 		],
 		"supportURL": "https://gitlab.com/curben/urlhaus-filter#urlhaus-malicious-url-blocklist"
 	},
-	"spam404-0": {
+	"curben-phishing": {
 		"content": "filters",
 		"group": "malware",
 		"off": true,
-		"title": "Spam404",
-		"contentURL": "https://raw.githubusercontent.com/Spam404/lists/master/adblock-list.txt",
-		"supportURL": "http://www.spam404.com/"
+		"title": "Phishing URL Blocklist",
+		"contentURL": "https://curben.gitlab.io/malware-filter/phishing-filter.txt",
+		"cdnURLs": [
+			"https://cdn.statically.io/gh/curbengh/phishing-filter/master/dist/phishing-filter.txt",
+			"https://raw.githubusercontent.com/curbengh/phishing-filter/master/dist/phishing-filter.txt",
+			"https://gitcdn.xyz/repo/curbengh/phishing-filter/master/dist/phishing-filter.txt",
+			"https://cdn.jsdelivr.net/gh/curbengh/phishing-filter/dist/phishing-filter.txt"
+		],
+		"supportURL": "https://gitlab.com/curben/phishing-filter#phishing-url-blocklist"
+	},
+	"curben-pup": {
+		"content": "filters",
+		"group": "malware",
+		"off": true,
+		"title": "PUP Domains Blocklist",
+		"contentURL": "https://curben.gitlab.io/malware-filter/pup-filter.txt",
+		"cdnURLs": [
+			"https://cdn.statically.io/gl/curben/phishing-filter/master/dist/pup-filter.txt",
+			"https://raw.githubusercontent.com/curbengh/phishing-filter/master/dist/pup-filter.txt",
+			"https://gitcdn.xyz/repo/curbengh/phishing-filter/master/dist/pup-filter.txt",
+			"https://cdn.jsdelivr.net/gh/curbengh/phishing-filter/dist/pup-filter.txt"
+		],
+		"supportURL": "https://gitlab.com/curben/pup-filter#pup-domains-blocklist"
 	},
 	"adguard-annoyance": {
 		"content": "filters",
