@@ -56,7 +56,7 @@
     "description": "appears as tab name in dashboard"
   },
   "supportPageName": {
-    "message": "Support",
+    "message": "Destek",
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
@@ -852,67 +852,67 @@
     "description": "Label for radio-button to pick export text format"
   },
   "supportOpenButton": {
-    "message": "Open",
+    "message": "Aç",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportS1H": {
-    "message": "Documentation",
+    "message": "Belgeler",
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Read the documentation at <code>uBlock/wiki</code> to learn about all of uBlock Origin's features.",
+    "message": "uBlock Origin'in tüm özellikleri ile igili bilgi edinmek için <code>uBlock/wiki</code> adresindeki belgeri okuyun.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
-    "message": "Questions and support",
+    "message": "Sorular ve destek",
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
-    "message": "Answers to questions and other kinds of help support is provided on the subreddit <code>/r/uBlockOrigin</code>.",
+    "message": "Sorulara cevaplar ve diğer türlü yardım desteği <code>/r/uBlockOrigin</code> subreddit'inde sunulmaktadır.",
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "Filter issues/website is broken",
+    "message": "Filtre sorunları/websitesi bozuk",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Report filter issues with specific websites to <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. Requires a GitHub account.",
+    "message": "Belirli websiteleriyle ilgili filtre sorunlarını  <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> sorun izleyicisine</span> bildirin. Github hesabı gerektirir.",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Important:</b> Avoid using other similarly-purposed blockers along with uBlock Origin, as this may cause filter issues on specific websites.",
+    "message": "<b>Önemli:</b> uBlock Origin'le birlikte, belirli websitelerinde filtre sorunlarına neden olabileceği için, diğer benzer amaçlı engellicileri kullanmaktan kaçının.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Tips:</b> Be sure your filter lists are up to date. <span data-url=\"logger-ui.html#_\">The logger</span> is the primary tool to diagnose filter-related issues.",
+    "message": "<b>İpuçları:</b> Filtre listenizin güncelliğinden emin olun. <span data-url=\"logger-ui.html#_\">Günlükçü</span> filtre bağlantılı sorunları tanılamada temel araçtır.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
-    "message": "Bug report",
+    "message": "Hata raporu",
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Report issues with uBlock Origin itself to <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>. Requires a GitHub account.",
+    "message": "uBlock Origin'in kendisiyle ilgili sorunlarını <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> sorun izleyicisine</span> bildirin. Github hesabı gerektirir.",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting Information",
+    "message": "Hata Giderme Bilgisi",
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "Below is technical information that might be useful when volunteers are trying to help you solve a problem.",
+    "message": "Aşağıdaki, gönüllüler size bir sorunu çözmede yardım etmeye çalışırken, faydalı olabilecek teknik bilgidir.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Important:</b> Potentially private or sensitive information is redacted by default. Redacted information may make it more difficult to solve a problem.",
+    "message": "<b>Önemli:</b> Olası gizli ve hassas bilgiler öntanımlı olarak kısaltılır. Kısaltılmış bilgiler bir sorunu çözmeyi zorlaştırabilir.",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportRedact": {
-    "message": "Redact",
+    "message": "Kısalt",
     "description": "Text for 'Redact' button"
   },
   "supportUnredact": {
-    "message": "Unredact",
+    "message": "Kısaltma",
     "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
@@ -1132,7 +1132,7 @@
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "genericSelectAll": {
-    "message": "Select all",
+    "message": "Tümünü seç",
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleBlockingProfile": {

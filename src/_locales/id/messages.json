@@ -852,67 +852,67 @@
     "description": "Label for radio-button to pick export text format"
   },
   "supportOpenButton": {
-    "message": "Open",
+    "message": "Buka",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportS1H": {
-    "message": "Documentation",
+    "message": "Dokumentasi",
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Read the documentation at <code>uBlock/wiki</code> to learn about all of uBlock Origin's features.",
+    "message": "Baca dokumentasi di <code>uBlock/wiki</code> untuk mempelajari semua fitur uBlock Origin.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
-    "message": "Questions and support",
+    "message": "Pertanyaan dan dukungan",
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
-    "message": "Answers to questions and other kinds of help support is provided on the subreddit <code>/r/uBlockOrigin</code>.",
+    "message": "Jawaban pertanyaan dan dukungan bantuan lainnya tersedia di subreddit <code>/r/uBlockOrigin</code>.",
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "Filter issues/website is broken",
+    "message": "Masalah filter / situs web rusak",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Report filter issues with specific websites to <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. Requires a GitHub account.",
+    "message": "Laporkan masalah filter pada situs web ke <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">pelacak masalah <code>uBlockOrigin/uAssets</code></span>. Membutuhkan akun GitHub.",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Important:</b> Avoid using other similarly-purposed blockers along with uBlock Origin, as this may cause filter issues on specific websites.",
+    "message": "<b>Penting:</b> Hindari menggunakan pemblokir sejenis bersamaan dengan uBlock Origin, karena mungkin akan mengakibatkan terjadinya masalah filter pada situs web tertentu.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Tips:</b> Be sure your filter lists are up to date. <span data-url=\"logger-ui.html#_\">The logger</span> is the primary tool to diagnose filter-related issues.",
+    "message": "<b>Tips:</b> Pastikan filter Anda selalu yang terbaru. <span data-url=\"logger-ui.html#_\">Pencatat log</span> adalah utilitas utama untuk mendiagnosis masalah yang terkait dengan filter.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
-    "message": "Bug report",
+    "message": "Laporan bug",
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Report issues with uBlock Origin itself to <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>. Requires a GitHub account.",
+    "message": "Laporkan masalah ekstensi uBlock Origin ke <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\">pelacak masalah <code>uBlockOrigin/uBlock-issue</code></span>. Membutuhkan akun GitHub.",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting Information",
+    "message": "Informasi penyelesaian masalah",
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "Below is technical information that might be useful when volunteers are trying to help you solve a problem.",
+    "message": "Di bawah ini adalah informasi teknis yang mungkin berguna saat sukarelawan berusaha membantu memecahkan masalah Anda.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Important:</b> Potentially private or sensitive information is redacted by default. Redacted information may make it more difficult to solve a problem.",
+    "message": "<b>Penting:</b> Informasi yang sifatnya privat dan sensitif disensor secara bawaan. Informasi yang disensor mungkin akan membuat proses memecahkan masalah semakin sulit.",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportRedact": {
-    "message": "Redact",
+    "message": "Sensor",
     "description": "Text for 'Redact' button"
   },
   "supportUnredact": {
-    "message": "Unredact",
+    "message": "Batal sensor",
     "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
@@ -1132,7 +1132,7 @@
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "genericSelectAll": {
-    "message": "Select all",
+    "message": "Pilih semua",
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleBlockingProfile": {
