@@ -57,6 +57,7 @@ a {
 code, .code {
     background-color: var(--button-surface);
     font-family: monospace;
+    font-size: smaller;
     padding: 4px;
     }
 hr {
