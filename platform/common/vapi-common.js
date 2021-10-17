@@ -66,19 +66,16 @@ vAPI.webextFlavor = {
         typeof browser.runtime.getBrowserInfo === 'function'
     ) {
         browser.runtime.getBrowserInfo().then(info => {
-            flavor.major = parseInt(info.version, 10) || 60;
+            flavor.major = parseInt(info.version, 10) || flavor.major;
             soup.add(info.vendor.toLowerCase())
                 .add(info.name.toLowerCase());
-            if ( soup.has('firefox') && flavor.major < 57 ) {
-                soup.delete('html_filtering');
-            }
             dispatch();
         });
         if ( browser.runtime.getURL('').startsWith('moz-extension://') ) {
             soup.add('firefox')
                 .add('user_stylesheet')
                 .add('html_filtering');
-            flavor.major = 60;
+            flavor.major = 78;
         }
         return;
     }
