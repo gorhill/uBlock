@@ -1,5 +1,5 @@
-/* https://protocol.mozilla.org/assets/docs/css/protocol.css */
 @charset "UTF-8";
+/* https://protocol.mozilla.org/assets/docs/css/protocol.css */
 @font-face {
     font-family: Inter;
     font-style: normal;
@@ -58,7 +58,7 @@ code, .code {
     background-color: var(--button-surface);
     font-family: monospace;
     font-size: smaller;
-    padding: 4px;
+    padding: 2px 4px;
     }
 hr {
     border: 0;
