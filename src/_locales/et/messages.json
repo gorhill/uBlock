@@ -856,11 +856,11 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportS1H": {
-    "message": "Dokumentatsioon",
+    "message": "Dokumendid",
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Loe dokumentatsiooni kohas <code>uBlock/wiki</code>, et avastada kõik uBlock Origini funktsioonid.",
+    "message": "Loe dokumente kohas <code>uBlock/wiki</code>, et avastada kõik uBlock Origini võimalusi.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
@@ -880,11 +880,11 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Oluline:</b> Väldi teiste sarnaselt toimivate blokeerijate kasutamist koos uBlock Originiga, see võib põhjustada teatud lehtedel filtrivigu.",
+    "message": "<b>Oluline:</b> väldi teiste sarnaselt toimivate blokeerijate kasutamist koos uBlock Originiga, see võib põhjustada teatud lehtedel filtrivigu.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Nõuanne:</b> Veendu, et su filtrinimekirjad on ajakohased. <span data-url=\"logger-ui.html#_\">Logija</span> on peamine tööriist filtritega seotud vigade diagnoosimiseks.",
+    "message": "<b>Nõuanne:</b> veendu, et filtrinimekirjad on ajakohased. <span data-url=\"logger-ui.html#_\">Logija</span> on peamine tööriist filtritega seotud vigade diagnoosimiseks.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
@@ -904,7 +904,7 @@
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Oluline:</b> Potentsiaalselt privaatne või tundlik info on vaikimisi kaetud. Kaetud info võib probleemi lahendamist raskendada.",
+    "message": "<b>Oluline:</b> potentsiaalselt privaatne või tundlik info on vaikimisi kaetud. Kaetud info võib probleemi lahendamist raskendada.",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportRedact": {

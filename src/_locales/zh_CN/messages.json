@@ -888,11 +888,11 @@
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
-    "message": "漏洞报告",
+    "message": "错误报告",
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "若发现该工具的相关漏洞，请至 <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\">https://github.com/uBlockOrigin/uBlock-issues/issues</span> 提交详细报告。（需注册並登录 GitHub 账户）",
+    "message": "将 uBlock Origin 本身的问题反馈至 <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> 问题跟踪器</span>。需要 GitHub 账号。",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
