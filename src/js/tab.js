@@ -63,7 +63,11 @@ import {
         if ( tabId < 0 ) {
             return 'http://behind-the-scene/';
         }
-        tabURLNormalizer.href = tabURL;
+        try {
+            tabURLNormalizer.href = tabURL;
+        } catch(ex) {
+            return tabURL;
+        }
         const protocol = tabURLNormalizer.protocol.slice(0, -1);
         if ( protocol === 'https' || protocol === 'http' ) {
             return tabURLNormalizer.href;
@@ -869,11 +873,18 @@ housekeep itself.
 
 vAPI.Tabs = class extends vAPI.Tabs {
     onActivated(details) {
+        const { tabId } = details;
+        if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/757
+        const pageStore = µb.pageStoreFromTabId(tabId);
+        if ( pageStore === null ) {
+            this.onNewTab(tabId);
+            return;
+        }
         super.onActivated(details);
-        if ( vAPI.isBehindTheSceneTabId(details.tabId) ) { return; }
         // https://github.com/uBlockOrigin/uBlock-issues/issues/680
-        µb.updateToolbarIcon(details.tabId);
-        contextMenu.update(details.tabId);
+        µb.updateToolbarIcon(tabId);
+        contextMenu.update(tabId);
     }
 
     onClosed(tabId) {
@@ -923,10 +934,19 @@ vAPI.Tabs = class extends vAPI.Tabs {
         }
     }
 
+    async onNewTab(tabId) {
+        const tab = await vAPI.tabs.get(tabId);
+        if ( tab === null ) { return; }
+        const { id, url = '' } = tab;
+        if ( url === '' ) { return; }
+        µb.tabContextManager.commit(id, url);
+        µb.bindTabToPageStore(id, 'tabUpdated', tab);
+        contextMenu.update(id);
+    }
+
     // It may happen the URL in the tab changes, while the page's document
     // stays the same (for instance, Google Maps). Without this listener,
     // the extension icon won't be properly refreshed.
-
     onUpdated(tabId, changeInfo, tab) {
         super.onUpdated(tabId, changeInfo, tab);
         if ( !tab.url || tab.url === '' ) { return; }
