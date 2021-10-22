@@ -54,16 +54,6 @@ window.addEventListener('webextFlavor', function() {
 
 /******************************************************************************/
 
-vAPI.randomToken = function() {
-    const n = Math.random();
-    return String.fromCharCode(n * 26 + 97) +
-        Math.floor(
-            (0.25 + n * 0.75) * Number.MAX_SAFE_INTEGER
-        ).toString(36).slice(-8);
-};
-
-/******************************************************************************/
-
 vAPI.app = {
     name: manifest.name.replace(/ dev\w+ build/, ''),
     version: (( ) => {
