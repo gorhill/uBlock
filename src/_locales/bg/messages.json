@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Изключения",
+    "message": "Доверени сайтове",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -420,7 +420,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Настройката разрешава синтактично обособяване и налагане на <a href=\"https://adblockplus.org/en/faq_internal#elemhide\"> съвместими с Adblock Plus филтри за &ldquo;скриване на елементи&rdquo;</a>. Козметични по същество, филтрите скриват визуално неприятни елементи в страницата, които иначе не се блокират от системата за филтриране по мрежова заявка.</p><p>Разрешаването ѝ ще увеличи ползваната от uBlock₀ памет.</p>",
+    "message": "Козметичните филтри служат за скриване на елементи в уебстраницата, които се считат за визуално неприятни и които не могат да бъдат блокирани от механизмите за филтриране, базирани на мрежови заявки.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -428,7 +428,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Общокозметични са филтрите, предназначени за прилагане във всички сайтове.<p>И макар че се ползват ефективно в uBlock₀, те могат съществено да увеличат натоварването на паметта и процесора в определени страници, особено в такива обемисти и дългозареждащи се.<p>Разрешаването ѝ ще премахне натоварването им в тях, поради начина на боравене с общокозметични филтри, както и ще намали ползваната от uBlock₀ памет.<p>Ползването на настройката се препоръчва при по-слаби устройства.",
+    "message": "Общокозметични са филтрите, предназначени за прилагане във всички сайтове. Разрешаването на тази опция ще премахне натоварването на паметта и процесора, добавено към уеб страниците в резултат на обработката на общите козметични филтри.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -500,7 +500,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Един филтър на ред. Това може да бъде обикновен адрес или съвместим с Adblock Plus филтър. Редовете с представка &lsquo;!&rsquo; ще бъдат игнорирани.",
+    "message": "Един филтър на ред. Това може да бъде обикновен адрес или филтър, съвместим с EasyList. Редовете с представка <code>!</code> ще бъдат игнорирани.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -584,7 +584,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "Списък на адресите, за които uBlock Origin ще бъде изключен. Един елемент на ред. Недействителните адреси ще бъдат пренебрегнати.",
+    "message": "Списък на адресите, за които uBlock Origin ще бъде изключен. Един запис на ред. Недействителните адреси ще бъдат пренебрегнати и коментирани.",
     "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
@@ -596,7 +596,7 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "ublock-изключения_{{datetime}}.txt",
+    "message": "ublock-доверени_сайтове_{{datetime}}.txt",
     "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
@@ -988,7 +988,7 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: Добавяне на следния адрес към потребителският списък с филтри?\n\nИме: \"{{title}}\"\nURL адрес: {{url}}",
+    "message": "Добавяне на следния адрес към списъците с потребителски филтри?\n\nИме: \"{{title}}\"\nURL адрес: {{url}}",
     "description": "No longer used"
   },
   "subscribeButton": {

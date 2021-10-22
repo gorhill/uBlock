@@ -852,67 +852,67 @@
     "description": "Label for radio-button to pick export text format"
   },
   "supportOpenButton": {
-    "message": "Open",
+    "message": "Iepenje",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportS1H": {
-    "message": "Documentation",
+    "message": "Dokumintaasje",
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Read the documentation at <code>uBlock/wiki</code> to learn about all of uBlock Origin's features.",
+    "message": "Lês de dokumintaasje op <code>uBlock/wiki</code> foar mear ynfo oer alle funksjes fan uBlock Origin.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
-    "message": "Questions and support",
+    "message": "Fragen en stipe",
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
-    "message": "Answers to questions and other kinds of help support is provided on the subreddit <code>/r/uBlockOrigin</code>.",
+    "message": "Antwurden op fragen en oare soarten stipe wurde levere op de subreddit <code>/r/uBlockOrigin</code>.",
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "Filter issues/website is broken",
+    "message": "Filterproblemen/website wurket net",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Report filter issues with specific websites to <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. Requires a GitHub account.",
+    "message": "Meld filterproblemen mei spesifike websites op de <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> probleemtracker</span>. Fereasket in GitHub-account.",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Important:</b> Avoid using other similarly-purposed blockers along with uBlock Origin, as this may cause filter issues on specific websites.",
+    "message": "<b>Wichtich:</b> mij it gebrûk fan oare adblockers foar itselde doel yn kombinaasje mei uBlock Origin, omdat dit op bepaalde websites problemen jaan kin.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Tips:</b> Be sure your filter lists are up to date. <span data-url=\"logger-ui.html#_\">The logger</span> is the primary tool to diagnose filter-related issues.",
+    "message": "<b>Tips:</b> soargje derfoar dat jo filterlisten by-de-tiid binne. <span data-url=\"logger-ui.html#_\">De logger</span> is it primêre helpmiddel foar it analysearjen fan filterrelatearre problemen.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
-    "message": "Bug report",
+    "message": "Bugmelding",
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Report issues with uBlock Origin itself to <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>. Requires a GitHub account.",
+    "message": "Meld problemen mei uBlock Origin sels by de <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> probleemtracker</span>. Fereasket in GitHub-account.",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting Information",
+    "message": "Probleemoplossingsynformaasje",
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "Below is technical information that might be useful when volunteers are trying to help you solve a problem.",
+    "message": "Hjirûnder stiet technyske ynformaasje dy't handich wêze kin wannear't frijwilligers jo probearje te helpen by it oplossen fan in probleem.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Important:</b> Potentially private or sensitive information is redacted by default. Redacted information may make it more difficult to solve a problem.",
+    "message": "<b>Wichtich:</b> mooglik gefoelige of priveegegevens wurde standert redigearre. Redigearre gegevens kinne it oplossen fan in probleem swierder meitsje.",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportRedact": {
-    "message": "Redact",
+    "message": "Redigearje",
     "description": "Text for 'Redact' button"
   },
   "supportUnredact": {
-    "message": "Unredact",
+    "message": "Redigearje ûngedien meitsje",
     "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
@@ -1132,7 +1132,7 @@
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "genericSelectAll": {
-    "message": "Select all",
+    "message": "Alles selektearje",
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleBlockingProfile": {

@@ -56,7 +56,7 @@
     "description": "appears as tab name in dashboard"
   },
   "supportPageName": {
-    "message": "Support",
+    "message": "सहायता",
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
@@ -568,7 +568,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
-    "message": "Sort:",
+    "message": "क्रम में लगाये",
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
@@ -576,11 +576,11 @@
     "description": "English: a sort option for list of rules."
   },
   "rulesSortBySource": {
-    "message": "Source",
+    "message": "स्रोत",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortByDestination": {
-    "message": "Destination",
+    "message": "गंतव्य",
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
@@ -688,7 +688,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinModified": {
-    "message": "modified",
+    "message": "परिवर्तित",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
@@ -852,11 +852,11 @@
     "description": "Label for radio-button to pick export text format"
   },
   "supportOpenButton": {
-    "message": "Open",
+    "message": "खोलें",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportS1H": {
-    "message": "Documentation",
+    "message": "प्रलेखन",
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {

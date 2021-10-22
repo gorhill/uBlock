@@ -860,7 +860,7 @@
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Leia a documentação em <code>uBlock/wiki</code> para saber mais sobre todas as funcionalidades do uBlock Origin.",
+    "message": "Leia a documentação em <code>uBlock/wiki</code> para saber mais acerca de todas as funcionalidades do uBlock Origin.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
@@ -872,19 +872,19 @@
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "Filtro de problemas/website está com falhas",
+    "message": "Problemas de filtros/website está com falhas",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Reportar problemas de filtro com websites específicos para <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. Requer uma conta GitHub.",
+    "message": "Relatar problemas de filtros com websites específicos para o <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">controlador de problemas <code>uBlockOrigin/uAssets</code></span>. Requer uma conta GitHub.",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Importante:</b> Evitar a utilização de outros bloqueadores com propósitos semelhantes juntamente com uBlock Origin, uma vez que isto pode causar problemas de filtragem em websites específicos.",
+    "message": "<b>Importante:</b> Evite a utilização de outros bloqueadores com propósitos semelhantes juntamente com uBlock Origin, uma vez que isto pode causar problemas com filtros em websites específicos.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Dicas:</b> Certifique-se de que as suas listas de filtros estão atualizadas. <span data-url=\"logger-ui.html#_\">O registador</span> é a ferramenta principal para diagnosticar problemas relacionados com o filtro.",
+    "message": "<b>Dicas:</b> Certifique-se de que as suas listas de filtros estão atualizadas. <span data-url=\"logger-ui.html#_\">O registador</span> é a ferramenta principal para diagnosticar problemas relacionados com filtros.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
@@ -892,7 +892,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Reportar problemas com o uBlock Origin em si para <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>. Requer uma conta GitHub.",
+    "message": "Relatar problemas com o uBlock Origin para <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\">controlador de problemas <code>uBlockOrigin/uBlock-issue</code></span>. Requer uma conta GitHub.",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
@@ -900,11 +900,11 @@
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "Abaixo encontra-se informação técnica que pode ser útil quando voluntários estão a tentar ajudá-lo a resolver um problema.",
+    "message": "Abaixo encontra-se informação técnica que pode ser útil quando voluntários estão a tentar ajudar-lhe a resolver um problema.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Importante:</b> A informação potencialmente privada ou sensível é redigida por defeito. A informação redigida pode tornar mais difícil a resolução de um problema.",
+    "message": "<b>Importante:</b> A informação potencialmente privada ou sensível é redigida por predefinição. A informação redigida pode tornar mais difícil a resolução de um problema.",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportRedact": {

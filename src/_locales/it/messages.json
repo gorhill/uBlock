@@ -884,7 +884,7 @@
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Suggerimenti:</b> Assicurati che le tue liste di filtri siano aggiornate. <span data-url=\"logger-ui.html#_\">Il logger</span> è lo strumento principale per diagnosticare i problemi relativi ai filtri.",
+    "message": "<b>Suggerimenti:</b> Assicurati che le tue liste di filtri siano aggiornate. <span data-url=\"logger-ui.html#_\">Il registro</span> è lo strumento principale per diagnosticare i problemi relativi ai filtri.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
@@ -948,11 +948,11 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "Gli elenchi di filtri di uBO sono liberamente ospitati sulla seguente <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a>:",
+    "message": "Gli elenchi di filtri di uBO sono liberamente ospitati sui seguenti <a href=\"https://it.wikipedia.org/wiki/Content_Delivery_Network\">CDN</a>:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "Una CDN selezionata casualmente verrà utilizzata quando è necessario aggiornare un elenco di filtri",
+    "message": "Un CDN selezionato a caso verrà utilizzato quando è necessario aggiornare un elenco di filtri",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
