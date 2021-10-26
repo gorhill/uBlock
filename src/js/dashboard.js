@@ -118,7 +118,7 @@ if ( self.location.hash.slice(1) === 'no-dashboard.html' ) {
     ]);
 
     {
-        const details = results[0];
+        const details = results[0] || {};
         document.body.classList.toggle(
             'canUpdateShortcuts',
             details.canUpdateShortcuts === true
@@ -132,7 +132,7 @@ if ( self.location.hash.slice(1) === 'no-dashboard.html' ) {
     }
 
     {
-        let pane = results[1];
+        let pane = results[1] || null;
         if ( self.location.hash !== '' ) {
             pane = self.location.hash.slice(1) || null;
         }
