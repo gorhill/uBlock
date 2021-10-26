@@ -860,7 +860,7 @@
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "uBlock Origin'in tüm özellikleri ile igili bilgi edinmek için <code>uBlock/wiki</code> adresindeki belgeri okuyun.",
+    "message": "uBlock Origin'in özelliklerinin tamamı hakkında bilgi edinmek için <code>uBlock/wiki</code> adresindeki belgeri okuyun.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
@@ -892,7 +892,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "uBlock Origin'in kendisiyle ilgili sorunlarını <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> sorun izleyicisine</span> bildirin. Github hesabı gerektirir.",
+    "message": "uBlock Origin'in kendisiyle ilgili sorunları <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> sorun izleyicisine</span> bildirin. Github hesabı gerektirir.",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {

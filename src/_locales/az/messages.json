@@ -56,7 +56,7 @@
     "description": "appears as tab name in dashboard"
   },
   "supportPageName": {
-    "message": "Support",
+    "message": "Dəstək",
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
@@ -852,11 +852,11 @@
     "description": "Label for radio-button to pick export text format"
   },
   "supportOpenButton": {
-    "message": "Open",
+    "message": "Aç",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportS1H": {
-    "message": "Documentation",
+    "message": "Dokumentasiya",
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
@@ -864,7 +864,7 @@
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
-    "message": "Questions and support",
+    "message": "Suallar və dəstək",
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
@@ -888,7 +888,7 @@
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
-    "message": "Bug report",
+    "message": "Xəta bildirişi",
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
@@ -916,7 +916,7 @@
     "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
-    "message": "Privacy policy",
+    "message": "Məxfilik siyasəti",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {
@@ -1132,7 +1132,7 @@
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "genericSelectAll": {
-    "message": "Select all",
+    "message": "Hamısını seç",
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleBlockingProfile": {

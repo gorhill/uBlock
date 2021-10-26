@@ -56,7 +56,7 @@
     "description": "appears as tab name in dashboard"
   },
   "supportPageName": {
-    "message": "Mbështetja teknike",
+    "message": "Ndihma teknike",
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
@@ -856,11 +856,11 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportS1H": {
-    "message": "Dokumentacion",
+    "message": "Dokumentacioni",
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Read the documentation at <code>uBlock/wiki</code> to learn about all of uBlock Origin's features.",
+    "message": "Lexoni <code>uBlock/wiki</code> që të mësoni më shumë mbi funksionet e uBlock Origin.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
@@ -872,7 +872,7 @@
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "Filter issues/website is broken",
+    "message": "Probleme filtrash/faqe me defekte",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
@@ -880,11 +880,11 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Important:</b> Avoid using other similarly-purposed blockers along with uBlock Origin, as this may cause filter issues on specific websites.",
+    "message": "<b>Vërejtje:</b> uBlock Origin nuk duhet përdorur njëkohësisht me aplikacionet e ngjashme bllokuese, pasi disa faqe mund të kenë probleme me filtrat.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Tips:</b> Be sure your filter lists are up to date. <span data-url=\"logger-ui.html#_\">The logger</span> is the primary tool to diagnose filter-related issues.",
+    "message": "<b>Këshilla:</b> Sigurohuni që listat e filtrave janë të përditësuara. <span data-url=\"logger-ui.html#_\">Regjistri</span> është instrumenti kryesor për të diagnostikuar problemet me filtrat.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
@@ -1132,7 +1132,7 @@
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "genericSelectAll": {
-    "message": "Zgjidhi të gjitha",
+    "message": "Përzgjedh të gjitha",
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleBlockingProfile": {
