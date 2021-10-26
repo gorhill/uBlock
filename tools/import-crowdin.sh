@@ -60,6 +60,7 @@ cp $SRC/ro/messages.json    $DES/ro/messages.json
 cp $SRC/ru/messages.json    $DES/ru/messages.json
 cp $SRC/sk/messages.json    $DES/sk/messages.json
 cp $SRC/sl/messages.json    $DES/sl/messages.json
+cp $SRC/so/messages.json    $DES/so/messages.json
 cp $SRC/sq/messages.json    $DES/sq/messages.json
 cp $SRC/sr/messages.json    $DES/sr/messages.json
 cp $SRC/sv-SE/messages.json $DES/sv/messages.json
