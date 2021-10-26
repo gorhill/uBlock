@@ -208,25 +208,30 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
         return style || 'value';
     };
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/760#issuecomment-951146371
+    //   Quick fix: auto-escape commas.
     const colorNetOptionSpan = function(stream) {
-        const bits = parser.slices[parserSlot];
-        if ( (bits & parser.BITComma) !== 0  ) {
-            netOptionValueMode = false;
-            stream.pos += parser.slices[parserSlot+2];
-            parserSlot += 3;
-            return 'def strong';
+        const [ slotBits, slotPos, slotLen ] =
+            parser.slices.slice(parserSlot, parserSlot+3);
+        if ( (slotBits & parser.BITComma) !== 0 ) {
+            if ( /^,\d*?\}/.test(parser.raw.slice(slotPos)) === false ) {
+                netOptionValueMode = false;
+                stream.pos += slotLen;
+                parserSlot += 3;
+                return 'def strong';
+            }
         }
         if ( netOptionValueMode ) {
-            return colorNetOptionValueSpan(stream, bits);
+            return colorNetOptionValueSpan(stream, slotBits);
         }
-        if ( (bits & parser.BITTilde) !== 0 ) {
-            stream.pos += parser.slices[parserSlot+2];
+        if ( (slotBits & parser.BITTilde) !== 0 ) {
+            stream.pos += slotLen;
             parserSlot += 3;
             return 'keyword strong';
         }
-        if ( (bits & parser.BITEqual) !== 0 ) {
+        if ( (slotBits & parser.BITEqual) !== 0 ) {
             netOptionValueMode = true;
-            stream.pos += parser.slices[parserSlot+2];
+            stream.pos += slotLen;
             parserSlot += 3;
             return 'def';
         }

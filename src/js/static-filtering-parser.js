@@ -1884,9 +1884,9 @@ const BITUnderscore     = 1 << 22;
 const BITBrace          = 1 << 23;
 const BITPipe           = 1 << 24;
 const BITTilde          = 1 << 25;
-const BITOpening        = 1 << 27;
-const BITClosing        = 1 << 28;
-const BITUnicode        = 1 << 29;
+const BITOpening        = 1 << 26;
+const BITClosing        = 1 << 27;
+const BITUnicode        = 1 << 28;
 // TODO: separate from character bits into a new slice slot.
 const BITIgnore         = 1 << 30;
 const BITError          = 1 << 31;
@@ -2359,6 +2359,9 @@ const Span = class {
 
 /******************************************************************************/
 
+// https://github.com/uBlockOrigin/uBlock-issues/issues/760#issuecomment-951146371
+//   Quick fix: auto-escape commas.
+
 const NetOptionsIterator = class {
     constructor(parser) {
         this.parser = parser;
@@ -2426,8 +2429,9 @@ const NetOptionsIterator = class {
                 if ( hasBits(bits, BITComma) ) {
                     if ( this.interactive && (i === lopt || slices[i+2] > 1) ) {
                         slices[i] |= BITError;
+                    } else if ( /^,\d*?\}/.test(this.parser.raw.slice(slices[i+1])) === false ) {
+                        break;
                     }
-                    break;
                 }
                 if ( lval === 0 && hasBits(bits, BITEqual) ) { lval = i; }
                 i += 3;
@@ -2551,7 +2555,7 @@ const NetOptionsIterator = class {
                 }
             }
         }
-        // `queryprune=`:  only for network requests.
+        // `removeparam=`:  only for network requests.
         {
             const i = this.tokenPos[OPTTokenQueryprune];
             if ( i !== -1 ) {
