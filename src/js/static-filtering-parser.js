@@ -1442,13 +1442,16 @@ Parser.prototype.SelectorCompiler = class {
     // https://github.com/gorhill/uBlock/issues/3111
     //   Workaround until https://bugzilla.mozilla.org/show_bug.cgi?id=1406817
     //   is fixed.
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1751
+    //   Do not rely on matches() or querySelector() to test whether a
+    //   selector is declarative or not.
     cssSelectorType(s) {
         if ( this.reSimpleSelector.test(s) ) { return 1; }
         const pos = this.cssPseudoElement(s);
         if ( pos !== -1 ) {
             return this.cssSelectorType(s.slice(0, pos)) === 1 ? 3 : 0;
         }
-        if ( this.div === null ) { return 1; }
+        if ( this.stylesheet === null ) { return 1; }
         try {
             this.stylesheet.insertRule(`${s}{color:red}`);
             if ( this.stylesheet.cssRules.length === 0 ) { return 0; }
