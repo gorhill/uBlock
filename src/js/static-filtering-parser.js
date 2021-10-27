@@ -332,7 +332,13 @@ const Parser = class {
             this.flavorBits |= BITFlavorExtCosmetic;
         }
         this.result.raw = selector;
-        if ( this.selectorCompiler.compile(selector, this.result) === false ) {
+        if (
+            this.selectorCompiler.compile(
+                selector,
+                hasBits(this.flavorBits, BITFlavorExtStrong),
+                this.result
+            ) === false
+        ) {
             this.flavorBits |= BITFlavorUnsupported;
         }
     }
@@ -1302,10 +1308,20 @@ Parser.prototype.SelectorCompiler = class {
             [ 'matches-css-before', ':matches-css-before' ],
         ]);
         this.reSimpleSelector = /^[#.][A-Za-z_][\w-]*$/;
-        this.div = (( ) => {
+        // https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet#browser_compatibility
+        //   Firefox does not support constructor for CSSStyleSheet
+        this.stylesheet = (( ) => {
             if ( typeof document !== 'object' ) { return null; }
             if ( document instanceof Object === false ) { return null; }
-            return document.createElement('div');
+            try {
+                return new CSSStyleSheet();
+            } catch(ex) {
+            }
+            const style = document.createElement('style');
+            document.body.append(style);
+            const stylesheet = style.sheet;
+            style.remove();
+            return stylesheet;
         })();
         this.rePseudoElement = /:(?::?after|:?before|:-?[a-z][a-z-]*[a-z])$/;
         this.reProceduralOperator = new RegExp([
@@ -1333,7 +1349,7 @@ Parser.prototype.SelectorCompiler = class {
         ]);
     }
 
-    compile(raw, out) {
+    compile(raw, isProcedural, out) {
         // https://github.com/gorhill/uBlock/issues/952
         //   Find out whether we are dealing with an Adguard-specific cosmetic
         //   filter, and if so, translate it if supported, or discard it if not
@@ -1353,7 +1369,7 @@ Parser.prototype.SelectorCompiler = class {
         const selectorType = this.cssSelectorType(raw);
         if ( selectorType !== 0 ) {
             extendedSyntax = this.reExtendedSyntax.test(raw);
-            if ( extendedSyntax === false ) {
+            if ( (extendedSyntax || isProcedural) === false ) {
                 out.pseudoclass = selectorType === 3;
                 out.compiled = raw;
                 return true;
@@ -1379,7 +1395,7 @@ Parser.prototype.SelectorCompiler = class {
                       operator + '(' + matches[3] + ')' +
                       raw.slice(matches.index + matches[0].length);
             }
-            return this.compile(raw, out);
+            return this.compile(raw, isProcedural, out);
         }
 
         // Procedural selector?
@@ -1389,8 +1405,9 @@ Parser.prototype.SelectorCompiler = class {
         if ( compiled.pseudo !== undefined ) {
             out.pseudoclass = compiled.pseudo;
         }
-
-        out.compiled = JSON.stringify(compiled);
+        out.compiled = compiled.selector !== compiled.raw
+            ? JSON.stringify(compiled)
+            : compiled.selector;
         return true;
     }
 
@@ -1433,7 +1450,9 @@ Parser.prototype.SelectorCompiler = class {
         }
         if ( this.div === null ) { return 1; }
         try {
-            this.div.matches(`${s}, ${s}:not(#foo)`);
+            this.stylesheet.insertRule(`${s}{color:red}`);
+            if ( this.stylesheet.cssRules.length === 0 ) { return 0; }
+            this.stylesheet.deleteRule(0);
         } catch (ex) {
             return 0;
         }
@@ -1546,11 +1565,19 @@ Parser.prototype.SelectorCompiler = class {
     //   - opening comment `/*`
     compileStyleProperties(s) {
         if ( /url\(|\\|\/\*/i.test(s) ) { return; }
-        if ( this.div === null ) { return s; }
-        this.div.style.cssText = s;
-        if ( this.div.style.cssText === '' ) { return; }
-        this.div.style.cssText = '';
-        return s;
+        if ( this.stylesheet === null ) { return s; }
+        let valid = false;
+        try {
+            this.stylesheet.insertRule(`a{${s}}`);
+            const rules = this.stylesheet.cssRules;
+            valid = rules.length !== 0 && rules[0].style.cssText !== '';
+        } catch(ex) {
+            return;
+        }
+        if ( this.stylesheet.cssRules.length !== 0 ) {
+            this.stylesheet.deleteRule(0);
+        }
+        if ( valid ) { return s; }
     }
 
     compileAttrList(s) {
