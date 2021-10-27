@@ -129,7 +129,6 @@ const Parser = class {
             exception: false,
             raw: '',
             compiled: '',
-            pseudoclass: false,
         };
         this.reset();
     }
@@ -289,7 +288,6 @@ const Parser = class {
     analyzeExtPattern() {
         this.result.exception = this.isException();
         this.result.compiled = undefined;
-        this.result.pseudoclass = false;
 
         let selector = this.strFromSpan(this.patternSpan);
         if ( selector === '' ) {
@@ -1323,7 +1321,11 @@ Parser.prototype.SelectorCompiler = class {
             style.remove();
             return stylesheet;
         })();
-        this.rePseudoElement = /:(?::?after|:?before|:-?[a-z][a-z-]*[a-z])$/;
+        this.div = (( ) => {
+            if ( typeof document !== 'object' ) { return null; }
+            if ( document instanceof Object === false ) { return null; }
+            return document.createElement('div');
+        })();
         this.reProceduralOperator = new RegExp([
             '^(?:',
             Array.from(parser.proceduralOperatorTokens.keys()).join('|'),
@@ -1366,11 +1368,11 @@ Parser.prototype.SelectorCompiler = class {
         }
 
         let extendedSyntax = false;
-        const selectorType = this.cssSelectorType(raw);
-        if ( selectorType !== 0 ) {
+
+        // Can be used in a declarative CSS rule?
+        if ( this.sheetSelectable(raw) ) {
             extendedSyntax = this.reExtendedSyntax.test(raw);
             if ( (extendedSyntax || isProcedural) === false ) {
-                out.pseudoclass = selectorType === 3;
                 out.compiled = raw;
                 return true;
             }
@@ -1402,9 +1404,6 @@ Parser.prototype.SelectorCompiler = class {
         const compiled = this.compileProceduralSelector(raw);
         if ( compiled === undefined ) { return false; }
 
-        if ( compiled.pseudo !== undefined ) {
-            out.pseudoclass = compiled.pseudo;
-        }
         out.compiled = compiled.selector !== compiled.raw
             ? JSON.stringify(compiled)
             : compiled.selector;
@@ -1429,11 +1428,6 @@ Parser.prototype.SelectorCompiler = class {
             : `${selector}:style(${style})`;
     }
 
-    // Return value:
-    //   0b00 (0) = not a valid CSS selector
-    //   0b01 (1) = valid CSS selector, without pseudo-element
-    //   0b11 (3) = valid CSS selector, with pseudo element
-    //
     // Quick regex-based validation -- most cosmetic filters are of the
     // simple form and in such case a regex is much faster.
     // Keep in mind:
@@ -1445,27 +1439,28 @@ Parser.prototype.SelectorCompiler = class {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1751
     //   Do not rely on matches() or querySelector() to test whether a
     //   selector is declarative or not.
-    cssSelectorType(s) {
-        if ( this.reSimpleSelector.test(s) ) { return 1; }
-        const pos = this.cssPseudoElement(s);
-        if ( pos !== -1 ) {
-            return this.cssSelectorType(s.slice(0, pos)) === 1 ? 3 : 0;
-        }
-        if ( this.stylesheet === null ) { return 1; }
+    sheetSelectable(s) {
+        if ( this.reSimpleSelector.test(s) ) { return true; }
+        if ( this.stylesheet === null ) { return true; }
         try {
             this.stylesheet.insertRule(`${s}{color:red}`);
-            if ( this.stylesheet.cssRules.length === 0 ) { return 0; }
+            if ( this.stylesheet.cssRules.length === 0 ) { return false; }
             this.stylesheet.deleteRule(0);
         } catch (ex) {
-            return 0;
+            return false;
         }
-        return 1;
+        return true;
     }
 
-    cssPseudoElement(s) {
-        if ( s.lastIndexOf(':') === -1 ) { return -1; }
-        const match = this.rePseudoElement.exec(s);
-        return match !== null ? match.index : -1;
+    querySelectable(s) {
+        if ( this.reSimpleSelector.test(s) ) { return true; }
+        if ( this.div === null ) { return true; }
+        try {
+            this.div.querySelector(`${s},${s}:not(#foo)`);
+        } catch (ex) {
+            return false;
+        }
+        return true;
     }
 
     compileProceduralSelector(raw) {
@@ -1534,10 +1529,10 @@ Parser.prototype.SelectorCompiler = class {
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/341#issuecomment-447603588
     //   Reject instances of :not() filters for which the argument is
-    //   a valid CSS selector, otherwise we would be adversely
-    //   changing the behavior of CSS4's :not().
+    //   a valid CSS selector, otherwise we would be adversely changing the
+    //   behavior of CSS4's :not().
     compileNotSelector(s) {
-        if ( this.cssSelectorType(s) === 0 ) {
+        if ( this.querySelectable(s) === false ) {
             return this.compileProcedural(s);
         }
     }
@@ -1545,7 +1540,7 @@ Parser.prototype.SelectorCompiler = class {
     compileUpwardArgument(s) {
         const i = this.compileInteger(s, 1, 256);
         if ( i !== undefined ) { return i; }
-        if ( this.cssSelectorType(s) === 1 ) { return s; }
+        if ( this.querySelectable(s) ) { return s; }
     }
 
     compileRemoveSelector(s) {
@@ -1555,7 +1550,7 @@ Parser.prototype.SelectorCompiler = class {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/382#issuecomment-703725346
     //   Prepend `:scope` only when it can be deemed implicit.
     compileSpathExpression(s) {
-        if ( this.cssSelectorType(/^\s*[+:>~]/.test(s) ? `:scope${s}` : s) === 1 ) {
+        if ( this.querySelectable(/^\s*[+:>~]/.test(s) ? `:scope${s}` : s) ) {
             return s;
         }
     }
@@ -1714,9 +1709,7 @@ Parser.prototype.SelectorCompiler = class {
             // https://github.com/uBlockOrigin/uBlock-issues/issues/341#issuecomment-447603588
             //   Maybe that one operator is a valid CSS selector and if so,
             //   then consider it to be part of the prefix.
-            if ( this.cssSelectorType(raw.slice(opNameBeg, i)) === 1 ) {
-                continue;
-            }
+            if ( this.querySelectable(raw.slice(opNameBeg, i)) ) { continue; }
             // Extract and remember operator details.
             let operator = raw.slice(opNameBeg, opNameEnd);
             operator = this.normalizedOperators.get(operator) || operator;
@@ -1752,8 +1745,18 @@ Parser.prototype.SelectorCompiler = class {
 
         // No task found: then we have a CSS selector.
         // At least one task found: nothing should be left to parse.
-        if ( tasks.length === 0 && action === undefined ) {
-            prefix = raw;
+        if ( tasks.length === 0 ) {
+            if ( action === undefined ) {
+                prefix = raw;
+            }
+            if ( root && this.sheetSelectable(prefix) ) {
+                if ( action === undefined ) {
+                    return { selector: prefix };
+                } else if ( action[0] === ':style' ) {
+                    return { selector: prefix, action };
+                }
+            }
+
         } else if ( opPrefixBeg < n ) {
             if ( action !== undefined ) { return; }
             const spath = this.compileSpathExpression(raw.slice(opPrefixBeg));
@@ -1773,7 +1776,7 @@ Parser.prototype.SelectorCompiler = class {
                 prefix += ' *';
             }
             prefix = prefix.replace(this.reDropScope, '');
-            if ( this.cssSelectorType(prefix) === 0 ) {
+            if ( this.querySelectable(prefix) === false ) {
                 if (
                     root ||
                     this.reIsCombinator.test(prefix) === false ||
@@ -1795,17 +1798,6 @@ Parser.prototype.SelectorCompiler = class {
         // Expose action to take in root descriptor.
         if ( action !== undefined ) {
             out.action = action;
-        }
-
-        // Pseudo elements are valid only when used in a root task list AND
-        // only when there are no procedural operators: pseudo elements can't
-        // be querySelectorAll-ed.
-        if ( prefix !== '' ) {
-            const pos = this.cssPseudoElement(prefix);
-            if ( pos !== -1 ) {
-                if ( root === false || tasks.length !== 0 ) { return; }
-                out.pseudo = pos;
-            }
         }
 
         return out;
