@@ -1404,9 +1404,12 @@ Parser.prototype.SelectorCompiler = class {
         const compiled = this.compileProceduralSelector(raw);
         if ( compiled === undefined ) { return false; }
 
-        out.compiled = compiled.selector !== compiled.raw
-            ? JSON.stringify(compiled)
-            : compiled.selector;
+        out.compiled =
+            compiled.selector !== compiled.raw ||
+            this.sheetSelectable(compiled.selector) === false
+                ? JSON.stringify(compiled)
+                : compiled.selector;
+
         return true;
     }
 
