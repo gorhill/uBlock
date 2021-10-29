@@ -1351,7 +1351,7 @@ Parser.prototype.SelectorCompiler = class {
         ]);
     }
 
-    compile(raw, isProcedural, out) {
+    compile(raw, asProcedural, out) {
         // https://github.com/gorhill/uBlock/issues/952
         //   Find out whether we are dealing with an Adguard-specific cosmetic
         //   filter, and if so, translate it if supported, or discard it if not
@@ -1367,15 +1367,10 @@ Parser.prototype.SelectorCompiler = class {
             out.raw = raw;
         }
 
-        let extendedSyntax = false;
-
         // Can be used in a declarative CSS rule?
-        if ( this.sheetSelectable(raw) ) {
-            extendedSyntax = this.reExtendedSyntax.test(raw);
-            if ( (extendedSyntax || isProcedural) === false ) {
-                out.compiled = raw;
-                return true;
-            }
+        if ( asProcedural === false && this.sheetSelectable(raw) ) {
+            out.compiled = raw;
+            return true;
         }
 
         // We  rarely reach this point -- majority of selectors are plain
@@ -1388,7 +1383,7 @@ Parser.prototype.SelectorCompiler = class {
         // Note: extended selector syntax has been deprecated in ABP, in
         // favor of the procedural one (i.e. `:operator(...)`).
         // See https://issues.adblockplus.org/ticket/5287
-        if ( extendedSyntax ) {
+        if ( asProcedural && this.reExtendedSyntax.test(raw) ) {
             let matches;
             while ( (matches = this.reExtendedSyntaxParser.exec(raw)) !== null ) {
                 const operator = this.normalizedExtendedSyntaxOperators.get(matches[1]);
@@ -1397,7 +1392,7 @@ Parser.prototype.SelectorCompiler = class {
                       operator + '(' + matches[3] + ')' +
                       raw.slice(matches.index + matches[0].length);
             }
-            return this.compile(raw, isProcedural, out);
+            return this.compile(raw, true, out);
         }
 
         // Procedural selector?
