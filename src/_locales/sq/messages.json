@@ -868,11 +868,11 @@
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
-    "message": "Pyetjet që keni dhe çdo lloj ndihme tjetër mund ta kërkoni në \"subreddit\" <code>/r/uBlockOrigin</code>.",
+    "message": "Në forumin e dedikuar Reddit <code>/r/uBlockOrigin</code> mund të bëni pyetje dhe të kërkoni çdolloj ndihme tjetër.",
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "Probleme filtrash/faqe me defekte",
+    "message": "Probleme me filtrat/faqet me defekte",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
@@ -892,7 +892,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Problemet e uBlock Origin duhen raportuar te ditari i problemeve <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code></span>. Duhet një konto GitHub.",
+    "message": "Problemet e uBlock Origin duhen raportuar në ditarin e problemeve <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code></span>. Duhet një konto GitHub.",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
