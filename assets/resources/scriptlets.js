@@ -1576,6 +1576,9 @@
                 init.body.includes('PlaybackAccessToken')
             ) {
                 const { headers } = init;
+                if ( typeof headers['Authorization'] === 'string' ) {
+                    headers['Authorization'] = '';
+                }
                 if ( typeof headers['X-Device-Id'] === 'string' ) {
                     headers['X-Device-Id'] = 'twitch-web-wall-mason';
                 }
