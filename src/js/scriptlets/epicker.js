@@ -524,6 +524,22 @@ const filtersFrom = function(x, y) {
         x = undefined;
     }
 
+    // https://github.com/gorhill/uBlock/issues/1545
+    //   Network filter candidates from all other elements found at [x,y].
+    // https://www.reddit.com/r/uBlockOrigin/comments/qmjk36/
+    //   Extract network candidates first.
+    if ( typeof x === 'number' ) {
+        const magicAttr = `${vAPI.sessionId}-clickblind`;
+        pickerRoot.setAttribute(magicAttr, '');
+        const elems = document.elementsFromPoint(x, y);
+        pickerRoot.removeAttribute(magicAttr);
+        for ( const elem of elems ) {
+            netFilterFromElement(elem);
+        }
+    } else if ( first !== null ) {
+        netFilterFromElement(first);
+    }
+
     // Cosmetic filter candidates from ancestors.
     // https://github.com/gorhill/uBlock/issues/2519
     // https://github.com/uBlockOrigin/uBlock-issues/issues/17
@@ -540,18 +556,6 @@ const filtersFrom = function(x, y) {
         const selector = cosmeticFilterCandidates[i-1].slice(2);
         if ( safeQuerySelectorAll(document.body, selector).length > 1 ) {
             cosmeticFilterCandidates.push('##body');
-        }
-    }
-
-    // https://github.com/gorhill/uBlock/issues/1545
-    //   Network filter candidates from all other elements found at [x,y].
-    if ( typeof x === 'number' ) {
-        const magicAttr = `${vAPI.sessionId}-clickblind`;
-        pickerRoot.setAttribute(magicAttr, '');
-        const elems = document.elementsFromPoint(x, y);
-        pickerRoot.removeAttribute(magicAttr);
-        for ( const elem of elems ) {
-            netFilterFromElement(elem);
         }
     }
 
