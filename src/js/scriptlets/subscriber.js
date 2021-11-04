@@ -61,14 +61,15 @@ const onMaybeSubscriptionLinkClicked = function(target) {
         }
         const location = subscribeURL.searchParams.get('location') || '';
         const title = subscribeURL.searchParams.get('title') || '';
-        if ( location === '' || title === '' ) { return; }
+        if ( location === '' || title === '' ) { return true; }
         // https://github.com/uBlockOrigin/uBlock-issues/issues/1797
-        if ( /^(file|https?):\/\//.test(location) === false ) { return; }
+        if ( /^(file|https?):\/\//.test(location) === false ) { return true; }
         vAPI.messaging.send('scriptlets', {
             what: 'subscribeTo',
             location,
             title,
         });
+        return true;
     } catch (_) {
     }
 };
@@ -80,9 +81,10 @@ document.addEventListener('click', ev => {
     if ( ev.button !== 0 || ev.isTrusted === false ) { return; }
     const target = ev.target.closest('a');
     if ( target instanceof HTMLAnchorElement === false ) { return; }
-    onMaybeSubscriptionLinkClicked(target);
-    ev.stopPropagation();
-    ev.preventDefault();
+    if ( onMaybeSubscriptionLinkClicked(target) === true ) {
+        ev.stopPropagation();
+        ev.preventDefault();
+    }
 });
 
 /******************************************************************************/
