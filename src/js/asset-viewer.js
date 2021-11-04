@@ -35,6 +35,9 @@ import './codemirror/ubo-static-filtering.js';
     const assetKey = subscribeParams.get('url');
     if ( assetKey === null ) { return; }
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1797
+    if ( /^(file|https?):\/\//.test(assetKey) === false ) { return; }
+
     const subscribeElem = subscribeParams.get('subscribe') !== null
         ? document.getElementById('subscribe')
         : null;

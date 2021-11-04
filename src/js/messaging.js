@@ -1863,6 +1863,8 @@ const onMessage = function(request, sender, callback) {
         const hash = µb.selectedFilterLists.indexOf(request.location) !== -1
             ? '#subscribed'
             : '';
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/1797
+        if ( /^(file|https?):\/\//.test(url) === false ) { break; }
         vAPI.tabs.open({
             url: `/asset-viewer.html?url=${url}&title=${title}&subscribe=1${hash}`,
             select: true,
