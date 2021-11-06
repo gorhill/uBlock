@@ -348,7 +348,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "CHN: AdGuard Chinese (中文)",
-		"lang": "zh",
+		"lang": "ug zh",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/224.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters"
 	},
@@ -366,7 +366,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "DEU: EasyList Germany",
-		"lang": "de",
+		"lang": "de dsb hsb lb rm",
 		"contentURL": [
 			"https://easylist.to/easylistgermany/easylistgermany.txt",
 			"https://easylist-downloads.adblockplus.org/easylistgermany.txt"
@@ -396,7 +396,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "FRA: AdGuard Français",
-		"lang": "ar br fr oc",
+		"lang": "ar br ff fr lb oc son",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/16.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters"
 	},
@@ -547,7 +547,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "POL: Oficjalne Polskie Filtry do AdBlocka, uBlocka Origin i AdGuarda",
-		"lang": "pl",
+		"lang": "szl pl",
 		"contentURL": "https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt",
 		"supportURL": "https://github.com/MajkiIT/polish-ads-filter/issues",
 		"instructionURL": "https://github.com/MajkiIT/polish-ads-filter#polish-filters-for-adblock-ublock-origin--adguard"
@@ -557,7 +557,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "POL: Oficjalne polskie filtry przeciwko alertom o Adblocku",
-		"lang": "pl",
+		"lang": "szl pl",
 		"contentURL": "https://raw.githubusercontent.com/olegwukr/polish-privacy-filters/master/anti-adblock.txt",
 		"supportURL": "https://github.com/olegwukr/polish-privacy-filters/issues"
 	},
@@ -578,7 +578,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "RUS: RU AdList",
-		"lang": "be kk ru uk uz",
+		"lang": "be kk tt ru uk uz",
 		"contentURL": "https://easylist-downloads.adblockplus.org/advblock+cssfixes.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=102",
 		"instructionURL": "https://forums.lanik.us/viewtopic.php?f=102&t=22512"
@@ -588,7 +588,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "spa: EasyList Spanish",
-		"lang": "an ast ca es eu gl",
+		"lang": "an ast ca cak es eu gn gl trs quz",
 		"contentURL": "https://easylist-downloads.adblockplus.org/easylistspanish.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=103"
 	},
@@ -597,7 +597,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "spa, por: AdGuard Spanish/Portuguese",
-		"lang": "an ast ca es eu gl pt",
+		"lang": "an ast ca cak es eu gl gn trs pt quz",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/9.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
 		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
