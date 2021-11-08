@@ -1437,12 +1437,17 @@ Parser.prototype.SelectorCompiler = class {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1751
     //   Do not rely on matches() or querySelector() to test whether a
     //   selector is declarative or not.
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1806#issuecomment-963278382
+    //   Forbid multiple and unexpected CSS style declarations.
     sheetSelectable(s) {
         if ( this.reSimpleSelector.test(s) ) { return true; }
         if ( this.stylesheet === null ) { return true; }
         try {
             this.stylesheet.insertRule(`${s}{color:red}`);
-            if ( this.stylesheet.cssRules.length === 0 ) { return false; }
+            if ( this.stylesheet.cssRules.length !== 1 ) { return false; }
+            const style = this.stylesheet.cssRules[0].style;
+            if ( style.length !== 1 ) { return false; }
+            if ( style.getPropertyValue('color') !== 'red' ) { return false; }
             this.stylesheet.deleteRule(0);
         } catch (ex) {
             return false;
