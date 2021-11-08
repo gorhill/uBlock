@@ -224,7 +224,7 @@
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Klikkaa kumotaksesi muutoksesi.",
+    "message": "Paina kumotaksesi muutoksesi.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {
