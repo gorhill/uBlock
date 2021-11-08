@@ -333,7 +333,7 @@ const Parser = class {
         if (
             this.selectorCompiler.compile(
                 selector,
-                hasBits(this.flavorBits, BITFlavorExtStrong),
+                hasBits(this.flavorBits, BITFlavorExtStrong | BITFlavorExtStyle),
                 this.result
             ) === false
         ) {
@@ -1450,11 +1450,15 @@ Parser.prototype.SelectorCompiler = class {
         return true;
     }
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1806
+    //   Forbid instances of:
+    //   - opening comment `/*`
     querySelectable(s) {
         if ( this.reSimpleSelector.test(s) ) { return true; }
         if ( this.div === null ) { return true; }
         try {
             this.div.querySelector(`${s},${s}:not(#foo)`);
+            if ( s.includes('/*') ) { return false; }
         } catch (ex) {
             return false;
         }
