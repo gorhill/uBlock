@@ -146,16 +146,19 @@ import {
 };
 
 µb.saveUserSettings = function() {
+    // `externalLists` will be deprecated in some future, it is kept around
+    // for forward compatibility purpose, and should reflect the content of
+    // `importedLists`.
+    // 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1803
+    //   Do this before computing modified settings.
+    this.userSettings.externalLists =
+        this.userSettings.importedLists.join('\n');
+
     const toSave = this.getModifiedSettings(
         this.userSettings,
         this.userSettingsDefault
     );
-
-    // `externalLists` will be deprecated in some future, it is kept around
-    // for forward compatibility purpose, and should reflect the content of
-    // `importedLists`.
-    this.userSettings.externalLists =
-        this.userSettings.importedLists.join('\n');
 
     const toRemove = [];
     for ( const key in this.userSettings ) {
