@@ -38,12 +38,14 @@
         if ( typeof a === 'function' ) {
             a(); return;
         }
-        if ( Array.isArray(a) === false ) {
-            return;
-        }
-        // https://twitter.com/catovitch/status/776442930345218048
+        if ( Array.isArray(a) === false ) { return; }
         // https://developers.google.com/analytics/devguides/collection/gajs/methods/gaJSApiDomainDirectory#_gat.GA_Tracker_._link
-        if ( a[0] === '_link' && typeof a[1] === 'string' ) {
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/1807
+        if (
+            typeof a[0] === 'string' &&
+            /(^|\.)_link$/.test(a[0]) &&
+            typeof a[1] === 'string'
+        ) {
             window.location.assign(a[1]);
         }
         // https://github.com/gorhill/uBlock/issues/2162
