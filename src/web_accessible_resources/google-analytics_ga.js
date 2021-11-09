@@ -46,7 +46,10 @@
             /(^|\.)_link$/.test(a[0]) &&
             typeof a[1] === 'string'
         ) {
-            window.location.assign(a[1]);
+            try {
+                window.location.assign(a[1]);
+            } catch(ex) {
+            }
         }
         // https://github.com/gorhill/uBlock/issues/2162
         if ( a[0] === '_set' && a[1] === 'hitCallback' && typeof a[2] === 'function' ) {
@@ -62,7 +65,7 @@
             '_cookiePathCopy _deleteCustomVar _getName _setAccount',
             '_getAccount _getClientInfo _getDetectFlash _getDetectTitle',
             '_getLinkerUrl _getLocalGifPath _getServiceMode _getVersion',
-            '_getVisitorCustomVar _initData _link _linkByPost',
+            '_getVisitorCustomVar _initData _linkByPost',
             '_setAllowAnchor _setAllowHash _setAllowLinker _setCampContentKey',
             '_setCampMediumKey _setCampNameKey _setCampNOKey _setCampSourceKey',
             '_setCampTermKey _setCampaignCookieTimeout _setCampaignTrack _setClientInfo',
@@ -74,12 +77,19 @@
             '_trackPageview _trackSocial _trackTiming _trackTrans',
             '_visitCode'
         ].join(' ').split(/\s+/);
-        let i = api.length;
-        while ( i-- ) {
-            out[api[i]] = noopfn;
+        for ( const method of api ) {
+            out[method] = noopfn;
         }
         out._getLinkerUrl = function(a) {
             return a;
+        };
+        // https://github.com/AdguardTeam/Scriptlets/issues/154
+        out._link = function(a) {
+            if ( typeof a !== 'string' ) { return; }
+            try {
+                window.location.assign(a);
+            } catch(ex) {
+            }
         };
         return out;
     })();
