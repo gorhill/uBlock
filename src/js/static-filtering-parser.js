@@ -1564,6 +1564,7 @@ Parser.prototype.SelectorCompiler = class {
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/668
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1693
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1811
     //   Forbid instances of:
     //   - `image-set(`
     //   - `url(`
@@ -1571,7 +1572,7 @@ Parser.prototype.SelectorCompiler = class {
     //   - backslashes `\`
     //   - opening comment `/*`
     compileStyleProperties(s) {
-        if ( /image-set\(|url\(|\/\/|\\|\/\*/i.test(s) ) { return; }
+        if ( /image-set\(|url\(|\/\s*\/|\\|\/\*/i.test(s) ) { return; }
         if ( this.stylesheet === null ) { return s; }
         let valid = false;
         try {
