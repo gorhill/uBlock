@@ -35,7 +35,7 @@ const uselessKeys = [
 ];
 
 const sensitiveValues = [
-    'filterset',
+    'filterset (user)',
     'modifiedUserSettings.popupPanelSections',
     'modifiedHiddenSettings.userResourcesLocation',
     'trustedset.added',
@@ -184,23 +184,23 @@ function reportSpecificFilterType() {
 
 function reportSpecificFilterIssue(ev) {
     const bodyTemplate = [
-        '### Address of the web page',
+        '## Address of the web page',
         '',
         '`{{url}}`',
         '',
-        '### Type of issue',
+        '## Type of issue',
         '',
         '{{type}}',
         '',
-        '### Description (when issue is not obvious)',
+        '## Description (when issue is not obvious)',
         '',
         '[none]',
         '',
-        '### Screenshot (when description is difficult)',
+        '## Screenshot (when description is difficult)',
         '',
         '[none]',
         '',
-        '### Configuration',
+        '## Configuration',
         '',
         '{{configuration}}',
     ].join('\n');
