@@ -570,9 +570,10 @@ const renderPopup = function() {
         }
     }
 
-    const canElementPicker = popupData.canElementPicker === true && isFiltering;
-    uDom.nodeFromId('gotoPick').classList.toggle('enabled', canElementPicker);
-    uDom.nodeFromId('gotoZap').classList.toggle('enabled', canElementPicker);
+    uDom.nodeFromId('basicTools').classList.toggle(
+        'canPick',
+        popupData.canElementPicker === true && isFiltering
+    );
 
     let blocked, total;
     if ( popupData.pageCounts !== undefined ) {
@@ -840,6 +841,15 @@ const gotoPick = function() {
     });
 
     vAPI.closePopup();
+};
+
+/******************************************************************************/
+
+const gotoReport = function() {
+    messaging.send('popupPanel', {
+        what: 'launchReporter',
+        tabId: popupData.tabId,
+    });
 };
 
 /******************************************************************************/
@@ -1382,6 +1392,7 @@ const getPopupData = async function(tabId, first = false) {
 uDom('#switch').on('click', toggleNetFilteringSwitch);
 uDom('#gotoZap').on('click', gotoZap);
 uDom('#gotoPick').on('click', gotoPick);
+uDom('#gotoReport').on('click', gotoReport);
 uDom('.hnSwitch').on('click', ev => { toggleHostnameSwitch(ev); });
 uDom('#saveRules').on('click', saveFirewallRules);
 uDom('#revertRules').on('click', ( ) => { revertFirewallRules(); });

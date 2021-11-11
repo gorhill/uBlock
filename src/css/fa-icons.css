@@ -64,6 +64,7 @@
     width: calc(1em * 1794 / 1792);
     }
 .fa-icon > .fa-icon_clipboard,
+.fa-icon > .fa-icon_comment-alt,
 .fa-icon > .fa-icon_external-link,
 .fa-icon > .fa-icon_eye-dropper,
 .fa-icon > .fa-icon_eye-open,

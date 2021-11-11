@@ -28,6 +28,7 @@ import punycode from '../lib/punycode.js';
 
 import cacheStorage from './cachestorage.js';
 import cosmeticFilteringEngine from './cosmetic-filtering.js';
+import htmlFilteringEngine from './html-filtering.js';
 import logger from './logger.js';
 import lz4Codec from './lz4.js';
 import io from './assets.js';
@@ -477,15 +478,22 @@ const onMessage = function(request, sender, callback) {
 
     // Sync
     let response;
-    let pageStore;
 
     switch ( request.what ) {
-    case 'hasPopupContentChanged':
-        pageStore = µb.pageStoreFromTabId(request.tabId);
-        var lastModified = pageStore ? pageStore.contentLastModified : 0;
+    case 'hasPopupContentChanged': {
+        const pageStore = µb.pageStoreFromTabId(request.tabId);
+        const lastModified = pageStore ? pageStore.contentLastModified : 0;
         response = lastModified !== request.contentLastModified;
         break;
-
+    }
+    case 'launchReporter': {
+        const pageStore = µb.pageStoreFromTabId(request.tabId);
+        if ( pageStore === null ) { break; }
+        const supportURL = new URL(vAPI.getURL('support.html'));
+        supportURL.searchParams.set('reportURL', pageStore.rawURL);
+        µb.openNewTab({ url: supportURL.href, select: true, index: -1 });
+        break;
+    }
     case 'revertFirewallRules':
         // TODO: use Set() to message around sets of hostnames
         sessionFirewall.copyRules(
@@ -537,8 +545,8 @@ const onMessage = function(request, sender, callback) {
         response = popupDataFromTabId(request.tabId);
         break;
 
-    case 'toggleNetFiltering':
-        pageStore = µb.pageStoreFromTabId(request.tabId);
+    case 'toggleNetFiltering': {
+        const pageStore = µb.pageStoreFromTabId(request.tabId);
         if ( pageStore ) {
             pageStore.toggleNetFilteringSwitch(
                 request.url,
@@ -548,7 +556,7 @@ const onMessage = function(request, sender, callback) {
             µb.updateToolbarIcon(request.tabId, 0b111);
         }
         break;
-
+    }
     default:
         return vAPI.messaging.UNHANDLED;
     }
@@ -1304,16 +1312,22 @@ const getSupportData = async function() {
         extensionVersion: vAPI.app.version,
         modifiedUserSettings,
         modifiedHiddenSettings,
+        'filterset (summary)': {
+            network: staticNetFilteringEngine.getFilterCount(),
+            cosmetic: cosmeticFilteringEngine.getFilterCount(),
+            scriptlet: scriptletFilteringEngine.getFilterCount(),
+            html: htmlFilteringEngine.getFilterCount(),
+        },
         'listset (total-discarded, last updated)': {
             removed: removedListset,
             added: addedListset,
             default: defaultListset,
         },
+        'filterset (user)': filterset,
         trustedset: diffArrays(
             µb.arrayFromWhitelist(µb.netWhitelist),
             µb.netWhitelistDefault
         ),
-        filterset,
         switchRuleset: diffArrays(
             sessionSwitches.toArray(),
             µb.hostnameSwitchesDefault

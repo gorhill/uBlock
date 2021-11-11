@@ -50,7 +50,10 @@ const htmlFilteringEngine = {
     },
     get discardedCount() {
         return discardedCount;
-    }
+    },
+    getFilterCount() {
+        return filterDB.size;
+    },
 };
 
 const PSelectorHasTextTask = class {

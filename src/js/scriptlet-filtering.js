@@ -57,7 +57,10 @@ const scriptletFilteringEngine = {
     },
     get discardedCount() {
         return discardedCount;
-    }
+    },
+    getFilterCount() {
+        return scriptletDB.size;
+    },
 };
 
 // Purpose of `contentscriptCode` below is too programmatically inject
