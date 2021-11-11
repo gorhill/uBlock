@@ -201,7 +201,7 @@ with open(unsigned_xpi_filepath, 'rb') as f:
     headers = { 'Authorization': get_jwt_auth(), }
     data = { 'channel': 'unlisted' }
     files = { 'upload': f, }
-    signing_url = 'https://addons.mozilla.org/api/v3/addons/{0}/versions/{1}/'.format(extension_id, ext_version)
+    signing_url = 'https://addons.mozilla.org/api/v4/addons/{0}/versions/{1}/'.format(extension_id, ext_version)
     print('Submitting package to be signed...')
     response = requests.put(signing_url, headers=headers, data=data, files=files)
     if response.status_code != 202:
