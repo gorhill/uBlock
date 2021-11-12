@@ -3362,7 +3362,7 @@ class FilterCompiler {
         if ( pattern.startsWith('|') ) {
             return this.extractTokenFromRegex('\\b' + pattern.slice(1));
         }
-        this.extractTokenFromPattern(encodeURIComponent(pattern).toLowerCase());
+        this.extractTokenFromPattern(pattern.toLowerCase());
     }
 
     hasNoOptionUnits() {
