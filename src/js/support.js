@@ -183,36 +183,12 @@ function reportSpecificFilterType() {
 }
 
 function reportSpecificFilterIssue(ev) {
-    const bodyTemplate = [
-        '## Address of the web page',
-        '',
-        '`{{url}}`',
-        '',
-        '## Type of issue',
-        '',
-        '{{type}}',
-        '',
-        '## Description (when issue is not obvious)',
-        '',
-        '[none]',
-        '',
-        '## Screenshot (when description is difficult)',
-        '',
-        '[none]',
-        '',
-        '## Configuration',
-        '',
-        '{{configuration}}',
-    ].join('\n');
-    const githubURL = new URL('https://github.com/uBlockOrigin/uAssets/issues/new');
-    const issueType = document.querySelector('[data-i18n="supportS6Select1"] ~ select').value;
-    const title = `${reportSpecificFilterHostname()}: ${reportSpecificFilterType()}`;
-    const body = bodyTemplate
-        .replace('{{url}}', reportURL.href)
-        .replace('{{type}}', issueType)
-        .replace('{{configuration}}', configToMarkdown(false));
-    githubURL.searchParams.set('title', title);
-    githubURL.searchParams.set('body', body);
+    const githubURL = new URL('https://github.com/uBlockOrigin/uAssets/issues/new?template=specific_report_from_ubo.yml');
+    const issueType = reportSpecificFilterType();
+    githubURL.searchParams.set('title', `${reportSpecificFilterHostname()}: ${issueType}`);
+    githubURL.searchParams.set('url_address_of_the_web_page', '`' + reportURL.href + '`');
+    githubURL.searchParams.set('category', issueType);
+    githubURL.searchParams.set('configuration', configToMarkdown(false));
     vAPI.messaging.send('default', {
         what: 'gotoURL',
         details: { url: githubURL.href, select: true, index: -1 },
