@@ -27,12 +27,6 @@ import punycode from '../lib/punycode.js';
 
 /******************************************************************************/
 
-{
-// >>>>> start of local scope
-
-/******************************************************************************/
-
-
 let popupFontSize = 'unset';
 vAPI.localStorage.getItemAsync('popupFontSize').then(value => {
     if ( typeof value !== 'string' || value === 'unset' ) { return; }
@@ -850,6 +844,8 @@ const gotoReport = function() {
         what: 'launchReporter',
         tabId: popupData.tabId,
     });
+
+    vAPI.closePopup();
 };
 
 /******************************************************************************/
@@ -1413,6 +1409,3 @@ document.querySelector('#firewall > [data-type="3p-frame"] .filter')
     });
 
 /******************************************************************************/
-
-// <<<<< end of local scope
-}
