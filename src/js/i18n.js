@@ -46,6 +46,7 @@ const allowedTags = new Set([
     'em',
     'i',
     'span',
+    'u',
 ]);
 
 const expandHtmlEntities = (( ) => {
