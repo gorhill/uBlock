@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "இத்தளத்திலொரு சிக்கலைப் புகாரளி",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -860,11 +860,11 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Create new report",
+    "message": "புதிய புகாரை உருவாக்கு",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Find similar reports",
+    "message": "ஒரேமாதிரியான புகார்களைக் கண்டறி",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -920,7 +920,7 @@
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "வடிகட்டி சிக்கலைப் புகாரளி",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
@@ -928,11 +928,11 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Address of the web page:",
+    "message": "வலைப்பக்கத்தின் முகவரி:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The web page...",
+    "message": "வலைப்பக்கம்...",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
@@ -952,11 +952,11 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "தனியுரிமைசார் சிக்கல்களுள்ளன",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Breaks when uBlock Origin is enabled",
+    "message": "uBlock Origin இயக்கப்பட்டிருந்தால் உடையும்",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportRedact": {

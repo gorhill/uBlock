@@ -936,7 +936,7 @@
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Pick an entry --",
+    "message": "-- เลือกรายการ --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {

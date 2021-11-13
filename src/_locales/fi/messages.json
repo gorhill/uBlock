@@ -72,7 +72,7 @@
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Klikkaa poistaaksesi uBlock₀:n käytöstä tällä sivustolla.\n\nCtrl+klikkaus poistaaksesi uBlock₀:n käytöstä vain tällä sivulla.",
+    "message": "Paina poistaaksesi uBlock₀:n käytöstä tällä sivustolla.\n\nCtrl+painallus poistaaksesi uBlock₀:n käytöstä vain tällä sivulla.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "Ilmoita ongelmasta tällä verkkosivustolla",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -136,11 +136,11 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Klikkaa estääksesi kaikki ponnahdukset tällä sivustolla",
+    "message": "Paina estääksesi kaikki ponnahdukset tällä sivustolla",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Klikkaa salliaksesi kaikki ponnahdukset tällä sivustolla",
+    "message": "Paina salliaksesi kaikki ponnahdukset tällä sivustolla",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -148,11 +148,11 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Klikkaa estääksesi suuret mediaelementit tällä sivustolla",
+    "message": "Paina estääksesi suuret mediaelementit tällä sivustolla",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Klikkaa salliaksesi suuret mediaelementit tällä sivustolla",
+    "message": "Paina salliaksesi suuret mediaelementit tällä sivustolla",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -160,31 +160,31 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Klikkaa poistaaksesi kosmeettisen suodatuksen käytöstä tällä sivustolla",
+    "message": "Paina poistaaksesi kosmeettisen suodatuksen käytöstä tällä sivustolla",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Klikkaa käyttääksesi kosmeettista suodatusta tällä sivustolla",
+    "message": "Paina käyttääksesi kosmeettista suodatusta tällä sivustolla",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Estä kirjasinten etälataus tällä sivulla",
+    "message": "Estä etäladattavat fontit tällä sivustolla",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Klikkaa estääksesi kirjasinten etälatauksen tällä sivustolla",
+    "message": "Paina estääksesi etäladattavat fontit tällä sivustolla",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Klikkaa salliaksesi kirjasinten etälatauksen tällä sivustolla",
+    "message": "Paina salliaksesi etäladattavat fontit tällä sivustolla",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Klikkaa poistaaksesi JavaScriptin käytöstä tällä sivulla",
+    "message": "Paina poistaaksesi JavaScriptin käytöstä tällä sivulla",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Klikkaa salliaksesi JavaScriptin tällä sivulla",
+    "message": "Paina salliaksesi JavaScriptin tällä sivulla",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
@@ -200,7 +200,7 @@
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
-    "message": "Etäladattavat kirjasimet",
+    "message": "Etäladattavat fontit",
     "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
@@ -224,7 +224,7 @@
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
-    "message": "Klikkaa tehdäksesi muutoksistasi pysyvät.",
+    "message": "Paina tehdäksesi muutoksistasi pysyvät.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
@@ -492,7 +492,7 @@
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "Viimeisin päivitys: {{ago}}.\nKlikkaa päivittääksesi manuaalisesti.",
+    "message": "Viimeisin päivitys: {{ago}}.\nPaina pakottaaksesi päivityksen.",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
@@ -860,11 +860,11 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Create new report",
+    "message": "Luo uusi ilmoitus",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Find similar reports",
+    "message": "Etsi samankaltaisia ilmoituksia",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -920,43 +920,43 @@
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "Ilmoita suodatinongelmasta",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported.",
+    "message": "Välttääksesi vapaaehtoisten kuormittamisen ylimääräisillä ilmoituksilla, tarkista ensin onko ongelmasta jo ilmoitettu.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Address of the web page:",
+    "message": "Verkkosivun osoite:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The web page...",
+    "message": "Verkkosivu...",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Pick an entry --",
+    "message": "-- Valitse aihe --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "Näyttää mainoksia tai niiden jäänteitä",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Has overlays or other nuisances",
+    "message": "Sisältää peiteruutuja tai muita ärsykkeitä",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Detects uBlock Origin",
+    "message": "Havaitsee uBlock Originin",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "Sisältää tietosuojaan liittyviä ongelmia",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Breaks when uBlock Origin is enabled",
+    "message": "Ei toimi oikein uBlock Origin ollessa käytössä",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportRedact": {
@@ -1212,7 +1212,7 @@
     "description": "short for 'gigabytes'"
   },
   "clickToLoad": {
-    "message": "Klikkaa ladataksesi",
+    "message": "Paina ladataksesi",
     "description": "Message used in frame placeholders"
   },
   "dummy": {
