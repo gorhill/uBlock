@@ -1,11 +1,6 @@
 body > div.body {
     padding: 0 0.5em;
     }
-@media screen and (max-device-width: 960px) {
-    body {
-        zoom: 1.4;
-        }
-    }
 h2, h3 {
     margin: 1em 0;
     }
