@@ -115,7 +115,7 @@ function patchEmptiness(data, prop) {
 }
 
 function configToMarkdown(collapse = false) {
-    const text = cmEditor.getValue().replace(/^    /gm, '');
+    const text = cmEditor.getValue();
     return collapse
         ? '<details>\n\n```yaml\n' + text + '\n```\n</details>'
         : '```yaml\n' + text + '\n```\n';
