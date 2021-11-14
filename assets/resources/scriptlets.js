@@ -1562,6 +1562,9 @@
 /// twitch-videoad.js
 // https://github.com/uBlockOrigin/uAssets/issues/5184
 // https://github.com/pixeltris/TwitchAdSolutions/commit/6be4c5313035
+// https://github.com/pixeltris/TwitchAdSolutions/commit/3d2883ea9e3a
+// https://github.com/pixeltris/TwitchAdSolutions/commit/7233b5fd2284
+// https://github.com/pixeltris/TwitchAdSolutions/commit/aad8946dab2b
 (function() {
     if ( /(^|\.)twitch\.tv$/.test(document.location.hostname) === false ) { return; }
     window.fetch = new Proxy(window.fetch, {
@@ -1573,7 +1576,8 @@
                 init instanceof Object &&
                 init.headers instanceof Object &&
                 typeof init.body === 'string' &&
-                init.body.includes('PlaybackAccessToken')
+                init.body.includes('PlaybackAccessToken') &&
+                init.body.includes('"isVod":true') === false
             ) {
                 const { headers } = init;
                 if ( typeof headers['Authorization'] === 'string' ) {
