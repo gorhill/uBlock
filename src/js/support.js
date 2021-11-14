@@ -132,6 +132,33 @@ function showData() {
     const shownData = JSON.parse(JSON.stringify(supportData));
     uselessKeys.forEach(prop => { removeKey(shownData, prop); });
     const redacted = document.body.classList.contains('redacted');
+    // If the report is for a specific site, report per-site switches which
+    // are triggered on the reported site.
+    if (
+        reportURL !== null &&
+        shownData.switchRuleset instanceof Object &&
+        Array.isArray(shownData.switchRuleset.added)
+    ) {
+        const hostname = reportURL.hostname;
+        const added = [];
+        const triggered = [];
+        for ( const rule of shownData.switchRuleset.added ) {
+            const match = /^[^:]+:\s+(\S+)/.exec(rule);
+            if (
+                match[1] === '*' ||
+                hostname === match[1] ||
+                hostname.endsWith(`.${match[1]}`)
+            ) {
+                triggered.push(rule);
+            } else {
+                added.push(rule);
+            }
+        }
+        if ( triggered.length !== 0 ) {
+            shownData.switchRuleset.triggered = triggered;
+            shownData.switchRuleset.added = added;
+        }
+    }
     if ( redacted ) {
         sensitiveValues.forEach(prop => { redactValue(shownData, prop); });
         sensitiveKeys.forEach(prop => { redactKeys(shownData, prop); });

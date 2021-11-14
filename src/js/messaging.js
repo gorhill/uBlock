@@ -1302,16 +1302,18 @@ const getSupportData = async function() {
         removedListset = undefined;
     }
 
+    let browserFamily = (( ) => {
+        if ( vAPI.webextFlavor.soup.has('firefox') ) { return 'Firefox'; }
+        if ( vAPI.webextFlavor.soup.has('chromium') ) { return 'Chromium'; }
+        return 'Unknown';
+    })();
+    if ( vAPI.webextFlavor.soup.has('mobile') ) {
+        browserFamily += ' Mobile';
+    }
+
     return {
-        browserFlavor: Array.from(vAPI.webextFlavor.soup).join(' '),
-        browserVersion: vAPI.webextFlavor.major,
-        extensionId: vAPI.webextFlavor.soup.has('firefox') === false
-            ? vAPI.i18n('@@extension_id')
-            : undefined,
-        extensionName: vAPI.app.name,
-        extensionVersion: vAPI.app.version,
-        modifiedUserSettings,
-        modifiedHiddenSettings,
+        [`${vAPI.app.name}`]: `${vAPI.app.version}`,
+        [`${browserFamily}`]: `${vAPI.webextFlavor.major}`,
         'filterset (summary)': {
             network: staticNetFilteringEngine.getFilterCount(),
             cosmetic: cosmeticFilteringEngine.getFilterCount(),
@@ -1340,6 +1342,8 @@ const getSupportData = async function() {
             sessionURLFiltering.toArray(),
             []
         ),
+        modifiedUserSettings,
+        modifiedHiddenSettings,
     };
 };
 
