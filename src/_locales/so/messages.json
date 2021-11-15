@@ -959,6 +959,10 @@
     "message": "Breaks when uBlock Origin is enabled",
     "description": "An entry in the widget used to select the type of issue"
   },
+  "supportS6Select1Option6": {
+    "message": "Opens unwanted tabs or windows",
+    "description": "An entry in the widget used to select the type of issue"
+  },
   "supportRedact": {
     "message": "Ka warbixi arrimaha shaandhaynta shabakadaha gaarka ah <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> soo saara raadraacayaasha</span >. Wuxuu u baahan yahay akoon GitHub",
     "description": "Text for 'Redact' button"

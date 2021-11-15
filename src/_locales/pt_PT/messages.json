@@ -959,6 +959,10 @@
     "message": "Falha quando uBlock Origin é ativado",
     "description": "An entry in the widget used to select the type of issue"
   },
+  "supportS6Select1Option6": {
+    "message": "Opens unwanted tabs or windows",
+    "description": "An entry in the widget used to select the type of issue"
+  },
   "supportRedact": {
     "message": "Redigir",
     "description": "Text for 'Redact' button"
