@@ -221,6 +221,11 @@ const µBlock = {  // jshint ignore:line
     //   This can be used to defer filtering decision-making.
     readyToFilter: false,
 
+    supportStats: {
+        launchToReadiness: 0,
+        launchFromSelfie: false,
+    },
+
     pageStores: new Map(),
     pageStoresToken: 0,
 

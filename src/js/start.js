@@ -427,6 +427,7 @@ let selfieIsValid = false;
 try {
     selfieIsValid = await µb.selfieManager.load();
     if ( selfieIsValid === true ) {
+        µb.supportStats.launchFromSelfie = true;
         ubolog(`Selfie ready ${Date.now()-vAPI.T0} ms after launch`);
     }
 } catch (ex) {
@@ -504,7 +505,8 @@ browser.runtime.onUpdateAvailable.addListener(details => {
     }
 });
 
-ubolog(`All ready ${Date.now()-vAPI.T0} ms after launch`);
+µb.supportStats.launchToReadiness = Date.now() - vAPI.T0;
+ubolog(`All ready ${µb.supportStats.launchToReadiness} ms after launch`);
 
 // <<<<< end of private scope
 })();

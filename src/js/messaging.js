@@ -1269,7 +1269,9 @@ const getSupportData = async function() {
             if ( typeof list.entryCount === 'number' ) {
                 listDetails.push(`${list.entryCount}-${list.entryCount-list.entryUsedCount}`);
             }
-            if ( typeof list.writeTime === 'number' ) {
+            if ( typeof list.writeTime !== 'number' || list.writeTime === 0 ) {
+                listDetails.push('never');
+            } else {
                 const delta = (Date.now() - list.writeTime) / 1000 | 0;
                 const days = (delta / 86400) | 0;
                 const hours = (delta % 86400) / 3600 | 0;
@@ -1344,6 +1346,7 @@ const getSupportData = async function() {
         ),
         modifiedUserSettings,
         modifiedHiddenSettings,
+        supportStats: µb.supportStats,
     };
 };
 
