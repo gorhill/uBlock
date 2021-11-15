@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Raporto një problem të kësaj faqe",
+    "message": "Raportoj problemin me uebsajtin",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -860,11 +860,11 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Krijo raportim të ri",
+    "message": "Krijoj raport të ri",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Gjej raportime të ngjashëme",
+    "message": "Gjej raporte të ngjashme",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -888,7 +888,7 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Problemet e disa faqeve me filtrat duhen raportuar në ditarin e problemeve <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code></span>. Duhet një konto GitHub.",
+    "message": "Problemet e disa faqeve me filtrat duhen raportuar në ditarin e problemeve <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code></span>. <u>Duhet një konto GitHub.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
@@ -904,7 +904,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Problemet e uBlock Origin duhen raportuar në ditarin e problemeve <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code></span>. Duhet një konto GitHub.",
+    "message": "Problemet e uBlock Origin duhen raportuar në ditarin e problemeve <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code></span>. <u>Duhet një konto GitHub.</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
@@ -920,7 +920,7 @@
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
-    "message": "Raporto një problem filtrimi",
+    "message": "Raportoni problemet me filtrat",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
@@ -932,19 +932,19 @@
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "Faqja web...",
+    "message": "Faqja...",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Zgjidh një rast --",
+    "message": "-- Zgjidhni --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shfaq reklamat ose mbetjet e tyre",
+    "message": "Shfaq reklama ose pjesë reklamash",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Ka mbivendosje ose ngatërresa",
+    "message": "Ka mbivendosje ose parregullsi të tjera",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
@@ -956,7 +956,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Nuk punon kur është në punë uBlock Origin",
+    "message": "Bllokohet kur aktivizoj uBlock Origin",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportRedact": {

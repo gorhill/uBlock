@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Bu web sitesinde bir sorunu bildirin",
+    "message": "Bu web sitesinde bir sorunu bildir",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -888,7 +888,7 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Belirli websiteleriyle ilgili filtre sorunlarını  <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> sorun izleyicisine</span> bildirin. Github hesabı gerektirir.",
+    "message": "Belirli websiteleriyle ilgili filtre sorunlarını  <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> sorun izleyicisine</span> bildirin. <u>Github hesabı gerektirir.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
@@ -904,7 +904,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "uBlock Origin'in kendisiyle ilgili sorunları <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> sorun izleyicisine</span> bildirin. Github hesabı gerektirir.",
+    "message": "uBlock Origin'in kendisiyle ilgili sorunları <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> sorun izleyicisine</span> bildirin. <u>Github hesabı gerektirir.</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
@@ -924,7 +924,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Gönüllülere aynı raporu tekrar göndermekten kaçınmak için lütfen sorunun daha önce bildirilmediğinden emin olun.",
+    "message": "Gönüllülere aynı raporlarla sıkıntı vermemek için, lütfen sorunun daha önce bildirilmediğinden emin olun.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -936,27 +936,27 @@
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Bir giriş seçin --",
+    "message": "-- Bir girdi seçin --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Reklam veya reklam artıklarını gösterir",
+    "message": "Reklam veya reklam artıkları gösteriyor",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Bindirmeleri veya diğer sıkıntıları vardır",
+    "message": "Bindirmeleri veya diğer sıkıntıları var",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "uBlock Origin’i tespit eder",
+    "message": "uBlock Origin’i algılıyor",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Gizlilikle ilgili sorunları vardır",
+    "message": "Gizlilikle ilgili sorunları var",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "uBlock Origin etkinleştirildiğinde kesilir",
+    "message": "uBlock Origin etkinken bozuluyor",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportRedact": {
