@@ -212,7 +212,11 @@ function reportSpecificFilterType() {
 function reportSpecificFilterIssue(ev) {
     const githubURL = new URL('https://github.com/uBlockOrigin/uAssets/issues/new?template=specific_report_from_ubo.yml');
     const issueType = reportSpecificFilterType();
-    githubURL.searchParams.set('title', `${reportSpecificFilterHostname()}: ${issueType}`);
+    let title = `${reportSpecificFilterHostname()}: ${issueType}`;
+    if ( document.getElementById('isNSFW').checked ) {
+        title = `[nsfw] ${title}`;
+    }
+    githubURL.searchParams.set('title', title);
     githubURL.searchParams.set('url_address_of_the_web_page', '`' + reportURL.href + '`');
     githubURL.searchParams.set('category', issueType);
     githubURL.searchParams.set('configuration', configToMarkdown(false));
