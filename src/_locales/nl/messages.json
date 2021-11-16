@@ -963,6 +963,10 @@
     "message": "Opent ongewenste tabbladen of vensters",
     "description": "An entry in the widget used to select the type of issue"
   },
+  "supportS6Checkbox1": {
+    "message": "Label the web page as &ldquo;NSFW&rdquo; (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">&ldquo;Not Safe For Work&rdquo;</a>)",
+    "description": "A checkbox to use for NSFW sites"
+  },
   "supportRedact": {
     "message": "Redigeren",
     "description": "Text for 'Redact' button"
