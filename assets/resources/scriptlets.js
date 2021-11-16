@@ -1580,9 +1580,6 @@
                 init.body.includes('"isVod":true') === false
             ) {
                 const { headers } = init;
-                if ( typeof headers['Authorization'] === 'string' ) {
-                    headers['Authorization'] = '';
-                }
                 if ( typeof headers['X-Device-Id'] === 'string' ) {
                     headers['X-Device-Id'] = 'twitch-web-wall-mason';
                 }
