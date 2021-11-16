@@ -924,7 +924,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Për të shmangur ngarkesën e raportime duplikatë tek vullnetarët, ju lutem saktësoni që ky problem nuk është raportuar më parë.",
+    "message": "Verifikoni a e kanë raportuar më parë problemin, që të mos i mundoni ndihmësit vullnetarë me raportime të njëllojta.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -948,7 +948,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Dallon uBlock Origin",
+    "message": "E di që përdor uBlock Origin",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
@@ -960,7 +960,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "Hap skeda ose dritare të panevojshme",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportRedact": {

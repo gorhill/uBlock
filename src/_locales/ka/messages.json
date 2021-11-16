@@ -944,7 +944,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "ადებს შემაწუხებელ შრეებს და მისთანებს",
+    "message": "ადებს შემაწუხებელ შრეებსა და მისთანებს",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
@@ -960,7 +960,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "ხსნის არასასურველ ჩანართებს ან ფანჯრებს",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportRedact": {

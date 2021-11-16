@@ -864,7 +864,7 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Busca informes semblants",
+    "message": "Cerca d'informes semblants",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -924,7 +924,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Per evitar carregar els voluntaris amb informes duplicats, verifiqueu que el problema encara no s'hagi informat.",
+    "message": "Per evitar carregar els voluntaris amb informes duplicats, verifiqueu que el problema encara no s'hagi notificat.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -944,7 +944,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Té superposicions o altres molèsties",
+    "message": "Té superposicions o altres errors",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
@@ -956,11 +956,11 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "No funciona quan l'uBlock Origin està activat",
+    "message": "No funciona amb l'uBlock Origin habilitat",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "Obre pestanyes o finestres no desitjades",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportRedact": {
