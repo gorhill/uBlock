@@ -169,7 +169,7 @@
 		"content": "filters",
 		"group": "privacy",
 		"off": true,
-		"title": "Block access to LAN",
+		"title": "Block Outsider Intrusion into LAN",
 		"contentURL": "https://raw.githubusercontent.com/gwarser/filter-lists/master/lan-block.txt",
 		"supportURL": "https://github.com/gwarser/filter-lists"
 	},
