@@ -312,7 +312,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "بلاک کردن این اِلمان‌",
+    "message": "بلاک کردن این بخش",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -444,7 +444,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "محلی",
+    "message": "داخلی",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -476,7 +476,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "واردات...",
+    "message": "وارد شده",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -668,7 +668,7 @@
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
-    "message": "فیلتر کردن مطالب لاگ",
+    "message": "فیلتر کردن محتوای لاگ",
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
