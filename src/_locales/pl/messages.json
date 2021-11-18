@@ -252,7 +252,7 @@
     "description": ""
   },
   "popup1pScriptRulePrompt": {
-    "message": "skrypty z tej domeny",
+    "message": "skrypty własne",
     "description": ""
   },
   "popup3pScriptRulePrompt": {
@@ -276,11 +276,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilterTip": {
-    "message": "Wyróżnij wiersze zawierające skrypty innych firm",
+    "message": "↑: Wyróżnij wiersze zawierające skrypty z domen zewnętrznych",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party scripts' cell"
   },
   "popup3pFrameFilterTip": {
-    "message": "Wyróżnij wiersze zawierające ramki innych firm",
+    "message": "↑: Wyróżnij wiersze zawierające ramki z domen zewnętrznych",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party frames' cell"
   },
   "pickerCreate": {
@@ -476,7 +476,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Importuj...",
+    "message": "Importuj…",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -496,7 +496,7 @@
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Aktualizowanie...",
+    "message": "Aktualizowanie…",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -700,7 +700,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin3p": {
-    "message": "domeny trzecie",
+    "message": "domeny zewnętrzne",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerEntryDetailsHeader": {
@@ -872,7 +872,7 @@
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Przeczytaj dokumentację na <code>uBlock/wiki</code> by dowiedzieć się o funkcjach uBlock Origin.",
+    "message": "Przeczytaj dokumentację na <code>uBlock/wiki</code> by nauczyć się obsługi uBlock Origin.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
@@ -888,7 +888,7 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Zgłaszaj problemy z filtrowaniem na poszczególnych stronach na <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"> trakerze błędów<code>uBlockOrigin/uAssets</code></span>. <u>Wymaga konta GitHub.</u>",
+    "message": "Zgłoś problemy z filtrowaniem na poszczególnych stronach na <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"> trakerze błędów<code>uBlockOrigin/uAssets</code></span>. <u>Wymaga konta GitHub.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
@@ -916,7 +916,7 @@
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Ważne:</b> potencjalnie prywatne lub wrażliwe informacje są domyślnie ocenzurowane. Ocenzurowanie może utrudnić rozwiązanie problemu.",
+    "message": "<b>Ważne:</b> potencjalnie prywatne lub wrażliwe informacje są domyślnie ocenzurowane. Ocenzurowanie może utrudniać rozwiązanie problemu.",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
@@ -936,7 +936,7 @@
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Wybierz pozycję --",
+    "message": "— Wybierz pozycję —",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
@@ -964,7 +964,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Oznacz stronę internetową jako &bdquo;NSFW&rdquo; (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">&bdquo;Not Safe For Work (nieodpowiednią w pracy)&rdquo;</a>)",
+    "message": "Oznacz stronę internetową jako „NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">„Not Safe For Work (nieodpowiednią w pracy)”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
@@ -1168,11 +1168,11 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "Zablokuj element w ramce...",
+    "message": "Zablokuj element w ramce…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Subskrybuj listę filtrów...",
+    "message": "Subskrybuj listę filtrów…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {

@@ -964,7 +964,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Marquer le site Web en tant que &ldquo;NSFW&rdquo; (<a href=\"https://fr.wikipedia.org/wiki/Not_safe_for_work\">&ldquo;Not Safe For Work&rdquo;, c'est-à-dire pour public averti/inapproprié au travail</a>)",
+    "message": "Marquer le site Web en tant que \"NSFW\" (<a href=\"https://fr.wikipedia.org/wiki/Not_safe_for_work\">\"Not Safe For Work\", c'est-à-dire pour public averti/inapproprié au travail</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {

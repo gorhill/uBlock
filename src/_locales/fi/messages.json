@@ -168,15 +168,15 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Muuta ulkoisten kirjasinten lataustilaa tällä sivustolla",
+    "message": "Muuta ulkoisten fonttien lataustilaa tällä sivustolla",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Paina estääksesi ulkoisten kirjasinten latauksen tällä sivustolla",
+    "message": "Paina estääksesi ulkoisten fonttien latauksen tällä sivustolla",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Paina salliaksesi ulkoisten kirjasinten latauksen tällä sivustolla",
+    "message": "Paina salliaksesi ulkoisten fonttien latauksen tällä sivustolla",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
@@ -200,7 +200,7 @@
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
-    "message": "Ulkoiset kirjasimet",
+    "message": "Ulkoiset fontit",
     "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
@@ -376,7 +376,7 @@
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
-    "message": "Estä ulkoisten kirjasinten lataus",
+    "message": "Estä ulkoisten fonttien lataus",
     "description": ""
   },
   "settingsNoScriptingPrompt": {
@@ -456,7 +456,7 @@
     "description": "English: Privacy"
   },
   "3pGroupMalware": {
-    "message": "Haittaohjelmaverkkotunnukset",
+    "message": "Haittaohjelmia jakelevat verkkotunnukset",
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {

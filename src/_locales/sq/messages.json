@@ -924,7 +924,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Verifikoni a e kanë raportuar më parë problemin, që të mos i mundoni ndihmësit vullnetarë me raportime të njëllojta.",
+    "message": "Verifikoni a është raportuar më parë problemi, që të mos i lodhni vullnetarët e tjerë me raporte të njëllojta.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -964,7 +964,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Etiketoj faqen web si &ldquo;NSFW&rdquo; (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">&ldquo;Not Safe For Work&rdquo;</a>)",
+    "message": "Etiketoj faqen si “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“E papërshtatshme për punë”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
