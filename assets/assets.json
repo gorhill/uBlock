@@ -170,8 +170,14 @@
 		"group": "privacy",
 		"off": true,
 		"title": "Block Outsider Intrusion into LAN",
-		"contentURL": "https://raw.githubusercontent.com/gwarser/filter-lists/master/lan-block.txt",
-		"supportURL": "https://github.com/gwarser/filter-lists"
+		"contentURL": "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/lan-block.txt",
+		"cdnURLs": [
+			"https://gitcdn.xyz/repo/uBlockOrigin/uAssets/master/filters/lan-block.txt",
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssets@master/filters/lan-block.txt",
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssets/master/filters/lan-block.txt",
+			"https://combinatronics.io/uBlockOrigin/uAssets/master/filters/lan-block.txt"
+		],
+		"supportURL": "https://github.com/uBlockOrigin/uAssets/issues"
 	},
 	"easyprivacy": {
 		"content": "filters",
