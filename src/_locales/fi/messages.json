@@ -840,7 +840,7 @@
     "description": "A label for the partyness column"
   },
   "loggerExportFormatList": {
-    "message": "Luettelo",
+    "message": "Lista",
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportFormatTable": {
