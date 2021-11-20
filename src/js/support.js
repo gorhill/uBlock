@@ -115,7 +115,7 @@ function patchEmptiness(data, prop) {
 }
 
 function configToMarkdown(collapse = false) {
-    const text = cmEditor.getValue();
+    const text = cmEditor.getValue().trim();
     return collapse
         ? '<details>\n\n```yaml\n' + text + '\n```\n</details>'
         : '```yaml\n' + text + '\n```\n';
@@ -219,7 +219,7 @@ function reportSpecificFilterIssue(ev) {
     githubURL.searchParams.set('title', title);
     githubURL.searchParams.set('url_address_of_the_web_page', '`' + reportURL.href + '`');
     githubURL.searchParams.set('category', issueType);
-    githubURL.searchParams.set('configuration', configToMarkdown(false));
+    githubURL.searchParams.set('configuration', configToMarkdown(true));
     vAPI.messaging.send('default', {
         what: 'gotoURL',
         details: { url: githubURL.href, select: true, index: -1 },
