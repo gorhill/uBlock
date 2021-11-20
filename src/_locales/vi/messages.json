@@ -24,7 +24,7 @@
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
-    "message": "Cấu hình",
+    "message": "Cài đặt",
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
@@ -888,7 +888,7 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Report filter issues with specific websites to <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "<u>Cần tài khoản GitHub:</u> Báo cáo lỗi với uBlock Origin tại <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>đây</code></span>. ",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
@@ -896,7 +896,7 @@
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Tips:</b> Be sure your filter lists are up to date. <span data-url=\"logger-ui.html#_\">The logger</span> is the primary tool to diagnose filter-related issues.",
+    "message": "<b>Mẹo:</b> Hãy đảm bảo các bộ lọc của bạn được cập nhật đầy đủ. <span data-url=\"logger-ui.html#_\">Nhật ký</span> là một công cụ hữu hiệu để chẩn đoán các lỗi bộ lọc.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
@@ -904,7 +904,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Report issues with uBlock Origin itself to <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "<u>Cần tài khoản GitHub:</u> Báo cáo lỗi với uBlock Origin tại <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>đây</code></span>. ",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
@@ -916,15 +916,15 @@
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Important:</b> Potentially private or sensitive information is redacted by default. Redacted information may make it more difficult to solve a problem.",
+    "message": "<b>Lưu ý:</b> Mặc định, các luật và bộ lọc cá nhân được ẩn. Điều này có thể khiến việc khắc phục lỗi khó khắn hơn.",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "Báo cáo lỗi bộ lọc cụ thể",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported.",
+    "message": "Để tránh tạo gánh nặng cho các tình nguyện viên, hãy chắc chắc rằng chưa từng có vấn đề tương tự được báo cáo.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -932,15 +932,15 @@
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The web page...",
+    "message": "Trang web...",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Pick an entry --",
+    "message": "--Chọn một lỗi--",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "Vẫn hiện quảng cáo hoặc vùng chứa quảng cáo",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
@@ -948,31 +948,31 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Detects uBlock Origin",
+    "message": "Phát hiện uBlock Origin",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "Có các cấn đề về riêng tư",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Malfunctions when uBlock Origin is enabled",
+    "message": "Trục trặc khi bật uBlock Origin",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "Xuất hiện các tab và cửa sổ ngoài mong muốn",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "Đánh dấu \"NFSW\" - Not Safe For Work cho trang web. <a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">Tìm hiểu về \"Not Safe For Work\"</a>",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
-    "message": "Redact",
+    "message": "Ẩn bớt",
     "description": "Text for 'Redact' button"
   },
   "supportUnredact": {
-    "message": "Unredact",
+    "message": "Hiện thêm",
     "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
@@ -1192,7 +1192,7 @@
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "genericSelectAll": {
-    "message": "Select all",
+    "message": "Chọn tất cả",
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleBlockingProfile": {

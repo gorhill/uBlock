@@ -888,7 +888,7 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Anmeld filterproblemer med bestemte websteder til <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code>-problemsporing</span>. Kræver en GitHub-konto.",
+    "message": "Rapportér filterproblemer med bestemte websteder via <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code>-problemsporing</span>. <u>Kræver en GitHub-konto.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
@@ -904,7 +904,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Anmeld problemer med selve uBlock Origin via <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> problemsporingen</span>. Kræver en GitHub-konto.",
+    "message": "Rapportér problemer med selve uBlock Origin via <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> problemsporingen</span>. <u>Kræver en GitHub-konto.</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
@@ -964,7 +964,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Afmærk websiden som &ldquo;NSFW&rdquo; (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">&ldquo;Ikke sikker til arbejdsbrug&rdquo;</a>)",
+    "message": "Markér websiden som &ldquo;NSFW&rdquo; (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">&ldquo;Ikke sikker til arbejdsbrug&rdquo;</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
