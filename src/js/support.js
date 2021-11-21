@@ -131,7 +131,7 @@ function addDetailsToReportURL(id, collapse = false) {
 function showData() {
     const shownData = JSON.parse(JSON.stringify(supportData));
     uselessKeys.forEach(prop => { removeKey(shownData, prop); });
-    const redacted = document.body.classList.contains('redacted');
+    const redacted = true;
     // If the report is for a specific site, report per-site switches which
     // are triggered on the reported site.
     if (
@@ -269,16 +269,6 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
             details: { url: url.href, select: true, index: -1 },
         });
         ev.preventDefault();
-    });
-
-    uDom('#redactButton').on('click', ( ) => {
-        document.body.classList.add('redacted');
-        showData();
-    });
-
-    uDom('#unredactButton').on('click', ( ) => {
-        document.body.classList.remove('redacted');
-        showData();
     });
 
     uDom('#selectAllButton').on('click', ( ) => {
