@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "このウェブサイトについて問題を報告する",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -860,11 +860,11 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Create new report",
+    "message": "新しい報告を作成する",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Find similar reports",
+    "message": "似た報告を探す",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -884,31 +884,31 @@
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "Filter issues/website is broken",
+    "message": "フィルターの問題 / ウェブサイトに不具合がある",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Report filter issues with specific websites to <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "特定のウェブサイトにて生じるフィルターの問題は<span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"> <code>uBlockOrigin/uAssets</code>の課題追跡システム</span>に報告してください。<u>GitHubのアカウントが必要です。</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Important:</b> Avoid using other similarly-purposed blockers along with uBlock Origin, as this may cause filter issues on specific websites.",
+    "message": "<b>重要：</b>目的を同じくするブロッカーを uBlock Origin と並用することは控えてください。これを行うと特定のウェブサイトにおけるフィルターの問題が誘発されます。",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Tips:</b> Be sure your filter lists are up to date. <span data-url=\"logger-ui.html#_\">The logger</span> is the primary tool to diagnose filter-related issues.",
+    "message": "<b>コツ：</b>フィルターリストが最新か確認しましょう。<span data-url=\"logger-ui.html#_\">リクエストログ</span>はフィルターに関連する問題を分析する第１のツールです。",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
-    "message": "Bug report",
+    "message": "バグ報告",
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Report issues with uBlock Origin itself to <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "uBlock Origin 自身の問題は<span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"> <code>uBlockOrigin/uBlock-issue</code>課題追跡システム</span>に報告してください。<u>GitHub のアカウントが必要です。</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting Information",
+    "message": "トラブルシューティング情報",
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
