@@ -424,7 +424,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>このオプションは<a href=\"https://adblockplus.org/en/faq_internal#elemhide\">Adblock Plus適合の&ldquo;要素隠蔽&rdquo;フィルター</a>の解析と施行を有効にします。これらのフィルターは表面的で、ネットリクエストベースのフィルタリングエンジンでブロックできない視覚的に迷惑な要素をウェブページ上で隠す物です。</p><p>この機能を有効にするとuBlock₀の使用メモリーを増やします。</p>",
+    "message": "コスメティックフィルターは、視覚的な妨害と見なされ、ネットワーク要求ベースのフィルタリングエンジンでブロックできないWebページ内の要素を非表示にするのに役立ちます。",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -912,67 +912,67 @@
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "Below is technical information that might be useful when volunteers are trying to help you solve a problem.",
+    "message": "以下は、ボランティアが問題解決に動く際に役立つ可能性のある設定記録です。",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Important:</b> Potentially private or sensitive information is redacted by default. Redacted information may make it more difficult to solve a problem.",
+    "message": "<b>重要：</b>個人情報や機密情報の可能性のある情報はデフォルトでは削除されます。情報が削除されたことによって問題解決が困難になる可能性があります。",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "フィルターの問題を報告する",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported.",
+    "message": "重複した報告によってボランティアに負担をかけないように、問題が既に報告されていないか確認してください。",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Address of the web page:",
+    "message": "ウェブページのアドレス",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The web page...",
+    "message": "このウェブページは以下の問題があります。",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Pick an entry --",
+    "message": "-- エントリーを選択する --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "広告またはその消し残りが表示されます",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Has overlays or other nuisances",
+    "message": "オーバーレイなど邪魔な要素があります",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Detects uBlock Origin",
+    "message": "uBlock Originを検出します",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "プライバシーを侵害します",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Malfunctions when uBlock Origin is enabled",
+    "message": "uBlock Originを有効にした時に不具合が起こります",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "タブやウィンドウを勝手に開きます",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "ウェブページに“NSFW”<a href=\"https://ja.wikipedia.org/wiki/NSFW\">Not Safe For Work（職場で見ると危険）</a>というラベルをつける",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
-    "message": "Redact",
+    "message": "編集済にする",
     "description": "Text for 'Redact' button"
   },
   "supportUnredact": {
-    "message": "Unredact",
+    "message": "無編集にする",
     "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
@@ -1192,7 +1192,7 @@
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "genericSelectAll": {
-    "message": "Select all",
+    "message": "すべて選択",
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleBlockingProfile": {
