@@ -324,6 +324,9 @@ const Parser = class {
             }
             this.flavorBits |= BITFlavorExtHTML;
             selector = selector.slice(1);
+            if ( (this.hasOptions() || this.isException()) === false ) {
+                this.flavorBits |= BITFlavorUnsupported;
+            }
         }
         // ##...
         else {
