@@ -888,11 +888,11 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Segnala problemi dei filtri con siti specifici all'<span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code>issue tracker</span>. Richiede un account GitHub.",
+    "message": "Segnala problemi dei filtri con siti specifici al <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">tracciatore di bug <code>uBlockOrigin/uAssets</code></span>. Richiede un account GitHub.",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Importante:</b> Evita di utilizzare altre estensioni simili nsieme ad uBlock Origin, poiché ciò potrebbe causare problemi di filtro su specifici siti.",
+    "message": "<b>Importante:</b> Evita di utilizzare altre estensioni simili insieme a uBlock Origin, poiché ciò potrebbe causare problemi di filtro su specifici siti.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
@@ -900,11 +900,11 @@
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
-    "message": "Segnalare un bug",
+    "message": "Segnalazione di errori",
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Segnala problemi di uBlock Origin stesso all'<span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code>issue tracker</span>. Richiede un account GitHub.",
+    "message": "Segnala problemi di uBlock Origin stesso al <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\">tracciatore di bug <code>uBlockOrigin/uBlock-issue</code></span>. Richiede un account GitHub.",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
@@ -924,7 +924,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Per evitare di gravare i volontari con segnalazioni doppie, verificare che il problema non sia già stato segnalato.",
+    "message": "Per evitare di appesantire i volontari con segnalazioni doppie, verifica che il problema non sia già stato segnalato.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -980,7 +980,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {
-    "message": "Changelog",
+    "message": "Cronologia",
     "description": ""
   },
   "aboutCode": {

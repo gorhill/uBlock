@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Een probleem op deze website melden",
+    "message": "Meld een probleem op deze website",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -276,11 +276,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilterTip": {
-    "message": "↑: Rijen met scripts van derden benadrukken",
+    "message": "↑: Benadruk rijen met scripts van derden",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party scripts' cell"
   },
   "popup3pFrameFilterTip": {
-    "message": "↑: Rijen met frames van derden benadrukken",
+    "message": "↑: Benadruk rijen met frames van derden",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party frames' cell"
   },
   "pickerCreate": {
@@ -404,7 +404,7 @@
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
-    "message": "{{used}} van {{total}} gebruikt",
+    "message": "{{used}} van de {{total}} gebruikt",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
@@ -860,11 +860,11 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Nieuwe melding maken",
+    "message": "Maak nieuwe melding",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Soortgelijke meldingen zoeken",
+    "message": "Zoek soortgelijke meldingen",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -892,11 +892,11 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Belangrijk:</b> vermijd het gebruik van andere adblockers voor dezelfde doeleinden in combinatie met uBlock Origin, omdat dit op bepaalde websites problemen kan geven.",
+    "message": "<b>Belangrijk:</b> Vermijd het gebruik van andere adblockers voor dezelfde doeleinden in combinatie met uBlock Origin, omdat dit op bepaalde websites problemen kan geven.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Tips:</b> zorg ervoor dat uw filterlijsten up-to-date zijn. <span data-url=\"logger-ui.html#_\">De logger</span> is het primaire hulpmiddel voor het analyseren van filtergerelateerde problemen.",
+    "message": "<b>Tips:</b> Zorg ervoor dat uw filterlijsten up-to-date zijn. <span data-url=\"logger-ui.html#_\">De logger</span> is het primaire hulpmiddel voor het analyseren van filtergerelateerde problemen.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
@@ -916,11 +916,11 @@
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Belangrijk:</b> mogelijk gevoelige of privégegevens worden standaard geredigeerd. Geredigeerde gegevens kunnen het oplossen van een probleem bemoeilijken.",
+    "message": "<b>Belangrijk:</b> Mogelijk gevoelige of privégegevens worden standaard geredigeerd. Geredigeerde gegevens kunnen het oplossen van een probleem bemoeilijken.",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
-    "message": "Een filterprobleem melden",
+    "message": "Meld een filterprobleem",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {

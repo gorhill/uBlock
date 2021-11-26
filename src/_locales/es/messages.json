@@ -888,7 +888,7 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Reportar problemas de filtros con sitios web específicos en el registro de problemas de <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code></span>. <u>Requiere una cuenta en GitHub</u>.",
+    "message": "Reportar problemas de filtros con sitios web específicos en el registro de problemas <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code></span>. <u>Requiere una cuenta en GitHub</u>.",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
@@ -896,7 +896,7 @@
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Consejos:</b> asegúrate de que tus listas de filtros están actualizadas. El <span data-url=\"logger-ui.html#_\">registro de peticiones</span> es la principal herramienta para diagnosticar problemas relacionados con los filtros.",
+    "message": "<b>Consejos:</b> asegúrate de que tus listas de filtros estén actualizadas. El <span data-url=\"logger-ui.html#_\">registro de peticiones</span> es la principal herramienta para diagnosticar problemas relacionados con los filtros.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {

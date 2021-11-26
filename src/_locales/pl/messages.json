@@ -872,7 +872,7 @@
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Przeczytaj dokumentację na <code>uBlock/wiki</code> by nauczyć się obsługi uBlock Origin.",
+    "message": "Przeczytaj dokumentację na <code>uBlock/wiki</code>, by nauczyć się obsługi uBlock Origin.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {

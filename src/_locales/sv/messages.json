@@ -504,7 +504,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Ett filter per rad. Ett filter kan vara ett vanligt värdnamn eller ett EasyList-kompatibelt filter. Rader med prefixet <code>!</code> kommer att ignoreras.",
+    "message": "Ett filter per rad. Ett filter kan vara ett vanligt värdnamn eller ett EasyList-kompatibelt filter. Rader med prefixet <code>!</code> ignoreras.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -924,7 +924,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported.",
+    "message": "För att undvika att belasta volontärer med dubbletter av rapporter, kontrollera att problemet inte redan har rapporterats.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -964,7 +964,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "Märk webbsidan som \"NSFW\" (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Inte lämplig på jobbet”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
