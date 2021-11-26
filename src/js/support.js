@@ -29,6 +29,7 @@ let supportData;
 
 const uselessKeys = [
     'modifiedHiddenSettings.benchmarkDatasetURL',
+    'modifiedUserSettings.alwaysDetachLogger',
     'modifiedUserSettings.popupPanelSections',
     'modifiedUserSettings.externalLists',
     'modifiedUserSettings.importedLists',
@@ -135,19 +136,18 @@ function showData() {
     // If the report is for a specific site, report per-site switches which
     // are triggered on the reported site.
     if (
-        reportURL !== null &&
+        reportHostname !== '' &&
         shownData.switchRuleset instanceof Object &&
         Array.isArray(shownData.switchRuleset.added)
     ) {
-        const hostname = reportURL.hostname;
         const added = [];
         const triggered = [];
         for ( const rule of shownData.switchRuleset.added ) {
             const match = /^[^:]+:\s+(\S+)/.exec(rule);
             if (
                 match[1] === '*' ||
-                hostname === match[1] ||
-                hostname.endsWith(`.${match[1]}`)
+                reportHostname === match[1] ||
+                reportHostname.endsWith(`.${match[1]}`)
             ) {
                 triggered.push(rule);
             } else {
@@ -187,37 +187,54 @@ function showData() {
 
 /******************************************************************************/
 
-const reportURL = (( ) => {
+const reportHostname = (( ) => {
     const url = new URL(window.location.href);
     try {
         const reportURL = url.searchParams.get('reportURL');
+        const parsedURL = new URL(reportURL);
+        parsedURL.username = '';
+        parsedURL.password = '';
+        parsedURL.hash = '';
+        const select = document.querySelector('select[name="url"]');
+        select.options[0].textContent = parsedURL.href;
+        if ( parsedURL.search !== '' ) {
+            const option = document.createElement('option');
+            parsedURL.search = '';
+            option.textContent = parsedURL.href;
+            select.append(option);
+        }
+        if ( parsedURL.pathname !== '/' ) {
+            const option = document.createElement('option');
+            parsedURL.pathname = '';
+            option.textContent = parsedURL.href;
+            select.append(option);
+        }
         if ( reportURL !== null ) {
             document.body.classList.add('filterIssue');
         }
-        document.querySelector('[data-i18n="supportS6URL"] ~ input').value = reportURL;
-        return new URL(reportURL);
+        return parsedURL.hostname.replace(/^www\./, '');
     } catch(ex) {
     }
-    return null;
+    return '';
 })();
 
-function reportSpecificFilterHostname() {
-    return reportURL.hostname.replace(/^www\./, '');
-}
-
 function reportSpecificFilterType() {
-    return document.querySelector('[data-i18n="supportS6Select1"] ~ select').value;
+    return document.querySelector('select[name="type"]').value;
 }
 
 function reportSpecificFilterIssue(ev) {
     const githubURL = new URL('https://github.com/uBlockOrigin/uAssets/issues/new?template=specific_report_from_ubo.yml');
     const issueType = reportSpecificFilterType();
-    let title = `${reportSpecificFilterHostname()}: ${issueType}`;
+    let title = `${reportHostname}: ${issueType}`;
     if ( document.getElementById('isNSFW').checked ) {
         title = `[nsfw] ${title}`;
     }
     githubURL.searchParams.set('title', title);
-    githubURL.searchParams.set('url_address_of_the_web_page', '`' + reportURL.href + '`');
+    githubURL.searchParams.set(
+        'url_address_of_the_web_page', '`' +
+        document.querySelector('select[name="url"]').value +
+        '`'
+    );
     githubURL.searchParams.set('category', issueType);
     githubURL.searchParams.set('configuration', configToMarkdown(true));
     vAPI.messaging.send('default', {
@@ -263,7 +280,7 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 
     uDom('[data-i18n="supportFindSpecificButton"]').on('click', ev => {
         const url = new URL('https://github.com/uBlockOrigin/uAssets/issues');
-        url.searchParams.set('q', `is:issue "${reportSpecificFilterHostname()}" in:title`);
+        url.searchParams.set('q', `is:issue "${reportHostname}" in:title`);
         vAPI.messaging.send('default', {
             what: 'gotoURL',
             details: { url: url.href, select: true, index: -1 },
