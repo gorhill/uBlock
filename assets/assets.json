@@ -145,7 +145,7 @@
 			"https://easylist-downloads.adblockplus.org/easylist.txt",
 			"assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt"
 		],
-		"supportURL": "https://forums.lanik.us/"
+		"supportURL": "https://easylist.to/"
 	},
 	"adguard-spyware": {
 		"content": "filters",
@@ -189,7 +189,7 @@
 			"https://easylist-downloads.adblockplus.org/easyprivacy.txt",
 			"assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt"
 		],
-		"supportURL": "https://forums.lanik.us/"
+		"supportURL": "https://easylist.to/"
 	},
 	"urlhaus-1": {
 		"content": "filters",
@@ -268,7 +268,7 @@
 		"off": true,
 		"title": "Fanboy’s Annoyance",
 		"contentURL": "https://secure.fanboy.co.nz/fanboy-annoyance.txt",
-		"supportURL": "https://forums.lanik.us/"
+		"supportURL": "https://easylist.to/"
 	},
 	"fanboy-cookiemonster": {
 		"content": "filters",
@@ -287,7 +287,7 @@
 			"https://easylist.to/easylist/fanboy-social.txt",
 			"https://secure.fanboy.co.nz/fanboy-social.txt"
 		],
-		"supportURL": "https://forums.lanik.us/"
+		"supportURL": "https://easylist.to/"
 	},
 	"ublock-annoyances": {
 		"content": "filters",
