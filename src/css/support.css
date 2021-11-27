@@ -5,10 +5,11 @@ body {
 .body > div {
     max-width: 800px;
     }
-
+h3 {
+    margin-bottom: 0;
+    }
 .supportEntry {
     display: flex;
-    margin-top: 1em;
     }
 :root.mobile .supportEntry {
     flex-direction: column;
@@ -16,13 +17,16 @@ body {
 .supportEntry > div:first-of-type {
     flex-grow: 1;
     }
+:root:not(.mobile) .supportEntry > div:first-of-type {
+    margin-inline-end: 2em;
+    }
 .supportEntry > div.hasButtons {
     align-items: center;
     display: flex;
     justify-content: space-around;
     }
 .supportEntry h3 {
-    margin-top: 0;
+    margin: 1em 0;
     }
 
 .e > .supportEntry {
@@ -45,8 +49,7 @@ body.filterIssue .body > div:not(.e) {
 }
 
 button {
-    margin-inline-end: 1em;
-        -webkit-margin-end: 1em;
+    align-self: center;
     }
 span[data-url] {
     color: var(--link-ink);

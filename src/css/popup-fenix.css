@@ -580,8 +580,13 @@ body.godMode #actionSelector > #dynaAllow {
 :root body[data-ui~="+no-popups"] #no-popups {
     display: flex;
     }
-:root.mobile [href="logger-ui.html#_"] {
+:root.mobile [href="logger-ui.html#_"],
+:root body[data-ui~="-logger"] [href="logger-ui.html#_"] {
     display: none;
+    }
+:root:not(.mobile) [href="logger-ui.html#_"],
+:root body[data-ui~="+logger"] [href="logger-ui.html#_"] {
+    display: flex;
     }
 body:not([data-more~="a"]) [data-more="a"],
 body:not([data-more~="b"]) [data-more="b"],

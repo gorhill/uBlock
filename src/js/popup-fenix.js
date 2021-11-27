@@ -840,9 +840,27 @@ const gotoPick = function() {
 /******************************************************************************/
 
 const gotoReport = function() {
+    const popupPanel = {
+        blocked: popupData.pageCounts.blocked.any,
+    };
+    const reportedStates = [
+        { name: 'enabled', prop: 'netFilteringSwitch', expected: true },
+        { name: 'no-cosmetic-filtering', prop: 'noCosmeticFiltering', expected: false },
+        { name: 'no-large-media', prop: 'noLargeMedia', expected: false },
+        { name: 'no-popups', prop: 'noPopups', expected: false },
+        { name: 'no-remote-fonts', prop: 'noRemoteFonts', expected: false },
+        { name: 'no-scripting', prop: 'noScripting', expected: false },
+        { name: 'can-element-picker', prop: 'canElementPicker', expected: true },
+    ];
+    for ( const { name, prop, expected } of reportedStates ) {
+        if ( popupData[prop] === expected ) { continue; }
+        popupPanel[name] = !expected;
+    }
     messaging.send('popupPanel', {
         what: 'launchReporter',
         tabId: popupData.tabId,
+        pageURL: popupData.pageURL,
+        popupPanel: JSON.stringify(popupPanel),
     });
 
     vAPI.closePopup();
