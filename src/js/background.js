@@ -81,7 +81,7 @@ const hiddenSettingsDefault = {
     selfieAfter: 3,
     strictBlockingBypassDuration: 120,
     suspendTabsUntilReady: 'unset',
-    uiPopupConfig: 'undocumented',
+    uiPopupConfig: 'unset',
     uiFlavor: 'unset',
     uiStyles: 'unset',
     uiTheme: 'unset',
