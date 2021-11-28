@@ -191,7 +191,7 @@ const reportedPage = (( ) => {
         }
         document.body.classList.add('filterIssue');
         return {
-            hostname: parsedURL.hostname.replace(/^www\./, ''),
+            hostname: parsedURL.hostname.replace(/^(m|mobile|www)\./, ''),
             popupPanel: JSON.parse(url.searchParams.get('popupPanel')),
         };
     } catch(ex) {
@@ -262,7 +262,7 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 
         uDom('[data-i18n="supportFindSpecificButton"]').on('click', ev => {
             const url = new URL('https://github.com/uBlockOrigin/uAssets/issues');
-            url.searchParams.set('q', `is:issue "${reportedPage.hostname}" in:title`);
+            url.searchParams.set('q', `is:issue sort:updated-desc "${reportedPage.hostname}" in:title`);
             vAPI.messaging.send('default', {
                 what: 'gotoURL',
                 details: { url: url.href, select: true, index: -1 },

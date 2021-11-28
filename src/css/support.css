@@ -20,11 +20,6 @@ h3 {
 :root:not(.mobile) .supportEntry > div:first-of-type {
     margin-inline-end: 2em;
     }
-.supportEntry > div.hasButtons {
-    align-items: center;
-    display: flex;
-    justify-content: space-around;
-    }
 .supportEntry h3 {
     margin: 1em 0;
     }
@@ -36,9 +31,7 @@ h3 {
     margin-top: 1em;
     }
 .e > .supportEntry select {
-    padding: var(--default-gap-xxsmall);
-    }
-.e > .supportEntry select {
+    min-width: 50%;
     max-width: calc(100% - 1em);
     }
 body:not(.filterIssue) .body > div.e {
