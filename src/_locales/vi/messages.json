@@ -388,7 +388,7 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsUncloakCnamePrompt": {
-    "message": "Phát hiện tên miền theo dõi mạo danh của bên thứ ba (CNAME Trackers)",
+    "message": "Chặn tên miền theo dõi mạo danh từ bên thứ ba (CNAME Trackers)",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsLastRestorePrompt": {
@@ -904,7 +904,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Report issues with uBlock Origin itself to <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "<u>Cần tài khoản GitHub:</u> Báo cáo lỗi bộ lọc với tên miền cụ thể cho <code>uBlock Origin</code> tại <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\">đây</span>. ",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {

@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Meld een probleem op deze website",
+    "message": "Een probleem op deze website melden",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -276,11 +276,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilterTip": {
-    "message": "↑: Benadruk rijen met scripts van derden",
+    "message": "↑: Rijen met scripts van derden benadrukken",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party scripts' cell"
   },
   "popup3pFrameFilterTip": {
-    "message": "↑: Benadruk rijen met frames van derden",
+    "message": "↑: Rijen met frames van derden benadrukken",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party frames' cell"
   },
   "pickerCreate": {
@@ -860,11 +860,11 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Maak nieuwe melding",
+    "message": "Nieuwe melding maken",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Zoek soortgelijke meldingen",
+    "message": "Soortgelijke meldingen zoeken",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -888,15 +888,15 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Meld filterproblemen met specifieke websites op de <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> probleemtracker</span>. Vereist een GitHub-account.",
+    "message": "Meld filterproblemen met specifieke websites in de <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code>-probleemtracker</span>. <u>Vereist een GitHub-account.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Belangrijk:</b> Vermijd het gebruik van andere adblockers voor dezelfde doeleinden in combinatie met uBlock Origin, omdat dit op bepaalde websites problemen kan geven.",
+    "message": "<b>Belangrijk:</b> vermijd het gebruik van andere adblockers voor dezelfde doeleinden in combinatie met uBlock Origin, omdat dit op bepaalde websites problemen kan geven.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Tips:</b> Zorg ervoor dat uw filterlijsten up-to-date zijn. <span data-url=\"logger-ui.html#_\">De logger</span> is het primaire hulpmiddel voor het analyseren van filtergerelateerde problemen.",
+    "message": "<b>Tips:</b> zorg ervoor dat uw filterlijsten up-to-date zijn. <span data-url=\"logger-ui.html#_\">De logger</span> is het primaire hulpmiddel voor het analyseren van filtergerelateerde problemen.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
@@ -904,7 +904,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Meld problemen met uBlock Origin zelf bij de <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> probleemtracker</span>. Vereist een GitHub-account.",
+    "message": "Meld problemen met uBlock Origin zelf in de <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code>-probleemtracker</span>. <u>Vereist een GitHub-account.</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
@@ -916,11 +916,11 @@
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Belangrijk:</b> Mogelijk gevoelige of privégegevens worden standaard geredigeerd. Geredigeerde gegevens kunnen het oplossen van een probleem bemoeilijken.",
+    "message": "<b>Belangrijk:</b> mogelijk gevoelige of privégegevens worden standaard geredigeerd. Geredigeerde gegevens kunnen het oplossen van een probleem bemoeilijken.",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
-    "message": "Meld een filterprobleem",
+    "message": "Een filterprobleem melden",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
@@ -964,7 +964,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "De webpagina labelen als &lsquo;NSFW&rsquo; (<a href=\"https://nl.wikipedia.org/wiki/NSFW\">&lsquo;Not Safe For Work&rsquo;</a>)",
+    "message": "De webpagina labelen als ‘NSFW’ (<a href=\"https://nl.wikipedia.org/wiki/NSFW\">‘Not Safe For Work’</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {

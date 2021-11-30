@@ -420,7 +420,7 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
-    "message": "Utilizza Adblock+ element hiding filters.",
+    "message": "Analizza e applica filtri cosmetici",
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
@@ -504,7 +504,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Un filtro per ogni riga. Un filtro può essere un hostname, o un filtro compatibile con Adblock Plus. Ogni riga che comincia con <code>!</code> verrà ignorata.",
+    "message": "Un filtro per riga. Un filtro può essere un semplice hostname, o un filtro compatibile con EasyList. Ogni riga che comincia con <code>!</code> verrà ignorata.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -980,7 +980,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {
-    "message": "Cronologia",
+    "message": "Changelog",
     "description": ""
   },
   "aboutCode": {

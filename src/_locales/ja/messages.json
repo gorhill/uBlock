@@ -964,7 +964,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "ウェブページに“NSFW”<a href=\"https://ja.wikipedia.org/wiki/NSFW\">Not Safe For Work（職場で見ると危険）</a>というラベルをつける",
+    "message": "ウェブページに“NSFW”（<a href=\"https://ja.wikipedia.org/wiki/NSFW\">閲覧注意</a>）というラベルをつける",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
