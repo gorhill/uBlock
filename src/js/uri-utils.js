@@ -44,7 +44,7 @@ const reIPv6FromAuthority =
 const reMustNormalizeHostname =
     /[^0-9a-z._-]/;
 const reOriginFromURI =
-    /^(?:[^:\/?#]+:)\/\/[^\/?#]+/;
+    /^[^:\/?#]+:\/\/[^\/?#]+/;
 const reHostnameFromNetworkURL =
     /^(?:http|ws|ftp)s?:\/\/([0-9a-z_][0-9a-z._-]*[0-9a-z])(?::\d+)?\//;
 const reIPAddressNaive =
