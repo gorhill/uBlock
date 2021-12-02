@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* globals document */
+/* globals CSSStyleSheet, document */
 
 'use strict';
 
