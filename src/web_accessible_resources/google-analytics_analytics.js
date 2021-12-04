@@ -65,7 +65,7 @@
         return new Tracker();
     };
     ga.getAll = function() {
-        return [];
+        return [new Tracker()];
     };
     ga.remove = noopfn;
     // https://github.com/uBlockOrigin/uAssets/issues/2107
