@@ -1693,8 +1693,8 @@ const FilterOriginHitSetTest = class extends FilterOriginHitSet {
                 origHNTrieContainer
                     .setNeedle(`${$docEntity.compute()}.*`)
                     .matches(super.getTrie(ihitset)) !== -1
-                ? 1
-                : 0;
+                    ? 1
+                    : 0;
         }
         return filterData[idata+3] !== 0;
     }
