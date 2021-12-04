@@ -46,8 +46,8 @@ const hiddenSettingsDefault = {
     allowGenericProceduralFilters: false,
     assetFetchTimeout: 30,
     autoCommentFilterTemplate: '{{date}} {{origin}}',
-    autoUpdateAssetFetchPeriod: 120,
-    autoUpdateDelayAfterLaunch: 180,
+    autoUpdateAssetFetchPeriod: 60,
+    autoUpdateDelayAfterLaunch: 105,
     autoUpdatePeriod: 4,
     benchmarkDatasetURL: 'unset',
     blockingProfiles: '11111/#F00 11010/#C0F 11001/#00F 00001',
@@ -78,7 +78,7 @@ const hiddenSettingsDefault = {
     popupPanelLockedSections: 0,
     popupPanelHeightMode: 0,
     requestJournalProcessPeriod: 1000,
-    selfieAfter: 3,
+    selfieAfter: 2,
     strictBlockingBypassDuration: 120,
     suspendTabsUntilReady: 'unset',
     uiPopupConfig: 'unset',
@@ -175,8 +175,8 @@ const µBlock = {  // jshint ignore:line
 
     // Read-only
     systemSettings: {
-        compiledMagic: 39,  // Increase when compiled format changes
-        selfieMagic: 39,    // Increase when selfie format changes
+        compiledMagic: 40,  // Increase when compiled format changes
+        selfieMagic: 40,    // Increase when selfie format changes
     },
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/759#issuecomment-546654501

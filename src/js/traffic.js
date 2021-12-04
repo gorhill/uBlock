@@ -936,7 +936,7 @@ const injectCSP = function(fctxt, pageStore, responseHeaders) {
     if ( staticDirectives !== undefined ) {
         for ( const directive of staticDirectives ) {
             if ( directive.result !== 1 ) { continue; }
-            cspSubsets.push(directive.modifier.value);
+            cspSubsets.push(directive.value);
         }
     }
 

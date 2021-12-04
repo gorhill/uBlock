@@ -25,12 +25,12 @@
 
 /******************************************************************************/
 
-export function queueTask(func) {
+export function queueTask(func, timeout = 5000) {
     if ( typeof requestIdleCallback === 'undefined' ) {
         return setTimeout(func, 1);
     }
 
-    return requestIdleCallback(func, { timeout: 5000 });
+    return requestIdleCallback(func, { timeout });
 }
 
 export function dropTask(id) {

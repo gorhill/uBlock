@@ -124,7 +124,7 @@ const TRIE0_START = TRIE0_SLOT + 4 << 2;    //       272
 
 const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
 
-const HNTrieContainer = class {
+class HNTrieContainer {
 
     constructor() {
         const len = PAGE_SIZE * 2;
@@ -223,10 +223,7 @@ const HNTrieContainer = class {
         return -1;
     }
 
-    createOne(args) {
-        if ( Array.isArray(args) ) {
-            return new this.HNTrieRef(this, args[0], args[1]);
-        }
+    createTrie(hostnames = undefined) {
         // grow buffer if needed
         if ( (this.buf32[CHAR0_SLOT] - this.buf32[TRIE1_SLOT]) < 12 ) {
             this.growBuf(12, 0);
@@ -236,11 +233,75 @@ const HNTrieContainer = class {
         this.buf32[iroot+0] = 0;
         this.buf32[iroot+1] = 0;
         this.buf32[iroot+2] = 0;
-        return new this.HNTrieRef(this, iroot, 0);
+        if ( hostnames !== undefined ) {
+            for ( const hn of hostnames ) {
+                this.setNeedle(hn).add(iroot);
+            }
+        }
+        return iroot;
     }
 
-    compileOne(trieRef) {
-        return [ trieRef.iroot, trieRef.size ];
+    dumpTrie(iroot) {
+        let hostnames = Array.from(this.trieIterator(iroot));
+        if ( String.prototype.padStart instanceof Function ) {
+            const maxlen = Math.min(
+                hostnames.reduce((maxlen, hn) => Math.max(maxlen, hn.length), 0),
+                64
+            );
+            hostnames = hostnames.map(hn => hn.padStart(maxlen));
+        }
+        for ( const hn of hostnames ) {
+            console.log(hn);
+        }
+    }
+
+    trieIterator(iroot) {
+        return {
+            value: undefined,
+            done: false,
+            next() {
+                if ( this.icell === 0 ) {
+                    if ( this.forks.length === 0 ) {
+                        this.value = undefined;
+                        this.done = true;
+                        return this;
+                    }
+                    this.charPtr = this.forks.pop();
+                    this.icell = this.forks.pop();
+                }
+                for (;;) {
+                    const idown = this.container.buf32[this.icell+0];
+                    if ( idown !== 0 ) {
+                        this.forks.push(idown, this.charPtr);
+                    }
+                    const v = this.container.buf32[this.icell+2];
+                    let i0 = this.container.buf32[CHAR0_SLOT] + (v >>> 8);
+                    const i1 = i0 + (v & 0x7F);
+                    while ( i0 < i1 ) {
+                        this.charPtr -= 1;
+                        this.charBuf[this.charPtr] = this.container.buf[i0];
+                        i0 += 1;
+                    }
+                    this.icell = this.container.buf32[this.icell+1];
+                    if ( (v & 0x80) !== 0 ) {
+                        return this.toHostname();
+                    }
+                }
+            },
+            toHostname() {
+                this.value = this.textDecoder.decode(
+                    new Uint8Array(this.charBuf.buffer, this.charPtr)
+                );
+                return this;
+            },
+            container: this,
+            icell: this.buf32[iroot],
+            charBuf: new Uint8Array(256),
+            charPtr: 256,
+            forks: [],
+            textDecoder: new TextDecoder(),
+            [Symbol.iterator]() { return this; },
+        };
     }
 
     addJS(iroot) {
@@ -346,15 +407,6 @@ const HNTrieContainer = class {
             byteLength: this.buf.byteLength,
             char0: this.buf32[CHAR0_SLOT],
         };
-    }
-
-    fromIterable(hostnames, add) {
-        if ( add === undefined ) { add = 'add'; }
-        const trieRef = this.createOne();
-        for ( const hn of hostnames ) {
-            trieRef[add](hn);
-        }
-        return trieRef;
     }
 
     serialize(encoder) {
@@ -612,149 +664,13 @@ const HNTrieContainer = class {
         }
         this.buf32 = new Uint32Array(this.buf.buffer);
     }
-};
+}
 
 HNTrieContainer.prototype.matches = HNTrieContainer.prototype.matchesJS;
 HNTrieContainer.prototype.matchesWASM = null;
 
 HNTrieContainer.prototype.add = HNTrieContainer.prototype.addJS;
 HNTrieContainer.prototype.addWASM = null;
-
-/*******************************************************************************
-
-    Class to hold reference to a specific trie
-
-*/
-
-HNTrieContainer.prototype.HNTrieRef = class {
-
-    constructor(container, iroot, size) {
-        this.container = container;
-        this.iroot = iroot;
-        this.size = size;
-        this.needle = '';
-        this.last = -1;
-    }
-
-    add(hn) {
-        if ( this.container.setNeedle(hn).add(this.iroot) > 0 ) {
-            this.last = -1;
-            this.needle = '';
-            this.size += 1;
-            return true;
-        }
-        return false;
-    }
-
-    addJS(hn) {
-        if ( this.container.setNeedle(hn).addJS(this.iroot) > 0 ) {
-            this.last = -1;
-            this.needle = '';
-            this.size += 1;
-            return true;
-        }
-        return false;
-    }
-
-    addWASM(hn) {
-        if ( this.container.setNeedle(hn).addWASM(this.iroot) > 0 ) {
-            this.last = -1;
-            this.needle = '';
-            this.size += 1;
-            return true;
-        }
-        return false;
-    }
-
-    matches(needle) {
-        if ( needle !== this.needle ) {
-            this.needle = needle;
-            this.last = this.container.setNeedle(needle).matches(this.iroot);
-        }
-        return this.last;
-    }
-
-    matchesJS(needle) {
-        if ( needle !== this.needle ) {
-            this.needle = needle;
-            this.last = this.container.setNeedle(needle).matchesJS(this.iroot);
-        }
-        return this.last;
-    }
-
-    matchesWASM(needle) {
-        if ( needle !== this.needle ) {
-            this.needle = needle;
-            this.last = this.container.setNeedle(needle).matchesWASM(this.iroot);
-        }
-        return this.last;
-    }
-
-    dump() {
-        let hostnames = Array.from(this);
-        if ( String.prototype.padStart instanceof Function ) {
-            const maxlen = Math.min(
-                hostnames.reduce((maxlen, hn) => Math.max(maxlen, hn.length), 0),
-                64
-            );
-            hostnames = hostnames.map(hn => hn.padStart(maxlen));
-        }
-        for ( const hn of hostnames ) {
-            console.log(hn);
-        }
-    }
-
-    [Symbol.iterator]() {
-        return {
-            value: undefined,
-            done: false,
-            next: function() {
-                if ( this.icell === 0 ) {
-                    if ( this.forks.length === 0 ) {
-                        this.value = undefined;
-                        this.done = true;
-                        return this;
-                    }
-                    this.charPtr = this.forks.pop();
-                    this.icell = this.forks.pop();
-                }
-                for (;;) {
-                    const idown = this.container.buf32[this.icell+0];
-                    if ( idown !== 0 ) {
-                        this.forks.push(idown, this.charPtr);
-                    }
-                    const v = this.container.buf32[this.icell+2];
-                    let i0 = this.container.buf32[CHAR0_SLOT] + (v >>> 8);
-                    const i1 = i0 + (v & 0x7F);
-                    while ( i0 < i1 ) {
-                        this.charPtr -= 1;
-                        this.charBuf[this.charPtr] = this.container.buf[i0];
-                        i0 += 1;
-                    }
-                    this.icell = this.container.buf32[this.icell+1];
-                    if ( (v & 0x80) !== 0 ) {
-                        return this.toHostname();
-                    }
-                }
-            },
-            toHostname: function() {
-                this.value = this.textDecoder.decode(
-                    new Uint8Array(this.charBuf.buffer, this.charPtr)
-                );
-                return this;
-            },
-            container: this.container,
-            icell: this.container.buf32[this.iroot],
-            charBuf: new Uint8Array(256),
-            charPtr: 256,
-            forks: [],
-            textDecoder: new TextDecoder()
-        };
-    }
-};
-
-HNTrieContainer.prototype.HNTrieRef.prototype.last = -1;
-HNTrieContainer.prototype.HNTrieRef.prototype.needle = '';
 
 /******************************************************************************/
 
