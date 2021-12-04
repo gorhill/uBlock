@@ -123,34 +123,34 @@ import HNTrieContainer from '@gorhill/ubo-core/js/hntrie.js';
 const trieContainer = new HNTrieContainer();
 
 const aTrie = trieContainer.createOne();
-aTrie.add('example.org');
-aTrie.add('example.com');
+trieContainer.add(aTrie, 'example.org');
+trieContainer.add(aTrie, 'example.com');
 
 const anotherTrie = trieContainer.createOne();
-anotherTrie.add('foo.invalid');
-anotherTrie.add('bar.invalid');
+trieContainer.add(anotherTrie, 'foo.invalid');
+trieContainer.add(anotherTrie, 'bar.invalid');
 
 // matches() return the position at which the match starts, or -1 when
 // there is no match.
 
 // Matches: return 4
-console.log("aTrie.matches('www.example.org')", aTrie.matches('www.example.org'));
+console.log("trieContainer.matches(aTrie, 'www.example.org')", trieContainer.matches(aTrie, 'www.example.org'));
 
 // Does not match: return -1
-console.log("aTrie.matches('www.foo.invalid')", aTrie.matches('www.foo.invalid'));
+console.log("trieContainer.matches(aTrie, 'www.foo.invalid')", trieContainer.matches(aTrie, 'www.foo.invalid'));
 
 // Does not match: return -1
-console.log("anotherTrie.matches('www.example.org')", anotherTrie.matches('www.example.org'));
+console.log("trieContainer.matches(anotherTrie, 'www.example.org')", trieContainer.matches(anotherTrie, 'www.example.org'));
 
 // Matches: return 0
-console.log("anotherTrie.matches('foo.invalid')", anotherTrie.matches('foo.invalid'));
+console.log("trieContainer.matches(anotherTrie, 'foo.invalid')", trieContainer.matches(anotherTrie, 'foo.invalid'));
 ```
 
 The `reset()` method must be used to remove all the tries from a trie container, 
 you can't remove a single trie from the container.
 
 ```js
-hntrieContainer.reset();
+trieContainer.reset();
 ```
 
 When you reset a trie container, you can't use the reference to prior instances 
