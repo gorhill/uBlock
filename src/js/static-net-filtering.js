@@ -361,22 +361,27 @@ const FILTER_DATA_PAGE_SIZE = 65536;
 
 let filterData = new Int32Array(FILTER_DATA_PAGE_SIZE * 5);
 let filterDataWritePtr = 2;
+function filterDataGrow(len) {
+    if ( len <= filterData.length ) { return; }
+    const newLen = (len + FILTER_DATA_PAGE_SIZE-1) & ~(FILTER_DATA_PAGE_SIZE-1);
+    const newBuf = new Int32Array(newLen);
+    newBuf.set(filterData);
+    filterData = newBuf;
+}
 function filterDataAlloc(...args) {
-    const idata = filterDataWritePtr;
     const len = args.length;
-    filterDataWritePtr += len;
-    if ( filterDataWritePtr > filterData.length ) {
-        const newLength = (filterDataWritePtr + FILTER_DATA_PAGE_SIZE-1) & ~(FILTER_DATA_PAGE_SIZE-1);
-        filterData = new Int32Array(newLength);
-    }
-    for ( let j = 0; j < len; j++ ) {
-        filterData[idata+j] = args[j];
+    const idata = filterDataAllocLen(len);
+    for ( let i = 0; i < len; i++ ) {
+        filterData[idata+i] = args[i];
     }
     return idata;
 }
 function filterDataAllocLen(len) {
     const idata = filterDataWritePtr;
     filterDataWritePtr += len;
+    if ( filterDataWritePtr > filterData.length ) {
+        filterDataGrow(filterDataWritePtr);
+    }
     return idata;
 }
 const filterSequenceAdd = (a, b) => {
@@ -395,10 +400,8 @@ function filterDataToSelfie() {
 function filterDataFromSelfie(selfie) {
     if ( typeof selfie !== 'string' || selfie === '' ) { return false; }
     const data = JSON.parse(selfie);
-    const newLen = (data.length + FILTER_DATA_PAGE_SIZE-1) & ~(FILTER_DATA_PAGE_SIZE-1);
-    if ( newLen > filterData.length ) {
-        filterData = new Int32Array(newLen);
-    }
+    if ( Array.isArray(data) === false ) { return false; }
+    filterDataGrow(data.length);
     filterDataWritePtr = data.length;
     filterData.set(data);
     return true;
@@ -446,6 +449,7 @@ function filterRefsToSelfie() {
 function filterRefsFromSelfie(selfie) {
     if ( typeof selfie !== 'string' || selfie === '' ) { return false; }
     const refs = JSON.parse(selfie);
+    if ( Array.isArray(refs) === false ) { return false; }
     for ( let i = 0; i < refs.length; i++ ) {
         const v = refs[i];
         switch ( v.t ) {
@@ -1836,10 +1840,10 @@ const FilterCollection = class {
         filterData[idata+1] = i;
     }
 
-    static create() {
+    static create(fid = -1) {
         return filterDataAlloc(
-            this.fid,   // fid
-            0           // i
+            fid !== -1 ? fid : FilterCollection.fid,
+            0
         );
     }
 
@@ -2279,10 +2283,10 @@ const FilterBucket = class extends FilterCollection {
 
     static create() {
         const idata = filterDataAllocLen(4);
-        filterData[idata+0] = FilterBucket.fid; // fid
-        filterData[idata+1] = super.create();   // icollection
-        filterData[idata+2] = 0;                // n
-        filterData[idata+3] = 0;                // $matchedUnit
+        filterData[idata+0] = FilterBucket.fid;             // fid
+        filterData[idata+1] = FilterCollection.create();    // icollection
+        filterData[idata+2] = 0;                            // n
+        filterData[idata+3] = 0;                            // $matchedUnit
         return idata;
     }
 
@@ -3681,7 +3685,7 @@ FilterContainer.prototype.freeze = function() {
     if ( this.optimized !== true && this.optimizeTaskId === undefined ) {
         this.optimizeTaskId = queueTask(( ) => {
             this.optimizeTaskId = undefined;
-            this.optimize(10);
+            this.optimize();
         }, 2000);
     }
 };
