@@ -248,9 +248,11 @@ const onCacheSettingsReady = async function(fetched) {
     if ( fetched.compiledMagic !== µb.systemSettings.compiledMagic ) {
         µb.compiledFormatChanged = true;
         µb.selfieIsInvalid = true;
+        ubolog(`Serialized format of static filter lists changed`);
     }
     if ( fetched.selfieMagic !== µb.systemSettings.selfieMagic ) {
         µb.selfieIsInvalid = true;
+        ubolog(`Serialized format of selfie changed`);
     }
     if ( µb.selfieIsInvalid ) {
         µb.selfieManager.destroy();
