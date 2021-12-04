@@ -171,7 +171,7 @@ const loadBenchmarkDataset = (( ) => {
         else if ( r === 2 ) { allowCount += 1; }
         if ( r !== 1 ) {
             if ( staticNetFilteringEngine.hasQuery(fctxt) ) {
-                staticNetFilteringEngine.filterQuery(fctxt, 'queryprune');
+                staticNetFilteringEngine.filterQuery(fctxt, 'removeparam');
             }
             if ( fctxt.type === 'main_frame' || fctxt.type === 'sub_frame' ) {
                 staticNetFilteringEngine.matchAndFetchModifiers(fctxt, 'csp');
