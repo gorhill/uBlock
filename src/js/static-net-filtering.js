@@ -359,13 +359,26 @@ const isSeparatorChar = c => (charClassMap[c] & CHAR_CLASS_SEPARATOR) !== 0;
 
 const FILTER_DATA_PAGE_SIZE = 65536;
 
+const roundToFilterDataPageSize =
+    len => (len + FILTER_DATA_PAGE_SIZE-1) & ~(FILTER_DATA_PAGE_SIZE-1);
+
 let filterData = new Int32Array(FILTER_DATA_PAGE_SIZE * 5);
 let filterDataWritePtr = 2;
 function filterDataGrow(len) {
     if ( len <= filterData.length ) { return; }
-    const newLen = (len + FILTER_DATA_PAGE_SIZE-1) & ~(FILTER_DATA_PAGE_SIZE-1);
+    const newLen = roundToFilterDataPageSize(len);
     const newBuf = new Int32Array(newLen);
     newBuf.set(filterData);
+    filterData = newBuf;
+}
+function filterDataShrink() {
+    const newLen = Math.max(
+        roundToFilterDataPageSize(filterDataWritePtr),
+        FILTER_DATA_PAGE_SIZE
+    );
+    if ( newLen >= filterData.length ) { return; }
+    const newBuf = new Int32Array(newLen);
+    newBuf.set(filterData.subarray(0, filterDataWritePtr));
     filterData = newBuf;
 }
 function filterDataAlloc(...args) {
@@ -404,6 +417,7 @@ function filterDataFromSelfie(selfie) {
     filterDataGrow(data.length);
     filterDataWritePtr = data.length;
     filterData.set(data);
+    filterDataShrink();
     return true;
 }
 
@@ -1706,9 +1720,9 @@ const FilterOriginHitSetTest = class extends FilterOriginHitSet {
     static create(domainOpt) {
         const idata = filterDataAllocLen(4);
         filterData[idata+0] = FilterOriginHitSetTest.fid;
-        filterData[idata+1] = super.create(domainOpt);          // ihitset
-        filterData[idata+2] = domainOpt.includes('.*') ? 1 : 0; // hasEntity
-        filterData[idata+3] = 0;                                // $lastResult
+        filterData[idata+1] = FilterOriginHitSet.create(domainOpt); // ihitset
+        filterData[idata+2] = domainOpt.includes('.*') ? 1 : 0;     // hasEntity
+        filterData[idata+3] = 0;                                    // $lastResult
         return idata;
     }
 };
@@ -3538,6 +3552,9 @@ const FilterContainer = function() {
     // becomes too large, we can just go back to using a Map.
     this.bitsToBucketIndices = JSON.parse(`[${'0,'.repeat(CategoryCount-1)}0]`);
     this.buckets = [ new Map() ];
+    this.goodFilters = new Set();
+    this.badFilters = new Set();
+    this.unitsToOptimize = [];
     this.reset();
 };
 
@@ -3567,11 +3584,11 @@ FilterContainer.prototype.reset = function() {
     this.allowFilterCount = 0;
     this.blockFilterCount = 0;
     this.discardedCount = 0;
-    this.goodFilters = new Set();
-    this.badFilters = new Set();
+    this.goodFilters.clear();
+    this.badFilters.clear();
+    this.unitsToOptimize.length = 0;
     this.bitsToBucketIndices.fill(0);
     this.buckets.length = 1;
-    this.optimized = false;
 
     urlTokenizer.resetKnownTokens();
 
@@ -3625,6 +3642,7 @@ FilterContainer.prototype.freeze = function() {
             if ( iunit === 0 ) {
                 iunit = FilterHostnameDict.create();
                 bucket.set(DOT_TOKEN_HASH, iunit);
+                this.unitsToOptimize.push({ bits, tokenHash });
             }
             FilterHostnameDict.add(iunit, fdata);
             continue;
@@ -3673,6 +3691,7 @@ FilterContainer.prototype.freeze = function() {
         FilterBucket.unshift(ibucketunit, iunit);
         FilterBucket.unshift(ibucketunit, inewunit);
         bucket.set(tokenHash, ibucketunit);
+        this.unitsToOptimize.push({ bits, tokenHash });
     }
 
     this.badFilters.clear();
@@ -3682,12 +3701,12 @@ FilterContainer.prototype.freeze = function() {
     // Optimizing is not critical for the static network filtering engine to
     // work properly, so defer this until later to allow for reduced delay to
     // readiness when no valid selfie is available.
-    if ( this.optimized !== true && this.optimizeTaskId === undefined ) {
-        this.optimizeTaskId = queueTask(( ) => {
-            this.optimizeTaskId = undefined;
-            this.optimize();
-        }, 2000);
-    }
+    if ( this.optimizeTaskId !== undefined ) { return; }
+
+    this.optimizeTaskId = queueTask(( ) => {
+        this.optimizeTaskId = undefined;
+        this.optimize(10);
+    }, 2000);
 };
 
 /******************************************************************************/
@@ -3698,43 +3717,41 @@ FilterContainer.prototype.optimize = function(throttle = 0) {
         this.optimizeTaskId = undefined;
     }
 
-    // This will prevent pointless optimize cycles when incrementally adding
-    // filters.
-    this.optimized = true;
-
     //this.filterClassHistogram();
 
     const later = throttle => {
         this.optimizeTaskId = queueTask(( ) => {
             this.optimizeTaskId = undefined;
-            this.optimize(throttle - 1);
+            this.optimize(throttle);
         }, 1000);
     };
 
     const t0 = Date.now();
-    for ( let bits = 0; bits < this.bitsToBucketIndices.length; bits++ ) {
-        const ibucket = this.bitsToBucketIndices[bits];
-        if ( ibucket === 0 ) { continue; }
-        const bucket = this.buckets[ibucket];
-        for ( const [ th, iunit ] of bucket ) {
-            if ( throttle > 0 && (Date.now() - t0) > 48 ) {
-                return later(throttle);
+    while ( this.unitsToOptimize.length !== 0 ) {
+        const { bits, tokenHash } = this.unitsToOptimize.pop();
+        const bucket = this.buckets[this.bitsToBucketIndices[bits]];
+        const iunit = bucket.get(tokenHash);
+        const fc = filterGetClass(iunit);
+        switch ( fc ) {
+        case FilterHostnameDict:
+            FilterHostnameDict.optimize(iunit);
+            break;
+        case FilterBucket: {
+            const optimizeBits =
+                (tokenHash === NO_TOKEN_HASH) || (bits & ModifyAction) !== 0
+                    ? 0b10
+                    : 0b01;
+            const inewunit = FilterBucket.optimize(iunit, optimizeBits);
+            if ( inewunit !== 0 ) {
+                bucket.set(tokenHash, inewunit);
             }
-            const fc = filterGetClass(iunit);
-            if ( fc === FilterHostnameDict ) {
-                FilterHostnameDict.optimize(iunit);
-                continue;
-            }
-            if ( fc === FilterBucket ) {
-                const optimizeBits =
-                    (th === NO_TOKEN_HASH) || (bits & ModifyAction) !== 0
-                        ? 0b10
-                        : 0b01;
-                const inewunit = FilterBucket.optimize(iunit, optimizeBits);
-                if ( inewunit === 0 ) { continue; }
-                bucket.set(th, inewunit);
-                continue;
-            }
+            break;
+        }
+        default:
+            break;
+        }
+        if ( throttle > 0 && (Date.now() - t0) > 48 ) {
+            return later(throttle - 1);
         }
     }
 
@@ -3745,6 +3762,7 @@ FilterContainer.prototype.optimize = function(throttle = 0) {
         destHNTrieContainer.optimize()
     );
     bidiTrieOptimize();
+    filterDataShrink();
 
     //this.filterClassHistogram();
 };
