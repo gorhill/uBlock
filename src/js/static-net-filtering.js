@@ -3580,9 +3580,6 @@ FilterContainer.prototype.prime = function() {
 FilterContainer.prototype.reset = function() {
     this.processedFilterCount = 0;
     this.acceptedCount = 0;
-    this.rejectedCount = 0;
-    this.allowFilterCount = 0;
-    this.blockFilterCount = 0;
     this.discardedCount = 0;
     this.goodFilters.clear();
     this.badFilters.clear();
@@ -3793,11 +3790,11 @@ FilterContainer.prototype.toSelfie = function(storage, path) {
 
     return Promise.all([
         storage.put(
-            `${path}/FilterHostnameDict.trieContainer`,
+            `${path}/destHNTrieContainer`,
             destHNTrieContainer.serialize(sparseBase64)
         ),
         storage.put(
-            `${path}/FilterOrigin.trieContainer`,
+            `${path}/origHNTrieContainer`,
             origHNTrieContainer.serialize(sparseBase64)
         ),
         storage.put(
@@ -3818,9 +3815,6 @@ FilterContainer.prototype.toSelfie = function(storage, path) {
                 version: this.selfieVersion,
                 processedFilterCount: this.processedFilterCount,
                 acceptedCount: this.acceptedCount,
-                rejectedCount: this.rejectedCount,
-                allowFilterCount: this.allowFilterCount,
-                blockFilterCount: this.blockFilterCount,
                 discardedCount: this.discardedCount,
                 bitsToBucketIndices: this.bitsToBucketIndices,
                 buckets: bucketsToSelfie(),
@@ -3830,27 +3824,35 @@ FilterContainer.prototype.toSelfie = function(storage, path) {
     ]);
 };
 
+FilterContainer.prototype.serialize = async function() {
+    const selfie = [];
+    const storage = {
+        put(name, data) {
+            selfie.push([ name, data ]);
+        }
+    };
+    await this.toSelfie(storage, '');
+    return JSON.stringify(selfie);
+};
+
 /******************************************************************************/
 
-FilterContainer.prototype.fromSelfie = function(storage, path) {
+FilterContainer.prototype.fromSelfie = async function(storage, path) {
     if (
         storage instanceof Object === false ||
         storage.get instanceof Function === false
     ) {
-        return Promise.resolve();
+        return;
     }
 
-    const bucketsFromSelfie = selfie => {
-        for ( let i = 0; i < selfie.length; i++ ) {
-            this.buckets[i] = new Map(selfie[i]);
-        }
-    };
+    this.reset();
 
-    return Promise.all([
-        storage.get(`${path}/FilterHostnameDict.trieContainer`).then(details =>
+    const results = await Promise.all([
+        storage.get(`${path}/main`),
+        storage.get(`${path}/destHNTrieContainer`).then(details =>
             destHNTrieContainer.unserialize(details.content, sparseBase64)
         ),
-        storage.get(`${path}/FilterOrigin.trieContainer`).then(details =>
+        storage.get(`${path}/origHNTrieContainer`).then(details =>
             origHNTrieContainer.unserialize(details.content, sparseBase64)
         ),
         storage.get(`${path}/bidiTrie`).then(details =>
@@ -3862,28 +3864,45 @@ FilterContainer.prototype.fromSelfie = function(storage, path) {
         storage.get(`${path}/filterRefs`).then(details =>
             filterRefsFromSelfie(details.content)
         ),
-        storage.get(`${path}/main`).then(details => {
-            let selfie;
-            try {
-                selfie = JSON.parse(details.content);
-            } catch (ex) {
-            }
-            if ( selfie instanceof Object === false ) { return false; }
-            if ( selfie.version !== this.selfieVersion ) { return false; }
-            this.processedFilterCount = selfie.processedFilterCount;
-            this.acceptedCount = selfie.acceptedCount;
-            this.rejectedCount = selfie.rejectedCount;
-            this.allowFilterCount = selfie.allowFilterCount;
-            this.blockFilterCount = selfie.blockFilterCount;
-            this.discardedCount = selfie.discardedCount;
-            this.bitsToBucketIndices = selfie.bitsToBucketIndices;
-            bucketsFromSelfie(selfie.buckets);
-            urlTokenizer.fromSelfie(selfie.urlTokenizer);
-            return true;
-        }),
-    ]).then(results =>
-        results.every(v => v === true)
-    );
+    ]);
+
+    if ( results.slice(1).every(v => v === true) === false ) { return false; }
+
+    const bucketsFromSelfie = selfie => {
+        for ( let i = 0; i < selfie.length; i++ ) {
+            this.buckets[i] = new Map(selfie[i]);
+        }
+    };
+
+    const details = results[0];
+    if ( details instanceof Object === false ) { return false; }
+    if ( typeof details.content !== 'string' ) { return false; }
+    if ( details.content === '' ) { return false; }
+    let selfie;
+    try {
+        selfie = JSON.parse(details.content);
+    } catch (ex) {
+    }
+    if ( selfie instanceof Object === false ) { return false; }
+    if ( selfie.version !== this.selfieVersion ) { return false; }
+    this.processedFilterCount = selfie.processedFilterCount;
+    this.acceptedCount = selfie.acceptedCount;
+    this.discardedCount = selfie.discardedCount;
+    this.bitsToBucketIndices = selfie.bitsToBucketIndices;
+    bucketsFromSelfie(selfie.buckets);
+    urlTokenizer.fromSelfie(selfie.urlTokenizer);
+    return true;
+};
+
+
+FilterContainer.prototype.unserialize = async function(s) {
+    const selfie = new Map(JSON.parse(s));
+    const storage = {
+        get(name) {
+            return Promise.resolve(selfie.get(name));
+        }
+    };
+    return this.fromSelfie(storage, '');
 };
 
 /******************************************************************************/
