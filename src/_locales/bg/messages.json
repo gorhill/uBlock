@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Подайте сигнал за проблем на този уебсайт",
+    "message": "Докладване на проблем с този уебсайт",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -864,7 +864,7 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Намерете подобни доклади",
+    "message": "Намиране на подобни доклади",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -888,7 +888,7 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Докладвайте за проблеми с филтъра с конкретни уебсайтове в <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> проследяване на проблеми</span>. Изисква се акаунт в GitHub.",
+    "message": "Докладвайте за проблеми с филтрирането на конкретни уебсайтове в <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> за проследяване на проблеми</span>. <u>Изисква акаунт в GitHub.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
@@ -920,11 +920,11 @@
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
-    "message": "Подайте сигнал за проблем с филтъра",
+    "message": "Докладване на проблем с филтъра",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "За да избегнете натоварването на доброволците с дублиращи се доклади, моля, проверете дали проблемът все още не е докладван.",
+    "message": "За да се избегне натоварването на доброволците с дублиращи се доклади, моля, проверете дали проблемът все още не е докладван.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -956,7 +956,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Прекъсва, когато uBlock Origin е активиран",
+    "message": "Функционира неправилно, когато uBlock Origin е активиран",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
@@ -964,7 +964,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Маркиране на уеб страницата като &ldquo;NSFW&rdquo; (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">&ldquo;небезопасна за работа&rdquo;</a>)",
+    "message": "Маркиране на уеб страницата като &ldquo;NSFW&rdquo; (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">&ldquo;не е безопасна за работа&rdquo;</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
