@@ -227,7 +227,7 @@ async function matchRequestModifiers(engine, requests) {
                 modified = true;
                 if ( NEED_RESULTS ) {
                     const reqstop = process.hrtime.bigint();
-                    details.f = directives.map(a => a.logData().raw).sort().join('    ');
+                    details.f = directives.map(a => `${a.result}:${a.logData().raw}`).sort();
                     details.t = Math.round(Number(reqstop - reqstart) / 10) / 100;
                     results['csp'].push([ i, Object.assign({}, details) ]);
                 }
@@ -240,7 +240,7 @@ async function matchRequestModifiers(engine, requests) {
                 modified = true;
                 if ( NEED_RESULTS ) {
                     const reqstop = process.hrtime.bigint();
-                    details.f = directives.map(a => a.logData().raw).sort().join('    ');
+                    details.f = directives.map(a => `${a.result}:${a.logData().raw}`).sort();
                     details.t = Math.round(Number(reqstop - reqstart) / 10) / 100;
                     results['redirect-rule'].push([ i, Object.assign({}, details) ]);
                 }
@@ -253,7 +253,7 @@ async function matchRequestModifiers(engine, requests) {
                 modified = true;
                 if ( NEED_RESULTS ) {
                     const reqstop = process.hrtime.bigint();
-                    details.f = directives.map(a => a.logData().raw).sort().join('    ');
+                    details.f = directives.map(a => `${a.result}:${a.logData().raw}`).sort();
                     details.t = Math.round(Number(reqstop - reqstart) / 10) / 100;
                     results['removeparam'].push([ i, Object.assign({}, details) ]);
                 }
@@ -298,13 +298,25 @@ async function compareModifiers(afterResults) {
         const after = new Map(afterResults[modifier]);
         for ( const [ i, b ] of before ) {
             const a = after.get(i);
-            if ( a !== undefined && a.f === b.f ) { continue; }
-            diffs.push([ i, { before: b, after: a || null } ]);
+            if ( a !== undefined && JSON.stringify(a.f) === JSON.stringify(b.f) ) { continue; }
+            diffs.push([ i, {
+                type: b.type,
+                url: b.url,
+                originURL: b.originURL,
+                before: { f: b.f, t: b.t },
+                after: a !== undefined ? { f: a.f, t: a.t } : null,
+            }]);
         }
         for ( const [ i, a ] of after ) {
             const b = before.get(i);
             if ( b !== undefined ) { continue; }
-            diffs.push([ i, { before: b || null, after: a } ]);
+            diffs.push([ i, {
+                type: a.type,
+                url: a.url,
+                originURL: a.originURL,
+                before: null,
+                after: { f: a.f, t: a.t },
+            }]);
         }
     }
     return diffs;
