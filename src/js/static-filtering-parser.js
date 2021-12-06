@@ -641,6 +641,9 @@ const Parser = class {
                     this.flavorBits &= ~BITFlavorNetRightAnchor;
                 }
             }
+            // Pointless trailing caret (when preceded by a wildcard)
+            // TODO
+            //
             // Pointless left-hand pattern anchoring
             if (
                 (

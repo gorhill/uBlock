@@ -151,9 +151,9 @@ const FilteringContext = class {
     }
 
     fromDetails({ originURL, url, type }) {
-        this.setDocOriginFromURL(originURL);
-        this.setURL(url);
-        this.setType(type);
+        this.setDocOriginFromURL(originURL)
+            .setURL(url)
+            .setType(type);
         return this;
     }
 
