@@ -191,25 +191,6 @@ useLists.promise = null;
 
 /******************************************************************************/
 
-class MockStorage {
-    constructor(serialized) {
-        this.map = new Map(serialized);
-    }
-
-    async put(assetKey, content) {
-        this.map.set(assetKey, content);
-        return ({ assetKey, content });
-    }
-
-    async get(assetKey) {
-        return ({ assetKey, content: this.map.get(assetKey) });
-    }
-
-    *[Symbol.iterator]() {
-        yield* this.map;
-    }
-}
-
 const fctx = new FilteringContext();
 let snfeProxyInstance = null;
 
@@ -253,15 +234,12 @@ class StaticNetFilteringEngine {
         return compileList(...args);
     }
 
-    async serialize() {
-        const storage = new MockStorage();
-        await snfe.toSelfie(storage, 'path');
-        return JSON.stringify([...storage]);
+    serialize() {
+        return snfe.serialize();
     }
 
-    async deserialize(serialized) {
-        const storage = new MockStorage(JSON.parse(serialized));
-        await snfe.fromSelfie(storage, 'path');
+    deserialize(serialized) {
+        return snfe.unserialize(serialized);
     }
 
     static async create({ noPSL = false } = {}) {

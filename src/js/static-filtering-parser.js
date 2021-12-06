@@ -1308,7 +1308,7 @@ Parser.prototype.SelectorCompiler = class {
             [ 'matches-css-after', ':matches-css-after' ],
             [ 'matches-css-before', ':matches-css-before' ],
         ]);
-        this.reSimpleSelector = /^[#.][A-Za-z_][\w-]*$/;
+        this.reSimpleSelector = /^[#.]?[A-Za-z_][\w-]*$/;
         // https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet#browser_compatibility
         //   Firefox does not support constructor for CSSStyleSheet
         this.stylesheet = (( ) => {
@@ -2100,7 +2100,7 @@ const OPTTokenPopunder           = 31;
 const OPTTokenPopup              = 32;
 const OPTTokenRedirect           = 33;
 const OPTTokenRedirectRule       = 34;
-const OPTTokenQueryprune         = 35;
+const OPTTokenRemoveparam        = 35;
 const OPTTokenScript             = 36;
 const OPTTokenShide              = 37;
 const OPTTokenXhr                = 38;
@@ -2200,7 +2200,7 @@ Parser.prototype.OPTTokenOther = OPTTokenOther;
 Parser.prototype.OPTTokenPing = OPTTokenPing;
 Parser.prototype.OPTTokenPopunder = OPTTokenPopunder;
 Parser.prototype.OPTTokenPopup = OPTTokenPopup;
-Parser.prototype.OPTTokenQueryprune = OPTTokenQueryprune;
+Parser.prototype.OPTTokenRemoveparam = OPTTokenRemoveparam;
 Parser.prototype.OPTTokenRedirect = OPTTokenRedirect;
 Parser.prototype.OPTTokenRedirectRule = OPTTokenRedirectRule;
 Parser.prototype.OPTTokenScript = OPTTokenScript;
@@ -2265,11 +2265,11 @@ const netOptionTokenDescriptors = new Map([
     /* synonym */ [ 'beacon', OPTTokenPing | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTNonCspableType | OPTNonRedirectableType ],
     [ 'popunder', OPTTokenPopunder | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
     [ 'popup', OPTTokenPopup | OPTNonNetworkType | OPTCanNegate | OPTNonCspableType | OPTNonRedirectableType ],
-    [ 'queryprune', OPTTokenQueryprune | OPTMayAssign | OPTModifierType | OPTNonCspableType | OPTNonRedirectableType ],
-    /* synonym */ [ 'removeparam', OPTTokenQueryprune | OPTMayAssign | OPTModifierType | OPTNonCspableType | OPTNonRedirectableType ],
     [ 'redirect', OPTTokenRedirect | OPTMustAssign | OPTAllowMayAssign | OPTModifierType ],
     /* synonym */ [ 'rewrite', OPTTokenRedirect | OPTMustAssign | OPTAllowMayAssign | OPTModifierType ],
     [ 'redirect-rule', OPTTokenRedirectRule | OPTMustAssign | OPTAllowMayAssign | OPTModifierType | OPTNonCspableType ],
+    [ 'removeparam', OPTTokenRemoveparam | OPTMayAssign | OPTModifierType | OPTNonCspableType | OPTNonRedirectableType ],
+    /* synonym */ [ 'queryprune', OPTTokenRemoveparam | OPTMayAssign | OPTModifierType | OPTNonCspableType | OPTNonRedirectableType ],
     [ 'script', OPTTokenScript | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
     [ 'shide', OPTTokenShide | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
     /* synonym */ [ 'specifichide', OPTTokenShide | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
@@ -2324,11 +2324,11 @@ Parser.netOptionTokenIds = new Map([
     /* synonym */ [ 'beacon', OPTTokenPing ],
     [ 'popunder', OPTTokenPopunder ],
     [ 'popup', OPTTokenPopup ],
-    [ 'queryprune', OPTTokenQueryprune ],
-    /* synonym */ [ 'removeparam', OPTTokenQueryprune ],
     [ 'redirect', OPTTokenRedirect ],
     /* synonym */ [ 'rewrite', OPTTokenRedirect ],
     [ 'redirect-rule', OPTTokenRedirectRule ],
+    [ 'removeparam', OPTTokenRemoveparam ],
+    /* synonym */ [ 'queryprune', OPTTokenRemoveparam ],
     [ 'script', OPTTokenScript ],
     [ 'shide', OPTTokenShide ],
     /* synonym */ [ 'specifichide', OPTTokenShide ],
@@ -2371,7 +2371,7 @@ Parser.netOptionTokenNames = new Map([
     [ OPTTokenPing, 'ping' ],
     [ OPTTokenPopunder, 'popunder' ],
     [ OPTTokenPopup, 'popup' ],
-    [ OPTTokenQueryprune, 'removeparam' ],
+    [ OPTTokenRemoveparam, 'removeparam' ],
     [ OPTTokenRedirect, 'redirect' ],
     [ OPTTokenRedirectRule, 'redirect-rule' ],
     [ OPTTokenScript, 'script' ],
@@ -2592,7 +2592,7 @@ const NetOptionsIterator = class {
         }
         // `removeparam=`:  only for network requests.
         {
-            const i = this.tokenPos[OPTTokenQueryprune];
+            const i = this.tokenPos[OPTTokenRemoveparam];
             if ( i !== -1 ) {
                 if ( hasBits(allBits, OPTNonNetworkType) ) {
                     optSlices[i] = OPTTokenInvalid;

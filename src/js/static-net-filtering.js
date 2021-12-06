@@ -1794,6 +1794,10 @@ const FilterModifierResult = class {
         this.bits = (env.bits & ~RealmBitsMask) | filterData[imodifierunit+1];
     }
 
+    get result() {
+        return (this.bits & AllowAction) === 0 ? 1 : 2;
+    }
+
     get value() {
         return this.refs.value;
     }
@@ -1808,7 +1812,7 @@ const FilterModifierResult = class {
 
     logData() {
         const r = new LogData(this.bits, this.th, this.ireportedunit);
-        r.result = (this.bits & AllowAction) === 0 ? 1 : 2;
+        r.result = this.result;
         r.modifier = true;
         return r;
     }
@@ -2005,26 +2009,28 @@ registerFilterClass(FilterCompositeAll);
 
 const FilterHostnameDict = class {
     static getCount(idata) {
+        const itrie = filterData[idata+1];
+        if ( itrie === 0 ) {
+            return filterRefs[filterData[idata+3]].length;
+        }
         return Array.from(
             destHNTrieContainer.trieIterator(filterData[idata+1])
         ).length;
     }
 
     static match(idata) {
-        const refs = filterRefs[filterData[idata+3]];
-        if ( $requestHostname !== refs.$last ) {
-            const itrie = filterData[idata+1] || this.optimize(idata);
+        const itrie = filterData[idata+1] || this.optimize(idata);
+        return (
             filterData[idata+2] = destHNTrieContainer
-                .setNeedle(refs.$last = $requestHostname)
-                .matches(itrie);
-        }
-        return filterData[idata+2] !== -1;
+                .setNeedle($requestHostname)
+                .matches(itrie)
+        ) !== -1;
     }
 
     static add(idata, hn) {
         const itrie = filterData[idata+1];
         if ( itrie === 0 ) {
-            filterRefs[filterData[idata+3]].hostnames.push(hn);
+            filterRefs[filterData[idata+3]].push(hn);
         } else {
             destHNTrieContainer.setNeedle(hn).add(itrie);
         }
@@ -2033,9 +2039,9 @@ const FilterHostnameDict = class {
     static optimize(idata) {
         const itrie = filterData[idata+1];
         if ( itrie !== 0 ) { return itrie; }
-        const refs = filterRefs[filterData[idata+3]];
-        filterData[idata+1] = destHNTrieContainer.createTrie(refs.hostnames);
-        refs.hostnames = [];
+        const hostnames = filterRefs[filterData[idata+3]];
+        filterData[idata+1] = destHNTrieContainer.createTrie(hostnames);
+        filterRefs[filterData[idata+3]] = null;
         return filterData[idata+1];
     }
 
@@ -2044,16 +2050,12 @@ const FilterHostnameDict = class {
         filterData[idata+0] = FilterHostnameDict.fid;   // fid
         filterData[idata+1] = 0;                        // itrie
         filterData[idata+2] = -1;                       // lastResult
-        filterData[idata+3] = filterRefAdd({
-            hostnames: [],
-            $last: '',
-        });
+        filterData[idata+3] = filterRefAdd([]);         // []: hostnames
         return idata;
     }
 
     static logData(idata, details) {
-        const refs = filterRefs[filterData[idata+3]];
-        const hostname = refs.$last.slice(filterData[idata+2]);
+        const hostname = $requestHostname.slice(filterData[idata+2]);
         details.pattern.push('||', hostname, '^');
         details.regex.push(
             restrFromPlainPattern(hostname),
@@ -3031,11 +3033,11 @@ class FilterCompiler {
                 break;
             case this.parser.OPTTokenNoop:
                 break;
-            case this.parser.OPTTokenQueryprune:
+            case this.parser.OPTTokenRemoveparam:
                 if ( this.processModifierOption(id, val) === false ) {
                     return false;
                 }
-                this.optionUnitBits |= this.QUERYPRUNE_BIT;
+                this.optionUnitBits |= this.REMOVEPARAM_BIT;
                 break;
             case this.parser.OPTTokenRedirect:
                 if ( this.action === AllowAction ) {
@@ -3192,12 +3194,12 @@ class FilterCompiler {
     // are not good. Avoid if possible. This has a significant positive
     // impact on performance.
     //
-    // For pattern-less queryprune filters, try to derive a pattern from
-    // the queryprune value.
+    // For pattern-less removeparam filters, try to derive a pattern from
+    // the removeparam value.
 
     makeToken() {
         if ( this.pattern === '*' ) {
-            if ( this.modifyType !== this.parser.OPTTokenQueryprune ) {
+            if ( this.modifyType !== this.parser.OPTTokenRemoveparam ) {
                 return;
             }
             return this.extractTokenFromQuerypruneValue();
@@ -3529,7 +3531,7 @@ FilterCompiler.prototype.DENYALLOW_BIT    = 0b000000010;
 FilterCompiler.prototype.HEADER_BIT       = 0b000000100;
 FilterCompiler.prototype.STRICT_PARTY_BIT = 0b000001000;
 FilterCompiler.prototype.CSP_BIT          = 0b000010000;
-FilterCompiler.prototype.QUERYPRUNE_BIT   = 0b000100000;
+FilterCompiler.prototype.REMOVEPARAM_BIT  = 0b000100000;
 FilterCompiler.prototype.REDIRECT_BIT     = 0b001000000;
 FilterCompiler.prototype.NOT_TYPE_BIT     = 0b010000000;
 FilterCompiler.prototype.IMPORTANT_BIT    = 0b100000000;
@@ -3543,7 +3545,7 @@ FilterCompiler.prototype.FILTER_UNSUPPORTED = 2;
 
 const FilterContainer = function() {
     this.compilerVersion = '2';
-    this.selfieVersion = '2';
+    this.selfieVersion = '3';
 
     this.MAX_TOKEN_LENGTH = MAX_TOKEN_LENGTH;
     this.optimizeTaskId = undefined;
@@ -3898,8 +3900,8 @@ FilterContainer.prototype.fromSelfie = async function(storage, path) {
 FilterContainer.prototype.unserialize = async function(s) {
     const selfie = new Map(JSON.parse(s));
     const storage = {
-        get(name) {
-            return Promise.resolve(selfie.get(name));
+        async get(name) {
+            return { content: selfie.get(name) };
         }
     };
     return this.fromSelfie(storage, '');
