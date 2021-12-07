@@ -85,12 +85,13 @@ class CompiledListReader {
         this.line = '';
         this.blocks = new Map();
         this.properties = new Map();
-        const reBlockStart = new RegExp(`^${blockStartPrefix}(\\d+)\\n`, 'gm');
+        const reBlockStart = new RegExp(`^${blockStartPrefix}([\\w:]+)\\n`, 'gm');
         let match = reBlockStart.exec(raw);
         while ( match !== null ) {
-            let beg = match.index + match[0].length;
-            let end = raw.indexOf(blockEndPrefix + match[1], beg);
-            this.blocks.set(parseInt(match[1], 10), raw.slice(beg, end));
+            const sectionId = match[1];
+            const beg = match.index + match[0].length;
+            const end = raw.indexOf(blockEndPrefix + sectionId, beg);
+            this.blocks.set(sectionId, raw.slice(beg, end));
             reBlockStart.lastIndex = end;
             match = reBlockStart.exec(raw);
         }
@@ -129,15 +130,6 @@ class CompiledListReader {
         return unserialize(arg);
     }
 }
-
-CompiledListWriter.prototype.NETWORK_SECTION =
-CompiledListReader.prototype.NETWORK_SECTION = 100;
-
-CompiledListWriter.blockStartPrefix =
-CompiledListReader.blockStartPrefix = blockStartPrefix;
-
-CompiledListWriter.blockEndPrefix =
-CompiledListReader.blockEndPrefix = blockEndPrefix;
 
 /******************************************************************************/
 

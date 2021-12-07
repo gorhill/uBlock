@@ -38,9 +38,6 @@ const cosmeticSurveyingMissCountMax =
     parseInt(vAPI.localStorage.getItem('cosmeticSurveyingMissCountMax'), 10) ||
     15;
 
-const COMPILED_SPECIFIC_SECTION = 0;
-const COMPILED_GENERIC_SECTION = 1;
-
 /******************************************************************************/
 /******************************************************************************/
 
@@ -398,7 +395,7 @@ FilterContainer.prototype.compileGenericHideSelector = function(
         return;
     }
 
-    writer.select(µb.compiledCosmeticSection + COMPILED_GENERIC_SECTION);
+    writer.select('COSMETIC_FILTERS:GENERIC');
 
     const type = compiled.charCodeAt(0);
     let key;
@@ -501,7 +498,7 @@ FilterContainer.prototype.compileGenericUnhideSelector = function(
         return;
     }
 
-    writer.select(µb.compiledCosmeticSection + COMPILED_SPECIFIC_SECTION);
+    writer.select('COSMETIC_FILTERS:SPECIFIC');
 
     // https://github.com/chrisaljoudi/uBlock/issues/497
     //   All generic exception filters are stored as hostname-based filter
@@ -531,7 +528,7 @@ FilterContainer.prototype.compileSpecificSelector = function(
         return;
     }
 
-    writer.select(µb.compiledCosmeticSection + COMPILED_SPECIFIC_SECTION);
+    writer.select('COSMETIC_FILTERS:SPECIFIC');
 
     // https://github.com/chrisaljoudi/uBlock/issues/145
     let unhide = exception ? 1 : 0;
@@ -564,13 +561,13 @@ FilterContainer.prototype.compileTemporary = function(parser) {
 
 FilterContainer.prototype.fromCompiledContent = function(reader, options) {
     if ( options.skipCosmetic ) {
-        this.skipCompiledContent(reader, COMPILED_SPECIFIC_SECTION);
-        this.skipCompiledContent(reader, COMPILED_GENERIC_SECTION);
+        this.skipCompiledContent(reader, 'SPECIFIC');
+        this.skipCompiledContent(reader, 'GENERIC');
         return;
     }
 
     // Specific cosmetic filter section
-    reader.select(µb.compiledCosmeticSection + COMPILED_SPECIFIC_SECTION);
+    reader.select('COSMETIC_FILTERS:SPECIFIC');
     while ( reader.next() ) {
         this.acceptedCount += 1;
         const fingerprint = reader.fingerprint();
@@ -606,12 +603,12 @@ FilterContainer.prototype.fromCompiledContent = function(reader, options) {
     }
 
     if ( options.skipGenericCosmetic ) {
-        this.skipCompiledContent(reader, COMPILED_GENERIC_SECTION);
+        this.skipCompiledContent(reader, 'GENERIC');
         return;
     }
 
     // Generic cosmetic filter section
-    reader.select(µb.compiledCosmeticSection + COMPILED_GENERIC_SECTION);
+    reader.select('COSMETIC_FILTERS:GENERIC');
     while ( reader.next() ) {
         this.acceptedCount += 1;
         const fingerprint = reader.fingerprint();
@@ -675,7 +672,7 @@ FilterContainer.prototype.fromCompiledContent = function(reader, options) {
 /******************************************************************************/
 
 FilterContainer.prototype.skipCompiledContent = function(reader, sectionId) {
-    reader.select(µb.compiledCosmeticSection + sectionId);
+    reader.select(`COSMETIC_FILTERS:${sectionId}`);
     while ( reader.next() ) {
         this.acceptedCount += 1;
         this.discardedCount += 1;

@@ -249,7 +249,7 @@ scriptletFilteringEngine.freeze = function() {
 };
 
 scriptletFilteringEngine.compile = function(parser, writer) {
-    writer.select(µb.compiledScriptletSection);
+    writer.select('SCRIPTLET_FILTERS');
 
     // Only exception filters are allowed to be global.
     const { raw, exception } = parser.result;
@@ -295,7 +295,7 @@ scriptletFilteringEngine.compileTemporary = function(parser) {
 //     4                 -1
 
 scriptletFilteringEngine.fromCompiledContent = function(reader) {
-    reader.select(µb.compiledScriptletSection);
+    reader.select('SCRIPTLET_FILTERS');
 
     while ( reader.next() ) {
         acceptedCount += 1;

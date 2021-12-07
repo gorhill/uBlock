@@ -111,10 +111,8 @@ const typeNameToTypeValue = {
        'inline-font': 17 << TypeBitsOffset,
      'inline-script': 18 << TypeBitsOffset,
              'cname': 19 << TypeBitsOffset,
-//          'unused': 20 << TypeBitsOffset,
-//          'unused': 21 << TypeBitsOffset,
-            'webrtc': 22 << TypeBitsOffset,
-       'unsupported': 23 << TypeBitsOffset,
+            'webrtc': 20 << TypeBitsOffset,
+       'unsupported': 21 << TypeBitsOffset,
 };
 
 const otherTypeBitValue = typeNameToTypeValue.other;
@@ -168,8 +166,6 @@ const typeValueToTypeName = [
 //const typeValueFromCatBits = catBits => (catBits >>> TypeBitsOffset) & 0b11111;
 
 const MAX_TOKEN_LENGTH = 7;
-
-const COMPILED_BAD_SECTION = 1;
 
 // Four upper bits of token hash are reserved for built-in predefined
 // token hashes, which should never end up being used when tokenizing
@@ -1779,12 +1775,10 @@ registerFilterClass(FilterCompositeAll);
 const FilterHostnameDict = class {
     static getCount(idata) {
         const itrie = filterData[idata+1];
-        if ( itrie === 0 ) {
-            return filterRefs[filterData[idata+3]].length;
+        if ( itrie !== 0 ) {
+            return Array.from(destHNTrieContainer.trieIterator(itrie)).length;
         }
-        return Array.from(
-            destHNTrieContainer.trieIterator(filterData[idata+1])
-        ).length;
+        return filterRefs[filterData[idata+3]].length;
     }
 
     static match(idata) {
@@ -2640,6 +2634,12 @@ class FilterCompiler {
         return this;
     }
 
+    start(/* writer */) {
+    }
+
+    finish(/* writer */) {
+    }
+
     clone() {
         return new FilterCompiler(this.parser, this);
     }
@@ -3105,8 +3105,8 @@ class FilterCompiler {
 
         writer.select(
             this.badFilter
-                ? writer.NETWORK_SECTION + COMPILED_BAD_SECTION
-                : writer.NETWORK_SECTION
+                ? 'NETWORK_FILTERS:BAD'
+                : 'NETWORK_FILTERS:GOOD'
         );
 
         // Reminder:
@@ -3715,7 +3715,7 @@ FilterContainer.prototype.createCompiler = function(parser) {
 /******************************************************************************/
 
 FilterContainer.prototype.fromCompiled = function(reader) {
-    reader.select(reader.NETWORK_SECTION);
+    reader.select('NETWORK_FILTERS:GOOD');
     while ( reader.next() ) {
         this.acceptedCount += 1;
         if ( this.goodFilters.has(reader.line) ) {
@@ -3725,7 +3725,7 @@ FilterContainer.prototype.fromCompiled = function(reader) {
         }
     }
 
-    reader.select(reader.NETWORK_SECTION + COMPILED_BAD_SECTION);
+    reader.select('NETWORK_FILTERS:BAD');
     while ( reader.next() ) {
         this.badFilters.add(reader.line);
     }

@@ -28,18 +28,18 @@
 
 /******************************************************************************/
 
-const reBlockStart = /^#block-start-(\d+)\n/gm;
+const reBlockStart = /^#block-start-([\w:]+)\n/gm;
 let listEntries = Object.create(null);
 
-const extractBlocks = function(content, begId, endId) {
+const extractBlocks = function(content, ...ids) {
     reBlockStart.lastIndex = 0;
     const out = [];
     let match = reBlockStart.exec(content);
     while ( match !== null ) {
         const beg = match.index + match[0].length;
-        const blockId = parseInt(match[1], 10);
-        if ( blockId >= begId && blockId < endId ) {
-            const end = content.indexOf('#block-end-' + match[1], beg);
+        const id = match[1];
+        if ( ids.includes(id) ) {
+            const end = content.indexOf(`#block-end-${id}`, beg);
             out.push(content.slice(beg, end));
             reBlockStart.lastIndex = end;
         }
@@ -58,7 +58,7 @@ const fromNetFilter = function(details) {
     for ( const assetKey in listEntries ) {
         const entry = listEntries[assetKey];
         if ( entry === undefined ) { continue; }
-        const content = extractBlocks(entry.content, 100, 101);
+        const content = extractBlocks(entry.content, 'NETWORK_FILTERS:GOOD');
         let pos = 0;
         for (;;) {
             pos = content.indexOf(compiledFilter, pos);
@@ -159,9 +159,15 @@ const fromCosmeticFilter = function(details) {
     for ( const assetKey in listEntries ) {
         const entry = listEntries[assetKey];
         if ( entry === undefined ) { continue; }
-        let content = extractBlocks(entry.content, 200, 1000),
-            isProcedural,
-            found;
+        const content = extractBlocks(
+            entry.content,
+            'COSMETIC_FILTERS:GENERIC',
+            'COSMETIC_FILTERS:SPECIFIC',
+            'SCRIPTLET_FILTERS',
+            'HTML_FILTERS',
+            'HTTPHEADER_FILTERS'
+        );
+        let found;
         let pos = 0;
         while ( (pos = content.indexOf(needle, pos)) !== -1 ) {
             let beg = content.lastIndexOf('\n', pos);
@@ -216,9 +222,9 @@ const fromCosmeticFilter = function(details) {
             case 8:
             // HTML filtering
             // Response header filtering
-            case 64:
+            case 64: {
                 if ( exception !== ((fargs[2] & 0b001) !== 0) ) { break; }
-                isProcedural = (fargs[2] & 0b010) !== 0;
+                const isProcedural = (fargs[2] & 0b010) !== 0;
                 if (
                     isProcedural === false && fargs[3] !== selector ||
                     isProcedural && JSON.parse(fargs[3]).raw !== selector
@@ -237,6 +243,7 @@ const fromCosmeticFilter = function(details) {
                 }
                 found = fargs[1] + prefix + selector;
                 break;
+            }
             // Scriptlet injection
             case 32:
                 if ( exception !== ((fargs[2] & 0b001) !== 0) ) { break; }

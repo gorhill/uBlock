@@ -175,8 +175,8 @@ const µBlock = {  // jshint ignore:line
 
     // Read-only
     systemSettings: {
-        compiledMagic: 41,  // Increase when compiled format changes
-        selfieMagic: 41,    // Increase when selfie format changes
+        compiledMagic: 42,  // Increase when compiled format changes
+        selfieMagic: 42,    // Increase when selfie format changes
     },
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/759#issuecomment-546654501
@@ -188,13 +188,6 @@ const µBlock = {  // jshint ignore:line
     //   issue. It's just an attempt at hardening.
     compiledFormatChanged: false,
     selfieIsInvalid: false,
-
-    compiledCosmeticSection: 200,
-    compiledScriptletSection: 300,
-    compiledHTMLSection: 400,
-    compiledHTTPHeaderSection: 500,
-    compiledSentinelSection: 1000,
-    compiledBadSubsection: 1,
 
     restoreBackupSettings: {
         lastRestoreFile: '',

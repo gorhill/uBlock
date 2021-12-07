@@ -316,7 +316,7 @@ htmlFilteringEngine.compile = function(parser, writer) {
         return;
     }
 
-    writer.select(µb.compiledHTMLSection);
+    writer.select('HTML_FILTERS');
 
     // TODO: Mind negated hostnames, they are currently discarded.
 
@@ -345,7 +345,7 @@ htmlFilteringEngine.fromCompiledContent = function(reader) {
     // Don't bother loading filters if stream filtering is not supported.
     if ( µb.canFilterResponseData === false ) { return; }
 
-    reader.select(µb.compiledHTMLSection);
+    reader.select('HTML_FILTERS');
 
     while ( reader.next() ) {
         acceptedCount += 1;

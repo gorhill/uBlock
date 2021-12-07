@@ -90,7 +90,7 @@ httpheaderFilteringEngine.freeze = function() {
 };
 
 httpheaderFilteringEngine.compile = function(parser, writer) {
-    writer.select(µb.compiledHTTPHeaderSection);
+    writer.select('HTTPHEADER_FILTERS');
 
     const { compiled, exception } = parser.result;
     const headerName = compiled.slice(15, -1);
@@ -136,7 +136,7 @@ httpheaderFilteringEngine.compileTemporary = function(parser) {
 //               15  -1
 
 httpheaderFilteringEngine.fromCompiledContent = function(reader) {
-    reader.select(µb.compiledHTTPHeaderSection);
+    reader.select('HTTPHEADER_FILTERS');
 
     while ( reader.next() ) {
         acceptedCount += 1;
