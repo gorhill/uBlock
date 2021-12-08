@@ -215,8 +215,7 @@ const µBlock = {  // jshint ignore:line
     readyToFilter: false,
 
     supportStats: {
-        launchToReadiness: 0,
-        launchFromSelfie: false,
+        launchToReadiness: '',
     },
 
     pageStores: new Map(),
