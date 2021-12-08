@@ -768,10 +768,16 @@ registerFilterClass(FilterPatternPlainX);
 
 const FilterPatternGeneric = class {
     static match(idata) {
-        const refs = filterRefs[filterData[idata+2]];
+        const refs = filterRefs[filterData[idata+4]];
         if ( refs.$re === null ) {
             refs.$re = new RegExp(
-                restrFromGenericPattern(refs.s, filterData[idata+1])
+                restrFromGenericPattern(
+                    bidiTrie.extractString(
+                        filterData[idata+1],
+                        filterData[idata+2]
+                    ),
+                    filterData[idata+3]
+                )
             );
         }
         return refs.$re.test($requestURL);
@@ -788,13 +794,12 @@ const FilterPatternGeneric = class {
     }
 
     static fromCompiled(args) {
-        const idata = filterDataAllocLen(3);
-        filterData[idata+0] = args[0];          // fid
-        filterData[idata+1] = args[2];          // anchor
-        filterData[idata+2] = filterRefAdd({
-            s: args[1],
-            $re: null,
-        });
+        const idata = filterDataAllocLen(5);
+        filterData[idata+0] = args[0];                          // fid
+        filterData[idata+1] = bidiTrie.storeString(args[1]);    // i
+        filterData[idata+2] = args[1].length;                   // n
+        filterData[idata+3] = args[2];                          // anchor
+        filterData[idata+4] = filterRefAdd({ $re: null });
         return idata;
     }
 
@@ -804,21 +809,22 @@ const FilterPatternGeneric = class {
 
     static logData(idata, details) {
         details.pattern.length = 0;
-        const anchor = filterData[idata+1];
+        const anchor = filterData[idata+3];
         if ( (anchor & 0b100) !== 0 ) {
             details.pattern.push('||');
         } else if ( (anchor & 0b010) !== 0 ) {
             details.pattern.push('|');
         }
-        const refs = filterRefs[filterData[idata+2]];
-        details.pattern.push(refs.s);
+        const s = bidiTrie.extractString(
+            filterData[idata+1],
+            filterData[idata+2]
+        );
+        details.pattern.push(s);
         if ( (anchor & 0b001) !== 0 ) {
             details.pattern.push('|');
         }
         details.regex.length = 0;
-        details.regex.push(
-            restrFromGenericPattern(refs.s, anchor & ~0b100)
-        );
+        details.regex.push(restrFromGenericPattern(s, anchor & ~0b100));
     }
 };
 
