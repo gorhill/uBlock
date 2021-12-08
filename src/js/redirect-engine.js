@@ -130,6 +130,9 @@ const redirectableResources = new Map([
         alias: 'bab-defuser.js',
         data: 'text',
     } ],
+    [ 'nobab2.js', {
+        data: 'text',
+    } ],
     [ 'nofab.js', {
         alias: 'fuckadblock.js-3.2.0',
         data: 'text',
