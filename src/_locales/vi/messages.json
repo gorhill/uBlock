@@ -172,11 +172,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Bấm để chặn phông từ xa trên trang này",
+    "message": "Nhấp để chặn phông tải về trên trang này",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Bấm để không chặn phông từ xa trên trang này",
+    "message": "Nhấp để không chặn phông tải về trên trang này",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
@@ -200,7 +200,7 @@
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
-    "message": "Phông từ xa",
+    "message": "Phông tải về",
     "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
@@ -1008,7 +1008,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "Danh sách các bộ lọc của uBO được lưu trữ miễn phí trên các CDN.",
+    "message": "Danh sách các bộ lọc của riêng uBO được lưu trữ miễn phí tại các <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a> sau:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {

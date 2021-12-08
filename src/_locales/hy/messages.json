@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "Հաղորդել կայքում առաջացած խնդրի մասին",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -856,123 +856,123 @@
     "description": "Label for radio-button to pick export text format"
   },
   "supportOpenButton": {
-    "message": "Open",
+    "message": "Բացել",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Create new report",
+    "message": "Նոր զեկույց ստեղծել",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Find similar reports",
+    "message": "Գտնել նման զեկույցներ",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
-    "message": "Documentation",
+    "message": "Փաստաթղթեր",
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Read the documentation at <code>uBlock/wiki</code> to learn about all of uBlock Origin's features.",
+    "message": "Կարդացեք փաստաթղթերը <code>uBlock/wiki</code>-ում՝ uBlock Origin-ի բոլոր հնարավորությունների մասին իմանալու։",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
-    "message": "Questions and support",
+    "message": "Հարցեր և աջակցություն",
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
-    "message": "Answers to questions and other kinds of help support is provided on the subreddit <code>/r/uBlockOrigin</code>.",
+    "message": "Հարցերի պատասխանները և օգնության այլ տեսակները մատչելի են Reddit-ի <code>/r/uBlockOrigin</code> բաժնում։",
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "Filter issues/website is broken",
+    "message": "Զտիչի խնդիրներ/կայքը կոտրված է",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Report filter issues with specific websites to the <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "Հաղորդեք որոշակի կայքերի հետ կապված զտիչի խնդիրների մասին <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets-ի</code> խնդիրների հետագծիչի բաժնում</span>։ <u>Պահանջվում է GitHub հաշիվ։</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Important:</b> Avoid using other similarly-purposed blockers along with uBlock Origin, as this may cause filter issues on specific websites.",
+    "message": "<b>Կարևոր է.</b> Խուսափեք uBlock Origin-ի հետ մեկտեղ նման այլ արգելափակիչներ օգտագործելուց, քանի որ դա կարող է որոշակի կայքերում զտիչի հետ կապված խնդիրներ առաջացնել:",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Tips:</b> Be sure your filter lists are up to date. <span data-url=\"logger-ui.html#_\">The logger</span> is the primary tool to diagnose filter-related issues.",
+    "message": "<b>Խորհուրդներ.</b>Համոզվեք, որ Ձեր զտիչների ցուցակները թարմացված են: <span data-url=\"logger-ui.html#_\">Մատյանը</span> զտիչների հետ կապված խնդիրների ախտորոշման հիմնական գործիքն է։",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
-    "message": "Bug report",
+    "message": "Զեկույց սխալի մասին",
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Report issues with uBlock Origin itself to the <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "Հաղորդեք uBlock Origin-ի սեփական սխալների մասին <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> խնդիրների հետագծիչի բաժնում</span>։ <u>Պահանջվում է GitHub հաշիվ։</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting Information",
+    "message": "Ախտորոշիչ տեղեկություն",
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "Below is technical information that might be useful when volunteers are trying to help you solve a problem.",
+    "message": "Ցածում տեխնիկական տեղեկություն է, որը կարող է օգտակար լինել, երբ կամավորները փորձում են օգնել Ձեզ լուծել խնդիրը։",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Important:</b> Potentially private or sensitive information is redacted by default. Redacted information may make it more difficult to solve a problem.",
+    "message": "<b>Կարևոր է.</b> Հնարավոր անձնական կամ զգայուն տեղեկությունները խմբագրվում է լռելյայնորեն։ Վերամշակված տեղեկություները կարող է ավելի բարդացնել խնդրի լուծումը:",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "Հաղորդել զտիչի խնդրի մասին",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported.",
+    "message": "Կամավորներին կրկնօրինակ զեկույցներով չծանրաբեռնելու համար խնդրում ենք ստուգել, որ խնդիրն արդեն հաղորդված չէ։",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Address of the web page:",
+    "message": "Վեբ էջի հասցեն՝",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The web page...",
+    "message": "Վեբ էջը...",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Pick an entry --",
+    "message": "-- Ընտրեք կատեգորիա --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "Գովազդ է ցուցադրվում կամ դրա մնացորդներ",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Has overlays or other nuisances",
+    "message": "Վրածածկումներ կամ այլ խանգարումներ",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Detects uBlock Origin",
+    "message": "Հայտնաբերվում է uBlock Origin-ը",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "Գաղտնիության հետ կապված խնդիրներ",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Malfunctions when uBlock Origin is enabled",
+    "message": "Անսարքություններ, երբ uBlock Origin-ը միացված է",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "Բացում է անցանկալի ներդիրները կամ լուսամուտները",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "Նշել վեբ էջը որպես «NSFW» (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">«Աշխատանքի համար անվտանգ չէ»</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
-    "message": "Redact",
+    "message": "Խմբագրել",
     "description": "Text for 'Redact' button"
   },
   "supportUnredact": {
-    "message": "Unredact",
+    "message": "Չեղարկել խմբագրումը",
     "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
@@ -1192,7 +1192,7 @@
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "genericSelectAll": {
-    "message": "Select all",
+    "message": "Ընտրել բոլորը",
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleBlockingProfile": {
