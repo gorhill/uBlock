@@ -619,9 +619,6 @@ registerFilterClass(FilterTrue);
 
 /******************************************************************************/
 
-// The only purpose of this class is so that the `important` filter
-// option is added to the logged raw filter.
-
 const FilterImportant = class {
     static match() {
         return ($isBlockImportant = true);
@@ -2633,10 +2630,8 @@ class FilterCompiler {
         this.tokenBeg = 0;
         this.typeBits = 0;
         this.notTypeBits = 0;
-        this.firstWildcardPos = -1;
-        this.secondWildcardPos = -1;
-        this.firstCaretPos = -1;
-        this.secondCaretPos = -1;
+        this.wildcardPos = -1;
+        this.caretPos = -1;
         return this;
     }
 
@@ -2941,19 +2936,11 @@ class FilterCompiler {
         }
 
         if ( this.parser.patternHasWildcard() ) {
-            this.firstWildcardPos = pattern.indexOf('*');
-            if ( this.firstWildcardPos !== -1 ) {
-                this.secondWildcardPos =
-                    pattern.indexOf('*', this.firstWildcardPos + 1);
-            }
+            this.wildcardPos = pattern.indexOf('*');
         }
 
         if ( this.parser.patternHasCaret() ) {
-            this.firstCaretPos = pattern.indexOf('^');
-            if ( this.firstCaretPos !== -1 ) {
-                this.secondCaretPos =
-                    pattern.indexOf('^', this.firstCaretPos + 1);
-            }
+            this.caretPos = pattern.indexOf('^');
         }
 
         if ( pattern.length > 1024 ) {
@@ -3252,20 +3239,6 @@ class FilterCompiler {
                 : FilterCompositeAll.compile(units),
             writer
         );
-
-        // Add block-important filters to the block realm, so as to avoid
-        // to unconditionally match against the block-important realm for
-        // every network request. Block-important filters are quite rare so
-        // the block-important realm should be checked when and only when
-        // there is a matched exception filter, which important filters are
-        // meant to override.
-        if ( (this.action & ActionBitsMask) === BlockImportant ) {
-            this.action &= ~Important;
-            this.compileToAtomicFilter(
-                FilterCompositeAll.compile(units),
-                writer
-            );
-        }
     }
 
     compilePattern(units) {
@@ -3281,14 +3254,14 @@ class FilterCompiler {
             units.push(FilterPatternGeneric.compile(this));
             return;
         }
-        if ( this.firstWildcardPos === -1 && this.firstCaretPos === -1 ) {
+        if ( this.wildcardPos === -1 && this.caretPos === -1 ) {
             units.push(FilterPatternPlain.compile(this));
             return;
         }
         // Optimize special case: plain pattern with trailing caret
         if (
-            this.firstWildcardPos === -1 &&
-            this.firstCaretPos === (this.pattern.length - 1)
+            this.wildcardPos === -1 &&
+            this.caretPos === (this.pattern.length - 1)
         ) {
             this.pattern = this.pattern.slice(0, -1);
             units.push(FilterPatternPlain.compile(this));
@@ -3418,7 +3391,6 @@ FilterContainer.prototype.reset = function() {
 /******************************************************************************/
 
 FilterContainer.prototype.freeze = function() {
-    const filterBucketId = FilterBucket.fid;
     const unserialize = CompiledListReader.unserialize;
 
     for ( const line of this.goodFilters ) {
@@ -3481,21 +3453,21 @@ FilterContainer.prototype.freeze = function() {
 
         urlTokenizer.addKnownToken(tokenHash);
 
-        const inewunit = filterFromCompiled(fdata);
+        this.addFilterUnit(bits, tokenHash, filterFromCompiled(fdata));
 
-        if ( iunit === 0 ) {
-            bucket.set(tokenHash, inewunit);
-            continue;
+        // Add block-important filters to the block realm, so as to avoid
+        // to unconditionally match against the block-important realm for
+        // every network request. Block-important filters are quite rare so
+        // the block-important realm should be checked when and only when
+        // there is a matched exception filter, which important filters are
+        // meant to override.
+        if ( (bits & ActionBitsMask) === BlockImportant ) {
+            this.addFilterUnit(
+                bits & ~Important,
+                tokenHash,
+                filterFromCompiled(fdata)
+            );
         }
-        if ( filterData[iunit+0] === filterBucketId ) {
-            FilterBucket.unshift(iunit, inewunit);
-            continue;
-        }
-        const ibucketunit = FilterBucket.create();
-        FilterBucket.unshift(ibucketunit, iunit);
-        FilterBucket.unshift(ibucketunit, inewunit);
-        bucket.set(tokenHash, ibucketunit);
-        this.unitsToOptimize.push({ bits, tokenHash });
     }
 
     this.badFilters.clear();
@@ -3513,6 +3485,35 @@ FilterContainer.prototype.freeze = function() {
         this.optimizeTaskId = undefined;
         this.optimize(10);
     }, 2000);
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.addFilterUnit = function(
+    bits,
+    tokenHash,
+    inewunit
+) {
+    let ibucket = this.bitsToBucketIndices[bits];
+    if ( ibucket === 0 ) {
+        ibucket = this.bitsToBucketIndices[bits] = this.buckets.length;
+        this.buckets.push(new Map());
+    }
+    const bucket = this.buckets[ibucket];
+    const istoredunit = bucket.get(tokenHash) || 0;
+    if ( istoredunit === 0 ) {
+        bucket.set(tokenHash, inewunit);
+        return;
+    }
+    if ( filterData[istoredunit+0] === FilterBucket.fid ) {
+        FilterBucket.unshift(istoredunit, inewunit);
+        return;
+    }
+    const ibucketunit = FilterBucket.create();
+    FilterBucket.unshift(ibucketunit, istoredunit);
+    FilterBucket.unshift(ibucketunit, inewunit);
+    bucket.set(tokenHash, ibucketunit);
+    this.unitsToOptimize.push({ bits, tokenHash });
 };
 
 /******************************************************************************/
