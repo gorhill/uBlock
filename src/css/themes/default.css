@@ -323,6 +323,10 @@
     --bg-popup-cell-label-mixed: hsla(45, 100%, 38%, 1);
     --popup-icon-x-ink: #e22850;
 
+    /* cloud widget */
+    --cloud-widget-surface: var(--dark-gray-80);
+
+
  /* Need to set colors in forms.css for moz-field stuffz
   -moz-FieldText: #888888 !important;  change from these names to either HEX value or variables.  default-ink
   -moz-Field: #15141a !important;    var would be var(--dark-gray-90) hex value might be easiest though.
