@@ -3322,8 +3322,8 @@ FilterCompiler.prototype.FILTER_UNSUPPORTED = 2;
 /******************************************************************************/
 
 const FilterContainer = function() {
-    this.compilerVersion = '4';
-    this.selfieVersion = '4';
+    this.compilerVersion = '5';
+    this.selfieVersion = '5';
 
     this.MAX_TOKEN_LENGTH = MAX_TOKEN_LENGTH;
     this.optimizeTaskId = undefined;
