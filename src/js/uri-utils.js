@@ -31,8 +31,8 @@ import punycode from '../lib/punycode.js';
 // Originally:
 // https://github.com/gorhill/uBlock/blob/8b5733a58d3acf9fb62815e14699c986bd1c2fdc/src/js/uritools.js
 
-const reCommonHostnameFromURL =
-    /^https?:\/\/([0-9a-z_][0-9a-z._-]*[0-9a-z])\//;
+const reHostnameFromCommonURL =
+    /^https:\/\/[0-9a-z._-]+[0-9a-z]\//;
 const reAuthorityFromURI =
     /^(?:[^:\/?#]+:)?(\/\/[^\/?#]+)/;
 const reHostFromNakedAuthority =
@@ -75,20 +75,20 @@ function entityFromDomain(domain) {
 }
 
 function hostnameFromURI(uri) {
-    let matches = reCommonHostnameFromURL.exec(uri);
-    if ( matches !== null ) { return matches[1]; }
-    matches = reAuthorityFromURI.exec(uri);
-    if ( matches === null ) { return ''; }
-    const authority = matches[1].slice(2);
+    let match = reHostnameFromCommonURL.exec(uri);
+    if ( match !== null ) { return match[0].slice(8, -1); }
+    match = reAuthorityFromURI.exec(uri);
+    if ( match === null ) { return ''; }
+    const authority = match[1].slice(2);
     if ( reHostFromNakedAuthority.test(authority) ) {
         return authority.toLowerCase();
     }
-    matches = reHostFromAuthority.exec(authority);
-    if ( matches === null ) {
-        matches = reIPv6FromAuthority.exec(authority);
-        if ( matches === null ) { return ''; }
+    match = reHostFromAuthority.exec(authority);
+    if ( match === null ) {
+        match = reIPv6FromAuthority.exec(authority);
+        if ( match === null ) { return ''; }
     }
-    let hostname = matches[1];
+    let hostname = match[1];
     while ( hostname.endsWith('.') ) {
         hostname = hostname.slice(0, -1);
     }
@@ -104,8 +104,10 @@ function hostnameFromNetworkURL(url) {
 }
 
 function originFromURI(uri) {
-    const matches = reOriginFromURI.exec(uri);
-    return matches !== null ? matches[0].toLowerCase() : '';
+    let match = reHostnameFromCommonURL.exec(uri);
+    if ( match !== null ) { return match[0].slice(0, -1); }
+    match = reOriginFromURI.exec(uri);
+    return match !== null ? match[0].toLowerCase() : '';
 }
 
 function isNetworkURI(uri) {
