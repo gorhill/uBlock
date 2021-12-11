@@ -471,76 +471,78 @@ const Parser = class {
             }
         }
 
-        // If the pattern is a regex, remember this.
+        // Assume no anchors.
+        this.patternLeftAnchorSpan.i = this.patternSpan.i;
+        this.patternRightAnchorSpan.i = this.optionsAnchorSpan.i;
+
+        // Skip all else if pattern is a regex
         if ( patternIsRegex ) {
+            this.patternBits = this.bitsFromSpan(this.patternSpan);
             this.flavorBits |= BITFlavorNetRegex;
+            this.category = CATStaticNetFilter;
+            return;
         }
 
         // Refine by processing pattern anchors.
         //
-        // Assume no anchors.
-        this.patternLeftAnchorSpan.i = this.patternSpan.i;
-        this.patternRightAnchorSpan.i = this.optionsAnchorSpan.i;
         // Not a regex, there might be anchors.
-        if ( patternIsRegex === false ) {
-            // Left anchor?
-            //   `|`: anchor to start of URL
-            //   `||`: anchor to left of a hostname label
-            if (
-                this.patternSpan.len !== 0 &&
-                hasBits(this.slices[this.patternSpan.i], BITPipe)
-            ) {
-                this.patternLeftAnchorSpan.len = 3;
-                const len = this.slices[this.patternSpan.i+2];
-                // |||*, ...  =>  ||, |*, ...
-                if ( len > 2 ) {
-                    this.splitSlot(this.patternSpan.i, 2);
+        // Left anchor?
+        //   `|`: anchor to start of URL
+        //   `||`: anchor to left of a hostname label
+        if (
+            this.patternSpan.len !== 0 &&
+            hasBits(this.slices[this.patternSpan.i], BITPipe)
+        ) {
+            this.patternLeftAnchorSpan.len = 3;
+            const len = this.slices[this.patternSpan.i+2];
+            // |||*, ...  =>  ||, |*, ...
+            if ( len > 2 ) {
+                this.splitSlot(this.patternSpan.i, 2);
+            } else {
+                this.patternSpan.len -= 3;
+            }
+            this.patternSpan.i += 3;
+            this.flavorBits |= len === 1
+                ? BITFlavorNetLeftURLAnchor
+                : BITFlavorNetLeftHnAnchor;
+        }
+        // Right anchor?
+        //   `|`: anchor to end of URL
+        //   `^`: anchor to end of hostname, when other conditions are
+        //        fulfilled:
+        //          the pattern is hostname-anchored on the left
+        //          the pattern is made only of hostname characters
+        if ( this.patternSpan.len !== 0 ) {
+            const lastPatternSlice = this.patternSpan.len > 3
+                ? this.patternRightAnchorSpan.i - 3
+                : this.patternSpan.i;
+            const bits = this.slices[lastPatternSlice];
+            if ( (bits & BITPipe) !== 0 ) {
+                this.patternRightAnchorSpan.i = lastPatternSlice;
+                this.patternRightAnchorSpan.len = 3;
+                const len = this.slices[this.patternRightAnchorSpan.i+2];
+                // ..., ||*  =>  ..., |*, |
+                if ( len > 1 ) {
+                    this.splitSlot(this.patternRightAnchorSpan.i, len - 1);
+                    this.patternRightAnchorSpan.i += 3;
                 } else {
                     this.patternSpan.len -= 3;
                 }
-                this.patternSpan.i += 3;
-                this.flavorBits |= len === 1
-                    ? BITFlavorNetLeftURLAnchor
-                    : BITFlavorNetLeftHnAnchor;
-            }
-            // Right anchor?
-            //   `|`: anchor to end of URL
-            //   `^`: anchor to end of hostname, when other conditions are
-            //        fulfilled:
-            //          the pattern is hostname-anchored on the left
-            //          the pattern is made only of hostname characters
-            if ( this.patternSpan.len !== 0 ) {
-                const lastPatternSlice = this.patternSpan.len > 3
-                    ? this.patternRightAnchorSpan.i - 3
-                    : this.patternSpan.i;
-                const bits = this.slices[lastPatternSlice];
-                if ( (bits & BITPipe) !== 0 ) {
-                    this.patternRightAnchorSpan.i = lastPatternSlice;
-                    this.patternRightAnchorSpan.len = 3;
-                    const len = this.slices[this.patternRightAnchorSpan.i+2];
-                    // ..., ||*  =>  ..., |*, |
-                    if ( len > 1 ) {
-                        this.splitSlot(this.patternRightAnchorSpan.i, len - 1);
-                        this.patternRightAnchorSpan.i += 3;
-                    } else {
-                        this.patternSpan.len -= 3;
-                    }
-                    this.flavorBits |= BITFlavorNetRightURLAnchor;
-                } else if (
-                    hasBits(bits, BITCaret) &&
-                    this.slices[lastPatternSlice+2] === 1 &&
-                    hasBits(this.flavorBits, BITFlavorNetLeftHnAnchor) &&
-                    this.skipUntilNot(
-                        this.patternSpan.i,
-                        lastPatternSlice,
-                        BITHostname
-                    ) === lastPatternSlice
-                ) {
-                    this.patternRightAnchorSpan.i = lastPatternSlice;
-                    this.patternRightAnchorSpan.len = 3;
-                    this.patternSpan.len -= 3;
-                    this.flavorBits |= BITFlavorNetRightHnAnchor;
-                }
+                this.flavorBits |= BITFlavorNetRightURLAnchor;
+            } else if (
+                hasBits(bits, BITCaret) &&
+                this.slices[lastPatternSlice+2] === 1 &&
+                hasBits(this.flavorBits, BITFlavorNetLeftHnAnchor) &&
+                this.skipUntilNot(
+                    this.patternSpan.i,
+                    lastPatternSlice,
+                    BITHostname
+                ) === lastPatternSlice
+            ) {
+                this.patternRightAnchorSpan.i = lastPatternSlice;
+                this.patternRightAnchorSpan.len = 3;
+                this.patternSpan.len -= 3;
+                this.flavorBits |= BITFlavorNetRightHnAnchor;
             }
         }
 
@@ -553,16 +555,16 @@ const Parser = class {
         //   the part following the space character.
         // https://github.com/uBlockOrigin/uBlock-issues/issues/1118
         //   Patterns with more than one space are dubious.
-        {
+        if ( hasBits(this.allBits, BITSpace) ) {
             const { i, len } = this.patternSpan;
             const noOptionsAnchor = this.optionsAnchorSpan.len === 0;
             let j = len;
             for (;;) {
                 if ( j === 0 ) { break; }
                 j -= 3;
-                const bits = this.slices[i+j];
-                if ( noOptionsAnchor && hasBits(bits, BITSpace) ) { break; }
-                this.patternBits |= bits;
+                if ( noOptionsAnchor && hasBits(this.slices[i+j], BITSpace) ) {
+                    break;
+                }
             }
             if ( j !== 0 ) {
                 const sink = this.strFromSlices(this.patternSpan.i, j - 3);
@@ -587,86 +589,87 @@ const Parser = class {
             }
         }
 
-        // Pointless wildcards and anchoring:
+        // Pointless wildcards:
         // - Eliminate leading wildcard not followed by a pattern token slice
         // - Eliminate trailing wildcard not preceded by a pattern token slice
-        // - Eliminate pattern anchoring when irrelevant
+        // - Eliminate pointless trailing asterisk-caret (`*^`)
         //
         // Leading wildcard history:
         // https://github.com/gorhill/uBlock/issues/1669#issuecomment-224822448
         //   Remove pointless leading *.
-        // https://github.com/gorhill/uBlock/issues/3034
-        //   We can remove anchoring if we need to match all at the start.
-        //
-        // Trailing wildcard history:
-        // https://github.com/gorhill/uBlock/issues/3034
-        //   We can remove anchoring if we need to match all at the end.
-        {
+        if ( hasBits(this.allBits, BITAsterisk) ) {
             let { i, len } = this.patternSpan;
+            let pattern = this.strFromSpan(this.patternSpan);
             // Pointless leading wildcard
-            if (
-                len > 3 &&
-                hasBits(this.slices[i], BITAsterisk) &&
-                hasNoBits(this.slices[i+3], BITPatternToken)
-            ) {
+            if ( /^\*+[^0-9a-z%]/.test(pattern) ) {
                 this.slices[i] |= BITIgnore;
-                i += 3; len -= 3;
-                this.patternSpan.i = i;
-                this.patternSpan.len = len;
-                // We can ignore left-hand pattern anchor
-                if ( this.patternLeftAnchorSpan.len !== 0 ) {
-                    this.slices[this.patternLeftAnchorSpan.i] |= BITIgnore;
-                    this.flavorBits &= ~BITFlavorNetLeftAnchor;
-                }
+                this.patternSpan.i = (i += 3);
+                this.patternSpan.len = (len -= 3);
+                pattern = this.strFromSpan(this.patternSpan);
             }
             // Pointless trailing wildcard
-            if (
-                len > 3 &&
-                hasBits(this.slices[i+len-3], BITAsterisk) &&
-                hasNoBits(this.slices[i+len-6], BITPatternToken)
-            ) {
+            if ( /([^0-9a-z%]|[0-9a-z%]{7,})\*+$/.test(pattern) ) {
+                this.patternSpan.len = (len -= 3);
+                pattern = this.strFromSpan(this.patternSpan);
                 // Ignore only if the pattern would not end up looking like
                 // a regex.
-                if (
-                    hasNoBits(this.slices[i], BITSlash) ||
-                    hasNoBits(this.slices[i+len-6], BITSlash)
-                ) {
-                    this.slices[i+len-3] |= BITIgnore;
+                if ( /^\/.+\/$/.test(pattern) === false ) {
+                    this.slices[i+len] |= BITIgnore;
                 }
-                len -= 3;
-                this.patternSpan.len = len;
                 // We can ignore right-hand pattern anchor
                 if ( this.patternRightAnchorSpan.len !== 0 ) {
                     this.slices[this.patternRightAnchorSpan.i] |= BITIgnore;
                     this.flavorBits &= ~BITFlavorNetRightAnchor;
                 }
             }
-            // Pointless trailing caret (when preceded by a wildcard)
-            // TODO
-            //
-            // Pointless left-hand pattern anchoring
+            // Pointless trailing asterisk-caret: `..*^`,  `..*^|`
+            if ( hasBits(this.allBits, BITCaret) && /\*+\^$/.test(pattern) ) {
+                this.slices[i+len-3] |= BITIgnore;
+                this.slices[i+len-6] |= BITIgnore;
+                this.patternSpan.len = (len -= 6);
+                pattern = this.strFromSpan(this.patternSpan);
+                // We can ignore right-hand pattern anchor
+                if ( this.patternRightAnchorSpan.len !== 0 ) {
+                    this.slices[this.patternRightAnchorSpan.i] |= BITIgnore;
+                    this.flavorBits &= ~BITFlavorNetRightAnchor;
+                }
+            }
+        }
+
+        // Pointless left-hand pattern anchoring
+        //
+        // Leading wildcard history:
+        // https://github.com/gorhill/uBlock/issues/3034
+        //   We can remove anchoring if we need to match all at the start.
+        if ( hasBits(this.flavorBits, BITFlavorNetLeftAnchor) ) {
+            const i = this.patternLeftAnchorSpan.i;
             if (
-                (
-                    len === 0 ||
-                    len !== 0 && hasBits(this.slices[i], BITAsterisk)
-                ) &&
-                hasBits(this.flavorBits, BITFlavorNetLeftAnchor)
+                this.patternSpan.len === 0 ||
+                hasBits(this.slices[i+3], BITIgnore|BITAsterisk)
             ) {
-                this.slices[this.patternLeftAnchorSpan.i] |= BITIgnore;
+                this.slices[i] |= BITIgnore;
                 this.flavorBits &= ~BITFlavorNetLeftAnchor;
             }
-            // Pointless right-hand pattern anchoring
+        }
+
+        // Pointless right-hand pattern anchoring
+        //
+        // Trailing wildcard history:
+        // https://github.com/gorhill/uBlock/issues/3034
+        //   We can remove anchoring if we need to match all at the end.
+        if ( hasBits(this.flavorBits, BITFlavorNetRightAnchor) ) {
+            const i = this.patternLeftAnchorSpan;
             if (
-                (
-                    len === 0 ||
-                    len !== 0 && hasBits(this.slices[i+len-3], BITAsterisk)
-                ) &&
-                hasBits(this.flavorBits, BITFlavorNetRightAnchor)
+                this.patternSpan.len === 0 ||
+                hasBits(this.slices[i-3], BITIgnore|BITAsterisk)
             ) {
-                this.slices[this.patternRightAnchorSpan.i] |= BITIgnore;
+                this.slices[i] |= BITIgnore;
                 this.flavorBits &= ~BITFlavorNetRightAnchor;
             }
         }
+
+        // Collate effective pattern bits
+        this.patternBits = this.bitsFromSpan(this.patternSpan);
 
         this.category = CATStaticNetFilter;
     }
@@ -1175,6 +1178,15 @@ const Parser = class {
         const raw = this.raw.slice(0, beg) + pattern + this.raw.slice(end);
         this.analyze(raw);
         return true;
+    }
+
+    bitsFromSpan(span) {
+        const { i, len } = span;
+        let bits = 0;
+        for ( let j = 0; j < len; j += 3 ) {
+            bits |= this.slices[i+j];
+        }
+        return bits;
     }
 
     hasFlavor(bits) {

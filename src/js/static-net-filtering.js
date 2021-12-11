@@ -3254,19 +3254,17 @@ class FilterCompiler {
             units.push(FilterPatternGeneric.compile(this));
             return;
         }
-        if ( this.wildcardPos === -1 && this.caretPos === -1 ) {
-            units.push(FilterPatternPlain.compile(this));
-            return;
-        }
-        // Optimize special case: plain pattern with trailing caret
-        if (
-            this.wildcardPos === -1 &&
-            this.caretPos === (this.pattern.length - 1)
-        ) {
-            this.pattern = this.pattern.slice(0, -1);
-            units.push(FilterPatternPlain.compile(this));
-            units.push(FilterTrailingSeparator.compile());
-            return;
+        if ( this.wildcardPos === -1 ) {
+            if ( this.caretPos === -1 ) {
+                units.push(FilterPatternPlain.compile(this));
+                return;
+            }
+            if ( this.caretPos === (this.pattern.length - 1) ) {
+                this.pattern = this.pattern.slice(0, -1);
+                units.push(FilterPatternPlain.compile(this));
+                units.push(FilterTrailingSeparator.compile());
+                return;
+            }
         }
         units.push(FilterPatternGeneric.compile(this));
     }
