@@ -98,7 +98,6 @@ const userSettingsDefault = {
     collapseBlocked: true,
     colorBlindFriendly: false,
     contextMenuEnabled: true,
-    dynamicFilteringEnabled: false,
     externalLists: '',
     firewallPaneMinimized: true,
     hyperlinkAuditingDisabled: true,
