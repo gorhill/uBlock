@@ -114,7 +114,9 @@ vAPI.browserSettings = (( ) => {
 
     return {
         // https://github.com/uBlockOrigin/uBlock-issues/issues/1723#issuecomment-919913361
-        canLeakLocalIPAddresses: vAPI.webextFlavor.soup.has('mobile'),
+        canLeakLocalIPAddresses:
+            vAPI.webextFlavor.soup.has('firefox') &&
+            vAPI.webextFlavor.soup.has('mobile'),
 
         set: function(details) {
             for ( const setting in details ) {
