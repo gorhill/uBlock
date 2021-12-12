@@ -529,6 +529,13 @@ class HNTrieContainer {
         return true;
     }
 
+    dumpInfo() {
+        return [
+            `Buffer size (Uint8Array): ${this.buf32[CHAR1_SLOT].toLocaleString('en')}`,
+            `WASM: ${this.wasmMemory === null ? 'disabled' : 'enabled'}`,
+        ].join('\n');
+    }
+
     //--------------------------------------------------------------------------
     // Private methods
     //--------------------------------------------------------------------------

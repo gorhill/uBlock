@@ -239,6 +239,10 @@ const onMessage = function(request, sender, callback) {
         }
         break;
 
+    case 'sfneDump':
+        response = staticNetFilteringEngine.dump();
+        break;
+
     default:
         return vAPI.messaging.UNHANDLED;
     }

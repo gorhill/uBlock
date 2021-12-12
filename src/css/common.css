@@ -125,8 +125,13 @@ button.iconifiable > .fa-icon {
     font-size: 120%;
     }
 body[dir="rtl"] button.iconifiable > .fa-icon {
-    padding-left: 0.5em;
+    padding-left: 0.4em;
+    padding-right: 0;
     }
+body[dir] button.iconifiable > .fa-icon:last-child {
+    padding-left: 0;
+    padding-right: 0;
+}
 label {
     align-items: center;
     display: inline-flex;
