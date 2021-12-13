@@ -54,7 +54,7 @@ uDom.nodeFromId('snfe-dump').addEventListener('click', ev => {
         const button = ev.target;
         button.setAttribute('disabled', '');
         vAPI.messaging.send('dashboard', {
-            what: 'sfneDump',
+            what: 'snfeDump',
         }).then(result => {
             log(result);
             button.removeAttribute('disabled');
@@ -70,12 +70,23 @@ vAPI.messaging.send('dashboard', {
         const button = ev.target;
         button.setAttribute('disabled', '');
         vAPI.messaging.send('dashboard', {
-            what: 'sfneBenchmark',
+            what: 'snfeBenchmark',
         }).then(result => {
             log(result);
             button.removeAttribute('disabled');
         });
     });
+});
+
+uDom.nodeFromId('cfe-dump').addEventListener('click', ev => {
+        const button = ev.target;
+        button.setAttribute('disabled', '');
+        vAPI.messaging.send('dashboard', {
+            what: 'cfeDump',
+        }).then(result => {
+            log(result);
+            button.removeAttribute('disabled');
+        });
 });
 
 /******************************************************************************/

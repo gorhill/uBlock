@@ -137,7 +137,7 @@ const onMessage = function(request, sender, callback) {
         });
         return;
 
-    case 'sfneBenchmark':
+    case 'snfeBenchmark':
         µb.benchmarkStaticNetFiltering({ redirectEngine }).then(result => {
             callback(result);
         });
@@ -239,8 +239,12 @@ const onMessage = function(request, sender, callback) {
         }
         break;
 
-    case 'sfneDump':
+    case 'snfeDump':
         response = staticNetFilteringEngine.dump();
+        break;
+
+    case 'cfeDump':
+        response = cosmeticFilteringEngine.dump();
         break;
 
     default:
