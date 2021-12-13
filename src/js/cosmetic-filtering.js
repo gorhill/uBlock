@@ -1147,7 +1147,7 @@ FilterContainer.prototype.dump = function() {
         ...Array.from(this.lowlyGeneric.cl.complex.values()).map(a => `  ##.${a}`),
         `+ highly.simple: ${this.highlyGeneric.simple.dict.size}`,
         ...Array.from(this.highlyGeneric.simple.dict).map(a => `  ##${a}`),
-        `+ highly.complex: ${this.lowlyGeneric.id.simple.size}`,
+        `+ highly.complex: ${this.highlyGeneric.complex.dict.size}`,
         ...Array.from(this.highlyGeneric.complex.dict).map(a => `  ##${a}`),
     ].join('\n');
 };
