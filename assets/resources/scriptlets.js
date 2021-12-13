@@ -1278,7 +1278,7 @@
     let reStr;
     if ( arg1 === '{{1}}' || arg1 === '' ) {
         reStr = '^';
-    } else if ( arg1.startWith('/') && arg1.endsWith('/') ) {
+    } else if ( arg1.startsWith('/') && arg1.endsWith('/') ) {
         reStr = arg1.slice(1, -1);
     } else {
         reStr = arg1.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
