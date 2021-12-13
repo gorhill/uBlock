@@ -1064,7 +1064,7 @@ const FilterRegex = class {
         details.pattern.push('/', s, '/');
         details.regex.push(s);
         details.isRegex = true;
-        if ( filterData[idata+1] !== 0 ) {
+        if ( filterData[idata+3] !== 0 ) {
             details.options.push('match-case');
         }
     }
@@ -1077,7 +1077,7 @@ const FilterRegex = class {
                 filterData[idata+2]
             ),
             '/',
-            filterData[idata+3] === 1 ? ' (match-case)' : '',
+            filterData[idata+3] !== 0 ? ' (match-case)' : '',
         ].join('');
     }
 };
