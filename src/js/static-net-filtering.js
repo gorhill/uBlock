@@ -4536,21 +4536,26 @@ FilterContainer.prototype.dump = function() {
         [ ThirdParty, '3rd-party' ],
     ]);
     for ( const [ realmBits, realmName ] of realms ) {
-        toOutput(0, `realm: ${realmName}`);
+        toOutput(1, `+ realm: ${realmName}`);
         for ( const [ partyBits, partyName ] of partyness ) {
-            toOutput(1, `party: ${partyName}`);
+            toOutput(2, `+ party: ${partyName}`);
+            const processedTypeBits = new Set();
             for ( const typeName in typeNameToTypeValue ) {
-                const bits = realmBits | partyBits | typeNameToTypeValue[typeName];
+                const typeBits = typeNameToTypeValue[typeName];
+                if ( processedTypeBits.has(typeBits) ) { continue; }
+                processedTypeBits.add(typeBits);
+                const bits = realmBits | partyBits | typeBits;
                 const ibucket = this.bitsToBucketIndices[bits];
                 if ( ibucket === 0 ) { continue; }
-                toOutput(2, `type: ${typeName}`);
+                const thCount = this.buckets[ibucket].size;
+                toOutput(3, `+ type: ${typeName} (${thCount})`);
                 for ( const [ th, iunit ] of this.buckets[ibucket] ) {
                     thCounts.add(th);
                     const ths = thConstants.has(th)
                         ? thConstants.get(th)
                         : `0x${th.toString(16)}`;
-                    toOutput(3, `th: ${ths}`);
-                    dumpUnit(iunit, out, 4);
+                    toOutput(4, `th: ${ths}`);
+                    dumpUnit(iunit, out, 5);
                 }
             }
         }
@@ -4562,22 +4567,22 @@ FilterContainer.prototype.dump = function() {
 
     out.unshift([
         'Static Network Filtering Engine internals:',
-        `Distinct token hashes: ${thCounts.size.toLocaleString('en')}`,
-        `Known-token sieve (Uint8Array): ${knownTokens.toLocaleString('en')} out of 65,536`,
-        `Filter data (Int32Array): ${filterDataWritePtr.toLocaleString('en')}`,
-        `Filter refs (JS array): ${filterRefsWritePtr.toLocaleString('en')}`,
-        'Origin trie container:',
-        origHNTrieContainer.dumpInfo().split('\n').map(a => `  ${a}`).join('\n'),
-        'Request trie container:',
-        destHNTrieContainer.dumpInfo().split('\n').map(a => `  ${a}`).join('\n'),
-        'Pattern trie container:',
-        bidiTrie.dumpInfo().split('\n').map(a => `  ${a}`).join('\n'),
-        'Filter class stats:',
+        `  Distinct token hashes: ${thCounts.size.toLocaleString('en')}`,
+        `  Known-token sieve (Uint8Array): ${knownTokens.toLocaleString('en')} out of 65,536`,
+        `  Filter data (Int32Array): ${filterDataWritePtr.toLocaleString('en')}`,
+        `  Filter refs (JS array): ${filterRefsWritePtr.toLocaleString('en')}`,
+        '  Origin trie container:',
+        origHNTrieContainer.dumpInfo().split('\n').map(a => `    ${a}`).join('\n'),
+        '  Request trie container:',
+        destHNTrieContainer.dumpInfo().split('\n').map(a => `    ${a}`).join('\n'),
+        '  Pattern trie container:',
+        bidiTrie.dumpInfo().split('\n').map(a => `    ${a}`).join('\n'),
+        '+ Filter class stats:',
         Array.from(fcCounts)
              .sort((a, b) => b[1] - a[1])
-             .map(a => `  ${a[0]}: ${a[1].toLocaleString('en')}`)
+             .map(a => `    ${a[0]}: ${a[1].toLocaleString('en')}`)
              .join('\n'),
-        'Filter tree:',
+        '+ Filter tree:',
     ].join('\n'));
     return out.join('\n');
 };
