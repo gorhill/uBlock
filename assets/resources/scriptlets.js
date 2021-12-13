@@ -1270,6 +1270,30 @@
 })();
 
 
+// https://github.com/uBlockOrigin/uAssets/issues/10323#issuecomment-992312847
+// https://github.com/AdguardTeam/Scriptlets/issues/158
+/// window-close-if.js
+(function() {
+    const arg1 = '{{1}}';
+    let reStr;
+    if ( arg1 === '{{1}}' || arg1 === '' ) {
+        reStr = '^';
+    } else if ( arg1.startWith('/') && arg1.endsWith('/') ) {
+        reStr = arg1.slice(1, -1);
+    } else {
+        reStr = arg1.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+    try {
+        const re = new RegExp(reStr);
+        if ( re.test(`${window.location.pathname}${window.location.search}`) ) {
+            window.close();
+        }
+    } catch(ex) {
+        console.log(ex);
+    }
+})();
+
+
 // https://github.com/gorhill/uBlock/issues/1228
 /// window.name-defuser
 (function() {
