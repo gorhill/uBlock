@@ -25,6 +25,10 @@
 
 /******************************************************************************/
 
+const reFoldable = /^ *(?=\+ \S)/;
+
+/******************************************************************************/
+
 CodeMirror.registerGlobalHelper(
     'fold',
     'ubo-dump',
@@ -34,7 +38,7 @@ CodeMirror.registerGlobalHelper(
         const startLine = cm.getLine(startLineNo);
         let endLineNo = startLineNo;
         let endLine = startLine;
-        const match = /^ *(?=\+ \S)/.exec(startLine);
+        const match = reFoldable.exec(startLine);
         if ( match === null ) { return; }
         const foldCandidate = '  ' + match[0];
         const lastLineNo = cm.lastLine();
@@ -81,6 +85,50 @@ function log(text) {
 
 uDom.nodeFromId('console-clear').addEventListener('click', ( ) => {
         cmEditor.setValue('');
+});
+
+uDom.nodeFromId('console-fold').addEventListener('click', ( ) => {
+    const unfolded = [];
+    let maxUnfolded = -1;
+    cmEditor.eachLine(handle => {
+        const match = reFoldable.exec(handle.text);
+        if ( match === null ) { return; }
+        const depth = match[0].length;
+        const line = handle.lineNo();
+        const isFolded = cmEditor.isFolded({ line, ch: handle.text.length });
+        if ( isFolded === true ) { return; }
+        unfolded.push({ line, depth });
+        maxUnfolded = Math.max(maxUnfolded, depth);
+    });
+    if ( maxUnfolded === -1 ) { return; }
+    cmEditor.startOperation();
+    for ( const details of unfolded ) {
+        if ( details.depth !== maxUnfolded ) { continue; }
+        cmEditor.foldCode(details.line, null, 'fold');
+    }
+    cmEditor.endOperation();
+});
+
+uDom.nodeFromId('console-unfold').addEventListener('click', ( ) => {
+    const folded = [];
+    let minFolded = Number.MAX_SAFE_INTEGER;
+    cmEditor.eachLine(handle => {
+        const match = reFoldable.exec(handle.text);
+        if ( match === null ) { return; }
+        const depth = match[0].length;
+        const line = handle.lineNo();
+        const isFolded = cmEditor.isFolded({ line, ch: handle.text.length });
+        if ( isFolded !== true ) { return; }
+        folded.push({ line, depth });
+        minFolded = Math.min(minFolded, depth);
+    });
+    if ( minFolded === Number.MAX_SAFE_INTEGER ) { return; }
+    cmEditor.startOperation();
+    for ( const details of folded ) {
+        if ( details.depth !== minFolded ) { continue; }
+        cmEditor.foldCode(details.line, null, 'unfold');
+    }
+    cmEditor.endOperation();
 });
 
 uDom.nodeFromId('snfe-dump').addEventListener('click', ev => {
