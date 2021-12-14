@@ -28,6 +28,8 @@
 // https://github.com/uBlockOrigin/uBlock-issues/issues/1659
 //   Chromium fails to dispatch onCreatedNavigationTarget() events sometimes,
 //   so we synthetize these missing events when this happens.
+// https://github.com/uBlockOrigin/uAssets/issues/10323
+//   Also mind whether the new tab is launched from an external application.
 
 vAPI.Tabs = class extends vAPI.Tabs {
     constructor() {
@@ -65,12 +67,11 @@ vAPI.Tabs = class extends vAPI.Tabs {
     synthesizeNavigationTargetEvent(details) {
         if ( this.tabIds.has(details.tabId) === false ) { return; }
         this.tabIds.delete(details.tabId);
-        if (
-            Array.isArray(details.transitionQualifiers) === false ||
-            details.transitionQualifiers.includes('client_redirect') === false
-        ) {
-            return;
-        }
+        const isClientRedirect =
+            Array.isArray(details.transitionQualifiers) &&
+            details.transitionQualifiers.includes('client_redirect');
+        const isStartPage = details.transitionType === 'start_page';
+        if ( isClientRedirect === false && isStartPage === false ) { return; }
         this.onCreatedNavigationTargetHandler({
             tabId: details.tabId,
             sourceTabId: details.tabId,
