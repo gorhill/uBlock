@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "Webgune honetan arazo baten berri eman",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -856,51 +856,51 @@
     "description": "Label for radio-button to pick export text format"
   },
   "supportOpenButton": {
-    "message": "Open",
+    "message": "Ireki",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Create new report",
+    "message": "Txosten berri bat sortu",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Find similar reports",
+    "message": "Antzeko txostenak aurkitu",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
-    "message": "Documentation",
+    "message": "Dokumentazioa",
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Read the documentation at <code>uBlock/wiki</code> to learn about all of uBlock Origin's features.",
+    "message": "Irakurri dokumentazioa <code>uBlock/wiki</code> helbidean, uBlock Originen funtzio guztiak ezagutzeko.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
-    "message": "Questions and support",
+    "message": "Galderak eta laguntza",
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
-    "message": "Answers to questions and other kinds of help support is provided on the subreddit <code>/r/uBlockOrigin</code>.",
+    "message": "<code>/r/uBlockOrigin</code> azpidian galderen erantzunak eta beste laguntza mota batzuk eskaintzen dira.",
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "Filter issues/website is broken",
+    "message": "Arazoak iragazkiekin/webguneak ez du funtzionatzen",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Report filter issues with specific websites to the <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "Web-gune espezifikoekin iragazteko arazoak jakinaraz iezaguzu hemen: <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">uBlockOrigin/uAssets</code> issue tracker</span>. <u>GitHub kontu bat behar da</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Important:</b> Avoid using other similarly-purposed blockers along with uBlock Origin, as this may cause filter issues on specific websites.",
+    "message": "<b>Kontuan izan:</b> Ez erabili antzeko helburua duten beste blokeatzaile batzuk uBlock Originekin batera, horrek arazoak sor baititzake webgune espezifikoetan iragazteko.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Tips:</b> Be sure your filter lists are up to date. <span data-url=\"logger-ui.html#_\">The logger</span> is the primary tool to diagnose filter-related issues.",
+    "message": "<b>Aholkuak</b> Ziurtatu zure iragazki-zerrendak eguneratuta daudela. <span data-url=\"logger-ui.html#_\">Erregistratzailea</span> da iragazkiekin lotutako arazoak diagnostikatzeko tresna nagusia.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
-    "message": "Bug report",
+    "message": "Errore-txostena",
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
@@ -908,7 +908,7 @@
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting Information",
+    "message": "Arazoen konponbideari buruzko informazioa",
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
@@ -920,59 +920,59 @@
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "Iragazkiko arazo baten berri eman",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported.",
+    "message": "Txosten bikoiztuak dituzten boluntarioak ez gainkargatzeko, mesedez egiaztatu arazoa ez dela jakinarazi.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Address of the web page:",
+    "message": "Web orriaren helbidea:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The web page...",
+    "message": "Webgunea...",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Pick an entry --",
+    "message": "-- Aukeratu sarrera bat --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "Iragarkiak edo iragarkien hondarrak erakusten ditu",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Has overlays or other nuisances",
+    "message": "Gainjartzeak edo bestelako eragozpenak ditu",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Detects uBlock Origin",
+    "message": "uBlock Origin detektatzen du",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "Pribatutasun-arazoak ditu",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Malfunctions when uBlock Origin is enabled",
+    "message": "Funtzionamendu-akatsak uBlock Origin aktibatuta dagoenean",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "Ireki nahi ez diren erlaitzak edo leihoak",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "Web orria «NSFW» moduan jarri (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work” </a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
-    "message": "Redact",
+    "message": "Erredaktatu",
     "description": "Text for 'Redact' button"
   },
   "supportUnredact": {
-    "message": "Unredact",
+    "message": "Desegin erredakzioa",
     "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
@@ -1192,7 +1192,7 @@
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "genericSelectAll": {
-    "message": "Select all",
+    "message": "Hautatu dena",
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleBlockingProfile": {

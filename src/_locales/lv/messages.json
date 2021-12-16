@@ -388,7 +388,7 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsUncloakCnamePrompt": {
-    "message": "Uncloak canonical names",
+    "message": "Atslēpt kanoniskos nosaukumus",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsLastRestorePrompt": {
@@ -724,11 +724,11 @@
     "description": "Label to identify a context field (typically a hostname)"
   },
   "loggerEntryDetailsRootContext": {
-    "message": "Root context",
+    "message": "Saknes konteksts",
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
-    "message": "Partyness",
+    "message": "Ballīte",
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
@@ -836,7 +836,7 @@
     "description": "A label for the context column"
   },
   "loggerSettingHideColumnPartyness": {
-    "message": "{{input}} Partyness",
+    "message": "{{input}} Ballīte",
     "description": "A label for the partyness column"
   },
   "loggerExportFormatList": {

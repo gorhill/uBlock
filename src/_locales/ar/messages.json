@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "التقرير عن مُشكلة في الموقع",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -588,7 +588,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "قائمة المواقع الوثوقة تحتوي على صفحات الويب التي يجب تعطيل uBlock₀ عند الدخول عليها. أدخل رابط واحد كل سطر. الروابط الغير صحيحه سوف يتم تجاهلها تلقائيًا.",
+    "message": "قائمة المواقع الوثوقة تحتوي على صفحات الويب التي يجب تعطيل يو بلوك أوريجين عند الدخول عليها. أدخل رابط واحد كل سطر. الروابط الغير صحيحة سوف يتم تجاهلها تلقائيًا.",
     "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
@@ -648,7 +648,7 @@
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
-    "message": "ويكي uBlock Origin: حافظ السجلات",
+    "message": "ويكي يو بلوك أوريجين: حافظ السجلات",
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
@@ -860,11 +860,11 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Create new report",
+    "message": "إنشاء تقرير جديد",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Find similar reports",
+    "message": "العثور على تقارير مماثلة",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -872,7 +872,7 @@
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "اقرأ الوثائق على <code>uBlock/wiki</code> للتعرف على جميع ميزات uBlock Origin.",
+    "message": "اقرأ الوثائق على <code>uBlock/wiki</code> للتعرف على جميع ميزات يو بلوك أوريجين.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
@@ -888,11 +888,11 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "الإبلاغ عن مشكلات التصفية في مواقع ويب محددة لـ <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> أداة تعقب المشكلات</span>. يتطلب حساب GitHub ..",
+    "message": "الإبلاغ عن مشكلات التصفية في مواقع ويب محددة لـ <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> أداة تعقب المشكلات</span>. يتطلب حساب GitHub..",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>هام:</b> تجنب استخدام أدوات الحظر الأخرى ذات الغرض المشابه مع uBlock Origin ، حيث قد يتسبب ذلك في حدوث مشكلات في التصفية على مواقع ويب معينة.",
+    "message": "<b>هام:</b> تجنب استخدام أدوات الحظر الأخرى ذات الغرض المشابه مع يو بلوك أوريجين، حيث قد يتسبب ذلك في حدوث مشكلات في التصفية على مواقع ويب معينة.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
@@ -904,7 +904,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "الإبلاغ عن المشكلات المتعلقة بـ uBlock Origin نفسه إلى <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> أداة تعقب المشكلات</span>. يتطلب حساب GitHub.",
+    "message": "الإبلاغ عن المشكلات المتعلقة بيو بلوك أوريجين نفسه إلى <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> أداة تعقب المشكلات</span>. يتطلب حساب GitHub.",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
@@ -920,51 +920,51 @@
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "الإبلاغ عن مشكلة في عوامل التصفية",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported.",
+    "message": "لتجنب إثقال كاهل المتطوعين بتقارير مكررة، يرجى التحقق من عدم الإبلاغ عن المشكلة بالفعل.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Address of the web page:",
+    "message": "عنوان صفحة الويب:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The web page...",
+    "message": "صفحة الويب...",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Pick an entry --",
+    "message": "-- إختر خيارًا --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "ٌيُظهر الإعلانات أو بقايا الإعلانات",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Has overlays or other nuisances",
+    "message": "به تراكبات أو مضايقات أخرى",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Detects uBlock Origin",
+    "message": "يكتشف يو بلوك أوريجين",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "لديه مشاكل متعلقة بالخصوصية",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Malfunctions when uBlock Origin is enabled",
+    "message": "الأعطال عند تمكين يو بلوك أوريجين",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "افتح التبويبات أو النوافذ التي ليس مرغوبًا بها",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "تسمية صفحة الويب باسم \"NSFW\" (<a href=\"https://ar.wikipedia.org/wiki/%D8%BA%D9%8A%D8%B1_%D9%85%D9%86%D8%A7%D8%B3%D8%A8_%D9%84%D9%84%D8%B9%D9%85%D9%84\">\"ليس آمن للعمل\"\n",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {

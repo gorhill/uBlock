@@ -56,7 +56,7 @@
     "description": "appears as tab name in dashboard"
   },
   "supportPageName": {
-    "message": "Support",
+    "message": "Sprijini",
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
@@ -960,7 +960,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "Deschide file sau ferestre nedorite",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {

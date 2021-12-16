@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "דווח על בעיה באתר אינטרנט זה",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -860,11 +860,11 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Create new report",
+    "message": "צור דוח חדש",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Find similar reports",
+    "message": "חיפוש דוחות דומים",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -920,51 +920,51 @@
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "דיווח על בעיית מסנן",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported.",
+    "message": "כדי להימנע מהעמקת מתנדבים בדוחות כפולים, ודא שהבעיה טרם דווחה.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Address of the web page:",
+    "message": "כתובת דף האינטרנט:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The web page...",
+    "message": "דף האינטרנט...",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Pick an entry --",
+    "message": "-- בחר ערך --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "הצגת מודעות או שאריות מודעות",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Has overlays or other nuisances",
+    "message": "יש שכבות על או מטרד אחר",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Detects uBlock Origin",
+    "message": "מזהה מקור uBlock",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "יש בעיות הקשורות לפרטיות",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Malfunctions when uBlock Origin is enabled",
+    "message": "תקלות כאשר uBlock Origin מופעל",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "פתיחת כרטיסיות או חלונות לא רצויים",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "סמן דף אינטרנט זה בתור ”NSFW” (<a href=\"https://he.wikipedia.org/wiki/NSFW\">“Not Safe For Work”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {

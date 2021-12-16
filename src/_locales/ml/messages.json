@@ -860,15 +860,15 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Create new report",
+    "message": "പുതിയ റിപ്പോർട്ട് നിർമ്മിക്കുക",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Find similar reports",
+    "message": "സമാനമായ റിപോർട്ടുകൾ കാണുക",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
-    "message": "Documentation",
+    "message": "പ്രമാണീകരണം",
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {

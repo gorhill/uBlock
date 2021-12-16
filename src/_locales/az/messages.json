@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "Bu veb bir problem hesabat",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -276,11 +276,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilterTip": {
-    "message": "↑: Emphasize rows which have 3rd-party scripts",
+    "message": "↑: Qeyd edək simli olan var, üçüncü scripts",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party scripts' cell"
   },
   "popup3pFrameFilterTip": {
-    "message": "↑: Emphasize rows which have 3rd-party frames",
+    "message": "↑: Qeyd edək simli olan var, kənar çərçivəsi",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party frames' cell"
   },
   "pickerCreate": {
@@ -388,7 +388,7 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsUncloakCnamePrompt": {
-    "message": "Uncloak canonical names",
+    "message": "Canonical adları ortaya çıxarın",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsLastRestorePrompt": {
@@ -860,11 +860,11 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Create new report",
+    "message": "Yeni hesabat yaradın",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Find similar reports",
+    "message": "Oxşar hesabat tap",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -872,7 +872,7 @@
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Read the documentation at <code>uBlock/wiki</code> to learn about all of uBlock Origin's features.",
+    "message": "UBlock Origin-in bütün xüsusiyyətlərini öyrənmək üçün <code>uBlock/wiki</code> ünvanında sənədləri oxuyun.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
@@ -880,11 +880,11 @@
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
-    "message": "Answers to questions and other kinds of help support is provided on the subreddit <code>/r/uBlockOrigin</code>.",
+    "message": "Suallara və yardım dəstəyinin digər növlərinə cavablar <code>/r/uBlock Origin</Code > - də təqdim olunur.",
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "Filter issues/website is broken",
+    "message": "Filter problemləri / veb sınıq",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {

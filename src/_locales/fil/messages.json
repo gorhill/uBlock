@@ -804,7 +804,7 @@
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
-    "message": "Preserve entries from the last {{input}} minutes",
+    "message": "Panatilihin and mga entry mula sa huling {{input}} mga minuto",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
@@ -820,7 +820,7 @@
     "description": "A logger setting"
   },
   "loggerSettingHideColumnsPrompt": {
-    "message": "Hide columns:",
+    "message": "Itago ang mga columns",
     "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
   },
   "loggerSettingHideColumnTime": {
@@ -980,7 +980,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {
-    "message": "Changelog",
+    "message": "Mga pagbabago",
     "description": ""
   },
   "aboutCode": {
@@ -1064,7 +1064,7 @@
     "description": "English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo": {
-    "message": "an hour ago",
+    "message": "isang oras ang nakalipas",
     "description": "English: an hour ago"
   },
   "elapsedManyHoursAgo": {

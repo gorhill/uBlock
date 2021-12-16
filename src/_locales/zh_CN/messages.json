@@ -124,7 +124,7 @@
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "开启记录器",
+    "message": "打开记录器",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {

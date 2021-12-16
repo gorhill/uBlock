@@ -68,15 +68,15 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Klick: inaktivera/aktivera uBlock₀ för hela webbplatsen.\n\nCtrl+klick: inaktivera uBlock₀ endast för den här sidan.",
+    "message": "Klick: inaktivera/aktivera uBlock₀ för denna webbplats.\n\nCtrl+klick: inaktivera uBlock₀ endast för denna sida.",
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Klicka för att inaktivera uBlock₀ för hela webbplatsen.\n\nCtrl+klicka för att inaktivera uBlock₀ enbart för den här sidan.",
+    "message": "Klicka för att inaktivera uBlock₀ för denna webbplats.\n\nCtrl+klicka för att inaktivera uBlock₀ enbart för denna sida.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Klicka för att aktivera uBlock₀ på den här webbplatsen.",
+    "message": "Klicka för att aktivera uBlock₀ på denna webbplats.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -84,7 +84,7 @@
     "description": "English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt": {
-    "message": "på den här sidan",
+    "message": "på denna sida",
     "description": "English: on this page"
   },
   "popupBlockedStats": {
@@ -100,7 +100,7 @@
     "description": "English: or"
   },
   "popupBlockedOnThisPage_v2": {
-    "message": "Blockerat på den här sidan",
+    "message": "Blockerat på denna sida",
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Rapportera ett problem på den här hemsidan",
+    "message": "Rapportera ett problem på denna webbplats",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -136,11 +136,11 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Klicka för att blockera alla popup-fönster på den här webbplatsen",
+    "message": "Klicka för att blockera alla popup-fönster på denna webbplats",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Klicka för att inte längre blockera alla popup-fönster på den här webbplatsen",
+    "message": "Klicka för att inte längre blockera alla popup-fönster på denna webbplats",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -148,11 +148,11 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Klicka för att blockera stora medieelement på den här webbplatsen",
+    "message": "Klicka för att blockera stora medieelement på denna webbplats",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Klicka för att inte längre blockera stora medieelement på den här webbplatsen",
+    "message": "Klicka för att inte längre blockera stora medieelement på denna webbplats",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -160,31 +160,31 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Klicka för att inaktivera kosmetiska filter på den här webbplatsen",
+    "message": "Klicka för att inaktivera kosmetiska filter på denna webbplats",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Klicka för att aktivera kosmetisk filtrering på den här webbplatsen",
+    "message": "Klicka för att aktivera kosmetisk filtrering på denna webbplats",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Växla blockeringen av fjärrtypsnitt på den här webbplatsen",
+    "message": "Växla blockeringen av fjärrtypsnitt på denna webbplats",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Klicka för att blockera fjärrtypsnitt på den här webbplatsen",
+    "message": "Klicka för att blockera fjärrtypsnitt på denna webbplats",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Klicka för att inte längre blockera fjärrtypsnitt på den här webbplatsen",
+    "message": "Klicka för att inte längre blockera fjärrtypsnitt på denna webbplats",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Klicka för att inaktivera JavaScript på den här webbplatsen",
+    "message": "Klicka för att inaktivera JavaScript på denna webbplats",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Klicka för att aktivera JavaScript på den här webbplatsen",
+    "message": "Klicka för att aktivera JavaScript på denna webbplats",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
