@@ -1138,7 +1138,7 @@ const webRequest = {
         vAPI.net = new vAPI.Net();
         vAPI.net.suspend();
 
-        return ( ) => {
+        return async ( ) => {
             vAPI.net.setSuspendableListener(onBeforeRequest);
             vAPI.net.addListener(
                 'onHeadersReceived',
@@ -1146,7 +1146,21 @@ const webRequest = {
                 { urls: [ 'http://*/*', 'https://*/*' ] },
                 [ 'blocking', 'responseHeaders' ]
             );
-            vAPI.net.unsuspend(true);
+            vAPI.net.unsuspend({ force: true });
+            // Mitigation: force-reload active tabs for environments not
+            // supporting suspended network request listeners.
+            if (
+                vAPI.net.canSuspend() !== true ||
+                µb.hiddenSettings.suspendTabsUntilReady === 'no'
+            ) {
+                const tabs = await vAPI.tabs.query({
+                    active: true,
+                    windowType: 'normal',
+                });
+                for ( const tab of tabs ) {
+                    vAPI.tabs.reload(tab.id);
+                }
+            }
         };
     })(),
 

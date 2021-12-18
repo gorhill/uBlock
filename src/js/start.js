@@ -304,7 +304,7 @@ const onHiddenSettingsReady = async function() {
         });
     }
 
-    // Matbe override default cache storage
+    // Maybe override default cache storage
     const cacheBackend = await cacheStorage.select(
         µb.hiddenSettings.cacheStorageAPI
     );
