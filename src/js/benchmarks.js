@@ -94,14 +94,30 @@ const loadBenchmarkDataset = (( ) => {
         console.info(`Loading benchmark dataset...`);
         datasetPromise = io.fetchText(datasetURL).then(details => {
             console.info(`Parsing benchmark dataset...`);
-            const requests = [];
-            const lineIter = new LineIterator(details.content);
-            while ( lineIter.eot() === false ) {
-                let request;
+            let requests = [];
+            if ( details.content.startsWith('[') ) {
                 try {
-                    request = JSON.parse(lineIter.next());
+                    requests = JSON.parse(details.content);
                 } catch(ex) {
                 }
+            } else {
+                const lineIter = new LineIterator(details.content);
+                const parsed = [];
+                while ( lineIter.eot() === false ) {
+                    const line = lineIter.next().trim();
+                    if ( line === '' ) { continue; }
+                    try {
+                        parsed.push(JSON.parse(line));
+                    } catch(ex) {
+                        parsed.length = 0;
+                        break;
+                    }
+                }
+                requests = parsed;
+            }
+            if ( requests.length === 0 ) { return; }
+            const out = [];
+            for ( const request of requests ) {
                 if ( request instanceof Object === false ) { continue; }
                 if ( !request.frameUrl || !request.url ) { continue; }
                 if ( request.cpt === 'document' ) {
@@ -109,9 +125,9 @@ const loadBenchmarkDataset = (( ) => {
                 } else if ( request.cpt === 'xhr' ) {
                     request.cpt = 'xmlhttprequest';
                 }
-                requests.push(request);
+                out.push(request);
             }
-            return requests;
+            return out;
         }).catch(details => {
             console.info(`Not found: ${details.url}`);
             datasetPromise = undefined;
