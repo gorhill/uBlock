@@ -1127,28 +1127,31 @@ FilterContainer.prototype.getFilterCount = function() {
 /******************************************************************************/
 
 FilterContainer.prototype.dump = function() {
+    let genericCount = 0;
+    for ( const i of [ 'simple', 'complex' ] ) {
+        for ( const j of [ 'id', 'cl' ] ) {
+            genericCount += this.lowlyGeneric[j][i].size;
+        }
+    }
     return [
         'Cosmetic Filtering Engine internals:',
-        `specific counts: ${this.specificFilters.size}`,
-        'generic counts:',
-        `  lowly.id.simple: ${this.lowlyGeneric.id.simple.size}`,
-        `  lowly.class.simple: ${this.lowlyGeneric.cl.simple.size}`,
-        `  lowly.id.complex: ${this.lowlyGeneric.id.complex.size}`,
-        `  lowly.class.complex: ${this.lowlyGeneric.cl.complex.size}`,
-        `  highly.simple: ${this.highlyGeneric.simple.dict.size}`,
-        `  highly.complex: ${this.highlyGeneric.complex.dict.size}`,
-        `+ lowly.id.simple: ${this.lowlyGeneric.id.simple.size}`,
-        ...Array.from(this.lowlyGeneric.id.simple).map(a => `  ###${a}`),
-        `+ lowly.id.complex: ${this.lowlyGeneric.id.complex.size}`,
-        ...Array.from(this.lowlyGeneric.id.complex.values()).map(a => `  ###${a}`),
-        `+ lowly.class.simple: ${this.lowlyGeneric.cl.simple.size}`,
-        ...Array.from(this.lowlyGeneric.cl.simple).map(a => `  ##.${a}`),
-        `+ lowly.class.complex: ${this.lowlyGeneric.cl.complex.size}`,
-        ...Array.from(this.lowlyGeneric.cl.complex.values()).map(a => `  ##.${a}`),
-        `+ highly.simple: ${this.highlyGeneric.simple.dict.size}`,
-        ...Array.from(this.highlyGeneric.simple.dict).map(a => `  ##${a}`),
-        `+ highly.complex: ${this.highlyGeneric.complex.dict.size}`,
-        ...Array.from(this.highlyGeneric.complex.dict).map(a => `  ##${a}`),
+        `specific: ${this.specificFilters.size}`,
+        `generic: ${genericCount}`,
+        `+ lowly.id: ${this.lowlyGeneric.id.simple.size + this.lowlyGeneric.id.complex.size}`,
+        `  + simple: ${this.lowlyGeneric.id.simple.size}`,
+        ...Array.from(this.lowlyGeneric.id.simple).map(a => `    ###${a}`),
+        `  + complex: ${this.lowlyGeneric.id.complex.size}`,
+        ...Array.from(this.lowlyGeneric.id.complex.values()).map(a => `    ##${a}`),
+        `+ lowly.class: ${this.lowlyGeneric.cl.simple.size + this.lowlyGeneric.cl.complex.size}`,
+        `  + simple: ${this.lowlyGeneric.cl.simple.size}`,
+        ...Array.from(this.lowlyGeneric.cl.simple).map(a => `    ##.${a}`),
+        `  + complex: ${this.lowlyGeneric.cl.complex.size}`,
+        ...Array.from(this.lowlyGeneric.cl.complex.values()).map(a => `    ##${a}`),
+        `+ highly: ${this.highlyGeneric.simple.dict.size + this.highlyGeneric.complex.dict.size}`,
+        `  + highly.simple: ${this.highlyGeneric.simple.dict.size}`,
+        ...Array.from(this.highlyGeneric.simple.dict).map(a => `    ##${a}`),
+        `  + highly.complex: ${this.highlyGeneric.complex.dict.size}`,
+        ...Array.from(this.highlyGeneric.complex.dict).map(a => `    ##${a}`),
     ].join('\n');
 };
 
