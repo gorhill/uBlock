@@ -1155,6 +1155,7 @@ const webRequest = {
             ) {
                 const tabs = await vAPI.tabs.query({
                     active: true,
+                    url: [ 'https://*/*', 'http://*/*' ],
                     windowType: 'normal',
                 });
                 for ( const tab of tabs ) {
