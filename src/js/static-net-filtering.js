@@ -1200,10 +1200,6 @@ class DomainOptIterator {
 // A helper instance to reuse throughout
 const domainOptIterator = new DomainOptIterator('');
 
-const domainOptNormalizer = domainOpt => {
-    return domainOpt.split('|').sort().join('|');
-};
-
 /******************************************************************************/
 
 // The optimal class is picked according to the content of the `domain=`
@@ -1367,15 +1363,10 @@ registerFilterClass(FilterOriginMiss);
 /******************************************************************************/
 
 const FilterOriginHitSet = class {
-    // The `domainOpt` value may be in either the allocated refs or the trie,
-    // never in both at the same time.
     static getDomainOpt(idata) {
-        const itrie = filterData[idata+2];
-        if ( itrie === 0 ) {
-            return filterRefs[filterData[idata+4]].domainOpt;
-        }
-        return domainOptNormalizer(
-            Array.from(origHNTrieContainer.trieIterator(itrie)).join('|')
+        return origHNTrieContainer.extractDomainOpt(
+            filterData[idata+1],
+            filterData[idata+2]
         );
     }
 
@@ -1384,13 +1375,13 @@ const FilterOriginHitSet = class {
     }
 
     static match(idata) {
-        const refs = filterRefs[filterData[idata+4]];
+        const refs = filterRefs[filterData[idata+6]];
         if ( $docHostname === refs.$last ) {
-            return filterData[idata+3] !== -1;
+            return filterData[idata+5] !== -1;
         }
         refs.$last = $docHostname;
-        const which = filterData[idata+1];
-        const itrie = filterData[idata+2] || this.toTrie(idata);
+        const which = filterData[idata+3];
+        const itrie = filterData[idata+4] || this.toTrie(idata);
         let lastResult = -1;
         if ( (which & 0b01) !== 0 ) {
             lastResult = origHNTrieContainer
@@ -1402,16 +1393,19 @@ const FilterOriginHitSet = class {
                 .setNeedle($docEntity.compute())
                 .matches(itrie);
         }
-        return (filterData[idata+3] = lastResult) !== -1;
+        return (filterData[idata+5] = lastResult) !== -1;
     }
 
     static create(domainOpt, which = 0b11) {
-        const idata = filterDataAllocLen(5);
+        const idata = filterDataAllocLen(7);
         filterData[idata+0] = FilterOriginHitSet.fid;
-        filterData[idata+1] = which;
-        filterData[idata+2] = 0;            // itrie
-        filterData[idata+3] = -1;           // $lastResult
-        filterData[idata+4] = filterRefAdd({ domainOpt, $last: '' });
+        filterData[idata+1] = origHNTrieContainer.storeDomainOpt(domainOpt);
+        filterData[idata+2] = domainOpt.length;
+        filterData[idata+3] = which;
+        filterData[idata+4] = 0;            // itrie
+        filterData[idata+5] = -1;           // $lastResult
+        filterData[idata+6] = filterRefAdd({ $last: '' });
+        this.toTrie(idata);
         return idata;
     }
 
@@ -1424,26 +1418,24 @@ const FilterOriginHitSet = class {
     }
 
     static fromCompiled(args) {
-        const idata = filterDataAllocLen(5);
+        const idata = filterDataAllocLen(7);
         filterData[idata+0] = args[0];      // fid
-        filterData[idata+1] = args[2];      // which
-        filterData[idata+2] = 0;            // itrie
-        filterData[idata+3] = -1;           // $lastResult
-        filterData[idata+4] = filterRefAdd({ domainOpt: args[1], $last: '' });
+        filterData[idata+1] = origHNTrieContainer.storeDomainOpt(args[1]);
+        filterData[idata+2] = args[1].length;
+        filterData[idata+3] = args[2];      // which
+        filterData[idata+4] = 0;            // itrie
+        filterData[idata+5] = -1;           // $lastResult
+        filterData[idata+6] = filterRefAdd({ $last: '' });
         return idata;
     }
 
     static toTrie(idata) {
-        const refs = filterRefs[filterData[idata+4]];
-        const itrie = filterData[idata+2] = origHNTrieContainer.createTrie(
-            domainOptIterator.reset(refs.domainOpt)
-        );
-        refs.domainOpt = '';
+        const itrie = filterData[idata+4] =
+            origHNTrieContainer.createTrieFromStoredDomainOpt(
+                filterData[idata+1],
+                filterData[idata+2]
+            );
         return itrie;
-    }
-
-    static getTrie(idata) {
-        return filterData[idata+2];
     }
 
     static keyFromArgs(args) {
@@ -1455,7 +1447,7 @@ const FilterOriginHitSet = class {
     }
 
     static dumpInfo(idata) {
-        return `0b${filterData[idata+1].toString(2)} ${this.getDomainOpt(idata)}`;
+        return `0b${filterData[idata+3].toString(2)} ${this.getDomainOpt(idata)}`;
     }
 };
 
@@ -1863,7 +1855,7 @@ const FilterHostnameDict = class {
         const itrie = filterData[idata+1];
         if ( itrie !== 0 ) { return itrie; }
         const hostnames = filterRefs[filterData[idata+3]];
-        filterData[idata+1] = destHNTrieContainer.createTrie(hostnames);
+        filterData[idata+1] = destHNTrieContainer.createTrieFromIterable(hostnames);
         filterRefs[filterData[idata+3]] = null;
         return filterData[idata+1];
     }
@@ -1908,11 +1900,9 @@ const FilterDenyAllow = class {
     }
 
     static fromCompiled(args) {
-        const itrie = destHNTrieContainer.createTrie();
-        for ( const hn of domainOptIterator.reset(args[1]) ) {
-            if ( hn === '' ) { continue; }
-            destHNTrieContainer.setNeedle(hn).add(itrie);
-        }
+        const itrie = destHNTrieContainer.createTrieFromIterable(
+            domainOptIterator.reset(args[1])
+        );
         const idata = filterDataAllocLen(3);
         filterData[idata+0] = args[0];                  // fid
         filterData[idata+1] = itrie;                    // itrie
@@ -3503,7 +3493,7 @@ FilterCompiler.prototype.FILTER_UNSUPPORTED = 2;
 
 const FilterContainer = function() {
     this.compilerVersion = '6';
-    this.selfieVersion = '6';
+    this.selfieVersion = '7';
 
     this.MAX_TOKEN_LENGTH = MAX_TOKEN_LENGTH;
     this.optimizeTaskId = undefined;
@@ -4579,7 +4569,7 @@ FilterContainer.prototype.dump = function() {
 
     const out = [];
 
-    const toOutput = (depth, line) => {
+    const toOutput = (depth, line, out) => {
         out.push(`${' '.repeat(depth*2)}${line}`);
     };
 
@@ -4588,7 +4578,7 @@ FilterContainer.prototype.dump = function() {
         const fc = filterGetClass(idata);
         fcCounts.set(fc.name, (fcCounts.get(fc.name) || 0) + 1);
         const info = filterDumpInfo(idata) || '';
-        toOutput(depth, info !== '' ? `${fc.name}: ${info}` : fc.name);
+        toOutput(depth, info !== '' ? `${fc.name}: ${info}` : fc.name, out);
         switch ( fc ) {
         case FilterBucket:
         case FilterCompositeAll:
@@ -4618,7 +4608,7 @@ FilterContainer.prototype.dump = function() {
     const realms = new Map([
         [ BlockAction, 'block' ],
         [ BlockImportant, 'block-important' ],
-        [ AllowAction, 'allow' ],
+        [ AllowAction, 'unblock' ],
         [ ModifyAction, 'modify' ],
     ]);
     const partyness = new Map([
@@ -4627,9 +4617,9 @@ FilterContainer.prototype.dump = function() {
         [ ThirdParty, '3rd-party' ],
     ]);
     for ( const [ realmBits, realmName ] of realms ) {
-        toOutput(1, `+ realm: ${realmName}`);
+        toOutput(1, `+ realm: ${realmName}`, out);
         for ( const [ partyBits, partyName ] of partyness ) {
-            toOutput(2, `+ party: ${partyName}`);
+            toOutput(2, `+ party: ${partyName}`, out);
             const processedTypeBits = new Set();
             for ( const typeName in typeNameToTypeValue ) {
                 const typeBits = typeNameToTypeValue[typeName];
@@ -4639,13 +4629,13 @@ FilterContainer.prototype.dump = function() {
                 const ibucket = this.bitsToBucketIndices[bits];
                 if ( ibucket === 0 ) { continue; }
                 const thCount = this.buckets[ibucket].size;
-                toOutput(3, `+ type: ${typeName} (${thCount})`);
+                toOutput(3, `+ type: ${typeName} (${thCount})`, out);
                 for ( const [ th, iunit ] of this.buckets[ibucket] ) {
                     thCounts.add(th);
                     const ths = thConstants.has(th)
                         ? thConstants.get(th)
                         : `0x${th.toString(16)}`;
-                    toOutput(4, `+ th: ${ths}`);
+                    toOutput(4, `+ th: ${ths}`, out);
                     dumpUnit(iunit, out, 5);
                 }
             }

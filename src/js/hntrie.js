@@ -223,7 +223,7 @@ class HNTrieContainer {
         return -1;
     }
 
-    createTrie(hostnames = undefined) {
+    createTrie() {
         // grow buffer if needed
         if ( (this.buf32[CHAR0_SLOT] - this.buf32[TRIE1_SLOT]) < 12 ) {
             this.growBuf(12, 0);
@@ -233,12 +233,41 @@ class HNTrieContainer {
         this.buf32[iroot+0] = 0;
         this.buf32[iroot+1] = 0;
         this.buf32[iroot+2] = 0;
-        if ( hostnames !== undefined ) {
-            for ( const hn of hostnames ) {
-                this.setNeedle(hn).add(iroot);
+        return iroot;
+    }
+
+    createTrieFromIterable(hostnames) {
+        const itrie = this.createTrie();
+        for ( const hn of hostnames ) {
+            if ( hn === '' ) { continue; }
+            this.setNeedle(hn).add(itrie);
+        }
+        return itrie;
+    }
+
+    createTrieFromStoredDomainOpt(i, n) {
+        const itrie = this.createTrie();
+        const jend = i + n;
+        let j = i, offset = 0, k = 0, c = 0;
+        while ( j !== jend ) {
+            offset = this.buf32[CHAR0_SLOT]; // Important
+            k = 0;
+            for (;;) {
+                if ( j === jend ) { break; }
+                c = this.buf[offset+j];
+                j += 1;
+                if ( c === 0x7C /* '|' */ ) { break; }
+                if ( k === 255 ) { continue; }
+                this.buf[k] = c;
+                k += 1;
+            }
+            if ( k !== 0 ) {
+                this.buf[255] = k;
+                this.add(itrie);
             }
         }
-        return iroot;
+        this.needle = ''; // Important
+        return itrie;
     }
 
     dumpTrie(iroot) {
@@ -304,6 +333,12 @@ class HNTrieContainer {
         };
     }
 
+    // TODO:
+    //   Rework code to add from a string already present in the character
+    //   buffer, i.e. not having to go through setNeedle() when adding a new
+    //   hostname to a trie. This will require much work though, and probably
+    //   changing the order in which string segments are stored in the
+    //   character buffer.
     addJS(iroot) {
         let lhnchar = this.buf[255];
         if ( lhnchar === 0 ) { return 0; }
@@ -483,6 +518,31 @@ class HNTrieContainer {
     }
 
     extractHostname(i, n) {
+        const textDecoder = new TextDecoder();
+        const offset = this.buf32[CHAR0_SLOT] + i;
+        return textDecoder.decode(this.buf.subarray(offset, offset + n));
+    }
+
+    storeDomainOpt(s) {
+        let n = s.length;
+        if ( n === this.lastStoredLen && s === this.lastStored ) {
+            return this.lastStoredIndex;
+        }
+        this.lastStored = s;
+        this.lastStoredLen = n;
+        if ( (this.buf.length - this.buf32[CHAR1_SLOT]) < n ) {
+            this.growBuf(0, n);
+        }
+        const offset = this.buf32[CHAR1_SLOT];
+        this.buf32[CHAR1_SLOT] = offset + n;
+        const buf8 = this.buf;
+        for ( let i = 0; i < n; i++ ) {
+            buf8[offset+i] = s.charCodeAt(i);
+        }
+        return (this.lastStoredIndex = offset - this.buf32[CHAR0_SLOT]);
+    }
+
+    extractDomainOpt(i, n) {
         const textDecoder = new TextDecoder();
         const offset = this.buf32[CHAR0_SLOT] + i;
         return textDecoder.decode(this.buf.subarray(offset, offset + n));
