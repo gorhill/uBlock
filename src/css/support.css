@@ -14,6 +14,9 @@ h3 {
 :root.mobile .supportEntry {
     flex-direction: column;
     }
+.supportEntry > * {
+    min-width: 6em;
+    }
 .supportEntry > div:first-of-type {
     flex-grow: 1;
     }
