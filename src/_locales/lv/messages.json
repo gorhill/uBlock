@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "Saraksts ar interneta resursiem, kuriem tiks atslēgts uBlock Origin. Viens ieraksts katrā rindiņā. Nederīgi interneta resursu nosaukumi tiks ignorēti bez brīdinājuma.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Importēt un pievienot",

@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "Usaldatud saitide direktiivid määravad, millistel veebilehtedel peaks uBlock Origin keelatud olema. Üks kirje rea kohta. Sobimatuid direktiive vaikselt ignoreeritakse ja kommenteeritakse välja.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Impordi ja lisa",

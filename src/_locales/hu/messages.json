@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "Az alábbi listában felsorolt hostokon a kiegészítő nem fog működni. Soronként egy bejegyzés. Érvénytelen hostnevek figyelmen kívül maradnak.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Importál és hozzáad",

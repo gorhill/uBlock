@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "Η λίστα σας με τα ονόματα κόμβων (host names) στα οποία το uBlock θα είναι απενεργοποιημένο. Μια καταχώρηση ανά γραμμή. Άκυρα ονόματα κόμβων θα παρακάμπτονται σιωπηλά.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Εισαγωγή και προσάρτηση",

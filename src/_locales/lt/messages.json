@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "Baltojo sąrašo direktyvos nurodo, kurioms svetainėms uBlock Origin turėtų būti išjungtas. Vienas įrašas eilutėje. Neteisingos direktyvos bus tyliai ignoruotos ir užkomentuotos.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Importuoti ir papildyti",

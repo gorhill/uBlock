@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "Direktiva pouzdanih stranica govori za koje bi web stranice uBlock Origin trebao biti onemogućen. Jedan zapis po retku. Nevaljane direktive biti će tiho ignorirane i komentirane.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Uvesti i dodati",

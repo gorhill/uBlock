@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "მითითებული გამონაკლისები განსაზღვრავს, თუ რომელ ვებგვერდზე უნდა გამოირთოს uBlock Origin. თითოეული ჩანაწერი ცალკეულ ხაზზე უნდა იყოს. არასწორი მითითებები უგულებელყოფილი იქნება გაფრთხილების გარეშე და აღინიშნება კომენტარად.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "შემოტანა და დამატება",

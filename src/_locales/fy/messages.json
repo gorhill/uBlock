@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "De whitelist-ynstruksjes skriuwe foar op hokker websiden uBlock Origin útskeakele wurde moat. Ien fermelding per rigel. Unjildige ynstruksjes wurde sûnder meidieling negearre en útskeakele.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Ymportearje en tafoegje",

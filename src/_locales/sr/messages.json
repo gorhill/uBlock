@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "Смернице поузданих сајтова диктирају на којим веб страницама би uBlock Origin требало бити онемогућен. Један унос по реду. Неисправне смернице ће бити тихо занемарене.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Увези и додај",

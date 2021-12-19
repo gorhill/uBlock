@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "Ausnahmeregeln bestimmen, auf welchen Webseiten uBlock Origin nicht aktiv sein soll. Ein Eintrag pro Zeile. Ungültige Regeln werden ignoriert und auskommentiert.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Importieren und anfügen",

@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "Berisi domain atau halaman situs terpercaya, uBlock Origin akan dinonaktifkan. Satu entri per baris. Entri yang tidak valid akan diabaikan dan dijadikan komentar.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Impor dan tambahkan",

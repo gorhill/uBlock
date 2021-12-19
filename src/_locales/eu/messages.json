@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "Zerrenda zuriaren direktibek uBlock zeintzu web orrietan desgaituko den zehazten dute. Sarrera bat lerroko. Baliogabeko ostalari izenak ezikusiko dira.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Inportatu eta gehitu",

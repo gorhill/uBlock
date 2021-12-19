@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "Списък на адресите, за които uBlock Origin ще бъде изключен. Един запис на ред. Недействителните адреси ще бъдат пренебрегнати и коментирани.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Внасяне от файл...",

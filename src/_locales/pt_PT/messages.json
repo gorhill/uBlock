@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "As diretivas de sites confiáveis determinam em quais páginas web o uBlock Origin deve ser desativado. Uma entrada por linha. Diretivas inválidas serão ignoradas e comentadas silenciosamente.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Importar e anexar",

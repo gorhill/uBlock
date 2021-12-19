@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "Güvenilen site yönergeleri, uBlock Origin'in devre dışı bırakılması gerektiği web sayfalarını belirler. Her satırda bir girdi. Geçersiz yönergeler sessizce yok sayılacak ve yoruma dönüştürülecektir.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "İçe aktar ve ekle",

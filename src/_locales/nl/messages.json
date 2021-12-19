@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "De vertrouwde-website-instructies schrijven voor op welke webpagina’s uBlock Origin dient te worden uitgeschakeld. Eén vermelding per regel. Ongeldige instructies worden zonder mededeling genegeerd en uitgecommentarieerd.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Importeren en toevoegen...",

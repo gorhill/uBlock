@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "Via listo de gastignomoj por kiuj uBlock₀ estos malŝaltata. Unu gastignomo por ĉiu linio. Nevalidaj gastignomoj estos ignorataj silente.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Importi kaj postaldoni",

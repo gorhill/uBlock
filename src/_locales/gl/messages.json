@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "A lista branca é a túa lista de nomes de servidor nos que o uBlock₀ estará desactivado. Ten unha entrada por cada liña, e os nomes de servidor non válidos serán ignorados.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Importar e anexar",

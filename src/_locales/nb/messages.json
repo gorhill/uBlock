@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "Direktivene for betrodde sider bestemmer hvilke nettsider uBlock Origin ikke skal være aktiv på. Én oppføring per linje. Ugyldige direktiver blir stille ignorert og kommentert ut.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Importer og legg til",

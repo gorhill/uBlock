@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "Vaš seznam gostiteljskih naslovov, za katere želite, da je uBlock₀ izklopljen. En vnos na vrstico. Neveljavna gostiteljska imena bodo brez opozoril ignorirana.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Uvozi in dodaj",

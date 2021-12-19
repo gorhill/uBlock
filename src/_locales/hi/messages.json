@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "वाइटलिस्ट के नियम यह बताते हैं कि uBlock Origin को किस वेब पेज पर बंद करना चाहिए। एक एंट्री हर लाइन में। अमान्य नियमों को सीधे-सीधे नजरअंदाज कर दिया जाएगा।",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "इम्पोर्ट करें और जोड़ें",

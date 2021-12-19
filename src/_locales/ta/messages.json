@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "எந்தெந்தப் பக்கங்களில் uBlock₀ முடக்கப்பட வேண்டுமென்பதை அனுமதிப்பட்ட கட்டளைகள் ஆணையிடுகின்றன. வரிக்கு ஒரு இடுகை மட்டுமே. தவறான கட்டளைகள் அமைதியாகப் புறக்கணிக்கப்படும்.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "இறக்குமதி செய்து சேர்",

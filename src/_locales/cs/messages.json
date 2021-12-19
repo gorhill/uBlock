@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "Pravidla v seznamu povolených domén určují, pro které webové stránky bude uBlock Origin vypnutý. Jedna položka na řádek. Neplatná pravidla budou tiše ignorována a zakomentována.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Importovat a připojit",

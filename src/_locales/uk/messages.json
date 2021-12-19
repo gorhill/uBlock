@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "Ваш список адрес сайтів, для яких µBlock буде неактивним. Додайте по одному запису на рядок. Невірні адреси будуть проігноровані без попереджень та закоментовані.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Імпортувати та додати",

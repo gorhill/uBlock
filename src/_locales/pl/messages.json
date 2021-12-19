@@ -588,8 +588,8 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "Wytyczne zaufanych witryn nakazują, na których stronach uBlock Origin powinien zostać wyłączony. Jeden wpis na linię. Nieprawidłowe linie zostaną bez powiadomienia zignorowane i wykomentowane.",
-    "description": "The name of the trusted sites pane."
+    "message": "Wytyczne zaufanych witryn nakazują, na których stronach uBlock Origin powinien zostać wyłączony. Jeden wpis na linię.",
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Importuj i dołącz",

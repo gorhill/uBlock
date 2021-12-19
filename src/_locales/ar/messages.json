@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "قائمة المواقع الوثوقة تحتوي على صفحات الويب التي يجب تعطيل يو بلوك أوريجين عند الدخول عليها. أدخل رابط واحد كل سطر. الروابط الغير صحيحة سوف يتم تجاهلها تلقائيًا.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "استيراد",

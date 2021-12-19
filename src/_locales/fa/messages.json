@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "دستور العمل‌های لیست سفید حکم می‌کند که uBlock₀ باید بر روی کدام یک از صفحات وب غیر فعال باشد. در هر خط فقط یک مورد. دستور العمل‌های نامعتبر بدون اشاره ای نادیده گرفته شده و بیرون انداخته می‌شوند.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "وارد کردن و الحاق",

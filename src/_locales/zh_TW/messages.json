@@ -588,8 +588,8 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "信任名單中的規則適用的頁面不會被 uBlock Origin 過濾或阻擋。每行一個規則。無效的規則將被忽略。",
-    "description": "The name of the trusted sites pane."
+    "message": "列表裡的主機名稱將被 uBlock₀ 停用。每行一個規則。無效的主機名稱將被忽略掉。",
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "匯入並加入",

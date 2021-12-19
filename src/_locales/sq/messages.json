@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "Kjo listë paraqet faqet e besuara në të cilat uBlock Origin duhet çaktivizuar. Një element për rresht. Nuk do të merren parasysh udhëzimet e pasakta.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Importoj dhe shtoj",

@@ -588,8 +588,8 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "Sitios de confianza para los cuales se deshabilitará uBlock Origin. Una entrada por línea. Las entradas no válidas serán ignoradas.",
-    "description": "The name of the trusted sites pane."
+    "message": "Lista de nombres de servidores para los cuales se deshabilitará uBlock₀. Una entrada por línea. Se omitirán nombres de servidores no válidos.",
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Importar y anexar",

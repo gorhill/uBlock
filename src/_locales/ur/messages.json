@@ -588,8 +588,8 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "The trusted site directives dictate on which web pages uBlock Origin should be disabled. One entry per line. Invalid directives will be silently ignored and commented out.",
-    "description": "The name of the trusted sites pane."
+    "message": "The trusted site directives dictate on which web pages uBlock Origin should be disabled. One entry per line.",
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Import and append",

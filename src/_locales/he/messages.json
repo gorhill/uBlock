@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "הרשומות באתרים המהימנים מציינות באילו דפי אינטרנט uBlock Origin לא יהיה פעיל. רשומה אחת בכל שורה. רשומות לא חוקיות תתעלמנה בשקט ויסומנו כהערות.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "ייבא וצרף",

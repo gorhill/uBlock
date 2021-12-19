@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "Les sites Web déclarés comme fiables auprès d'uBlock Origin ne seront pas traités par ce dernier.\nUne entrée par ligne. Les entrées invalides seront silencieusement ignorées et commentées.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Importer",

@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "Վստահված կայքերի ցուցակը սահմանում է, թե որ կայքերում uBlock Origin-ը պիտի անջատված լինի։ Մեկ տողում մեկ գրառում։ Անճիշտ կանոններն առանց նախազգուշացման անտեսվելու և մեկնաբանվելու են։",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Ներմուծել և հավելել",

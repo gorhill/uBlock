@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "Arahan laman web yang dipercayai menentukan halaman web mana uBlock Origin harus dilumpuhkan. Satu penyertaan setiap baris. Arahan tidak sah akan diam-diam diabaikan dan dikomentari.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Import dan melampirkan",

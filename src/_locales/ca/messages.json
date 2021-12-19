@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "Llistat dels noms de servidor amb que s'inhabilitarà l'µBlock. Una entrada per línia. S'ignoraran els noms de servidor no vàlids.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Imporar i annexar",

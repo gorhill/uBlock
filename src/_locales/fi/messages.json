@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "Luotettu sivusto -luokitukset määrittelevät millä sivuilla uBlock Originia ei käytetä. Yksiosoite riviä kohden. Virheelliset luokitukset ohitetaan huomaamattomasti ja kommentoidaan pois.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Tuo ja lisää...",

@@ -104,7 +104,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "Bị chặn kể từ khi cài đặt",
+    "message": "Đã chặn từ khi cài đặt",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
@@ -136,11 +136,11 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Nhấp để chặn tất cả cửa sổ bật lên trên trang này",
+    "message": "Nhấp để chặn tất cả cửa sổ popup trên trang này",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Nhấp để hủy chặn tất cả cửa sổ bật lên trên trang này",
+    "message": "Nhấp để hủy chặn tất cả cửa sổ popup trên trang này",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "Danh sách tên các máy chủ mà uBlock Origin sẽ bị chặn. Một mục nhập trên mỗi dòng. Tên máy chủ không hợp lệ sẽ được tự động bỏ qua.",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "Nhập và thêm vào",

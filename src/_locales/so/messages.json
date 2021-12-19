@@ -589,7 +589,7 @@
   },
   "whitelistPrompt": {
     "message": "U Dhoofinta faylka",
-    "description": "The name of the trusted sites pane."
+    "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
     "message": "my-ublock-dynamic-rules_{{datetime}}.txt",
