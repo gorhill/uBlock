@@ -588,7 +588,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "Записи доверенных сайтов указывают на каких веб-страницах uBlock Origin должен быть отключён. Одна запись на строку. Некорректные записи будут проигнорированы и закомментированы без предупреждений.",
+    "message": "Записи доверенных сайтов указывают на каких веб-страницах uBlock Origin должен быть отключен. Одна запись на строку.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {

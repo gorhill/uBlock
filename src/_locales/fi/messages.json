@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Viimeinkin tehokas mainosesto, joka ei kuormita prosessoria ja muistia.",
+    "message": "Viimeinkin tehokas estotyökalu, joka ei kuormita prosessoria ja muistia.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
@@ -60,7 +60,7 @@
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
-    "message": "uBlock₀ — Resursien katselu",
+    "message": "uBlock₀ — Resurssien katselu",
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
@@ -588,7 +588,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "Luotettu sivusto -luokitukset määrittelevät millä sivuilla uBlock Originia ei käytetä. Yksiosoite riviä kohden. Virheelliset luokitukset ohitetaan huomaamattomasti ja kommentoidaan pois.",
+    "message": "Luotettu sivusto -luokitukset määrittelevät millä sivuilla uBlock Originia ei käytetä. Yksi osoite riviä kohden.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {

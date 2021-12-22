@@ -156,11 +156,11 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "このサイトの非表示フィルタリングを切り替えます",
+    "message": "このサイトへの非表示フィルタリングを切り替えます",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "クリックするとこのサイトでの非表示フィルタリングを無効します",
+    "message": "クリックするとこのサイトでの非表示フィルタリングを無効にします",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
@@ -320,7 +320,7 @@
     "description": "English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt": {
-    "message": "アイコンにブロックしたリクエストの数を表示する",
+    "message": "ブロックしたリクエストの数をアイコンに表示する",
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
@@ -416,7 +416,7 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll": {
-    "message": "すべてのキャッシュを解放",
+    "message": "すべてのキャッシュを削除",
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
@@ -432,7 +432,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "汎用非表示フィルターは、すべてのウェブサイトに適用するように意図された非表示フィルターです。このオプションを有効にすると、汎用非表示フィルターを処理する結果としてウェブページに加わる、メモリーと CPU のオーバーヘッドを削減できます。\n\n性能の低い端末ではこのオプションを有効にすることをおすすめします。",
+    "message": "汎用非表示フィルターは、すべてのウェブサイトに適用するように意図された非表示フィルターです。このオプションを有効にすると、汎用非表示フィルターを処理する結果としてウェブページに加わる、メモリーと CPU のオーバーヘッドが削減されます。\n\n性能の低い端末ではこのオプションを有効にすることをおすすめします。",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -468,7 +468,7 @@
     "description": "English: Multipurpose"
   },
   "3pGroupRegions": {
-    "message": "地域、言語",
+    "message": "地域・言語",
     "description": "English: Regions, languages"
   },
   "3pGroupCustom": {
@@ -576,7 +576,7 @@
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
-    "message": "タイプ",
+    "message": "ルールの種類",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortBySource": {
@@ -872,7 +872,7 @@
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "<code>uBlock/wiki</code> にあるドキュメントを読んで uBlock Origin の全機能について学びましょう。",
+    "message": "uBlock Origin のすべての機能については、<code>uBlock/wiki</code> のドキュメントをお読みください。",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
@@ -892,11 +892,11 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>重要:</b> 目的が同じ他のブロッカーを uBlock Origin と併用することは控えてください。特定のウェブサイトでフィルターの問題を引き起こす可能性があります。",
+    "message": "<b>重要:</b> 似た機能を持つブロッカーを uBlock Origin と併用することは控えてください。特定のウェブサイトでフィルターの問題を引き起こすことがあります。",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>コツ:</b> フィルターリストが最新か確認しましょう。<span data-url=\"logger-ui.html#_\">ログ</span>はフィルター関連の問題の原因を調査するための第一のツールです。",
+    "message": "<b>ヒント:</b> フィルターリストが最新か確認しましょう。<span data-url=\"logger-ui.html#_\">ログ</span>はフィルター関連の問題の原因を調査するための第一のツールです。",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
@@ -912,11 +912,11 @@
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "以下は、ボランティアが問題解決に動く際に役立つ可能性のある記録です。",
+    "message": "以下の技術情報はボランティアが問題解決に取り組むときに役立つことがあります。",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>重要:</b> 個人情報や機密情報の可能性のある情報は既定で削除されます。情報が削除されたことによって問題解決が困難になる可能性があります。",
+    "message": "<b>重要:</b> 個人情報や機密情報の可能性のある情報は既定で削除されます。情報が削除されたことによって問題解決が困難になることがあります。",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
@@ -1008,11 +1008,11 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "uBO の内製フィルターリストは以下の <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a> に無料でホストしています:",
+    "message": "uBO の内製フィルターリストは以下の <a href=\"https://ja.wikipedia.org/wiki/%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84%E3%83%87%E3%83%AA%E3%83%90%E3%83%AA%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF\">CDN</a> に無料でホストしています:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "ランダムに選択された CDN がフィルターリストの更新が必要になったときに使用されます",
+    "message": "ランダムに選択された CDN がフィルターリストの更新が必要なときに使用されます",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
@@ -1116,7 +1116,7 @@
     "description": "English: Close this window"
   },
   "docblockedProceed": {
-    "message": "{{hostname}} の厳格なブロッキングを無効にする",
+    "message": "{{hostname}} への厳格なブロッキングを無効にする",
     "description": "English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary": {

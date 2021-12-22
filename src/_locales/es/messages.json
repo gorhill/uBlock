@@ -588,7 +588,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "Lista de nombres de servidores para los cuales se deshabilitará uBlock₀. Una entrada por línea. Se omitirán nombres de servidores no válidos.",
+    "message": "Sitios de confianza para los cuales se deshabilitará uBlock Origin. Una entrada por línea.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
