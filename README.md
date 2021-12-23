@@ -120,7 +120,7 @@ Note that issues specific to the Safari fork are the responsibility of the curre
 
 #### Note for all browsers
 
-To benefit from uBlock Origin's higher efficiency, it's advised that you don't use other content blockers at the same time (such as Adblock Plus, AdBlock). uBlock Origin will do [as well or better](#blocking) than most popular ad blockers. Other blockers can also prevent uBlock Origin's privacy or anti-blocker-defusing features from working properly.
+To benefit from uBlock Origin's higher efficiency, it's advised that you don't use other content blockers at the same time (such as Adblock Plus, AdBlock). uBlock Origin will do [as well or better](https://www.debugbear.com/blog/chrome-extension-performance-2021#how-do-ad-blockers-and-privacy-tools-affect-browser-performance) than most popular ad blockers. Other blockers can also prevent uBlock Origin's privacy or anti-blocker-defusing features from working properly.
 
 #### Deploying
 
