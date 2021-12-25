@@ -311,6 +311,19 @@ describe('SNFE', () => {
                     });
                     assert.strictEqual(r, 0);
                 });
+
+                // https://github.com/gorhill/uBlock/commit/d66cd1116c0e
+                it('should not match on localhost', async () => {
+                    await engine.useLists([
+                        { name: 'test', raw: '.js$domain=foo.*|bar.*\n/^/$domain=example.*|foo.*' },
+                    ]);
+                    const r = engine.matchRequest({
+                        originURL: 'https://localhost/',
+                        type: 'script',
+                        url: 'https://localhost/baz.js',
+                    });
+                    assert.strictEqual(r, 0);
+                });
             });
         });
     }
