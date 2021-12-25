@@ -1146,7 +1146,7 @@ const webRequest = {
                 { urls: [ 'http://*/*', 'https://*/*' ] },
                 [ 'blocking', 'responseHeaders' ]
             );
-            vAPI.net.unsuspend({ force: true });
+            vAPI.net.unsuspend(true);
             // Mitigation: force-reload active tabs for environments not
             // supporting suspended network request listeners.
             if (
