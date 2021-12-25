@@ -266,7 +266,8 @@ class HNTrieContainer {
                 this.add(itrie);
             }
         }
-        this.needle = ''; // Important
+        this.needle = '';   // Important
+        this.buf[255] = 0;  // Important
         return itrie;
     }
 
