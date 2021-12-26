@@ -605,6 +605,60 @@ const filterDumpInfo = (idata) => {
 };
 
 
+/*******************************************************************************
+
+    Filter classes
+
+    Pattern:
+        FilterPatternAny
+        FilterPatternPlain
+            FilterPatternPlain1
+            FilterPatternPlainX
+        FilterPatternGeneric
+        FilterRegex
+        FilterPlainTrie
+        FilterHostnameDict
+
+    Pattern modifiers:
+        FilterAnchorHnLeft
+            FilterAnchorHn
+        FilterAnchorRight
+        FilterAnchorLeft
+        FilterTrailingSeparator
+
+    Context, immediate:
+        FilterOriginHit
+            FilterOriginMiss
+                FilterOriginEntityMiss
+            FilterOriginEntityHit
+        FilterOriginHitSet
+            FilterOriginMissSet
+            FilterJustOrigin
+                FilterHTTPJustOrigin
+                FilterHTTPSJustOrigin
+
+    Other options:
+        FilterDenyAllow
+        FilterImportant
+        FilterNotType
+        FilterStrictParty
+        FilterModifier
+
+    Collection:
+        FilterCollection
+            FilterCompositeAll
+            FilterBucket
+                FilterBucketIf
+                    FilterBucketIfOriginHits
+                    FilterBucketIfRegexHits
+            FilterOriginHitAny
+
+    A single filter can be made of many parts, in which case FilterCompositeAll
+    is used to hold all the parts, and where all the parts must be a match in
+    order for the filter to be a match.
+
+**/
+
 /******************************************************************************/
 
 const FilterPatternAny = class {
@@ -1307,9 +1361,13 @@ const FilterOriginHit = class {
         return true;
     }
 
+    static getMatchTarget() {
+        return $docHostname;
+    }
+
     static match(idata) {
         return origHNTrieContainer.matchesHostname(
-            $docHostname,
+            this.getMatchTarget(),
             filterData[idata+1],
             filterData[idata+2]
         );
@@ -1374,38 +1432,79 @@ const FilterOriginHitSet = class {
         return true;
     }
 
-    static match(idata) {
-        const refs = filterRefs[filterData[idata+6]];
-        if ( $docHostname === refs.$last ) {
-            return filterData[idata+5] !== -1;
-        }
-        refs.$last = $docHostname;
-        const which = filterData[idata+3];
-        const itrie = filterData[idata+4] || this.toTrie(idata);
-        let lastResult = -1;
-        if ( (which & 0b01) !== 0 ) {
-            lastResult = origHNTrieContainer
-                .setNeedle($docHostname)
-                .matches(itrie);
-        }
-        if ( lastResult === -1 && (which & 0b10) !== 0 ) {
-            lastResult = origHNTrieContainer
-                .setNeedle($docEntity.compute())
-                .matches(itrie);
-        }
-        return (filterData[idata+5] = lastResult) !== -1;
+    static getTrieCount(idata) {
+        const itrie = filterData[idata+4];
+        if ( itrie === 0 ) { return 0; }
+        return Array.from(
+            origHNTrieContainer.trieIterator(filterData[idata+4])
+        ).length;
     }
 
-    static create(domainOpt, which = 0b11) {
+    static getLastResult(idata) {
+        return filterData[idata+5];
+    }
+
+    static getMatchTarget(which) {
+        return (which & 0b01) !== 0
+            ? $docHostname
+            : $docEntity.compute();
+    }
+
+    static getMatchedHostname(idata) {
+        const lastResult = filterData[idata+5];
+        if ( lastResult === -1 ) { return ''; }
+        return this.getMatchTarget(lastResult >>> 8).slice(lastResult & 0xFF);
+    }
+
+    static match(idata) {
+        const refs = filterRefs[filterData[idata+6]];
+        const docHostname = this.getMatchTarget(0b01);
+        if ( docHostname === refs.$last ) {
+            return filterData[idata+5] !== -1;
+        }
+        refs.$last = docHostname;
+        const which = filterData[idata+3];
+        const itrie = filterData[idata+4] || this.toTrie(idata);
+        if ( itrie === 0 ) { return false; }
+        if ( (which & 0b01) !== 0 ) {
+            const pos = origHNTrieContainer
+                .setNeedle(docHostname)
+                .matches(itrie);
+            if ( pos !== -1 ) {
+                filterData[idata+5] = 0b01 << 8 | pos;
+                return true;
+            }
+        }
+        if ( (which & 0b10) !== 0 ) {
+            const pos = origHNTrieContainer
+                .setNeedle(this.getMatchTarget(0b10))
+                .matches(itrie);
+            if ( pos !== -1 ) {
+                filterData[idata+5] = 0b10 << 8 | pos;
+                return true;
+            }
+        }
+        filterData[idata+5] = -1;
+        return false;
+    }
+
+    static add(idata, hn) {
+        origHNTrieContainer.setNeedle(hn).add(filterData[idata+4]);
+        filterData[idata+3] |= hn.charCodeAt(hn.length - 1) !== 0x2A /* '*' */
+            ? 0b01
+            : 0b10;
+        filterData[idata+5] = -1;
+    }
+
+    static create(fid = -1) {
         const idata = filterDataAllocLen(7);
-        filterData[idata+0] = FilterOriginHitSet.fid;
-        filterData[idata+1] = origHNTrieContainer.storeDomainOpt(domainOpt);
-        filterData[idata+2] = domainOpt.length;
-        filterData[idata+3] = which;
-        filterData[idata+4] = 0;            // itrie
+        filterData[idata+0] = fid !== -1 ? fid : FilterOriginHitSet.fid;
+        filterData[idata+1] = 0;
+        filterData[idata+2] = 0;
+        filterData[idata+3] = 0;
+        filterData[idata+4] = origHNTrieContainer.createTrie();
         filterData[idata+5] = -1;           // $lastResult
         filterData[idata+6] = filterRefAdd({ $last: '' });
-        this.toTrie(idata);
         return idata;
     }
 
@@ -1430,6 +1529,7 @@ const FilterOriginHitSet = class {
     }
 
     static toTrie(idata) {
+        if ( filterData[idata+2] === 0 ) { return 0; }
         const itrie = filterData[idata+4] =
             origHNTrieContainer.createTrieFromStoredDomainOpt(
                 filterData[idata+1],
@@ -1488,12 +1588,8 @@ registerFilterClass(FilterOriginMissSet);
 /******************************************************************************/
 
 const FilterOriginEntityHit = class extends FilterOriginHit {
-    static match(idata) {
-        return origHNTrieContainer.matchesHostname(
-            $docEntity.compute(),
-            filterData[idata+1],
-            filterData[idata+2]
-        );
+    static getMatchTarget() {
+        return $docEntity.compute();
     }
 
     static compile(entity) {
@@ -1506,12 +1602,8 @@ registerFilterClass(FilterOriginEntityHit);
 /******************************************************************************/
 
 const FilterOriginEntityMiss = class extends FilterOriginMiss {
-    static match(idata) {
-        return origHNTrieContainer.matchesHostname(
-            $docEntity.compute(),
-            filterData[idata+1],
-            filterData[idata+2]
-        ) === false;
+    static getMatchTarget() {
+        return $docEntity.compute();
     }
 
     static compile(entity) {
@@ -1620,10 +1712,6 @@ const FilterModifierResult = class {
 /******************************************************************************/
 
 const FilterCollection = class {
-    static isEmpty(idata) {
-        return this.forEach(idata, ( ) => { return true; }) !== true;
-    }
-
     static getCount(idata) {
         let n = 0;
         this.forEach(idata, ( ) => { n += 1; });
@@ -1647,14 +1735,6 @@ const FilterCollection = class {
 
     static shift(idata) {
         filterData[idata+1] = filterData[filterData[idata+1]+1];
-    }
-
-    static getSequenceRoot(idata) {
-        return filterData[idata+1];
-    }
-
-    static setSequenceRoot(idata, i) {
-        filterData[idata+1] = i;
     }
 
     static create(fid = -1) {
@@ -1930,44 +2010,23 @@ registerFilterClass(FilterDenyAllow);
 // Dictionary of hostnames for filters which only purpose is to match
 // the document origin.
 
-const FilterJustOrigin = class {
-    static getCount(idata) {
-        return Array.from(
-            origHNTrieContainer.trieIterator(filterData[idata+1])
-        ).length;
-    }
-
-    static match(idata) {
-        const pos = origHNTrieContainer.setNeedle($docHostname).matches(filterData[idata+1]);
-        if ( pos === -1 ) { return false; }
-        filterRefs[filterData[idata+2]] = $docHostname.slice(pos);
-        return true;
-    }
-
-    static add(idata, hn) {
-        return origHNTrieContainer.setNeedle(hn).add(filterData[idata+1]);
-    }
-
+const FilterJustOrigin = class extends FilterOriginHitSet {
     static create(fid = -1) {
-        const idata = filterDataAllocLen(3);
-        filterData[idata+0] = fid !== -1 ? fid : FilterJustOrigin.fid;  // fid
-        filterData[idata+1] = origHNTrieContainer.createTrie();         // itrie
-        filterData[idata+2] = filterRefAdd('');                         // $hostname
-        return idata;
+        return super.create(fid !== -1 ? fid : FilterJustOrigin.fid);
     }
 
-    static fromCompiled(args) {
-        return FilterJustOrigin.create(args[0]);
+    static logPattern(idata, details) {
+        details.pattern.push('*');
+        details.regex.push('^');
     }
 
     static logData(idata, details) {
-        details.pattern.push('*');
-        details.regex.push('^');
-        details.domains.push(filterRefs[filterData[idata+2]]);
+        this.logPattern(idata, details);
+        details.domains.push(this.getMatchedHostname(idata));
     }
 
     static dumpInfo(idata) {
-        return this.getCount(idata);
+        return this.getTrieCount(idata);
     }
 };
 
@@ -1984,14 +2043,9 @@ const FilterHTTPSJustOrigin = class extends FilterJustOrigin {
         return super.create(FilterHTTPSJustOrigin.fid);
     }
 
-    static fromCompiled(args) {
-        return super.fromCompiled(args);
-    }
-
-    static logData(idata, details) {
+    static logPattern(idata, details) {
         details.pattern.push('|https://');
         details.regex.push('^https://');
-        details.domains.push(filterRefs[filterData[idata+2]]);
     }
 };
 
@@ -2008,14 +2062,9 @@ const FilterHTTPJustOrigin = class extends FilterJustOrigin {
         return super.create(FilterHTTPJustOrigin.fid);
     }
 
-    static fromCompiled(args) {
-        return super.fromCompiled(args);
-    }
-
-    static logData(idata, details) {
+    static logPattern(idata, details) {
         details.pattern.push('|http://');
         details.regex.push('^http://');
-        details.domains.push(filterRefs[filterData[idata+2]]);
     }
 };
 
@@ -3308,7 +3357,6 @@ class FilterCompiler {
         // filters, the original filter is split into as many filters as there
         // are entries in the `domain=` option.
         if ( this.isJustOrigin() ) {
-            const tokenHash = this.tokenHash;
             if ( this.pattern === '*' || this.pattern.startsWith('http*') ) {
                 this.tokenHash = ANY_TOKEN_HASH;
             } else if /* 'https:' */ ( this.pattern.startsWith('https') ) {
@@ -3316,26 +3364,8 @@ class FilterCompiler {
             } else /* 'http:' */ {
                 this.tokenHash = ANY_HTTP_TOKEN_HASH;
             }
-            const entities = [];
             for ( const hn of this.domainOptList ) {
-                if ( this.domainIsEntity(hn) === false ) {
-                    this.compileToAtomicFilter(hn, writer);
-                } else {
-                    entities.push(hn);
-                }
-            }
-            if ( entities.length === 0 ) { return; }
-            this.tokenHash = tokenHash;
-            const leftAnchored = (this.anchor & 0b010) !== 0;
-            for ( const entity of entities ) {
-                const units = [];
-                this.compilePattern(units);
-                if ( leftAnchored ) { units.push(FilterAnchorLeft.compile()); }
-                compileDomainOpt([ entity ], true, units);
-                this.compileToAtomicFilter(
-                    FilterCompositeAll.compile(units),
-                    writer
-                );
+                this.compileToAtomicFilter(hn, writer);
             }
             return;
         }
@@ -3492,8 +3522,8 @@ FilterCompiler.prototype.FILTER_UNSUPPORTED = 2;
 /******************************************************************************/
 
 const FilterContainer = function() {
-    this.compilerVersion = '6';
-    this.selfieVersion = '7';
+    this.compilerVersion = '8';
+    this.selfieVersion = '8';
 
     this.MAX_TOKEN_LENGTH = MAX_TOKEN_LENGTH;
     this.optimizeTaskId = undefined;
