@@ -286,7 +286,7 @@ const onHiddenSettingsReady = async function() {
     if ( µb.hiddenSettings.suspendTabsUntilReady === 'no' ) {
         vAPI.net.unsuspend(true);
     } else if ( µb.hiddenSettings.suspendTabsUntilReady === 'yes' ) {
-        vAPI.net.suspend();
+        vAPI.net.suspend(true);
     }
 
     // Maybe disable WebAssembly
