@@ -80,7 +80,6 @@ const hiddenSettingsDefault = {
     requestJournalProcessPeriod: 1000,
     selfieAfter: 2,
     strictBlockingBypassDuration: 120,
-    suspendTabsUntilReady: 'unset',
     uiPopupConfig: 'unset',
     uiFlavor: 'unset',
     uiStyles: 'unset',
@@ -109,6 +108,7 @@ const userSettingsDefault = {
     prefetchingDisabled: true,
     requestLogMaxEntries: 1000,
     showIconBadge: true,
+    suspendUntilListsAreLoaded: true,
     tooltipsDisabled: false,
     webrtcIPAddressHidden: false,
 };
@@ -214,7 +214,7 @@ const µBlock = {  // jshint ignore:line
     readyToFilter: false,
 
     supportStats: {
-        launchToReadiness: '',
+        allReadyAfter: '',
     },
 
     pageStores: new Map(),

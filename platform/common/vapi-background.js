@@ -1220,12 +1220,10 @@ vAPI.Net = class {
     }
     unsuspendAllRequests() {
     }
-    suspend(force = false) {
-        if ( this.canSuspend() || force ) {
-            this.suspendDepth += 1;
-        }
+    suspend() {
+        this.suspendDepth += 1;
     }
-    unsuspend(all = false) {
+    unsuspend({ all = false, discard = false } = {}) {
         if ( this.suspendDepth === 0 ) { return; }
         if ( all ) {
             this.suspendDepth = 0;
@@ -1233,7 +1231,7 @@ vAPI.Net = class {
             this.suspendDepth -= 1;
         }
         if ( this.suspendDepth !== 0 ) { return; }
-        this.unsuspendAllRequests();
+        this.unsuspendAllRequests(discard);
     }
     canSuspend() {
         return false;

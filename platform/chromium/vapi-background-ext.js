@@ -186,9 +186,11 @@ vAPI.Tabs = class extends vAPI.Tabs {
             return { cancel: true };
         }
 
-        unsuspendAllRequests() {
-            for ( const tabId of this.suspendedTabIds ) {
-                vAPI.tabs.reload(tabId);
+        unsuspendAllRequests(discard = false) {
+            if ( discard !== true ) {
+                for ( const tabId of this.suspendedTabIds ) {
+                    vAPI.tabs.reload(tabId);
+                }
             }
             this.suspendedTabIds.clear();
         }

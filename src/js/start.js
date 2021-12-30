@@ -192,6 +192,13 @@ const onNetWhitelistReady = function(netWhitelistRaw, adminExtra) {
 // User settings are in memory
 
 const onUserSettingsReady = function(fetched) {
+    // Terminate suspended state?
+    if ( fetched.suspendUntilListsAreLoaded === false ) {
+        vAPI.net.unsuspend({ all: true, discard: true });
+        ubolog(`Unsuspend network activity listener`);
+        µb.supportStats.unsuspendAfter = `${Date.now() - vAPI.T0} ms`;
+    }
+
     // `externalLists` will be deprecated in some future, it is kept around
     // for forward compatibility purpose, and should reflect the content of
     // `importedLists`.
@@ -280,13 +287,6 @@ const onHiddenSettingsReady = async function() {
             }
         }
         ubolog(`Override default webext flavor with ${tokens}`);
-    }
-
-    // Maybe override current network listener suspend state
-    if ( µb.hiddenSettings.suspendTabsUntilReady === 'no' ) {
-        vAPI.net.unsuspend(true);
-    } else if ( µb.hiddenSettings.suspendTabsUntilReady === 'yes' ) {
-        vAPI.net.suspend(true);
     }
 
     // Maybe disable WebAssembly
@@ -506,11 +506,11 @@ browser.runtime.onUpdateAvailable.addListener(details => {
     }
 });
 
-µb.supportStats.launchToReadiness = `${Date.now() - vAPI.T0} ms`;
+µb.supportStats.allReadyAfter = `${Date.now() - vAPI.T0} ms`;
 if ( selfieIsValid ) {
-    µb.supportStats.launchToReadiness += ' (selfie)';
+    µb.supportStats.allReadyAfter += ' (selfie)';
 }
-ubolog(`All ready ${µb.supportStats.launchToReadiness} ms after launch`);
+ubolog(`All ready ${µb.supportStats.allReadyAfter} ms after launch`);
 
 // <<<<< end of private scope
 })();

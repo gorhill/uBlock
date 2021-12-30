@@ -286,7 +286,8 @@ const renderFilterLists = function(soft) {
         // Re-insert import widget.
         uDom('[data-groupkey="custom"] .listEntries').append(importWidget);
 
-        uDom.nodeFromId('autoUpdate').checked = listDetails.autoUpdate === true;
+        uDom.nodeFromId('autoUpdate').checked =
+            listDetails.autoUpdate === true;
         uDom.nodeFromId('listsOfBlockedHostsPrompt').textContent =
             vAPI.i18n('3pListsOfBlockedHostsPrompt')
                 .replace(
@@ -301,6 +302,8 @@ const renderFilterLists = function(soft) {
             listDetails.parseCosmeticFilters === true;
         uDom.nodeFromId('ignoreGenericCosmeticFilters').checked =
             listDetails.ignoreGenericCosmeticFilters === true;
+        uDom.nodeFromId('suspendUntilListsAreLoaded').checked =
+            listDetails.suspendUntilListsAreLoaded === true;
 
         // Compute a hash of the settings so that we can keep track of changes
         // affecting the loading of filter lists.
@@ -529,11 +532,12 @@ const buttonPurgeAllHandler = async function(hard) {
 
 /******************************************************************************/
 
-const autoUpdateCheckboxChanged = function() {
+const userSettingCheckboxChanged = function() {
+    const target = event.target;
     messaging.send('dashboard', {
         what: 'userSettings',
-        name: 'autoUpdate',
-        value: this.checked,
+        name: target.id,
+        value: target.checked,
     });
 };
 
@@ -683,9 +687,10 @@ self.hasUnsavedData = function() {
 
 /******************************************************************************/
 
-uDom('#autoUpdate').on('change', autoUpdateCheckboxChanged);
+uDom('#autoUpdate').on('change', userSettingCheckboxChanged);
 uDom('#parseCosmeticFilters').on('change', onFilteringSettingsChanged);
 uDom('#ignoreGenericCosmeticFilters').on('change', onFilteringSettingsChanged);
+uDom('#suspendUntilListsAreLoaded').on('change', userSettingCheckboxChanged);
 uDom('#buttonApply').on('click', ( ) => { buttonApplyHandler(); });
 uDom('#buttonUpdate').on('click', ( ) => { buttonUpdateHandler(); });
 uDom('#buttonPurgeAll').on('click', ev => {
