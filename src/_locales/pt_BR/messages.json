@@ -588,7 +588,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "As diretivas dos sites confiáveis ditam em quais páginas da web o uBlock Origin deve ser desativado. Uma entrada por linha. As diretivas inválidas serão silenciosamente ignoradas e comentadas.",
+    "message": "As diretivas dos sites confiáveis ditam em quais páginas da web o uBlock Origin deve ser desativado. Uma entrada por linha.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
@@ -908,7 +908,7 @@
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
-    "message": "Informação sobre Soluções de Problemas",
+    "message": "Informações sobre Soluções de Problemas",
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
@@ -920,11 +920,11 @@
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
-    "message": "Reportar um problema com o filtro",
+    "message": "Informar um problema com o filtro",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Para evitar sobrecarregar os voluntários com relatórios duplicados, por favor certifique-se que o problema já não foi relatado.",
+    "message": "Para evitar sobrecarregar os voluntários com relatórios duplicados, por favor certifique-se que o problema já não foi informado.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {

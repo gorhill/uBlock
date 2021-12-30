@@ -56,7 +56,7 @@
     "description": "appears as tab name in dashboard"
   },
   "supportPageName": {
-    "message": "Support",
+    "message": "پشتیبانی",
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
@@ -856,19 +856,19 @@
     "description": "Label for radio-button to pick export text format"
   },
   "supportOpenButton": {
-    "message": "Open",
+    "message": "باز کردن",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Create new report",
+    "message": "ایجاد گزارش جدید",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Find similar reports",
+    "message": "یافتن گزارش‌های مشابه",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
-    "message": "Documentation",
+    "message": "مستندات",
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
@@ -876,7 +876,7 @@
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
-    "message": "Questions and support",
+    "message": "سوال‌ها و پشتیبانی",
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
@@ -892,7 +892,7 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Important:</b> Avoid using other similarly-purposed blockers along with uBlock Origin, as this may cause filter issues on specific websites.",
+    "message": "<b>مهم:</b> از مسدودکننده‌های مشابه دیگر در کنار یوبلاک اوریجین استفاده نکنید. این کار ممکن است باعث ایجاد مشکل در فیلترها برای برخی سایت‌ها شود.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
@@ -900,7 +900,7 @@
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
-    "message": "Bug report",
+    "message": "گزارش اشکال",
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
@@ -912,7 +912,7 @@
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "Below is technical information that might be useful when volunteers are trying to help you solve a problem.",
+    "message": "در زیر اطلاعات فنی آمده که ممکن است برای داوطلبانی که می‌خواهند در حل یک مشکل کمک کنند مفید باشد.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
@@ -920,27 +920,27 @@
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "گزارش یک اشکال در فیلتر",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported.",
+    "message": "برای این که وقت داوطلبان با گزارش‌های تکراری گرفته نشوند، لطفا مطمئن شوید که این اشکال قبلا گزارش نشده باشد.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Address of the web page:",
+    "message": "آدرس صفحه‌ی وب:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The web page...",
+    "message": "این صفحه‌ی وب...",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Pick an entry --",
+    "message": "-- یک گزینه را انتخاب کنید --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "تبلیغات یا باقی‌مانده‌هایی از آن نشان می‌دهد",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
@@ -948,19 +948,19 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Detects uBlock Origin",
+    "message": "یوبلاک اوریجین را تشخیص می‌دهد",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "دارای ایراد مربوط به حریم خصوصی است",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Malfunctions when uBlock Origin is enabled",
+    "message": "وقتی یوبلاک اوریجین فعال است عملکرد درستی ندارد",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "تب یا پنجره‌ی ناخواسته باز می‌کند",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
@@ -1192,7 +1192,7 @@
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "genericSelectAll": {
-    "message": "Select all",
+    "message": "انتخاب همه",
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleBlockingProfile": {

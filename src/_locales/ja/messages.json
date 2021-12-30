@@ -944,7 +944,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "オーバーレイなど邪魔な要素があります",
+    "message": "オーバーレイなど邪魔なものがあります",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
@@ -956,7 +956,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "uBlock Origin を有効にすると誤作動します",
+    "message": "uBlock Origin を有効にすると正しく動作しません",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {

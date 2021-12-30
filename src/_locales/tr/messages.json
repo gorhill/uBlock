@@ -588,7 +588,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "Güvenilen site yönergeleri, uBlock Origin'in devre dışı bırakılması gerektiği web sayfalarını belirler. Her satırda bir girdi. Geçersiz yönergeler sessizce yok sayılacak ve yoruma dönüştürülecektir.",
+    "message": "Güvenilen site yönergeleri, uBlock Origin'in devre dışı bırakılması gerektiği web sayfalarını belirler. Her satırda bir girdi.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
@@ -884,15 +884,15 @@
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "Filtre sorunları/websitesi bozuk",
+    "message": "Filtre sorunları/web sitesi bozuk",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Belirli websiteleriyle ilgili filtre sorunlarını  <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> sorun izleyicisine</span> bildirin. <u>Github hesabı gerektirir.</u>",
+    "message": "Belirli web siteleriyle ilgili filtre sorunlarını  <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> sorun izleyicisine</span> bildirin. <u>Github hesabı gerektirir.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Önemli:</b> uBlock Origin'le birlikte, belirli websitelerinde filtre sorunlarına neden olabileceği için, diğer benzer amaçlı engellicileri kullanmaktan kaçının.",
+    "message": "<b>Önemli:</b> uBlock Origin'le birlikte, belirli web sitelerinde filtre sorunlarına neden olabileceği için, diğer benzer amaçlı engelleyicileri kullanmaktan kaçının.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
@@ -964,7 +964,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Websitesini uygunsuz (“NSFW”) olarak etiketle (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "Web sayfasını uygunsuz (“NSFW”) olarak etiketle (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
