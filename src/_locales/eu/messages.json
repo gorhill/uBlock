@@ -435,6 +435,10 @@
     "message": "<p>Iragazki kosmetiko orokorrak webgune guztietan aplikatzeko sortu diren iragazki kosmetikoak dira. <p>uBlock₀ aplikazioak ongi kudeatzen baditu ere iragazki kosmetiko orokorrek wegune batzuetan memoria edo PUZ erabilera nabarmena ekar dezakete handiak eta antzinakoak diren horietan gehienbat. <p>Aukera hau gaituz iragazki kosmetiko orokorren erabileraren ondoriozko memoria eta PUZ erabilera gehigarria sahiestuko da, eta baita uBlock₀ beraren memoria erabilera gutxiagotu. <p> Ahalmen gutxiagoko gailuetan aukera hau gaitzea aholkatzen da.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Lists of blocked hosts",
     "description": "English: Lists of blocked hosts"

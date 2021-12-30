@@ -435,6 +435,10 @@
     "message": "Общокозметични са филтрите, предназначени за прилагане във всички сайтове. Разрешаването на тази опция ще премахне натоварването на паметта и процесора, добавено към уеб страниците в резултат на обработката на общите козметични филтри.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Списъци на блокираните хостове",
     "description": "English: Lists of blocked hosts"

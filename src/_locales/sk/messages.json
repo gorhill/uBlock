@@ -435,6 +435,10 @@
     "message": "<p>Generické kozmetické filtre sú tie kozmetické filtre, ktoré sú určené na použitie na všetkých webových stránkach.<p>Aj keď ich uBlock₀ používa efektívne, generické kozmetické filtre môžu stále prispievať k zaťaženiu pamäte a procesora na niektorých webových stránkach, a to najmä na veľkých a zložitých.<p>Zapnutím tejto možnosti sa zníži zaťaženie pamäte a procesora v dôsledku použitia generických kozmetických filtrov pre webové stránky, a taktiež sa znížia nároky samotného rozšírenia uBlock₀ na pamäť.<p>Odporúča sa povoliť túto možnosť na menej výkonných zariadeniach.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Zoznamy zablokovaných hostiteľov",
     "description": "English: Lists of blocked hosts"

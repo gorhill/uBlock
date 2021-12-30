@@ -435,6 +435,10 @@
     "message": "<p>Os filtros cosméticos xenéricos estanche pensados para seren aplicados en todas as páxinas.<p>Aínda que o uBlock₀ os xestiona dun xeito eficiente, algúns deles precisan de altas cantidades de memoria e sobreemprego da CPU, especialmente nas páxinas grandes e nas máis duradeiras.<p>Activar esta opción suprimirá os requerimentos de memoria e CPU por causa destes filtros cosméticos xenéricos, así como reducirá a cantidade de memoria ocupada polo uBlock₀ mesmo.<p>Recomendámosche activar esta opción sobre todo nos dispositivos menos potentes.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Lista dos servidores bloqueados",
     "description": "English: Lists of blocked hosts"

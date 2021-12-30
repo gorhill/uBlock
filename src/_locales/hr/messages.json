@@ -435,6 +435,10 @@
     "message": "Generički estetski filteri su takvi filteri koji su namijenjeni svim web stranicama. Omogućavanjem ove postavke eliminirati će se memorijska i procesorska dodatna upotreba na web stranicama kao rezultat korištenja generičkih estetskih filtera.\n\nPreporučeno je omogućiti ovu postavku na slabijim uređajima.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Popis blokiranih hosts",
     "description": "English: Lists of blocked hosts"

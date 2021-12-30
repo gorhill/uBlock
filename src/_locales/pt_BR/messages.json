@@ -435,6 +435,10 @@
     "message": "Os filtros cosméticos genéricos são filtros que são destinados a serem aplicados em todos os sites. Ativando esta opção irá eliminar a sobrecarga da memória e CPU das página.\n\nÉ recomendado que ative esta opção em dispositivos menos poderosos.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Listas de servidores bloqueados",
     "description": "English: Lists of blocked hosts"

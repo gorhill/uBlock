@@ -435,6 +435,10 @@
     "message": "Общие косметические фильтры — это те косметические фильтры, которые должны применяться на всех веб-сайтах. Включение этой опции снизит потребление памяти и избавит процессор от обработки общих косметических фильтров на веб-страницах.\n\nРекомендуется включить эту опцию на недостаточно мощных устройствах.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Список заблокированных хостов",
     "description": "English: Lists of blocked hosts"

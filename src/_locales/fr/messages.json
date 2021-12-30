@@ -435,6 +435,10 @@
     "message": "Les filtres esthétiques génériques sont des filtres esthétiques conçus pour être appliqués sur tous les sites Web. Activer cette option réduira l'utilisation en mémoire et en processeur sur les pages Web.\n\nIl est recommandé d'activer ce paramètre sur des appareils à la puissance modeste.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Listes prédéfinies d'hôtes à bloquer",
     "description": "English: Lists of blocked hosts"

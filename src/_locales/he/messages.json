@@ -435,6 +435,10 @@
     "message": "מסננים קוסמטיים כלליים - אלה הם המסננים הקוסמטיים, אשר מיועדים להיות מוחלים על כל דפי האינטרנט. אפשור הגדרה זו תוריד את צריכת הזיכרון והמעבד אשר מתווספות לדפי אינטרנט כתוצאה משימוש במסננים קוסמטיים כלליים.\n\nמומלץ לאפשר הגדרה זו במכשירים פחות חזקים.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "רשימה של דומיינים חסומים",
     "description": "English: Lists of blocked hosts"

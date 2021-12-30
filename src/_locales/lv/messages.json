@@ -435,6 +435,10 @@
     "message": "<p>Vispārīgie kosmētikas filtri ir kosmētikas filtri, kurus paredzēts piemērot visās tīmekļvietnēs.<p>Lai gan uBlock ₀ darbojas efektīvi, vispārīgie kosmētikas filtri dažās tīmekļa lapās var ievērojami noslogot atmiņu un centrālo procesoru.<p>Šīs opcijas izmantošana samazinās vispārīgo kosmētikas filtru izmantotās atmiņas un procesora noslodzi kā arī samazinās paša uBlock₀ izmantoto atmiņu.<p>Ieteicams izmantot zemas veiktspējas ierīcēm.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Bloķēto hostu saraksti",
     "description": "English: Lists of blocked hosts"

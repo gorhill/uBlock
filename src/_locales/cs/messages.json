@@ -435,6 +435,10 @@
     "message": "<p>Obecné kosmetické filtry jsou kosmetické filtry vytvořené k použití se všemi webovými stránkami.<p>Přestože je uBlock₀ používá velmi efektivně, kosmetické filtry mohou přispět ke zvýšenému využití operační paměti a procesoru na některých webech, zejména těch velkých a složitých.<p>Zapnutím této volby se lze vyhnout nadbytečnému zatížení paměti i procesoru vyvolaném použitím obecných kosmetických filtrů a rovněž snížit využití paměti samotným uBlock₀ rozšířením.<p>Na méně výkonných zařízeních je doporučeno tuto volbu povolit.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Seznamy blokovaných hostitelů",
     "description": "English: Lists of blocked hosts"

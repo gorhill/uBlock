@@ -435,6 +435,10 @@
     "message": "<p>전체적 표면 필터들은 방문하는 모든 사이트에 적용하는 표면 필터입니다. <p>uBlock₀는 이를 효율적으로 적용하지만, 전체적 표면 필터들은 사이트의 크기와 유지시간에 따라 확연할 정도의 메모리 및 CPU 오버헤드를 줄 수 있습니다. <p>이 옵션을 활성화하면 전체적 표면 필터 적용으로 메모리 및 CPU 오버헤드를 제거하고, uBlock₀ 자체의 메모리 사용량도 줄입니다. <p>저전력 기기에 사용하는 것을 권장합니다.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "차단된 호스트 목록",
     "description": "English: Lists of blocked hosts"

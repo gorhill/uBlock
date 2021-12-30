@@ -435,6 +435,10 @@
     "message": "Generiske kosmetiske filtre er de kosmetiske filtre, der er beregnet til at gælde på alle websteder. Aktivering af denne indstilling vil eliminere hukommelse- og CPU-forbrug, der tilføjes til websider som et resultat af håndtering af generiske kosmetiske filtre.\n\nDet anbefales at aktivere denne indstilling på mindre kraftfulde enheder.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Liste over blokerede værter",
     "description": "English: Lists of blocked hosts"

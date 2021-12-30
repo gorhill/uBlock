@@ -435,6 +435,10 @@
     "message": "Algemiene kosmetyske filters binne dy kosmetyske filters dy't bedoeld binne om op alle websites tapast te wurden. It ynskeakeljen fan dizze opsje eliminearret de oan websiden tafoege ûnthâld- en cpu-oerhead as gefolch fan it ferwurkjen fan algemiene kosmetyske filters.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "List fan blokkearre hosts",
     "description": "English: Lists of blocked hosts"

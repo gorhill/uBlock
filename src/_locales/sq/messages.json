@@ -435,6 +435,10 @@
     "message": "Filtrat kozmetikë jospecifikë janë filtra të cilët aplikohen për të gjitha faqet e internetit. Aktivizimi i këtij opsioni eliminon peshën e tepërt te memoria dhe procesori.\n\nKy opsion rekomandohet për aparatet kompjuterike jo shumë të shpejta.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Lista e hosteve të bllokuara",
     "description": "English: Lists of blocked hosts"

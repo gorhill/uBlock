@@ -435,6 +435,10 @@
     "message": "汎用非表示フィルターは、すべてのウェブサイトに適用するように意図された非表示フィルターです。このオプションを有効にすると、汎用非表示フィルターを処理する結果としてウェブページに加わる、メモリーと CPU のオーバーヘッドが削減されます。\n\n性能の低い端末ではこのオプションを有効にすることをおすすめします。",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "ブロックしたホストの一覧",
     "description": "English: Lists of blocked hosts"

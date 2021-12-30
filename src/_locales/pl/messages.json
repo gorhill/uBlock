@@ -435,6 +435,10 @@
     "message": "Ogólne filtry kosmetyczne, to filtry które mają być zastosowane na wszystkich stronach internetowych. Włącznie tej funkcji zmniejszy obciążenie procesora i pamięci.\n\nZaleca się włączenie tej funkcji na mniej wydajnych urządzeniach.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Listy zablokowanych hostów",
     "description": "English: Lists of blocked hosts"

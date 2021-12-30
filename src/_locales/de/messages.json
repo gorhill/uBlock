@@ -435,6 +435,10 @@
     "message": "Generische kosmetische Filter sind diejenigen kosmetischen Filter, die für die Anwendung auf allen Webseiten bestimmt sind. Die Aktivierung dieser Option wird die Mehrbelastung für Speicher und Prozessor auf Webseiten durch die Verarbeitung generischer kosmetischer Filter verhindern.\n\nEs wird empfohlen, diese Option auf weniger leistungsstarken Geräten zu aktivieren.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Listen blockierter Hostnamen",
     "description": "English: Lists of blocked hosts"

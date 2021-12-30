@@ -435,6 +435,10 @@
     "message": "Ümumi kosmetik filtrlərin bütün veb-saytlarda istifadəsi nəzərdə tutulur. Bu seçimi etdiyiniz təqdirdə veb-səhifələrdə ümumi kosmetik filtrlərin işlənməsi ilə əlaqədar yaddaşdan istifadə və prosessor yükü azalacaq.\n\nAz güclü cihazlarda bu seçimin aktivləşdirilməsi tövsiyə olunur.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Lists of blocked hosts",
     "description": "English: Lists of blocked hosts"

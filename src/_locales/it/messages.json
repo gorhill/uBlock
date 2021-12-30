@@ -435,6 +435,10 @@
     "message": "<p>I filtri cosmetici generici sono i filtri cosmetici intesi per essere applicati a tutti i siti Web.<p>Benché questi siano gestiti in modo efficiente da uBlock₀, i filtri cosmetici generici potrebbero contribuire a un carico elevato in termini di memoria e CPU su alcune pagine Web, in particolare quelle di notevoli dimensioni e a lunga scadenza.<p>L'attivazione di quest'opzione eliminerà il carico elevato in termini di memoria e CPU aggiunto alle pagine Web in conseguenza della gestione dei filtri cosmetici generici, e inoltre ridurrà l'impatto sulla memoria di uBlock₀ stesso.<p>È raccomandato abilitare quest'opzione sui dispositivi meno potenti.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Lista degli hosts bloccati",
     "description": "English: Lists of blocked hosts"

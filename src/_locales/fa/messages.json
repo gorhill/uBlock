@@ -435,6 +435,10 @@
     "message": "<p>فیلترهای زیبا سازی عمومی، آن دسته از فیلترهای زیبا سازی هستند که در همه وب سایت ها کاربرد دارند.\n<p>اگر چه بصورت موثر توسط uBlock₀ انجام شده، ولی فیلترهای عمومی زیبا سازی هنوز هم ممکن است سربار حافظه قابل اندازه گیری و سربار پردازنده در برخی از صفحات وب به جای بگذارد، به ویژه برای صفحات وب بزرگ و طولانی مدت.<p>فعال کردن این گزینه سربارهای حافظه و پردازنده را که به صفحات اضافه شده به عنوان نتیجۀ اجرای فیلترهای عمومی زیبا سازی برطرف می‌کند، و همچنین ردپای حافظۀ خود uBlock₀ را کمتر می‌کند<p>توصیه می شود این گزینه را در دستگاه های با قدرت کمتر فعال کنید.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "فهرست میزبان های مسدود شده",
     "description": "English: Lists of blocked hosts"

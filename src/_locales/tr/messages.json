@@ -435,6 +435,10 @@
     "message": "Genel kozmetik filtreler tüm web sayfalarına uygulanacak kozmetik filtrelerdir. Bu seçeneğin etkinleştirilmesi, genel kozmetik filtrelerin işlenmesi nedeniyle web sayfalarına eklenen bellek ve işlemci yükünü ortadan kaldırır.\n\nDaha az güçlü aygıtlarda bu seçeneğin etkinleştirilmesi önerilir.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Engellenmiş alan adlarının listesi",
     "description": "English: Lists of blocked hosts"

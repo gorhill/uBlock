@@ -435,6 +435,10 @@
     "message": "Bộ lọc phần tử chung là những bộ lọc phần tử được áp dụng cho cho mọi trang web. Kích hoạt tùy chọn này sẽ giảm bớt sức nặng lên cpu và bộ nhớ do không còn phải xử lí các bộ lọc phần tử chung.\n\nTùy chọn này được khuyến nghị kích hoạt trên thiết bị cấu hình thấp.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Danh sách những máy chủ bị chặn",
     "description": "English: Lists of blocked hosts"

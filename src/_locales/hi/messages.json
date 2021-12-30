@@ -435,6 +435,10 @@
     "message": "जेनेरिक कॉस्मेटिक फिल्टरस वो कॉस्मेटिक फिल्टरस हैं जो सब वेब साइट्स पर लागू होते हैं। यह विकल्प को चालू कराने से मेमोरी और सीपीयू पर जो उपर का दबाव पड़ता है वो नहीं रहेगा जो कॉस्मेटिक फिल्टरों को जारी करने से हुआ था।\n\nइस विकल्प को कमज़ोर डिवाइसों पर चालू कराने की सलाह दी जाती है।",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Lists of blocked hosts",
     "description": "English: Lists of blocked hosts"

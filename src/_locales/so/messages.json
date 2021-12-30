@@ -435,6 +435,10 @@
     "message": "Cusbooneysii hadda",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Lists of blocked hosts",
     "description": "English: Lists of blocked hosts"

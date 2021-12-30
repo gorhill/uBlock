@@ -435,6 +435,10 @@
     "message": "എല്ലാ വെബ് സൈറ്റുകളിലും പ്രയോഗിക്കാൻ ഉദ്ദേശിക്കുന്ന കോസ്മെറ്റിക് ഫിൽട്ടറുകളാണ് ജനറിക് കോസ്മെറ്റിക് ഫിൽട്ടറുകൾ. ഈ ഓപ്ഷൻ പ്രവർത്തനക്ഷമമാക്കുന്നത് ജനറിക് കോസ്മെറ്റിക് ഫിൽട്ടറുകൾ കൈകാര്യം ചെയ്യുന്നതിന്റെ ഫലമായി വെബ് പേജുകളിൽ ചേർത്ത മെമ്മറിയും സിപിയു ഓവർഹെഡും ഇല്ലാതാക്കും.\n\nശക്തി കുറഞ്ഞ ഉപകരണങ്ങളിൽ ഈ ഓപ്‌ഷൻ പ്രവർത്തനക്ഷമമാക്കാൻ ശുപാർശ ചെയ്യുന്നു.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Lists of blocked hosts",
     "description": "English: Lists of blocked hosts"

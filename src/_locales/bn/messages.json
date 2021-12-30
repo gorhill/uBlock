@@ -435,6 +435,10 @@
     "message": "<p>জেনেরিক প্রসাধনী ছাঁকনি হচ্ছে সেইসব প্রসাধনী ছাঁকনি যা সব ওয়েবসাইটে প্রয়োগের জন্য অভিপ্রেত।<p>যদিও তা uBlock₀ দ্বারা দক্ষতার সঙ্গে পরিচালনা করে, কিন্তু জেনেরিক প্রসাধন ফিল্টার এখনও কিছু ওয়েব পাতার পরিমাপযোগ্য মেমরি ও CPU-র অত্যাধিক চাপ সৃষ্টিতে অবদান রাখতে পারে, বিশেষ করে বড় এবং দীর্ঘ একটিতে।<p>এই অপশন সক্রিয় করলে জেনেরিক প্রসাধনী ছাঁকনি পরিচালিত হবে যা ওয়েব পাতার পরিমাপযোগ্য মেমরি ও CPU-র অত্যাধিক চাপ সৃষ্টি দূর করবে এবং uBlock₀ নিজেই মেমরি পদাঙ্ক অর্ধ করবে।<p>এটা কম শক্তিশালী ডিভাইসে এই অপশনটি সক্রিয় করার জন্য সুপারিশ করা হচ্ছে।",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "অবরুদ্ধ হোস্টের তালিকা",
     "description": "English: Lists of blocked hosts"

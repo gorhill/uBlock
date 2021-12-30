@@ -435,6 +435,10 @@
     "message": "Општи естетски филтери су они естетски филтери који су намењени за примену на свим сајтовима. Омогућавањем ове опције, елиминисаће се повећана потрошња меморије и оптерећење процесора на страницама као резултат руковања општим естетским филтерима.\n\nПрепоручује се да се ова опција омогући на мање моћним уређајима.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Списак блокираних хостова",
     "description": "English: Lists of blocked hosts"

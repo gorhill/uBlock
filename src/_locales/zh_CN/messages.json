@@ -435,6 +435,10 @@
     "message": "通用元素过滤规则是应用到所有网站的元素过滤规则。启用此选项将消除网站因处理通用元素过滤规则而增加的内存和 CPU 占用。\n\n推荐在低性能设备上启用此选项。",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "被屏蔽站点列表",
     "description": "English: Lists of blocked hosts"

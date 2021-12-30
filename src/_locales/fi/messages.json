@@ -435,6 +435,10 @@
     "message": "Kosmeettiset yleissuodattimet ovat sellaisia kosmeettisia suodattimia, jotka on tarkoitettu käytettäväksi kaikilla verkkosivustoilla. Tämä asetus poistaa tällaisten suodattimien käsittelystä verkkosivuille aiheutuvan, korkeamman keskusmuistin ja suorittimen kuormituksen.\n\nAsetuksen käyttö on suositeltavaa heikkotehoisilla laitteilla.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Luettelo estetyistä osoitteista",
     "description": "English: Lists of blocked hosts"

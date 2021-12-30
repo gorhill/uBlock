@@ -435,6 +435,10 @@
     "message": "「一般元素隱藏過濾規則」是會套用在所有網頁的元素隱藏過濾規則。啟用此選項會減少每個網頁，因處理一般元素隱藏過濾規則而增加的記憶體與 CPU 使用量。\n\n建議在效能較差的裝置上啟用此選項。",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "被阻擋網域的列表",
     "description": "English: Lists of blocked hosts"

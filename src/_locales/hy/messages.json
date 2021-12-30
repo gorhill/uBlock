@@ -435,6 +435,10 @@
     "message": "Ընդհանուր կոսմետիկ զտիչներն այն կոսմետիկ զտիչներն են, որոնք նախատեսված են կիրառվել բոլոր կայքերում։ Այս ընտրանքը միացնելը կվերացնի հիշողության և մշակիչի բեռնվածությունը, որը կայքեջերի մոտ ավելանում է ընդհանուր կոսմետիկ զտիչների մշակման արդյունքում։\n\nԽորհուրդ է տրվում միացնել այս ընտրանքը ոչ բավականաչափ հզոր սարքերում։",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Lists of blocked hosts",
     "description": "English: Lists of blocked hosts"

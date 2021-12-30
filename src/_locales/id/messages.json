@@ -435,6 +435,10 @@
     "message": "Filter tampilan generik adalah filter tampilan yang dibuat untuk diterapkan pada semua situs web. Mengaktifkan opsi ini akan menghilangkan peningkatan overhead memori ram dan CPU pada halaman web akibat diterapkannya filter tampilan generik.\n\nDirekomendasikan untuk mengaktifkan opsi ini pada perangkat dengan performa rendah.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Daftar host yang diblokir",
     "description": "English: Lists of blocked hosts"

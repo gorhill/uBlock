@@ -435,6 +435,10 @@
     "message": "Üldised ilufiltrid on need ilufiltrid, mis töötavad kõikidel veebisaitidel. Selle valiku lubamine vähendab veebisaitidel üldiste ilufiltrite kasutamisest tulenevat mälu ja protsessori koormust.\n\nSelle valiku lubamine on soovitatav vähem võimekates seadmetes.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Blokeeritud domeenide loendid",
     "description": "English: Lists of blocked hosts"

@@ -435,6 +435,10 @@
     "message": "Algemene cosmetische filters zijn die cosmetische filters die zijn bedoeld om op alle websites te worden toegepast. Het inschakelen van deze optie elimineert de aan webpagina’s toegevoegde geheugen- en cpu-overhead als gevolg van het verwerken van algemene cosmetische filters.\n\nHet wordt aanbevolen deze optie op minder krachtige apparaten in te schakelen.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Lijst van geblokkeerde hosts",
     "description": "English: Lists of blocked hosts"

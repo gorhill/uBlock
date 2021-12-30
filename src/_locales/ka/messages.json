@@ -435,6 +435,10 @@
     "message": "გარეგნული საერთო ფილტრები ისეთი ფილტრებია, რომლებიც ყველა ვებსაიტზე მოქმედებს. ამ პარამეტრის ჩართვით კი თავიდან აიცილებთ გარეგნული ელემენტების საერთო ფილტრების შედეგად მეხსიერებისა და პროცესორის ზედმეტ დატვირთვას.\n\nამ პარამეტრის ჩართვა სასურველია სუსტ მოწყობილობებზე.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Lists of blocked hosts",
     "description": "English: Lists of blocked hosts"

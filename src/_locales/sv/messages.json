@@ -435,6 +435,10 @@
     "message": "Allmänna kosmetiska filter är de kosmetiska filter som är avsedda att tillämpas på alla webbplatser. Att aktivera detta alternativ kommer att eliminera minnes- och processoranvändningen som läggs till på webbsidor som ett resultat av hantering av allmänna kosmetiska filter.\n\nDet rekommenderas att aktivera detta alternativ på mindre kraftfulla enheter.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Listor över blockerade värdar",
     "description": "English: Lists of blocked hosts"

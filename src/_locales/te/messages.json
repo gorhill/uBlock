@@ -435,6 +435,10 @@
     "message": "<p>సాధారణ కాస్మెటిక్ ఫిల్టర్లు అన్ని సైట్లపై ఉపయోగించబడుతాయి.<p>వీటిని uBlock₀ సమర్థవంతంగా ఉపయోగించగలిగినా, కొన్ని భారీ లేదా దీర్ఘకాలికంగా వీక్షిస్తున్న పేజీలలో CPU ఇంకా RAM వాడుకను ఇవి పెంచగలవు.<p>ఈ ఎంపికను ఎంచుకోవడంవలన, సాధారణ కాస్మెటిక్ ఫిల్టర్లు కొరకు అదనపు CPU ఉపయోగాన్ని నివారిస్తుంది, పైగా uBlock₀ యొక్క RAM వాడుక తగ్గడానికి తోడ్పడుతుంది.<p>అల్పసామర్ధ్య పరికరాలలో దీన్ని ఎంచుకోవడం శ్రేయస్కరం.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "నిరోధించబడిన చిరునామాల జాబితా",
     "description": "English: Lists of blocked hosts"

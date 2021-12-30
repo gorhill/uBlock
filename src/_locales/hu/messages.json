@@ -435,6 +435,10 @@
     "message": "<p>Az általános kozmetikai szűrők azok a kozmetikai szűrők, amelyek minden weboldalra érvényesek.<p>Ugyan a uBlock₀ hatékonyan kezeli őket, az általános kozmetikai szűrők mégis mérhetően magasabb memória és CPU használatot eredményezhetnek néhány weboldalon, főleg nagy, és régóta futóak esetében.<p>Ennek az opciónak a bekapcsolása kiküszöböli az általános kozmetikai szűrők kezeléséből a weboldalakon adódó memória és CPU használat többletet, továbbá csökkenti a uBlock₀ által foglalt memóriát is.<p>Ajánlott bekapcsolni ezt az opciót a gyengébb eszközökön.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Blokkolt hostokat tartalmazó listák",
     "description": "English: Lists of blocked hosts"

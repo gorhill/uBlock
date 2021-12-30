@@ -435,6 +435,10 @@
     "message": "<p>Загальні косметичні фільтри — це косметичні фільтри, які застосовуються до всіх веб-сторінок.<p>Хоча й uBlock обробує фільтри ефективно, вони все одно можуть вимагати значну кількість ресурсів на деяких, особливо навантаженних сторінках.<p>Увімкнення цього параметра знизить споживання ресурсів на таких сторінках від застосування загальних косметичних фільтрів, а також знизить споживання пам'яті самого uBlock.<p>Рекомендується увімкнути цей параметр на слабких пристроях.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Перелік заблокованих хостів",
     "description": "English: Lists of blocked hosts"

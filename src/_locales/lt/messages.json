@@ -435,6 +435,10 @@
     "message": "<p>Daugybiniai kosmetiniai filtrai yra tokie kosmetiniai filtrai, kurie taikomi visoms svetainėms.<p>Nors uBlock₀ juos apdoroja efektyviai, daugybiniai kosmetiniai filtrai vis tiek gali prisidėti prie pamatuojamo atminties ir procesoriaus panaudojimo kai kuriose svetainėse, ypač didelėse ir ilgai gyvuojančiose.<p>Šio nustatymo įjungimas sumažins atminties ir procesoriaus naudojimą, kurį sukelia svetainės dėl daugybinių kosmetinių filtrų apdorojimo, bei sumažins bendrą uBlock₀ atminties naudojimą.<p>Rekomenduojama įjungti šį nustatymą mažiau galinguose įrenginiuose.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Blokuotų serverių sąrašas",
     "description": "English: Lists of blocked hosts"

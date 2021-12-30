@@ -435,6 +435,10 @@
     "message": "الفلاتر التجميلية العمومية هي الفلاتر التجميلية التي تنطبق على كل مواقع الإنترنت. تفعيل هذا الخيار سوف يترك مساحة أقل من الذاكرة و قوة المعالجة للإستعمال من قبل صفحات الويب كنتيجة لمعالجة الفلاتر التجميلية العمومية.\n\nمن الأفضل تفعيل هذا الخيار على الأجهزة الأقل قوة.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "قائمة المواقع المحجوبة",
     "description": "English: Lists of blocked hosts"

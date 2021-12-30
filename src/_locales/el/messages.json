@@ -435,6 +435,10 @@
     "message": "<p>Τα γενικά κοσμητικά φίλτρα είναι εκείνα τα κοσμητικά φίλτρα που εφαρμόζονται σε όλες τις ιστοσελίδες.<p>Αν και γίνεται αποτελεσματική διαχείρισή τους από το uBlock₀, τα γενικά κοσμητικά φίλτρα ενδέχεται να καταναλώσουν σημαντική μνήμη και να υπερφορτώσουν τη CPU σε μερικές ιστοσελίδες, ειδικά για μεγάλες μακροχρόνιες.<p>Η ενεργοποίηση αυτής της επιλογής θα εξαλείψει την υπερφόρτωση μνήμης και CPU στις ιστοσελίδες ως αποτέλεσμα της διαχείρισης γενικών κοσμητικών φίλτρων, ενώ ενδέχεται να μειώσει την κατανάλωση μνήμης του ίδιου του uBlock₀.<p>Προτείνεται η ενεργοποίηση αυτής της επιλογής στις λιγότερο ισχυρές συσκευές.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
+  "3pSuspendUntilListsAreLoaded": {
+    "message": "Suspend network activity until all filter lists are loaded",
+    "description": "A checkbox in the 'Filter lists' pane"
+  },
   "3pListsOfBlockedHostsHeader": {
     "message": "Λίστες αποκλεισμένων hosts",
     "description": "English: Lists of blocked hosts"
