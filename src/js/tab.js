@@ -355,8 +355,14 @@ const onPopupUpdated = (( ) => {
         let popupType = 'popup',
             result = 0;
         // https://github.com/gorhill/uBlock/issues/2919
-        // - If the target tab matches a clicked link, assume it's legit.
-        if ( areDifferentURLs(targetURL, openerDetails.trustedURL) ) {
+        //   If the target tab matches a clicked link, assume it's legit.
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/1912
+        //   If the target also matches the last clicked link, assume it's
+        //   legit.
+        if (
+            areDifferentURLs(targetURL, openerDetails.trustedURL) &&
+            areDifferentURLs(targetURL, µb.maybeGoodPopup.url)
+        ) {
             result = popupMatch(fctxt, rootOpenerURL, localOpenerURL, targetURL);
         }
 
