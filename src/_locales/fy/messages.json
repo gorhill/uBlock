@@ -436,7 +436,7 @@
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
-    "message": "Suspend network activity until all filter lists are loaded",
+    "message": "Netwurkaktiviteit ûnderbrekke oant alle filterlisten laden binne",
     "description": "A checkbox in the 'Filter lists' pane"
   },
   "3pListsOfBlockedHostsHeader": {
@@ -592,7 +592,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "De whitelist-ynstruksjes skriuwe foar op hokker websiden uBlock Origin útskeakele wurde moat. Ien fermelding per rigel. Unjildige ynstruksjes wurde sûnder meidieling negearre en útskeakele.",
+    "message": "De fertroude-website-ynstruksjes skriuwe foar op hokker websiden uBlock Origin útskeakele wurde moat. Ien fermelding per rigel.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
@@ -892,7 +892,7 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Meld filterproblemen mei spesifike websites op de <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> probleemtracker</span>. Fereasket in GitHub-account.",
+    "message": "Meld filterproblemen mei spesifike websites op de <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"> probleemtracker</span>. Fereasket in GitHub-account.",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
@@ -908,7 +908,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Meld problemen mei uBlock Origin sels by de <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> probleemtracker</span>. Fereasket in GitHub-account.",
+    "message": "Meld problemen mei uBlock Origin sels by de <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"> probleemtracker</span>. Fereasket in GitHub-account.",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
@@ -968,7 +968,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "De webside labelje as &lsquo;NSFW&rsquo; (<a href=\"https://nl.wikipedia.org/wiki/NSFW\">&lsquo;Not Safe For Work&rsquo;</a>)",
+    "message": "De webside labelje as ‘NSFW’ (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">‘Not Safe For Work’</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {

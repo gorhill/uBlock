@@ -436,7 +436,7 @@
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
-    "message": "Suspend network activity until all filter lists are loaded",
+    "message": "Преустановяване на мрежовата дейност, докато се заредят всички списъци с филтри",
     "description": "A checkbox in the 'Filter lists' pane"
   },
   "3pListsOfBlockedHostsHeader": {
@@ -592,7 +592,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "Списък на адресите, за които uBlock Origin ще бъде изключен. Един запис на ред. Недействителните адреси ще бъдат пренебрегнати и коментирани.",
+    "message": "Указанията за доверени сайтове определят кои уеб страници трябва да бъдат изключени от uBlock Origin. По един запис на ред.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
