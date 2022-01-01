@@ -1150,8 +1150,8 @@ const webRequest = {
             // Mitigation: force-reload active tabs for environments not
             // supporting suspended network request listeners.
             if (
-                vAPI.net.canSuspend() !== true ||
-                µb.hiddenSettings.suspendTabsUntilReady === 'no'
+                vAPI.net.canSuspend() !== true &&
+                µb.hiddenSettings.suspendTabsUntilReady === 'unset'
             ) {
                 const tabs = await vAPI.tabs.query({
                     active: true,
