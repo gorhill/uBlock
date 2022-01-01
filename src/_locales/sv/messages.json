@@ -436,7 +436,7 @@
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
-    "message": "Suspend network activity until all filter lists are loaded",
+    "message": "Stäng av nätverksaktiviteten tills alla filterlistor har laddats",
     "description": "A checkbox in the 'Filter lists' pane"
   },
   "3pListsOfBlockedHostsHeader": {
@@ -592,7 +592,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "De pålitliga webbplatsdirektiven dikterar på vilka webbplatser uBlock Origin bör inaktiveras. En post per rad. Ogiltiga direktiv ignoreras och kommenteras ut.",
+    "message": "Direktiven för betrodda webbplatser anger vilka webbsidor som uBlock Origin ska inaktiveras på. En post per rad.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
