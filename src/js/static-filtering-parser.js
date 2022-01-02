@@ -658,7 +658,7 @@ const Parser = class {
         // https://github.com/gorhill/uBlock/issues/3034
         //   We can remove anchoring if we need to match all at the end.
         if ( hasBits(this.flavorBits, BITFlavorNetRightAnchor) ) {
-            const i = this.patternLeftAnchorSpan;
+            const i = this.patternRightAnchorSpan.i;
             if (
                 this.patternSpan.len === 0 ||
                 hasBits(this.slices[i-3], BITIgnore|BITAsterisk)
