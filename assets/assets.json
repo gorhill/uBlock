@@ -473,14 +473,6 @@
 		"contentURL": "https://easylist-downloads.adblockplus.org/easylistitaly.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=96"
 	},
-	"ITA-1": {
-		"content": "filters",
-		"group": "regions",
-		"off": true,
-		"title": "ITA: ABP X Files",
-		"contentURL": "https://raw.githubusercontent.com/gioxx/xfiles/master/filtri.txt",
-		"supportURL": "https://xfiles.noads.it/"
-	},
 	"JPN-1": {
 		"content": "filters",
 		"group": "regions",
