@@ -83,17 +83,18 @@ const getElementBoundingClientRect = function(elem) {
     if ( rect.width !== 0 && rect.height !== 0 ) {
         return rect;
     }
+    if ( elem.shadowRoot instanceof DocumentFragment ) {
+        return getElementBoundingClientRect(elem.shadowRoot);
+    }
 
     let left = rect.left,
-        right = rect.right,
+        right = left + rect.width,
         top = rect.top,
-        bottom = rect.bottom;
+        bottom = top + rect.height;
 
     for ( const child of elem.children ) {
         rect = getElementBoundingClientRect(child);
-        if ( rect.width === 0 || rect.height === 0 ) {
-            continue;
-        }
+        if ( rect.width === 0 || rect.height === 0 ) { continue; }
         if ( rect.left < left ) { left = rect.left; }
         if ( rect.right > right ) { right = rect.right; }
         if ( rect.top < top ) { top = rect.top; }
@@ -101,8 +102,10 @@ const getElementBoundingClientRect = function(elem) {
     }
 
     return {
+        bottom,
         height: bottom - top,
         left,
+        right,
         top,
         width: right - left
     };
@@ -940,20 +943,22 @@ const zapElementAtPoint = function(mx, my, options) {
 
     if ( elemToRemove instanceof Element === false ) { return; }
 
-    const getStyleValue = function(elem, prop) {
+    const getStyleValue = (elem, prop) => {
         const style = window.getComputedStyle(elem);
         return style ? style[prop] : '';
     };
 
     // Heuristic to detect scroll-locking: remove such lock when detected.
-    let maybeScrollLocked = false;
-    let elem = elemToRemove;
-    do {
-        maybeScrollLocked =
-            parseInt(getStyleValue(elem, 'zIndex'), 10) >= 1000 ||
-            getStyleValue(elem, 'position') === 'fixed';
-        elem = elem.parentElement;
-    } while ( elem !== null && maybeScrollLocked === false );
+    let maybeScrollLocked = elemToRemove.shadowRoot instanceof DocumentFragment;
+    if ( maybeScrollLocked === false ) {
+        let elem = elemToRemove;
+        do {
+            maybeScrollLocked =
+                parseInt(getStyleValue(elem, 'zIndex'), 10) >= 1000 ||
+                getStyleValue(elem, 'position') === 'fixed';
+            elem = elem.parentElement;
+        } while ( elem !== null && maybeScrollLocked === false );
+    }
     if ( maybeScrollLocked ) {
         const doc = document;
         if ( getStyleValue(doc.body, 'overflowY') === 'hidden' ) {
