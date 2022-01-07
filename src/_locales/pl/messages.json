@@ -484,7 +484,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "Jeden adres URL na linię. Błędne adresy URL będą pomijane.",
+    "message": "Jeden adres URL listy na linię. Błędne adresy URL będą pomijane.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -1028,7 +1028,7 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Przywróć z pliku…",
+    "message": "Przywróć kopię z pliku…",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {

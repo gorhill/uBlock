@@ -1032,7 +1032,7 @@
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Відновити параметри за замовчанням...",
+    "message": "Відновити початкові налаштування...",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {

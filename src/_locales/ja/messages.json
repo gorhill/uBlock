@@ -104,7 +104,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "インストールからの総ブロック数",
+    "message": "インストールからのブロック数",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
@@ -416,7 +416,7 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll": {
-    "message": "すべてのキャッシュを削除",
+    "message": "キャッシュをすべて削除",
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
@@ -436,7 +436,7 @@
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
-    "message": "すべてのフィルターリストを読み込むまでネットワークアクティビティを一時停止する",
+    "message": "フィルターリストをすべて読み込むまで、ネットワークアクティビティを一時停止する",
     "description": "A checkbox in the 'Filter lists' pane"
   },
   "3pListsOfBlockedHostsHeader": {
@@ -488,7 +488,7 @@
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
-    "message": "更新待ちです。",
+    "message": "期限切れです。",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pViewContent": {

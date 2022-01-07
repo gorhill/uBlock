@@ -480,7 +480,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Importer...",
+    "message": "Importer…",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -1032,7 +1032,7 @@
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Tilbakestill til standardinnstillinger",
+    "message": "Gjenopprett forvalgte innstillinger",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
@@ -1144,7 +1144,7 @@
     "description": "tooltip"
   },
   "cloudNoData": {
-    "message": "...\n...",
+    "message": "…\n…",
     "description": ""
   },
   "cloudDeviceNamePrompt": {

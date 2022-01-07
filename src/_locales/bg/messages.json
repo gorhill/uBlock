@@ -312,7 +312,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Блокиране на елемент...",
+    "message": "Блокиране на елемент…",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -1028,7 +1028,7 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Внасяне от файл...",
+    "message": "Възстановяване от файл...",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {

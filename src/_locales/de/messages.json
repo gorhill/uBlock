@@ -480,7 +480,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Importieren …",
+    "message": "Importieren...",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -556,7 +556,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Aus einer Datei importieren …",
+    "message": "Aus Datei importieren …",
     "description": ""
   },
   "rulesExport": {
@@ -1028,11 +1028,11 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Aus einer Datei wiederherstellen ...",
+    "message": "Aus Datei wiederherstellen …",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Auf Vorgaben zurücksetzen …",
+    "message": "Auf Werkseinstellungen zurücksetzen...",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {

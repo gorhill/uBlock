@@ -312,7 +312,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Ögeyi engelle...",
+    "message": "Ögeyi engelle…",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -480,7 +480,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "İçe aktar...",
+    "message": "İçe aktar…",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -500,7 +500,7 @@
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Güncelleniyor...",
+    "message": "Güncelleniyor…",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -556,7 +556,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Dosyadan al...",
+    "message": "Dosyadan al…",
     "description": ""
   },
   "rulesExport": {
@@ -1028,11 +1028,11 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Dosyadan geri yükle...",
+    "message": "Dosyadan geri yükle…",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Varsayılan ayarlara sıfırla...",
+    "message": "Varsayılan ayarlara sıfırla…",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
@@ -1172,11 +1172,11 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "Çerçevedeki ögeyi engelle...",
+    "message": "Çerçevedeki ögeyi engelle…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Filtre listesine abone ol...",
+    "message": "Filtre listesine abone ol…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {

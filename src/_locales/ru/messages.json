@@ -312,7 +312,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Блокировать элемент...",
+    "message": "Блокировать элемент",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -556,7 +556,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Импорт из файла...",
+    "message": "Импортировать из файла...",
     "description": ""
   },
   "rulesExport": {
@@ -1028,7 +1028,7 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Восстановление из файла...",
+    "message": "Восстановить из файла...",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
@@ -1172,11 +1172,11 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "Заблокировать элемент во фрейме...",
+    "message": "Заблокировать элемент фрейма...",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Подписаться на список фильтров...",
+    "message": "Установить список фильтров...",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {

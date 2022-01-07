@@ -1028,7 +1028,7 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Terugzetten uit bestand...",
+    "message": "Herstellen uit bestand...",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {

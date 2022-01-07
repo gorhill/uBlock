@@ -312,7 +312,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Blokovat prvek...",
+    "message": "Blokovat prvek",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -500,7 +500,7 @@
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Aktualizování...",
+    "message": "Probíhá aktualizace...",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -1028,11 +1028,11 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Obnovit ze souboru...",
+    "message": "Obnovit ze souboru…",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Obnovit výchozí nastavení...",
+    "message": "Obnovit výchozí nastavení…",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {

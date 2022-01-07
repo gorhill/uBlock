@@ -312,7 +312,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Bloquer un élément",
+    "message": "Bloquer l'élément",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -500,7 +500,7 @@
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Mise à jour en cours...",
+    "message": "Mise à jour en cours…",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -556,7 +556,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Importer à partir du fichier",
+    "message": "Importer à partir du fichier…",
     "description": ""
   },
   "rulesExport": {
@@ -936,7 +936,7 @@
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "La page Web...",
+    "message": "La page Web…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
@@ -1028,11 +1028,11 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Importer depuis un fichier",
+    "message": "Restaurer depuis un fichier…",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Paramètres par défaut",
+    "message": "Réinitialiser les réglages",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
@@ -1172,7 +1172,7 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "Bloquer un élément de cadre",
+    "message": "Bloquer l'élément dans le cadre",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {

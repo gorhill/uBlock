@@ -1032,7 +1032,7 @@
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "重置为默认设置…",
+    "message": "重置为默认设置",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
