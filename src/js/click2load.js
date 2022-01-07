@@ -42,15 +42,6 @@ frameURLElem.children[1].title = frameURL;
 
 document.body.setAttribute('title', actualURL);
 
-const onWindowResize = function() {
-    document.body.style.width = `${self.innerWidth}px`;
-    document.body.style.height = `${self.innerHeight}px`;
-};
-
-onWindowResize();
-
-self.addEventListener('resize', onWindowResize);
-
 document.body.addEventListener('click', ev => {
     if ( ev.isTrusted === false ) { return; }
     if ( ev.target.closest('#frameURL') !== null ) { return; }

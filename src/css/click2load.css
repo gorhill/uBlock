@@ -25,8 +25,10 @@ body {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    height: 100vh;
     padding: 0 2px;
     position: relative;
+    width: 100vw;
     }
 
 .logo {
