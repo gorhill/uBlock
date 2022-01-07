@@ -856,6 +856,19 @@ const gotoReport = function() {
         if ( popupData[prop] === expected ) { continue; }
         popupPanel[name] = !expected;
     }
+    if ( hostnameToSortableTokenMap.size !== 0 ) {
+        const blockedDetails = {};
+        const hostnames =
+            Array.from(hostnameToSortableTokenMap.keys()).sort(hostnameCompare);
+        for ( const hostname of hostnames ) {
+            const entry = popupData.hostnameDict[hostname];
+            if ( entry.counts.blocked.any === 0 ) { continue; }
+            blockedDetails[hostname] = entry.counts.blocked.any;
+        }
+        if ( Object.keys(blockedDetails).length !== 0 ) {
+            popupPanel.blockedDetails = blockedDetails;
+        }
+    }
     messaging.send('popupPanel', {
         what: 'launchReporter',
         tabId: popupData.tabId,
