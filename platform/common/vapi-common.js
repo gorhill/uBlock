@@ -75,7 +75,7 @@ vAPI.webextFlavor = {
             soup.add('firefox')
                 .add('user_stylesheet')
                 .add('html_filtering');
-            flavor.major = 78;
+            flavor.major = 91;
         }
         return;
     }
