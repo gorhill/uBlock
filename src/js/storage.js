@@ -623,8 +623,9 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
     // User filter list.
     newAvailableLists[this.userFiltersPath] = {
+        content: 'filters',
         group: 'user',
-        title: vAPI.i18n('1pPageName')
+        title: vAPI.i18n('1pPageName'),
     };
 
     // Custom filter lists.

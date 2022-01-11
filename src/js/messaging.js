@@ -1294,7 +1294,7 @@ const getSupportData = async function() {
                 listDetails.push(parts.join('.'));
             }
         }
-        if ( list.isDefault ) {
+        if ( list.isDefault || listKey === µb.userFiltersPath ) {
             if ( used ) {
                 defaultListset[listKey] = listDetails.join(', ');
             } else {
