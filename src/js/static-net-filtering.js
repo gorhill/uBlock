@@ -3493,7 +3493,7 @@ FilterCompiler.prototype.FILTER_UNSUPPORTED = 2;
 
 const FilterContainer = function() {
     this.compilerVersion = '6';
-    this.selfieVersion = '7';
+    this.selfieVersion = '8';
 
     this.MAX_TOKEN_LENGTH = MAX_TOKEN_LENGTH;
     this.optimizeTaskId = undefined;
