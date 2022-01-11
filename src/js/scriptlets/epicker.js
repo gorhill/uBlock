@@ -416,6 +416,9 @@ const cosmeticFilterFromElement = function(elem) {
     // Use attributes if still no selector found.
     // https://github.com/gorhill/uBlock/issues/1901
     //   Trim attribute value, this may help in case of malformed HTML.
+    //
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1923
+    //   Escape unescaped `"` in attribute values
     if ( selector === '' ) {
         let attributes = [], attr;
         switch ( tagName ) {
@@ -457,13 +460,14 @@ const cosmeticFilterFromElement = function(elem) {
         }
         while ( (attr = attributes.pop()) ) {
             if ( attr.v.length === 0 ) { continue; }
+            const w = attr.v.replace(/([^\\])"/g, '$1\\"');
             v = elem.getAttribute(attr.k);
             if ( attr.v === v ) {
-                selector += `[${attr.k}="${attr.v}"]`;
+                selector += `[${attr.k}="${w}"]`;
             } else if ( v.startsWith(attr.v) ) {
-                selector += `[${attr.k}^="${attr.v}"]`;
+                selector += `[${attr.k}^="${w}"]`;
             } else {
-                selector += `[${attr.k}*="${attr.v}"]`;
+                selector += `[${attr.k}*="${w}"]`;
             }
         }
     }
