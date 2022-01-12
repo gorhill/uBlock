@@ -440,7 +440,7 @@ function filterRefsToSelfie() {
             refs.push({ t: 2, v });
             continue;
         }
-        if ( v instanceof Object === false ) {
+        if ( typeof v !== 'object' || v === null ) {
             refs.push({ t: 0, v });
             continue;
         }
@@ -3772,13 +3772,9 @@ FilterContainer.prototype.optimize = function(throttle = 0) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.toSelfie = function(storage, path) {
-    if (
-        storage instanceof Object === false ||
-        storage.put instanceof Function === false
-    ) {
-        return Promise.resolve();
-    }
+FilterContainer.prototype.toSelfie = async function(storage, path) {
+    if ( typeof storage !== 'object' || storage === null ) { return; }
+    if ( typeof storage.put !== 'function' ) { return; }
 
     const bucketsToSelfie = ( ) => {
         const selfie = [];
@@ -3844,12 +3840,8 @@ FilterContainer.prototype.serialize = async function() {
 /******************************************************************************/
 
 FilterContainer.prototype.fromSelfie = async function(storage, path) {
-    if (
-        storage instanceof Object === false ||
-        storage.get instanceof Function === false
-    ) {
-        return;
-    }
+    if ( typeof storage !== 'object' || storage === null ) { return; }
+    if ( typeof storage.get !== 'function' ) { return; }
 
     this.reset();
 
@@ -3881,7 +3873,7 @@ FilterContainer.prototype.fromSelfie = async function(storage, path) {
     };
 
     const details = results[0];
-    if ( details instanceof Object === false ) { return false; }
+    if ( typeof details !== 'object' || details === null ) { return false; }
     if ( typeof details.content !== 'string' ) { return false; }
     if ( details.content === '' ) { return false; }
     let selfie;
@@ -3889,7 +3881,7 @@ FilterContainer.prototype.fromSelfie = async function(storage, path) {
         selfie = JSON.parse(details.content);
     } catch (ex) {
     }
-    if ( selfie instanceof Object === false ) { return false; }
+    if ( typeof selfie !== 'object' || selfie === null ) { return false; }
     if ( selfie.version !== this.selfieVersion ) { return false; }
     this.processedFilterCount = selfie.processedFilterCount;
     this.acceptedCount = selfie.acceptedCount;
@@ -3899,7 +3891,6 @@ FilterContainer.prototype.fromSelfie = async function(storage, path) {
     urlTokenizer.fromSelfie(selfie.urlTokenizer);
     return true;
 };
-
 
 FilterContainer.prototype.unserialize = async function(s) {
     const selfie = new Map(JSON.parse(s));

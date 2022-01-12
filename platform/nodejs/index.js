@@ -218,6 +218,12 @@ class StaticNetFilteringEngine {
         return snfe.hasQuery(details);
     }
 
+    filterQuery(details) {
+        const directives = snfe.filterQuery(fctx.fromDetails(details));
+        if ( directives === undefined ) { return; }
+        return { redirectURL: fctx.redirectURL, directives };
+    }
+
     isBlockImportant() {
         return snfe.isBlockImportant();
     }
