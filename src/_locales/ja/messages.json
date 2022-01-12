@@ -432,11 +432,11 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "汎用非表示フィルターは、すべてのウェブサイトに適用するように意図された非表示フィルターです。このオプションを有効にすると、汎用非表示フィルターを処理する結果としてウェブページに加わる、メモリーと CPU のオーバーヘッドが削減されます。\n\n性能の低い端末ではこのオプションを有効にすることをおすすめします。",
+    "message": "汎用非表示フィルターとは、すべてのウェブサイトに適用するように意図された非表示フィルターです。このオプションを有効にすると、汎用非表示フィルターを処理する結果としてウェブページに加わる、メモリーと CPU のオーバーヘッドが削減されます。\n\n性能の低い端末ではこのオプションを有効にすることをお勧めします。",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
-    "message": "フィルターリストをすべて読み込むまで、ネットワークアクティビティを一時停止する",
+    "message": "フィルターリストをすべて読み込むまで、ネットワークアクティビティを停止する",
     "description": "A checkbox in the 'Filter lists' pane"
   },
   "3pListsOfBlockedHostsHeader": {
@@ -660,7 +660,7 @@
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
-    "message": "ログの出力を停止します (以後のデータはすべて破棄)",
+    "message": "ログの出力を中断します (以後のデータはすべて破棄)",
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {

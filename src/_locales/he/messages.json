@@ -312,7 +312,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "חסום אלמנט",
+    "message": "חסום אלמנט...",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -436,7 +436,7 @@
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
-    "message": "Suspend network activity until all filter lists are loaded",
+    "message": "השהה פעילות רשת עד לסיום טעינת כל רשימות הסינון",
     "description": "A checkbox in the 'Filter lists' pane"
   },
   "3pListsOfBlockedHostsHeader": {
@@ -480,7 +480,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "ייבא…",
+    "message": "ייבא...",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {

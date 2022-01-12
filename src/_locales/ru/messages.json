@@ -312,7 +312,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Блокировать элемент",
+    "message": "Блокировать элемент...",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -500,7 +500,7 @@
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Обновляется...",
+    "message": "Обновление...",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -556,7 +556,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Импортировать из файла...",
+    "message": "Импорт из файла...",
     "description": ""
   },
   "rulesExport": {
@@ -1172,7 +1172,7 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "Заблокировать элемент фрейма...",
+    "message": "Заблокировать элемент во фрейме...",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {

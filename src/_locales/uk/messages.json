@@ -556,7 +556,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": " Імпортувати з файлу...",
+    "message": " Імпортувати з файлу…",
     "description": ""
   },
   "rulesExport": {
@@ -1028,7 +1028,7 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Відновити з файлу...",
+    "message": "Відновити з файлу…",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
