@@ -91,6 +91,7 @@ const processDeclarativeSimple = function(node, out) {
     ) {
         return;
     }
+    const unwrapSelector = vAPI.domFilterer.unwrapSelector;
     for ( const selector of simpleDeclarativeSet ) {
         if (
             (node === document || safeMatchSelector(selector, node) === false) &&
@@ -98,7 +99,7 @@ const processDeclarativeSimple = function(node, out) {
         ) {
             continue;
         }
-        out.push(`##${selector}`);
+        out.push(`##${unwrapSelector(selector)}`);
         simpleDeclarativeSet.delete(selector);
         simpleDeclarativeStr = undefined;
         loggedSelectors.add(selector);
@@ -113,9 +114,10 @@ const processDeclarativeComplex = function(out) {
         complexDeclarativeStr = safeGroupSelectors(complexDeclarativeSet);
     }
     if ( document.querySelector(complexDeclarativeStr) === null ) { return; }
+    const unwrapSelector = vAPI.domFilterer.unwrapSelector;
     for ( const selector of complexDeclarativeSet ) {
         if ( safeQuerySelector(selector) === null ) { continue; }
-        out.push(`##${selector}`);
+        out.push(`##${unwrapSelector(selector)}`);
         complexDeclarativeSet.delete(selector);
         complexDeclarativeStr = undefined;
         loggedSelectors.add(selector);

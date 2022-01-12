@@ -676,6 +676,11 @@ vAPI.DOMFilterer = class {
     getAllExceptionSelectors() {
         return this.exceptions.join(',\n');
     }
+
+    unwrapSelector(s) {
+        const match = /^:is\((.+)\):not\(html,body\)\/\*hg\*\/$/.exec(s);
+        return match !== null ? match[1] : s;
+    }
 };
 
 /******************************************************************************/

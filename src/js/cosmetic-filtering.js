@@ -227,13 +227,11 @@ const FilterContainer = function() {
     this.highlyGeneric.simple = {
         canonical: 'highGenericHideSimple',
         dict: new Set(),
-        str: '',
         mru: new µb.MRUCache(16)
     };
     this.highlyGeneric.complex = {
         canonical: 'highGenericHideComplex',
         dict: new Set(),
-        str: '',
         mru: new µb.MRUCache(16)
     };
 
@@ -281,11 +279,14 @@ FilterContainer.prototype.reset = function() {
 
     // highly generic selectors sets
     this.highlyGeneric.simple.dict.clear();
-    this.highlyGeneric.simple.str = '';
     this.highlyGeneric.simple.mru.reset();
     this.highlyGeneric.complex.dict.clear();
-    this.highlyGeneric.complex.str = '';
     this.highlyGeneric.complex.mru.reset();
+
+    // https://developer.mozilla.org/en-US/docs/Web/CSS/:is#browser_compatibility
+    this.cssIs =
+        vAPI.webextFlavor.soup.has('firefox') && vAPI.webextFlavor.major >= 84 ||
+        vAPI.webextFlavor.soup.has('chromium') && vAPI.webextFlavor.major >= 88;
 };
 
 /******************************************************************************/
@@ -300,9 +301,7 @@ FilterContainer.prototype.freeze = function() {
         this.lowlyGeneric.cl.simple.size !== 0 ||
         this.lowlyGeneric.cl.complex.size !== 0;
 
-    this.highlyGeneric.simple.str = Array.from(this.highlyGeneric.simple.dict).join(',\n');
     this.highlyGeneric.simple.mru.reset();
-    this.highlyGeneric.complex.str = Array.from(this.highlyGeneric.complex.dict).join(',\n');
     this.highlyGeneric.complex.mru.reset();
 
     this.frozen = true;
@@ -706,9 +705,7 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
     this.lowlyGeneric.cl.simple = new Set(selfie.lowlyGenericSCL);
     this.lowlyGeneric.cl.complex = new Map(selfie.lowlyGenericCCL);
     this.highlyGeneric.simple.dict = new Set(selfie.highSimpleGenericHideArray);
-    this.highlyGeneric.simple.str = selfie.highSimpleGenericHideArray.join(',\n');
     this.highlyGeneric.complex.dict = new Set(selfie.highComplexGenericHideArray);
-    this.highlyGeneric.complex.str = selfie.highComplexGenericHideArray.join(',\n');
     this.needDOMSurveyor =
         selfie.lowlyGenericSID.length !== 0 ||
         selfie.lowlyGenericCID.length !== 0 ||
@@ -1042,14 +1039,19 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
         //   indirectly in the mru cache: this is to prevent duplication of the
         //   string in memory, which I have observed occurs when the string is
         //   stored directly as a value in a Map.
+        //
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/1692
+        //   Wrap generic selectors to prevent matching `html` or `body`
+        //   elements. Content script-side code must unwrap those selectors
+        //   before reporting them in a user interface.
         if ( options.noGenericCosmeticFiltering !== true ) {
             const exceptionSetHash = out.exceptionFilters.join();
             for ( const key in this.highlyGeneric ) {
                 const entry = this.highlyGeneric[key];
-                let str = entry.mru.lookup(exceptionSetHash);
-                if ( str === undefined ) {
-                    str = { s: entry.str, excepted: [] };
-                    let genericSet = entry.dict;
+                let genericSet = entry.dict;
+                let cache = entry.mru.lookup(exceptionSetHash);
+                if ( cache === undefined ) {
+                    cache = { s: '', excepted: [] };
                     let hit = false;
                     for ( const exception of exceptionSet ) {
                         if ( (hit = genericSet.has(exception)) ) { break; }
@@ -1058,18 +1060,23 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
                         genericSet = new Set(entry.dict);
                         for ( const exception of exceptionSet ) {
                             if ( genericSet.delete(exception) ) {
-                                str.excepted.push(exception);
+                                cache.excepted.push(exception);
                             }
                         }
-                        str.s = Array.from(genericSet).join(',\n');
                     }
-                    entry.mru.add(exceptionSetHash, str);
+                    let genericArr = Array.from(genericSet);
+                    if ( this.cssIs ) {
+                        genericArr =
+                            genericArr.map(a => `:is(${a}):not(html,body)/*hg*/`);
+                    }
+                    cache.s = genericArr.join(',\n');
+                    entry.mru.add(exceptionSetHash, cache);
                 }
-                if ( str.excepted.length !== 0 ) {
-                    out.exceptedFilters.push(...str.excepted);
+                if ( cache.excepted.length !== 0 ) {
+                    out.exceptedFilters.push(...cache.excepted);
                 }
-                if ( str.s.length !== 0 ) {
-                    injectedHideFilters.push(str.s);
+                if ( cache.s.length !== 0 ) {
+                    injectedHideFilters.push(cache.s);
                 }
             }
         }
