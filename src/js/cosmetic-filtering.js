@@ -284,6 +284,8 @@ FilterContainer.prototype.reset = function() {
     this.highlyGeneric.complex.mru.reset();
 
     // https://developer.mozilla.org/en-US/docs/Web/CSS/:is#browser_compatibility
+    // https://developer.mozilla.org/en-US/docs/Web/CSS/:not#browser_compatibility
+    //   Need support for both `:is()` and `:not()` with selector list.
     this.cssIs =
         vAPI.webextFlavor.soup.has('firefox') && vAPI.webextFlavor.major >= 84 ||
         vAPI.webextFlavor.soup.has('chromium') && vAPI.webextFlavor.major >= 88;
