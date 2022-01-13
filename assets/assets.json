@@ -330,6 +330,15 @@
 		],
 		"supportURL": "https://pgl.yoyo.org/adservers/"
 	},
+	"ALB-0": {
+		"content": "filters",
+		"group": "regions",
+		"off": true,
+		"title": "ALB: Adblock List for Albania",
+		"lang": "sq",
+		"contentURL": "https://raw.githubusercontent.com/AnXh3L0/blocklist/master/albanian-easylist-addition/Albania.txt",
+		"supportURL": "https://github.com/AnXh3L0/blocklist"
+	},
 	"ara-0": {
 		"content": "filters",
 		"group": "regions",
