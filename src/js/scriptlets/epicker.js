@@ -566,6 +566,18 @@ const filtersFrom = function(x, y) {
         }
     }
 
+    // https://github.com/gorhill/uBlock/commit/ebaa8a8bb28aef043a68c99965fe6c128a3fe5e4#commitcomment-63818019
+    //   If still no best candidate, just use whatever is available in network
+    //   filter candidates -- which may have been previously skipped in favor
+    //   of cosmetic filters.
+    if ( bestCandidateFilter === null && netFilterCandidates.length !== 0 ) {
+        bestCandidateFilter = {
+            type: 'net',
+            filters: netFilterCandidates,
+            slot: 0
+        };
+    }
+
     return netFilterCandidates.length + cosmeticFilterCandidates.length;
 };
 
