@@ -336,7 +336,7 @@ const netFilterFromElement = function(elem) {
     const pattern = mergeStrings(urls);
 
 
-    if ( bestCandidateFilter === null ) {
+    if ( bestCandidateFilter === null && elem.matches('html,body') === false ) {
         bestCandidateFilter = {
             type: 'net',
             filters: candidates,
