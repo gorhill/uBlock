@@ -538,6 +538,7 @@ const saveAssetCacheRegistry = (( ) => {
 })();
 
 const assetCacheRead = async function(assetKey, updateReadTime = false) {
+    const t0 = Date.now();
     const internalKey = `cache/${assetKey}`;
 
     const reportBack = function(content) {
@@ -551,6 +552,12 @@ const assetCacheRead = async function(assetKey, updateReadTime = false) {
         getAssetCacheRegistry(),
         cacheStorage.get(internalKey),
     ]);
+
+    µb.supportStats.maxAssetCacheWait = Math.max(
+        Date.now() - t0,
+        parseInt(µb.supportStats.maxAssetCacheWait, 10)
+    ) + ' ms';
+
     if (
         bin instanceof Object === false ||
         bin.hasOwnProperty(internalKey) === false

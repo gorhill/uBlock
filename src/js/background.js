@@ -215,6 +215,7 @@ const µBlock = {  // jshint ignore:line
 
     supportStats: {
         allReadyAfter: '',
+        maxAssetCacheWait: '0 ms',
     },
 
     pageStores: new Map(),
