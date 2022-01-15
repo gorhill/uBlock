@@ -60,19 +60,22 @@ On Windows, the settings are saved in a SQlite file located at `%APPDATA%\Mozill
 
 ### Build instructions (for developers)
 
-- Clone [uBlock](https://github.com/gorhill/uBlock) and [uAssets](https://github.com/uBlockOrigin/uAssets) repositories in the same parent directory
-    - `git clone https://github.com/gorhill/uBlock.git`
-    - `git clone https://github.com/uBlockOrigin/uAssets.git`
+- Clone [uBlock repo](https://github.com/gorhill/uBlock): `git clone https://github.com/gorhill/uBlock.git`
 - Set path to uBlock: `cd uBlock`
 - The official version of uBO is in the `master` branch
     - `git checkout master`
 - Build the plugin:
-    - Chromium: `./tools/make-chromium.sh`
-    - Firefox webext: `./tools/make-firefox.sh all`
-    - Firefox legacy:
-        - `git checkout firefox-legacy`
-        - `./tools/make-firefox-legacy.sh all`
+    - Chromium: `make chromium`
+    - Firefox: `make firefox`
+    - NPM package: `make npm`
 - Load the result of the build into your browser:
-    - Chromium: load the unpacked extension folder `/uBlock/dist/build/uBlock0.chromium/` in Chromium to use the extension.
-    - Firefox: drag-and-drop `/uBlock/dist/build/uBlock0.firefox.xpi` or `/uBlock/dist/build/uBlock0.firefox-legacy.xpi` into Firefox.
+    - Chromium:
+        - Navigate to `chrome://extensions/`
+        - Check _"Developer mode"_
+        - Click _"Load unpacked"_
+        - Select `/uBlock/dist/build/uBlock0.chromium/`
+    - Firefox:
+        - Navigate to `about:debugging#/runtime/this-firefox`
+        - Click _"Load Temporary Add-on..."_ 
+        - Select `/uBlock/dist/build/uBlock0.firefox/`
    
