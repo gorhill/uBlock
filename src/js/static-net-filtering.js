@@ -2495,7 +2495,7 @@ const FilterOnHeaders = class {
 
     static logData(idata, details) {
         const irefs = filterData[idata+1];
-        const headerOpt = filterRefs[irefs+0];
+        const headerOpt = filterRefs[irefs].headerOpt;
         let opt = 'header';
         if ( headerOpt !== '' ) {
             opt += `=${headerOpt}`;
