@@ -134,6 +134,9 @@ const initializeTabs = async function() {
 /******************************************************************************/
 
 // To bring older versions up to date
+//
+// https://www.reddit.com/r/uBlockOrigin/comments/s7c9go/
+//   Abort suspending network requests when uBO is merely being installed.
 
 const onVersionReady = function(lastVersion) {
     if ( lastVersion === vAPI.app.version ) { return; }
@@ -141,7 +144,12 @@ const onVersionReady = function(lastVersion) {
     vAPI.storage.set({ version: vAPI.app.version });
 
     const lastVersionInt = vAPI.app.intFromVersion(lastVersion);
-    if ( lastVersionInt === 0 ) { return; }
+
+    // Special case: first installation
+    if ( lastVersionInt === 0 ) {
+        vAPI.net.unsuspend({ all: true, discard: true });
+        return;
+    }
 
     // Since built-in resources may have changed since last version, we
     // force a reload of all resources.
