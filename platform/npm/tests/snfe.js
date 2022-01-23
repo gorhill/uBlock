@@ -341,6 +341,31 @@ describe('SNFE', () => {
                     });
                     assert.strictEqual(r, 0);
                 });
+
+                // https://github.com/AdguardTeam/AdguardFilters/issues/88067#issuecomment-1019518277
+                it('should match regex-based filter without `match-case` option', async () => {
+                    await engine.useLists([
+                        { name: 'test', raw: '/\.com\/[a-z]{9,}\/[a-z]{9,}\.js$/$script,1p' },
+                    ]);
+                    const r = engine.matchRequest({
+                        originURL: 'https://example.com/',
+                        type: 'script',
+                        url: 'https://example.com/LQMDQSMLDAZAEHERE/LQMDQSMLDAZAEHERE.js',
+                    });
+                    assert.strictEqual(r, 1);
+                });
+
+                it('should not match regex-based filter with `match-case` option', async () => {
+                    await engine.useLists([
+                        { name: 'test', raw: '/\.com\/[a-z]{9,}\/[a-z]{9,}\.js$/$script,1p,match-case' },
+                    ]);
+                    const r = engine.matchRequest({
+                        originURL: 'https://example.com/',
+                        type: 'script',
+                        url: 'https://example.com/LQMDQSMLDAZAEHERE/LQMDQSMLDAZAEHERE.js',
+                    });
+                    assert.strictEqual(r, 0);
+                });
             });
         });
     }

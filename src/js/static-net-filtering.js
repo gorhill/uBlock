@@ -1108,7 +1108,7 @@ const FilterRegex = class {
         if ( refs.$re === null ) {
             refs.$re = new RegExp(
                 this.getRegexPattern(idata),
-                filterData[idata+3] === 0 ? '' : 'i'
+                filterData[idata+3] === 0 ? 'i' : ''
             );
         }
         if ( refs.$re.test($requestURLRaw) === false ) { return false; }
