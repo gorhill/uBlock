@@ -76,15 +76,22 @@
     if ( dl instanceof Object ) {
         if ( dl.hide instanceof Object && typeof dl.hide.end === 'function' ) {
             dl.hide.end();
+            dl.hide.end = ()=>{};
         }
         if ( typeof dl.push === 'function' ) {
             const doCallback = function(item) {
                 if ( item instanceof Object === false ) { return; }
                 if ( typeof item.eventCallback !== 'function' ) { return; }
                 setTimeout(item.eventCallback, 1);
+                item.eventCallback = ()=>{};
             };
+            dl.push = new Proxy(dl.push, {
+                apply: function(target, thisArg, args) {
+                    doCallback(args[0]);
+                    return Reflect.apply(target, thisArg, args);
+                }
+            });
             if ( Array.isArray(dl) ) {
-                dl.push = item => doCallback(item);
                 const q = dl.slice();
                 for ( const item of q ) {
                     doCallback(item);
