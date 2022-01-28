@@ -29,6 +29,9 @@
         return id;
     })();
     const FingerprintJS = class {
+        static hashComponents() {
+            return visitorId;
+        }
         static load() {
             return Promise.resolve(new FingerprintJS());
         }
