@@ -487,19 +487,10 @@ contextMenu.update();
 // default UI according to platform.
 if (
     browser.browserAction instanceof Object &&
-    browser.browserAction.setPopup instanceof Function
+    browser.browserAction.setPopup instanceof Function &&
+    µb.hiddenSettings.uiFlavor === 'classic'
 ) {
-    const env = vAPI.webextFlavor;
-    if (
-        µb.hiddenSettings.uiFlavor === 'classic' || (
-            µb.hiddenSettings.uiFlavor === 'unset' && (
-                env.soup.has('chromium') && env.major < 66 ||
-                env.soup.has('firefox') && env.major < 68
-            )
-        )
-    ) {
-        browser.browserAction.setPopup({ popup: 'popup.html' });
-    }
+    browser.browserAction.setPopup({ popup: 'popup.html' });
 }
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/717
