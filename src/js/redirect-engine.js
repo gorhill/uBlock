@@ -67,6 +67,9 @@ const redirectableResources = new Map([
     [ 'ampproject_v0.js', {
         alias: 'ampproject.org/v0.js',
     } ],
+    [ 'canrunads.js', {
+        data: 'text',
+    } ],
     [ 'chartbeat.js', {
         alias: 'static.chartbeat.com/chartbeat.js',
     } ],
