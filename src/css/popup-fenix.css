@@ -24,8 +24,8 @@
     opacity: 0;
     }
 a {
-    color: var(--default-ink);
-    fill: var(--default-ink);
+    color: var(--ink-1);
+        fill: var(--ink-1);
     text-decoration: none;
     }
 :focus {
@@ -55,7 +55,7 @@ hr {
     }
 
 #sticky {
-    background-color: var(--default-surface);
+    background-color: var(--surface-1);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -83,7 +83,7 @@ hr {
     stroke-width: 64;
     }
 body.off #switch {
-    fill: var(--default-surface);
+    fill: var(--surface-1);
     stroke: var(--checkbox-ink);
     }
 .rulesetTools {
@@ -96,11 +96,11 @@ body.off #switch {
     width: 25%;
     }
 .rulesetTools [id] {
-    background-color: var(--bg-transient-notice);
-    border: 1px solid #ddc;
+    background-color: var(--popup-ruleset-tool-surface);
     border-radius: 4px;
+    box-shadow: var(--popup-ruleset-tool-shadow) 0 1px 1px;
     cursor: pointer;
-    fill: var(--default-ink-a50);
+    fill: var(--popup-ruleset-tool-ink);
     flex-grow: 1;
     font-size: 2.2em;
     padding: 0;
@@ -108,6 +108,9 @@ body.off #switch {
     }
 .rulesetTools [id]:not(:first-of-type) {
     margin-top: 0.2em;
+    }
+.rulesetTools [id] > svg {
+    fill: var(--ink-4);
     }
 body.needReload #refresh,
 body.needSave #saveRules,
@@ -290,7 +293,7 @@ body[data-more=""] #lessButton {
     }
 #firewall > div > span,
 #actionSelector > #dynaCounts {
-    background-color: var(--bg-popup-cell-2);
+    background-color: var(--popup-cell-surface);
     border: none;
     box-sizing: border-box;
     display: inline-flex;
@@ -347,7 +350,7 @@ body[data-more=""] #lessButton {
     opacity: 0.5;
     }
 #firewall > div.isCname > span:first-of-type {
-    color: var(--fg-popup-cell-cname);
+    color: var(--popup-cell-cname-ink);
     }
 #firewall > div > span:first-of-type > sub {
     display: inline-block;
@@ -368,7 +371,7 @@ body[data-more=""] #lessButton {
     }
 #firewall > div > span:nth-of-type(3),
 #firewall > div > span:nth-of-type(4) {
-    color: var(--fg-0-70);
+    color: var(--ink-2);
     display: none;
     font-family: monospace;
     text-align: center;
@@ -381,11 +384,11 @@ body[data-more=""] #lessButton {
     pointer-events: auto;
     }
 #firewall > div.isDomain.hasSubdomains > span:first-of-type > span::before {
-    color: var(--default-ink-a40);
+    color: var(--ink-3);
     content: '\2026\A0';
     }
 #firewall > div:first-of-type > span:first-of-type::before {
-    color: var(--fg-0-50);
+    color: var(--ink-3);
     content: '+';
     padding-right: 0.25em;
     }
@@ -468,7 +471,7 @@ body.advancedUser #firewall > div > span:first-of-type ~ span {
     box-sizing: border-box;
     content: '';
     display: inline-block;
-    filter: var(--bg-popup-cell-label-filter);
+    filter: var(--popup-cell-label-filter);
     height: 100%;
     left: 0;
     position: absolute;
@@ -476,49 +479,49 @@ body.advancedUser #firewall > div > span:first-of-type ~ span {
     width: 7px;
     }
 #firewall > div.isRootContext > span:first-of-type::before {
-    background: var(--fg-0-50);
+    background: var(--ink-3);
     width: 14px !important;
     }
 #firewall > div.allowed > span:first-of-type::before,
 #firewall > div.isDomain.totalAllowed > span:first-of-type::before {
-    background: var(--bg-popup-cell-allow-own);
+    background: var(--popup-cell-allow-own-surface);
     }
 #firewall > div.blocked > span:first-of-type::before,
 #firewall > div.isDomain.totalBlocked > span:first-of-type::before {
-    background: var(--bg-popup-cell-block-own);
+    background: var(--popup-cell-block-own-surface);
     }
 #firewall > div.allowed.blocked > span:first-of-type::before,
 #firewall > div.isDomain.totalAllowed.totalBlocked > span:first-of-type::before {
-    background: var(--bg-popup-cell-label-mixed);
+    background: var(--popup-cell-label-mixed-surface);
     }
 /* Rule cells */
 body.advancedUser #firewall > div > span.allowRule,
 #actionSelector > #dynaAllow {
-    background: var(--bg-popup-cell-allow);
+    background: var(--popup-cell-allow-surface);
     }
 body.advancedUser #firewall > div > span.blockRule,
 #actionSelector > #dynaBlock {
-    background: var(--bg-popup-cell-block);
+    background: var(--popup-cell-block-surface);
     }
 body.advancedUser #firewall > div > span.noopRule,
 #actionSelector > #dynaNoop {
-    background: var(--bg-popup-cell-noop);
+    background: var(--popup-cell-noop-surface);
     }
 body.advancedUser #firewall > div > span.ownRule,
 #firewall > div > span.ownRule {
-    color: var(--default-surface);
+    color: var(--surface-1);
     }
 body.advancedUser #firewall > div > span.allowRule.ownRule,
 :root:not(.mobile) #actionSelector > #dynaAllow:hover {
-    background: var(--bg-popup-cell-allow-own);
+    background: var(--popup-cell-allow-own-surface);
     }
 body.advancedUser #firewall > div > span.blockRule.ownRule,
 :root:not(.mobile) #actionSelector > #dynaBlock:hover {
-    background: var(--bg-popup-cell-block-own);
+    background: var(--popup-cell-block-own-surface);
     }
 body.advancedUser #firewall > div > span.noopRule.ownRule,
 :root:not(.mobile) #actionSelector > #dynaNoop:hover {
-    background: var(--bg-popup-cell-noop-own);
+    background: var(--popup-cell-noop-own-surface);
     }
 
 #actionSelector {
@@ -651,19 +654,25 @@ body:not([data-more~="e"]) [data-more="e"] {
 :root.desktop body {
     --popup-gap: calc(var(--font-size) * 0.875);
     }
-:root.desktop #switch:hover {
-    background-color: var(--default-surface-hover);
+:root.desktop body:not(.off) #switch:hover {
+    fill: rgb(var(--popup-power-ink-rgb) / 90%);
+    }
+:root.desktop body.off #switch:hover {
+    stroke: var(--popup-power-ink);
     }
 :root.desktop .rulesetTools [id]:hover {
-    fill: var(--default-ink);
+    background-color: var(--popup-ruleset-tool-surface-hover);
+    }
+:root.desktop .rulesetTools [id]:hover > svg {
+    fill: var(--ink-3);
     }
 :root.desktop #firewall {
     direction: rtl;
     line-height: 1.4;
     }
 :root.desktop .tool:hover {
-    background-color: var(--default-surface-hover);
+    background-color: var(--surface-2);
     }
 :root.desktop #moreOrLess > span:hover {
-    background-color: var(--default-surface-hover);
+    background-color: var(--surface-2);
     }

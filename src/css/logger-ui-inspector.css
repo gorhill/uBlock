@@ -14,7 +14,7 @@
     padding-left: 0.5em;
     }
 #domInspector ul {
-    background-color: var(--default-surface);
+    background-color: var(--surface-1);
     margin: 0;
     padding-left: 1em;
     }
@@ -25,7 +25,7 @@
 #domInspector li.isCosmeticHide,
 #domInspector li.isCosmeticHide ul,
 #domInspector li.isCosmeticHide li {
-    background-color: #fee;
+    background-color: var(--surface-2);
     }
 #domInspector li > * {
     display: inline-block;
@@ -37,7 +37,7 @@
     color: #aaa;
     }
 #domInspector li > span:first-child {
-    color: var(--default-ink);
+    color: var(--ink-1);
     cursor: default;
     font-size: 1rem;
     margin-right: 0;

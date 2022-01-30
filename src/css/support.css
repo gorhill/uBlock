@@ -6,6 +6,7 @@ body {
     max-width: 800px;
     }
 h3 {
+    color: var(--fieldset-header-ink);
     margin-bottom: 0;
     }
 .supportEntry {

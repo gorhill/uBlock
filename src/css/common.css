@@ -40,11 +40,11 @@
 
 /* Common uBO styles */
 body {
-    background-color: var(--default-surface);
+    background-color: var(--surface-1);
     border: 0;
     box-sizing: border-box;
-    color: var(--default-ink);
-    fill: var(--default-ink);
+    color: var(--ink-1);
+        fill: var(--ink-1);
     font-family: Inter, sans-serif;
     font-size: var(--font-size);
     line-height: 1.5;
@@ -53,16 +53,17 @@ body {
     }
 a {
     color: var(--link-ink);
+        fill: var(--link-ink);
     }
 code, .code {
-    background-color: var(--button-surface);
+    background-color: var(--surface-2);
     font-family: monospace;
     font-size: smaller;
     padding: 2px 4px;
     }
 hr {
     border: 0;
-    border-top: 1px solid var(--hr-ink);
+    border-top: 1px solid var(--surface-2);
     margin: 1em 0;
     }
 textarea {
@@ -73,8 +74,8 @@ button {
     appearance: none;
     -moz-appearance: none;
     -webkit-appearance: none;
-    border: 1px solid transparent;
-    border-radius: 5px;
+    border: 0;
+    border-radius: var(--button-border-radius);
     background-color: var(--button-surface);
     color: var(--button-ink);
     display: inline-flex;
@@ -83,6 +84,7 @@ button {
     justify-content: center;
     min-height: 36px;
     padding: 0 var(--font-size);
+    position: relative;
     vertical-align: middle;
     }
 button.vflex {
@@ -91,51 +93,71 @@ button.vflex {
     padding-bottom: 0;
     padding-top: 0;
     }
-button:hover {
-    background-color: var(--button-surface-hover);
+button > .hover {
+    background-color: var(--elevation-up-surface);
+    border-radius: var(--button-border-radius);
+    height: 100%;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    }
+button:not(.disabled):not([disabled]):hover > .hover {
+    opacity: var(--elevation-up1-opacity);
+    }
+button.notext:not(.disabled):not([disabled]):hover > .hover {
+    opacity: var(--elevation-up2-opacity);
     }
 button.active {
-    background-color: var(--button-active-surface);
-    }
-button.important {
-    background-color: var(--button-important-surface);
-    }
-button.important:hover {
-    background-color: var(--button-important-surface-hover);
     }
 button.disabled,
-button[disabled],
-button.important.disabled,
-button.important[disabled] {
-    background-color: var(--button-disabled-surface);
-    color: var(--button-disabled-ink);
-    fill: var(--button-disabled-ink);
+button[disabled] {
+    background-color: var(--button-surface);
+    color: var(--button-ink);
+    fill: var(--button-ink);
     filter: var(--button-disabled-filter);
     pointer-events: none;
     }
-button.preferred {
+button.preferred:not(.disabled):not([disabled]) {
     background-color: var(--button-preferred-surface);
     color: var(--button-preferred-ink);
+    fill: var(--button-preferred-ink);
     }
-button.iconifiable > .fa-icon {
-    padding-left: 0;
-    padding-right: 0.4em;
+button.preferred:not(.disabled):not([disabled]):hover > .hover {
+    background-color: var(--elevation-down-surface);
+    opacity: var(--elevation-down1-opacity);
     }
-button.iconifiable > .fa-icon {
+button.iconified.notext {
+    background-color: transparent;
+    }
+button.iconified > .fa-icon {
     font-size: 120%;
-    }
-body[dir="rtl"] button.iconifiable > .fa-icon {
-    padding-left: 0.4em;
-    padding-right: 0;
-    }
-body[dir] button.iconifiable > .fa-icon:last-child {
     padding-left: 0;
     padding-right: 0;
-}
+    }
+button.iconified > .fa-icon + [data-i18n] {
+    padding-right: 0;
+    padding-left: 0.4em;
+    }
+body[dir="rtl"] button.iconified > .fa-icon + [data-i18n] {
+    padding-right: 0.4em;
+    padding-left: 0;
+    }
 label {
     align-items: center;
     display: inline-flex;
     position: relative;
+    }
+section.notice {
+    background-color: var(--notice-surface);
+    box-shadow: var(--notice-surface-shadow);
+    color: var(--notice-ink);
+    }
+:root:not(.classic) section.notice a {
+    color: var(--surface-2);
     }
 
 /**
@@ -183,11 +205,11 @@ label {
 .checkbox > input[type="checkbox"]:checked + svg {
     background-color: var(--checkbox-checked-ink);
     border-color: var(--checkbox-checked-ink);
-    stroke: var(--default-surface);
+    stroke: var(--surface-1);
     }
 .checkbox[disabled],
 .checkbox[disabled] ~ span {
-    opacity: 0.5;
+    filter: var(--checkbox-disabled-filter);
     }
 
 select {
@@ -223,11 +245,11 @@ select {
     -webkit-margin-start: 2em;
     }
 @media (max-width: 640px) {
-    button.iconifiable > .fa-icon {
+    button.iconified > .fa-icon {
         font-size: 1.2rem;
         padding: 0;
         }
-    button.iconifiable > [data-i18n] {
+    button.iconified > [data-i18n] {
         display: none;
         }
     }
@@ -240,34 +262,6 @@ select {
     }
 .logo > img {
     width: 100%;
-    }
-
-.ubo-icon {
-    align-items: center;
-    background-color: transparent;
-    border: 0;
-    display: inline-flex;
-    justify-content: center;
-    margin: 0;
-    padding: 0.1em;
-    position: relative;
-    }
-.ubo-icon > * {
-    pointer-events: none;
-    }
-.ubo-icon.disabled,
-.disabled > .ubo-icon,
-.ubo-icon[disabled],
-[disabled] > .ubo-icon {
-    color: var(--button-disabled-ink);
-    fill: var(--button-disabled-ink);
-    filter: var(--button-disabled-filter);
-    stroke: var(--button-disabled-ink);
-    pointer-events: none;
-    }
-.ubo-icon > svg {
-    height: 1em;
-    width: 1em;
     }
 
 /* high dpi devices */

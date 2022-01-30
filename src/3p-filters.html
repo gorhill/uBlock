@@ -18,9 +18,9 @@
 
 <div id="cloudWidget" class="hide" data-cloud-entry="tpFiltersPane"></div>
 <div id="actions">
-    <button id="buttonApply" class="important disabled iconifiable" type="button" data-i18n-title="3pApplyChanges"><span class="fa-icon">check</span><span data-i18n="3pApplyChanges"></span></button>
-    <button id="buttonUpdate" class="important disabled iconifiable" type="button" data-i18n-title="3pUpdateNow"><span class="fa-icon">refresh</span><span data-i18n="3pUpdateNow"></span></button>
-    <button id="buttonPurgeAll" class="disabled iconifiable" type="button" data-i18n-title="3pPurgeAll"><span class="fa-icon">clock-o</span><span data-i18n="3pPurgeAll"></span></button>
+    <button id="buttonApply" class="preferred disabled iconified" type="button" data-i18n-title="3pApplyChanges"><span class="fa-icon">check</span><span data-i18n="3pApplyChanges">_</span><span class="hover"></span></button>
+    <button id="buttonUpdate" class="preferred disabled iconified" type="button" data-i18n-title="3pUpdateNow"><span class="fa-icon">refresh</span><span data-i18n="3pUpdateNow">_</span><span class="hover"></span></button>
+    <button id="buttonPurgeAll" class="disabled iconified" type="button" data-i18n-title="3pPurgeAll"><span class="fa-icon">clock-o</span><span data-i18n="3pPurgeAll">_</span><span class="hover"></span></button>
 </div>
 
 <div>
@@ -28,13 +28,13 @@
         <label><span class="input checkbox"><input type="checkbox" id="autoUpdate"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span><span data-i18n="3pAutoUpdatePrompt1"></span></label>
     </div>
     <div class="li">
+        <label><span class="input checkbox"><input type="checkbox" id="suspendUntilListsAreLoaded"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span><span data-i18n="3pSuspendUntilListsAreLoaded"></span></label>
+    </div>
+    <div class="li">
         <label><span class="input checkbox"><input type="checkbox" id="parseCosmeticFilters"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span><span><span data-i18n="3pParseAllABPHideFiltersPrompt1"></span>&nbsp;<span class="fa-icon info" data-i18n-title="3pParseAllABPHideFiltersInfo">question-circle</span></span></label>
     </div>
     <div class="li">
         <label><span class="input checkbox"><input type="checkbox" id="ignoreGenericCosmeticFilters"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span><span><span data-i18n="3pIgnoreGenericCosmeticFilters"></span>&nbsp;<span class="fa-icon info" data-i18n-title="3pIgnoreGenericCosmeticFiltersInfo">question-circle</span></span></label>
-    </div>
-    <div class="li">
-        <label><span class="input checkbox"><input type="checkbox" id="suspendUntilListsAreLoaded"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span><span data-i18n="3pSuspendUntilListsAreLoaded"></span></label>
     </div>
 </div>
 

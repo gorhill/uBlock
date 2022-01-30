@@ -1,7 +1,6 @@
 html#ublock0-epicker,
 #ublock0-epicker body {
     background: transparent;
-    color: var(--default-ink);
     cursor: not-allowed;
     font: 12px sans-serif;
     height: 100vh;
@@ -13,8 +12,8 @@ html#ublock0-epicker,
     outline: none;
 }
 #ublock0-epicker aside {
-    background-color: var(--default-surface);
-    border: 1px solid var(--default-surface-border);
+    background-color: var(--surface-1);
+    border: 1px solid var(--border-2);
     bottom: 2px;
     box-sizing: border-box;
     cursor: default;
@@ -39,27 +38,9 @@ html#ublock0-epicker,
     margin: 0.25em 0 0 0;
 }
 #ublock0-epicker button {
-    background-color: var(--button-surface);
-    border: 0;
-    border-radius: 3px;
-    box-sizing: border-box;
-    box-shadow: none;
-    color: var(--button-ink);
     cursor: pointer;
-    padding: 0.4em 0.8em;
-}
-#ublock0-epicker button:disabled {
-    color: var(--button-disabled-ink);
-    background-color: var(--button-disabled-surface);
-}
-#ublock0-epicker button:not(:disabled):hover {
-    background-color: var(--button-surface-hover);
-}
-#ublock0-epicker #create:not(:disabled) {
-    background-color: var(--button-important-surface);
-}
-#ublock0-epicker #create:not(:disabled):hover {
-    background-color: var(--button-important-surface-hover);
+    min-height: 32px;
+    padding: 0 0.8em;
 }
 #ublock0-epicker.preview #preview {
     background-color: var(--button-preferred-surface);
@@ -82,7 +63,7 @@ html#ublock0-epicker,
     width: 100%;
 }
 #ublock0-epicker section > div:first-child {
-    border: 1px solid var(--default-surface-border);
+    border: 1px solid var(--border-2);
     margin: 0;
     position: relative;
 }
@@ -222,10 +203,10 @@ html#ublock0-epicker,
     white-space: nowrap;
 }
 #ublock0-epicker #candidateFilters .changeFilter li.active {
-    border: 1px dotted var(--blue-50);
+    border: 1px dotted rgb(var(--blue-50));
     }
 #ublock0-epicker #candidateFilters .changeFilter li:hover {
-    background-color: var(--default-surface-hover);
+    background-color: var(--surface-2);
 }
 
 /**

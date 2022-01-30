@@ -66,11 +66,11 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
         const match = rePreparseIfDirective.exec(string);
         if ( match === null ) {
             stream.skipToEnd();
-            return 'variable strong';
+            return 'directive';
         }
         if ( pos < match[1].length ) {
             stream.pos += match[1].length;
-            return 'variable strong';
+            return 'directive';
         }
         stream.skipToEnd();
         if ( match[1].endsWith(' ') === false ) {

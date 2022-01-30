@@ -98,11 +98,13 @@ DOMListFactory.nodeFromSelector = function(selector) {
     vAPI.messaging.send('uDom', { what: 'uiStyles' }).then(response => {
         if ( typeof response !== 'object' || response === null ) { return; }
         if ( response.uiTheme !== 'unset' ) {
-            if ( response.uiTheme === 'light' ) {
+            if ( /\blight\b/.test(response.uiTheme) ) {
                 root.classList.remove('dark');
-            } else if ( response.uiTheme === 'dark' ) {
-                root.classList.add('dark');
             }
+            if ( /\bdark\b/.test(response.uiTheme) ) {
+                root.classList.remove('dark');
+            }
+            root.classList.add(...response.uiTheme.split(/\s+/));
         }
         if ( response.uiStyles !== 'unset' ) {
             document.body.style.cssText = response.uiStyles;
@@ -552,18 +554,11 @@ DOMList.prototype.text = function(text) {
 /******************************************************************************/
 
 const toggleClass = function(node, className, targetState) {
-    var tokenList = node.classList;
-    if ( tokenList instanceof DOMTokenList === false ) {
-        return;
-    }
-    var currentState = tokenList.contains(className);
-    var newState = targetState;
-    if ( newState === undefined ) {
-        newState = !currentState;
-    }
-    if ( newState === currentState ) {
-        return;
-    }
+    const tokenList = node.classList;
+    if ( tokenList instanceof DOMTokenList === false ) { return; }
+    const currentState = tokenList.contains(className);
+    const newState = targetState !== undefined ? targetState : !currentState;
+    if ( newState === currentState ) { return; }
     tokenList.toggle(className, newState);
 };
 
@@ -573,7 +568,7 @@ DOMList.prototype.hasClass = function(className) {
     if ( !this.nodes.length ) {
         return false;
     }
-    var tokenList = this.nodes[0].classList;
+    const tokenList = this.nodes[0].classList;
     return tokenList instanceof DOMTokenList &&
            tokenList.contains(className);
 };
@@ -587,9 +582,8 @@ DOMList.prototype.removeClass = function(className) {
     if ( className !== undefined ) {
         return this.toggleClass(className, false);
     }
-    var i = this.nodes.length;
-    while ( i-- ) {
-        this.nodes[i].className = '';
+    for ( const node of this.nodes ) {
+        node.className = '';
     }
     return this;
 };
@@ -600,9 +594,8 @@ DOMList.prototype.toggleClass = function(className, targetState) {
     if ( className.indexOf(' ') !== -1 ) {
         return this.toggleClasses(className, targetState);
     }
-    var i = this.nodes.length;
-    while ( i-- ) {
-        toggleClass(this.nodes[i], className, targetState);
+    for ( const node of this.nodes ) {
+        toggleClass(node, className, targetState);
     }
     return this;
 };
@@ -610,14 +603,10 @@ DOMList.prototype.toggleClass = function(className, targetState) {
 /******************************************************************************/
 
 DOMList.prototype.toggleClasses = function(classNames, targetState) {
-    var tokens = classNames.split(/\s+/);
-    var i = this.nodes.length;
-    var node, j;
-    while ( i-- ) {
-        node = this.nodes[i];
-        j = tokens.length;
-        while ( j-- ) {
-            toggleClass(node, tokens[j], targetState);
+    const tokens = classNames.split(/\s+/);
+    for ( const node of this.nodes ) {
+        for ( const token of tokens ) {
+            toggleClass(node, token, targetState);
         }
     }
     return this;

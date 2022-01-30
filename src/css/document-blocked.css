@@ -41,7 +41,7 @@ a {
     width: 100%;
     }
 #warningSign > a {
-    fill: var(--yellow-50);
+    fill: rgb(var(--yellow-50));
     font-size: 96px;
     }
 #theURL {
@@ -58,9 +58,9 @@ a {
     background-color: transparent;
     top: 100%;
     box-sizing: border-box;
-    color: var(--fg-0-60);
+    color: var(--ink-4);
+        fill: var(--ink-4);
     cursor: pointer;
-    fill: var(--fg-0-60);
     font-size: 1.2rem;
     padding: var(--default-gap-xxsmall);
     position: absolute;
@@ -79,14 +79,12 @@ body[dir="rtl"] #theURL > p > span:last-of-type {
     left: 0;
     }
 #theURL > p:hover > span {
-    color: var(--default-ink);
-    fill: var(--default-ink);
+    color: var(--ink-1);
+        fill: var(--ink-1);
     }
 #parsed {
-    background-color: var(--bg-1);
-    border: 1px solid var(--bg-code);
-    border-top: none;
-    color: var(--fg-0-80);
+    background-color: var(--surface-1);
+    border: 4px solid var(--surface-2);
     font-size: small;
     overflow-x: auto;
     padding: var(--default-gap-xxsmall);

@@ -18,7 +18,7 @@ body {
     flex-grow: 1;
     }
 #advancedSettings {
-    border-top: 1px solid #ddd;
+    border: var(--default-gap-xxsmall) solid var(--surface-2);
     text-align: left;
     }
 .CodeMirror-wrap pre {

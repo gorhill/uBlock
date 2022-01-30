@@ -6,7 +6,7 @@ body {
     margin-bottom: 6rem;
     }
 #actions {
-    background-color: var(--default-surface);
+    background-color: var(--surface-1);
     padding: var(--default-gap-small) 0 var(--default-gap-xsmall) 0;
     position: sticky;
     top: 0;
@@ -28,7 +28,7 @@ body {
     }
 #listsOfBlockedHostsPrompt::before,
 .groupEntry:not([data-groupkey="user"]) .geDetails::before {
-    color: var(--fg-0-50);
+    color: var(--ink-3);
     content: '\2212';
     font-family: monospace;
     font-size: large;
@@ -49,7 +49,7 @@ body.hideUnused #listsOfBlockedHostsPrompt::before,
     pointer-events: none;
     }
 .groupEntry .geCount {
-    color: var(--fg-0-60);
+    color: var(--ink-3);
     font-size: 90%;
     pointer-events: none;
     }
@@ -74,17 +74,17 @@ body.hideUnused #listsOfBlockedHostsPrompt::before,
 .listEntry.toRemove .listname {
     text-decoration: line-through;
     }
+.listEntry a,
 .listEntry .fa-icon,
 .listEntry .counts {
-    color: var(--fg-0-50);
+    color: var(--info0-ink);
+        fill: var(--info0-ink);
     display: none;
-    fill: var(--fg-0-50);
     font-size: 120%;
     margin: 0 0.2em 0 0;
     }
 .listEntry .fa-icon:hover {
-    color: inherit;
-    fill: inherit;
+    transform: scale(1.25);
     }
 .listEntry .content {
     display: inline-flex;
@@ -98,30 +98,19 @@ body.hideUnused #listsOfBlockedHostsPrompt::before,
 .listEntry .remove,
 .listEntry .unsecure,
 .listEntry .failed {
-    color: var(--fg-icon-info-lvl-4-dimmed);
+    color: var(--info3-ink);
+        fill: var(--info3-ink);
     cursor: pointer;
-    fill: var(--fg-icon-info-lvl-4-dimmed);
-    }
-.listEntry .remove:hover,
-.listEntry .unsecure:hover,
-.listEntry .failed:hover {
-    color: var(--fg-icon-info-lvl-4);
-    fill: var(--fg-icon-info-lvl-4);
     }
 .listEntry.external .remove {
     display: inline-flex;
     }
 .listEntry.mustread a.mustread {
-    color: var(--fg-icon-info-lvl-1-dimmed);
+    color: var(--info1-ink);
+        fill: var(--info1-ink);
     display: inline-flex;
-    fill: var(--fg-icon-info-lvl-1-dimmed);
-    }
-.listEntry.mustread a.mustread:hover {
-    color: var(--fg-icon-info-lvl-1);
-    fill: var(--fg-icon-info-lvl-1);
     }
 .listEntry .counts {
-    color: var(--fg-0-60);
     font-size: smaller;
 }
 .listEntry.checked .counts {
@@ -131,9 +120,6 @@ body.hideUnused #listsOfBlockedHostsPrompt::before,
     cursor: default;
     display: none;
 }
-.listEntry .status:hover {
-    color: inherit;
-    }
 .listEntry.checked.unsecure .unsecure {
     display: inline-flex;
     }
@@ -147,12 +133,8 @@ body.hideUnused #listsOfBlockedHostsPrompt::before,
     display: inline-flex;
     }
 .listEntry .obsolete {
-    color: var(--info-lvl-2-ink);
-    fill: var(--info-lvl-2-ink);
-    }
-.listEntry .obsolete:hover {
-    color: var(--info-lvl-2-ink-hover);
-    fill: var(--info-lvl-2-ink-hover);
+    color: var(--info2-ink);
+        fill: var(--info2-ink);
     }
 body:not(.updating) .listEntry.checked.obsolete .obsolete {
     display: inline-flex;
@@ -193,7 +175,7 @@ body.updating .listEntry.checked.obsolete .updating {
     -webkit-margin-start: 0;
     }
 :root.mobile .li.listEntry {
-    background-color: var(--bg-1);
+    /* background-color: var(--bg-1); */
     overflow-x: auto;
     }
 :root.mobile .li.listEntry label > span:not([class]) {

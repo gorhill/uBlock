@@ -96,7 +96,7 @@ const safeTextToDOM = function(text, parent) {
     // Fast path (most common).
     if ( text.indexOf('<') === -1 ) {
         const toInsert = safeTextToTextNode(text);
-        let toReplace = parent.childElementCount !== 0
+        let toReplace = parent.childCount !== 0
             ? parent.firstChild
             : null;
         while ( toReplace !== null ) {

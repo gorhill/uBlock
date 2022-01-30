@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="../lib/codemirror/addon/hint/show-hint.css">
 
 <link rel="stylesheet" href="../css/themes/default.css">
+<link rel="stylesheet" href="../css/common.css">
 <link rel="stylesheet" href="../css/epicker-ui.css">
 <link rel="stylesheet" href="../css/codemirror.css">
 </head>
@@ -33,13 +34,13 @@
     </div>
     <div id="toolbar">
         <div>
-            <button id="preview" type="button" data-i18n="pickerPreview"></button>
+            <button id="preview" type="button" data-i18n="pickerPreview">_<span class="hover"></span></button>
         </div>
         <div id="move"></div>
         <div>
-            <button id="create" type="button" disabled data-i18n="pickerCreate"></button>
-            <button id="pick" type="button" data-i18n="pickerPick"></button>
-            <button id="quit" type="button" data-i18n="pickerQuit"></button>
+            <button id="create" type="button" class="preferred" disabled data-i18n="pickerCreate">_<span class="hover"></span></button>
+            <button id="pick" type="button" data-i18n="pickerPick">_<span class="hover"></span></button>
+            <button id="quit" type="button" data-i18n="pickerQuit">_<span class="hover"></span></button>
         </div>
     </div>
 </section>

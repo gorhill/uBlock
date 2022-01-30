@@ -222,9 +222,7 @@ const onMessage = function(request, sender, callback) {
     case 'uiStyles':
         response = {
             uiStyles: µb.hiddenSettings.uiStyles,
-            uiTheme: vAPI.webextFlavor.soup.has('devbuild')
-                ? µb.hiddenSettings.uiTheme
-                : 'unset',
+            uiTheme: µb.hiddenSettings.uiTheme,
         };
         break;
 

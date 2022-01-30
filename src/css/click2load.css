@@ -20,7 +20,6 @@
 
 body {
     align-items: center;
-    background-color: var(--default-surface);
     border: 1px solid var(--ubo-red);
     box-sizing: border-box;
     display: flex;

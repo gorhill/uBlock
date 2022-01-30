@@ -537,10 +537,15 @@ const onTextChanged = (( ) => {
             cleanEditToken = mergeView.editor().changeGeneration();
             isClean = true;
         }
+        const isDirty = mergeView.leftChunks().length !== 0;
         document.body.classList.toggle('editing', isClean === false);
-        diff.classList.toggle('dirty', mergeView.leftChunks().length !== 0);
-        document.getElementById('editSaveButton')
-                .classList.toggle('disabled', isClean);
+        diff.classList.toggle('dirty', isDirty);
+        uDom('#editSaveButton')
+            .toggleClass('disabled', isClean);
+        uDom('#exportButton,#importButton')
+            .toggleClass('disabled', isClean === false);
+        uDom('#revertButton,#commitButton')
+            .toggleClass('disabled', isClean === false || isDirty === false);
         const input = document.querySelector('#ruleFilter input');
         if ( isClean ) {
             input.removeAttribute('disabled');
