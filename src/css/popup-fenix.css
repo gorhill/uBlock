@@ -98,7 +98,6 @@ body.off #switch {
 .rulesetTools [id] {
     background-color: var(--popup-ruleset-tool-surface);
     border-radius: 4px;
-    box-shadow: var(--popup-ruleset-tool-shadow) 0 1px 1px;
     cursor: pointer;
     fill: var(--popup-ruleset-tool-ink);
     flex-grow: 1;

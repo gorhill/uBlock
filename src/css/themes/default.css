@@ -276,16 +276,13 @@
     --popup-cell-surface: var(--surface-2);
     --popup-cell-label-filter: opacity(40%);
     --popup-cell-cname-ink: rgb(var(--blue-50));
-    --popup-cell-allow-surface-rgb: 0   125   0; /* h:127.7 S:100 Luv:45 */
-    --popup-cell-noop-surface-rgb:  107 107 107; /* h:0     S:0   Luv:45 */
-    --popup-cell-block-surface-rgb: 216   0   0; /* h:12.2  S:100 Luv:45 */
-    --popup-cell-allow-own-surface: rgb(var(--popup-cell-allow-surface-rgb));
-    --popup-cell-allow-surface: rgb(var(--popup-cell-allow-surface-rgb) / 25%);
-    --popup-cell-noop-own-surface: rgb(var(--popup-cell-noop-surface-rgb));
-    --popup-cell-noop-surface: rgb(var(--popup-cell-noop-surface-rgb) / 30%);
-    --popup-cell-block-own-surface: rgb(var(--popup-cell-block-surface-rgb));
-    --popup-cell-block-surface: rgb(var(--popup-cell-block-surface-rgb) / 25%);
-    --popup-cell-label-mixed-surface: #c29100;
+    --popup-cell-allow-own-surface: rgb(var(--popup-cell-allow-own-surface-rgb));
+    --popup-cell-allow-surface: rgb(var(--popup-cell-allow-surface-rgb));
+    --popup-cell-noop-own-surface: rgb(var(--popup-cell-noop-own-surface-rgb));
+    --popup-cell-noop-surface: rgb(var(--popup-cell-noop-surface-rgb));
+    --popup-cell-block-own-surface: rgb(var(--popup-cell-block-own-surface-rgb));
+    --popup-cell-block-surface: rgb(var(--popup-cell-block-surface-rgb));
+    --popup-cell-label-mixed-surface: #c29100; /* TODO: fix */
     --popup-icon-x-ink: rgb(var(--red-60));
     --popup-power-ink-rgb: var(--primary-color-40);
     --popup-power-ink: rgb(var(--popup-power-ink-rgb));
@@ -350,17 +347,6 @@
 }
 
 /*
- * Source for color-blind color scheme from https://github.com/WyohKnott:
- *   https://github.com/chrisaljoudi/uBlock/issues/467#issuecomment-95177219
- * 
- * */
-:root.colorBlind {
-    --popup-cell-allow-surface-rgb: 225 157 0;
-    --popup-cell-block-surface-rgb: 14 55 255;
-    --popup-cell-label-mixed-surface: #ff6a00;
-}
-
-/*
  * Default dark theme starts here
  * 
  * https://github.com/uBlockOrigin/uBlock-issues/issues/1027#issuecomment-629641072
@@ -404,13 +390,7 @@
     /* popup panel */
     --popup-cell-label-filter: opacity(40%);
     --popup-cell-cname-ink: hsla(0, 0%, 53%, 0.3);
-    --popup-cell-allow-surface-rgb:   0 153   0; /* h:127.7 S:100 Luv:55 */
-    --popup-cell-noop-surface-rgb:  132 132 132; /* h:0     S:0   Luv:55 */
-    --popup-cell-block-surface-rgb: 255  40  40; /* h:12.2  S:100 Luv:55 */
-    --popup-cell-allow-surface: rgb(var(--popup-cell-allow-surface-rgb) / 65%);
-    --popup-cell-noop-surface: rgb(var(--popup-cell-noop-surface-rgb) / 65%);
-    --popup-cell-block-surface: rgb(var(--popup-cell-block-surface-rgb) / 65%);
-    --popup-cell-label-mixed-surface: hsla(45, 100%, 38%, 1);
+    --popup-cell-label-mixed-surface: hsla(45, 100%, 38%, 1); /* TODO: fix */
     --popup-icon-x-ink: rgb(var(--red-50));
     --popup-power-ink-rgb: var(--primary-color-60);
     --popup-ruleset-tool-shadow: -surface-0;
@@ -452,7 +432,48 @@
     --logger-redirected-surface: rgb(var(--yellow-5) / 40%);
 }
 
+/*
+ * Rule colors
+ * */
+:root:not(.dark):not(.colorBlind) {
+    --popup-cell-allow-own-surface-rgb:   0 127   0; /* h:127.7 S:100 Luv:45 */
+    --popup-cell-allow-surface-rgb:     129 202 129; /* h:127.7 S:50  Luv:75 */
+    --popup-cell-block-own-surface-rgb: 216   0   0; /* h:12.2  S:100 Luv:45 */
+    --popup-cell-block-surface-rgb:     224 172 172; /* h:12.2  S:50  Luv:75 */
+    --popup-cell-noop-own-surface-rgb:  107 107 107; /* h:0     S:0   Luv:45 */
+    --popup-cell-noop-surface-rgb:      185 185 185; /* h:0     S:0   Luv:75 */
+}
+
+:root.dark:not(.colorBlind) {
+    --popup-cell-allow-own-surface-rgb:   0 153   0; /* h:127.7 S:100 Luv:55 */
+    --popup-cell-allow-surface-rgb:      64 103  64; /* h:127.7 S:50  Luv:40 */
+    --popup-cell-block-own-surface-rgb: 255  40  40; /* h:12.2  S:100 Luv:55 */
+    --popup-cell-block-surface-rgb:     156  65  65; /* h:12.2  S:50  Luv:40 */
+    --popup-cell-noop-own-surface-rgb:  132 132 132; /* h:0     S:0   Luv:55 */
+    --popup-cell-noop-surface-rgb:       94  94  94; /* h:0     S:0   Luv:40 */
+}
+
+/*
+ * Source for color-blind color scheme:
+ * https://davidmathlogic.com/colorblind/
+ * First pair in "Accessible palettes"
+ * 
+ * */
+:root.colorBlind {
+    --popup-cell-allow-own-surface-rgb: 151 113   0; /* h:58.5 S:100 Luv:50 */
+    --popup-cell-block-own-surface-rgb:   0 120 216; /* h:252  S:100 Luv:50 */
+    --popup-cell-noop-own-surface-rgb:  119 119 119; /* h:0    S:0   Luv:50 */
+    --popup-cell-label-mixed-surface: #ff6a00;  /* TODO: fix */
+}
+:root.colorBlind:not(.dark) {
+    --popup-cell-allow-surface-rgb:     223 178  92; /* h:58.5 S:75  Luv:75 */
+    --popup-cell-block-surface-rgb:     159 185 238; /* h:252  S:75  Luv:75 */
+    --popup-cell-noop-surface-rgb:      185 185 185; /* h:0    S:0   Luv:75 */
+}
 :root.dark.colorBlind {
+    --popup-cell-allow-surface-rgb:     115  91  44; /* h:58.5 S:75  Luv:40 */
+    --popup-cell-block-surface-rgb:      53  95 154; /* h:252  S:75  Luv:40 */
+    --popup-cell-noop-surface-rgb:       94  94  94; /* h:0    S:0   Luv:40 */
 }
 
 :root.classic:not(.dark) {
@@ -464,4 +485,3 @@
     --popup-ruleset-tool-surface-hover: rgb(var(--yellow-5) / 75%);
     --popup-ruleset-tool-shadow: rgb(var(--gray-85));
 }
-
