@@ -44,6 +44,9 @@ body:not(.filterIssue) .body > div.e {
 body.filterIssue .body > div:not(.e) {
     display: none;
 }
+body.filterIssue #moreButton {
+    display: none;
+}
 
 button {
     align-self: center;

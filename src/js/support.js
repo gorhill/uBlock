@@ -270,6 +270,13 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
             });
             ev.preventDefault();
         });
+
+        uDom('#showSupportInfo').on('click', ev => {
+            const button = ev.target;
+            button.classList.add('hidden');
+            uDom.nodeFromSelector('.a.b.c.d').classList.add('e');
+            cmEditor.refresh();
+        });
     }
 
     uDom('#selectAllButton').on('click', ( ) => {

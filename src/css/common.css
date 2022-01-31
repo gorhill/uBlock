@@ -222,6 +222,11 @@ select {
     visibility: hidden;
     width: 0;
     }
+.subtil {
+    color: var(--subtil-ink);
+    cursor: default;
+    opacity: 66%;
+    }
 .fieldset {
     margin: var(--font-size);
     }

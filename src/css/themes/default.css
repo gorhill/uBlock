@@ -222,7 +222,6 @@
     --surface-1: rgb(var(--gray-95));
     --surface-2: rgb(var(--gray-90));
     --surface-3: rgb(var(--gray-80));
-    --surface-4: rgb(var(--gray-75));
 
     --border-1: rgb(var(--gray-75));
     --border-2: rgb(var(--gray-70));
@@ -236,6 +235,7 @@
     --accent-surface-3: rgb(var(--primary-color-70));
 
     --link-ink: var(--accent-surface-1);
+    --subtil-ink: var(--accent-surface-1);
 
     --fieldset-header-surface: transparent;
     --fieldset-header-ink: var(--ink-2);
@@ -265,8 +265,8 @@
     /* info levels: normal, fyi, warn, error -- we want same Luv */
     --info0-ink-rgb: 119 119 119; /* h:  0 S:  0 Luv:60 */
     --info1-ink-rgb:  72 143 255; /* h:255 S:100 Luv:60 */
-    --info2-ink-rgb: 227 113   0; /* h: 30 S:100 Luv:60 */
-    --info3-ink-rgb: 255  68 166; /* h:330 S:100 Luv:60 */
+    --info2-ink-rgb: 208 125   0; /* h: 40 S:100 Luv:60 */
+    --info3-ink-rgb: 255  82  94; /* h: 10 S:100 Luv:60 */
     --info0-ink: rgb(var(--info0-ink-rgb));
     --info1-ink: rgb(var(--info1-ink-rgb));
     --info2-ink: rgb(var(--info2-ink-rgb));
@@ -372,7 +372,6 @@
     --surface-1: rgb(var(--gray-10));
     --surface-2: rgb(var(--gray-20));
     --surface-3: rgb(var(--gray-30));
-    --surface-4: rgb(var(--gray-40));
 
     --border-1: rgb(var(--gray-35));
     --border-2: rgb(var(--gray-40));
@@ -446,9 +445,9 @@
 
 :root.dark:not(.colorBlind) {
     --popup-cell-allow-own-surface-rgb:   0 153   0; /* h:127.7 S:100 Luv:55 */
-    --popup-cell-allow-surface-rgb:      64 103  64; /* h:127.7 S:50  Luv:40 */
+    --popup-cell-allow-surface-rgb:      73 117  73; /* h:127.7 S:50  Luv:45 */
     --popup-cell-block-own-surface-rgb: 255  40  40; /* h:12.2  S:100 Luv:55 */
-    --popup-cell-block-surface-rgb:     156  65  65; /* h:12.2  S:50  Luv:40 */
+    --popup-cell-block-surface-rgb:     175  74  74; /* h:12.2  S:50  Luv:45 */
     --popup-cell-noop-own-surface-rgb:  132 132 132; /* h:0     S:0   Luv:55 */
     --popup-cell-noop-surface-rgb:       94  94  94; /* h:0     S:0   Luv:40 */
 }
@@ -485,3 +484,12 @@
     --popup-ruleset-tool-surface-hover: rgb(var(--yellow-5) / 75%);
     --popup-ruleset-tool-shadow: rgb(var(--gray-85));
 }
+
+/*
+ * Experiment: use Firefox for Android dark theme colors
+:root.mobile.dark {
+    --gray-10: 43 42 51;
+    --gray-20: 66 65 77;
+    --ink-rgb: 251 251 254;
+}
+*/
