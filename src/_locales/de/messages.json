@@ -112,7 +112,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
-    "message": "Klicken, um die Übersicht zu öffnen",
+    "message": "Hier klicken, um die Übersicht zu öffnen",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
@@ -156,7 +156,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Kosmetische Filter für diese Seite an-/ausschalten",
+    "message": "Kosmetische Filter für diese Website an-/ausschalten",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
@@ -432,7 +432,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "Generische kosmetische Filter sind diejenigen kosmetischen Filter, die für die Anwendung auf allen Webseiten bestimmt sind. Die Aktivierung dieser Option wird die Mehrbelastung für Speicher und Prozessor auf Webseiten durch die Verarbeitung generischer kosmetischer Filter verhindern.\n\nEs wird empfohlen, diese Option auf weniger leistungsstarken Geräten zu aktivieren.",
+    "message": "Generische kosmetische Filter sind kosmetische Filter, die auf alle Websites angewendet werden sollen. Die Aktivierung dieser Option verhindert die Mehrbelastung des Arbeitsspeichers und der CPU, die durch die Verarbeitung generischer kosmetischer Filter auf Websites entsteht.\n\nEs wird empfohlen, diese Option auf weniger leistungsfähigen Geräten zu aktivieren.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
@@ -480,7 +480,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Importieren...",
+    "message": "Importieren …",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -508,7 +508,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Eine Regel pro Zeile. Eine Regel kann ein einfacher Hostname sein oder ein Adblock-Plus-kompatibler Filter. Zeilen mit vorangestelltem <code>!</code> werden ignoriert.",
+    "message": "Ein Filter pro Zeile. Ein Filter kann ein einfacher Hostname oder ein EasyList-kompatibler Filter sein. Zeilen mit vorangestelltem <code>!</code> werden ignoriert.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -592,7 +592,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "Ausnahmeregeln bestimmen, auf welchen Webseiten uBlock Origin nicht aktiv sein soll. Ein Eintrag pro Zeile. Ungültige Regeln werden ignoriert und auskommentiert.",
+    "message": "Ausnahmeregeln bestimmen, auf welchen Webseiten uBlock Origin deaktiviert werden soll. Ein Eintrag pro Zeile.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
@@ -648,7 +648,7 @@
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "Popup-Bereich umschalten",
+    "message": "Pop-up-Fenster ein-/ausblenden",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
@@ -892,11 +892,11 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Melden Sie Probleme mit spezifischen Webseiten an <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code>Issue Tracker</span>. Erfordert einen GitHub-Account.",
+    "message": "Melden Sie Filterprobleme mit spezifischen Websites an den <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">uBlockOrigin/uAssets</code> Issue Tracker</span>. <u>Erfordert einen GitHub-Account.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Wichtig:</b> Vermeiden Sie andere ähnliche Blocker zusammen mit uBlock Origin zu verwenden, da es Probleme beim Filter auf spezifischen Webseiten verursachen kann.",
+    "message": "<b>Wichtig:</b> Vermeiden Sie die Verwendung anderer, ähnlicher Blocker zusammen mit uBlock Origin, da dies zu Filterproblemen auf bestimmten Websites führen kann.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {

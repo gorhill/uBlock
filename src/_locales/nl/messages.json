@@ -312,7 +312,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Element blokkeren...",
+    "message": "Element blokkeren…",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -480,7 +480,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Importeren...",
+    "message": "Importeren…",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -500,7 +500,7 @@
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Bijwerken...",
+    "message": "Bijwerken…",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -556,7 +556,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Importeren uit bestand...",
+    "message": "Importeren uit bestand…",
     "description": ""
   },
   "rulesExport": {
@@ -936,7 +936,7 @@
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "De webpagina...",
+    "message": "De webpagina…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
@@ -1028,11 +1028,11 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Herstellen uit bestand...",
+    "message": "Terugzetten uit bestand…",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Standaardinstellingen terugzetten...",
+    "message": "Standaardinstellingen terugzetten…",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
@@ -1144,7 +1144,7 @@
     "description": "tooltip"
   },
   "cloudNoData": {
-    "message": "... \n...",
+    "message": "…\n…",
     "description": ""
   },
   "cloudDeviceNamePrompt": {
@@ -1172,11 +1172,11 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "Element in frame blokkeren...",
+    "message": "Element in frame blokkeren…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Abonneren op filterlijst...",
+    "message": "Abonneren op filterlijst…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {

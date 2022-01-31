@@ -892,15 +892,15 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Reportar problemas de filtro com websites específicos no <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">rastreador de problemas <code>uBlockOrigin/uAssets</code>.</span>. Requer uma conta GitHub.",
+    "message": "Relate problemas de filtros em sites específicos no <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">rastreador de problemas do <code>uBlockOrigin/uAssets</code></span>. <u>Requer uma conta do GitHub.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Importante:</b> Evite usar outros bloqueadores com propósito similar com uBlock Origin, isso pode causar problemas com filtros em websites específicos.",
+    "message": "<b>Importante:</b> evite usar outros bloqueadores com propósito similar ao do uBlock Origin, pois isso pode causar problemas com filtros em sites específicos.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Dicas:</b> Esteja certo que sua lista de filtros está atualizada. <span data-url=\"logger-ui.html#_\">Os logs</span> são a principal ferramenta para diagnosticar problemas relacionados a filtros.",
+    "message": "<b>Dicas:</b> certifique-se que a sua lista de filtros está atualizada. <span data-url=\"logger-ui.html#_\">Os relatórios</span> são a principal ferramenta para diagnosticar problemas relacionados aos filtros.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
@@ -908,11 +908,11 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Relate problemas com o próprio uBlock Origin no <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\">rastreador de problemas <code>uBlockOrigin/uBlock-issue</code></span>. Requer uma conta GitHub.",
+    "message": "Relate problemas do próprio uBlock Origin no <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">rastreador de problemas do <code>uBlockOrigin/uBlock-issue</code></span>. <u>Requer uma conta do GitHub.</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
-    "message": "Informações sobre Soluções de Problemas",
+    "message": "Informações para solução de problemas",
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
@@ -920,7 +920,7 @@
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Importante:</b> Informações potencialmente privadas ou confidenciais são removidas por padrão. As informações removidas podem dificultar a solução de um problema.",
+    "message": "<b>Atenção:</b> informações potencialmente sensíveis ou confidenciais são removidas por padrão. As informações removidas podem dificultar a solução de um problema.",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
@@ -928,7 +928,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Para evitar sobrecarregar os voluntários com relatórios duplicados, por favor certifique-se que o problema já não foi informado.",
+    "message": "Para evitar sobrecarregar os voluntários com relatórios duplicados, certifique-se que o problema já não foi relatado.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -940,15 +940,15 @@
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Escolha uma opção --",
+    "message": "— Escolha uma opção —",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Mostra propagandas ou restos de propaganda",
+    "message": "Exibe anúncios ou restos de anúncios",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Tem conteúdos que obstruem a visualização ou outros aborrecimentos",
+    "message": "Possui sobreposições ou coisas incômodas",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
@@ -956,7 +956,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Tem problemas relacionados a privacidade",
+    "message": "Contém problemas relacionados à privacidade",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
@@ -968,7 +968,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Nomeie a página como &ldquo;NSFW&rdquo; (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">&ldquo;Not Safe For Work&rdquo;</a>)",
+    "message": "Marcar a página da web como \"NSFW\" (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">\"Not Safe For Work\"</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
@@ -1012,7 +1012,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "As listas de filtros do uBO estão hospedadas gratuitamente nos seguintes <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
+    "message": "As listas de filtros do uBlock Origin estão hospedadas gratuitamente nos seguintes <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
@@ -1020,7 +1020,7 @@
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "Backup para arquivo",
+    "message": "Fazer backup para arquivo",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
@@ -1032,7 +1032,7 @@
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Restaurar para as configurações padrão...",
+    "message": "Redefinir para as configurações padrão...",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {

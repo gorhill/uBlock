@@ -864,7 +864,7 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "新しい報告を作成する",
+    "message": "新しい報告を作成",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {

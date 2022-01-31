@@ -56,7 +56,7 @@
     "description": "appears as tab name in dashboard"
   },
   "supportPageName": {
-    "message": "Support",
+    "message": "সাহায্য",
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "এই ওয়েবসাইট এর একটি সমস্যার ব্যাপারা অভিযোগ যানান",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -152,7 +152,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "এই সাইটে বড় মিডিয়া উপাদান আর অবরুদ্ধ না করতে ক্লিক করুন",
+    "message": "এই সাইটের বর মিডিয়া এলিমেন্টগুলি ব্লক করা বন্ধ করতে ক্লিক করুন",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -436,7 +436,7 @@
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
-    "message": "Suspend network activity until all filter lists are loaded",
+    "message": "সবগুলি ফিল্টার তালিকা লোড না হওয়া পর্যন্ত নেটওয়ার্ক কার্যকলাপ স্থগিত করুন",
     "description": "A checkbox in the 'Filter lists' pane"
   },
   "3pListsOfBlockedHostsHeader": {
@@ -864,11 +864,11 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Create new report",
+    "message": "নতুন অভিযোগ",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Find similar reports",
+    "message": "একই রকম অভিযোগ দেখুন",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
