@@ -34,7 +34,7 @@ html, body {
     outline: 0;
     }
 .tabButton.selected {
-    background-color: var(--primary-surface-2);
+    background-color: var(--dashboard-tab-active-surface);
     border-bottom: 3px solid var(--dashboard-tab-active-ink);
     color: var(--dashboard-tab-active-ink);
         fill: var(--dashboard-tab-active-ink);
