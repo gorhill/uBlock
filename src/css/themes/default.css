@@ -280,11 +280,11 @@
     --popup-cell-noop-surface-rgb:  107 107 107; /* h:0     S:0   Luv:45 */
     --popup-cell-block-surface-rgb: 216   0   0; /* h:12.2  S:100 Luv:45 */
     --popup-cell-allow-own-surface: rgb(var(--popup-cell-allow-surface-rgb));
-    --popup-cell-allow-surface: rgb(var(--popup-cell-allow-surface-rgb) / 35%);
+    --popup-cell-allow-surface: rgb(var(--popup-cell-allow-surface-rgb) / 25%);
     --popup-cell-noop-own-surface: rgb(var(--popup-cell-noop-surface-rgb));
-    --popup-cell-noop-surface: rgb(var(--popup-cell-noop-surface-rgb) / 35%);
+    --popup-cell-noop-surface: rgb(var(--popup-cell-noop-surface-rgb) / 30%);
     --popup-cell-block-own-surface: rgb(var(--popup-cell-block-surface-rgb));
-    --popup-cell-block-surface: rgb(var(--popup-cell-block-surface-rgb) / 35%);
+    --popup-cell-block-surface: rgb(var(--popup-cell-block-surface-rgb) / 25%);
     --popup-cell-label-mixed-surface: #c29100;
     --popup-icon-x-ink: rgb(var(--red-60));
     --popup-power-ink-rgb: var(--primary-color-40);
