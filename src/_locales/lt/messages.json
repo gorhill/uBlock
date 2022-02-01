@@ -652,7 +652,7 @@
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
-    "message": "„uBlock Origin“ vikis: žurnalas",
+    "message": "„uBlock Origin“ viki: žurnalas",
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {

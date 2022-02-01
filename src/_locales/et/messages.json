@@ -592,7 +592,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "Usaldatud saitide direktiivid määravad, millistel veebilehtedel peaks uBlock Origin keelatud olema. Üks kirje rea kohta. Sobimatuid direktiive vaikselt ignoreeritakse ja kommenteeritakse välja.",
+    "message": "Usaldatud saitide direktiivid määravad, millistel veebilehtedel peaks uBlock Origin keelatud olema. Üks kirje rea kohta.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
@@ -968,7 +968,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Sildista veebileht kui &ldquo;NSFW&rdquo; (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">&ldquo;tööks sobimatu&rdquo;</a>)",
+    "message": "Sildista veebileht kui „NSFW“ (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">&ldquo;tööks sobimatu&rdquo;</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
@@ -1032,7 +1032,7 @@
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Taasta vaikeseadetele...",
+    "message": "Alusta nullist...",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
