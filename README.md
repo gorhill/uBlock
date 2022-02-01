@@ -25,9 +25,9 @@ uBlock Origin
 ***
 
 <p align="center">
-<a href="https://addons.mozilla.org/addon/ublock-origin/"><img src="https://user-images.githubusercontent.com/585534/107280546-7b9b2a00-6a26-11eb-8f9f-f95932f4bfec.png" alt="Get uBlock Origin for Firefox"></a> 
+<a href="https://addons.mozilla.org/firefox/addon/ublock-origin/"><img src="https://user-images.githubusercontent.com/585534/107280546-7b9b2a00-6a26-11eb-8f9f-f95932f4bfec.png" alt="Get uBlock Origin for Firefox"></a> 
 <a href="https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm"><img src="https://user-images.githubusercontent.com/585534/107280622-91a8ea80-6a26-11eb-8d07-77c548b28665.png" alt="Get uBlock Origin for Chromium"></a>
-<a href="https://microsoftedge.microsoft.com/addons/detail/odfafepnkmbhccpbejgmiehpchacaeak"><img src="https://user-images.githubusercontent.com/585534/107280673-a5ece780-6a26-11eb-9cc7-9fa9f9f81180.png" alt="Get uBlock Origin for Microsoft Edge"></a>
+<a href="https://microsoftedge.microsoft.com/addons/detail/ublock-origin/odfafepnkmbhccpbejgmiehpchacaeak"><img src="https://user-images.githubusercontent.com/585534/107280673-a5ece780-6a26-11eb-9cc7-9fa9f9f81180.png" alt="Get uBlock Origin for Microsoft Edge"></a>
 <a href="https://addons.opera.com/extensions/details/ublock/"><img src="https://user-images.githubusercontent.com/585534/107280692-ac7b5f00-6a26-11eb-85c7-088926504452.png" alt="Get uBlock Origin for Opera"></a>
       <br><sub><a href="https://twitter.com/gorhill/status/1033706103782170625">Do <b>not</b> use uBlock Origin along with other similarly-purposed blockers</a>.</sub>
       <br><sub>See below for <a href="#installation">more installation options.</a></sub>
@@ -65,7 +65,7 @@ For support/questions/help, there is [/r/uBlockOrigin](https://www.reddit.com/r/
 
 ## Philosophy
 
-uBlock Origin (or uBlock₀) is not an *ad blocker*; it's a general-purpose blocker. uBlock Origin blocks ads through its support of the [Adblock Plus filter syntax](https://adblockplus.org/en/filters). uBlock Origin [extends](https://github.com/gorhill/uBlock/wiki/Filter-syntax-extensions) the syntax and is designed to work with custom rules and filters. Furthermore, advanced mode allows uBlock Origin to work in [default-deny mode](https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-default-deny), which mode will cause [all 3rd-party network requests](https://requestpolicycontinued.github.io/#what-are-cross-site-requests) to be blocked by default, unless allowed by the user.
+uBlock Origin (or uBlock₀) is not an *ad blocker*; it's a general-purpose blocker. uBlock Origin blocks ads through its support of the [Adblock Plus filter syntax](https://help.eyeo.com/en/adblockplus/how-to-write-filters). uBlock Origin [extends](https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#extended-syntax) the syntax and is designed to work with custom rules and filters. Furthermore, advanced mode allows uBlock Origin to work in [default-deny mode](https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-default-deny), which mode will cause [all 3rd-party network requests](https://requestpolicycontinued.github.io/#what-are-cross-site-requests) to be blocked by default, unless allowed by the user.
 
 That said, it's important to note that using a blocker is **NOT** [theft](https://twitter.com/LeaVerou/status/518154828166725632). Don't fall for this creepy idea. The _ultimate_ logical consequence of `blocking = theft` is the criminalisation of the inalienable right to privacy.
 
@@ -89,24 +89,24 @@ It is expected that uBlock Origin is compatible with any Chromium-based browsers
 
 #### Firefox / Firefox for Android
 
-[Firefox Add-ons web site](https://addons.mozilla.org/addon/ublock-origin/).
+[Firefox Add-ons web site](https://addons.mozilla.org/firefox/addon/ublock-origin/).
 
 There is also a development version if you want to test uBlock Origin with the latest changes: for installation, see [Install / Firefox webext / For beta version](https://github.com/gorhill/uBlock/blob/master/dist/README.md#for-beta-version)
 
-uBlock Origin is compatible with [SeaMonkey](http://www.seamonkey-project.org/), [Pale Moon](https://www.palemoon.org/), and possibly other browsers based on Firefox: for installation, see [Install / Firefox legacy](https://github.com/gorhill/uBlock/blob/master/dist/README.md#firefox-legacy).
+uBlock Origin is compatible with [SeaMonkey](https://www.seamonkey-project.org/), [Pale Moon](https://www.palemoon.org/), and possibly other browsers based on Firefox: for installation, see [Install / Firefox legacy](https://github.com/gorhill/uBlock/blob/master/dist/README.md#firefox-legacy).
 
 uBO may also be installed as a [Debian package](https://packages.debian.org/stable/source/ublock-origin):
 
 - Firefox 56-: `apt-get install xul-ext-ublock-origin`
 - Firefox 55+: `apt-get install webext-ublock-origin`
 
-There is no guarantee the package will be available on your specific platform -- in which case, you will have to install from [Firefox Add-ons web site](https://addons.mozilla.org/addon/ublock-origin/).
+There is no guarantee the package will be available on your specific platform -- in which case, you will have to install from [Firefox Add-ons web site](https://addons.mozilla.org/firefox/addon/ublock-origin/).
 
 #### Microsoft Edge
 
-Publisher: [Nik Rolls](https://github.com/nikrolls/uBlock-Edge).
+Publisher: [Nicole Rolls](https://github.com/nicole-ashley/uBlock-Edge).
 
-Chromium-based Edge: Stable version available in [Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/odfafepnkmbhccpbejgmiehpchacaeak).
+Chromium-based Edge: Stable version available in [Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/ublock-origin/odfafepnkmbhccpbejgmiehpchacaeak).
 
 #### Safari (macOS)
 
@@ -127,7 +127,7 @@ To benefit from uBlock Origin's higher efficiency, it's advised that you don't u
 Below is documentation to assist administrators in deploying uBlock Origin:
 
 - [Deploying uBlock Origin](https://github.com/gorhill/uBlock/wiki/Deploying-uBlock-Origin)
-    - Firefox: [Deploying uBlock Origin for Firefox with CCK2 and Group Policy](http://decentsecurity.com/ublock-for-firefox-deployment/) (external)
+    - Firefox: [Deploying uBlock Origin for Firefox with CCK2 and Group Policy](https://decentsecurity.com/ublock-for-firefox-deployment/) (external)
     - Google Chrome: [Managing Google Chrome with adblocking and security](https://decentsecurity.com/ublock-for-google-chrome-deployment/) (external)
 
 ## Release History
@@ -145,7 +145,7 @@ really do want to contribute something, think about the people working hard
 to maintain the filter lists you are using, which were made available to use by
 all for free.
 
-You can contribute by helping translate uBlock Origin [on Crowdin](https://crowdin.net/project/ublock).
+You can contribute by helping translate uBlock Origin [on Crowdin](https://crowdin.com/project/ublock).
 
 ## License
 
