@@ -154,6 +154,46 @@
     }
 
 /*
+ * Default dark theme starts here
+ * 
+ * https://github.com/uBlockOrigin/uBlock-issues/issues/1027#issuecomment-629641072
+ *   Assign a default background color if dark mode is enabled -- hopefully
+ *   this will avoid flashes of white background until the document's own CSS
+ *   overrides the default color value below.
+ * 
+ * */
+@media (prefers-color-scheme: light) {
+    :root {
+        --surface-0-rgb: 255 255 255;
+        --surface-1: rgb(var(--gray-95));
+        --surface-2: rgb(var(--gray-90));
+        --surface-3: rgb(var(--gray-80));
+    }
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --surface-0-rgb: 0 0 0;
+        --surface-1: rgb(var(--gray-10));
+        --surface-2: rgb(var(--gray-20));
+        --surface-3: rgb(var(--gray-30));
+    }
+}
+
+:root.light {
+    --surface-0-rgb: 255 255 255;
+    --surface-1: rgb(var(--gray-95));
+    --surface-2: rgb(var(--gray-90));
+    --surface-3: rgb(var(--gray-80));
+}
+
+:root.dark {
+    --surface-0-rgb: 0 0 0;
+    --surface-1: rgb(var(--gray-10));
+    --surface-2: rgb(var(--gray-20));
+    --surface-3: rgb(var(--gray-30));
+}
+
+/*
  * Components
  * 
  * */
@@ -172,12 +212,6 @@
     /* https://material.io/design/color/text-legibility.html#text-backgrounds */
     --ink-rgb: var(--ink-80);
     --ink-0: black;
-
-    --surface-0-rgb: 255 255 255;
-    --surface-0: rgb(var(--surface-0-rgb));
-    --surface-1: rgb(var(--gray-95));
-    --surface-2: rgb(var(--gray-90));
-    --surface-3: rgb(var(--gray-80));
 
     --border-1: rgb(var(--gray-75));
     --border-2: rgb(var(--gray-70));
@@ -245,16 +279,6 @@
     --logger-modified-em-surface: #0000c028;
 }
 
-/*
- * Default dark theme starts here
- * 
- * https://github.com/uBlockOrigin/uBlock-issues/issues/1027#issuecomment-629641072
- *   Assign a default background color if dark mode is enabled -- hopefully
- *   this will avoid flashes of white background until the document's own CSS
- *   overrides the default color value below.
- * 
- * */
-
 /* https://material.io/design/color/dark-theme.html */
 :root.dark {
     --elevation-down-surface: black;
@@ -266,11 +290,6 @@
 
     --ink-rgb: var(--gray-95);
     --ink-0: white;
-
-    --surface-0-rgb: 0 0 0;
-    --surface-1: rgb(var(--gray-10));
-    --surface-2: rgb(var(--gray-20));
-    --surface-3: rgb(var(--gray-30));
 
     --border-1: rgb(var(--gray-35));
     --border-2: rgb(var(--gray-40));
@@ -326,6 +345,8 @@
     --high-em: 87%;
     --medium-em: 60%;
     --low-em: 38%;
+
+    --surface-0: rgb(var(--surface-0-rgb));
 
     --ink-1: rgb(var(--ink-rgb));
     --ink-2: rgb(var(--ink-rgb) / var(--high-em));

@@ -71,26 +71,26 @@ DOMListFactory.root = document.querySelector(':root');
 
 /******************************************************************************/
 
-DOMListFactory.setTheme = function(theme, remove) {
-    if ( theme === 'auto' && typeof self.matchMedia === 'function' ) {
-        const mql = self.matchMedia('(prefers-color-scheme: dark)');
-        theme = mql instanceof Object && mql.matches === true
-            ? 'dark'
-            : '';
+DOMListFactory.setTheme = function(theme) {
+    if ( theme === 'auto' ) {
+        if ( typeof self.matchMedia === 'function' ) {
+            const mql = self.matchMedia('(prefers-color-scheme: dark)');
+            theme = mql instanceof Object && mql.matches === true
+                ? 'dark'
+                : 'light';
+        } else {
+            theme = 'light';
+        }
     }
     let w = self;
     for (;;) {
         const rootcl = w.document.documentElement.classList;
-        rootcl.remove(...remove);
-        switch ( theme ) {
-        case 'dark':
+        if ( theme === 'dark' ) {
             rootcl.add('dark');
-            break;
-        case 'light':
+            rootcl.remove('light');
+        } else /* if ( theme === 'light' ) */ {
             rootcl.add('light');
-            break;
-        default:
-            break;
+            rootcl.remove('dark');
         }
         if ( w === w.parent ) { break; }
         w = w.parent;
@@ -150,7 +150,7 @@ DOMListFactory.setAccentColor = function(accentEnabled, accentColor) {
     //   Offer the possibility to bypass uBO's default styling
     vAPI.messaging.send('uDom', { what: 'uiStyles' }).then(response => {
         if ( typeof response !== 'object' || response === null ) { return; }
-        uDom.setTheme(response.uiTheme, [ 'dark', 'light' ]);
+        uDom.setTheme(response.uiTheme);
         if ( response.uiAccentCustom ) {
             uDom.setAccentColor(true, response.uiAccentCustom0);
         }
