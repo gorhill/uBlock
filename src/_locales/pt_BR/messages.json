@@ -312,7 +312,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Bloquear elemento...",
+    "message": "Bloquear elemento…",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -864,7 +864,7 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Criar um novo relatório",
+    "message": "Criar novo relatório",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
@@ -880,7 +880,7 @@
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
-    "message": "Perguntas e Suporte",
+    "message": "Perguntas e suporte",
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
@@ -936,7 +936,7 @@
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "A página da web...",
+    "message": "A página da web…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
@@ -1032,7 +1032,7 @@
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Redefinir para as configurações padrão...",
+    "message": "Redefinir para as configurações padrão…",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
