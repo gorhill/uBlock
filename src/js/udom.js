@@ -72,8 +72,8 @@ DOMListFactory.root = document.querySelector(':root');
 /******************************************************************************/
 
 DOMListFactory.setTheme = function(theme, remove) {
-    if ( theme === 'auto' && typeof self.watchMedia === 'function' ) {
-        const mql = self.watchMedia('(prefers-color-scheme: dark)');
+    if ( theme === 'auto' && typeof self.matchMedia === 'function' ) {
+        const mql = self.matchMedia('(prefers-color-scheme: dark)');
         theme = mql instanceof Object && mql.matches === true
             ? 'dark'
             : '';
