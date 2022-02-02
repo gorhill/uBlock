@@ -335,17 +335,25 @@
     "message": "색맹 최적화",
     "description": "English: Color-blind friendly"
   },
+  "settingsAppearance": {
+    "message": "Appearance",
+    "description": "Section for controlling user interface appearance"
+  },
+  "settingsThemeLabel": {
+    "message": "Theme",
+    "description": "Label for checkbox to enable a custom dark theme"
+  },
+  "settingsThemeAccent0Label": {
+    "message": "Custom accent color",
+    "description": "Label for checkbox to pick an accent color"
+  },
   "settingsCloudStorageEnabledPrompt": {
     "message": "클라우드 저장소 활성화",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "고급 사용자 모드 (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>필수로 읽어야 할 내용</a>)",
-    "description": ""
-  },
-  "settingsAdvancedUserSettings": {
-    "message": "고급 설정",
-    "description": "For the tooltip of a link which gives access to advanced settings"
+    "message": "고급 사용자 모드 (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>필수로 읽어보세요.</a>)",
+    "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
     "message": "프리-페칭 비활성화 (차단된 네트워크 요청에 대해 모든 접속요청 방지)",
@@ -390,6 +398,18 @@
   "settingsUncloakCnamePrompt": {
     "message": "표준 이름 잠금 해제",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
+  },
+  "settingsAdvanced": {
+    "message": "Advanced",
+    "description": "Section for controlling advanced-user settings"
+  },
+  "settingsAdvancedSynopsis": {
+    "message": "Features suitable only for technical users.",
+    "description": "Description of section controlling advanced-user settings"
+  },
+  "settingsAdvancedUserSettings": {
+    "message": "고급 설정",
+    "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsLastRestorePrompt": {
     "message": "최근 복원:",

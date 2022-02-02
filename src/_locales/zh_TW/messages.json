@@ -335,17 +335,25 @@
     "message": "使用對色盲友善的色彩",
     "description": "English: Color-blind friendly"
   },
+  "settingsAppearance": {
+    "message": "Appearance",
+    "description": "Section for controlling user interface appearance"
+  },
+  "settingsThemeLabel": {
+    "message": "Theme",
+    "description": "Label for checkbox to enable a custom dark theme"
+  },
+  "settingsThemeAccent0Label": {
+    "message": "Custom accent color",
+    "description": "Label for checkbox to pick an accent color"
+  },
   "settingsCloudStorageEnabledPrompt": {
     "message": "啟用雲端儲存空間的支援",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
     "message": "我是進階使用者（<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>必讀資訊</a>）",
-    "description": ""
-  },
-  "settingsAdvancedUserSettings": {
-    "message": "進階設定",
-    "description": "For the tooltip of a link which gives access to advanced settings"
+    "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
     "message": "關閉預讀功能（避免連線至被阻擋的網域）",
@@ -390,6 +398,18 @@
   "settingsUncloakCnamePrompt": {
     "message": "將代理域名映射至真實域名",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
+  },
+  "settingsAdvanced": {
+    "message": "Advanced",
+    "description": "Section for controlling advanced-user settings"
+  },
+  "settingsAdvancedSynopsis": {
+    "message": "Features suitable only for technical users.",
+    "description": "Description of section controlling advanced-user settings"
+  },
+  "settingsAdvancedUserSettings": {
+    "message": "進階設定",
+    "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsLastRestorePrompt": {
     "message": "上次還原：",

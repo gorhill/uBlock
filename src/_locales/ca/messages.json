@@ -335,17 +335,25 @@
     "message": "Configuració per a persones daltòniques",
     "description": "English: Color-blind friendly"
   },
+  "settingsAppearance": {
+    "message": "Appearance",
+    "description": "Section for controlling user interface appearance"
+  },
+  "settingsThemeLabel": {
+    "message": "Theme",
+    "description": "Label for checkbox to enable a custom dark theme"
+  },
+  "settingsThemeAccent0Label": {
+    "message": "Custom accent color",
+    "description": "Label for checkbox to pick an accent color"
+  },
   "settingsCloudStorageEnabledPrompt": {
     "message": "Habilita el suport d'emmagatzematge al núvol",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
     "message": "Sóc un usuari avançat (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>Lectura necessària</a>)",
-    "description": ""
-  },
-  "settingsAdvancedUserSettings": {
-    "message": "configuració avançada",
-    "description": "For the tooltip of a link which gives access to advanced settings"
+    "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
     "message": "Inhabilita la cerca prèvia (per evitar qualsevol connexió de xarxa per a sol·licituds blocades)",
@@ -390,6 +398,18 @@
   "settingsUncloakCnamePrompt": {
     "message": "Revela els noms canònics",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
+  },
+  "settingsAdvanced": {
+    "message": "Advanced",
+    "description": "Section for controlling advanced-user settings"
+  },
+  "settingsAdvancedSynopsis": {
+    "message": "Features suitable only for technical users.",
+    "description": "Description of section controlling advanced-user settings"
+  },
+  "settingsAdvancedUserSettings": {
+    "message": "configuració avançada",
+    "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsLastRestorePrompt": {
     "message": "Darrera restauració:",

@@ -335,17 +335,25 @@
     "message": "Optimeret til farveblinde",
     "description": "English: Color-blind friendly"
   },
+  "settingsAppearance": {
+    "message": "Appearance",
+    "description": "Section for controlling user interface appearance"
+  },
+  "settingsThemeLabel": {
+    "message": "Theme",
+    "description": "Label for checkbox to enable a custom dark theme"
+  },
+  "settingsThemeAccent0Label": {
+    "message": "Custom accent color",
+    "description": "Label for checkbox to pick an accent color"
+  },
   "settingsCloudStorageEnabledPrompt": {
     "message": "Aktivér understøttelse for Skylagring",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
     "message": "Dette er (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>obligatorisk læsning</a>) for den erfarne bruger",
-    "description": ""
-  },
-  "settingsAdvancedUserSettings": {
-    "message": "avancerede indstillinger",
-    "description": "For the tooltip of a link which gives access to advanced settings"
+    "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
     "message": "Deaktivér præindlæsning (for at hindre enhver forbindelse for blokerede netværksanmodninger)",
@@ -390,6 +398,18 @@
   "settingsUncloakCnamePrompt": {
     "message": "Vis kanoniske navne",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
+  },
+  "settingsAdvanced": {
+    "message": "Advanced",
+    "description": "Section for controlling advanced-user settings"
+  },
+  "settingsAdvancedSynopsis": {
+    "message": "Features suitable only for technical users.",
+    "description": "Description of section controlling advanced-user settings"
+  },
+  "settingsAdvancedUserSettings": {
+    "message": "avancerede indstillinger",
+    "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsLastRestorePrompt": {
     "message": "Seneste gendannelse:",

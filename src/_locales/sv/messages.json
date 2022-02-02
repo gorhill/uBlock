@@ -335,17 +335,25 @@
     "message": "Färgblindsanpassat",
     "description": "English: Color-blind friendly"
   },
+  "settingsAppearance": {
+    "message": "Appearance",
+    "description": "Section for controlling user interface appearance"
+  },
+  "settingsThemeLabel": {
+    "message": "Theme",
+    "description": "Label for checkbox to enable a custom dark theme"
+  },
+  "settingsThemeAccent0Label": {
+    "message": "Custom accent color",
+    "description": "Label for checkbox to pick an accent color"
+  },
   "settingsCloudStorageEnabledPrompt": {
     "message": "Aktivera stöd för molnlagring",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
     "message": "Jag är en avancerad användare (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>obligatorisk läsning</a>)",
-    "description": ""
-  },
-  "settingsAdvancedUserSettings": {
-    "message": "avancerade inställningar",
-    "description": "For the tooltip of a link which gives access to advanced settings"
+    "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
     "message": "Inaktivera förhandshämtning (för att förhindra anslutningar av blockerade förfrågningar)",
@@ -390,6 +398,18 @@
   "settingsUncloakCnamePrompt": {
     "message": "Visa CNAME-poster",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
+  },
+  "settingsAdvanced": {
+    "message": "Advanced",
+    "description": "Section for controlling advanced-user settings"
+  },
+  "settingsAdvancedSynopsis": {
+    "message": "Features suitable only for technical users.",
+    "description": "Description of section controlling advanced-user settings"
+  },
+  "settingsAdvancedUserSettings": {
+    "message": "avancerade inställningar",
+    "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsLastRestorePrompt": {
     "message": "Senast återställd:",

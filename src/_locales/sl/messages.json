@@ -335,17 +335,25 @@
     "message": "Način prijazen barvno slepim uporabnikom",
     "description": "English: Color-blind friendly"
   },
+  "settingsAppearance": {
+    "message": "Appearance",
+    "description": "Section for controlling user interface appearance"
+  },
+  "settingsThemeLabel": {
+    "message": "Theme",
+    "description": "Label for checkbox to enable a custom dark theme"
+  },
+  "settingsThemeAccent0Label": {
+    "message": "Custom accent color",
+    "description": "Label for checkbox to pick an accent color"
+  },
   "settingsCloudStorageEnabledPrompt": {
     "message": "Omogoči podporo za shrambo v oblaku",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
     "message": "Sem napreden uporabnik (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>Potrebno branje</a>)",
-    "description": ""
-  },
-  "settingsAdvancedUserSettings": {
-    "message": "napredne nastavitve",
-    "description": "For the tooltip of a link which gives access to advanced settings"
+    "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
     "message": "Onemogoči prednalaganje strani (da se prepreči kakršno koli povezavo za blokirane zahteve omrežja)",
@@ -390,6 +398,18 @@
   "settingsUncloakCnamePrompt": {
     "message": "Uncloak canonical names",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
+  },
+  "settingsAdvanced": {
+    "message": "Advanced",
+    "description": "Section for controlling advanced-user settings"
+  },
+  "settingsAdvancedSynopsis": {
+    "message": "Features suitable only for technical users.",
+    "description": "Description of section controlling advanced-user settings"
+  },
+  "settingsAdvancedUserSettings": {
+    "message": "napredne nastavitve",
+    "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsLastRestorePrompt": {
     "message": "Zadnja obnovitev:",

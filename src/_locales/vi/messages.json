@@ -335,17 +335,25 @@
     "message": "Thân thiện với người mù màu",
     "description": "English: Color-blind friendly"
   },
+  "settingsAppearance": {
+    "message": "Appearance",
+    "description": "Section for controlling user interface appearance"
+  },
+  "settingsThemeLabel": {
+    "message": "Theme",
+    "description": "Label for checkbox to enable a custom dark theme"
+  },
+  "settingsThemeAccent0Label": {
+    "message": "Custom accent color",
+    "description": "Label for checkbox to pick an accent color"
+  },
   "settingsCloudStorageEnabledPrompt": {
     "message": "Kích hoạt hỗ trợ lưu trữ trực tuyến",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
     "message": "Tôi là một người dùng có kinh nghiệm (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>Yêu cầu đọc qua</a>)",
-    "description": ""
-  },
-  "settingsAdvancedUserSettings": {
-    "message": "cài đặt nâng cao",
-    "description": "For the tooltip of a link which gives access to advanced settings"
+    "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
     "message": "Vô hiệu tải trước (để chặn bất kỳ kết nối với những yêu cầu mạng đã chặn)",
@@ -390,6 +398,18 @@
   "settingsUncloakCnamePrompt": {
     "message": "Chặn tên miền theo dõi mạo danh từ bên thứ ba (CNAME Trackers)",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
+  },
+  "settingsAdvanced": {
+    "message": "Advanced",
+    "description": "Section for controlling advanced-user settings"
+  },
+  "settingsAdvancedSynopsis": {
+    "message": "Features suitable only for technical users.",
+    "description": "Description of section controlling advanced-user settings"
+  },
+  "settingsAdvancedUserSettings": {
+    "message": "cài đặt nâng cao",
+    "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsLastRestorePrompt": {
     "message": "Lần phục hồi trước:",

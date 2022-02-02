@@ -335,17 +335,25 @@
     "message": "Λειτουργία φιλική προς χρήστες με αχρωματοψία",
     "description": "English: Color-blind friendly"
   },
+  "settingsAppearance": {
+    "message": "Appearance",
+    "description": "Section for controlling user interface appearance"
+  },
+  "settingsThemeLabel": {
+    "message": "Theme",
+    "description": "Label for checkbox to enable a custom dark theme"
+  },
+  "settingsThemeAccent0Label": {
+    "message": "Custom accent color",
+    "description": "Label for checkbox to pick an accent color"
+  },
   "settingsCloudStorageEnabledPrompt": {
     "message": "Ενεργοποίηση υποστήριξης cloud storage",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
     "message": "Είμαι προχωρημένος χρήστης (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>Aπαραίτητη ανάγνωση</a>)",
-    "description": ""
-  },
-  "settingsAdvancedUserSettings": {
-    "message": "ρυθμίσεις για προχωρημένους",
-    "description": "For the tooltip of a link which gives access to advanced settings"
+    "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
     "message": "Απενεργοποίηση προ-φόρτωσης (για να αποτραπεί κάθε σύνδεση σε αποκλεισμένες αιτήσεις δικτύου)",
@@ -390,6 +398,18 @@
   "settingsUncloakCnamePrompt": {
     "message": "Ξεσκέπασμα/εμφάνιση κανονικών ονομάτων CNAME",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
+  },
+  "settingsAdvanced": {
+    "message": "Advanced",
+    "description": "Section for controlling advanced-user settings"
+  },
+  "settingsAdvancedSynopsis": {
+    "message": "Features suitable only for technical users.",
+    "description": "Description of section controlling advanced-user settings"
+  },
+  "settingsAdvancedUserSettings": {
+    "message": "ρυθμίσεις για προχωρημένους",
+    "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsLastRestorePrompt": {
     "message": "Τελευταία ανάκτηση:",

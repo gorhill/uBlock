@@ -335,17 +335,25 @@
     "message": "వర్ణ అంధులకనుకూలమైన",
     "description": "English: Color-blind friendly"
   },
+  "settingsAppearance": {
+    "message": "Appearance",
+    "description": "Section for controlling user interface appearance"
+  },
+  "settingsThemeLabel": {
+    "message": "Theme",
+    "description": "Label for checkbox to enable a custom dark theme"
+  },
+  "settingsThemeAccent0Label": {
+    "message": "Custom accent color",
+    "description": "Label for checkbox to pick an accent color"
+  },
   "settingsCloudStorageEnabledPrompt": {
     "message": "క్లౌడ్ లో పొందుపర్చడాన్న్ది అనుమతించు",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "మీరు నిపుణత కలిగిన వినియోగాదారులితే (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>ఇది తప్పనిసరిగా చదవాలి</a>)",
-    "description": ""
-  },
-  "settingsAdvancedUserSettings": {
-    "message": "అధునాతన అమరికలు",
-    "description": "For the tooltip of a link which gives access to advanced settings"
+    "message": "మీరు నిపుణత కలిగిన వినియోగాదారులైతే (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>అవసరమైన సమాచారం</a>)",
+    "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
     "message": "అంశాలను ముందుగానే తీసుకురావడాన్ని నిషేధించు (ఎవైనా అవాంఛనీయ అనుసంధానాలను నివారించడానికి)",
@@ -390,6 +398,18 @@
   "settingsUncloakCnamePrompt": {
     "message": "కానానికల్ పేర్లను తెరవండి",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
+  },
+  "settingsAdvanced": {
+    "message": "Advanced",
+    "description": "Section for controlling advanced-user settings"
+  },
+  "settingsAdvancedSynopsis": {
+    "message": "Features suitable only for technical users.",
+    "description": "Description of section controlling advanced-user settings"
+  },
+  "settingsAdvancedUserSettings": {
+    "message": "అధునాతన అమరికలు",
+    "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsLastRestorePrompt": {
     "message": "గత పునరుద్ధారణ:",

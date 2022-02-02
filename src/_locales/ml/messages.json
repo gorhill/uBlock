@@ -335,17 +335,25 @@
     "message": "വർണ്ണാന്ധതാ സൗഹാര്‍ദ്ദപരമായത്",
     "description": "English: Color-blind friendly"
   },
+  "settingsAppearance": {
+    "message": "Appearance",
+    "description": "Section for controlling user interface appearance"
+  },
+  "settingsThemeLabel": {
+    "message": "Theme",
+    "description": "Label for checkbox to enable a custom dark theme"
+  },
+  "settingsThemeAccent0Label": {
+    "message": "Custom accent color",
+    "description": "Label for checkbox to pick an accent color"
+  },
   "settingsCloudStorageEnabledPrompt": {
     "message": "ക്ലൌഡ് സ്റ്റോറെജ് സപ്പോര്‍ട്ട് എനേബിള്‍ ചെയ്യുക",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
     "message": "ഞാന്‍ ഒരു അഡ്വാന്‍സ്ഡ് യൂസര്‍ ആണ് (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'> വായിക്കേണ്ടത്</a>)",
-    "description": ""
-  },
-  "settingsAdvancedUserSettings": {
-    "message": "വിപുലമായ ക്രമീകരണങ്ങൾ",
-    "description": "For the tooltip of a link which gives access to advanced settings"
+    "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
     "message": "പ്രീ-ഫെച്ചിംഗ് ഡിസേബിള്‍ ചെയ്യുക (ബ്ലോക്ക് ചെയ്ത നെറ്റ്‌വര്‍ക്ക് അപേക്ഷകള്‍ക്ക് കണക്ഷന്‍ ലഭിക്കുന്നത് തടയുന്നതിന്)",
@@ -390,6 +398,18 @@
   "settingsUncloakCnamePrompt": {
     "message": "കാനോനിക്കൽ പേരുകൾ അൺലോക്ക് ചെയ്യുക",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
+  },
+  "settingsAdvanced": {
+    "message": "Advanced",
+    "description": "Section for controlling advanced-user settings"
+  },
+  "settingsAdvancedSynopsis": {
+    "message": "Features suitable only for technical users.",
+    "description": "Description of section controlling advanced-user settings"
+  },
+  "settingsAdvancedUserSettings": {
+    "message": "വിപുലമായ ക്രമീകരണങ്ങൾ",
+    "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsLastRestorePrompt": {
     "message": "അവസാന റീസ്റ്റോര്‍:",

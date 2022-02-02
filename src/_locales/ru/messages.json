@@ -335,17 +335,25 @@
     "message": "Цветовая схема для дальтоников",
     "description": "English: Color-blind friendly"
   },
+  "settingsAppearance": {
+    "message": "Appearance",
+    "description": "Section for controlling user interface appearance"
+  },
+  "settingsThemeLabel": {
+    "message": "Theme",
+    "description": "Label for checkbox to enable a custom dark theme"
+  },
+  "settingsThemeAccent0Label": {
+    "message": "Custom accent color",
+    "description": "Label for checkbox to pick an accent color"
+  },
   "settingsCloudStorageEnabledPrompt": {
     "message": "Включить поддержку облачного хранилища",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
     "message": "Я опытный пользователь (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>Обязательно к прочтению</a>)",
-    "description": ""
-  },
-  "settingsAdvancedUserSettings": {
-    "message": "расширенные настройки",
-    "description": "For the tooltip of a link which gives access to advanced settings"
+    "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
     "message": "Отключить предзагрузку для предотвращения подключений для заблокированных запросов",
@@ -390,6 +398,18 @@
   "settingsUncloakCnamePrompt": {
     "message": "Раскрывать CNAME записи",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
+  },
+  "settingsAdvanced": {
+    "message": "Advanced",
+    "description": "Section for controlling advanced-user settings"
+  },
+  "settingsAdvancedSynopsis": {
+    "message": "Features suitable only for technical users.",
+    "description": "Description of section controlling advanced-user settings"
+  },
+  "settingsAdvancedUserSettings": {
+    "message": "расширенные настройки",
+    "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsLastRestorePrompt": {
     "message": "Последнее восстановление:",

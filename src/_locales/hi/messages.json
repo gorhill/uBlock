@@ -335,17 +335,25 @@
     "message": "वरणांध अनुकूलित ",
     "description": "English: Color-blind friendly"
   },
+  "settingsAppearance": {
+    "message": "Appearance",
+    "description": "Section for controlling user interface appearance"
+  },
+  "settingsThemeLabel": {
+    "message": "Theme",
+    "description": "Label for checkbox to enable a custom dark theme"
+  },
+  "settingsThemeAccent0Label": {
+    "message": "Custom accent color",
+    "description": "Label for checkbox to pick an accent color"
+  },
   "settingsCloudStorageEnabledPrompt": {
     "message": "क्लाउड स्टोरेज सपोर्ट चालू करें",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
     "message": "मैं एक उच्च उपयोगकर्ता हूँ (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>आवश्यक पठन</a>)",
-    "description": ""
-  },
-  "settingsAdvancedUserSettings": {
-    "message": "उन्नत सेटिंग्स",
-    "description": "For the tooltip of a link which gives access to advanced settings"
+    "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
     "message": "प्री-फ़ेचिंग बंद करें (कोई भी ब्लॉक किये गए कनेक्शंनो से संपर्क न करने लिए)",
@@ -390,6 +398,18 @@
   "settingsUncloakCnamePrompt": {
     "message": "विहित नाम अनलॉक करें",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
+  },
+  "settingsAdvanced": {
+    "message": "Advanced",
+    "description": "Section for controlling advanced-user settings"
+  },
+  "settingsAdvancedSynopsis": {
+    "message": "Features suitable only for technical users.",
+    "description": "Description of section controlling advanced-user settings"
+  },
+  "settingsAdvancedUserSettings": {
+    "message": "उन्नत सेटिंग्स",
+    "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsLastRestorePrompt": {
     "message": " पिछला रिस्टोर:",

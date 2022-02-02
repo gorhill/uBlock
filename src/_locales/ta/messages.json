@@ -335,17 +335,25 @@
     "message": "நிறம்-அறியாதோருக்கு ஏதுவாக",
     "description": "English: Color-blind friendly"
   },
+  "settingsAppearance": {
+    "message": "Appearance",
+    "description": "Section for controlling user interface appearance"
+  },
+  "settingsThemeLabel": {
+    "message": "Theme",
+    "description": "Label for checkbox to enable a custom dark theme"
+  },
+  "settingsThemeAccent0Label": {
+    "message": "Custom accent color",
+    "description": "Label for checkbox to pick an accent color"
+  },
   "settingsCloudStorageEnabledPrompt": {
     "message": "மேகக்கணி சேமிப்பக ஆதரவு இயக்கு",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
     "message": "நான் ஒரு மேம்பட்ட பயனர் (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>வாசித்தல் தேவை</a>)",
-    "description": ""
-  },
-  "settingsAdvancedUserSettings": {
-    "message": "மேம்பட்ட அமைப்புகள்",
-    "description": "For the tooltip of a link which gives access to advanced settings"
+    "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
     "message": "முன்கூட்டியே பெறுவதை முடக்கு (தடுக்கப்பட்ட பிணைய கோரிக்கைகளுக்கான எந்தவொரு தொடர்பையும் தடுக்க)",
@@ -390,6 +398,18 @@
   "settingsUncloakCnamePrompt": {
     "message": "நியமன பெயர்களை அவிழ்த்து விடுங்கள்",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
+  },
+  "settingsAdvanced": {
+    "message": "Advanced",
+    "description": "Section for controlling advanced-user settings"
+  },
+  "settingsAdvancedSynopsis": {
+    "message": "Features suitable only for technical users.",
+    "description": "Description of section controlling advanced-user settings"
+  },
+  "settingsAdvancedUserSettings": {
+    "message": "மேம்பட்ட அமைப்புகள்",
+    "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsLastRestorePrompt": {
     "message": "இறுதியாக மீட்பதற்கு:",

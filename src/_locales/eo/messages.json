@@ -335,17 +335,25 @@
     "message": "Afabla por kolorblinduloj",
     "description": "English: Color-blind friendly"
   },
+  "settingsAppearance": {
+    "message": "Appearance",
+    "description": "Section for controlling user interface appearance"
+  },
+  "settingsThemeLabel": {
+    "message": "Theme",
+    "description": "Label for checkbox to enable a custom dark theme"
+  },
+  "settingsThemeAccent0Label": {
+    "message": "Custom accent color",
+    "description": "Label for checkbox to pick an accent color"
+  },
   "settingsCloudStorageEnabledPrompt": {
     "message": "Ŝalti subtenon por nelokdependa konservado",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
     "message": "Mi estas sperta uzanto (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>Nepra legaĵo</a>)",
-    "description": ""
-  },
-  "settingsAdvancedUserSettings": {
-    "message": "altgradaj agordoj",
-    "description": "For the tooltip of a link which gives access to advanced settings"
+    "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
     "message": "Malŝalti antaŭvenigadon (por preventi ajnan konekton de blokitaj retaj petoj)",
@@ -390,6 +398,18 @@
   "settingsUncloakCnamePrompt": {
     "message": "Uncloak canonical names",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
+  },
+  "settingsAdvanced": {
+    "message": "Advanced",
+    "description": "Section for controlling advanced-user settings"
+  },
+  "settingsAdvancedSynopsis": {
+    "message": "Features suitable only for technical users.",
+    "description": "Description of section controlling advanced-user settings"
+  },
+  "settingsAdvancedUserSettings": {
+    "message": "altgradaj agordoj",
+    "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsLastRestorePrompt": {
     "message": "Lasta restaŭro:",

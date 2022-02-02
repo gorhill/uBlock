@@ -335,17 +335,25 @@
     "message": "Accesibil pentru daltonism",
     "description": "English: Color-blind friendly"
   },
+  "settingsAppearance": {
+    "message": "Appearance",
+    "description": "Section for controlling user interface appearance"
+  },
+  "settingsThemeLabel": {
+    "message": "Theme",
+    "description": "Label for checkbox to enable a custom dark theme"
+  },
+  "settingsThemeAccent0Label": {
+    "message": "Custom accent color",
+    "description": "Label for checkbox to pick an accent color"
+  },
   "settingsCloudStorageEnabledPrompt": {
     "message": "Activează suportul pentru stocare în cloud",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
     "message": "Sunt un utilizator avansat (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>Lectură obligatorie</a>)",
-    "description": ""
-  },
-  "settingsAdvancedUserSettings": {
-    "message": "setări avansate",
-    "description": "For the tooltip of a link which gives access to advanced settings"
+    "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
     "message": "Dezactivează preluarea în avans (pentru a preveni orice conexiune ce s-ar încadra în cereri de rețea blocate)",
@@ -390,6 +398,18 @@
   "settingsUncloakCnamePrompt": {
     "message": "Dezvăluie numele canonice",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
+  },
+  "settingsAdvanced": {
+    "message": "Advanced",
+    "description": "Section for controlling advanced-user settings"
+  },
+  "settingsAdvancedSynopsis": {
+    "message": "Features suitable only for technical users.",
+    "description": "Description of section controlling advanced-user settings"
+  },
+  "settingsAdvancedUserSettings": {
+    "message": "setări avansate",
+    "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsLastRestorePrompt": {
     "message": "Ultima restaurare:",

@@ -335,17 +335,25 @@
     "message": "Достъпност за хора с цветна слепота",
     "description": "English: Color-blind friendly"
   },
+  "settingsAppearance": {
+    "message": "Appearance",
+    "description": "Section for controlling user interface appearance"
+  },
+  "settingsThemeLabel": {
+    "message": "Theme",
+    "description": "Label for checkbox to enable a custom dark theme"
+  },
+  "settingsThemeAccent0Label": {
+    "message": "Custom accent color",
+    "description": "Label for checkbox to pick an accent color"
+  },
   "settingsCloudStorageEnabledPrompt": {
     "message": "Включване на поддръжка за съхранение в облак",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
     "message": "Аз съм опитен потребител (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>Допълнително четиво</a>)",
-    "description": ""
-  },
-  "settingsAdvancedUserSettings": {
-    "message": "разширени настройки",
-    "description": "For the tooltip of a link which gives access to advanced settings"
+    "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
     "message": "Изключване на предварителното извличане (за избягване на всяка връзка за блокираните мрежови заявки)",
@@ -390,6 +398,18 @@
   "settingsUncloakCnamePrompt": {
     "message": "Разкриване на каноничните имена",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
+  },
+  "settingsAdvanced": {
+    "message": "Advanced",
+    "description": "Section for controlling advanced-user settings"
+  },
+  "settingsAdvancedSynopsis": {
+    "message": "Features suitable only for technical users.",
+    "description": "Description of section controlling advanced-user settings"
+  },
+  "settingsAdvancedUserSettings": {
+    "message": "разширени настройки",
+    "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsLastRestorePrompt": {
     "message": "Последно възстановяване:",
