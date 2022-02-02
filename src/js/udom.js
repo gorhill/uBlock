@@ -36,26 +36,19 @@ const uDom = (( ) => {
 
 /******************************************************************************/
 
-const DOMList = function() {
-    this.nodes = [];
+const DOMList = class {
+    constructor() {
+        this.nodes = [];
+    }
+    get length() {
+        return this.nodes.length;
+    }
 };
 
 /******************************************************************************/
 
-Object.defineProperty(
-    DOMList.prototype,
-    'length',
-    {
-        get: function() {
-            return this.nodes.length;
-        }
-    }
-);
-
-/******************************************************************************/
-
 const DOMListFactory = function(selector, context) {
-    var r = new DOMList();
+    const r = new DOMList();
     if ( typeof selector === 'string' ) {
         selector = selector.trim();
         if ( selector !== '' ) {
@@ -74,6 +67,109 @@ const DOMListFactory = function(selector, context) {
     return r;
 };
 
+DOMListFactory.root = document.querySelector(':root');
+
+/******************************************************************************/
+
+DOMListFactory.setTheme = function(theme, remove) {
+    if ( theme === 'auto' && typeof self.watchMedia === 'function' ) {
+        const mql = self.watchMedia('(prefers-color-scheme: dark)');
+        theme = mql instanceof Object && mql.matches === true
+            ? 'dark'
+            : '';
+    }
+    let w = self;
+    for (;;) {
+        const rootcl = w.document.documentElement.classList;
+        rootcl.remove(...remove);
+        switch ( theme ) {
+        case 'dark':
+            rootcl.add('dark');
+            break;
+        case 'light':
+            rootcl.add('light');
+            break;
+        default:
+            break;
+        }
+        if ( w === w.parent ) { break; }
+        w = w.parent;
+        try { void w.document; } catch(ex) { return; }
+    }
+};
+
+DOMListFactory.normalizeAccentColor = function(accentColor) {
+    if ( self.hsluv === undefined ) { return accentColor; }
+    const hsl = self.hsluv.hexToHsluv(accentColor);
+    hsl[0] = Math.round(hsl[0] * 10) / 10;
+    hsl[1] = Math.round(Math.min(100, Math.max(50, hsl[1])));
+    hsl[2] = 70;
+    const rgb = self.hsluv.hsluvToRgb(hsl).map(
+        a => Math.round(a * 255).toString(16).padStart(2, '0')
+    );
+    return `#${rgb.join('')}`;
+};
+
+DOMListFactory.setAccentColor = function(accentEnabled, accentColor) {
+    if ( self.hsluv === undefined ) { return; }
+    let w = self;
+    let styleText = '';
+    if ( accentEnabled ) {
+        const shades = [ 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95 ];
+        const text = [];
+        const hsl = self.hsluv.hexToHsluv(accentColor);
+        text.push(':root {');
+        for ( const shade of shades ) {
+            hsl[2] = shade;
+            const rgb = self.hsluv.hsluvToRgb(hsl).map(a => Math.round(a * 255));
+            text.push(`   --primary-color-${shade}: ${rgb.join(' ')};`);
+        }
+        text.push('}', '');
+        styleText = text.join('\n');
+    }
+    for (;;) {
+        let style = w.document.querySelector('style#accentColors');
+        if ( style !== null ) { style.remove(); }
+        if ( styleText.length !== 0 ) {
+            style = w.document.createElement('style');
+            style.id = 'accentColors';
+            style.textContent = styleText;
+            w.document.head.append(style);
+            w.document.documentElement.classList.add('accented');
+        } else {
+            w.document.documentElement.classList.remove('accented');
+        }
+        if ( w === w.parent ) { break; }
+        w = w.parent;
+        try { void w.document; } catch(ex) { return; }
+    }
+};
+
+{
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1044
+    //   Offer the possibility to bypass uBO's default styling
+    vAPI.messaging.send('uDom', { what: 'uiStyles' }).then(response => {
+        if ( typeof response !== 'object' || response === null ) { return; }
+        uDom.setTheme(response.uiTheme, [ 'dark', 'light' ]);
+        if ( response.uiAccentCustom ) {
+            uDom.setAccentColor(true, response.uiAccentCustom0);
+        }
+        if ( response.uiStyles !== 'unset' ) {
+            document.body.style.cssText = response.uiStyles;
+        }
+    });
+
+    const rootcl = DOMListFactory.root.classList;
+    if ( vAPI.webextFlavor.soup.has('mobile') ) {
+        rootcl.add('mobile');
+    } else {
+        rootcl.add('desktop');
+    }
+    if ( window.matchMedia('(min-resolution: 150dpi)').matches ) {
+        rootcl.add('hidpi');
+    }
+}
+
 /******************************************************************************/
 
 DOMListFactory.onLoad = function(callback) {
@@ -89,42 +185,6 @@ DOMListFactory.nodeFromId = function(id) {
 DOMListFactory.nodeFromSelector = function(selector) {
     return document.querySelector(selector);
 };
-
-/******************************************************************************/
-
-{
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/1044
-    //   Offer the possibility to bypass uBO's default styling
-    vAPI.messaging.send('uDom', { what: 'uiStyles' }).then(response => {
-        if ( typeof response !== 'object' || response === null ) { return; }
-        if ( response.uiTheme !== 'unset' ) {
-            if ( /\blight\b/.test(response.uiTheme) ) {
-                root.classList.remove('dark');
-            }
-            if ( /\bdark\b/.test(response.uiTheme) ) {
-                root.classList.remove('dark');
-            }
-            root.classList.add(...response.uiTheme.split(/\s+/));
-        }
-        if ( response.uiStyles !== 'unset' ) {
-            document.body.style.cssText = response.uiStyles;
-        }
-    });
-
-    const root = DOMListFactory.root = document.querySelector(':root');
-    if ( vAPI.webextFlavor.soup.has('mobile') ) {
-        root.classList.add('mobile');
-    } else {
-        root.classList.add('desktop');
-    }
-    if ( window.matchMedia('(min-resolution: 150dpi)').matches ) {
-        root.classList.add('hidpi');
-    }
-    // TODO: re-enable once there is a fully functional dark theme 
-    //if ( window.matchMedia('(prefers-color-scheme: dark)').matches ) {
-    //    root.classList.add('dark');
-    //}
-}
 
 /******************************************************************************/
 

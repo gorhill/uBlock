@@ -170,7 +170,8 @@ uDom.nodeFromId('why').textContent = details.fs;
         return;
     }
 
-    const toggler = document.querySelector('#theURL > p > span:last-of-type');
+    const toggler = document.querySelector('#toggleParse');
+    toggler.classList.remove('hidden');
 
     toggler.addEventListener('click', ( ) => {
         const cl = uDom.nodeFromId('theURL').classList;

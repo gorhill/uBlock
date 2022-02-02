@@ -208,31 +208,46 @@ const changeUserSettings = function(name, value) {
         name,
         value,
     });
+
+    // Maybe reflect some changes immediately
+    switch ( name ) {
+    case 'uiTheme':
+        uDom.setTheme(value, [ 'dark', 'light' ]);
+        break;
+    case 'uiAccentCustom':
+    case 'uiAccentCustom0':
+        uDom.setAccentColor(
+            uDom.nodeFromSelector('[data-setting-name="uiAccentCustom"]').checked,
+            uDom.nodeFromSelector('[data-setting-name="uiAccentCustom0"]').value
+        );
+        break;
+    default:
+        break;
+    }
 };
 
 /******************************************************************************/
 
-const onInputChanged = function(ev) {
+const onValueChanged = function(ev) {
     const input = ev.target;
     const name = this.getAttribute('data-setting-name');
     let value = input.value;
-    if ( name === 'largeMediaSize' ) {
+    // Maybe sanitize value
+    switch ( name ) {
+    case 'largeMediaSize':
         value = Math.min(Math.max(Math.floor(parseInt(value, 10) || 0), 0), 1000000);
+        break;
+    case 'uiAccentCustom0':
+        value = uDom.normalizeAccentColor(value);
+        break;
+    default:
+        break;
     }
     if ( value !== input.value ) {
         input.value = value;
     }
+
     changeUserSettings(name, value);
-};
-
-/******************************************************************************/
-
-// Workaround for:
-// https://github.com/gorhill/uBlock/issues/1448
-
-const onPreventDefault = function(ev) {
-    ev.target.focus();
-    ev.preventDefault();
 };
 
 /******************************************************************************/
@@ -261,14 +276,9 @@ const onUserSettingsReceived = function(details) {
             .css('display', '');
     }
 
-    uDom('[data-i18n="settingsNoLargeMediaPrompt"] > input[type="number"]')
-        .attr('data-setting-name', 'largeMediaSize')
-        .attr('data-setting-type', 'input');
-
-    uDom('[data-setting-type="input"]').forEach(function(uNode) {
+    uDom('[data-setting-type="value"]').forEach(function(uNode) {
         uNode.val(details[uNode.attr('data-setting-name')])
-             .on('change', onInputChanged)
-             .on('click', onPreventDefault);
+             .on('change', onValueChanged);
     });
 
     uDom('#export').on('click', ( ) => { exportToFile(); });

@@ -115,7 +115,7 @@ button.active {
     }
 button.disabled,
 button[disabled] {
-    background-color: var(--button-surface);
+    background-color: var(--button-disabled-surface);
     color: var(--button-ink);
     fill: var(--button-ink);
     filter: var(--button-disabled-filter);
@@ -124,7 +124,7 @@ button[disabled] {
 button.preferred:not(.disabled):not([disabled]) {
     background-color: var(--button-preferred-surface);
     color: var(--button-preferred-ink);
-    fill: var(--button-preferred-ink);
+        fill: var(--button-preferred-ink);
     }
 button.preferred:not(.disabled):not([disabled]):hover > .hover {
     background-color: var(--elevation-down-surface);

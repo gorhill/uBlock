@@ -2,6 +2,9 @@
     --bg-tooltip: hsla(60, 100%, 97%, 1);
     --popup-power-ink: rgb(0 110 254);
     --popup-power-ink-hover: rgb(var(--blue-60));
+    --ink-2: rgb(var(--ink-rgb) / 80%);
+    --ink-3: rgb(var(--ink-rgb) / 60%);
+    --ink-4: rgb(var(--ink-rgb) / 40%);
     --ink-5: rgb(var(--ink-rgb) / 20%);
     }
 :root.dark {

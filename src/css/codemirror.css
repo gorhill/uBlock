@@ -12,9 +12,6 @@
     height: 100%;
     width: 100%;
     }
-.CodeMirror-activeline-background {
-    background-color: var(--cm-active-line);
-    }
 .CodeMirror-cursor {
     border-color: var(--cm-cursor);
     }
@@ -118,6 +115,7 @@
     color: var(--sf-variable-ink);
     }
 .cm-s-default .cm-warning {
+    background-color: var(--sf-warning-surface);
     text-decoration: underline var(--sf-warning-ink);
     text-underline-position: under;
     }
@@ -166,7 +164,7 @@
     font-size: 140%;
     }
 .cm-search-widget .fa-icon:not(.fa-icon-ro):hover {
-    fill: #000;
+    fill: var(--ink-1);
     }
 .cm-search-widget-input input {
     border: 1px solid var(--cm-gutter-ink);
@@ -205,11 +203,11 @@
     color: var(--cm-merge-copy-ink);
     }
 .CodeMirror-merge-l-chunk {
-    background-color: var(--cm-merge-l-chunk-surface);
+    background-color: var(--cm-merge-chunk-surface);
     }
 .CodeMirror-merge-l-chunk-start,
 .CodeMirror-merge-l-chunk-end {
-    border-color: var(--cm-merge-l-chunk-border);
+    border-color: var(--cm-merge-chunk-border);
     }
 .CodeMirror-merge-l-deleted {
     background-image: none;
@@ -224,10 +222,16 @@
     vertical-align: top;
     }
 .CodeMirror-merge-spacer {
-    background-color: var(--surface-0);
-    opacity: 40%;
+    background-color: var(--cm-merge-chunk-surface);
     }
 
 .CodeMirror-hints {
     z-index: 10000;
+    }
+
+/* Must appear after other background color declarations to be sure it
+ * overrides them
+ * */
+.CodeMirror-activeline-background {
+    background-color: var(--cm-active-line);
     }

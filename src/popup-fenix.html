@@ -4,10 +4,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="css/themes/default.css">
-<link rel="stylesheet" href="css/common.css" type="text/css">
-<link rel="stylesheet" href="css/fa-icons.css" type="text/css">
-<link rel="stylesheet" href="css/popup-fenix.css" type="text/css">
+<link rel="stylesheet" href="css/themes/default.css">
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/fa-icons.css">
+<link rel="stylesheet" href="css/popup-fenix.css">
 <title data-i18n="extName"></title>
 </head>
 
@@ -41,7 +41,6 @@
             </div>
             <div id="hostname"><span></span>&shy;<span></span></div>
         </div>
-        <hr data-more="d">
         <div id="extraTools" class="toolRibbon" data-more="d">
             <span id="no-popups" class="hnSwitch tool enabled" role="button" aria-label tabindex="0" title><span class="fa-icon fa-icon-badged">ph-popups<svg class="nope" viewBox="0 0 20 20"><path d="M1,1 19,19M1,19 19,1" /></svg></span><span class="caption" data-i18n="popupNoPopups_v2"></span></span>
             <span id="no-large-media" class="hnSwitch tool enabled" role="button" aria-label tabindex="0" title><span class="fa-icon fa-icon-badged">film<svg class="nope" viewBox="0 0 20 20"><path d="M1,1 19,19M1,19 19,1" /></svg></span><span class="caption" data-i18n="popupNoLargeMedia_v2"></span></span>
@@ -55,7 +54,6 @@
             <span data-i18n="popupDomainsConnected_v2"></span><span></span>
             <span data-i18n="popupBlockedSinceInstall_v2" data-more="b"></span><span data-more="b"></span>
         </div>
-        <hr data-more="c">
         <div id="basicTools" class="toolRibbon" data-more="c">
             <span id="gotoZap" class="fa-icon tool enabled needPick" data-i18n-title="popupTipZapper">bolt<span class="caption" data-i18n="popupTipZapper"></span></span>
             <span id="gotoPick" class="fa-icon tool enabled needPick" data-i18n-title="popupTipPicker">eye-dropper<span class="caption" data-i18n="popupTipPicker"></span></span>
@@ -67,8 +65,8 @@
         <div class="itemRibbon" data-more="f">
             <span data-i18n="popupVersion"></span><span id="version"></span>
         </div>
-        <hr>
-        <div id="moreOrLess">
+        <hr data-more="g">
+        <div id="moreOrLess" class="">
             <span id="moreButton">
                 <span data-i18n="popupMoreButton_v2"></span>&emsp;<span class="fa-icon">angle-up</span>
             </span>
@@ -95,6 +93,8 @@
     <div id="hotspotTip"></div>
     <div id="tooltip"></div>
 </div>
+
+<script src="lib/hsluv/hsluv-0.1.0.min.js"></script>
 
 <script src="js/fa-icons.js"></script>
 <script src="js/vapi.js"></script>

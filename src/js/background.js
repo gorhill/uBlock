@@ -83,7 +83,6 @@ const hiddenSettingsDefault = {
     uiPopupConfig: 'unset',
     uiFlavor: 'unset',
     uiStyles: 'unset',
-    uiTheme: 'unset',
     updateAssetBypassBrowserCache: false,
     userResourcesLocation: 'unset',
 };
@@ -97,6 +96,9 @@ const userSettingsDefault = {
     collapseBlocked: true,
     colorBlindFriendly: false,
     contextMenuEnabled: true,
+    uiAccentCustom: false,
+    uiAccentCustom0: '#aca0f7',
+    uiTheme: 'auto',
     externalLists: '',
     firewallPaneMinimized: true,
     hyperlinkAuditingDisabled: true,

@@ -221,8 +221,10 @@ const onMessage = function(request, sender, callback) {
 
     case 'uiStyles':
         response = {
+            uiAccentCustom: µb.userSettings.uiAccentCustom,
+            uiAccentCustom0: µb.userSettings.uiAccentCustom0,
             uiStyles: µb.hiddenSettings.uiStyles,
-            uiTheme: µb.hiddenSettings.uiTheme,
+            uiTheme: µb.userSettings.uiTheme,
         };
         break;
 

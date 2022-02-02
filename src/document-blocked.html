@@ -15,7 +15,7 @@
 <div>
     <p data-i18n="docblockedPrompt1"></p>
     <div id="theURL" class="collapsed">
-        <p class="code"><span></span><span><span class="fa-icon">zoom-in</span><span class="fa-icon">zoom-out</span></span></p>
+        <p class="code"><span></span><span id="toggleParse" class="hidden"><span class="fa-icon">zoom-in</span><span class="fa-icon">zoom-out</span></span></p>
         <ul id="parsed"></ul>
     </div>
 </div>
@@ -54,6 +54,8 @@
      --><a class="fa-icon filterListSupport hidden" href="#" target="_blank" rel="noopener noreferrer">home</a>
     </span>
 </div>
+
+<script src="lib/hsluv/hsluv-0.1.0.min.js"></script>
 
 <script src="js/fa-icons.js"></script>
 <script src="js/vapi.js"></script>
