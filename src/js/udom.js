@@ -71,7 +71,7 @@ DOMListFactory.root = document.querySelector(':root');
 
 /******************************************************************************/
 
-DOMListFactory.setTheme = function(theme) {
+DOMListFactory.setTheme = function(theme, propagate = false) {
     if ( theme === 'auto' ) {
         if ( typeof self.matchMedia === 'function' ) {
             const mql = self.matchMedia('(prefers-color-scheme: dark)');
@@ -92,13 +92,19 @@ DOMListFactory.setTheme = function(theme) {
             rootcl.add('light');
             rootcl.remove('dark');
         }
+        if ( propagate === false ) { break; }
         if ( w === w.parent ) { break; }
         w = w.parent;
         try { void w.document; } catch(ex) { return; }
     }
 };
 
-DOMListFactory.setAccentColor = function(accentEnabled, accentColor, stylesheet = '') {
+DOMListFactory.setAccentColor = function(
+    accentEnabled,
+    accentColor,
+    propagate,
+    stylesheet = ''
+) {
     if ( accentEnabled && stylesheet === '' && self.hsluv !== undefined ) {
         const toRGB = hsl => self.hsluv.hsluvToRgb(hsl).map(a => Math.round(a * 255)).join(' ');
         // Normalize first
@@ -145,6 +151,7 @@ DOMListFactory.setAccentColor = function(accentEnabled, accentColor, stylesheet 
         } else {
             wdoc.documentElement.classList.remove('accented');
         }
+        if ( propagate === false ) { break; }
         if ( w === w.parent ) { break; }
         w = w.parent;
         try { void w.document; } catch(ex) { break; }
@@ -161,6 +168,7 @@ DOMListFactory.setAccentColor = function(accentEnabled, accentColor, stylesheet 
             uDom.setAccentColor(
                 true,
                 response.uiAccentCustom0,
+                false,
                 response.uiAccentStylesheet
             );
         }

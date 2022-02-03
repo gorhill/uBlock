@@ -212,13 +212,14 @@ const changeUserSettings = function(name, value) {
     // Maybe reflect some changes immediately
     switch ( name ) {
     case 'uiTheme':
-        uDom.setTheme(value, [ 'dark', 'light' ]);
+        uDom.setTheme(value, true);
         break;
     case 'uiAccentCustom':
     case 'uiAccentCustom0':
         uDom.setAccentColor(
             uDom.nodeFromSelector('[data-setting-name="uiAccentCustom"]').checked,
-            uDom.nodeFromSelector('[data-setting-name="uiAccentCustom0"]').value
+            uDom.nodeFromSelector('[data-setting-name="uiAccentCustom0"]').value,
+            true
         );
         break;
     default:
