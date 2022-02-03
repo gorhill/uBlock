@@ -100,6 +100,7 @@ DOMListFactory.setTheme = function(theme) {
 
 DOMListFactory.setAccentColor = function(accentEnabled, accentColor, stylesheet = '') {
     if ( accentEnabled && stylesheet === '' && self.hsluv !== undefined ) {
+        const toRGB = hsl => self.hsluv.hsluvToRgb(hsl).map(a => Math.round(a * 255)).join(' ');
         // Normalize first
         const hsl = self.hsluv.hexToHsluv(accentColor);
         hsl[0] = Math.round(hsl[0] * 10) / 10;
@@ -110,10 +111,23 @@ DOMListFactory.setAccentColor = function(accentEnabled, accentColor, stylesheet 
         text.push(':root.accented {');
         for ( const shade of shades ) {
             hsl[2] = shade;
-            const rgb = self.hsluv.hsluvToRgb(hsl).map(a => Math.round(a * 255));
-            text.push(`   --primary-${shade}: ${rgb.join(' ')};`);
+            text.push(`   --primary-${shade}: ${toRGB(hsl)};`);
         }
-        text.push('}', '');
+        text.push('}');
+        hsl[1] = Math.min(25, hsl[1]);
+        hsl[2] = 80;
+        text.push(
+            ':root.light.accented {',
+            `    --button-surface-rgb: ${toRGB(hsl)};`,
+            '}',
+        );
+        hsl[2] = 30;
+        text.push(
+            ':root.dark.accented {',
+            `    --button-surface-rgb: ${toRGB(hsl)};`,
+            '}',
+        );
+        text.push('');
         stylesheet = text.join('\n');
         vAPI.messaging.send('uDom', { what: 'uiAccentStylesheet', stylesheet });
     }

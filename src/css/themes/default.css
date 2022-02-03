@@ -221,6 +221,9 @@
     --accent-ink-3: var(--ink-1);
     --accent-surface-1: rgb(var(--primary-40));
 
+    /* buttons */
+    --button-surface-rgb: var(--gray-80);
+
     /* popup panel */
     --popup-cell-cname-ink: #0054d7; /* h260 S:100 Luv:40 */;
     --popup-cell-label-mixed-surface: #c29100; /* TODO: fix */
@@ -298,6 +301,9 @@
 
     --accent-surface-1: rgb(var(--primary-70));
 
+    /* buttons */
+    --button-surface-rgb: var(--gray-30);
+
     /* popup panel */
     --popup-cell-cname-ink: #93a6ff; /* h260 S:100 Luv:70 */;
     --popup-cell-label-mixed-surface: hsla(45, 100%, 38%, 1); /* TODO: fix */
@@ -363,7 +369,7 @@
     --fieldset-header-ink: var(--ink-2);
 
     --button-ink: var(--ink-1);
-    --button-surface: var(--surface-3);
+    --button-surface: rgb(var(--button-surface-rgb));
     --button-border-radius: 5px;
     --button-preferred-ink: var(--accent-ink-1);
     --button-preferred-surface: var(--accent-surface-1);
@@ -431,14 +437,6 @@
     --popup-cell-block-surface-rgb:     175  74  74; /* h:12.2  S:50  Luv:45 */
     --popup-cell-noop-own-surface-rgb:  132 132 132; /* h:0     S:0   Luv:55 */
     --popup-cell-noop-surface-rgb:       94  94  94; /* h:0     S:0   Luv:40 */
-}
-
-:root.accented {
-    --button-surface: rgb(var(--primary-80));
-}
-
-:root.dark.accented {
-    --button-surface: rgb(var(--primary-30));
 }
 
 /*
