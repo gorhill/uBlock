@@ -222,7 +222,7 @@
     --accent-surface-1: rgb(var(--primary-40));
 
     /* popup panel */
-    --popup-cell-cname-ink: rgb(var(--blue-50));
+    --popup-cell-cname-ink: #0054d7; /* h260 S:100 Luv:40 */;
     --popup-cell-label-mixed-surface: #c29100; /* TODO: fix */
     --popup-icon-x-ink: rgb(var(--red-60));
     --popup-power-ink-rgb: var(--primary-50);
@@ -299,7 +299,7 @@
     --accent-surface-1: rgb(var(--primary-70));
 
     /* popup panel */
-    --popup-cell-cname-ink: hsla(0, 0%, 53%, 0.3);
+    --popup-cell-cname-ink: #93a6ff; /* h260 S:100 Luv:70 */;
     --popup-cell-label-mixed-surface: hsla(45, 100%, 38%, 1); /* TODO: fix */
     --popup-icon-x-ink: rgb(var(--red-50));
     --popup-power-ink-rgb: var(--primary-60);

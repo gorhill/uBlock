@@ -104,19 +104,13 @@ DOMListFactory.setAccentColor = function(accentEnabled, accentColor, stylesheet 
         const hsl = self.hsluv.hexToHsluv(accentColor);
         hsl[0] = Math.round(hsl[0] * 10) / 10;
         hsl[1] = Math.round(Math.min(100, Math.max(0, hsl[1])));
-        hsl[2] = 70;
-        const rgb = self.hsluv.hsluvToRgb(hsl).map(
-            a => Math.round(a * 255).toString(16).padStart(2, '0')
-        );
         // Use normalized result to derive all shades
-        const rgbNormal = `#${rgb.join('')}`;
         const shades = [ 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95 ];
         const text = [];
-        const hslNormal = self.hsluv.hexToHsluv(rgbNormal);
         text.push(':root.accented {');
         for ( const shade of shades ) {
-            hslNormal[2] = shade;
-            const rgb = self.hsluv.hsluvToRgb(hslNormal).map(a => Math.round(a * 255));
+            hsl[2] = shade;
+            const rgb = self.hsluv.hsluvToRgb(hsl).map(a => Math.round(a * 255));
             text.push(`   --primary-${shade}: ${rgb.join(' ')};`);
         }
         text.push('}', '');
