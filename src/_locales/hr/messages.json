@@ -312,7 +312,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Blokiraj element...",
+    "message": "Blokiraj element…",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -336,15 +336,15 @@
     "description": "English: Color-blind friendly"
   },
   "settingsAppearance": {
-    "message": "Appearance",
+    "message": "Izgled",
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
-    "message": "Theme",
+    "message": "Tema",
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "Custom accent color",
+    "message": "Prilagođena glavna boja",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsCloudStorageEnabledPrompt": {
@@ -352,7 +352,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Ja sam napredni korisnik (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>obavezna literatura</a>)",
+    "message": "Ja sam napredni korisnik",
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
@@ -400,11 +400,11 @@
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsAdvanced": {
-    "message": "Advanced",
+    "message": "Napredno",
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Features suitable only for technical users.",
+    "message": "Značajke prikladne samo za napredne korisnike.",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
@@ -500,7 +500,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Uvoz...",
+    "message": "Uvoz…",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -520,7 +520,7 @@
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Ažuriranje u tijeku...",
+    "message": "Ažuriranje u tijeku…",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -576,7 +576,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Uvoz iz datoteke...",
+    "message": "Uvoz iz datoteke…",
     "description": ""
   },
   "rulesExport": {
@@ -956,7 +956,7 @@
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "Web stranica...",
+    "message": "Web stranica…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
@@ -1048,11 +1048,11 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Vraćanje iz datoteke...",
+    "message": "Vraćanje iz datoteke…",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Vraćanje izvornih zadanih postavki...",
+    "message": "Vraćanje izvornih zadanih postavki…",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
@@ -1164,7 +1164,7 @@
     "description": "tooltip"
   },
   "cloudNoData": {
-    "message": "...\n...",
+    "message": "…\n…",
     "description": ""
   },
   "cloudDeviceNamePrompt": {
@@ -1192,11 +1192,11 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "Blokiraj element u okviru...",
+    "message": "Blokiraj element u okviru…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Prijavite se na popis filtera...",
+    "message": "Prijavite se na popis filtera…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {

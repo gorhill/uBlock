@@ -136,11 +136,11 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Hier klicken, um alle Popups auf dieser Website zu blockieren",
+    "message": "Hier klicken, um alle Pop-ups auf dieser Website zu blockieren",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Hier klicken, um Popups auf dieser Website nicht mehr zu blockieren",
+    "message": "Hier klicken, um Pop-ups auf dieser Website nicht mehr zu blockieren",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -164,7 +164,7 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Hier klicken, um kosmetische Filter auf dieser Seite zu aktivieren",
+    "message": "Hier klicken, um kosmetische Filter auf dieser Website zu aktivieren",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -180,7 +180,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Klicken, um JavaScript auf dieser Seite zu deaktivieren",
+    "message": "Hier klicken, um JavaScript auf dieser Website zu deaktivieren",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
@@ -336,15 +336,15 @@
     "description": "English: Color-blind friendly"
   },
   "settingsAppearance": {
-    "message": "Appearance",
+    "message": "Erscheinungsbild",
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
-    "message": "Theme",
+    "message": "Farbschema",
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "Custom accent color",
+    "message": "Benutzerdefinierte Akzentfarbe",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsCloudStorageEnabledPrompt": {
@@ -352,7 +352,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Ich bin ein erfahrener Anwender (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>Pflichtlektüre</a>)",
+    "message": "Ich bin ein erfahrener Benutzer",
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
@@ -400,11 +400,11 @@
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsAdvanced": {
-    "message": "Advanced",
+    "message": "Erweitert",
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Features suitable only for technical users.",
+    "message": "Funktionen, die nur für technisch versierte Benutzer geeignet sind.",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
@@ -1052,7 +1052,7 @@
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Auf Werkseinstellungen zurücksetzen...",
+    "message": "Auf Werkseinstellungen zurücksetzen …",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
