@@ -36,7 +36,7 @@ body {
     position: relative;
     }
 #themePrimary > span {
-    background-color: rgb(var(--primary-color-50));
+    background-color: rgb(var(--primary-50));
     display: inline-flex;
     width: 2em;
     }

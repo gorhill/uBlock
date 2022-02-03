@@ -250,6 +250,7 @@ const µBlock = {  // jshint ignore:line
 
     liveBlockingProfiles: [],
     blockingProfileColorCache: new Map(),
+    uiAccentStylesheet: '',
 };
 
 µBlock.domainFromHostname = domainFromHostname;

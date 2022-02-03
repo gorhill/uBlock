@@ -237,9 +237,6 @@ const onValueChanged = function(ev) {
     case 'largeMediaSize':
         value = Math.min(Math.max(Math.floor(parseInt(value, 10) || 0), 0), 1000000);
         break;
-    case 'uiAccentCustom0':
-        value = uDom.normalizeAccentColor(value);
-        break;
     default:
         break;
     }

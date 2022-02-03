@@ -140,17 +140,17 @@
  * 
  * */
 :root /* h268 */ {
-     --primary-color-5:  13   4  65; /* S:90 Luv:5 */
-    --primary-color-10:  22   9  92; /* S:90 Luv:10 */
-    --primary-color-20:  40  20 145; /* S:90 Luv:20 */
-    --primary-color-30:  59  32 202; /* S:90 Luv:30 */
-    --primary-color-40:  84  62 234; /* S:90 Luv:40 */
-    --primary-color-50: 112  98 240; /* S:90 Luv:50 */
-    --primary-color-60: 139 130 244; /* S:90 Luv:60 */
-    --primary-color-70: 168 162 247; /* S:90 Luv:70 */
-    --primary-color-80: 196 193 250; /* S:90 Luv:80 */
-    --primary-color-90: 225 224 252; /* S:90 Luv:90 */
-    --primary-color-95: 240 239 254; /* S:90 Luv:95 */
+     --primary-5:  13   4  65; /* S:90 Luv:5 */
+    --primary-10:  22   9  92; /* S:90 Luv:10 */
+    --primary-20:  40  20 145; /* S:90 Luv:20 */
+    --primary-30:  59  32 202; /* S:90 Luv:30 */
+    --primary-40:  84  62 234; /* S:90 Luv:40 */
+    --primary-50: 112  98 240; /* S:90 Luv:50 */
+    --primary-60: 139 130 244; /* S:90 Luv:60 */
+    --primary-70: 168 162 247; /* S:90 Luv:70 */
+    --primary-80: 196 193 250; /* S:90 Luv:80 */
+    --primary-90: 225 224 252; /* S:90 Luv:90 */
+    --primary-95: 240 239 254; /* S:90 Luv:95 */
     }
 
 /*
@@ -219,13 +219,13 @@
     --border-4: rgb(var(--gray-60));
 
     --accent-ink-3: var(--ink-1);
-    --accent-surface-1: rgb(var(--primary-color-40));
+    --accent-surface-1: rgb(var(--primary-40));
 
     /* popup panel */
     --popup-cell-cname-ink: rgb(var(--blue-50));
     --popup-cell-label-mixed-surface: #c29100; /* TODO: fix */
     --popup-icon-x-ink: rgb(var(--red-60));
-    --popup-power-ink-rgb: var(--primary-color-50);
+    --popup-power-ink-rgb: var(--primary-50);
 
     /* horizontal line separator */
     --hr-ink: var(--surface-2);
@@ -247,7 +247,7 @@
     --cm-merge-chunk-surface: rgb(var(--surface-0-rgb) / 40%);
     --cm-negative: #e32f00; /* h:15 S:100 Luv:50 */
     --cm-positive: #008a21; /* h:130 S:100 Luv:50 */
-    --cm-selection-surface: rgb(var(--primary-color-70) / 50%);
+    --cm-selection-surface: rgb(var(--primary-70) / 50%);
     --cm-selection-ink: var(--ink-1);
     --cm-searching-ink: inherit;
     --cm-searching-surface: rgb(var(--yellow-20) / 80%);
@@ -296,13 +296,13 @@
     --border-3: rgb(var(--gray-45));
     --border-4: rgb(var(--gray-50));
 
-    --accent-surface-1: rgb(var(--primary-color-70));
+    --accent-surface-1: rgb(var(--primary-70));
 
     /* popup panel */
     --popup-cell-cname-ink: hsla(0, 0%, 53%, 0.3);
     --popup-cell-label-mixed-surface: hsla(45, 100%, 38%, 1); /* TODO: fix */
     --popup-icon-x-ink: rgb(var(--red-50));
-    --popup-power-ink-rgb: var(--primary-color-60);
+    --popup-power-ink-rgb: var(--primary-60);
 
     /* cloud widget */
     --cloud-total-used-surface: rgb(var(--violet-20) / 25%);
@@ -314,7 +314,7 @@
     --cm-matchingbracket: rgb(var(--green-30) / 50%);
     --cm-negative: #ff8982; /* h:15 S:100 Luv:70 */
     --cm-positive: #00c634; /* h:130 S:100 Luv:70 */
-    --cm-selection-surface: rgb(var(--primary-color-30) / 50%);
+    --cm-selection-surface: rgb(var(--primary-30) / 50%);
     --cm-searching-ink: var(--surface-0);
     --cm-searching-surface: rgb(var(--yellow-20));
 
@@ -404,11 +404,11 @@
     --popup-cell-block-own-surface: rgb(var(--popup-cell-block-own-surface-rgb));
     --popup-cell-block-surface: rgb(var(--popup-cell-block-surface-rgb));
     --popup-power-ink: rgb(var(--popup-power-ink-rgb));
-    --popup-toolbar-surface: rgb(var(--primary-color-80) / 20%);
-    --popup-toolbar-surface-hover: rgb(var(--primary-color-80) / 25%);
+    --popup-toolbar-surface: rgb(var(--primary-80) / 20%);
+    --popup-toolbar-surface-hover: rgb(var(--primary-80) / 25%);
     --popup-ruleset-tool-ink: var(--ink-1);
-    --popup-ruleset-tool-surface: rgb(var(--primary-color-80) / 20%);
-    --popup-ruleset-tool-surface-hover: rgb(var(--primary-color-80) / 25%);
+    --popup-ruleset-tool-surface: rgb(var(--primary-80) / 20%);
+    --popup-ruleset-tool-surface-hover: rgb(var(--primary-80) / 25%);
     --popup-ruleset-tool-shadow: transparent;
 }
 
@@ -434,11 +434,11 @@
 }
 
 :root.accented {
-    --button-surface: rgb(var(--primary-color-80));
+    --button-surface: rgb(var(--primary-80));
 }
 
 :root.dark.accented {
-    --button-surface: rgb(var(--primary-color-30));
+    --button-surface: rgb(var(--primary-30));
 }
 
 /*

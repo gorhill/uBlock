@@ -98,50 +98,48 @@ DOMListFactory.setTheme = function(theme) {
     }
 };
 
-DOMListFactory.normalizeAccentColor = function(accentColor) {
-    if ( self.hsluv === undefined ) { return accentColor; }
-    const hsl = self.hsluv.hexToHsluv(accentColor);
-    hsl[0] = Math.round(hsl[0] * 10) / 10;
-    hsl[1] = Math.round(Math.min(100, Math.max(50, hsl[1])));
-    hsl[2] = 70;
-    const rgb = self.hsluv.hsluvToRgb(hsl).map(
-        a => Math.round(a * 255).toString(16).padStart(2, '0')
-    );
-    return `#${rgb.join('')}`;
-};
-
-DOMListFactory.setAccentColor = function(accentEnabled, accentColor) {
-    if ( self.hsluv === undefined ) { return; }
-    let w = self;
-    let styleText = '';
-    if ( accentEnabled ) {
+DOMListFactory.setAccentColor = function(accentEnabled, accentColor, stylesheet = '') {
+    if ( accentEnabled && stylesheet === '' && self.hsluv !== undefined ) {
+        // Normalize first
+        const hsl = self.hsluv.hexToHsluv(accentColor);
+        hsl[0] = Math.round(hsl[0] * 10) / 10;
+        hsl[1] = Math.round(Math.min(100, Math.max(0, hsl[1])));
+        hsl[2] = 70;
+        const rgb = self.hsluv.hsluvToRgb(hsl).map(
+            a => Math.round(a * 255).toString(16).padStart(2, '0')
+        );
+        // Use normalized result to derive all shades
+        const rgbNormal = `#${rgb.join('')}`;
         const shades = [ 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95 ];
         const text = [];
-        const hsl = self.hsluv.hexToHsluv(accentColor);
-        text.push(':root {');
+        const hslNormal = self.hsluv.hexToHsluv(rgbNormal);
+        text.push(':root.accented {');
         for ( const shade of shades ) {
-            hsl[2] = shade;
-            const rgb = self.hsluv.hsluvToRgb(hsl).map(a => Math.round(a * 255));
-            text.push(`   --primary-color-${shade}: ${rgb.join(' ')};`);
+            hslNormal[2] = shade;
+            const rgb = self.hsluv.hsluvToRgb(hslNormal).map(a => Math.round(a * 255));
+            text.push(`   --primary-${shade}: ${rgb.join(' ')};`);
         }
         text.push('}', '');
-        styleText = text.join('\n');
+        stylesheet = text.join('\n');
+        vAPI.messaging.send('uDom', { what: 'uiAccentStylesheet', stylesheet });
     }
+    let w = self;
     for (;;) {
-        let style = w.document.querySelector('style#accentColors');
+        const wdoc = w.document;
+        let style = wdoc.querySelector('style#accentColors');
         if ( style !== null ) { style.remove(); }
-        if ( styleText.length !== 0 ) {
-            style = w.document.createElement('style');
+        if ( accentEnabled ) {
+            style = wdoc.createElement('style');
             style.id = 'accentColors';
-            style.textContent = styleText;
-            w.document.head.append(style);
-            w.document.documentElement.classList.add('accented');
+            style.textContent = stylesheet;
+            wdoc.head.append(style);
+            wdoc.documentElement.classList.add('accented');
         } else {
-            w.document.documentElement.classList.remove('accented');
+            wdoc.documentElement.classList.remove('accented');
         }
         if ( w === w.parent ) { break; }
         w = w.parent;
-        try { void w.document; } catch(ex) { return; }
+        try { void w.document; } catch(ex) { break; }
     }
 };
 
@@ -152,7 +150,11 @@ DOMListFactory.setAccentColor = function(accentEnabled, accentColor) {
         if ( typeof response !== 'object' || response === null ) { return; }
         uDom.setTheme(response.uiTheme);
         if ( response.uiAccentCustom ) {
-            uDom.setAccentColor(true, response.uiAccentCustom0);
+            uDom.setAccentColor(
+                true,
+                response.uiAccentCustom0,
+                response.uiAccentStylesheet
+            );
         }
         if ( response.uiStyles !== 'unset' ) {
             document.body.style.cssText = response.uiStyles;
