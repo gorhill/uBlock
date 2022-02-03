@@ -21,18 +21,28 @@ html, body {
     z-index: 10;
     }
 .tabButton {
+    background-color: transparent;
     border: 0;
     border-bottom: 3px solid transparent;
+    border-radius: 0;
     color: var(--dashboard-tab-ink);
         fill: var(--dashboard-tab-ink);
+    font-family: var(--font-family);
+    font-size: var(--font-size);
     padding: 0.7em 1.4em calc(0.7em - 3px);
     text-decoration: none;
-    user-select: none;
     white-space: nowrap;
     }
 .tabButton:focus {
     outline: 0;
     }
+/* 
+ * TODO: support keyboard-driven navigation
+ * 
+.tabButton:not(:active):focus {
+    background-color: var(--dashboard-tab-focus-surface);
+    }
+ */
 .tabButton.selected {
     background-color: var(--dashboard-tab-active-surface);
     border-bottom: 3px solid var(--dashboard-tab-active-ink);
@@ -91,8 +101,8 @@ body.noDashboard #dashboard-nav {
     cursor: pointer;
     }
 :root.desktop .tabButton:not(.selected):hover {
-    background-color: var(--dashboard-tab-surface-hover);
-    border-bottom-color: var(--dashboard-tab-border-hover);
+    background-color: var(--dashboard-tab-hover-surface);
+    border-bottom-color: var(--dashboard-tab-hover-border);
     }
 
 /* touch-screen devices */

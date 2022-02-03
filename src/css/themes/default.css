@@ -122,11 +122,12 @@
 }
 
 /*
- * Font size
+ * Font
  * 
  * */
 :root {
     --font-size: 14px;
+    --font-family: Inter, sans-serif;
 }
 
 :root.mobile {
@@ -139,18 +140,18 @@
  * Tool: hsluv.org
  * 
  * */
-:root /* h268 */ {
-     --primary-5:  13   4  65; /* S:90 Luv:5 */
-    --primary-10:  22   9  92; /* S:90 Luv:10 */
-    --primary-20:  40  20 145; /* S:90 Luv:20 */
-    --primary-30:  59  32 202; /* S:90 Luv:30 */
-    --primary-40:  84  62 234; /* S:90 Luv:40 */
-    --primary-50: 112  98 240; /* S:90 Luv:50 */
-    --primary-60: 139 130 244; /* S:90 Luv:60 */
-    --primary-70: 168 162 247; /* S:90 Luv:70 */
-    --primary-80: 196 193 250; /* S:90 Luv:80 */
-    --primary-90: 225 224 252; /* S:90 Luv:90 */
-    --primary-95: 240 239 254; /* S:90 Luv:95 */
+:root /* h255 */ {
+    --primary-5:   3  16  40; /* S:90 Luv:5 */
+   --primary-10:   5  27  59; /* S:90 Luv:10 */
+   --primary-20:  14  47  95; /* S:90 Luv:20 */
+   --primary-30:  24  69 134; /* S:90 Luv:30 */
+   --primary-40:  34  93 176; /* S:90 Luv:40 */
+   --primary-50:  45 117 219; /* S:90 Luv:50 */
+   --primary-60:  86 143 244; /* S:90 Luv:60 */
+   --primary-70: 137 170 247; /* S:90 Luv:70 */
+   --primary-80: 179 198 250; /* S:90 Luv:80 */
+   --primary-90: 218 226 252; /* S:90 Luv:90 */
+   --primary-95: 236 240 254; /* S:90 Luv:95 */
     }
 
 /*
@@ -223,6 +224,9 @@
 
     /* buttons */
     --button-surface-rgb: var(--gray-80);
+
+    --dashboard-tab-active-ink-rgb: var(--primary-40);
+    --dashboard-tab-focus-surface-rgb: var(--primary-90);
 
     /* popup panel */
     --popup-cell-cname-ink: #0054d7; /* h260 S:100 Luv:40 */;
@@ -303,6 +307,9 @@
 
     /* buttons */
     --button-surface-rgb: var(--gray-30);
+
+    --dashboard-tab-active-ink-rgb: var(--primary-70);
+    --dashboard-tab-focus-surface-rgb: var(--primary-20);
 
     /* popup panel */
     --popup-cell-cname-ink: #93a6ff; /* h260 S:100 Luv:70 */;
@@ -386,10 +393,11 @@
     --notice-surface-shadow: #000 0 2px 8px;
 
     --dashboard-tab-ink: var(--ink-1);
-    --dashboard-tab-active-ink: var(--accent-surface-1);
+    --dashboard-tab-active-ink: rgb(var(--dashboard-tab-active-ink-rgb));
     --dashboard-tab-active-surface: transparent;
-    --dashboard-tab-surface-hover: var(--surface-2);
-    --dashboard-tab-border-hover: var(--surface-3);
+    --dashboard-tab-focus-surface: rgb(var(--dashboard-tab-focus-surface-rgb));
+    --dashboard-tab-hover-surface: var(--surface-2);
+    --dashboard-tab-hover-border: var(--surface-3);
 
     /* info levels: normal, fyi, warn, error -- we want same Luv */
     --info0-ink-rgb: 119 119 119; /* h:  0 S:  0 Luv:60 */
