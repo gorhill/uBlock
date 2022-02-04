@@ -539,9 +539,9 @@ body[dir="rtl"] #modalOverlay > div > div:nth-of-type(2) {
     max-height: 20vh;
     }
 #netFilteringDialog > .preview > span {
-    background-color: white;
+    background-color: var(--surface-3);
     cursor: pointer;
-    padding: 0.5em;
+    padding: 1em;
     }
 
 #netFilteringDialog > .headers {
