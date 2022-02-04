@@ -253,7 +253,7 @@ body[dir="rtl"] #netInspector #filterExprPicker {
     background-color: rgba(0, 19, 110, 0.1);
     }
 #vwRenderer .logEntry > div[data-aliasid] {
-    color: mediumblue;
+    color: var(--popup-cell-cname-ink);
     }
 #vwRenderer .logEntry > div[data-type="tabLoad"] {
     background-color: #666;
