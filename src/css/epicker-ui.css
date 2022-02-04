@@ -47,11 +47,11 @@ html#ublock0-epicker,
     color: var(--button-preferred-ink);
 }
 #ublock0-epicker #move {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAD0lEQVQI12NgwAH+MxANACsZAQAWO6hBAAAAAElFTkSuQmCC');
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAFElEQVQI12NgwAfKy8v/M5ANYLoBshgEyQo6H9UAAAAASUVORK5CYII=');
     cursor: grab;
     flex-grow: 1;
     margin: 2px 4px;
-    opacity: 0.2;
+    opacity: 0.8;
     }
 #ublock0-epicker aside.moving #move {
     cursor: grabbing;
