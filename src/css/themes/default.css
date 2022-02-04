@@ -242,7 +242,7 @@
     --cloud-used-surface: rgb(var(--violet-60));
 
     /* codemirror */
-    --cm-active-line: var(--surface-1);
+    --cm-active-line: rgb(var(--gray-90));
     --cm-cursor: var(--ink-0);
     --cm-foldmarker-ink: rgb(var(--blue-40));
     --cm-gutter-border: var(--surface-1);
@@ -254,10 +254,10 @@
     --cm-merge-chunk-surface: rgb(var(--surface-0-rgb) / 40%);
     --cm-negative: #e32f00; /* h:15 S:100 Luv:50 */
     --cm-positive: #008a21; /* h:130 S:100 Luv:50 */
-    --cm-selection-surface: rgb(var(--primary-70) / 50%);
-    --cm-selection-ink: var(--ink-1);
-    --cm-searching-ink: inherit;
-    --cm-searching-surface: rgb(var(--yellow-20) / 80%);
+    --cm-selection-surface: rgb(var(--gray-90));
+    --cm-selection-focused-surface: rgb(var(--primary-90));
+    --cm-searching-ink: black;
+    --cm-searching-surface: #fee300cc /* h75 S:100 Luv:90 a:80% */;
     --cm-search-match-surface: rgb(var(--yellow-40) / 50%);
 
     /* syntax highlight: static filtering */
@@ -322,14 +322,16 @@
     --cloud-used-surface: rgb(var(--violet-20));
 
     /* codemirror */
+    --cm-active-line: rgb(var(--gray-20));
     --cm-merge-copy-ink: rgb(var(--blue-30));
     --cm-foldmarker-ink: rgb(var(--blue-20));
     --cm-matchingbracket: rgb(var(--green-30) / 50%);
     --cm-negative: #ff8982; /* h:15 S:100 Luv:70 */
     --cm-positive: #00c634; /* h:130 S:100 Luv:70 */
-    --cm-selection-surface: rgb(var(--primary-30) / 50%);
-    --cm-searching-ink: var(--surface-0);
-    --cm-searching-surface: rgb(var(--yellow-20));
+    --cm-selection-surface: rgb(var(--gray-20));
+    --cm-selection-focused-surface: rgb(var(--primary-20));
+    --cm-searching-ink: black;
+    --cm-searching-surface: #fee300cc /* h75 S:100 Luv:90 a:80% */;
 
     /* syntax highlight: static filtering */
     --sf-comment-ink: var(--ink-3);

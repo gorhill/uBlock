@@ -15,9 +15,11 @@
 .CodeMirror-cursor {
     border-color: var(--cm-cursor);
     }
+.CodeMirror-selected {
+    background-color: var(--cm-selection-surface);
+    }
 .CodeMirror-focused .CodeMirror-selected {
-    background: var(--cm-selection-surface);
-    color: var(--cm-selection-ink);
+    background-color: var(--cm-selection-focused-surface);
     }
 .CodeMirror-foldmarker {
     color: var(--cm-foldmarker-ink);
@@ -31,8 +33,7 @@
 .CodeMirror-line::selection,
 .CodeMirror-line > span::selection,
 .CodeMirror-line > span > span::selection {
-    background: var(--cm-selection-surface);
-    color: var(--cm-selection-ink);
+    background-color: var(--cm-selection-surface);
     }
 .CodeMirror-linenumber {
     color: var(--cm-gutter-ink);
