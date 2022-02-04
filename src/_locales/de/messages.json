@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
@@ -80,7 +80,7 @@
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
-    "message": "blockierte Anfragen",
+    "message": "Blockierte Anfragen",
     "description": "English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt": {
@@ -112,7 +112,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
-    "message": "Hier klicken, um die Übersicht zu öffnen",
+    "message": "Hier klicken, um das Dashboard zu öffnen",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
@@ -132,7 +132,7 @@
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Pop-ups auf dieser Seite blockieren/zulassen",
+    "message": "Pop-ups auf dieser Website blockieren/zulassen",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
@@ -140,7 +140,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Hier klicken, um Pop-ups auf dieser Website nicht mehr zu blockieren",
+    "message": "Hier klicken, um Pop-ups auf dieser Website wieder zuzulassen",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -152,7 +152,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Hier klicken, um große Medienelemente auf dieser Website nicht mehr zu blockieren",
+    "message": "Hier klicken, um große Medienelemente auf dieser Website wieder zuzulassen",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -160,7 +160,7 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Hier klicken, um kosmetische Filter auf dieser Seite zu deaktivieren",
+    "message": "Hier klicken, um kosmetische Filter auf dieser Website zu deaktivieren",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
@@ -168,15 +168,15 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Remote-Schriftarten für diese Seite an-/ausschalten",
+    "message": "Externe Schriftarten für diese Website erlauben/blockieren",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Hier klicken, um Remote-Schriftarten auf dieser Website zu blockieren",
+    "message": "Hier klicken, um externe Schriftarten auf dieser Website zu blockieren",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Hier klicken, um Remote-Schriftarten auf dieser Website nicht mehr zu blockieren",
+    "message": "Hier klicken, um externe Schriftarten auf dieser Website wieder zuzulassen",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
@@ -184,7 +184,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Klicken, um JavaScript auf dieser Seite wieder zuzulassen",
+    "message": "Hier klicken, um JavaScript auf dieser Website wieder zuzulassen",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
@@ -200,7 +200,7 @@
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
-    "message": "Externe Schriften",
+    "message": "Externe Schriftarten",
     "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
@@ -224,11 +224,11 @@
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
-    "message": "Hier klicken, um deine Änderungen dauerhaft zu übernehmen.",
+    "message": "Hier klicken, um Ihre Änderungen dauerhaft zu übernehmen.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Hier klicken, um deine Änderungen rückgängig zu machen.",
+    "message": "Hier klicken, um Ihre Änderungen rückgängig zu machen.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {
@@ -312,7 +312,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Element blockieren...",
+    "message": "Element blockieren…",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -320,7 +320,7 @@
     "description": "English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt": {
-    "message": "Anzahl blockierter Anfragen auf dem Symbol anzeigen",
+    "message": "Anzahl der blockierten Anfragen auf dem Symbol anzeigen",
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
@@ -332,7 +332,7 @@
     "description": "English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt": {
-    "message": "Anzeige für farbenblinde Benutzer",
+    "message": "Modus für Farbenblinde",
     "description": "English: Color-blind friendly"
   },
   "settingsAppearance": {
@@ -372,7 +372,7 @@
     "description": ""
   },
   "settingPerSiteSwitchGroupSynopsis": {
-    "message": "Dieses Standardverhalten kann für jede Webseite angepasst werden",
+    "message": "Dieses Standardverhalten kann für jede Website angepasst werden",
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
@@ -384,7 +384,7 @@
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
-    "message": "Externe Schriftarten blocken",
+    "message": "Externe Schriftarten blockieren",
     "description": ""
   },
   "settingsNoScriptingPrompt": {
@@ -416,7 +416,7 @@
     "description": "English: Last restore:"
   },
   "settingsLastBackupPrompt": {
-    "message": "Letztes Backup:",
+    "message": "Letzte Sicherung:",
     "description": "English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt": {
@@ -428,7 +428,7 @@
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
-    "message": "Automatische Aktualisierung der Filterlisten",
+    "message": "Filterlisten automatisch aktualisieren",
     "description": "A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow": {
@@ -440,7 +440,7 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
-    "message": "Kosmetische Filter auswerten und deren Anwendung erzwingen",
+    "message": "Kosmetische Filter auswerten und deren Anwendung erzwingen.",
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
@@ -500,7 +500,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Importieren …",
+    "message": "Importieren…",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -520,7 +520,7 @@
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Wird aktualisiert …",
+    "message": "Wird aktualisiert…",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -532,11 +532,11 @@
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
-    "message": "Importieren und anfügen",
+    "message": "Importieren und anfügen…",
     "description": "English: Import and append"
   },
   "1pExport": {
-    "message": "Exportieren",
+    "message": "Exportieren…",
     "description": "English: Export"
   },
   "1pExportFilename": {
@@ -576,11 +576,11 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Aus Datei importieren …",
+    "message": "Aus Datei importieren…",
     "description": ""
   },
   "rulesExport": {
-    "message": "In eine Datei exportieren ...",
+    "message": "In Datei exportieren…",
     "description": ""
   },
   "rulesDefaultFileName": {
@@ -588,7 +588,7 @@
     "description": "default file name to use"
   },
   "rulesHint": {
-    "message": "Liste deiner dynamischen Filterregeln.",
+    "message": "Liste Ihrer dynamischen Filterregeln.",
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
@@ -616,15 +616,15 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Importieren und anfügen",
+    "message": "Importieren und anfügen…",
     "description": "English: Import and append"
   },
   "whitelistExport": {
-    "message": "Exportieren",
+    "message": "Exportieren…",
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "ublock-whitelist_{{datetime}}.txt",
+    "message": "ublock-ausnahmeregeln_{{datetime}}.txt",
     "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
@@ -764,7 +764,7 @@
     "description": "Label to identify the URL of an entry"
   },
   "loggerURLFilteringHeader": {
-    "message": "URL-Regeln",
+    "message": "URL-Regel",
     "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
@@ -776,23 +776,23 @@
     "description": "Label for the type selector"
   },
   "loggerStaticFilteringHeader": {
-    "message": "Statische Filter",
+    "message": "Statischer Filter",
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "{{action}} Netzwerkanfragen {{type}} {{br}}deren URL-Adresse mit {{url}} übereinstimmt{{br}} und von {{origin}} stammen,{{br}}{{importance}} ein übereinstimmender Ausnahme-Filter existiert.",
+    "message": "{{action}} Netzwerkanfragen {{type}},{{br}}deren URL-Adresse mit {{url}} übereinstimmt{{br}}und von {{origin}} stammen,{{br}}{{importance}} ein übereinstimmender Ausnahme-Filter existiert.\n",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
-    "message": "Blockieren",
+    "message": "Blockiere",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAllow": {
-    "message": "Erlauben",
+    "message": "Erlaube",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType": {
-    "message": "vom Typ \"{{type}}\"",
+    "message": "vom Typ »{{type}}«",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyType": {
@@ -820,7 +820,7 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Statischer Filter <code>{{filter}}</code> konnte in keiner der aktuell aktivierten Filterlisten gefunden werden.",
+    "message": "Statischer Filter konnte in keiner der derzeit aktivierten Filterlisten gefunden werden",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
@@ -908,7 +908,7 @@
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "Filterprobleme/Webseite funktioniert nicht",
+    "message": "Filterprobleme / Website funktioniert nicht",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
@@ -948,7 +948,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Um die freiwilligen Helfer nicht mit doppelten Meldungen zu belasten, vergewissern Sie sich bitte, ob das Problem nicht schon einmal gemeldet wurde.",
+    "message": "Um die Freiwilligen nicht mit doppelten Meldungen zu belasten, vergewissern Sie sich bitte, ob das Problem nicht schon einmal gemeldet wurde.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -956,11 +956,11 @@
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "Die Webseite …",
+    "message": "Die Webseite…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Ein Element auswählen --",
+    "message": "-- Einen Eintrag auswählen --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
@@ -1032,7 +1032,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "Die uBO-eigenen Filterlisten werden auf den folgenden <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a> frei zur Verfügung gestellt:",
+    "message": "Die uBO-eigenen Filterlisten werden auf den folgenden <a href=\"https://de.wikipedia.org/wiki/Content_Delivery_Network\">CDNs</a> frei zur Verfügung gestellt:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
@@ -1040,7 +1040,7 @@
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "Backup in eine Datei",
+    "message": "In Datei sichern…",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
@@ -1048,19 +1048,19 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Aus Datei wiederherstellen …",
+    "message": "Aus Datei wiederherstellen…",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Auf Werkseinstellungen zurücksetzen …",
+    "message": "Auf Werkseinstellungen zurücksetzen…",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
-    "message": "Alle Einstellungen werden überschrieben und auf den Stand von {{time}} gebracht. Anschließend wird uBlock neu gestartet.\n\nSollen die aktuellen Einstellungen durch die Sicherung ersetzt werden?",
+    "message": "Alle Einstellungen werden überschrieben und auf den Stand vom {{time}} gebracht. Anschließend wird uBlock₀ neu gestartet.\n\nSollen die aktuellen Einstellungen durch die Sicherung ersetzt werden?",
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {
-    "message": "Die Daten konnten nicht gelesen werden oder waren ungültig",
+    "message": "Die Daten konnten nicht gelesen werden oder sind ungültig",
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
@@ -1072,7 +1072,7 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: Folgende Adresse Ihrer benutzerdefinierten Filterliste hinzufügen?\n\nTitel: »{{title}}«\nAdresse: {{url}}",
+    "message": "Folgende URL zu Ihren benutzerdefinierten Filterlisten hinzufügen?\n\nTitel: »{{title}}«\nURL: {{url}}",
     "description": "No longer used"
   },
   "subscribeButton": {
@@ -1120,7 +1120,7 @@
     "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
-    "message": "Aufgrund des folgenden Filters",
+    "message": "Aufgrund des folgenden Filters:",
     "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
@@ -1132,7 +1132,7 @@
     "description": "English: List of filter list names follows"
   },
   "docblockedBack": {
-    "message": "Gehe zurück",
+    "message": "Zurück",
     "description": "English: Go back"
   },
   "docblockedClose": {
@@ -1140,7 +1140,7 @@
     "description": "English: Close this window"
   },
   "docblockedProceed": {
-    "message": "Kein striktes Blockieren für {{hostname}}",
+    "message": "Striktes Blockieren für {{hostname}} deaktivieren",
     "description": "English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary": {
@@ -1160,11 +1160,11 @@
     "description": "tooltip"
   },
   "cloudPullAndMerge": {
-    "message": "Backup aus der Cloud importieren und mit den aktuellen Einstellungen zusammenführen",
+    "message": "Sicherung aus der Cloud importieren und mit den aktuellen Einstellungen zusammenführen",
     "description": "tooltip"
   },
   "cloudNoData": {
-    "message": "...\n...",
+    "message": "…\n…",
     "description": ""
   },
   "cloudDeviceNamePrompt": {
@@ -1172,7 +1172,7 @@
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
-    "message": "Warnung! Veränderungen dieser erweiterten Einstellungen auf eigenes Risiko.",
+    "message": "Warnung! Die Veränderung dieser erweiterten Einstellungen erfolgt auf eigenes Risiko.",
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {
@@ -1192,11 +1192,11 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "Elemente in Frame sperren …",
+    "message": "Element im Frame blockieren…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Filterliste abonnieren …",
+    "message": "Filterliste abonnieren…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
@@ -1204,7 +1204,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Tastaturkürzel festlegen",
+    "message": "Tastenkürzel festlegen",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {

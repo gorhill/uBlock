@@ -344,7 +344,7 @@
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "Color acentuado personalizado",
+    "message": "Tono de color personalizado",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsCloudStorageEnabledPrompt": {
@@ -352,7 +352,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Soy usuario avanzado (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>lectura necesaria</a>)",
+    "message": "Soy usuario avanzado",
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
@@ -404,7 +404,7 @@
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Características aptas sólo para usuarios técnicos.",
+    "message": "Características aptas solo para usuarios técnicos.",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
