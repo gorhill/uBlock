@@ -153,7 +153,22 @@ vAPI.browserSettings = (( ) => {
                     break;
 
                 case 'webrtcIPAddress':
-                    if ( this.canLeakLocalIPAddresses === false ) { return; }
+                    // https://github.com/uBlockOrigin/uBlock-issues/issues/1928
+                    // https://www.reddit.com/r/uBlockOrigin/comments/sl7p74/
+                    //   Hypothetical: some browsers _think_ uBO is still using
+                    //   the setting possibly based on cached state from the
+                    //   past, and making an explicit API call that uBO is not
+                    //   using the setting appears to solve those unexpected
+                    //   reported occurrences of uBO interfering despite never
+                    //   using the API.
+                    if ( this.canLeakLocalIPAddresses === false ) {
+                        if ( vAPI.webextFlavor.soup.has('chromium') ) {
+                            bp.network.webRTCIPHandlingPolicy.clear({
+                                scope: 'regular',
+                            });
+                        }
+                        return;
+                    }
                     if ( !!details[setting] ) {
                         bp.network.webRTCIPHandlingPolicy.clear({
                             scope: 'regular',
