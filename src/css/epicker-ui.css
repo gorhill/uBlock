@@ -63,7 +63,7 @@ html#ublock0-epicker,
     width: 100%;
 }
 #ublock0-epicker section > div:first-child {
-    border: 1px solid var(--border-2);
+    border: 1px solid var(--button-surface);
     margin: 0;
     position: relative;
 }
@@ -115,7 +115,7 @@ html#ublock0-epicker,
     }
 .resultsetModifier  > span > span:nth-of-type(1) {
     background-color: var(--checkbox-checked-ink);
-    border-inline-end: 1px solid #aaa;
+    border-inline-end: 1px solid var(--button-surface);
     display: inline-block;
     flex-shrink: 0;
     height: 6px;
@@ -136,8 +136,8 @@ html#ublock0-epicker,
     width: 16px;
     }
 .resultsetModifier  > span > span:nth-of-type(3) {
-    background-color: var(--checkbox-ink);
-    border-inline-start: 1px solid #aaa;
+    background-color: var(--button-surface);
+    border-inline-start: 1px solid var(--button-surface);
     display: inline-block;
     flex-grow: 1;
     height: 6px;
@@ -155,8 +155,8 @@ html#ublock0-epicker,
     }
 #resultsetCount {
     align-items: center;
-    background-color: #aaa;
-    color: white;
+    background-color: var(--button-surface);
+    color: var(--ink-1);
     display: inline-flex;
     justify-content: center;
     min-width: 2.2em;
