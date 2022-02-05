@@ -240,7 +240,7 @@
     "description": ""
   },
   "popup3pAnyRulePrompt": {
-    "message": "Ressourcen von Drittseiten",
+    "message": "Ressourcen von Drittanbietern",
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
@@ -256,11 +256,11 @@
     "description": ""
   },
   "popup3pScriptRulePrompt": {
-    "message": "Skripte von Drittseiten",
+    "message": "Skripte von Drittanbietern",
     "description": ""
   },
   "popup3pFrameRulePrompt": {
-    "message": "Frames von Drittseiten",
+    "message": "Frames von Drittanbietern",
     "description": ""
   },
   "popupHitDomainCountPrompt": {
@@ -352,7 +352,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Ich bin ein erfahrener Benutzer",
+    "message": "Ich bin technisch versiert",
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
@@ -404,7 +404,7 @@
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Funktionen, die nur für technisch versierte Benutzer geeignet sind.",
+    "message": "Funktionen, die nur für technisch versierte Benutzer geeignet sind",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
@@ -672,7 +672,7 @@
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
-    "message": "uBlock Origin Wiki: Protokollierung",
+    "message": "uBlock Origin-Wiki: Protokoll der Netzwerkanfragen",
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
@@ -848,7 +848,7 @@
     "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
   },
   "loggerSettingHideColumnTime": {
-    "message": "{{input}} Zeit",
+    "message": "{{input}} Uhrzeit",
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
@@ -896,7 +896,7 @@
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Lesen Sie die Dokumentation auf <code>uBlock/wiki</code>, um mehr über uBlock Origins-Features zu lernen.",
+    "message": "Lesen Sie die Dokumentation auf <code>uBlock/wiki</code>, um mehr über alle Funktionen von uBlock Origin zu erfahren.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
