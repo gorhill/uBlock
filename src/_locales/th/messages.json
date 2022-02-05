@@ -404,7 +404,7 @@
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Features suitable only for technical users.",
+    "message": "Features suitable only for technical users",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
