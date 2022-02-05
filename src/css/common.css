@@ -55,6 +55,10 @@ a {
     color: var(--link-ink);
         fill: var(--link-ink);
     }
+a:hover {
+    color: var(--link-hover-ink);
+        fill: var(--link-hover-ink);
+    }
 code, .code {
     background-color: var(--surface-2);
     font-family: monospace;

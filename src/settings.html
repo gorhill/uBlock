@@ -31,7 +31,22 @@
 <div class="fieldset">
     <div class="fieldset-header" data-i18n="settingsAppearance"></div>
     <div class="li"><label><span data-i18n="settingsThemeLabel">_</span>&emsp;<select data-setting-name="uiTheme" data-setting-type="value"><option value="auto">Auto<option value="light">Light<option value="dark">Dark</select></label></div>
-    <div class="li"><label><span class="input checkbox"><input type="checkbox" data-setting-name="uiAccentCustom" data-setting-type="bool"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span><span data-i18n="settingsThemeAccent0Label">_</span></label>&emsp;<input type="color" data-setting-name="uiAccentCustom0" data-setting-type="value"></div>
+    <div class="li">
+        <label><span class="input checkbox"><input type="checkbox" data-setting-name="uiAccentCustom" data-setting-type="bool"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span><span data-i18n="settingsThemeAccent0Label">_</span></label>&emsp;
+        <input type="color" list="preset-accent-colors" data-setting-name="uiAccentCustom0" data-setting-type="value">
+        <datalist id="preset-accent-colors">
+            <option value="#f75782"><!-- h:0...360 step 40 S:90 Luv:60 -->
+            <option value="#cc7f2b">
+            <option value="#9c932b">
+            <option value="#56a22b">
+            <option value="#2ea283">
+            <option value="#309fa6">
+            <option value="#3498d6">
+            <option value="#ad75f4">
+            <option value="#f542d6">
+            <option value="#919191"><!-- h:0 S:0 Luv:60 -->
+        </datalist>
+    </div>
     <div class="li"><label><span class="input checkbox"><input type="checkbox" data-setting-name="colorBlindFriendly" data-setting-type="bool"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span><span data-i18n="settingsColorBlindPrompt">_</span></label></div>
     <div class="li"><label><span class="input checkbox"><input type="checkbox" data-setting-name="tooltipsDisabled" data-setting-type="bool"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span><span data-i18n="settingsTooltipsPrompt">_</span></label></div>
 </div>

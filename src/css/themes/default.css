@@ -127,11 +127,13 @@
  * */
 :root {
     --font-size: 14px;
+    --font-size-smaller: 13px;
     --font-family: Inter, sans-serif;
 }
 
 :root.mobile {
     --font-size: 16px;
+    --font-size-smaller: 14px;
 }
 
 /*
@@ -222,6 +224,9 @@
     --accent-ink-3: var(--ink-1);
     --accent-surface-1: rgb(var(--primary-40));
 
+    --link-ink: rgb(var(--primary-40));
+    --link-hover-ink: rgb(var(--primary-30));
+
     /* buttons */
     --button-surface-rgb: var(--gray-80);
 
@@ -305,6 +310,9 @@
 
     --accent-surface-1: rgb(var(--primary-70));
 
+    --link-ink: rgb(var(--primary-70));
+    --link-hover-ink: rgb(var(--primary-80));
+
     /* buttons */
     --button-surface-rgb: var(--gray-30);
 
@@ -371,7 +379,6 @@
     --accent-ink-1: var(--surface-0);
     --accent-ink-3: var(--ink-1);
 
-    --link-ink: var(--accent-surface-1);
     --subtil-ink: var(--accent-surface-1);
 
     --fieldset-header-surface: transparent;

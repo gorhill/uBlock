@@ -127,7 +127,7 @@ textarea {
     transform: scaleY(1);
     }
 #netInspector #filterExprPicker {
-    background-color: var(--surface-1);
+    background-color: var(--surface-0);
     border: 1px solid gray;
     display: none;
     position: absolute;

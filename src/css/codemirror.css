@@ -33,7 +33,7 @@
 .CodeMirror-line::selection,
 .CodeMirror-line > span::selection,
 .CodeMirror-line > span > span::selection {
-    background-color: var(--cm-selection-surface);
+    background-color: var(--cm-selection-focused-surface);
     }
 .CodeMirror-linenumber {
     color: var(--cm-gutter-ink);

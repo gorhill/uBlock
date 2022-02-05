@@ -4,7 +4,7 @@ body {
 
 .synopsis {
     color: var(--ink-1);
-    font-size: 90%;
+    font-size: var(--font-size-smaller);
     opacity: var(--medium-em);
     }
 
