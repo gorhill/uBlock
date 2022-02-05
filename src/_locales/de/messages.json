@@ -72,11 +72,11 @@
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Klicken, um uBlock₀ für diese Website zu deaktivieren. \n\nStrg+Klick, um uBlock₀ nur auf dieser Webseite zu deaktivieren.",
+    "message": "Hier klicken, um uBlock₀ für diese Website zu deaktivieren. \n\nStrg+Klick, um uBlock₀ nur auf dieser Seite zu deaktivieren.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Klicken Sie hier, um uBlock₀ für diese Website zu aktivieren.",
+    "message": "Hier klicken, um uBlock₀ für diese Website zu aktivieren.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -112,7 +112,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
-    "message": "Hier klicken, um das Dashboard zu öffnen",
+    "message": "Dashboard öffnen",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
@@ -264,7 +264,7 @@
     "description": ""
   },
   "popupHitDomainCountPrompt": {
-    "message": "verbundene Domains",
+    "message": "Verbundene Domains",
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
@@ -284,7 +284,7 @@
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party frames' cell"
   },
   "pickerCreate": {
-    "message": "Erzeugen",
+    "message": "Erstellen",
     "description": "English: Create"
   },
   "pickerPick": {
@@ -592,7 +592,7 @@
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
-    "message": "Regel-Syntax: <code>Quelle Ziel Typ Action</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'> vollständige Dokumentation</a>).",
+    "message": "Regel-Syntax: <code>Quelle Ziel Typ Aktion</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>Ausführliche Dokumentation</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
@@ -932,7 +932,7 @@
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
-    "message": "Fehlerinformationen",
+    "message": "Informationen zur Fehlerbehebung",
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
@@ -1016,7 +1016,7 @@
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Quelltext",
+    "message": "Quellcode",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {

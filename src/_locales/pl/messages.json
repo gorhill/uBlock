@@ -352,7 +352,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Jestem zaawansowanym użytkownikiem (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>Wymagana lektura</a>)",
+    "message": "Jestem zaawansowanym użytkownikiem",
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {

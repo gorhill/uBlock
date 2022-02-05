@@ -336,7 +336,7 @@
     "description": "English: Color-blind friendly"
   },
   "settingsAppearance": {
-    "message": "界面外觀",
+    "message": "外觀",
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
@@ -404,7 +404,7 @@
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "僅為專業用戶設計的功能。",
+    "message": "僅適合技術使用者使用的相關功能。",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
