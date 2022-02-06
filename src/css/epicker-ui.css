@@ -63,7 +63,7 @@ html#ublock0-epicker,
     width: 100%;
 }
 #ublock0-epicker section > div:first-child {
-    border: 1px solid var(--button-surface);
+    border: 1px solid var(--surface-3);
     margin: 0;
     position: relative;
 }
@@ -115,7 +115,7 @@ html#ublock0-epicker,
     }
 .resultsetModifier  > span > span:nth-of-type(1) {
     background-color: var(--checkbox-checked-ink);
-    border-inline-end: 1px solid var(--button-surface);
+    border-inline-end: 1px solid var(--surface-3);
     display: inline-block;
     flex-shrink: 0;
     height: 6px;
@@ -136,8 +136,8 @@ html#ublock0-epicker,
     width: 16px;
     }
 .resultsetModifier  > span > span:nth-of-type(3) {
-    background-color: var(--button-surface);
-    border-inline-start: 1px solid var(--button-surface);
+    background-color: var(--surface-3);
+    border-inline-start: 1px solid var(--surface-3);
     display: inline-block;
     flex-grow: 1;
     height: 6px;
@@ -155,7 +155,7 @@ html#ublock0-epicker,
     }
 #resultsetCount {
     align-items: center;
-    background-color: var(--button-surface);
+    background-color: var(--surface-3);
     color: var(--ink-1);
     display: inline-flex;
     justify-content: center;
