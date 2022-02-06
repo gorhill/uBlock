@@ -73,7 +73,6 @@ html#ublock0-epicker,
 #ublock0-epicker section .codeMirrorContainer {
     border: none;
     box-sizing: border-box;
-    font: 11px monospace;
     height: 8em;
     max-height: 50vh;
     min-height: 1em;
@@ -200,7 +199,7 @@ html#ublock0-epicker,
     border: 1px solid transparent;
     cursor: pointer;
     direction: ltr;
-    font: 11px monospace;
+    font-family: monospace;
     white-space: nowrap;
 }
 #ublock0-epicker #candidateFilters .changeFilter li.active {
