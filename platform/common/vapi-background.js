@@ -152,7 +152,7 @@ vAPI.browserSettings = (( ) => {
                     }
                     break;
 
-                case 'webrtcIPAddress':
+                case 'webrtcIPAddress': {
                     // https://github.com/uBlockOrigin/uBlock-issues/issues/1928
                     // https://www.reddit.com/r/uBlockOrigin/comments/sl7p74/
                     //   Hypothetical: some browsers _think_ uBO is still using
@@ -161,26 +161,27 @@ vAPI.browserSettings = (( ) => {
                     //   using the setting appears to solve those unexpected
                     //   reported occurrences of uBO interfering despite never
                     //   using the API.
+                    const mustEnable = !details[setting];
                     if ( this.canLeakLocalIPAddresses === false ) {
-                        if ( vAPI.webextFlavor.soup.has('chromium') ) {
+                        if ( mustEnable && vAPI.webextFlavor.soup.has('chromium') ) {
                             bp.network.webRTCIPHandlingPolicy.clear({
                                 scope: 'regular',
                             });
                         }
-                        return;
+                        continue;
                     }
-                    if ( !!details[setting] ) {
-                        bp.network.webRTCIPHandlingPolicy.clear({
-                            scope: 'regular',
-                        });
-                    } else {
+                    if ( mustEnable ) {
                         bp.network.webRTCIPHandlingPolicy.set({
                             value: 'default_public_interface_only',
                             scope: 'regular'
                         });
+                    } else {
+                        bp.network.webRTCIPHandlingPolicy.clear({
+                            scope: 'regular',
+                        });
                     }
                     break;
-
+                }
                 default:
                     break;
                 }
