@@ -215,6 +215,7 @@
     /* https://material.io/design/color/text-legibility.html#text-backgrounds */
     --ink-rgb: var(--ink-80);
     --ink-0: black;
+    --ink-100: white;
 
     --border-1: rgb(var(--gray-75));
     --border-2: rgb(var(--gray-70));
@@ -245,6 +246,9 @@
     /* cloud widget */
     --cloud-total-used-surface: rgb(var(--violet-60) / 25%);
     --cloud-used-surface: rgb(var(--violet-60));
+
+    /* misc */
+    --error-surface: #c00004; /* h:12 S:100 Luv:40 */
 
     /* codemirror */
     --cm-active-line: rgb(var(--gray-90));
@@ -302,6 +306,7 @@
 
     --ink-rgb: var(--gray-95);
     --ink-0: white;
+    --ink-100: black;
 
     --border-1: rgb(var(--gray-35));
     --border-2: rgb(var(--gray-40));
@@ -328,6 +333,9 @@
     /* cloud widget */
     --cloud-total-used-surface: rgb(var(--violet-20) / 25%);
     --cloud-used-surface: rgb(var(--violet-20));
+
+    /* misc */
+    --error-surface: #ff5354; /* h:12 S:100 Luv:60 */
 
     /* codemirror */
     --cm-active-line: rgb(var(--gray-20));

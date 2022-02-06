@@ -68,7 +68,7 @@ html#ublock0-epicker,
     position: relative;
 }
 #ublock0-epicker section.invalidFilter > div:first-child {
-    border-color: red;
+    border-color: var(--error-surface);
 }
 #ublock0-epicker section .codeMirrorContainer {
     border: none;
@@ -162,7 +162,8 @@ html#ublock0-epicker,
     min-width: 2.2em;
     }
 #ublock0-epicker section.invalidFilter #resultsetCount {
-    background-color: red;
+    background-color: var(--error-surface);
+    color: var(--ink-100);
 }
 #ublock0-epicker section > div:first-child + div {
     direction: ltr;
