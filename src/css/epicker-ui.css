@@ -2,7 +2,6 @@ html#ublock0-epicker,
 #ublock0-epicker body {
     background: transparent;
     cursor: not-allowed;
-    font: 12px sans-serif;
     height: 100vh;
     margin: 0;
     overflow: hidden;
@@ -36,11 +35,6 @@ html#ublock0-epicker,
 }
 #ublock0-epicker ul {
     margin: 0.25em 0 0 0;
-}
-#ublock0-epicker button {
-    cursor: pointer;
-    min-height: 32px;
-    padding: 0 0.8em;
 }
 #ublock0-epicker.preview #preview {
     background-color: var(--button-preferred-surface);
@@ -86,7 +80,8 @@ html#ublock0-epicker,
 
 #ublock0-epicker section .resultsetWidgets {
     display: flex;
-}
+    font-size: var(--font-size-smaller);
+    }
 #resultsetModifiers {
     align-items: flex-end;
     display: inline-flex;
@@ -199,7 +194,7 @@ html#ublock0-epicker,
     border: 1px solid transparent;
     cursor: pointer;
     direction: ltr;
-    font-family: monospace;
+    font: 12px monospace;
     white-space: nowrap;
 }
 #ublock0-epicker #candidateFilters .changeFilter li.active {
