@@ -240,11 +240,11 @@
     "description": ""
   },
   "popup3pAnyRulePrompt": {
-    "message": "Ressourcen von Drittanbietern",
+    "message": "Ressourcen aus Drittquellen",
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "CSS/Bilder von Drittanbietern",
+    "message": "CSS/Bilder aus Drittquellen",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -256,11 +256,11 @@
     "description": ""
   },
   "popup3pScriptRulePrompt": {
-    "message": "Skripte von Drittanbietern",
+    "message": "Skripte aus Drittquellen",
     "description": ""
   },
   "popup3pFrameRulePrompt": {
-    "message": "Frames von Drittanbietern",
+    "message": "Frames aus Drittquellen",
     "description": ""
   },
   "popupHitDomainCountPrompt": {
@@ -276,11 +276,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilterTip": {
-    "message": "↑: Zeilen hervorheben, die Skripte von Drittanbietern enthalten",
+    "message": "↑: Zeilen hervorheben, die Skripte aus Drittquellen enthalten",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party scripts' cell"
   },
   "popup3pFrameFilterTip": {
-    "message": "↑: Zeilen hervorheben, die Frames von Drittanbietern enthalten",
+    "message": "↑: Zeilen hervorheben, die Frames aus Drittquellen enthalten",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party frames' cell"
   },
   "pickerCreate": {
@@ -652,7 +652,7 @@
     "description": "Appears in the logger's tab selector"
   },
   "logBehindTheScene": {
-    "message": "Hintergrundanfragen",
+    "message": "Hintergrund-Netzwerkanfragen",
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
@@ -724,7 +724,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin3p": {
-    "message": "Drittanbieter",
+    "message": "Ressourcen aus Drittquellen",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerEntryDetailsHeader": {
@@ -828,7 +828,7 @@
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
-    "message": "Einträge der letzten {{input}} Minuten behalten",
+    "message": "Einträge der letzten {{input}} Minuten beibehalten",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
@@ -840,7 +840,7 @@
     "description": "A logger setting"
   },
   "loggerSettingPerEntryLineCount": {
-    "message": "{{input}} Zeilen pro Element im vertikal erweiterten Modus verwenden",
+    "message": "{{input}} Zeilen pro Eintrag im vertikal erweiterten Modus verwenden",
     "description": "A logger setting"
   },
   "loggerSettingHideColumnsPrompt": {
@@ -872,7 +872,7 @@
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportEncodePlain": {
-    "message": "Rohtext",
+    "message": "Nur Text",
     "description": "Label for radio-button to pick export text format"
   },
   "loggerExportEncodeMarkdown": {
