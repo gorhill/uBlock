@@ -3,7 +3,7 @@ body {
     }
 
 .synopsis {
-    color: var(--ink-1);
+    color: var(--ink-0);
     font-size: var(--font-size-smaller);
     opacity: var(--medium-em);
     }
