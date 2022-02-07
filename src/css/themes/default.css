@@ -271,7 +271,7 @@
 
     /* syntax highlight: static filtering */
     --sf-comment-ink: var(--ink-3);
-    --sf-def-ink: #005cb9; /* h:255 S:100 Luv:40 */
+    --sf-def-ink: #3c3aff; /* h:266 S:100 Luv:40 */
     --sf-directive-ink: var(--ink-1);
     --sf-error-ink: #ff8981; /* h15 S:100 Luv:70 */
     --sf-error-surface: #ff898133; /* h15 S:100 Luv:70 @ 20% */
@@ -279,7 +279,7 @@
     --sf-notice-ink: var(--ink-4);
     --sf-readonly-ink: var(--ink-3);
     --sf-tag-ink: #006e2e /* h:135 S:100 Luv:40 */;
-    --sf-value-ink: #9f4200 /* h:25 S:100 Luv:40 */;
+    --sf-value-ink: #974900 /* h:30 S:100 Luv:40 */;
     --sf-variable-ink: var(--ink-1);
     --sf-warning-ink: #e49d00; /* h:50 S:100 Luv:70 */
     --sf-warning-surface: #e49d0033; /* h:50 S:100 Luv:70 @ 20% */
@@ -351,12 +351,12 @@
 
     /* syntax highlight: static filtering */
     --sf-comment-ink: var(--ink-3);
-    --sf-def-ink: #84aaff; /* h:255 S:100 Luv:70 */
+    --sf-def-ink: #a2a2ff; /* h:266 S:100 Luv:70 */
     --sf-error-ink: #ff8981; /* h15 S:100 Luv:70 */
     --sf-error-surface: #ff898166; /* h15 S:100 Luv:70 @ 40% */
     --sf-keyword-ink: #d5bbff; /* h:280 S:100 Luv:80 */
     --sf-tag-ink: #00c559 /* h:135 S:100 Luv:70 */;
-    --sf-value-ink: #ff8c62 /* h:25 S:100 Luv:70 */;
+    --sf-value-ink: #ff8d48 /* h:30 S:100 Luv:70 */;
     --sf-variable-ink: var(--ink-1);
     --sf-warning-ink: #e49d00; /* h:50 S:100 Luv:70 */
     --sf-warning-surface: #e49d0066; /* h:50 S:100 Luv:50 @ 40% */
