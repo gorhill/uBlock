@@ -263,8 +263,8 @@
     --cm-merge-chunk-surface: rgb(var(--surface-0-rgb) / 40%);
     --cm-negative: #e32f00; /* h:15 S:100 Luv:50 */
     --cm-positive: #008a21; /* h:130 S:100 Luv:50 */
-    --cm-selection-surface: rgb(var(--gray-70));
-    --cm-selection-focused-surface: rgb(var(--primary-70));
+    --cm-selection-surface: rgb(var(--gray-80));
+    --cm-selection-focused-surface: rgb(var(--primary-80));
     --cm-searching-ink: black;
     --cm-searching-surface: #fee300cc /* h75 S:100 Luv:90 a:80% */;
     --cm-search-match-surface: rgb(var(--yellow-40) / 50%);
