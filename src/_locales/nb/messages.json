@@ -336,15 +336,15 @@
     "description": "English: Color-blind friendly"
   },
   "settingsAppearance": {
-    "message": "Appearance",
+    "message": "Utseende",
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
-    "message": "Theme",
+    "message": "Tema",
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "Custom accent color",
+    "message": "Tilpasset aksentfarge",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsCloudStorageEnabledPrompt": {
@@ -352,7 +352,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Jeg er en avansert bruker (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>Nødvendig lesning</a>)",
+    "message": "Jeg er en avansert bruker",
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
@@ -400,11 +400,11 @@
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsAdvanced": {
-    "message": "Advanced",
+    "message": "Avansert",
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Features suitable only for technical users",
+    "message": "Funksjoner kun egnet for tekniske brukere",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {

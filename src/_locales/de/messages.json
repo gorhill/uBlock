@@ -912,7 +912,7 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Melden Sie Filterprobleme mit spezifischen Websites an den <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">uBlockOrigin/uAssets</code> Issue Tracker</span>. <u>Erfordert einen GitHub-Account.</u>",
+    "message": "Melden Sie Filterprobleme mit spezifischen Websites an den <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> Issue Tracker</span>. <u>Erfordert einen GitHub-Account.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
@@ -928,7 +928,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Melden Sie Fehler von uBlock Origin selbst an <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> Issue Tracker</span>. Es wird ein GitHub-Account benötigt.",
+    "message": "Melden Sie Fehler von uBlock Origin selbst an den <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> Issue Tracker</span>. <u>Erfordert einen GitHub-Account.</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
