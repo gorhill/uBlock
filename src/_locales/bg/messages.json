@@ -336,7 +336,7 @@
     "description": "English: Color-blind friendly"
   },
   "settingsAppearance": {
-    "message": "Изглед",
+    "message": "Външен вид",
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
@@ -344,7 +344,7 @@
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "Цвят на акцента по избор",
+    "message": "Потребителски цвят на акцента",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsCloudStorageEnabledPrompt": {
@@ -352,7 +352,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Аз съм опитен потребител (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>Допълнително четиво</a>)",
+    "message": "Аз съм опитен потребител",
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
@@ -404,7 +404,7 @@
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Функции, подходящи само за технически грамотни потребители.",
+    "message": "Функции, подходящи само за технически грамотни потребители",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
@@ -912,7 +912,7 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Докладвайте за проблеми с филтрирането на конкретни уебсайтове в <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> за проследяване на проблеми</span>. <u>Изисква акаунт в GitHub.</u>",
+    "message": "Докладвайте за проблеми с филтрирането на конкретни уебсайтове в <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> за проследяване на проблеми</span>. <u>Изисква се акаунт в GitHub.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
@@ -928,7 +928,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Докладвайте за проблеми със самия uBlock Origin в <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> проследяване на проблеми</span>. Изисква се акаунт в GitHub.",
+    "message": "Докладвайте за проблеми със самия uBlock Origin в <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> за проследяване на проблеми</span>. <u>Изисква се акаунт в GitHub.</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
@@ -1036,7 +1036,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "Ще бъде използван случайно избран CDN, когато трябва да се актуализира списък с филтри",
+    "message": "Ще бъде използван случайно избран CDN, когато трябва да се обнови списък с филтри",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
