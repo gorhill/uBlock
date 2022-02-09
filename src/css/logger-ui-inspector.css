@@ -74,7 +74,7 @@
     text-decoration: line-through;
     }
 #domInspector li > code.filter {
-    color: red;
+    color: var(--cm-negative);
     }
 
 #domInspector li > ul {
