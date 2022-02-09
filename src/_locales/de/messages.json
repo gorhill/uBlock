@@ -252,7 +252,7 @@
     "description": ""
   },
   "popup1pScriptRulePrompt": {
-    "message": "Skripte der aktuellen Seite",
+    "message": "Skripte von dieser Domain",
     "description": ""
   },
   "popup3pScriptRulePrompt": {
