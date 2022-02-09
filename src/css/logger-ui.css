@@ -612,6 +612,7 @@ body[dir="rtl"] #netFilteringDialog > .headers > .tools {
 #netFilteringDialog[data-pane="static"] > .panes > [data-pane="static"] {
     display: flex;
     flex-direction: column;
+    padding: 0 var(--default-gap-xsmall);
     }
 #netFilteringDialog > .panes > .details > div {
     align-items: stretch;
