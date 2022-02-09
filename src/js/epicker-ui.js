@@ -458,7 +458,6 @@ const onCandidateChanged = function() {
     const filter = filterFromTextarea();
     const bad = filter === '!';
     $stor('section').classList.toggle('invalidFilter', bad);
-    $id('create').disabled = bad;
     if ( bad ) {
         $id('resultsetCount').textContent = 'E';
         $id('create').setAttribute('disabled', '');
@@ -767,7 +766,7 @@ const showDialog = function(details) {
 
     dialog.querySelector('ul').style.display =
         netFilters.length || cosmeticFilters.length ? '' : 'none';
-    dialog.querySelector('#create').disabled = true;
+    $id('create').setAttribute('disabled', '');
 
     // Auto-select a candidate filter
 
