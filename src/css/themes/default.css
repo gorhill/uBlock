@@ -129,11 +129,13 @@
     --font-size: 14px;
     --font-size-smaller: 13px;
     --font-family: Inter, sans-serif;
+    --monospace-size: 12px;
 }
 
 :root.mobile {
     --font-size: 16px;
     --font-size-smaller: 14px;
+    --monospace-size: 13px;
 }
 
 /*

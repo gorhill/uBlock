@@ -62,7 +62,7 @@ a:hover {
 code, .code {
     background-color: var(--surface-2);
     font-family: monospace;
-    font-size: smaller;
+    font-size: var(--monospace-size);
     padding: 2px 4px;
     }
 hr {

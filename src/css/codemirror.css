@@ -1,5 +1,4 @@
 .codeMirrorContainer {
-    font-size: 12px;
     line-height: 1.25;
     overflow: hidden;
     position: relative;
@@ -9,6 +8,7 @@
     box-sizing: border-box;
     color: var(--ink-1);
     flex-grow: 1;
+    font-size: var(--monospace-size);
     height: 100%;
     width: 100%;
     }

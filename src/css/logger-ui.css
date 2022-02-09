@@ -72,7 +72,7 @@ textarea {
 .vscrollable {
     direction: ltr;
     flex-grow: 1;
-    font-size: small;
+    font-size: var(--font-size-smaller);
     overflow-x: hidden;
     overflow-y: auto;
 }
