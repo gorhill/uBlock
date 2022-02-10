@@ -400,7 +400,7 @@
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsAdvanced": {
-    "message": "Advanced",
+    "message": "Lanjutan",
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
