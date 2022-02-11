@@ -334,7 +334,7 @@ class PSelector {
             ]);
         }
         this.raw = o.raw;
-        this.selector = ':root > :root';
+        this.selector = o.selector;
         this.tasks = [];
         const tasks = [];
         if ( Array.isArray(o.tasks) === false ) { return; }
@@ -344,7 +344,6 @@ class PSelector {
             tasks.push(new ctor(task));
         }
         // Initialize only after all tasks have been successfully instantiated
-        this.selector = o.selector;
         this.tasks = tasks;
     }
     prime(input) {
