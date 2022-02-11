@@ -340,7 +340,7 @@
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
-    "message": "Theme",
+    "message": "Etoso",
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
@@ -596,7 +596,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
-    "message": "Sort:",
+    "message": "Ordigi:",
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
@@ -608,7 +608,7 @@
     "description": "English: a sort option for list of rules."
   },
   "rulesSortByDestination": {
-    "message": "Destination",
+    "message": "Celo",
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
