@@ -222,6 +222,9 @@
     border-color: var(--cm-gutter-border);
     vertical-align: top;
     }
+.CodeMirror-merge-scrolllock {
+    color: var(--cm-merge-copy-ink);
+    }
 .CodeMirror-merge-spacer {
     background-color: var(--cm-merge-chunk-surface);
     }
