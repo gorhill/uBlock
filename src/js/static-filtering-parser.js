@@ -1575,7 +1575,7 @@ Parser.prototype.SelectorCompiler = class {
         if ( this.querySelectable(s) ) { return s; }
     }
 
-    compileRemoveSelector(s) {
+    compileNoArgument(s) {
         if ( s === '' ) { return s; }
     }
 
@@ -1683,6 +1683,7 @@ Parser.prototype.SelectorCompiler = class {
                 raw.push(task[1]);
                 break;
             case ':min-text-length':
+            case ':others':
             case ':upward':
             case ':watch-attr':
             case ':xpath':
@@ -1860,8 +1861,10 @@ Parser.prototype.SelectorCompiler = class {
             return this.compileInteger(args);
         case ':not':
             return this.compileNotSelector(args);
+        case ':others':
+            return this.compileNoArgument(args);
         case ':remove':
-            return this.compileRemoveSelector(args);
+            return this.compileNoArgument(args);
         case ':spath':
             return this.compileSpathExpression(args);
         case ':style':
@@ -1878,6 +1881,9 @@ Parser.prototype.SelectorCompiler = class {
     }
 };
 
+// bit 0: can be used as auto-completion hint
+// bit 1: can not be used in HTML filtering
+//
 Parser.prototype.proceduralOperatorTokens = new Map([
     [ '-abp-contains', 0b00 ],
     [ '-abp-has', 0b00, ],
@@ -1893,6 +1899,7 @@ Parser.prototype.proceduralOperatorTokens = new Map([
     [ 'min-text-length', 0b01 ],
     [ 'not', 0b01 ],
     [ 'nth-ancestor', 0b00 ],
+    [ 'others', 0b01 ],
     [ 'remove', 0b11 ],
     [ 'style', 0b11 ],
     [ 'upward', 0b01 ],
