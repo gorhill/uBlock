@@ -2926,11 +2926,7 @@ class FilterCompiler {
     processModifierOption(modifier, value) {
         if ( this.modifyType !== undefined ) { return false; }
         this.modifyType = modifier;
-        if ( value !== undefined ) {
-            this.modifyValue = value;
-        } else if ( this.action === AllowAction ) {
-            this.modifyValue = '';
-        }
+        this.modifyValue = value || '';
         return true;
     }
 
