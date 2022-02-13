@@ -303,7 +303,7 @@ import {
                 );
             }
         }
-        canSuspend() {
+        static canSuspend() {
             return true;
         }
     };

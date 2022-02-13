@@ -110,7 +110,7 @@ const userSettingsDefault = {
     prefetchingDisabled: true,
     requestLogMaxEntries: 1000,
     showIconBadge: true,
-    suspendUntilListsAreLoaded: true,
+    suspendUntilListsAreLoaded: vAPI.Net.canSuspend(),
     tooltipsDisabled: false,
     webrtcIPAddressHidden: false,
 };

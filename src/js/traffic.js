@@ -1136,7 +1136,9 @@ const webRequest = {
 
     start: (( ) => {
         vAPI.net = new vAPI.Net();
-        vAPI.net.suspend();
+        if ( vAPI.Net.canSuspend() ) {
+            vAPI.net.suspend();
+        }
 
         return async ( ) => {
             vAPI.net.setSuspendableListener(onBeforeRequest);
