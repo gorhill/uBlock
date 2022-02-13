@@ -183,7 +183,9 @@ vAPI.Tabs = class extends vAPI.Tabs {
 
         suspendOneRequest(details) {
             this.suspendedTabIds.add(details.tabId);
-            return { cancel: true };
+            return {
+                redirectUrl: vAPI.getURL(`web_accessible_resources/empty?secret=${vAPI.warSecret()}`)
+            };
         }
 
         unsuspendAllRequests(discard = false) {
