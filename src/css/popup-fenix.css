@@ -639,7 +639,6 @@ body:not([data-more~="e"]) [data-more="e"] {
     }
 :root.portrait #main {
     max-width: unset;
-    min-width: unset;
     }
 :root.portrait #firewall {
     max-height: unset;
