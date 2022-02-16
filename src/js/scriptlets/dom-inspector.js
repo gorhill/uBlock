@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2015-present Raymond Hill
+    Copyright (C) 2015-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -509,7 +509,7 @@ const cosmeticFilterMapper = (function() {
         // Declarative selectors.
         for ( const entry of (details.declarative || []) ) {
             for ( const selector of entry[0].split(',\n') ) {
-                let canonical = vAPI.domFilterer.unwrapSelector(selector);
+                let canonical = selector;
                 let nodes;
                 if ( entry[1] !== vAPI.hideStyle ) {
                     canonical += ':style(' + entry[1] + ')';
