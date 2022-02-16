@@ -64,7 +64,7 @@
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
-    "message": "Parametra të avancuar",
+    "message": "Parametrat e avancuar",
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
@@ -340,11 +340,11 @@
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
-    "message": "Tema",
+    "message": "Motivi",
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "Custom accent color",
+    "message": "Personalizoj ngjyrën e theksuar",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsCloudStorageEnabledPrompt": {
@@ -352,7 +352,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Jam një përdorues i përparuar (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>Lexim i detyruar</a>)",
+    "message": "Kam njohuri të thelluara",
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
@@ -400,15 +400,15 @@
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsAdvanced": {
-    "message": "Të përparuar",
+    "message": "Parametrat e avancuar",
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Veçori të përshtatshme për përdoruesit teknikë",
+    "message": "Funksione të përshtatshme vetëm për specialistët",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
-    "message": "parametra të avancuar",
+    "message": "parametrat e avancuar",
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsLastRestorePrompt": {
@@ -916,11 +916,11 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Vërejtje:</b> uBlock Origin nuk duhet përdorur njëkohësisht me aplikacionet e ngjashme bllokuese, pasi disa faqe mund të kenë probleme me filtrat.",
+    "message": "<b>Vërejtje:</b> uBlock Origin nuk duhet përdorur njëkohësisht me aplikacionet e ngjashme bllokuese, pasi disa faqe mund të shfaqin probleme me filtrat.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Këshilla:</b> Sigurohuni që listat e filtrave janë të përditësuara. <span data-url=\"logger-ui.html#_\">Regjistri</span> është instrumenti kryesor për të diagnostikuar problemet me filtrat.",
+    "message": "<b>Këshilla:</b> Sigurohuni që listat e filtrave janë të përditësuara. <span data-url=\"logger-ui.html#_\">Regjistri</span> është instrumenti kryesor për diagnostikimin e problemeve me filtrat.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
@@ -1000,7 +1000,7 @@
     "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
-    "message": "Politikat e konfidencialitetit",
+    "message": "Politika e konfidencialitetit",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {
