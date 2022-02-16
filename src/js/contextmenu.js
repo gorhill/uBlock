@@ -151,7 +151,7 @@ const menuEntries = {
         id: 'uBlock0-subscribeToList',
         title: vAPI.i18n('contextMenuSubscribeToList'),
         contexts: [ 'link' ],
-        targetUrlPatterns: [ 'abp:*' ],
+        targetUrlPatterns: [ 'abp:*', 'https://subscribe.adblockplus.org/*' ],
     },
     temporarilyAllowLargeMediaElements: {
         id: 'uBlock0-temporarilyAllowLargeMediaElements',
