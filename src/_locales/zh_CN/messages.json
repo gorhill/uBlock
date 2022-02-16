@@ -336,7 +336,7 @@
     "description": "English: Color-blind friendly"
   },
   "settingsAppearance": {
-    "message": "界面外观",
+    "message": "外观",
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
@@ -400,11 +400,11 @@
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsAdvanced": {
-    "message": "高级设定",
+    "message": "高级",
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "仅为专家用户提供的功能。",
+    "message": "仅适合专家级用户的功能。",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {

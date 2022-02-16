@@ -532,11 +532,11 @@
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
-    "message": "Importeren en toevoegen...",
+    "message": "Importeren en toevoegen…",
     "description": "English: Import and append"
   },
   "1pExport": {
-    "message": "Exporteren...",
+    "message": "Exporteren…",
     "description": "English: Export"
   },
   "1pExportFilename": {
@@ -580,7 +580,7 @@
     "description": ""
   },
   "rulesExport": {
-    "message": "Exporteren naar bestand...",
+    "message": "Exporteren naar bestand…",
     "description": ""
   },
   "rulesDefaultFileName": {
@@ -616,11 +616,11 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Importeren en toevoegen...",
+    "message": "Importeren en toevoegen…",
     "description": "English: Import and append"
   },
   "whitelistExport": {
-    "message": "Exporteren...",
+    "message": "Exporteren…",
     "description": "English: Export"
   },
   "whitelistExportFilename": {
@@ -1040,7 +1040,7 @@
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "Back-up maken naar bestand...",
+    "message": "Back-up maken naar bestand…",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {

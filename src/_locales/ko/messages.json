@@ -200,7 +200,7 @@
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
-    "message": "원격 폰트",
+    "message": "외부 폰트",
     "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {

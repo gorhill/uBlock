@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Endlich ein effizienter Blocker. Prozessor-freundlich und bescheiden beim Speicherbedarf.",
+    "message": "Endlich ein effizienter Blocker, der wenig Prozessorleistung und Arbeitsspeicher verbraucht.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
@@ -44,7 +44,7 @@
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "Tastenkürzel",
+    "message": "Tastenkombinationen",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -216,11 +216,11 @@
     "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
-    "message": "Globale Regeln: Diese Spalte ist für Regeln, die bei allen Seiten angewendet werden.",
+    "message": "Globale Regeln: Diese Spalte ist für Regeln, die für alle Websites gelten.",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Lokale Regeln: Diese Spalte ist für Regeln, die nur bei dieser Seite angewendet werden.\nLokale Regeln überschreiben globale Regeln.",
+    "message": "Lokale Regeln: Diese Spalte ist für Regeln, die nur für die aktuelle Website gelten.\nLokale Regeln überschreiben globale Regeln.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -268,7 +268,7 @@
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
-    "message": "{{count}} von insgesamt {{total}}",
+    "message": "{{count}} von {{total}}",
     "description": "appears in popup"
   },
   "popupVersion": {
@@ -584,7 +584,7 @@
     "description": ""
   },
   "rulesDefaultFileName": {
-    "message": "my-ublock-dynamic-rules_{{datetime}}.txt",
+    "message": "ublock-dynamische-regeln_{{datetime}}.txt",
     "description": "default file name to use"
   },
   "rulesHint": {
@@ -688,7 +688,7 @@
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "Protokollierungsfilterung umschalten",
+    "message": "Protokollierungsfilterung ein-/ausschalten",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
@@ -780,7 +780,7 @@
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "{{action}} Netzwerkanfragen {{type}},{{br}}deren URL-Adresse mit {{url}} übereinstimmt{{br}}und von {{origin}} stammen,{{br}}{{importance}} ein übereinstimmender Ausnahme-Filter existiert.\n",
+    "message": "{{action}} Netzwerkanfragen {{type}},{{br}}deren URL-Adresse mit {{url}} übereinstimmt{{br}}und von {{origin}} stammen,{{br}}{{importance}} ein übereinstimmender Ausnahme-Filter existiert.",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
@@ -1204,11 +1204,11 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Tastenkürzel festlegen",
+    "message": "Tastenkombination drücken",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "Bildlauf sperren/entsperren",
+    "message": "Synchrones Scrollen ein-/ausschalten",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {

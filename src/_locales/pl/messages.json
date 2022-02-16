@@ -404,7 +404,7 @@
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Funkcje odpowiednie tylko dla użytkowników z przygotowaniem technicznym",
+    "message": "Funkcje odpowiednie tylko dla zaawansowanych użytkowników",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
@@ -920,7 +920,7 @@
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Porada:</b> upewnij się, że listy filtrów są aktualne. <span data-url=\"logger-ui.html#_\">Rejestrator</span> jest głównym narzędziem do diagnozowania problemów z filtrowaniem.",
+    "message": "<b>Porada:</b> Upewnij się, że listy filtrów są aktualne. <span data-url=\"logger-ui.html#_\">Rejestrator</span> jest głównym narzędziem do diagnozowania problemów z filtrowaniem.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {

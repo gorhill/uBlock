@@ -112,7 +112,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
-    "message": "डैशबोर्ड को खोलने के लिए क्लिक करें",
+    "message": "डैशबोर्ड खोलें",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
