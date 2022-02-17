@@ -831,12 +831,18 @@ browser.browserAction.onClicked.addListener(function(tab) {
 //   content scripts. Whether a message can trigger a privileged operation is
 //   decided based on whether the port from which a message is received is
 //   privileged, which is a status evaluated once, at port connection time.
+//
+// https://github.com/uBlockOrigin/uBlock-issues/issues/1992
+//   If present, use MessageSender.origin to determine whether the port is
+//   from a privileged page, otherwise use MessageSender.url.
+//   MessageSender.origin is more reliable as it is not spoofable by a
+//   compromised renderer.
 
 vAPI.messaging = {
     ports: new Map(),
     listeners: new Map(),
     defaultHandler: null,
-    PRIVILEGED_URL: vAPI.getURL(''),
+    PRIVILEGED_ORIGIN: vAPI.getURL('').slice(0, -1),
     NOOPFUNC: function(){},
     UNHANDLED: 'vAPI.messaging.notHandled',
 
@@ -862,10 +868,12 @@ vAPI.messaging = {
         );
         const portDetails = { port };
         const sender = port.sender;
-        const { tab, url } = sender;
+        const { origin, tab, url } = sender;
         portDetails.frameId = sender.frameId;
         portDetails.frameURL = url;
-        portDetails.privileged = url.startsWith(this.PRIVILEGED_URL);
+        portDetails.privileged =
+            origin !== undefined && origin === this.PRIVILEGED_ORIGIN ||
+            origin === undefined && url.startsWith(this.PRIVILEGED_ORIGIN);
         if ( tab ) {
             portDetails.tabId = tab.id;
             portDetails.tabURL = tab.url;
