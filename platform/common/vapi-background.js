@@ -45,13 +45,6 @@ if ( vAPI.canWASM === false ) {
 
 vAPI.supportsUserStylesheets = vAPI.webextFlavor.soup.has('user_stylesheet');
 
-// The real actual webextFlavor value may not be set in stone, so listen
-// for possible future changes.
-window.addEventListener('webextFlavor', function() {
-    vAPI.supportsUserStylesheets =
-        vAPI.webextFlavor.soup.has('user_stylesheet');
-}, { once: true });
-
 /******************************************************************************/
 
 vAPI.app = {

@@ -83,12 +83,9 @@ vAPI.webextFlavor = {
     // Synchronous -- order of tests is important
     const match = /\bChrom(?:e|ium)\/([\d.]+)/.exec(ua);
     if ( match !== null ) {
-        soup.add('chromium');
+        soup.add('chromium')
+            .add('user_stylesheet');
         flavor.major = parseInt(match[1], 10) || 0;
-        // https://github.com/gorhill/uBlock/issues/3588
-        if ( flavor.major >= 66 ) {
-            soup.add('user_stylesheet');
-        }
     }
 
     // Don't starve potential listeners
