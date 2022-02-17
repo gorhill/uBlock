@@ -30,7 +30,6 @@ html#ublock0-epicker,
     display: block;
 }
 #ublock0-epicker #toolbar {
-    cursor: grab;
     display: flex;
 }
 #ublock0-epicker ul {
