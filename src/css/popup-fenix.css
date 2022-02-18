@@ -190,6 +190,10 @@ body.needSave #revertRules {
     unicode-bidi: embed;
     visibility: hidden;
     }
+.toolRibbon .tool:hover {
+    color: var(--ink-1);
+        fill: var(--ink-1);
+    }
 .toolRibbon .tool.enabled {
     visibility: visible;
     }
