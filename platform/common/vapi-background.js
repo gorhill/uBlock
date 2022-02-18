@@ -871,9 +871,9 @@ vAPI.messaging = {
         const { origin, tab, url } = sender;
         portDetails.frameId = sender.frameId;
         portDetails.frameURL = url;
-        portDetails.privileged =
-            origin !== undefined && origin === this.PRIVILEGED_ORIGIN ||
-            origin === undefined && url.startsWith(this.PRIVILEGED_ORIGIN);
+        portDetails.privileged = origin !== undefined
+            ? origin === this.PRIVILEGED_ORIGIN
+            : url.startsWith(this.PRIVILEGED_ORIGIN);
         if ( tab ) {
             portDetails.tabId = tab.id;
             portDetails.tabURL = tab.url;
