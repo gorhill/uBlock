@@ -41,7 +41,8 @@
         "https://filterlists.com/*",
         "https://forums.lanik.us/*",
         "https://github.com/*",
-        "https://*.github.io/*"
+        "https://*.github.io/*",
+        "https://*.letsblock.it/*"
       ],
       "js": [
         "/js/scriptlets/subscriber.js"
