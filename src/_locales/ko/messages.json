@@ -1219,13 +1219,13 @@
     "message": "모두 선택",
     "description": "Label for buttons used to select all text in editor"
   },
-  "toggleBlockingProfile": {
-    "message": "차단 프로필 전환",
-    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  "toggleCosmeticFiltering": {
+    "message": "Toggle cosmetic filtering",
+    "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "relaxBlockingMode": {
     "message": "차단 모드 완화",
-    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+    "description": "Label for keyboard shortcut used to relax blocking mode"
   },
   "storageUsed": {
     "message": "스토리지 사용량: {{value}} {{unit}}",

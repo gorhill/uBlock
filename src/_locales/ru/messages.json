@@ -1219,13 +1219,13 @@
     "message": "Выбрать все",
     "description": "Label for buttons used to select all text in editor"
   },
-  "toggleBlockingProfile": {
-    "message": "Переключение профиля блокировки",
-    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  "toggleCosmeticFiltering": {
+    "message": "Toggle cosmetic filtering",
+    "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "relaxBlockingMode": {
     "message": "Ослабленный режим блокировки",
-    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+    "description": "Label for keyboard shortcut used to relax blocking mode"
   },
   "storageUsed": {
     "message": "Размер хранилища: {{value}} {{unit}}",

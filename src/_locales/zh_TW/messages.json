@@ -1219,13 +1219,13 @@
     "message": "全選",
     "description": "Label for buttons used to select all text in editor"
   },
-  "toggleBlockingProfile": {
-    "message": "開閉封鎖設定檔",
-    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  "toggleCosmeticFiltering": {
+    "message": "Toggle cosmetic filtering",
+    "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "relaxBlockingMode": {
     "message": "放寬封鎖量模式",
-    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+    "description": "Label for keyboard shortcut used to relax blocking mode"
   },
   "storageUsed": {
     "message": "儲存空間用量：{{value}} {{unit}}",

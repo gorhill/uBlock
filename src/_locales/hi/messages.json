@@ -1219,13 +1219,13 @@
     "message": "सभी चुनें",
     "description": "Label for buttons used to select all text in editor"
   },
-  "toggleBlockingProfile": {
-    "message": "ब्लॉकिंग प्रोफ़ाइल क्को टॉगल करें ",
-    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  "toggleCosmeticFiltering": {
+    "message": "Toggle cosmetic filtering",
+    "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "relaxBlockingMode": {
     "message": "ब्लैकिंग मोड को ढील दें",
-    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+    "description": "Label for keyboard shortcut used to relax blocking mode"
   },
   "storageUsed": {
     "message": "इस्तेमाल हुई स्टोरेज:{{value}} {{unit}}",

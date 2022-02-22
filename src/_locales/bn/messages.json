@@ -1219,13 +1219,13 @@
     "message": "সবগুলো নির্বাচন করুন",
     "description": "Label for buttons used to select all text in editor"
   },
-  "toggleBlockingProfile": {
-    "message": "রোধক প্রোফাইল চালু/বন্ধ",
-    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  "toggleCosmeticFiltering": {
+    "message": "Toggle cosmetic filtering",
+    "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "relaxBlockingMode": {
     "message": "রোধক মোড শিথিল করুন",
-    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+    "description": "Label for keyboard shortcut used to relax blocking mode"
   },
   "storageUsed": {
     "message": "ব্যবহৃত স্টোরেজ: {{value}}{{unit}}",

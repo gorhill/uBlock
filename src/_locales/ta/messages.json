@@ -1219,13 +1219,13 @@
     "message": "எல்லாம் தேர்ந்தெடு",
     "description": "Label for buttons used to select all text in editor"
   },
-  "toggleBlockingProfile": {
-    "message": "தடுப்பு சுயவிவரத்தை நிலைமாற்று",
-    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  "toggleCosmeticFiltering": {
+    "message": "Toggle cosmetic filtering",
+    "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "relaxBlockingMode": {
     "message": "தடுப்பு பயன்முறையை தளர்த்தவும்",
-    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+    "description": "Label for keyboard shortcut used to relax blocking mode"
   },
   "storageUsed": {
     "message": "பயன்படுத்தப்பட்ட சேமிப்பகத்தின் அளவு: {{value}} பைட்டுகள்",

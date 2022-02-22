@@ -1219,13 +1219,13 @@
     "message": "Select all",
     "description": "Label for buttons used to select all text in editor"
   },
-  "toggleBlockingProfile": {
-    "message": "തടയൽ പ്രൊഫൈൽ ടോഗിൾ ചെയ്യുക",
-    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  "toggleCosmeticFiltering": {
+    "message": "Toggle cosmetic filtering",
+    "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "relaxBlockingMode": {
     "message": "തടയൽ മോഡ് വിശ്രമിക്കുക",
-    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+    "description": "Label for keyboard shortcut used to relax blocking mode"
   },
   "storageUsed": {
     "message": "ഉപയോഗിച്ച സംഭരണം: {{value}} {{unit}}",
