@@ -255,7 +255,7 @@
         i32.eqz
         if
             get_local $iCandidates
-            i32.load8_u offset=4
+            i32.load offset=4
             i32.const 0x2A
             i32.ne
             br_if $labelLookupDone
