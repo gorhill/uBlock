@@ -160,11 +160,21 @@ const relaxBlockingMode = (( ) => {
 })();
 
 vAPI.commands.onCommand.addListener(async command => {
+    // Generic commands
+    if ( command === 'open-dashboard' ) {
+        µb.openNewTab({
+            url: 'dashboard.html',
+            select: true,
+            index: -1,
+        });
+        return;
+    }
+    // Tab-specific commands
+    const tab = await vAPI.tabs.getCurrent();
+    if ( tab instanceof Object === false ) { return; }
     switch ( command ) {
     case 'launch-element-picker':
     case 'launch-element-zapper': {
-        const tab = await vAPI.tabs.getCurrent();
-        if ( tab instanceof Object === false ) { return; }
         µb.epickerArgs.mouse = false;
         µb.elementPickerExec(
             tab.id,
@@ -175,8 +185,6 @@ vAPI.commands.onCommand.addListener(async command => {
         break;
     }
     case 'launch-logger': {
-        const tab = await vAPI.tabs.getCurrent();
-        if ( tab instanceof Object === false ) { return; }
         const hash = tab.url.startsWith(vAPI.getURL(''))
             ? ''
             : `#_+${tab.id}`;
@@ -187,16 +195,14 @@ vAPI.commands.onCommand.addListener(async command => {
         });
         break;
     }
-    case 'open-dashboard': {
-        µb.openNewTab({
-            url: 'dashboard.html',
-            select: true,
-            index: -1,
-        });
-        break;
-    }
     case 'relax-blocking-mode':
-        relaxBlockingMode(await vAPI.tabs.getCurrent());
+        relaxBlockingMode(tab);
+        break;
+    case 'toggle-cosmetic-filtering':
+        µb.toggleHostnameSwitch({
+            name: 'no-cosmetic-filtering',
+            hostname: hostnameFromURI(µb.normalizeTabURL(tab.id, tab.url)),
+        });
         break;
     default:
         break;

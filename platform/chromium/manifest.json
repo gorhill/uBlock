@@ -26,6 +26,9 @@
     },
     "relax-blocking-mode": {
       "description": "__MSG_relaxBlockingMode__"
+    },
+    "toggle-cosmetic-filtering": {
+      "description": "__MSG_toggleCosmeticFiltering__"
     }
   },
   "content_scripts": [

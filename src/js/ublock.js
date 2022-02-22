@@ -566,11 +566,14 @@ const matchBucket = function(url, hostname, bucket, start) {
 /******************************************************************************/
 
 µb.toggleHostnameSwitch = function(details) {
+    const newState = typeof details.state === 'boolean'
+        ? details.state
+        : sessionSwitches.evaluateZ(details.name, details.hostname) === false;
     let changed = sessionSwitches.toggleZ(
         details.name,
         details.hostname,
         !!details.deep,
-        details.state
+        newState
     );
     if ( changed === false ) { return; }
 
@@ -580,7 +583,7 @@ const matchBucket = function(url, hostname, bucket, start) {
         this.updateToolbarIcon(details.tabId, 0b100);
         break;
     case 'no-cosmetic-filtering': {
-        const scriptlet = details.state ? 'cosmetic-off' : 'cosmetic-on';
+        const scriptlet = newState ? 'cosmetic-off' : 'cosmetic-on';
         vAPI.tabs.executeScript(details.tabId, {
             file: `/js/scriptlets/${scriptlet}.js`,
             allFrames: true,
@@ -590,7 +593,7 @@ const matchBucket = function(url, hostname, bucket, start) {
     case 'no-large-media':
         const pageStore = this.pageStoreFromTabId(details.tabId);
         if ( pageStore !== null ) {
-            pageStore.temporarilyAllowLargeMediaElements(!details.state);
+            pageStore.temporarilyAllowLargeMediaElements(!newState);
         }
         break;
     }
@@ -601,7 +604,7 @@ const matchBucket = function(url, hostname, bucket, start) {
         details.name,
         details.hostname,
         !!details.deep,
-        details.state
+        newState
     );
     if ( changed ) {
         this.saveHostnameSwitches();
