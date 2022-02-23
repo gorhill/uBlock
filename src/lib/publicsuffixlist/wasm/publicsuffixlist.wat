@@ -247,7 +247,7 @@
         ;; }
         ;; // 2. If no rules match, the prevailing rule is "*".
         ;; if ( iFound === 0 ) {
-        ;;     if ( buf8[iCandidates + 1 << 2] !== 0x2A /* '*' */ ) { break; }
+        ;;     if ( buf32[iCandidates + 1] !== 0x2A /* '*' */ ) { break; }
         ;;     buf8[SUFFIX_NOT_FOUND_SLOT] = 1;
         ;;     iFound = iCandidates;
         ;; }
