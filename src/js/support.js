@@ -29,6 +29,7 @@ let supportData;
 
 const uselessKeys = [
     'modifiedHiddenSettings.benchmarkDatasetURL',
+    'modifiedHiddenSettings.blockingProfiles',
     'modifiedHiddenSettings.consoleLogLevel',
     'modifiedHiddenSettings.uiPopupConfig',
     'modifiedUserSettings.alwaysDetachLogger',
@@ -36,6 +37,9 @@ const uselessKeys = [
     'modifiedUserSettings.externalLists',
     'modifiedUserSettings.importedLists',
     'modifiedUserSettings.popupPanelSections',
+    'modifiedUserSettings.uiAccentCustom',
+    'modifiedUserSettings.uiAccentCustom0',
+    'modifiedUserSettings.uiTheme',
 ];
 
 const sensitiveValues = [
