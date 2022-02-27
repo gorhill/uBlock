@@ -928,7 +928,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Ilmoita ongelmista uBlock Origin -laajennuksessa <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock</code>-ongelmaseurannanssa</span>. <u>Vaatii GitHub-tilin</u>.",
+    "message": "Ilmoita uBlock Origin -laajennuksen ongelmista <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock</code>-ongelmaseurannanssa</span>. <u>Vaatii GitHub-tilin</u>.",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
@@ -936,7 +936,7 @@
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "Alla on teknisiä tietoja, jotka saattavat olla hyödyllisiä vapaaehtoisille, jotka yrittävät auttaa ongelmasi ratkaisussa.",
+    "message": "Alla on teknisiä tietoja, joista voi olla hyötyä vapaaehtoisille, jotka pyrkivät auttamaan ongelmasi ratkaisussa.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
@@ -1012,7 +1012,7 @@
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Tukijat",
+    "message": "Avustajat",
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
@@ -1028,7 +1028,7 @@
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "Ulkopuoliset riippuvuudet (GPLv3:n mukaisesti):",
+    "message": "Ulkopuoliset riippuvuudet (GPLv3-yhteensopiva):",
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
@@ -1220,7 +1220,7 @@
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleCosmeticFiltering": {
-    "message": "Toggle cosmetic filtering",
+    "message": "Kytke kosmeettinen suodatus päälle/pois",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "relaxBlockingMode": {

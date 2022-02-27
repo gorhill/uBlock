@@ -144,7 +144,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Große Medienelemente dieser Seite anzeigen/sperren",
+    "message": "Große Medienelemente auf dieser Website anzeigen/blockieren",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
@@ -156,15 +156,15 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Kosmetische Filter für diese Website an-/ausschalten",
+    "message": "Kosmetische Filterung für diese Website ein-/ausschalten",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Hier klicken, um kosmetische Filter auf dieser Website zu deaktivieren",
+    "message": "Hier klicken, um die kosmetische Filterung auf dieser Website zu deaktivieren",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Hier klicken, um kosmetische Filter auf dieser Website zu aktivieren",
+    "message": "Hier klicken, um die kosmetische Filterung auf dieser Website zu aktivieren",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -376,7 +376,7 @@
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "Kosmetische Filter deaktivieren",
+    "message": "Kosmetische Filterung deaktivieren",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
@@ -436,7 +436,7 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll": {
-    "message": "Alle Cache-Speicher leeren",
+    "message": "Alle Caches leeren",
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
@@ -664,7 +664,7 @@
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
-    "message": "DOM-Inspektor umschalten",
+    "message": "DOM-Inspektor ein-/ausschalten",
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
@@ -1220,7 +1220,7 @@
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleCosmeticFiltering": {
-    "message": "Toggle cosmetic filtering",
+    "message": "Kosmetische Filterung ein-/ausschalten",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "relaxBlockingMode": {

@@ -280,7 +280,7 @@
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party scripts' cell"
   },
   "popup3pFrameFilterTip": {
-    "message": "↑: Emphasize rows which have 3rd-party frames",
+    "message": "↑: تاکید بر ردیف‌هایی که فریم‌های خارجی (3rd-party) دارند",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party frames' cell"
   },
   "pickerCreate": {
@@ -336,15 +336,15 @@
     "description": "English: Color-blind friendly"
   },
   "settingsAppearance": {
-    "message": "Appearance",
+    "message": "ظاهر",
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
-    "message": "Theme",
+    "message": "پوسته",
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "Custom accent color",
+    "message": "رنگ اصلی دلخواه",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsCloudStorageEnabledPrompt": {
@@ -400,11 +400,11 @@
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsAdvanced": {
-    "message": "Advanced",
+    "message": "پیشرفته",
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Features suitable only for technical users",
+    "message": "قابلیت‌های مناسب برای کاربران فنی",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
@@ -896,7 +896,7 @@
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Read the documentation at <code>uBlock/wiki</code> to learn about all of uBlock Origin's features.",
+    "message": "مستنداتی که در <code>uBlock/wiki</code> هست را بخوانید تا با تمام امکانات uBlock Origin آشنا شوید.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
@@ -904,11 +904,11 @@
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
-    "message": "Answers to questions and other kinds of help support is provided on the subreddit <code>/r/uBlockOrigin</code>.",
+    "message": "پاسخ به سوالات و انواع راهنمایی‌ها در ساب‌ردیت <code>/r/uBlockOrigin</code> ارائه می‌شود.",
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "Filter issues/website is broken",
+    "message": "مشکل فیلترها/وبسایتی ایراد دارد",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
@@ -932,7 +932,7 @@
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting Information",
+    "message": "اطلاعات مشکل‌گشایی",
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
@@ -940,7 +940,7 @@
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Important:</b> Potentially private or sensitive information is redacted by default. Redacted information may make it more difficult to solve a problem.",
+    "message": "<b>مهم:</b> اطلاعات شخصی یا حساس به طور پیشفرض ویرایش و مبهم می‌شوند. اطلاعات مبهم‌شده ممکن است حل مشکل را سخت‌تر کند.",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
@@ -988,7 +988,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "علامت زدن صفحه به عنوان \"NSFW\" (<a href=\"https://fa.wikipedia.org/wiki/%D9%86%D8%A7%D9%85%D9%86%D8%A7%D8%B3%D8%A8_%D8%A8%D8%B1%D8%A7%DB%8C_%DA%A9%D8%A7%D8%B1\">\"نامناسب برای کار\"</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
