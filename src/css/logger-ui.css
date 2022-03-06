@@ -582,13 +582,16 @@ body[dir="rtl"] #netFilteringDialog > .headers > .tools {
     left: 0;
     }
 #netFilteringDialog > .headers > .tools > span {
+    color: var(--ink-4);
+        fill: var(--ink-4);
     cursor: pointer;
     font-size: 1.5em;
     padding: 0 0.25em;
     text-align: center;
     }
 #netFilteringDialog > .headers > .tools > span:hover {
-    background-color: #eee;
+    color: var(--ink-1);
+        fill: var(--ink-1);
     }
 #netFilteringDialog.extendedRealm > .headers > .dynamic,
 #netFilteringDialog.extendedRealm > .panes > .dynamic {
