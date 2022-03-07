@@ -309,15 +309,6 @@
 		"contentURL": "https://someonewhocares.org/hosts/hosts",
 		"supportURL": "https://someonewhocares.org/hosts/"
 	},
-	"mvps-0": {
-		"content": "filters",
-		"group": "multipurpose",
-		"updateAfter": 11,
-		"off": true,
-		"title": "MVPS HOSTS",
-		"contentURL": "https://winhelp2002.mvps.org/hosts.txt",
-		"supportURL": "https://winhelp2002.mvps.org/"
-	},
 	"plowe-0": {
 		"content": "filters",
 		"group": "multipurpose",
