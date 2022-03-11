@@ -132,7 +132,7 @@
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Bu site için açılır pencere engellemeyi aç/kapa",
+    "message": "Bu site için açılır pencere engellemeyi aç/kapat",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
@@ -144,7 +144,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Bu site için büyük medya ögelerini engellemeyi aç/kapa",
+    "message": "Bu site için büyük medya ögelerini engellemeyi aç/kapat",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
@@ -156,7 +156,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Bu site için kozmetik filtrelemeyi aç/kapa",
+    "message": "Bu site için kozmetik filtrelemeyi aç/kapat",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
@@ -168,7 +168,7 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Bu site için uzak yazıtiplerini engellemeyi aç/kapa",
+    "message": "Bu site için uzak yazıtiplerini engellemeyi aç/kapat",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
@@ -664,11 +664,11 @@
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
-    "message": "DOM araştırıcısını aç/kapa",
+    "message": "DOM araştırıcısını aç/kapat",
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "Açılır paneli aç/kapa",
+    "message": "Açılır paneli aç/kapat",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
@@ -688,7 +688,7 @@
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "Günlük filtrelemeyi aç/kapa",
+    "message": "Günlük filtrelemeyi aç/kapat",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
@@ -1208,7 +1208,7 @@
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "Kilitli kaydırmayı aç/kapa",
+    "message": "Kilitli kaydırmayı aç/kapat",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {

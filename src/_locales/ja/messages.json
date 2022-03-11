@@ -132,7 +132,7 @@
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "このサイトのポップアップのブロックをすべて切り替えます",
+    "message": "このサイトに対するポップアップブロックの有効/無効をすべて切り替えます",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
@@ -144,7 +144,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "このサイトの大きなメディア要素のブロックを切り替えます",
+    "message": "このサイトに対する大きなメディア要素のブロックの有効/無効を切り替えます",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
@@ -156,19 +156,19 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "このサイトへの非表示フィルタリングを切り替えます",
+    "message": "このサイトに対する非表示フィルタリングの有効/無効を切り替えます",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "クリックするとこのサイトでの非表示フィルタリングを無効にします",
+    "message": "クリックするとこのサイトでの整形フィルタリングを無効にします",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "クリックするとこのサイトでの非表示フィルタリングを有効にします",
+    "message": "クリックするとこのサイトでの整形フィルタリングを有効にします",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "このサイトのリモートフォントのブロックを切り替えます",
+    "message": "このサイトに対するリモートフォントのブロックの有効/無効を切り替えます",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
@@ -196,7 +196,7 @@
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
-    "message": "非表示フィルタリング",
+    "message": "整形フィルタリング",
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
@@ -304,7 +304,7 @@
     "description": "English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters": {
-    "message": "非表示フィルター",
+    "message": "整形フィルター",
     "description": "English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint": {
@@ -376,7 +376,7 @@
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "非表示フィルタリングを無効にする",
+    "message": "整形フィルタリングを無効にする",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
@@ -420,7 +420,7 @@
     "description": "English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt": {
-    "message": "{{netFilterCount}} 行のネットワークフィルター ＋ {{cosmeticFilterCount}} 行の非表示フィルター:",
+    "message": "{{netFilterCount}} 行のネットワークフィルター ＋ {{cosmeticFilterCount}} 行の整形フィルター:",
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
@@ -440,19 +440,19 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
-    "message": "非表示フィルターを解析して適用する",
+    "message": "整形フィルターを解析して適用する",
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "非表示フィルターは、ネットワークリクエストに基づいたフィルタリングエンジンではブロックできない、邪魔とみなされる視覚的要素をウェブページ上から隠すという機能を果たします。",
+    "message": "整形フィルターは、ネットワークリクエストに基づいたフィルタリングエンジンではブロックできない、邪魔とみなされる視覚的要素をウェブページ上から隠すという機能を果たします。",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
-    "message": "汎用非表示フィルターを無視する",
+    "message": "汎用整形フィルターを無視する",
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "汎用非表示フィルターとは、すべてのウェブサイトに適用することを目的とした非表示フィルターです。このオプションを有効にすると、汎用非表示フィルターを処理する結果としてウェブページに加わる、メモリーと CPU のオーバーヘッドが削減されます。\n\n性能の低い端末ではこのオプションを有効にすることをお勧めします。",
+    "message": "汎用整形フィルターとは、すべてのウェブサイトに適用することを目的とした非表示フィルターです。このオプションを有効にすると、汎用非表示フィルターを処理する結果としてウェブページに加わる、メモリーと CPU のオーバーヘッドが削減されます。\n\n性能の低い端末ではこのオプションを有効にすることをお勧めします。",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
@@ -664,11 +664,11 @@
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
-    "message": "DOM インスペクターの表示を切り替えます",
+    "message": "DOM インスペクターの表示/非表示を切り替えます",
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "ポップアップパネルの表示を切り替えます",
+    "message": "ポップアップパネルの表示/非表示を切り替えます",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
@@ -688,7 +688,7 @@
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "ログの絞り込みを切り替えます",
+    "message": "ログの絞り込みの有効/無効を切り替えます",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
@@ -1208,7 +1208,7 @@
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "スクロールの同期を切り替えます",
+    "message": "スクロールの同期/非同期を切り替えます",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
@@ -1220,7 +1220,7 @@
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleCosmeticFiltering": {
-    "message": "非表示フィルタリングを切り替える",
+    "message": "整形フィルタリングの有効/無効を切り替える",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "relaxBlockingMode": {
