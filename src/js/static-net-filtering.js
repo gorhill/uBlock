@@ -176,6 +176,7 @@ const       ANY_TOKEN_HASH = 0x20000000;
 const ANY_HTTPS_TOKEN_HASH = 0x30000000;
 const  ANY_HTTP_TOKEN_HASH = 0x40000000;
 const     EMPTY_TOKEN_HASH = 0xF0000000;
+const   INVALID_TOKEN_HASH = 0xFFFFFFFF;
 
 /******************************************************************************/
 
@@ -2581,7 +2582,7 @@ const urlTokenizer = new (class {
         }
         this._tokens[i+0] = NO_TOKEN_HASH;
         this._tokens[i+1] = 0;
-        this._tokens[i+2] = 0;
+        this._tokens[i+2] = INVALID_TOKEN_HASH;
         this._tokenized = true;
         return this._tokens;
     }
@@ -3981,7 +3982,7 @@ FilterContainer.prototype.matchAndFetchModifiers = function(
     let th = 0, iunit = 0;
     for (;;) {
         th = tokenHashes[i];
-        if ( th === 0 ) { break; }
+        if ( th === INVALID_TOKEN_HASH ) { break; }
         env.th = th;
         $tokenBeg = tokenHashes[i+1];
         if (
@@ -4173,7 +4174,7 @@ FilterContainer.prototype.realmMatchString = function(
         let i = 0;
         for (;;) {
             tokenHash = tokenHashes[i];
-            if ( tokenHash === 0 ) { return false; }
+            if ( tokenHash === INVALID_TOKEN_HASH ) { return false; }
             $tokenBeg = tokenHashes[i+1];
             if (
                 (ibucket00 !== 0) &&
