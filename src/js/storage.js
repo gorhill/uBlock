@@ -1492,7 +1492,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 /******************************************************************************/
 
 // https://github.com/gorhill/uBlock/issues/2344
-//   Support mutliple locales per filter list.
+//   Support multiple locales per filter list.
 // https://github.com/gorhill/uBlock/issues/3210
 //   Support ability to auto-enable a filter list based on user agent.
 // https://github.com/gorhill/uBlock/pull/3860

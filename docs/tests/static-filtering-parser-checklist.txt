@@ -7,7 +7,7 @@
 ! invalid cases, by typically adding the list to uBO, disabling the list,
 ! and viewing it in uBO's asset viewer.
 !
-! Feel free to add more entries to more throughly validate the static
+! Feel free to add more entries to more thoroughly validate the static
 ! filtering parser, submit the changes in your fork of uBO by opening an
 ! issue at https://github.com/uBlockOrigin/uBlock-issues/issues
 

@@ -73,7 +73,7 @@ import './benchmarks.js';
 /******************************************************************************/
 
 // Default handler
-//      priviledged
+//      privileged
 
 {
 // >>>>> start of local scope

@@ -15,7 +15,7 @@
 uBlock Origin
 </h1>
 <p align="center">
-<sup> <!-- Pronounciation -->
+<sup> <!-- Pronunciation -->
       pronounced <i>you-block origin</i> (<code>/ˈjuːˌblɒk/</code>) — <i>you</i> decide what enters your browser.
 </sup>
 <br>

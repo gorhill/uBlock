@@ -697,7 +697,7 @@ let renderOnce = function() {
     if ( document.body.classList.contains('responsive') ) { return; }
 
     // For large displays: we do not want the left pane -- optional and
-    // hidden by defaut -- to dictate the height of the popup. The right pane
+    // hidden by default -- to dictate the height of the popup. The right pane
     // dictates the height of the popup, and the left pane will have a
     // scrollbar if ever its height is more than what is available.
     // For small displays: we use the whole viewport.

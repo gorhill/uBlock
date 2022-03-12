@@ -31,7 +31,7 @@ import { hostnameFromURI } from './uri-utils.js';
 µb.canUseShortcuts = vAPI.commands instanceof Object;
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/386
-//   Firefox 74 and above has complete shotcut assignment user interface.
+//   Firefox 74 and above has complete shortcut assignment user interface.
 µb.canUpdateShortcuts = false;
 
 if (

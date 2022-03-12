@@ -180,7 +180,7 @@ SelectorCacheEntry.junkyard = [];
 //       High-medium generic: [href^="..."]
 //       High-high generic: everything else
 // Specific
-//    Specfic hostname
+//    Specific hostname
 //    Specific entity
 // Generic filters can only be enforced once the main document is loaded.
 // Specific filers can be enforced before the main document is loaded.

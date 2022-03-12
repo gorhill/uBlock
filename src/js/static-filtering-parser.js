@@ -2500,7 +2500,7 @@ const NetOptionsIterator = class {
                 if ( lval === 0 && hasBits(bits, BITEqual) ) { lval = i; }
                 i += 3;
             }
-            // Check for proper assignement
+            // Check for proper assignment
             let assigned = false;
             if ( good && lval !== 0 ) {
                 good = assigned = slices[lval+2] === 1 && lval + 3 !== i;

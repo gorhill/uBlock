@@ -16,7 +16,7 @@ https://github.com/gorhill/lz4-wasm
 The purpose is to instanciate a WebAssembly- or pure javascript-based
 LZ4 block codec.
 
-If the choosen implementation is not specified, there will be an attempt to
+If the chosen implementation is not specified, there will be an attempt to
 create a WebAssembly-based instance. If for whatever reason this fails, a
 pure javascript-based instance will be created.
 

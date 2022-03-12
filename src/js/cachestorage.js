@@ -140,7 +140,7 @@ const selectIDB = async function() {
     //   property was already set, so this means uBO can detect here whether
     //   the database can be opened successfully. A try-catch block is
     //   necessary when reading the `error` property because we are not
-    //   allowed to read this propery outside of event handlers in newer
+    //   allowed to read this property outside of event handlers in newer
     //   implementation of IDBRequest (my understanding).
 
     const getDb = function() {
