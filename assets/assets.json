@@ -202,8 +202,7 @@
 		"cdnURLs": [
 			"https://curbengh.github.io/malware-filter/urlhaus-filter-online.txt",
 			"https://curben.gitlab.io/urlhaus-filter/urlhaus-filter-online.txt",
-			"https://malware-filter.pages.dev/urlhaus-filter-online.txt",
-			"https://malware-filter.netlify.app/urlhaus-filter-online.txt"
+			"https://malware-filter.pages.dev/urlhaus-filter-online.txt"
 		],
 		"supportURL": "https://gitlab.com/curben/urlhaus-filter#malicious-url-blocklist"
 	},
@@ -216,8 +215,7 @@
 		"cdnURLs": [
 			"https://curbengh.github.io/phishing-filter/phishing-filter.txt",
 			"https://curben.gitlab.io/phishing-filter/phishing-filter.txt",
-			"https://phishing-filter.pages.dev/phishing-filter.txt",
-			"https://phishing-filter.netlify.app/phishing-filter.txt"
+			"https://phishing-filter.pages.dev/phishing-filter.txt"
 		],
 		"supportURL": "https://gitlab.com/curben/phishing-filter#phishing-url-blocklist"
 	},
@@ -230,8 +228,7 @@
 		"cdnURLs": [
 			"https://curbengh.github.io/pup-filter/pup-filter.txt",
 			"https://curben.gitlab.io/pup-filter/pup-filter.txt",
-			"https://pup-filter.pages.dev/pup-filter.txt",
-			"https://pup-filter.netlify.app/pup-filter.txt"
+			"https://pup-filter.pages.dev/pup-filter.txt"
 		],
 		"supportURL": "https://gitlab.com/curben/pup-filter#pup-domains-blocklist"
 	},
