@@ -1,7 +1,7 @@
 {
 	"assets.json": {
 		"content": "internal",
-		"updateAfter": 7,
+		"updateAfter": 13,
 		"contentURL": [
 			"https://raw.githubusercontent.com/gorhill/uBlock/master/assets/assets.json",
 			"assets/assets.json"
@@ -25,7 +25,7 @@
 	},
 	"ublock-badlists": {
 		"content": "internal",
-		"updateAfter": 13,
+		"updateAfter": 29,
 		"contentURL": [
 			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badlists.txt",
 			"assets/ublock/badlists.txt"
@@ -56,7 +56,6 @@
 	},
 	"ublock-badware": {
 		"content": "filters",
-		"updateAfter": 7,
 		"group": "default",
 		"title": "uBlock filters – Badware risks",
 		"contentURL": [
@@ -74,7 +73,7 @@
 	},
 	"ublock-privacy": {
 		"content": "filters",
-		"updateAfter": 7,
+		"updateAfter": 13,
 		"group": "default",
 		"title": "uBlock filters – Privacy",
 		"contentURL": [
@@ -90,7 +89,7 @@
 	},
 	"ublock-abuse": {
 		"content": "filters",
-		"updateAfter": 14,
+		"updateAfter": 13,
 		"group": "default",
 		"title": "uBlock filters – Resource abuse",
 		"contentURL": [
