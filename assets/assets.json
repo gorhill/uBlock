@@ -122,7 +122,6 @@
 		"content": "filters",
 		"updateAfter": 1,
 		"group": "default",
-		"off": true,
 		"title": "uBlock filters – Quick fixes",
 		"contentURL": [
 			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/quick-fixes.txt"
