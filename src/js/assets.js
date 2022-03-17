@@ -343,8 +343,8 @@ assets.fetchFilterList = async function(mainlistURL) {
 
 **/
 
-let assetSourceRegistryPromise,
-    assetSourceRegistry = Object.create(null);
+let assetSourceRegistryPromise;
+let assetSourceRegistry = Object.create(null);
 
 const getAssetSourceRegistry = function() {
     if ( assetSourceRegistryPromise === undefined ) {
@@ -376,6 +376,11 @@ const getAssetSourceRegistry = function() {
 
 const registerAssetSource = function(assetKey, dict) {
     const entry = assetSourceRegistry[assetKey] || {};
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/2056
+    //   An existing list may become enabled by default
+    if ( dict.off === undefined && entry.off === true ) {
+        delete entry.off;
+    }
     for ( const prop in dict ) {
         if ( dict.hasOwnProperty(prop) === false ) { continue; }
         if ( dict[prop] === undefined ) {
@@ -434,7 +439,7 @@ const saveAssetSourceRegistry = (( ) => {
     };
 })();
 
-const updateAssetSourceRegistry = function(json, silent) {
+const updateAssetSourceRegistry = function(json, silent = false) {
     let newDict;
     try {
         newDict = JSON.parse(json);
