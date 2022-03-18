@@ -645,7 +645,8 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         io.registerAssetSource(listKey, entry);
     }
 
-    // Convert a no longer existing stock list into an imported list.
+    // Convert a no longer existing stock list into an imported list, except
+    // when the removed stock list is deemed a "bad list".
     const customListFromStockList = assetKey => {
         const oldEntry = oldAvailableLists[assetKey];
         if ( oldEntry === undefined || oldEntry.off === true ) { return; }
@@ -653,6 +654,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         if ( Array.isArray(listURL) ) {
             listURL = listURL[0];
         }
+        if ( this.badLists.has(listURL) ) { return; }
         const newEntry = {
             content: 'filters',
             contentURL: listURL,
