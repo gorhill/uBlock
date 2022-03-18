@@ -31,6 +31,7 @@
 			"assets/ublock/badlists.txt"
 		],
 		"cdnURLs": [
+			"https://ublockorigin.github.io/uAssets/filters/badlists.txt",
 			"https://gitcdn.xyz/repo/uBlockOrigin/uAssets/master/filters/badlists.txt",
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssets@master/filters/badlists.txt",
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssets/master/filters/badlists.txt",
@@ -46,6 +47,7 @@
 			"assets/ublock/filters.txt"
 		],
 		"cdnURLs": [
+			"https://ublockorigin.github.io/uAssets/filters/filters.txt",
 			"https://gitcdn.xyz/repo/uBlockOrigin/uAssets/master/filters/filters.txt",
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssets@master/filters/filters.txt",
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssets/master/filters/filters.txt",
@@ -63,6 +65,7 @@
 			"assets/ublock/badware.txt"
 		],
 		"cdnURLs": [
+			"https://ublockorigin.github.io/uAssets/filters/badware.txt",
 			"https://gitcdn.xyz/repo/uBlockOrigin/uAssets/master/filters/badware.txt",
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssets@master/filters/badware.txt",
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssets/master/filters/badware.txt",
@@ -81,6 +84,7 @@
 			"assets/ublock/privacy.txt"
 		],
 		"cdnURLs": [
+			"https://ublockorigin.github.io/uAssets/filters/privacy.txt",
 			"https://gitcdn.xyz/repo/uBlockOrigin/uAssets/master/filters/privacy.txt",
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssets@master/filters/privacy.txt",
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssets/master/filters/privacy.txt",
@@ -97,6 +101,7 @@
 			"assets/ublock/resource-abuse.txt"
 		],
 		"cdnURLs": [
+			"https://ublockorigin.github.io/uAssets/filters/resource-abuse.txt",
 			"https://gitcdn.xyz/repo/uBlockOrigin/uAssets/master/filters/resource-abuse.txt",
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssets@master/filters/resource-abuse.txt",
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssets/master/filters/resource-abuse.txt",
@@ -112,6 +117,7 @@
 			"assets/ublock/unbreak.txt"
 		],
 		"cdnURLs": [
+			"https://ublockorigin.github.io/uAssets/filters/unbreak.txt",
 			"https://gitcdn.xyz/repo/uBlockOrigin/uAssets/master/filters/unbreak.txt",
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssets@master/filters/unbreak.txt",
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssets/master/filters/unbreak.txt",
@@ -127,6 +133,7 @@
 			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/quick-fixes.txt"
 		],
 		"cdnURLs": [
+			"https://ublockorigin.github.io/uAssets/filters/quick-fixes.txt",
 			"https://gitcdn.xyz/repo/uBlockOrigin/uAssets/master/filters/quick-fixes.txt",
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssets@master/filters/quick-fixes.txt",
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssets/master/filters/quick-fixes.txt",
@@ -189,6 +196,7 @@
 		"title": "Block Outsider Intrusion into LAN",
 		"contentURL": "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/lan-block.txt",
 		"cdnURLs": [
+			"https://ublockorigin.github.io/uAssets/filters/lan-block.txt",
 			"https://gitcdn.xyz/repo/uBlockOrigin/uAssets/master/filters/lan-block.txt",
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssets@master/filters/lan-block.txt",
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssets/master/filters/lan-block.txt",
@@ -309,9 +317,11 @@
 		"off": true,
 		"contentURL": "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/annoyances.txt",
 		"cdnURLs": [
+			"https://ublockorigin.github.io/uAssets/filters/annoyances.txt",
 			"https://gitcdn.xyz/repo/uBlockOrigin/uAssets/master/filters/annoyances.txt",
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssets@master/filters/annoyances.txt",
-			"https://cdn.statically.io/gh/uBlockOrigin/uAssets/master/filters/annoyances.txt"
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssets/master/filters/annoyances.txt",
+			"https://combinatronics.io/uBlockOrigin/uAssets/master/filters/annoyances.txt"
 		]
 	},
 	"dpollock-0": {
