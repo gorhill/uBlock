@@ -299,6 +299,8 @@
 
 /* https://material.io/design/color/dark-theme.html */
 :root.dark {
+    color-scheme: dark;
+
     --elevation-down-surface: black;
     --elevation-down1-opacity: 16%;
     --elevation-down2-opacity: 32%;
