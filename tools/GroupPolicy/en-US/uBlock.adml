@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources xmlns:xsd="https://www.w3.org/2001/XMLSchema" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.microsoft.com/GroupPolicy/PolicyDefinitions" revision="1.0" schemaVersion="1.0">
+    <displayName>Contoso Company base file</displayName>
+    <description>This file contains the Contoso parent category.
+  </description>
+    <resources>
+        <stringTable>
+            <string id="V1_0_0_1">uBlock Origin v1.0.0.1 or later</string>
+            <string id="V1_3_2">uBlock Origin v1.3.2 or later</string>
+            <string id="V1_33_0">uBlock Origin v1.33.0 or later</string>
+            <string id="uBlockCategory">uBlock Origin</string>
+            <string id="GoogleChrome">Google Chrome</string>
+            <string id="MicrosoftEdge">Microsoft Edge</string>
+            <string id="adminSettings">Apply an exported configuration (adminSettings)</string>
+            <string id="advancedSettings">Advanced settings to overwrite</string>
+            <string id="userSettings">User settings to overwrite</string>
+            <string id="disableDashboard">Prevent access to uBO's dashboard</string>
+            <string id="disabledPopupPanelParts">Popup panel parts to disable</string>
+            <string id="toAdd">Settings to add at launch time</string>
+            <string id="toOverwrite">Settings to overwrite at launch time</string>
+            <string id="adminSettings_Help">A valid JSON string compliant with uBO's backup format.
+                
+Administrators can force specific configurations to deployed uBlock Origin (uBO). At launch time, uBO will look for a setting named adminSettings, and if it exists, it will parse, extract and overwrite a user's settings with the administrator-assigned ones.
+
+Configure uBO as you wish for your users, then create a backup using the "Backup to file" in the Settings pane. Now open this backup file using a text editor, and remove all entries you do not want to overwrite, while taking care to end up with a valid JSON file (mind trailing commas, etc.). All the entries left are the ones which will be overwritten on the user's side.
+
+Example value:
+{"userSettings": {"colorBlindFriendly": true}}
+
+https://github.com/gorhill/uBlock/wiki/Deploying-uBlock-Origin
+            </string>
+            <string id="userSettings_Help">A list of [name,value] pairs to populate user settings
+                
+Each entry in the array is an array consisting of a pair of name-value strings. Each name string must be a supported user setting, and each value string must properly resolve to a supported value.
+
+Every valid entry will be used to overwrite the corresponding default user setting at launch time.
+
+Example value:
+[[ "contextMenuEnabled", "false" ],[ "dynamicFilteringEnabled", "false" ]]
+
+https://github.com/gorhill/uBlock/wiki/Deploying-uBlock-Origin:-configuration#usersettings</string>
+            <string id="advancedSettings_Help">A list of [name,value] pairs to populate advanced settings
+                
+Each entry in the array is an array consisting of a pair of name-value strings. Each name string must be a supported advanced setting, and each value string must properly resolve to a supported value.
+
+Every valid entry will be used to overwrite the corresponding default advanced setting, and will also become read-only, i.e. the user won't be able to change it.
+
+Example value:
+[[ "disableWebAssembly", "true" ]]
+
+https://github.com/gorhill/uBlock/wiki/Deploying-uBlock-Origin:-configuration#advancedsettings</string>
+            <string id="disableDashboard_Help">Set to true to prevent access to configuration options
+                
+https://github.com/gorhill/uBlock/wiki/Deploying-uBlock-Origin:-configuration#disabledashboard</string>
+            <string id="disabledPopupPanelParts_Help">An array of strings, where each string refer to a part of the popup panel which should be removed from view. Current supported named parts:
+
+globalStats: remove access to "Blocked since install" statistic.
+basicTools: remove access to basic tools.
+extraTools: remove access to per-site switches.
+overviewPane: remove access to the overview pane.
+
+Example value:
+["globalStats","overviewPane"]
+
+https://github.com/gorhill/uBlock/wiki/Deploying-uBlock-Origin:-configuration#disabledpopuppanelparts</string>
+            <string id="toAdd_Help">The properties in the toAdd branch will append to the already present local settings. Currently, the following properties are supported:
+
+trustedSiteDirectives
+The trustedSiteDirectives property is an array of string, each of which must resolve into a valid trusted-site directive, used to dictate where uBO must be disabled.
+
+Example value:
+{"trustedSiteDirectives": ["example.com","example.org"]}
+
+https://github.com/gorhill/uBlock/wiki/Deploying-uBlock-Origin:-configuration#toadd</string>
+            <string id="toOverwrite_Help">The properties in the toOverwrite branch will wholly replace the corresponding local settings. Currently, the following properties are supported:
+
+filters
+The filters property is an array of strings, which are meant to represent all the lines making the text to use as the content of the "My filters" pane.
+
+filterLists
+The filterLists property is an array of strings, where each string is a token which identifies a list to enable by default. To enable a stock filter list, this is the token identifying the list as per content of assets.json. For an external list, i.e. not found in assets.json, the token is the URL of the filter list.
+
+trustedSiteDirectives
+The trustedSiteDirectives property is an array of string, each of which must resolve into a valid trusted-site directive, used to dictate where uBO must be disabled.
+
+All the directives will be used to wholly replace the local trusted-site directives, including the built-in ones.
+
+Example value:
+{"trustedSiteDirectives": ["example.com","example.org"], "filters": ["||example.com/log$xhr,domain=www.example.org"], "filterLists": ["ublock-filters"]}
+
+https://github.com/gorhill/uBlock/wiki/Deploying-uBlock-Origin:-configuration#tooverwrite</string>
+        </stringTable>
+        <presentationTable>
+            <presentation id="adminSettings">
+                <textBox refId="adminSettingsDialog">
+                    <label>Exported settings to apply:</label>
+                </textBox>
+            </presentation>
+            <presentation id="advancedSettings">
+                <textBox refId="advancedSettingsDialog">
+                    <label>Advanced settings to set:</label>
+                </textBox>
+            </presentation>
+            <presentation id="userSettings">
+                <textBox refId="userSettingsDialog">
+                    <label>User settings to set:</label>
+                </textBox>
+            </presentation>
+            <presentation id="disabledPopupPanelParts">
+                <textBox refId="disabledPopupPanelPartsDialog">
+                    <label>Popup panel parts to disable:</label>
+                </textBox>
+            </presentation>
+            <presentation id="toAdd">
+                <textBox refId="toAddDialog">
+                    <label>Properties to add:</label>
+                </textBox>
+            </presentation>
+            <presentation id="toOverwrite">
+                <textBox refId="toOverwriteDialog">
+                    <label>Properties to overwrite:</label>
+                </textBox>
+            </presentation>
+        </presentationTable>
+    </resources>
+</policyDefinitionResources>

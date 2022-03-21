@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitions xmlns:xsd="https://www.w3.org/2001/XMLSchema" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://www.microsoft.com/GroupPolicy/PolicyDefinitions">
+    <policyNamespaces>
+        <target prefix="uBlock" namespace="gorhill.uBlock" />
+    </policyNamespaces>
+    <resources minRequiredRevision="1.0" />
+    <supportedOn>
+        <definitions>
+            <definition name="V1_33_0" displayName="$(string.V1_33_0)" />
+            <definition name="V1_0_0_1" displayName="$(string.V1_0_0_1)" />
+        </definitions>
+    </supportedOn>
+    <categories>
+        <category name="uBlockOrigin" displayName="$(string.uBlockCategory)" />
+        <category name="MicrosoftEdge" displayName="$(string.MicrosoftEdge)">
+            <parentCategory ref="uBlockOrigin" />
+        </category>
+    </categories>
+    <policies>
+        <policy name="edgeAdminSettings" class="Both" displayName="$(string.adminSettings)" explainText="$(string.adminSettings_Help)" presentation="$(presentation.adminSettings)" key="Software\Policies\Microsoft\Edge\3rdparty\Extensions\odfafepnkmbhccpbejgmiehpchacaeak\policy">
+            <parentCategory ref="MicrosoftEdge" />
+            <supportedOn ref="V1_0_0_1" />
+            <elements>
+                <text id="adminSettingsDialog" valueName="adminSettings" required="true" />
+            </elements>
+        </policy>
+        <policy name="edgeAdvancedSettings" class="Both" displayName="$(string.advancedSettings)" explainText="$(string.advancedSettings_Help)" presentation="$(presentation.advancedSettings)" key="Software\Policies\Microsoft\Edge\3rdparty\Extensions\odfafepnkmbhccpbejgmiehpchacaeak\policy">
+            <parentCategory ref="MicrosoftEdge" />
+            <supportedOn ref="V1_33_0" />
+            <elements>
+                <text id="advancedSettingsDialog" valueName="advancedSettings" required="true" />
+            </elements>
+        </policy>
+        <policy name="edgeUserSettings" class="Both" displayName="$(string.userSettings)" explainText="$(string.userSettings_Help)" presentation="$(presentation.userSettings)" key="Software\Policies\Microsoft\Edge\3rdparty\Extensions\odfafepnkmbhccpbejgmiehpchacaeak\policy">
+            <parentCategory ref="MicrosoftEdge" />
+            <supportedOn ref="V1_33_0" />
+            <elements>
+                <text id="userSettingsDialog" valueName="userSettings" required="true" />
+            </elements>
+        </policy>
+        <policy name="edgeDisableDashboard" class="Both" displayName="$(string.disableDashboard)" explainText="$(string.disableDashboard_Help)" key="Software\Policies\Microsoft\Edge\3rdparty\Extensions\odfafepnkmbhccpbejgmiehpchacaeak\policy" valueName="disableDashboard">
+            <parentCategory ref="MicrosoftEdge" />
+            <supportedOn ref="V1_33_0" />
+        </policy>
+        <policy name="edgeDisabledPopupPanelParts" class="Both" displayName="$(string.disabledPopupPanelParts)" explainText="$(string.disabledPopupPanelParts_Help)" presentation="$(presentation.disabledPopupPanelParts)" key="Software\Policies\Microsoft\Edge\3rdparty\Extensions\odfafepnkmbhccpbejgmiehpchacaeak\policy">
+            <parentCategory ref="MicrosoftEdge" />
+            <supportedOn ref="V1_33_0" />
+            <elements>
+                <text id="disabledPopupPanelPartsDialog" valueName="disabledPopupPanelParts" required="true" />
+            </elements>
+        </policy>
+        <policy name="edgeToAdd" class="Both" displayName="$(string.toAdd)" explainText="$(string.toAdd_Help)" presentation="$(presentation.toAdd)" key="Software\Policies\Microsoft\Edge\3rdparty\Extensions\odfafepnkmbhccpbejgmiehpchacaeak\policy">
+            <parentCategory ref="MicrosoftEdge" />
+            <supportedOn ref="V1_33_0" />
+            <elements>
+                <text id="toAddDialog" valueName="toAdd" required="true" />
+            </elements>
+        </policy>
+        <policy name="edgeToOverwrite" class="Both" displayName="$(string.toOverwrite)" explainText="$(string.toOverwrite_Help)" presentation="$(presentation.toOverwrite)" key="Software\Policies\Microsoft\Edge\3rdparty\Extensions\odfafepnkmbhccpbejgmiehpchacaeak\policy">
+            <parentCategory ref="MicrosoftEdge" />
+            <supportedOn ref="V1_33_0" />
+            <elements>
+                <text id="toOverwriteDialog" valueName="toOverwrite" required="true" />
+            </elements>
+        </policy>
+    </policies>
+</policyDefinitions>
