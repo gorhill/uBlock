@@ -299,8 +299,6 @@
 
 /* https://material.io/design/color/dark-theme.html */
 :root.dark {
-    color-scheme: dark;
-
     --elevation-down-surface: black;
     --elevation-down1-opacity: 16%;
     --elevation-down2-opacity: 32%;
@@ -371,6 +369,12 @@
     /* logger */
     --logger-modified-surface: #663efd60;
     --logger-redirected-surface: rgb(var(--yellow-5) / 40%);
+}
+
+:root.dark input,
+:root.dark select,
+:root.dark textarea {
+    color-scheme: dark;
 }
 
 /*
