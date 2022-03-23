@@ -266,7 +266,7 @@ body[dir="rtl"] #netInspector #filterExprPicker {
     color: #008;
     }
 #vwRenderer .logEntry > div.voided {
-    opacity: 0.3;
+    opacity: 0.5;
     }
 #vwRenderer .logEntry > div.voided:hover {
     opacity: 0.7;
