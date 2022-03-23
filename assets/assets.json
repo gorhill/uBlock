@@ -28,7 +28,7 @@
 		"content": "internal",
 		"updateAfter": 29,
 		"contentURL": [
-			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badlists.txt",
+			"https://ublockorigin.github.io/uAssets/filters/badlists.txt",
 			"assets/ublock/badlists.txt"
 		],
 		"cdnURLs": [
@@ -45,7 +45,7 @@
 		"group": "default",
 		"title": "uBlock filters",
 		"contentURL": [
-			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt",
+			"https://ublockorigin.github.io/uAssets/filters/filters.txt",
 			"assets/ublock/filters.txt"
 		],
 		"cdnURLs": [
@@ -63,7 +63,7 @@
 		"group": "default",
 		"title": "uBlock filters – Badware risks",
 		"contentURL": [
-			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badware.txt",
+			"https://ublockorigin.github.io/uAssets/filters/badware.txt",
 			"assets/ublock/badware.txt"
 		],
 		"cdnURLs": [
@@ -83,7 +83,7 @@
 		"group": "default",
 		"title": "uBlock filters – Privacy",
 		"contentURL": [
-			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/privacy.txt",
+			"https://ublockorigin.github.io/uAssets/filters/privacy.txt",
 			"assets/ublock/privacy.txt"
 		],
 		"cdnURLs": [
@@ -101,7 +101,7 @@
 		"group": "default",
 		"title": "uBlock filters – Resource abuse",
 		"contentURL": [
-			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/resource-abuse.txt",
+			"https://ublockorigin.github.io/uAssets/filters/resource-abuse.txt",
 			"assets/ublock/resource-abuse.txt"
 		],
 		"cdnURLs": [
@@ -118,7 +118,7 @@
 		"group": "default",
 		"title": "uBlock filters – Unbreak",
 		"contentURL": [
-			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/unbreak.txt",
+			"https://ublockorigin.github.io/uAssets/filters/unbreak.txt",
 			"assets/ublock/unbreak.txt"
 		],
 		"cdnURLs": [
@@ -136,7 +136,7 @@
 		"group": "default",
 		"title": "uBlock filters – Quick fixes",
 		"contentURL": [
-			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/quick-fixes.txt"
+			"https://ublockorigin.github.io/uAssets/filters/quick-fixes.txt"
 		],
 		"cdnURLs": [
 			"https://ublockorigin.github.io/uAssetsCDN/filters/quick-fixes.txt",
@@ -201,7 +201,7 @@
 		"group": "privacy",
 		"off": true,
 		"title": "Block Outsider Intrusion into LAN",
-		"contentURL": "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/lan-block.txt",
+		"contentURL": "https://ublockorigin.github.io/uAssets/filters/lan-block.txt",
 		"cdnURLs": [
 			"https://ublockorigin.github.io/uAssetsCDN/filters/lan-block.txt",
 			"https://ublockorigin.pages.dev/filters/lan-block.txt",
@@ -323,7 +323,7 @@
 		"group": "social",
 		"title": "uBlock filters – Annoyances",
 		"off": true,
-		"contentURL": "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/annoyances.txt",
+		"contentURL": "https://ublockorigin.github.io/uAssets/filters/annoyances.txt",
 		"cdnURLs": [
 			"https://ublockorigin.github.io/uAssetsCDN/filters/annoyances.txt",
 			"https://ublockorigin.pages.dev/filters/annoyances.txt",
