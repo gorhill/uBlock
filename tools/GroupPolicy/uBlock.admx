@@ -15,6 +15,9 @@
         <category name="MicrosoftEdge" displayName="$(string.MicrosoftEdge)">
             <parentCategory ref="uBlockOrigin" />
         </category>
+        <category name="GoogleChrome" displayName="$(string.GoogleChrome)">
+            <parentCategory ref="uBlockOrigin" />
+        </category>
     </categories>
     <policies>
         <policy name="edgeAdminSettings" class="Both" displayName="$(string.adminSettings)" explainText="$(string.adminSettings_Help)" presentation="$(presentation.adminSettings)" key="Software\Policies\Microsoft\Edge\3rdparty\Extensions\odfafepnkmbhccpbejgmiehpchacaeak\policy">
@@ -58,6 +61,52 @@
         </policy>
         <policy name="edgeToOverwrite" class="Both" displayName="$(string.toOverwrite)" explainText="$(string.toOverwrite_Help)" presentation="$(presentation.toOverwrite)" key="Software\Policies\Microsoft\Edge\3rdparty\Extensions\odfafepnkmbhccpbejgmiehpchacaeak\policy">
             <parentCategory ref="MicrosoftEdge" />
+            <supportedOn ref="V1_33_0" />
+            <elements>
+                <text id="toOverwriteDialog" valueName="toOverwrite" required="true" />
+            </elements>
+        </policy>
+        <policy name="chromeAdminSettings" class="Both" displayName="$(string.adminSettings)" explainText="$(string.adminSettings_Help)" presentation="$(presentation.adminSettings)" key="Software\Policies\Google\Chrome\3rdparty\Extensions\cjpalhdlnbpafiamejdnhcphjbkeiagm\policy">
+            <parentCategory ref="GoogleChrome" />
+            <supportedOn ref="V1_0_0_1" />
+            <elements>
+                <text id="adminSettingsDialog" valueName="adminSettings" required="true" />
+            </elements>
+        </policy>
+        <policy name="chromeAdvancedSettings" class="Both" displayName="$(string.advancedSettings)" explainText="$(string.advancedSettings_Help)" presentation="$(presentation.advancedSettings)" key="Software\Policies\Google\Chrome\3rdparty\Extensions\cjpalhdlnbpafiamejdnhcphjbkeiagm\policy">
+            <parentCategory ref="GoogleChrome" />
+            <supportedOn ref="V1_33_0" />
+            <elements>
+                <text id="advancedSettingsDialog" valueName="advancedSettings" required="true" />
+            </elements>
+        </policy>
+        <policy name="chromeUserSettings" class="Both" displayName="$(string.userSettings)" explainText="$(string.userSettings_Help)" presentation="$(presentation.userSettings)" key="Software\Policies\Google\Chrome\3rdparty\Extensions\cjpalhdlnbpafiamejdnhcphjbkeiagm\policy">
+            <parentCategory ref="GoogleChrome" />
+            <supportedOn ref="V1_33_0" />
+            <elements>
+                <text id="userSettingsDialog" valueName="userSettings" required="true" />
+            </elements>
+        </policy>
+        <policy name="chromeDisableDashboard" class="Both" displayName="$(string.disableDashboard)" explainText="$(string.disableDashboard_Help)" key="Software\Policies\Google\Chrome\3rdparty\Extensions\cjpalhdlnbpafiamejdnhcphjbkeiagm\policy" valueName="disableDashboard">
+            <parentCategory ref="GoogleChrome" />
+            <supportedOn ref="V1_33_0" />
+        </policy>
+        <policy name="chromeDisabledPopupPanelParts" class="Both" displayName="$(string.disabledPopupPanelParts)" explainText="$(string.disabledPopupPanelParts_Help)" presentation="$(presentation.disabledPopupPanelParts)" key="Software\Policies\Google\Chrome\3rdparty\Extensions\cjpalhdlnbpafiamejdnhcphjbkeiagm\policy">
+            <parentCategory ref="GoogleChrome" />
+            <supportedOn ref="V1_33_0" />
+            <elements>
+                <text id="disabledPopupPanelPartsDialog" valueName="disabledPopupPanelParts" required="true" />
+            </elements>
+        </policy>
+        <policy name="chromeToAdd" class="Both" displayName="$(string.toAdd)" explainText="$(string.toAdd_Help)" presentation="$(presentation.toAdd)" key="Software\Policies\Google\Chrome\3rdparty\Extensions\cjpalhdlnbpafiamejdnhcphjbkeiagm\policy">
+            <parentCategory ref="GoogleChrome" />
+            <supportedOn ref="V1_33_0" />
+            <elements>
+                <text id="toAddDialog" valueName="toAdd" required="true" />
+            </elements>
+        </policy>
+        <policy name="chromeToOverwrite" class="Both" displayName="$(string.toOverwrite)" explainText="$(string.toOverwrite_Help)" presentation="$(presentation.toOverwrite)" key="Software\Policies\Google\Chrome\3rdparty\Extensions\cjpalhdlnbpafiamejdnhcphjbkeiagm\policy">
+            <parentCategory ref="GoogleChrome" />
             <supportedOn ref="V1_33_0" />
             <elements>
                 <text id="toOverwriteDialog" valueName="toOverwrite" required="true" />
