@@ -936,7 +936,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
             if ( matches[2] !== undefined ) {
                 updateAfter = Math.ceil(updateAfter / 24);
             }
-            updateAfter = Math.max(updateAfter, 1);
+            updateAfter = Math.max(updateAfter, 0.5);
             if ( updateAfter !== listEntry.updateAfter ) {
                 listEntry.updateAfter = updateAfter;
                 io.registerAssetSource(assetKey, { updateAfter });
