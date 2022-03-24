@@ -18,6 +18,9 @@
         <category name="GoogleChrome" displayName="$(string.GoogleChrome)">
             <parentCategory ref="uBlockOrigin" />
         </category>
+        <category name="MozillaFirefox" displayName="$(string.MozillaFirefox)">
+            <parentCategory ref="uBlockOrigin" />
+        </category>
     </categories>
     <policies>
         <policy name="edgeAdminSettings" class="Both" displayName="$(string.adminSettings)" explainText="$(string.adminSettings_Help)" presentation="$(presentation.adminSettings)" key="Software\Policies\Microsoft\Edge\3rdparty\Extensions\odfafepnkmbhccpbejgmiehpchacaeak\policy">
@@ -110,6 +113,13 @@
             <supportedOn ref="V1_33_0" />
             <elements>
                 <text id="toOverwriteDialog" valueName="toOverwrite" required="true" />
+            </elements>
+        </policy>
+        <policy name="firefoxAdminSettings" class="Both" displayName="$(string.adminSettings)" explainText="$(string.adminSettings_Help)" presentation="$(presentation.adminSettings)" key="SOFTWARE\Policies\Mozilla\Firefox\3rdparty\Extensions\uBlock0@raymondhill.net">
+            <parentCategory ref="MozillaFirefox" />
+            <supportedOn ref="V1_0_0_1" />
+            <elements>
+                <text id="adminSettingsDialog" valueName="adminSettings" required="true" />
             </elements>
         </policy>
     </policies>

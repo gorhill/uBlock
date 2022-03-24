@@ -11,6 +11,7 @@
             <string id="uBlockCategory">uBlock Origin</string>
             <string id="GoogleChrome">Google Chrome</string>
             <string id="MicrosoftEdge">Microsoft Edge</string>
+            <string id="MozillaFirefox">Mozilla Firefox</string>
             <string id="adminSettings">Apply an exported configuration (adminSettings)</string>
             <string id="advancedSettings">Advanced settings to overwrite</string>
             <string id="userSettings">User settings to overwrite</string>
