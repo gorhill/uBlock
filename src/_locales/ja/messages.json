@@ -76,7 +76,7 @@
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "クリックするとこのサイトで  uBlock₀ を有効にします。",
+    "message": "クリックするとこのサイトで uBlock₀ を有効にします。",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -156,7 +156,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "このサイトに対する非表示フィルタリングの有効/無効を切り替えます",
+    "message": "このサイトに対する整形フィルタリングの有効/無効を切り替えます",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
@@ -528,7 +528,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "1 行につき 1 つのフィルターです。フィルターは単純なホスト名でも EasyList と同じ形式でも構いません。<code>!</code> から始まる行は無視されます。",
+    "message": "1 行につき 1 つのフィルターです。フィルターはただのホスト名でも EasyList と同じ形式でも構いません。! から始まる行は無視されます。\n",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -1032,7 +1032,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "uBO の内製フィルターリストは以下の <a href=\"https://ja.wikipedia.org/wiki/%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84%E3%83%87%E3%83%AA%E3%83%90%E3%83%AA%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF\">CDN</a> にホストしています:",
+    "message": "uBO の内製フィルターリストは以下の <a href=\"https://ja.wikipedia.org/wiki/%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84%E3%83%87%E3%83%AA%E3%83%90%E3%83%AA%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF\">CDN</a> に無料でホストしています:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
@@ -1224,7 +1224,7 @@
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "relaxBlockingMode": {
-    "message": "ブロッキングモードのレベルを下げる",
+    "message": "ブロッキングモードを緩和する",
     "description": "Label for keyboard shortcut used to relax blocking mode"
   },
   "storageUsed": {
