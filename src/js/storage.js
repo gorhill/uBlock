@@ -194,6 +194,9 @@ import {
         if (typeof results[0].advancedSettings === 'string' && results[0].advancedSettings !== '') {
             results[0].advancedSettings = JSON.parse(results[0].advancedSettings);
         }
+        if (typeof results[0].disabledPopupPanelParts === 'string' && results[0].disabledPopupPanelParts !== '') {
+            results[0].disabledPopupPanelParts = JSON.parse(results[0].disabledPopupPanelParts);
+        }
         const {
             advancedSettings,
             disableDashboard,
