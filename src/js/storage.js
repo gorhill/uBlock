@@ -1387,6 +1387,8 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         ]) || {};
         if ( store.toOverwrite instanceof Object ) {
             toOverwrite = store.toOverwrite;
+        } else if ( typeof store.toOverwrite === 'string' && store.toOverwrite !== '') {
+            toOverwrite = JSON.parse(store.toOverwrite);
         }
         const json = store.adminSettings;
         if ( typeof json === 'string' && json !== '' ) {
