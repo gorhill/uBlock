@@ -191,6 +191,9 @@ import {
     ]);
 
     if ( results[0] instanceof Object ) {
+        if (typeof results[0].advancedSettings === 'string' && results[0].advancedSettings !== '') {
+            results[0].advancedSettings = JSON.parse(results[0].advancedSettings);
+        }
         const {
             advancedSettings,
             disableDashboard,
