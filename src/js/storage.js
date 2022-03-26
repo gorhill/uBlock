@@ -128,6 +128,10 @@ import {
     const usUser = results[0] instanceof Object && results[0] ||
                    Object.assign(usDefault);
 
+    if (typeof results[1] === 'string' && results[1] !== '') {
+        results[1] = JSON.parse(results[1]);
+    }
+
     if ( Array.isArray(results[1]) ) {
         const adminSettings = results[1];
         for ( const entry of adminSettings ) {
