@@ -122,5 +122,44 @@
                 <text id="adminSettingsDialog" valueName="adminSettings" required="true" />
             </elements>
         </policy>
+        <policy name="firefoxAdvancedSettings" class="Both" displayName="$(string.advancedSettings)" explainText="$(string.advancedSettings_Help)" presentation="$(presentation.advancedSettings)" key="Software\Policies\Mozilla\Firefox\3rdparty\Extensions\uBlock0@raymondhill.net">
+            <parentCategory ref="MozillaFirefox" />
+            <supportedOn ref="V1_33_0" />
+            <elements>
+                <text id="advancedSettingsDialog" valueName="advancedSettings" required="true" />
+            </elements>
+        </policy>
+        <policy name="firefoxUserSettings" class="Both" displayName="$(string.userSettings)" explainText="$(string.userSettings_Help)" presentation="$(presentation.userSettings)" key="Software\Policies\Mozilla\Firefox\3rdparty\Extensions\uBlock0@raymondhill.net">
+            <parentCategory ref="MozillaFirefox" />
+            <supportedOn ref="V1_33_0" />
+            <elements>
+                <text id="userSettingsDialog" valueName="userSettings" required="true" />
+            </elements>
+        </policy>
+        <policy name="firefoxDisableDashboard" class="Both" displayName="$(string.disableDashboard)" explainText="$(string.disableDashboard_Help)" key="Software\Policies\Mozilla\Firefox\3rdparty\Extensions\uBlock0@raymondhill.net" valueName="disableDashboard">
+            <parentCategory ref="MozillaFirefox" />
+            <supportedOn ref="V1_33_0" />
+        </policy>
+        <policy name="firefoxDisabledPopupPanelParts" class="Both" displayName="$(string.disabledPopupPanelParts)" explainText="$(string.disabledPopupPanelParts_Help)" presentation="$(presentation.disabledPopupPanelParts)" key="Software\Policies\Mozilla\Firefox\3rdparty\Extensions\uBlock0@raymondhill.net">
+            <parentCategory ref="MozillaFirefox" />
+            <supportedOn ref="V1_33_0" />
+            <elements>
+                <text id="disabledPopupPanelPartsDialog" valueName="disabledPopupPanelParts" required="true" />
+            </elements>
+        </policy>
+        <policy name="firefoxToAdd" class="Both" displayName="$(string.toAdd)" explainText="$(string.toAdd_Help)" presentation="$(presentation.toAdd)" key="Software\Policies\Mozilla\Firefox\3rdparty\Extensions\uBlock0@raymondhill.net">
+            <parentCategory ref="MozillaFirefox" />
+            <supportedOn ref="V1_33_0" />
+            <elements>
+                <text id="toAddDialog" valueName="toAdd" required="true" />
+            </elements>
+        </policy>
+        <policy name="firefoxToOverwrite" class="Both" displayName="$(string.toOverwrite)" explainText="$(string.toOverwrite_Help)" presentation="$(presentation.toOverwrite)" key="Software\Policies\Mozilla\Firefox\3rdparty\Extensions\uBlock0@raymondhill.net">
+            <parentCategory ref="MozillaFirefox" />
+            <supportedOn ref="V1_33_0" />
+            <elements>
+                <text id="toOverwriteDialog" valueName="toOverwrite" required="true" />
+            </elements>
+        </policy>
     </policies>
 </policyDefinitions>
