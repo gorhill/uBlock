@@ -399,7 +399,12 @@ try {
     await onHiddenSettingsReady();
     ubolog(`Hidden settings ready ${Date.now()-vAPI.T0} ms after launch`);
 
-    const adminExtra = await vAPI.adminStorage.get('toAdd');
+    let toAdd = await vAPI.adminStorage.get('toAdd');
+    if (typeof toAdd === 'string' && toAdd !== '') {
+            toAdd = JSON.parse(toAdd);
+    }
+    const adminExtra = toAdd;
+    toAdd = null;
     ubolog(`Extra admin settings ready ${Date.now()-vAPI.T0} ms after launch`);
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1365
