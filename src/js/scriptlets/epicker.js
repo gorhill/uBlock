@@ -231,13 +231,12 @@ const resourceURLsFromElement = function(elem) {
         if ( url !== '' ) { urls.push(url); }
         return urls;
     }
-    {
-        const s = elem[prop];
-        if ( typeof s === 'string' && /^https?:\/\//.test(s) ) {
-            urls.push(trimFragmentFromURL(s.slice(0, 1024)));
-        }
+    const s = elem[prop];
+    if ( typeof s === 'string' && /^https?:\/\//.test(s) ) {
+        urls.push(trimFragmentFromURL(s.slice(0, 1024)));
     }
     resourceURLsFromSrcset(elem, urls);
+    resourceURLsFromPicture(elem, urls);
     return urls;
 };
 
@@ -269,6 +268,20 @@ const resourceURLsFromSrcset = function(elem, out) {
         const parsedURL = new URL(url, document.baseURI);
         if ( parsedURL.pathname.length === 0 ) { continue; }
         out.push(trimFragmentFromURL(parsedURL.href));
+    }
+};
+
+// https://github.com/uBlockOrigin/uBlock-issues/issues/2069#issuecomment-1080600661
+// https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture
+const resourceURLsFromPicture = function(elem, out) {
+    if ( elem.localName === 'source' ) { return; }
+    const picture = elem.parentElement;
+    if ( picture === null || picture.localName !== 'picture' ) { return; }
+    const sources = picture.querySelectorAll(':scope > source');
+    for ( const source of sources ) {
+        const urls = resourceURLsFromElement(source);
+        if ( urls.length === 0 ) { continue; }
+        out.push(...urls);
     }
 };
 
@@ -364,6 +377,7 @@ const netFilter1stSources = {
     'iframe': 'src',
        'img': 'src',
     'object': 'data',
+    'source': 'src',
      'video': 'src'
 };
 
