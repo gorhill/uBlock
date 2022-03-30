@@ -336,11 +336,11 @@
     "description": "English: Color-blind friendly"
   },
   "settingsAppearance": {
-    "message": "Appearance",
+    "message": "Kinézet",
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
-    "message": "Theme",
+    "message": "Téma",
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {

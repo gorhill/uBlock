@@ -1052,7 +1052,7 @@
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Riparti da zero...",
+    "message": "Ripristina le impostazioni predefinite…",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
