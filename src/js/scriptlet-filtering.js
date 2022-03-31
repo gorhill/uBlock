@@ -117,7 +117,8 @@ const contentscriptCode = (( ) => {
         ')(',
             '"', 'hostname-slot', '", ',
             '"', 'scriptlets-slot', '"',
-        '); void 0;',
+        ');',
+        '0;',
     ];
     return {
         parts: parts,
@@ -221,21 +222,6 @@ const patchScriptlet = function(content, args) {
     return content;
 };
 
-const logOne = function(isException, token, details) {
-    µb.filteringContext
-        .duplicate()
-        .fromTabId(details.tabId)
-        .setRealm('extended')
-        .setType('dom')
-        .setURL(details.url)
-        .setDocOriginFromURL(details.url)
-        .setFilter({
-            source: 'extended',
-            raw: (isException ? '#@#' : '##') + `+js(${token})`
-        })
-        .toLogger();
-};
-
 scriptletFilteringEngine.reset = function() {
     scriptletDB.clear();
     duplicates.clear();
@@ -319,7 +305,7 @@ const $scriptlets = new Set();
 const $exceptions = new Set();
 const $scriptletToCodeMap = new Map();
 
-scriptletFilteringEngine.retrieve = function(request) {
+scriptletFilteringEngine.retrieve = function(request, options = {}) {
     if ( scriptletDB.size === 0 ) { return; }
 
     const hostname = request.hostname;
@@ -348,27 +334,37 @@ scriptletFilteringEngine.retrieve = function(request) {
 
     // Wholly disable scriptlet injection?
     if ( $exceptions.has('') ) {
-        if ( logger.enabled ) {
-            logOne(true, '', request);
+        if ( Array.isArray(options.logEntries) ) {
+            options.logEntries.push({
+                isException: true,
+                token: '',
+                tabId: request.tabId,
+                url: request.url,
+            });
         }
         return;
     }
 
     $scriptletToCodeMap.clear();
-    for ( const rawToken of $scriptlets ) {
-        lookupScriptlet(rawToken, redirectEngine, $scriptletToCodeMap);
+    for ( const token of $scriptlets ) {
+        lookupScriptlet(token, redirectEngine, $scriptletToCodeMap);
     }
     if ( $scriptletToCodeMap.size === 0 ) { return; }
 
     // Return an array of scriptlets, and log results if needed.
     const out = [];
-    for ( const [ rawToken, code ] of $scriptletToCodeMap ) {
-        const isException = $exceptions.has(rawToken);
+    for ( const [ token, code ] of $scriptletToCodeMap ) {
+        const isException = $exceptions.has(token);
         if ( isException === false ) {
             out.push(code);
         }
-        if ( logger.enabled ) {
-            logOne(isException, rawToken, request);
+        if ( Array.isArray(options.logEntries) ) {
+            options.logEntries.push({
+                isException,
+                token,
+                tabId: request.tabId,
+                url: request.url,
+            });
         }
     }
 
@@ -411,17 +407,36 @@ scriptletFilteringEngine.injectNow = function(details) {
     };
     request.domain = domainFromHostname(request.hostname);
     request.entity = entityFromDomain(request.domain);
-    const scriptlets = this.retrieve(request);
+    const logEntries = logger.enabled ? [] : undefined;
+    const scriptlets = this.retrieve(request, { logEntries });
     if ( scriptlets === undefined ) { return; }
     let code = contentscriptCode.assemble(request.hostname, scriptlets);
     if ( µb.hiddenSettings.debugScriptletInjector ) {
         code = 'debugger;\n' + code;
     }
-    vAPI.tabs.executeScript(details.tabId, {
+    const promise = vAPI.tabs.executeScript(details.tabId, {
         code,
         frameId: details.frameId,
         matchAboutBlank: true,
         runAt: 'document_start',
+    });
+    if ( logEntries === undefined ) { return; }
+    promise.then(results => {
+        if ( Array.isArray(results) === false || results[0] !== 0 ) { return; }
+        for ( const entry of logEntries ) {
+            µb.filteringContext
+                .duplicate()
+                .fromTabId(entry.tabId)
+                .setRealm('extended')
+                .setType('dom')
+                .setURL(entry.url)
+                .setDocOriginFromURL(entry.url)
+                .setFilter({
+                    source: 'extended',
+                    raw: (entry.isException ? '#@#' : '##') + `+js(${entry.token})`
+                })
+                .toLogger();
+        }
     });
 };
 
