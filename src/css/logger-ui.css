@@ -649,6 +649,9 @@ body[dir="rtl"] #netFilteringDialog > .panes > .details > div > span:nth-of-type
 #netFilteringDialog > .panes > .details > div > span:nth-of-type(2):not(.prose) {
     word-break: break-all;
     }
+#netFilteringDialog > .panes > .details > div > span:nth-of-type(2) .listEntry {
+    display: inline-flex;
+    }
 #netFilteringDialog > .panes > .details > div > span:nth-of-type(2) .fa-icon {
     font-size: 110%;
     opacity: 0.5;
