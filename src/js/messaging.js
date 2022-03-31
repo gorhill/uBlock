@@ -658,7 +658,7 @@ const retrieveContentScriptParameters = async function(sender, request) {
         µb.canInjectScriptletsNow === false ||
         isNetworkURI(sender.frameURL) === false
     ) {
-        response.scriptlets = scriptletFilteringEngine.retrieve(request);
+        scriptletFilteringEngine.injectNow(request);
     }
 
     // https://github.com/NanoMeow/QuickReports/issues/6#issuecomment-414516623

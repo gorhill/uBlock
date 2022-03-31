@@ -118,7 +118,7 @@ const contentscriptCode = (( ) => {
             '"', 'hostname-slot', '", ',
             '"', 'scriptlets-slot', '"',
         ');',
-        '0;',
+        '\n0;',
     ];
     return {
         parts: parts,
