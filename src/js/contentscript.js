@@ -1024,7 +1024,6 @@ vAPI.DOMFilterer = class {
     // Extract all classes/ids: these will be passed to the cosmetic
     // filtering engine, and in return we will obtain only the relevant
     // CSS selectors.
-    const reWhitespace = /\s/;
 
     // https://github.com/gorhill/uBlock/issues/672
     // http://www.w3.org/TR/2014/REC-html5-20141028/infrastructure.html#space-separated-tokens
@@ -1039,19 +1038,21 @@ vAPI.DOMFilterer = class {
         queriedIds.add(s);
     };
 
+    // https://github.com/uBlockOrigin/uBlock-issues/discussions/2076
+    //   Performance: avoid using Element.classList
     const classesFromNode = (node, out) => {
-        const s = node.className;
-        if ( typeof s !== 'string' || s.length === 0 ) { return; }
-        if ( reWhitespace.test(s) === false ) {
-            if ( queriedClasses.has(s) ) { return; }
-            out.push(s);
-            queriedClasses.add(s);
-            return;
-        }
-        for ( const s of node.classList.values() ) {
-            if ( queriedClasses.has(s) ) { continue; }
-            out.push(s);
-            queriedClasses.add(s);
+        const s = node.getAttribute('class');
+        if ( typeof s !== 'string' ) { return; }
+        const len = s.length;
+        for ( let beg = 0, end = 0, token = ''; beg < len; beg += 1 ) {
+            end = s.indexOf(' ', beg);
+            if ( end === beg ) { continue; }
+            if ( end === -1 ) { end = len; }
+            token = s.slice(beg, end);
+            beg = end;
+            if ( queriedClasses.has(token) ) { continue; }
+            out.push(token);
+            queriedClasses.add(token);
         }
     };
 
