@@ -1263,6 +1263,7 @@ const pickerCSSStyle = [
     'border-radius: 0',
     'box-shadow: none',
     'display: block',
+    'filter: none',
     'height: 100vh',
     'left: 0',
     'margin: 0',
