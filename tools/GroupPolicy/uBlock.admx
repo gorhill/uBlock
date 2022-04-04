@@ -122,43 +122,43 @@
                 <text id="adminSettingsDialog" valueName="adminSettings" required="true" />
             </elements>
         </policy>
-        <policy name="firefoxAdvancedSettings" class="Both" displayName="$(string.advancedSettings)" explainText="$(string.advancedSettings_Help)" presentation="$(presentation.advancedSettings)" key="Software\Policies\Mozilla\Firefox\3rdparty\Extensions\uBlock0@raymondhill.net">
+        <policy name="firefoxAdvancedSettings" class="Both" displayName="$(string.advancedSettings)" explainText="$(string.advancedSettings_Help)" presentation="$(presentation.advancedSettingsMulti)" key="Software\Policies\Mozilla\Firefox\3rdparty\Extensions\uBlock0@raymondhill.net">
             <parentCategory ref="MozillaFirefox" />
             <supportedOn ref="V1_33_0" />
             <elements>
-                <text id="advancedSettingsDialog" valueName="advancedSettings" required="true" />
+                <multiText id="advancedSettingsDialogMulti" valueName="advancedSettings" required="true" maxStrings="1" />
             </elements>
         </policy>
-        <policy name="firefoxUserSettings" class="Both" displayName="$(string.userSettings)" explainText="$(string.userSettings_Help)" presentation="$(presentation.userSettings)" key="Software\Policies\Mozilla\Firefox\3rdparty\Extensions\uBlock0@raymondhill.net">
+        <policy name="firefoxUserSettings" class="Both" displayName="$(string.userSettings)" explainText="$(string.userSettings_Help)" presentation="$(presentation.userSettingsMulti)" key="Software\Policies\Mozilla\Firefox\3rdparty\Extensions\uBlock0@raymondhill.net">
             <parentCategory ref="MozillaFirefox" />
             <supportedOn ref="V1_33_0" />
             <elements>
-                <text id="userSettingsDialog" valueName="userSettings" required="true" />
+                <multiText id="userSettingsDialogMulti" valueName="userSettings" required="true" maxStrings="1" />
             </elements>
         </policy>
         <policy name="firefoxDisableDashboard" class="Both" displayName="$(string.disableDashboard)" explainText="$(string.disableDashboard_Help)" key="Software\Policies\Mozilla\Firefox\3rdparty\Extensions\uBlock0@raymondhill.net" valueName="disableDashboard">
             <parentCategory ref="MozillaFirefox" />
             <supportedOn ref="V1_33_0" />
         </policy>
-        <policy name="firefoxDisabledPopupPanelParts" class="Both" displayName="$(string.disabledPopupPanelParts)" explainText="$(string.disabledPopupPanelParts_Help)" presentation="$(presentation.disabledPopupPanelParts)" key="Software\Policies\Mozilla\Firefox\3rdparty\Extensions\uBlock0@raymondhill.net">
+        <policy name="firefoxDisabledPopupPanelParts" class="Both" displayName="$(string.disabledPopupPanelParts)" explainText="$(string.disabledPopupPanelParts_Help)" presentation="$(presentation.disabledPopupPanelPartsMulti)" key="Software\Policies\Mozilla\Firefox\3rdparty\Extensions\uBlock0@raymondhill.net">
             <parentCategory ref="MozillaFirefox" />
             <supportedOn ref="V1_33_0" />
             <elements>
-                <text id="disabledPopupPanelPartsDialog" valueName="disabledPopupPanelParts" required="true" />
+                <multiText id="disabledPopupPanelPartsDialogMulti" valueName="disabledPopupPanelParts" required="true" maxStrings="1" />
             </elements>
         </policy>
-        <policy name="firefoxToAdd" class="Both" displayName="$(string.toAdd)" explainText="$(string.toAdd_Help)" presentation="$(presentation.toAdd)" key="Software\Policies\Mozilla\Firefox\3rdparty\Extensions\uBlock0@raymondhill.net">
+        <policy name="firefoxToAdd" class="Both" displayName="$(string.toAdd)" explainText="$(string.toAdd_Help)" presentation="$(presentation.toAddMulti)" key="Software\Policies\Mozilla\Firefox\3rdparty\Extensions\uBlock0@raymondhill.net">
             <parentCategory ref="MozillaFirefox" />
             <supportedOn ref="V1_33_0" />
             <elements>
-                <text id="toAddDialog" valueName="toAdd" required="true" />
+                <multiText id="toAddDialogMulti" valueName="toAdd" required="true" maxStrings="1" />
             </elements>
         </policy>
-        <policy name="firefoxToOverwrite" class="Both" displayName="$(string.toOverwrite)" explainText="$(string.toOverwrite_Help)" presentation="$(presentation.toOverwrite)" key="Software\Policies\Mozilla\Firefox\3rdparty\Extensions\uBlock0@raymondhill.net">
+        <policy name="firefoxToOverwrite" class="Both" displayName="$(string.toOverwrite)" explainText="$(string.toOverwrite_Help)" presentation="$(presentation.toOverwriteMulti)" key="Software\Policies\Mozilla\Firefox\3rdparty\Extensions\uBlock0@raymondhill.net">
             <parentCategory ref="MozillaFirefox" />
             <supportedOn ref="V1_33_0" />
             <elements>
-                <text id="toOverwriteDialog" valueName="toOverwrite" required="true" />
+                <multiText id="toOverwriteDialogMulti" valueName="toOverwrite" required="true" maxStrings="1" />
             </elements>
         </policy>
     </policies>

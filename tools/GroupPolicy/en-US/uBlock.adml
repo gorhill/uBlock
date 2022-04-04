@@ -122,6 +122,21 @@ https://github.com/gorhill/uBlock/wiki/Deploying-uBlock-Origin:-configuration#to
                     <label>Properties to overwrite:</label>
                 </textBox>
             </presentation>
+            <presentation id="advancedSettingsMulti">
+                <multiTextBox refId="advancedSettingsDialogMulti" />
+            </presentation>
+            <presentation id="userSettingsMulti">
+                <multiTextBox refId="userSettingsDialogMulti" />
+            </presentation>
+            <presentation id="disabledPopupPanelPartsMulti">
+                <multiTextBox refId="disabledPopupPanelPartsDialogMulti" />
+            </presentation>
+            <presentation id="toAddMulti">
+                <multiTextBox refId="toAddDialogMulti" />
+            </presentation>
+            <presentation id="toOverwriteMulti">
+                <multiTextBox refId="toOverwriteDialogMulti" />
+            </presentation>
         </presentationTable>
     </resources>
 </policyDefinitionResources>
