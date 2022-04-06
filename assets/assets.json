@@ -136,7 +136,8 @@
 		"group": "default",
 		"title": "uBlock filters – Quick fixes",
 		"contentURL": [
-			"https://ublockorigin.github.io/uAssets/filters/quick-fixes.txt"
+			"https://ublockorigin.github.io/uAssets/filters/quick-fixes.txt",
+			"assets/ublock/quick-fixes.txt"
 		],
 		"cdnURLs": [
 			"https://ublockorigin.github.io/uAssetsCDN/filters/quick-fixes.txt",
