@@ -114,6 +114,7 @@ const Parser = class {
         this.reUnicodeChars = /[^\x00-\x7F]/g;
         this.reHostnameLabel = /[^.]+/g;
         this.rePlainHostname = /^(?:[\w-]+\.)*[a-z]+$/;
+        this.reBadHostnameChars = /[\x00-\x24\x26-\x29\x2b\x2c\x2f\x3b-\x40\x5c\x5e\x60\x7b-\x7f]/;
         this.rePlainEntity = /^(?:[\w-]+\.)+\*$/;
         this.reEntity = /^[^*]+\.\*$/;
         // https://github.com/uBlockOrigin/uBlock-issues/issues/1146
@@ -743,6 +744,7 @@ const Parser = class {
         if ( not && (modeBits & 0b1000) === 0 ) { return; }
         let hn = not === false ? s : s.slice(1);
         if ( this.rePlainHostname.test(hn) ) { return s; }
+        if ( this.reBadHostnameChars.test(hn) ) { return; }
         const hasWildcard = hn.lastIndexOf('*') !== -1;
         if ( hasWildcard ) {
             if ( modeBits === 0 ) { return; }
