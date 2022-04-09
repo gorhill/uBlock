@@ -466,6 +466,15 @@
 		"contentURL": "https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/subscriptions/abpindo.txt",
 		"supportURL": "https://github.com/ABPindo/indonesianadblockrules"
 	},
+	"IND-0": {
+		"content": "filters",
+		"group": "regions",
+		"off": true,
+		"title": "IND: IndianList",
+		"lang": "as bn gu hi kn ml mr ne pa si ta te",
+		"contentURL": "https://easylist-downloads.adblockplus.org/indianlist.txt",
+		"supportURL": "https://github.com/mediumkreation/IndianList"
+	},
 	"IRN-0": {
 		"content": "filters",
 		"group": "regions",
