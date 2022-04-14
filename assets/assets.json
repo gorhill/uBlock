@@ -563,7 +563,7 @@
 		"off": true,
 		"title": "NLD: EasyDutch",
 		"lang": "af fy nl",
-		"contentURL": "https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/main/EasyDutch.txt",
+		"contentURL": "https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/gh-pages/EasyDutch.txt",
 		"supportURL": "https://github.com/EasyDutch-uBO/EasyDutch/"
 	},
 	"NOR-0": {
