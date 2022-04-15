@@ -984,7 +984,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "打开多余的标签页或窗口",
+    "message": "打开不需要的标签页或窗口",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
@@ -1072,7 +1072,7 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀：添加下列 URL 到您的自定义规则列表吗？\n\n标题： “{{title}}”\nURL： {{url}}",
+    "message": "添加下列网址到您的自定义规则列表吗？\n\n标题： “{{title}}”\n网址： {{url}}",
     "description": "No longer used"
   },
   "subscribeButton": {

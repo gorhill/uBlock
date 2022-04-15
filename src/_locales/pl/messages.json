@@ -404,7 +404,7 @@
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Funkcje odpowiednie tylko dla zaawansowanych użytkowników",
+    "message": "Funkcje odpowiednie tylko dla użytkowników z przygotowaniem technicznym.",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
@@ -944,7 +944,7 @@
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
-    "message": "Zgłoś problem z filtrowaniem",
+    "message": "Zgłoś problem z filtrem",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
@@ -968,7 +968,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Ma okna dialogowe lub inne niedogodności",
+    "message": "Ma nakładki lub inne niedogodności",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {

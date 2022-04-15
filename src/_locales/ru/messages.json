@@ -428,7 +428,7 @@
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
-    "message": "Автообновление списков фильтров.",
+    "message": "Автообновление списков фильтров",
     "description": "A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow": {
@@ -440,7 +440,7 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
-    "message": "Парсить и применять косметические фильтры.",
+    "message": "Парсить и применять косметические фильтры",
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
@@ -448,7 +448,7 @@
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
-    "message": "Игнорировать общие косметические фильтры.",
+    "message": "Игнорировать общие косметические фильтры",
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
@@ -776,7 +776,7 @@
     "description": "Label for the type selector"
   },
   "loggerStaticFilteringHeader": {
-    "message": "Стат. фильтр",
+    "message": "Статич. фильтр",
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
@@ -920,11 +920,11 @@
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Подсказки:</b> Убедитесь, что ваши списки фильтров обновлены. <span data-url=\"logger-ui.html#_\">Логгер</span> - основной инструмент диагностики проблем, связанных с фильтрами.",
+    "message": "<b>Советы:</b> убедитесь, что ваши списки фильтров обновлены. <span data-url=\"logger-ui.html#_\">Логгер</span> — основной инструмент диагностики проблем, связанных с фильтрами.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
-    "message": "Баг репорт",
+    "message": "Отчет об ошибке",
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
@@ -1032,7 +1032,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "Собственные списки фильтров uBO's свободно размещены на следующих <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a>:",
+    "message": "Собственные списки фильтров uBO свободно размещены на следующих <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a>:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {

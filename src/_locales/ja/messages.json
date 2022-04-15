@@ -420,11 +420,11 @@
     "description": "English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt": {
-    "message": "{{netFilterCount}} 行のネットワークフィルター ＋ {{cosmeticFilterCount}} 行の整形フィルター:",
+    "message": "{{netFilterCount}} 件のネットワークフィルター ＋ {{cosmeticFilterCount}} 件の整形フィルター:",
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
-    "message": "{{total}} 行中 {{used}} 行使用",
+    "message": "{{total}} 件中 {{used}} 件使用",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
@@ -452,7 +452,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "汎用整形フィルターとは、すべてのウェブサイトに適用することを目的とした非表示フィルターです。このオプションを有効にすると、汎用非表示フィルターを処理する結果としてウェブページに加わる、メモリーと CPU のオーバーヘッドが削減されます。\n\n性能の低い端末ではこのオプションを有効にすることをお勧めします。",
+    "message": "汎用整形フィルターとは、すべてのウェブサイトに適用することを目的とした整形フィルターです。このオプションを有効にすると、汎用整形フィルターを処理する結果としてウェブページに加わる、メモリーと CPU のオーバーヘッドが削減されます。\n\n性能の低い端末ではこのオプションを有効にすることをお勧めします。",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {

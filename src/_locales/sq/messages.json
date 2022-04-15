@@ -132,15 +132,15 @@
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Zh/Bllokoj të gjitha dritaret automatike te uebsajti",
+    "message": "Zh/Bllokoj të gjitha dritaret modale te uebsajti",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Bllokoj të gjitha dritaret automatike te uebsajti",
+    "message": "Bllokoj të gjitha dritaret modale te uebsajti",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Zhbllokoj të gjitha dritaret automatike te uebsajti",
+    "message": "Zhbllokoj të gjitha dritaret modale te uebsajti",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -188,7 +188,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
-    "message": "Dritaret automatike",
+    "message": "Dritaret modale",
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
@@ -456,7 +456,7 @@
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
-    "message": "Pezulloj aktivitetin me rrjetin deri kur të jenë gati listat e filtrave",
+    "message": "Pezulloj aktivitetin derisa të jenë gati të gjitha listat e filtrave",
     "description": "A checkbox in the 'Filter lists' pane"
   },
   "3pListsOfBlockedHostsHeader": {
@@ -520,7 +520,7 @@
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Në përditësim…",
+    "message": "Përditëson…",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -668,7 +668,7 @@
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "Ç/Aktivizoj panelin automatik",
+    "message": "Ç/Aktivizoj panelin modal",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
@@ -824,7 +824,7 @@
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
-    "message": "Do të fshihen automatikisht zërat në regjistër që nuk plotësojnë këto tre kushte:",
+    "message": "Do të fshihen automatikisht zërat në regjistër që nuk plotësojnë këto tri kushte:",
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
@@ -896,7 +896,7 @@
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Lexoni <code>uBlock/wiki</code> që të mësoni më shumë mbi funksionet e uBlock Origin.",
+    "message": "Lexoni <code>uBlock/wiki</code> që të mësoni më shumë për funksionet e uBlock Origin.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
@@ -916,7 +916,7 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Vërejtje:</b> uBlock Origin nuk duhet përdorur njëkohësisht me aplikacionet e ngjashme bllokuese, pasi disa faqe mund të shfaqin probleme me filtrat.",
+    "message": "<b>Vërejtje:</b> uBlock Origin nuk duhet përdorur njëkohësisht me aplikacionet e ngjashme bllokuese, pasi mund të shfaqen probleme me filtrat.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
@@ -936,11 +936,11 @@
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "Informacioni teknik i mëposhtëm mund t'u shërbejë personave që përpiqen t'ju ndihmojnë për zgjidhjen e një problemi.",
+    "message": "Informacioni teknik i mëposhtëm u shërben personave të cilët përpiqen t'ju ndihmojnë për zgjidhjen e një problemi që mund të keni.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Vërejtje:</b> Informacionet me sfond privat dhe delikat censurohen automatikisht. Informacioni i censuruar mund ta vështirësojë zgjidhjen e një problemi.",
+    "message": "<b>Vërejtje:</b> Informacionet me sfond privat dhe delikat censurohen automatikisht. Informacioni i censuruar mund ta vështirësojë zgjidhjen e problemit.",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
@@ -1036,7 +1036,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "CDN-ja do të zgjidhet rastësisht kur ndonjë listë duhet përditësuar.",
+    "message": "CDN-ja do të zgjidhet rastësisht për të kryer përditësimin e një liste me filtra.",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
@@ -1072,7 +1072,7 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "Të shtohet adresa në listën e personalizuar të filtrave?\n\nTitulli: \"{{title}}\"\nURL: {{url}}",
+    "message": "Do e shtoni adresën në listën e personalizuar të filtrave?\n\nTitulli: \"{{title}}\"\nURL: {{url}}",
     "description": "No longer used"
   },
   "subscribeButton": {

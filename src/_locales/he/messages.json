@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "דווח על סוגייה באתר זה",
+    "message": "דווח על בעיה באתר אינטרנט זה",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -312,7 +312,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "חסום אלמנט...",
+    "message": "חסום אלמנט",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -576,7 +576,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "ייבא מקובץ…",
+    "message": "ייבא מקובץ...",
     "description": ""
   },
   "rulesExport": {
@@ -888,7 +888,7 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "מצא דוחות דומים",
+    "message": "חיפוש דוחות דומים",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -944,7 +944,7 @@
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
-    "message": "דווח על סוגיית מסנן",
+    "message": "דיווח על בעיית מסנן",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
@@ -952,11 +952,11 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "כתובת של דף האינטרנט:",
+    "message": "כתובת דף האינטרנט:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "דף האינטרנט…",
+    "message": "דף האינטרנט...",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
