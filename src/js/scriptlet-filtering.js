@@ -222,6 +222,18 @@ const patchScriptlet = function(content, args) {
     return content;
 };
 
+const logOne = function(tabId, url, filter) {
+    µb.filteringContext
+        .duplicate()
+        .fromTabId(tabId)
+        .setRealm('extended')
+        .setType('dom')
+        .setURL(url)
+        .setDocOriginFromURL(url)
+        .setFilter({ source: 'extended', raw: filter })
+        .toLogger();
+};
+
 scriptletFilteringEngine.reset = function() {
     scriptletDB.clear();
     duplicates.clear();
@@ -332,15 +344,12 @@ scriptletFilteringEngine.retrieve = function(request, options = {}) {
         return;
     }
 
+    const mustLog = Array.isArray(options.logEntries);
+
     // Wholly disable scriptlet injection?
     if ( $exceptions.has('') ) {
-        if ( Array.isArray(options.logEntries) ) {
-            options.logEntries.push({
-                isException: true,
-                token: '',
-                tabId: request.tabId,
-                url: request.url,
-            });
+        if ( mustLog ) {
+            logOne(request.tabId, request.url, '#@#+js()');
         }
         return;
     }
@@ -358,10 +367,12 @@ scriptletFilteringEngine.retrieve = function(request, options = {}) {
         if ( isException === false ) {
             out.push(code);
         }
-        if ( Array.isArray(options.logEntries) ) {
+        if ( mustLog === false ) { continue; }
+        if ( isException ) {
+            logOne(request.tabId, request.url, `#@#+js(${token})`);
+        } else {
             options.logEntries.push({
-                isException,
-                token,
+                token: `##+js(${token})`,
                 tabId: request.tabId,
                 url: request.url,
             });
@@ -424,18 +435,7 @@ scriptletFilteringEngine.injectNow = function(details) {
     promise.then(results => {
         if ( Array.isArray(results) === false || results[0] !== 0 ) { return; }
         for ( const entry of logEntries ) {
-            µb.filteringContext
-                .duplicate()
-                .fromTabId(entry.tabId)
-                .setRealm('extended')
-                .setType('dom')
-                .setURL(entry.url)
-                .setDocOriginFromURL(entry.url)
-                .setFilter({
-                    source: 'extended',
-                    raw: (entry.isException ? '#@#' : '##') + `+js(${entry.token})`
-                })
-                .toLogger();
+            logOne(entry.tabId, entry.url, entry.token);
         }
     });
 };
