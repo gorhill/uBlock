@@ -564,6 +564,12 @@
 		"title": "NLD: EasyDutch",
 		"lang": "af fy nl",
 		"contentURL": "https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/gh-pages/EasyDutch.txt",
+		"cdnURLs": [
+			"https://combinatronics.io/EasyDutch-uBO/EasyDutch/gh-pages/EasyDutch.txt",
+			"https://cdn.statically.io/gh/EasyDutch-uBO/EasyDutch/gh-pages/EasyDutch.txt",
+			"https://cdn.jsdelivr.net/gh/EasyDutch-uBO/EasyDutch@gh-pages/EasyDutch.txt",
+			"https://cdn.statically.io/gl/BPower0036/EasyDutch/raw/gh-pages/EasyDutch.txt"
+		],
 		"supportURL": "https://github.com/EasyDutch-uBO/EasyDutch/"
 	},
 	"NOR-0": {
