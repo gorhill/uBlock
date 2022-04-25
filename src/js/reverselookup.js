@@ -155,7 +155,7 @@ const fromNetFilter = async function(rawFilter) {
     });
 };
 
-const fromCosmeticFilter = async function(details) {
+const fromExtendedFilter = async function(details) {
     if (
         typeof details.rawFilter !== 'string' ||
         details.rawFilter === ''
@@ -169,7 +169,7 @@ const fromCosmeticFilter = async function(details) {
     const hostname = hostnameFromURI(details.url);
 
     worker.postMessage({
-        what: 'fromCosmeticFilter',
+        what: 'fromExtendedFilter',
         id: id,
         domain: domainFromHostname(hostname),
         hostname: hostname,
@@ -203,7 +203,7 @@ const resetLists = function() {
 
 const staticFilteringReverseLookup = {
     fromNetFilter,
-    fromCosmeticFilter,
+    fromExtendedFilter,
     resetLists,
     shutdown: stopWorker
 };

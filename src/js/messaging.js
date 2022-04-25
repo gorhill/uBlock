@@ -118,7 +118,7 @@ const onMessage = function(request, sender, callback) {
         return;
 
     case 'listsFromCosmeticFilter':
-        staticFilteringReverseLookup.fromCosmeticFilter(
+        staticFilteringReverseLookup.fromExtendedFilter(
             request
         ).then(response => {
             callback(response);
