@@ -55,7 +55,10 @@ const fromNetFilter = function(details) {
     for ( const assetKey in listEntries ) {
         const entry = listEntries[assetKey];
         if ( entry === undefined ) { continue; }
-        const content = extractBlocks(entry.content, 'NETWORK_FILTERS:GOOD');
+        if ( entry.networkContent === undefined ) {
+            entry.networkContent = extractBlocks(entry.content, 'NETWORK_FILTERS:GOOD');
+        }
+        const content = entry.networkContent;
         let pos = 0;
         for (;;) {
             pos = content.indexOf(compiledFilter, pos);
@@ -157,14 +160,17 @@ const fromExtendedFilter = function(details) {
     for ( const assetKey in listEntries ) {
         const entry = listEntries[assetKey];
         if ( entry === undefined ) { continue; }
-        const content = extractBlocks(
-            entry.content,
-            'COSMETIC_FILTERS:SPECIFIC',
-            'COSMETIC_FILTERS:GENERIC',
-            'SCRIPTLET_FILTERS',
-            'HTML_FILTERS',
-            'HTTPHEADER_FILTERS'
-        );
+        if ( entry.extendedContent === undefined ) {
+            entry.extendedContent = extractBlocks(
+                entry.content,
+                'COSMETIC_FILTERS:SPECIFIC',
+                'COSMETIC_FILTERS:GENERIC',
+                'SCRIPTLET_FILTERS',
+                'HTML_FILTERS',
+                'HTTPHEADER_FILTERS'
+            );
+        }
+        const content = entry.extendedContent;
         let found;
         let pos = 0;
         while ( (pos = content.indexOf(needle, pos)) !== -1 ) {
