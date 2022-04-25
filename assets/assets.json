@@ -529,10 +529,10 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "KOR: YousList",
+		"title": "KOR: List-KR",
 		"lang": "ko",
-		"contentURL": "https://raw.githubusercontent.com/yous/YousList/master/youslist.txt",
-		"supportURL": "https://github.com/yous/YousList"
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/227.txt",
+		"supportURL": "https://github.com/List-KR/List-KR#readme"
 	},
 	"LTU-0": {
 		"content": "filters",
