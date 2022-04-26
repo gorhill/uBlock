@@ -470,7 +470,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "IND: IndianList",
+		"title": "IND, LKA: IndianList",
 		"lang": "as bn gu hi kn ml mr ne pa si ta te",
 		"contentURL": "https://easylist-downloads.adblockplus.org/indianlist.txt",
 		"supportURL": "https://github.com/mediumkreation/IndianList"
