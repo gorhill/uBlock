@@ -336,15 +336,15 @@
     "description": "English: Color-blind friendly"
   },
   "settingsAppearance": {
-    "message": "Appearance",
+    "message": "Izgled",
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
-    "message": "Theme",
+    "message": "Tema",
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "Custom accent color",
+    "message": "Barva akcenta po meri",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsCloudStorageEnabledPrompt": {
@@ -400,11 +400,11 @@
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsAdvanced": {
-    "message": "Advanced",
+    "message": "Napredno",
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Features suitable only for technical users",
+    "message": "Funkcije primerne zgolj za napredne uporabnike",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
@@ -928,11 +928,11 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Report issues with uBlock Origin itself to the <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "Prijavi težave z uBlock Origin na <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code>sledilnik težav</span>. <u>Potreben je GitHub račun.</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting Information",
+    "message": "Informacije za odpravljanje težav",
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
@@ -944,27 +944,27 @@
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "Prijavi napako filtra",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported.",
+    "message": "Zaradi preprečitve obremenjevanja prostovoljcev s podvojenimi poročili prosim preveri da težava še ni bila sporočena.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Address of the web page:",
+    "message": "Naslov spletne strani:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The web page…",
+    "message": "Spletna stran …",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Pick an entry --",
+    "message": "-- Izberi vnos --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "Prikaže reklame ali ostanke reklam",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
@@ -976,7 +976,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "Ima probleme povezane z zasebnostjo",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
@@ -1036,7 +1036,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "A randomly picked CDN is used when a filter list needs to be updated",
+    "message": "Ob posodobitvi seznama filtrov se uporabi naključno izbran CDN",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
@@ -1216,11 +1216,11 @@
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "genericSelectAll": {
-    "message": "Select all",
+    "message": "Izberi vse",
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleCosmeticFiltering": {
-    "message": "Toggle cosmetic filtering",
+    "message": "Preklopi lepotno filtriranje",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "relaxBlockingMode": {

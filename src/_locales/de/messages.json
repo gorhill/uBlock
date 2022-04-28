@@ -948,7 +948,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Um die Freiwilligen nicht mit doppelten Meldungen zu belasten, vergewissern Sie sich bitte, ob das Problem nicht schon einmal gemeldet wurde.",
+    "message": "Um die freiwilligen Helfer nicht mit doppelten Meldungen zu belasten, vergewissern Sie sich bitte, ob das Problem nicht schon einmal gemeldet wurde.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -964,7 +964,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Zeigt Werbung oder Anzeigenreste",
+    "message": "Zeigt Werbung oder Werbeüberreste",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
