@@ -1277,6 +1277,7 @@ const pickerCSSStyle = [
     'pointer-events: auto',
     'position: fixed',
     'top: 0',
+    'transform: none',
     'visibility: visible',
     'width: 100%',
     'z-index: 2147483647',
