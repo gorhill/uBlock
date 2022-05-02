@@ -9,7 +9,7 @@
 		"cdnURLs": [
 			"https://ublockorigin.github.io/uAssetsCDN/ublock/assets.json",
 			"https://ublockorigin.pages.dev/ublock/assets.json",
-			"https://gitcdn.xyz/repo/gorhill/uBlock/master/assets/assets.json",
+			"https://gitcdn.link/cdn/gorhill/uBlock/master/assets/assets.json",
 			"https://cdn.jsdelivr.net/gh/gorhill/uBlock@master/assets/assets.json",
 			"https://cdn.statically.io/gh/gorhill/uBlock/master/assets/assets.json",
 			"https://combinatronics.io/gorhill/uBlock/master/assets/assets.json"
@@ -20,7 +20,7 @@
 		"updateAfter": 19,
 		"contentURL": [
 			"https://publicsuffix.org/list/public_suffix_list.dat",
-			"https://gitcdn.xyz/repo/publicsuffix/list/master/public_suffix_list.dat",
+			"https://gitcdn.link/cdn/publicsuffix/list/master/public_suffix_list.dat",
 			"assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat"
 		]
 	},
@@ -482,7 +482,7 @@
 		"title": "IRN: Adblock-Iran",
 		"lang": "fa",
 		"contentURL": [
-			"https://gitcdn.xyz/repo/farrokhi/adblock-iran/master/filter.txt",
+			"https://gitcdn.link/cdn/farrokhi/adblock-iran/master/filter.txt",
 			"https://combinatronics.io/farrokhi/adblock-iran/master/filter.txt",
 			"https://cdn.statically.io/gh/farrokhi/adblock-iran/master/filter.txt"
 		],
@@ -548,7 +548,7 @@
 		"lang": "lt",
 		"contentURL": "https://raw.githubusercontent.com/EasyList-Lithuania/easylist_lithuania/master/easylistlithuania.txt",
 		"cdnURLs": [
-			"https://gitcdn.xyz/repo/EasyList-Lithuania/easylist_lithuania/master/easylistlithuania.txt",
+			"https://gitcdn.link/cdn/EasyList-Lithuania/easylist_lithuania/master/easylistlithuania.txt",
 			"https://cdn.jsdelivr.net/gh/EasyList-Lithuania/easylist_lithuania@master/easylistlithuania.txt",
 			"https://cdn.statically.io/gl/DandelionSprout/easylist_lithuania/raw/master/easylistlithuania.txt"
 		],
@@ -588,7 +588,7 @@
 			"https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianList.txt"
 		],
 		"cdnURLs": [
-			"https://gitcdn.xyz/repo/DandelionSprout/adfilt/master/NorwegianList.txt",
+			"https://gitcdn.link/cdn/DandelionSprout/adfilt/master/NorwegianList.txt",
 			"https://cdn.jsdelivr.net/gh/DandelionSprout/adfilt@master/NorwegianList.txt",
 			"https://cdn.statically.io/gl/DandelionSprout/adfilt/master/NorwegianList.txt"
 		],
