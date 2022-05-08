@@ -81,7 +81,6 @@ const hiddenSettingsDefault = {
     selfieAfter: 2,
     strictBlockingBypassDuration: 120,
     uiPopupConfig: 'unset',
-    uiFlavor: 'unset',
     uiStyles: 'unset',
     updateAssetBypassBrowserCache: false,
     userResourcesLocation: 'unset',

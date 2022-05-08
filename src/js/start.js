@@ -493,16 +493,6 @@ io.addObserver(µb.assetObserver.bind(µb));
 // active tab.
 contextMenu.update();
 
-// Maybe install non-default popup document, or automatically select
-// default UI according to platform.
-if (
-    browser.browserAction instanceof Object &&
-    browser.browserAction.setPopup instanceof Function &&
-    µb.hiddenSettings.uiFlavor === 'classic'
-) {
-    browser.browserAction.setPopup({ popup: 'popup.html' });
-}
-
 // https://github.com/uBlockOrigin/uBlock-issues/issues/717
 //   Prevent the extension from being restarted mid-session.
 browser.runtime.onUpdateAvailable.addListener(details => {
