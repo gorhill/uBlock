@@ -1253,18 +1253,9 @@
                 status: { value: 200, writable: false },
                 statusText: { value: 'OK', writable: false },
             });
-            if ( this.onreadystatechange !== null ) {
-                setTimeout(( ) => {
-                    const ev = new Event('readystatechange');
-                    this.onreadystatechange.call(this, ev);
-                }, 1);
-            }
-            if ( this.onload !== null ) {
-                setTimeout(( ) => {
-                    const ev = new Event('load');
-                    this.onload.call(this, ev);
-                }, 1);
-            }
+            this.dispatchEvent(new Event('readystatechange'));
+            this.dispatchEvent(new Event('load'));
+            this.dispatchEvent(new Event('loadend'));
         }
     };
 })();
@@ -1364,9 +1355,11 @@
 // https://github.com/uBlockOrigin/uAssets/issues/8
 /// alert-buster.js
 (function() {
-    window.alert = function(a) {
-        console.info(a);
-    };
+    window.alert = new Proxy(window.alert, {
+        apply: function(a) {
+            console.info(a);
+        },
+    });
 })();
 
 
