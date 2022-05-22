@@ -83,133 +83,133 @@
     ;; const iCharData = buf32[CHARDATA_PTR_SLOT];
     i32.const 404
     i32.load
-    set_local $iCharData
+    local.set $iCharData
     ;; let iNode = pslBuffer32[RULES_PTR_SLOT];
     i32.const 400
     i32.load
     i32.const 2
     i32.shl
-    set_local $iNode
+    local.set $iNode
     ;; let iLabel = LABEL_INDICES_SLOT;
     i32.const 256
-    set_local $iLabel
+    local.set $iLabel
     ;; let cursorPos = -1;
     i32.const -1
-    set_local $cursorPos
+    local.set $cursorPos
     ;; label-lookup loop
     ;; for (;;) {
     block $labelLookupDone loop $labelLookup
         ;; // Extract label indices
         ;; const labelBeg = buf8[iLabel+1];
         ;; const labelLen = buf8[iLabel+0] - labelBeg;
-        get_local $iLabel
+        local.get $iLabel
         i32.load8_u
-        get_local $iLabel
+        local.get $iLabel
         i32.load8_u offset=1
-        tee_local $labelBeg
+        local.tee $labelBeg
         i32.sub
-        set_local $labelLen
+        local.set $labelLen
         ;; // Match-lookup loop: binary search
         ;; let r = buf32[iNode+0] >>> 16;
         ;; if ( r === 0 ) { break; }
-        get_local $iNode
+        local.get $iNode
         i32.load16_u offset=2
-        tee_local $r
+        local.tee $r
         i32.eqz
         br_if $labelLookupDone
         ;; const iCandidates = buf32[iNode+2];
-        get_local $iNode
+        local.get $iNode
         i32.load offset=8
         i32.const 2
         i32.shl
-        set_local $iCandidates
+        local.set $iCandidates
         ;; let l = 0;
         ;; let iFound = 0;
         i32.const 0
-        tee_local $l
-        set_local $iFound
+        local.tee $l
+        local.set $iFound
         ;; while ( l < r ) {
         block $binarySearchDone loop $binarySearch
-            get_local $l
-            get_local $r
+            local.get $l
+            local.get $r
             i32.ge_u
             br_if $binarySearchDone
             ;; const iCandidate = l + r >>> 1;
-            get_local $l
-            get_local $r
+            local.get $l
+            local.get $r
             i32.add
             i32.const 1
             i32.shr_u
-            tee_local $iCandidate
+            local.tee $iCandidate
             ;; const iCandidateNode = iCandidates + iCandidate + (iCandidate << 1);
             i32.const 2
             i32.shl
-            tee_local $_1
-            get_local $_1
+            local.tee $_1
+            local.get $_1
             i32.const 1
             i32.shl
             i32.add
-            get_local $iCandidates
+            local.get $iCandidates
             i32.add
-            tee_local $iCandidateNode
+            local.tee $iCandidateNode
             ;; const candidateLen = buf32[iCandidateNode+0] & 0x000000FF;
             i32.load8_u
-            set_local $candidateLen
+            local.set $candidateLen
             ;; let d = labelLen - candidateLen;
-            get_local $labelLen
-            get_local $candidateLen
+            local.get $labelLen
+            local.get $candidateLen
             i32.sub
-            tee_local $d
+            local.tee $d
             ;; if ( d === 0 ) {
             i32.eqz
             if
                 ;; const iCandidateChar = candidateLen <= 4
-                get_local $candidateLen
+                local.get $candidateLen
                 i32.const 4
                 i32.le_u
                 if
                     ;; ? iCandidateNode + 1 << 2
-                    get_local $iCandidateNode
+                    local.get $iCandidateNode
                     i32.const 4
                     i32.add
-                    set_local $iCandidateChar
+                    local.set $iCandidateChar
                 else
                     ;; : buf32[CHARDATA_PTR_SLOT] + buf32[iCandidateNode+1];
-                    get_local $iCharData
-                    get_local $iCandidateNode
+                    local.get $iCharData
+                    local.get $iCandidateNode
                     i32.load offset=4
                     i32.add
-                    set_local $iCandidateChar
+                    local.set $iCandidateChar
                 end
                 ;; for ( let i = 0; i < labelLen; i++ ) {
-                get_local $labelBeg
-                tee_local $_1
-                get_local $labelLen
+                local.get $labelBeg
+                local.tee $_1
+                local.get $labelLen
                 i32.add
-                set_local $_3
-                get_local $iCandidateChar
-                set_local $_2
+                local.set $_3
+                local.get $iCandidateChar
+                local.set $_2
                 block $findDiffDone loop $findDiff
                     ;; d = buf8[labelBeg+i] - buf8[iCandidateChar+i];
                     ;; if ( d !== 0 ) { break; }
-                    get_local $_1
+                    local.get $_1
                     i32.load8_u
-                    get_local $_2
+                    local.get $_2
                     i32.load8_u
                     i32.sub
-                    tee_local $d
+                    local.tee $d
                     br_if $findDiffDone
-                    get_local $_1
+                    local.get $_1
                     i32.const 1
                     i32.add
-                    tee_local $_1
-                    get_local $_3
+                    local.tee $_1
+                    local.get $_3
                     i32.eq
                     br_if $findDiffDone
-                    get_local $_2
+                    local.get $_2
                     i32.const 1
                     i32.add
-                    set_local $_2
+                    local.set $_2
                     br $findDiff
                 ;; }
                 end end
@@ -217,32 +217,32 @@
             end
             ;; if ( d < 0 ) {
             ;;     r = iCandidate;
-            get_local $d
+            local.get $d
             i32.const 0
             i32.lt_s
             if
-                get_local $iCandidate
-                set_local $r
+                local.get $iCandidate
+                local.set $r
                 br $binarySearch
             end
             ;; } else if ( d > 0 ) {
             ;;     l = iCandidate + 1;
-            get_local $d
+            local.get $d
             i32.const 0
             i32.gt_s
             if
-                get_local $iCandidate
+                local.get $iCandidate
                 i32.const 1
                 i32.add
-                set_local $l
+                local.set $l
                 br $binarySearch
             end
             ;; } else /* if ( d === 0 ) */ {
             ;;     iFound = iCandidateNode;
             ;;     break;
             ;; }
-            get_local $iCandidateNode
-            set_local $iFound
+            local.get $iCandidateNode
+            local.set $iFound
         end end
         ;; }
         ;; // 2. If no rules match, the prevailing rule is "*".
@@ -251,10 +251,10 @@
         ;;     buf8[SUFFIX_NOT_FOUND_SLOT] = 1;
         ;;     iFound = iCandidates;
         ;; }
-        get_local $iFound
+        local.get $iFound
         i32.eqz
         if
-            get_local $iCandidates
+            local.get $iCandidates
             i32.load offset=4
             i32.const 0x2A
             i32.ne
@@ -262,12 +262,12 @@
             i32.const 399
             i32.const 1
             i32.store8
-            get_local $iCandidates
-            set_local $iFound
+            local.get $iCandidates
+            local.set $iFound
         end
         ;; iNode = iFound;
-        get_local $iFound
-        tee_local $iNode
+        local.get $iFound
+        local.tee $iNode
         ;; // 5. If the prevailing rule is a exception rule, modify it by
         ;; //    removing the leftmost label.
         ;; if ( (buf32[iNode+0] & 0x00000200) !== 0 ) {
@@ -277,15 +277,15 @@
         ;;     break;
         ;; }
         i32.load8_u offset=1
-        tee_local $_1
+        local.tee $_1
         i32.const 0x02
         i32.and
         if
-            get_local $iLabel
+            local.get $iLabel
             i32.const 256
             i32.gt_u
             if
-                get_local $iLabel
+                local.get $iLabel
                 i32.const -2
                 i32.add
                 return
@@ -295,25 +295,25 @@
         ;; if ( (buf32[iNode+0] & 0x00000100) !== 0 ) {
         ;;     cursorPos = labelBeg;
         ;; }
-        get_local $_1
+        local.get $_1
         i32.const 0x01
         i32.and
         if
-            get_local $iLabel
-            set_local $cursorPos
+            local.get $iLabel
+            local.set $cursorPos
         end
         ;; if ( labelBeg === 0 ) { break; }
-        get_local $labelBeg
+        local.get $labelBeg
         i32.eqz
         br_if $labelLookupDone
         ;; iLabel += 2;
-        get_local $iLabel
+        local.get $iLabel
         i32.const 2
         i32.add
-        set_local $iLabel
+        local.set $iLabel
         br $labelLookup
     end end
-    get_local $cursorPos
+    local.get $cursorPos
 )
 
 ;;

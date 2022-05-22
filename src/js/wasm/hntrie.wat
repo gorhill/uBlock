@@ -64,19 +64,19 @@
     ;;
     i32.const 264               ;; start of char section is stored at addr 264
     i32.load
-    set_local $char0
+    local.set $char0
     ;; let ineedle = this.buf[255];
     i32.const 255               ;; addr of needle is stored at addr 255
     i32.load8_u
-    set_local $ineedle
+    local.set $ineedle
     ;; let icell = this.buf32[iroot+0];
-    get_local $iroot
+    local.get $iroot
     i32.const 2
     i32.shl
     i32.load
     i32.const 2
     i32.shl
-    tee_local $icell
+    local.tee $icell
     ;; if ( icell === 0 ) { return -1; }
     i32.eqz
     if
@@ -86,43 +86,43 @@
     ;; for (;;) {
     block $noSegment loop $nextSegment
         ;; if ( ineedle === 0 ) { return -1; }
-        get_local $ineedle
+        local.get $ineedle
         i32.eqz
         if
             i32.const -1
             return
         end
         ;; ineedle -= 1;
-        get_local $ineedle
+        local.get $ineedle
         i32.const -1
         i32.add
-        tee_local $ineedle
+        local.tee $ineedle
         ;; let c = this.buf[ineedle];
         i32.load8_u
-        set_local $c
+        local.set $c
         ;; for (;;) {
         block $foundSegment loop $findSegment
             ;; v = this.buf32[icell+2];
-            get_local $icell
+            local.get $icell
             i32.load offset=8
-            tee_local $v
+            local.tee $v
             ;; i0 = char0 + (v >>> 8);
             i32.const 8
             i32.shr_u
-            get_local $char0
+            local.get $char0
             i32.add
-            tee_local $i0
+            local.tee $i0
             ;; if ( this.buf[i0] === c ) { break; }
             i32.load8_u
-            get_local $c
+            local.get $c
             i32.eq
             br_if $foundSegment
             ;; icell = this.buf32[icell+0];
-            get_local $icell
+            local.get $icell
             i32.load
             i32.const 2
             i32.shl
-            tee_local $icell
+            local.tee $icell
             i32.eqz
             if
                 i32.const -1
@@ -131,44 +131,44 @@
             br 0
         end end
         ;; let n = v & 0x7F;
-        get_local $v
+        local.get $v
         i32.const 0x7F
         i32.and
-        tee_local $n
+        local.tee $n
         ;; if ( n > 1 ) {
         i32.const 1
         i32.gt_u
         if
             ;; n -= 1;
-            get_local $n
+            local.get $n
             i32.const -1
             i32.add
-            tee_local $n
+            local.tee $n
             ;; if ( n > ineedle ) { return -1; }
-            get_local $ineedle
+            local.get $ineedle
             i32.gt_u
             if
                 i32.const -1
                 return
             end
-            get_local $i0
+            local.get $i0
             i32.const 1
             i32.add
-            tee_local $i0
+            local.tee $i0
             ;; const i1 = i0 + n;
-            get_local $n
+            local.get $n
             i32.add
-            set_local $i1
+            local.set $i1
             ;; do {
             loop
                 ;; ineedle -= 1;
-                get_local $ineedle
+                local.get $ineedle
                 i32.const -1
                 i32.add
-                tee_local $ineedle
+                local.tee $ineedle
                 ;; if ( this.buf[i0] !== this.buf[ineedle] ) { return -1; }
                 i32.load8_u
-                get_local $i0
+                local.get $i0
                 i32.load8_u
                 i32.ne
                 if
@@ -176,47 +176,47 @@
                     return
                 end
                 ;; i0 += 1;
-                get_local $i0
+                local.get $i0
                 i32.const 1
                 i32.add
-                tee_local $i0
+                local.tee $i0
                 ;; } while ( i0 < i1 );
-                get_local $i1
+                local.get $i1
                 i32.lt_u
                 br_if 0
             end
         end
         ;; if ( (v & 0x80) !== 0 ) {
-        get_local $v
+        local.get $v
         i32.const 0x80
         i32.and
         if
             ;; if ( ineedle === 0 || buf8[ineedle-1] === 0x2E /* '.' */ ) {
             ;;     return ineedle;
             ;; }
-            get_local $ineedle
+            local.get $ineedle
             i32.eqz
             if
                 i32.const 0
                 return
             end
-            get_local $ineedle
+            local.get $ineedle
             i32.const -1
             i32.add
             i32.load8_u
             i32.const 0x2E
             i32.eq
             if
-                get_local $ineedle
+                local.get $ineedle
                 return
             end
         end
         ;; icell = this.buf32[icell+1];
-        get_local $icell
+        local.get $icell
         i32.load offset=4
         i32.const 2
         i32.shl
-        tee_local $icell
+        local.tee $icell
         ;; if ( icell === 0 ) { break; }
         br_if 0
     end end
@@ -245,7 +245,7 @@
     ;; let lhnchar = this.buf[255];
     i32.const 255
     i32.load8_u
-    tee_local $lhnchar
+    local.tee $lhnchar
     ;; if ( lhnchar === 0 ) { return 0; }
     i32.eqz
     if
@@ -281,21 +281,21 @@
         end
     end
     ;; let icell = this.buf32[iroot+0];
-    get_local $iroot
+    local.get $iroot
     i32.const 2
     i32.shl
-    tee_local $iroot
+    local.tee $iroot
     i32.load
     i32.const 2
     i32.shl
-    tee_local $icell
+    local.tee $icell
     ;; if ( this.buf32[icell+2] === 0 ) {
     i32.eqz
     if
         ;; this.buf32[iroot+0] = this.addLeafCell(lhnchar);
         ;; return 1;
-        get_local $iroot
-        get_local $lhnchar
+        local.get $iroot
+        local.get $lhnchar
         call $addLeafCell
         i32.store
         i32.const 1
@@ -304,37 +304,37 @@
     ;; const char0 = this.buf32[HNBIGTRIE_CHAR0_SLOT];
     i32.const 264
     i32.load
-    set_local $char0
+    local.set $char0
     ;; for (;;) {
     loop $nextSegment
         ;; const v = this.buf32[icell+2];
-        get_local $icell
+        local.get $icell
         i32.load offset=8
-        tee_local $v
+        local.tee $v
         ;; let isegchar0 = char0 + (v >>> 8);
         i32.const 8
         i32.shr_u
-        get_local $char0
+        local.get $char0
         i32.add
-        tee_local $isegchar0
+        local.tee $isegchar0
         ;; if ( this.buf[isegchar0] !== this.buf[lhnchar-1] ) {
         i32.load8_u
-        get_local $lhnchar
+        local.get $lhnchar
         i32.const -1
         i32.add
         i32.load8_u
         i32.ne
         if
             ;; inext = this.buf32[icell+0];
-            get_local $icell
+            local.get $icell
             i32.load
-            tee_local $inext
+            local.tee $inext
             ;; if ( inext === 0 ) {
             i32.eqz
             if
                 ;; this.buf32[icell+0] = this.addLeafCell(lhnchar);
-                get_local $icell
-                get_local $lhnchar
+                local.get $icell
+                local.get $lhnchar
                 call $addLeafCell
                 i32.store
                 ;; return 1;
@@ -342,25 +342,25 @@
                 return
             end
             ;; icell = inext;
-            get_local $inext
+            local.get $inext
             i32.const 2
             i32.shl
-            set_local $icell
+            local.set $icell
             br $nextSegment
         end
         ;; let isegchar = 1;
         i32.const 1
-        set_local $isegchar
+        local.set $isegchar
         ;; lhnchar -= 1;
-        get_local $lhnchar
+        local.get $lhnchar
         i32.const -1
         i32.add
-        set_local $lhnchar
+        local.set $lhnchar
         ;; const lsegchar = v & 0x7F;
-        get_local $v
+        local.get $v
         i32.const 0x7F
         i32.and
-        tee_local $lsegchar
+        local.tee $lsegchar
         ;; if ( lsegchar !== 1 ) {
         i32.const 1
         i32.ne
@@ -368,69 +368,69 @@
             ;; for (;;) {
             block $mismatch loop
                 ;; if ( isegchar === lsegchar ) { break; }
-                get_local $isegchar
-                get_local $lsegchar
+                local.get $isegchar
+                local.get $lsegchar
                 i32.eq
                 br_if $mismatch
-                get_local $lhnchar
+                local.get $lhnchar
                 i32.eqz
                 br_if $mismatch
                 ;; if ( this.buf[isegchar0+isegchar] !== this.buf[lhnchar-1] ) { break; }
-                get_local $isegchar0
-                get_local $isegchar
+                local.get $isegchar0
+                local.get $isegchar
                 i32.add
                 i32.load8_u
-                get_local $lhnchar
+                local.get $lhnchar
                 i32.const -1
                 i32.add
                 i32.load8_u
                 i32.ne
                 br_if $mismatch
                 ;; isegchar += 1;
-                get_local $isegchar
+                local.get $isegchar
                 i32.const 1
                 i32.add
-                set_local $isegchar
+                local.set $isegchar
                 ;; lhnchar -= 1;
-                get_local $lhnchar
+                local.get $lhnchar
                 i32.const -1
                 i32.add
-                set_local $lhnchar
+                local.set $lhnchar
                 br 0
             end end
         end
         ;; const boundaryBit = v & 0x80;
-        get_local $v
+        local.get $v
         i32.const 0x80
         i32.and
-        set_local $boundaryBit
+        local.set $boundaryBit
         ;; if ( isegchar === lsegchar ) {
-        get_local $isegchar
-        get_local $lsegchar
+        local.get $isegchar
+        local.get $lsegchar
         i32.eq
         if
             ;; if ( lhnchar === 0 ) {
-            get_local $lhnchar
+            local.get $lhnchar
             i32.eqz
             if
                 ;; if ( boundaryBit !== 0 ) { return 0; }
-                get_local $boundaryBit
+                local.get $boundaryBit
                 if
                     i32.const 0
                     return
                 end
                 ;; this.buf32[icell+2] = v | 0x80;
-                get_local $icell
-                get_local $v
+                local.get $icell
+                local.get $v
                 i32.const 0x80
                 i32.or
                 i32.store offset=8
             else
                 ;; if ( boundaryBit !== 0 ) {
-                get_local $boundaryBit
+                local.get $boundaryBit
                 if
                     ;; if ( this.buf[lhnchar-1] === 0x2E /* '.' */ ) { return -1; }
-                    get_local $lhnchar
+                    local.get $lhnchar
                     i32.const -1
                     i32.add
                     i32.load8_u
@@ -442,36 +442,36 @@
                     end
                 end
                 ;; inext = this.buf32[icell+1];
-                get_local $icell
+                local.get $icell
                 i32.load offset=4
-                tee_local $inext
+                local.tee $inext
                 ;; if ( inext !== 0 ) {
                 if
                     ;; icell = inext;
-                    get_local $inext
+                    local.get $inext
                     i32.const 2
                     i32.shl
-                    set_local $icell
+                    local.set $icell
                     ;; continue;
                     br $nextSegment
                 end
                 ;; this.buf32[icell+1] = this.addLeafCell(lhnchar);
-                get_local $icell
-                get_local $lhnchar
+                local.get $icell
+                local.get $lhnchar
                 call $addLeafCell
                 i32.store offset=4
             end
         else
             ;; isegchar0 -= char0;
-            get_local $icell
-            get_local $isegchar0
-            get_local $char0
+            local.get $icell
+            local.get $isegchar0
+            local.get $char0
             i32.sub
-            tee_local $isegchar0
+            local.tee $isegchar0
             ;; this.buf32[icell+2] = isegchar0 << 8 | isegchar;
             i32.const 8
             i32.shl
-            get_local $isegchar
+            local.get $isegchar
             i32.or
             i32.store offset=8
             ;; inext = this.addCell(
@@ -479,39 +479,39 @@
             ;;     this.buf32[icell+1],
             ;;     isegchar0 + isegchar << 8 | boundaryBit | lsegchar - isegchar
             ;; );
-            get_local $icell
+            local.get $icell
             i32.const 0
-            get_local $icell
+            local.get $icell
             i32.load offset=4
-            get_local $isegchar0
-            get_local $isegchar
+            local.get $isegchar0
+            local.get $isegchar
             i32.add
             i32.const 8
             i32.shl
-            get_local $boundaryBit
+            local.get $boundaryBit
             i32.or
-            get_local $lsegchar
-            get_local $isegchar
+            local.get $lsegchar
+            local.get $isegchar
             i32.sub
             i32.or
             call $addCell
-            tee_local $inext
+            local.tee $inext
             ;; this.buf32[icell+1] = inext;
             i32.store offset=4
             ;; if ( lhnchar !== 0 ) {
-            get_local $lhnchar
+            local.get $lhnchar
             if
                 ;; this.buf32[inext+0] = this.addLeafCell(lhnchar);
-                get_local $inext
+                local.get $inext
                 i32.const 2
                 i32.shl
-                get_local $lhnchar
+                local.get $lhnchar
                 call $addLeafCell
                 i32.store
             else
                 ;; this.buf32[icell+2] |= 0x80;
-                get_local $icell
-                get_local $icell
+                local.get $icell
+                local.get $icell
                 i32.load offset=8
                 i32.const 0x80
                 i32.or
@@ -547,24 +547,24 @@
     i32.const 260
     i32.const 260
     i32.load
-    tee_local $icell
+    local.tee $icell
     i32.const 12
     i32.add
     i32.store
     ;; this.buf32[icell+0] = idown;
-    get_local $icell
-    get_local $idown
+    local.get $icell
+    local.get $idown
     i32.store
     ;; this.buf32[icell+1] = iright;
-    get_local $icell
-    get_local $iright
+    local.get $icell
+    local.get $iright
     i32.store offset=4
     ;; this.buf32[icell+2] = v;
-    get_local $icell
-    get_local $v
+    local.get $icell
+    local.get $v
     i32.store offset=8
     ;; return icell;
-    get_local $icell
+    local.get $icell
     i32.const 2
     i32.shr_u
 )
@@ -582,58 +582,58 @@
     ;; const r = this.buf32[TRIE1_SLOT] >>> 2;
     i32.const 260
     i32.load
-    tee_local $r
+    local.tee $r
     ;; let i = r;
-    set_local $i
+    local.set $i
     ;; while ( lsegchar > 127 ) {
     block $lastSegment loop
-        get_local $lsegchar
+        local.get $lsegchar
         i32.const 127
         i32.le_u
         br_if $lastSegment
         ;; this.buf32[i+0] = 0;
-        get_local $i
+        local.get $i
         i32.const 0
         i32.store
         ;; this.buf32[i+1] = i + 3;
-        get_local $i
-        get_local $i
+        local.get $i
+        local.get $i
         i32.const 12
         i32.add
         i32.const 2
         i32.shr_u
         i32.store offset=4
         ;; this.buf32[i+2] = this.addSegment(lsegchar, lsegchar - 127);
-        get_local $i
-        get_local $lsegchar
-        get_local $lsegchar
+        local.get $i
+        local.get $lsegchar
+        local.get $lsegchar
         i32.const 127
         i32.sub
         call $addSegment
         i32.store offset=8
         ;; lsegchar -= 127;
-        get_local $lsegchar
+        local.get $lsegchar
         i32.const 127
         i32.sub
-        set_local $lsegchar
+        local.set $lsegchar
         ;; i += 3;
-        get_local $i
+        local.get $i
         i32.const 12
         i32.add
-        set_local $i
+        local.set $i
         br 0
     end end
     ;; this.buf32[i+0] = 0;
-    get_local $i
+    local.get $i
     i32.const 0
     i32.store
     ;; this.buf32[i+1] = 0;
-    get_local $i
+    local.get $i
     i32.const 0
     i32.store offset=4
     ;; this.buf32[i+2] = this.addSegment(lsegchar, 0) | 0x80;
-    get_local $i
-    get_local $lsegchar
+    local.get $i
+    local.get $lsegchar
     i32.const 0
     call $addSegment
     i32.const 0x80
@@ -641,12 +641,12 @@
     i32.store offset=8
     ;; this.buf32[TRIE1_SLOT] = i + 3 << 2;
     i32.const 260
-    get_local $i
+    local.get $i
     i32.const 12
     i32.add
     i32.store
     ;; return r;
-    get_local $r
+    local.get $r
     i32.const 2
     i32.shr_u
 )
@@ -666,7 +666,7 @@
     (local $i i32)              ;; iterator
     ;;
     ;; if ( lsegchar === 0 ) { return 0; }
-    get_local $lsegchar
+    local.get $lsegchar
     i32.eqz
     if
         i32.const 0
@@ -675,45 +675,45 @@
     ;; let char1 = this.buf32[HNBIGTRIE_CHAR1_SLOT];
     i32.const 268
     i32.load
-    tee_local $char1
+    local.tee $char1
     ;; const isegchar = char1 - this.buf32[HNBIGTRIE_CHAR0_SLOT];
     i32.const 264
     i32.load
     i32.sub
-    set_local $isegchar
+    local.set $isegchar
     ;; let i = lsegchar;
-    get_local $lsegchar
-    set_local $i
+    local.get $lsegchar
+    local.set $i
     ;; do {
     loop
         ;; this.buf[char1++] = this.buf[--i];
-        get_local $char1
-        get_local $i
+        local.get $char1
+        local.get $i
         i32.const -1
         i32.add
-        tee_local $i
+        local.tee $i
         i32.load8_u
         i32.store8
-        get_local $char1
+        local.get $char1
         i32.const 1
         i32.add
-        set_local $char1
+        local.set $char1
         ;; } while ( i !== lsegend );
-        get_local $i
-        get_local $lsegend
+        local.get $i
+        local.get $lsegend
         i32.ne
         br_if 0
     end
     ;; this.buf32[HNBIGTRIE_CHAR1_SLOT] = char1;
     i32.const 268
-    get_local $char1
+    local.get $char1
     i32.store
     ;; return isegchar << 8 | lsegchar - lsegend;
-    get_local $isegchar
+    local.get $isegchar
     i32.const 8
     i32.shl
-    get_local $lsegchar
-    get_local $lsegend
+    local.get $lsegchar
+    local.get $lsegend
     i32.sub
     i32.or
 )
