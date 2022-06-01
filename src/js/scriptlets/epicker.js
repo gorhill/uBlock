@@ -1281,18 +1281,10 @@ const pickerCSSStyle = [
     'visibility: visible',
     'width: 100%',
     'z-index: 2147483647',
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1408
+    'color-scheme: light',
     ''
 ];
-
-// https://github.com/uBlockOrigin/uBlock-issues/issues/1408
-//   We need to reset Chromium-specific `color-scheme` property
-//   for our iframe widget.
-if (
-    CSS.supports instanceof Function &&
-    CSS.supports('color-scheme', 'initial')
-) {
-    pickerCSSStyle.push('color-scheme: initial');
-}
 
 const pickerCSS = `
 :root > [${vAPI.sessionId}] {
