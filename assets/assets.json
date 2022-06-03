@@ -531,7 +531,7 @@
 		"off": true,
 		"title": "KOR: List-KR",
 		"lang": "ko",
-		"contentURL": "https://github.com/List-KR/List-KR/raw/master/filter-uBO.txt",
+		"contentURL": "https://raw.githubusercontent.com/List-KR/List-KR/master/filter-uBO.txt",
 		"cdnURLs": [
 			"https://cdn.jsdelivr.net/gh/List-KR/List-KR@master/filter-uBO.txt",
 			"https://cdn.statically.io/gh/List-KR/List-KR/master/filter-uBO.txt",
