@@ -88,7 +88,7 @@
     "description": "English: on this page"
   },
   "popupBlockedStats": {
-    "message": "{{count}} ({{percent}}%)",
+    "message": "{{count}} ({{percent}} %)",
     "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
@@ -396,7 +396,7 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsUncloakCnamePrompt": {
-    "message": "Kanonische Namen enthüllen",
+    "message": "Anerkannten Namen enthüllen",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsAdvanced": {
@@ -872,7 +872,7 @@
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportEncodePlain": {
-    "message": "Nur Text",
+    "message": "Rohtext",
     "description": "Label for radio-button to pick export text format"
   },
   "loggerExportEncodeMarkdown": {
@@ -948,7 +948,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Um die freiwilligen Helfer nicht mit doppelten Meldungen zu belasten, vergewissern Sie sich bitte, ob das Problem nicht schon einmal gemeldet wurde.",
+    "message": "Um die Freiwilligen nicht mit doppelten Meldungen zu belasten, vergewissern Sie sich bitte, ob das Problem nicht schon einmal gemeldet wurde.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {

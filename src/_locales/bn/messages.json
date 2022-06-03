@@ -336,15 +336,15 @@
     "description": "English: Color-blind friendly"
   },
   "settingsAppearance": {
-    "message": "Appearance",
+    "message": "দৃষ্টি",
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
-    "message": "Theme",
+    "message": "থিম",
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "Custom accent color",
+    "message": "কাস্টম অ্যাকসেন্ট রঙ",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsCloudStorageEnabledPrompt": {
@@ -400,11 +400,11 @@
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsAdvanced": {
-    "message": "Advanced",
+    "message": "অ্যাডভান্সড",
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Features suitable only for technical users",
+    "message": "শুধুমাত্র প্রযুক্তিগত ব্যবহারকারীদের জন্য উপযুক্ত ফিচারসমুহ",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
@@ -892,103 +892,103 @@
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
-    "message": "Documentation",
+    "message": "ডকুমেন্টেশন",
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Read the documentation at <code>uBlock/wiki</code> to learn about all of uBlock Origin's features.",
+    "message": "uBlock Origin এর সমস্ত ফিচার সম্পর্কে জানতে <code>uBlock/wiki</code> এ ডকুমেন্টেশন পড়ুন।",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
-    "message": "Questions and support",
+    "message": "যোগাযোগ এবং সহায়তা",
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
-    "message": "Answers to questions and other kinds of help support is provided on the subreddit <code>/r/uBlockOrigin</code>.",
+    "message": "প্রশ্নের উত্তর এবং অন্যান্য ধরনের সাহায্য ও সহায়তা <code>/r/uBlockOrigin</code> সাবরেডিট এ দেওয়া আছে।",
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "Filter issues/website is broken",
+    "message": "ফিল্টার সমস্যা/ওয়েবসাইট ভেঙে গেছে",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Report filter issues with specific websites to the <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "নির্দিষ্ট ওয়েবসাইটের ফিল্টার সমস্যাগুলি <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> ইস্যু ট্র্যাকারে রিপোর্ট করুন<span> <u>একটি GitHub অ্যাকাউন্ট প্রয়োজন৷</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Important:</b> Avoid using other similarly-purposed blockers along with uBlock Origin, as this may cause filter issues on specific websites.",
+    "message": "<b>গুরুত্বপূর্ণ:</b> uBlock Origin-এর সাথে একই রকম-উদ্দেশ্যযুক্ত ব্লকার ব্যবহার করা এড়িয়ে চলুন, কারণ এটি নির্দিষ্ট ওয়েবসাইটে ফিল্টার এর সমস্যা সৃষ্টি করতে পারে।",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Tips:</b> Be sure your filter lists are up to date. <span data-url=\"logger-ui.html#_\">The logger</span> is the primary tool to diagnose filter-related issues.",
+    "message": "<b>টিপস:</b> আপনার ফিল্টার তালিকা আপ টু ডেট আছে তা নিশ্চিত করুন। <span data-url=\"logger-ui.html#_\">লগার</span> হল ফিল্টার-সম্পর্কিত সমস্যা নির্ণয়ের প্রাথমিক টুল।",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
-    "message": "Bug report",
+    "message": "বাগ রিপোর্ট",
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Report issues with uBlock Origin itself to the <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "<span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> ইস্যু ট্র্যাকার</span> এ uBlock অরিজিন সংক্রান্ত সমস্যাগুলি রিপোর্ট করুন। <u>একটি GitHub অ্যাকাউন্ট প্রয়োজন৷</u>৷",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting Information",
+    "message": "সমস্যা সমাধানের তথ্য",
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "Below is technical information that might be useful when volunteers are trying to help you solve a problem.",
+    "message": "স্বেচ্ছাসেবকরা যখন কোনো সমস্যা সমাধানের জন্য আপনাকে সাহায্য করার চেষ্টা করছেন তখন প্রযুক্তিগত তথ্য নিচে দেওয়া হল যা কার্যকর হতে পারে।",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Important:</b> Potentially private or sensitive information is redacted by default. Redacted information may make it more difficult to solve a problem.",
+    "message": "<b>গুরুত্বপূর্ণ:</b> সম্ভাব্য ব্যক্তিগত বা সংবেদনশীল তথ্য ডিফল্টরূপে সংশোধন করা হয়। সংশোধিত তথ্য সমস্যা সমাধান করা আরও কঠিন করে তুলতে পারে।",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "একটি ফিল্টার সমস্যা রিপোর্ট করুন",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported.",
+    "message": "ডুপ্লিকেট রিপোর্ট সহ স্বেচ্ছাসেবকদের বোঝা এড়াতে, অনুগ্রহ করে যাচাই করুন যে সমস্যাটি ইতিমধ্যে রিপোর্ট করা হয়নি।",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Address of the web page:",
+    "message": "ওয়েব পেজের ঠিকানা:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The web page…",
+    "message": "ওয়েব পেজটি…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Pick an entry --",
+    "message": "-- একটি এন্ট্রি চয়ন করুন --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "বিজ্ঞাপন বা বিজ্ঞাপনের অবশিষ্টাংশ দেখায়",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Has overlays or other nuisances",
+    "message": "ওভারলে বা অন্যান্য উপদ্রব আছে",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Detects uBlock Origin",
+    "message": "uBlock Origin শনাক্ত করে",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "গোপনীয়তা-সম্পর্কিত সমস্যা আছে",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Malfunctions when uBlock Origin is enabled",
+    "message": "যখন uBlock Origin চালু করা থাকে তখন সমস্যা দেখা দেয়",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "অবাঞ্ছিত ট্যাব বা উইন্ডো খোলে",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "ওয়েব পৃষ্ঠাটিকে “NSFW” হিসাবে লেবেল করুন (<a href=\"https://bn.wikipedia.org/wiki/নট_সেফ_ফর_ওয়ার্ক\">“কাজের জন্য নিরাপদ নয়”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
@@ -1032,11 +1032,11 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "uBO's own filter lists are freely hosted on the following <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
+    "message": "uBO-এর নিজস্ব ফিল্টার তালিকাগুলি নিম্নলিখিত <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a> এ অবাধে হোস্ট করা হয়েছে:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "A randomly picked CDN is used when a filter list needs to be updated",
+    "message": "একটি ফিল্টার তালিকা আপডেট করার প্রয়োজন হলে একটি এলোমেলোভাবে বাছাই করা CDN ব্যবহার করা হয়",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
@@ -1220,7 +1220,7 @@
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleCosmeticFiltering": {
-    "message": "Toggle cosmetic filtering",
+    "message": "সৌন্দর্য্যবর্ধক ফিল্টার চালু বা বন্ধ করুন",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "relaxBlockingMode": {

@@ -136,7 +136,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Натисніть для блокування спливаючих вікон на цьому сайті",
+    "message": "Натисніть, щоб заблокувати всі спливаючі вікна на цьому сайті",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
@@ -404,7 +404,7 @@
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Функції, що потрібні лише технічним користувачам.",
+    "message": "Функції, що потрібні лише технічним користувачам",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
@@ -444,7 +444,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p> Ця опція вмикає розбір та задіяння <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">Adblock Plus-сумісних &ldquo;element hiding&rdquo; фільтрів</a>. Ці фільтри є фактично косметичними – дозволяють приховати елементи в інтернеті, які є візуальними незручностями і які підходять для рушія блокування запитів.</p><p>Увімкнення цієї функції збільшує споживання пам’яті <i>µBlock</i>'ом.</p>",
+    "message": "Косметичні фільтри служать для приховування елементів на веб-сторінці, які вважаються візуально незручними, і які не можуть бути заблоковані мережевими системами фільтрації запитів.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -576,7 +576,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": " Імпортувати з файлу…",
+    "message": "Імпорт з файлу…",
     "description": ""
   },
   "rulesExport": {
@@ -608,7 +608,7 @@
     "description": "English: a sort option for list of rules."
   },
   "rulesSortByDestination": {
-    "message": "Призначення ",
+    "message": "Призначення",
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
@@ -820,7 +820,7 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Статичний фільтр <code>{{filter}}</code> не знайдений в жодному списку увімкнених у даний момент фільтрів",
+    "message": "Статичний фільтр не знайдений в жодному списку увімкнених у цей момент фільтрів",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
@@ -896,7 +896,7 @@
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Прочитайте документацію у <code>uBlock/вікі</code>, щоб дізнатися про всі функції uBlock Origin. ",
+    "message": "Прочитайте документацію на <code>uBlock/вікі</code>, щоб дізнатися про всі функції uBlock Origin.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
@@ -908,11 +908,11 @@
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "Фільтр проблем/вебсайтів пошкоджено",
+    "message": "Проблеми з фільтрами/сайт не працює",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Повідомити про проблеми фільтра на певних вебсайтах до <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">відстежувача проблем<code>uBlockOrigin/uAssets</code></span>. Потрібен обліковий запис GitHub.",
+    "message": "Повідомити про проблеми фільтра на певних вебсайтах до <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">відстежувача проблем <code>uBlockOrigin/uAssets</code></span>. <u>Потрібен обліковий запис GitHub.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
@@ -928,7 +928,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Повідомити про проблеми самого uBlock Origin <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\">відстежувач проблем <code>uBlockOrigin/uBlock-issue</code>. Потрібен обліковий запис GitHub.",
+    "message": "Повідомити про проблеми самого uBlock Origin <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\">відстежувач проблем <code>uBlockOrigin/uBlock-issue</code>. <u>Потрібен обліковий запис GitHub.</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
