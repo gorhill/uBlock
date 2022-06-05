@@ -479,14 +479,15 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "IRN: Adblock-Iran",
+		"title": "IRN: PersianBlocker",
 		"lang": "fa",
 		"contentURL": [
-			"https://gitcdn.link/cdn/farrokhi/adblock-iran/master/filter.txt",
-			"https://combinatronics.io/farrokhi/adblock-iran/master/filter.txt",
-			"https://cdn.statically.io/gh/farrokhi/adblock-iran/master/filter.txt"
+            "https://raw.githubusercontent.com/MasterKia/PersianBlocker/main/PersianBlocker.txt",
+			"https://gitcdn.link/cdn/MasterKia/PersianBlocker/main/PersianBlocker.txt",
+			"https://combinatronics.io/MasterKia/PersianBlocker/main/PersianBlocker.txt",
+			"https://cdn.statically.io/gh/MasterKia/PersianBlocker/main/PersianBlocker.txt"
 		],
-		"supportURL": "https://github.com/farrokhi/adblock-iran"
+		"supportURL": "https://github.com/MasterKia/PersianBlocker"
 	},
 	"ISL-0": {
 		"content": "filters",
