@@ -612,7 +612,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "Berisi domain atau halaman situs terpercaya, uBlock Origin akan dinonaktifkan. Satu entri per baris. Entri yang tidak valid akan diabaikan dan dijadikan komentar.",
+    "message": "Arahan situs tepercaya menentukan halaman web mana yang uBlock Origin harus dinonaktifkan. Satu entri per baris.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
@@ -948,7 +948,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Untuk mengurangi beban relawan dengan laporan sama berulang, harap verifikasi bahwa masalah tersebut belum dilaporkan.",
+    "message": "Untuk menghindari membebani sukarelawan dengan laporan duplikat, harap verifikasi bahwa masalah tersebut belum dilaporkan.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -1032,7 +1032,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "Daftar filter milik uBO dihosting secara bebas pada <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a> berikut:",
+    "message": "Daftar filter uBO sendiri dihosting secara gratis di <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a> berikut:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
