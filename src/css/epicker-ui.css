@@ -26,6 +26,10 @@ html#ublock0-epicker,
     right: 2px;
     width: calc(40% - 2px);
 }
+/* https://github.com/uBlockOrigin/uBlock-issues/discussions/2114 */
+#ublock0-epicker aside {
+    min-width: min(24rem, 100vw - 4px);
+}
 #ublock0-epicker.paused:not(.zap) aside {
     display: block;
 }
