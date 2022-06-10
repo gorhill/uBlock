@@ -44,6 +44,6 @@ rm $DES/lib/publicsuffixlist/wasm/*.wasm
 rm $DES/lib/publicsuffixlist/wasm/*.wat
 
 echo "*** uBlock0.opera: Generating meta..."
-python tools/make-opera-meta.py $DES/
+python3 tools/make-opera-meta.py $DES/
 
 echo "*** uBlock0.opera: Package done."

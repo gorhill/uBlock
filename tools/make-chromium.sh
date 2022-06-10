@@ -23,7 +23,7 @@ cp platform/chromium/*.json $DES/
 cp -R $DES/_locales/nb $DES/_locales/no
 
 echo "*** uBlock0.chromium: Generating meta..."
-python tools/make-chromium-meta.py $DES/
+python3 tools/make-chromium-meta.py $DES/
 
 if [ "$1" = all ]; then
     echo "*** uBlock0.chromium: Creating plain package..."
