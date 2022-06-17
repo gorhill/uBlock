@@ -562,6 +562,7 @@
 		"title": "LVA: Latvian List",
 		"lang": "lv",
 		"contentURL": "https://notabug.org/latvian-list/adblock-latvian/raw/master/lists/latvian-list.txt",
+		"cdnURLs": "https://cdn.statically.io/gl/DandelionSprout/LatvianListBackup/master/lists/latvian-list.txt",
 		"supportURL": "https://notabug.org/latvian-list/adblock-latvian"
 	},
 	"NLD-0": {
