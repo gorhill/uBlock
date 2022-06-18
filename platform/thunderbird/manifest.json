@@ -16,7 +16,7 @@
       "32": "img/icon_32.png"
     },
     "default_title": "uBlock Origin",
-    "default_popup": "popup.html"
+    "default_popup": "popup-fenix.html"
   },
   "content_scripts": [
     {
