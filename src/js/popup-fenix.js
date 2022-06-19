@@ -1259,6 +1259,9 @@ const toggleHostnameSwitch = async function(ev) {
 
 */
 
+// https://github.com/uBlockOrigin/uBlock-issues/issues/2145
+//   Ignore events from auto-repeating keys
+
 {
     let eventCount = 0;
     let eventTime = 0;
@@ -1268,6 +1271,7 @@ const toggleHostnameSwitch = async function(ev) {
             eventCount = 0;
             return;
         }
+        if ( ev.repeat ) { return; }
         const now = Date.now();
         if ( (now - eventTime) >= 500 ) {
             eventCount = 0;
