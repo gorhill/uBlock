@@ -36,6 +36,8 @@
 /// alias acs.js
 /// alias abort-current-inline-script.js
 /// alias acis.js
+// Issues to mind before changing anything:
+//  https://github.com/uBlockOrigin/uBlock-issues/issues/2154
 (function() {
     const target = '{{1}}';
     if ( target === '' || target === '{{1}}' ) { return; }
@@ -50,7 +52,7 @@
     })();
     const context = '{{3}}';
     const reContext = (( ) => {
-        if ( context === '' || context === '{{3}}' ) { return /^$/; }
+        if ( context === '' || context === '{{3}}' ) { return; }
         if ( /^\/.+\/$/.test(context) ) {
             return new RegExp(context.slice(1,-1));
         }
@@ -102,8 +104,10 @@
     const validate = ( ) => {
         const e = document.currentScript;
         if ( e instanceof HTMLScriptElement === false ) { return; }
-        if ( reContext.test(e.src) === false ) { return; }
         if ( e === thisScript ) { return; }
+        if ( reContext !== undefined && reContext.test(e.src) === false ) {
+            return;
+        }
         if ( reNeedle.test(getScriptText(e)) === false ) { return; }
         throw new ReferenceError(magic);
     };
