@@ -25,14 +25,39 @@
     };
     const obr = {};
     const methods = [
-        'callClick', 'callLoadMore', 'callRecs', 'callUserZapping',
-        'callWhatIs', 'cancelRecommendation', 'cancelRecs', 'closeCard',
-        'closeModal', 'closeTbx', 'errorInjectionHandler', 'getCountOfRecs',
-        'getStat', 'imageError', 'manualVideoClicked', 'onOdbReturn',
-        'onVideoClick', 'pagerLoad', 'recClicked', 'refreshSpecificWidget',
-        'refreshWidget', 'reloadWidget', 'researchWidget', 'returnedError',
-        'returnedHtmlData', 'returnedIrdData', 'returnedJsonData', 'scrollLoad',
-        'showDescription', 'showRecInIframe', 'userZappingMessage', 'zappingFormAction'
+        'callClick',
+        'callLoadMore',
+        'callRecs',
+        'callUserZapping',
+        'callWhatIs',
+        'cancelRecommendation',
+        'cancelRecs',
+        'closeCard',
+        'closeModal',
+        'closeTbx',
+        'errorInjectionHandler',
+        'getCountOfRecs',
+        'getStat',
+        'imageError',
+        'manualVideoClicked',
+        'onOdbReturn',
+        'onVideoClick',
+        'pagerLoad',
+        'recClicked',
+        'refreshSpecificWidget',
+        'renderSpaWidgets',
+        'refreshWidget',
+        'reloadWidget',
+        'researchWidget',
+        'returnedError',
+        'returnedHtmlData',
+        'returnedIrdData',
+        'returnedJsonData',
+        'scrollLoad',
+        'showDescription',
+        'showRecInIframe',
+        'userZappingMessage',
+        'zappingFormAction'
     ];
     obr.extern = {
         video: {
