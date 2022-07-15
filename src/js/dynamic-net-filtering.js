@@ -320,6 +320,11 @@ class DynamicHostRuleFiltering {
             if ( this.evaluateCellZ(srcHostname, '*', type) !== 0 ) {
                 return this.r;
             }
+            if ( type.startsWith('3p-') ) {
+                if ( this.evaluateCellZ(srcHostname, '*', '3p') !== 0 ) {
+                    return this.r;
+                }
+            }
         }
 
         // Any destination, any party, any type
