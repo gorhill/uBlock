@@ -136,7 +136,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Натисніть, щоб заблокувати всі спливаючі вікна на цьому сайті",
+    "message": "Натисніть, щоб заблокувати всі спливні вікна на цьому сайті",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
@@ -352,7 +352,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Я досвідчений користувач (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>Обов’язково до прочитання</a>)",
+    "message": "Я досвідчений користувач",
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
@@ -444,7 +444,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "Косметичні фільтри служать для приховування елементів на веб-сторінці, які вважаються візуально незручними, і які не можуть бути заблоковані мережевими системами фільтрації запитів.",
+    "message": "Косметичні фільтри служать для приховування елементів на вебсторінці, які вважаються візуально незручними, і які не можуть бути заблоковані мережевими системами фільтрації запитів.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {

@@ -352,7 +352,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "אני משתמש מתקדם (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>נדרש לקרוא</a>)",
+    "message": "אני משתמש מתקדם",
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
@@ -1048,11 +1048,11 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "שחזר מקובץ...",
+    "message": "שחזור מקובץ...",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "אפס להגדרות ברירת מחדל...",
+    "message": "שחזור להגדרות ברירת המחדל...",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
@@ -1192,7 +1192,7 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "חסום אלמנט בתוך מסגרת...",
+    "message": "חסימת אלמנט בתוך המסגרת...",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
@@ -1220,7 +1220,7 @@
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleCosmeticFiltering": {
-    "message": "Toggle cosmetic filtering",
+    "message": "הפעל/כבה סינון קוסמטי",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "relaxBlockingMode": {

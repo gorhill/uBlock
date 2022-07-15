@@ -208,7 +208,7 @@
     "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
-    "message": "Khác",
+    "message": "Mở rộng",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton_v2": {
