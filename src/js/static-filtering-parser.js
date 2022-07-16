@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* globals document */
+/* globals CSSStyleSheet, document */
 
 'use strict';
 
@@ -1333,17 +1333,20 @@ Parser.prototype.SelectorCompiler = class {
             [ 'matches-css-before', ':matches-css-before' ],
         ]);
         this.reSimpleSelector = /^[#.]?[A-Za-z_][\w-]*$/;
-        this.styleElement = (( ) => {
+        // https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet#browser_compatibility
+        //   Firefox does not support constructor for CSSStyleSheet
+        this.stylesheet = (( ) => {
             if ( typeof document !== 'object' ) { return null; }
-            if ( document === null ) { return null; }
+            if ( document instanceof Object === false ) { return null; }
             try {
-                const styleElement = document.createElement('style');
-                styleElement.disabled = true;
-                document.body.append(styleElement);
-                return styleElement;
+                return new CSSStyleSheet();
             } catch(ex) {
             }
-            return null;
+            const style = document.createElement('style');
+            document.body.append(style);
+            const stylesheet = style.sheet;
+            style.remove();
+            return stylesheet;
         })();
         this.div = (( ) => {
             if ( typeof document !== 'object' ) { return null; }
@@ -1465,17 +1468,18 @@ Parser.prototype.SelectorCompiler = class {
     //   Forbid multiple and unexpected CSS style declarations.
     sheetSelectable(s) {
         if ( this.reSimpleSelector.test(s) ) { return true; }
-        if ( this.styleElement === null ) { return true; }
+        if ( this.stylesheet === null ) { return true; }
         try {
-            this.styleElement.textContent = `${s}{color:red}`;
-            const rules = this.styleElement.sheet.cssRules;
-            if ( rules.length !== 1 ) { return false; }
-            const style = rules[0].style;
+            this.stylesheet.insertRule(`${s}{color:red}`);
+            if ( this.stylesheet.cssRules.length !== 1 ) { return false; }
+            const style = this.stylesheet.cssRules[0].style;
             if ( style.length !== 1 ) { return false; }
-            if ( style.getPropertyValue('color') === 'red' ) { return true; }
+            if ( style.getPropertyValue('color') !== 'red' ) { return false; }
+            this.stylesheet.deleteRule(0);
         } catch (ex) {
+            return false;
         }
-        return false;
+        return true;
     }
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1806
@@ -1596,15 +1600,17 @@ Parser.prototype.SelectorCompiler = class {
     //   - opening comment `/*`
     compileStyleProperties(s) {
         if ( /image-set\(|url\(|\/\s*\/|\\|\/\*/i.test(s) ) { return; }
-        if ( this.styleElement === null ) { return s; }
+        if ( this.stylesheet === null ) { return s; }
         let valid = false;
         try {
-            this.styleElement.textContent = `a{${s}} b{color:red;}`;
-            const rules = this.styleElement.sheet.cssRules;
-            valid = rules.length >= 2 &&
-                rules[0].style.cssText !== '' &&
-                rules[1].style.cssText !== '';
+            this.stylesheet.insertRule(`a{${s}}`);
+            const rules = this.stylesheet.cssRules;
+            valid = rules.length !== 0 && rules[0].style.cssText !== '';
         } catch(ex) {
+            return;
+        }
+        if ( this.stylesheet.cssRules.length !== 0 ) {
+            this.stylesheet.deleteRule(0);
         }
         if ( valid ) { return s; }
     }
@@ -1775,12 +1781,8 @@ Parser.prototype.SelectorCompiler = class {
             if ( i === n ) { break; }
         }
 
-        // when there is an explicit action, nothing should be left to parse.
-        if ( action !== undefined && opPrefixBeg < n ) { return; }
-
         // No task found: then we have a CSS selector.
-        // At least one task found: either nothing or a valid plain CSS selector
-        // should be left to parse
+        // At least one task found: nothing should be left to parse.
         if ( tasks.length === 0 ) {
             if ( action === undefined ) {
                 prefix = raw;
@@ -1794,6 +1796,7 @@ Parser.prototype.SelectorCompiler = class {
             }
 
         } else if ( opPrefixBeg < n ) {
+            if ( action !== undefined ) { return; }
             const spath = this.compileSpathExpression(raw.slice(opPrefixBeg));
             if ( spath === undefined ) { return; }
             tasks.push([ ':spath', spath ]);
