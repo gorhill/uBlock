@@ -561,8 +561,8 @@
 		"off": true,
 		"title": "LVA: Latvian List",
 		"lang": "lv",
-		"contentURL": "https://notabug.org/latvian-list/adblock-latvian/raw/master/lists/latvian-list.txt",
-		"supportURL": "https://notabug.org/latvian-list/adblock-latvian"
+		"contentURL": "https://raw.githubusercontent.com/Latvian-List/adblock-latvian/master/lists/latvian-list.txt",
+		"supportURL": "https://github.com/Latvian-List/adblock-latvian"
 	},
 	"NLD-0": {
 		"content": "filters",
