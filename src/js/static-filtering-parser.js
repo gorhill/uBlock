@@ -1351,27 +1351,9 @@ Parser.prototype.SelectorCompiler = class {
         // Resulting regex literal:
         // ^(?:[A-Za-z_][\w-]*(?:[.#][A-Za-z_][\w-]*)*(?:\[[A-Za-z_][\w-]*[*^$]?="[^"\]\\]+"\])*|[.#][A-Za-z_][\w-]*(?:[.#][A-Za-z_][\w-]*)*(?:\[[A-Za-z_][\w-]*[*^$]?="[^"\]\\]+"\])*|\[[A-Za-z_][\w-]*[*^$]?="[^"\]\\]+"\](?:\[[A-Za-z_][\w-]*[*^$]?="[^"\]\\]+"\])*)(?:(?:\s+|\s*[>+~]\s*)(?:[A-Za-z_][\w-]*(?:[.#][A-Za-z_][\w-]*)*(?:\[[A-Za-z_][\w-]*[*^$]?="[^"\]\\]+"\])*|[.#][A-Za-z_][\w-]*(?:[.#][A-Za-z_][\w-]*)*(?:\[[A-Za-z_][\w-]*[*^$]?="[^"\]\\]+"\])*|\[[A-Za-z_][\w-]*[*^$]?="[^"\]\\]+"\](?:\[[A-Za-z_][\w-]*[*^$]?="[^"\]\\]+"\])*))*$
 
-        // We use an actual stylesheet to validate uncommon CSS selectors
-        // which can be used in a CSS declaration.
-        this.sheetValidatorRule = null;
-        (( ) => {
-            if ( typeof document !== 'object' ) { return; }
-            if ( document === null ) { return; }
-            try {
-                const styleElement = document.createElement('style');
-                document.body.append(styleElement);
-                const sheet = styleElement.sheet;
-                styleElement.remove();
-                sheet.insertRule('_z{color:red}');
-                const rule = sheet.cssRules[0];
-                this.sheetValidatorRule = rule;
-            } catch(ex) {
-            }
-        })();
-
-        // We use another stylsheet to validate CSS properties which can be
-        // used in a CSS declaration.
-        this.styleValidatorElement = null;
+        // We use an actual stylesheet to validate uncommon CSS selectors and
+        // CSS properties which can be used in a CSS declaration.
+        this.cssValidatorElement = null;
         (( ) => {
             if ( typeof document !== 'object' ) { return; }
             if ( document === null ) { return; }
@@ -1379,7 +1361,7 @@ Parser.prototype.SelectorCompiler = class {
                 const styleElement = document.createElement('style');
                 styleElement.appendChild(document.createTextNode(' '));
                 document.body.append(styleElement);
-                this.styleValidatorElement = styleElement;
+                this.cssValidatorElement = styleElement;
             } catch(ex) {
             }
         })();
@@ -1402,7 +1384,6 @@ Parser.prototype.SelectorCompiler = class {
         this.reDropScope = /^\s*:scope\s*(?=[+>~])/;
         this.reIsDanglingSelector = /[+>~\s]\s*$/;
         this.reIsCombinator = /^\s*[+>~]/;
-        this.reUnicodeSpecials = /[\uFFF0-\uFFFF]/;
         this.regexToRawValue = new Map();
         // https://github.com/gorhill/uBlock/issues/2793
         this.normalizedOperators = new Map([
@@ -1508,14 +1489,14 @@ Parser.prototype.SelectorCompiler = class {
     //   Forbid multiple and unexpected CSS style declarations.
     sheetSelectable(s) {
         if ( this.reCommonSelector.test(s) ) { return true; }
-        const rule = this.sheetValidatorRule;
-        if ( rule === null ) { return true; }
+        if ( this.cssValidatorElement === null ) { return true; }
         let valid = false;
         try {
-            rule.selectorText = '_z';
-            rule.selectorText = `_z + ${s}`;
-            valid = rule.selectorText !== '_z' &&
-                this.reUnicodeSpecials.test(rule.selectorText) === false;
+            this.cssValidatorElement.childNodes[0].nodeValue = `_z + ${s}{color:red;} _z{color:red;}`;
+            const rules = this.cssValidatorElement.sheet.cssRules;
+            valid = rules.length === 2 &&
+                rules[0].style.cssText !== '' &&
+                rules[1].style.cssText !== '';
         } catch (ex) {
         }
         return valid;
@@ -1639,11 +1620,11 @@ Parser.prototype.SelectorCompiler = class {
     //   - opening comment `/*`
     compileStyleProperties(s) {
         if ( /image-set\(|url\(|\/\s*\/|\\|\/\*/i.test(s) ) { return; }
-        if ( this.styleValidatorElement === null ) { return s; }
+        if ( this.cssValidatorElement === null ) { return s; }
         let valid = false;
         try {
-            this.styleValidatorElement.childNodes[0].nodeValue = `_z{${s}} _z{color:red;}`;
-            const rules = this.styleValidatorElement.sheet.cssRules;
+            this.cssValidatorElement.childNodes[0].nodeValue = `_z{${s}} _z{color:red;}`;
+            const rules = this.cssValidatorElement.sheet.cssRules;
             valid = rules.length >= 2 &&
                 rules[0].style.cssText !== '' &&
                 rules[1].style.cssText !== '';
