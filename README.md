@@ -9,14 +9,14 @@
 [![Badge Mozilla]][Mozilla]   
 [![Badge Chrome]][Chrome]
 
-</div>
-
 <br>
 <br>
 
-<div align = center>
+<img src = 'src/img/ublock.svg' height = 80>
 
-# <img src = 'src/img/ublock.svg' height = 48> uBlock Origin
+<br>
+
+# uBlock Origin
 
 *You decide what enters your browser.*
 
@@ -40,13 +40,11 @@
 
 ***[Not affiliated with `UBlock.org`][UBlock.org]***
 
-
 </sup>
 
-
+<br>
 
 </div>
-
 
 ---
 
