@@ -1,46 +1,60 @@
 
-[![Badge Commits]][Commit Rate]
+<div align = center>
+
+[![Badge License]][License]   
+[![Badge Commits]][Commit Rate]   
 [![Badge Issues]][Issues]
-[![Badge Localization]][Crowdin]
-[![Badge License]][License]
-[![Badge NPM]][NPM]
-[![Badge Mozilla]][Mozilla]
+
+[![Badge NPM]][NPM]   
+[![Badge Mozilla]][Mozilla]   
 [![Badge Chrome]][Chrome]
 
-***
+</div>
 
-<h1 align="center">
-<sub>
-<img  src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/img/icon38@2x.png" height="38" width="38">
-</sub>
-uBlock Origin
-</h1>
-<p align="center">
-<sup> <!-- Pronunciation -->
-      pronounced <i>you-block origin</i> (<code>/ˈjuːˌblɒk/</code>) — <i>you</i> decide what enters your browser.
-</sup>
 <br>
-<sub><a href="https://github.com/gorhill/uBlock/wiki/uBlock-Origin-is-completely-unrelated-to-the-web-site-ublock.org"><b>BEWARE!</b> uBlock Origin is (and has always been) COMPLETELY UNRELATED to the web site <code>ublock.org</code></a>.</sub>
-</p>
+<br>
 
-***
+<div align = center>
 
-<p align="center">
-<a href="https://addons.mozilla.org/addon/ublock-origin/"><img src="https://user-images.githubusercontent.com/585534/107280546-7b9b2a00-6a26-11eb-8f9f-f95932f4bfec.png" alt="Get uBlock Origin for Firefox"></a>
-<a href="https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm"><img src="https://user-images.githubusercontent.com/585534/107280622-91a8ea80-6a26-11eb-8d07-77c548b28665.png" alt="Get uBlock Origin for Chromium"></a>
-<a href="https://microsoftedge.microsoft.com/addons/detail/ublock-origin/odfafepnkmbhccpbejgmiehpchacaeak"><img src="https://user-images.githubusercontent.com/585534/107280673-a5ece780-6a26-11eb-9cc7-9fa9f9f81180.png" alt="Get uBlock Origin for Microsoft Edge"></a>
-<a href="https://addons.opera.com/extensions/details/ublock/"><img src="https://user-images.githubusercontent.com/585534/107280692-ac7b5f00-6a26-11eb-85c7-088926504452.png" alt="Get uBlock Origin for Opera"></a>
-      <br><sub><a href="https://twitter.com/gorhill/status/1033706103782170625">Do <b>not</b> use uBlock Origin along with other similarly-purposed blockers</a>.</sub>
-      <br><sub>See below for <a href="#installation">more installation options.</a></sub>
-</p>
+# <img src = 'src/img/ublock.svg' height = 48> uBlock Origin
 
-***
+*You decide what enters your browser.*
+
+<br>
+<br>
+
+[![Button Firefox]][Mozilla]  
+[![Button Chrome]][Chrome]
+
+[![Button Microsoft]][Edge]  
+[![Button Opera]][Opera]
+
+<br>
+<br>
+
+<sup>
+
+***uBlock*** *is pronounced `you-block origin` | `/ˈjuːˌblɒk/`*
+
+*[Don't combine with other similary-purposed blockers][Combined]*
+
+***[Not affiliated with `UBlock.org`][UBlock.org]***
+
+
+</sup>
+
+
+
+</div>
+
+
+---
 
 **An efficient blocker add-on for various browsers. Fast, potent, and lean.**
 
 uBlock Origin is **NOT** an "ad blocker": [it is a wide-spectrum blocker][Blocking] -- which happens to be able to function as a mere "ad blocker". The default behavior of uBlock Origin when newly installed is to block ads, trackers and malware sites -- through [_EasyList_][EasyList], [_EasyPrivacy_][EasyPrivacy], [_Peter Lowe’s ad/tracking/malware servers_][Peters List], [_Online Malicious URL Blocklist_][Malicious Blocklist], and uBlock Origin's [own filter lists][UBlock Filters].
 
-***
+---
 
 * [Documentation](#documentation)
 * [Purpose & General Info](#philosophy)
@@ -164,9 +178,11 @@ You can contribute by helping translate uBlock Origin on [Crowdin].
 [Performance]: https://www.debugbear.com/blog/chrome-extension-performance-2021#how-do-ad-blockers-and-privacy-tools-affect-browser-performance
 [Peters List]: https://pgl.yoyo.org/adservers/policy.php
 [EasyPrivacy]: https://easylist.github.io/#easyprivacy
+[UBlock.org]: https://github.com/gorhill/uBlock/wiki/uBlock-Origin-is-completely-unrelated-to-the-web-site-ublock.org
 [Chrome Dev]: https://chrome.google.com/webstore/detail/ublock-origin-dev-build/cgbcahbpdhpcegmbfconppldiemgcoii
 [SeaMonkey]: https://www.seamonkey-project.org/
 [Pale Moon]: https://www.palemoon.org/
+[Combined]: https://twitter.com/gorhill/status/1033706103782170625
 [EasyList]: https://easylist.github.io/#easylist
 [Mozilla]: https://addons.mozilla.org/firefox/addon/ublock-origin/
 [Crowdin]: https://crowdin.com/project/ublock
@@ -207,11 +223,20 @@ You can contribute by helping translate uBlock Origin on [Crowdin].
 
 <!----------------------------------[ Badges ]--------------------------------->
 
-[Badge Localization]: https://d322cqt584bo4o.cloudfront.net/ublock/localized.svg
-[Badge Commits]: https://img.shields.io/github/commit-activity/m/gorhill/ublock?label=Commits
-[Badge Mozilla]: https://img.shields.io/amo/rating/ublock-origin?label=Firefox
-[Badge License]: https://img.shields.io/badge/License-GPLv3-blue.svg
-[Badge Chrome]: https://img.shields.io/chrome-web-store/rating/cjpalhdlnbpafiamejdnhcphjbkeiagm?label=Chrome
-[Badge Issues]: https://img.shields.io/github/issues/uBlockOrigin/uBlock-issues
-[Badge NPM]: https://img.shields.io/npm/v/@gorhill/ubo-core
+[Badge Localization]: https://d322cqt584bo4o.cloudfront.net/ublock/localized.svg?style=for-the-badge
+
+[Badge Commits]: https://img.shields.io/github/commit-activity/m/gorhill/ublock?style=for-the-badge&label=Commits&logoColor=white&logo=GitHub&labelColor=00A98F&color=006c5c
+[Badge Mozilla]: https://img.shields.io/amo/rating/ublock-origin?style=for-the-badge&label=Firefox&color=c95a2e&labelColor=FF7139&logoColor=white&logo=Firefox
+[Badge License]: https://img.shields.io/badge/License-GPL3-015d93.svg?style=for-the-badge&labelColor=blue
+[Badge Chrome]: https://img.shields.io/chrome-web-store/rating/cjpalhdlnbpafiamejdnhcphjbkeiagm?style=for-the-badge&label=Chrome&logoColor=white&logo=GoogleChrome&labelColor=4285F4&color=356ecd
+[Badge Issues]: https://img.shields.io/github/issues/uBlockOrigin/uBlock-issues?style=for-the-badge&labelColor=d9b125&color=b1901f&logoColor=white&logo=GitLFS
+[Badge NPM]: https://img.shields.io/npm/v/@gorhill/ubo-core?style=for-the-badge&labelColor=CB3837&logoColor=white&logo=NPM&color=9f2c2b
+
+
+<!---------------------------------[ Buttons ]--------------------------------->
+
+[Button Microsoft]:  https://user-images.githubusercontent.com/585534/107280673-a5ece780-6a26-11eb-9cc7-9fa9f9f81180.png
+[Button Firefox]: https://user-images.githubusercontent.com/585534/107280546-7b9b2a00-6a26-11eb-8f9f-f95932f4bfec.png
+[Button Chrome]: https://user-images.githubusercontent.com/585534/107280622-91a8ea80-6a26-11eb-8d07-77c548b28665.png
+[Button Opera]: https://user-images.githubusercontent.com/585534/107280692-ac7b5f00-6a26-11eb-85c7-088926504452.png
 
