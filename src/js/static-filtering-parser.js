@@ -1581,6 +1581,18 @@ Parser.prototype.SelectorCompiler = class {
         return n;
     }
 
+    compileMediaQuery(s) {
+        if ( typeof self !== 'object' ) { return; }
+        if ( self === null ) { return; }
+        if ( typeof self.matchMedia !== 'function' ) { return; }
+        try {
+            const mql = self.matchMedia(s);
+            if ( mql instanceof self.MediaQueryList === false ) { return; }
+            if ( mql.media !== 'not all' ) { return s; }
+        } catch(ex) {
+        }
+    }
+
     // https://github.com/uBlockOrigin/uBlock-issues/issues/341#issuecomment-447603588
     //   Reject instances of :not() filters for which the argument is
     //   a valid CSS selector, otherwise we would be adversely changing the
@@ -1702,6 +1714,7 @@ Parser.prototype.SelectorCompiler = class {
             case ':spath':
                 raw.push(task[1]);
                 break;
+            case ':matches-media':
             case ':min-text-length':
             case ':others':
             case ':upward':
@@ -1878,6 +1891,8 @@ Parser.prototype.SelectorCompiler = class {
             return this.compileCSSDeclaration(args);
         case ':matches-css-before':
             return this.compileCSSDeclaration(args);
+        case ':matches-media':
+            return this.compileMediaQuery(args);
         case ':matches-path':
             return this.compileText(args);
         case ':min-text-length':
@@ -1918,7 +1933,8 @@ Parser.prototype.proceduralOperatorTokens = new Map([
     [ 'matches-css', 0b11 ],
     [ 'matches-css-after', 0b11 ],
     [ 'matches-css-before', 0b11 ],
-    [ 'matches-path', 0b01 ],
+    [ 'matches-media', 0b11 ],
+    [ 'matches-path', 0b11 ],
     [ 'min-text-length', 0b01 ],
     [ 'not', 0b01 ],
     [ 'nth-ancestor', 0b00 ],

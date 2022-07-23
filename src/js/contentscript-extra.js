@@ -104,15 +104,22 @@ class PSelectorMatchesCSSBeforeTask extends PSelectorMatchesCSSTask {
 }
 PSelectorMatchesCSSBeforeTask.prototype.pseudo = ':before';
 
-class PSelectorMinTextLengthTask extends PSelectorTask {
+class PSelectorMatchesMediaTask extends PSelectorTask {
     constructor(task) {
         super();
-        this.min = task[1];
+        this.mql = window.matchMedia(task[1]);
+        if ( this.mql.media === 'not all' ) { return; }
+        this.mql.addEventListener('change', ( ) => {
+            if ( typeof vAPI !== 'object' ) { return; }
+            if ( vAPI === null ) { return; }
+            const filterer = vAPI.domFilterer && vAPI.domFilterer.proceduralFilterer;
+            if ( filterer instanceof Object === false ) { return; }
+            filterer.onDOMChanged([ null ]);
+        });
     }
     transpose(node, output) {
-        if ( node.textContent.length >= this.min ) {
-            output.push(node);
-        }
+        if ( this.mql.matches === false ) { return; }
+        output.push(node);
     }
 }
 
@@ -127,6 +134,18 @@ class PSelectorMatchesPathTask extends PSelectorTask {
     }
     transpose(node, output) {
         if ( this.needle.test(self.location.pathname + self.location.search) ) {
+            output.push(node);
+        }
+    }
+}
+
+class PSelectorMinTextLengthTask extends PSelectorTask {
+    constructor(task) {
+        super();
+        this.min = task[1];
+    }
+    transpose(node, output) {
+        if ( node.textContent.length >= this.min ) {
             output.push(node);
         }
     }
@@ -322,6 +341,7 @@ class PSelector {
                 [ ':matches-css', PSelectorMatchesCSSTask ],
                 [ ':matches-css-after', PSelectorMatchesCSSAfterTask ],
                 [ ':matches-css-before', PSelectorMatchesCSSBeforeTask ],
+                [ ':matches-media', PSelectorMatchesMediaTask ],
                 [ ':matches-path', PSelectorMatchesPathTask ],
                 [ ':min-text-length', PSelectorMinTextLengthTask ],
                 [ ':not', PSelectorIfNotTask ],
