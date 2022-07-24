@@ -492,43 +492,28 @@ try {
 /******************************************************************************/
 
 const cosmeticFilterMapper = (function() {
-    // https://github.com/gorhill/uBlock/issues/546
-    var matchesFnName;
-    if ( typeof document.body.matches === 'function' ) {
-        matchesFnName = 'matches';
-    } else if ( typeof document.body.mozMatchesSelector === 'function' ) {
-        matchesFnName = 'mozMatchesSelector';
-    } else if ( typeof document.body.webkitMatchesSelector === 'function' ) {
-        matchesFnName = 'webkitMatchesSelector';
-    }
-
     const nodesFromStyleTag = function(rootNode) {
         const filterMap = roRedNodes;
         const details = vAPI.domFilterer.getAllSelectors();
 
         // Declarative selectors.
-        for ( const entry of (details.declarative || []) ) {
-            for ( const selector of entry[0].split(',\n') ) {
-                let canonical = selector;
+        for ( const block of (details.declarative || []) ) {
+            for ( const selector of block.split(',\n') ) {
                 let nodes;
-                if ( entry[1] !== vAPI.hideStyle ) {
-                    canonical += ':style(' + entry[1] + ')';
-                }
                 if ( reHasCSSCombinators.test(selector) ) {
                     nodes = document.querySelectorAll(selector);
                 } else {
                     if (
                         filterMap.has(rootNode) === false &&
-                        rootNode[matchesFnName](selector)
+                        rootNode.matches(selector)
                     ) {
-                        filterMap.set(rootNode, canonical);
+                        filterMap.set(rootNode, selector);
                     }
                     nodes = rootNode.querySelectorAll(selector);
                 }
                 for ( const node of nodes ) {
-                    if ( filterMap.has(node) === false ) {
-                        filterMap.set(node, canonical);
-                    }
+                    if ( filterMap.has(node) ) { continue; }
+                    filterMap.set(node, selector);
                 }
             }
         }

@@ -501,6 +501,7 @@ vAPI.DOMFilterer = class {
         this.stylesheets = [];
         this.exceptedCSSRules = [];
         this.exceptions = [];
+        this.convertedProceduralFilters = [];
         this.proceduralFilterer = null;
         // https://github.com/uBlockOrigin/uBlock-issues/issues/167
         //   By the time the DOMContentLoaded is fired, the content script might
@@ -518,11 +519,11 @@ vAPI.DOMFilterer = class {
 
     explodeCSS(css) {
         const out = [];
-        const reBlock = /^\{(.*)\}$/m;
+        const cssHide = `{${vAPI.hideStyle}}`;
         const blocks = css.trim().split(/\n\n+/);
         for ( const block of blocks ) {
-            const match = reBlock.exec(block);
-            out.push([ block.slice(0, match.index).trim(), match[1] ]);
+            if ( block.endsWith(cssHide) === false ) { continue; }
+            out.push(block.slice(0, -cssHide.length).trim());
         }
         return out;
     }
@@ -621,9 +622,6 @@ vAPI.DOMFilterer = class {
     }
 
     addProceduralSelectors(selectors) {
-        if ( Array.isArray(selectors) === false || selectors.length === 0 ) {
-            return;
-        }
         const procedurals = [];
         for ( const raw of selectors ) {
             procedurals.push(JSON.parse(raw));
@@ -652,23 +650,30 @@ vAPI.DOMFilterer = class {
             ? `[${this.proceduralFilterer.masterToken}]`
             : undefined;
         for ( const css of this.stylesheets ) {
-            const blocks = this.explodeCSS(css);
-            for ( const block of blocks ) {
+            for ( const block of this.explodeCSS(css) ) {
                 if (
                     includePrivateSelectors === false &&
                     masterToken !== undefined &&
-                    block[0].startsWith(masterToken)
+                    block.startsWith(masterToken)
                 ) {
                     continue;
                 }
-                out.declarative.push([ block[0], block[1] ]);
+                out.declarative.push(block);
             }
         }
         const excludeProcedurals = (bits & 0b10) !== 0;
-        if ( excludeProcedurals !== true ) {
-            out.procedural = hasProcedural
-                ? Array.from(this.proceduralFilterer.selectors.values())
-                : [];
+        if ( excludeProcedurals === false ) {
+            out.procedural = [];
+            if ( hasProcedural ) {
+                out.procedural.push(
+                    ...this.proceduralFilterer.selectors.values()
+                );
+            }
+            for ( const json of this.convertedProceduralFilters ) {
+                out.procedural.push(
+                    this.proceduralFiltererInstance().createProceduralFilter(json)
+                );
+            }
         }
         return out;
     }
@@ -1319,6 +1324,7 @@ vAPI.DOMFilterer = class {
             domFilterer.addCSS(cfeDetails.injectedCSS);
             domFilterer.addProceduralSelectors(cfeDetails.proceduralFilters);
             domFilterer.exceptCSSRules(cfeDetails.exceptedFilters);
+            domFilterer.convertedProceduralFilters = cfeDetails.convertedProceduralFilters;
         }
 
         vAPI.userStylesheet.apply();

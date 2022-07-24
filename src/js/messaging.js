@@ -631,15 +631,17 @@ const retrieveContentScriptParameters = async function(sender, request) {
     request.domain = domainFromHostname(request.hostname);
     request.entity = entityFromDomain(request.domain);
 
-    response.specificCosmeticFilters =
+    const scf = response.specificCosmeticFilters =
         cosmeticFilteringEngine.retrieveSpecificSelectors(request, response);
 
     // The procedural filterer's code is loaded only when needed and must be
     // present before returning response to caller.
     if (
-        Array.isArray(response.specificCosmeticFilters.proceduralFilters) || (
-            logger.enabled &&
-            response.specificCosmeticFilters.exceptedFilters.length !== 0
+        scf.proceduralFilters.length !== 0 || (
+            logger.enabled && (
+                scf.convertedProceduralFilters.length !== 0 ||
+                scf.exceptedFilters.length !== 0                
+            )
         )
     ) {
         await vAPI.tabs.executeScript(tabId, {

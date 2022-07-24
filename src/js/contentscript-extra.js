@@ -415,6 +415,13 @@ class PSelectorRoot extends PSelector {
         this.lastAllowanceTime = 0;
         this.styleToken = styleToken;
     }
+    prime(input) {
+        try {
+            return super.prime(input);
+        } catch (ex) {
+        }
+        return [];
+    }
 }
 PSelectorRoot.prototype.hit = false;
 
@@ -534,7 +541,7 @@ class ProceduralFilterer {
 
     // TODO: Current assumption is one style per hit element. Could be an
     //       issue if an element has multiple styling and one styling is
-    //       brough back. Possibly too rare to care about this for now.
+    //       brought back. Possibly too rare to care about this for now.
     unstyleNodes(nodes) {
         for ( const node of nodes ) {
             if ( this.styledNodes.has(node) ) { continue; }
@@ -543,7 +550,7 @@ class ProceduralFilterer {
     }
 
     createProceduralFilter(o) {
-        return new PSelectorRoot(o);
+        return new PSelectorRoot(typeof o === 'string' ? JSON.parse(o) : o);
     }
 
     onDOMCreated() {

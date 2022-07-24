@@ -40,8 +40,6 @@ const simpleDeclarativeSet = new Set();
 let simpleDeclarativeStr;
 const complexDeclarativeSet = new Set();
 let complexDeclarativeStr;
-const declarativeStyleDict = new Map();
-let declarativeStyleStr;
 const proceduralDict = new Map();
 const exceptionDict = new Map();
 let exceptionStr;
@@ -124,30 +122,12 @@ const processDeclarativeComplex = function(out) {
 
 /******************************************************************************/
 
-const processDeclarativeStyle = function(out) {
-    if ( declarativeStyleDict.size === 0 ) { return; }
-    if ( declarativeStyleStr === undefined ) {
-        declarativeStyleStr = safeGroupSelectors(declarativeStyleDict.keys());
-    }
-    if ( document.querySelector(declarativeStyleStr) === null ) { return; }
-    for ( const selector of declarativeStyleDict.keys() ) {
-        if ( safeQuerySelector(selector) === null ) { continue; }
-        for ( const style of declarativeStyleDict.get(selector) ) {
-            const raw = `##${selector}:style(${style})`;
-            out.push(raw);
-            loggedSelectors.add(raw);
-        }
-        declarativeStyleDict.delete(selector);
-        declarativeStyleStr = undefined;
-    }
-};
-
-/******************************************************************************/
-
 const processProcedural = function(out) {
     if ( proceduralDict.size === 0 ) { return; }
     for ( const [ raw, pselector ] of proceduralDict ) {
-        if ( pselector.hit === false ) { continue; }
+        if ( pselector.hit === false && pselector.exec().length === 0 ) {
+            continue;
+        }
         out.push(`##${raw}`);
         proceduralDict.delete(raw);
     }
@@ -201,7 +181,6 @@ const processTimer = new vAPI.SafeAnimationFrame(( ) => {
     }
 
     processDeclarativeComplex(toLog);
-    processDeclarativeStyle(toLog);
     processProcedural(toLog);
     processExceptions(toLog);
     processProceduralExceptions(toLog);
@@ -240,18 +219,8 @@ const attributeObserver = new MutationObserver(mutations => {
 const handlers = {
     onFiltersetChanged: function(changes) {
         //console.time('dom logger/filterset changed');
-        for ( const entry of (changes.declarative || []) ) {
-            for ( let selector of entry[0].split(',\n') ) {
-                if ( entry[1] !== 'display:none!important;' ) {
-                    declarativeStyleStr = undefined;
-                    const styles = declarativeStyleDict.get(selector);
-                    if ( styles === undefined ) {
-                        declarativeStyleDict.set(selector, [ entry[1] ]);
-                        continue;
-                    }
-                    styles.push(entry[1]);
-                    continue;
-                }
+        for ( const block of (changes.declarative || []) ) {
+            for ( const selector of block.split(',\n') ) {
                 if ( loggedSelectors.has(selector) ) { continue; }
                 if ( reHasCSSCombinators.test(selector) ) {
                     complexDeclarativeSet.add(selector);

@@ -1824,9 +1824,9 @@ Parser.prototype.SelectorCompiler = class {
             }
             if ( root && this.sheetSelectable(prefix) ) {
                 if ( action === undefined ) {
-                    return { selector: prefix };
+                    return { selector: prefix, cssable: true };
                 } else if ( action[0] === ':style' ) {
-                    return { selector: prefix, action };
+                    return { selector: prefix, cssable: true, action };
                 }
             }
 
@@ -1862,6 +1862,9 @@ Parser.prototype.SelectorCompiler = class {
         }
 
         const out = { selector: prefix };
+        if ( root && this.sheetSelectable(prefix) ) {
+            out.cssable = true;
+        }
 
         if ( tasks.length !== 0 ) {
             out.tasks = tasks;

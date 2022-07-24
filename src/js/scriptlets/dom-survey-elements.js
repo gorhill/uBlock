@@ -59,7 +59,7 @@
                 return 0;
             }
             return document.querySelectorAll(
-                details.declarative.map(entry => entry[0]).join(',')
+                details.declarative.join(',\n')
             ).length;
         })();
     }
