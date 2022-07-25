@@ -828,7 +828,8 @@ FilterContainer.prototype.cssRuleFromProcedural = function(json) {
     if ( pfilter.cssable !== true ) { return; }
     const { tasks, action } = pfilter;
     let mq;
-    if ( tasks !== undefined && tasks.length === 1 ) {
+    if ( tasks !== undefined ) {
+        if ( tasks.length > 1 ) { return; }
         if ( tasks[0][0] !== ':matches-media' ) { return; }
         mq = tasks[0][1];
     }

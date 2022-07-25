@@ -1862,9 +1862,6 @@ Parser.prototype.SelectorCompiler = class {
         }
 
         const out = { selector: prefix };
-        if ( root && this.sheetSelectable(prefix) ) {
-            out.cssable = true;
-        }
 
         if ( tasks.length !== 0 ) {
             out.tasks = tasks;
@@ -1873,6 +1870,19 @@ Parser.prototype.SelectorCompiler = class {
         // Expose action to take in root descriptor.
         if ( action !== undefined ) {
             out.action = action;
+        }
+
+        // Flag to quickly find out whether the filter can be converted into
+        // a declarative CSS rule.
+        if (
+            root &&
+            (action === undefined || action[0] === ':style') &&
+            (
+                tasks.length === 0 ||
+                tasks.length === 1 && tasks[0][0] === ':matches-media'
+            )
+        ) {
+            out.cssable = this.sheetSelectable(prefix);
         }
 
         return out;
