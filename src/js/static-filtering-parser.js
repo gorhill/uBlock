@@ -1487,12 +1487,17 @@ Parser.prototype.SelectorCompiler = class {
     //   selector is declarative or not.
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1806#issuecomment-963278382
     //   Forbid multiple and unexpected CSS style declarations.
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/2170#issuecomment-1207921464
+    //   Assigning text content to the `style` element resets the `disabled`
+    //   state of the sheet, so we need to explicitly disable it each time we
+    //   assign new text.
     sheetSelectable(s) {
         if ( this.reCommonSelector.test(s) ) { return true; }
         if ( this.cssValidatorElement === null ) { return true; }
         let valid = false;
         try {
             this.cssValidatorElement.childNodes[0].nodeValue = `_z + ${s}{color:red;} _z{color:red;}`;
+            this.cssValidatorElement.sheet.disabled =  true;
             const rules = this.cssValidatorElement.sheet.cssRules;
             valid = rules.length === 2 &&
                 rules[0].style.cssText !== '' &&
@@ -1636,6 +1641,7 @@ Parser.prototype.SelectorCompiler = class {
         let valid = false;
         try {
             this.cssValidatorElement.childNodes[0].nodeValue = `_z{${s}} _z{color:red;}`;
+            this.cssValidatorElement.sheet.disabled =  true;
             const rules = this.cssValidatorElement.sheet.cssRules;
             valid = rules.length >= 2 &&
                 rules[0].style.cssText !== '' &&
