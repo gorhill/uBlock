@@ -1290,7 +1290,7 @@
 
 
 // https://github.com/gorhill/uBlock/issues/1228
-/// window.name-defuser
+/// window.name-defuser.js
 (function() {
     if ( window === window.top ) {
         window.name = '';
