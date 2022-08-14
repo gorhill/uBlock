@@ -144,6 +144,8 @@ const redirectableResources = new Map([
         alias: [ 'noopmp3-0.1s', 'abp-resource:blank-mp3' ],
         data: 'blob',
     } ],
+    [ 'noop-0.5s.mp3', {
+    } ],
     [ 'noop-1s.mp4', {
         alias: 'noopmp4-1s',
         data: 'blob',
