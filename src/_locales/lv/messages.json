@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Atļautais saraksts",
+    "message": "Uzticamas vietnes",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -244,7 +244,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "3rd-party css/attēli",
+    "message": "trešo pušu CSS/attēli",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -312,7 +312,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Bloķēt elementu",
+    "message": "Bloķēt elementu…",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -500,7 +500,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Importēt...",
+    "message": "Importēt…",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -520,7 +520,7 @@
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Atjaunina...",
+    "message": "Atjaunina…",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -576,7 +576,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Importēt no faila...",
+    "message": "Importēt no faila…",
     "description": ""
   },
   "rulesExport": {
@@ -676,7 +676,7 @@
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
-    "message": "Iztīrīt žurnālus",
+    "message": "Iztīrīt žurnālu",
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
@@ -760,7 +760,7 @@
     "description": "Label to identify the type of an entry"
   },
   "loggerEntryDetailsURL": {
-    "message": "URL",
+    "message": "Vietnes URL",
     "description": "Label to identify the URL of an entry"
   },
   "loggerURLFilteringHeader": {
@@ -956,7 +956,7 @@
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "Tīmekļa lapa...",
+    "message": "Tīmekļa lapa…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
@@ -1052,7 +1052,7 @@
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Atgriezt noklusējuma iestatījumus...",
+    "message": "Atgriezt noklusējuma iestatījumus…",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
@@ -1192,11 +1192,11 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "Aizturēt elementu rāmī...",
+    "message": "Aizturēt elementu rāmī…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Abonēt filtru sarakstu...",
+    "message": "Abonēt filtru sarakstu…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
@@ -1224,7 +1224,7 @@
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "relaxBlockingMode": {
-    "message": "Atslābināt aizturēšanas stāvokli",
+    "message": "Atslābinātais aizturēšanas režīms",
     "description": "Label for keyboard shortcut used to relax blocking mode"
   },
   "storageUsed": {

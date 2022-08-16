@@ -748,7 +748,7 @@
     "description": "Label to identify a context field (typically a hostname)"
   },
   "loggerEntryDetailsRootContext": {
-    "message": "Grundkontext",
+    "message": "Basiskontext",
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
@@ -872,7 +872,7 @@
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportEncodePlain": {
-    "message": "Rohtext",
+    "message": "Nur Text",
     "description": "Label for radio-button to pick export text format"
   },
   "loggerExportEncodeMarkdown": {
