@@ -81,6 +81,7 @@ class PSelectorMatchesCSSTask extends PSelectorTask {
     constructor(task) {
         super();
         this.name = task[1].name;
+        this.pseudo = task[1].pseudo ? `::${task[1].pseudo}` : null;
         let arg0 = task[1].value, arg1;
         if ( Array.isArray(arg0) ) {
             arg1 = arg0[1]; arg0 = arg0[0];
@@ -94,15 +95,19 @@ class PSelectorMatchesCSSTask extends PSelectorTask {
         }
     }
 }
-PSelectorMatchesCSSTask.prototype.pseudo = null;
-
 class PSelectorMatchesCSSAfterTask extends PSelectorMatchesCSSTask {
+    constructor(task) {
+        super(task);
+        this.pseudo = 'after';
+    }
 }
-PSelectorMatchesCSSAfterTask.prototype.pseudo = ':after';
 
 class PSelectorMatchesCSSBeforeTask extends PSelectorMatchesCSSTask {
+    constructor(task) {
+        super(task);
+        this.pseudo = 'before';
+    }
 }
-PSelectorMatchesCSSBeforeTask.prototype.pseudo = ':before';
 
 class PSelectorMatchesMediaTask extends PSelectorTask {
     constructor(task) {

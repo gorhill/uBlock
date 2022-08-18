@@ -1560,6 +1560,13 @@ Parser.prototype.SelectorCompiler = class {
     }
 
     compileCSSDeclaration(s) {
+        let pseudo; {
+            const match = /^[a-z-]+,/.exec(s);
+            if ( match !== null ) {
+                pseudo = match[0].slice(0, -1);
+                s = s.slice(match[0].length).trim();
+            }
+        }
         const pos = s.indexOf(':');
         if ( pos === -1 ) { return; }
         const name = s.slice(0, pos).trim();
@@ -1576,7 +1583,7 @@ Parser.prototype.SelectorCompiler = class {
             regexDetails = '^' + value.replace(this.reEscapeRegex, '\\$&') + '$';
             this.regexToRawValue.set(regexDetails, value);
         }
-        return { name: name, value: regexDetails };
+        return { name, pseudo, value: regexDetails };
     }
 
     compileInteger(s, min = 0, max = 0x7FFFFFFF) {
@@ -1711,7 +1718,11 @@ Parser.prototype.SelectorCompiler = class {
                         value = `/${task[1].value}/`;
                     }
                 }
-                raw.push(`${task[0]}(${task[1].name}: ${value})`);
+                if ( task[1].pseudo ) {
+                    raw.push(`:matches-css(${task[1].pseudo}, ${task[1].name}: ${value})`);
+                } else {
+                    raw.push(`:matches-css(${task[1].name}: ${value})`);
+                }
                 break;
             case ':not':
             case ':if-not':
@@ -1907,9 +1918,9 @@ Parser.prototype.SelectorCompiler = class {
         case ':matches-css':
             return this.compileCSSDeclaration(args);
         case ':matches-css-after':
-            return this.compileCSSDeclaration(args);
+            return this.compileCSSDeclaration(`after, ${args}`);
         case ':matches-css-before':
-            return this.compileCSSDeclaration(args);
+            return this.compileCSSDeclaration(`before, ${args}`);
         case ':matches-media':
             return this.compileMediaQuery(args);
         case ':matches-path':
