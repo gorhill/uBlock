@@ -98,14 +98,14 @@ class PSelectorMatchesCSSTask extends PSelectorTask {
 class PSelectorMatchesCSSAfterTask extends PSelectorMatchesCSSTask {
     constructor(task) {
         super(task);
-        this.pseudo = 'after';
+        this.pseudo = '::after';
     }
 }
 
 class PSelectorMatchesCSSBeforeTask extends PSelectorMatchesCSSTask {
     constructor(task) {
         super(task);
-        this.pseudo = 'before';
+        this.pseudo = '::before';
     }
 }
 
