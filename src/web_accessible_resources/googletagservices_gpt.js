@@ -77,6 +77,7 @@
         getTargetingKeys: nooparrayfn,
         getSlots: nooparrayfn,
         refresh: noopfn,
+        removeEventListener: noopfn,
         set: noopthisfn,
         setCategoryExclusion: noopthisfn,
         setCentering: noopfn,
