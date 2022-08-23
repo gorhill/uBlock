@@ -1384,6 +1384,7 @@ Parser.prototype.SelectorCompiler = class {
         this.reDropScope = /^\s*:scope\s*(?=[+>~])/;
         this.reIsDanglingSelector = /[+>~\s]\s*$/;
         this.reIsCombinator = /^\s*[+>~]/;
+        this.reForgivingOps = /:has\(/;
         this.regexToRawValue = new Map();
         // https://github.com/gorhill/uBlock/issues/2793
         this.normalizedOperators = new Map([
@@ -1416,7 +1417,15 @@ Parser.prototype.SelectorCompiler = class {
         }
 
         // Can be used in a declarative CSS rule?
-        if ( asProcedural === false && this.sheetSelectable(raw) ) {
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/2228
+        //   Some operators are forgiving, so we need to exclude them for now
+        //   as potentially declarative selectors until we validate that their
+        //   arguments are themselves valid plain CSS selector.
+        if (
+            asProcedural === false &&
+            this.reForgivingOps.test(raw) === false &&
+            this.sheetSelectable(raw)
+        ) {
             out.compiled = raw;
             return true;
         }
@@ -1792,20 +1801,27 @@ Parser.prototype.SelectorCompiler = class {
             // Unbalanced parenthesis? An unbalanced parenthesis is fine
             // as long as the last character is a closing parenthesis.
             if ( pcnt !== 0 && c !== 0x29 ) { return; }
+            // Extract and remember operator/argument details.
+            const opname = raw.slice(opNameBeg, opNameEnd);
+            const oparg = raw.slice(opNameEnd + 1, i - 1);
+            const operator = this.normalizedOperators.get(opname) || opname;
             // https://github.com/uBlockOrigin/uBlock-issues/issues/341#issuecomment-447603588
             //   Maybe that one operator is a valid CSS selector and if so,
             //   then consider it to be part of the prefix.
-            if ( this.querySelectable(raw.slice(opNameBeg, i)) ) { continue; }
-            // Extract and remember operator details.
-            let operator = raw.slice(opNameBeg, opNameEnd);
-            operator = this.normalizedOperators.get(operator) || operator;
+            // https://github.com/uBlockOrigin/uBlock-issues/issues/2228
+            //   Maybe an operator is a valid CSS selector, but if it is
+            //   "forgiving", we also need to validate that the argument itself
+            //   is also a valid CSS selector.
+            if (
+                this.querySelectable(raw.slice(opNameBeg, i)) &&
+                this.querySelectable(oparg)
+            ) {
+                continue;
+            }
             // Action operator can only be used as trailing operator in the
             // root task list.
             // Per-operator arguments validation
-            const args = this.compileArgument(
-                operator,
-                raw.slice(opNameEnd + 1, i - 1)
-            );
+            const args = this.compileArgument(operator, oparg);
             if ( args === undefined ) { return; }
             if ( opPrefixBeg === 0 ) {
                 prefix = raw.slice(0, opNameBeg);
