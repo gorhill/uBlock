@@ -1453,7 +1453,7 @@ Parser.prototype.SelectorCompiler = class {
         }
 
         // Procedural selector?
-        const compiled = this.compileProceduralSelector(raw);
+        const compiled = this.compileProceduralSelector(raw, asProcedural);
         if ( compiled === undefined ) { return false; }
 
         out.compiled =
@@ -1531,8 +1531,8 @@ Parser.prototype.SelectorCompiler = class {
         return true;
     }
 
-    compileProceduralSelector(raw) {
-        const compiled = this.compileProcedural(raw, true);
+    compileProceduralSelector(raw, asProcedural = false) {
+        const compiled = this.compileProcedural(raw, true, asProcedural);
         if ( compiled !== undefined ) {
             compiled.raw = this.decompileProcedural(compiled);
         }
@@ -1757,7 +1757,7 @@ Parser.prototype.SelectorCompiler = class {
         return raw.join('');
     }
 
-    compileProcedural(raw, root = false) {
+    compileProcedural(raw, root = false, asProcedural = false) {
         if ( raw === '' ) { return; }
 
         const tasks = [];
@@ -1813,6 +1813,7 @@ Parser.prototype.SelectorCompiler = class {
             //   "forgiving", we also need to validate that the argument itself
             //   is also a valid CSS selector.
             if (
+                asProcedural === false &&
                 this.querySelectable(raw.slice(opNameBeg, i)) &&
                 this.querySelectable(oparg)
             ) {
