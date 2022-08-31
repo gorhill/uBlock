@@ -4,11 +4,16 @@ on:
   create:
     branches: master
 
+permissions:
+  contents: read
+
 # I used the following project as template to get started:
 # https://github.com/dessant/search-by-image/blob/master/.github/workflows/ci.yml
 
 jobs:
   build:
+    permissions:
+      contents: write # for creating release
     name: Build packages
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/')
