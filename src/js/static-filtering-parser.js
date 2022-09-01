@@ -1615,6 +1615,7 @@ Parser.prototype.SelectorCompiler = class {
         if ( this.querySelectable(s) === false ) {
             return this.compileProcedural(s);
         }
+        return s;
     }
 
     compileUpwardArgument(s) {
