@@ -684,7 +684,7 @@ const Parser = class {
 
     analyzeNetExtra() {
         if ( this.patternIsRegex() ) {
-            if ( this.regexUtils.isValid(this.getNetPattern()) === false ) {
+            if ( this.utils.regex.isValid(this.getNetPattern()) === false ) {
                 this.markSpan(this.patternSpan, BITError);
             }
         } else if (
@@ -1048,7 +1048,7 @@ const Parser = class {
         // TODO: not necessarily true, this needs more work.
         if ( this.patternIsRegex === false ) { return true; }
         return this.reGoodRegexToken.test(
-            this.regexUtils.toTokenizableStr(this.getNetPattern())
+            this.utils.regex.toTokenizableStr(this.getNetPattern())
         );
     }
 
@@ -2962,134 +2962,269 @@ const ExtOptionsIterator = class {
 
 /******************************************************************************/
 
-// Depends on:
-// https://github.com/foo123/RegexAnalyzer
+Parser.utils = Parser.prototype.utils = (( ) => {
 
-Parser.regexUtils = Parser.prototype.regexUtils = (( ) => {
+    // Depends on:
+    // https://github.com/foo123/RegexAnalyzer
+    const regexAnalyzer = Regex && Regex.Analyzer || null;
 
-    const firstCharCodeClass = s => {
-        return /^[\x01%0-9A-Za-z]/.test(s) ? 1 : 0;
-    };
-
-    const lastCharCodeClass = s => {
-        return /[\x01%0-9A-Za-z]$/.test(s) ? 1 : 0;
-    };
-
-    const toTokenizableStr = node => {
-        switch ( node.type ) {
-        case 1: /* T_SEQUENCE, 'Sequence' */ {
-            let s = '';
-            for ( let i = 0; i < node.val.length; i++ ) {
-                s += toTokenizableStr(node.val[i]);
-            }
-            return s;
+    class regex {
+        static firstCharCodeClass(s) {
+            return /^[\x01%0-9A-Za-z]/.test(s) ? 1 : 0;
         }
-        case 2: /* T_ALTERNATION, 'Alternation' */
-        case 8: /* T_CHARGROUP, 'CharacterGroup' */ {
-            let firstChar = 0;
-            let lastChar = 0;
-            for ( let i = 0; i < node.val.length; i++ ) {
-                const s = toTokenizableStr(node.val[i]);
-                if ( firstChar === 0 && firstCharCodeClass(s) === 1 ) {
-                    firstChar = 1;
+
+        static lastCharCodeClass(s) {
+            return /[\x01%0-9A-Za-z]$/.test(s) ? 1 : 0;
+        }
+
+        static tokenizableStrFromNode(node) {
+            switch ( node.type ) {
+            case 1: /* T_SEQUENCE, 'Sequence' */ {
+                let s = '';
+                for ( let i = 0; i < node.val.length; i++ ) {
+                    s += this.tokenizableStrFromNode(node.val[i]);
                 }
-                if ( lastChar === 0 && lastCharCodeClass(s) === 1 ) {
-                    lastChar = 1;
-                }
-                if ( firstChar === 1 && lastChar === 1 ) { break; }
+                return s;
             }
-            return String.fromCharCode(firstChar, lastChar);
-        }
-        case 4: /* T_GROUP, 'Group' */ {
-            if ( node.flags.NegativeLookAhead === 1 ) { return '\x01'; }
-            if ( node.flags.NegativeLookBehind === 1 ) { return '\x01'; }
-            return toTokenizableStr(node.val);
-        }
-        case 16: /* T_QUANTIFIER, 'Quantifier' */ {
-            const s = toTokenizableStr(node.val);
-            const first = firstCharCodeClass(s);
-            const last = lastCharCodeClass(s);
-            if ( node.flags.min === 0 && first === 0 && last === 0 ) {
+            case 2: /* T_ALTERNATION, 'Alternation' */
+            case 8: /* T_CHARGROUP, 'CharacterGroup' */ {
+                let firstChar = 0;
+                let lastChar = 0;
+                for ( let i = 0; i < node.val.length; i++ ) {
+                    const s = this.tokenizableStrFromNode(node.val[i]);
+                    if ( firstChar === 0 && this.firstCharCodeClass(s) === 1 ) {
+                        firstChar = 1;
+                    }
+                    if ( lastChar === 0 && this.lastCharCodeClass(s) === 1 ) {
+                        lastChar = 1;
+                    }
+                    if ( firstChar === 1 && lastChar === 1 ) { break; }
+                }
+                return String.fromCharCode(firstChar, lastChar);
+            }
+            case 4: /* T_GROUP, 'Group' */ {
+                if ( node.flags.NegativeLookAhead === 1 ) { return '\x01'; }
+                if ( node.flags.NegativeLookBehind === 1 ) { return '\x01'; }
+                return this.tokenizableStrFromNode(node.val);
+            }
+            case 16: /* T_QUANTIFIER, 'Quantifier' */ {
+                const s = this.tokenizableStrFromNode(node.val);
+                const first = this.firstCharCodeClass(s);
+                const last = this.lastCharCodeClass(s);
+                if ( node.flags.min === 0 && first === 0 && last === 0 ) {
+                    return '';
+                }
+                return String.fromCharCode(first, last);
+            }
+            case 64: /* T_HEXCHAR, 'HexChar' */ {
+                return String.fromCharCode(parseInt(node.val.slice(1), 16));
+            }
+            case 128: /* T_SPECIAL, 'Special' */ {
+                const flags = node.flags;
+                if (
+                    flags.EndCharGroup === 1 || // dangling `]`
+                    flags.EndGroup === 1 ||     // dangling `)`
+                    flags.EndRepeats === 1      // dangling `}`
+                ) {
+                    throw new Error('Unmatched bracket');
+                }
+                return flags.MatchEnd === 1 ||
+                       flags.MatchStart === 1 ||
+                       flags.MatchWordBoundary === 1
+                    ? '\x00'
+                    : '\x01';
+            }
+            case 256: /* T_CHARS, 'Characters' */ {
+                for ( let i = 0; i < node.val.length; i++ ) {
+                    if ( this.firstCharCodeClass(node.val[i]) === 1 ) {
+                        return '\x01';
+                    }
+                }
+                return '\x00';
+            }
+            // Ranges are assumed to always involve token-related characters.
+            case 512: /* T_CHARRANGE, 'CharacterRange' */ {
+                return '\x01';
+            }
+            case 1024: /* T_STRING, 'String' */ {
+                return node.val;
+            }
+            case 2048: /* T_COMMENT, 'Comment' */ {
                 return '';
             }
-            return String.fromCharCode(first, last);
-        }
-        case 64: /* T_HEXCHAR, 'HexChar' */ {
-            return String.fromCharCode(parseInt(node.val.slice(1), 16));
-        }
-        case 128: /* T_SPECIAL, 'Special' */ {
-            const flags = node.flags;
-            if (
-                flags.EndCharGroup === 1 || // dangling `]`
-                flags.EndGroup === 1 ||     // dangling `)`
-                flags.EndRepeats === 1      // dangling `}`
-            ) {
-                throw new Error('Unmatched bracket');
+            default:
+                break;
             }
-            return flags.MatchEnd === 1 ||
-                   flags.MatchStart === 1 ||
-                   flags.MatchWordBoundary === 1
-                ? '\x00'
-                : '\x01';
-        }
-        case 256: /* T_CHARS, 'Characters' */ {
-            for ( let i = 0; i < node.val.length; i++ ) {
-                if ( firstCharCodeClass(node.val[i]) === 1 ) {
-                    return '\x01';
-                }
-            }
-            return '\x00';
-        }
-        // Ranges are assumed to always involve token-related characters.
-        case 512: /* T_CHARRANGE, 'CharacterRange' */ {
             return '\x01';
         }
-        case 1024: /* T_STRING, 'String' */ {
-            return node.val;
-        }
-        case 2048: /* T_COMMENT, 'Comment' */ {
-            return '';
-        }
-        default:
-            break;
-        }
-        return '\x01';
-    };
 
-    if (
-        Regex instanceof Object === false ||
-        Regex.Analyzer instanceof Object === false
-    ) {
-        return {
-            isValid: function(reStr)  {
-                try {
-                    void new RegExp(reStr);
-                } catch(ex) {
-                    return false;
-                }
-                return true;
-            },
-            toTokenizableStr: ( ) => '',
-        };
-    }
-
-    return {
-        isValid: function(reStr) {
+        static isValid(reStr) {
             try {
                 void new RegExp(reStr);
-                void toTokenizableStr(Regex.Analyzer(reStr, false).tree());
+                if ( regexAnalyzer !== null ) {
+                    void this.tokenizableStrFromNode(
+                        regexAnalyzer(reStr, false).tree()
+                    );
+                }
             } catch(ex) {
                 return false;
             }
             return true;
-        },
-        toTokenizableStr: function(reStr) {
+        }
+
+        static isRE2(reStr) {
+            if ( regexAnalyzer === null ) { return true; }
+            let tree;
             try {
-                return toTokenizableStr(Regex.Analyzer(reStr, false).tree());
+                tree = regexAnalyzer(reStr, false).tree();
+            } catch(ex) {
+                return;
+            }
+            const isRE2 = node => {
+                if ( node instanceof Object === false ) { return true; }
+                if ( node.flags instanceof Object ) {
+                    if ( node.flags.LookAhead === 1 ) { return false; }
+                    if ( node.flags.NegativeLookAhead === 1 ) { return false; }
+                    if ( node.flags.LookBehind === 1 ) { return false; }
+                    if ( node.flags.NegativeLookBehind === 1 ) { return false; }
+                }
+                if ( Array.isArray(node.val) ) {
+                    for ( const entry of node.val ) {
+                        if ( isRE2(entry) === false ) { return false; }
+                    }
+                }
+                if ( node.val instanceof Object ) {
+                    return isRE2(node.val);
+                }
+                return true;
+            };
+            return isRE2(tree);
+        }
+
+        static toTokenizableStr(reStr) {
+            if ( regexAnalyzer === null ) { return ''; }
+            try {
+                return this.tokenizableStrFromNode(
+                    regexAnalyzer(reStr, false).tree()
+                );
             } catch(ex) {
             }
             return '';
-        },
+        }
+    }
+
+    const preparserTokens = new Map([
+        [ 'ext_ublock', 'ublock' ],
+        [ 'env_chromium', 'chromium' ],
+        [ 'env_edge', 'edge' ],
+        [ 'env_firefox', 'firefox' ],
+        [ 'env_legacy', 'legacy' ],
+        [ 'env_mobile', 'mobile' ],
+        [ 'env_safari', 'safari' ],
+        [ 'cap_html_filtering', 'html_filtering' ],
+        [ 'cap_user_stylesheet', 'user_stylesheet' ],
+        [ 'false', 'false' ],
+        // Hoping ABP-only list maintainers can at least make use of it to
+        // help non-ABP content blockers better deal with filters benefiting
+        // only ABP.
+        [ 'ext_abp', 'false' ],
+        // Compatibility with other blockers
+        // https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters#adguard-specific
+        [ 'adguard', 'adguard' ],
+        [ 'adguard_app_android', 'false' ],
+        [ 'adguard_app_ios', 'false' ],
+        [ 'adguard_app_mac', 'false' ],
+        [ 'adguard_app_windows', 'false' ],
+        [ 'adguard_ext_android_cb', 'false' ],
+        [ 'adguard_ext_chromium', 'chromium' ],
+        [ 'adguard_ext_edge', 'edge' ],
+        [ 'adguard_ext_firefox', 'firefox' ],
+        [ 'adguard_ext_opera', 'chromium' ],
+        [ 'adguard_ext_safari', 'false' ],
+    ]);
+
+    class preparser {
+        // This method returns an array of indices, corresponding to position in
+        // the content string which should alternatively be parsed and discarded.
+        static splitter(content, env) {
+            const reIf = /^!#(if|endif)\b([^\n]*)(?:[\n\r]+|$)/gm;
+            const stack = [];
+            const shouldDiscard = ( ) => stack.some(v => v);
+            const parts = [ 0 ];
+            let discard = false;
+
+            for (;;) {
+                const match = reIf.exec(content);
+                if ( match === null ) { break; }
+
+                switch ( match[1] ) {
+                case 'if':
+                    let expr = match[2].trim();
+                    const target = expr.charCodeAt(0) === 0x21 /* '!' */;
+                    if ( target ) { expr = expr.slice(1); }
+                    const token = preparserTokens.get(expr);
+                    const startDiscard =
+                        token === 'false' && target === false ||
+                        token !== undefined && env.includes(token) === target;
+                    if ( discard === false && startDiscard ) {
+                        parts.push(match.index);
+                        discard = true;
+                    }
+                    stack.push(startDiscard);
+                    break;
+
+                case 'endif':
+                    stack.pop();
+                    const stopDiscard = shouldDiscard() === false;
+                    if ( discard && stopDiscard ) {
+                        parts.push(match.index + match[0].length);
+                        discard = false;
+                    }
+                    break;
+
+                default:
+                    break;
+                }
+            }
+
+            parts.push(content.length);
+            return parts;
+        }
+
+        static prune(content, env) {
+            const parts = this.splitter(content, env);
+            const out = [];
+            for ( let i = 0, n = parts.length - 1; i < n; i += 2 ) {
+                const beg = parts[i+0];
+                const end = parts[i+1];
+                out.push(content.slice(beg, end));
+            }
+            return out.join('\n');
+        }
+
+        static getHints() {
+            const out = [];
+            const vals = new Set();
+            for ( const [ key, val ] of preparserTokens ) {
+                if ( vals.has(val) ) { continue; }
+                vals.add(val);
+                out.push(key);
+            }
+            return out;
+        }
+
+        static getTokens(env) {
+            const out = new Map();
+            for ( const [ key, val ] of preparserTokens ) {
+                out.set(key, val !== 'false' && env.includes(val));
+            }
+            return Array.from(out);
+        }
+    }
+
+    return {
+        preparser,
+        regex,
     };
 })();
 

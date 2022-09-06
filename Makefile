@@ -1,7 +1,7 @@
 # https://stackoverflow.com/a/6273809
 run_options := $(filter-out $@,$(MAKECMDGOALS))
 
-.PHONY: all clean test lint chromium firefox npm dig \
+.PHONY: all clean test lint chromium firefox npm dig mv3 \
 	compare maxcost medcost mincost modifiers record wasm
 
 sources := $(wildcard assets/resources/* src/* src/*/* src/*/*/* src/*/*/*/*)
@@ -51,6 +51,11 @@ dig: dist/build/uBlock0.dig
 
 dig-snfe: dig
 	cd dist/build/uBlock0.dig && npm run snfe $(run_options)
+
+dist/build/uBlock0.mv3: tools/make-mv3.sh $(sources) $(platform)
+	tools/make-mv3.sh all
+
+mv3: dist/build/uBlock0.mv3
 
 # Update submodules.
 update-submodules:

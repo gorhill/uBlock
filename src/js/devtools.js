@@ -45,7 +45,8 @@ CodeMirror.registerGlobalHelper(
         let nextLineNo = startLineNo + 1;
         while ( nextLineNo < lastLineNo ) {
             const nextLine = cm.getLine(nextLineNo);
-            if ( nextLine.startsWith(foldCandidate) === false ) {
+            // TODO: use regex to find folding end
+            if ( nextLine.startsWith(foldCandidate) === false && nextLine !== ']' ) {
                 if ( startLineNo >= endLineNo ) { return; }
                 return {
                     from: CodeMirror.Pos(startLineNo, startLine.length),
@@ -136,6 +137,17 @@ uDom.nodeFromId('snfe-dump').addEventListener('click', ev => {
         button.setAttribute('disabled', '');
         vAPI.messaging.send('dashboard', {
             what: 'snfeDump',
+        }).then(result => {
+            log(result);
+            button.removeAttribute('disabled');
+        });
+});
+
+uDom.nodeFromId('snfe-todnr').addEventListener('click', ev => {
+        const button = ev.target;
+        button.setAttribute('disabled', '');
+        vAPI.messaging.send('dashboard', {
+            what: 'snfeToDNR',
         }).then(result => {
             log(result);
             button.removeAttribute('disabled');

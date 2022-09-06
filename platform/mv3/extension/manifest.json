@@ -1,0 +1,25 @@
+{
+  "author": "Raymond Hill",
+   "background": {
+      "service_worker": "background.js",
+      "type": "module"
+   },
+  "declarative_net_request": {
+    "rule_resources": [
+    ]
+  },
+  "description": "uBO Minus is permission-less experimental MV3-based network request blocker",
+  "icons": {
+    "16": "img/icon_16.png",
+    "32": "img/icon_32.png",
+    "64": "img/icon_64.png",
+    "128": "img/icon_128.png"
+  },
+  "manifest_version": 3,
+  "minimum_chrome_version": "101.0",
+  "name": "uBO Minus (MV3)",
+  "permissions": [
+    "declarativeNetRequest"
+  ],
+  "version": "0.1.0"
+}

@@ -39,6 +39,7 @@ import staticNetFilteringEngine from './static-net-filtering.js';
 import µb from './background.js';
 import webRequest from './traffic.js';
 import { denseBase64 } from './base64-custom.js';
+import { dnrRulesetFromRawLists } from './static-dnr-filtering.js';
 import { redirectEngine } from './redirect-engine.js';
 import { StaticFilteringParser } from './static-filtering-parser.js';
 
@@ -142,6 +143,98 @@ const onMessage = function(request, sender, callback) {
             callback(result);
         });
         return;
+
+    case 'snfeToDNR': {
+        const listPromises = [];
+        const listNames = [];
+        for ( const assetKey of µb.selectedFilterLists ) {
+            listPromises.push(
+                io.get(assetKey, { dontCache: true }).then(details => {
+                    listNames.push(assetKey);
+                    return { name: assetKey, text: details.content };
+                })
+            );
+        }
+        const options = {
+            extensionPaths: redirectEngine.getResourceDetails(),
+            env: vAPI.webextFlavor.env,
+        };
+        const t0 = Date.now();
+        dnrRulesetFromRawLists(listPromises, options).then(ruleset => {
+            const replacer = (k, v) => {
+                if ( k.startsWith('__') ) { return; }
+                if ( Array.isArray(v) ) {
+                    return v.sort();
+                }
+                if ( v instanceof Object ) {
+                    const sorted = {};
+                    for ( const kk of Object.keys(v).sort() ) {
+                        sorted[kk] = v[kk];
+                    }
+                    return sorted;
+                }
+                return v;
+            };
+            const isUnsupported = rule =>
+                rule._error !== undefined;
+            const isRegex = rule =>
+                rule.condition !== undefined &&
+                rule.condition.regexFilter !== undefined;
+            const isRedirect = rule =>
+                rule.action !== undefined &&
+                rule.action.type === 'redirect' &&
+                rule.action.redirect.extensionPath !== undefined;
+            const isCsp = rule =>
+                rule.action !== undefined &&
+                rule.action.type === 'modifyHeaders';
+            const isRemoveparam = rule =>
+                rule.action !== undefined &&
+                rule.action.type === 'redirect' &&
+                rule.action.redirect.transform !== undefined;
+            const runtime = Date.now() - t0;
+            const out = [
+                `dnrRulesetFromRawLists(${JSON.stringify(listNames, null, 2)})`,
+                `Run time: ${runtime} ms`,
+            ];
+            const good = ruleset.filter(rule =>
+                isUnsupported(rule) === false &&
+                isRegex(rule) === false &&
+                isRedirect(rule) === false &&
+                isCsp(rule) === false &&
+                isRemoveparam(rule) === false
+            );
+            out.push(`+ Good filters (${good.length}): ${JSON.stringify(good, replacer, 2)}`);
+            const regexes = ruleset.filter(rule =>
+                isUnsupported(rule) === false &&
+                isRegex(rule) &&
+                isRedirect(rule) === false &&
+                isCsp(rule) === false &&
+                isRemoveparam(rule) === false
+            );
+            out.push(`+ Regex-based filters (${regexes.length}): ${JSON.stringify(regexes, replacer, 2)}`);
+            const redirects = ruleset.filter(rule =>
+                isUnsupported(rule) === false &&
+                isRedirect(rule)
+            );
+            out.push(`+ 'redirect=' filters (${redirects.length}): ${JSON.stringify(redirects, replacer, 2)}`);
+            const headers = ruleset.filter(rule =>
+                isUnsupported(rule) === false &&
+                isCsp(rule)
+            );
+            out.push(`+ 'csp=' filters (${headers.length}): ${JSON.stringify(headers, replacer, 2)}`);
+            const removeparams = ruleset.filter(rule =>
+                isUnsupported(rule) === false &&
+                isRemoveparam(rule)
+            );
+            out.push(`+ 'removeparam=' filters (${removeparams.length}): ${JSON.stringify(removeparams, replacer, 2)}`);
+            const bad = ruleset.filter(rule =>
+                isUnsupported(rule)
+            );
+            out.push(`+ Unsupported filters (${bad.length}): ${JSON.stringify(bad, replacer, 2)}`);
+            callback(out.join('\n'));
+        });
+        return;
+    }
 
     default:
         break;
@@ -1346,7 +1439,7 @@ const getSupportData = async function() {
             scriptlet: scriptletFilteringEngine.getFilterCount(),
             html: htmlFilteringEngine.getFilterCount(),
         },
-        'listset (total-discarded, last updated)': {
+        'listset (total-discarded, last-updated)': {
             removed: removedListset,
             added: addedListset,
             default: defaultListset,
@@ -1429,8 +1522,10 @@ const onMessage = function(request, sender, callback) {
         response = {};
         if ( (request.hintUpdateToken || 0) === 0 ) {
             response.redirectResources = redirectEngine.getResourceDetails();
-            response.preparseDirectiveTokens = µb.preparseDirectives.getTokens();
-            response.preparseDirectiveHints = µb.preparseDirectives.getHints();
+            response.preparseDirectiveTokens =
+                StaticFilteringParser.utils.preparser.getTokens(vAPI.webextFlavor.env);
+            response.preparseDirectiveHints =
+                StaticFilteringParser.utils.preparser.getHints();
             response.expertMode = µb.hiddenSettings.filterAuthorMode;
         }
         if ( request.hintUpdateToken !== µb.pageStoresToken ) {

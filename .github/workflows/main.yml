@@ -45,6 +45,7 @@ jobs:
           tools/make-firefox.sh ${{ steps.release_info.outputs.VERSION }}
           tools/make-thunderbird.sh ${{ steps.release_info.outputs.VERSION }}
           tools/make-npm.sh ${{ steps.release_info.outputs.VERSION }}
+          tools/make-mv3.sh all
       - name: Upload Chromium package
         uses: actions/upload-release-asset@v1
         env:
@@ -80,4 +81,13 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.npm.tgz
           asset_name: uBlock0_${{ steps.release_info.outputs.VERSION }}.npm.tgz
+          asset_content_type: application/octet-stream
+      - name: Upload Chromium MV3 package
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/build/uBlock0.mv3.zip
+          asset_name: uBlock0.mv3.zip
           asset_content_type: application/octet-stream

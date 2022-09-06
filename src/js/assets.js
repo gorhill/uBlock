@@ -26,6 +26,7 @@
 import cacheStorage from './cachestorage.js';
 import logger from './logger.js';
 import µb from './background.js';
+import { StaticFilteringParser } from './static-filtering-parser.js';
 
 /******************************************************************************/
 
@@ -267,7 +268,10 @@ assets.fetchFilterList = async function(mainlistURL) {
             }
             if ( result instanceof Object === false ) { continue; }
             const content = result.content;
-            const slices = µb.preparseDirectives.split(content);
+            const slices = StaticFilteringParser.utils.preparser.splitter(
+                content,
+                vAPI.webextFlavor.env
+            );
             for ( let i = 0, n = slices.length - 1; i < n; i++ ) {
                 const slice = content.slice(slices[i+0], slices[i+1]);
                 if ( (i & 1) !== 0 ) {

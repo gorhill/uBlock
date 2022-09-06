@@ -37,7 +37,10 @@ vAPI.setTimeout = vAPI.setTimeout || self.setTimeout.bind(self);
 
 vAPI.webextFlavor = {
     major: 0,
-    soup: new Set()
+    soup: new Set(),
+    get env() {
+        return Array.from(this.soup);
+    }
 };
 
 (( ) => {

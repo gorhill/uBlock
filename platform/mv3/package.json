@@ -1,0 +1,6 @@
+{
+  "engines": {
+    "node": ">=17.5.0"
+  },
+  "type": "module"
+}

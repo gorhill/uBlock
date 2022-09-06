@@ -348,6 +348,15 @@ RedirectEngine.prototype.tokenToURL = function(
 
 /******************************************************************************/
 
+RedirectEngine.prototype.tokenToDNR = function(token) {
+    const entry = this.resources.get(this.aliases.get(token) || token);
+    if ( entry === undefined ) { return; }
+    if ( entry.warURL === undefined ) { return; }
+    return entry.warURL;
+};
+
+/******************************************************************************/
+
 RedirectEngine.prototype.hasToken = function(token) {
     if ( token === 'none' ) { return true; }
     const asDataURI = token.charCodeAt(0) === 0x25 /* '%' */;
@@ -554,6 +563,7 @@ RedirectEngine.prototype.getResourceDetails = function() {
             canInject: typeof entry.data === 'string',
             canRedirect: entry.warURL !== undefined,
             aliasOf: '',
+            extensionPath: entry.warURL,
         });
     }
     for ( const [ alias, name ] of this.aliases ) {

@@ -715,42 +715,57 @@ class BidiTrieContainer {
                         this.done = true;
                         return this;
                     }
-                    this.charPtr = this.forks.pop();
+                    this.pattern = this.forks.pop();
+                    this.dir = this.forks.pop();
                     this.icell = this.forks.pop();
                 }
+                const buf32 = this.container.buf32;
+                const buf8 = this.container.buf8;
                 for (;;) {
-                    const idown = this.container.buf32[this.icell+CELL_OR];
-                    if ( idown !== 0 ) {
-                        this.forks.push(idown, this.charPtr);
+                    const ialt = buf32[this.icell+CELL_OR];
+                    const v = buf32[this.icell+SEGMENT_INFO];
+                    const offset = v & 0x00FFFFFF;
+                    let i0 = buf32[CHAR0_SLOT] + offset;
+                    const len = v >>> 24;
+                    for ( let i = 0; i < len; i++ ) {
+                        this.charBuf[i] = buf8[i0+i];
                     }
-                    const v = this.container.buf32[this.icell+SEGMENT_INFO];
-                    let i0 = this.container.buf32[CHAR0_SLOT] + (v & 0x00FFFFFF);
-                    const i1 = i0 + (v >>> 24);
-                    while ( i0 < i1 ) {
-                        this.charBuf[this.charPtr] = this.container.buf8[i0];
-                        this.charPtr += 1;
-                        i0 += 1;
+                    if ( len !== 0 && ialt !== 0 ) {
+                        this.forks.push(ialt, this.dir, this.pattern);
                     }
-                    this.icell = this.container.buf32[this.icell+CELL_AND];
-                    if ( this.icell === 0 ) {
-                        return this.toPattern();
+                    const inext = buf32[this.icell+CELL_AND];
+                    if ( len !== 0 ) {
+                        const s = this.textDecoder.decode(
+                            new Uint8Array(this.charBuf.buffer, 0, len)
+                        );
+                        if ( this.dir > 0 ) {
+                            this.pattern += s;
+                        } else if ( this.dir < 0 ) {
+                            this.pattern = s + this.pattern;
+                        }
                     }
-                    if ( this.container.buf32[this.icell+SEGMENT_INFO] === 0 ) {
-                        this.icell = this.container.buf32[this.icell+CELL_AND];
-                        return this.toPattern();
+                    this.icell = inext;
+                    if ( len !== 0 ) { continue; }
+                    // boundary cell
+                    if ( ialt !== 0 ) {
+                        if ( inext === 0 ) {
+                            this.icell = ialt;
+                            this.dir = -1;
+                        } else {
+                            this.forks.push(ialt, -1, this.pattern);
+                        }
+                    }
+                    if ( offset !== 0 ) {
+                        this.value = { pattern: this.pattern, iextra: offset };
+                        return this;
                     }
                 }
-            },
-            toPattern() {
-                this.value = this.textDecoder.decode(
-                    new Uint8Array(this.charBuf.buffer, 0, this.charPtr)
-                );
-                return this;
             },
             container: this,
             icell: iroot,
             charBuf: new Uint8Array(256),
-            charPtr: 0,
+            pattern: '',
+            dir: 1,
             forks: [],
             textDecoder: new TextDecoder(),
             [Symbol.iterator]() { return this; },
