@@ -24,6 +24,7 @@
 /******************************************************************************/
 
 import fs from 'fs/promises';
+import https from 'https';
 import process from 'process';
 
 import rulesetConfigs from './ruleset-config.js';
@@ -110,9 +111,19 @@ async function main() {
     const rulesetDirPromise = fs.mkdir(`${rulesetDir}`, { recursive: true });
 
     const fetchList = url => {
-        return fetch(url)
-            .then(response => response.text())
-            .then(text => ({ name: url, text }));
+        return new Promise((resolve, reject) => {
+            https.get(url, response => {
+                const data = [];
+                response.on('data', chunk => {
+                    data.push(chunk.toString());
+                });
+                response.on('end', ( ) => {
+                    resolve({ name: url, text: data.join('') });
+                });
+            }).on('error', error => {
+                reject(error);
+            });
+        });
     };
 
     const readList = path =>
