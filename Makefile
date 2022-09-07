@@ -57,6 +57,9 @@ mv3: tools/make-mv3.sh $(sources) $(platform)
 
 mv3-quick: tools/make-mv3.sh $(sources) $(platform)
 	tools/make-mv3.sh quick
+	
+mv3-full: tools/make-mv3.sh $(sources) $(platform)
+	tools/make-mv3.sh all
 
 # Update submodules.
 update-submodules:

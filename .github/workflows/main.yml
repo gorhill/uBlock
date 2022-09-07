@@ -45,10 +45,9 @@ jobs:
           tools/make-firefox.sh ${{ steps.release_info.outputs.VERSION }}
           tools/make-thunderbird.sh ${{ steps.release_info.outputs.VERSION }}
           tools/make-npm.sh ${{ steps.release_info.outputs.VERSION }}
-          tools/make-mv3.sh all
       - name: Build MV3 packages
         run: |
-          tools/make-mv3.sh
+          tools/make-mv3.sh all
           echo ::set-output name=MV3PACKAGE::$(basename $(ls dist/build/uBlock0_*.mv3.zip))
       - name: Upload Chromium package
         uses: actions/upload-release-asset@v1

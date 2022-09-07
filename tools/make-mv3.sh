@@ -53,15 +53,17 @@ fi
 echo "*** uBlock0.mv3: extension ready"
 echo "Extension location: $DES/"
 
-echo "*** uBlock0.mv3: Creating webstore package..."
-PACKAGENAME=uBlock0_$(jq -r .version $DES/manifest.json).mv3.zip
-TMPDIR=$(mktemp -d)
-mkdir -p $TMPDIR
-cp -R $DES/* $TMPDIR/
-cd $TMPDIR > /dev/null
-rm log.txt
-zip $PACKAGENAME -qr ./*
-cp $PACKAGENAME $(dirname $DES/)/
-cd - > /dev/null
-rm -rf $TMPDIR
-echo "Package location: $(pwd)/$PACKAGENAME" 
+if [ "$1" = "all" ]; then
+    echo "*** uBlock0.mv3: Creating webstore package..."
+    PACKAGENAME=uBlock0_$(jq -r .version $DES/manifest.json).mv3.zip
+    TMPDIR=$(mktemp -d)
+    mkdir -p $TMPDIR
+    cp -R $DES/* $TMPDIR/
+    cd $TMPDIR > /dev/null
+    rm log.txt
+    zip $PACKAGENAME -qr ./*
+    cp $PACKAGENAME $(dirname $DES/)/
+    cd - > /dev/null
+    rm -rf $TMPDIR
+    echo "Package location: $(pwd)/$PACKAGENAME" 
+fi
