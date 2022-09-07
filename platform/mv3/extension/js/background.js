@@ -1,6 +1,6 @@
 'use strict';
 
-import regexRulesets from '/rulesets/regexes.js';
+import rulesetDetails from '/rulesets/ruleset-details.js';
 
 /******************************************************************************/
 
@@ -13,9 +13,9 @@ const dynamicRuleMap = new Map();
 async function updateRegexRules() {
     const allRules = [];
     const toCheck = [];
-    for ( const regexRuleset of regexRulesets ) {
-        if ( regexRuleset.enabled !== true ) { continue; }
-        for ( const rule of regexRuleset.rules ) {
+    for ( const details of rulesetDetails ) {
+        if ( details.enabled !== true ) { continue; }
+        for ( const rule of details.ruleDetails.regexes ) {
             const regex = rule.condition.regexFilter;
             const isCaseSensitive = rule.condition.isUrlFilterCaseSensitive === true;
             allRules.push(rule);

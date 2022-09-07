@@ -55,7 +55,7 @@ async function main() {
 
     const writeOps = [];
     const ruleResources = [];
-    const regexRuleResources = [];
+    const rulesetDetails = [];
     const outputDir = commandLineArgs.get('output') || '.';
 
     let goodTotalCount = 0;
@@ -202,10 +202,21 @@ async function main() {
             )
         );
 
-        regexRuleResources.push({
+        rulesetDetails.push({
             id: ruleset.id,
             enabled: ruleset.enabled,
-            rules: regexes
+            filterDetails: {
+                total: details.filterCount,
+                accepted: details.acceptedFilterCount,
+                rejected: details.rejectedFilterCount,
+            },
+            ruleDetails: {
+                total: rules.length,
+                accepted: good.length,
+                discarded: redirects.length + headers.length + removeparams.length,
+                rejected: bad.length,
+                regexes,
+            },
         });
 
         ruleResources.push({
@@ -220,8 +231,8 @@ async function main() {
 
     writeOps.push(
         writeFile(
-            `${rulesetDir}/regexes.js`,
-            `export default ${JSON.stringify(regexRuleResources, replacer, 2)};\n`
+            `${rulesetDir}/ruleset-details.js`,
+            `export default ${JSON.stringify(rulesetDetails, replacer, 2)};\n`
         )
     );
 
