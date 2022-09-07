@@ -1,7 +1,15 @@
 {
+  "action": {
+    "default_icon": {
+      "16": "img/icon_16.png",
+      "32": "img/icon_32.png",
+      "64": "img/icon_64.png"
+    },
+    "default_popup": "popup.html"
+  },
   "author": "Raymond Hill",
-   "background": {
-      "service_worker": "background.js",
+  "background": {
+      "service_worker": "/js/background.js",
       "type": "module"
    },
   "declarative_net_request": {
@@ -19,7 +27,8 @@
   "minimum_chrome_version": "101.0",
   "name": "uBO Minus (MV3)",
   "permissions": [
+    "activeTab",
     "declarativeNetRequest"
   ],
-  "version": "0.1.0"
+  "version": "0.1"
 }

@@ -160,7 +160,7 @@ const onMessage = function(request, sender, callback) {
             env: vAPI.webextFlavor.env,
         };
         const t0 = Date.now();
-        dnrRulesetFromRawLists(listPromises, options).then(ruleset => {
+        dnrRulesetFromRawLists(listPromises, options).then(details => {
             const replacer = (k, v) => {
                 if ( k.startsWith('__') ) { return; }
                 if ( Array.isArray(v) ) {
@@ -192,9 +192,14 @@ const onMessage = function(request, sender, callback) {
                 rule.action.type === 'redirect' &&
                 rule.action.redirect.transform !== undefined;
             const runtime = Date.now() - t0;
+            const { ruleset } = details;
             const out = [
                 `dnrRulesetFromRawLists(${JSON.stringify(listNames, null, 2)})`,
                 `Run time: ${runtime} ms`,
+                `Filters count: ${details.filterCount}`,
+                `Accepted filter count: ${details.acceptedFilterCount}`,
+                `Rejected filter count: ${details.rejectedFilterCount}`,
+                `Resulting DNR rule count: ${ruleset.length}`,
             ];
             const good = ruleset.filter(rule =>
                 isUnsupported(rule) === false &&

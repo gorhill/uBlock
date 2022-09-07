@@ -46,7 +46,6 @@ function addToDNR(context, list) {
     const compiler = staticNetFilteringEngine.createCompiler(parser);
 
     writer.properties.set('name', list.name);
-    parser.setMaxTokenLength(staticNetFilteringEngine.MAX_TOKEN_LENGTH);
     compiler.start(writer);
 
     while ( lineIter.eot() === false ) {
@@ -95,8 +94,7 @@ async function dnrRulesetFromRawLists(lists, options = {}) {
         toLoad.push(list.then(list => toDNR(context, list)));
     }
     await Promise.all(toLoad);
-    const ruleset = staticNetFilteringEngine.dnrFromCompiled('end', context);
-    return ruleset;
+    return staticNetFilteringEngine.dnrFromCompiled('end', context);
 }
 
 /******************************************************************************/
