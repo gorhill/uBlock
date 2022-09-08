@@ -49,7 +49,6 @@ jobs:
         run: |
           tools/make-mv3.sh full
           echo ::set-output name=MV3PACKAGE::$(basename $(ls dist/build/uBlock0_*.mv3.zip))
-          echo ${{ steps.release_info.outputs.MV3PACKAGE }}
       - name: Upload Chromium package
         uses: actions/upload-release-asset@v1
         env:
