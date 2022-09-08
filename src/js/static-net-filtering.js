@@ -3427,6 +3427,8 @@ class FilterCompiler {
         }
     }
 
+    // https://github.com/uBlockOrigin/uAssets/discussions/14683#discussioncomment-3559284
+    //   If the removeparam value is a regex, unescape escaped commas
     extractTokenFromQuerypruneValue() {
         const pattern = this.modifyValue;
         if ( pattern === '*' || pattern.charCodeAt(0) === 0x7E /* '~' */ ) {
@@ -3434,7 +3436,9 @@ class FilterCompiler {
         }
         const match = /^\/(.+)\/i?$/.exec(pattern);
         if ( match !== null ) {
-            return this.extractTokenFromRegex(match[1]);
+            return this.extractTokenFromRegex(
+                match[1].replace(/(\{\d*)\\,/, '$1,')
+            );
         }
         if ( pattern.startsWith('|') ) {
             return this.extractTokenFromRegex('\\b' + pattern.slice(1));
