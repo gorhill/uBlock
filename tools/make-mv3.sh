@@ -62,8 +62,8 @@ if [ "$1" = "full" ]; then
     cd $TMPDIR > /dev/null
     rm log.txt
     zip $PACKAGENAME -qr ./*
-    cp $PACKAGENAME $(dirname $DES/)/
+    cp $PACKAGENAME $DES/
     cd - > /dev/null
     rm -rf $TMPDIR
-    echo "Package location: $(pwd)/$PACKAGENAME" 
+    echo "Package location: $(pwd)/dist/build/$PACKAGENAME"
 fi
