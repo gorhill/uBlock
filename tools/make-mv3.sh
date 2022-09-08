@@ -53,7 +53,7 @@ fi
 echo "*** uBlock0.mv3: extension ready"
 echo "Extension location: $DES/"
 
-if [ "$1" = "all" ]; then
+if [ "$1" = "full" ]; then
     echo "*** uBlock0.mv3: Creating webstore package..."
     PACKAGENAME=uBlock0_$(jq -r .version $DES/manifest.json).mv3.zip
     TMPDIR=$(mktemp -d)
