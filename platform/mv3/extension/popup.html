@@ -11,7 +11,7 @@
 <title data-i18n="extName"></title>
 </head>
 
-<body class="loading">
+<body class="loading" data-section="">
 <div id="main">
     <div id="sticky">
         <div id="stickyTools">
@@ -40,12 +40,17 @@
         </div>
         <div id="hostname"><span></span>&shy;<span></span></div>
     </div>
-    <div id="basicTools" class="toolRibbon">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <a href="dashboard.html" class="fa-icon tool" target="uBODashboard" tabindex="0" data-i18n-title="popupTipDashboard">cogs<span class="caption" data-i18n="popupTipDashboard"></span></a>
+    <hr data-section="a">
+    <div id="rulesetStats" data-section="a">
+    </div>
+    <hr>
+    <div id="moreOrLess" class="">
+        <span id="moreButton">
+            <span>More</span>&emsp;<span class="fa-icon">angle-up</span>
+        </span>
+        <span id="lessButton">
+            <span class="fa-icon">angle-up</span>&emsp;<span>Less</span>
+        </span>
     </div>
 </div>
 

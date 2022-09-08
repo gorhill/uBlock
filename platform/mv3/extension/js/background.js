@@ -15,7 +15,7 @@ async function updateRegexRules() {
     const toCheck = [];
     for ( const details of rulesetDetails ) {
         if ( details.enabled !== true ) { continue; }
-        for ( const rule of details.ruleDetails.regexes ) {
+        for ( const rule of details.rules.regexes ) {
             const regex = rule.condition.regexFilter;
             const isCaseSensitive = rule.condition.isUrlFilterCaseSensitive === true;
             allRules.push(rule);
@@ -171,9 +171,18 @@ async function toggleTrustedSiteDirective(details) {
 
     chrome.runtime.onMessage.addListener((request, sender, callback) => {
         switch ( request.what ) {
-        case 'matchesTrustedSiteDirective':
+        case 'popupPanelData':
             matchesTrustedSiteDirective(request).then(response => {
-                callback(response);
+                callback({
+                    isTrusted: response,
+                    rulesetDetails: rulesetDetails.filter(details =>
+                        details.enabled
+                    ).map(details => ({
+                        name: details.name,
+                        filterCount: details.filters.accepted,
+                        ruleCount: details.rules.accepted,
+                    })),
+                });
             });
             return true;
         case 'toggleTrustedSiteDirective':

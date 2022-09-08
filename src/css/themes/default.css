@@ -128,6 +128,7 @@
 :root {
     --font-size: 14px;
     --font-size-smaller: 13px;
+    --font-size-larger: 15px;
     --font-family: Inter, sans-serif;
     --monospace-size: 12px;
 }

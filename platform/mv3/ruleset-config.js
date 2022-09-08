@@ -24,7 +24,7 @@
 export default [
     {
         id: 'default',
-        name: 'Default ruleset',
+        name: 'Default: Ads and trackers',
         enabled: true,
         paths: [
         ],

@@ -204,13 +204,14 @@ async function main() {
 
         rulesetDetails.push({
             id: ruleset.id,
+            name: ruleset.name,
             enabled: ruleset.enabled,
-            filterDetails: {
+            filters: {
                 total: details.filterCount,
                 accepted: details.acceptedFilterCount,
                 rejected: details.rejectedFilterCount,
             },
-            ruleDetails: {
+            rules: {
                 total: rules.length,
                 accepted: good.length,
                 discarded: redirects.length + headers.length + removeparams.length,
