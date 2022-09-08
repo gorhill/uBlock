@@ -91,6 +91,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/build/${{ env.MV3PACKAGE }}
-          asset_name: ${{ env.MV3PACKAGE }}
+          asset_path: dist/build/${{ steps.release_info.outputs.MV3PACKAGE }}
+          asset_name: ${{ steps.release_info.outputs.MV3PACKAGE }}
           asset_content_type: application/octet-stream
