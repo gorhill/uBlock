@@ -65,6 +65,5 @@ if [ "$1" = "full" ]; then
     cd - > /dev/null
     cp $TMPDIR/$PACKAGENAME dist/build/
     rm -rf $TMPDIR
-    ls -l dist/build
     echo "Package location: $(pwd)/dist/build/$PACKAGENAME"
 fi
