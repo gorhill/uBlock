@@ -30,6 +30,7 @@
     Ref: https://github.com/uBlockOrigin/uBlock-issues/issues/1005
 */
 :root {
+    --default-gap-xxlarge: 40px;
     --default-gap-xlarge: 32px;
     --default-gap-large: 24px;
     --default-gap: 16px;

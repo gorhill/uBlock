@@ -20,16 +20,21 @@
 
 body {
     display: flex;
-    flex-direction: column;
-    padding: 40px;
-    text-align: center;
+    padding: var(--default-gap-xxlarge) var(--default-gap-small);
+    justify-content: center;
     }
-body > div {
-    margin: 0 0 var(--default-gap-large) 0;
+:root.mobile body {
+    padding: var(--default-gap-small);
     }
-body > div > * {
-    margin: 0 0 var(--default-gap-xsmall) 0;
+
+#rootContainer {
+    max-width: min(100vw, 600
+    px);
     }
+#rootContainer > * {
+    margin: 0 0 var(--default-gap-xxlarge) 0;
+    }
+
 a {
     text-decoration: none;
     }
@@ -41,7 +46,6 @@ a {
     width: 100%;
     }
 #warningSign > a {
-    fill: rgb(var(--yellow-50));
     font-size: 96px;
     }
 #theURL {
@@ -106,25 +110,33 @@ body[dir="rtl"] #toggleParse {
 #parsed span:first-of-type {
     font-weight: bold;
     }
+
 #whyex a {
     white-space: nowrap;
 }
-#proceed {
-    margin-bottom: var(--default-gap);
+#whyex ul {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding-inline-start: var(--default-gap-xsmall);
     }
-:root.mobile .proceedButtons {
+
+#actionContainer {
+    display: flex;
+    justify-content: space-between;
+    }
+:root.mobile #actionContainer {
     justify-content: center;
     display: flex;
     flex-direction: column;
     }
-.proceedButtons > button {
-    margin-inline-end: var(--default-gap);
-    margin-block-end: var(--default-gap-xsmall);
+#actionContainer > button {
+    margin-bottom: 2rem
     }
 
-.filterList:first-child .filterListSeparator {
-    display: none;
-    }
+.filterList {
+    display: flex;
+}
 .filterList .filterListSupport[href=""] {
     display: none;
     }

@@ -3,56 +3,51 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=yes">
-<title></title>
+<title data-i18n="docblockedTitle"></title>
 <link rel="stylesheet" href="css/themes/default.css">
 <link rel="stylesheet" href="css/common.css">
 <link rel="stylesheet" href="css/fa-icons.css">
 <link rel="stylesheet" href="css/document-blocked.css">
 </head>
 <body>
-<div id="warningSign"><a class="fa-icon" href="https://github.com/gorhill/uBlock/wiki/Strict-blocking" target="_blank" rel="noopener noreferrer">exclamation-triangle</a></div>
-
-<div>
-    <p data-i18n="docblockedPrompt1"></p>
-    <div id="theURL" class="collapsed">
-        <p class="code"><span></span><span id="toggleParse" class="hidden"><span class="fa-icon">zoom-in</span><span class="fa-icon">zoom-out</span></span></p>
-        <ul id="parsed"></ul>
-    </div>
-</div>
-
-<div>
-    <p data-i18n="docblockedPrompt2"></p>
-    <p id="why" class="code"></p>
-    <p id="whyex" style="display: none;"><span data-i18n="docblockedFoundIn"></span> <span></span></p>
+<div id="rootContainer">
+    <div id="warningSign">
+        <a class="fa-icon" href="https://github.com/gorhill/uBlock/wiki/Strict-blocking" target="_blank" rel="noopener noreferrer">exclamation-triangle</a>
     </div>
 
-<div>
-    <button id="back" class="preferred" data-i18n="docblockedBack" type="button">_<span class="hover"></span></button>
-    <button id="bye" class="preferred" data-i18n="docblockedClose" type="button">_<span class="hover"></span></button>
-</div>
+    <div>
+        <p data-i18n="docblockedPrompt1"></p>
+        <div id="theURL" class="collapsed">
+            <p class="code"><span></span><span id="toggleParse" class="hidden"><span class="fa-icon">zoom-in</span><span class="fa-icon">zoom-out</span></span></p>
+            <ul id="parsed"></ul>
+        </div>
+    </div>
 
-<div>
-    <p id="proceed"></p>
-    <p class="proceedButtons">
-        <button id="proceedTemporary" data-i18n="docblockedDisableTemporary" type="button">_<span class="hover"></span></button>
-        <button id="proceedPermanent" data-i18n="docblockedDisablePermanent" type="button">_<span class="hover"></span></button>
-    </p>
-</div>
+    <div>
+        <p data-i18n="docblockedPrompt2"></p>
+        <p id="why" class="code"></p>
+        <div id="whyex" style="display: none;">
+            <span data-i18n="docblockedFoundIn"></span>
+            <ul></ul>
+        </div>
+    </div>
 
-<div id="templates" style="display: none;">
-    <span class="proceed">
-        <span></span>
-        <select>
-            <option class="hn" value="" selected>
-            <option class="dn" value="">
-        </select> 
-        <span></span>
-    </span>
-    <span class="filterList">
-        <span class="filterListSeparator">&#x2022;</span>
-        <a class="filterListSource" href="asset-viewer.html?url=" target="_blank"></a>&nbsp;<!--
-     --><a class="fa-icon filterListSupport hidden" href="#" target="_blank" rel="noopener noreferrer">home</a>
-    </span>
+    <div class="li">
+        <label><span class="input checkbox"><input type="checkbox" id="disableWarning"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span><span>Don't warn me again about this site</span></label>
+    </div>
+
+    <div id="actionContainer">
+        <button id="back" data-i18n="docblockedBack" type="button">_<span class="hover"></span></button>
+        <button id="bye" data-i18n="docblockedClose" type="button">_<span class="hover"></span></button>
+        <button id="proceed" class="preferred" data-i18n="docblockedDisable" type="button"><span class="hover"></span></button>
+    </div>
+
+    <div id="templates" style="display: none;">
+        <li class="filterList">
+            <a class="filterListSource" href="asset-viewer.html?url=" target="_blank"></a>&nbsp;<!--
+         --><a class="fa-icon filterListSupport hidden" href="#" target="_blank" rel="noopener noreferrer">home</a>
+        </span>
+    </div>
 </div>
 
 <script src="lib/hsluv/hsluv-0.1.0.min.js"></script>

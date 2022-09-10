@@ -58,7 +58,7 @@ let details = {};
 
     if ( Array.isArray(lists) === false || lists.length === 0 ) { return; }
 
-    const parent = uDom.nodeFromSelector('#whyex > span:nth-of-type(2)');
+    const parent = uDom.nodeFromSelector('#whyex > ul');
     for ( const list of lists ) {
         const listElem = document.querySelector('#templates .filterList')
                                  .cloneNode(true);
@@ -73,27 +73,6 @@ let details = {};
         parent.appendChild(listElem);
     }
     uDom.nodeFromId('whyex').style.removeProperty('display');
-})();
-
-/******************************************************************************/
-
-(( ) => {
-    const matches = /^(.*)\{\{hostname\}\}(.*)$/.exec(vAPI.i18n('docblockedProceed'));
-    if ( matches === null ) { return; }
-    const proceed = document.querySelector('#templates .proceed').cloneNode(true);
-    proceed.children[0].textContent = matches[1];
-    proceed.children[2].textContent = matches[2];
-    const hnOption = proceed.querySelector('.hn');
-    if ( details.hn !== details.dn ) {
-        hnOption.textContent = details.hn;
-        hnOption.setAttribute('value', details.hn);
-    } else {
-        hnOption.remove();
-    }
-    const dnOption = proceed.querySelector('.dn');
-    dnOption.textContent = details.dn;
-    dnOption.setAttribute('value', details.dn);
-    document.getElementById('proceed').append(proceed);
 })();
 
 /******************************************************************************/
@@ -217,9 +196,7 @@ if ( window.history.length > 1 ) {
 /******************************************************************************/
 
 const getTargetHostname = function() {
-    const elem = document.querySelector('#proceed select');
-    if ( elem === null ) { return details.hn; }
-    return elem.value;
+    return details.hn;
 };
 
 const proceedToURL = function() {
@@ -246,8 +223,14 @@ const proceedPermanent = async function() {
     proceedToURL();
 };
 
-uDom('#proceedTemporary').attr('href', details.url).on('click', proceedTemporary);
-uDom('#proceedPermanent').attr('href', details.url).on('click', proceedPermanent);
+uDom('#proceed').on('click', ( ) => {
+    const input = document.querySelector('#disableWarning');
+    if ( input.checked ) {
+        proceedPermanent();
+    } else {
+        proceedTemporary();
+    }
+});
 
 /******************************************************************************/
 
