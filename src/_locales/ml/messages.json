@@ -1115,6 +1115,10 @@
     "message": "ഓഫ്",
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
+  "docblockedTitle": {
+    "message": "Page blocked",
+    "description": "Used as a title for the document-blocked page"
+  },
   "docblockedPrompt1": {
     "message": "താഴെ പറയുന്ന പേജ് ലോഡ് ചെയ്യുന്നത് യുബ്ലോക്ക് ഒറിജിന്‍ തടഞ്ഞിരിക്കുന്നു:",
     "description": "Used in the strict-blocking page"
@@ -1150,6 +1154,10 @@
   "docblockedDisablePermanent": {
     "message": "സ്ഥിരമായി",
     "description": "English: Permanently"
+  },
+  "docblockedDisable": {
+    "message": "Proceed",
+    "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {
     "message": "ക്ലൌഡ് സ്റ്റോറേജിലേക്ക് എക്സ്പോര്‍ട്ട്‌ ചെയ്യുക",

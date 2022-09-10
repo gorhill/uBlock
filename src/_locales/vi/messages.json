@@ -1115,6 +1115,10 @@
     "message": "tắt",
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
+  "docblockedTitle": {
+    "message": "Page blocked",
+    "description": "Used as a title for the document-blocked page"
+  },
   "docblockedPrompt1": {
     "message": "uBloc Origin đã chặn tải trang sau:",
     "description": "Used in the strict-blocking page"
@@ -1150,6 +1154,10 @@
   "docblockedDisablePermanent": {
     "message": "Vĩnh viễn",
     "description": "English: Permanently"
+  },
+  "docblockedDisable": {
+    "message": "Proceed",
+    "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {
     "message": "Xuất ra lưu trữ trực tuyến",

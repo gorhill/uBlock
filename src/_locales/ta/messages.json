@@ -1115,6 +1115,10 @@
     "message": "முடக்கத்தில்",
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
+  "docblockedTitle": {
+    "message": "Page blocked",
+    "description": "Used as a title for the document-blocked page"
+  },
   "docblockedPrompt1": {
     "message": "uBlock Origin பின்வரும் பக்கத்தை ஏற்றுவதில் இருந்து தடுத்தது:",
     "description": "Used in the strict-blocking page"
@@ -1150,6 +1154,10 @@
   "docblockedDisablePermanent": {
     "message": "நிரந்தரமாக",
     "description": "English: Permanently"
+  },
+  "docblockedDisable": {
+    "message": "Proceed",
+    "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {
     "message": "மேகக்கணினி சேமிப்பகத்திற்கு ஏற்று",

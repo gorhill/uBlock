@@ -1115,6 +1115,10 @@
     "message": "isključen",
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
+  "docblockedTitle": {
+    "message": "Page blocked",
+    "description": "Used as a title for the document-blocked page"
+  },
   "docblockedPrompt1": {
     "message": "uBlock Origin je onemogućio učitavanje sljedeće stranice:",
     "description": "Used in the strict-blocking page"
@@ -1150,6 +1154,10 @@
   "docblockedDisablePermanent": {
     "message": "Trajno",
     "description": "English: Permanently"
+  },
+  "docblockedDisable": {
+    "message": "Proceed",
+    "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {
     "message": "Izvezi u pohranu u oblaku",

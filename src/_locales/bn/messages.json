@@ -1115,6 +1115,10 @@
     "message": "বন্ধ",
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
+  "docblockedTitle": {
+    "message": "Page blocked",
+    "description": "Used as a title for the document-blocked page"
+  },
   "docblockedPrompt1": {
     "message": "uব্লক অরিজিন নিচের পৃষ্ঠা লোড করাকে প্রতিহত করেছে:",
     "description": "Used in the strict-blocking page"
@@ -1150,6 +1154,10 @@
   "docblockedDisablePermanent": {
     "message": "স্থায়ীভাবে",
     "description": "English: Permanently"
+  },
+  "docblockedDisable": {
+    "message": "Proceed",
+    "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {
     "message": "ক্লাউড সঞ্চয়ে রপ্তানি করুন",
