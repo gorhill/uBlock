@@ -396,7 +396,7 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsUncloakCnamePrompt": {
-    "message": "Anerkannten Namen enthüllen",
+    "message": "Kanonische Namen auflösen",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsAdvanced": {
@@ -424,7 +424,7 @@
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
-    "message": "{{used}} benutzt aus {{total}}",
+    "message": "{{used}} von {{total}} verwendet",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
@@ -748,7 +748,7 @@
     "description": "Label to identify a context field (typically a hostname)"
   },
   "loggerEntryDetailsRootContext": {
-    "message": "Basiskontext",
+    "message": "Wurzelkontext",
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
@@ -780,7 +780,7 @@
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "{{action}} Netzwerkanfragen {{type}},{{br}}deren URL-Adresse mit {{url}} übereinstimmt{{br}}und von {{origin}} stammen,{{br}}{{importance}} ein übereinstimmender Ausnahme-Filter existiert.",
+    "message": "{{action}} Netzwerkanfragen {{type}},{{br}}deren URL-Adresse mit {{url}} übereinstimmt{{br}}und von {{origin}} stammen,{{br}}{{importance}} ein übereinstimmender Ausnahmefilter existiert.",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
@@ -872,7 +872,7 @@
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportEncodePlain": {
-    "message": "Nur Text",
+    "message": "Einfach",
     "description": "Label for radio-button to pick export text format"
   },
   "loggerExportEncodeMarkdown": {
@@ -964,7 +964,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Zeigt Werbung oder Werbeüberreste",
+    "message": "Zeigt Werbung oder Anzeigenreste",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
