@@ -1077,6 +1077,7 @@ const reloadTab = function(ev) {
     messaging.send('popupPanel', {
         what: 'reloadTab',
         tabId: popupData.tabId,
+        url: popupData.pageURL,
         select: vAPI.webextFlavor.soup.has('mobile'),
         bypassCache: ev.ctrlKey || ev.metaKey || ev.shiftKey,
     });

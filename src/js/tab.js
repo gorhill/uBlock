@@ -339,14 +339,9 @@ const onPopupUpdated = (( ) => {
             return;
         }
 
-        // If the page URL is that of our "blocked page" URL, extract the URL
+        // If the page URL is that of our document-blocked URL, extract the URL
         // of the page which was blocked.
-        if ( targetURL.startsWith(vAPI.getURL('document-blocked.html')) ) {
-            const matches = /details=([^&]+)/.exec(targetURL);
-            if ( matches !== null ) {
-                targetURL = JSON.parse(decodeURIComponent(matches[1])).url;
-            }
-        }
+        targetURL = µb.pageURLFromMaybeDocumentBlockedURL(targetURL);
 
         // MUST be reset before code below is called.
         const fctxt = µb.filteringContext.duplicate();
@@ -683,6 +678,9 @@ housekeep itself.
 
     // Update just force all properties to be updated to match the most recent
     // root URL.
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1954
+    //   In case of document-blocked page, use the blocked page URL as the
+    //   context.
     TabContext.prototype.update = function() {
         this.netFilteringReadTime = 0;
         if ( this.stack.length === 0 ) {
@@ -694,7 +692,7 @@ housekeep itself.
             return;
         }
         const stackEntry = this.stack[this.stack.length - 1];
-        this.rawURL = stackEntry.url;
+        this.rawURL = µb.pageURLFromMaybeDocumentBlockedURL(stackEntry.url);
         this.normalURL = µb.normalizeTabURL(this.tabId, this.rawURL);
         this.origin = originFromURI(this.normalURL);
         this.rootHostname = hostnameFromURI(this.origin);

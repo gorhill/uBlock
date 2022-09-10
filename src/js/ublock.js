@@ -656,3 +656,16 @@ const matchBucket = function(url, hostname, bucket, start) {
 }
 
 /******************************************************************************/
+
+µb.pageURLFromMaybeDocumentBlockedURL = function(pageURL) {
+    if ( pageURL.startsWith(vAPI.getURL('/document-blocked.html?')) ) {
+        try {
+            const url = new URL(pageURL);
+            return JSON.parse(url.searchParams.get('details')).url;
+        } catch(ex) {
+        }
+    }
+    return pageURL;
+};
+
+/******************************************************************************/

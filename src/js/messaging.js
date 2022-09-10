@@ -299,15 +299,24 @@ const onMessage = function(request, sender, callback) {
         µb.openNewTab(request.details);
         break;
 
-    case 'reloadTab':
-        if ( vAPI.isBehindTheSceneTabId(request.tabId) === false ) {
-            vAPI.tabs.reload(request.tabId, request.bypassCache === true);
-            if ( request.select && vAPI.tabs.select ) {
-                vAPI.tabs.select(request.tabId);
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1954
+    //   In case of document-blocked page, navigate to blocked URL instead
+    //   of forcing a reload.
+    case 'reloadTab': {
+        if ( vAPI.isBehindTheSceneTabId(request.tabId) ) { break; }
+        const { tabId, bypassCache, url, select } = request;
+        vAPI.tabs.get(tabId).then(tab => {
+            if ( url && tab && url !== tab.url ) {
+                vAPI.tabs.replace(tabId, url);
+            } else {
+                vAPI.tabs.reload(tabId, bypassCache === true);
             }
+        });
+        if ( select && vAPI.tabs.select ) {
+            vAPI.tabs.select(tabId);
         }
         break;
-
+    }
     case 'setWhitelist':
         µb.netWhitelist = µb.whitelistFromString(request.whitelist);
         µb.saveWhitelist();
