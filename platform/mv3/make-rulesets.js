@@ -58,9 +58,6 @@ async function main() {
     const rulesetDetails = [];
     const outputDir = commandLineArgs.get('output') || '.';
 
-    let goodTotalCount = 0;
-    let maybeGoodTotalCount = 0;
-
     const output = [];
     const log = (text, silent = false) => {
         output.push(text);
@@ -68,6 +65,29 @@ async function main() {
             console.log(text);
         }
     };
+
+    // Get manifest content
+    const manifest = await fs.readFile(
+        `${outputDir}/manifest.json`,
+        { encoding: 'utf8' }
+    ).then(text =>
+        JSON.parse(text)
+    );
+
+    // Create unique version number according to build time
+    let version = manifest.version;
+    {
+        const now = new Date();
+        const yearPart = now.getUTCFullYear() - 2000;
+        const monthPart = (now.getUTCMonth() + 1) * 1000;
+        const dayPart = now.getUTCDate() * 10;
+        const hourPart = Math.floor(now.getUTCHours() / 3) + 1;
+        version += `.${yearPart}.${monthPart + dayPart + hourPart}`;
+    }
+    log(`Version: ${version}`);
+
+    let goodTotalCount = 0;
+    let maybeGoodTotalCount = 0;
 
     const replacer = (k, v) => {
         if ( k.startsWith('__') ) { return; }
@@ -243,12 +263,6 @@ async function main() {
     log(`Total regex rules count: ${maybeGoodTotalCount}`);
 
     // Patch manifest
-    const manifest = await fs.readFile(
-        `${outputDir}/manifest.json`,
-        { encoding: 'utf8' }
-    ).then(text =>
-        JSON.parse(text)
-    );
     manifest.declarative_net_request = { rule_resources: ruleResources };
     const now = new Date();
     const yearPart = now.getUTCFullYear() - 2000;
