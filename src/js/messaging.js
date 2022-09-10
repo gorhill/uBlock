@@ -890,7 +890,12 @@ const onMessage = function(request, sender, callback) {
                 mouse: µb.epickerArgs.mouse,
                 zap: µb.epickerArgs.zap,
                 eprom: µb.epickerArgs.eprom,
-                pickerURL: vAPI.getURL(`/web_accessible_resources/epicker-ui.html?secret=${vAPI.warSecret()}`),
+                pickerURL: vAPI.getURL(
+                    `/web_accessible_resources/epicker-ui.html?secret=${vAPI.warSecret()}`
+                ),
+                needColorScheme:
+                    vAPI.webextFlavor.soup.has('firefox') === false ||
+                    vAPI.webextFlavor.major < 106,
             });
             µb.epickerArgs.target = '';
         });

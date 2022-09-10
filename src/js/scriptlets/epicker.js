@@ -1281,10 +1281,14 @@ const pickerCSSStyle = [
     'visibility: visible',
     'width: 100%',
     'z-index: 2147483647',
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/1408
-    'color-scheme: light',
-    ''
 ];
+
+// https://github.com/uBlockOrigin/uBlock-issues/issues/1408
+// https://github.com/uBlockOrigin/uBlock-issues/issues/2240
+if ( pickerBootArgs.needColorScheme ) {
+    pickerCSSStyle.push('color-scheme: light');
+}
+pickerCSSStyle.push(''); // Important
 
 const pickerCSS = `
 :root > [${vAPI.sessionId}] {
