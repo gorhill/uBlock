@@ -13,20 +13,20 @@ Listset for 'default':
 	https://easylist.to/easylist/easylist.txt
 	https://easylist.to/easylist/easyprivacy.txt
 	https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
-Input filter count: 78989
-	Accepted filter count: 76596
+Input filter count: 78991
+	Accepted filter count: 76598
 	Rejected filter count: 152
 Output rule count: 21360
-	Good: 20519
+	Good: 20521
 	Maybe good (regexes): 126
 	redirect-rule= (discarded): 462
 	csp= (discarded): 84
 	removeparams= (discarded): 22
-	Unsupported: 147
-		Entity not supported: ads.shopee.*
+	Unsupported: 145
 		Entity not supported: samehadaku.*
 		Entity not supported: booru.*
 		Entity not supported: silkengirl.*
+		Entity not supported: ads.shopee.*
 		Entity not supported: komikcast.*
 		Entity not supported: silkengirl.*
 		Entity not supported: silkengirl.*
@@ -54,26 +54,34 @@ Output rule count: 21360
 		Entity not supported: camwhores.*
 		regexFilter is not RE2-compatible: ^https:\/\/ltn\.hitomi\.la\/[A-Za-z]{4,}\/(?=[a-z]{0,19}[A-Z])[A-Za-z]{4,20}\.js$
 		regexFilter is not RE2-compatible: ^http:\/\/img[a-z]+\.(?:buzz|xyz)\/(?!shrinker).*
-		Entity not supported: upvid.*
-		Entity not supported: uptomega.*
-		Entity not supported: clicknupload.*
-		Entity not supported: uplinkto.*
 		Entity not supported: link1s.*
+		Entity not supported: moviesda1.*
 		Entity not supported: dloader.*
 		Entity not supported: isaidubhd.*
 		Entity not supported: isaidub.*
+		Entity not supported: upvid.*
+		Entity not supported: uptomega.*
+		Entity not supported: clicknupload.*
 		Entity not supported: 10starhd.*
 		Entity not supported: databasegdriveplayer.*
 		Entity not supported: earnload.*
 		Entity not supported: atishmkv.*
 		Entity not supported: hdhub4u.*
+		Entity not supported: uploadhub.*
+		Entity not supported: bollyflix.*
+		Entity not supported: javfree.*
+		Entity not supported: shortzzy.*
+		Entity not supported: xtits.*
+		Entity not supported: shorttey.*
+		Entity not supported: hdmovieplus.*
+		Entity not supported: elitetorrent.*
+		Entity not supported: adcorto.*
 		Entity not supported: toonanime.*
 		Entity not supported: quickclaims.*
 		Entity not supported: vipboxtv.*
 		Entity not supported: buffstreams.*
 		Entity not supported: hog.*
 		Entity not supported: samehadaku.*
-		Entity not supported: sxyprn.*
 		Entity not supported: palimas.*
 		Entity not supported: gogoanime.*
 		Entity not supported: mazpic.*
@@ -88,23 +96,19 @@ Output rule count: 21360
 		Entity not supported: animeflv.*
 		Entity not supported: kiss-anime.*
 		Entity not supported: strikeout.*
-		Entity not supported: japscan.*
 		Entity not supported: downloadhub.*
 		Entity not supported: 9xbuddy.*
 		Entity not supported: anitube.*
 		Entity not supported: solarmovie.*
 		Entity not supported: dramacool9.*
 		Entity not supported: hdfriday.*
-		Entity not supported: extramovies.*
 		Entity not supported: pingit.*
 		Entity not supported: lookmovie.*
 		Entity not supported: okstream.*
-		Entity not supported: seulink.*
 		Entity not supported: megavideo.*
 		Entity not supported: leechall.*
 		Entity not supported: torrentgalaxy.*
 		Entity not supported: allcalidad.*
-		Entity not supported: movieshub.*
 		Entity not supported: dailysport.*
 		Entity not supported: mkvcinemas.*
 		Entity not supported: pelispedia.*
@@ -112,42 +116,36 @@ Output rule count: 21360
 		Entity not supported: animesvision.*
 		regexFilter is not RE2-compatible: ^https?:\/\/(?:[a-z]{2}\.)?[0-9a-z]{7,16}\.com\/[a-z](?=[a-z]{0,25}[0-9A-Z])[0-9a-zA-Z]{3,26}\/(?:[1-5]\d{4}|[3-9]\d{3})\??(?:_=\d+|v=\d)?$
 		regexFilter is not RE2-compatible: ^https?:\/\/(?:[a-z]{2}\.)?[0-9a-z]{7,16}\.website\/[a-z](?=[a-z]{0,25}[0-9A-Z])[0-9a-zA-Z]{3,26}\/(?:[1-5]\d{4}|[3-9]\d{3})\??(?:_=\d+|v=\d)?$
-		Entity not supported: uploadhub.*
-		Entity not supported: javfree.*
-		Entity not supported: shortzzy.*
-		Entity not supported: xtits.*
-		Entity not supported: shorttey.*
-		Entity not supported: hdmovieplus.*
-		Entity not supported: elitetorrent.*
-		Entity not supported: adcorto.*
 		Entity not supported: animesa.*
 		Entity not supported: txxx.*
-		Entity not supported: bloomberg.*
+		Entity not supported: dropgalaxy.*
+		Entity not supported: dropgalaxy.*
 		Entity not supported: hqq.*
+		Entity not supported: bloomberg.*
 		Entity not supported: dropgalaxy.*
 		Entity not supported: dropgalaxy.*
 		Entity not supported: dropgalaxy.*
 		Entity not supported: dropgalaxy.*
+		Entity not supported: viafree.*
+		Entity not supported: hotfrog.*
+		Entity not supported: gentside.*
+		Entity not supported: pasty.*
+		Entity not supported: wstream.*
 		Entity not supported: bloomberg.*
 		Entity not supported: bloomberg.*
 		Entity not supported: tube8.*
 		Entity not supported: tvnow.*
 		Entity not supported: audible.*
-		Entity not supported: hotfrog.*
-		Entity not supported: pasty.*
-		Entity not supported: wstream.*
-		Entity not supported: dropgalaxy.*
-		Entity not supported: dropgalaxy.*
-		Entity not supported: bloomberg.*
-		Entity not supported: soap2day.*
 		Entity not supported: streamingcommunity.*
 		Entity not supported: filepress.*
-		Entity not supported: viafree.*
 		Entity not supported: dropgalaxy.*
 		Entity not supported: dropgalaxy.*
 		Entity not supported: discoveryplus.*
-		Entity not supported: pussyspace.*
+		Entity not supported: viafree.*
+		Entity not supported: bloomberg.*
+		Entity not supported: soap2day.*
 		Entity not supported: 2embed.*
+		Entity not supported: pussyspace.*
 		Invalid network filter in https://easylist.to/easylist/easylist.txt: $webrtc,domain=ack.net|allthetests.com|azvideo.net|champion.gg|clicknupload.link|colourlovers.com|csgolounge.com|dispatch.com|fastplay.to|go4up.com|gounlimited.to|janjua.pw|janjua.tv|jpost.com|megaup.net|merriam-webster.com|netdna-storage.com|ouo.io|ouo.press|rlslog.net|sourceforge.net|spanishdict.com|telegram.com|torlock.icu|torlock2.com|uptobox.com|videowood.tv|vidtodo.com|yts.gs|yts.mx
 		Entity not supported: slreamplay.*
 		Entity not supported: guardaserie.*
@@ -156,15 +154,15 @@ Output rule count: 21360
 		Entity not supported: streamzz.*
 		Entity not supported: soccerstreams-100.*
 		Entity not supported: streamingcommunity.*
+		Unsupported regex-based removeParam: /^ad/
+		Unsupported regex-based removeParam: /^ad/
 		Entity not supported: carousell.*
 		Entity not supported: 1movies.*
 		Entity not supported: 1movies.*
-		Unsupported regex-based removeParam: /^ad/
-		Unsupported regex-based removeParam: /^ad/
 		Unsupported regex-based removeParam: /^(?:correlator|f[cr-w]|p[e-sv]|u_|ga_|url|dt|adk)/
-		Unhandled modifier exception
-		Unhandled modifier exception
 		Unsupported regex-based removeParam: /^(?:correlator|f[cr-w]|p[e-sv]|[abdeg-or-x])/
+		Unhandled modifier exception
+		Unhandled modifier exception
 		Unhandled modifier exception
 		Entity not supported: pobre.*
 		Unhandled modifier exception
@@ -206,5 +204,5 @@ Output rule count: 5863
 	removeparams= (discarded): 0
 	Unsupported: 1
 		regexFilter is not RE2-compatible: ^(?!.*(24liveblog.com|24liveplus.com|acint.net|addthis.com|addthisedge.com|akamai.net|akamaiedge.net|alloha.tv|ampproject.org|anycomment.io|apester.com|api-ssl.bitly.com|api.corr.life|api.here.com|api.sypexgeo.net|app.hoversignal.com|appsmail.ru|bam.nr-data.net|blogger.com|bootstrapcdn.com|cackle.me|cdn.ampproject.org|cdn.iframe.ly|cdn.rawgit.com|cdnstats.ru|cdnvideo.ru|chartbeat.com|chatango.com|chatbro.com|chimpstatic.com|cloudflare.com|cloudflare.net|cloudfront.net|code.createjs.com|columbus.te.ua|cultserv.ru|disqus.com|disquscdn.com|dmca.com|each.im|ebacdn.com|edgecastcdn.net|ellinagraypel.com|embed.ex.co|embed.widgetpack.com|embedstorage.net|eurosolidarity.org|facebook.com|facebook.net|fastly.net|fastlylb.net|fbcdn.net|fbvkcdn.com|feonet.net|fluidplayer.com|fontawesome.com|fonts.w.tools|freecurrencyrates.com|fwcdn1.com|fwdcdn.com|gcdn.co|getsitecontrol.com|gismeteo.ru|gismeteo.ua|github.io|gitlab.io|google-analytics.com|google.com|googleadservices.com|googleapis.com|googleoptimize.com|googletagmanager.com|googletagservices.com|gravatar.com|gravitec.media|gravitec.net|gstatic.com|hcaptcha.com|hupso.com|hwcdn.net|hypercomments.com|ibytedtos.com|imgsmail.ru|imgur.com|informers.ukr.net|instagram.com|intensedebate.com|intercom.io|intercomcdn.com|intravideo.net|issuu.com|ivideon.com|jivosite.com|jquery.com|js-agent.newrelic.com|jsdelivr.net|jsonip.com|jwpcdn.com|jwplatform.com|keycaptcha.com|kin-x.com|kinogram.best|kinohod.ru|kinoplayer.co|kinotreiler.com|kitbit.net|kodik-add.com|kodikapi.com|libria.fun|licdn.com|likebtn.com|linkedin.com|lp4.io|luxnet.ua|mail.ru|mailchimp.com|mapbox.com|media-imdb.com|media.reformal.ru|mediator.media|meteobar.com|meteonova.ru|mirtesen.ru|netdna-cdn.com|ngenix.net|nuipogoda.ru|odnaknopka.ru|odnoklassniki.ru|ok.ru|oneall.com|onesignal.com|onthe.io|phnx.click|piktochart.com|pinterest.com|pixars.org|platformcraft.ru|playbuzz.com|player|player.panda.video|pljs.ru|plrjs.com|plyr.io|polldaddy.com|polyfill.io|pv.pjtsu.com|quiz.ink|raincaptcha.com|readymag.com|recaptcha.net|relap.io|renteres.ru|rumer.club|s5o.ru|securedtouch.com|selcdn.net|sendpulse.com|pluso.ru|shareaholic.com|shareaholic.net|sharethis.com|shrink.pe|sinoptik.ua|source.mmi.bemobile.ua|sporcle.com|sportradar.com|sportrecs.com|sports.ru|stackpathcdn.com|static.addtoany.com|statically.io|streamvid.club|telegram.im|telegram.org|tenews.org.ua|tenews.te.ua|tiktok.com|tilda.ws|tildacdn.com|tns-counter.ru|tolstoycomments.com|traq.li|trbcdn.net|trbna.com|ttrace.ru|tumblr.com|tvget.ru|tvsok.ru|twimg.com|twitter.com|typekit.net|uanews.org.ua|ui.ill.in.ua|unpkg.com|uptolike.com|userapi.com|usocial.pro|uweb.ru|vicomi.com|vidazoo.com|videocdn.tv|videoplayers.club|viglink.com|viqeo.tv|vk.com|vkontakte.ru|vuukle.com|widget.speechki.org|widget.vp.ru|widgets.getpocket.com|world-weather.ru|wp.com|yabber.cloud|yandex.ru|yandex.st|yastatic.net|yohoho.cc|yohoho.online|yoomoney.ru|youtube-nocookie.com|youtube.com|ytimg.com|zencdn.net)).*$
-Total good rules count: 27981
+Total good rules count: 27983
 Total regex rules count: 150
