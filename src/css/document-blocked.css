@@ -28,8 +28,7 @@ body {
     }
 
 #rootContainer {
-    max-width: min(100vw, 600
-    px);
+    width: min(100vw, 640px);
     }
 #rootContainer > * {
     margin: 0 0 var(--default-gap-xxlarge) 0;
