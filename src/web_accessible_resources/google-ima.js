@@ -1,3 +1,20 @@
+/**
+ * 
+ * Source below is based on Mozilla source code:
+ * https://searchfox.org/mozilla-central/rev/d317e93d9a59c9e4c06ada85fbff9f6a1ceaaad1/browser/extensions/webcompat/shims/google-ima.js
+ * 
+ * Modifications to the original code below this comment:
+ * - Avoid JS syntax not supported by older browser versions
+ * - Add missing shim event
+ * - Modified to avoid jshint warnings as per uBO's config
+ * 
+ * Related issue:
+ * - https://github.com/uBlockOrigin/uBlock-issues/issues/2158
+ * 
+**/
+ 
+'use strict';
+
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
@@ -11,7 +28,7 @@
  * site breakage, such as black bxoes where videos ought to be placed.
  */
 
-if (!window.google?.ima?.VERSION) {
+if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
   const VERSION = "3.517.2";
 
   const CheckCanAutoplay = (function() {
@@ -195,7 +212,7 @@ if (!window.google?.ima?.VERSION) {
       { type: "video/mp4" }
     );
 
-    let testVideo = undefined;
+    let testVideo;
 
     return function() {
       if (!testVideo) {
@@ -219,68 +236,70 @@ if (!window.google?.ima?.VERSION) {
   }
 
   class ImaSdkSettings {
-    #c = true;
-    #f = {};
-    #i = false;
-    #l = "";
-    #p = "";
-    #r = 0;
-    #t = "";
-    #v = "";
+    constructor() {
+      this.c = true;
+      this.f = {};
+      this.i = false;
+      this.l = "";
+      this.p = "";
+      this.r = 0;
+      this.t = "";
+      this.v = "";
+    }
     getCompanionBackfill() {}
     getDisableCustomPlaybackForIOS10Plus() {
-      return this.#i;
+      return this.i;
     }
     getFeatureFlags() {
-      return this.#f;
+      return this.f;
     }
     getLocale() {
-      return this.#l;
+      return this.l;
     }
     getNumRedirects() {
-      return this.#r;
+      return this.r;
     }
     getPlayerType() {
-      return this.#t;
+      return this.t;
     }
     getPlayerVersion() {
-      return this.#v;
+      return this.v;
     }
     getPpid() {
-      return this.#p;
+      return this.p;
     }
     isCookiesEnabled() {
-      return this.#c;
+      return this.c;
     }
     setAutoPlayAdBreaks() {}
     setCompanionBackfill() {}
     setCookiesEnabled(c) {
-      this.#c = !!c;
+      this.c = !!c;
     }
     setDisableCustomPlaybackForIOS10Plus(i) {
-      this.#i = !!i;
+      this.i = !!i;
     }
     setFeatureFlags(f) {
-      this.#f = f;
+      this.f = f;
     }
     setLocale(l) {
-      this.#l = l;
+      this.l = l;
     }
     setNumRedirects(r) {
-      this.#r = r;
+      this.r = r;
     }
     setPlayerType(t) {
-      this.#t = t;
+      this.t = t;
     }
     setPlayerVersion(v) {
-      this.#v = v;
+      this.v = v;
     }
     setPpid(p) {
-      this.#p = p;
+      this.p = p;
     }
-    setSessionId(s) {}
-    setVpaidAllowed(a) {}
-    setVpaidMode(m) {}
+    setSessionId(/*s*/) {}
+    setVpaidAllowed(/*a*/) {}
+    setVpaidMode(/*m*/) {}
   }
   ImaSdkSettings.CompanionBackfillMode = {
     ALWAYS: "always",
@@ -293,10 +312,12 @@ if (!window.google?.ima?.VERSION) {
   };
 
   class EventHandler {
-    #listeners = new Map();
+    constructor() {
+      this.listeners = new Map();
+    }
 
     _dispatch(e) {
-      const listeners = this.#listeners.get(e.type) || [];
+      const listeners = this.listeners.get(e.type) || [];
       for (const listener of Array.from(listeners)) {
         try {
           listener(e);
@@ -307,28 +328,33 @@ if (!window.google?.ima?.VERSION) {
     }
 
     addEventListener(t, c) {
-      if (!this.#listeners.has(t)) {
-        this.#listeners.set(t, new Set());
+      if (!this.listeners.has(t)) {
+        this.listeners.set(t, new Set());
       }
-      this.#listeners.get(t).add(c);
+      this.listeners.get(t).add(c);
     }
 
     removeEventListener(t, c) {
-      this.#listeners.get(t)?.delete(c);
+      const typeSet = this.listeners.get(t);
+      if (!typeSet) { return; }
+      typeSet.delete(c);
     }
   }
 
   class AdsLoader extends EventHandler {
-    #settings = new ImaSdkSettings();
+    constructor() {
+      super();
+      this.settings = new ImaSdkSettings();
+    }
     contentComplete() {}
     destroy() {}
     getSettings() {
-      return this.#settings;
+      return this.settings;
     }
     getVersion() {
       return VERSION;
     }
-    requestAds(r, c) {
+    requestAds(/*r, c*/) {
       // If autoplay is disabled and the page is trying to autoplay a tracking
       // ad, then IMA fails with an error, and the page is expected to request
       // ads again later when the user clicks to play.
@@ -351,7 +377,10 @@ if (!window.google?.ima?.VERSION) {
   }
 
   class AdsManager extends EventHandler {
-    #volume = 1;
+    constructor() {
+      super();
+      this.volume = 1;
+    }
     collapse() {}
     configureAdsManager() {}
     destroy() {}
@@ -374,9 +403,9 @@ if (!window.google?.ima?.VERSION) {
       return 0;
     }
     getVolume() {
-      return this.#volume;
+      return this.volume;
     }
-    init(w, h, m, e) {}
+    init(/*w, h, m, e*/) {}
     isCustomClickTrackingUsed() {
       return false;
     }
@@ -385,10 +414,10 @@ if (!window.google?.ima?.VERSION) {
     }
     pause() {}
     requestNextAdBreak() {}
-    resize(w, h, m) {}
+    resize(/*w, h, m*/) {}
     resume() {}
     setVolume(v) {
-      this.#volume = v;
+      this.volume = v;
     }
     skip() {}
     start() {
@@ -396,6 +425,7 @@ if (!window.google?.ima?.VERSION) {
         for (const type of [
           AdEvent.Type.LOADED,
           AdEvent.Type.STARTED,
+          AdEvent.Type.CONTENT_RESUME_REQUESTED,
           AdEvent.Type.AD_BUFFERING,
           AdEvent.Type.FIRST_QUARTILE,
           AdEvent.Type.MIDPOINT,
@@ -412,7 +442,7 @@ if (!window.google?.ima?.VERSION) {
       });
     }
     stop() {}
-    updateAdsRenderingSettings(s) {}
+    updateAdsRenderingSettings(/*s*/) {}
   }
 
   class AdsRenderingSettings {}
@@ -445,7 +475,9 @@ if (!window.google?.ima?.VERSION) {
   }
 
   class Ad {
-    _pi = new AdPodInfo();
+    constructor() {
+      this._pi = new AdPodInfo();
+    }
     getAdId() {
       return "";
     }
@@ -566,31 +598,27 @@ if (!window.google?.ima?.VERSION) {
   }
 
   class AdError {
-    #errorCode = -1;
-    #message = "";
-    #type = "";
-    #vastErrorCode = -1;
     constructor(type, code, vast, message) {
-      this.#errorCode = code;
-      this.#message = message;
-      this.#type = type;
-      this.#vastErrorCode = vast;
+      this.errorCode = code;
+      this.message = message;
+      this.type = type;
+      this.vastErrorCode = vast;
     }
     getErrorCode() {
-      return this.#errorCode;
+      return this.errorCode;
     }
     getInnerError() {}
     getMessage() {
-      return this.#message;
+      return this.message;
     }
     getType() {
-      return this.#type;
+      return this.type;
     }
     getVastErrorCode() {
-      return this.#vastErrorCode;
+      return this.vastErrorCode;
     }
     toString() {
-      return `AdError ${this.#errorCode}: ${this.#message}`;
+      return `AdError ${this.errorCode}: ${this.message}`;
     }
   }
   AdError.ErrorCode = {};
@@ -599,7 +627,11 @@ if (!window.google?.ima?.VERSION) {
   const isEngadget = () => {
     try {
       for (const ctx of Object.values(window.vidible._getContexts())) {
-        if (ctx.getPlayer()?.div?.innerHTML.includes("www.engadget.com")) {
+        const player = ctx.getPlayer();
+        if (!player) { continue;}
+        const div = player.div;
+        if (!div) { continue; }
+        if (div.innerHTML.includes("www.engadget.com")) {
           return true;
         }
       }
@@ -656,13 +688,12 @@ if (!window.google?.ima?.VERSION) {
   };
 
   class AdErrorEvent {
-    type = "adError";
-    #error = "";
     constructor(error) {
-      this.#error = error;
+      this.type = "adError";
+      this.error = error;
     }
     getError() {
-      return this.#error;
+      return this.error;
     }
     getUserRequestContext() {
       return {};

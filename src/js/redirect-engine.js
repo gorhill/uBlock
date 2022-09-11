@@ -104,6 +104,8 @@ const redirectableResources = new Map([
     [ 'google-analytics_inpage_linkid.js', {
         alias: 'google-analytics.com/inpage_linkid.js',
     } ],
+    [ 'google-ima.js', {
+    } ],
     [ 'googlesyndication_adsbygoogle.js', {
         alias: 'googlesyndication.com/adsbygoogle.js',
         data: 'text',
