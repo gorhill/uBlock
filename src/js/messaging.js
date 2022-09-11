@@ -902,9 +902,6 @@ const onMessage = function(request, sender, callback) {
                 pickerURL: vAPI.getURL(
                     `/web_accessible_resources/epicker-ui.html?secret=${vAPI.warSecret()}`
                 ),
-                needColorScheme:
-                    vAPI.webextFlavor.soup.has('firefox') === false ||
-                    vAPI.webextFlavor.major < 106,
             });
             µb.epickerArgs.target = '';
         });
