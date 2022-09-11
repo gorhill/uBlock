@@ -1143,6 +1143,10 @@
     "message": "Zatvori ovaj prozor",
     "description": "English: Close this window"
   },
+  "docblockedDontWarn": {
+    "message": "Don't warn me again about this site",
+    "description": "Label for checkbox in document-blocked page"
+  },
   "docblockedProceed": {
     "message": "Isključi strogo blokiranje za {{hostname}}",
     "description": "English: Disable strict blocking for {{hostname}} ..."

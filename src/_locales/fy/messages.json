@@ -1143,6 +1143,10 @@
     "message": "Dit finster slute",
     "description": "English: Close this window"
   },
+  "docblockedDontWarn": {
+    "message": "Don't warn me again about this site",
+    "description": "Label for checkbox in document-blocked page"
+  },
   "docblockedProceed": {
     "message": "Strikte blokkearring foar {{hostname}} útskeakelje",
     "description": "English: Disable strict blocking for {{hostname}} ..."

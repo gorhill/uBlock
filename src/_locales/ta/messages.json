@@ -1143,6 +1143,10 @@
     "message": "இச்சாளரத்தை மூடு",
     "description": "English: Close this window"
   },
+  "docblockedDontWarn": {
+    "message": "Don't warn me again about this site",
+    "description": "Label for checkbox in document-blocked page"
+  },
   "docblockedProceed": {
     "message": "{{hostname}}-இல் கண்டிப்பான தடையைச்‌ செயலிழக்கச் செய்",
     "description": "English: Disable strict blocking for {{hostname}} ..."

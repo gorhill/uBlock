@@ -1143,6 +1143,10 @@
     "message": "ഈ വിന്‍ഡോ ക്ലോസ് ചെയ്യുക",
     "description": "English: Close this window"
   },
+  "docblockedDontWarn": {
+    "message": "Don't warn me again about this site",
+    "description": "Label for checkbox in document-blocked page"
+  },
   "docblockedProceed": {
     "message": "{{hostname}}ലേക്ക് കര്‍ശന ബ്ലോക്കിംഗ് ഡിസേബിള്‍ ചെയ്യുക",
     "description": "English: Disable strict blocking for {{hostname}} ..."

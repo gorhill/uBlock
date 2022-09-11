@@ -1143,6 +1143,10 @@
     "message": "এই উইন্ডোটি বন্ধ করুন",
     "description": "English: Close this window"
   },
+  "docblockedDontWarn": {
+    "message": "Don't warn me again about this site",
+    "description": "Label for checkbox in document-blocked page"
+  },
   "docblockedProceed": {
     "message": "{{hostname}}-এর জন্য কঠোর অবরোধ নিষ্ক্রিয় করুন",
     "description": "English: Disable strict blocking for {{hostname}} ..."

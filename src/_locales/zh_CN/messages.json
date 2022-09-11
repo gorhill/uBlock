@@ -968,7 +968,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "针对性的画面覆盖或其他骚扰",
+    "message": "存在遮盖或类似问题",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
@@ -1116,7 +1116,7 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedTitle": {
-    "message": "Page blocked",
+    "message": "页面已被屏蔽",
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {
@@ -1143,6 +1143,10 @@
     "message": "关闭此窗口",
     "description": "English: Close this window"
   },
+  "docblockedDontWarn": {
+    "message": "不再针对此网站作出警告",
+    "description": "Label for checkbox in document-blocked page"
+  },
   "docblockedProceed": {
     "message": "不对 {{hostname}} 进行严格屏蔽",
     "description": "English: Disable strict blocking for {{hostname}} ..."
@@ -1156,7 +1160,7 @@
     "description": "English: Permanently"
   },
   "docblockedDisable": {
-    "message": "Proceed",
+    "message": "继续加载",
     "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {

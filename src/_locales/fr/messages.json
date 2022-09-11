@@ -1116,7 +1116,7 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedTitle": {
-    "message": "Page blocked",
+    "message": "Page bloquée",
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {
@@ -1143,6 +1143,10 @@
     "message": "Fermer cette fenêtre",
     "description": "English: Close this window"
   },
+  "docblockedDontWarn": {
+    "message": "Ne plus m'avertir à propos de ce site",
+    "description": "Label for checkbox in document-blocked page"
+  },
   "docblockedProceed": {
     "message": "Désactiver le blocage strict du domaine {{hostname}}",
     "description": "English: Disable strict blocking for {{hostname}} ..."
@@ -1156,7 +1160,7 @@
     "description": "English: Permanently"
   },
   "docblockedDisable": {
-    "message": "Proceed",
+    "message": "Poursuivre",
     "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {

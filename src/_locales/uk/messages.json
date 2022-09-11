@@ -1116,7 +1116,7 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedTitle": {
-    "message": "Page blocked",
+    "message": "Сторінка заблокована",
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {
@@ -1143,6 +1143,10 @@
     "message": "Зачинити це вікно",
     "description": "English: Close this window"
   },
+  "docblockedDontWarn": {
+    "message": "Не нагадуйте мені про цей сайт",
+    "description": "Label for checkbox in document-blocked page"
+  },
   "docblockedProceed": {
     "message": "Вимкнути повне блокування для {{hostname}}",
     "description": "English: Disable strict blocking for {{hostname}} ..."
@@ -1156,7 +1160,7 @@
     "description": "English: Permanently"
   },
   "docblockedDisable": {
-    "message": "Proceed",
+    "message": "Продовжити",
     "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {

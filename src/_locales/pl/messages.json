@@ -404,7 +404,7 @@
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Funkcje odpowiednie tylko dla użytkowników z przygotowaniem technicznym.",
+    "message": "Funkcje odpowiednie tylko dla użytkowników z przygotowaniem technicznym",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
@@ -908,19 +908,19 @@
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "Problemy z filtrowaniem/błędy w wyświetlaniu stron",
+    "message": "Problemy z filtrami/błędy w wyświetlaniu stron",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Zgłoś problemy z filtrowaniem na poszczególnych stronach na <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"> trackerze błędów <code>uBlockOrigin/uAssets</code></span>. <u>Wymaga konta GitHub.</u>",
+    "message": "Zgłoś problemy z filtrami na poszczególnych stronach na <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"> trackerze błędów <code>uBlockOrigin/uAssets</code></span>. <u>Wymaga konta GitHub.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Ważne:</b> unikaj innych podobnie działających dodatków razem z uBlock Origin, ponieważ może to powodować problemy z filtrowaniem na poszczególnych stronach.",
+    "message": "<b>Ważne:</b> Unikaj innych podobnie działających dodatków razem z uBlock Origin, ponieważ może to powodować problemy z filtrami na poszczególnych stronach.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Porada:</b> Upewnij się, że listy filtrów są aktualne. <span data-url=\"logger-ui.html#_\">Rejestrator</span> jest głównym narzędziem do diagnozowania problemów z filtrowaniem.",
+    "message": "<b>Porada:</b> Upewnij się, że listy filtrów są aktualne. <span data-url=\"logger-ui.html#_\">Rejestrator</span> jest głównym narzędziem do diagnozowania problemów związanych z filtrami.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
@@ -940,7 +940,7 @@
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Ważne:</b> potencjalnie prywatne lub wrażliwe informacje są domyślnie ocenzurowane. Ocenzurowanie może utrudniać rozwiązanie problemu.",
+    "message": "<b>Ważne:</b> Potencjalnie prywatne lub wrażliwe informacje są domyślnie ocenzurowane. Ocenzurowanie może utrudnić rozwiązanie problemu.",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
@@ -1116,7 +1116,7 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedTitle": {
-    "message": "Page blocked",
+    "message": "Strona zablokowana",
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {
@@ -1143,6 +1143,10 @@
     "message": "Zamknij to okno",
     "description": "English: Close this window"
   },
+  "docblockedDontWarn": {
+    "message": "Nie ostrzegaj mnie ponownie o tej stronie",
+    "description": "Label for checkbox in document-blocked page"
+  },
   "docblockedProceed": {
     "message": "Wyłącz rygorystyczne blokowanie dla {{hostname}}",
     "description": "English: Disable strict blocking for {{hostname}} ..."
@@ -1156,7 +1160,7 @@
     "description": "English: Permanently"
   },
   "docblockedDisable": {
-    "message": "Proceed",
+    "message": "Kontynuuj",
     "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {
