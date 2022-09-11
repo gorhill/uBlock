@@ -223,6 +223,12 @@ const proceedPermanent = async function() {
     proceedToURL();
 };
 
+uDom('#disableWarning').on('change', ev => {
+    const checked = ev.target.checked;
+    document.querySelector('[data-i18n="docblockedBack"]').classList.toggle('disabled', checked);
+    document.querySelector('[data-i18n="docblockedClose"]').classList.toggle('disabled', checked);
+});
+
 uDom('#proceed').on('click', ( ) => {
     const input = document.querySelector('#disableWarning');
     if ( input.checked ) {
