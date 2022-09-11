@@ -25,10 +25,11 @@
   },
   "manifest_version": 3,
   "minimum_chrome_version": "101.0",
-  "name": "uBO Minus (MV3)",
+  "name": "uBlock Origin Lite",
   "permissions": [
     "activeTab",
     "declarativeNetRequest"
   ],
+  "short_name": "uBO Lite",
   "version": "0.1"
 }
