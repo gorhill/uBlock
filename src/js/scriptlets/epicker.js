@@ -1278,21 +1278,20 @@ const pickerCSSStyle = [
     'position: fixed',
     'top: 0',
     'transform: none',
-    'visibility: visible',
+    'visibility: hidden',
     'width: 100%',
     'z-index: 2147483647',
+    'color-scheme: light dark',
+    ''
 ];
 
-// https://github.com/uBlockOrigin/uBlock-issues/issues/1408
-// https://github.com/uBlockOrigin/uBlock-issues/issues/2240
-if ( pickerBootArgs.needColorScheme ) {
-    pickerCSSStyle.push('color-scheme: light');
-}
-pickerCSSStyle.push(''); // Important
 
 const pickerCSS = `
 :root > [${vAPI.sessionId}] {
     ${pickerCSSStyle.join(' !important;')}
+}
+:root > [${vAPI.sessionId}-loaded] {
+    visibility: visible !important;
 }
 :root [${vAPI.sessionId}-clickblind] {
     pointer-events: none !important;
@@ -1316,7 +1315,10 @@ vAPI.MessagingConnection.addListener(onConnectionMessage);
     if ( pickerBootArgs.zap ) {
         url.searchParams.set('zap', '1');
     }
-    pickerRoot.contentWindow.location = url.href;
+    pickerRoot.addEventListener("load", function() {
+      pickerRoot.setAttribute(`${vAPI.sessionId}-loaded`, "");
+    });
+    pickerRoot.src = url.href;
 }
 
 /******************************************************************************/
