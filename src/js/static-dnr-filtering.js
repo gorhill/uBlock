@@ -91,7 +91,11 @@ async function dnrRulesetFromRawLists(lists, options = {}) {
     const toLoad = [];
     const toDNR = (context, list) => addToDNR(context, list);
     for ( const list of lists ) {
-        toLoad.push(list.then(list => toDNR(context, list)));
+        if ( list instanceof Promise ) {
+            toLoad.push(list.then(list => toDNR(context, list)));
+        } else {
+            toLoad.push(toDNR(context, list));
+        }
     }
     await Promise.all(toLoad);
     return staticNetFilteringEngine.dnrFromCompiled('end', context);

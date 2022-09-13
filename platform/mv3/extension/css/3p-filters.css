@@ -1,0 +1,186 @@
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+    }
+body {
+    margin-bottom: 6rem;
+    }
+#actions {
+    background-color: var(--surface-1);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    }
+#buttonUpdate.active {
+    pointer-events: none;
+    }
+#buttonUpdate.active .fa-icon svg {
+    animation: spin 1s linear infinite;
+    transform-origin: 50%;
+    }
+#lists {
+    margin: 0.5em 0 0 0;
+    padding: 0;
+    }
+.groupEntry:not([data-groupkey="user"]) .geDetails::before {
+    color: var(--ink-3);
+    content: '\2212';
+    font-family: monospace;
+    font-size: large;
+    margin-inline-end: 0.25em;
+    -webkit-margin-end: 0.25em;
+    }
+.groupEntry.hideUnused:not([data-groupkey="user"]) .geDetails::before {
+    content: '+';
+    }
+.groupEntry {
+    margin: 0.5em 0;
+    }
+.groupEntry .geDetails {
+    cursor: pointer;
+    }
+.groupEntry .geName {
+    pointer-events: none;
+    }
+.groupEntry .geCount {
+    color: var(--ink-3);
+    font-size: 90%;
+    pointer-events: none;
+    }
+.listEntries {
+    margin-inline-start: 0.6em;
+    -webkit-margin-start: 0.6em;
+    }
+.groupEntry:not([data-groupkey="user"]) .listEntry:not(.isDefault).unused {
+    display: none;
+    }
+.listEntry > * {
+    margin-left: 0;
+    margin-right: 0;
+    unicode-bidi: embed;
+    }
+.listEntry .listname {
+    white-space: nowrap;
+    }
+.listEntry.toRemove .checkbox {
+    visibility: hidden;
+    }
+.listEntry.toRemove .listname {
+    text-decoration: line-through;
+    }
+.listEntry a,
+.listEntry .fa-icon,
+.listEntry .counts {
+    color: var(--info0-ink);
+        fill: var(--info0-ink);
+    display: none;
+    font-size: 120%;
+    margin: 0 0.2em 0 0;
+    }
+.listEntry .fa-icon:hover {
+    transform: scale(1.25);
+    }
+.listEntry .content {
+    display: inline-flex;
+    }
+.listEntry a.towiki {
+    display: inline-flex;
+    }
+.listEntry.support a.support {
+    display: inline-flex;
+    }
+.listEntry .remove,
+.listEntry .unsecure,
+.listEntry .failed {
+    color: var(--info3-ink);
+        fill: var(--info3-ink);
+    cursor: pointer;
+    }
+.listEntry.external .remove {
+    display: inline-flex;
+    }
+.listEntry.mustread a.mustread {
+    color: var(--info1-ink);
+        fill: var(--info1-ink);
+    display: inline-flex;
+    }
+.listEntry .counts {
+    font-size: smaller;
+}
+.listEntry.checked .counts {
+    display: inline-block;
+}
+.listEntry .status {
+    cursor: default;
+    display: none;
+}
+.listEntry.checked.unsecure .unsecure {
+    display: inline-flex;
+    }
+.listEntry.failed .failed {
+    display: inline-flex;
+    }
+.listEntry .cache {
+    cursor: pointer;
+    }
+.listEntry.checked.cached:not(.obsolete) .cache {
+    display: inline-flex;
+    }
+.listEntry .obsolete {
+    color: var(--info2-ink);
+        fill: var(--info2-ink);
+    }
+body:not(.updating) .listEntry.checked.obsolete .obsolete {
+    display: inline-flex;
+    }
+.listEntry .updating {
+    transform-origin: 50%;
+    }
+body.updating .listEntry.checked.obsolete .updating {
+    animation: spin 1s steps(8) infinite;
+    display: inline-flex;
+    }
+.listEntry.toImport {
+    margin: 0.5em 0;
+    }
+.listEntry.toImport textarea {
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    display: block;
+    font-size: smaller;
+    height: 6em;
+    margin: 0;
+    resize: vertical;
+    visibility: hidden;
+    white-space: pre;
+    width: 100%;
+    }
+.listEntry.toImport.checked textarea {
+    visibility: visible;
+    }
+
+/* touch-screen devices */
+:root.mobile .listEntry .fa-icon {
+    font-size: 120%;
+    margin: 0 0.5em 0 0;
+    }
+:root.mobile .listEntries {
+    margin-inline-start: 0;
+    -webkit-margin-start: 0;
+    }
+:root.mobile .li.listEntry {
+    /* background-color: var(--bg-1); */
+    overflow-x: auto;
+    }
+:root.mobile .li.listEntry label > span:not([class]) {
+    flex-grow: 1;
+    }
+:root.mobile .li.listEntry .listname,
+:root.mobile .li.listEntry .iconbar {
+    align-items: flex-start;
+    display: flex;
+    white-space: nowrap;
+    }
+:root.mobile .li.listEntry .iconbar {
+    margin-top: 0.2em;
+    }

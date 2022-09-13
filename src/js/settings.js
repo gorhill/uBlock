@@ -23,9 +23,7 @@
 
 'use strict';
 
-/******************************************************************************/
-
-(( ) => {
+import { i18n$ } from './i18n.js';
 
 /******************************************************************************/
 
@@ -63,11 +61,11 @@ const handleImportFilePicker = function() {
             userData = undefined;
         }
         if ( userData === undefined ) {
-            window.alert(vAPI.i18n('aboutRestoreDataError'));
+            window.alert(i18n$('aboutRestoreDataError'));
             return;
         }
         const time = new Date(userData.timeStamp);
-        const msg = vAPI.i18n('aboutRestoreDataConfirm')
+        const msg = i18n$('aboutRestoreDataConfirm')
                         .replace('{{time}}', time.toLocaleString());
         const proceed = window.confirm(msg);
         if ( proceed !== true ) { return; }
@@ -137,9 +135,9 @@ const onLocalDataReceived = function(details) {
         unit = '';
     }
     uDom.nodeFromId('storageUsed').textContent =
-        vAPI.i18n('storageUsed')
+        i18n$('storageUsed')
             .replace('{{value}}', v.toLocaleString(undefined, { maximumSignificantDigits: 3 }))
-            .replace('{{unit}}', unit && vAPI.i18n(unit) || '');
+            .replace('{{unit}}', unit && i18n$(unit) || '');
 
     const timeOptions = {
         weekday: 'long',
@@ -154,7 +152,7 @@ const onLocalDataReceived = function(details) {
     const lastBackupFile = details.lastBackupFile || '';
     if ( lastBackupFile !== '' ) {
         const dt = new Date(details.lastBackupTime);
-        const text = vAPI.i18n('settingsLastBackupPrompt');
+        const text = i18n$('settingsLastBackupPrompt');
         const node = uDom.nodeFromId('settingsLastBackupPrompt');
         node.textContent = text + '\xA0' + dt.toLocaleString('fullwide', timeOptions);
         node.style.display = '';
@@ -163,7 +161,7 @@ const onLocalDataReceived = function(details) {
     const lastRestoreFile = details.lastRestoreFile || '';
     if ( lastRestoreFile !== '' ) {
         const dt = new Date(details.lastRestoreTime);
-        const text = vAPI.i18n('settingsLastRestorePrompt');
+        const text = i18n$('settingsLastRestorePrompt');
         const node = uDom.nodeFromId('settingsLastRestorePrompt');
         node.textContent = text + '\xA0' + dt.toLocaleString('fullwide', timeOptions);
         node.style.display = '';
@@ -183,7 +181,7 @@ const onLocalDataReceived = function(details) {
 /******************************************************************************/
 
 const resetUserData = function() {
-    const msg = vAPI.i18n('aboutResetDataConfirm');
+    const msg = i18n$('aboutResetDataConfirm');
     const proceed = window.confirm(msg);
     if ( proceed !== true ) { return; }
     vAPI.messaging.send('dashboard', {
@@ -306,5 +304,3 @@ document.querySelector(
 );
 
 /******************************************************************************/
-
-})();

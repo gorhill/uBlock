@@ -291,6 +291,10 @@ if response.status_code != 204:
 # package is higher version than current one.
 #
 
+# Be sure in sync with potentially modified files on remote
+r = subprocess.run(['git', 'checkout', 'origin/master', '--', 'dist/chromium-mv3/log.txt'], stdout=subprocess.PIPE)
+rout = bytes.decode(r.stdout).strip()
+
 print('Update GitHub to point to newly signed self-hosted xpi package...')
 updates_json_filepath = os.path.join(projdir, 'dist', 'firefox', 'updates.json')
 with open(updates_json_filepath) as f:
@@ -305,7 +309,6 @@ with open(updates_json_filepath) as f:
             with open(updates_json_filepath, 'w') as f:
                 f.write(updates_json)
                 f.close()
-        # Automatically git add/commit if needed.
         # - Stage the changed file
         r = subprocess.run(['git', 'status', '-s', updates_json_filepath], stdout=subprocess.PIPE)
         rout = bytes.decode(r.stdout).strip()

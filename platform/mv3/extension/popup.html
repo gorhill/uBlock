@@ -19,7 +19,7 @@
                 <span id="saveRules" class="fa-icon" data-i18n-title="popupTipSaveRules">lock</span>
                 <span id="revertRules" class="fa-icon" data-i18n-title="popupTipRevertRules">eraser</span>
             </div>
-            <div id="switch" role="button" aria-label tabindex="0" title>
+            <div id="switch" role="button" aria-label tabindex="0" data-i18n-title="popupPowerSwitchInfo">
                 <span class="fa-icon"><!--
                     Power button taken from Font Awesome v4.7.0 by Dave Gandy.
                     Unlike other FA icons, the power button is inlined here so
@@ -40,6 +40,13 @@
         </div>
         <div id="hostname"><span></span>&shy;<span></span></div>
     </div>
+    <div id="basicTools" class="toolRibbon" data-more="c">
+        <span class="fa-icon tool needPick" data-i18n-title="popupTipZapper">bolt<span class="caption"></span></span>
+        <span class="fa-icon tool needPick" data-i18n-title="popupTipPicker">eye-dropper<span class="caption"></span></span>
+        <span class="fa-icon tool needPick" data-i18n-title="popupTipReport">comment-alt<span class="caption"></span></span>
+        <a href="logger-ui.html#_" class="fa-icon tool" target="uBOLogger" tabindex="0" data-i18n-title="popupTipLog">list-alt<span class="caption"></span></a>
+        <a href="dashboard.html" class="fa-icon tool enabled" target="uBODashboard" tabindex="0" data-i18n-title="popupTipDashboard">cogs<span class="caption" data-i18n="popupTipDashboard"></span></a>
+    </div>
     <hr data-section="a">
     <div id="rulesetStats" data-section="a">
     </div>
@@ -55,6 +62,7 @@
 </div>
 
 <script src="js/fa-icons.js"></script>
+<script src="js/i18n.js" type="module"></script>
 <script src="js/popup.js" type="module"></script>
 
 </body>

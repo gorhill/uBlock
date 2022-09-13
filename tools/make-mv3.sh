@@ -25,8 +25,12 @@ echo "*** uBlock0.mv3: Copying common files"
 cp -R src/css/fonts/* $DES/css/fonts/
 cp src/css/themes/default.css $DES/css/
 cp src/css/common.css $DES/css/
+cp src/css/dashboard.css $DES/css/
+cp src/css/dashboard-common.css $DES/css/
 cp src/css/fa-icons.css $DES/css/
+
 cp src/js/fa-icons.js $DES/js/
+cp src/js/i18n.js $DES/js/
 
 cp LICENSE.txt $DES/
 
@@ -35,6 +39,7 @@ cp platform/mv3/extension/*.html $DES/
 cp platform/mv3/extension/css/* $DES/css/
 cp platform/mv3/extension/js/* $DES/js/
 cp platform/mv3/extension/img/* $DES/img/
+cp -R platform/mv3/extension/_locales $DES/
 
 if [ "$1" != "quick" ]; then
     echo "*** uBlock0.mv3: Generating rulesets"
@@ -44,6 +49,7 @@ if [ "$1" != "quick" ]; then
     ./tools/make-nodejs.sh $TMPDIR
     cp platform/mv3/package.json $TMPDIR/
     cp platform/mv3/*.js $TMPDIR/
+    cp assets/assets.json $TMPDIR/
     cd $TMPDIR
     node --no-warnings make-rulesets.js output=$DES quick=$QUICK
     cd - > /dev/null

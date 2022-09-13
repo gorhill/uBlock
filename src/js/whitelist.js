@@ -23,9 +23,7 @@
 
 'use strict';
 
-/******************************************************************************/
-
-(( ) => {
+import { i18n$ } from './i18n.js';
 
 /******************************************************************************/
 
@@ -204,7 +202,7 @@ const exportWhitelistToFile = function() {
     const val = getEditorText();
     if ( val === '' ) { return; }
     const filename =
-        vAPI.i18n('whitelistExportFilename')
+        i18n$('whitelistExportFilename')
             .replace('{{datetime}}', uBlockDashboard.dateNowToSensibleString())
             .replace(/ +/g, '_');
     vAPI.download({
@@ -262,5 +260,3 @@ uDom('#whitelistRevert').on('click', revertChanges);
 renderWhitelist();
 
 /******************************************************************************/
-
-})();

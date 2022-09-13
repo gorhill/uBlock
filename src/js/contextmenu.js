@@ -24,6 +24,7 @@
 /******************************************************************************/
 
 import µb from './background.js';
+import { i18n$ } from './i18n.js';
 
 /******************************************************************************/
 
@@ -134,28 +135,28 @@ const onEntryClicked = function(details, tab) {
 const menuEntries = {
     blockElement: {
         id: 'uBlock0-blockElement',
-        title: vAPI.i18n('pickerContextMenuEntry'),
+        title: i18n$('pickerContextMenuEntry'),
         contexts: [ 'all' ],
     },
     blockElementInFrame: {
         id: 'uBlock0-blockElementInFrame',
-        title: vAPI.i18n('contextMenuBlockElementInFrame'),
+        title: i18n$('contextMenuBlockElementInFrame'),
         contexts: [ 'frame' ],
     },
     blockResource: {
         id: 'uBlock0-blockResource',
-        title: vAPI.i18n('pickerContextMenuEntry'),
+        title: i18n$('pickerContextMenuEntry'),
         contexts: [ 'audio', 'frame', 'image', 'video' ],
     },
     subscribeToList: {
         id: 'uBlock0-subscribeToList',
-        title: vAPI.i18n('contextMenuSubscribeToList'),
+        title: i18n$('contextMenuSubscribeToList'),
         contexts: [ 'link' ],
         targetUrlPatterns: [ 'abp:*', 'https://subscribe.adblockplus.org/*' ],
     },
     temporarilyAllowLargeMediaElements: {
         id: 'uBlock0-temporarilyAllowLargeMediaElements',
-        title: vAPI.i18n('contextMenuTemporarilyAllowLargeMediaElements'),
+        title: i18n$('contextMenuTemporarilyAllowLargeMediaElements'),
         contexts: [ 'all' ],
     }
 };

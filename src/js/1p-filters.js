@@ -25,6 +25,7 @@
 
 /******************************************************************************/
 
+import { i18n$ } from './i18n.js';
 import './codemirror/ubo-static-filtering.js';
 
 /******************************************************************************/
@@ -234,7 +235,7 @@ const startImportFilePicker = function() {
 const exportUserFiltersToFile = function() {
     const val = getEditorText();
     if ( val === '' ) { return; }
-    const filename = vAPI.i18n('1pExportFilename')
+    const filename = i18n$('1pExportFilename')
         .replace('{{datetime}}', uBlockDashboard.dateNowToSensibleString())
         .replace(/ +/g, '_');
     vAPI.download({

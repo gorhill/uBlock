@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-(( ) => {
+import { i18n$ } from './i18n.js';
 
 /******************************************************************************/
 
@@ -128,7 +128,7 @@ uDom.nodeFromId('why').textContent = details.fs;
         if ( search === '' ) { return false; }
 
         url.search = '';
-        const li = liFromParam(vAPI.i18n('docblockedNoParamsPrompt'), url.href);
+        const li = liFromParam(i18n$('docblockedNoParamsPrompt'), url.href);
         parentNode.appendChild(li);
 
         const params = new self.URLSearchParams(search);
@@ -237,9 +237,5 @@ uDom('#proceed').on('click', ( ) => {
         proceedTemporary();
     }
 });
-
-/******************************************************************************/
-
-})();
 
 /******************************************************************************/

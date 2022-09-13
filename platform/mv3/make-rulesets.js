@@ -27,8 +27,8 @@ import fs from 'fs/promises';
 import https from 'https';
 import process from 'process';
 
-import rulesetConfigs from './ruleset-config.js';
 import { dnrRulesetFromRawLists } from './js/static-dnr-filtering.js';
+import { StaticFilteringParser } from './js/static-filtering-parser.js';
 
 /******************************************************************************/
 
@@ -51,20 +51,74 @@ const commandLineArgs = (( ) => {
 
 /******************************************************************************/
 
+const isUnsupported = rule =>
+    rule._error !== undefined;
+
+const isRegex = rule =>
+    rule.condition !== undefined &&
+    rule.condition.regexFilter !== undefined;
+
+const isRedirect = rule =>
+    rule.action !== undefined &&
+    rule.action.type === 'redirect' &&
+    rule.action.redirect.extensionPath !== undefined;
+
+const isCsp = rule =>
+    rule.action !== undefined &&
+    rule.action.type === 'modifyHeaders';
+
+const isRemoveparam = rule =>
+    rule.action !== undefined &&
+    rule.action.type === 'redirect' &&
+    rule.action.redirect.transform !== undefined;
+
+const isGood = rule =>
+    isUnsupported(rule) === false &&
+    isRedirect(rule) === false &&
+    isCsp(rule) === false &&
+    isRemoveparam(rule) === false;
+
+/******************************************************************************/
+
+const stdOutput = [];
+
+const log = (text, silent = false) => {
+    stdOutput.push(text);
+    if ( silent === false ) {
+        console.log(text);
+    }
+};
+
+/******************************************************************************/
+
+const fetchList = url => {
+    return new Promise((resolve, reject) => {
+        log(`\tFetching ${url}`);
+        https.get(url, response => {
+            const data = [];
+            response.on('data', chunk => {
+                data.push(chunk.toString());
+            });
+            response.on('end', ( ) => {
+                resolve({ url, content: data.join('') });
+            });
+        }).on('error', error => {
+            reject(error);
+        });
+    });
+};
+
+/******************************************************************************/
+
 async function main() {
+
+    const env = [ 'chromium' ];
 
     const writeOps = [];
     const ruleResources = [];
     const rulesetDetails = [];
+    const regexRulesetDetails = new Map();
     const outputDir = commandLineArgs.get('output') || '.';
-
-    const output = [];
-    const log = (text, silent = false) => {
-        output.push(text);
-        if ( silent === false ) {
-            console.log(text);
-        }
-    };
 
     // Get manifest content
     const manifest = await fs.readFile(
@@ -104,78 +158,62 @@ async function main() {
         return v;
     };
 
-    const isUnsupported = rule =>
-        rule._error !== undefined;
-    const isRegex = rule =>
-        rule.condition !== undefined &&
-        rule.condition.regexFilter !== undefined;
-    const isRedirect = rule =>
-        rule.action !== undefined &&
-        rule.action.type === 'redirect' &&
-        rule.action.redirect.extensionPath !== undefined;
-    const isCsp = rule =>
-        rule.action !== undefined &&
-        rule.action.type === 'modifyHeaders';
-    const isRemoveparam = rule =>
-        rule.action !== undefined &&
-        rule.action.type === 'redirect' &&
-        rule.action.redirect.transform !== undefined;
-    const isGood = rule =>
-        isUnsupported(rule) === false &&
-        isRedirect(rule) === false &&
-        isCsp(rule) === false &&
-        isRemoveparam(rule) === false
-        ;
-
     const rulesetDir = `${outputDir}/rulesets`;
     const rulesetDirPromise = fs.mkdir(`${rulesetDir}`, { recursive: true });
-
-    const fetchList = url => {
-        return new Promise((resolve, reject) => {
-            https.get(url, response => {
-                const data = [];
-                response.on('data', chunk => {
-                    data.push(chunk.toString());
-                });
-                response.on('end', ( ) => {
-                    resolve({ name: url, text: data.join('') });
-                });
-            }).on('error', error => {
-                reject(error);
-            });
-        });
-    };
-
-    const readList = path =>
-        fs.readFile(path, { encoding: 'utf8' })
-            .then(text => ({ name: path, text }));
 
     const writeFile = (path, data) =>
         rulesetDirPromise.then(( ) =>
             fs.writeFile(path, data));
 
-    for ( const ruleset of rulesetConfigs ) {
-        const lists = [];
-
+    const rulesetFromURLS = async function(assetDetails) {
         log('============================');
-        log(`Listset for '${ruleset.id}':`);
+        log(`Listset for '${assetDetails.id}':`);
 
-        if ( Array.isArray(ruleset.paths) ) {
-            for ( const path of ruleset.paths ) {
-                log(`\t${path}`);
-                lists.push(readList(`assets/${path}`));
+        // Remember fetched URLs
+        const fetchedURLs = new Set();
+
+        // Fetch list and expand `!#include` directives
+        let parts = assetDetails.urls.map(url => ({ url }));
+        while (  parts.every(v => typeof v === 'string') === false ) {
+            const newParts = [];
+            for ( const part of parts ) {
+                if ( typeof part === 'string' ) {
+                    newParts.push(part);
+                    continue;
+                }
+                if ( fetchedURLs.has(part.url) ) {
+                    newParts.push('');
+                    continue;
+                }
+                fetchedURLs.add(part.url);
+                newParts.push(
+                    fetchList(part.url).then(details => {
+                        const { url } = details;
+                        const content = details.content.trim();
+                        if ( typeof content === 'string' && content !== '' ) {
+                            if (
+                                content.startsWith('<') === false ||
+                                content.endsWith('>') === false
+                            ) {
+                                return { url, content };
+                            }
+                        }
+                        log(`No valid content for ${details.name}`);
+                        return { url, content: '' };
+                    })
+                );
             }
+            parts = await Promise.all(newParts);
+            parts = StaticFilteringParser.utils.preparser.expandIncludes(parts, env);
         }
-        if ( Array.isArray(ruleset.urls) ) {
-            for ( const url of ruleset.urls ) {
-                log(`\t${url}`);
-                lists.push(fetchList(url));
-            }
+        const text = parts.join('\n');
+
+        if ( text === '' ) {
+            log('No filterset found');
+            return;
         }
 
-        const details = await dnrRulesetFromRawLists(lists, {
-            env: [ 'chromium' ],
-        });
+        const details = await dnrRulesetFromRawLists([ { name: assetDetails.id, text } ], { env });
         const { ruleset: rules } = details;
         log(`Input filter count: ${details.filterCount}`);
         log(`\tAccepted filter count: ${details.acceptedFilterCount}`);
@@ -215,17 +253,11 @@ async function main() {
             true
         );
 
-        writeOps.push(
-            writeFile(
-                `${rulesetDir}/${ruleset.id}.json`,
-                `${JSON.stringify(good, replacer, 2)}\n`
-            )
-        );
-
         rulesetDetails.push({
-            id: ruleset.id,
-            name: ruleset.name,
-            enabled: ruleset.enabled,
+            id: assetDetails.id,
+            name: assetDetails.name,
+            enabled: assetDetails.enabled,
+            lang: assetDetails.lang,
             filters: {
                 total: details.filterCount,
                 accepted: details.acceptedFilterCount,
@@ -236,24 +268,100 @@ async function main() {
                 accepted: good.length,
                 discarded: redirects.length + headers.length + removeparams.length,
                 rejected: bad.length,
-                regexes,
+                regexes: regexes.length,
             },
         });
 
+        writeOps.push(
+            writeFile(
+                `${rulesetDir}/${assetDetails.id}.json`,
+                `${JSON.stringify(good, replacer, 2)}\n`
+            )
+        );
+
+        regexRulesetDetails.set(assetDetails.id, regexes);
+
+        writeOps.push(
+            writeFile(
+                `${rulesetDir}/${assetDetails.id}.regexes.json`,
+                `${JSON.stringify(regexes, replacer, 2)}\n`
+            )
+        );
+
         ruleResources.push({
-            id: ruleset.id,
-            enabled: ruleset.enabled,
-            path: `/rulesets/${ruleset.id}.json`
+            id: assetDetails.id,
+            enabled: assetDetails.enabled,
+            path: `/rulesets/${assetDetails.id}.json`
         });
 
         goodTotalCount += good.length;
         maybeGoodTotalCount += regexes.length;
+    };
+
+    // Get assets.json content
+    const assets = await fs.readFile(
+        `./assets.json`,
+        { encoding: 'utf8' }
+    ).then(text =>
+        JSON.parse(text)
+    );
+
+    // Assemble all default lists as the default ruleset
+    const contentURLs = [];
+    for ( const asset of Object.values(assets) ) {
+        if ( asset.content !== 'filters' ) { continue; }
+        if ( asset.off === true ) { continue; }
+        const contentURL = Array.isArray(asset.contentURL)
+            ? asset.contentURL[0]
+            : asset.contentURL;
+        contentURLs.push(contentURL);
+    }
+    await rulesetFromURLS({
+        id: 'default',
+        name: 'Ads, trackers, miners, and more' ,
+        enabled: true,
+        urls: contentURLs,
+    });
+
+    // Regional rulesets
+    for ( const [ id, asset ] of Object.entries(assets) ) {
+        if ( asset.content !== 'filters' ) { continue; }
+        if ( asset.off !== true ) { continue; }
+        if ( typeof asset.lang !== 'string' ) { continue; }
+
+        const contentURL = Array.isArray(asset.contentURL)
+            ? asset.contentURL[0]
+            : asset.contentURL;
+        await rulesetFromURLS({
+            id: id.toLowerCase(),
+            lang: asset.lang,
+            name: asset.title,
+            enabled: false,
+            urls: [ contentURL ],
+        });
+    }
+
+    // Handpicked rulesets
+    const handpicked = [ 'block-lan', 'dpollock-0' ];
+    for ( const id of handpicked ) {
+        const asset = assets[id];
+        if ( asset.content !== 'filters' ) { continue; }
+
+        const contentURL = Array.isArray(asset.contentURL)
+            ? asset.contentURL[0]
+            : asset.contentURL;
+        await rulesetFromURLS({
+            id: id.toLowerCase(),
+            name: asset.title,
+            enabled: false,
+            urls: [ contentURL ],
+        });
     }
 
     writeOps.push(
         writeFile(
-            `${rulesetDir}/ruleset-details.js`,
-            `export default ${JSON.stringify(rulesetDetails, replacer, 2)};\n`
+            `${rulesetDir}/ruleset-details.json`,
+            `${JSON.stringify(rulesetDetails, replacer, 2)}\n`
         )
     );
 
@@ -276,7 +384,7 @@ async function main() {
     );
 
     // Log results
-    await fs.writeFile(`${outputDir}/log.txt`, output.join('\n') + '\n');
+    await fs.writeFile(`${outputDir}/log.txt`, stdOutput.join('\n') + '\n');
 }
 
 main();

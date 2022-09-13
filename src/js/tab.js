@@ -30,6 +30,7 @@ import staticNetFilteringEngine from './static-net-filtering.js';
 import µb from './background.js';
 import webext from './webext.js';
 import { PageStore } from './pagestore.js';
+import { i18n$ } from './i18n.js';
 
 import {
     sessionFirewall,
@@ -1052,7 +1053,7 @@ vAPI.tabs = new vAPI.Tabs();
     };
     const pageStore = new NoPageStore(vAPI.noTabId);
     µb.pageStores.set(pageStore.tabId, pageStore);
-    pageStore.title = vAPI.i18n('logBehindTheScene');
+    pageStore.title = i18n$('logBehindTheScene');
 }
 
 /******************************************************************************/

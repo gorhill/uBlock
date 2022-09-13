@@ -23,6 +23,8 @@
 
 'use strict';
 
+import { i18n, i18n$ } from './i18n.js';
+
 /******************************************************************************/
 
 (( ) => {
@@ -58,7 +60,7 @@ const fetchStorageUsed = async function() {
         elem.classList.add('hide');
         return;
     }
-    const units = ' ' + vAPI.i18n('genericBytes');
+    const units = ' ' + i18n$('genericBytes');
     elem.title = result.max.toLocaleString() + units;
     const total = (result.total / result.max * 100).toFixed(1);
     elem = elem.firstElementChild;
@@ -206,7 +208,7 @@ const onInitialize = function(options) {
 
         faIconsInit(widget);
 
-        vAPI.i18n.render(widget);
+        i18n.render(widget);
         widget.classList.remove('hide');
 
         uDom('#cloudPush').on('click', ( ) => { pushData(); });

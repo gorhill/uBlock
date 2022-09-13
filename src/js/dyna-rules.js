@@ -28,6 +28,7 @@
 import publicSuffixList from '../lib/publicsuffixlist/publicsuffixlist.js';
 
 import { hostnameFromURI } from './uri-utils.js';
+import { i18n$ } from './i18n.js';
 
 import './codemirror/ubo-dynamic-filtering.js';
 
@@ -80,13 +81,13 @@ let isCollapsed = false;
 // reliably the default title attribute assigned by CodeMirror.
 
 {
-    const i18nCommitStr = vAPI.i18n('rulesCommit');
-    const i18nRevertStr = vAPI.i18n('rulesRevert');
+    const i18nCommitStr = i18n$('rulesCommit');
+    const i18nRevertStr = i18n$('rulesRevert');
     const commitArrowSelector = '.CodeMirror-merge-copybuttons-left .CodeMirror-merge-copy-reverse:not([title="' + i18nCommitStr + '"])';
     const revertArrowSelector = '.CodeMirror-merge-copybuttons-left .CodeMirror-merge-copy:not([title="' + i18nRevertStr + '"])';
 
     uDom.nodeFromSelector('.CodeMirror-merge-scrolllock')
-        .setAttribute('title', vAPI.i18n('genericMergeViewScrollLock'));
+        .setAttribute('title', i18n$('genericMergeViewScrollLock'));
 
     const translate = function() {
         let elems = document.querySelectorAll(commitArrowSelector);
@@ -340,7 +341,7 @@ const startImportFilePicker = function() {
 /******************************************************************************/
 
 function exportUserRulesToFile() {
-    const filename = vAPI.i18n('rulesDefaultFileName')
+    const filename = i18n$('rulesDefaultFileName')
         .replace('{{datetime}}', uBlockDashboard.dateNowToSensibleString())
         .replace(/ +/g, '_');
     vAPI.download({

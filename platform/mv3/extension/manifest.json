@@ -16,6 +16,7 @@
     "rule_resources": [
     ]
   },
+  "default_locale": "en",
   "description": "uBO Minus is permission-less experimental MV3-based network request blocker",
   "icons": {
     "16": "img/icon_16.png",
@@ -26,6 +27,7 @@
   "manifest_version": 3,
   "minimum_chrome_version": "101.0",
   "name": "uBlock Origin Lite",
+  "options_page": "dashboard.html",
   "permissions": [
     "activeTab",
     "declarativeNetRequest"

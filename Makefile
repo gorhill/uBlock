@@ -1,11 +1,11 @@
 # https://stackoverflow.com/a/6273809
 run_options := $(filter-out $@,$(MAKECMDGOALS))
 
-.PHONY: all clean test lint chromium firefox npm dig mv3 \
+.PHONY: all clean test lint chromium firefox npm dig mv3 mv3-quick \
 	compare maxcost medcost mincost modifiers record wasm
 
 sources := $(wildcard assets/resources/* dist/version src/* src/*/* src/*/*/* src/*/*/*/*)
-platform := $(wildcard platform/* platform/*/* platform/*/*/*)
+platform := $(wildcard platform/* platform/*/* platform/*/*/* platform/*/*/*/*)
 assets := $(wildcard submodules/uAssets/* \
                      submodules/uAssets/*/* \
                      submodules/uAssets/*/*/* \
@@ -57,7 +57,7 @@ mv3: tools/make-mv3.sh $(sources) $(platform)
 
 mv3-quick: tools/make-mv3.sh $(sources) $(platform)
 	tools/make-mv3.sh quick
-	
+
 mv3-full: tools/make-mv3.sh $(sources) $(platform)
 	tools/make-mv3.sh full
 

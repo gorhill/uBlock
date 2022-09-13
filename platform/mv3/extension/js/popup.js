@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-present Raymond Hill
+    Copyright (C) 2022-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,32 +19,20 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* jshint esversion:11 */
+
 'use strict';
+
+/******************************************************************************/
+
+import { browser, sendMessage } from './ext.js';
+import { i18n$ } from './i18n.js';
+import { simpleStorage } from './storage.js';
 
 /******************************************************************************/
 
 let currentTab = {};
 let originalTrustedState = false;
-
-/******************************************************************************/
-
-class safeLocalStorage {
-    static getItem(k) {
-        try {
-            return self.localStorage.getItem(k);
-        }
-        catch(ex) {
-        }
-        return null;
-    }
-    static setItem(k, v) {
-        try {
-            self.localStorage.setItem(k, v);
-        }
-        catch(ex) {
-        }
-    }
-}
 
 /******************************************************************************/
 
@@ -57,7 +45,7 @@ async function toggleTrustedSiteDirective() {
     }
     if ( url instanceof URL === false ) { return; }
     const targetTrustedState = document.body.classList.contains('off');
-    const newTrustedState = await chrome.runtime.sendMessage({
+    const newTrustedState = await sendMessage({
         what: 'toggleTrustedSiteDirective',
         origin: url.origin,
         state: targetTrustedState,
@@ -75,7 +63,7 @@ async function toggleTrustedSiteDirective() {
 /******************************************************************************/
 
 function reloadTab(ev) {
-    chrome.tabs.reload(currentTab.id, {
+    browser.tabs.reload(currentTab.id, {
         bypassCache: ev.ctrlKey || ev.metaKey || ev.shiftKey,
     });
     document.body.classList.remove('needReload');
@@ -85,7 +73,7 @@ function reloadTab(ev) {
 /******************************************************************************/
 
 async function init() {
-    const [ tab ] = await chrome.tabs.query({ active: true });
+    const [ tab ] = await browser.tabs.query({ active: true });
     if ( tab instanceof Object === false ) { return true; }
     currentTab = tab;
 
@@ -97,7 +85,7 @@ async function init() {
 
     let popupPanelData;
     if ( url !== undefined ) {
-        popupPanelData = await chrome.runtime.sendMessage({
+        popupPanelData = await sendMessage({
             what: 'popupPanelData',
             origin: url.origin,
         });
@@ -126,7 +114,9 @@ async function init() {
             h1.textContent = details.name;
             parent.append(h1);
             const p = document.createElement('p');
-            p.textContent = `${details.ruleCount.toLocaleString()} rules, converted from ${details.filterCount.toLocaleString()} network filters`;
+            p.textContent = i18n$('perRulesetStats')
+                .replace('{{ruleCount}}', details.ruleCount.toLocaleString())
+                .replace('{{filterCount}}', details.filterCount.toLocaleString());
             parent.append(p);
         }
     }
@@ -189,12 +179,12 @@ async function toggleSections(more) {
     }
     if ( newBits === currentBits ) { return; }
     sectionBitsToAttribute(newBits);
-    safeLocalStorage.setItem('popupPanelSections', newBits);
+    simpleStorage.setItem('popupPanelSections', newBits);
 }
 
-sectionBitsToAttribute(
-    parseInt(safeLocalStorage.getItem('popupPanelSections'), 10)
-);
+simpleStorage.getItem('popupPanelSections').then(s => {
+    sectionBitsToAttribute(parseInt(s, 10) || 0);
+});
 
 document.querySelector('#moreButton').addEventListener('click', ( ) => {
     toggleSections(true);

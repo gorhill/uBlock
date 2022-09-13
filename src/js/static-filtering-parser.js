@@ -3176,10 +3176,17 @@ Parser.utils = Parser.prototype.utils = (( ) => {
         [ 'adguard_ext_safari', 'false' ],
     ]);
 
+    const toURL = url => {
+        try {
+            return new URL(url.trim());
+        } catch (ex) {
+        }
+    };
+
     class preparser {
         // This method returns an array of indices, corresponding to position in
         // the content string which should alternatively be parsed and discarded.
-        static splitter(content, env) {
+        static splitter(content, env = []) {
             const reIf = /^!#(if|endif)\b([^\n]*)(?:[\n\r]+|$)/gm;
             const stack = [];
             const shouldDiscard = ( ) => stack.some(v => v);
@@ -3205,7 +3212,6 @@ Parser.utils = Parser.prototype.utils = (( ) => {
                     }
                     stack.push(startDiscard);
                     break;
-
                 case 'endif':
                     stack.pop();
                     const stopDiscard = shouldDiscard() === false;
@@ -3214,7 +3220,6 @@ Parser.utils = Parser.prototype.utils = (( ) => {
                         discard = false;
                     }
                     break;
-
                 default:
                     break;
                 }
@@ -3222,6 +3227,47 @@ Parser.utils = Parser.prototype.utils = (( ) => {
 
             parts.push(content.length);
             return parts;
+        }
+
+        static expandIncludes(parts, env = []) {
+            const out = [];
+            const reInclude = /^!#include +(\S+)[^\n\r]*(?:[\n\r]+|$)/gm;
+            for ( const part of parts ) {
+                if ( typeof part === 'string' ) {
+                    out.push(part);
+                    continue;
+                }
+                if ( part instanceof Object === false ) { continue; }
+                const content = part.content;
+                const slices = this.splitter(content, env);
+                for ( let i = 0, n = slices.length - 1; i < n; i++ ) {
+                    const slice = content.slice(slices[i+0], slices[i+1]);
+                    if ( (i & 1) !== 0 ) {
+                        out.push(slice);
+                        continue;
+                    }
+                    let lastIndex = 0;
+                    for (;;) {
+                        const match = reInclude.exec(slice);
+                        if ( match === null ) { break; }
+                        if ( toURL(match[1]) !== undefined ) { continue; }
+                        if ( match[1].indexOf('..') !== -1 ) { continue; }
+                        // Compute nested list path relative to parent list path
+                        const pos = part.url.lastIndexOf('/');
+                        if ( pos === -1 ) { continue; }
+                        const subURL = part.url.slice(0, pos + 1) + match[1].trim();
+                        out.push(
+                            slice.slice(lastIndex, match.index + match[0].length),
+                            `! >>>>>>>> ${subURL}\n`,
+                            { url: subURL },
+                            `! <<<<<<<< ${subURL}\n`
+                        );
+                        lastIndex = reInclude.lastIndex;
+                    }
+                    out.push(lastIndex === 0 ? slice : slice.slice(lastIndex));
+                }
+            }
+            return out;
         }
 
         static prune(content, env) {

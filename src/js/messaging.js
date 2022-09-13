@@ -40,6 +40,7 @@ import µb from './background.js';
 import webRequest from './traffic.js';
 import { denseBase64 } from './base64-custom.js';
 import { dnrRulesetFromRawLists } from './static-dnr-filtering.js';
+import { i18n$ } from './i18n.js';
 import { redirectEngine } from './redirect-engine.js';
 import { StaticFilteringParser } from './static-filtering-parser.js';
 
@@ -1075,7 +1076,7 @@ const backupUserData = async function() {
         userFilters: userFilters.content,
     };
 
-    const filename = vAPI.i18n('aboutBackupFilename')
+    const filename = i18n$('aboutBackupFilename')
         .replace('{{datetime}}', µb.dateNowToSensibleString())
         .replace(/ +/g, '_');
     µb.restoreBackupSettings.lastBackupFile = filename;
@@ -1316,7 +1317,7 @@ const getShortcuts = function(callback) {
             let desc = command.description;
             let match = /^__MSG_(.+?)__$/.exec(desc);
             if ( match !== null ) {
-                desc = vAPI.i18n(match[1]);
+                desc = i18n$(match[1]);
             }
             if ( desc === '' ) { continue; }
             command.description = desc;

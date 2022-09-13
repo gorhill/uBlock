@@ -37,6 +37,7 @@ import staticFilteringReverseLookup from './reverselookup.js';
 import staticNetFilteringEngine from './static-net-filtering.js';
 import µb from './background.js';
 import { hostnameFromURI } from './uri-utils.js';
+import { i18n, i18n$ } from './i18n.js';
 import { redirectEngine } from './redirect-engine.js';
 import { sparseBase64 } from './base64-custom.js';
 import { StaticFilteringParser } from './static-filtering-parser.js';
@@ -625,7 +626,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     newAvailableLists[this.userFiltersPath] = {
         content: 'filters',
         group: 'user',
-        title: vAPI.i18n('1pPageName'),
+        title: i18n$('1pPageName'),
     };
 
     // Custom filter lists.
@@ -1392,7 +1393,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     if ( typeof details.lang === 'string' ) {
         let re = this.listMatchesEnvironment.reLang;
         if ( re === undefined ) {
-            const match = /^[a-z]+/.exec(browser.i18n.getUILanguage());
+            const match = /^[a-z]+/.exec(i18n.getUILanguage());
             if ( match !== null ) {
                 re = new RegExp('\\b' + match[0] + '\\b');
                 this.listMatchesEnvironment.reLang = re;

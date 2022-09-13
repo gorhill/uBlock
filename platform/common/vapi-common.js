@@ -112,18 +112,6 @@ vAPI.getURL = browser.runtime.getURL;
 
 /******************************************************************************/
 
-vAPI.i18n = browser.i18n.getMessage;
-
-// http://www.w3.org/International/questions/qa-scripts#directions
-document.body.setAttribute(
-    'dir',
-    ['ar', 'he', 'fa', 'ps', 'ur'].indexOf(vAPI.i18n('@@ui_locale')) !== -1
-        ? 'rtl'
-        : 'ltr'
-);
-
-/******************************************************************************/
-
 // https://github.com/gorhill/uBlock/issues/3057
 // - webNavigation.onCreatedNavigationTarget become broken on Firefox when we
 //   try to make the popup panel close itself using the original

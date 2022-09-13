@@ -27,12 +27,13 @@ import cacheStorage from './cachestorage.js';
 import logger from './logger.js';
 import µb from './background.js';
 import { StaticFilteringParser } from './static-filtering-parser.js';
+import { i18n$ } from './i18n.js';
 
 /******************************************************************************/
 
 const reIsExternalPath = /^(?:[a-z-]+):\/\//;
 const reIsUserAsset = /^user-/;
-const errorCantConnectTo = vAPI.i18n('errorCantConnectTo');
+const errorCantConnectTo = i18n$('errorCantConnectTo');
 
 const assets = {};
 

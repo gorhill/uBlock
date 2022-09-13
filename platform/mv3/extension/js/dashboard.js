@@ -19,9 +19,12 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global uDom */
-
 'use strict';
+
+/******************************************************************************/
+
+import { simpleStorage } from './storage.js';
+import { dom, qs$ } from './dom.js';
 
 /******************************************************************************/
 
@@ -40,7 +43,7 @@ const discardUnsavedData = function(synchronous = false) {
     }
 
     return new Promise(resolve => {
-        const modal = uDom.nodeFromId('unsavedWarning');
+        const modal = document.querySelector('#unsavedWarning');
         modal.classList.add('on');
         modal.focus();
 
@@ -69,18 +72,20 @@ const discardUnsavedData = function(synchronous = false) {
 };
 
 const loadDashboardPanel = function(pane, first) {
-    const tabButton = uDom.nodeFromSelector(`[data-pane="${pane}"]`);
+    const tabButton = document.querySelector(`[data-pane="${pane}"]`);
     if ( tabButton === null || tabButton.classList.contains('selected') ) {
         return;
     }
     const loadPane = ( ) => {
         self.location.replace(`#${pane}`);
-        uDom('.tabButton.selected').toggleClass('selected', false);
+        for ( const node of document.querySelectorAll('.tabButton.selected') ) {
+            node.classList.remove('selected');
+        }
         tabButton.classList.add('selected');
         tabButton.scrollIntoView();
-        uDom.nodeFromId('iframe').contentWindow.location.replace(pane);
+        document.querySelector('#iframe').contentWindow.location.replace(pane);
         if ( pane !== 'no-dashboard.html' ) {
-            vAPI.localStorage.setItem('dashboardLastVisitedPane', pane);
+            simpleStorage.setItem('dashboardLastVisitedPane', pane);
         }
     };
     if ( first ) {
@@ -106,40 +111,25 @@ if ( self.location.hash.slice(1) === 'no-dashboard.html' ) {
 }
 
 (async ( ) => {
-    const results = await Promise.all([
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/106
-        vAPI.messaging.send('dashboard', { what: 'dashboardConfig' }),
-        vAPI.localStorage.getItemAsync('dashboardLastVisitedPane'),
-    ]);
-
-    {
-        const details = results[0] || {};
-        document.body.classList.toggle(
-            'canUpdateShortcuts',
-            details.canUpdateShortcuts === true
-        );
-        if ( details.noDashboard ) {
-            self.location.hash = '#no-dashboard.html';
-            document.body.classList.add('noDashboard');
-        } else if ( self.location.hash === '#no-dashboard.html' ) {
-            self.location.hash = '';
-        }
+    let pane = null;
+    if ( self.location.hash !== '' ) {
+        pane = self.location.hash.slice(1) || null;
     }
+    loadDashboardPanel(pane !== null ? pane : '3p-filters.html', true);
 
-    {
-        let pane = results[1] || null;
-        if ( self.location.hash !== '' ) {
-            pane = self.location.hash.slice(1) || null;
-        }
-        loadDashboardPanel(pane !== null ? pane : 'settings.html', true);
+    dom.on(
+        qs$('#dashboard-nav'),
+        'click',
+        '.tabButton',
+        onTabClickHandler
+    );
 
-        uDom('.tabButton').on('click', onTabClickHandler);
-
-        // https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
-        window.addEventListener('beforeunload', ( ) => {
-            if ( discardUnsavedData(true) ) { return; }
-            event.preventDefault();
-            event.returnValue = '';
-        });
-    }
+    // https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
+    window.addEventListener('beforeunload', ( ) => {
+        if ( discardUnsavedData(true) ) { return; }
+        event.preventDefault();
+        event.returnValue = '';
+    });
 })();
+
+/******************************************************************************/

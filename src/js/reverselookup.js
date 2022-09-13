@@ -27,6 +27,7 @@ import staticNetFilteringEngine from './static-net-filtering.js';
 import µb from './background.js';
 import { CompiledListWriter } from './static-filtering-io.js';
 import { StaticFilteringParser } from './static-filtering-parser.js';
+import { i18n$ } from './i18n.js';
 
 import {
     domainFromHostname,
@@ -110,7 +111,7 @@ const initWorker = function() {
         entries.set(listKey, {
             title: listKey !== µb.userFiltersPath ?
                 entry.title :
-                vAPI.i18n('1pPageName'),
+                i18n$('1pPageName'),
             supportURL: entry.supportURL || ''
         });
     }

@@ -4,7 +4,6 @@
 	"eqeqeq": true,
 	"esversion": 8,
 	"globals": {
-		"browser": false,    // global variable in Firefox, Edge
 		"chrome": false,     // global variable in Chromium, Chrome, Opera
 		"self": false,
 		"vAPI": false,
