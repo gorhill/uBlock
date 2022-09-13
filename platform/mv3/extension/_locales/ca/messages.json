@@ -79,6 +79,14 @@
     "message": "Feu clic per revertir els canvis.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
+  "popupMoreButton": {
+    "message": "More",
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton": {
+    "message": "Less",
+    "description": "Label to be used to hide popup panel sections"
+  },
   "settingsIconBadgePrompt": {
     "message": "Mostra el nombre de sol·licituds blocades a la icona",
     "description": "English: Show the number of blocked requests on the icon"

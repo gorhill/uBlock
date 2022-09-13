@@ -79,6 +79,14 @@
     "message": "Klõpsa, et võtta muudatused tagasi.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
+  "popupMoreButton": {
+    "message": "More",
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton": {
+    "message": "Less",
+    "description": "Label to be used to hide popup panel sections"
+  },
   "settingsIconBadgePrompt": {
     "message": "Kuva ikoonil blokeeritud elementide arv",
     "description": "English: Show the number of blocked requests on the icon"

@@ -79,6 +79,14 @@
     "message": "Kumoa muutoksesi painamalla tästä.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
+  "popupMoreButton": {
+    "message": "More",
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton": {
+    "message": "Less",
+    "description": "Label to be used to hide popup panel sections"
+  },
   "settingsIconBadgePrompt": {
     "message": "Näytä estettyjen pyyntöjen määrä",
     "description": "English: Show the number of blocked requests on the icon"
