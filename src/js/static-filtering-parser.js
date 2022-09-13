@@ -1534,6 +1534,9 @@ Parser.prototype.SelectorCompiler = class {
     compileProceduralSelector(raw, asProcedural = false) {
         const compiled = this.compileProcedural(raw, true, asProcedural);
         if ( compiled !== undefined ) {
+            if ( asProcedural ) {
+                this.optimizeCompiledProcedural(compiled);
+            }
             compiled.raw = this.decompileProcedural(compiled);
         }
         return compiled;
@@ -1681,6 +1684,31 @@ Parser.prototype.SelectorCompiler = class {
         return s;
     }
 
+    optimizeCompiledProcedural(compiled) {
+        if ( typeof compiled === 'string' ) { return; }
+        if ( Array.isArray(compiled.tasks) === false ) { return; }
+        const tasks = [];
+        let selector = compiled.selector;
+        for ( const task of compiled.tasks ) {
+            switch ( task[0] ) {
+            case ':not':
+            case ':if-not':
+                this.optimizeCompiledProcedural(task[1]);
+                if ( tasks.length === 0 && typeof task[1] === 'string' ) {
+                    selector += `:not(${task[1]})`;
+                    break;
+                }
+                tasks.push(task);
+                break;
+            default:
+                tasks.push(task);
+                break;
+            }
+        }
+        compiled.selector = selector;
+        compiled.tasks = tasks.length !== 0 ? tasks : undefined;
+    }
+
     // https://github.com/gorhill/uBlock/issues/2793#issuecomment-333269387
     //   Normalize (somewhat) the stringified version of procedural
     //   cosmetic filters -- this increase the likelihood of detecting
@@ -1689,6 +1717,7 @@ Parser.prototype.SelectorCompiler = class {
     //   The normalized string version is what is reported in the logger,
     //   by design.
     decompileProcedural(compiled) {
+        if ( typeof compiled === 'string' ) { return compiled; }
         const tasks = compiled.tasks || [];
         const raw = [ compiled.selector ];
         for ( const task of tasks ) {
@@ -1725,6 +1754,10 @@ Parser.prototype.SelectorCompiler = class {
                 break;
             case ':not':
             case ':if-not':
+                if ( typeof(task[1]) === 'string' ) {
+                    raw.push(`:not(${task[1]})`);
+                    break;
+                }
                 raw.push(`:not(${this.decompileProcedural(task[1])})`);
                 break;
             case ':spath':
