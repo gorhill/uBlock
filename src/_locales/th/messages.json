@@ -504,7 +504,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "One URL per line. Invalid URLs will be silently ignored.",
+    "message": "หนึ่ง URL ต่อบรรทัด URL ที่ไม่ถูกต้องจะถูกละเว้น",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -528,7 +528,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "One filter per line. A filter can be a plain hostname, or an EasyList-compatible filter. Lines prefixed with <code>!</code> will be ignored.",
+    "message": "หนึ่งตัวกรองต่อบรรทัด ตัวกรองอาจเป็น hostname หรือตัวกรองที่เข้ากันได้กับ EasyList, บรรทัดที่ขึ้นต้นด้วย <code>!</code> จะถูกละเว้น\n",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -1116,7 +1116,7 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedTitle": {
-    "message": "Page blocked",
+    "message": "เพจถูกบล็อค",
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {
@@ -1160,7 +1160,7 @@
     "description": "English: Permanently"
   },
   "docblockedDisable": {
-    "message": "Proceed",
+    "message": "ดำเนินการ",
     "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {

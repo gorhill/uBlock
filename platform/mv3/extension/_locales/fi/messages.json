@@ -1,0 +1,202 @@
+{
+  "extName": {
+    "message": "uBlock Origin Lite",
+    "description": "extension name."
+  },
+  "extShortDesc": {
+    "message": "Kokeellinen, kevyempi sisällönesto, joka ei tarvitse erityisiä käyttöoikeuksia -- estää oletusarvoisesti mm. mainokset, seurannat ja mainarit.",
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
+  },
+  "perRulesetStats": {
+    "message": "{{ruleCount}} sääntöä, muunnettu {{filterCount}} verkkosuodattimesta",
+    "description": "Appears aside each filter list in the _3rd-party filters_ pane"
+  },
+  "dashboardName": {
+    "message": "uBO Lite — Hallintapaneeli",
+    "description": "English: uBO Lite — Dashboard"
+  },
+  "dashboardUnsavedWarning": {
+    "message": "Varoitus! Olet tehnyt muutoksia, joita ei ole vielä tallennettu",
+    "description": "A warning in the dashboard when navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningStay": {
+    "message": "Älä poistu",
+    "description": "Label for button to prevent navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningIgnore": {
+    "message": "Ohita",
+    "description": "Label for button to ignore unsaved changes"
+  },
+  "settingsPageName": {
+    "message": "Asetukset",
+    "description": "appears as tab name in dashboard"
+  },
+  "3pPageName": {
+    "message": "Suodatinlistat",
+    "description": "appears as tab name in dashboard"
+  },
+  "1pPageName": {
+    "message": "Omat suodattimet",
+    "description": "appears as tab name in dashboard"
+  },
+  "whitelistPageName": {
+    "message": "Luotetut sivustot",
+    "description": "appears as tab name in dashboard"
+  },
+  "aboutPageName": {
+    "message": "Tietoja",
+    "description": "appears as tab name in dashboard"
+  },
+  "aboutPrivacyPolicy": {
+    "message": "Tietosuojakäytäntö",
+    "description": "Link to privacy policy on GitHub (English)"
+  },
+  "popupPowerSwitchInfo": {
+    "message": "Poista uBO Lite käytöstä/ota se käyttöön tällä sivustolla",
+    "description": "Tooltip for the main power button in the popup panel"
+  },
+  "popupTipDashboard": {
+    "message": "Avaa hallintapaneeli",
+    "description": "English: Click to open the dashboard"
+  },
+  "popupTipZapper": {
+    "message": "Avaa elementtien piilotustila",
+    "description": "Tooltip for the element-zapper icon in the popup panel"
+  },
+  "popupTipPicker": {
+    "message": "Avaa elementtien valintatila",
+    "description": "English: Enter element picker mode"
+  },
+  "popupTipReport": {
+    "message": "Ilmoita ongelmasta tällä verkkosivustolla",
+    "description": "Tooltip used for the 'chat' icon in the panel"
+  },
+  "popupTipSaveRules": {
+    "message": "Tee muutoksistasi pysyviä painamalla tästä.",
+    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules": {
+    "message": "Kumoa muutoksesi painamalla tästä.",
+    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
+  },
+  "settingsIconBadgePrompt": {
+    "message": "Näytä estettyjen pyyntöjen määrä",
+    "description": "English: Show the number of blocked requests on the icon"
+  },
+  "settingsAppearance": {
+    "message": "Ulkoasu",
+    "description": "Section for controlling user interface appearance"
+  },
+  "settingsThemeLabel": {
+    "message": "Teema",
+    "description": "Label for checkbox to enable a custom dark theme"
+  },
+  "settingsThemeAccent0Label": {
+    "message": "Oma korostusväri",
+    "description": "Label for checkbox to pick an accent color"
+  },
+  "settingsNoCSPReportsPrompt": {
+    "message": "Estä CSP-raportit",
+    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
+  },
+  "3pGroupDefault": {
+    "message": "Oletus",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupAds": {
+    "message": "Mainokset",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupPrivacy": {
+    "message": "Tietosuoja",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupMalware": {
+    "message": "Haittaohjelmia jakelevat verkkotunnukset",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupAnnoyances": {
+    "message": "Ärsykkeet",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupMisc": {
+    "message": "Sekalaiset",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupRegions": {
+    "message": "Alueet, kielet",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "1pFormatHint": {
+    "message": "Yksi suodatin riviä kohden. Suodatin voi olla pelkkä osoite tai EasyList-yhteensopiva suodatin. Rivit, joiden alussa on <code>!</code>, ohitetaan.",
+    "description": "Short information about how to create custom filters"
+  },
+  "1pImport": {
+    "message": "Tuo ja lisää...",
+    "description": "English: Import and append"
+  },
+  "1pExport": {
+    "message": "Vie tiedostoon...",
+    "description": "English: Export"
+  },
+  "1pExportFilename": {
+    "message": "omat-staattiset-ublock-suodattimet_{{datetime}}.txt",
+    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
+  },
+  "whitelistPrompt": {
+    "message": "Luotettu sivusto -luokitukset määrittelevät millä sivuilla uBO Litea ei käytetä. Yksi osoite riviä kohden.",
+    "description": "A concise description of the 'Trusted sites' pane."
+  },
+  "whitelistImport": {
+    "message": "Tuo ja lisää...",
+    "description": "English: Import and append"
+  },
+  "whitelistExport": {
+    "message": "Vie tiedostoon...",
+    "description": "English: Export"
+  },
+  "whitelistExportFilename": {
+    "message": "omat-luotetut-ublock-sivustot_{{datetime}}.txt",
+    "description": "The default filename to use for import/export purpose"
+  },
+  "aboutChangelog": {
+    "message": "Muutoshistoria",
+    "description": ""
+  },
+  "aboutCode": {
+    "message": "Lähdekoodi (GPLv3)",
+    "description": "English: Source code (GPLv3)"
+  },
+  "aboutContributors": {
+    "message": "Avustajat",
+    "description": "English: Contributors"
+  },
+  "aboutSourceCode": {
+    "message": "Lähdekoodi",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "Käännökset",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "Suodatinlistat",
+    "description": "Link text to uBO's own filter lists repo"
+  },
+  "aboutDependencies": {
+    "message": "Ulkopuoliset riippuvuudet (GPLv3-yhteensopiva):",
+    "description": "Shown in the About pane"
+  },
+  "genericSubmit": {
+    "message": "Lähetä",
+    "description": "for generic 'Submit' buttons"
+  },
+  "genericApplyChanges": {
+    "message": "Käytä muutoksia",
+    "description": "for generic 'Apply changes' buttons"
+  },
+  "genericRevert": {
+    "message": "Palauta",
+    "description": "for generic 'Revert' buttons"
+  }
+}

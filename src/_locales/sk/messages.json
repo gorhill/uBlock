@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Biela listina",
+    "message": "Dôveryhodné stránky",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -276,11 +276,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilterTip": {
-    "message": "↑: Zvýrazniť riadky, ktoré majú skripty z tretej strany",
+    "message": "↑: Zvýrazniť riadky, ktoré majú skripty tretích strán",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party scripts' cell"
   },
   "popup3pFrameFilterTip": {
-    "message": "↑: Zvýrazniť riadky, ktoré majú rámy z tretej strany",
+    "message": "↑: Zvýrazniť riadky, ktoré majú rámy tretích strán",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party frames' cell"
   },
   "pickerCreate": {
@@ -312,7 +312,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Zablokovať prvok",
+    "message": "Zablokovať prvok…",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -340,11 +340,11 @@
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
-    "message": "Motív",
+    "message": "Téma",
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "Vlastná farba motívu",
+    "message": "Vlastná farba témy",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsCloudStorageEnabledPrompt": {
@@ -352,7 +352,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Som pokročilý používateľ (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>povinne prečítať</a>)",
+    "message": "Som pokročilý používateľ",
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
@@ -396,7 +396,7 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsUncloakCnamePrompt": {
-    "message": "Nemaskovať CNAME",
+    "message": "Odhaliť kanonické mená",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsAdvanced": {
@@ -444,7 +444,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Táto možnosť povoľuje analyzovanie a vynútenie <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">filtrov &ldquo;skrývajúcich prvky&rdquo; a kompatibilných s Adblock Plus</a>. Tieto filtre sú prevažne kozmetické. Skrývajú prvky webových stránok, ktoré sú vizuálne otravné a nemôžu byť zablokované filtrovaním sieťových požiadavkov.</p><p>Povolenie tejto funkcie zvyšujte nároky <i>uBlock₀</i> na pamäť.</p>",
+    "message": "Kozmetické filtre slúžia na skrytie prvkov na webovej stránke, ktoré sa považujú za vizuálne obťažujúce a ktoré nemôžu byť zablokované filtrovaním sieťových požiadavkov.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -452,7 +452,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Generické kozmetické filtre sú tie kozmetické filtre, ktoré sú určené na použitie na všetkých webových stránkach.<p>Aj keď ich uBlock₀ používa efektívne, generické kozmetické filtre môžu stále prispievať k zaťaženiu pamäte a procesora na niektorých webových stránkach, a to najmä na veľkých a zložitých.<p>Zapnutím tejto možnosti sa zníži zaťaženie pamäte a procesora v dôsledku použitia generických kozmetických filtrov pre webové stránky, a taktiež sa znížia nároky samotného rozšírenia uBlock₀ na pamäť.<p>Odporúča sa povoliť túto možnosť na menej výkonných zariadeniach.",
+    "message": "Generické kozmetické filtre sú tie kozmetické filtre, ktoré sú určené na použitie na všetkých webových stránkach. Zapnutím tejto možnosti sa zníži zaťaženie pamäte a procesora v dôsledku použitia generických kozmetických filtrov.\n\nOdporúča sa povoliť túto možnosť na menej výkonných zariadeniach.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
@@ -596,7 +596,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
-    "message": "Zoradenie:",
+    "message": "Zoradiť:",
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
@@ -608,11 +608,11 @@
     "description": "English: a sort option for list of rules."
   },
   "rulesSortByDestination": {
-    "message": "Doména",
+    "message": "Cieľ",
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "Zoznam hostiteľov, pre ktoré webové stránky bude uBlock Origin zakázaný. Jedna položka na riadok. Neplatní hostitelia budú ignorovaní a zakomentovaní.",
+    "message": "Zoznam dôveryhodných stránok pre ktoré bude uBlock Origin zakázaný. Jedna položka na riadok.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
@@ -624,7 +624,7 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "ublock-moja-biela-listina_{{datetime}}.txt",
+    "message": "ublock-doveryhodne-stranky_{{datetime}}.txt",
     "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
@@ -820,7 +820,7 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Statický filter <code>{{filter}}</code> sa nepodarilo nájsť v žiadnom momentálne povolenom zozname filtrov",
+    "message": "Statický filter sa nepodarilo nájsť v žiadnom momentálne povolenom zozname filtrov",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
@@ -928,7 +928,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Nahlásenie problémov so samotným uBlock Origin na <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>. Vyžaduje sa GitHub účet.",
+    "message": "Nahlásenie problémov so samotným uBlock Origin na<span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>. <u>Vyžaduje sa GitHub účet.</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
@@ -980,7 +980,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Je rozbitá, keď je povolený uBlock Origin",
+    "message": "Má problém s funkčnosťou, keď je povolený uBlock Origin",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
@@ -1032,11 +1032,11 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "Vlastné zoznamy filtrov uBO sú voľne dostupné na týchto stránkach <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a>",
+    "message": "Vlastné zoznamy filtrov uBO sú voľne dostupné na nasledujúcich <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a>:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "Keď bude potrebné aktualizovať zoznam filtrov, použije sa náhodne vybraná sieť CDN",
+    "message": "Pri aktualizácii zoznamu filtrov sa použije náhodne vybraná CDN.",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
@@ -1208,7 +1208,7 @@
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Pridať zoznam filtrov…",
+    "message": "Prihlásiť sa k odberu zoznamu filtrov…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
@@ -1228,7 +1228,7 @@
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "genericSelectAll": {
-    "message": "Označiť všetko",
+    "message": "Vybrať všetko",
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleCosmeticFiltering": {

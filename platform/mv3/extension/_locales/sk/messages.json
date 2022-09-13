@@ -1,0 +1,202 @@
+{
+  "extName": {
+    "message": "uBlock Origin Lite",
+    "description": "extension name."
+  },
+  "extShortDesc": {
+    "message": "Experimentálny blokátor obsahu bez povolení – predvolene blokuje reklamy, sledovacie programy, minery a ďalšie.",
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
+  },
+  "perRulesetStats": {
+    "message": "{{ruleCount}} pravidiel, prevedené z {{filterCount}} sieťových filtrov",
+    "description": "Appears aside each filter list in the _3rd-party filters_ pane"
+  },
+  "dashboardName": {
+    "message": "uBlock Lite — Ovládací panel",
+    "description": "English: uBO Lite — Dashboard"
+  },
+  "dashboardUnsavedWarning": {
+    "message": "Upozornenie! Máte neuložené zmeny",
+    "description": "A warning in the dashboard when navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningStay": {
+    "message": "Zostať",
+    "description": "Label for button to prevent navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningIgnore": {
+    "message": "Ignorovať",
+    "description": "Label for button to ignore unsaved changes"
+  },
+  "settingsPageName": {
+    "message": "Nastavenia",
+    "description": "appears as tab name in dashboard"
+  },
+  "3pPageName": {
+    "message": "Zoznam filtrov",
+    "description": "appears as tab name in dashboard"
+  },
+  "1pPageName": {
+    "message": "Moje filtre",
+    "description": "appears as tab name in dashboard"
+  },
+  "whitelistPageName": {
+    "message": "Dôveryhodné stránky",
+    "description": "appears as tab name in dashboard"
+  },
+  "aboutPageName": {
+    "message": "O doplnku",
+    "description": "appears as tab name in dashboard"
+  },
+  "aboutPrivacyPolicy": {
+    "message": "Zásady ochrany osobných údajov",
+    "description": "Link to privacy policy on GitHub (English)"
+  },
+  "popupPowerSwitchInfo": {
+    "message": "Zakázať/povoliť uBO Lite pre túto stránku",
+    "description": "Tooltip for the main power button in the popup panel"
+  },
+  "popupTipDashboard": {
+    "message": "Otvoriť ovládací panel",
+    "description": "English: Click to open the dashboard"
+  },
+  "popupTipZapper": {
+    "message": "Prejsť do režimu výberu prvku",
+    "description": "Tooltip for the element-zapper icon in the popup panel"
+  },
+  "popupTipPicker": {
+    "message": "Prejsť do režimu výberu prvku",
+    "description": "English: Enter element picker mode"
+  },
+  "popupTipReport": {
+    "message": "Nahlásiť problém na tejto webovej stránke",
+    "description": "Tooltip used for the 'chat' icon in the panel"
+  },
+  "popupTipSaveRules": {
+    "message": "Kliknutím použijete vaše zmeny.",
+    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules": {
+    "message": "Kliknutím vrátite vaše zmeny.",
+    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
+  },
+  "settingsIconBadgePrompt": {
+    "message": "Zobraziť počet zablokovaných požiadaviek na ikone",
+    "description": "English: Show the number of blocked requests on the icon"
+  },
+  "settingsAppearance": {
+    "message": "Vzhľad",
+    "description": "Section for controlling user interface appearance"
+  },
+  "settingsThemeLabel": {
+    "message": "Téma",
+    "description": "Label for checkbox to enable a custom dark theme"
+  },
+  "settingsThemeAccent0Label": {
+    "message": "Vlastná farba témy",
+    "description": "Label for checkbox to pick an accent color"
+  },
+  "settingsNoCSPReportsPrompt": {
+    "message": "Zablokovať CSP hlásenia",
+    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
+  },
+  "3pGroupDefault": {
+    "message": "Predvolené",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupAds": {
+    "message": "Reklamy",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupPrivacy": {
+    "message": "Súkromie",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupMalware": {
+    "message": "Domény malvéru",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupAnnoyances": {
+    "message": "Obťažujúce",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupMisc": {
+    "message": "Rôzne",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupRegions": {
+    "message": "Regióny, jazyky",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "1pFormatHint": {
+    "message": "Jeden filter na riadok. Filter môže byť jednoduchý názov hostiteľa alebo filter kompatibilný s Adblock Plus. Riadky začínajúce s <code>!</code> budú ignorované.",
+    "description": "Short information about how to create custom filters"
+  },
+  "1pImport": {
+    "message": "Importovať a pripojiť",
+    "description": "English: Import and append"
+  },
+  "1pExport": {
+    "message": "Exportovať",
+    "description": "English: Export"
+  },
+  "1pExportFilename": {
+    "message": "ublock-moje-statické-filtre_{{datetime}}.txt",
+    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
+  },
+  "whitelistPrompt": {
+    "message": "Zoznam dôveryhodných stránok pre ktoré bude uBO Lite zakázaný. Jedna položka na riadok.",
+    "description": "A concise description of the 'Trusted sites' pane."
+  },
+  "whitelistImport": {
+    "message": "Importovať a pripojiť",
+    "description": "English: Import and append"
+  },
+  "whitelistExport": {
+    "message": "Exportovať",
+    "description": "English: Export"
+  },
+  "whitelistExportFilename": {
+    "message": "ublock-doveryhodne-stranky_{{datetime}}.txt",
+    "description": "The default filename to use for import/export purpose"
+  },
+  "aboutChangelog": {
+    "message": "Zoznam zmien",
+    "description": ""
+  },
+  "aboutCode": {
+    "message": "Zdrojový kód (GPLv3)",
+    "description": "English: Source code (GPLv3)"
+  },
+  "aboutContributors": {
+    "message": "Prispievatelia",
+    "description": "English: Contributors"
+  },
+  "aboutSourceCode": {
+    "message": "Zdrojový kód",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "Preklady",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "Zoznam filtrov",
+    "description": "Link text to uBO's own filter lists repo"
+  },
+  "aboutDependencies": {
+    "message": "Externé závislosti (kompatibilné s GPLv3):",
+    "description": "Shown in the About pane"
+  },
+  "genericSubmit": {
+    "message": "Poslať",
+    "description": "for generic 'Submit' buttons"
+  },
+  "genericApplyChanges": {
+    "message": "Použiť zmeny",
+    "description": "for generic 'Apply changes' buttons"
+  },
+  "genericRevert": {
+    "message": "Vrátiť",
+    "description": "for generic 'Revert' buttons"
+  }
+}

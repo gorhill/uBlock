@@ -68,15 +68,15 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Klick: uBlock₀ für diese Website aktivieren/deaktivieren.\n\nStrg+Klick: uBlock₀ nur für die aktuelle Seite deaktivieren.",
+    "message": "Klick: uBlock₀ für diese Website ein-/ausschalten.\n\nStrg+Klick: uBlock₀ nur für die aktuelle Seite ausschalten.",
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Hier klicken, um uBlock₀ für diese Website zu deaktivieren. \n\nStrg+Klick, um uBlock₀ nur auf dieser Seite zu deaktivieren.",
+    "message": "Hier klicken, um uBlock₀ für diese Website auszuschalten. \n\nStrg+Klick, um uBlock₀ nur auf dieser Seite auszuschalten.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Hier klicken, um uBlock₀ für diese Website zu aktivieren.",
+    "message": "Hier klicken, um uBlock₀ für diese Website einzuschalten.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -424,7 +424,7 @@
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
-    "message": "{{used}} von {{total}} verwendet",
+    "message": "{{used}}/{{total}} verwendet",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {

@@ -612,7 +612,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "Arahan situs tepercaya menentukan halaman web mana yang uBlock Origin harus dinonaktifkan. Satu entri per baris.",
+    "message": "Arahan situs terpercaya menentukan pada halaman web mana uBlock Origin harus dinonaktifkan. Satu entri per baris.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {

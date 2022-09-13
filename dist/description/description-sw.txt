@@ -1,0 +1,49 @@
+Kizuizi kinachofaa: nyepesi kwenye kumbukumbu na nyayo za CPU, na bado inawezapakia na kuamrisha maelfu ya vichujio kuliko vizuizi vingine.
+
+Kielelezo cha ufanisi wake: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+
+Utumiaji: Kitufe kikubwa cha nishati kinalemaza/kuwezesha kabisa uBlock kwenye tovuti ya sasa. Inatekelezeka kwenye tovutio ya sasa pekee, si kitufe cha kila mahali.
+
+***
+
+Inawezabadilishwa, na ni zaidi ya "kizuizi cha matangazo": inawezasoma na kuunda vichujio kutoka faili za wenyeji.
+
+Punde inapoanza kutumiwa, vichujio hivi vinapakiwa na kuamrishwa:
+
+- EasyList
+-Orodha ya  Peter Lowe ya seva za matangazo
+- EasyPrivacy
+- Vikoa vya programu-hasidi
+
+Orodha zaidi zinawezateuliwa iwapo unataka:
+
+- Orodha fuatiliaji yake Fanboy iliyoboreshwa
+- Faili yake Dan Pollock ya wenyeji
+- seva za hpHosts za matangazo na ufuatiliaji
+- Wenyeji wa MVPS
+- Spam404
+- Na mengineo
+
+Inajulikana kuwa unavyowezesha vichujio zaidi, ndipo kumbukumbu inavyotumika zaidi. Hata hivyo, hata baada ya kuongeza orodha mbili anuwai za Fanboy, seva za hpHosts za matangazo, na za ufuatiliaji, uBlock bado inatumia kumbukumbu kidogo kuliko vizuizi vingine vinavyopatikana kule nje.
+
+Pia, unahamasishwa kuwa kuteua baadhi ya orodha hizi huenda kukaongeza hatari ya tovuti kuvunjika -- sana sana zile orodha ambazo hutumika kama faili za wenyeji.
+
+***
+
+Bila orodha setiawali za vichujio, kiendelezi hiki sii kitu. Kwa hivyo, iwapo ungependa kuchangia kitu cha maana, fikiria wale wanaotia bidii kudumisha orodha za vichujio unayotumia, na zilizofanywa huria kwa kila mmoja.
+
+***
+
+Huru
+Programu huria yenye leseni ya umma (GPLv3)
+Na watumiaji kwa watumiaji
+
+Wachangiaji @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Wachangiaji @ Crowdin: https://crowdin.net/project/ublock
+
+***
+
+It's quite an early version, keep this in mind when you review.
+
+Batli ya mabadiliko ya mradi:
+https://github.com/gorhill/uBlock/releases

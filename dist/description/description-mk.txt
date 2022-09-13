@@ -1,0 +1,49 @@
+Ефикасен блокер: лесен на меморија и процесор, но сепак може да вчита и да наметне илјадници филтри повеќе од другите популарни блокери.
+
+Илустриран преглед на ефикасноста: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+
+Користење: Големото копче за "струја" во попапот се користи за трајно да се исклучи/уклучи уБлок за моменталниот веб сајт. Се однесува само на моменталниот веб-страница, не е копче за глобално вклучување/исклучување.
+
+***
+
+Флексибилно, може да биде повеќе од само "блокирач на реклами": може исто да чита и прави филтери од хост фајлови.
+
+Без подесување, овие списоци на филтри се вчитуваат и се присилуваат:
+
+- EasyList (ИзиЛиста)
+- Peter Lowe’s Ad server list (Peter Lowe’s листа на рекламни сервери)
+- EasyPrivacy (ЛеснаПриватност)
+- Домени на малвер
+
+Повеќе листи се достапни за вас да ги одберете ако сакате:
+
+- Fanboy’s Enhanced Tracking List
+- Dan Pollock’s hosts file
+- hpHosts’s Ad and tracking servers
+- MVPS HOSTS
+- Spam404
+- и много други
+
+Се разбира, што повеќе филтри се enabled, поголема ќе биде зафатената меморија. Yet, even after adding Fanboy's two extra lists, hpHosts’s Ad and tracking servers, uBlock still has a lower memory footprint than other very popular blockers out there.
+
+Also, be aware that selecting some of these extra lists may lead to higher likelihood of web site breakage -- especially those lists which are normally used as hosts file.
+
+***
+
+Without the preset lists of filters, this extension is nothing. So if ever you really do want to contribute something, think about the people working hard to maintain the filter lists you are using, which were made available to use by all for free.
+
+***
+
+Бесплатно.
+Отворен изворен код со јавна лиценза (ГПЛв3)
+За корисници од корисници.
+
+Соработници @ Гитхаб: https://github.com/gorhill/uBlock/graphs/contributors
+Преведување @ Crowdin: https://crowdin.net/project/ublock
+
+***
+
+It's quite an early version, keep this in mind when you review.
+
+Project change log:
+https://github.com/gorhill/uBlock/releases

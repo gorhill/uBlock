@@ -1,0 +1,49 @@
+Səmərəli bir əngəlləyici: yaddaş və prosessor yükünü artırmadığı halda digər məşhur əngəlləyicilərlə müqayisədə minlərlə daha çox filtri dəstəkləyir.
+
+Proqramın səmərəliliyinə dair ümumi əyani məlumat: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+
+İstifadə: Açılan pəncərədəki böyük açar düyməsi uBlock₀-u cari veb-saytda işə salmaq/dayandırmaq üçündür. Bu zaman uBlock₀ bütün veb-saytlarda deyil, yalnız cari veb-saytda işə düşür/dayandırılır.
+
+***
+
+Uyuşqan olmaqla yanaşı, uBlock₀ adi reklam əngəlləyicisindən fərqli olaraq domen adlarının olduğu faylları oxuya və yarada bilir.
+
+Standart rejimdə aşağıdakı filtr siyahıları yüklənəcək və tətbiq olunacaq:
+
+- EasyList
+- Peter Lowe-dan reklam serverləri siyahısı
+- EasyPrivacy
+- Zərərli domenlər
+
+Əlavə olaraq aşağıdakı siyahıları da seçə bilərsiniz:
+
+- Fanboy-dan izləmə serverlərinin genişləndirilmiş siyahısı
+- Dan Pollock-dan veb-domenlər faylı
+- hpHosts reklam və izləmə serverləri siyahısı
+- MVPS veb-domenləri
+- Spam404
+- Və bir çox başqaları
+
+Təbii ki, hər yeni seçilən filtrlər siyahısı yaddaş yükünü də artırır. Buna baxmayaraq, Fanboy-dan iki əlavə siyahı və hpHosts reklam və izləmə serverləri siyahısını seçsəniz belə, uBlock₀ digər məşhur reklam əngəlləyicilərindən fərqli olaraq yaddaşda daha az yer tutur.
+
+Həmçinin nəzərə alın ki, əlavə siyahıların bəzisini -- xüsusən tərkibində domen adları olan siyahıları seçdikdə, veb-saytın düzgün yüklənməməsi ehtimalı da artır.
+
+***
+
+Əvvəldən quraşdırılmış filtr siyahıları olmadan, uBlock₀ heç bir işə yaramır. Ona görə də, əgər siz həqiqətən bir töfhə vermək istəyirsinizsə, hər kəsin istifadəsinə pulsuz təqdim olunan filtr siyahılarını yorulmadan dəstəkləyən insanlar haqqında düşünün.
+
+***
+
+Pulsuz.
+Ümumi lisenziyalı (GPLv3) açıq mənbə kodu.
+İstifadəçilər tərəfindən istifadəçilər üçün.
+
+Github-a qoşulan iştirakçılarımız: https://github.com/gorhill/uBlock/graphs/contributors
+Crowdin-ə qoşulan iştirakçılarımız: https://crowdin.net/project/ublock
+
+***
+
+It's quite an early version, keep this in mind when you review.
+
+Layihəyə edilmiş dəyişikliklərin siyahısı:
+https://github.com/gorhill/uBlock/releases

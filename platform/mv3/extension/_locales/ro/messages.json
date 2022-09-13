@@ -1,0 +1,202 @@
+{
+  "extName": {
+    "message": "ubock Origin Lite",
+    "description": "extension name."
+  },
+  "extShortDesc": {
+    "message": "Un blocant de conținut experimental, care nu necesită permisiuni - blochează implicit reclame, elemente de urmărire, scripturi de minat etc.",
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
+  },
+  "perRulesetStats": {
+    "message": "{{ruleCount}} de reguli convertite din {{filterCount}} filtre de rețea",
+    "description": "Appears aside each filter list in the _3rd-party filters_ pane"
+  },
+  "dashboardName": {
+    "message": "uBO Lite — Panou de control",
+    "description": "English: uBO Lite — Dashboard"
+  },
+  "dashboardUnsavedWarning": {
+    "message": "Atenție! Ai modificări nesalvate",
+    "description": "A warning in the dashboard when navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningStay": {
+    "message": "Așteaptă",
+    "description": "Label for button to prevent navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningIgnore": {
+    "message": "Ignoră",
+    "description": "Label for button to ignore unsaved changes"
+  },
+  "settingsPageName": {
+    "message": "Configurări",
+    "description": "appears as tab name in dashboard"
+  },
+  "3pPageName": {
+    "message": "Liste de filtre",
+    "description": "appears as tab name in dashboard"
+  },
+  "1pPageName": {
+    "message": "Filtrele mele",
+    "description": "appears as tab name in dashboard"
+  },
+  "whitelistPageName": {
+    "message": "Siteuri de încredere",
+    "description": "appears as tab name in dashboard"
+  },
+  "aboutPageName": {
+    "message": "Despre",
+    "description": "appears as tab name in dashboard"
+  },
+  "aboutPrivacyPolicy": {
+    "message": "Politică de confidențialitate",
+    "description": "Link to privacy policy on GitHub (English)"
+  },
+  "popupPowerSwitchInfo": {
+    "message": "Dezactivează/activează uBO Lite pentru acest site",
+    "description": "Tooltip for the main power button in the popup panel"
+  },
+  "popupTipDashboard": {
+    "message": "Deschide panoul de control",
+    "description": "English: Click to open the dashboard"
+  },
+  "popupTipZapper": {
+    "message": "Accesați modul de eliminare elemente",
+    "description": "Tooltip for the element-zapper icon in the popup panel"
+  },
+  "popupTipPicker": {
+    "message": "Modul alege element",
+    "description": "English: Enter element picker mode"
+  },
+  "popupTipReport": {
+    "message": "Raportează o eroare cu acest site",
+    "description": "Tooltip used for the 'chat' icon in the panel"
+  },
+  "popupTipSaveRules": {
+    "message": "Apasă pentru a face modificările permanente.",
+    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules": {
+    "message": "Apasă pentru a renunța la modificări.",
+    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
+  },
+  "settingsIconBadgePrompt": {
+    "message": "Arată numărul cererilor blocate pe pictogramă",
+    "description": "English: Show the number of blocked requests on the icon"
+  },
+  "settingsAppearance": {
+    "message": "Aspect",
+    "description": "Section for controlling user interface appearance"
+  },
+  "settingsThemeLabel": {
+    "message": "Temă",
+    "description": "Label for checkbox to enable a custom dark theme"
+  },
+  "settingsThemeAccent0Label": {
+    "message": "Culoare de accentuare personalizată",
+    "description": "Label for checkbox to pick an accent color"
+  },
+  "settingsNoCSPReportsPrompt": {
+    "message": "Blochează rapoartele CSP",
+    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
+  },
+  "3pGroupDefault": {
+    "message": "Implicit",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupAds": {
+    "message": "Reclame",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupPrivacy": {
+    "message": "Confidențialitate",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupMalware": {
+    "message": "Domenii malițioase",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupAnnoyances": {
+    "message": "Neplăceri",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupMisc": {
+    "message": "Diverse",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupRegions": {
+    "message": "Regiuni, limbi",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "1pFormatHint": {
+    "message": "Un filtru pe linie. Un filtru poate fi un simplu nume de gazdă sau un filtru compatibil EasyList. Liniile precedate de <code>!</code> vor fi ignorate.",
+    "description": "Short information about how to create custom filters"
+  },
+  "1pImport": {
+    "message": "Importă și adaugă",
+    "description": "English: Import and append"
+  },
+  "1pExport": {
+    "message": "Exportă",
+    "description": "English: Export"
+  },
+  "1pExportFilename": {
+    "message": "filtrele-mele-statice-ublock_{{datetime}}.txt",
+    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
+  },
+  "whitelistPrompt": {
+    "message": "Instrucțiunile pentru site-uri de încredere specifică paginile pentru care uBO Lite trebuie dezactivat. O intrare pe linie.",
+    "description": "A concise description of the 'Trusted sites' pane."
+  },
+  "whitelistImport": {
+    "message": "Importă și adaugă",
+    "description": "English: Import and append"
+  },
+  "whitelistExport": {
+    "message": "Exportă",
+    "description": "English: Export"
+  },
+  "whitelistExportFilename": {
+    "message": "filtrele-mele-siteuri-de-incredere-ublock_{{datetime}}.txt",
+    "description": "The default filename to use for import/export purpose"
+  },
+  "aboutChangelog": {
+    "message": "Jurnal de modificări",
+    "description": ""
+  },
+  "aboutCode": {
+    "message": "Cod sursă (GPLv3)",
+    "description": "English: Source code (GPLv3)"
+  },
+  "aboutContributors": {
+    "message": "Contribuitori",
+    "description": "English: Contributors"
+  },
+  "aboutSourceCode": {
+    "message": "Cod sursă",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "Traduceri",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "Liste de filtre",
+    "description": "Link text to uBO's own filter lists repo"
+  },
+  "aboutDependencies": {
+    "message": "Dependențe externe (compatibile GPLv3):",
+    "description": "Shown in the About pane"
+  },
+  "genericSubmit": {
+    "message": "Trimite",
+    "description": "for generic 'Submit' buttons"
+  },
+  "genericApplyChanges": {
+    "message": "Aplică modificările",
+    "description": "for generic 'Apply changes' buttons"
+  },
+  "genericRevert": {
+    "message": "Înlătură",
+    "description": "for generic 'Revert' buttons"
+  }
+}

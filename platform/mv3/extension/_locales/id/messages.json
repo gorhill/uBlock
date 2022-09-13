@@ -1,0 +1,202 @@
+{
+  "extName": {
+    "message": "uBlock Origin Lite",
+    "description": "extension name."
+  },
+  "extShortDesc": {
+    "message": "Pemblokir konten eksperimental yang cepat dan ringan -- memblokir iklan, pelacak, penambang kripto dan lainnya secara bawaan.",
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
+  },
+  "perRulesetStats": {
+    "message": "{{ruleCount}} aturan, dikonversi dari {{filterCount}} filter jaringan",
+    "description": "Appears aside each filter list in the _3rd-party filters_ pane"
+  },
+  "dashboardName": {
+    "message": "uBO Lite — Dasbor",
+    "description": "English: uBO Lite — Dashboard"
+  },
+  "dashboardUnsavedWarning": {
+    "message": "Peringatan! Anda memiliki perubahan yang belum disimpan",
+    "description": "A warning in the dashboard when navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningStay": {
+    "message": "Tinggal",
+    "description": "Label for button to prevent navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningIgnore": {
+    "message": "Abaikan",
+    "description": "Label for button to ignore unsaved changes"
+  },
+  "settingsPageName": {
+    "message": "Pengaturan",
+    "description": "appears as tab name in dashboard"
+  },
+  "3pPageName": {
+    "message": "Daftar Filter",
+    "description": "appears as tab name in dashboard"
+  },
+  "1pPageName": {
+    "message": "Filter Saya",
+    "description": "appears as tab name in dashboard"
+  },
+  "whitelistPageName": {
+    "message": "Situs Terpercaya",
+    "description": "appears as tab name in dashboard"
+  },
+  "aboutPageName": {
+    "message": "Tentang",
+    "description": "appears as tab name in dashboard"
+  },
+  "aboutPrivacyPolicy": {
+    "message": "Kebijakan privasi",
+    "description": "Link to privacy policy on GitHub (English)"
+  },
+  "popupPowerSwitchInfo": {
+    "message": "Aktif/nonaktifkan uBO Lite untuk situs ini",
+    "description": "Tooltip for the main power button in the popup panel"
+  },
+  "popupTipDashboard": {
+    "message": "Buka dasbor",
+    "description": "English: Click to open the dashboard"
+  },
+  "popupTipZapper": {
+    "message": "Memasuki mode penghapus elemen",
+    "description": "Tooltip for the element-zapper icon in the popup panel"
+  },
+  "popupTipPicker": {
+    "message": "Memasuki mode pemilihan elemen",
+    "description": "English: Enter element picker mode"
+  },
+  "popupTipReport": {
+    "message": "Laporkan masalah situs web ini",
+    "description": "Tooltip used for the 'chat' icon in the panel"
+  },
+  "popupTipSaveRules": {
+    "message": "Klik untuk membuat ubahan Anda permanen.",
+    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules": {
+    "message": "Klik untuk membatalkan ubahan Anda.",
+    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
+  },
+  "settingsIconBadgePrompt": {
+    "message": "Tampilkan jumlah permintaan yang diblokir pada ikon",
+    "description": "English: Show the number of blocked requests on the icon"
+  },
+  "settingsAppearance": {
+    "message": "Tampilan",
+    "description": "Section for controlling user interface appearance"
+  },
+  "settingsThemeLabel": {
+    "message": "Tema",
+    "description": "Label for checkbox to enable a custom dark theme"
+  },
+  "settingsThemeAccent0Label": {
+    "message": "Warna aksen khusus",
+    "description": "Label for checkbox to pick an accent color"
+  },
+  "settingsNoCSPReportsPrompt": {
+    "message": "Blokir laporan CSP",
+    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
+  },
+  "3pGroupDefault": {
+    "message": "Bawaan",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupAds": {
+    "message": "Iklan",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupPrivacy": {
+    "message": "Privasi",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupMalware": {
+    "message": "Domain malware",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupAnnoyances": {
+    "message": "Gangguan",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupMisc": {
+    "message": "Lainnya",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupRegions": {
+    "message": "Wilayah, bahasa",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "1pFormatHint": {
+    "message": "Satu filter per baris. Filter dapat berupa nama hos, atau filter yang kompatibel dengan EasyList. Baris yang diawali dengan <code>!</code> akan diabaikan.",
+    "description": "Short information about how to create custom filters"
+  },
+  "1pImport": {
+    "message": "Impor dan tambahkan",
+    "description": "English: Import and append"
+  },
+  "1pExport": {
+    "message": "Ekspor",
+    "description": "English: Export"
+  },
+  "1pExportFilename": {
+    "message": "my-ublock-static-filters_{{datetime}}.txt",
+    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
+  },
+  "whitelistPrompt": {
+    "message": "Arahan situs terpercaya menentukan pada halaman web mana uBO Lite harus dinonaktifkan. Satu entri per baris.",
+    "description": "A concise description of the 'Trusted sites' pane."
+  },
+  "whitelistImport": {
+    "message": "Impor dan tambahkan",
+    "description": "English: Import and append"
+  },
+  "whitelistExport": {
+    "message": "Ekspor",
+    "description": "English: Export"
+  },
+  "whitelistExportFilename": {
+    "message": "my-ublock-trusted-sites_{{datetime}}.txt",
+    "description": "The default filename to use for import/export purpose"
+  },
+  "aboutChangelog": {
+    "message": "Catatan perubahan",
+    "description": ""
+  },
+  "aboutCode": {
+    "message": "Kode sumber (GPLv3)",
+    "description": "English: Source code (GPLv3)"
+  },
+  "aboutContributors": {
+    "message": "Kontributor",
+    "description": "English: Contributors"
+  },
+  "aboutSourceCode": {
+    "message": "Kode sumber",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "Terjemahan",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "Daftar filter",
+    "description": "Link text to uBO's own filter lists repo"
+  },
+  "aboutDependencies": {
+    "message": "Dependensi eksternal (kompatibel GPLv3):",
+    "description": "Shown in the About pane"
+  },
+  "genericSubmit": {
+    "message": "Kirim",
+    "description": "for generic 'Submit' buttons"
+  },
+  "genericApplyChanges": {
+    "message": "Terapkan perubahan",
+    "description": "for generic 'Apply changes' buttons"
+  },
+  "genericRevert": {
+    "message": "Urungkan",
+    "description": "for generic 'Revert' buttons"
+  }
+}

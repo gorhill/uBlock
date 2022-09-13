@@ -1144,7 +1144,7 @@
     "description": "English: Close this window"
   },
   "docblockedDontWarn": {
-    "message": "このサイトでは二度と警告しない",
+    "message": "次回からこのサイトについて警告を表示しない",
     "description": "Label for checkbox in document-blocked page"
   },
   "docblockedProceed": {
@@ -1160,7 +1160,7 @@
     "description": "English: Permanently"
   },
   "docblockedDisable": {
-    "message": "続行する",
+    "message": "続行",
     "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {

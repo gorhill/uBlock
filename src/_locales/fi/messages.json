@@ -116,7 +116,7 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Avaa elementin piilotustila",
+    "message": "Avaa elementtien piilotustila",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
@@ -320,7 +320,7 @@
     "description": "English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt": {
-    "message": "Näytä estettyjen pyyntöjen määrä työkalupalkin kuvakkeessa",
+    "message": "Näytä estettyjen pyyntöjen määrä",
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
@@ -536,7 +536,7 @@
     "description": "English: Import and append"
   },
   "1pExport": {
-    "message": "Vie tiedostoon",
+    "message": "Vie tiedostoon...",
     "description": "English: Export"
   },
   "1pExportFilename": {
@@ -580,7 +580,7 @@
     "description": ""
   },
   "rulesExport": {
-    "message": "Vie tiedostoon",
+    "message": "Vie tiedostoon...",
     "description": ""
   },
   "rulesDefaultFileName": {
@@ -620,7 +620,7 @@
     "description": "English: Import and append"
   },
   "whitelistExport": {
-    "message": "Vie tiedostoon",
+    "message": "Vie tiedostoon...",
     "description": "English: Export"
   },
   "whitelistExportFilename": {

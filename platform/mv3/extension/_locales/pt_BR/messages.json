@@ -1,0 +1,202 @@
+{
+  "extName": {
+    "message": "uBlock Origin Lite",
+    "description": "extension name."
+  },
+  "extShortDesc": {
+    "message": "Um bloqueador de conteúdo leve, experimental e sem uso permissões - bloqueie anúncios, rastreadores, mineradores e muito mais por padrão",
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
+  },
+  "perRulesetStats": {
+    "message": "{{ruleCount}} regras, convertidas de {{filterCount}} filtros de rede",
+    "description": "Appears aside each filter list in the _3rd-party filters_ pane"
+  },
+  "dashboardName": {
+    "message": "uBO Lite — Painel",
+    "description": "English: uBO Lite — Dashboard"
+  },
+  "dashboardUnsavedWarning": {
+    "message": "Aviso! Você não salvou as mudanças",
+    "description": "A warning in the dashboard when navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningStay": {
+    "message": "Manter",
+    "description": "Label for button to prevent navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningIgnore": {
+    "message": "Ignorar",
+    "description": "Label for button to ignore unsaved changes"
+  },
+  "settingsPageName": {
+    "message": "Configurações",
+    "description": "appears as tab name in dashboard"
+  },
+  "3pPageName": {
+    "message": "Listas de filtros",
+    "description": "appears as tab name in dashboard"
+  },
+  "1pPageName": {
+    "message": "Meus filtros",
+    "description": "appears as tab name in dashboard"
+  },
+  "whitelistPageName": {
+    "message": "Sites confiáveis",
+    "description": "appears as tab name in dashboard"
+  },
+  "aboutPageName": {
+    "message": "Sobre",
+    "description": "appears as tab name in dashboard"
+  },
+  "aboutPrivacyPolicy": {
+    "message": "Política de privacidade",
+    "description": "Link to privacy policy on GitHub (English)"
+  },
+  "popupPowerSwitchInfo": {
+    "message": "Desabilitar/habilitar uBO Lite para este site",
+    "description": "Tooltip for the main power button in the popup panel"
+  },
+  "popupTipDashboard": {
+    "message": "Abrir painel",
+    "description": "English: Click to open the dashboard"
+  },
+  "popupTipZapper": {
+    "message": "Entrar no modo de exclusão de elemento",
+    "description": "Tooltip for the element-zapper icon in the popup panel"
+  },
+  "popupTipPicker": {
+    "message": "Entrar no modo de seleção de elemento",
+    "description": "English: Enter element picker mode"
+  },
+  "popupTipReport": {
+    "message": "Reportar um problema com este website",
+    "description": "Tooltip used for the 'chat' icon in the panel"
+  },
+  "popupTipSaveRules": {
+    "message": "Clique para tornar suas alterações permanentes.",
+    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules": {
+    "message": "Clique para reverter suas alterações.",
+    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
+  },
+  "settingsIconBadgePrompt": {
+    "message": "Mostrar o número de solicitações bloqueadas no ícone",
+    "description": "English: Show the number of blocked requests on the icon"
+  },
+  "settingsAppearance": {
+    "message": "Aparência",
+    "description": "Section for controlling user interface appearance"
+  },
+  "settingsThemeLabel": {
+    "message": "Tema",
+    "description": "Label for checkbox to enable a custom dark theme"
+  },
+  "settingsThemeAccent0Label": {
+    "message": "Cor de destaque personalizada",
+    "description": "Label for checkbox to pick an accent color"
+  },
+  "settingsNoCSPReportsPrompt": {
+    "message": "Bloquear relatórios CSP",
+    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
+  },
+  "3pGroupDefault": {
+    "message": "Padrão",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupAds": {
+    "message": "Anúncios",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupPrivacy": {
+    "message": "Privacidade",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupMalware": {
+    "message": "Domínios de malware",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupAnnoyances": {
+    "message": "Aborrecimentos",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupMisc": {
+    "message": "Diversos",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupRegions": {
+    "message": "Regiões, idiomas",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "1pFormatHint": {
+    "message": "Um filtro por linha. O filtro pode ser um simples nome de servidor ou um filtro compatível com Adblock Plus. Linhas com prefixo <code>!</code> serão ignoradas.",
+    "description": "Short information about how to create custom filters"
+  },
+  "1pImport": {
+    "message": "Importar e adicionar",
+    "description": "English: Import and append"
+  },
+  "1pExport": {
+    "message": "Exportar",
+    "description": "English: Export"
+  },
+  "1pExportFilename": {
+    "message": "meus-filtros-estáticos-do-ublock_{{datetime}}.txt",
+    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
+  },
+  "whitelistPrompt": {
+    "message": "As diretivas dos sites confiáveis ditam em quais páginas da web o uBO Lite deve ser desativado. Uma entrada por linha.",
+    "description": "A concise description of the 'Trusted sites' pane."
+  },
+  "whitelistImport": {
+    "message": "Importar e adicionar",
+    "description": "English: Import and append"
+  },
+  "whitelistExport": {
+    "message": "Exportar",
+    "description": "English: Export"
+  },
+  "whitelistExportFilename": {
+    "message": "meus-sites-confiáveis-do-ublock_{{datetime}}.txt",
+    "description": "The default filename to use for import/export purpose"
+  },
+  "aboutChangelog": {
+    "message": "Registro de alterações",
+    "description": ""
+  },
+  "aboutCode": {
+    "message": "Código-fonte (GPLv3)",
+    "description": "English: Source code (GPLv3)"
+  },
+  "aboutContributors": {
+    "message": "Colaboradores",
+    "description": "English: Contributors"
+  },
+  "aboutSourceCode": {
+    "message": "Código fonte",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "Traduções",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "Listas de filtros",
+    "description": "Link text to uBO's own filter lists repo"
+  },
+  "aboutDependencies": {
+    "message": "Dependências externas (compatíveis com GPLv3):",
+    "description": "Shown in the About pane"
+  },
+  "genericSubmit": {
+    "message": "Enviar",
+    "description": "for generic 'Submit' buttons"
+  },
+  "genericApplyChanges": {
+    "message": "Aplicar mudanças",
+    "description": "for generic 'Apply changes' buttons"
+  },
+  "genericRevert": {
+    "message": "Reverter",
+    "description": "for generic 'Revert' buttons"
+  }
+}
