@@ -56,7 +56,7 @@
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/filters.txt",
 			"https://combinatronics.io/uBlockOrigin/uAssetsCDN/main/filters/filters.txt"
 		],
-		"supportURL": "https://github.com/uBlockOrigin/uAssets/issues"
+		"supportURL": "https://github.com/uBlockOrigin/uAssets"
 	},
 	"ublock-badware": {
 		"content": "filters",
@@ -74,7 +74,7 @@
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/badware.txt",
 			"https://combinatronics.io/uBlockOrigin/uAssetsCDN/main/filters/badware.txt"
 		],
-		"supportURL": "https://github.com/gorhill/uBlock/wiki/Badware-risks",
+		"supportURL": "https://github.com/uBlockOrigin/uAssets",
 		"instructionURL": "https://github.com/gorhill/uBlock/wiki/Badware-risks"
 	},
 	"ublock-privacy": {
@@ -93,7 +93,8 @@
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/filters/privacy.txt",
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/privacy.txt",
 			"https://combinatronics.io/uBlockOrigin/uAssetsCDN/main/filters/privacy.txt"
-		]
+		],
+		"supportURL": "https://github.com/uBlockOrigin/uAssets"
 	},
 	"ublock-abuse": {
 		"content": "filters",
@@ -111,7 +112,8 @@
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/filters/resource-abuse.txt",
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/resource-abuse.txt",
 			"https://combinatronics.io/uBlockOrigin/uAssetsCDN/main/filters/resource-abuse.txt"
-		]
+		],
+		"supportURL": "https://github.com/uBlockOrigin/uAssets"
 	},
 	"ublock-unbreak": {
 		"content": "filters",
@@ -128,7 +130,8 @@
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/filters/unbreak.txt",
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/unbreak.txt",
 			"https://combinatronics.io/uBlockOrigin/uAssetsCDN/main/filters/unbreak.txt"
-		]
+		],
+		"supportURL": "https://github.com/uBlockOrigin/uAssets"
 	},
 	"ublock-quick-fixes": {
 		"content": "filters",
@@ -146,7 +149,8 @@
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/filters/quick-fixes.txt",
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/quick-fixes.txt",
 			"https://combinatronics.io/uBlockOrigin/uAssetsCDN/main/filters/quick-fixes.txt"
-		]
+		],
+		"supportURL": "https://github.com/uBlockOrigin/uAssets"
 	},
 	"adguard-generic": {
 		"content": "filters",
@@ -211,7 +215,7 @@
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/lan-block.txt",
 			"https://combinatronics.io/uBlockOrigin/uAssetsCDN/main/filters/lan-block.txt"
 		],
-		"supportURL": "https://github.com/uBlockOrigin/uAssets/issues"
+		"supportURL": "https://github.com/uBlockOrigin/uAssets"
 	},
 	"easyprivacy": {
 		"content": "filters",
@@ -332,7 +336,8 @@
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/filters/annoyances.txt",
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/annoyances.txt",
 			"https://combinatronics.io/uBlockOrigin/uAssetsCDN/main/filters/annoyances.txt"
-		]
+		],
+		"supportURL": "https://github.com/uBlockOrigin/uAssets"
 	},
 	"dpollock-0": {
 		"content": "filters",
