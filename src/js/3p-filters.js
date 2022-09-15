@@ -361,7 +361,7 @@ const updateAssetStatus = function(details) {
             'title',
             lastUpdateTemplateString.replace(
                 '{{ago}}',
-                i18n$.renderElapsedTimeToString(Date.now())
+                i18n.renderElapsedTimeToString(Date.now())
             )
         );
     }
