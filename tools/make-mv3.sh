@@ -67,7 +67,7 @@ if [ "$1" = "full" ]; then
     cp -R $DES/* $TMPDIR/
     cd $TMPDIR > /dev/null
     rm log.txt
-    zip $PACKAGENAME -r ./*
+    zip $PACKAGENAME -qr ./*
     cd - > /dev/null
     cp $TMPDIR/$PACKAGENAME dist/build/
     rm -rf $TMPDIR
