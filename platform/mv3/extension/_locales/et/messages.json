@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Eksperimentaalne, õigustevaba sisublokeerija - blokeeri koheselt reklaame, jälgijaid, kaevandajaid ja muud.",
+    "message": "Katsetamisel õigustevaba sisublokeerija. Tõkesta koheselt reklaame, jälgijaid, kaevandajaid ja muud.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -28,7 +28,7 @@
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
-    "message": "Seaded",
+    "message": "Sätted",
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
@@ -64,7 +64,7 @@
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Sisene elemendi valikuolekusse",
+    "message": "Sisene elemendi valikurežiimi",
     "description": "English: Enter element picker mode"
   },
   "popupTipReport": {
@@ -80,11 +80,11 @@
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {
-    "message": "More",
+    "message": "Rohkem",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Less",
+    "message": "Vähem",
     "description": "Label to be used to hide popup panel sections"
   },
   "settingsIconBadgePrompt": {

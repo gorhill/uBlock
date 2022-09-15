@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Ein experimenteller Lite-Inhaltsblocker, der keine Berechtigungen benötigt - blockiert standardmäßig Werbung, Tracker, Miner & mehr.",
+    "message": "Experimenteller Inhaltsblocker, der keine Berechtigungen benötigt. Blockiert Werbung, Tracker & mehr sofort nach der Installation.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -80,11 +80,11 @@
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {
-    "message": "More",
+    "message": "Mehr",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Less",
+    "message": "Weniger",
     "description": "Label to be used to hide popup panel sections"
   },
   "settingsIconBadgePrompt": {
@@ -128,7 +128,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMisc": {
-    "message": "Verschiedene Zwecke",
+    "message": "Verschiedenes",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupRegions": {

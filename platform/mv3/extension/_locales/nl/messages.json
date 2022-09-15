@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Een experimentele, toestemmingsloze lichte inhoudsblokkeerder -- blokkeert standaard advertenties, trackers, miners en meer.",
+    "message": "Een experimentele, toestemmingsloze inhoudsblokkeerder. Blokkeert direct na installatie advertenties, trackers, miners en meer.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -80,11 +80,11 @@
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {
-    "message": "More",
+    "message": "Meer",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Less",
+    "message": "Minder",
     "description": "Label to be used to hide popup panel sections"
   },
   "settingsIconBadgePrompt": {

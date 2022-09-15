@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Экспериментальный облегчённый блокировщик контента, не требующий разрешений; по умолчанию блокирует рекламу, трекеры, майнеры и многое другое.",
+    "message": "Экспериментальный облегчённый блокировщик контента, не требующий разрешений. Блокирует рекламу, трекеры, майнеры и многое другое.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -80,11 +80,11 @@
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {
-    "message": "More",
+    "message": "Больше",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Less",
+    "message": "Меньше",
     "description": "Label to be used to hide popup panel sections"
   },
   "settingsIconBadgePrompt": {

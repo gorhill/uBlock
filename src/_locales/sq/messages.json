@@ -16,7 +16,7 @@
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Pres",
+    "message": "Qëndroj",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -68,7 +68,7 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Ç/Aktivizoj uBlock₀ te ky uebsajti.\n\nKlikimi+Ctrl e çaktivizon uBlock₀ vetëm te kjo faqja.",
+    "message": "Klikimi e ç/aktivizon uBlock₀ te ky uebsajti.\n\nKlikimi+Ctrl e çaktivizon uBlock₀ vetëm te kjo faqja.",
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
@@ -224,7 +224,7 @@
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
-    "message": "Ruaj gjithnjë ndryshimet.",
+    "message": "Ruaj përgjithnjë ndryshimet.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
@@ -528,7 +528,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Një filtër për rresht. Filtri mund të jetë thjesht emri i një hosti ose i ngjashëm me ata që përdor EasyList. Nuk do të merren parasysh rreshtat që fillojnë me <code>!</code>.",
+    "message": "Një filtër për rresht. Filtri mund të jetë thjesht emri i një hosti ose si ata që përdor EasyList. Nuk do të merren parasysh rreshtat që fillojnë me <code>!</code>.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -1000,7 +1000,7 @@
     "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
-    "message": "Politika e konfidencialitetit",
+    "message": "Politika e privatësisë",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {

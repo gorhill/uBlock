@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Un bloqueur de contenu allégé, expérimental et sans permission requise - bloque par défaut les publicités, les pisteurs, les mineurs et plus encore",
+    "message": "Un bloqueur allégé, expérimental et sans permission requise. Bloque les publicités, pisteurs, mineurs dès l'installation.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -80,11 +80,11 @@
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {
-    "message": "More",
+    "message": "Plus",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Less",
+    "message": "Moins",
     "description": "Label to be used to hide popup panel sections"
   },
   "settingsIconBadgePrompt": {

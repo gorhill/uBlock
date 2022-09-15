@@ -88,7 +88,7 @@
     "description": "English: on this page"
   },
   "popupBlockedStats": {
-    "message": "{{count}} או {{percent}}%",
+    "message": "{{count}} ({{percent}}%)",
     "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
@@ -312,7 +312,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "חסום אלמנט",
+    "message": "חסום אלמנט…",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -344,7 +344,7 @@
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "צבע הדגשה מותאם",
+    "message": "צבע הדגשה מותאם אישית",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsCloudStorageEnabledPrompt": {
@@ -404,7 +404,7 @@
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "מאפיינים למשתמשים טכניים בלבד",
+    "message": "מאפיינים למשתמשים בעלי ידע טכני בלבד",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
@@ -500,7 +500,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "ייבא...",
+    "message": "ייבא…",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -576,7 +576,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "ייבא מקובץ...",
+    "message": "ייבא מקובץ…",
     "description": ""
   },
   "rulesExport": {
@@ -888,7 +888,7 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "חיפוש דוחות דומים",
+    "message": "מצא דוחות דומים",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -956,11 +956,11 @@
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "דף האינטרנט...",
+    "message": "דף האינטרנט…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- בחר ערך --",
+    "message": "-- בחר קטגוריה --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
@@ -972,7 +972,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "מזהה מקור uBlock",
+    "message": "מזהה את  uBlock Origin",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
@@ -984,7 +984,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "פתיחת כרטיסיות או חלונות לא רצויים",
+    "message": "נפתחים לשוניות או חלונות לא רצויים",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
@@ -1048,11 +1048,11 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "שחזור מקובץ...",
+    "message": "שחזר מקובץ…",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "שחזור להגדרות ברירת המחדל...",
+    "message": "אפס להגדרות ברירת מחדל…",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
@@ -1116,7 +1116,7 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedTitle": {
-    "message": "Page blocked",
+    "message": "הדף חסום",
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {
@@ -1144,7 +1144,7 @@
     "description": "English: Close this window"
   },
   "docblockedDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "אל תתריע לי שוב על אתר זה",
     "description": "Label for checkbox in document-blocked page"
   },
   "docblockedProceed": {
@@ -1160,7 +1160,7 @@
     "description": "English: Permanently"
   },
   "docblockedDisable": {
-    "message": "Proceed",
+    "message": "המשך",
     "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {
@@ -1204,11 +1204,11 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "חסימת אלמנט בתוך המסגרת...",
+    "message": "חסום אלמנט בתוך מסגרת…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "הירשם לרשימת המסננים...",
+    "message": "הירשם לרשימת המסננים…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
@@ -1232,7 +1232,7 @@
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleCosmeticFiltering": {
-    "message": "הפעל/כבה סינון קוסמטי",
+    "message": "הפעל/כבה מסננים קוסמטיים",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "relaxBlockingMode": {

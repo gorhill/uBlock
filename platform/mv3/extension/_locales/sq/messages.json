@@ -4,15 +4,15 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Një bllokues eksperimental i përmbajtjes -- bllokon reklamat, gjurmuesit, minatorët e shumë të tjerë.",
+    "message": "Një bllokues eksperimental, i cili bllokon pa kushte reklamat, gjurmuesit, kriptominatorët etj. menjëherë pas instalimit.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
-    "message": "{{ruleCount}} rregulla, konvertuar nga {{filterCount}} filtrat e rrjetit",
+    "message": "{{ruleCount}} rregulla të konvertuara nga {{filterCount}} filtra rrjeti",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
-    "message": "uBO Lite — Panel i kontrollit",
+    "message": "uBO Lite — Paneli i kontrollit",
     "description": "English: uBO Lite — Dashboard"
   },
   "dashboardUnsavedWarning": {
@@ -44,15 +44,15 @@
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
-    "message": "Rreth nesh",
+    "message": "Info",
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
-    "message": "Politika e privatësisë ",
+    "message": "Politika e privatësisë",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupPowerSwitchInfo": {
-    "message": "Aktivoj/Çaktvizoj uBO Lite për këtë site.",
+    "message": "Ç/Aktivizoj uBO Lite te ky uebsajti",
     "description": "Tooltip for the main power button in the popup panel"
   },
   "popupTipDashboard": {
@@ -60,7 +60,7 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Shpërndarsi i elementeve",
+    "message": "Asgjësuesi i elementeve",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
@@ -72,19 +72,19 @@
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipSaveRules": {
-    "message": "Ruaj ndryshimet përherë.",
+    "message": "Ruaj përgjithnjë ndryshimet.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Rikthej ndryshimet.",
+    "message": "Kthej ndryshimet.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {
-    "message": "More",
+    "message": "Të tjera",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Less",
+    "message": "Më pak",
     "description": "Label to be used to hide popup panel sections"
   },
   "settingsIconBadgePrompt": {
@@ -96,7 +96,7 @@
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
-    "message": "Tema",
+    "message": "Motivi",
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
@@ -108,7 +108,7 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "3pGroupDefault": {
-    "message": "I paracaktuar",
+    "message": "Standard",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -136,7 +136,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "1pFormatHint": {
-    "message": "Një filtër për rresht. Filtri mund të jetë thjesht emri i një hosti ose i ngjashëm me ata që përdor EasyList. Nuk do të merren parasysh rreshtat që fillojnë me <code>!</code>.",
+    "message": "Një filtër për rresht. Filtri mund të jetë thjesht emri i një hosti ose si ata që përdor EasyList. Nuk do të merren parasysh rreshtat që fillojnë me <code>!</code>.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -152,7 +152,7 @@
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "whitelistPrompt": {
-    "message": "Kjo listë paraqet faqet e besuara të internetit në të cilat uBlock Origin duhet çaktivizuar. Një element për rresht.",
+    "message": "Kjo listë paraqet faqet e besuara të internetit në të cilat uBO Lite duhet çaktivizuar. Një element për rresht.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
@@ -172,7 +172,7 @@
     "description": ""
   },
   "aboutCode": {
-    "message": "Kod burim (GPLv3)",
+    "message": "Materiali burimor (GPLv3)",
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
@@ -180,7 +180,7 @@
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Kod burim",
+    "message": "Materiali burimor",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
@@ -200,11 +200,11 @@
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Ruan ndryshimet",
+    "message": "Ruaj ndryshimet",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
-    "message": "Rikthim",
+    "message": "Rikthej",
     "description": "for generic 'Revert' buttons"
   }
 }

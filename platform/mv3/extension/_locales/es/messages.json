@@ -4,15 +4,15 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "An experimental, permission-less lite content blocker -- block ads, trackers, miners and more by default.",
+    "message": "Un bloqueador de contenido experimental con menos permisos. Bloquea anuncios, rastreadores, criptomineros.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
-    "message": "{{ruleCount}} reglas, convertidas desde {{filterCount}} red de filtros",
+    "message": "{{ruleCount}} reglas, convertidas desde {{filterCount}} filtros de red",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
-    "message": "uBO Lite — Panel",
+    "message": "uBO Lite — Panel de control",
     "description": "English: uBO Lite — Dashboard"
   },
   "dashboardUnsavedWarning": {
@@ -28,7 +28,7 @@
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
-    "message": "Ajustes",
+    "message": "Configuración",
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Sitios confiables",
+    "message": "Sitios de confianza",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -52,11 +52,11 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupPowerSwitchInfo": {
-    "message": "Deshabilitar/habilitar uBO Lite para este sitio",
+    "message": "Deshabilitar/habilitar uBO Lite en este sitio",
     "description": "Tooltip for the main power button in the popup panel"
   },
   "popupTipDashboard": {
-    "message": "Abrir el panel",
+    "message": "Abrir panel de control",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
@@ -64,7 +64,7 @@
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Entrar al modo de selección de elementos",
+    "message": "Entrar al modo selección de elementos",
     "description": "English: Enter element picker mode"
   },
   "popupTipReport": {
@@ -72,19 +72,19 @@
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipSaveRules": {
-    "message": "Cliquea para hacer tus cambios permanentes.",
+    "message": "Haz clic para hacer tus cambios permanentes.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Cliquea para revertir tus cambios.",
+    "message": "Haz clic para revertir tus cambios.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {
-    "message": "More",
+    "message": "Más",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Less",
+    "message": "Menos",
     "description": "Label to be used to hide popup panel sections"
   },
   "settingsIconBadgePrompt": {
@@ -100,7 +100,7 @@
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "Color de acento personalizado",
+    "message": "Tono de color personalizado",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsNoCSPReportsPrompt": {
@@ -124,19 +124,19 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
-    "message": "Molestias",
+    "message": "Elementos molestos",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMisc": {
-    "message": "Misceláneos",
+    "message": "Varios",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupRegions": {
-    "message": "Regiones, lenguajes",
+    "message": "Regiones, idiomas",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "1pFormatHint": {
-    "message": "Un filtro por linea. Un filtro puede ser un nombre de un dominio simple, o puede ser un filtro compatible con EasyList. Las lineas que comiencen con  <code>!</code> seran ignoradas.",
+    "message": "Un filtro por línea. El filtro puede ser un nombre de dominio, o un filtro compatible con EasyList. Las líneas que comiencen con <code>!</code> serán ignoradas.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -152,11 +152,11 @@
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "whitelistPrompt": {
-    "message": "Las directivas de sitio de confianza dictan en cual página web uBO Lite debera estar deshabilitado. Una entrada por línea.",
+    "message": "Sitios de confianza para los cuales se deshabilitará uBO Lite. Una entrada por línea.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Importar y adjuntar",
+    "message": "Importar y anexar",
     "description": "English: Import and append"
   },
   "whitelistExport": {
@@ -164,7 +164,7 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "ublock-mis-sitios-confiables_{{datetime}}.txt",
+    "message": "ublock-mis-sitios-de-confianza_{{datetime}}.txt",
     "description": "The default filename to use for import/export purpose"
   },
   "aboutChangelog": {
@@ -176,7 +176,7 @@
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Contribuidores",
+    "message": "Colaboradores",
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
@@ -204,7 +204,7 @@
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
-    "message": "Deshacer",
+    "message": "Revertir",
     "description": "for generic 'Revert' buttons"
   }
 }

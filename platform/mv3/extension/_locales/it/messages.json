@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Un blocco dei contenuti sperimentale, senza permessi, che blocca per impostazione predefinita annunci, tracker, minatori e altro ancora.",
+    "message": "Un blocco dei contenuti sperimentale, senza permessi, che blocca per impostazione predefinita annunci, tracker, minatori.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -20,7 +20,7 @@
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Attendi",
+    "message": "Resta",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -80,11 +80,11 @@
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {
-    "message": "More",
+    "message": "Altro",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Less",
+    "message": "Meno",
     "description": "Label to be used to hide popup panel sections"
   },
   "settingsIconBadgePrompt": {
@@ -152,7 +152,7 @@
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "whitelistPrompt": {
-    "message": "Lista delle pagine web dove uBlock Origin è disabilitato. Una voce per riga.",
+    "message": "Lista delle pagine web dove uBO Lite è disabilitato. Una voce per riga.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {

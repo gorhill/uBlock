@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Um bloqueador de conteúdo leve, experimental e sem uso permissões - bloqueie anúncios, rastreadores, mineradores e muito mais por padrão",
+    "message": "Um bloqueador de conteúdo leve, experimental e sem uso permissões - bloqueie anúncios, rastreadores, mineradores por padrão",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -80,11 +80,11 @@
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {
-    "message": "More",
+    "message": "Mais",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Less",
+    "message": "Menos",
     "description": "Label to be used to hide popup panel sections"
   },
   "settingsIconBadgePrompt": {

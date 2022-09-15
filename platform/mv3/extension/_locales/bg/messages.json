@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Експериментален, без разрешения, олекотен блокер за съдържание - блокира по подразбиране реклами, тракери, миньори и други.",
+    "message": "Експериментален блокер за съдържание без разрешения. Блокира реклами, тракери, миньори и други веднага след инсталирането.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -80,11 +80,11 @@
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {
-    "message": "More",
+    "message": "Повече",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Less",
+    "message": "По-малко",
     "description": "Label to be used to hide popup panel sections"
   },
   "settingsIconBadgePrompt": {

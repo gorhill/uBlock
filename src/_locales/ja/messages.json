@@ -612,7 +612,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "[信頼するサイト] では uBlock Origin を無効にするウェブページを指定します。1 行につき 1 つのエントリーです。",
+    "message": "[信頼するサイト] では uBlock Origin を無効にするウェブページを指定します。1 行につき 1 ページです。",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {

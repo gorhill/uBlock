@@ -4,11 +4,11 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Eksperymentalny, pozbawiony uprawnień bloker treści w wersji uproszczonej -- domyślnie blokuje reklamy, moduły śledzące, koparki i nie tylko.",
+    "message": "Eksperymentalne blokowanie treści bez pozwolenia. Natychmiast po instalacji blokuje reklamy, trackery, koparki i inne.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
-    "message": "Reguły {{ruleCount}}, przekonwertowane z {{filterCount}} filtrów sieciowych",
+    "message": "{{ruleCount}} reguł, przekonwertowanych z {{filterCount}} filtrów sieciowych",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
@@ -80,11 +80,11 @@
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {
-    "message": "More",
+    "message": "Więcej",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Less",
+    "message": "Mniej",
     "description": "Label to be used to hide popup panel sections"
   },
   "settingsIconBadgePrompt": {
