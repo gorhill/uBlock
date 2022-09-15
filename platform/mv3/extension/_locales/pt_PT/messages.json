@@ -83,6 +83,14 @@
     "message": "Mais",
     "description": "Label to be used to show popup panel sections"
   },
+  "popupGrantGreatPowers": {
+    "message": "Click to grant uBO Lite extended permissions on this site.\nExtended permissions allow more effective content blocking.",
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupRevokeGreatPowers": {
+    "message": "Click to revoke extended permissions on this site",
+    "description": "Label to be used to show popup panel sections"
+  },
   "popupLessButton": {
     "message": "Menos",
     "description": "Label to be used to hide popup panel sections"
