@@ -25,7 +25,9 @@
 
 /******************************************************************************/
 
-import { dnr, i18n, runtime } from './ext.js';
+import { browser, dnr, i18n, runtime } from './ext.js';
+import { fetchJSON } from './fetch.js';
+import { registerCSS } from './background-css.js';
 
 /******************************************************************************/
 
@@ -96,16 +98,6 @@ async function saveRulesetConfig() {
 
 /******************************************************************************/
 
-function fetchJSON(filename) {
-    return fetch(`/rulesets/${filename}.json`).then(response =>
-        response.json()
-    ).catch(reason => {
-        console.info(reason);
-    });
-}
-
-/******************************************************************************/
-
 async function updateRegexRules(dynamicRules) {
     // Avoid testing already tested regexes
     const validRegexSet = new Set(
@@ -122,7 +114,8 @@ async function updateRegexRules(dynamicRules) {
     const toFetch = [];
     for ( const details of rulesetDetails.values() ) {
         if ( details.enabled !== true ) { continue; }
-        toFetch.push(fetchJSON(`${details.id}.regexes`));
+        if ( details.rules.regexes === 0 ) { continue; }
+        toFetch.push(fetchJSON(`/rulesets/${details.id}.regexes`));
     }
     const regexRulesets = await Promise.all(toFetch);
 
@@ -303,11 +296,7 @@ async function getEnabledRulesetsStats() {
     for ( const id of ids ) {
         const ruleset = rulesetDetails.get(id);
         if ( ruleset === undefined ) { continue; }
-        out.push({
-            name: ruleset.name,
-            filterCount: ruleset.filters.accepted,
-            ruleCount: ruleset.rules.accepted,
-        });
+        out.push(ruleset);
     }
     return out;
 }
@@ -344,6 +333,99 @@ async function defaultRulesetsFromLanguage() {
 
 /******************************************************************************/
 
+async function hasGreatPowers(origin) {
+    return browser.permissions.contains({
+        origins: [ `${origin}/*` ]
+    });
+}
+
+function grantGreatPowers(hostname) {
+    return browser.permissions.request({
+        origins: [
+            `*://${hostname}/*`,
+        ]
+    });
+}
+
+function revokeGreatPowers(hostname) {
+    return browser.permissions.remove({
+        origins: [
+            `*://${hostname}/*`,
+        ]
+    });
+}
+
+/******************************************************************************/
+
+function onMessage(request, sender, callback) {
+    switch ( request.what ) {
+
+    case 'applyRulesets': {
+        enableRulesets(request.enabledRulesets).then(( ) => {
+            rulesetConfig.enabledRulesets = request.enabledRulesets;
+            return saveRulesetConfig();
+        }).then(( ) => {
+            callback();
+        });
+        return true;
+    }
+
+    case 'getRulesetData': {
+        dnr.getEnabledRulesets().then(enabledRulesets => {
+            callback({
+                enabledRulesets,
+                rulesetDetails: Array.from(rulesetDetails.values()),
+            });
+        });
+        return true;
+    }
+
+    case 'grantGreatPowers':
+        grantGreatPowers(request.hostname).then(granted => {
+            callback(granted);
+        });
+        return true;
+
+    case 'popupPanelData': {
+        Promise.all([
+            matchesTrustedSiteDirective(request),
+            hasGreatPowers(request.origin),
+            getEnabledRulesetsStats(),
+        ]).then(results => {
+            callback({
+                isTrusted: results[0],
+                hasGreatPowers: results[1],
+                rulesetDetails: results[2],
+            });
+        });
+        return true;
+    }
+
+    case 'revokeGreatPowers':
+        revokeGreatPowers(request.hostname).then(removed => {
+            callback(removed);
+        });
+        return true;
+
+    case 'toggleTrustedSiteDirective': {
+        toggleTrustedSiteDirective(request).then(response => {
+            callback(response);
+        });
+        return true;
+    }
+
+    default:
+        break;
+
+    }
+}
+
+async function onPermissionsChanged() {
+    await registerCSS();
+}
+
+/******************************************************************************/
+
 async function start() {
     // Fetch enabled rulesets and dynamic rules
     const dynamicRules = await dnr.getDynamicRules();
@@ -352,7 +434,7 @@ async function start() {
     }
 
     // Fetch ruleset details
-    await fetchJSON('ruleset-details').then(entries => {
+    await fetchJSON('/rulesets/ruleset-details').then(entries => {
         if ( entries === undefined ) { return; }
         for ( const entry of entries ) {
             rulesetDetails.set(entry.id, entry);
@@ -386,61 +468,11 @@ async function start() {
     dnr.setExtensionActionOptions({ displayActionCountAsBadgeText: true });
 }
 
-/******************************************************************************/
-
-function messageListener(request, sender, callback) {
-    switch ( request.what ) {
-
-    case 'getRulesetData': {
-        dnr.getEnabledRulesets().then(enabledRulesets => {
-            callback({
-                enabledRulesets,
-                rulesetDetails: Array.from(rulesetDetails.values()),
-            });
-        });
-        return true;
-    }
-
-    case 'applyRulesets': {
-        enableRulesets(request.enabledRulesets).then(( ) => {
-            rulesetConfig.enabledRulesets = request.enabledRulesets;
-            return saveRulesetConfig();
-        }).then(( ) => {
-            callback();
-        });
-        return true;
-    }
-
-    case 'popupPanelData': {
-        Promise.all([
-            matchesTrustedSiteDirective(request),
-            getEnabledRulesetsStats(),
-        ]).then(results => {
-            callback({
-                isTrusted: results[0],
-                rulesetDetails: results[1],
-            });
-        });
-        return true;
-    }
-
-    case 'toggleTrustedSiteDirective': {
-        toggleTrustedSiteDirective(request).then(response => {
-            callback(response);
-        });
-        return true;
-    }
-
-    default:
-        break;
-
-    }
-}
-
-/******************************************************************************/
-
 (async ( ) => {
     await start();
 
-    runtime.onMessage.addListener(messageListener);
+    runtime.onMessage.addListener(onMessage);
+
+    browser.permissions.onAdded.addListener(onPermissionsChanged);
+    browser.permissions.onRemoved.addListener(onPermissionsChanged);
 })();

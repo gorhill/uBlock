@@ -28,9 +28,13 @@
   "minimum_chrome_version": "101.0",
   "name": "__MSG_extName__",
   "options_page": "dashboard.html",
+  "optional_host_permissions": [
+    "<all_urls>"
+  ],
   "permissions": [
     "activeTab",
-    "declarativeNetRequest"
+    "declarativeNetRequest",
+    "scripting"
   ],
   "short_name": "uBO Lite",
   "version": "0.1"

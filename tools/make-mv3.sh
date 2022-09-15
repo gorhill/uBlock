@@ -51,7 +51,7 @@ if [ "$1" != "quick" ]; then
     cp platform/mv3/*.js $TMPDIR/
     cp assets/assets.json $TMPDIR/
     cd $TMPDIR
-    node --no-warnings make-rulesets.js output=$DES quick=$QUICK
+    node --no-warnings make-rulesets.js output=$DES
     cd - > /dev/null
     rm -rf $TMPDIR
 fi

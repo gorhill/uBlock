@@ -40,18 +40,20 @@
         </div>
         <div id="hostname"><span></span>&shy;<span></span></div>
     </div>
-    <div id="basicTools" class="toolRibbon" data-more="c">
-        <span class="fa-icon tool needPick" data-i18n-title="popupTipZapper">bolt<span class="caption"></span></span>
-        <span class="fa-icon tool needPick" data-i18n-title="popupTipPicker">eye-dropper<span class="caption"></span></span>
-        <span class="fa-icon tool needPick" data-i18n-title="popupTipReport">comment-alt<span class="caption"></span></span>
-        <a href="logger-ui.html#_" class="fa-icon tool" target="uBOLogger" tabindex="0" data-i18n-title="popupTipLog">list-alt<span class="caption"></span></a>
+    <div class="toolRibbon pageTools">
+        <span id="toggleGreatPowers">
+            <span class="fa-icon tool enabled" data-i18n-title="popupGrantGreatPowers">sun-o<span class="caption"></span></span>
+            <span class="fa-icon tool enabled" data-i18n-title="popupRevokeGreatPowers">sun<span class="caption"></span></span>
+        </span>
+        <span></span>
+        <span></span>
+        <span></span>
         <a href="dashboard.html" class="fa-icon tool enabled" target="uBODashboard" tabindex="0" data-i18n-title="popupTipDashboard">cogs<span class="caption" data-i18n="popupTipDashboard"></span></a>
     </div>
-    <hr data-section="a">
     <div id="rulesetStats" data-section="a">
     </div>
-    <hr>
-    <div id="moreOrLess" class="">
+    <hr data-section="a">
+    <div id="moreOrLess">
         <span id="moreButton">
             <span data-i18n="popupMoreButton">_</span>&emsp;<span class="fa-icon">angle-up</span>
         </span>
@@ -59,6 +61,10 @@
             <span class="fa-icon">angle-up</span>&emsp;<span data-i18n="popupLessButton">_</span>
         </span>
     </div>
+</div>
+
+<div id="templates">
+    <div class="rulesetDetails"><h1></h1><p data-section="b"></p></div>
 </div>
 
 <script src="js/fa-icons.js"></script>

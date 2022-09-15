@@ -55,28 +55,26 @@ const renderFilterLists = function(soft) {
         }
         const on = enabledRulesets.includes(ruleset.id);
         li.classList.toggle('checked', on);
-        let elem;
         if ( dom.attr(li, 'data-listkey') !== ruleset.id ) {
             dom.attr(li, 'data-listkey', ruleset.id);
             qs$('input[type="checkbox"]', li).checked = on;
             qs$('.listname', li).textContent = ruleset.name || ruleset.id;
-            dom.removeClass(li, 'toRemove');
-            if ( ruleset.supportName ) {
-                dom.addClass(li, 'support');
-                elem = qs$('a.support', li);
-                dom.attr(elem, 'href', ruleset.supportURL);
-                dom.attr(elem, 'title', ruleset.supportName);
+            dom.cl.remove(li, 'toRemove');
+            if ( ruleset.homeURL ) {
+                dom.cl.add(li, 'support');
+                const elem = qs$('a.support', li);
+                dom.attr(elem, 'href', ruleset.homeURL);
             } else {
-                dom.removeClass(li, 'support');
+                dom.cl.remove(li, 'support');
             }
             if ( ruleset.instructionURL ) {
-                dom.addClass(li, 'mustread');
+                dom.cl.add(li, 'mustread');
                 dom.attr(qs$('a.mustread', li), 'href', ruleset.instructionURL);
             } else {
-                dom.removeClass(li, 'mustread');
+                dom.cl.remove(li, 'mustread');
             }
-            dom.toggleClass(li, 'isDefault', ruleset.isDefault === true);
-            dom.toggleClass(li, 'unused', hideUnused && !on);
+            dom.cl.toggle(li, 'isDefault', ruleset.isDefault === true);
+            dom.cl.toggle(li, 'unused', hideUnused && !on);
         }
         // https://github.com/gorhill/uBlock/issues/1429
         if ( !soft ) {
@@ -141,7 +139,7 @@ const renderFilterLists = function(soft) {
 
     // Incremental rendering: this will allow us to easily discard unused
     // DOM list entries.
-    dom.addClass(
+    dom.cl.add(
         qsa$('#lists .listEntries .listEntry[data-listkey]'),
         'discard'
     );
@@ -169,7 +167,7 @@ const renderFilterLists = function(soft) {
         ],
     ]);
 
-    dom.toggleClass(dom.body, 'hideUnused', mustHideUnusedLists('*'));
+    dom.cl.toggle(dom.body, 'hideUnused', mustHideUnusedLists('*'));
 
     for ( const [ groupKey, groupRulesets ] of groups ) {
         let liGroup = liFromListGroup(groupKey, groupRulesets);
@@ -193,7 +191,7 @@ const renderFilterLists = function(soft) {
 /******************************************************************************/
 
 const renderWidgets = function() {
-    dom.toggleClass(
+    dom.cl.toggle(
         qs$('#buttonApply'),
         'disabled',
         filteringSettingsHash === hashFromCurrentFromSettings()
@@ -231,12 +229,16 @@ const hashFromCurrentFromSettings = function() {
     return hash.join();
 };
 
+self.hasUnsavedData = function() {
+    return hashFromCurrentFromSettings() !== filteringSettingsHash;
+};
+
 /******************************************************************************/
 
 function onListsetChanged(ev) {
     const input = ev.target;
     const li = input.closest('.listEntry');
-    dom.toggleClass(li, 'checked', input.checked);
+    dom.cl.toggle(li, 'checked', input.checked);
     renderWidgets();
 }
 
@@ -265,7 +267,7 @@ const applyEnabledRulesets = async function() {
 };
 
 const buttonApplyHandler = async function() {
-    dom.removeClass(qs$('#buttonApply'), 'enabled');
+    dom.cl.remove(qs$('#buttonApply'), 'enabled');
     await applyEnabledRulesets();
     renderWidgets();
 };
@@ -298,7 +300,7 @@ const toggleHideUnusedLists = function(which) {
             hideUnusedSet.add(which);
         }
         document.body.classList.toggle('hideUnused', mustHide);
-        dom.toggleClass(qsa$('.groupEntry[data-groupkey]'), 'hideUnused', mustHide);
+        dom.cl.toggle(qsa$('.groupEntry[data-groupkey]'), 'hideUnused', mustHide);
     } else {
         const doesHide = hideUnusedSet.has(which);
         if ( doesHide ) {
@@ -308,11 +310,11 @@ const toggleHideUnusedLists = function(which) {
         }
         mustHide = doesHide === doesHideAll;
         groupSelector = `.groupEntry[data-groupkey="${which}"]`;
-        dom.toggleClass(qsa$(groupSelector), 'hideUnused', mustHide);
+        dom.cl.toggle(qsa$(groupSelector), 'hideUnused', mustHide);
     }
 
     for ( const elem of qsa$(`#lists ${groupSelector} .listEntry[data-listkey] input[type="checkbox"]:not(:checked)`) ) {
-        dom.toggleClass(
+        dom.cl.toggle(
             elem.closest('.listEntry[data-listkey]'),
             'unused',
             mustHide
@@ -342,24 +344,6 @@ simpleStorage.getItem('hideUnusedFilterLists').then(value => {
         hideUnusedSet = new Set(value);
     }
 });
-
-/******************************************************************************/
-
-self.hasUnsavedData = function() {
-    return hashFromCurrentFromSettings() !== filteringSettingsHash;
-};
-
-/******************************************************************************/
-
-dom.on(
-    qs$('#lists'),
-    'click',
-    '.listEntry label *',
-    ev => {
-        if ( ev.target.matches('input,.forinput') ) { return; }
-        ev.preventDefault();
-    }
-);
 
 /******************************************************************************/
 

@@ -25,15 +25,15 @@
 
 /******************************************************************************/
 
-function normalizeTarget(target) {
+const normalizeTarget = target => {
     if ( target === null ) { return []; }
     if ( Array.isArray(target) ) { return target; } 
     return target instanceof Element
         ? [ target ]
         : Array.from(target);
-}
+};
 
-function makeEventHandler(selector, callback) {
+const makeEventHandler = (selector, callback) => {
     return function(event) {
         const dispatcher = event.currentTarget;
         if (
@@ -52,36 +52,23 @@ function makeEventHandler(selector, callback) {
             callback.call(receiver, event);
         }
     };
-}
+};
 
 /******************************************************************************/
 
 class dom {
-
-    static addClass(target, cl) {
-        for ( const elem of normalizeTarget(target) ) {
-            elem.classList.add(cl);
-        }
-    }
-
-    static toggleClass(target, cl, state = undefined) {
-        for ( const elem of normalizeTarget(target) ) {
-            elem.classList.toggle(cl, state);
-        }
-    }
-
-    static removeClass(target, cl) {
-        for ( const elem of normalizeTarget(target) ) {
-            elem.classList.remove(cl);
-        }
-    }
-
     static attr(target, attr, value = undefined) {
         for ( const elem of normalizeTarget(target) ) {
             if ( value === undefined ) {
                 return elem.getAttribute(attr);
             }
             elem.setAttribute(attr, value);
+        }
+    }
+
+    static text(target, text) {
+        for ( const elem of normalizeTarget(target) ) {
+            elem.textContent = text;
         }
     }
 
@@ -104,6 +91,37 @@ class dom {
     }
 }
 
+dom.cl = class {
+    static add(target, name) {
+        for ( const elem of normalizeTarget(target) ) {
+            elem.classList.add(name);
+        }
+    }
+
+    static remove(target, name) {
+        for ( const elem of normalizeTarget(target) ) {
+            elem.classList.remove(name);
+        }
+    }
+
+    static toggle(target, name, state) {
+        for ( const elem of normalizeTarget(target) ) {
+            elem.classList.toggle(name, state);
+        }
+    }
+
+    static has(target, name) {
+        for ( const elem of normalizeTarget(target) ) {
+            if ( elem.classList.contains(name) ) {
+                return true;
+            }
+        }
+        return false;
+    }
+};
+
+dom.html = document.documentElement;
+dom.head = document.head;
 dom.body = document.body;
 
 /******************************************************************************/
@@ -114,6 +132,17 @@ function qs$(s, elem = undefined) {
 
 function qsa$(s, elem = undefined) {
     return (elem || document).querySelectorAll(s);
+}
+
+/******************************************************************************/
+
+{
+    const mql = self.matchMedia('(prefers-color-scheme: dark)');
+    const theme = mql instanceof Object && mql.matches === true
+        ? 'dark'
+        : 'light';
+    dom.cl.toggle(dom.html, 'dark', theme === 'dark');
+    dom.cl.toggle(dom.html, 'light', theme !== 'dark');
 }
 
 /******************************************************************************/

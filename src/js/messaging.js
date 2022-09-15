@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* globals browser */
+
 'use strict';
 
 /******************************************************************************/
@@ -161,7 +163,8 @@ const onMessage = function(request, sender, callback) {
             env: vAPI.webextFlavor.env,
         };
         const t0 = Date.now();
-        dnrRulesetFromRawLists(listPromises, options).then(details => {
+        dnrRulesetFromRawLists(listPromises, options).then(result => {
+            const { network } = result;
             const replacer = (k, v) => {
                 if ( k.startsWith('__') ) { return; }
                 if ( Array.isArray(v) ) {
@@ -193,13 +196,13 @@ const onMessage = function(request, sender, callback) {
                 rule.action.type === 'redirect' &&
                 rule.action.redirect.transform !== undefined;
             const runtime = Date.now() - t0;
-            const { ruleset } = details;
+            const { ruleset } = network;
             const out = [
                 `dnrRulesetFromRawLists(${JSON.stringify(listNames, null, 2)})`,
                 `Run time: ${runtime} ms`,
-                `Filters count: ${details.filterCount}`,
-                `Accepted filter count: ${details.acceptedFilterCount}`,
-                `Rejected filter count: ${details.rejectedFilterCount}`,
+                `Filters count: ${network.filterCount}`,
+                `Accepted filter count: ${network.acceptedFilterCount}`,
+                `Rejected filter count: ${network.rejectedFilterCount}`,
                 `Resulting DNR rule count: ${ruleset.length}`,
             ];
             const good = ruleset.filter(rule =>
@@ -237,6 +240,12 @@ const onMessage = function(request, sender, callback) {
                 isUnsupported(rule)
             );
             out.push(`+ Unsupported filters (${bad.length}): ${JSON.stringify(bad, replacer, 2)}`);
+
+            out.push(`\n+ Cosmetic filters: ${result.cosmetic.length}`);
+            for ( const details of result.cosmetic ) {
+                out.push(`    ${JSON.stringify(details)}`);
+            }
+
             callback(out.join('\n'));
         });
         return;

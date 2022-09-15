@@ -25,7 +25,9 @@
 
 import fs from 'fs/promises';
 import https from 'https';
+import path from 'path';
 import process from 'process';
+import { createHash } from 'crypto';
 
 import { dnrRulesetFromRawLists } from './js/static-dnr-filtering.js';
 import { StaticFilteringParser } from './js/static-filtering-parser.js';
@@ -91,21 +93,47 @@ const log = (text, silent = false) => {
 
 /******************************************************************************/
 
-const fetchList = url => {
+const urlToFileName = url => {
+    return url
+        .replace(/^https?:\/\//, '')
+        .replace(/\//g, '_')
+        ;
+};
+
+const fetchList = (url, cacheDir) => {
     return new Promise((resolve, reject) => {
-        log(`\tFetching ${url}`);
-        https.get(url, response => {
-            const data = [];
-            response.on('data', chunk => {
-                data.push(chunk.toString());
+        const fname = urlToFileName(url);
+        fs.readFile(`${cacheDir}/${fname}`, { encoding: 'utf8' }).then(content => {
+            log(`\tFetched local ${url}`);
+            resolve({ url, content });
+        }).catch(( ) => {
+            log(`\tFetching remote ${url}`);
+            https.get(url, response => {
+                const data = [];
+                response.on('data', chunk => {
+                    data.push(chunk.toString());
+                });
+                response.on('end', ( ) => {
+                    const content = data.join('');
+                    try {
+                        writeFile(`${cacheDir}/${fname}`, content);
+                    } catch (ex) {
+                    }
+                    resolve({ url, content });
+                });
+            }).on('error', error => {
+                reject(error);
             });
-            response.on('end', ( ) => {
-                resolve({ url, content: data.join('') });
-            });
-        }).on('error', error => {
-            reject(error);
         });
     });
+};
+
+/******************************************************************************/
+
+const writeFile = async (fname, data) => {
+    const dir = path.dirname(fname);
+    await fs.mkdir(dir, { recursive: true });
+    return fs.writeFile(fname, data);
 };
 
 /******************************************************************************/
@@ -117,7 +145,7 @@ async function main() {
     const writeOps = [];
     const ruleResources = [];
     const rulesetDetails = [];
-    const regexRulesetDetails = new Map();
+    const cssDetails = new Map();
     const outputDir = commandLineArgs.get('output') || '.';
 
     // Get manifest content
@@ -159,11 +187,8 @@ async function main() {
     };
 
     const rulesetDir = `${outputDir}/rulesets`;
-    const rulesetDirPromise = fs.mkdir(`${rulesetDir}`, { recursive: true });
-
-    const writeFile = (path, data) =>
-        rulesetDirPromise.then(( ) =>
-            fs.writeFile(path, data));
+    const cacheDir = `${outputDir}/../mv3-data`;
+    const cssDir = `${outputDir}/content-css`;
 
     const rulesetFromURLS = async function(assetDetails) {
         log('============================');
@@ -187,7 +212,7 @@ async function main() {
                 }
                 fetchedURLs.add(part.url);
                 newParts.push(
-                    fetchList(part.url).then(details => {
+                    fetchList(part.url, cacheDir).then(details => {
                         const { url } = details;
                         const content = details.content.trim();
                         if ( typeof content === 'string' && content !== '' ) {
@@ -213,11 +238,12 @@ async function main() {
             return;
         }
 
-        const details = await dnrRulesetFromRawLists([ { name: assetDetails.id, text } ], { env });
-        const { ruleset: rules } = details;
-        log(`Input filter count: ${details.filterCount}`);
-        log(`\tAccepted filter count: ${details.acceptedFilterCount}`);
-        log(`\tRejected filter count: ${details.rejectedFilterCount}`);
+        const results = await dnrRulesetFromRawLists([ { name: assetDetails.id, text } ], { env });
+        const { network } = results;
+        const { ruleset: rules } = network;
+        log(`Input filter count: ${network.filterCount}`);
+        log(`\tAccepted filter count: ${network.acceptedFilterCount}`);
+        log(`\tRejected filter count: ${network.rejectedFilterCount}`);
         log(`Output rule count: ${rules.length}`);
 
         const good = rules.filter(rule => isGood(rule) && isRegex(rule) === false);
@@ -253,15 +279,51 @@ async function main() {
             true
         );
 
+        writeOps.push(
+            writeFile(
+                `${rulesetDir}/${assetDetails.id}.json`,
+                `${JSON.stringify(good, replacer)}\n`
+            )
+        );
+
+        if ( regexes.length !== 0 ) {
+            writeOps.push(
+                writeFile(
+                    `${rulesetDir}/${assetDetails.id}.regexes.json`,
+                    `${JSON.stringify(regexes, replacer)}\n`
+                )
+            );
+        }
+
+        const { cosmetic } = results;
+        const cssEntries = [];
+        for ( const entry of cosmetic ) {
+            const fname = createHash('sha256').update(entry.css).digest('hex').slice(0,8);
+            const fpath = `${assetDetails.id}/${fname.slice(0,1)}/${fname.slice(1,8)}`;
+            writeOps.push(
+                writeFile(
+                    `${cssDir}/${fpath}.css`,
+                    `${entry.css}\n{display:none!important;}\n`
+                )
+            );
+            entry.css = fname;
+            cssEntries.push(entry);
+        }
+        log(`CSS entries: ${cssEntries.length}`);
+        if ( cssEntries.length !== 0 ) {
+            cssDetails.set(assetDetails.id, cssEntries);
+        }
+
         rulesetDetails.push({
             id: assetDetails.id,
             name: assetDetails.name,
             enabled: assetDetails.enabled,
             lang: assetDetails.lang,
+            homeURL: assetDetails.homeURL,
             filters: {
-                total: details.filterCount,
-                accepted: details.acceptedFilterCount,
-                rejected: details.rejectedFilterCount,
+                total: network.filterCount,
+                accepted: network.acceptedFilterCount,
+                rejected: network.rejectedFilterCount,
             },
             rules: {
                 total: rules.length,
@@ -270,23 +332,10 @@ async function main() {
                 rejected: bad.length,
                 regexes: regexes.length,
             },
+            css: {
+                specific: cssEntries.length,
+            },
         });
-
-        writeOps.push(
-            writeFile(
-                `${rulesetDir}/${assetDetails.id}.json`,
-                `${JSON.stringify(good, replacer, 2)}\n`
-            )
-        );
-
-        regexRulesetDetails.set(assetDetails.id, regexes);
-
-        writeOps.push(
-            writeFile(
-                `${rulesetDir}/${assetDetails.id}.regexes.json`,
-                `${JSON.stringify(regexes, replacer, 2)}\n`
-            )
-        );
 
         ruleResources.push({
             id: assetDetails.id,
@@ -321,6 +370,7 @@ async function main() {
         name: 'Ads, trackers, miners, and more' ,
         enabled: true,
         urls: contentURLs,
+        homeURL: 'https://github.com/uBlockOrigin/uAssets',
     });
 
     // Regional rulesets
@@ -338,10 +388,11 @@ async function main() {
             name: asset.title,
             enabled: false,
             urls: [ contentURL ],
+            homeURL: asset.supportURL,
         });
     }
 
-    // Handpicked rulesets
+    // Handpicked rulesets from assets.json
     const handpicked = [ 'block-lan', 'dpollock-0' ];
     for ( const id of handpicked ) {
         const asset = assets[id];
@@ -355,13 +406,30 @@ async function main() {
             name: asset.title,
             enabled: false,
             urls: [ contentURL ],
+            homeURL: asset.supportURL,
         });
     }
+
+    // Handpicked rulesets from abroad
+    await rulesetFromURLS({
+        id: 'stevenblack-hosts',
+        name: 'Steven Black\'s hosts file',
+        enabled: false,
+        urls: [ 'https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts' ],
+        homeURL: 'https://github.com/StevenBlack/hosts#readme',
+    });
 
     writeOps.push(
         writeFile(
             `${rulesetDir}/ruleset-details.json`,
-            `${JSON.stringify(rulesetDetails, replacer, 2)}\n`
+            `${JSON.stringify(rulesetDetails, null, 2)}\n`
+        )
+    );
+
+    writeOps.push(
+        writeFile(
+            `${cssDir}/css-specific.json`,
+            `${JSON.stringify(Array.from(cssDetails), null, 2)}\n`
         )
     );
 

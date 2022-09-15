@@ -34,6 +34,92 @@ import {
 
 /******************************************************************************/
 
+function addExtendedToDNR(context, parser) {
+    if ( parser.category !== parser.CATStaticExtFilter ) { return false; }
+
+    if ( (parser.flavorBits & parser.BITFlavorUnsupported) !== 0 ) {
+        return true;
+    }
+
+    // Scriptlet injection
+    if ( (parser.flavorBits & parser.BITFlavorExtScriptlet) !== 0 ) {
+        return true;
+    }
+
+    // Response header filtering
+    if ( (parser.flavorBits & parser.BITFlavorExtResponseHeader) !== 0 ) {
+        return true;
+    }
+
+    // HTML filtering
+    if ( (parser.flavorBits & parser.BITFlavorExtHTML) !== 0 ) {
+        return true;
+    }
+
+    // Cosmetic filtering
+    if ( context.cosmeticFilters === undefined ) {
+        context.cosmeticFilters = new Map();
+    }
+
+    // https://github.com/chrisaljoudi/uBlock/issues/151
+    //   Negated hostname means the filter applies to all non-negated hostnames
+    //   of same filter OR globally if there is no non-negated hostnames.
+    for ( const { hn, not, bad } of parser.extOptions() ) {
+        if ( bad ) { continue; }
+        const { compiled, exception } = parser.result;
+        if ( compiled.startsWith('{') ) { continue; }
+        if ( exception ) { continue; }
+        if ( hn.endsWith('.*') ) { continue; }
+        let cssdetails = context.cosmeticFilters.get(compiled);
+        if ( cssdetails === undefined ) {
+            cssdetails = {
+            };
+            context.cosmeticFilters.set(compiled, cssdetails);
+        }
+        if ( not ) {
+            if ( cssdetails.excludeMatches === undefined ) {
+                cssdetails.excludeMatches = [];
+            }
+            cssdetails.excludeMatches.push(hn);
+            continue;
+        }
+        if ( cssdetails.matches === undefined ) {
+            cssdetails.matches = [];
+        }
+        if ( cssdetails.matches.includes('*') ) { continue; }
+        if ( hn === '*' ) {
+            cssdetails.matches = [ '*' ];
+            continue;
+        }
+        cssdetails.matches.push(hn);
+    }
+}
+
+/******************************************************************************/
+
+function optimizeCosmeticFilters(filters) {
+    if ( filters === undefined ) { return []; }
+    const merge = new Map();
+    for ( const [ selector, details ] of filters ) {
+        const json = JSON.stringify(details);
+        let entries = merge.get(json);
+        if ( entries === undefined ) {
+            entries = new Set();
+            merge.set(json, entries);
+        }
+        entries.add(selector);
+    }
+    const out = [];
+    for ( const [ json, selectors ] of merge ) {
+        const details = JSON.parse(json);
+        details.css = Array.from(selectors).join(',\n');
+        out.push(details);
+    }
+    return out;
+}
+
+/******************************************************************************/
+
 function addToDNR(context, list) {
     const writer = new CompiledListWriter();
     const lineIter = new LineIterator(
@@ -58,7 +144,11 @@ function addToDNR(context, list) {
         parser.analyze(line);
 
         if ( parser.shouldIgnore() ) { continue; }
-        if ( parser.category !== parser.CATStaticNetFilter ) { continue; }
+
+        if ( parser.category !== parser.CATStaticNetFilter ) {
+            addExtendedToDNR(context, parser);
+            continue;
+        }
 
         // https://github.com/gorhill/uBlock/issues/2599
         //   convert hostname to punycode if needed
@@ -98,7 +188,11 @@ async function dnrRulesetFromRawLists(lists, options = {}) {
         }
     }
     await Promise.all(toLoad);
-    return staticNetFilteringEngine.dnrFromCompiled('end', context);
+
+    return {
+        network: staticNetFilteringEngine.dnrFromCompiled('end', context),
+        cosmetic: optimizeCosmeticFilters(context.cosmeticFilters),
+    };
 }
 
 /******************************************************************************/

@@ -7,6 +7,7 @@ body {
     }
 #actions {
     background-color: var(--surface-1);
+    padding: 0.5em 0;
     position: sticky;
     top: 0;
     z-index: 10;
@@ -183,4 +184,8 @@ body.updating .listEntry.checked.obsolete .updating {
     }
 :root.mobile .li.listEntry .iconbar {
     margin-top: 0.2em;
+    }
+
+#templates {
+    display: none;
     }
