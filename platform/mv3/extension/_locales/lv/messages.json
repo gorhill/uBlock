@@ -84,11 +84,11 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupGrantGreatPowers": {
-    "message": "Click to grant uBO Lite extended permissions on this site.\nExtended permissions allow more effective content blocking.",
+    "message": "Klikšķināt, lai piešķirtu uBO Lite paplašinātas tiesības šajā vietnē.\nPaplašinātas tiesības nodrošina daudz iedarbīgāku satura aizturēšanu.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupRevokeGreatPowers": {
-    "message": "Click to revoke extended permissions on this site",
+    "message": "Klikšķināt, lai atsauktu paplašinātās tiesības šajā vietnē.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {

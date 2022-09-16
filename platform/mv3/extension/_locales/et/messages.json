@@ -84,11 +84,11 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupGrantGreatPowers": {
-    "message": "Click to grant uBO Lite extended permissions on this site.\nExtended permissions allow more effective content blocking.",
+    "message": "Klõpsa, et anda uBO Lite'il selle saidi jaoks laiendatud õigused.\nLaiendatud õigused võimaldavad efektiivsemat sisublokeerimist.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupRevokeGreatPowers": {
-    "message": "Click to revoke extended permissions on this site",
+    "message": "Klõpsa, et tühistada selle saidi laiendatud õigused",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {

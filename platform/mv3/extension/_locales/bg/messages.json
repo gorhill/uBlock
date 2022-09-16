@@ -84,11 +84,11 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupGrantGreatPowers": {
-    "message": "Click to grant uBO Lite extended permissions on this site.\nExtended permissions allow more effective content blocking.",
+    "message": "Кликнете, за да предоставите разширени разрешения на uBO Lite на този сайт.\nРазширените разрешения позволяват по-ефективно блокиране на съдържание.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupRevokeGreatPowers": {
-    "message": "Click to revoke extended permissions on this site",
+    "message": "Кликнете, за да отмените разширените разрешения на този сайт",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {

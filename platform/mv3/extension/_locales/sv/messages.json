@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "En experimentell blockerare (lite-version utan behörigheter som standard blockerar annonser, spårare, miners och mer.",
+    "message": "En experimentell blockerare.  Blockerar annonser, spårare, miners och mer omedelbart efter installationen.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -84,11 +84,11 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupGrantGreatPowers": {
-    "message": "Click to grant uBO Lite extended permissions on this site.\nExtended permissions allow more effective content blocking.",
+    "message": "Klicka för att ge uBO Lite utökade behörigheter på den här webbplatsen.\nMed utökade behörigheter blir innehållsblockering mer effektiv.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupRevokeGreatPowers": {
-    "message": "Click to revoke extended permissions on this site",
+    "message": "Klicka för att återkalla utökade behörigheter på den här webbplatsen",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {

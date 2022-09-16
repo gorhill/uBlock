@@ -84,11 +84,11 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupGrantGreatPowers": {
-    "message": "Click to grant uBO Lite extended permissions on this site.\nExtended permissions allow more effective content blocking.",
+    "message": "點擊以授予 uBO Lite 在此網站上的延伸權限。\n延伸權限可讓內容阻擋更有效率。",
     "description": "Label to be used to show popup panel sections"
   },
   "popupRevokeGreatPowers": {
-    "message": "Click to revoke extended permissions on this site",
+    "message": "點擊以撤銷此網站的延伸權限",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
@@ -116,7 +116,7 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "3pGroupDefault": {
-    "message": "預設值",
+    "message": "預設",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAds": {

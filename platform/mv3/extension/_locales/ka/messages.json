@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "An experimental, permission-less content blocker. Blocks ads, trackers, miners, and more immediately upon installation.",
+    "message": "საცდელი, ნებართვებისგან თავისუფალი მსუბუქი შემზღუდავი -- თავისთავად აცილებს რეკლამებს, მეთვალყურეებს, კრიპტოგამომმუშავებლებს და ა.შ.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -84,11 +84,11 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupGrantGreatPowers": {
-    "message": "Click to grant uBO Lite extended permissions on this site.\nExtended permissions allow more effective content blocking.",
+    "message": "დაწკაპეთ და uBO Lite მიიღებს დამატებით ნებართვებს ამ საიტზე.\nდამატებითი ნებართვებით მეტად შედეგიანად შეზღუდვას შეძლებს.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupRevokeGreatPowers": {
-    "message": "Click to revoke extended permissions on this site",
+    "message": "დაწკაპეთ დამატებითი ნებართვის გასაუქმებლად ამ საიტზე",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {

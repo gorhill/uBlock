@@ -20,35 +20,35 @@
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Stay",
+    "message": "Залишитись",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Ignore",
+    "message": "Ігнорувати",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
-    "message": "Settings",
+    "message": "Налаштування",
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Filter lists",
+    "message": "Списки фільтрів",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
-    "message": "My filters",
+    "message": "Мої фільтри",
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Trusted sites",
+    "message": "Довірені сайти",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
-    "message": "About",
+    "message": "Про застосунок",
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
-    "message": "Privacy policy",
+    "message": "Політика приватності",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupPowerSwitchInfo": {
@@ -56,7 +56,7 @@
     "description": "Tooltip for the main power button in the popup panel"
   },
   "popupTipDashboard": {
-    "message": "Open the dashboard",
+    "message": "Відкрити панель керування",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
@@ -80,7 +80,7 @@
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {
-    "message": "More",
+    "message": "Більше",
     "description": "Label to be used to show popup panel sections"
   },
   "popupGrantGreatPowers": {
@@ -92,7 +92,7 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Less",
+    "message": "Менше",
     "description": "Label to be used to hide popup panel sections"
   },
   "settingsIconBadgePrompt": {
@@ -100,47 +100,47 @@
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsAppearance": {
-    "message": "Appearance",
+    "message": "Вигляд",
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
-    "message": "Theme",
+    "message": "Тема",
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "Custom accent color",
+    "message": "Акцент кольору користувача",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsNoCSPReportsPrompt": {
-    "message": "Block CSP reports",
+    "message": "Блокувати CSP-звіти",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "3pGroupDefault": {
-    "message": "Default",
+    "message": "Типово",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAds": {
-    "message": "Ads",
+    "message": "Реклама",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupPrivacy": {
-    "message": "Privacy",
+    "message": "Приватність",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Malware domains",
+    "message": "Домени шкідливих програм",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
-    "message": "Annoyances",
+    "message": "Надокучливості",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMisc": {
-    "message": "Miscellaneous",
+    "message": "Різне",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupRegions": {
-    "message": "Regions, languages",
+    "message": "Регіони, мови",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "1pFormatHint": {
@@ -148,11 +148,11 @@
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
-    "message": "Import and append",
+    "message": "Імпортувати та додати",
     "description": "English: Import and append"
   },
   "1pExport": {
-    "message": "Export",
+    "message": "Експортувати",
     "description": "English: Export"
   },
   "1pExportFilename": {
@@ -164,11 +164,11 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Import and append",
+    "message": "Імпортувати та додати",
     "description": "English: Import and append"
   },
   "whitelistExport": {
-    "message": "Export",
+    "message": "Експортувати",
     "description": "English: Export"
   },
   "whitelistExportFilename": {
@@ -176,27 +176,27 @@
     "description": "The default filename to use for import/export purpose"
   },
   "aboutChangelog": {
-    "message": "Changelog",
+    "message": "Журнал змін",
     "description": ""
   },
   "aboutCode": {
-    "message": "Source code (GPLv3)",
+    "message": "Код програми (GPLv3)",
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Contributors",
+    "message": "Учасники",
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Source code",
+    "message": "Вихідний код",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
-    "message": "Translations",
+    "message": "Переклади",
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
-    "message": "Filter lists",
+    "message": "Списки фільтрів",
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
@@ -204,15 +204,15 @@
     "description": "Shown in the About pane"
   },
   "genericSubmit": {
-    "message": "Submit",
+    "message": "Відправити",
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Apply changes",
+    "message": "Застосувати зміни",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
-    "message": "Revert",
+    "message": "Повернути",
     "description": "for generic 'Revert' buttons"
   }
 }
