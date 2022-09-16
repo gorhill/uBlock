@@ -566,15 +566,17 @@ async function main() {
     );
 
     // Assemble all default lists as the default ruleset
-    const contentURLs = [];
-    for ( const asset of Object.values(assets) ) {
-        if ( asset.content !== 'filters' ) { continue; }
-        if ( asset.off === true ) { continue; }
-        const contentURL = Array.isArray(asset.contentURL)
-            ? asset.contentURL[0]
-            : asset.contentURL;
-        contentURLs.push(contentURL);
-    }
+    const contentURLs = [
+        'https://ublockorigin.pages.dev/filters/filters.txt',
+        'https://ublockorigin.pages.dev/filters/badware.txt',
+        'https://ublockorigin.pages.dev/filters/privacy.txt',
+        'https://ublockorigin.pages.dev/filters/resource-abuse.txt',
+        'https://ublockorigin.pages.dev/filters/unbreak.txt',
+        'https://ublockorigin.pages.dev/filters/quick-fixes.txt',
+        'https://secure.fanboy.co.nz/easylist.txt',
+        'https://secure.fanboy.co.nz/easyprivacy.txt',
+        'https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext',
+    ];
     await rulesetFromURLS({
         id: 'default',
         name: 'Ads, trackers, miners, and more' ,
