@@ -27,7 +27,7 @@
 
 import { browser, dnr, i18n, runtime } from './ext.js';
 import { fetchJSON } from './fetch.js';
-import { registerCSS } from './background-css.js';
+import { registerInjectable } from './scripting-manager.js';
 
 /******************************************************************************/
 
@@ -37,13 +37,46 @@ const REGEXES_REALM_END = REGEXES_REALM_START + RULE_REALM_SIZE;
 const TRUSTED_DIRECTIVE_BASE_RULE_ID = 8000000;
 const CURRENT_CONFIG_BASE_RULE_ID = 9000000;
 
-const dynamicRuleMap = new Map();
-const rulesetDetails = new Map();
-
 const rulesetConfig = {
     version: '',
     enabledRulesets: [],
 };
+
+/******************************************************************************/
+
+let rulesetDetailsPromise;
+
+function getRulesetDetails() {
+    if ( rulesetDetailsPromise !== undefined ) {
+        return rulesetDetailsPromise;
+    }
+    rulesetDetailsPromise = fetchJSON('/rulesets/ruleset-details').then(entries => {
+        const map = new Map(
+            entries.map(entry => [ entry.id, entry ])
+        );
+        return map;
+    });
+    return rulesetDetailsPromise;
+}
+
+/******************************************************************************/
+
+let dynamicRuleMapPromise;
+
+function getDynamicRules() {
+    if ( dynamicRuleMapPromise !== undefined ) {
+        return dynamicRuleMapPromise;
+    }
+    dynamicRuleMapPromise = dnr.getDynamicRules().then(rules => {
+        const map = new Map(
+            rules.map(rule => [ rule.id, rule ])
+        );
+        console.log(`Dynamic rule count: ${map.size}`);
+        console.log(`Available dynamic rule count: ${dnr.MAX_NUMBER_OF_DYNAMIC_AND_SESSION_RULES - map.size}`);
+        return map;
+    });
+    return dynamicRuleMapPromise;
+}
 
 /******************************************************************************/
 
@@ -52,6 +85,7 @@ function getCurrentVersion() {
 }
 
 async function loadRulesetConfig() {
+    const dynamicRuleMap = await getDynamicRules();
     const configRule = dynamicRuleMap.get(CURRENT_CONFIG_BASE_RULE_ID);
     if ( configRule === undefined ) {
         rulesetConfig.enabledRulesets = await defaultRulesetsFromLanguage();
@@ -71,6 +105,7 @@ async function loadRulesetConfig() {
 }
 
 async function saveRulesetConfig() {
+    const dynamicRuleMap = await getDynamicRules();
     let configRule = dynamicRuleMap.get(CURRENT_CONFIG_BASE_RULE_ID);
     if ( configRule === undefined ) {
         configRule = {
@@ -98,7 +133,15 @@ async function saveRulesetConfig() {
 
 /******************************************************************************/
 
-async function updateRegexRules(dynamicRules) {
+async function updateRegexRules() {
+    const [
+        rulesetDetails,
+        dynamicRules
+    ] = await Promise.all([
+        getRulesetDetails(),
+        dnr.getDynamicRules(),
+    ]);
+
     // Avoid testing already tested regexes
     const validRegexSet = new Set(
         dynamicRules.filter(rule =>
@@ -156,6 +199,7 @@ async function updateRegexRules(dynamicRules) {
 
     // Add validated regex rules to dynamic ruleset without affecting rules
     // outside regex rule realm.
+    const dynamicRuleMap = await getDynamicRules();
     const newRuleMap = new Map(newRules.map(rule => [ rule.id, rule ]));
     const addRules = [];
     const removeRuleIds = [];
@@ -186,6 +230,7 @@ async function updateRegexRules(dynamicRules) {
 
 async function matchesTrustedSiteDirective(details) {
     const url = new URL(details.origin);
+    const dynamicRuleMap = await getDynamicRules();
     let rule = dynamicRuleMap.get(TRUSTED_DIRECTIVE_BASE_RULE_ID);
     if ( rule === undefined ) { return false; }
     const domainSet = new Set(rule.condition.requestDomains);
@@ -201,6 +246,7 @@ async function matchesTrustedSiteDirective(details) {
 
 async function addTrustedSiteDirective(details) {
     const url = new URL(details.origin);
+    const dynamicRuleMap = await getDynamicRules();
     let rule = dynamicRuleMap.get(TRUSTED_DIRECTIVE_BASE_RULE_ID);
     if ( rule !== undefined ) {
         rule.condition.initiatorDomains = undefined;
@@ -233,6 +279,7 @@ async function addTrustedSiteDirective(details) {
 
 async function removeTrustedSiteDirective(details) {
     const url = new URL(details.origin);
+    const dynamicRuleMap = await getDynamicRules();
     let rule = dynamicRuleMap.get(TRUSTED_DIRECTIVE_BASE_RULE_ID);
     if ( rule === undefined ) { return false; }
     rule.condition.initiatorDomains = undefined;
@@ -291,7 +338,13 @@ async function enableRulesets(ids) {
 }
 
 async function getEnabledRulesetsStats() {
-    const ids = await dnr.getEnabledRulesets();
+    const [
+        rulesetDetails,
+        ids,
+    ] = await Promise.all([
+        getRulesetDetails(),
+        dnr.getEnabledRulesets(),
+    ]);
     const out = [];
     for ( const id of ids ) {
         const ruleset = rulesetDetails.get(id);
@@ -323,6 +376,7 @@ async function defaultRulesetsFromLanguage() {
         `\\b(${Array.from(langSet).join('|')})\\b`
     );
 
+    const rulesetDetails = await getRulesetDetails();
     for ( const [ id, details ] of rulesetDetails ) {
         if ( typeof details.lang !== 'string' ) { continue; }
         if ( reTargetLang.test(details.lang) === false ) { continue; }
@@ -371,7 +425,11 @@ function onMessage(request, sender, callback) {
     }
 
     case 'getRulesetData': {
-        dnr.getEnabledRulesets().then(enabledRulesets => {
+        Promise.all([
+            getRulesetDetails(),
+            dnr.getEnabledRulesets(),
+        ]).then(results => {
+            const [ rulesetDetails, enabledRulesets ] = results;
             callback({
                 enabledRulesets,
                 rulesetDetails: Array.from(rulesetDetails.values()),
@@ -382,6 +440,7 @@ function onMessage(request, sender, callback) {
 
     case 'grantGreatPowers':
         grantGreatPowers(request.hostname).then(granted => {
+            console.info(`Granted uBOL great powers on ${request.hostname}: ${granted}`);
             callback(granted);
         });
         return true;
@@ -403,6 +462,7 @@ function onMessage(request, sender, callback) {
 
     case 'revokeGreatPowers':
         revokeGreatPowers(request.hostname).then(removed => {
+            console.info(`Revoked great powers from uBOL on ${request.hostname}: ${removed}`);
             callback(removed);
         });
         return true;
@@ -421,37 +481,19 @@ function onMessage(request, sender, callback) {
 }
 
 async function onPermissionsChanged() {
-    await registerCSS();
+    await registerInjectable();
 }
 
 /******************************************************************************/
 
 async function start() {
-    // Fetch enabled rulesets and dynamic rules
-    const dynamicRules = await dnr.getDynamicRules();
-    for ( const rule of dynamicRules ) {
-        dynamicRuleMap.set(rule.id, rule);
-    }
-
-    // Fetch ruleset details
-    await fetchJSON('/rulesets/ruleset-details').then(entries => {
-        if ( entries === undefined ) { return; }
-        for ( const entry of entries ) {
-            rulesetDetails.set(entry.id, entry);
-        }
-    });
-
     await loadRulesetConfig();
-
-    console.log(`Dynamic rule count: ${dynamicRuleMap.size}`);
-    console.log(`Available dynamic rule count: ${dnr.MAX_NUMBER_OF_DYNAMIC_AND_SESSION_RULES - dynamicRuleMap.size}`);
-
     await enableRulesets(rulesetConfig.enabledRulesets);
 
     // We need to update the regex rules only when ruleset version changes.
     const currentVersion = getCurrentVersion();
     if ( currentVersion !== rulesetConfig.version ) {
-        await updateRegexRules(dynamicRules);
+        await updateRegexRules();
         console.log(`Version change: ${rulesetConfig.version} => ${currentVersion}`);
         rulesetConfig.version = currentVersion;
     }

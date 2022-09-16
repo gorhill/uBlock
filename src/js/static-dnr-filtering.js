@@ -37,23 +37,52 @@ import {
 function addExtendedToDNR(context, parser) {
     if ( parser.category !== parser.CATStaticExtFilter ) { return false; }
 
-    if ( (parser.flavorBits & parser.BITFlavorUnsupported) !== 0 ) {
-        return true;
-    }
+    if ( (parser.flavorBits & parser.BITFlavorUnsupported) !== 0 ) { return; }
 
     // Scriptlet injection
     if ( (parser.flavorBits & parser.BITFlavorExtScriptlet) !== 0 ) {
-        return true;
+        if ( parser.hasOptions() === false ) { return; }
+        if ( context.scriptletFilters === undefined ) {
+            context.scriptletFilters = new Map();
+        }
+        const { raw, exception } = parser.result;
+        for ( const { hn, not, bad } of parser.extOptions() ) {
+            if ( bad ) { continue; }
+            if ( hn.endsWith('.*') ) { continue; }
+            if ( exception ) { continue; }
+            let details = context.scriptletFilters.get(raw);
+            if ( details === undefined ) {
+                details = {};
+                context.scriptletFilters.set(raw, details);
+            }
+            if ( not ) {
+                if ( details.excludeMatches === undefined ) {
+                    details.excludeMatches = [];
+                }
+                details.excludeMatches.push(hn);
+                continue;
+            }
+            if ( details.matches === undefined ) {
+                details.matches = [];
+            }
+            if ( details.matches.includes('*') ) { continue; }
+            if ( hn === '*' ) {
+                details.matches = [ '*' ];
+                continue;
+            }
+            details.matches.push(hn);
+        }
+        return;
     }
 
     // Response header filtering
     if ( (parser.flavorBits & parser.BITFlavorExtResponseHeader) !== 0 ) {
-        return true;
+        return;
     }
 
     // HTML filtering
     if ( (parser.flavorBits & parser.BITFlavorExtHTML) !== 0 ) {
-        return true;
+        return;
     }
 
     // Cosmetic filtering
@@ -66,56 +95,32 @@ function addExtendedToDNR(context, parser) {
     //   of same filter OR globally if there is no non-negated hostnames.
     for ( const { hn, not, bad } of parser.extOptions() ) {
         if ( bad ) { continue; }
+        if ( hn.endsWith('.*') ) { continue; }
         const { compiled, exception } = parser.result;
         if ( compiled.startsWith('{') ) { continue; }
         if ( exception ) { continue; }
-        if ( hn.endsWith('.*') ) { continue; }
-        let cssdetails = context.cosmeticFilters.get(compiled);
-        if ( cssdetails === undefined ) {
-            cssdetails = {
-            };
-            context.cosmeticFilters.set(compiled, cssdetails);
+        let details = context.cosmeticFilters.get(compiled);
+        if ( details === undefined ) {
+            details = {};
+            context.cosmeticFilters.set(compiled, details);
         }
         if ( not ) {
-            if ( cssdetails.excludeMatches === undefined ) {
-                cssdetails.excludeMatches = [];
+            if ( details.excludeMatches === undefined ) {
+                details.excludeMatches = [];
             }
-            cssdetails.excludeMatches.push(hn);
+            details.excludeMatches.push(hn);
             continue;
         }
-        if ( cssdetails.matches === undefined ) {
-            cssdetails.matches = [];
+        if ( details.matches === undefined ) {
+            details.matches = [];
         }
-        if ( cssdetails.matches.includes('*') ) { continue; }
+        if ( details.matches.includes('*') ) { continue; }
         if ( hn === '*' ) {
-            cssdetails.matches = [ '*' ];
+            details.matches = [ '*' ];
             continue;
         }
-        cssdetails.matches.push(hn);
+        details.matches.push(hn);
     }
-}
-
-/******************************************************************************/
-
-function optimizeCosmeticFilters(filters) {
-    if ( filters === undefined ) { return []; }
-    const merge = new Map();
-    for ( const [ selector, details ] of filters ) {
-        const json = JSON.stringify(details);
-        let entries = merge.get(json);
-        if ( entries === undefined ) {
-            entries = new Set();
-            merge.set(json, entries);
-        }
-        entries.add(selector);
-    }
-    const out = [];
-    for ( const [ json, selectors ] of merge ) {
-        const details = JSON.parse(json);
-        details.css = Array.from(selectors).join(',\n');
-        out.push(details);
-    }
-    return out;
 }
 
 /******************************************************************************/
@@ -175,7 +180,8 @@ function addToDNR(context, list) {
 /******************************************************************************/
 
 async function dnrRulesetFromRawLists(lists, options = {}) {
-    const context = staticNetFilteringEngine.dnrFromCompiled('begin');
+    const context = {};
+    staticNetFilteringEngine.dnrFromCompiled('begin', context);
     context.extensionPaths = new Map(options.extensionPaths || []);
     context.env = options.env;
     const toLoad = [];
@@ -191,7 +197,8 @@ async function dnrRulesetFromRawLists(lists, options = {}) {
 
     return {
         network: staticNetFilteringEngine.dnrFromCompiled('end', context),
-        cosmetic: optimizeCosmeticFilters(context.cosmeticFilters),
+        cosmetic: context.cosmeticFilters,
+        scriptlet: context.scriptletFilters,
     };
 }
 

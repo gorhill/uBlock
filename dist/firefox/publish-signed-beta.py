@@ -291,8 +291,8 @@ if response.status_code != 204:
 # package is higher version than current one.
 #
 
-# Be sure in sync with potentially modified files on remote
-r = subprocess.run(['git', 'checkout', 'origin/master', '--', 'dist/chromium-mv3/log.txt'], stdout=subprocess.PIPE)
+# Be sure we are in sync with potentially modified files on remote
+r = subprocess.run(['git', 'pull', 'origin', 'master'], stdout=subprocess.PIPE)
 rout = bytes.decode(r.stdout).strip()
 
 print('Update GitHub to point to newly signed self-hosted xpi package...')

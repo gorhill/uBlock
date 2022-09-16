@@ -181,6 +181,16 @@ body.mobile.no-tooltips .toolRibbon .tool {
     margin-bottom: 0;
     }
 
+#toggleGreatPowers {
+    position: relative;
+    }
+#toggleGreatPowers .badge {
+    font-size: var(--font-size-xsmall);
+    line-height: 1;
+    right: 4px;
+    position: absolute;
+    bottom: 2px;
+    }
 body:not(.hasGreatPowers) [data-i18n-title="popupGrantGreatPowers"],
 body.hasGreatPowers [data-i18n-title="popupRevokeGreatPowers"] {
     display: flex;
@@ -189,7 +199,7 @@ body:not(.hasGreatPowers) [data-i18n-title="popupRevokeGreatPowers"],
 body.hasGreatPowers [data-i18n-title="popupGrantGreatPowers"] {
     display: none;
     }
-body.hasGreatPowers [data-i18n-title="popupRevokeGreatPowers"] {
+body [data-i18n-title="popupRevokeGreatPowers"] {
     fill: var(--popup-power-ink);
     }
 

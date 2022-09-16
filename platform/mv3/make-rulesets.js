@@ -51,6 +51,13 @@ const commandLineArgs = (( ) => {
     return args;
 })();
 
+const outputDir = commandLineArgs.get('output') || '.';
+const cacheDir = `${outputDir}/../mv3-data`;
+const rulesetDir = `${outputDir}/rulesets`;
+const cssDir = `${outputDir}/content-css`;
+const scriptletDir = `${outputDir}/content-js`;
+const env = [ 'chromium', 'ubol' ];
+
 /******************************************************************************/
 
 const isUnsupported = rule =>
@@ -133,20 +140,343 @@ const fetchList = (url, cacheDir) => {
 const writeFile = async (fname, data) => {
     const dir = path.dirname(fname);
     await fs.mkdir(dir, { recursive: true });
-    return fs.writeFile(fname, data);
+    const promise = fs.writeFile(fname, data);
+    writeOps.push(promise);
+    return promise;
 };
+
+const writeOps = [];
+
+/******************************************************************************/
+
+const ruleResources = [];
+const rulesetDetails = [];
+const cssDetails = new Map();
+const scriptletDetails = new Map();
+
+/******************************************************************************/
+
+async function fetchAsset(assetDetails) {
+    // Remember fetched URLs
+    const fetchedURLs = new Set();
+
+    // Fetch list and expand `!#include` directives
+    let parts = assetDetails.urls.map(url => ({ url }));
+    while (  parts.every(v => typeof v === 'string') === false ) {
+        const newParts = [];
+        for ( const part of parts ) {
+            if ( typeof part === 'string' ) {
+                newParts.push(part);
+                continue;
+            }
+            if ( fetchedURLs.has(part.url) ) {
+                newParts.push('');
+                continue;
+            }
+            fetchedURLs.add(part.url);
+            newParts.push(
+                fetchList(part.url, cacheDir).then(details => {
+                    const { url } = details;
+                    const content = details.content.trim();
+                    if ( typeof content === 'string' && content !== '' ) {
+                        if (
+                            content.startsWith('<') === false ||
+                            content.endsWith('>') === false
+                        ) {
+                            return { url, content };
+                        }
+                    }
+                    log(`No valid content for ${details.name}`);
+                    return { url, content: '' };
+                })
+            );
+        }
+        parts = await Promise.all(newParts);
+        parts = StaticFilteringParser.utils.preparser.expandIncludes(parts, env);
+    }
+    const text = parts.join('\n');
+
+    if ( text === '' ) {
+        log('No filterset found');
+    }
+    return text;
+}
+
+/******************************************************************************/
+
+async function processNetworkFilters(assetDetails, network) {
+    const replacer = (k, v) => {
+        if ( k.startsWith('__') ) { return; }
+        if ( Array.isArray(v) ) {
+            return v.sort();
+        }
+        if ( v instanceof Object ) {
+            const sorted = {};
+            for ( const kk of Object.keys(v).sort() ) {
+                sorted[kk] = v[kk];
+            }
+            return sorted;
+        }
+        return v;
+    };
+
+    const { ruleset: rules } = network;
+    log(`Input filter count: ${network.filterCount}`);
+    log(`\tAccepted filter count: ${network.acceptedFilterCount}`);
+    log(`\tRejected filter count: ${network.rejectedFilterCount}`);
+    log(`Output rule count: ${rules.length}`);
+
+    const good = rules.filter(rule => isGood(rule) && isRegex(rule) === false);
+    log(`\tGood: ${good.length}`);
+
+    const regexes = rules.filter(rule => isGood(rule) && isRegex(rule));
+    log(`\tMaybe good (regexes): ${regexes.length}`);
+
+    const redirects = rules.filter(rule =>
+        isUnsupported(rule) === false &&
+        isRedirect(rule)
+    );
+    log(`\tredirect-rule= (discarded): ${redirects.length}`);
+
+    const headers = rules.filter(rule =>
+        isUnsupported(rule) === false &&
+        isCsp(rule)
+    );
+    log(`\tcsp= (discarded): ${headers.length}`);
+
+    const removeparams = rules.filter(rule =>
+        isUnsupported(rule) === false &&
+        isRemoveparam(rule)
+    );
+    log(`\tremoveparams= (discarded): ${removeparams.length}`);
+
+    const bad = rules.filter(rule =>
+        isUnsupported(rule)
+    );
+    log(`\tUnsupported: ${bad.length}`);
+    log(
+        bad.map(rule => rule._error.map(v => `\t\t${v}`)).join('\n'),
+        true
+    );
+
+    writeFile(
+        `${rulesetDir}/${assetDetails.id}.json`,
+        `${JSON.stringify(good, replacer)}\n`
+    );
+
+    if ( regexes.length !== 0 ) {
+        writeFile(
+            `${rulesetDir}/${assetDetails.id}.regexes.json`,
+            `${JSON.stringify(regexes, replacer)}\n`
+        );
+    }
+
+    return {
+        total: rules.length,
+        accepted: good.length,
+        discarded: redirects.length + headers.length + removeparams.length,
+        rejected: bad.length,
+        regexes: regexes.length,
+    };
+}
+
+/******************************************************************************/
+
+function optimizeExtendedFilters(filters) {
+    if ( filters === undefined ) { return []; }
+    const merge = new Map();
+    for ( const [ selector, details ] of filters ) {
+        const json = JSON.stringify(details);
+        let entries = merge.get(json);
+        if ( entries === undefined ) {
+            entries = new Set();
+            merge.set(json, entries);
+        }
+        entries.add(selector);
+    }
+    const out = [];
+    for ( const [ json, entries ] of merge ) {
+        const details = JSON.parse(json);
+        details.payload = Array.from(entries);
+        out.push(details);
+    }
+    return out;
+}
+
+/******************************************************************************/
+
+const style = [
+    '  display:none!important;',
+    '  position:absolute!important;',
+    '  z-index:0!important;',
+    '  visibility:collapse!important;',
+].join('\n');
+
+function processCosmeticFilters(assetDetails, mapin) {
+    if ( mapin === undefined ) { return 0; }
+
+    const optimized = optimizeExtendedFilters(mapin);
+    const cssEntries = new Map();
+    for ( const entry of optimized ) {
+        const selectors = entry.payload.join(',\n');
+        const fname = createHash('sha256').update(selectors).digest('hex').slice(0,8);
+        const fpath = `${assetDetails.id}/${fname.slice(0,1)}/${fname.slice(1,8)}`;
+        writeFile(
+            `${cssDir}/${fpath}.css`,
+            `${selectors} {\n${style}\n}\n`
+        );
+        cssEntries.set(fname, {
+            y: entry.matches,
+            n: entry.excludeMatches,
+        });
+    }
+
+    log(`CSS entries: ${cssEntries.size}`);
+
+    if ( cssEntries.size !== 0 ) {
+        cssDetails.set(assetDetails.id, Array.from(cssEntries));
+    }
+
+    return cssEntries.size;
+}
+
+/******************************************************************************/
+
+async function processScriptletFilters(assetDetails, mapin) {
+    if ( mapin === undefined ) { return 0; }
+
+    const originalScriptletMap = new Map();
+    const dealiasingMap = new Map();
+
+    const parseArguments = (raw) => {
+        const out = [];
+        let s = raw;
+        let len = s.length;
+        let beg = 0, pos = 0;
+        let i = 1;
+        while ( beg < len ) {
+            pos = s.indexOf(',', pos);
+            // Escaped comma? If so, skip.
+            if ( pos > 0 && s.charCodeAt(pos - 1) === 0x5C /* '\\' */ ) {
+                s = s.slice(0, pos - 1) + s.slice(pos);
+                len -= 1;
+                continue;
+            }
+            if ( pos === -1 ) { pos = len; }
+            out.push(s.slice(beg, pos).trim());
+            beg = pos = pos + 1;
+            i++;
+        }
+        return out;
+    };
+
+    const parseFilter = (raw) => {
+        const filter = raw.slice(4, -1);
+        const end = filter.length;
+        let pos = filter.indexOf(',');
+        if ( pos === -1 ) { pos = end; }
+        const parts = filter.trim().split(',').map(s => s.trim());
+        const token = dealiasingMap.get(parts[0]) || '';
+        if ( token !== '' && originalScriptletMap.has(token) ) {
+            return {
+                token,
+                args: parseArguments(parts.slice(1).join(',').trim()),
+            };
+        }
+    };
+
+    const patchScriptlet = (filter) => {
+        return originalScriptletMap.get(filter.token).replace(
+            /^self\.\$args\$$/m,
+            `...${JSON.stringify(filter.args, null, 4)}`
+        );
+    };
+
+    // Load all available scriptlets into a key-val map, where the key is the
+    // scriptlet token, and val is the whole content of the file.
+    const files = await fs.readdir('./scriptlets');
+    const reScriptletNameOrAlias = /^\/\/\/\s+(?:name|alias)\s+(\S+)/gm;
+    for ( const file of files ) {
+        const text = await fs.readFile(
+            `./scriptlets/${file}`,
+            { encoding: 'utf8' }
+        );
+        const aliasSet = new Set();
+        for (;;) {
+            const match = reScriptletNameOrAlias.exec(text);
+            if ( match === null ) { break; }
+            aliasSet.add(match[1]);
+        }
+        if ( aliasSet.size === 0 ) { continue; }
+        const aliases = Array.from(aliasSet);
+        originalScriptletMap.set(aliases[0], text);
+        for ( let i = 0; i < aliases.length; i++ ) {
+            dealiasingMap.set(aliases[i], aliases[0]);
+        }
+    }
+
+    // Merge entries after dealiasing and expanding arguments
+    const normalizedMap = new Map();
+    for ( const [ rawFilter, toAdd ] of mapin ) {
+        const normalized = parseFilter(rawFilter);
+        if ( normalized === undefined ) { continue; }
+        const key = JSON.stringify(normalized);
+        const toMerge = normalizedMap.get(key);
+        if ( toMerge === undefined ) {
+            normalizedMap.set(key, toAdd);
+            continue;
+        }
+        const matches = new Set(toMerge.matches || []);
+        const excludeMatches = new Set(toMerge.excludeMatches || []);
+        if ( toAdd.matches && toAdd.matches.size !== 0 ) {
+            toAdd.matches.forEach(hn => {
+                matches.add(hn);
+            });
+        }
+        if ( toAdd.excludeMatches && toAdd.excludeMatches.size !== 0 ) {
+            toAdd.excludeMatches.forEach(hn => {
+                excludeMatches.add(hn);
+            });
+        }
+        if ( matches.size !== 0 ) {
+            toMerge.matches = matches.has('*')
+                ? [ '*' ]
+                : Array.from(matches);
+        }
+        if ( excludeMatches.size !== 0 ) {
+            toMerge.excludeMatches = excludeMatches.has('*')
+                ? [ '*' ]
+                : Array.from(excludeMatches);
+        }
+    }
+
+    // Combine injected resources for same matches/excludeMatches instances
+    //const optimized = optimizeExtendedFilters(normalizedMap);
+
+    // Generate distinct scriptlets according to patched scriptlets
+    const scriptletEntries = new Map();
+    for ( const [ json, entry ] of normalizedMap ) {
+        const fname = createHash('sha256').update(json).digest('hex').slice(0,8);
+        const scriptlet = patchScriptlet(JSON.parse(json));
+        const fpath = `${assetDetails.id}/${fname.slice(0,1)}/${fname.slice(1,8)}`;
+        writeFile(`${scriptletDir}/${fpath}.js`, scriptlet);
+        scriptletEntries.set(fname, {
+            y: entry.matches,
+            n: entry.excludeMatches,
+        });
+    }
+
+    log(`Scriptlet entries: ${scriptletEntries.size}`);
+
+    if ( scriptletEntries.size !== 0 ) {
+        scriptletDetails.set(assetDetails.id, Array.from(scriptletEntries));
+    }
+    return scriptletEntries.size;
+}
 
 /******************************************************************************/
 
 async function main() {
-
-    const env = [ 'chromium' ];
-
-    const writeOps = [];
-    const ruleResources = [];
-    const rulesetDetails = [];
-    const cssDetails = new Map();
-    const outputDir = commandLineArgs.get('output') || '.';
 
     // Get manifest content
     const manifest = await fs.readFile(
@@ -168,151 +498,31 @@ async function main() {
     }
     log(`Version: ${version}`);
 
-    let goodTotalCount = 0;
-    let maybeGoodTotalCount = 0;
-
-    const replacer = (k, v) => {
-        if ( k.startsWith('__') ) { return; }
-        if ( Array.isArray(v) ) {
-            return v.sort();
-        }
-        if ( v instanceof Object ) {
-            const sorted = {};
-            for ( const kk of Object.keys(v).sort() ) {
-                sorted[kk] = v[kk];
-            }
-            return sorted;
-        }
-        return v;
-    };
-
-    const rulesetDir = `${outputDir}/rulesets`;
-    const cacheDir = `${outputDir}/../mv3-data`;
-    const cssDir = `${outputDir}/content-css`;
-
     const rulesetFromURLS = async function(assetDetails) {
         log('============================');
         log(`Listset for '${assetDetails.id}':`);
 
-        // Remember fetched URLs
-        const fetchedURLs = new Set();
+        const text = await fetchAsset(assetDetails);
 
-        // Fetch list and expand `!#include` directives
-        let parts = assetDetails.urls.map(url => ({ url }));
-        while (  parts.every(v => typeof v === 'string') === false ) {
-            const newParts = [];
-            for ( const part of parts ) {
-                if ( typeof part === 'string' ) {
-                    newParts.push(part);
-                    continue;
-                }
-                if ( fetchedURLs.has(part.url) ) {
-                    newParts.push('');
-                    continue;
-                }
-                fetchedURLs.add(part.url);
-                newParts.push(
-                    fetchList(part.url, cacheDir).then(details => {
-                        const { url } = details;
-                        const content = details.content.trim();
-                        if ( typeof content === 'string' && content !== '' ) {
-                            if (
-                                content.startsWith('<') === false ||
-                                content.endsWith('>') === false
-                            ) {
-                                return { url, content };
-                            }
-                        }
-                        log(`No valid content for ${details.name}`);
-                        return { url, content: '' };
-                    })
-                );
-            }
-            parts = await Promise.all(newParts);
-            parts = StaticFilteringParser.utils.preparser.expandIncludes(parts, env);
-        }
-        const text = parts.join('\n');
-
-        if ( text === '' ) {
-            log('No filterset found');
-            return;
-        }
-
-        const results = await dnrRulesetFromRawLists([ { name: assetDetails.id, text } ], { env });
-        const { network } = results;
-        const { ruleset: rules } = network;
-        log(`Input filter count: ${network.filterCount}`);
-        log(`\tAccepted filter count: ${network.acceptedFilterCount}`);
-        log(`\tRejected filter count: ${network.rejectedFilterCount}`);
-        log(`Output rule count: ${rules.length}`);
-
-        const good = rules.filter(rule => isGood(rule) && isRegex(rule) === false);
-        log(`\tGood: ${good.length}`);
-
-        const regexes = rules.filter(rule => isGood(rule) && isRegex(rule));
-        log(`\tMaybe good (regexes): ${regexes.length}`);
-
-        const redirects = rules.filter(rule =>
-            isUnsupported(rule) === false &&
-            isRedirect(rule)
-        );
-        log(`\tredirect-rule= (discarded): ${redirects.length}`);
-
-        const headers = rules.filter(rule =>
-            isUnsupported(rule) === false &&
-            isCsp(rule)
-        );
-        log(`\tcsp= (discarded): ${headers.length}`);
-
-        const removeparams = rules.filter(rule =>
-            isUnsupported(rule) === false &&
-            isRemoveparam(rule)
-        );
-        log(`\tremoveparams= (discarded): ${removeparams.length}`);
-
-        const bad = rules.filter(rule =>
-            isUnsupported(rule)
-        );
-        log(`\tUnsupported: ${bad.length}`);
-        log(
-            bad.map(rule => rule._error.map(v => `\t\t${v}`)).join('\n'),
-            true
+        const results = await dnrRulesetFromRawLists(
+            [ { name: assetDetails.id, text } ],
+            { env }
         );
 
-        writeOps.push(
-            writeFile(
-                `${rulesetDir}/${assetDetails.id}.json`,
-                `${JSON.stringify(good, replacer)}\n`
-            )
+        const netStats = await processNetworkFilters(
+            assetDetails,
+            results.network
         );
 
-        if ( regexes.length !== 0 ) {
-            writeOps.push(
-                writeFile(
-                    `${rulesetDir}/${assetDetails.id}.regexes.json`,
-                    `${JSON.stringify(regexes, replacer)}\n`
-                )
-            );
-        }
+        const cosmeticStats = await processCosmeticFilters(
+            assetDetails,
+            results.cosmetic
+        );
 
-        const { cosmetic } = results;
-        const cssEntries = [];
-        for ( const entry of cosmetic ) {
-            const fname = createHash('sha256').update(entry.css).digest('hex').slice(0,8);
-            const fpath = `${assetDetails.id}/${fname.slice(0,1)}/${fname.slice(1,8)}`;
-            writeOps.push(
-                writeFile(
-                    `${cssDir}/${fpath}.css`,
-                    `${entry.css}\n{display:none!important;}\n`
-                )
-            );
-            entry.css = fname;
-            cssEntries.push(entry);
-        }
-        log(`CSS entries: ${cssEntries.length}`);
-        if ( cssEntries.length !== 0 ) {
-            cssDetails.set(assetDetails.id, cssEntries);
-        }
+        const scriptletStats = await processScriptletFilters(
+            assetDetails,
+            results.scriptlet
+        );
 
         rulesetDetails.push({
             id: assetDetails.id,
@@ -321,19 +531,22 @@ async function main() {
             lang: assetDetails.lang,
             homeURL: assetDetails.homeURL,
             filters: {
-                total: network.filterCount,
-                accepted: network.acceptedFilterCount,
-                rejected: network.rejectedFilterCount,
+                total: results.network.filterCount,
+                accepted: results.network.acceptedFilterCount,
+                rejected: results.network.rejectedFilterCount,
             },
             rules: {
-                total: rules.length,
-                accepted: good.length,
-                discarded: redirects.length + headers.length + removeparams.length,
-                rejected: bad.length,
-                regexes: regexes.length,
+                total: netStats.total,
+                accepted: netStats.accepted,
+                discarded: netStats.discarded,
+                rejected: netStats.rejected,
+                regexes: netStats.regexes,
             },
             css: {
-                specific: cssEntries.length,
+                specific: cosmeticStats,
+            },
+            scriptlets: {
+                total: scriptletStats,
             },
         });
 
@@ -342,9 +555,6 @@ async function main() {
             enabled: assetDetails.enabled,
             path: `/rulesets/${assetDetails.id}.json`
         });
-
-        goodTotalCount += good.length;
-        maybeGoodTotalCount += regexes.length;
     };
 
     // Get assets.json content
@@ -419,24 +629,22 @@ async function main() {
         homeURL: 'https://github.com/StevenBlack/hosts#readme',
     });
 
-    writeOps.push(
-        writeFile(
-            `${rulesetDir}/ruleset-details.json`,
-            `${JSON.stringify(rulesetDetails, null, 2)}\n`
-        )
+    writeFile(
+        `${rulesetDir}/ruleset-details.json`,
+        `${JSON.stringify(rulesetDetails, null, 1)}\n`
     );
 
-    writeOps.push(
-        writeFile(
-            `${cssDir}/css-specific.json`,
-            `${JSON.stringify(Array.from(cssDetails), null, 2)}\n`
-        )
+    writeFile(
+        `${cssDir}/css-specific.json`,
+        `${JSON.stringify(Array.from(cssDetails))}\n`
+    );
+
+    writeFile(
+        `${scriptletDir}/scriptlet-details.json`,
+        `${JSON.stringify(Array.from(scriptletDetails))}\n`
     );
 
     await Promise.all(writeOps);
-
-    log(`Total good rules count: ${goodTotalCount}`);
-    log(`Total regex rules count: ${maybeGoodTotalCount}`);
 
     // Patch manifest
     manifest.declarative_net_request = { rule_resources: ruleResources };

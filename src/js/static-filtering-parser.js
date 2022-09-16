@@ -1337,7 +1337,7 @@ Parser.prototype.SelectorCompiler = class {
         // context.
         const cssIdentifier = '[A-Za-z_][\\w-]*';
         const cssClassOrId = `[.#]${cssIdentifier}`;
-        const cssAttribute = `\\[${cssIdentifier}[*^$]?="[^"\\]\\\\]+"\\]`;
+        const cssAttribute = `\\[${cssIdentifier}(?:[*^$]?="[^"\\]\\\\]+")\\]`;
         const cssSimple =
             '(?:' +
             `${cssIdentifier}(?:${cssClassOrId})*(?:${cssAttribute})*` + '|' +
@@ -1502,7 +1502,7 @@ Parser.prototype.SelectorCompiler = class {
     //   assign new text.
     sheetSelectable(s) {
         if ( this.reCommonSelector.test(s) ) { return true; }
-        if ( this.cssValidatorElement === null ) { return true; }
+        if ( this.cssValidatorElement === null ) { return false; }
         let valid = false;
         try {
             this.cssValidatorElement.childNodes[0].nodeValue = `_z + ${s}{color:red;} _z{color:red;}`;
@@ -1521,7 +1521,7 @@ Parser.prototype.SelectorCompiler = class {
     //   - opening comment `/*`
     querySelectable(s) {
         if ( this.reCommonSelector.test(s) ) { return true; }
-        if ( this.div === null ) { return true; }
+        if ( this.div === null ) { return false; }
         try {
             this.div.querySelector(`${s},${s}:not(#foo)`);
             if ( s.includes('/*') ) { return false; }
