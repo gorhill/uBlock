@@ -4176,6 +4176,7 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
     };
     mergeRules(rulesetMap, 'resourceTypes');
     mergeRules(rulesetMap, 'initiatorDomains');
+    mergeRules(rulesetMap, 'requestDomains');
     mergeRules(rulesetMap, 'removeParams');
 
     // Patch case-sensitiveness

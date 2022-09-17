@@ -185,11 +185,12 @@ body.mobile.no-tooltips .toolRibbon .tool {
     position: relative;
     }
 #toggleGreatPowers .badge {
+    bottom: 4px;
     font-size: var(--font-size-xsmall);
     line-height: 1;
-    right: 4px;
+    pointer-events: none;
     position: absolute;
-    bottom: 2px;
+    right: 4px;
     }
 body:not(.hasGreatPowers) [data-i18n-title="popupGrantGreatPowers"],
 body.hasGreatPowers [data-i18n-title="popupRevokeGreatPowers"] {

@@ -219,6 +219,10 @@ async function init() {
     );
 
     dom.text(qs$('#hostname'), tabHostname);
+    dom.text(
+        qs$('#toggleGreatPowers .badge'),
+        popupPanelData.injectableCount || ''
+    );
 
     const parent = qs$('#rulesetStats');
     for ( const details of popupPanelData.rulesetDetails || [] ) {

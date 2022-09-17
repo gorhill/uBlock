@@ -27,7 +27,8 @@
 
 import { browser, dnr, i18n, runtime } from './ext.js';
 import { fetchJSON } from './fetch.js';
-import { registerInjectable } from './scripting-manager.js';
+import { getInjectableCount, registerInjectable } from './scripting-manager.js';
+import { parsedURLromOrigin } from './utils.js';
 
 /******************************************************************************/
 
@@ -229,7 +230,9 @@ async function updateRegexRules() {
 /******************************************************************************/
 
 async function matchesTrustedSiteDirective(details) {
-    const url = new URL(details.origin);
+    const url = parsedURLromOrigin(details.origin);
+    if ( url === undefined ) { return false; }
+    
     const dynamicRuleMap = await getDynamicRules();
     let rule = dynamicRuleMap.get(TRUSTED_DIRECTIVE_BASE_RULE_ID);
     if ( rule === undefined ) { return false; }
@@ -241,11 +244,14 @@ async function matchesTrustedSiteDirective(details) {
         if ( pos === -1 ) { break; }
         hostname = hostname.slice(pos+1);
     }
+    
     return false;
 }
 
 async function addTrustedSiteDirective(details) {
-    const url = new URL(details.origin);
+    const url = parsedURLromOrigin(details.origin);
+    if ( url === undefined ) { return false; }
+
     const dynamicRuleMap = await getDynamicRules();
     let rule = dynamicRuleMap.get(TRUSTED_DIRECTIVE_BASE_RULE_ID);
     if ( rule !== undefined ) {
@@ -254,6 +260,7 @@ async function addTrustedSiteDirective(details) {
             rule.condition.requestDomains = [];
         }
     }
+
     if ( rule === undefined ) {
         rule = {
             id: TRUSTED_DIRECTIVE_BASE_RULE_ID,
@@ -270,15 +277,19 @@ async function addTrustedSiteDirective(details) {
     } else if ( rule.condition.requestDomains.includes(url.hostname) === false ) {
         rule.condition.requestDomains.push(url.hostname);
     }
+
     await dnr.updateDynamicRules({
         addRules: [ rule ],
         removeRuleIds: [ TRUSTED_DIRECTIVE_BASE_RULE_ID ],
     });
+
     return true;
 }
 
 async function removeTrustedSiteDirective(details) {
-    const url = new URL(details.origin);
+    const url = parsedURLromOrigin(details.origin);
+    if ( url === undefined ) { return false; }
+
     const dynamicRuleMap = await getDynamicRules();
     let rule = dynamicRuleMap.get(TRUSTED_DIRECTIVE_BASE_RULE_ID);
     if ( rule === undefined ) { return false; }
@@ -286,6 +297,7 @@ async function removeTrustedSiteDirective(details) {
     if ( Array.isArray(rule.condition.requestDomains) === false ) {
         rule.condition.requestDomains = [];
     }
+
     const domainSet = new Set(rule.condition.requestDomains);
     const beforeCount = domainSet.size;
     let hostname = url.hostname;
@@ -295,7 +307,9 @@ async function removeTrustedSiteDirective(details) {
         if ( pos === -1 ) { break; }
         hostname = hostname.slice(pos+1);
     }
+
     if ( domainSet.size === beforeCount ) { return false; }
+
     if ( domainSet.size === 0 ) {
         dynamicRuleMap.delete(TRUSTED_DIRECTIVE_BASE_RULE_ID);
         await dnr.updateDynamicRules({
@@ -303,11 +317,14 @@ async function removeTrustedSiteDirective(details) {
         });
         return false;
     }
+
     rule.condition.requestDomains = Array.from(domainSet);
+
     await dnr.updateDynamicRules({
         addRules: [ rule ],
         removeRuleIds: [ TRUSTED_DIRECTIVE_BASE_RULE_ID ],
     });
+
     return false;
 }
 
@@ -450,11 +467,13 @@ function onMessage(request, sender, callback) {
             matchesTrustedSiteDirective(request),
             hasGreatPowers(request.origin),
             getEnabledRulesetsStats(),
+            getInjectableCount(request.origin),
         ]).then(results => {
             callback({
                 isTrusted: results[0],
                 hasGreatPowers: results[1],
                 rulesetDetails: results[2],
+                injectableCount: results[3],
             });
         });
         return true;
@@ -493,12 +512,14 @@ async function start() {
     // We need to update the regex rules only when ruleset version changes.
     const currentVersion = getCurrentVersion();
     if ( currentVersion !== rulesetConfig.version ) {
-        await updateRegexRules();
         console.log(`Version change: ${rulesetConfig.version} => ${currentVersion}`);
+        await Promise.all([
+            updateRegexRules(),
+            registerInjectable(),
+        ]);
         rulesetConfig.version = currentVersion;
+        saveRulesetConfig();
     }
-
-    saveRulesetConfig();
 
     const enabledRulesets = await dnr.getEnabledRulesets();
     console.log(`Enabled rulesets: ${enabledRulesets}`);

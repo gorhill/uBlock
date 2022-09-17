@@ -27,6 +27,7 @@
 
 import { browser, dnr } from './ext.js';
 import { fetchJSON } from './fetch.js';
+import { parsedURLromOrigin } from './utils.js';
 
 /******************************************************************************/
 
@@ -89,21 +90,21 @@ const toRegisterable = (fname, entry) => {
         id: fname,
         allFrames: true,
     };
-    if ( entry.matches ) {
+    if ( entry.y ) {
         directive.matches = matchesFromHostnames(entry.y);
     } else {
         directive.matches = [ '*://*/*' ];
     }
-    if ( entry.excludeMatches ) {
+    if ( entry.n ) {
         directive.excludeMatches = matchesFromHostnames(entry.n);
     }
     if ( entry.type === CSS_TYPE ) {
         directive.css = [
-            `/content-css/${entry.id}/${fname.slice(0,1)}/${fname.slice(1,8)}.css`
+            `/content-css/${fname.slice(0,1)}/${fname.slice(1,2)}/${fname.slice(2,8)}.css`
         ];
     } else if ( entry.type === JS_TYPE ) {
         directive.js = [
-            `/content-js/${entry.id}/${fname.slice(0,1)}/${fname.slice(1,8)}.js`
+            `/content-js/${fname.slice(0,1)}/${fname.slice(1,8)}.js`
         ];
         directive.runAt = 'document_start';
         directive.world = 'MAIN';
@@ -115,15 +116,12 @@ const toRegisterable = (fname, entry) => {
 /******************************************************************************/
 
 const shouldRegister = (origins, matches) => {
+    if ( Array.isArray(matches) === false ) { return true; }
     for ( const origin of origins ) {
-        if ( origin === '*' || Array.isArray(matches) === false ) {
-            return true;
-        }
+        if ( origin === '*' ) { return true; }
         let hn = origin;
         for (;;) {
-            if ( matches.includes(hn) ) {
-                return true;
-            }
+            if ( matches.includes(hn) ) { return true; }
             if ( hn === '*' ) { break; }
             const pos = hn.indexOf('.');
             hn = pos !== -1
@@ -136,7 +134,9 @@ const shouldRegister = (origins, matches) => {
 
 /******************************************************************************/
 
-async function getInjectableCount(hostname) {
+async function getInjectableCount(origin) {
+    const url = parsedURLromOrigin(origin);
+    if ( url === undefined ) { return 0; }
 
     const [
         rulesetIds,
@@ -151,23 +151,22 @@ async function getInjectableCount(hostname) {
     let total = 0;
 
     for ( const rulesetId of rulesetIds ) {
-
         if ( cssDetails.has(rulesetId) ) {
-            for ( const entry of cssDetails ) {
-                if ( shouldRegister([ hostname ], entry[1].y) === true ) {
+            const entries = cssDetails.get(rulesetId);
+            for ( const entry of entries ) {
+                if ( shouldRegister([ url.hostname ], entry[1].y) ) {
                     total += 1;
                 }
             }
         }
-        
         if ( scriptletDetails.has(rulesetId) ) {
-            for ( const entry of cssDetails ) {
-                if ( shouldRegister([ hostname ], entry[1].y) === true ) {
+            const entries = cssDetails.get(rulesetId);
+            for ( const entry of entries ) {
+                if ( shouldRegister([ url.hostname ], entry[1].y) ) {
                     total += 1;
                 }
             }
         }
-
     }
 
     return total;
@@ -199,23 +198,47 @@ async function registerInjectable() {
         origins.add('*');
     }
 
+    const mergeEntries = (a, b) => {
+        if ( b.y !== undefined ) {
+            if ( a.y === undefined ) {
+                a.y = new Set(b.y);
+            } else {
+                b.y.forEach(v => a.y.add(v));
+            }
+        }
+        if ( b.n !== undefined ) {
+            if ( a.n === undefined ) {
+                a.n = new Set(b.n);
+            } else {
+                b.n.forEach(v => a.n.add(v));
+            }
+        }
+        return a;
+    };
+
     const toRegister = new Map();
 
     for ( const rulesetId of rulesetIds ) {
         if ( cssDetails.has(rulesetId) ) {
             for ( const [ fname, entry ] of cssDetails.get(rulesetId) ) {
-                entry.id = rulesetId;
-                entry.type = CSS_TYPE;
-                if ( shouldRegister(origins, entry.y) !== true ) { continue; }
-                toRegister.set(fname, entry);
+                if ( shouldRegister(origins, entry.y) === false ) { continue; }
+                let existing = toRegister.get(fname);
+                if ( existing === undefined ) {
+                    existing = { type: CSS_TYPE };
+                    toRegister.set(fname, existing);
+                }
+                mergeEntries(existing, entry);
             }
         }
         if ( scriptletDetails.has(rulesetId) ) {
             for ( const [ fname, entry ] of scriptletDetails.get(rulesetId) ) {
-                entry.id = rulesetId;
-                entry.type = JS_TYPE;
-                if ( shouldRegister(origins, entry.y) !== true ) { continue; }
-                toRegister.set(fname, entry);
+                if ( shouldRegister(origins, entry.y) === false ) { continue; }
+                let existing = toRegister.get(fname);
+                if ( existing === undefined ) {
+                    existing = { type: JS_TYPE };
+                    toRegister.set(fname, existing);
+                }
+                mergeEntries(existing, entry);
             }
         }
     }

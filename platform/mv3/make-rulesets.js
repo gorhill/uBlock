@@ -305,6 +305,8 @@ function optimizeExtendedFilters(filters) {
 
 /******************************************************************************/
 
+const globalCSSFileSet = new Set();
+
 const style = [
     '  display:none!important;',
     '  position:absolute!important;',
@@ -320,15 +322,34 @@ function processCosmeticFilters(assetDetails, mapin) {
     for ( const entry of optimized ) {
         const selectors = entry.payload.join(',\n');
         const fname = createHash('sha256').update(selectors).digest('hex').slice(0,8);
-        const fpath = `${assetDetails.id}/${fname.slice(0,1)}/${fname.slice(1,8)}`;
-        writeFile(
-            `${cssDir}/${fpath}.css`,
-            `${selectors} {\n${style}\n}\n`
-        );
-        cssEntries.set(fname, {
-            y: entry.matches,
-            n: entry.excludeMatches,
-        });
+        if ( globalCSSFileSet.has(fname) === false ) {
+            globalCSSFileSet.add(fname);
+            const fpath = `${fname.slice(0,1)}/${fname.slice(1,2)}/${fname.slice(2,8)}`;
+            writeFile(
+                `${cssDir}/${fpath}.css`,
+                `${selectors} {\n${style}\n}\n`
+            );
+        }
+        const existing = cssEntries.get(fname);
+        if ( existing === undefined ) {
+            cssEntries.set(fname, {
+                y: entry.matches,
+                n: entry.excludeMatches,
+            });
+            continue;
+        }
+        if ( entry.matches ) {
+            for ( const hn of entry.matches ) {
+                if ( existing.y.includes(hn) ) { continue; }
+                existing.y.push(hn);
+            }
+        }
+        if ( entry.excludeMatches ) {
+            for ( const hn of entry.excludeMatches ) {
+                if ( existing.n.includes(hn) ) { continue; }
+                existing.n.push(hn);
+            }
+        }
     }
 
     log(`CSS entries: ${cssEntries.size}`);
@@ -342,11 +363,58 @@ function processCosmeticFilters(assetDetails, mapin) {
 
 /******************************************************************************/
 
+// Load all available scriptlets into a key-val map, where the key is the
+// scriptlet token, and val is the whole content of the file.
+
+const scriptletDealiasingMap = new Map(); 
+let scriptletsMapPromise;
+
+function loadAllScriptlets() {
+    if ( scriptletsMapPromise !== undefined ) {
+        return scriptletsMapPromise;
+    }
+
+    scriptletsMapPromise = fs.readdir('./scriptlets').then(files => {
+        const reScriptletNameOrAlias = /^\/\/\/\s+(?:name|alias)\s+(\S+)/gm;
+        const readPromises = [];
+        for ( const file of files ) {
+            readPromises.push(
+                fs.readFile(`./scriptlets/${file}`, { encoding: 'utf8' })
+            );
+        }
+        return Promise.all(readPromises).then(results => {
+            const originalScriptletMap = new Map();
+            for ( const text of results ) {
+                const aliasSet = new Set();
+                for (;;) {
+                    const match = reScriptletNameOrAlias.exec(text);
+                    if ( match === null ) { break; }
+                    aliasSet.add(match[1]);
+                }
+                if ( aliasSet.size === 0 ) { continue; }
+                const aliases = Array.from(aliasSet);
+                originalScriptletMap.set(aliases[0], text);
+                for ( let i = 0; i < aliases.length; i++ ) {
+                    scriptletDealiasingMap.set(aliases[i], aliases[0]);
+                }
+            }
+            return originalScriptletMap;
+        });
+    });
+
+    return scriptletsMapPromise;
+}
+
+/******************************************************************************/
+
+const globalPatchedScriptletsSet = new Set();
+
 async function processScriptletFilters(assetDetails, mapin) {
     if ( mapin === undefined ) { return 0; }
 
-    const originalScriptletMap = new Map();
-    const dealiasingMap = new Map();
+    // Load all available scriptlets into a key-val map, where the key is the
+    // scriptlet token, and val is the whole content of the file.
+    const originalScriptletMap = await loadAllScriptlets();
 
     const parseArguments = (raw) => {
         const out = [];
@@ -376,7 +444,7 @@ async function processScriptletFilters(assetDetails, mapin) {
         let pos = filter.indexOf(',');
         if ( pos === -1 ) { pos = end; }
         const parts = filter.trim().split(',').map(s => s.trim());
-        const token = dealiasingMap.get(parts[0]) || '';
+        const token = scriptletDealiasingMap.get(parts[0]) || '';
         if ( token !== '' && originalScriptletMap.has(token) ) {
             return {
                 token,
@@ -387,83 +455,45 @@ async function processScriptletFilters(assetDetails, mapin) {
 
     const patchScriptlet = (filter) => {
         return originalScriptletMap.get(filter.token).replace(
-            /^self\.\$args\$$/m,
-            `...${JSON.stringify(filter.args, null, 4)}`
+            /^(\}\)\(\.\.\.)self\.\$args\$(\);)$/m,
+            `$1${JSON.stringify(filter.args, null, 4)}$2`
         );
     };
 
-    // Load all available scriptlets into a key-val map, where the key is the
-    // scriptlet token, and val is the whole content of the file.
-    const files = await fs.readdir('./scriptlets');
-    const reScriptletNameOrAlias = /^\/\/\/\s+(?:name|alias)\s+(\S+)/gm;
-    for ( const file of files ) {
-        const text = await fs.readFile(
-            `./scriptlets/${file}`,
-            { encoding: 'utf8' }
-        );
-        const aliasSet = new Set();
-        for (;;) {
-            const match = reScriptletNameOrAlias.exec(text);
-            if ( match === null ) { break; }
-            aliasSet.add(match[1]);
-        }
-        if ( aliasSet.size === 0 ) { continue; }
-        const aliases = Array.from(aliasSet);
-        originalScriptletMap.set(aliases[0], text);
-        for ( let i = 0; i < aliases.length; i++ ) {
-            dealiasingMap.set(aliases[i], aliases[0]);
-        }
-    }
+    // Generate distinct scriptlet files according to patched scriptlets
+    const scriptletEntries = new Map();
 
-    // Merge entries after dealiasing and expanding arguments
-    const normalizedMap = new Map();
-    for ( const [ rawFilter, toAdd ] of mapin ) {
+    for ( const [ rawFilter, entry ] of mapin ) {
         const normalized = parseFilter(rawFilter);
         if ( normalized === undefined ) { continue; }
-        const key = JSON.stringify(normalized);
-        const toMerge = normalizedMap.get(key);
-        if ( toMerge === undefined ) {
-            normalizedMap.set(key, toAdd);
+        const json = JSON.stringify(normalized);
+        const fname = createHash('sha256').update(json).digest('hex').slice(0,8);
+        if ( globalPatchedScriptletsSet.has(fname) === false ) {
+            globalPatchedScriptletsSet.add(fname);
+            const scriptlet = patchScriptlet(normalized);
+            const fpath = `${fname.slice(0,1)}/${fname.slice(1,8)}`;
+            writeFile(`${scriptletDir}/${fpath}.js`, scriptlet);
+        }
+        const existing = scriptletEntries.get(fname);
+        if ( existing === undefined ) {
+            scriptletEntries.set(fname, {
+                y: entry.matches,
+                n: entry.excludeMatches,
+            });
             continue;
         }
-        const matches = new Set(toMerge.matches || []);
-        const excludeMatches = new Set(toMerge.excludeMatches || []);
-        if ( toAdd.matches && toAdd.matches.size !== 0 ) {
-            toAdd.matches.forEach(hn => {
-                matches.add(hn);
-            });
+        if ( entry.matches ) {
+            for ( const hn of entry.matches ) {
+                if ( existing.y.includes(hn) ) { continue; }
+                existing.y.push(hn);
+            }
         }
-        if ( toAdd.excludeMatches && toAdd.excludeMatches.size !== 0 ) {
-            toAdd.excludeMatches.forEach(hn => {
-                excludeMatches.add(hn);
-            });
+        if ( entry.excludeMatches ) {
+            for ( const hn of entry.excludeMatches ) {
+                if ( existing.n.includes(hn) ) { continue; }
+                existing.n.push(hn);
+            }
         }
-        if ( matches.size !== 0 ) {
-            toMerge.matches = matches.has('*')
-                ? [ '*' ]
-                : Array.from(matches);
-        }
-        if ( excludeMatches.size !== 0 ) {
-            toMerge.excludeMatches = excludeMatches.has('*')
-                ? [ '*' ]
-                : Array.from(excludeMatches);
-        }
-    }
-
-    // Combine injected resources for same matches/excludeMatches instances
-    //const optimized = optimizeExtendedFilters(normalizedMap);
-
-    // Generate distinct scriptlets according to patched scriptlets
-    const scriptletEntries = new Map();
-    for ( const [ json, entry ] of normalizedMap ) {
-        const fname = createHash('sha256').update(json).digest('hex').slice(0,8);
-        const scriptlet = patchScriptlet(JSON.parse(json));
-        const fpath = `${assetDetails.id}/${fname.slice(0,1)}/${fname.slice(1,8)}`;
-        writeFile(`${scriptletDir}/${fpath}.js`, scriptlet);
-        scriptletEntries.set(fname, {
-            y: entry.matches,
-            n: entry.excludeMatches,
-        });
     }
 
     log(`Scriptlet entries: ${scriptletEntries.size}`);
