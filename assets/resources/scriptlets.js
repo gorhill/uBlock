@@ -1267,20 +1267,24 @@
 
 // https://github.com/uBlockOrigin/uAssets/issues/10323#issuecomment-992312847
 // https://github.com/AdguardTeam/Scriptlets/issues/158
+// https://github.com/uBlockOrigin/uBlock-issues/discussions/2270
 /// window-close-if.js
 (function() {
     const arg1 = '{{1}}';
     let reStr;
+    let subject = '';
     if ( arg1 === '{{1}}' || arg1 === '' ) {
         reStr = '^';
-    } else if ( arg1.startsWith('/') && arg1.endsWith('/') ) {
+    } else if ( /^\/.*\/$/.test(arg1) ) {
         reStr = arg1.slice(1, -1);
+        subject = window.location.href;
     } else {
         reStr = arg1.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        subject = `${window.location.pathname}${window.location.search}`;
     }
     try {
         const re = new RegExp(reStr);
-        if ( re.test(`${window.location.pathname}${window.location.search}`) ) {
+        if ( re.test(subject) ) {
             window.close();
         }
     } catch(ex) {
