@@ -84,11 +84,11 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupGrantGreatPowers": {
-    "message": "Cliquea para otorgar permisos extendidos a uBO Lite en este sitio.\nLos permisos extendidos permiten un bloqueo de contenido más efectivo.",
+    "message": "Haz clic para otorgar permisos extendidos a uBO Lite en este sitio.\nLos permisos extendidos permiten un bloqueo de contenido más efectivo.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupRevokeGreatPowers": {
-    "message": "Cliquea para revocar los permisos extendidos en este sitio",
+    "message": "Haz clic para revocar los permisos extendidos en este sitio",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
