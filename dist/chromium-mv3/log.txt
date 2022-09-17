@@ -1,4 +1,4 @@
-Version: 0.1.22.9167
+Version: 0.1.22.9175
 ============================
 Listset for 'default':
 	Fetching remote https://ublockorigin.pages.dev/filters/filters.txt
@@ -7,22 +7,22 @@ Listset for 'default':
 	Fetching remote https://ublockorigin.pages.dev/filters/resource-abuse.txt
 	Fetching remote https://ublockorigin.pages.dev/filters/unbreak.txt
 	Fetching remote https://ublockorigin.pages.dev/filters/quick-fixes.txt
-	Fetching remote https://secure.fanboy.co.nz/easyprivacy.txt
 	Fetching remote https://secure.fanboy.co.nz/easylist.txt
+	Fetching remote https://secure.fanboy.co.nz/easyprivacy.txt
 	Fetching remote https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
 	Fetching remote https://ublockorigin.pages.dev/filters/filters-2020.txt
 	Fetching remote https://ublockorigin.pages.dev/filters/filters-2021.txt
 	Fetching remote https://ublockorigin.pages.dev/filters/filters-2022.txt
-Input filter count: 79017
-	Accepted filter count: 76625
+Input filter count: 79121
+	Accepted filter count: 76728
 	Rejected filter count: 151
-Output rule count: 21146
-	Good: 20295
+Output rule count: 20990
+	Good: 20197
 	Maybe good (regexes): 127
-	redirect-rule= (discarded): 465
-	csp= (discarded): 84
+	redirect-rule= (discarded): 435
+	csp= (discarded): 58
 	removeparams= (discarded): 23
-	Unsupported: 152
+	Unsupported: 150
 		Entity not supported: booru.*
 		Entity not supported: silkengirl.*
 		Entity not supported: megalink.*
@@ -40,7 +40,6 @@ Output rule count: 21146
 		Entity not supported: theproxy.*
 		regexFilter is not RE2-compatible: ^https:\/\/a\.[-0-9a-z]{4,16}\.(?:club|com?|cyou|info|net|ru|site|top?|xxx|xyz)\/(?=[a-z]{0,6}[0-9A-Z])[0-9a-zA-Z]{7}\.js$
 		Entity not supported: sitesunblocked.*
-		Entity not supported: 1movies.*
 		Entity not supported: 1movies.*
 		Entity not supported: slreamplay.*
 		Entity not supported: sexwebvideo.*
@@ -160,7 +159,6 @@ Output rule count: 21146
 		Entity not supported: streamzz.*
 		Entity not supported: streamingcommunity.*
 		Entity not supported: 1movies.*
-		Entity not supported: 1movies.*
 		Unsupported regex-based removeParam: /^ad/
 		Unsupported regex-based removeParam: /^ad/
 		Entity not supported: carousell.*
@@ -175,8 +173,8 @@ Output rule count: 21146
 		Unhandled modifier exception
 		Unhandled modifier exception
 		Unhandled modifier exception
-CSS entries: 4720
-Scriptlet entries: 884
+CSS entries: 4724
+Scriptlet entries: 886
 ============================
 Listset for 'alb-0':
 	Fetching remote https://raw.githubusercontent.com/AnXh3L0/blocklist/master/albanian-easylist-addition/Albania.txt
@@ -229,21 +227,21 @@ CSS entries: 184
 ============================
 Listset for 'chn-0':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/224.txt
-Input filter count: 18778
-	Accepted filter count: 18737
+Input filter count: 18793
+	Accepted filter count: 18752
 	Rejected filter count: 0
-Output rule count: 6800
-	Good: 6739
+Output rule count: 6782
+	Good: 6724
 	Maybe good (regexes): 14
 	redirect-rule= (discarded): 34
-	csp= (discarded): 9
+	csp= (discarded): 6
 	removeparams= (discarded): 0
 	Unsupported: 4
 		regexFilter is not RE2-compatible: ^(?!.*(bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|vk.com|yandex.|yastatic.net|ytimg.com|zencdn.net|player|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com)).*$
 		Invalid network filter in chn-0: @@||ad.alimama.com^$genericblock
 		Invalid network filter in chn-0: @@||cmechina.net^$genericblock
 		Unhandled modifier exception
-CSS entries: 2511
+CSS entries: 2512
 Scriptlet entries: 43
 ============================
 Listset for 'cze-0':
@@ -252,11 +250,11 @@ Listset for 'cze-0':
 Input filter count: 226
 	Accepted filter count: 226
 	Rejected filter count: 0
-Output rule count: 122
+Output rule count: 120
 	Good: 113
 	Maybe good (regexes): 0
 	redirect-rule= (discarded): 6
-	csp= (discarded): 3
+	csp= (discarded): 1
 	removeparams= (discarded): 0
 	Unsupported: 0
 
@@ -268,8 +266,8 @@ Listset for 'deu-0':
 Input filter count: 2188
 	Accepted filter count: 2188
 	Rejected filter count: 0
-Output rule count: 1714
-	Good: 1710
+Output rule count: 1688
+	Good: 1684
 	Maybe good (regexes): 3
 	redirect-rule= (discarded): 0
 	csp= (discarded): 0
@@ -297,31 +295,31 @@ Output rule count: 0
 Listset for 'fin-0':
 	Fetching remote https://raw.githubusercontent.com/finnish-easylist-addition/finnish-easylist-addition/master/Finland_adb.txt
 	Fetching remote https://raw.githubusercontent.com/finnish-easylist-addition/finnish-easylist-addition/master/Finland_adb_uBO_extras.txt
-Input filter count: 168
-	Accepted filter count: 168
+Input filter count: 169
+	Accepted filter count: 169
 	Rejected filter count: 0
 Output rule count: 147
-	Good: 137
+	Good: 138
 	Maybe good (regexes): 3
-	redirect-rule= (discarded): 4
+	redirect-rule= (discarded): 3
 	csp= (discarded): 0
 	removeparams= (discarded): 0
 	Unsupported: 3
 		regexFilter is not RE2-compatible: telsu\.fi\/(?![^>]*\.\w{3}$).+
 		regexFilter is not RE2-compatible: telsu\.fi\/(?![^>].*\.(jpg|png|svg|ico)$).+
 		regexFilter is not RE2-compatible: telsu\.fi\/img\/(?!cloudcity|mindmax|navibg|prg|tvohjelmat)
-CSS entries: 304
+CSS entries: 305
 Scriptlet entries: 1
 ============================
 Listset for 'fra-0':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/16.txt
-Input filter count: 21513
-	Accepted filter count: 21459
+Input filter count: 21529
+	Accepted filter count: 21475
 	Rejected filter count: 48
-Output rule count: 7331
-	Good: 7280
+Output rule count: 7314
+	Good: 7264
 	Maybe good (regexes): 10
-	redirect-rule= (discarded): 28
+	redirect-rule= (discarded): 27
 	csp= (discarded): 5
 	removeparams= (discarded): 0
 	Unsupported: 8
@@ -402,33 +400,19 @@ Listset for 'irn-0':
 Input filter count: 1349
 	Accepted filter count: 1349
 	Rejected filter count: 0
-Output rule count: 530
+Output rule count: 517
 	Good: 502
 	Maybe good (regexes): 0
 	redirect-rule= (discarded): 0
 	csp= (discarded): 0
-	removeparams= (discarded): 5
-	Unsupported: 23
+	removeparams= (discarded): 6
+	Unsupported: 9
 		Strict partyness not supported: strict3p
-		Unsupported regex-based removeParam: /^utm_/
 		Unsupported regex-based removeParam: /^utm_/
 		Unsupported regex-based removeParam: /^utm_/
 		Unsupported regex-based removeParam: /^promo/
 		Unsupported regex-based removeParam: /promo/
-		Unsupported regex-based removeParam: /promo/
-		Unsupported regex-based removeParam: /^utm_/
-		Unsupported regex-based removeParam: /^utm_/
-		Unsupported regex-based removeParam: /^utm_/
-		Unsupported regex-based removeParam: /^utm_/
-		Unsupported regex-based removeParam: /^utm_/
 		Unsupported regex-based removeParam: /itm/
-		Unsupported regex-based removeParam: /^utm_/
-		Unsupported regex-based removeParam: /^utm_/
-		Unsupported regex-based removeParam: /^utm_/
-		Unsupported regex-based removeParam: /^utm_/
-		Unsupported regex-based removeParam: /^utm_/
-		Unsupported regex-based removeParam: /^utm_/
-		Unsupported regex-based removeParam: /^utm_/
 		Unsupported regex-based removeParam: /^utm_/
 		Unsupported regex-based removeParam: /^utm_/
 		Unsupported regex-based removeParam: /^utm_/
@@ -456,8 +440,8 @@ Listset for 'isr-0':
 Input filter count: 708
 	Accepted filter count: 707
 	Rejected filter count: 1
-Output rule count: 294
-	Good: 261
+Output rule count: 278
+	Good: 245
 	Maybe good (regexes): 4
 	redirect-rule= (discarded): 11
 	csp= (discarded): 1
@@ -476,10 +460,10 @@ Output rule count: 294
 		Invalid network filter in isr-0: *$webrtc,domain=walla.co.il
 		Invalid network filter in isr-0: *$webrtc,domain=ynet.co.il
 		Invalid network filter in isr-0: *$webrtc,domain=mako.co.il
-		Invalid network filter in isr-0: *$webrtc,domain=globes.co.il
-		Invalid network filter in isr-0: *$webrtc,domain=calcalist.co.il
 		Invalid network filter in isr-0: *$webrtc,domain=13news.co.il|13tv.co.il
 		Invalid network filter in isr-0: *$webrtc,domain=yad2.co.il
+		Invalid network filter in isr-0: *$webrtc,domain=globes.co.il
+		Invalid network filter in isr-0: *$webrtc,domain=calcalist.co.il
 CSS entries: 113
 Scriptlet entries: 2
 ============================
@@ -488,8 +472,8 @@ Listset for 'ita-0':
 Input filter count: 5687
 	Accepted filter count: 5687
 	Rejected filter count: 0
-Output rule count: 5418
-	Good: 5414
+Output rule count: 5417
+	Good: 5413
 	Maybe good (regexes): 3
 	redirect-rule= (discarded): 0
 	csp= (discarded): 0
@@ -503,8 +487,8 @@ Listset for 'jpn-1':
 Input filter count: 1215
 	Accepted filter count: 1214
 	Rejected filter count: 0
-Output rule count: 807
-	Good: 773
+Output rule count: 803
+	Good: 769
 	Maybe good (regexes): 11
 	redirect-rule= (discarded): 20
 	csp= (discarded): 0
@@ -535,8 +519,8 @@ Listset for 'ltu-0':
 Input filter count: 574
 	Accepted filter count: 574
 	Rejected filter count: 0
-Output rule count: 524
-	Good: 520
+Output rule count: 523
+	Good: 519
 	Maybe good (regexes): 1
 	redirect-rule= (discarded): 3
 	csp= (discarded): 0
@@ -589,19 +573,19 @@ Scriptlet entries: 9
 ============================
 Listset for 'nor-0':
 	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianList.txt
-	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/AntiAdblockEntries.txt
 	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/NordicFilters-NotFirefox.txt
 	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/NordicFilters-NotBrave.txt
+	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/AntiAdblockEntries.txt
 Input filter count: 863
 	Accepted filter count: 856
 	Rejected filter count: 0
-Output rule count: 515
-	Good: 458
-	Maybe good (regexes): 3
+Output rule count: 485
+	Good: 428
+	Maybe good (regexes): 2
 	redirect-rule= (discarded): 3
 	csp= (discarded): 1
-	removeparams= (discarded): 17
-	Unsupported: 33
+	removeparams= (discarded): 21
+	Unsupported: 30
 		Entity not supported: discoveryplus.*
 		Entity not supported: gamereactor.*
 		Entity not supported: gamereactor.*
@@ -612,29 +596,26 @@ Output rule count: 515
 		Entity not supported: gamereactor.*
 		Entity not supported: discoveryplus.*
 		Entity not supported: discoveryplus.*
-		Entity not supported: discoveryplus.*
-		Entity not supported: gamereactor.*
-		Entity not supported: gamereactor.*
-		Entity not supported: discoveryplus.*
-		Entity not supported: gamereactor.*
 		Entity not supported: gamereactor.*
 		Invalid network filter in nor-0: ||5e529.v.fwmrm.net^$app=com.discovery.dplay
+		Invalid network filter in nor-0: ||ssl-dnnstream.tns-cs.net^$app=com.discovery.dplay
 		Invalid network filter in nor-0: ||discoverynordics.hb.omtrdc.net^$app=com.discovery.dplay
+		Invalid network filter in nor-0: ||widgets.sprinklecontent.com^$app=no.startsiden.bookmarks
 		Invalid network filter in nor-0: /tv2ads.js$app=dk.tv2.nyhedscenter
+		Invalid network filter in nor-0: -bazaar-$app=no.nettavisen.phonegap.na
 		Invalid network filter in nor-0: /bazaar/*$app=no.nettavisen.phonegap.na
+		Invalid network filter in nor-0: /resources/dfp/*$app=no.nettavisen.phonegap.na
+		Invalid network filter in nor-0: ||finn.no^$app=no.bt
+		Invalid network filter in nor-0: contentMarketing$app=no.sol
 		Invalid network filter in nor-0: /insert_grtv_stats.$xhr,app=com.gamereactor
 		Invalid network filter in nor-0: /prerolls/*$app=com.gamereactor
 		Invalid network filter in nor-0: /videojs.ima.$app=com.gamereactor
 		Invalid network filter in nor-0: @@||imasdk.googleapis.com/js/sdkloader/ima3.$app=com.gamereactor
+		Invalid network filter in nor-0: @@||openx.gamereactor.dk/www/delivery/fc.php$app=com.gamereactor
+		Unsupported regex-based removeParam: /^rs[0-9]/
+		Unsupported regex-based removeParam: /^source=partnerads$/
 		Unsupported regex-based removeParam: /^source=tradedoubler$/
 		Unsupported regex-based removeParam: /^amp;/
-		Invalid network filter in nor-0: ||ssl-dnnstream.tns-cs.net^$app=com.discovery.dplay
-		Invalid network filter in nor-0: ||widgets.sprinklecontent.com^$app=no.startsiden.bookmarks
-		Invalid network filter in nor-0: -bazaar-$app=no.nettavisen.phonegap.na
-		Invalid network filter in nor-0: /resources/dfp/*$app=no.nettavisen.phonegap.na
-		Invalid network filter in nor-0: ||finn.no^$app=no.bt
-		Invalid network filter in nor-0: contentMarketing$app=no.sol
-		Invalid network filter in nor-0: @@||openx.gamereactor.dk/www/delivery/fc.php$app=com.gamereactor
 CSS entries: 426
 Scriptlet entries: 8
 ============================
@@ -664,8 +645,8 @@ Listset for 'pol-2':
 Input filter count: 300
 	Accepted filter count: 300
 	Rejected filter count: 0
-Output rule count: 203
-	Good: 195
+Output rule count: 202
+	Good: 194
 	Maybe good (regexes): 5
 	redirect-rule= (discarded): 3
 	csp= (discarded): 0
@@ -679,18 +660,18 @@ Listset for 'rou-1':
 	Fetching remote https://road.adblock.ro/lista.txt
 	Fetching remote https://road.adblock.ro/road-ubo.txt
 No valid content for undefined
-Input filter count: 513
-	Accepted filter count: 511
+Input filter count: 516
+	Accepted filter count: 514
 	Rejected filter count: 0
-Output rule count: 409
-	Good: 406
+Output rule count: 411
+	Good: 408
 	Maybe good (regexes): 3
 	redirect-rule= (discarded): 0
 	csp= (discarded): 0
 	removeparams= (discarded): 0
 	Unsupported: 0
 
-CSS entries: 183
+CSS entries: 184
 ============================
 Listset for 'rus-0':
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/RuAdList-uBO.txt
@@ -708,30 +689,30 @@ Listset for 'rus-0':
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/css-fixes-experimental.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/js-fixes-experimental.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/AWRL-non-sync.txt
-Input filter count: 18441
-	Accepted filter count: 18423
+Input filter count: 18442
+	Accepted filter count: 18424
 	Rejected filter count: 16
-Output rule count: 6063
-	Good: 5926
+Output rule count: 6003
+	Good: 5911
 	Maybe good (regexes): 21
 	redirect-rule= (discarded): 19
-	csp= (discarded): 84
-	removeparams= (discarded): 9
+	csp= (discarded): 38
+	removeparams= (discarded): 10
 	Unsupported: 4
 		regexFilter is not RE2-compatible: ^(?!.*(24liveblog.com|24liveplus.com|acint.net|addthis.com|addthisedge.com|akamai.net|akamaiedge.net|alloha.tv|ampproject.org|anycomment.io|apester.com|api-ssl.bitly.com|api.corr.life|api.here.com|api.sypexgeo.net|app.hoversignal.com|appsmail.ru|bam.nr-data.net|blogger.com|bootstrapcdn.com|cackle.me|cdn.ampproject.org|cdn.iframe.ly|cdn.rawgit.com|cdnstats.ru|cdnvideo.ru|chartbeat.com|chatango.com|chatbro.com|chimpstatic.com|cloudflare.com|cloudflare.net|cloudfront.net|code.createjs.com|columbus.te.ua|cultserv.ru|disqus.com|disquscdn.com|dmca.com|each.im|ebacdn.com|edgecastcdn.net|ellinagraypel.com|embed.ex.co|embed.widgetpack.com|embedstorage.net|eurosolidarity.org|facebook.com|facebook.net|fastly.net|fastlylb.net|fbcdn.net|fbvkcdn.com|feonet.net|fluidplayer.com|fontawesome.com|fonts.w.tools|freecurrencyrates.com|fwcdn1.com|fwdcdn.com|gcdn.co|getsitecontrol.com|gismeteo.ru|gismeteo.ua|github.io|gitlab.io|google-analytics.com|google.com|googleadservices.com|googleapis.com|googleoptimize.com|googletagmanager.com|googletagservices.com|gravatar.com|gravitec.media|gravitec.net|gstatic.com|hcaptcha.com|hupso.com|hwcdn.net|hypercomments.com|ibytedtos.com|imgsmail.ru|imgur.com|informers.ukr.net|instagram.com|intensedebate.com|intercom.io|intercomcdn.com|intravideo.net|issuu.com|ivideon.com|jivosite.com|jquery.com|js-agent.newrelic.com|jsdelivr.net|jsonip.com|jwpcdn.com|jwplatform.com|keycaptcha.com|kin-x.com|kinogram.best|kinohod.ru|kinoplayer.co|kinotreiler.com|kitbit.net|kodik-add.com|kodikapi.com|libria.fun|licdn.com|likebtn.com|linkedin.com|lp4.io|luxnet.ua|mail.ru|mailchimp.com|mapbox.com|media-imdb.com|media.reformal.ru|mediator.media|meteobar.com|meteonova.ru|mirtesen.ru|netdna-cdn.com|ngenix.net|nuipogoda.ru|odnaknopka.ru|odnoklassniki.ru|ok.ru|oneall.com|onesignal.com|onthe.io|phnx.click|piktochart.com|pinterest.com|pixars.org|platformcraft.ru|playbuzz.com|player|player.panda.video|pljs.ru|plrjs.com|plyr.io|polldaddy.com|polyfill.io|pv.pjtsu.com|quiz.ink|raincaptcha.com|readymag.com|recaptcha.net|relap.io|renteres.ru|rumer.club|s5o.ru|securedtouch.com|selcdn.net|sendpulse.com|pluso.ru|shareaholic.com|shareaholic.net|sharethis.com|shrink.pe|sinoptik.ua|source.mmi.bemobile.ua|sporcle.com|sportradar.com|sportrecs.com|sports.ru|stackpathcdn.com|static.addtoany.com|statically.io|streamvid.club|telegram.im|telegram.org|tenews.org.ua|tenews.te.ua|tiktok.com|tilda.ws|tildacdn.com|tns-counter.ru|tolstoycomments.com|traq.li|trbcdn.net|trbna.com|ttrace.ru|tumblr.com|tvget.ru|tvsok.ru|twimg.com|twitter.com|typekit.net|uanews.org.ua|ui.ill.in.ua|unpkg.com|uptolike.com|userapi.com|usocial.pro|uweb.ru|vicomi.com|vidazoo.com|videocdn.tv|videoplayers.club|viglink.com|viqeo.tv|vk.com|vkontakte.ru|vuukle.com|widget.speechki.org|widget.vp.ru|widgets.getpocket.com|world-weather.ru|wp.com|yabber.cloud|yandex.ru|yandex.st|yastatic.net|yohoho.cc|yohoho.online|yoomoney.ru|youtube-nocookie.com|youtube.com|ytimg.com|zencdn.net)).*$
 		Entity not supported: m.rp5.*
 		Unhandled modifier exception
 		Unsupported regex-based removeParam: /autostart|skin_name/
-CSS entries: 4761
-Scriptlet entries: 105
+CSS entries: 4763
+Scriptlet entries: 107
 ============================
 Listset for 'spa-0':
 	Fetching remote https://easylist-downloads.adblockplus.org/easylistspanish.txt
 Input filter count: 1572
 	Accepted filter count: 1572
 	Rejected filter count: 0
-Output rule count: 817
-	Good: 807
+Output rule count: 816
+	Good: 806
 	Maybe good (regexes): 9
 	redirect-rule= (discarded): 0
 	csp= (discarded): 0
@@ -745,20 +726,19 @@ Listset for 'spa-1':
 Input filter count: 1422
 	Accepted filter count: 1417
 	Rejected filter count: 0
-Output rule count: 953
-	Good: 917
+Output rule count: 950
+	Good: 915
 	Maybe good (regexes): 6
 	redirect-rule= (discarded): 24
 	csp= (discarded): 0
 	removeparams= (discarded): 0
-	Unsupported: 6
+	Unsupported: 5
 		Entity not supported: netcine.*
 		Entity not supported: netcine.*
-		Entity not supported: cuevana3.*
 		Entity not supported: cuevana3.*
 		regexFilter is not RE2-compatible: ^(?!.*(bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|vk.com|yandex.|yastatic.net|ytimg.com|zencdn.net|player|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com)).*$
 		Entity not supported: anitube.*
-CSS entries: 997
+CSS entries: 998
 Scriptlet entries: 54
 ============================
 Listset for 'svn-0':
@@ -766,8 +746,8 @@ Listset for 'svn-0':
 Input filter count: 148
 	Accepted filter count: 148
 	Rejected filter count: 0
-Output rule count: 104
-	Good: 104
+Output rule count: 103
+	Good: 103
 	Maybe good (regexes): 0
 	redirect-rule= (discarded): 0
 	csp= (discarded): 0
@@ -784,11 +764,11 @@ Listset for 'swe-1':
 Input filter count: 1502
 	Accepted filter count: 1502
 	Rejected filter count: 0
-Output rule count: 1144
-	Good: 1121
+Output rule count: 1138
+	Good: 1119
 	Maybe good (regexes): 2
 	redirect-rule= (discarded): 9
-	csp= (discarded): 6
+	csp= (discarded): 2
 	removeparams= (discarded): 3
 	Unsupported: 3
 		Unsupported regex-based removeParam: /^ap/
@@ -817,8 +797,8 @@ Listset for 'tur-0':
 Input filter count: 1805
 	Accepted filter count: 1805
 	Rejected filter count: 0
-Output rule count: 1372
-	Good: 1329
+Output rule count: 1371
+	Good: 1328
 	Maybe good (regexes): 13
 	redirect-rule= (discarded): 19
 	csp= (discarded): 0
@@ -843,8 +823,8 @@ Listset for 'vie-1':
 Input filter count: 731
 	Accepted filter count: 731
 	Rejected filter count: 0
-Output rule count: 562
-	Good: 557
+Output rule count: 559
+	Good: 554
 	Maybe good (regexes): 3
 	redirect-rule= (discarded): 0
 	csp= (discarded): 2
@@ -859,8 +839,8 @@ Listset for 'block-lan':
 Input filter count: 43
 	Accepted filter count: 43
 	Rejected filter count: 0
-Output rule count: 43
-	Good: 37
+Output rule count: 10
+	Good: 4
 	Maybe good (regexes): 6
 	redirect-rule= (discarded): 0
 	csp= (discarded): 0
