@@ -83,6 +83,16 @@ const hostnamesFromMatches = origins => {
     return out;
 };
 
+const arrayEq = (a, b) => {
+    if ( a === undefined ) { return b === undefined; }
+    if ( b === undefined ) { return false; }
+    if ( a.length !== b.length ) { return false; }
+    for ( const i of a ) {
+        if ( b.includes(i) === false ) { return false; }
+    }
+    return true;
+};
+
 /******************************************************************************/
 
 const toRegisterable = (fname, entry) => {
@@ -111,6 +121,17 @@ const toRegisterable = (fname, entry) => {
     }
 
     return directive;
+};
+
+const toMaybeUpdatable = (registered, candidate) => {
+    const matches = candidate.y && matchesFromHostnames(candidate.y);
+    if ( arrayEq(registered.matches, matches) === false ) {
+        return toRegisterable(candidate);
+    }
+    const excludeMatches = candidate.n && matchesFromHostnames(candidate.n);
+    if ( arrayEq(registered.excludeMatches, excludeMatches) === false ) {
+        return toRegisterable(candidate);
+    }
 };
 
 /******************************************************************************/
@@ -243,26 +264,39 @@ async function registerInjectable() {
         }
     }
 
-    const before = new Set(registered.map(entry => entry.id));
+    const before = new Map(registered.map(entry => [ entry.id, entry ]));
+
     const toAdd = [];
+    const toUpdate = [];
     for ( const [ fname, entry ] of toRegister ) {
-        if ( before.has(fname) ) { continue; }
-        toAdd.push(toRegisterable(fname, entry));
+        if ( before.has(fname) === false ) {
+            toAdd.push(toRegisterable(fname, entry));
+            continue;
+        }
+        const updated = toMaybeUpdatable(before.get(fname), entry);
+        if ( updated !== undefined ) {
+            toUpdate.push(updated);
+        }
     }
+
     const toRemove = [];
-    for ( const fname of before ) {
+    for ( const fname of before.keys() ) {
         if ( toRegister.has(fname) ) { continue; }
         toRemove.push(fname);
     }
 
     const todo = [];
     if ( toRemove.length !== 0 ) {
-        todo.push(browser.scripting.unregisterContentScripts(toRemove));
-        console.info(`Unregistered ${toRemove.length} content (css/js)`);
+        todo.push(browser.scripting.unregisterContentScripts({ ids: toRemove }));
+        console.info(`Unregistered ${toRemove} content (css/js)`);
     }
     if ( toAdd.length !== 0 ) {
         todo.push(browser.scripting.registerContentScripts(toAdd));
-        console.info(`Registered ${toAdd.length} content (css/js)`);
+        console.info(`Registered ${toAdd.map(v => v.id)} content (css/js)`);
+    }
+    if ( toUpdate.length !== 0 ) {
+        todo.push(browser.scripting.updateContentScripts(toUpdate));
+        console.info(`Updated ${toUpdate.map(v => v.id)} content (css/js)`);
     }
     if ( todo.length === 0 ) { return; }
 
