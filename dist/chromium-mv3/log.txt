@@ -1,4 +1,4 @@
-Version: 0.1.22.9175
+Version: 0.1.22.9176
 ============================
 Listset for 'default':
 	Fetching remote https://ublockorigin.pages.dev/filters/filters.txt
@@ -13,14 +13,14 @@ Listset for 'default':
 	Fetching remote https://ublockorigin.pages.dev/filters/filters-2020.txt
 	Fetching remote https://ublockorigin.pages.dev/filters/filters-2021.txt
 	Fetching remote https://ublockorigin.pages.dev/filters/filters-2022.txt
-Input filter count: 79121
-	Accepted filter count: 76728
+Input filter count: 79124
+	Accepted filter count: 76726
 	Rejected filter count: 151
-Output rule count: 20990
+Output rule count: 20992
 	Good: 20197
 	Maybe good (regexes): 127
 	redirect-rule= (discarded): 435
-	csp= (discarded): 58
+	csp= (discarded): 60
 	removeparams= (discarded): 23
 	Unsupported: 150
 		Entity not supported: booru.*
@@ -173,7 +173,7 @@ Output rule count: 20990
 		Unhandled modifier exception
 		Unhandled modifier exception
 		Unhandled modifier exception
-CSS entries: 4724
+CSS entries: 4725
 Scriptlet entries: 886
 ============================
 Listset for 'alb-0':
@@ -227,11 +227,11 @@ CSS entries: 184
 ============================
 Listset for 'chn-0':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/224.txt
-Input filter count: 18793
-	Accepted filter count: 18752
+Input filter count: 18787
+	Accepted filter count: 18746
 	Rejected filter count: 0
-Output rule count: 6782
-	Good: 6724
+Output rule count: 6776
+	Good: 6718
 	Maybe good (regexes): 14
 	redirect-rule= (discarded): 34
 	csp= (discarded): 6
@@ -241,7 +241,7 @@ Output rule count: 6782
 		Invalid network filter in chn-0: @@||ad.alimama.com^$genericblock
 		Invalid network filter in chn-0: @@||cmechina.net^$genericblock
 		Unhandled modifier exception
-CSS entries: 2512
+CSS entries: 2510
 Scriptlet entries: 43
 ============================
 Listset for 'cze-0':
@@ -382,26 +382,26 @@ CSS entries: 401
 ============================
 Listset for 'ind-0':
 	Fetching remote https://easylist-downloads.adblockplus.org/indianlist.txt
-Input filter count: 5204
-	Accepted filter count: 5204
+Input filter count: 5207
+	Accepted filter count: 5207
 	Rejected filter count: 0
-Output rule count: 5171
-	Good: 5171
+Output rule count: 5174
+	Good: 5174
 	Maybe good (regexes): 0
 	redirect-rule= (discarded): 0
 	csp= (discarded): 0
 	removeparams= (discarded): 0
 	Unsupported: 0
 
-CSS entries: 2047
+CSS entries: 2048
 ============================
 Listset for 'irn-0':
 	Fetching remote https://raw.githubusercontent.com/MasterKia/PersianBlocker/main/PersianBlocker.txt
-Input filter count: 1349
-	Accepted filter count: 1349
+Input filter count: 1353
+	Accepted filter count: 1353
 	Rejected filter count: 0
-Output rule count: 517
-	Good: 502
+Output rule count: 521
+	Good: 506
 	Maybe good (regexes): 0
 	redirect-rule= (discarded): 0
 	csp= (discarded): 0
@@ -416,7 +416,7 @@ Output rule count: 517
 		Unsupported regex-based removeParam: /^utm_/
 		Unsupported regex-based removeParam: /^utm_/
 		Unsupported regex-based removeParam: /^utm_/
-CSS entries: 301
+CSS entries: 303
 Scriptlet entries: 20
 ============================
 Listset for 'isl-0':
@@ -573,9 +573,9 @@ Scriptlet entries: 9
 ============================
 Listset for 'nor-0':
 	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianList.txt
+	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/AntiAdblockEntries.txt
 	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/NordicFilters-NotFirefox.txt
 	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/NordicFilters-NotBrave.txt
-	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/AntiAdblockEntries.txt
 Input filter count: 863
 	Accepted filter count: 856
 	Rejected filter count: 0
@@ -759,8 +759,8 @@ CSS entries: 158
 Listset for 'swe-1':
 	Fetching remote https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Frellwits-Swedish-Filter.txt
 	Fetching remote https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Swedish/swe-ubo-filters.txt
-	Fetching remote https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Swedish/chromium.txt
 	Fetching remote https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Swedish/not_mobile.txt
+	Fetching remote https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Swedish/chromium.txt
 Input filter count: 1502
 	Accepted filter count: 1502
 	Rejected filter count: 0
