@@ -93,12 +93,15 @@ function addExtendedToDNR(context, parser) {
     // https://github.com/chrisaljoudi/uBlock/issues/151
     //   Negated hostname means the filter applies to all non-negated hostnames
     //   of same filter OR globally if there is no non-negated hostnames.
+    // Drop selectors which can potentially lead to the hiding of
+    // html/body elements.
     for ( const { hn, not, bad } of parser.extOptions() ) {
         if ( bad ) { continue; }
         if ( hn.endsWith('.*') ) { continue; }
         const { compiled, exception } = parser.result;
         if ( compiled.startsWith('{') ) { continue; }
         if ( exception ) { continue; }
+        if ( /(^|[^\w#.\-\[])(html|body)(,|$)/i.test(compiled) ) { continue; }
         let details = context.cosmeticFilters.get(compiled);
         if ( details === undefined ) {
             details = {};

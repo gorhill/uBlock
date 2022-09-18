@@ -122,7 +122,9 @@ body.needSave #revertRules {
     }
 #rulesetStats .rulesetDetails h1 {
     font-size: 1em;
+    font-weight: normal;
     margin: 0.5em 0;
+    text-transform: capitalize;
     }
 #rulesetStats .rulesetDetails p {
     font-size: var(--font-size-smaller);

@@ -58,6 +58,7 @@ body {
 .listEntry > * {
     margin-left: 0;
     margin-right: 0;
+    text-transform: capitalize;
     unicode-bidi: embed;
     }
 .listEntry .listname {

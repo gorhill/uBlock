@@ -434,7 +434,10 @@ function onMessage(request, sender, callback) {
     case 'applyRulesets': {
         enableRulesets(request.enabledRulesets).then(( ) => {
             rulesetConfig.enabledRulesets = request.enabledRulesets;
-            return saveRulesetConfig();
+            return Promise.all([
+                saveRulesetConfig(),
+                registerInjectable(),
+            ]);
         }).then(( ) => {
             callback();
         });
@@ -513,13 +516,16 @@ async function start() {
     const currentVersion = getCurrentVersion();
     if ( currentVersion !== rulesetConfig.version ) {
         console.log(`Version change: ${rulesetConfig.version} => ${currentVersion}`);
-        await Promise.all([
-            updateRegexRules(),
-            registerInjectable(),
-        ]);
-        rulesetConfig.version = currentVersion;
-        saveRulesetConfig();
+        updateRegexRules().then(( ) => {
+            rulesetConfig.version = currentVersion;
+            saveRulesetConfig();
+        });
     }
+
+    // Unsure whether the browser remembers correctly registered css/scripts
+    // after we quit the browser. For now uBOL will check unconditionally at
+    // launch time whether content css/scripts are properly registered.
+    registerInjectable();
 
     const enabledRulesets = await dnr.getEnabledRulesets();
     console.log(`Enabled rulesets: ${enabledRulesets}`);

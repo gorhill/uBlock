@@ -54,8 +54,8 @@ const commandLineArgs = (( ) => {
 const outputDir = commandLineArgs.get('output') || '.';
 const cacheDir = `${outputDir}/../mv3-data`;
 const rulesetDir = `${outputDir}/rulesets`;
-const cssDir = `${outputDir}/content-css`;
-const scriptletDir = `${outputDir}/content-js`;
+const cssDir = `${rulesetDir}/css`;
+const scriptletDir = `${rulesetDir}/js`;
 const env = [ 'chromium', 'ubol' ];
 
 /******************************************************************************/
@@ -151,8 +151,7 @@ const writeOps = [];
 
 const ruleResources = [];
 const rulesetDetails = [];
-const cssDetails = new Map();
-const scriptletDetails = new Map();
+const scriptingDetails = new Map();
 
 /******************************************************************************/
 
@@ -282,6 +281,30 @@ async function processNetworkFilters(assetDetails, network) {
 
 /******************************************************************************/
 
+function addScriptingAPIResources(id, entry, prop, fname) {
+    if ( entry[prop] === undefined ) { return; }
+    for ( const hn of entry[prop] ) {
+        let details = scriptingDetails.get(id);
+        if ( details === undefined ) {
+            details = {
+                matches: new Map(),
+                excludeMatches: new Map(),
+            };
+            scriptingDetails.set(id, details);
+        }
+        let fnames = details[prop].get(hn);
+        if ( fnames === undefined ) {
+            fnames = new Set();
+            details[prop].set(hn, fnames);
+        }
+        fnames.add(fname);
+    }
+}
+
+/******************************************************************************/
+
+// This group together selectors which are used by a the same hostnames.
+
 function optimizeExtendedFilters(filters) {
     if ( filters === undefined ) { return []; }
     const merge = new Map();
@@ -307,58 +330,92 @@ function optimizeExtendedFilters(filters) {
 
 const globalCSSFileSet = new Set();
 
-const style = [
-    '  display:none!important;',
-    '  position:absolute!important;',
-    '  z-index:0!important;',
-    '  visibility:collapse!important;',
-].join('\n');
+const cssDeclaration =
+`@layer {
+$selector$ {
+  display:none!important;
+ }
+}`;
 
 function processCosmeticFilters(assetDetails, mapin) {
     if ( mapin === undefined ) { return 0; }
 
     const optimized = optimizeExtendedFilters(mapin);
-    const cssEntries = new Map();
+    const cssContentMap = new Map();
+
     for ( const entry of optimized ) {
-        const selectors = entry.payload.join(',\n');
-        const fname = createHash('sha256').update(selectors).digest('hex').slice(0,8);
+        const selectors = entry.payload.map(s => ` ${s}`).join(',\n');
+        // ends-with 0 = css resource
+        const fname = createHash('sha256').update(selectors).digest('hex').slice(0,8) + '0';
+        let contentDetails = cssContentMap.get(fname);
+        if ( contentDetails === undefined ) {
+            contentDetails = { selectors };
+            cssContentMap.set(fname, contentDetails);
+        }
+        if ( entry.matches !== undefined ) {
+            if ( contentDetails.matches === undefined ) {
+                contentDetails.matches = new Set();
+            }
+            for ( const hn of entry.matches ) {
+                contentDetails.matches.add(hn);
+            }
+        }
+        if ( entry.excludeMatches !== undefined ) {
+            if ( contentDetails.excludeMatches === undefined ) {
+                contentDetails.excludeMatches = new Set();
+            }
+            for ( const hn of entry.excludeMatches ) {
+                contentDetails.excludeMatches.add(hn);
+            }
+        }
+    }
+
+    // We do not want more than 128 CSS files per subscription, so we will
+    // group multiple unrelated selectors in the same file and hope this does
+    // not cause false positives.
+
+    const contentPerFile = Math.ceil(cssContentMap.size / 128);
+    const cssContentArray = Array.from(cssContentMap).map(entry => entry[1]);
+    let distinctResourceCount = 0;
+
+    for ( let i = 0; i < cssContentArray.length; i += contentPerFile ) {
+        const slice = cssContentArray.slice(i, i + contentPerFile);
+        const matches = slice.map(entry =>
+            Array.from(entry.matches || [])
+        ).flat();
+        const excludeMatches = slice.map(entry =>
+            Array.from(entry.excludeMatches || [])
+        ).flat();
+        const selectors = slice.map(entry =>
+            entry.selectors
+        ).join(',\n');
+        const fname = createHash('sha256').update(selectors).digest('hex').slice(0,8) + '0';
         if ( globalCSSFileSet.has(fname) === false ) {
             globalCSSFileSet.add(fname);
-            const fpath = `${fname.slice(0,1)}/${fname.slice(1,2)}/${fname.slice(2,8)}`;
+            const fpath = `${fname.slice(0,1)}/${fname.slice(1,2)}/${fname.slice(2)}`;
             writeFile(
                 `${cssDir}/${fpath}.css`,
-                `${selectors} {\n${style}\n}\n`
+                cssDeclaration.replace('$selector$', selectors)
             );
+            distinctResourceCount += 1;
         }
-        const existing = cssEntries.get(fname);
-        if ( existing === undefined ) {
-            cssEntries.set(fname, {
-                y: entry.matches,
-                n: entry.excludeMatches,
-            });
-            continue;
-        }
-        if ( entry.matches ) {
-            for ( const hn of entry.matches ) {
-                if ( existing.y.includes(hn) ) { continue; }
-                existing.y.push(hn);
-            }
-        }
-        if ( entry.excludeMatches ) {
-            for ( const hn of entry.excludeMatches ) {
-                if ( existing.n.includes(hn) ) { continue; }
-                existing.n.push(hn);
-            }
-        }
+        addScriptingAPIResources(
+            assetDetails.id,
+            { matches },
+            'matches',
+            fname
+        );
+        addScriptingAPIResources(
+            assetDetails.id,
+            { excludeMatches },
+            'excludeMatches',
+            fname
+        );
     }
 
-    log(`CSS entries: ${cssEntries.size}`);
+    log(`CSS entries: ${distinctResourceCount}`);
 
-    if ( cssEntries.size !== 0 ) {
-        cssDetails.set(assetDetails.id, Array.from(cssEntries));
-    }
-
-    return cssEntries.size;
+    return distinctResourceCount;
 }
 
 /******************************************************************************/
@@ -461,47 +518,38 @@ async function processScriptletFilters(assetDetails, mapin) {
     };
 
     // Generate distinct scriptlet files according to patched scriptlets
-    const scriptletEntries = new Map();
+    let distinctResourceCount = 0;
 
     for ( const [ rawFilter, entry ] of mapin ) {
         const normalized = parseFilter(rawFilter);
         if ( normalized === undefined ) { continue; }
         const json = JSON.stringify(normalized);
-        const fname = createHash('sha256').update(json).digest('hex').slice(0,8);
+        // ends-with 1 = scriptlet resource
+        const fname = createHash('sha256').update(json).digest('hex').slice(0,8) + '1';
         if ( globalPatchedScriptletsSet.has(fname) === false ) {
             globalPatchedScriptletsSet.add(fname);
             const scriptlet = patchScriptlet(normalized);
-            const fpath = `${fname.slice(0,1)}/${fname.slice(1,8)}`;
+            const fpath = `${fname.slice(0,1)}/${fname.slice(1)}`;
             writeFile(`${scriptletDir}/${fpath}.js`, scriptlet);
+            distinctResourceCount += 1;
         }
-        const existing = scriptletEntries.get(fname);
-        if ( existing === undefined ) {
-            scriptletEntries.set(fname, {
-                y: entry.matches,
-                n: entry.excludeMatches,
-            });
-            continue;
-        }
-        if ( entry.matches ) {
-            for ( const hn of entry.matches ) {
-                if ( existing.y.includes(hn) ) { continue; }
-                existing.y.push(hn);
-            }
-        }
-        if ( entry.excludeMatches ) {
-            for ( const hn of entry.excludeMatches ) {
-                if ( existing.n.includes(hn) ) { continue; }
-                existing.n.push(hn);
-            }
-        }
+        addScriptingAPIResources(
+            assetDetails.id,
+            entry,
+            'matches',
+            fname
+        );
+        addScriptingAPIResources(
+            assetDetails.id,
+            entry,
+            'excludeMatches',
+            fname
+        );
     }
 
-    log(`Scriptlet entries: ${scriptletEntries.size}`);
+    log(`Scriptlet entries: ${distinctResourceCount}`);
 
-    if ( scriptletEntries.size !== 0 ) {
-        scriptletDetails.set(assetDetails.id, Array.from(scriptletEntries));
-    }
-    return scriptletEntries.size;
+    return distinctResourceCount;
 }
 
 /******************************************************************************/
@@ -666,14 +714,16 @@ async function main() {
         `${JSON.stringify(rulesetDetails, null, 1)}\n`
     );
 
-    writeFile(
-        `${cssDir}/css-specific.json`,
-        `${JSON.stringify(Array.from(cssDetails))}\n`
-    );
+    const replacer = (k, v) => {
+        if ( v instanceof Set || v instanceof Map ) {
+            return Array.from(v);
+        }
+        return v;
+    };
 
     writeFile(
-        `${scriptletDir}/scriptlet-details.json`,
-        `${JSON.stringify(Array.from(scriptletDetails))}\n`
+        `${rulesetDir}/scripting-details.json`,
+        `${JSON.stringify(scriptingDetails, replacer)}\n`
     );
 
     await Promise.all(writeOps);

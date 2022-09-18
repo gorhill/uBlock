@@ -31,32 +31,26 @@ import { parsedURLromOrigin } from './utils.js';
 
 /******************************************************************************/
 
-const CSS_TYPE = 0;
-const JS_TYPE = 1;
+const CSS_TYPE = '0';
+const JS_TYPE = '1';
 
 /******************************************************************************/
 
-let cssDetailsPromise;
-let scriptletDetailsPromise;
+let scriptingDetailsPromise;
 
-function getCSSDetails() {
-    if ( cssDetailsPromise !== undefined ) {
-        return cssDetailsPromise;
+function getScriptingDetails() {
+    if ( scriptingDetailsPromise !== undefined ) {
+        return scriptingDetailsPromise;
     }
-    cssDetailsPromise = fetchJSON('/content-css/css-specific').then(rules => {
-        return new Map(rules);
+    scriptingDetailsPromise = fetchJSON('/rulesets/scripting-details').then(entries => {
+        const out = new Map(entries);
+        for ( const details of out.values() ) {
+            details.matches = new Map(details.matches);
+            details.excludeMatches = new Map(details.excludeMatches);
+        }
+        return out;
     });
-    return cssDetailsPromise;
-}
-
-function getScriptletDetails() {
-    if ( scriptletDetailsPromise !== undefined ) {
-        return scriptletDetailsPromise;
-    }
-    scriptletDetailsPromise = fetchJSON('/content-js/scriptlet-details').then(rules => {
-        return new Map(rules);
-    });
-    return scriptletDetailsPromise;
+    return scriptingDetailsPromise;
 }
 
 /******************************************************************************/
@@ -83,6 +77,12 @@ const hostnamesFromMatches = origins => {
     return out;
 };
 
+const toBroaderHostname = hn => {
+    if ( hn === '*' ) { return ''; }
+    const pos = hn.indexOf('.');
+    return pos !== -1 ? hn.slice(pos+1) : '*';
+};
+
 const arrayEq = (a, b) => {
     if ( a === undefined ) { return b === undefined; }
     if ( b === undefined ) { return false; }
@@ -100,21 +100,21 @@ const toRegisterable = (fname, entry) => {
         id: fname,
         allFrames: true,
     };
-    if ( entry.y ) {
-        directive.matches = matchesFromHostnames(entry.y);
+    if ( entry.matches ) {
+        directive.matches = matchesFromHostnames(entry.matches);
     } else {
         directive.matches = [ '*://*/*' ];
     }
-    if ( entry.n ) {
-        directive.excludeMatches = matchesFromHostnames(entry.n);
+    if ( entry.excludeMatches ) {
+        directive.excludeMatches = matchesFromHostnames(entry.excludeMatches);
     }
-    if ( entry.type === CSS_TYPE ) {
+    if ( fname.at(-1) === CSS_TYPE ) {
         directive.css = [
-            `/content-css/${fname.slice(0,1)}/${fname.slice(1,2)}/${fname.slice(2,8)}.css`
+            `/rulesets/css/${fname.slice(0,1)}/${fname.slice(1,2)}/${fname.slice(2)}.css`
         ];
-    } else if ( entry.type === JS_TYPE ) {
+    } else if ( fname.at(-1) === JS_TYPE ) {
         directive.js = [
-            `/content-js/${fname.slice(0,1)}/${fname.slice(1,8)}.js`
+            `/rulesets/js/${fname.slice(0,1)}/${fname.slice(1)}.js`
         ];
         directive.runAt = 'document_start';
         directive.world = 'MAIN';
@@ -124,33 +124,16 @@ const toRegisterable = (fname, entry) => {
 };
 
 const toMaybeUpdatable = (registered, candidate) => {
-    const matches = candidate.y && matchesFromHostnames(candidate.y);
+    const matches = candidate.matches &&
+        matchesFromHostnames(candidate.matches);
     if ( arrayEq(registered.matches, matches) === false ) {
         return toRegisterable(candidate);
     }
-    const excludeMatches = candidate.n && matchesFromHostnames(candidate.n);
+    const excludeMatches = candidate.excludeMatches &&
+        matchesFromHostnames(candidate.excludeMatches);
     if ( arrayEq(registered.excludeMatches, excludeMatches) === false ) {
         return toRegisterable(candidate);
     }
-};
-
-/******************************************************************************/
-
-const shouldRegister = (origins, matches) => {
-    if ( Array.isArray(matches) === false ) { return true; }
-    for ( const origin of origins ) {
-        if ( origin === '*' ) { return true; }
-        let hn = origin;
-        for (;;) {
-            if ( matches.includes(hn) ) { return true; }
-            if ( hn === '*' ) { break; }
-            const pos = hn.indexOf('.');
-            hn = pos !== -1
-                ? hn.slice(pos+1)
-                : '*';
-        }
-    }
-    return false;
 };
 
 /******************************************************************************/
@@ -161,32 +144,22 @@ async function getInjectableCount(origin) {
 
     const [
         rulesetIds,
-        cssDetails,
-        scriptletDetails,
+        scriptingDetails,
     ] = await Promise.all([
         dnr.getEnabledRulesets(),
-        getCSSDetails(),
-        getScriptletDetails(),
+        getScriptingDetails(),
     ]);
 
     let total = 0;
 
     for ( const rulesetId of rulesetIds ) {
-        if ( cssDetails.has(rulesetId) ) {
-            const entries = cssDetails.get(rulesetId);
-            for ( const entry of entries ) {
-                if ( shouldRegister([ url.hostname ], entry[1].y) ) {
-                    total += 1;
-                }
-            }
-        }
-        if ( scriptletDetails.has(rulesetId) ) {
-            const entries = cssDetails.get(rulesetId);
-            for ( const entry of entries ) {
-                if ( shouldRegister([ url.hostname ], entry[1].y) ) {
-                    total += 1;
-                }
-            }
+        if ( scriptingDetails.has(rulesetId) === false ) { continue; }
+        const details = scriptingDetails.get(rulesetId);
+        let hn = url.hostname;
+        while ( hn !== '' ) {
+            const fnames = details.matches.get(hn);
+            total += fnames && fnames.length || 0;
+            hn = toBroaderHostname(hn);
         }
     }
 
@@ -195,71 +168,53 @@ async function getInjectableCount(origin) {
 
 /******************************************************************************/
 
+// TODO: Mind trusted-site directives.
+
 async function registerInjectable() {
 
     const [
-        origins,
+        hostnames,
         rulesetIds,
         registered,
-        cssDetails,
-        scriptletDetails,
+        scriptingDetails,
     ] = await Promise.all([
         browser.permissions.getAll(),
         dnr.getEnabledRulesets(),
         browser.scripting.getRegisteredContentScripts(),
-        getCSSDetails(),
-        getScriptletDetails(),
+        getScriptingDetails(),
     ]).then(results => {
         results[0] = new Set(hostnamesFromMatches(results[0].origins));
         return results;
     });
 
-    if ( origins.has('*') && origins.size > 1 ) {
-        origins.clear();
-        origins.add('*');
+    if ( hostnames.has('*') && hostnames.size > 1 ) {
+        hostnames.clear();
+        hostnames.add('*');
     }
-
-    const mergeEntries = (a, b) => {
-        if ( b.y !== undefined ) {
-            if ( a.y === undefined ) {
-                a.y = new Set(b.y);
-            } else {
-                b.y.forEach(v => a.y.add(v));
-            }
-        }
-        if ( b.n !== undefined ) {
-            if ( a.n === undefined ) {
-                a.n = new Set(b.n);
-            } else {
-                b.n.forEach(v => a.n.add(v));
-            }
-        }
-        return a;
-    };
 
     const toRegister = new Map();
 
-    for ( const rulesetId of rulesetIds ) {
-        if ( cssDetails.has(rulesetId) ) {
-            for ( const [ fname, entry ] of cssDetails.get(rulesetId) ) {
-                if ( shouldRegister(origins, entry.y) === false ) { continue; }
-                let existing = toRegister.get(fname);
-                if ( existing === undefined ) {
-                    existing = { type: CSS_TYPE };
-                    toRegister.set(fname, existing);
-                }
-                mergeEntries(existing, entry);
+    const checkRealm = (details, prop, hn) => {
+        const fnames = details[prop].get(hn);
+        if ( fnames === undefined ) { return; }
+        for ( const fname of fnames ) {
+            const existing = toRegister.get(fname);
+            if ( existing ) {
+                existing[prop].push(hn);
+            } else {
+                toRegister.set(fname, { [prop]: [ hn ] });
             }
         }
-        if ( scriptletDetails.has(rulesetId) ) {
-            for ( const [ fname, entry ] of scriptletDetails.get(rulesetId) ) {
-                if ( shouldRegister(origins, entry.y) === false ) { continue; }
-                let existing = toRegister.get(fname);
-                if ( existing === undefined ) {
-                    existing = { type: JS_TYPE };
-                    toRegister.set(fname, existing);
-                }
-                mergeEntries(existing, entry);
+    };
+
+    for ( const rulesetId of rulesetIds ) {
+        const details = scriptingDetails.get(rulesetId);
+        if ( details === undefined ) { continue; }
+        for ( let hn of hostnames ) {
+            while ( hn !== '' ) {
+                checkRealm(details, 'matches', hn);
+                checkRealm(details, 'excludeMatches', hn);
+                hn = toBroaderHostname(hn);
             }
         }
     }
