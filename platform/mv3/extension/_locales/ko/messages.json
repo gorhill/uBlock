@@ -4,15 +4,15 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "실험적이고 권한이 적은 콘텐츠 차단기. 광고, 추격기, 채굴기 등을 설치 직후 차단합니다.",
+    "message": "실험적이고 권한이 적은 콘텐츠 차단기. 광고, 추적기, 채굴기 등을 설치 직후 차단합니다.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
-    "message": "{{filterCount}} 개의 네트워크 필터로부터 변환된 {{ruleCount}}  개의 규칙",
+    "message": "네트워크 필터 {{filterCount}}개로부터 변환된 규칙 {{ruleCount}}개",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
-    "message": "uBO Lite - 대시보드",
+    "message": "uBO Lite — 대시보드",
     "description": "English: uBO Lite — Dashboard"
   },
   "dashboardUnsavedWarning": {
@@ -52,7 +52,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupPowerSwitchInfo": {
-    "message": "이 사이트에 대해 uBO Lite을 켜거나 끄기",
+    "message": "이 사이트에 대해 uBO Lite를 켜거나 끄기",
     "description": "Tooltip for the main power button in the popup panel"
   },
   "popupTipDashboard": {
@@ -84,11 +84,11 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupGrantGreatPowers": {
-    "message": "이 사이트에 대해 uBO Lite에게 확장된 권한을 클릭하여 부여합니다.\n확장된 권한은 더 효과적인 콘텐츠 차단을 허용합니다.",
+    "message": "클릭하여 이 사이트에 대해 uBO Lite에게 확장된 권한을 부여합니다.\n확장된 권한은 더 효과적인 콘텐츠 차단을 허용합니다.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupRevokeGreatPowers": {
-    "message": "이 사이트에 대한 확장된 권한을 클릭하여 철회합니다.",
+    "message": "클릭하여 이 사이트에 대한 확장된 권한을 철회합니다.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
@@ -160,7 +160,7 @@
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "whitelistPrompt": {
-    "message": "신뢰된 사이트는 어느 웹 사이트에 uBO Lite가 비활성화되여하는 지를 말합니다. 한 출에 한 항목씩 적으세요.",
+    "message": "신뢰된 사이트는 어느 웹 사이트에 uBO Lite가 비활성화되여하는 지를 말합니다. 한 줄에 한 항목씩 적으세요.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
