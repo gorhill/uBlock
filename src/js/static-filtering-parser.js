@@ -3156,6 +3156,7 @@ Parser.utils = Parser.prototype.utils = (( ) => {
 
     const preparserTokens = new Map([
         [ 'ext_ublock', 'ublock' ],
+        [ 'ext_ubol', 'ubol' ],
         [ 'env_chromium', 'chromium' ],
         [ 'env_edge', 'edge' ],
         [ 'env_firefox', 'firefox' ],
