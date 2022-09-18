@@ -1,4 +1,4 @@
-Version: 0.1.22.9176
+Version: 0.1.22.9185
 ============================
 Listset for 'default':
 	Fetching remote https://ublockorigin.pages.dev/filters/filters.txt
@@ -13,13 +13,13 @@ Listset for 'default':
 	Fetching remote https://ublockorigin.pages.dev/filters/filters-2020.txt
 	Fetching remote https://ublockorigin.pages.dev/filters/filters-2021.txt
 	Fetching remote https://ublockorigin.pages.dev/filters/filters-2022.txt
-Input filter count: 79124
-	Accepted filter count: 76726
+Input filter count: 79198
+	Accepted filter count: 76799
 	Rejected filter count: 151
-Output rule count: 20992
-	Good: 20197
-	Maybe good (regexes): 127
-	redirect-rule= (discarded): 435
+Output rule count: 20999
+	Good: 20204
+	Maybe good (regexes): 126
+	redirect-rule= (discarded): 436
 	csp= (discarded): 60
 	removeparams= (discarded): 23
 	Unsupported: 150
@@ -173,7 +173,7 @@ Output rule count: 20992
 		Unhandled modifier exception
 		Unhandled modifier exception
 		Unhandled modifier exception
-CSS entries: 4725
+CSS entries: 126
 Scriptlet entries: 886
 ============================
 Listset for 'alb-0':
@@ -223,12 +223,12 @@ Output rule count: 664
 	removeparams= (discarded): 0
 	Unsupported: 0
 
-CSS entries: 184
+CSS entries: 93
 ============================
 Listset for 'chn-0':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/224.txt
-Input filter count: 18787
-	Accepted filter count: 18746
+Input filter count: 18802
+	Accepted filter count: 18761
 	Rejected filter count: 0
 Output rule count: 6776
 	Good: 6718
@@ -241,8 +241,8 @@ Output rule count: 6776
 		Invalid network filter in chn-0: @@||ad.alimama.com^$genericblock
 		Invalid network filter in chn-0: @@||cmechina.net^$genericblock
 		Unhandled modifier exception
-CSS entries: 2510
-Scriptlet entries: 43
+CSS entries: 126
+Scriptlet entries: 36
 ============================
 Listset for 'cze-0':
 	Fetching remote https://raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt
@@ -258,8 +258,8 @@ Output rule count: 120
 	removeparams= (discarded): 0
 	Unsupported: 0
 
-CSS entries: 137
-Scriptlet entries: 13
+CSS entries: 71
+Scriptlet entries: 12
 ============================
 Listset for 'deu-0':
 	Fetching remote https://easylist.to/easylistgermany/easylistgermany.txt
@@ -274,7 +274,7 @@ Output rule count: 1688
 	removeparams= (discarded): 0
 	Unsupported: 1
 		Invalid network filter in deu-0: @@||gofeminin.de^$genericblock
-CSS entries: 1146
+CSS entries: 117
 ============================
 Listset for 'est-0':
 	Fetching remote https://adblock.ee/list.php
@@ -308,7 +308,7 @@ Output rule count: 147
 		regexFilter is not RE2-compatible: telsu\.fi\/(?![^>]*\.\w{3}$).+
 		regexFilter is not RE2-compatible: telsu\.fi\/(?![^>].*\.(jpg|png|svg|ico)$).+
 		regexFilter is not RE2-compatible: telsu\.fi\/img\/(?!cloudcity|mindmax|navibg|prg|tvohjelmat)
-CSS entries: 305
+CSS entries: 122
 Scriptlet entries: 1
 ============================
 Listset for 'fra-0':
@@ -331,8 +331,8 @@ Output rule count: 7314
 		Invalid network filter in fra-0: @@$webrtc,domain=stream4free.live
 		Invalid network filter in fra-0: $webrtc,domain=11anim.com|1337x.st|1337x.to|2ddl.ms|adyou.me|ajplugins.com|allitebooks.com|androidadult.com|animeid.tv|animekb.net|animeland.tv|animezone.pl|avametrie.fr|avgle.com|bdurls.com|bigspeeds.com|bindassbros.com|blizzboygames.net|bonstreams.net|catrumahminimalis.me|centrum-dramy.pl|cestpasbien.pro|chatytvgratis.net|chrt.pw|cineiz.io|cinemahd.co|cinemamkv.net|cinemitas.com|cinestrenostv.tv|clik.pw|cmacapps.com|cocostreaming.com|convertinmp4.com|cpabien.ws|crictime.com|crictime.is|daclips.com|datpiff.com|ddl.to|ddmix.net|ddownload.com|deltabit.co|deportesmax.info|descargas2020.com|djs.sk|dl-protect.info|dl-protect1.com|dompl3.info|doodstream.co|doodstream.com|downlink.top|draculastream.org|drakula.top|dropapk.com|dropapk.to|dualpaste.net|earnwithshortlink.com|ebook-planete.org|ebookdz.com|fileone.tv|filmeserialeonline.org|filmtelecharger.net|flashx.net|flashx.tv|fluvore.com|free-telechargement.org|free-telecharger.com|free-telecharger.net|free-telecharger.org|free-telecharger.xyz|freecardano.com|freenem.com|fullmatchesandshows.com|gamestorrent.co|ganol.ru|ganool.im|ganool123.com|gtaall.com|gum-gum-streaming.com|hdvid.online|healthoptimizer.net|heapfiles.com|hq-porns.com|ianimes.org|iegy.best|imagenesmy.com|imgazure.com|immunicity.st|ithepiratebay.com|javher.com|jheberg.net|jkanime.net|k-streaming.cc|k-streaming.com|kinohabr.net|kinokrad.co|kinoprofi.org|kinostuff.com|kinox.me|kinox.tv|kiss-anime.ws|kissasian.ch|kissasian.sh|kooralive.info|kora-live.tv|kvid.org|lafmacun.net|larati.net|latino-webtv.com|leggendaweb.com|leitor.net|lemondedekevin.fr|lewd.ninja|libertyvf.co|libertyvf.com|libertyvf.net|libertyvf.tv|liketvw.com|likeur.org|limpi.tv|liveflashplayer.org|lordhd.com|love-drama.pl|ma-famille-dabord-streaming.com|mangaku.in|mejortorrent.org|mejortorrent1.com|mimaletamusical.blogspot.com|mkvcage.com|mladipodnikatelia.sk|modsbase.com|monova.org|movie4k.is|movie4k.org|movies123.ac|mp4mania.xyz|multiimg.com|myfeed4u.com|mywatchseries.stream|netiap.com|nicoblog.org|nonpiusolo.com|novom.ru|o2tvseries.com|oasivip.com|oceanoffgames.com|oipeirates.online|onion.ly|onion.pet|openload.cc|openload.ch|openload.fun|opensubtitles.org|ovid.online|ovid.tv|papstream.info|pastehere.xyz|pcgamestorrents.com|pdf-giant.com|peeplink.in|pelislatino3gp.biz|pinoybay.ch|piratebayblocked.com|planet-streaming.net|planet-streaming1.com|planete-bd.org|planetfools.com|povwideo.cc|powvideo.cc|powvideo.net|putload.tv|radiofly.ws|reactor.cc|readmanga.today|regarder-le-bureau-des-legendes-streaming.com|regarder-malcolm-streaming.com|regarder-peaky-blinders-streaming.xyz|regarder-prison-break-streaming.com|rivosport.co|rojadirecta.fr|sawlive.tv|scuseami.net|senmanga.com|sharemods.com|sherlockonline.ru|shippuden.tv|short.pe|short2win.com|shrink-service.it|sintelevisor.com|sleeptimer.org|slyid.com|solarmovie.one|sorteosrd.com|srt.am|starmusiq.one|strdef.world|stream2watch.org|stream4free.live|streambeam.io|streamcdn.to|streamcloud.eu|streamhunter.net|streamhunter.top|streamplay.me|streamplay.to|subswiki.com|subtorrents.tv|supervideo.tv|tamilmv.cz|tarjetarojatvonline.com|telerium.tv|teleriumtv.com|teleriumtv.net|theappguruz.com|thepiratebay.cr|thepiratebay.vip|thevid.net|thevid.tv|thevideo.ch|thevideo.io|thevideo.me|thevideo.us|tomadivx.tv|topsimages.com|torlock.com|torlock2.com|toros.co|tpbprox.com|tubetitties.com|tvpor-internet.com|tvshqiphd.com|uii.io|ukpass.co|unblocked2.fun|unblocked2.vip|unblocksites.co|up-4.net|upbom.com|upbom.net|upload.ee|uploadfiles.eu|uploadocean.com|uppom.live|uptostream.com|upvid.host|vcrypt.net|veehd.com|vergol.com|verliga1.net|vertelevisor.com|vev.io|vev.red|videobin.co|videowood.tv|vidfile.net|vidop.icu|vidoza.co|vidoza.net|vidshare.tv|vidup.io|vidup.tv|viewasian.tv|vup.to|watchonline.to|watchpornfree.ws|wearesaudis.net|wlive.tv|wstream.to|wstream.video|x1337x.eu|x1337x.se|x1337x.ws|xclusivejams.com|xfilesharing.com|xrivonet.info|xvideosharing.com|yify-torrent.org|yifyddl.movie|zenexplayer.com|zeroshare.me|zipansion.com|zone-ebook.com
 		Unhandled modifier exception
-CSS entries: 1161
-Scriptlet entries: 36
+CSS entries: 119
+Scriptlet entries: 31
 ============================
 Listset for 'grc-0':
 	Fetching remote https://www.void.gr/kargig/void-gr-filters.txt
@@ -347,7 +347,7 @@ Output rule count: 434
 	removeparams= (discarded): 0
 	Unsupported: 0
 
-CSS entries: 159
+CSS entries: 83
 ============================
 Listset for 'hun-0':
 	Fetching remote https://raw.githubusercontent.com/hufilter/hufilter/master/hufilter-ublock.txt
@@ -362,8 +362,8 @@ Output rule count: 200
 	removeparams= (discarded): 0
 	Unsupported: 0
 
-CSS entries: 437
-Scriptlet entries: 11
+CSS entries: 111
+Scriptlet entries: 9
 ============================
 Listset for 'idn-0':
 	Fetching remote https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/subscriptions/abpindo.txt
@@ -378,7 +378,7 @@ Output rule count: 3045
 	removeparams= (discarded): 0
 	Unsupported: 0
 
-CSS entries: 401
+CSS entries: 104
 ============================
 Listset for 'ind-0':
 	Fetching remote https://easylist-downloads.adblockplus.org/indianlist.txt
@@ -393,15 +393,15 @@ Output rule count: 5174
 	removeparams= (discarded): 0
 	Unsupported: 0
 
-CSS entries: 2048
+CSS entries: 123
 ============================
 Listset for 'irn-0':
 	Fetching remote https://raw.githubusercontent.com/MasterKia/PersianBlocker/main/PersianBlocker.txt
-Input filter count: 1353
-	Accepted filter count: 1353
+Input filter count: 1354
+	Accepted filter count: 1354
 	Rejected filter count: 0
-Output rule count: 521
-	Good: 506
+Output rule count: 522
+	Good: 507
 	Maybe good (regexes): 0
 	redirect-rule= (discarded): 0
 	csp= (discarded): 0
@@ -416,8 +416,8 @@ Output rule count: 521
 		Unsupported regex-based removeParam: /^utm_/
 		Unsupported regex-based removeParam: /^utm_/
 		Unsupported regex-based removeParam: /^utm_/
-CSS entries: 303
-Scriptlet entries: 20
+CSS entries: 106
+Scriptlet entries: 17
 ============================
 Listset for 'isl-0':
 	Fetching remote https://adblock.gardar.net/is.abp.txt
@@ -464,8 +464,8 @@ Output rule count: 278
 		Invalid network filter in isr-0: *$webrtc,domain=yad2.co.il
 		Invalid network filter in isr-0: *$webrtc,domain=globes.co.il
 		Invalid network filter in isr-0: *$webrtc,domain=calcalist.co.il
-CSS entries: 113
-Scriptlet entries: 2
+CSS entries: 114
+Scriptlet entries: 0
 ============================
 Listset for 'ita-0':
 	Fetching remote https://easylist-downloads.adblockplus.org/easylistitaly.txt
@@ -480,15 +480,15 @@ Output rule count: 5417
 	removeparams= (discarded): 0
 	Unsupported: 1
 		Invalid network filter in ita-0: $webrtc,domain=hentaisaturn.com|italydownload.com|mitoitalico.com|semprehawk.com
-CSS entries: 2062
+CSS entries: 122
 ============================
 Listset for 'jpn-1':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/7.txt
-Input filter count: 1215
-	Accepted filter count: 1214
+Input filter count: 1216
+	Accepted filter count: 1215
 	Rejected filter count: 0
-Output rule count: 803
-	Good: 769
+Output rule count: 804
+	Good: 770
 	Maybe good (regexes): 11
 	redirect-rule= (discarded): 20
 	csp= (discarded): 0
@@ -497,8 +497,8 @@ Output rule count: 803
 		regexFilter is not RE2-compatible: \/kyodopress_cms\/wp-content\/(themes\/kyodopress\/img_banner\/(?!bn_newspaper\.gif)|banners).*
 		regexFilter is not RE2-compatible: ^(?!.*(bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|vk.com|yandex.|yastatic.net|ytimg.com|zencdn.net|player|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com)).*$
 		Entity not supported: manga1001.*
-CSS entries: 1952
-Scriptlet entries: 24
+CSS entries: 127
+Scriptlet entries: 18
 ============================
 Listset for 'kor-1':
 	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filter-uBO.txt
@@ -527,7 +527,7 @@ Output rule count: 523
 	removeparams= (discarded): 0
 	Unsupported: 0
 
-CSS entries: 244
+CSS entries: 94
 Scriptlet entries: 1
 ============================
 Listset for 'lva-0':
@@ -543,7 +543,7 @@ Output rule count: 144
 	removeparams= (discarded): 0
 	Unsupported: 0
 
-CSS entries: 61
+CSS entries: 60
 ============================
 Listset for 'nld-0':
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/gh-pages/EasyDutch.txt
@@ -568,8 +568,8 @@ Output rule count: 644
 	removeparams= (discarded): 0
 	Unsupported: 1
 		Entity not supported: allestoringen.*
-CSS entries: 485
-Scriptlet entries: 9
+CSS entries: 125
+Scriptlet entries: 6
 ============================
 Listset for 'nor-0':
 	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianList.txt
@@ -616,8 +616,8 @@ Output rule count: 485
 		Unsupported regex-based removeParam: /^source=partnerads$/
 		Unsupported regex-based removeParam: /^source=tradedoubler$/
 		Unsupported regex-based removeParam: /^amp;/
-CSS entries: 426
-Scriptlet entries: 8
+CSS entries: 124
+Scriptlet entries: 5
 ============================
 Listset for 'pol-0':
 	Fetching remote https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt
@@ -638,7 +638,7 @@ Output rule count: 807
 		regexFilter is not RE2-compatible: ^http:\/\/((?!192\.168)(?!10\.)(?!172\.16)(?!172\.17)(?!172\.18)(?!172\.19)(?!172\.2)(?!172\.30)(?!172\.31)([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\/[a-zA-Z0-9]{30,}
 		regexFilter is not RE2-compatible: ^(http|https):\/\/www\.portel\.pl\/(?!pasaz)[-a-z0-9A-Z_%$&+=[\].]{1,200}\/[-a-z0-9A-Z_%$&+=[\]/.]{2,200}.(html|htm)
 		regexFilter is not RE2-compatible: ^(http|https):\/\/(?!www.speedvid)(?!streamcherry.com)(?!vshare)(?!vidoza)(?!openload)(?!www.youtube)[a-zA-Z0-9\W]{5,10}.[a-z]{2,20}\/(?!anime)[\w\W\d]{5,20}\/[a-z]{5,20}\/
-CSS entries: 1881
+CSS entries: 123
 ============================
 Listset for 'pol-2':
 	Fetching remote https://raw.githubusercontent.com/olegwukr/polish-privacy-filters/master/anti-adblock.txt
@@ -653,7 +653,7 @@ Output rule count: 202
 	removeparams= (discarded): 0
 	Unsupported: 0
 
-CSS entries: 109
+CSS entries: 67
 Scriptlet entries: 0
 ============================
 Listset for 'rou-1':
@@ -671,7 +671,7 @@ Output rule count: 411
 	removeparams= (discarded): 0
 	Unsupported: 0
 
-CSS entries: 184
+CSS entries: 95
 ============================
 Listset for 'rus-0':
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/RuAdList-uBO.txt
@@ -689,11 +689,11 @@ Listset for 'rus-0':
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/css-fixes-experimental.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/js-fixes-experimental.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/AWRL-non-sync.txt
-Input filter count: 18442
-	Accepted filter count: 18424
+Input filter count: 18440
+	Accepted filter count: 18422
 	Rejected filter count: 16
-Output rule count: 6003
-	Good: 5911
+Output rule count: 6001
+	Good: 5909
 	Maybe good (regexes): 21
 	redirect-rule= (discarded): 19
 	csp= (discarded): 38
@@ -703,8 +703,8 @@ Output rule count: 6003
 		Entity not supported: m.rp5.*
 		Unhandled modifier exception
 		Unsupported regex-based removeParam: /autostart|skin_name/
-CSS entries: 4763
-Scriptlet entries: 107
+CSS entries: 126
+Scriptlet entries: 93
 ============================
 Listset for 'spa-0':
 	Fetching remote https://easylist-downloads.adblockplus.org/easylistspanish.txt
@@ -719,7 +719,7 @@ Output rule count: 816
 	removeparams= (discarded): 0
 	Unsupported: 1
 		Invalid network filter in spa-0: $webrtc,domain=allpeliculas.com|animeid.tv|booksmedicos.org|dompl3.info|gnula.biz|jkanime.net|mejortorrent.com|mejortorrent.org|mejortorrent1.com|pelispedia.tv
-CSS entries: 755
+CSS entries: 127
 ============================
 Listset for 'spa-1':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/9.txt
@@ -738,8 +738,8 @@ Output rule count: 950
 		Entity not supported: cuevana3.*
 		regexFilter is not RE2-compatible: ^(?!.*(bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|vk.com|yandex.|yastatic.net|ytimg.com|zencdn.net|player|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com)).*$
 		Entity not supported: anitube.*
-CSS entries: 998
-Scriptlet entries: 54
+CSS entries: 116
+Scriptlet entries: 39
 ============================
 Listset for 'svn-0':
 	Fetching remote https://raw.githubusercontent.com/betterwebleon/slovenian-list/master/filters.txt
@@ -754,13 +754,13 @@ Output rule count: 103
 	removeparams= (discarded): 0
 	Unsupported: 0
 
-CSS entries: 158
+CSS entries: 84
 ============================
 Listset for 'swe-1':
 	Fetching remote https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Frellwits-Swedish-Filter.txt
 	Fetching remote https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Swedish/swe-ubo-filters.txt
-	Fetching remote https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Swedish/not_mobile.txt
 	Fetching remote https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Swedish/chromium.txt
+	Fetching remote https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Swedish/not_mobile.txt
 Input filter count: 1502
 	Accepted filter count: 1502
 	Rejected filter count: 0
@@ -774,8 +774,8 @@ Output rule count: 1138
 		Unsupported regex-based removeParam: /^ap/
 		Unsupported regex-based removeParam: /^browser/
 		Unsupported regex-based removeParam: /^utm_/
-CSS entries: 345
-Scriptlet entries: 45
+CSS entries: 118
+Scriptlet entries: 42
 ============================
 Listset for 'tha-0':
 	Fetching remote https://raw.githubusercontent.com/easylist-thailand/easylist-thailand/master/subscription/easylist-thailand.txt
@@ -790,7 +790,7 @@ Output rule count: 335
 	removeparams= (discarded): 0
 	Unsupported: 0
 
-CSS entries: 151
+CSS entries: 81
 ============================
 Listset for 'tur-0':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/13.txt
@@ -815,8 +815,8 @@ Output rule count: 1371
 		Entity not supported: yabancidizi.*
 		Entity not supported: hdfilmcehennemi.*
 		regexFilter is not RE2-compatible: ^(?!.*(bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|vk.com|yandex.|yastatic.net|ytimg.com|zencdn.net|player|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com)).*$
-CSS entries: 1583
-Scriptlet entries: 53
+CSS entries: 121
+Scriptlet entries: 36
 ============================
 Listset for 'vie-1':
 	Fetching remote https://raw.githubusercontent.com/abpvn/abpvn/master/filter/abpvn_ublock.txt
@@ -831,8 +831,8 @@ Output rule count: 559
 	removeparams= (discarded): 0
 	Unsupported: 0
 
-CSS entries: 397
-Scriptlet entries: 25
+CSS entries: 102
+Scriptlet entries: 18
 ============================
 Listset for 'block-lan':
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/lan-block.txt
@@ -864,8 +864,8 @@ Output rule count: 1
 ============================
 Listset for 'stevenblack-hosts':
 	Fetching remote https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
-Input filter count: 139584
-	Accepted filter count: 139584
+Input filter count: 140908
+	Accepted filter count: 140908
 	Rejected filter count: 0
 Output rule count: 2
 	Good: 2
@@ -875,3 +875,4 @@ Output rule count: 2
 	removeparams= (discarded): 0
 	Unsupported: 0
 
+CSS entries: 0
