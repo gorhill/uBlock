@@ -1,51 +1,37 @@
-An efficient blocker: Fast, potent and lean, and yet can load and enforce thousands more filters than other popular blockers out there.
-
-Illustrated overview of its efficiency: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
-
-Usage: The big power button in the popup is to permanently disable/enable uBlock for the current web site. It applies to the current web site only, it is not a global power button.
+uBlock Origin (uBO) is **NOT** an "ad blocker"; it is a wide-spectrum content blocker with CPU and memory efficiency as primary features.
 
 ***
 
-Flexible, it's more than an "ad blocker": it can also read and create filters from hosts files.
+Out of the box, uBO blocks ads, trackers, coin miners, popups, etc. through the following lists of filters, enabled by default:
 
-Out of the box, these lists of filters are loaded and enforced:
-
-- EasyList
-- Peter Lowe’s Ad server list
-- EasyPrivacy
-- Malware domains
+- EasyList (ads)
+- EasyPrivacy (tracking)
+- Peter Lowe’s Ad and tracking server list
+- Online Malicious URL Blocklist
+- uBO owned lists
 
 More lists are available for you to select if you wish:
 
-- Fanboy’s Enhanced Tracking List
+- EasyList Cookie List
+- Fanboy's Annoyance List
+- AdGuard Annoyances
 - Dan Pollock’s hosts file
-- hpHosts’s Ad and tracking servers
-- MVPS HOSTS
-- Spam404
 - And many others
 
-Of course, the more filters enabled, the higher the memory footprint. Yet, even after adding Fanboy's two extra lists, hpHosts’s Ad and tracking servers, uBlock Origin still has a lower memory footprint than other very popular blockers out there.
-
-Also, be aware that selecting some of these extra lists may lead to higher likelihood of web site breakage -- especially those lists which are normally used as hosts file.
+Additionally, you can point-and-click to block JavaScript locally or globally, create your own global or local rules to override entries from filter lists, and many more advanced features.
 
 ***
 
 Free.
-Open source with public license (GPLv3)
+Open source with public license (GPLv3).
 For users by users.
 
-If ever you really do want to contribute something, think about the people working hard to maintain the filter lists you are using, which were made available to use by all for free.
+If you ever want to contribute something, think about the people working hard to maintain the filter lists you are using, which were made available to use by all for free.
 
 ***
 
-Documentation:
-https://github.com/gorhill/uBlock#ublock-origin
-
-Project change log:
-https://github.com/gorhill/uBlock/releases
-
-Contributors @ GitHub:
-https://github.com/gorhill/uBlock/graphs/contributors
-
-Contributors @ Crowdin:
-https://crowdin.net/project/ublock
+    [Documentation](https://github.com/gorhill/uBlock#ublock-origin)
+    [Release Notes](https://github.com/gorhill/uBlock/releases)
+    [Community Support on Reddit](https://www.reddit.com/r/uBlockOrigin/)
+    [Contributors on GitHub](https://github.com/gorhill/uBlock/graphs/contributors)
+    [Contributors on Crowdin](https://crowdin.com/project/ublock)
