@@ -30,17 +30,21 @@
 
 /// name json-prune
 
-try {
+/******************************************************************************/
+
+// Important!
+// Isolate from global scope
+(function() {
 
 /******************************************************************************/
 
 //  https://github.com/uBlockOrigin/uBlock-issues/issues/1545
 //  - Add support for "remove everything if needle matches" case
 
-(function(
+const scriptlet = (
     rawPrunePaths = '',
     rawNeedlePaths = ''
-) {
+) => {
     const prunePaths = rawPrunePaths !== ''
         ? rawPrunePaths.split(/ +/)
         : [];
@@ -113,9 +117,32 @@ try {
             return Reflect.apply(...arguments).then(o => pruner(o));
         },
     });
-})(...self.$args$);
+};
 
 /******************************************************************************/
 
-} catch(ex) {
+const argsMap = new Map(self.$argsMap$);
+const hostnamesMap = new Map(self.$hostnamesMap$);
+
+let hn;
+try { hn = document.location.hostname; } catch(ex) { }
+while ( hn ) {
+    if ( hostnamesMap.has(hn) ) {
+        let argsHashes = hostnamesMap.get(hn);
+        if ( typeof argsHashes === 'number' ) { argsHashes = [ argsHashes ]; }
+        for ( const argsHash of argsHashes ) {
+            const details = argsMap.get(argsHash);
+            if ( details.n && details.n.includes(hn) ) { continue; }
+            try { scriptlet(...details.a); } catch(ex) {}
+        }
+    }
+    const pos = hn.indexOf('.');
+    if ( pos === -1 ) { break; }
+    hn = hn.slice(pos + 1);
 }
+
+/******************************************************************************/
+
+})();
+
+/******************************************************************************/

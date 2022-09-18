@@ -114,7 +114,7 @@ const toRegisterable = (fname, entry) => {
         ];
     } else if ( fname.at(-1) === JS_TYPE ) {
         directive.js = [
-            `/rulesets/js/${fname.slice(0,1)}/${fname.slice(1)}.js`
+            `/rulesets/js/${fname}.js`
         ];
         directive.runAt = 'document_start';
         directive.world = 'MAIN';
@@ -195,7 +195,7 @@ async function registerInjectable() {
     const toRegister = new Map();
 
     const checkRealm = (details, prop, hn) => {
-        const fnames = details[prop].get(hn);
+        const fnames = details[prop]?.get(hn);
         if ( fnames === undefined ) { return; }
         for ( const fname of fnames ) {
             const existing = toRegister.get(fname);

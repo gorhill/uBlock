@@ -33,18 +33,22 @@
 /// alias abort-current-inline-script
 /// alias acis
 
-try {
+/******************************************************************************/
+
+// Important!
+// Isolate from global scope
+(function() {
 
 /******************************************************************************/
 
 // Issues to mind before changing anything:
 //  https://github.com/uBlockOrigin/uBlock-issues/issues/2154
 
-(function(
+const scriptlet = (
     target = '',
     needle = '',
     context = ''
-) {
+) => {
     if ( target === '' ) { return; }
     const reRegexEscape = /[.*+?^${}()|[\]\\]/g;
     const reNeedle = (( ) => {
@@ -137,9 +141,32 @@ try {
             return oe.apply(this, arguments);
         }
     }.bind();
-})(...self.$args$);
+};
 
 /******************************************************************************/
 
-} catch(ex) {
+const argsMap = new Map(self.$argsMap$);
+const hostnamesMap = new Map(self.$hostnamesMap$);
+
+let hn;
+try { hn = document.location.hostname; } catch(ex) { }
+while ( hn ) {
+    if ( hostnamesMap.has(hn) ) {
+        let argsHashes = hostnamesMap.get(hn);
+        if ( typeof argsHashes === 'number' ) { argsHashes = [ argsHashes ]; }
+        for ( const argsHash of argsHashes ) {
+            const details = argsMap.get(argsHash);
+            if ( details.n && details.n.includes(hn) ) { continue; }
+            try { scriptlet(...details.a); } catch(ex) {}
+        }
+    }
+    const pos = hn.indexOf('.');
+    if ( pos === -1 ) { break; }
+    hn = hn.slice(pos + 1);
 }
+
+/******************************************************************************/
+
+})();
+
+/******************************************************************************/

@@ -60,6 +60,19 @@ const env = [ 'chromium', 'ubol' ];
 
 /******************************************************************************/
 
+const jsonSetMapReplacer = (k, v) => {
+    if ( v instanceof Set || v instanceof Map ) {
+        if ( v.size === 0 ) { return; }
+        return Array.from(v);
+    }
+    return v;
+};
+
+const uid = (s, l = 8) =>
+    createHash('sha256').update(s).digest('hex').slice(0,l);
+
+/******************************************************************************/
+
 const isUnsupported = rule =>
     rule._error !== undefined;
 
@@ -303,33 +316,10 @@ function addScriptingAPIResources(id, entry, prop, fname) {
 
 /******************************************************************************/
 
-// This group together selectors which are used by a the same hostnames.
-
-function optimizeExtendedFilters(filters) {
-    if ( filters === undefined ) { return []; }
-    const merge = new Map();
-    for ( const [ selector, details ] of filters ) {
-        const json = JSON.stringify(details);
-        let entries = merge.get(json);
-        if ( entries === undefined ) {
-            entries = new Set();
-            merge.set(json, entries);
-        }
-        entries.add(selector);
-    }
-    const out = [];
-    for ( const [ json, entries ] of merge ) {
-        const details = JSON.parse(json);
-        details.payload = Array.from(entries);
-        out.push(details);
-    }
-    return out;
-}
-
-/******************************************************************************/
-
 const globalCSSFileSet = new Set();
 
+// Using a at-rule layer declaration allows to raise uBOL's styles above
+// that of the page.
 const cssDeclaration =
 `@layer {
 $selector$ {
@@ -340,13 +330,54 @@ $selector$ {
 function processCosmeticFilters(assetDetails, mapin) {
     if ( mapin === undefined ) { return 0; }
 
-    const optimized = optimizeExtendedFilters(mapin);
-    const cssContentMap = new Map();
+    // Drop worryingly generic-looking selectors, they are too likely to
+    // cause false positives on unrelated sites. It's the price for a Lite
+    // version. Examples:
+    //   div[style*="z-index:"]
+    //   [style*="opacity:  0"]
+    for ( const s of mapin.keys() ) {
+        if ( /^[a-z]*\[style[^\]]*\](:|$)/.test(s) === false ) { continue; }
+        // `[style]` attributes with `/` characters are probably ok since they
+        // likely refer to specific `url()` property.
+        if ( s.indexOf('/') !== -1 ) { continue; }
+        // `[style]` attributes with dimension properties might be specific
+        // enough after all.
+        if ( /\b(height|width)\s*:\s*\d+px\b/.test(s) ) { continue; }
+        //console.log(`\tDropping ${s}`);
+        mapin.delete(s);
+    }
 
+    // This groups together selectors which are used by a the same hostname.
+    const optimizeExtendedFilters = filters => {
+        if ( filters === undefined ) { return []; }
+        const merge = new Map();
+        for ( const [ selector, details ] of filters ) {
+            const json = JSON.stringify(details);
+            let entries = merge.get(json);
+            if ( entries === undefined ) {
+                entries = new Set();
+                merge.set(json, entries);
+            }
+            entries.add(selector);
+        }
+        const out = [];
+        for ( const [ json, entries ] of merge ) {
+            const details = JSON.parse(json);
+            details.payload = Array.from(entries);
+            out.push(details);
+        }
+        return out;
+    };
+    const optimized = optimizeExtendedFilters(mapin);
+
+    // This creates a map of unique selectorset => all hostnames
+    // including/excluding the selectorset. This allows to avoid duplication
+    // of css content.
+    const cssContentMap = new Map();
     for ( const entry of optimized ) {
         const selectors = entry.payload.map(s => ` ${s}`).join(',\n');
         // ends-with 0 = css resource
-        const fname = createHash('sha256').update(selectors).digest('hex').slice(0,8) + '0';
+        const fname = uid(selectors) + '0';
         let contentDetails = cssContentMap.get(fname);
         if ( contentDetails === undefined ) {
             contentDetails = { selectors };
@@ -373,7 +404,6 @@ function processCosmeticFilters(assetDetails, mapin) {
     // We do not want more than 128 CSS files per subscription, so we will
     // group multiple unrelated selectors in the same file and hope this does
     // not cause false positives.
-
     const contentPerFile = Math.ceil(cssContentMap.size / 128);
     const cssContentArray = Array.from(cssContentMap).map(entry => entry[1]);
     let distinctResourceCount = 0;
@@ -389,7 +419,7 @@ function processCosmeticFilters(assetDetails, mapin) {
         const selectors = slice.map(entry =>
             entry.selectors
         ).join(',\n');
-        const fname = createHash('sha256').update(selectors).digest('hex').slice(0,8) + '0';
+        const fname = uid(selectors) + '0';
         if ( globalCSSFileSet.has(fname) === false ) {
             globalCSSFileSet.add(fname);
             const fpath = `${fname.slice(0,1)}/${fname.slice(1,2)}/${fname.slice(2)}`;
@@ -426,7 +456,7 @@ function processCosmeticFilters(assetDetails, mapin) {
 const scriptletDealiasingMap = new Map(); 
 let scriptletsMapPromise;
 
-function loadAllScriptlets() {
+function loadAllSourceScriptlets() {
     if ( scriptletsMapPromise !== undefined ) {
         return scriptletsMapPromise;
     }
@@ -462,8 +492,6 @@ function loadAllScriptlets() {
     return scriptletsMapPromise;
 }
 
-/******************************************************************************/
-
 const globalPatchedScriptletsSet = new Set();
 
 async function processScriptletFilters(assetDetails, mapin) {
@@ -471,7 +499,7 @@ async function processScriptletFilters(assetDetails, mapin) {
 
     // Load all available scriptlets into a key-val map, where the key is the
     // scriptlet token, and val is the whole content of the file.
-    const originalScriptletMap = await loadAllScriptlets();
+    const originalScriptletMap = await loadAllSourceScriptlets();
 
     const parseArguments = (raw) => {
         const out = [];
@@ -510,43 +538,113 @@ async function processScriptletFilters(assetDetails, mapin) {
         }
     };
 
-    const patchScriptlet = (filter) => {
-        return originalScriptletMap.get(filter.token).replace(
-            /^(\}\)\(\.\.\.)self\.\$args\$(\);)$/m,
-            `$1${JSON.stringify(filter.args, null, 4)}$2`
-        );
-    };
-
-    // Generate distinct scriptlet files according to patched scriptlets
-    let distinctResourceCount = 0;
-
+    // For each instance of distinct scriptlet, we will collect distinct
+    // instances of arguments, and for each distinct set of argument, we
+    // will collect the set of hostnames for which the scriptlet/args is meant
+    // to execute. This will allow us a single content script file and the
+    // scriptlets execution will depend on hostname testing against the
+    // URL of the document at scriptlet execution time. In the end, we
+    // should have no more generated content script per subscription than the
+    // number of distinct source scriptlets.
+    const scriptletDetails = new Map();
     for ( const [ rawFilter, entry ] of mapin ) {
         const normalized = parseFilter(rawFilter);
         if ( normalized === undefined ) { continue; }
-        const json = JSON.stringify(normalized);
-        // ends-with 1 = scriptlet resource
-        const fname = createHash('sha256').update(json).digest('hex').slice(0,8) + '1';
-        if ( globalPatchedScriptletsSet.has(fname) === false ) {
-            globalPatchedScriptletsSet.add(fname);
-            const scriptlet = patchScriptlet(normalized);
-            const fpath = `${fname.slice(0,1)}/${fname.slice(1)}`;
-            writeFile(`${scriptletDir}/${fpath}.js`, scriptlet);
-            distinctResourceCount += 1;
+        let argsDetails = scriptletDetails.get(normalized.token);
+        if ( argsDetails === undefined ) {
+            argsDetails = new Map();
+            scriptletDetails.set(normalized.token, argsDetails);
         }
-        addScriptingAPIResources(
-            assetDetails.id,
-            entry,
-            'matches',
-            fname
-        );
-        addScriptingAPIResources(
-            assetDetails.id,
-            entry,
-            'excludeMatches',
-            fname
-        );
+        const argsHash = JSON.stringify(normalized.args);
+        let hostnamesDetails = argsDetails.get(argsHash);
+        if ( hostnamesDetails === undefined ) {
+            hostnamesDetails = {
+                a: normalized.args,
+                y: new Set(),
+                n: new Set(),
+            };
+        }
+        argsDetails.set(argsHash, hostnamesDetails);
+        if ( entry.matches ) {
+            for ( const hn of entry.matches ) {
+                hostnamesDetails.y.add(hn);
+            }
+        }
+        if ( entry.excludeMatches ) {
+            for ( const hn of entry.excludeMatches ) {
+                hostnamesDetails.n.add(hn);
+            }
+        }
     }
 
+    let distinctResourceCount = 0;
+
+    const jsonReplacer = (k, v) => {
+        if ( k === 'n' ) {
+            if ( v.size === 0 ) { return; }
+            return Array.from(v);
+        }
+        if ( v instanceof Set || v instanceof Map ) {
+            if ( v.size === 0 ) { return; }
+            return Array.from(v);
+        }
+        return v;
+    };
+
+    const toHostnamesMap = (hostnames, hash, out) => {
+        for ( const hn of hostnames ) {
+            const existing = out.get(hn);
+            if ( existing === undefined ) {
+                out.set(hn, hash);
+            } else if ( Array.isArray(existing) ) {
+                existing.push(hash);
+            } else {
+                out.set(hn, [ existing, hash ]);
+            }
+        }
+    };
+
+    for ( const [ token, argsDetails ] of scriptletDetails ) {
+        const argsMap = Array.from(argsDetails).map(entry => {
+            return [ 
+                parseInt(uid(entry[0]),16),
+                { a: entry[1].a, n: entry[1].n }
+            ];
+        });
+        const hostnamesMap = new Map();
+        for ( const [ argsHash, details ] of argsDetails ) {
+            toHostnamesMap(details.y, parseInt(uid(argsHash),16), hostnamesMap);
+        }
+        const patchedScriptlet = originalScriptletMap.get(token)
+            .replace(
+                /\bself\.\$argsMap\$/m,
+                `${JSON.stringify(argsMap, jsonReplacer)}`
+            ).replace(
+                /\bself\.\$hostnamesMap\$/m,
+                `${JSON.stringify(hostnamesMap, jsonReplacer)}`
+            );
+        // ends-with 1 = scriptlet resource
+        const fname = uid(patchedScriptlet) + '1';
+        if ( globalPatchedScriptletsSet.has(fname) === false ) {
+            globalPatchedScriptletsSet.add(fname);
+            writeFile(`${scriptletDir}/${fname}.js`, patchedScriptlet, {});
+            distinctResourceCount += 1;
+        }
+        for ( const details of argsDetails.values() ) {
+            addScriptingAPIResources(
+                assetDetails.id,
+                { matches: details.y },
+                'matches',
+                fname
+            );
+            addScriptingAPIResources(
+                assetDetails.id,
+                { excludeMatches: details.n },
+                'excludeMatches',
+                fname
+            );
+        }
+    }
     log(`Scriptlet entries: ${distinctResourceCount}`);
 
     return distinctResourceCount;
@@ -714,16 +812,9 @@ async function main() {
         `${JSON.stringify(rulesetDetails, null, 1)}\n`
     );
 
-    const replacer = (k, v) => {
-        if ( v instanceof Set || v instanceof Map ) {
-            return Array.from(v);
-        }
-        return v;
-    };
-
     writeFile(
         `${rulesetDir}/scripting-details.json`,
-        `${JSON.stringify(scriptingDetails, replacer)}\n`
+        `${JSON.stringify(scriptingDetails, jsonSetMapReplacer)}\n`
     );
 
     await Promise.all(writeOps);
