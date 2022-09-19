@@ -109,9 +109,10 @@ const toRegisterable = (fname, entry) => {
         directive.excludeMatches = matchesFromHostnames(entry.excludeMatches);
     }
     if ( fname.at(-1) === CSS_TYPE ) {
-        directive.css = [
-            `/rulesets/css/${fname.slice(0,1)}/${fname.slice(1,2)}/${fname.slice(2)}.css`
+        directive.js = [
+            `/rulesets/css/${fname.slice(0,1)}/${fname.slice(1)}.js`,
         ];
+        directive.runAt = 'document_start';
     } else if ( fname.at(-1) === JS_TYPE ) {
         directive.js = [
             `/rulesets/js/${fname}.js`
@@ -123,17 +124,20 @@ const toRegisterable = (fname, entry) => {
     return directive;
 };
 
-const toMaybeUpdatable = (registered, candidate) => {
+/******************************************************************************/
+
+const shouldUpdate = (registered, candidate) => {
     const matches = candidate.matches &&
         matchesFromHostnames(candidate.matches);
     if ( arrayEq(registered.matches, matches) === false ) {
-        return toRegisterable(candidate);
+        return true;
     }
     const excludeMatches = candidate.excludeMatches &&
         matchesFromHostnames(candidate.excludeMatches);
     if ( arrayEq(registered.excludeMatches, excludeMatches) === false ) {
-        return toRegisterable(candidate);
+        return true;
     }
+    return false;
 };
 
 /******************************************************************************/
@@ -228,9 +232,8 @@ async function registerInjectable() {
             toAdd.push(toRegisterable(fname, entry));
             continue;
         }
-        const updated = toMaybeUpdatable(before.get(fname), entry);
-        if ( updated !== undefined ) {
-            toUpdate.push(updated);
+        if ( shouldUpdate(before.get(fname), entry) ) {
+            toUpdate.push(toRegisterable(fname, entry));
         }
     }
 
