@@ -19,9 +19,6 @@ jobs:
         uses: actions/checkout@v3
         with:
           persist-credentials: false
-      - name: Clone uAssets
-        run: |
-          git submodule update --depth 1 --init
       # https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
       - name: Build uBOLite MV3 packages
         run: |
@@ -35,7 +32,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           commit_message: Update build log file
-          target_branch: master
       - name: Create GitHub release
         id: create_release
         uses: actions/create-release@v1

@@ -502,7 +502,7 @@ async function processCosmeticFilters(assetDetails, mapin) {
     if ( generatedFiles.length !== 0 ) {
         log(`CSS-related distinct filters: ${cssContentArray.length} distinct combined selectors`);
         log(`CSS-related injectable files: ${generatedFiles.length}`);
-        log(`\t${generatedFiles}`);
+        log(`\t${generatedFiles.join(', ')}`);
     }
 
     return cssContentArray.length;
@@ -665,7 +665,7 @@ async function processScriptletFilters(assetDetails, mapin) {
             .reduce((a, b) => a + b.size, 0);
         log(`Scriptlet-related distinct filters: ${scriptletFilterCount}`);
         log(`Scriptlet-related injectable files: ${generatedFiles.length}`);
-        log(`\t${generatedFiles}`);
+        log(`\t${generatedFiles.join(', ')}`);
     }
 
     return generatedFiles.length;
