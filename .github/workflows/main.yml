@@ -45,18 +45,6 @@ jobs:
           tools/make-firefox.sh ${{ steps.release_info.outputs.VERSION }}
           tools/make-thunderbird.sh ${{ steps.release_info.outputs.VERSION }}
           tools/make-npm.sh ${{ steps.release_info.outputs.VERSION }}
-      - name: Build MV3 packages
-        run: |
-          tools/make-mv3.sh full
-          echo "MV3PACKAGE=$(basename $(ls dist/build/uBlock0_*.mv3.zip))" >> $GITHUB_ENV
-          cp dist/build/uBlock0.mv3/log.txt dist/chromium-mv3/
-      - name: Commit MV3 build log file
-        # https://github.com/marketplace/actions/github-action-for-committing-changes-to-a-repository
-        uses: devops-infra/action-commit-push@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          commit_message: Update build log file
-          target_branch: master
       - name: Upload Chromium package
         uses: actions/upload-release-asset@v1
         env:
@@ -92,13 +80,4 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.npm.tgz
           asset_name: uBlock0_${{ steps.release_info.outputs.VERSION }}.npm.tgz
-          asset_content_type: application/octet-stream
-      - name: Upload Chromium MV3 package
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/build/${{ env.MV3PACKAGE }}
-          asset_name: ${{ env.MV3PACKAGE }}
           asset_content_type: application/octet-stream

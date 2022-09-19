@@ -54,7 +54,6 @@ const commandLineArgs = (( ) => {
 const outputDir = commandLineArgs.get('output') || '.';
 const cacheDir = `${outputDir}/../mv3-data`;
 const rulesetDir = `${outputDir}/rulesets`;
-const cssDir = `${rulesetDir}/css`;
 const scriptletDir = `${rulesetDir}/js`;
 const env = [ 'chromium', 'ubol' ];
 
@@ -457,7 +456,7 @@ async function processCosmeticFilters(assetDetails, mapin) {
         }
     };
 
-    let distinctResourceCount = 0;
+    const generatedFiles = [];
 
     for ( let i = 0; i < cssContentArray.length; i += contentPerFile ) {
         const slice = cssContentArray.slice(i, i + contentPerFile);
@@ -481,8 +480,8 @@ async function processCosmeticFilters(assetDetails, mapin) {
         const fname = uid(patchedScriptlet) + '0';
         if ( globalPatchedScriptletsSet.has(fname) === false ) {
             globalPatchedScriptletsSet.add(fname);
-            writeFile(`${cssDir}/${fname.slice(0,1)}/${fname.slice(1)}.js`, patchedScriptlet, {});
-            distinctResourceCount += 1;
+            writeFile(`${scriptletDir}/${fname.slice(0,1)}/${fname.slice(1)}.js`, patchedScriptlet, {});
+            generatedFiles.push(fname);
         }
         for ( const entry of slice ) {
             addScriptingAPIResources(
@@ -499,9 +498,14 @@ async function processCosmeticFilters(assetDetails, mapin) {
             );
         }
     }
-    log(`CSS entries: ${distinctResourceCount}`);
 
-    return distinctResourceCount;
+    if ( generatedFiles.length !== 0 ) {
+        log(`CSS-related distinct filters: ${cssContentArray.length} distinct combined selectors`);
+        log(`CSS-related injectable files: ${generatedFiles.length}`);
+        log(`\t${generatedFiles}`);
+    }
+
+    return cssContentArray.length;
 }
 
 /******************************************************************************/
@@ -575,8 +579,8 @@ async function processScriptletFilters(assetDetails, mapin) {
                 y: new Set(),
                 n: new Set(),
             };
+            argsDetails.set(argsHash, hostnamesDetails);
         }
-        argsDetails.set(argsHash, hostnamesDetails);
         if ( entry.matches ) {
             for ( const hn of entry.matches ) {
                 hostnamesDetails.y.add(hn);
@@ -589,7 +593,7 @@ async function processScriptletFilters(assetDetails, mapin) {
         }
     }
 
-    let distinctResourceCount = 0;
+    const generatedFiles = [];
 
     const jsonReplacer = (k, v) => {
         if ( k === 'n' ) {
@@ -637,8 +641,8 @@ async function processScriptletFilters(assetDetails, mapin) {
         const fname = uid(patchedScriptlet) + '1';
         if ( globalPatchedScriptletsSet.has(fname) === false ) {
             globalPatchedScriptletsSet.add(fname);
-            writeFile(`${scriptletDir}/${fname}.js`, patchedScriptlet, {});
-            distinctResourceCount += 1;
+            writeFile(`${scriptletDir}/${fname.slice(0,1)}/${fname.slice(1)}.js`, patchedScriptlet, {});
+            generatedFiles.push(fname);
         }
         for ( const details of argsDetails.values() ) {
             addScriptingAPIResources(
@@ -655,9 +659,16 @@ async function processScriptletFilters(assetDetails, mapin) {
             );
         }
     }
-    log(`Scriptlet entries: ${distinctResourceCount}`);
 
-    return distinctResourceCount;
+    if ( generatedFiles.length !== 0 ) {
+        const scriptletFilterCount = Array.from(scriptletDetails.values())
+            .reduce((a, b) => a + b.size, 0);
+        log(`Scriptlet-related distinct filters: ${scriptletFilterCount}`);
+        log(`Scriptlet-related injectable files: ${generatedFiles.length}`);
+        log(`\t${generatedFiles}`);
+    }
+
+    return generatedFiles.length;
 }
 
 /******************************************************************************/

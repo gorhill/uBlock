@@ -31,7 +31,7 @@ import { parsedURLromOrigin } from './utils.js';
 
 /******************************************************************************/
 
-const CSS_TYPE = '0';
+const CSS_TYPE = '0';  // jshint ignore:line
 const JS_TYPE = '1';
 
 /******************************************************************************/
@@ -108,16 +108,9 @@ const toRegisterable = (fname, entry) => {
     if ( entry.excludeMatches ) {
         directive.excludeMatches = matchesFromHostnames(entry.excludeMatches);
     }
-    if ( fname.at(-1) === CSS_TYPE ) {
-        directive.js = [
-            `/rulesets/css/${fname.slice(0,1)}/${fname.slice(1)}.js`,
-        ];
-        directive.runAt = 'document_start';
-    } else if ( fname.at(-1) === JS_TYPE ) {
-        directive.js = [
-            `/rulesets/js/${fname}.js`
-        ];
-        directive.runAt = 'document_start';
+    directive.js = [ `/rulesets/js/${fname.slice(0,1)}/${fname.slice(1)}.js` ];
+    directive.runAt = 'document_start';
+    if ( fname.at(-1) === JS_TYPE ) {
         directive.world = 'MAIN';
     }
 
