@@ -1,4 +1,4 @@
-name: uBO Lite
+name: uBO Lite release
 
 on: workflow_dispatch
 
@@ -29,6 +29,13 @@ jobs:
           echo "PACKAGE=$(basename $(ls dist/build/uBOLite_*.mv3.zip))" >> $GITHUB_ENV
           echo "TAGNAME=$(basename $(ls dist/build/uBOLite_*.mv3.zip) .mv3.zip)" >> $GITHUB_ENV
           cp dist/build/uBOLite.mv3/log.txt dist/chromium-mv3/
+      - name: Commit uBOLite MV3 build log file
+        # https://github.com/marketplace/actions/github-action-for-committing-changes-to-a-repository
+        uses: devops-infra/action-commit-push@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          commit_message: Update build log file
+          target_branch: master
       - name: Create GitHub release
         id: create_release
         uses: actions/create-release@v1
@@ -38,13 +45,6 @@ jobs:
           tag_name: ${{ env.TAGNAME }}
           release_name: ${{ env.TAGNAME }}
           prerelease: true
-      - name: Commit uBOLite MV3 build log file
-        # https://github.com/marketplace/actions/github-action-for-committing-changes-to-a-repository
-        uses: devops-infra/action-commit-push@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          commit_message: Update build log file
-          target_branch: master
       - name: Upload uBOLite MV3 package
         uses: actions/upload-release-asset@v1
         env:

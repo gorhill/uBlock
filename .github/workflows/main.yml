@@ -1,4 +1,4 @@
-name: GitHub CI
+name: uBO release
 
 on:
   create:
