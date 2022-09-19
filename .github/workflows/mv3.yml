@@ -1,4 +1,4 @@
-name: GitHub CI
+name: uBO Lite
 
 on: workflow_dispatch
 
