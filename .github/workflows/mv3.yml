@@ -25,6 +25,7 @@ jobs:
           tools/make-mv3.sh full
           echo "PACKAGE=$(basename $(ls dist/build/uBOLite_*.mv3.zip))" >> $GITHUB_ENV
           echo "TAGNAME=$(basename $(ls dist/build/uBOLite_*.mv3.zip) .mv3.zip)" >> $GITHUB_ENV
+          echo "RELEASENAME=${PACKAGE/_/ }" >> $GITHUB_ENV
           cp dist/build/uBOLite.mv3/log.txt dist/chromium-mv3/
       - name: Commit uBOLite MV3 build log file
         # https://github.com/marketplace/actions/github-action-for-committing-changes-to-a-repository
@@ -39,7 +40,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           tag_name: ${{ env.TAGNAME }}
-          release_name: ${{ env.TAGNAME }}
+          release_name: ${{ env.RELEASENAME }}
           prerelease: true
       - name: Upload uBOLite MV3 package
         uses: actions/upload-release-asset@v1

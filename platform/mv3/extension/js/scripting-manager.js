@@ -31,11 +31,6 @@ import { parsedURLromOrigin } from './utils.js';
 
 /******************************************************************************/
 
-const CSS_TYPE = '0';  // jshint ignore:line
-const JS_TYPE = '1';
-
-/******************************************************************************/
-
 let scriptingDetailsPromise;
 
 function getScriptingDetails() {
@@ -110,12 +105,13 @@ const toRegisterable = (fname, entry) => {
     }
     directive.js = [ `/rulesets/js/${fname.slice(0,1)}/${fname.slice(1)}.js` ];
     directive.runAt = 'document_start';
-    if ( fname.at(-1) === JS_TYPE ) {
+    if ( (parseInt(fname,16) & MAIN_WORLD_BIT) !== 0 ) {
         directive.world = 'MAIN';
     }
-
     return directive;
 };
+
+const MAIN_WORLD_BIT = 0b1;
 
 /******************************************************************************/
 
@@ -192,9 +188,10 @@ async function registerInjectable() {
     const toRegister = new Map();
 
     const checkRealm = (details, prop, hn) => {
-        const fnames = details[prop]?.get(hn);
-        if ( fnames === undefined ) { return; }
-        for ( const fname of fnames ) {
+        const fids = details[prop]?.get(hn);
+        if ( fids === undefined ) { return; }
+        for ( const fid of fids ) {
+            const fname = fid.toString(16).padStart(8,'0');
             const existing = toRegister.get(fname);
             if ( existing ) {
                 existing[prop].push(hn);
