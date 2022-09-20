@@ -28,9 +28,9 @@ import https from 'https';
 import path from 'path';
 import process from 'process';
 import { createHash } from 'crypto';
-
 import { dnrRulesetFromRawLists } from './js/static-dnr-filtering.js';
 import { StaticFilteringParser } from './js/static-filtering-parser.js';
+import { fnameFromFileId } from './js/utils.js';
 
 /******************************************************************************/
 
@@ -349,25 +349,27 @@ function addScriptingAPIResources(id, entry, prop, fid) {
     for ( const hn of entry[prop] ) {
         let details = scriptingDetails.get(id);
         if ( details === undefined ) {
-            details = {
-                matches: new Map(),
-                excludeMatches: new Map(),
-            };
+            details = {};
             scriptingDetails.set(id, details);
+        }
+        if ( details[prop] === undefined ) {
+            details[prop] = new Map();
         }
         let fids = details[prop].get(hn);
         if ( fids === undefined ) {
-            fids = new Set();
+            details[prop].set(hn, fid);
+        } else if ( fids instanceof Set ) {
+            fids.add(fid);
+        } else if ( fid !== fids ) {
+            fids = new Set([ fids, fid ]);
             details[prop].set(hn, fids);
         }
-        fids.add(fid);
     }
 }
 
 const toCSSFileId = s => uidint32(s) & ~0b1;
 const toJSFileId  = s => uidint32(s) |  0b1;
-const fileNameFromId = id => id.toString(16).padStart(8,'0');
-
+const pathFromFileName = fname => `${scriptletDir}/${fname.slice(0,2)}/${fname.slice(2)}.js`;
 
 /******************************************************************************/
 
@@ -487,8 +489,8 @@ async function processCosmeticFilters(assetDetails, mapin) {
         const fid = toCSSFileId(patchedScriptlet);
         if ( globalPatchedScriptletsSet.has(fid) === false ) {
             globalPatchedScriptletsSet.add(fid);
-            const fname = fileNameFromId(fid);
-            writeFile(`${scriptletDir}/${fname.slice(0,1)}/${fname.slice(1)}.js`, patchedScriptlet, {});
+            const fname = fnameFromFileId(fid);
+            writeFile(pathFromFileName(fname), patchedScriptlet, {});
             generatedFiles.push(fname);
         }
         for ( const entry of slice ) {
@@ -649,8 +651,8 @@ async function processScriptletFilters(assetDetails, mapin) {
         const fid = toJSFileId(patchedScriptlet);
         if ( globalPatchedScriptletsSet.has(fid) === false ) {
             globalPatchedScriptletsSet.add(fid);
-            const fname = fileNameFromId(fid);
-            writeFile(`${scriptletDir}/${fname.slice(0,1)}/${fname.slice(1)}.js`, patchedScriptlet, {});
+            const fname = fnameFromFileId(fid);
+            writeFile(pathFromFileName(fname), patchedScriptlet, {});
             generatedFiles.push(fname);
         }
         for ( const details of argsDetails.values() ) {

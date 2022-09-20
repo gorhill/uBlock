@@ -34,4 +34,25 @@ function parsedURLromOrigin(origin) {
 
 /******************************************************************************/
 
-export { parsedURLromOrigin };
+const toBroaderHostname = hn => {
+    if ( hn === '*' ) { return ''; }
+    const pos = hn.indexOf('.');
+    return pos !== -1 ? hn.slice(pos+1) : '*';
+};
+
+/******************************************************************************/
+
+const fnameFromFileId = fid =>
+    fid.toString(32).padStart(7, '0');
+
+const fidFromFileName = fname =>
+    parseInt(fname, 32);
+
+/******************************************************************************/
+
+export {
+    parsedURLromOrigin,
+    toBroaderHostname,
+    fnameFromFileId,
+    fidFromFileName,
+};

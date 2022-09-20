@@ -27,7 +27,14 @@
 
 import { browser, dnr } from './ext.js';
 import { fetchJSON } from './fetch.js';
-import { parsedURLromOrigin } from './utils.js';
+import { matchesTrustedSiteDirective } from './trusted-sites.js';
+
+import {
+    parsedURLromOrigin,
+    toBroaderHostname,
+    fidFromFileName,
+    fnameFromFileId,
+} from './utils.js';
 
 /******************************************************************************/
 
@@ -72,12 +79,6 @@ const hostnamesFromMatches = origins => {
     return out;
 };
 
-const toBroaderHostname = hn => {
-    if ( hn === '*' ) { return ''; }
-    const pos = hn.indexOf('.');
-    return pos !== -1 ? hn.slice(pos+1) : '*';
-};
-
 const arrayEq = (a, b) => {
     if ( a === undefined ) { return b === undefined; }
     if ( b === undefined ) { return false; }
@@ -103,9 +104,9 @@ const toRegisterable = (fname, entry) => {
     if ( entry.excludeMatches ) {
         directive.excludeMatches = matchesFromHostnames(entry.excludeMatches);
     }
-    directive.js = [ `/rulesets/js/${fname.slice(0,1)}/${fname.slice(1)}.js` ];
+    directive.js = [ `/rulesets/js/${fname.slice(0,2)}/${fname.slice(2)}.js` ];
     directive.runAt = 'document_start';
-    if ( (parseInt(fname,16) & MAIN_WORLD_BIT) !== 0 ) {
+    if ( (fidFromFileName(fname) & MAIN_WORLD_BIT) !== 0 ) {
         directive.world = 'MAIN';
     }
     return directive;
@@ -150,8 +151,12 @@ async function getInjectableCount(origin) {
         const details = scriptingDetails.get(rulesetId);
         let hn = url.hostname;
         while ( hn !== '' ) {
-            const fnames = details.matches.get(hn);
-            total += fnames && fnames.length || 0;
+            const fids = details.matches?.get(hn);
+            if ( typeof fids === 'number' ) {
+                total += 1;
+            } else if ( Array.isArray(fids) ) {
+                total += fids.length;
+            }
             hn = toBroaderHostname(hn);
         }
     }
@@ -160,8 +165,6 @@ async function getInjectableCount(origin) {
 }
 
 /******************************************************************************/
-
-// TODO: Mind trusted-site directives.
 
 async function registerInjectable() {
 
@@ -176,27 +179,37 @@ async function registerInjectable() {
         browser.scripting.getRegisteredContentScripts(),
         getScriptingDetails(),
     ]).then(results => {
-        results[0] = new Set(hostnamesFromMatches(results[0].origins));
+        results[0] = new Map(
+            hostnamesFromMatches(results[0].origins).map(hn => [ hn, false ])
+        );
         return results;
     });
 
     if ( hostnames.has('*') && hostnames.size > 1 ) {
         hostnames.clear();
-        hostnames.add('*');
+        hostnames.set('*', false);
     }
+
+    await Promise.all(
+        Array.from(hostnames.keys()).map(
+            hn => matchesTrustedSiteDirective({ hostname: hn })
+                .then(trusted => hostnames.set(hn, trusted))
+        )
+    );
 
     const toRegister = new Map();
 
-    const checkRealm = (details, prop, hn) => {
-        const fids = details[prop]?.get(hn);
+    const checkMatches = (details, hn) => {
+        let fids = details.matches?.get(hn);
         if ( fids === undefined ) { return; }
+        if ( typeof fids === 'number' ) { fids = [ fids ]; }
         for ( const fid of fids ) {
-            const fname = fid.toString(16).padStart(8,'0');
+            const fname = fnameFromFileId(fid);
             const existing = toRegister.get(fname);
             if ( existing ) {
-                existing[prop].push(hn);
+                existing.matches.push(hn);
             } else {
-                toRegister.set(fname, { [prop]: [ hn ] });
+                toRegister.set(fname, { matches: [ hn ] });
             }
         }
     };
@@ -204,10 +217,37 @@ async function registerInjectable() {
     for ( const rulesetId of rulesetIds ) {
         const details = scriptingDetails.get(rulesetId);
         if ( details === undefined ) { continue; }
-        for ( let hn of hostnames ) {
+        for ( let [ hn, trusted ] of hostnames ) {
+            if ( trusted ) { continue; }
             while ( hn !== '' ) {
-                checkRealm(details, 'matches', hn);
-                checkRealm(details, 'excludeMatches', hn);
+                checkMatches(details, hn);
+                hn = toBroaderHostname(hn);
+            }
+        }
+    }
+
+    const checkExcludeMatches = (details, hn) => {
+        let fids = details.excludeMatches?.get(hn);
+        if ( fids === undefined ) { return; }
+        if ( typeof fids === 'number' ) { fids = [ fids ]; }
+        for ( const fid of fids ) {
+            const fname = fnameFromFileId(fid);
+            const existing = toRegister.get(fname);
+            if ( existing === undefined ) { continue; }
+            if ( existing.excludeMatches ) {
+                existing.excludeMatches.push(hn);
+            } else {
+                toRegister.set(fname, { excludeMatches: [ hn ] });
+            }
+        }
+    };
+
+    for ( const rulesetId of rulesetIds ) {
+        const details = scriptingDetails.get(rulesetId);
+        if ( details === undefined ) { continue; }
+        for ( let hn of hostnames.keys() ) {
+            while ( hn !== '' ) {
+                checkExcludeMatches(details, hn);
                 hn = toBroaderHostname(hn);
             }
         }

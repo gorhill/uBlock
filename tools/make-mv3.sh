@@ -49,6 +49,7 @@ if [ "$1" != "quick" ]; then
     ./tools/make-nodejs.sh $TMPDIR
     cp platform/mv3/package.json $TMPDIR/
     cp platform/mv3/*.js $TMPDIR/
+    cp platform/mv3/extension/js/utils.js $TMPDIR/js/
     cp assets/assets.json $TMPDIR/
     cp -R platform/mv3/scriptlets $TMPDIR/
     cd $TMPDIR
