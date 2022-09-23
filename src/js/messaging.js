@@ -1721,7 +1721,9 @@ const getURLFilteringData = function(details) {
 };
 
 const compileTemporaryException = function(filter) {
-    const parser = new StaticFilteringParser();
+    const parser = new StaticFilteringParser({
+        nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
+    });
     parser.analyze(filter);
     if ( parser.shouldDiscard() ) { return; }
     return staticExtFilteringEngine.compileTemporary(parser);

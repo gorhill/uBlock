@@ -97,6 +97,7 @@ function addExtendedToDNR(context, parser) {
         if ( bad ) { continue; }
         if ( hn.endsWith('.*') ) { continue; }
         const { compiled, exception } = parser.result;
+        if ( typeof compiled !== 'string' ) { continue; }
         if ( compiled.startsWith('{') ) { continue; }
         if ( exception ) { continue; }
         let details = context.cosmeticFilters.get(compiled);
@@ -126,14 +127,14 @@ function addExtendedToDNR(context, parser) {
 /******************************************************************************/
 
 function addToDNR(context, list) {
+    const env = context.env || [];
     const writer = new CompiledListWriter();
     const lineIter = new LineIterator(
-        StaticFilteringParser.utils.preparser.prune(
-            list.text,
-            context.env || []
-        )
+        StaticFilteringParser.utils.preparser.prune(list.text, env)
     );
-    const parser = new StaticFilteringParser();
+    const parser = new StaticFilteringParser({
+        nativeCssHas: env.includes('native_css_has'),
+    });
     const compiler = staticNetFilteringEngine.createCompiler(parser);
 
     writer.properties.set('name', list.name);
@@ -180,10 +181,9 @@ function addToDNR(context, list) {
 /******************************************************************************/
 
 async function dnrRulesetFromRawLists(lists, options = {}) {
-    const context = {};
+    const context = Object.assign({}, options);
     staticNetFilteringEngine.dnrFromCompiled('begin', context);
-    context.extensionPaths = new Map(options.extensionPaths || []);
-    context.env = options.env;
+    context.extensionPaths = new Map(context.extensionPaths || []);
     const toLoad = [];
     const toDNR = (context, list) => addToDNR(context, list);
     for ( const list of lists ) {

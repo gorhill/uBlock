@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* globals WebAssembly */
+/* globals browser, WebAssembly */
 
 'use strict';
 
@@ -973,7 +973,10 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     // Useful references:
     //    https://adblockplus.org/en/filter-cheatsheet
     //    https://adblockplus.org/en/filters
-    const parser = new StaticFilteringParser({ expertMode });
+    const parser = new StaticFilteringParser({
+        expertMode,
+        nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
+    });
     const compiler = staticNetFilteringEngine.createCompiler(parser);
     const lineIter = new LineIterator(
         parser.utils.preparser.prune(rawText, vAPI.webextFlavor.env)

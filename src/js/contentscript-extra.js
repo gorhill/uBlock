@@ -95,19 +95,6 @@ class PSelectorMatchesCSSTask extends PSelectorTask {
         }
     }
 }
-class PSelectorMatchesCSSAfterTask extends PSelectorMatchesCSSTask {
-    constructor(task) {
-        super(task);
-        this.pseudo = '::after';
-    }
-}
-
-class PSelectorMatchesCSSBeforeTask extends PSelectorMatchesCSSTask {
-    constructor(task) {
-        super(task);
-        this.pseudo = '::before';
-    }
-}
 
 class PSelectorMatchesMediaTask extends PSelectorTask {
     constructor(task) {
@@ -247,6 +234,20 @@ class PSelectorSpathTask extends PSelectorTask {
             output.push(node);
         }
     }
+    // Helper method for other operators.
+    static qsa(node, selector) {
+        const parent = node.parentElement;
+        if ( parent === null ) { return []; }
+        let pos = 1;
+        for (;;) {
+            node = node.previousElementSibling;
+            if ( node === null ) { break; }
+            pos += 1;
+        }
+        return parent.querySelectorAll(
+            `:scope > :nth-child(${pos})${selector}`
+        );
+    }
 }
 
 class PSelectorUpwardTask extends PSelectorTask {
@@ -339,23 +340,20 @@ class PSelector {
     constructor(o) {
         if ( PSelector.prototype.operatorToTaskMap === undefined ) {
             PSelector.prototype.operatorToTaskMap = new Map([
-                [ ':has', PSelectorIfTask ],
-                [ ':has-text', PSelectorHasTextTask ],
-                [ ':if', PSelectorIfTask ],
-                [ ':if-not', PSelectorIfNotTask ],
-                [ ':matches-css', PSelectorMatchesCSSTask ],
-                [ ':matches-css-after', PSelectorMatchesCSSAfterTask ],
-                [ ':matches-css-before', PSelectorMatchesCSSBeforeTask ],
-                [ ':matches-media', PSelectorMatchesMediaTask ],
-                [ ':matches-path', PSelectorMatchesPathTask ],
-                [ ':min-text-length', PSelectorMinTextLengthTask ],
-                [ ':not', PSelectorIfNotTask ],
-                [ ':nth-ancestor', PSelectorUpwardTask ],
-                [ ':others', PSelectorOthersTask ],
-                [ ':spath', PSelectorSpathTask ],
-                [ ':upward', PSelectorUpwardTask ],
-                [ ':watch-attr', PSelectorWatchAttrs ],
-                [ ':xpath', PSelectorXpathTask ],
+                [ 'has', PSelectorIfTask ],
+                [ 'has-text', PSelectorHasTextTask ],
+                [ 'if', PSelectorIfTask ],
+                [ 'if-not', PSelectorIfNotTask ],
+                [ 'matches-css', PSelectorMatchesCSSTask ],
+                [ 'matches-media', PSelectorMatchesMediaTask ],
+                [ 'matches-path', PSelectorMatchesPathTask ],
+                [ 'min-text-length', PSelectorMinTextLengthTask ],
+                [ 'not', PSelectorIfNotTask ],
+                [ 'others', PSelectorOthersTask ],
+                [ 'spath', PSelectorSpathTask ],
+                [ 'upward', PSelectorUpwardTask ],
+                [ 'watch-attr', PSelectorWatchAttrs ],
+                [ 'xpath', PSelectorXpathTask ],
             ]);
         }
         this.raw = o.raw;
@@ -374,7 +372,12 @@ class PSelector {
     prime(input) {
         const root = input || document;
         if ( this.selector === '' ) { return [ root ]; }
-        return Array.from(root.querySelectorAll(this.selector));
+        let selector = this.selector;
+        if ( input !== document && /^ [>+~]/.test(this.selector) ) {
+            return Array.from(PSelectorSpathTask.qsa(input, this.selector));
+        }
+        const elems = root.querySelectorAll(selector);
+        return Array.from(elems);
     }
     exec(input) {
         let nodes = this.prime(input);
@@ -453,7 +456,7 @@ class ProceduralFilterer {
             let style, styleToken;
             if ( selector.action === undefined ) {
                 style = vAPI.hideStyle;
-            } else if ( selector.action[0] === ':style' ) {
+            } else if ( selector.action[0] === 'style' ) {
                 style = selector.action[1];
             }
             if ( style !== undefined ) {

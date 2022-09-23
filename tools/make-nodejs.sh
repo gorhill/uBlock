@@ -23,6 +23,7 @@ cp src/js/uri-utils.js               $DES/js
 cp src/js/url-net-filtering.js       $DES/js
 
 mkdir -p $DES/lib
+cp -R src/lib/csstree          $DES/lib/
 cp -R src/lib/punycode.js      $DES/lib/
 cp -R src/lib/regexanalyzer    $DES/lib/
 cp -R src/lib/publicsuffixlist $DES/lib/

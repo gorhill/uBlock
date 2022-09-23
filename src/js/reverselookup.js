@@ -134,7 +134,9 @@ const fromNetFilter = async function(rawFilter) {
     if ( typeof rawFilter !== 'string' || rawFilter === '' ) { return; }
 
     const writer = new CompiledListWriter();
-    const parser = new StaticFilteringParser();
+    const parser = new StaticFilteringParser({
+        nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
+    });
     parser.setMaxTokenLength(staticNetFilteringEngine.MAX_TOKEN_LENGTH);
     parser.analyze(rawFilter);
 
