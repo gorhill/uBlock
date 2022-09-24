@@ -918,11 +918,15 @@ async function main() {
     });
 
     // Regional rulesets
+    const excludedLists = [
+        'ara-0',
+        'EST-0',
+    ];
     for ( const [ id, asset ] of Object.entries(assets) ) {
         if ( asset.content !== 'filters' ) { continue; }
         if ( asset.off !== true ) { continue; }
         if ( typeof asset.lang !== 'string' ) { continue; }
-
+        if ( excludedLists.includes(id) ) { continue; }
         const contentURL = Array.isArray(asset.contentURL)
             ? asset.contentURL[0]
             : asset.contentURL;
