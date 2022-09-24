@@ -37,10 +37,11 @@ import {
 function addExtendedToDNR(context, parser) {
     if ( parser.category !== parser.CATStaticExtFilter ) { return false; }
 
-    if ( (parser.flavorBits & parser.BITFlavorUnsupported) !== 0 ) { return; }
-
     // Scriptlet injection
     if ( (parser.flavorBits & parser.BITFlavorExtScriptlet) !== 0 ) {
+        if ( (parser.flavorBits & parser.BITFlavorUnsupported) !== 0 ) {
+            return;
+        }
         if ( parser.hasOptions() === false ) { return; }
         if ( context.scriptletFilters === undefined ) {
             context.scriptletFilters = new Map();
@@ -95,16 +96,24 @@ function addExtendedToDNR(context, parser) {
     //   of same filter OR globally if there is no non-negated hostnames.
     for ( const { hn, not, bad } of parser.extOptions() ) {
         if ( bad ) { continue; }
-        if ( hn.endsWith('.*') ) { continue; }
-        const { compiled, exception } = parser.result;
-        if ( typeof compiled !== 'string' ) { continue; }
-        if ( compiled.startsWith('{') ) { continue; }
+        let { compiled, exception, raw } = parser.result;
         if ( exception ) { continue; }
+        let rejected;
+        if ( compiled === undefined ) {
+            rejected = `Invalid filter: ${hn}##${raw}`;
+        } else if ( hn.endsWith('.*') ) {
+            rejected = `Entity not supported: ${hn}##${raw}`;
+        }
+        if ( rejected ) {
+            compiled = rejected;
+        }
         let details = context.cosmeticFilters.get(compiled);
         if ( details === undefined ) {
             details = {};
+            if ( rejected ) { details.rejected = true; }
             context.cosmeticFilters.set(compiled, details);
         }
+        if ( rejected ) { continue; }
         if ( not ) {
             if ( details.excludeMatches === undefined ) {
                 details.excludeMatches = [];

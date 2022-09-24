@@ -105,14 +105,19 @@ const toRegisterable = (fname, entry) => {
         directive.excludeMatches = matchesFromHostnames(entry.excludeMatches);
     }
     directive.js = [ `/rulesets/js/${fname.slice(0,2)}/${fname.slice(2)}.js` ];
-    directive.runAt = 'document_start';
+    if ( (fidFromFileName(fname) & RUN_AT_BIT) !== 0 ) {
+        directive.runAt = 'document_end';
+    } else {
+        directive.runAt = 'document_start';
+    }
     if ( (fidFromFileName(fname) & MAIN_WORLD_BIT) !== 0 ) {
         directive.world = 'MAIN';
     }
     return directive;
 };
 
-const MAIN_WORLD_BIT = 0b1;
+const RUN_AT_BIT =     0b10;
+const MAIN_WORLD_BIT = 0b01;
 
 /******************************************************************************/
 

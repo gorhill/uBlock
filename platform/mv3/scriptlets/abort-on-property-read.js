@@ -39,6 +39,14 @@
 
 /******************************************************************************/
 
+// $rulesetId$
+
+const argsMap = new Map(self.$argsMap$);
+
+const hostnamesMap = new Map(self.$hostnamesMap$);
+
+/******************************************************************************/
+
 const ObjGetOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
 const ObjDefineProperty = Object.defineProperty;
 
@@ -103,10 +111,6 @@ const scriptlet = (
 
 /******************************************************************************/
 
-const argsMap = new Map(self.$argsMap$);
-
-const hostnamesMap = new Map(self.$hostnamesMap$);
-
 let hn;
 try { hn = document.location.hostname; } catch(ex) { }
 while ( hn ) {
@@ -119,10 +123,19 @@ while ( hn ) {
             try { scriptlet(...details.a); } catch(ex) {}
         }
     }
+    if ( hn === '*' ) { break; }
     const pos = hn.indexOf('.');
-    if ( pos === -1 ) { break; }
-    hn = hn.slice(pos + 1);
+    if ( pos !== -1 ) {
+        hn = hn.slice(pos + 1);
+    } else {
+        hn = '*';
+    }
 }
+
+/******************************************************************************/
+
+argsMap.clear();
+hostnamesMap.clear();
 
 /******************************************************************************/
 

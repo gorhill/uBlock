@@ -1436,14 +1436,13 @@ Parser.prototype.SelectorCompiler = class {
         }
 
         out.compiled = this.compileSelector(raw);
-        if ( out.compiled === undefined ) {
-            console.log('Error:', raw);
-            return false;
-        }
+        if ( out.compiled === undefined ) { return false; }
+
         if ( out.compiled instanceof Object ) {
             out.compiled.raw = raw;
             out.compiled = JSON.stringify(out.compiled);
         }
+
         return true;
     }
 

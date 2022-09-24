@@ -17,9 +17,6 @@
     along with this program.  If not, see {http://www.gnu.org/licenses/}.
 
     Home: https://github.com/gorhill/uBlock
-
-    The scriptlets below are meant to be injected only into a
-    web page context.
 */
 
 /* jshint esversion:11 */
@@ -38,9 +35,13 @@
 
 /******************************************************************************/
 
+// $rulesetId$
+
 const argsMap = new Map(self.$argsMap$);
 
 const hostnamesMap = new Map(self.$hostnamesMap$);
+
+/******************************************************************************/
 
 let hn;
 try { hn = document.location.hostname; } catch(ex) { }
@@ -55,9 +56,13 @@ while ( hn ) {
             styles.push(details.a);
         }
     }
+    if ( hn === '*' ) { break; }
     const pos = hn.indexOf('.');
-    if ( pos === -1 ) { break; }
-    hn = hn.slice(pos + 1);
+    if ( pos !== -1 ) {
+        hn = hn.slice(pos + 1);
+    } else {
+        hn = '*';
+    }
 }
 
 if ( styles.length === 0 ) { return; }
@@ -71,6 +76,11 @@ try {
     ];
 } catch(ex) {
 }
+
+/******************************************************************************/
+
+argsMap.clear();
+hostnamesMap.clear();
 
 /******************************************************************************/
 
