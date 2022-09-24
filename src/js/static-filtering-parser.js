@@ -1515,6 +1515,10 @@ Parser.prototype.SelectorCompiler = class {
             args = out;
             out.push({ data });
             break;
+        case 'Nth': {
+            out.push({ data });
+            break;
+        }
         case 'PseudoClassSelector':
         case 'PseudoElementSelector':
             if ( head ) { args = []; }
@@ -1594,9 +1598,28 @@ Parser.prototype.SelectorCompiler = class {
             case 'Combinator':
                 out.push(data.name === ' ' ? ' ' : ` ${data.name} `);
                 break;
+            case 'Identifier':
+                out.push(data.name);
+                break;
             case 'IdSelector':
                 out.push(`#${data.name}`);
                 break;
+            case 'Nth': {
+                const a = parseInt(data.nth.a, 10) || null;
+                const b = parseInt(data.nth.b, 10) || null;
+                if ( a !== null ) {
+                    out.push(`${a}n`);
+                    if ( b === null ) { break; }
+                    if ( b < 0 ) {
+                        out.push(`${b}`);
+                    } else {
+                        out.push(`+${b}`);
+                    }
+                } else if ( b !== null ) {
+                    out.push(`${b}`);
+                }
+                break;
+            }
             case 'ActionSelector':
             case 'PseudoClassSelector':
             case 'PseudoElementSelector':
