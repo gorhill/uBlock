@@ -208,7 +208,7 @@
     "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
-    "message": "Të tjera",
+    "message": "Më shumë",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton_v2": {
@@ -372,7 +372,7 @@
     "description": ""
   },
   "settingPerSiteSwitchGroupSynopsis": {
-    "message": "Këto vlera mund të ndryshohen për çdo faqe",
+    "message": "Këto vlera mund të ndryshohen për çdo uebsajt",
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {

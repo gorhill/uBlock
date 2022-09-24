@@ -56,7 +56,7 @@
     "description": "appears as tab name in dashboard"
   },
   "supportPageName": {
-    "message": "Support",
+    "message": "സഹായം ",
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "ഈ വെബ്‌സൈറ്റിൽ ഉള്ള പ്രശ്നങ്ങൾ അറിയിക്കുക ",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {

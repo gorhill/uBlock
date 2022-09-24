@@ -612,7 +612,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "Смернице поузданих сајтова диктирају на којим веб страницама би uBlock Origin требало бити онемогућен. Један унос по реду.",
+    "message": "Смернице поузданих сајтова диктирају на којим веб страницама uBlock Origin треба да буде онемогућен. Један унос по реду.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
