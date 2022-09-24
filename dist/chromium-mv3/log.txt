@@ -1,4 +1,4 @@
-Version: 0.1.22.9246
+Version: 0.1.22.9248
 ============================
 Listset for 'default':
 	Fetching remote https://ublockorigin.pages.dev/filters/filters.txt
@@ -184,12 +184,12 @@ Output rule count: 21030
 		Unhandled modifier exception
 		Unhandled modifier exception
 		Entity not supported: gmx.*
-CSS-related distinct filters: 4952 distinct combined selectors
+CSS-related distinct filters: 4951 distinct combined selectors
 CSS-related injectable files: 12
-	0s6i5ao, 1q5pup8, 0nsfu6o, 1kd0mn0, 05c5j7s, 1q2ramg, 0ch24hg, 1fli5i8, 1rrv5fg, 0ha90k8, 05rmo3s, 0q6tkgs
-Pprocedural-related distinct filters: 593 distinct combined selectors
-Pprocedural-related injectable files: 4
-	1nl0lna, 0qggvjm, 1t6ti6u, 0v8ione
+	0cn5p14, 1q5pup8, 0b8qid0, 1kd0mn0, 0v19m64, 0319bas, 0p8fu64, 0361p3s, 1miruk4, 1vcu40o, 09qmid8, 0dlchv8
+Procedural-related distinct filters: 593 distinct combined selectors
+Procedural-related injectable files: 4
+	1nl0lna, 0qggvjm, 1t6ti6u, 1f1an7a
 Rejected cosmetic filters: 1386
 	Entity not supported: google.*###atvcap + #tvcap > .mnr-c > .commercial-unit-mobile-top
 	Entity not supported: google.*###center_col > #\5f Emc
@@ -1577,9 +1577,9 @@ Rejected cosmetic filters: 1386
 	Invalid filter: komorkomania.pl##:xpath(//*[string-length(@href) > 1600])
 	Invalid filter: polygamia.pl##:xpath(//*[string-length(@href) > 1600])
 	Invalid filter: open.fm##:xpath(//*[string-length(@href) > 1600])
-Scriptlet-related distinct filters: 1251
-Scriptlet-related injectable files: 4
-	0t5ui9p, 1lvsmph, 0o34tsl, 0r0cvo1
+Scriptlet-related distinct filters: 1658
+Scriptlet-related injectable files: 6
+	0t5ui9p, 1lvsmph, 1hhg7k1, 040l819, 0r0cvo1, 1g7jmjp
 ============================
 Listset for 'alb-0':
 	Fetching remote https://raw.githubusercontent.com/AnXh3L0/blocklist/master/albanian-easylist-addition/Albania.txt
@@ -1597,11 +1597,11 @@ Output rule count: 26
 		Entity not supported: www.filma24.*
 		Entity not supported: www.filma24.*
 		Entity not supported: filma24.*
-CSS-related distinct filters: 99 distinct combined selectors
+CSS-related distinct filters: 97 distinct combined selectors
 CSS-related injectable files: 11
-	1dl63rg, 1qj43rk, 10fs3ns, 1koh5u4, 1l3tc90, 0d136ms, 02r114g, 0pi0voc, 177kpeo, 0su0vi4, 1f3cs34
-Pprocedural-related distinct filters: 11 distinct combined selectors
-Pprocedural-related injectable files: 4
+	1dl63rg, 1qj43rk, 1g9skjk, 1rveqdg, 1o20eek, 0hhgu80, 17o0v80, 0au84dk, 1j8kqec, 0cipi5g, 00lnll0
+Procedural-related distinct filters: 11 distinct combined selectors
+Procedural-related injectable files: 4
 	04qaqnm, 1le71ai, 0svji32, 162f2ji
 Rejected cosmetic filters: 19
 	Entity not supported: www.filma24.*###vidad
@@ -1623,11 +1623,6 @@ Rejected cosmetic filters: 19
 	Entity not supported: filma24.*##div.download-links:style(width: 100% !important)
 	Entity not supported: filma24.*###disqus_thread:style(width: 100% !important)
 	Entity not supported: filma24.*##div.recommended.related:style(width: 100% !important)
-============================
-Listset for 'ara-0':
-	Fetching remote https://easylist-downloads.adblockplus.org/Liste_AR.txt
-No valid content for undefined
-No filterset found
 ============================
 Listset for 'bgr-0':
 	Fetching remote https://stanev.org/abp/adblock_bg.txt
@@ -1662,19 +1657,19 @@ Output rule count: 6724
 		Invalid network filter in chn-0: @@||ad.alimama.com^$genericblock
 		Invalid network filter in chn-0: @@||cmechina.net^$genericblock
 		Unhandled modifier exception
-CSS-related distinct filters: 2612 distinct combined selectors
+CSS-related distinct filters: 2611 distinct combined selectors
 CSS-related injectable files: 12
-	1m2c4pg, 0tc2m50, 1g364j4, 0aor1sk, 0c0lea8, 1o6jano, 1fr3fk8, 0d5lfjs, 0p97nnc, 0gep2rc, 16s7030, 198df58
-Pprocedural-related distinct filters: 166 distinct combined selectors
-Pprocedural-related injectable files: 4
-	0t6eq9m, 1pgqlfq, 17t0a0u, 13fgt3q
+	0fsll2o, 0868530, 0k2p7p8, 1r2te4k, 1vlsnj4, 154c5is, 1jp9odk, 0otsjms, 1dp0njg, 09vjfk8, 14ai630, 09tuqto
+Procedural-related distinct filters: 166 distinct combined selectors
+Procedural-related injectable files: 4
+	0t6eq9m, 1pcb2fi, 0eejk3i, 024hce2
 Rejected cosmetic filters: 3
 	Entity not supported: 18comic.*##body .bot-per
 	Entity not supported: 18comic.*##.top-a2db
 	Entity not supported: 18comic.*##.modal-body > ul.pop-list
-Scriptlet-related distinct filters: 50
-Scriptlet-related injectable files: 4
-	11fdmil, 1s5m36t, 18v3tj1, 0nc36t1
+Scriptlet-related distinct filters: 67
+Scriptlet-related injectable files: 6
+	0bhhh5l, 11fdmil, 082e4vh, 18v3tj1, 0mvp4ad, 0nc36t1
 ============================
 Listset for 'cze-0':
 	Fetching remote https://raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt
@@ -1692,13 +1687,13 @@ Output rule count: 120
 
 CSS-related distinct filters: 141 distinct combined selectors
 CSS-related injectable files: 12
-	1cp2678, 043qs8g, 1k2ou80, 1o4aroo, 1hdvglg, 148a1g0, 09mc980, 0d3h018, 1fmb4ls, 024skd4, 0b7j6vs, 08pd4qg
-Pprocedural-related distinct filters: 15 distinct combined selectors
-Pprocedural-related injectable files: 4
+	1cp2678, 043qs8g, 1k2ou80, 1o4aroo, 1hdvglg, 148a1g0, 09mc980, 0d3h018, 1fmb4ls, 024skd4, 0b7j6vs, 023trdo
+Procedural-related distinct filters: 15 distinct combined selectors
+Procedural-related injectable files: 4
 	0b2sgle, 15frpj2, 0htafhi, 1bird52
-Scriptlet-related distinct filters: 21
-Scriptlet-related injectable files: 3
-	06j6kv5, 1qojpcd, 0mr3ut9
+Scriptlet-related distinct filters: 22
+Scriptlet-related injectable files: 4
+	0ct0cip, 1qojpcd, 0mr3ut9, 0pqmb2t
 ============================
 Listset for 'deu-0':
 	Fetching remote https://easylist.to/easylistgermany/easylistgermany.txt
@@ -1715,15 +1710,10 @@ Output rule count: 1689
 		Invalid network filter in deu-0: @@||gofeminin.de^$genericblock
 CSS-related distinct filters: 1164 distinct combined selectors
 CSS-related injectable files: 12
-	1gs34oc, 0346tf4, 0rq2j0o, 18ps85k, 1s1ns1g, 09194h0, 0m64ssk, 00immhk, 07e13ss, 1n1fnno, 1vsom3o, 0anr8h4
-Pprocedural-related distinct filters: 83 distinct combined selectors
-Pprocedural-related injectable files: 4
+	0544gok, 0346tf4, 0rq2j0o, 18ps85k, 1s1ns1g, 09194h0, 0m64ssk, 00immhk, 07e13ss, 1n1fnno, 1vsom3o, 0cpn6bs
+Procedural-related distinct filters: 83 distinct combined selectors
+Procedural-related injectable files: 4
 	0m5m2gq, 0r966ri, 1nmhdum, 035sfs2
-============================
-Listset for 'est-0':
-	Fetching remote https://adblock.ee/list.php
-No valid content for undefined
-No filterset found
 ============================
 Listset for 'fin-0':
 	Fetching remote https://raw.githubusercontent.com/finnish-easylist-addition/finnish-easylist-addition/master/Finland_adb.txt
@@ -1743,24 +1733,24 @@ Output rule count: 147
 		regexFilter is not RE2-compatible: telsu\.fi\/img\/(?!cloudcity|mindmax|navibg|prg|tvohjelmat)
 CSS-related distinct filters: 352 distinct combined selectors
 CSS-related injectable files: 12
-	0209ct8, 0ir6ogs, 0147tso, 1cia8b8, 1eplhdg, 0i6lb30, 0f8bn6c, 1cm2rrk, 0lqk74g, 14r0q4k, 0k1d7is, 049s694
-Pprocedural-related distinct filters: 187 distinct combined selectors
-Pprocedural-related injectable files: 4
-	0odhene, 1jq4un2, 1geq55q, 1he9ici
+	0209ct8, 0ir6ogs, 0147tso, 1cia8b8, 0bfc3dc, 0i6lb30, 0f8bn6c, 1cm2rrk, 0lqk74g, 14r0q4k, 0k1d7is, 049s694
+Procedural-related distinct filters: 187 distinct combined selectors
+Procedural-related injectable files: 4
+	0odhene, 0gvusau, 17jigum, 1he9ici
 Rejected cosmetic filters: 2
 	Invalid filter: fin.afterdawn.com##.header:not(:matches-media((min-width: 750px))) + div[class] + div[class] .mobile-top-ad:-abp-has(+ .boxes):style(margin: unset !important)
 	Invalid filter: fin.afterdawn.com##.header:not(:matches-media((min-width: 750px))) + div[class] + div[class] .mobile-top-ad:not(+ .boxes):style(margin: -10px auto !important)
-Scriptlet-related distinct filters: 3
-Scriptlet-related injectable files: 2
-	0g2dphl, 1mlof8d
+Scriptlet-related distinct filters: 4
+Scriptlet-related injectable files: 3
+	0ngj1a9, 0g2dphl, 0ln2el9
 ============================
 Listset for 'fra-0':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/16.txt
-Input filter count: 21551
-	Accepted filter count: 21496
+Input filter count: 21552
+	Accepted filter count: 21497
 	Rejected filter count: 49
-Output rule count: 7331
-	Good: 7280
+Output rule count: 7332
+	Good: 7281
 	Maybe good (regexes): 10
 	redirect-rule= (discarded): 28
 	csp= (discarded): 5
@@ -1777,15 +1767,15 @@ Output rule count: 7331
 CSS-related distinct filters: 1184 distinct combined selectors
 CSS-related injectable files: 12
 	0mhmacs, 08h29b0, 0b773ko, 1jt9kt8, 076fnj0, 01q2adc, 0vddij0, 03usk38, 14vopos, 1i61vo4, 11o6fls, 1mvtv78
-Pprocedural-related distinct filters: 115 distinct combined selectors
-Pprocedural-related injectable files: 4
+Procedural-related distinct filters: 115 distinct combined selectors
+Procedural-related injectable files: 4
 	0n4jap2, 0jmr14a, 1lhjdvi, 04bt60i
 Rejected cosmetic filters: 2
 	Entity not supported: torrent911.*###vpnvpn
 	Entity not supported: oxtorrent.*###vpnvpn
-Scriptlet-related distinct filters: 43
-Scriptlet-related injectable files: 4
-	1oukjkh, 1278sjp, 010aed5, 16l5jd5
+Scriptlet-related distinct filters: 50
+Scriptlet-related injectable files: 6
+	1oukjkh, 0i3p0vl, 08tlg6d, 010aed5, 1757rtl, 16l5jd5
 ============================
 Listset for 'grc-0':
 	Fetching remote https://www.void.gr/kargig/void-gr-filters.txt
@@ -1800,11 +1790,11 @@ Output rule count: 434
 	removeparams= (discarded): 0
 	Unsupported: 0
 
-CSS-related distinct filters: 166 distinct combined selectors
+CSS-related distinct filters: 164 distinct combined selectors
 CSS-related injectable files: 12
-	1op8418, 0qj3m3g, 1nvuk4g, 0ht99h0, 0fdjnbg, 1qjq8is, 0ns0iks, 0o3hok0, 1jg90os, 0bjh24k, 1lfr6d0, 0dvdo7o
-Pprocedural-related distinct filters: 7 distinct combined selectors
-Pprocedural-related injectable files: 4
+	1op8418, 0qj3m3g, 0pb6qbg, 1jdq268, 1si8anc, 031bbak, 0vg0dhc, 1vtl35k, 15o8ksk, 160ffmo, 0lkaki4, 1g1f1ic
+Procedural-related distinct filters: 7 distinct combined selectors
+Procedural-related injectable files: 4
 	1215fl2, 1ichdcu, 0jaf83i, 1djk456
 ============================
 Listset for 'hun-0':
@@ -1820,15 +1810,15 @@ Output rule count: 202
 	removeparams= (discarded): 0
 	Unsupported: 0
 
-CSS-related distinct filters: 446 distinct combined selectors
+CSS-related distinct filters: 445 distinct combined selectors
 CSS-related injectable files: 12
-	1cf2490, 0ifqrbo, 1a6c4u4, 0ib0jd4, 15j1jm0, 1q31bok, 0jnagmo, 1uubfec, 1pnifdk, 03j9vdg, 08shb5s, 1hrmmvg
-Pprocedural-related distinct filters: 47 distinct combined selectors
-Pprocedural-related injectable files: 4
+	0ji9338, 188kmhs, 0a1evd4, 1navgig, 1lcph18, 1r3lbdc, 0qppfco, 07dhdi8, 0cbikgs, 0ckpnog, 1qu2v88, 1a3tg28
+Procedural-related distinct filters: 47 distinct combined selectors
+Procedural-related injectable files: 4
 	0n3icfa, 1tdstvu, 042hah6, 010uuq2
-Scriptlet-related distinct filters: 12
-Scriptlet-related injectable files: 3
-	1crc39l, 09i0qn9, 07lhj8p
+Scriptlet-related distinct filters: 15
+Scriptlet-related injectable files: 5
+	1crc39l, 09i0qn9, 1ukjb8d, 0odlrht, 1tlcd7p
 ============================
 Listset for 'idn-0':
 	Fetching remote https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/subscriptions/abpindo.txt
@@ -1845,9 +1835,9 @@ Output rule count: 3046
 
 CSS-related distinct filters: 419 distinct combined selectors
 CSS-related injectable files: 12
-	10knfk0, 0rtupcc, 0686rjc, 1f1nj1g, 179gq7k, 0j5ktvs, 135hjus, 1m4u6jo, 11vt9to, 0ihf6ic, 1sh74ck, 1225q7g
-Pprocedural-related distinct filters: 2 distinct combined selectors
-Pprocedural-related injectable files: 2
+	10knfk0, 0rtupcc, 04mido8, 0s8nj4k, 0fonhjs, 08f48p0, 11mi48s, 0uceat8, 19ot8no, 19ipes8, 1j0bgtg, 1pfdrhc
+Procedural-related distinct filters: 2 distinct combined selectors
+Procedural-related injectable files: 2
 	199pvjm, 1lnj09a
 Rejected cosmetic filters: 1
 	Invalid filter: neonime.net##[data-src^="https://neonime.net/wp-content/"]:xpath(..)
@@ -1865,11 +1855,11 @@ Output rule count: 5201
 	removeparams= (discarded): 0
 	Unsupported: 0
 
-CSS-related distinct filters: 2214 distinct combined selectors
+CSS-related distinct filters: 2217 distinct combined selectors
 CSS-related injectable files: 12
-	0fjq6b8, 0kthidk, 1ieh334, 13vjj88, 1oqsdb0, 0dmo31c, 1j9s6b8, 0at7lf8, 0tordgo, 0c8iqdc, 10f3fb8, 02ulenc
-Pprocedural-related distinct filters: 73 distinct combined selectors
-Pprocedural-related injectable files: 4
+	15ekuus, 17s5kd4, 1ieh334, 0tt9fk8, 08cf18c, 1b6nrkg, 08eu7tc, 1cb1724, 14isg4s, 00nt8h0, 0ol3gp4, 027boco
+Procedural-related distinct filters: 73 distinct combined selectors
+Procedural-related injectable files: 4
 	05c015m, 1bufjbi, 1tb1mka, 12h5ttm
 ============================
 Listset for 'irn-0':
@@ -1893,15 +1883,15 @@ Output rule count: 524
 		Unsupported regex-based removeParam: /^utm_/
 		Unsupported regex-based removeParam: /^utm_/
 		Unsupported regex-based removeParam: /^utm_/
-CSS-related distinct filters: 329 distinct combined selectors
+CSS-related distinct filters: 326 distinct combined selectors
 CSS-related injectable files: 12
-	1ftbh6o, 0qnv2rs, 0n3ue4k, 0etkg2o, 135opdc, 0tv2q9c, 1cvqj2c, 1t8vgfg, 0akh97s, 01df5e4, 0tksg8o, 180i6bc
-Pprocedural-related distinct filters: 63 distinct combined selectors
-Pprocedural-related injectable files: 4
-	1i0oapq, 177t3sa, 17jmk4m, 1hf3aqi
-Scriptlet-related distinct filters: 27
-Scriptlet-related injectable files: 3
-	1k5o819, 02lgsfp, 0mb2ba9
+	17ue23c, 09de7nc, 0leuf28, 1n84c6k, 038qc0s, 0cl0u5s, 0tkf2v4, 1njuhjg, 07bs78g, 0it18r8, 0g39avk, 03onb2g
+Procedural-related distinct filters: 63 distinct combined selectors
+Procedural-related injectable files: 4
+	1i0oapq, 177t3sa, 0ccjfae, 1hf3aqi
+Scriptlet-related distinct filters: 29
+Scriptlet-related injectable files: 4
+	1md8ek9, 02lgsfp, 0mb2ba9, 1alhr91
 ============================
 Listset for 'isl-0':
 	Fetching remote https://adblock.gardar.net/is.abp.txt
@@ -1952,17 +1942,17 @@ Output rule count: 278
 		Invalid network filter in isr-0: *$webrtc,domain=calcalist.co.il
 CSS-related distinct filters: 118 distinct combined selectors
 CSS-related injectable files: 12
-	1c3puc4, 1d68bvc, 1m2rvuc, 0q27ih8, 0goodsc, 12bp3ok, 0emdl18, 0anr1m0, 0k3782c, 1gd6b0g, 1sjqiig, 1ksmpkg
-Pprocedural-related distinct filters: 3 distinct combined selectors
-Pprocedural-related injectable files: 3
+	1c3puc4, 1d68bvc, 1m2rvuc, 0q27ih8, 0ip9rfo, 12bp3ok, 1lp3bt0, 0anr1m0, 1os4b4k, 1gd6b0g, 1sjqiig, 1ksmpkg
+Procedural-related distinct filters: 3 distinct combined selectors
+Procedural-related injectable files: 3
 	0c9sfbq, 0e6iugu, 1iuhhh6
 Rejected cosmetic filters: 3
 	Invalid filter: haaretz.co.il##span:has([href*="promo"]):xpath(..)
 	Entity not supported: sdarot.*###afterLoad:style(display: block !important)
 	Entity not supported: sdarot.*##[href*="channel22.co.il"]
-Scriptlet-related distinct filters: 7
-Scriptlet-related injectable files: 3
-	1shqma9, 0028hs5, 1mvji4t
+Scriptlet-related distinct filters: 11
+Scriptlet-related injectable files: 5
+	08h1gfd, 1blk175, 1upn1n1, 0028hs5, 1mvji4t
 ============================
 Listset for 'ita-0':
 	Fetching remote https://easylist-downloads.adblockplus.org/easylistitaly.txt
@@ -1980,8 +1970,8 @@ Output rule count: 5422
 CSS-related distinct filters: 2066 distinct combined selectors
 CSS-related injectable files: 12
 	1805gi4, 1sv7ksk, 04drfik, 0acht80, 00qf2rk, 0hsfnvs, 0qamju4, 1atv1ec, 0ktmub4, 0efe64g, 006tjg0, 1ockre8
-Pprocedural-related distinct filters: 38 distinct combined selectors
-Pprocedural-related injectable files: 4
+Procedural-related distinct filters: 38 distinct combined selectors
+Procedural-related injectable files: 4
 	0sfclp6, 1k1u8nu, 1fbb992, 1mb7322
 ============================
 Listset for 'jpn-1':
@@ -2000,10 +1990,10 @@ Output rule count: 807
 		regexFilter is not RE2-compatible: ^(?!.*(bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|vk.com|yandex.|yastatic.net|ytimg.com|zencdn.net|player|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com)).*$
 CSS-related distinct filters: 2038 distinct combined selectors
 CSS-related injectable files: 12
-	0ivcvco, 0t0ujjg, 1tehcsg, 0udqa38, 08e3eso, 0fnrrvo, 1ulons0, 12941jc, 1jtiiig, 0cb4qoc, 136s43c, 1f9nf2o
-Pprocedural-related distinct filters: 521 distinct combined selectors
-Pprocedural-related injectable files: 4
-	0qrggti, 03lim72, 13g8326, 1hqn2r6
+	0ujuct0, 097ub04, 0a3tkd0, 019240g, 13eadfg, 09kkktk, 1ulons0, 12941jc, 1jtiiig, 0l85v18, 0simisk, 1f9nf2o
+Procedural-related distinct filters: 521 distinct combined selectors
+Procedural-related injectable files: 4
+	1p4qce2, 0bqt84q, 13g8326, 1hqn2r6
 Rejected cosmetic filters: 27
 	Entity not supported: javmix.*##.home-h > h1:contains(ライブチャット)
 	Entity not supported: javmix.*##.home-h > h3:contains(Stripchat)
@@ -2032,9 +2022,9 @@ Rejected cosmetic filters: 27
 	Entity not supported: 9tsu.*##.ads-system
 	Entity not supported: 9tsu.*##.cactus-sidebar-content > .widget_text:not(.style-5)
 	Entity not supported: matome-plus.*##.amazontotalboxtest
-Scriptlet-related distinct filters: 26
-Scriptlet-related injectable files: 3
-	0e83jb9, 1iqeqi1, 054ksed
+Scriptlet-related distinct filters: 34
+Scriptlet-related injectable files: 4
+	0e83jb9, 1iqeqi1, 0eootd5, 0v94b81
 ============================
 Listset for 'kor-1':
 	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filter-uBO.txt
@@ -2065,13 +2055,13 @@ Output rule count: 523
 
 CSS-related distinct filters: 282 distinct combined selectors
 CSS-related injectable files: 12
-	0qrm3os, 1okficg, 16cvj2s, 070ld94, 0j9va7k, 09p04ks, 0bjnn70, 0novqc8, 0rlpiv8, 0em3jr8, 0vjloes, 091tb5s
-Pprocedural-related distinct filters: 14 distinct combined selectors
-Pprocedural-related injectable files: 4
+	0te0oac, 1okficg, 16cvj2s, 070ld94, 0j9va7k, 09p04ks, 0bjnn70, 0novqc8, 0rlpiv8, 0em3jr8, 0vjloes, 091tb5s
+Procedural-related distinct filters: 14 distinct combined selectors
+Procedural-related injectable files: 4
 	0ahc0mm, 1fo8ug2, 1qhb8me, 1co6n0m
-Scriptlet-related distinct filters: 4
-Scriptlet-related injectable files: 2
-	0pecjvd, 1cal349
+Scriptlet-related distinct filters: 6
+Scriptlet-related injectable files: 3
+	0pecjvd, 0abl5qd, 0oaaeah
 ============================
 Listset for 'lva-0':
 	Fetching remote https://raw.githubusercontent.com/Latvian-List/adblock-latvian/master/lists/latvian-list.txt
@@ -2115,15 +2105,15 @@ Output rule count: 644
 		Entity not supported: allestoringen.*
 CSS-related distinct filters: 642 distinct combined selectors
 CSS-related injectable files: 12
-	0m3j33o, 1959c1g, 1r4596k, 07ragcs, 08q5h9k, 1vb3a4k, 1sb6ta8, 1ntv4ig, 1hqu3bc, 0sfcjhk, 0etbrh0, 0d8vet8
-Pprocedural-related distinct filters: 171 distinct combined selectors
-Pprocedural-related injectable files: 4
+	0m3j33o, 1959c1g, 1r4596k, 1vjckp4, 08q5h9k, 1vb3a4k, 02rj4uc, 1h8o5hs, 1blnn5s, 0sfcjhk, 0etbrh0, 0d8vet8
+Procedural-related distinct filters: 171 distinct combined selectors
+Procedural-related injectable files: 4
 	1l0q1iq, 03q5cta, 0n8e2v6, 0mo8djq
 Rejected cosmetic filters: 1
 	Entity not supported: morningstar.*###ad_top_page
-Scriptlet-related distinct filters: 10
-Scriptlet-related injectable files: 3
-	00v5r59, 1vul5vl, 0n11qed
+Scriptlet-related distinct filters: 12
+Scriptlet-related injectable files: 5
+	0gac1q5, 00v5r59, 1vul5vl, 0tmr91t, 0vvvvtl
 ============================
 Listset for 'nor-0':
 	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianList.txt
@@ -2170,11 +2160,11 @@ Output rule count: 485
 		Unsupported regex-based removeParam: /^source=partnerads$/
 		Unsupported regex-based removeParam: /^source=tradedoubler$/
 		Unsupported regex-based removeParam: /^amp;/
-CSS-related distinct filters: 475 distinct combined selectors
+CSS-related distinct filters: 474 distinct combined selectors
 CSS-related injectable files: 12
-	0q1pock, 1umsn30, 1kuj568, 0kcepqs, 1j97se8, 0gjkskg, 0haug90, 1fimbcs, 1pgti4g, 147to0c, 043u0pk, 0sklqqs
-Pprocedural-related distinct filters: 140 distinct combined selectors
-Pprocedural-related injectable files: 4
+	0q1pock, 1uf50lk, 1kuj568, 0lleibc, 0vl97mc, 13arrpk, 0o128bc, 04j3p7s, 102ca1o, 1r23vjk, 0m5qa44, 12ceeek
+Procedural-related distinct filters: 140 distinct combined selectors
+Procedural-related injectable files: 4
 	0egrquq, 1dfdgb6, 075mpj2, 00pda3a
 Rejected cosmetic filters: 53
 	Entity not supported: costume.*##.teaser__native:upward(4)
@@ -2230,9 +2220,9 @@ Rejected cosmetic filters: 53
 	Entity not supported: gamereactor.*##div[class^=ad300]
 	Entity not supported: gamereactor.*##div[style*="width:300px;height:600px;"]
 	Entity not supported: gamereactor.*##div[style="min-height: 600px; margin-bottom: 20px;"]
-Scriptlet-related distinct filters: 10
-Scriptlet-related injectable files: 4
-	0it1ed1, 1jtq9il, 056p3j1, 12j2l49
+Scriptlet-related distinct filters: 12
+Scriptlet-related injectable files: 5
+	0it1ed1, 1jtq9il, 11jh745, 12j2l49, 1qp3kil
 ============================
 Listset for 'pol-0':
 	Fetching remote https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt
@@ -2253,12 +2243,12 @@ Output rule count: 807
 		regexFilter is not RE2-compatible: ^http:\/\/((?!192\.168)(?!10\.)(?!172\.16)(?!172\.17)(?!172\.18)(?!172\.19)(?!172\.2)(?!172\.30)(?!172\.31)([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\/[a-zA-Z0-9]{30,}
 		regexFilter is not RE2-compatible: ^(http|https):\/\/www\.portel\.pl\/(?!pasaz)[-a-z0-9A-Z_%$&+=[\].]{1,200}\/[-a-z0-9A-Z_%$&+=[\]/.]{2,200}.(html|htm)
 		regexFilter is not RE2-compatible: ^(http|https):\/\/(?!www.speedvid)(?!streamcherry.com)(?!vshare)(?!vidoza)(?!openload)(?!www.youtube)[a-zA-Z0-9\W]{5,10}.[a-z]{2,20}\/(?!anime)[\w\W\d]{5,20}\/[a-z]{5,20}\/
-CSS-related distinct filters: 2592 distinct combined selectors
+CSS-related distinct filters: 2582 distinct combined selectors
 CSS-related injectable files: 12
-	0apnhpc, 1pp10og, 0v9nqug, 18d6teg, 0vpjov8, 1ikburo, 0ehfmts, 1iugeuk, 1fjmi10, 0jhj3lc, 1uhfu7o, 1orsans
-Pprocedural-related distinct filters: 91 distinct combined selectors
-Pprocedural-related injectable files: 4
-	1rktjlq, 01f7ci6, 0bpobem, 0c7jub2
+	1499sc8, 1jac2uc, 15mnlsg, 0jji54g, 0vos8ug, 0ucjvus, 1nje6tg, 07kjtes, 1uhkoc8, 13qu5oc, 03viajs, 1iik5a4
+Procedural-related distinct filters: 91 distinct combined selectors
+Procedural-related injectable files: 4
+	1124kki, 01f7ci6, 0bpobem, 0sh35b2
 Rejected cosmetic filters: 1
 	Invalid filter: www.money.pl###app > div > div:matches-css(background-image: /^url\("https:\/\/v\.wpimg\.pl/)
 ============================
@@ -2277,9 +2267,9 @@ Output rule count: 202
 
 CSS-related distinct filters: 134 distinct combined selectors
 CSS-related injectable files: 12
-	1umh06k, 1begro8, 1drc6v4, 030cbi0, 13ilch4, 13k979s, 0mkk52s, 01adsvc, 085hpe0, 09frk6g, 0q9hd2k, 1n2h87o
-Pprocedural-related distinct filters: 10 distinct combined selectors
-Pprocedural-related injectable files: 4
+	1umh06k, 0o04p5s, 1drc6v4, 030cbi0, 13ilch4, 13k979s, 0mkk52s, 0tmnqno, 1vlpnks, 09frk6g, 0p7n3s8, 1n2h87o
+Procedural-related distinct filters: 10 distinct combined selectors
+Procedural-related injectable files: 4
 	1pkn90a, 0l0cf12, 1ib6522, 17dla6m
 ============================
 Listset for 'rou-1':
@@ -2300,8 +2290,8 @@ Output rule count: 390
 CSS-related distinct filters: 211 distinct combined selectors
 CSS-related injectable files: 12
 	1j094k4, 02k4vgs, 051b3eg, 104e1kk, 157fgqs, 0sik3b8, 1mr48g4, 1d4pmjc, 0o9llgk, 1up4108, 0pp3fb0, 1o9o3t4
-Pprocedural-related distinct filters: 74 distinct combined selectors
-Pprocedural-related injectable files: 4
+Procedural-related distinct filters: 74 distinct combined selectors
+Procedural-related injectable files: 4
 	07auuvi, 1hagkau, 0vif6h6, 15uhasq
 ============================
 Listset for 'rus-0':
@@ -2317,9 +2307,9 @@ Listset for 'rus-0':
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/specific_special.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/thirdparty.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/whitelist.txt
-	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/css-fixes-experimental.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/js-fixes-experimental.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/AWRL-non-sync.txt
+	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/css-fixes-experimental.txt
 Input filter count: 18460
 	Accepted filter count: 18442
 	Rejected filter count: 16
@@ -2336,10 +2326,10 @@ Output rule count: 6001
 		Unsupported regex-based removeParam: /autostart|skin_name/
 CSS-related distinct filters: 5167 distinct combined selectors
 CSS-related injectable files: 12
-	0qk9duc, 0nhfqt4, 03luuco, 0971vik, 0nm0n9k, 080ekoo, 0lbp2jg, 0l6d3c4, 0s8je1g, 06smdic, 0nja2io, 08me71s
-Pprocedural-related distinct filters: 948 distinct combined selectors
-Pprocedural-related injectable files: 4
-	0h70fd2, 1hkm4ba, 1qc3nc2, 0phcq32
+	118skis, 0dsj9i4, 0d3mvu0, 0mg8cbk, 1pub8pk, 1h0magk, 0d3ml6c, 1a3c0sg, 141qn4o, 1c1inok, 0b9cn2g, 11vceeg
+Procedural-related distinct filters: 948 distinct combined selectors
+Procedural-related injectable files: 4
+	04bnf2u, 1047efe, 1ktvgb6, 0phcq32
 Rejected cosmetic filters: 8
 	Invalid filter: mail.ru##.grid__lcol .logo__img--vk[href="//mail.ru"] > .logo__text:matches-media((min-width: 1317px)):style(display: block !important; width: 78px !important; height: 40px !important; opacity: 1 !important; position: absolute !important; right: 0 !important; top: 15px !important; background-color: #005ff9 !important)
 	Invalid filter: mail.ru##.grid__lcol .logo__img--vk[href="//mail.ru"]:matches-media((min-width: 1317px)):style(background-size: auto 40px !important; background-position: 90px 50% !important)
@@ -2349,9 +2339,9 @@ Rejected cosmetic filters: 8
 	Invalid filter: mail.ru##.grid__lcol .logo__img--vk[href="//mail.ru"]:matches-media((max-width: 1252px)):style(background-size: auto 40px !important; background-position: 75px 50% !important)
 	Invalid filter: mail.ru##.grid__lcol .logo__img--vk[href="//mail.ru"] > .logo__text:matches-media((max-width: 1188px)):style(display: block !important; width: 60px !important; height: 40px !important; opacity: 1 !important; position: absolute !important; right: 0 !important; top: 15px !important; background-color: #005ff9 !important)
 	Invalid filter: mail.ru##.grid__lcol .logo__img--vk[href="//mail.ru"]:matches-media((max-width: 1188px)):style(background-size: auto 40px !important; background-position: 60px 50% !important)
-Scriptlet-related distinct filters: 197
-Scriptlet-related injectable files: 4
-	0eh00o9, 1is819d, 04uei6t, 1emf7dd
+Scriptlet-related distinct filters: 220
+Scriptlet-related injectable files: 6
+	0eh00o9, 1er5qt1, 04uei6t, 0k679jp, 0iso7lh, 1emf7dd
 ============================
 Listset for 'spa-0':
 	Fetching remote https://easylist-downloads.adblockplus.org/easylistspanish.txt
@@ -2368,9 +2358,9 @@ Output rule count: 836
 		Invalid network filter in spa-0: $webrtc,domain=allpeliculas.com|animeid.tv|booksmedicos.org|dompl3.info|gnula.biz|jkanime.net|mejortorrent.com|mejortorrent.org|mejortorrent1.com|pelispedia.tv
 CSS-related distinct filters: 760 distinct combined selectors
 CSS-related injectable files: 12
-	1s1ntik, 1ao3u5c, 18utqb4, 03rpbr8, 0cjig0c, 1023uog, 0k63ol0, 17cki3c, 1ov27qg, 1u39jho, 0dt018o, 1lovc2o
-Pprocedural-related distinct filters: 25 distinct combined selectors
-Pprocedural-related injectable files: 4
+	1s1ntik, 0h92jvs, 18utqb4, 03rpbr8, 0cjig0c, 1023uog, 0k63ol0, 17cki3c, 1ov27qg, 1u39jho, 1160uio, 1lovc2o
+Procedural-related distinct filters: 25 distinct combined selectors
+Procedural-related injectable files: 4
 	1m13ltm, 022d57e, 1otk236, 10aj6ei
 ============================
 Listset for 'spa-1':
@@ -2392,9 +2382,9 @@ Output rule count: 944
 		Entity not supported: anitube.*
 CSS-related distinct filters: 1047 distinct combined selectors
 CSS-related injectable files: 12
-	1v9qvng, 14ojhks, 08dmvvo, 005cbt0, 0a5ai50, 1p8v7po, 0sns9l8, 0stem28, 0ke382g, 1eubteo, 1qbtvso, 0adathc
-Pprocedural-related distinct filters: 167 distinct combined selectors
-Pprocedural-related injectable files: 4
+	1v9qvng, 14ojhks, 08dmvvo, 005cbt0, 0a5ai50, 1g4muus, 0sns9l8, 0stem28, 0ke382g, 1eubteo, 1qbtvso, 0adathc
+Procedural-related distinct filters: 167 distinct combined selectors
+Procedural-related injectable files: 4
 	1mehhc6, 08le2o6, 12crtm6, 1oriaka
 Rejected cosmetic filters: 8
 	Entity not supported: atomixhq.*##.featured-slides > li.slide:not([id]):has(a[href^="https://startgaming.net/"])
@@ -2405,9 +2395,9 @@ Rejected cosmetic filters: 8
 	Entity not supported: lectulandia.*###rightPromo
 	Entity not supported: lectulandia.*##.perfbtns2
 	Entity not supported: lectulandia.*##.bloky > a > img
-Scriptlet-related distinct filters: 82
-Scriptlet-related injectable files: 4
-	0teuvil, 1jmhiv1, 1a0l5q9, 1csm9ih
+Scriptlet-related distinct filters: 95
+Scriptlet-related injectable files: 6
+	1e9nbd1, 01iltf5, 0n3rqil, 1jmhiv1, 1a0l5q9, 1csm9ih
 ============================
 Listset for 'svn-0':
 	Fetching remote https://raw.githubusercontent.com/betterwebleon/slovenian-list/master/filters.txt
@@ -2422,11 +2412,11 @@ Output rule count: 103
 	removeparams= (discarded): 0
 	Unsupported: 0
 
-CSS-related distinct filters: 169 distinct combined selectors
+CSS-related distinct filters: 167 distinct combined selectors
 CSS-related injectable files: 12
-	0a76a9s, 1u4mfmc, 0rpvbo4, 0srm5fk, 1ship60, 08avhqc, 1623b94, 03n0jls, 017ooj8, 1safv94, 11em718, 064rt64
-Pprocedural-related distinct filters: 2 distinct combined selectors
-Pprocedural-related injectable files: 2
+	0hjvmfg, 0avcc7g, 0ejhk7g, 0d2koi4, 03pd5kc, 13qrt44, 17vbtl8, 025lre8, 02uql1g, 1om3v8s, 0rd3rhg, 1dbn2gs
+Procedural-related distinct filters: 2 distinct combined selectors
+Procedural-related injectable files: 2
 	1h4fmie, 1nm5lk2
 ============================
 Listset for 'swe-1':
@@ -2449,13 +2439,13 @@ Output rule count: 1145
 		Unsupported regex-based removeParam: /^utm_/
 CSS-related distinct filters: 592 distinct combined selectors
 CSS-related injectable files: 12
-	0r0h3gs, 1emmoic, 1ii5lc8, 0os8tuo, 0j9fu6o, 1fuqhds, 1j9g6io, 0m89s1k, 0brjjp8, 0ickl8o, 1rifdg8, 0ttsjac
-Pprocedural-related distinct filters: 249 distinct combined selectors
-Pprocedural-related injectable files: 4
+	0r0h3gs, 1emmoic, 0sp7l10, 0p3see4, 0j9fu6o, 1vgee04, 1j9g6io, 0m89s1k, 0brjjp8, 0ickl8o, 1rifdg8, 0ttsjac
+Procedural-related distinct filters: 249 distinct combined selectors
+Procedural-related injectable files: 4
 	06ai8ge, 0oolj2u, 172eq32, 02m5n02
-Scriptlet-related distinct filters: 47
-Scriptlet-related injectable files: 4
-	0do8pbl, 0t9gb2p, 1gt1bsh, 1o3pvi1
+Scriptlet-related distinct filters: 56
+Scriptlet-related injectable files: 6
+	1730q09, 0do8pbl, 0t9gb2p, 1gt1bsh, 1vdki0h, 0l9ejah
 ============================
 Listset for 'tha-0':
 	Fetching remote https://raw.githubusercontent.com/easylist-thailand/easylist-thailand/master/subscription/easylist-thailand.txt
@@ -2470,11 +2460,11 @@ Output rule count: 335
 	removeparams= (discarded): 0
 	Unsupported: 0
 
-CSS-related distinct filters: 178 distinct combined selectors
+CSS-related distinct filters: 163 distinct combined selectors
 CSS-related injectable files: 12
-	14a4k5s, 0sb3khk, 09f40ac, 1a5qqvs, 0gm05p0, 1r1ieng, 12gbig4, 1fo0r60, 0tvqbqk, 0a2kav8, 18jffeg, 14m5o0s
-Pprocedural-related distinct filters: 1 distinct combined selectors
-Pprocedural-related injectable files: 1
+	01dt0v4, 000eqb4, 0u65mp8, 1q8fb48, 17an4t4, 037abs8, 11finjg, 0q5m1gk, 1jh2pac, 16skbj0, 140o6v0, 1t8j26k
+Procedural-related distinct filters: 1 distinct combined selectors
+Procedural-related injectable files: 1
 	08o4r3m
 ============================
 Listset for 'tur-0':
@@ -2502,9 +2492,9 @@ Output rule count: 1374
 		regexFilter is not RE2-compatible: ^(?!.*(bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|vk.com|yandex.|yastatic.net|ytimg.com|zencdn.net|player|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com)).*$
 CSS-related distinct filters: 1685 distinct combined selectors
 CSS-related injectable files: 12
-	099h468, 1h164u0, 0j51n6c, 1fans04, 1ls4vo4, 1jc3s9c, 0m1vpu4, 1pp9jbo, 1k1hbak, 1gj6ce4, 0d45578, 1lhhhks
-Pprocedural-related distinct filters: 336 distinct combined selectors
-Pprocedural-related injectable files: 4
+	099h468, 1h164u0, 1kks3rg, 1fans04, 1ls4vo4, 1jc3s9c, 0m1vpu4, 1pp9jbo, 1k1hbak, 1gj6ce4, 0d45578, 1lhhhks
+Procedural-related distinct filters: 336 distinct combined selectors
+Procedural-related injectable files: 4
 	1j4mkom, 03t8f5i, 0p5kf16, 1bsb3li
 Rejected cosmetic filters: 144
 	Entity not supported: torrentarsivi.*###wrapfabtest { height: 1px !important; }
@@ -2651,9 +2641,9 @@ Rejected cosmetic filters: 144
 	Entity not supported: fullhdfilmizlesene.*##.psk
 	Entity not supported: fullhdfilmizlesene.*##.rekgec-div
 	Entity not supported: webteizle.*##img[alt="reklam"]
-Scriptlet-related distinct filters: 64
-Scriptlet-related injectable files: 4
-	1rbk12h, 1gi1e3d, 1s20hb5, 1cljg09
+Scriptlet-related distinct filters: 74
+Scriptlet-related injectable files: 6
+	1nm36p9, 1rbk12h, 0m0llct, 1s20hb5, 0djar7l, 1cljg09
 ============================
 Listset for 'vie-1':
 	Fetching remote https://raw.githubusercontent.com/abpvn/abpvn/master/filter/abpvn_ublock.txt
@@ -2668,15 +2658,15 @@ Output rule count: 562
 	removeparams= (discarded): 0
 	Unsupported: 0
 
-CSS-related distinct filters: 412 distinct combined selectors
+CSS-related distinct filters: 411 distinct combined selectors
 CSS-related injectable files: 12
-	1l14pb0, 1c95plc, 0dimib0, 01sprmk, 1uoq30o, 03qm7no, 17vrhpo, 16o6nt0, 19mtua8, 0pfjnfs, 01oll4k, 1vd8tr0
-Pprocedural-related distinct filters: 8 distinct combined selectors
-Pprocedural-related injectable files: 4
+	03v562c, 1c95plc, 1bt2a0c, 0215seo, 0nu0048, 17ej318, 1pcn6sc, 0k22b38, 1jlbdq8, 0208ma4, 01a7gtk, 1r6m8kg
+Procedural-related distinct filters: 8 distinct combined selectors
+Procedural-related injectable files: 4
 	1iaj2cu, 1pn229u, 0bnl076, 1m1rq1i
-Scriptlet-related distinct filters: 35
-Scriptlet-related injectable files: 4
-	05spqtd, 0nse42t, 0f6n7l1, 06hqv35
+Scriptlet-related distinct filters: 38
+Scriptlet-related injectable files: 6
+	05spqtd, 17e5lhp, 04i7vs1, 10ko0ft, 0f6n7l1, 06hqv35
 ============================
 Listset for 'block-lan':
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/lan-block.txt
