@@ -782,6 +782,7 @@ const rulesetFromURLS = async function(assetDetails) {
     log(`Listset for '${assetDetails.id}':`);
 
     const text = await fetchAsset(assetDetails);
+    if ( text === '' ) { return; }
 
     const results = await dnrRulesetFromRawLists(
         [ { name: assetDetails.id, text } ],
