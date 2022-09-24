@@ -67,14 +67,14 @@ const scriptlet = (
         needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
     const reNeedle = new RegExp(needle);
-    const regexpTest = RegExp.prototype.test.call;
+    const regexpTest = RegExp.prototype.test;
     self.setTimeout = new Proxy(self.setTimeout, {
         apply: function(target, thisArg, args) {
             const a = String(args[0]);
             const b = args[1];
             let defuse;
             if ( needle !== '' ) {
-                defuse = regexpTest(reNeedle, a) !== needleNot;
+                defuse = regexpTest.call(reNeedle, a) !== needleNot;
             }
             if ( defuse !== false && delay !== undefined ) {
                 defuse = (b === delay || isNaN(b) && isNaN(delay) ) !== delayNot;
