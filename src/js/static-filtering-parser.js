@@ -1476,7 +1476,10 @@ Parser.prototype.SelectorCompiler = class {
     astFromRaw(raw, type) {
         let ast;
         try {
-            ast = cssTree.parse(raw, { context: type });
+            ast = cssTree.parse(raw, {
+                context: type,
+                parseValue: false,
+            });
         } catch(reason) {
             return;
         }
@@ -1932,7 +1935,6 @@ Parser.prototype.SelectorCompiler = class {
         if ( /image-set\(|url\(|\/\s*\/|\\|\/\*/i.test(s) ) { return; }
         const parts = this.astFromRaw(s, 'declarationList');
         if ( parts === undefined ) { return; }
-        if ( this.astHasType(parts, 'Raw') ) { return; }
         if ( this.astHasType(parts, 'Declaration') === false ) { return; }
         return s;
     }
