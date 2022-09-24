@@ -625,8 +625,8 @@ async function processProceduralCosmeticFilters(assetDetails, mapin) {
     }
 
     if ( generatedFiles.length !== 0 ) {
-        log(`Pprocedural-related distinct filters: ${contentArray.length} distinct combined selectors`);
-        log(`Pprocedural-related injectable files: ${generatedFiles.length}`);
+        log(`Procedural-related distinct filters: ${contentArray.length} distinct combined selectors`);
+        log(`Procedural-related injectable files: ${generatedFiles.length}`);
         log(`\t${generatedFiles.join(', ')}`);
     }
 
