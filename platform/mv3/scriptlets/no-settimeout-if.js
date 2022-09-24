@@ -28,8 +28,8 @@
 
 /******************************************************************************/
 
-/// name abort-on-property-read
-/// alias aopr
+/// name no-setTimeout-if
+/// alias nostif
 
 /******************************************************************************/
 
@@ -47,66 +47,44 @@ const hostnamesMap = new Map(self.$hostnamesMap$);
 
 /******************************************************************************/
 
-const ObjGetOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
-const ObjDefineProperty = Object.defineProperty;
-
-const magic =
-    String.fromCharCode(Date.now() % 26 + 97) +
-    Math.floor(Math.random() * 982451653 + 982451653).toString(36);
-
-const abort = function() {
-    throw new ReferenceError(magic);
-};
-
-const makeProxy = function(owner, chain) {
-    const pos = chain.indexOf('.');
-    if ( pos === -1 ) {
-        const desc = ObjGetOwnPropertyDescriptor(owner, chain);
-        if ( !desc || desc.get !== abort ) {
-            ObjDefineProperty(owner, chain, {
-                get: abort,
-                set: function(){}
-            });
-        }
-        return;
+const scriptlet = (
+    needle = '',
+    delay = '',
+    
+) => {
+    const needleNot = needle.charAt(0) === '!';
+    if ( needleNot ) { needle = needle.slice(1); }
+    if ( delay === '' ) { delay = undefined; }
+    let delayNot = false;
+    if ( delay !== undefined ) {
+        delayNot = delay.charAt(0) === '!';
+        if ( delayNot ) { delay = delay.slice(1); }
+        delay = parseInt(delay, 10);
     }
-
-    const prop = chain.slice(0, pos);
-    let v = owner[prop];
-    chain = chain.slice(pos + 1);
-    if ( v ) {
-        makeProxy(v, chain);
-        return;
+    if ( needle.startsWith('/') && needle.endsWith('/') ) {
+        needle = needle.slice(1,-1);
+    } else if ( needle !== '' ) {
+        needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
-
-    const desc = ObjGetOwnPropertyDescriptor(owner, prop);
-    if ( desc && desc.set !== undefined ) { return; }
-
-    ObjDefineProperty(owner, prop, {
-        get: function() { return v; },
-        set: function(a) {
-            v = a;
-            if ( a instanceof Object ) {
-                makeProxy(a, chain);
+    const reNeedle = new RegExp(needle);
+    const regexpTest = RegExp.prototype.test.call;
+    self.setTimeout = new Proxy(self.setTimeout, {
+        apply: function(target, thisArg, args) {
+            const a = String(args[0]);
+            const b = args[1];
+            let defuse;
+            if ( needle !== '' ) {
+                defuse = regexpTest(reNeedle, a) !== needleNot;
             }
+            if ( defuse !== false && delay !== undefined ) {
+                defuse = (b === delay || isNaN(b) && isNaN(delay) ) !== delayNot;
+            }
+            if ( defuse ) {
+                args[0] = function(){};
+            }
+            return target.apply(thisArg, args);
         }
     });
-};
-
-const scriptlet = (
-    chain = ''
-) => {
-    const owner = window;
-    makeProxy(owner, chain);
-    const oe = window.onerror;
-    window.onerror = function(msg, src, line, col, error) {
-        if ( typeof msg === 'string' && msg.includes(magic) ) {
-            return true;
-        }
-        if ( oe instanceof Function ) {
-            return oe(msg, src, line, col, error);
-        }
-    }.bind();
 };
 
 /******************************************************************************/

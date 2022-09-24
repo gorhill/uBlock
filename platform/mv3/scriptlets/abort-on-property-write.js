@@ -28,8 +28,8 @@
 
 /******************************************************************************/
 
-/// name abort-on-property-read
-/// alias aopr
+/// name abort-on-property-write
+/// alias aopw
 
 /******************************************************************************/
 
@@ -47,9 +47,6 @@ const hostnamesMap = new Map(self.$hostnamesMap$);
 
 /******************************************************************************/
 
-const ObjGetOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
-const ObjDefineProperty = Object.defineProperty;
-
 const magic =
     String.fromCharCode(Date.now() % 26 + 97) +
     Math.floor(Math.random() * 982451653 + 982451653).toString(36);
@@ -58,46 +55,23 @@ const abort = function() {
     throw new ReferenceError(magic);
 };
 
-const makeProxy = function(owner, chain) {
-    const pos = chain.indexOf('.');
-    if ( pos === -1 ) {
-        const desc = ObjGetOwnPropertyDescriptor(owner, chain);
-        if ( !desc || desc.get !== abort ) {
-            ObjDefineProperty(owner, chain, {
-                get: abort,
-                set: function(){}
-            });
-        }
-        return;
+const scriptlet = (
+    prop = ''
+) => {
+    let owner = window;
+    for (;;) {
+        const pos = prop.indexOf('.');
+        if ( pos === -1 ) { break; }
+        owner = owner[prop.slice(0, pos)];
+        if ( owner instanceof Object === false ) { return; }
+        prop = prop.slice(pos + 1);
     }
-
-    const prop = chain.slice(0, pos);
-    let v = owner[prop];
-    chain = chain.slice(pos + 1);
-    if ( v ) {
-        makeProxy(v, chain);
-        return;
-    }
-
-    const desc = ObjGetOwnPropertyDescriptor(owner, prop);
-    if ( desc && desc.set !== undefined ) { return; }
-
-    ObjDefineProperty(owner, prop, {
-        get: function() { return v; },
-        set: function(a) {
-            v = a;
-            if ( a instanceof Object ) {
-                makeProxy(a, chain);
-            }
+    delete owner[prop];
+    Object.defineProperty(owner, prop, {
+        set: function() {
+            abort();
         }
     });
-};
-
-const scriptlet = (
-    chain = ''
-) => {
-    const owner = window;
-    makeProxy(owner, chain);
     const oe = window.onerror;
     window.onerror = function(msg, src, line, col, error) {
         if ( typeof msg === 'string' && msg.includes(magic) ) {
