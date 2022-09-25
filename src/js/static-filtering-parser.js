@@ -1336,7 +1336,7 @@ Parser.prototype.SelectorCompiler = class {
             `${cssClassOrId}(?:${cssClassOrId})*(?:${cssAttribute})*` + '|' +
             `${cssAttribute}(?:${cssAttribute})*` +
             ')';
-        const cssCombinator = '(?:\\s+|\\s*[>+~]\\s*)';
+        const cssCombinator = '(?:\\s+|\\s*[+>~]\\s*)';
         this.reCommonSelector = new RegExp(
             `^${cssSimple}(?:${cssCombinator}${cssSimple})*$`
         );
@@ -1386,6 +1386,7 @@ Parser.prototype.SelectorCompiler = class {
             [ 'contains', 'has-text' ],
             [ 'has', 'has' ],
         ]);
+        this.reIsRelativeSelector = /^\s*[+>~]/;
         this.reExtendedSyntax = /\[-(?:abp|ext)-[a-z-]+=(['"])(?:.+?)(?:\1)\]/;
         this.reExtendedSyntaxReplacer = /\[-(?:abp|ext)-([a-z-]+)=(['"])(.+?)\2\]/g;
         this.abpProceduralOpReplacer = /:-abp-(?:contains|has)\(/g;
@@ -1430,6 +1431,9 @@ Parser.prototype.SelectorCompiler = class {
             }
         }
 
+        // Relative selectors not allowed at top level.
+        if ( this.reIsRelativeSelector.test(raw) ) { return false; }
+
         if ( this.reCommonSelector.test(raw) ) {
             out.compiled = raw;
             return true;
@@ -1442,7 +1446,6 @@ Parser.prototype.SelectorCompiler = class {
             out.compiled.raw = raw;
             out.compiled = JSON.stringify(out.compiled);
         }
-
         return true;
     }
 
