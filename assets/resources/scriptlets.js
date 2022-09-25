@@ -1675,6 +1675,7 @@
     if ( selector === '{{1}}' ) {
         selector = '';
     }
+    if ( selector === '' ) { return; }
     let selectorCheck = '{{2}}';
     if ( selectorCheck === '{{2}}' ) {
         selectorCheck = '';
@@ -1721,7 +1722,7 @@
     const realFetch = self.fetch;
     self.fetch = new Proxy(self.fetch, {
         apply: function(target, thisArg, args) {
-            if ( selector === '' || reUrl.test(urlFromArg(args[0])) === false ) {
+            if ( reUrl.test(urlFromArg(args[0])) === false ) {
                 return Reflect.apply(target, thisArg, args);
             }
             return realFetch(...args).then(realResponse =>
