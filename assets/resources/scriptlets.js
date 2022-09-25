@@ -1692,7 +1692,6 @@
         reUrl = new RegExp(urlPattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
     }
     const pruner = text => {
-        if ( selector === '' ) { return text; }
         if ( (/^\s*</.test(text) && />\s*$/.test(text)) === false ) {
             return text;
         }
@@ -1714,16 +1713,25 @@
         }
         return text;
     };
+    const urlFromArg = arg => {
+        if ( typeof arg === 'string' ) { return arg; }
+        if ( arg instanceof Request ) { return arg.url; }
+        return String(arg);
+    };
     const realFetch = self.fetch;
     self.fetch = new Proxy(self.fetch, {
         apply: function(target, thisArg, args) {
-            if ( reUrl.test(String(args[0])) === false ) {
+            if ( selector === '' || reUrl.test(urlFromArg(args[0])) === false ) {
                 return Reflect.apply(target, thisArg, args);
             }
-            return realFetch(...args).then(response =>
-                response.text()
-            ).then(text =>
-                new Response(pruner(text))
+            return realFetch(...args).then(realResponse =>
+                realResponse.text().then(text =>
+                    new Response(pruner(text), {
+                        status: realResponse.status,
+                        statusText: realResponse.statusText,
+                        headers: realResponse.headers,
+                    })
+                )
             );
         }
     });
