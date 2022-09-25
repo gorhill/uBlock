@@ -1669,6 +1669,66 @@
 
 
 
+/// xml-prune.js
+(function() {
+    let selector = '{{1}}';
+    if ( selector === '{{1}}' ) {
+        selector = '';
+    }
+    let selectorCheck = '{{2}}';
+    if ( selectorCheck === '{{2}}' ) {
+        selectorCheck = '';
+    }
+    let urlPattern = '{{3}}';
+    if ( urlPattern === '{{3}}' ) {
+        urlPattern = '';
+    }
+    let reUrl;
+    if ( urlPattern === '' ) {
+        reUrl = /^/;
+    } else if ( /^\/.*\/$/.test(urlPattern) ) {
+        reUrl = new RegExp(urlPattern.slice(1, -1));
+    } else {
+        reUrl = new RegExp(urlPattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    }
+    const pruner = text => {
+        if ( selector === '' ) { return text; }
+        if ( (/^\s*</.test(text) && />\s*$/.test(text)) === false ) {
+            return text;
+        }
+        try {
+            const xmlParser = new DOMParser();
+            const xmlDoc = xmlParser.parseFromString(text, 'text/xml');
+            if ( selectorCheck !== '' && xmlDoc.querySelector(selectorCheck) === null ) {
+                return text;
+            }
+            const elems = xmlDoc.querySelectorAll(selector);
+            if ( elems.length !== 0 ) {
+                for ( const elem of elems ) {
+                    elem.remove();
+                }
+                const serializer = new XMLSerializer();
+                text = serializer.serializeToString(xmlDoc);
+            }
+        } catch(ex) {
+        }
+        return text;
+    };
+    const realFetch = self.fetch;
+    self.fetch = new Proxy(self.fetch, {
+        apply: function(target, thisArg, args) {
+            if ( reUrl.test(String(args[0])) === false ) {
+                return Reflect.apply(target, thisArg, args);
+            }
+            return realFetch(...args).then(response =>
+                response.text()
+            ).then(text =>
+                new Response(pruner(text))
+            );
+        }
+    });
+})();
+
 
 
 // These lines below are skipped by the resource parser.
