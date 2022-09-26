@@ -43,6 +43,14 @@ class PSelectorTask {
     }
 }
 
+class PSelectorVoidTask extends PSelectorTask {
+    constructor(task) {
+        super();
+        console.info(`uBO: :${task[0]}() operator does not exist`);
+    }
+    transpose() {
+    }
+}
 
 class PSelectorHasTextTask extends PSelectorTask {
     constructor(task) {
@@ -377,8 +385,7 @@ class PSelector {
         const tasks = [];
         if ( Array.isArray(o.tasks) === false ) { return; }
         for ( const task of o.tasks ) {
-            const ctor = this.operatorToTaskMap.get(task[0]);
-            if ( ctor === undefined ) { return; }
+            const ctor = this.operatorToTaskMap.get(task[0]) || PSelectorVoidTask;
             tasks.push(new ctor(task));
         }
         // Initialize only after all tasks have been successfully instantiated
