@@ -95,6 +95,19 @@ class PSelectorMatchesCSSTask extends PSelectorTask {
         }
     }
 }
+class PSelectorMatchesCSSAfterTask extends PSelectorMatchesCSSTask {
+    constructor(task) {
+        super(task);
+        this.pseudo = '::after';
+    }
+}
+
+class PSelectorMatchesCSSBeforeTask extends PSelectorMatchesCSSTask {
+    constructor(task) {
+        super(task);
+        this.pseudo = '::before';
+    }
+}
 
 class PSelectorMatchesMediaTask extends PSelectorTask {
     constructor(task) {
@@ -345,6 +358,8 @@ class PSelector {
                 [ 'if', PSelectorIfTask ],
                 [ 'if-not', PSelectorIfNotTask ],
                 [ 'matches-css', PSelectorMatchesCSSTask ],
+                [ 'matches-css-after', PSelectorMatchesCSSAfterTask ],
+                [ 'matches-css-before', PSelectorMatchesCSSBeforeTask ],
                 [ 'matches-media', PSelectorMatchesMediaTask ],
                 [ 'matches-path', PSelectorMatchesPathTask ],
                 [ 'min-text-length', PSelectorMinTextLengthTask ],
