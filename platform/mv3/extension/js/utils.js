@@ -42,6 +42,34 @@ const toBroaderHostname = hn => {
 
 /******************************************************************************/
 
+const matchesFromHostnames = hostnames => {
+    const out = [];
+    for ( const hn of hostnames ) {
+        if ( hn === '*' ) {
+            out.push('<all_urls>');
+        } else {
+            out.push(`*://*.${hn}/*`);
+        }
+    }
+    return out;
+};
+
+const hostnamesFromMatches = origins => {
+    const out = [];
+    for ( const origin of origins ) {
+        if ( origin === '<all_urls>' ) {
+            out.push('*');
+            continue;
+        }
+        const match = /^\*:\/\/(?:\*\.)?([^\/]+)\/\*/.exec(origin);
+        if ( match === null ) { continue; }
+        out.push(match[1]);
+    }
+    return out;
+};
+
+/******************************************************************************/
+
 const fnameFromFileId = fid =>
     fid.toString(32).padStart(7, '0');
 
@@ -53,6 +81,8 @@ const fidFromFileName = fname =>
 export {
     parsedURLromOrigin,
     toBroaderHostname,
+    matchesFromHostnames,
+    hostnamesFromMatches,
     fnameFromFileId,
     fidFromFileName,
 };

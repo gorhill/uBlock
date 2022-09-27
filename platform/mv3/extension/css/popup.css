@@ -186,6 +186,9 @@ body.mobile.no-tooltips .toolRibbon .tool {
 #toggleGreatPowers {
     position: relative;
     }
+body.hasOmnipotence #toggleGreatPowers {
+    pointer-events: none;
+    }
 #toggleGreatPowers .badge {
     bottom: 4px;
     font-size: var(--font-size-xsmall);
@@ -202,7 +205,7 @@ body:not(.hasGreatPowers) [data-i18n-title="popupRevokeGreatPowers"],
 body.hasGreatPowers [data-i18n-title="popupGrantGreatPowers"] {
     display: none;
     }
-body [data-i18n-title="popupRevokeGreatPowers"] {
+body:not(.hasOmnipotence) [data-i18n-title="popupRevokeGreatPowers"] {
     fill: var(--popup-power-ink);
     }
 

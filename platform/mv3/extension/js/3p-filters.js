@@ -23,7 +23,7 @@
 
 /******************************************************************************/
 
-import { sendMessage } from './ext.js';
+import { browser, sendMessage } from './ext.js';
 import { i18n$ } from './i18n.js';
 import { dom, qs$, qsa$ } from './dom.js';
 import { simpleStorage } from './storage.js';
@@ -42,7 +42,7 @@ const renderNumber = function(value) {
 
 /******************************************************************************/
 
-const renderFilterLists = function(soft) {
+function renderFilterLists(soft) {
     const { enabledRulesets, rulesetDetails } = cachedRulesetData;
     const listGroupTemplate = qs$('#templates .groupEntry');
     const listEntryTemplate = qs$('#templates .listEntry');
@@ -186,11 +186,13 @@ const renderFilterLists = function(soft) {
     }
 
     renderWidgets();
-};
+}
 
 /******************************************************************************/
 
 const renderWidgets = function() {
+    qs$('#omnipotenceWidget input').checked = cachedRulesetData.hasOmnipotence;
+
     dom.cl.toggle(
         qs$('#buttonApply'),
         'disabled',
@@ -217,7 +219,30 @@ const renderWidgets = function() {
 
 /******************************************************************************/
 
-const hashFromCurrentFromSettings = function() {
+async function onOmnipotenceChanged(ev) {
+    const input = ev.target;
+    const newState = input.checked;
+
+    const oldState = await browser.permissions.contains({
+        origins: [ '<all_urls>' ]
+    });
+    if ( newState === oldState ) { return; }
+    if ( newState ) {
+        browser.permissions.request({ origins: [ '<all_urls>' ] });
+    } else {
+        browser.permissions.remove({ origins: [ '<all_urls>' ] });
+    }
+}
+
+dom.on(
+    qs$('#omnipotenceWidget input'),
+    'change',
+    ev => { onOmnipotenceChanged(ev); }
+);
+
+/******************************************************************************/
+
+function hashFromCurrentFromSettings() {
     const hash = [];
     const listHash = [];
     for ( const liEntry of qsa$('#lists .listEntry[data-listkey]') ) {
@@ -227,7 +252,7 @@ const hashFromCurrentFromSettings = function() {
     }
     hash.push(listHash.sort().join());
     return hash.join();
-};
+}
 
 self.hasUnsavedData = function() {
     return hashFromCurrentFromSettings() !== filteringSettingsHash;
@@ -251,7 +276,7 @@ dom.on(
 
 /******************************************************************************/
 
-const applyEnabledRulesets = async function() {
+async function applyEnabledRulesets() {
     const enabledRulesets = [];
     for ( const liEntry of qsa$('#lists .listEntry[data-listkey]') ) {
         if ( qs$('input[type="checkbox"]:checked', liEntry) === null ) { continue; }
@@ -264,13 +289,13 @@ const applyEnabledRulesets = async function() {
     });
 
     filteringSettingsHash = hashFromCurrentFromSettings();
-};
+}
 
-const buttonApplyHandler = async function() {
+async function buttonApplyHandler() {
     dom.cl.remove(qs$('#buttonApply'), 'enabled');
     await applyEnabledRulesets();
     renderWidgets();
-};
+}
 
 dom.on(
     qs$('#buttonApply'),
@@ -282,13 +307,13 @@ dom.on(
 
 // Collapsing of unused lists.
 
-const mustHideUnusedLists = function(which) {
+function mustHideUnusedLists(which) {
     const hideAll = hideUnusedSet.has('*');
     if ( which === '*' ) { return hideAll; }
     return hideUnusedSet.has(which) !== hideAll;
-};
+}
 
-const toggleHideUnusedLists = function(which) {
+function toggleHideUnusedLists(which) {
     const doesHideAll = hideUnusedSet.has('*');
     let groupSelector;
     let mustHide;
@@ -325,7 +350,7 @@ const toggleHideUnusedLists = function(which) {
         'hideUnusedFilterLists',
         Array.from(hideUnusedSet)
     );
-};
+}
 
 dom.on(
     qs$('#lists'),

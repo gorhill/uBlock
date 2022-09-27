@@ -157,9 +157,10 @@ dom.on(qs$('#lessButton'), 'click', ( ) => {
 /******************************************************************************/
 
 async function grantGreatPowers() {
-    const granted = await sendMessage({
-        what: 'grantGreatPowers',
-        hostname: tabHostname,
+    if ( tabHostname === '' ) { return; }
+    const targetHostname = tabHostname.replace(/^www\./, '');
+    const granted = await browser.permissions.request({
+        origins: [ `*://*.${targetHostname}/*` ],
     });
     if ( granted !== true ) { return; }
     dom.cl.add(dom.body, 'hasGreatPowers');
@@ -167,9 +168,10 @@ async function grantGreatPowers() {
 }
 
 async function revokeGreatPowers() {
-    const removed = await sendMessage({
-        what: 'revokeGreatPowers',
-        hostname: tabHostname,
+    if ( tabHostname === '' ) { return; }
+    const targetHostname = tabHostname.replace(/^www\./, '');
+    const removed = await browser.permissions.remove({
+        origins: [ `*://*.${targetHostname}/*` ],
     });
     if ( removed !== true ) { return; }
     dom.cl.remove(dom.body, 'hasGreatPowers');
@@ -210,6 +212,12 @@ async function init() {
         dom.body,
         'off',
         popupPanelData.isTrusted === true
+    );
+
+    dom.cl.toggle(
+        dom.body,
+        'hasOmnipotence',
+        popupPanelData.hasOmnipotence === true
     );
 
     dom.cl.toggle(

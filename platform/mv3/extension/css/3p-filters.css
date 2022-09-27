@@ -5,9 +5,14 @@
 body {
     margin-bottom: 6rem;
     }
+legend {
+    color: var(--ink-3);
+    font-size: var(--font-size-smaller);
+    padding: var(--default-gap-xxsmall);
+    }
 #actions {
     background-color: var(--surface-1);
-    padding: 0.5em 0;
+    padding: 1px 0;
     position: sticky;
     top: 0;
     z-index: 10;

@@ -1,5 +1,6 @@
 body > div.body {
     margin: 0 1em;
+    max-width: min(600px, 100vw);
     }
 h2, h3 {
     margin: 1em 0;
