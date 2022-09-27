@@ -74,35 +74,6 @@ const uidint32 = (s) => {
 
 /******************************************************************************/
 
-const isUnsupported = rule =>
-    rule._error !== undefined;
-
-const isRegex = rule =>
-    rule.condition !== undefined &&
-    rule.condition.regexFilter !== undefined;
-
-const isRedirect = rule =>
-    rule.action !== undefined &&
-    rule.action.type === 'redirect' &&
-    rule.action.redirect.extensionPath !== undefined;
-
-const isCsp = rule =>
-    rule.action !== undefined &&
-    rule.action.type === 'modifyHeaders';
-
-const isRemoveparam = rule =>
-    rule.action !== undefined &&
-    rule.action.type === 'redirect' &&
-    rule.action.redirect.transform !== undefined;
-
-const isGood = rule =>
-    isUnsupported(rule) === false &&
-    isRedirect(rule) === false &&
-    isCsp(rule) === false &&
-    isRemoveparam(rule) === false;
-
-/******************************************************************************/
-
 const stdOutput = [];
 
 const log = (text, silent = false) => {
@@ -214,6 +185,35 @@ async function fetchAsset(assetDetails) {
     }
     return text;
 }
+
+/******************************************************************************/
+
+const isUnsupported = rule =>
+    rule._error !== undefined;
+
+const isRegex = rule =>
+    rule.condition !== undefined &&
+    rule.condition.regexFilter !== undefined;
+
+const isRedirect = rule =>
+    rule.action !== undefined &&
+    rule.action.type === 'redirect' &&
+    rule.action.redirect.extensionPath !== undefined;
+
+const isCsp = rule =>
+    rule.action !== undefined &&
+    rule.action.type === 'modifyHeaders';
+
+const isRemoveparam = rule =>
+    rule.action !== undefined &&
+    rule.action.type === 'redirect' &&
+    rule.action.redirect.transform !== undefined;
+
+const isGood = rule =>
+    isUnsupported(rule) === false &&
+    isRedirect(rule) === false &&
+    isCsp(rule) === false &&
+    isRemoveparam(rule) === false;
 
 /******************************************************************************/
 
@@ -993,7 +993,9 @@ async function main() {
     );
 
     // Log results
-    await fs.writeFile(`${outputDir}/log.txt`, stdOutput.join('\n') + '\n');
+    const logContent = stdOutput.join('\n') + '\n';
+    await fs.writeFile(`${outputDir}/log.txt`, logContent);
+    await fs.writeFile(`${cacheDir}/log.txt`, logContent);
 }
 
 main();

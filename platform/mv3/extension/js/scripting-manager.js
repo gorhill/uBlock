@@ -27,7 +27,7 @@
 
 import { browser, dnr } from './ext.js';
 import { fetchJSON } from './fetch.js';
-import { matchesTrustedSiteDirective } from './trusted-sites.js';
+import { getAllTrustedSiteDirectives } from './trusted-sites.js';
 
 import {
     parsedURLromOrigin,
@@ -94,7 +94,6 @@ const arrayEq = (a, b) => {
 const toRegisterable = (fname, entry) => {
     const directive = {
         id: fname,
-        allFrames: true,
     };
     if ( entry.matches ) {
         directive.matches = matchesFromHostnames(entry.matches);
@@ -173,36 +172,35 @@ async function getInjectableCount(origin) {
 
 async function registerInjectable() {
 
+    if ( browser.scripting === undefined ) { return false; }
+
     const [
         hostnames,
+        trustedSites,
         rulesetIds,
         registered,
         scriptingDetails,
     ] = await Promise.all([
         browser.permissions.getAll(),
+        getAllTrustedSiteDirectives(),
         dnr.getEnabledRulesets(),
         browser.scripting.getRegisteredContentScripts(),
         getScriptingDetails(),
     ]).then(results => {
-        results[0] = new Map(
-            hostnamesFromMatches(results[0].origins).map(hn => [ hn, false ])
-        );
+        results[0] = new Set(hostnamesFromMatches(results[0].origins));
+        results[1] = new Set(results[1]);
         return results;
     });
 
-    if ( hostnames.has('*') && hostnames.size > 1 ) {
-        hostnames.clear();
-        hostnames.set('*', false);
-    }
-
-    await Promise.all(
-        Array.from(hostnames.keys()).map(
-            hn => matchesTrustedSiteDirective({ hostname: hn })
-                .then(trusted => hostnames.set(hn, trusted))
-        )
-    );
-
     const toRegister = new Map();
+
+    const isTrustedHostname = hn => {
+        while ( hn ) {
+            if ( trustedSites.has(hn) ) { return true; }
+            hn = toBroaderHostname(hn);
+        }
+        return false;
+    };
 
     const checkMatches = (details, hn) => {
         let fids = details.matches?.get(hn);
@@ -222,9 +220,9 @@ async function registerInjectable() {
     for ( const rulesetId of rulesetIds ) {
         const details = scriptingDetails.get(rulesetId);
         if ( details === undefined ) { continue; }
-        for ( let [ hn, trusted ] of hostnames ) {
-            if ( trusted ) { continue; }
-            while ( hn !== '' ) {
+        for ( let hn of hostnames ) {
+            if ( isTrustedHostname(hn) ) { continue; }
+            while ( hn ) {
                 checkMatches(details, hn);
                 hn = toBroaderHostname(hn);
             }
@@ -251,7 +249,7 @@ async function registerInjectable() {
         const details = scriptingDetails.get(rulesetId);
         if ( details === undefined ) { continue; }
         for ( let hn of hostnames.keys() ) {
-            while ( hn !== '' ) {
+            while ( hn ) {
                 checkExcludeMatches(details, hn);
                 hn = toBroaderHostname(hn);
             }

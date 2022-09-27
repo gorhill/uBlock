@@ -3903,65 +3903,65 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
         const bucket = buckets.get(bits);
 
         switch ( tokenHash ) {
-            case DOT_TOKEN_HASH: {
-                if ( bucket.has(DOT_TOKEN_HASH) === false ) {
-                    bucket.set(DOT_TOKEN_HASH, [{
-                        condition: {
-                            requestDomains: []
-                        }
-                    }]);
-                }
-                const rule = bucket.get(DOT_TOKEN_HASH)[0];
-                rule.condition.requestDomains.push(fdata);
-                break;
+        case DOT_TOKEN_HASH: {
+            if ( bucket.has(DOT_TOKEN_HASH) === false ) {
+                bucket.set(DOT_TOKEN_HASH, [{
+                    condition: {
+                        requestDomains: []
+                    }
+                }]);
             }
-            case ANY_TOKEN_HASH: {
-                if ( bucket.has(ANY_TOKEN_HASH) === false ) {
-                    bucket.set(ANY_TOKEN_HASH, [{
-                        condition: {
-                            initiatorDomains: []
-                        }
-                    }]);
-                }
-                const rule = bucket.get(ANY_TOKEN_HASH)[0];
-                rule.condition.initiatorDomains.push(fdata);
-                break;
+            const rule = bucket.get(DOT_TOKEN_HASH)[0];
+            rule.condition.requestDomains.push(fdata);
+            break;
+        }
+        case ANY_TOKEN_HASH: {
+            if ( bucket.has(ANY_TOKEN_HASH) === false ) {
+                bucket.set(ANY_TOKEN_HASH, [{
+                    condition: {
+                        initiatorDomains: []
+                    }
+                }]);
             }
-            case ANY_HTTPS_TOKEN_HASH: {
-                if ( bucket.has(ANY_HTTPS_TOKEN_HASH) === false ) {
-                    bucket.set(ANY_HTTPS_TOKEN_HASH, [{
-                        condition: {
-                            urlFilter: '|https://',
-                            initiatorDomains: []
-                        }
-                    }]);
-                }
-                const rule = bucket.get(ANY_HTTPS_TOKEN_HASH)[0];
-                rule.condition.initiatorDomains.push(fdata);
-                break;
+            const rule = bucket.get(ANY_TOKEN_HASH)[0];
+            rule.condition.initiatorDomains.push(fdata);
+            break;
+        }
+        case ANY_HTTPS_TOKEN_HASH: {
+            if ( bucket.has(ANY_HTTPS_TOKEN_HASH) === false ) {
+                bucket.set(ANY_HTTPS_TOKEN_HASH, [{
+                    condition: {
+                        urlFilter: '|https://',
+                        initiatorDomains: []
+                    }
+                }]);
             }
-            case ANY_HTTP_TOKEN_HASH: {
-                if ( bucket.has(ANY_HTTP_TOKEN_HASH) === false ) {
-                    bucket.set(ANY_HTTP_TOKEN_HASH, [{
-                        condition: {
-                            urlFilter: '|http://',
-                            initiatorDomains: []
-                        }
-                    }]);
-                }
-                const rule = bucket.get(ANY_HTTP_TOKEN_HASH)[0];
-                rule.condition.initiatorDomains.push(fdata);
-                break;
+            const rule = bucket.get(ANY_HTTPS_TOKEN_HASH)[0];
+            rule.condition.initiatorDomains.push(fdata);
+            break;
+        }
+        case ANY_HTTP_TOKEN_HASH: {
+            if ( bucket.has(ANY_HTTP_TOKEN_HASH) === false ) {
+                bucket.set(ANY_HTTP_TOKEN_HASH, [{
+                    condition: {
+                        urlFilter: '|http://',
+                        initiatorDomains: []
+                    }
+                }]);
             }
-            default: {
-                if ( bucket.has(EMPTY_TOKEN_HASH) === false ) {
-                    bucket.set(EMPTY_TOKEN_HASH, []);
-                }
-                const rule = {};
-                dnrRuleFromCompiled(fdata, rule);
-                bucket.get(EMPTY_TOKEN_HASH).push(rule);
-                break;
+            const rule = bucket.get(ANY_HTTP_TOKEN_HASH)[0];
+            rule.condition.initiatorDomains.push(fdata);
+            break;
+        }
+        default: {
+            if ( bucket.has(EMPTY_TOKEN_HASH) === false ) {
+                bucket.set(EMPTY_TOKEN_HASH, []);
             }
+            const rule = {};
+            dnrRuleFromCompiled(fdata, rule);
+            bucket.get(EMPTY_TOKEN_HASH).push(rule);
+            break;
+        }
         }
     }
 
@@ -4066,7 +4066,7 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
                         }
                     }
                 };
-                if ( /^\/.+\/$/.test(rule.__modifierValue) ) {
+                if ( /^~?\/.+\/$/.test(rule.__modifierValue) ) {
                     dnrAddRuleError(rule, `Unsupported regex-based removeParam: ${rule.__modifierValue}`);
                 }
             } else {
@@ -4075,6 +4075,17 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
                         query: ''
                     }
                 };
+            }
+            if ( rule.condition === undefined ) {
+                rule.condition = {
+                };
+            }
+            if ( rule.condition.resourceTypes === undefined ) {
+                rule.condition.resourceTypes = [
+                    'main_frame',
+                    'sub_frame',
+                    'xmlhttprequest',
+                ];
             }
             if ( rule.__modifierAction === AllowAction ) {
                 dnrAddRuleError(rule, 'Unhandled modifier exception');

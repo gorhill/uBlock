@@ -1499,45 +1499,32 @@ Parser.prototype.SelectorCompiler = class {
         case 'ClassSelector':
         case 'Combinator':
         case 'IdSelector':
+        case 'MediaFeature':
+        case 'Nth':
+        case 'Raw':
         case 'TypeSelector':
             out.push({ data });
             break;
-        case 'Declaration': {
+        case 'Declaration':
             if ( data.value ) {
                 this.astFlatten(data.value, args = []);
             }
             out.push({ data, args });
             args = undefined;
             break;
-        }
         case 'DeclarationList':
-            args = out;
-            out.push({ data });
-            break;
         case 'Identifier':
+        case 'MediaQueryList':
+        case 'Selector':
+        case 'SelectorList':
             args = out;
             out.push({ data });
             break;
-        case 'Nth': {
-            out.push({ data });
-            break;
-        }
+        case 'MediaQuery':
         case 'PseudoClassSelector':
         case 'PseudoElementSelector':
             if ( head ) { args = []; }
             out.push({ data, args });
-            break;
-        case 'Raw':
-            if ( head ) { args = []; }
-            out.push({ data, args });
-            break;
-        case 'Selector':
-            args = out;
-            out.push({ data });
-            break;
-        case 'SelectorList':
-            args = out;
-            out.push({ data });
             break;
         case 'Value':
             args = out;
@@ -1552,7 +1539,7 @@ Parser.prototype.SelectorCompiler = class {
             }
             let next = head.next;
             while ( next ) {
-                this.astFlatten(next.data, out);
+                this.astFlatten(next.data, args);
                 next = next.next;
             }
         }
@@ -1923,15 +1910,12 @@ Parser.prototype.SelectorCompiler = class {
     }
 
     compileMediaQuery(s) {
-        if ( typeof self !== 'object' ) { return; }
-        if ( self === null ) { return; }
-        if ( typeof self.matchMedia !== 'function' ) { return; }
-        try {
-            const mql = self.matchMedia(s);
-            if ( mql instanceof self.MediaQueryList === false ) { return; }
-            if ( mql.media !== 'not all' ) { return s; }
-        } catch(ex) {
-        }
+        const parts = this.astFromRaw(s, 'mediaQueryList');
+        if ( parts === undefined ) { return; }
+        if ( this.astHasType(parts, 'Raw') ) { return; }
+        if ( this.astHasType(parts, 'MediaQuery') === false ) { return; }
+        // TODO: normalize by serializing resulting AST
+        return s;
     }
 
     compileUpwardArgument(s) {

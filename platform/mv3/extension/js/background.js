@@ -72,7 +72,7 @@ async function loadRulesetConfig() {
         return;
     }
 
-    const match = /^\|\|example.invalid\/([^\/]+)\/(?:([^\/]+)\/)?/.exec(
+    const match = /^\|\|(?:example|ubolite)\.invalid\/([^\/]+)\/(?:([^\/]+)\/)?/.exec(
         configRule.condition.urlFilter
     );
     if ( match === null ) { return; }
@@ -101,7 +101,7 @@ async function saveRulesetConfig() {
 
     const version = rulesetConfig.version;
     const enabledRulesets = encodeURIComponent(rulesetConfig.enabledRulesets.join(' '));
-    const urlFilter = `||example.invalid/${version}/${enabledRulesets}/`;
+    const urlFilter = `||ubolite.invalid/${version}/${enabledRulesets}/`;
     if ( urlFilter === configRule.condition.urlFilter ) { return; }
     configRule.condition.urlFilter = urlFilter;
 
@@ -115,24 +115,24 @@ async function saveRulesetConfig() {
 
 async function hasGreatPowers(origin) {
     return browser.permissions.contains({
-        origins: [ `${origin}/*` ]
+        origins: [ `${origin}/*` ],
     });
 }
 
 function grantGreatPowers(hostname) {
     return browser.permissions.request({
-        origins: [
-            `*://${hostname}/*`,
-        ]
+        origins: [ `*://${hostname}/*` ],
     });
 }
 
 function revokeGreatPowers(hostname) {
     return browser.permissions.remove({
-        origins: [
-            `*://${hostname}/*`,
-        ]
+        origins: [ `*://${hostname}/*` ],
     });
+}
+
+function onPermissionsChanged() {
+    registerInjectable();
 }
 
 /******************************************************************************/
@@ -211,10 +211,6 @@ function onMessage(request, sender, callback) {
         break;
 
     }
-}
-
-async function onPermissionsChanged() {
-    await registerInjectable();
 }
 
 /******************************************************************************/

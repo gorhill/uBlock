@@ -205,26 +205,42 @@ async function defaultRulesetsFromLanguage() {
 async function enableRulesets(ids) {
     const afterIds = new Set(ids);
     const beforeIds = new Set(await dnr.getEnabledRulesets());
-    const enableRulesetIds = [];
-    const disableRulesetIds = [];
+    const enableRulesetSet = new Set();
+    const disableRulesetSet = new Set();
     for ( const id of afterIds ) {
         if ( beforeIds.has(id) ) { continue; }
-        enableRulesetIds.push(id);
+        enableRulesetSet.add(id);
     }
     for ( const id of beforeIds ) {
         if ( afterIds.has(id) ) { continue; }
-        disableRulesetIds.push(id);
+        disableRulesetSet.add(id);
     }
-    
+
+    if ( enableRulesetSet.size === 0 && disableRulesetSet.size === 0 ) {
+        return;
+    }
+
+    // Be sure the rulesets to enable/disable do exist in the current version,
+    // otherwise the API throws.
+    const rulesetDetails = await getRulesetDetails();
+    for ( const id of enableRulesetSet ) {
+        if ( rulesetDetails.has(id) ) { continue; }
+        enableRulesetSet.delete(id);
+    }
+    for ( const id of disableRulesetSet ) {
+        if ( rulesetDetails.has(id) ) { continue; }
+        disableRulesetSet.delete(id);
+    }
+    const enableRulesetIds = Array.from(enableRulesetSet);
+    const disableRulesetIds = Array.from(disableRulesetSet);
+
     if ( enableRulesetIds.length !== 0 ) {
         console.info(`Enable rulesets: ${enableRulesetIds}`);
     }
     if ( disableRulesetIds.length !== 0 ) {
         console.info(`Disable ruleset: ${disableRulesetIds}`);
     }
-    if ( enableRulesetIds.length !== 0 || disableRulesetIds.length !== 0 ) {
-        return dnr.updateEnabledRulesets({ enableRulesetIds, disableRulesetIds  });
-    }
+    return dnr.updateEnabledRulesets({ enableRulesetIds, disableRulesetIds });
 }
 
 /******************************************************************************/

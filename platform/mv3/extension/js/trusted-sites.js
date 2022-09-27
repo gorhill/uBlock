@@ -39,6 +39,15 @@ import {
 
 /******************************************************************************/
 
+async function getAllTrustedSiteDirectives() {
+    const dynamicRuleMap = await getDynamicRules();
+    const rule = dynamicRuleMap.get(TRUSTED_DIRECTIVE_BASE_RULE_ID);
+    if ( rule === undefined ) { return []; }
+    return rule.condition.requestDomains;
+}
+
+/******************************************************************************/
+
 async function matchesTrustedSiteDirective(details) {
     const hostname =
         details.hostname ||
@@ -47,7 +56,7 @@ async function matchesTrustedSiteDirective(details) {
     if ( hostname === undefined ) { return false; }
     
     const dynamicRuleMap = await getDynamicRules();
-    let rule = dynamicRuleMap.get(TRUSTED_DIRECTIVE_BASE_RULE_ID);
+    const rule = dynamicRuleMap.get(TRUSTED_DIRECTIVE_BASE_RULE_ID);
     if ( rule === undefined ) { return false; }
 
     const domainSet = new Set(rule.condition.requestDomains);
@@ -155,6 +164,7 @@ async function toggleTrustedSiteDirective(details) {
 /******************************************************************************/
 
 export {
+    getAllTrustedSiteDirectives,
     matchesTrustedSiteDirective,
     toggleTrustedSiteDirective,
 };
