@@ -232,16 +232,16 @@ const PSelector = class {
     }
 };
 PSelector.prototype.operatorToTaskMap = new Map([
-    [ ':has', PSelectorIfTask ],
-    [ ':has-text', PSelectorHasTextTask ],
-    [ ':if', PSelectorIfTask ],
-    [ ':if-not', PSelectorIfNotTask ],
-    [ ':min-text-length', PSelectorMinTextLengthTask ],
-    [ ':not', PSelectorIfNotTask ],
-    [ ':nth-ancestor', PSelectorUpwardTask ],
-    [ ':spath', PSelectorSpathTask ],
-    [ ':upward', PSelectorUpwardTask ],
-    [ ':xpath', PSelectorXpathTask ],
+    [ 'has', PSelectorIfTask ],
+    [ 'has-text', PSelectorHasTextTask ],
+    [ 'if', PSelectorIfTask ],
+    [ 'if-not', PSelectorIfNotTask ],
+    [ 'min-text-length', PSelectorMinTextLengthTask ],
+    [ 'not', PSelectorIfNotTask ],
+    [ 'nth-ancestor', PSelectorUpwardTask ],
+    [ 'spath', PSelectorSpathTask ],
+    [ 'upward', PSelectorUpwardTask ],
+    [ 'xpath', PSelectorXpathTask ],
 ]);
 PSelector.prototype.invalid = false;
 

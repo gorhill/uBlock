@@ -1740,6 +1740,84 @@
 
 
 
+/// m3u-prune.js
+// https://en.wikipedia.org/wiki/M3U
+(function() {
+    let m3uPattern = '{{1}}';
+    if ( m3uPattern === '{{1}}' ) {
+        m3uPattern = '';
+    }
+    let urlPattern = '{{2}}';
+    if ( urlPattern === '{{2}}' ) {
+        urlPattern = '';
+    }
+    const regexFromArg = arg => {
+        if ( arg === '' ) { return /^/; }
+        if ( /^\/.*\/$/.test(arg) ) { return new RegExp(arg.slice(1, -1)); }
+        return new RegExp(arg.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    };
+    const reM3u = regexFromArg(m3uPattern);
+    const reUrl = regexFromArg(urlPattern);
+    const pruner = text => {
+        if ( (/^\s*#EXTM3U/.test(text)) === false ) { return text; }
+        const toRemove = new Set();
+        const lines = text.trim().split(/\n\r|\n|\r/);
+        for ( let i = 0; i < lines.length; i++ ) {
+            const line = lines[i];
+            if ( reM3u.test(line) === false ) { continue; }
+            if ( i === 0 || /^#EXTINF\b/.test(lines[i-1]) === false ) { continue; }
+            toRemove.add(i-1).add(i);
+            if ( /^#EXT-X-DISCONTINUITY\b/.test(lines[i+1]) === false) { continue; }
+            toRemove.add(i+1);
+            i += 1;
+        }
+        if ( toRemove.size === 0 ) { return text; }
+        return lines.filter((l, i) => toRemove.has(i) === false).join('\n');
+    };
+    const urlFromArg = arg => {
+        if ( typeof arg === 'string' ) { return arg; }
+        if ( arg instanceof Request ) { return arg.url; }
+        return String(arg);
+    };
+    const realFetch = self.fetch;
+    self.fetch = new Proxy(self.fetch, {
+        apply: function(target, thisArg, args) {
+            if ( reUrl.test(urlFromArg(args[0])) === false ) {
+                return Reflect.apply(target, thisArg, args);
+            }
+            return realFetch(...args).then(realResponse =>
+                realResponse.text().then(text =>
+                    new Response(pruner(text), {
+                        status: realResponse.status,
+                        statusText: realResponse.statusText,
+                        headers: realResponse.headers,
+                    })
+                )
+            );
+        }
+    });
+    self.XMLHttpRequest.prototype.open = new Proxy(self.XMLHttpRequest.prototype.open, {
+        apply: async (target, thisArg, args) => {
+            if ( reUrl.test(urlFromArg(args[1])) === false ) {
+                return Reflect.apply(target, thisArg, args);
+            }
+            thisArg.addEventListener('readystatechange', function() {
+                if ( thisArg.readyState !== 4 ) { return; }
+                const type = thisArg.responseType;
+                if ( type !== '' && type !== 'text' ) { return; }
+                const textin = thisArg.responseText;
+                const textout = pruner(textin);
+                if ( textout === textin ) { return; }
+                Object.defineProperty(thisArg, 'response', { value: textout, writable: true });
+                Object.defineProperty(thisArg, 'responseText', { value: textout, writable: true });
+            });
+            return Reflect.apply(target, thisArg, args);
+        }
+    });
+})();
+
+
+
 // These lines below are skipped by the resource parser.
 // <<<< end of private namespace
 })();

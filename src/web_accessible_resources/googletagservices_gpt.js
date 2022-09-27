@@ -85,6 +85,7 @@
         setForceSafeFrame: noopthisfn,
         setLocation: noopthisfn,
         setPublisherProvidedId: noopthisfn,
+        setPrivacySettings: noopthisfn,
         setRequestNonPersonalizedAds: noopthisfn,
         setSafeFrameConfig: noopthisfn,
         setTagForChildDirectedTreatment: noopthisfn,
