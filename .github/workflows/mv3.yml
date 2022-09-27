@@ -27,7 +27,7 @@ jobs:
           echo "TAGNAME=$(basename $(ls dist/build/uBOLite_*.mv3.zip) .mv3.zip)" >> $GITHUB_ENV
           RELEASENAME=${TAGNAME/_/ }
           echo "RELEASENAME=$RELEASENAME" >> $GITHUB_ENV
-          cp dist/build/uBOLite.mv3/log.txt dist/chromium-mv3/
+          cp dist/build/uBOLite.mv3/log.txt dist/mv3/
       - name: Commit uBOLite MV3 build log file
         # https://github.com/marketplace/actions/github-action-for-committing-changes-to-a-repository
         uses: devops-infra/action-commit-push@master
