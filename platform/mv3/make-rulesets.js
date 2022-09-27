@@ -219,7 +219,7 @@ const isGood = rule =>
 
 async function processNetworkFilters(assetDetails, network) {
     const replacer = (k, v) => {
-        if ( k.startsWith('__') ) { return; }
+        if ( k.startsWith('_') ) { return; }
         if ( Array.isArray(v) ) {
             return v.sort();
         }
