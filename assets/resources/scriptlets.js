@@ -1758,21 +1758,43 @@
     };
     const reM3u = regexFromArg(m3uPattern);
     const reUrl = regexFromArg(urlPattern);
+    const pruneSpliceoutBlock = (lines, i) => {
+        if ( lines[i].startsWith('#EXT-X-CUE:TYPE="SpliceOut"') === false ) {
+            return false;
+        }
+        lines[i] = undefined; i += 1;
+        if ( lines[i].startsWith('#EXT-X-ASSET:CAID') ) {
+            lines[i] = undefined; i += 1;
+        }
+        if ( lines[i].startsWith('#EXT-X-SCTE35:') ) {
+            lines[i] = undefined; i += 1;
+        }
+        if ( lines[i].startsWith('#EXT-X-CUE-IN') ) {
+            lines[i] = undefined; i += 1;
+        }
+        if ( lines[i].startsWith('#EXT-X-SCTE35:') ) {
+            lines[i] = undefined; i += 1;
+        }
+        return true;
+    };
+    const pruneInfBlock = (lines, i) => {
+        if ( lines[i].startsWith('#EXTINF') === false ) { return false; }
+        if ( reM3u.test(lines[i+1]) === false ) { return false; }
+        lines[i] = lines[i+1] = undefined; i += 2;
+        if ( lines[i].startsWith('#EXT-X-DISCONTINUITY') ) {
+            lines[i] = undefined; i += 1;
+        }
+        return true;
+    };
     const pruner = text => {
         if ( (/^\s*#EXTM3U/.test(text)) === false ) { return text; }
-        const toRemove = new Set();
-        const lines = text.trim().split(/\n\r|\n|\r/);
+        const lines = text.split(/\n\r|\n|\r/);
         for ( let i = 0; i < lines.length; i++ ) {
-            const line = lines[i];
-            if ( reM3u.test(line) === false ) { continue; }
-            if ( i === 0 || /^#EXTINF\b/.test(lines[i-1]) === false ) { continue; }
-            toRemove.add(i-1).add(i);
-            if ( /^#EXT-X-DISCONTINUITY\b/.test(lines[i+1]) === false) { continue; }
-            toRemove.add(i+1);
-            i += 1;
+            if ( lines[i] === undefined ) { continue; }
+            if ( pruneSpliceoutBlock(lines, i) ) { continue; }
+            if ( pruneInfBlock(lines, i) ) { continue; }
         }
-        if ( toRemove.size === 0 ) { return text; }
-        return lines.filter((l, i) => toRemove.has(i) === false).join('\n');
+        return lines.filter(l => l !== undefined).join('\n');
     };
     const urlFromArg = arg => {
         if ( typeof arg === 'string' ) { return arg; }
@@ -1808,8 +1830,8 @@
                 const textin = thisArg.responseText;
                 const textout = pruner(textin);
                 if ( textout === textin ) { return; }
-                Object.defineProperty(thisArg, 'response', { value: textout, writable: true });
-                Object.defineProperty(thisArg, 'responseText', { value: textout, writable: true });
+                Object.defineProperty(thisArg, 'response', { value: textout });
+                Object.defineProperty(thisArg, 'responseText', { value: textout });
             });
             return Reflect.apply(target, thisArg, args);
         }
