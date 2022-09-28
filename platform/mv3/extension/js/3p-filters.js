@@ -227,11 +227,19 @@ async function onOmnipotenceChanged(ev) {
         origins: [ '<all_urls>' ]
     });
     if ( newState === oldState ) { return; }
+
+    let actualState;
     if ( newState ) {
-        browser.permissions.request({ origins: [ '<all_urls>' ] });
+        actualState = await browser.permissions.request({
+            origins: [ '<all_urls>' ]
+        });
     } else {
-        browser.permissions.remove({ origins: [ '<all_urls>' ] });
+        actualState = await browser.permissions.remove({
+            origins: [ '<all_urls>' ]
+        }) !== true;
     }
+
+    qs$('#omnipotenceWidget input').checked = actualState;
 }
 
 dom.on(
