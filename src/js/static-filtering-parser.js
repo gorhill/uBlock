@@ -1570,18 +1570,23 @@ Parser.prototype.SelectorCompiler = class {
         }
     }
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/2300
+    //   Unquoted atrtibute values are parsed as Identifier instead of String.
     astSerialize(parts) {
         const out = [];
         for ( const part of parts ) {
             const { data } = part;
             switch ( data.type ) {
-            case 'AttributeSelector':
+            case 'AttributeSelector': {
+                const name = data.name.name;
+                const value = data.value.value || data.value.name;
                 out.push(
                     data.matcher
-                        ? `[${data.name.name}${data.matcher}"${data.value.value}"]`
-                        : `[${data.name.name}]`
+                        ? `[${name}${data.matcher}"${value}"]`
+                        : `[${name}]`
                 );
                 break;
+            }
             case 'ClassSelector':
                 out.push(`.${data.name}`);
                 break;
