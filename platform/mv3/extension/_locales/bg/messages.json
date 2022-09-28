@@ -80,15 +80,15 @@
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {
-    "message": "Повече",
+    "message": "Още",
     "description": "Label to be used to show popup panel sections"
   },
   "popupGrantGreatPowers": {
-    "message": "Кликнете, за да предоставите разширени разрешения на uBO Lite на този сайт.\nРазширените разрешения позволяват по-ефективно блокиране на съдържание.",
+    "message": "Щракнете, за да предоставите на uBO Lite разширени разрешения за този сайт.\nРазширените разрешения позволяват по-ефективно блокиране на съдържанието.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupRevokeGreatPowers": {
-    "message": "Кликнете, за да отмените разширените разрешения на този сайт",
+    "message": "Щракнете, за да отмените разширените разрешения за този сайт",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
@@ -114,6 +114,14 @@
   "settingsNoCSPReportsPrompt": {
     "message": "Блокиране на CSP отчетите",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
+  },
+  "omnipotenceLabel": {
+    "message": "Enable extended filtering on all websites",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "omnipotenceLegend": {
+    "message": "uBO Lite can apply extended filtering on a given website only after you explicitly grant the extension permissions to modify data on that website. This setting allows you to grant permissions for extended filtering to all websites at once.",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Стандартни",

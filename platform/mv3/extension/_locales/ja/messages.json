@@ -115,6 +115,14 @@
     "message": "CSP レポートをブロックする",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
+  "omnipotenceLabel": {
+    "message": "Enable extended filtering on all websites",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "omnipotenceLegend": {
+    "message": "uBO Lite can apply extended filtering on a given website only after you explicitly grant the extension permissions to modify data on that website. This setting allows you to grant permissions for extended filtering to all websites at once.",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
   "3pGroupDefault": {
     "message": "既定",
     "description": "Header for a ruleset section in 'Filter lists pane'"
@@ -160,7 +168,7 @@
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "whitelistPrompt": {
-    "message": "[信頼するサイト] では uBO Lite を無効にするウェブページを指定します。1 行につき 1 ページです。",
+    "message": "[信頼するサイト] では uBO Lite を無効にするウェブページを指定します。1 行に つき 1 つです。",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
