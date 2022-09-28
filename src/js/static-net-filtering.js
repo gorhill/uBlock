@@ -1279,15 +1279,18 @@ const FilterNotType = class {
 
     static dnrFromCompiled(args, rule) {
         rule.condition = rule.condition || {};
-        if ( rule.condition.excludedResourceTypes === undefined ) {
-            rule.condition.excludedResourceTypes = [];
+        const rc = rule.condition;
+        if ( rc.excludedResourceTypes === undefined ) {
+            rc.excludedResourceTypes = [ 'main_frame' ];
         }
         let bits = args[1];
         for ( let i = 1; bits !== 0 && i < typeValueToTypeName.length; i++ ) {
             const bit = 1 << (i - 1);
             if ( (bits & bit) === 0 ) { continue; }
             bits &= ~bit;
-            rule.condition.excludedResourceTypes.push(`${typeValueToTypeName[i]}`);
+            const type = typeValueToTypeName[i];
+            if ( rc.excludedResourceTypes.includes(type) ) { continue; }
+            rc.excludedResourceTypes.push(type);
         }
     }
 
