@@ -1040,7 +1040,7 @@
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "النسخ الإحتياطي لملف",
+    "message": "النسخ الإحتياطي إلى ملف",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {

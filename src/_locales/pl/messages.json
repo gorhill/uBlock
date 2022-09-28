@@ -1040,7 +1040,7 @@
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "Utwórz kopię zapasową…",
+    "message": "Utwórz kopię zapasową",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {

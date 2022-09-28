@@ -116,11 +116,11 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "omnipotenceLabel": {
-    "message": "Enable extended filtering on all websites",
+    "message": "Wiidweidich filterjen op alle websites ynskeakelje",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "omnipotenceLegend": {
-    "message": "uBO Lite can apply extended filtering on a given website only after you explicitly grant the extension permissions to modify data on that website. This setting allows you to grant permissions for extended filtering to all websites at once.",
+    "message": "uBO Lite kin allinnich wiidweidich filterjen op in bepaalde website tapasse, neidat jo de útwreiding eksplisyt tastimmingen ferliend hawwe om gegevens op dy website oan te passen. Fia dizze ynstelling kinne jo tastimmingen foar wiidweidich filterjen oan alle websites tagelyk ferliene.",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
