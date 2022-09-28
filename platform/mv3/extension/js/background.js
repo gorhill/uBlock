@@ -141,11 +141,9 @@ function onMessage(request, sender, callback) {
     case 'applyRulesets': {
         enableRulesets(request.enabledRulesets).then(( ) => {
             rulesetConfig.enabledRulesets = request.enabledRulesets;
-            return Promise.all([
-                saveRulesetConfig(),
-                registerInjectables(),
-            ]);
+            return saveRulesetConfig();
         }).then(( ) => {
+            registerInjectables();
             callback();
         });
         return true;
@@ -188,9 +186,8 @@ function onMessage(request, sender, callback) {
 
     case 'toggleTrustedSiteDirective': {
         toggleTrustedSiteDirective(request).then(response => {
-            registerInjectables().then(( ) => {
-                callback(response);
-            });
+            registerInjectables();
+            callback(response);
         });
         return true;
     }
