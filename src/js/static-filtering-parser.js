@@ -1579,12 +1579,12 @@ Parser.prototype.SelectorCompiler = class {
             switch ( data.type ) {
             case 'AttributeSelector': {
                 const name = data.name.name;
+                if ( data.matcher === null ) {
+                    out.push(`[${name}]`);
+                    break;
+                }
                 const value = data.value.value || data.value.name;
-                out.push(
-                    data.matcher
-                        ? `[${name}${data.matcher}"${value}"]`
-                        : `[${name}]`
-                );
+                out.push(`[${name}${data.matcher}"${value}"]`);
                 break;
             }
             case 'ClassSelector':
