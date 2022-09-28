@@ -142,8 +142,8 @@ const typeValueToTypeName = [
     'image',
     'object',
     'script',
-    'xmlhttprequest',
-    'sub_frame',
+    'xhr',
+    'frame',
     'font',
     'media',
     'websocket',
@@ -162,6 +162,22 @@ const typeValueToTypeName = [
     'webrtc',
     'unsupported',
 ];
+
+const typeValueToDNRTypeName = [
+    '',
+    'stylesheet',
+    'image',
+    'object',
+    'script',
+    'xmlhttprequest',
+    'sub_frame',
+    'font',
+    'media',
+    'websocket',
+    'ping',
+    'other',
+];
+
 
 //const typeValueFromCatBits = catBits => (catBits >>> TypeBitsOffset) & 0b11111;
 
@@ -1284,11 +1300,12 @@ const FilterNotType = class {
             rc.excludedResourceTypes = [ 'main_frame' ];
         }
         let bits = args[1];
-        for ( let i = 1; bits !== 0 && i < typeValueToTypeName.length; i++ ) {
+        for ( let i = 1; bits !== 0 && i < typeValueToDNRTypeName.length; i++ ) {
             const bit = 1 << (i - 1);
             if ( (bits & bit) === 0 ) { continue; }
             bits &= ~bit;
-            const type = typeValueToTypeName[i];
+            const type = typeValueToDNRTypeName[i];
+            if ( type === undefined ) { continue; }
             if ( rc.excludedResourceTypes.includes(type) ) { continue; }
             rc.excludedResourceTypes.push(type);
         }
