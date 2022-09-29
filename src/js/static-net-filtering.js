@@ -633,11 +633,6 @@ const dnrAddRuleError = (rule, msg) => {
     rule._error.push(msg);
 };
 
-const dnrAddRuleWarning = (rule, msg) => {
-    rule._warning = rule._warning || [];
-    rule._warning.push(msg);
-};
-
 /*******************************************************************************
 
     Filter classes
@@ -4050,7 +4045,7 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
                 value: rule.__modifierValue,
             }];
             if ( rule.__modifierAction === AllowAction ) {
-                dnrAddRuleError(rule, 'Unhandled modifier exception');
+                dnrAddRuleError(rule, 'Unsupported modifier exception');
             }
             break;
         case 'redirect-rule': {
@@ -4063,7 +4058,7 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
             }
             const resource = context.extensionPaths.get(token);
             if ( rule.__modifierValue !== '' && resource === undefined ) {
-                dnrAddRuleWarning(rule, `Unpatchable redirect filter: ${rule.__modifierValue}`);
+                dnrAddRuleError(rule, `Unpatchable redirect filter: ${rule.__modifierValue}`);
             }
             const extensionPath = resource && resource.extensionPath || token;
             if ( rule.__modifierAction !== AllowAction ) {
@@ -4078,6 +4073,9 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
         }
         case 'removeparam':
             rule.action.type = 'redirect';
+            if ( rule.__modifierValue === '|' ) {
+                rule.__modifierValue = '';
+            }
             if ( rule.__modifierValue !== '' ) {
                 rule.action.redirect = {
                     transform: {
@@ -4108,7 +4106,7 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
                 ];
             }
             if ( rule.__modifierAction === AllowAction ) {
-                dnrAddRuleError(rule, 'Unhandled modifier exception');
+                dnrAddRuleError(rule, 'Unsupported modifier exception');
             }
             break;
         default:

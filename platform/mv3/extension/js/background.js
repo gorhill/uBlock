@@ -37,8 +37,8 @@ import {
     getDynamicRules,
     defaultRulesetsFromLanguage,
     enableRulesets,
-    getEnabledRulesetsStats,
-    updateRegexRules,
+    getEnabledRulesetsDetails,
+    updateDynamicRules,
 } from './ruleset-manager.js';
 
 import {
@@ -113,7 +113,8 @@ async function saveRulesetConfig() {
 
 /******************************************************************************/
 
-function hasGreatPowers(origin) {
+async function hasGreatPowers(origin) {
+    if ( /^https?:\/\//.test(origin) === false ) { return false; }
     return browser.permissions.contains({
         origins: [ `${origin}/*` ],
     });
@@ -126,10 +127,16 @@ function hasOmnipotence() {
 }
 
 function onPermissionsAdded(permissions) {
+    if ( permissions.origins?.includes('<all_urls>') ) {
+        updateDynamicRules();
+    }
     registerInjectables(permissions.origins);
 }
 
 function onPermissionsRemoved(permissions) {
+    if ( permissions.origins?.includes('<all_urls>') ) {
+        updateDynamicRules();
+    }
     registerInjectables(permissions.origins);
 }
 
@@ -170,7 +177,7 @@ function onMessage(request, sender, callback) {
             matchesTrustedSiteDirective(request),
             hasOmnipotence(),
             hasGreatPowers(request.origin),
-            getEnabledRulesetsStats(),
+            getEnabledRulesetsDetails(),
             getInjectableCount(request.origin),
         ]).then(results => {
             callback({
@@ -208,7 +215,7 @@ async function start() {
     const currentVersion = getCurrentVersion();
     if ( currentVersion !== rulesetConfig.version ) {
         console.log(`Version change: ${rulesetConfig.version} => ${currentVersion}`);
-        updateRegexRules().then(( ) => {
+        updateDynamicRules().then(( ) => {
             rulesetConfig.version = currentVersion;
             saveRulesetConfig();
         });

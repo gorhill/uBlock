@@ -237,10 +237,14 @@ async function init() {
         const div = qs$('#templates .rulesetDetails').cloneNode(true);
         dom.text(qs$('h1', div), details.name);
         const { rules, filters, css } = details;
+        let ruleCount = rules.plain + rules.regexes;
+        if ( popupPanelData.hasOmnipotence ) {
+            ruleCount += rules.removeparams;
+        }
         dom.text(
             qs$('p', div),
             i18n$('perRulesetStats')
-                .replace('{{ruleCount}}', rules.accepted.toLocaleString())
+                .replace('{{ruleCount}}', ruleCount.toLocaleString())
                 .replace('{{filterCount}}', filters.accepted.toLocaleString())
                 .replace('{{cssSpecificCount}}', css.specific.toLocaleString())
         );

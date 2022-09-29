@@ -40,10 +40,9 @@ function getScriptingDetails() {
         return scriptingDetailsPromise;
     }
     scriptingDetailsPromise = fetchJSON('/rulesets/scripting-details').then(entries => {
-        const out = new Map(entries);
-        for ( const details of out.values() ) {
-            details.matches = new Map(details.matches);
-            details.excludeMatches = new Map(details.excludeMatches);
+        const out = new Map();
+        for ( const entry of entries ) {
+            out.set(entry[0], new Map(entry[1]));
         }
         return out;
     });
@@ -52,32 +51,19 @@ function getScriptingDetails() {
 
 /******************************************************************************/
 
-const arrayEq = (a, b) => {
-    if ( a === undefined ) { return b === undefined; }
-    if ( b === undefined ) { return false; }
-    if ( a.length !== b.length ) { return false; }
-    for ( const i of a ) {
-        if ( b.includes(i) === false ) { return false; }
-    }
-    return true;
-};
-
-/******************************************************************************/
-
-const toRegisterable = (fname, entry) => {
+const toRegisterable = (fname, hostnames) => {
     const directive = {
         id: fname,
+        allFrames: true,
+        matchOriginAsFallback: true,
     };
-    if ( entry.matches ) {
-        directive.matches = ut.matchesFromHostnames(entry.matches);
+    if ( hostnames ) {
+        directive.matches = ut.matchesFromHostnames(hostnames);
     } else {
         directive.matches = [ '<all_urls>' ];
     }
-    if ( entry.excludeMatches ) {
-        directive.excludeMatches = ut.matchesFromHostnames(entry.excludeMatches);
-    }
     directive.js = [ `/rulesets/js/${fname.slice(0,2)}/${fname.slice(2)}.js` ];
-    if ( (ut.fidFromFileName(fname) & RUN_AT_BIT) !== 0 ) {
+    if ( (ut.fidFromFileName(fname) & RUN_AT_END_BIT) !== 0 ) {
         directive.runAt = 'document_end';
     } else {
         directive.runAt = 'document_start';
@@ -88,23 +74,28 @@ const toRegisterable = (fname, entry) => {
     return directive;
 };
 
-const RUN_AT_BIT =     0b10;
+const RUN_AT_END_BIT = 0b10;
 const MAIN_WORLD_BIT = 0b01;
 
 /******************************************************************************/
 
-const shouldUpdate = (registered, candidate) => {
-    const matches = candidate.matches &&
-        ut.matchesFromHostnames(candidate.matches);
-    if ( arrayEq(registered.matches, matches) === false ) {
-        return true;
+// Important: We need to sort the arrays for fast comparison
+const arrayEq = (a, b) => {
+    if ( a === undefined ) { return b === undefined; }
+    if ( b === undefined ) { return false; }
+    const alen = a.length;
+    if ( alen !== b.length ) { return false; }
+    a.sort(); b.sort();
+    for ( let i = 0; i < alen; i++ ) {
+        if ( a[i] !== b[i] ) { return false; }
     }
-    const excludeMatches = candidate.excludeMatches &&
-        ut.matchesFromHostnames(candidate.excludeMatches);
-    if ( arrayEq(registered.excludeMatches, excludeMatches) === false ) {
-        return true;
-    }
-    return false;
+    return true;
+};
+
+const shouldUpdate = (registered, candidateHostnames) => {
+    const registeredHostnames = registered.matches &&
+        ut.hostnamesFromMatches(registered.matches);
+    return arrayEq(registeredHostnames, candidateHostnames) === false;
 };
 
 const isTrustedHostname = (trustedSites, hn) => {
@@ -133,11 +124,11 @@ async function getInjectableCount(origin) {
     let total = 0;
 
     for ( const rulesetId of rulesetIds ) {
-        if ( scriptingDetails.has(rulesetId) === false ) { continue; }
-        const details = scriptingDetails.get(rulesetId);
+        const hostnamesToFidsMap = scriptingDetails.get(rulesetId);
+        if ( hostnamesToFidsMap === undefined ) { continue; }
         let hn = url.hostname;
         while ( hn !== '' ) {
-            const fids = details.matches?.get(hn);
+            const fids = hostnamesToFidsMap.get(hn);
             if ( typeof fids === 'number' ) {
                 total += 1;
             } else if ( Array.isArray(fids) ) {
@@ -162,28 +153,33 @@ function registerSomeInjectables(args) {
 
     const toRegisterMap = new Map();
 
-    const checkMatches = (details, hn) => {
-        let fids = details.matches?.get(hn);
+    const checkMatches = (hostnamesToFidsMap, hn) => {
+        let fids = hostnamesToFidsMap.get(hn);
         if ( fids === undefined ) { return; }
         if ( typeof fids === 'number' ) { fids = [ fids ]; }
         for ( const fid of fids ) {
             const fname = ut.fnameFromFileId(fid);
-            const existing = toRegisterMap.get(fname);
+            let existing = toRegisterMap.get(fname);
             if ( existing ) {
-                existing.matches.push(hn);
+                if ( existing[0] === '*' ) { continue; }
+                existing.push(hn);
             } else {
-                toRegisterMap.set(fname, { matches: [ hn ] });
+                toRegisterMap.set(fname, existing = [ hn ]);
             }
+            if ( hn !== '*' ) { continue; }
+            existing.length = 0;
+            existing.push('*');
+            break;
         }
     };
 
     for ( const rulesetId of rulesetIds ) {
-        const details = scriptingDetails.get(rulesetId);
-        if ( details === undefined ) { continue; }
+        const hostnamesToFidsMap = scriptingDetails.get(rulesetId);
+        if ( hostnamesToFidsMap === undefined ) { continue; }
         for ( let hn of hostnamesSet ) {
             if ( isTrustedHostname(trustedSites, hn) ) { continue; }
             while ( hn ) {
-                checkMatches(details, hn);
+                checkMatches(hostnamesToFidsMap, hn);
                 hn = ut.toBroaderHostname(hn);
             }
         }
@@ -202,19 +198,24 @@ function registerAllInjectables(args) {
     const toRegisterMap = new Map();
 
     for ( const rulesetId of rulesetIds ) {
-        const details = scriptingDetails.get(rulesetId);
-        if ( details === undefined ) { continue; }
-        for ( let [ hn, fids ] of details.matches ) {
+        const hostnamesToFidsMap = scriptingDetails.get(rulesetId);
+        if ( hostnamesToFidsMap === undefined ) { continue; }
+        for ( let [ hn, fids ] of hostnamesToFidsMap ) {
             if ( isTrustedHostname(trustedSites, hn) ) { continue; }
             if ( typeof fids === 'number' ) { fids = [ fids ]; }
             for ( const fid of fids ) {
                 const fname = ut.fnameFromFileId(fid);
-                const existing = toRegisterMap.get(fname);
+                let existing = toRegisterMap.get(fname);
                 if ( existing ) {
-                    existing.matches.push(hn);
+                    if ( existing[0] === '*' ) { continue; }
+                    existing.push(hn);
                 } else {
-                    toRegisterMap.set(fname, { matches: [ hn ] });
+                    toRegisterMap.set(fname, existing = [ hn ]);
                 }
+                if ( hn !== '*' ) { continue; }
+                existing.length = 0;
+                existing.push('*');
+                break;
             }
         }
     }
@@ -264,13 +265,13 @@ async function registerInjectables(origins) {
 
     const toAdd = [];
     const toUpdate = [];
-    for ( const [ fname, entry ] of toRegisterMap ) {
+    for ( const [ fname, hostnames ] of toRegisterMap ) {
         if ( before.has(fname) === false ) {
-            toAdd.push(toRegisterable(fname, entry));
+            toAdd.push(toRegisterable(fname, hostnames));
             continue;
         }
-        if ( shouldUpdate(before.get(fname), entry) ) {
-            toUpdate.push(toRegisterable(fname, entry));
+        if ( shouldUpdate(before.get(fname), hostnames) ) {
+            toUpdate.push(toRegisterable(fname, hostnames));
         }
     }
 
@@ -282,16 +283,25 @@ async function registerInjectables(origins) {
 
     const todo = [];
     if ( toRemove.length !== 0 ) {
-        todo.push(browser.scripting.unregisterContentScripts({ ids: toRemove }));
         console.info(`Unregistered ${toRemove} content (css/js)`);
+        todo.push(
+            browser.scripting.unregisterContentScripts({ ids: toRemove })
+                .catch(reason => { console.info(reason); })
+        );
     }
     if ( toAdd.length !== 0 ) {
-        todo.push(browser.scripting.registerContentScripts(toAdd));
         console.info(`Registered ${toAdd.map(v => v.id)} content (css/js)`);
+        todo.push(
+            browser.scripting.registerContentScripts(toAdd)
+                .catch(reason => { console.info(reason); })
+        );
     }
     if ( toUpdate.length !== 0 ) {
-        todo.push(browser.scripting.updateContentScripts(toUpdate));
         console.info(`Updated ${toUpdate.map(v => v.id)} content (css/js)`);
+        todo.push(
+            browser.scripting.updateContentScripts(toUpdate)
+                .catch(reason => { console.info(reason); })
+        );
     }
     if ( todo.length === 0 ) { return; }
 

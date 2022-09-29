@@ -46,10 +46,11 @@ const matchesFromHostnames = hostnames => {
     const out = [];
     for ( const hn of hostnames ) {
         if ( hn === '*' ) {
+            out.length = 0;
             out.push('<all_urls>');
-        } else {
-            out.push(`*://*.${hn}/*`);
+            break;
         }
+        out.push(`*://*.${hn}/*`);
     }
     return out;
 };
@@ -58,8 +59,9 @@ const hostnamesFromMatches = origins => {
     const out = [];
     for ( const origin of origins ) {
         if ( origin === '<all_urls>' ) {
+            out.length = 0;
             out.push('*');
-            continue;
+            break;
         }
         const match = /^\*:\/\/(?:\*\.)?([^\/]+)\/\*/.exec(origin);
         if ( match === null ) { continue; }

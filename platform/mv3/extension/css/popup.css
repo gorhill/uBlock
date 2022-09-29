@@ -123,12 +123,13 @@ body.needSave #revertRules {
 #rulesetStats .rulesetDetails h1 {
     font-size: 1em;
     font-weight: normal;
-    margin: 0.5em 0;
+    margin: 0.5em 0 0.25em 0;
     text-transform: capitalize;
     }
 #rulesetStats .rulesetDetails p {
+    color: var(--ink-2);
     font-size: var(--font-size-smaller);
-    margin: 0.5em 0 0.5em var(--popup-gap-thin);
+    margin: 0.25em 0 0.5em 0.5em;
     }
 
 .itemRibbon {
