@@ -1572,65 +1572,90 @@ Parser.prototype.SelectorCompiler = class {
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/2300
     //   Unquoted atrtibute values are parsed as Identifier instead of String.
+    astSerializePart(part) {
+        const out = [];
+        const { data } = part;
+        switch ( data.type ) {
+        case 'AttributeSelector': {
+            const name = data.name.name;
+            if ( data.matcher === null ) {
+                out.push(`[${name}]`);
+                break;
+            }
+            let value = data.value.value;
+            if ( typeof value !== 'string' ) {
+                value = data.value.name;
+            }
+            out.push(`[${name}${data.matcher}"${value}"]`);
+            break;
+        }
+        case 'ClassSelector':
+            out.push(`.${data.name}`);
+            break;
+        case 'Combinator':
+            out.push(data.name === ' ' ? ' ' : ` ${data.name} `);
+            break;
+        case 'Identifier':
+            out.push(data.name);
+            break;
+        case 'IdSelector':
+            out.push(`#${data.name}`);
+            break;
+        case 'Nth': {
+            const a = parseInt(data.nth.a, 10) || null;
+            const b = parseInt(data.nth.b, 10) || null;
+            if ( a !== null ) {
+                out.push(`${a}n`);
+                if ( b === null ) { break; }
+                if ( b < 0 ) {
+                    out.push(`${b}`);
+                } else {
+                    out.push(`+${b}`);
+                }
+            } else if ( b !== null ) {
+                out.push(`${b}`);
+            }
+            break;
+        }
+        case 'PseudoClassSelector':
+        case 'PseudoElementSelector':
+            out.push(`:${data.name}`);
+            if ( Array.isArray(part.args) ) {
+                out.push(`(${this.astSerialize(part.args)})`);
+            }
+            break;
+        case 'Raw':
+            out.push(data.value);
+            break;
+        case 'TypeSelector':
+            out.push(data.name);
+            break;
+        default:
+            break;
+        }
+        return out.join('');
+    }
+
+
     astSerialize(parts) {
         const out = [];
         for ( const part of parts ) {
             const { data } = part;
             switch ( data.type ) {
-            case 'AttributeSelector': {
-                const name = data.name.name;
-                if ( data.matcher === null ) {
-                    out.push(`[${name}]`);
-                    break;
-                }
-                const value = data.value.value || data.value.name;
-                out.push(`[${name}${data.matcher}"${value}"]`);
-                break;
-            }
+            case 'AttributeSelector':
             case 'ClassSelector':
-                out.push(`.${data.name}`);
-                break;
             case 'Combinator':
-                out.push(data.name === ' ' ? ' ' : ` ${data.name} `);
-                break;
             case 'Identifier':
-                out.push(data.name);
-                break;
             case 'IdSelector':
-                out.push(`#${data.name}`);
-                break;
-            case 'Nth': {
-                const a = parseInt(data.nth.a, 10) || null;
-                const b = parseInt(data.nth.b, 10) || null;
-                if ( a !== null ) {
-                    out.push(`${a}n`);
-                    if ( b === null ) { break; }
-                    if ( b < 0 ) {
-                        out.push(`${b}`);
-                    } else {
-                        out.push(`+${b}`);
-                    }
-                } else if ( b !== null ) {
-                    out.push(`${b}`);
-                }
-                break;
-            }
-            case 'ActionSelector':
+            case 'Nth':
             case 'PseudoClassSelector':
             case 'PseudoElementSelector':
-                out.push(`:${data.name}`);
-                if ( Array.isArray(part.args) ) {
-                    out.push(`(${this.astSerialize(part.args)})`);
-                }
-                break;
             case 'Raw':
-                out.push(data.value);
+            case 'TypeSelector':
+                out.push(this.astSerializePart(part));
                 break;
             case 'Selector':
                 if ( out.length !== 0 ) { out.push(','); }
-                break;
-            case 'TypeSelector':
-                out.push(data.name);
                 break;
             default:
                 break;
@@ -1663,55 +1688,20 @@ Parser.prototype.SelectorCompiler = class {
                 out.action = [ data.name, args ];
                 break;
             }
-            case 'AttributeSelector': {
-                const s = data.matcher
-                    ? `[${data.name.name}${data.matcher}"${data.value.value}"]`
-                    : `[${data.name.name}]`;
-                prelude.push(s);
-                break;
-            }
-            case 'ClassSelector': {
-                const s = `.${data.name}`;
-                prelude.push(s);
-                break;
-            }
-            case 'Combinator': {
-                const s = data.name === ' ' ? ' ' : ` ${data.name} `;
-                prelude.push(s);
-                break;
-            }
-            case 'IdSelector': {
-                const s = `#${data.name}`;
-                prelude.push(s);
-                break;
-            }
-            case 'PseudoClassSelector': {
-                prelude.push(`:${data.name}`);
-                if ( Array.isArray(part.args) ) {
-                    prelude.push(`(${this.astSerialize(part.args)})`);
-                }
-                break;
-            }
-            case 'PseudoElementSelector': {
-                prelude.push(`::${data.name}`);
-                if ( Array.isArray(part.args) ) {
-                    prelude.push(`(${this.astSerialize(part.args)})`);
-                }
-                break;
-            }
-            case 'SelectorList':
+            case 'AttributeSelector':
+            case 'ClassSelector':
+            case 'Combinator':
+            case 'IdSelector':
+            case 'PseudoClassSelector':
+            case 'PseudoElementSelector':
+            case 'TypeSelector':
+                prelude.push(this.astSerializePart(part));
                 break;
             case 'Selector':
                 if ( prelude.length !== 0 ) {
                     prelude.push(', ');
                 }
                 break;
-            case 'SelectorList':
-                break;
-            case 'TypeSelector': {
-                prelude.push(data.name);
-                break;
-            }
             case 'ProceduralSelector':
                 if ( prelude.length !== 0 ) {
                     if ( tasks.length === 0 ) {
