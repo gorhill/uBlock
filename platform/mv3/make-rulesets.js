@@ -390,8 +390,7 @@ const pathFromFileName = fname => `${scriptletDir}/${fname.slice(0,2)}/${fname.s
 
 /******************************************************************************/
 
-const COSMETIC_FILES_PER_RULESET = 12;
-const PROCEDURAL_FILES_PER_RULESET = 4;
+const MAX_COSMETIC_FILTERS_PER_FILE = 128;
 
 // This merges selectors which are used by the same hostnames
 
@@ -494,8 +493,6 @@ async function processCosmeticFilters(assetDetails, mapin) {
     const contentArray = groupCosmeticBySelectors(
         groupCosmeticByHostnames(mapin)
     );
-    const contentPerFile =
-        Math.ceil(contentArray.length / COSMETIC_FILES_PER_RULESET);
 
     // We do not want more than n CSS files per subscription, so we will
     // group multiple unrelated selectors in the same file, and distinct
@@ -508,8 +505,8 @@ async function processCosmeticFilters(assetDetails, mapin) {
     const originalScriptletMap = await loadAllSourceScriptlets();
     const generatedFiles = [];
 
-    for ( let i = 0; i < contentArray.length; i += contentPerFile ) {
-        const slice = contentArray.slice(i, i + contentPerFile);
+    for ( let i = 0; i < contentArray.length; i += MAX_COSMETIC_FILTERS_PER_FILE ) {
+        const slice = contentArray.slice(i, i + MAX_COSMETIC_FILTERS_PER_FILE);
         const argsMap = slice.map(entry => [
             entry[0],
             {
@@ -562,8 +559,6 @@ async function processProceduralCosmeticFilters(assetDetails, mapin) {
     const contentArray = groupCosmeticBySelectors(
         groupCosmeticByHostnames(mapin)
     );
-    const contentPerFile =
-        Math.ceil(contentArray.length / PROCEDURAL_FILES_PER_RULESET);
 
     // We do not want more than n CSS files per subscription, so we will
     // group multiple unrelated selectors in the same file, and distinct
@@ -576,8 +571,8 @@ async function processProceduralCosmeticFilters(assetDetails, mapin) {
     const originalScriptletMap = await loadAllSourceScriptlets();
     const generatedFiles = [];
 
-    for ( let i = 0; i < contentArray.length; i += contentPerFile ) {
-        const slice = contentArray.slice(i, i + contentPerFile);
+    for ( let i = 0; i < contentArray.length; i += MAX_COSMETIC_FILTERS_PER_FILE ) {
+        const slice = contentArray.slice(i, i + MAX_COSMETIC_FILTERS_PER_FILE);
         const argsMap = slice.map(entry => [
             entry[0],
             {

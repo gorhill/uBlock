@@ -35,7 +35,7 @@
 
 // Important!
 // Isolate from global scope
-(function() {
+(function uBOL_abortOnPropertyWrite() {
 
 /******************************************************************************/
 

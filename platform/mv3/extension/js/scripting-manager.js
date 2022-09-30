@@ -51,7 +51,7 @@ function getScriptingDetails() {
 
 /******************************************************************************/
 
-const toRegisterable = (fname, hostnames) => {
+const toRegisterable = (fname, hostnames, trustedSites) => {
     const directive = {
         id: fname,
         allFrames: true,
@@ -61,6 +61,12 @@ const toRegisterable = (fname, hostnames) => {
         directive.matches = ut.matchesFromHostnames(hostnames);
     } else {
         directive.matches = [ '<all_urls>' ];
+    }
+    if (
+        directive.matches.length === 1 &&
+        directive.matches[0] === '<all_urls>'
+    ) {
+        directive.excludeMatches = ut.matchesFromHostnames(trustedSites);
     }
     directive.js = [ `/rulesets/js/${fname.slice(0,2)}/${fname.slice(2)}.js` ];
     if ( (ut.fidFromFileName(fname) & RUN_AT_END_BIT) !== 0 ) {
@@ -92,10 +98,19 @@ const arrayEq = (a, b) => {
     return true;
 };
 
-const shouldUpdate = (registered, candidateHostnames) => {
-    const registeredHostnames = registered.matches &&
-        ut.hostnamesFromMatches(registered.matches);
-    return arrayEq(registeredHostnames, candidateHostnames) === false;
+const shouldUpdate = (registered, afterHostnames, afterExcludeHostnames) => {
+    if ( afterHostnames.length === 1 && afterHostnames[0] === '*' ) {
+        const beforeExcludeHostnames = registered.excludeMatches &&
+            ut.hostnamesFromMatches(registered.excludeMatches) ||
+            [];
+        if ( arrayEq(beforeExcludeHostnames, afterExcludeHostnames) === false ) { 
+            return true;
+        }
+    }
+    const beforeHostnames = registered.matches &&
+        ut.hostnamesFromMatches(registered.matches) ||
+        [];
+    return arrayEq(beforeHostnames, afterHostnames) === false;
 };
 
 const isTrustedHostname = (trustedSites, hn) => {
@@ -152,6 +167,7 @@ function registerSomeInjectables(args) {
     } = args;
 
     const toRegisterMap = new Map();
+    const trustedSitesSet = new Set(trustedSites);
 
     const checkMatches = (hostnamesToFidsMap, hn) => {
         let fids = hostnamesToFidsMap.get(hn);
@@ -177,7 +193,7 @@ function registerSomeInjectables(args) {
         const hostnamesToFidsMap = scriptingDetails.get(rulesetId);
         if ( hostnamesToFidsMap === undefined ) { continue; }
         for ( let hn of hostnamesSet ) {
-            if ( isTrustedHostname(trustedSites, hn) ) { continue; }
+            if ( isTrustedHostname(trustedSitesSet, hn) ) { continue; }
             while ( hn ) {
                 checkMatches(hostnamesToFidsMap, hn);
                 hn = ut.toBroaderHostname(hn);
@@ -196,12 +212,13 @@ function registerAllInjectables(args) {
     } = args;
 
     const toRegisterMap = new Map();
+    const trustedSitesSet = new Set(trustedSites);
 
     for ( const rulesetId of rulesetIds ) {
         const hostnamesToFidsMap = scriptingDetails.get(rulesetId);
         if ( hostnamesToFidsMap === undefined ) { continue; }
         for ( let [ hn, fids ] of hostnamesToFidsMap ) {
-            if ( isTrustedHostname(trustedSites, hn) ) { continue; }
+            if ( isTrustedHostname(trustedSitesSet, hn) ) { continue; }
             if ( typeof fids === 'number' ) { fids = [ fids ]; }
             for ( const fid of fids ) {
                 const fname = ut.fnameFromFileId(fid);
@@ -244,7 +261,6 @@ async function registerInjectables(origins) {
         browser.scripting.getRegisteredContentScripts(),
     ]).then(results => {
         results[0] = new Set(ut.hostnamesFromMatches(results[0].origins));
-        results[1] = new Set(results[1]);
         return results;
     });
 
@@ -267,11 +283,11 @@ async function registerInjectables(origins) {
     const toUpdate = [];
     for ( const [ fname, hostnames ] of toRegisterMap ) {
         if ( before.has(fname) === false ) {
-            toAdd.push(toRegisterable(fname, hostnames));
+            toAdd.push(toRegisterable(fname, hostnames, trustedSites));
             continue;
         }
-        if ( shouldUpdate(before.get(fname), hostnames) ) {
-            toUpdate.push(toRegisterable(fname, hostnames));
+        if ( shouldUpdate(before.get(fname), hostnames, trustedSites) ) {
+            toUpdate.push(toRegisterable(fname, hostnames, trustedSites));
         }
     }
 
