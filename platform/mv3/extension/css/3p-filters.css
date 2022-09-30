@@ -17,6 +17,11 @@ legend {
     top: 0;
     z-index: 10;
     }
+body.firstRun .firstRun {
+    background-color: rgb(var(--dashboard-highlight-surface-rgb));
+    padding: 8px;
+    zoom: 1.1;
+    }
 #buttonUpdate.active {
     pointer-events: none;
     }

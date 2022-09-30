@@ -25,7 +25,6 @@ echo "*** uBOLite.mv3: Copying common files"
 cp -R src/css/fonts/* $DES/css/fonts/
 cp src/css/themes/default.css $DES/css/
 cp src/css/common.css $DES/css/
-cp src/css/dashboard.css $DES/css/
 cp src/css/dashboard-common.css $DES/css/
 cp src/css/fa-icons.css $DES/css/
 

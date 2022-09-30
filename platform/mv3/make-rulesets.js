@@ -55,7 +55,13 @@ const outputDir = commandLineArgs.get('output') || '.';
 const cacheDir = `${outputDir}/../mv3-data`;
 const rulesetDir = `${outputDir}/rulesets`;
 const scriptletDir = `${rulesetDir}/js`;
-const env = [ 'chromium', 'ubol', 'native_css_has' ];
+const env = [
+    'chromium',
+    'native_css_has',
+    'ublock',
+    'ubol',
+    'user_stylesheet',
+];
 
 /******************************************************************************/
 

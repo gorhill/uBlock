@@ -56,6 +56,7 @@ import {
 const rulesetConfig = {
     version: '',
     enabledRulesets: [],
+    firstRun: false,
 };
 
 /******************************************************************************/
@@ -69,6 +70,7 @@ async function loadRulesetConfig() {
     const configRule = dynamicRuleMap.get(CURRENT_CONFIG_BASE_RULE_ID);
     if ( configRule === undefined ) {
         rulesetConfig.enabledRulesets = await defaultRulesetsFromLanguage();
+        rulesetConfig.firstRun = true;
         return;
     }
 
@@ -167,7 +169,9 @@ function onMessage(request, sender, callback) {
                 enabledRulesets,
                 rulesetDetails: Array.from(rulesetDetails.values()),
                 hasOmnipotence,
+                firstRun: rulesetConfig.firstRun,
             });
+            rulesetConfig.firstRun = false;
         });
         return true;
     }
@@ -243,4 +247,8 @@ async function start() {
 
     browser.permissions.onAdded.addListener(onPermissionsAdded);
     browser.permissions.onRemoved.addListener(onPermissionsRemoved);
+
+    if ( rulesetConfig.firstRun ) {
+        runtime.openOptionsPage();
+    }
 })();

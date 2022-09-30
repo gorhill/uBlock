@@ -214,6 +214,8 @@ function renderFilterLists(soft = false) {
 /******************************************************************************/
 
 const renderWidgets = function() {
+    dom.cl.toggle(dom.body, 'firstRun', cachedRulesetData.firstRun === true);
+
     qs$('#omnipotenceWidget input').checked = cachedRulesetData.hasOmnipotence;
 
     dom.cl.toggle(
