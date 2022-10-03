@@ -1657,8 +1657,10 @@ Parser.prototype.SelectorCompiler = class {
             case 'Selector':
                 if ( out.length !== 0 ) { out.push(','); }
                 break;
-            default:
+            case 'SelectorList':
                 break;
+            default:
+                return;
             }
         }
         return out.join('');
@@ -1697,11 +1699,6 @@ Parser.prototype.SelectorCompiler = class {
             case 'TypeSelector':
                 prelude.push(this.astSerializePart(part));
                 break;
-            case 'Selector':
-                if ( prelude.length !== 0 ) {
-                    prelude.push(', ');
-                }
-                break;
             case 'ProceduralSelector':
                 if ( prelude.length !== 0 ) {
                     if ( tasks.length === 0 ) {
@@ -1715,8 +1712,15 @@ Parser.prototype.SelectorCompiler = class {
                 if ( args === undefined ) { return; }
                 tasks.push([ data.name, args ]);
                 break;
-            default:
+            case 'Selector':
+                if ( prelude.length !== 0 ) {
+                    prelude.push(', ');
+                }
                 break;
+            case 'SelectorList':
+                break;
+            default:
+                return;
             }
         }
         if ( tasks.length === 0 && out.action === undefined ) {
@@ -1796,6 +1800,7 @@ Parser.prototype.SelectorCompiler = class {
         if ( Array.isArray(parts) && parts.length !== 0 ) {
             arg = this.astSerialize(parts);
         }
+        if ( arg === undefined ) { return; }
         switch ( operator ) {
         case 'has-text':
             return this.compileText(arg);
