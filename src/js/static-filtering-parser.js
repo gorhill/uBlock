@@ -1586,7 +1586,7 @@ Parser.prototype.SelectorCompiler = class {
             if ( typeof value !== 'string' ) {
                 value = data.value.name;
             }
-            out.push(`[${name}${data.matcher}"${value}"]`);
+            out.push(`[${name}${data.matcher}"${CSS.escape(value)}"]`);
             break;
         }
         case 'ClassSelector':
@@ -1858,6 +1858,7 @@ Parser.prototype.SelectorCompiler = class {
     // backslash characters.
     // Remove potentially present quotes before processing.
     compileText(s) {
+        if ( s === '' ) { return; }
         s = this.extractArg(s);
         const match = this.reParseRegexLiteral.exec(s);
         let regexDetails;
@@ -1950,6 +1951,7 @@ Parser.prototype.SelectorCompiler = class {
     }
 
     compileAttrList(s) {
+        if ( s === '' ) { return; }
         const attrs = s.split('\s*,\s*');
         const out = [];
         for ( const attr of attrs ) {

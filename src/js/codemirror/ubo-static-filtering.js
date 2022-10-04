@@ -40,7 +40,10 @@ let hintHelperRegistered = false;
 
 CodeMirror.defineMode('ubo-static-filtering', function() {
     if ( StaticFilteringParser instanceof Object === false ) { return; }
-    const parser = new StaticFilteringParser({ interactive: true });
+    const parser = new StaticFilteringParser({
+        interactive: true,
+        nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
+    });
 
     const reURL = /\bhttps?:\/\/\S+/;
     const rePreparseDirectives = /^!#(?:if|endif|include )\b/;
