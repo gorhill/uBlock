@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* globals document */
-
 'use strict';
 
 /******************************************************************************/
@@ -1391,6 +1389,9 @@ Parser.prototype.SelectorCompiler = class {
         this.reExtendedSyntaxReplacer = /\[-(?:abp|ext)-([a-z-]+)=(['"])(.+?)\2\]/g;
         this.abpProceduralOpReplacer = /:-abp-(?:contains|has)\(/g;
         this.nativeCssHas = instanceOptions.nativeCssHas === true;
+
+        // https://www.w3.org/TR/css-syntax-3/#typedef-ident-token
+        this.reValidIdentifier = /^\*|-?[A-Za-z_\xC0-\xFF\\\-]/;
     }
 
     compile(raw, out, compileOptions = {}) {
@@ -1571,13 +1572,14 @@ Parser.prototype.SelectorCompiler = class {
     }
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/2300
-    //   Unquoted atrtibute values are parsed as Identifier instead of String.
+    //   Unquoted attribute values are parsed as Identifier instead of String.
     astSerializePart(part) {
         const out = [];
         const { data } = part;
         switch ( data.type ) {
         case 'AttributeSelector': {
             const name = data.name.name;
+            if ( this.reValidIdentifier.test(name) === false ) { return; }
             if ( data.matcher === null ) {
                 out.push(`[${name}]`);
                 break;
@@ -1586,19 +1588,28 @@ Parser.prototype.SelectorCompiler = class {
             if ( typeof value !== 'string' ) {
                 value = data.value.name;
             }
-            out.push(`[${name}${data.matcher}"${CSS.escape(value)}"]`);
+            value = value.replace(/"/g, '\\$&');
+            let flags = '';
+            if ( typeof data.flags === 'string' ) {
+                flags = data.flags;
+                if ( /^(i|s|is|si)$/.test(flags) === false ) { return; }
+            }
+            out.push(`[${name}${data.matcher}"${value}"${flags}]`);
             break;
         }
         case 'ClassSelector':
+            if ( this.reValidIdentifier.test(data.name) === false ) { return; }
             out.push(`.${data.name}`);
             break;
         case 'Combinator':
             out.push(data.name === ' ' ? ' ' : ` ${data.name} `);
             break;
         case 'Identifier':
+            if ( this.reValidIdentifier.test(data.name) === false ) { return; }
             out.push(data.name);
             break;
         case 'IdSelector':
+            if ( this.reValidIdentifier.test(data.name) === false ) { return; }
             out.push(`#${data.name}`);
             break;
         case 'Nth': {
@@ -1628,6 +1639,7 @@ Parser.prototype.SelectorCompiler = class {
             out.push(data.value);
             break;
         case 'TypeSelector':
+            if ( this.reValidIdentifier.test(data.name) === false ) { return; }
             out.push(data.name);
             break;
         default:
@@ -1637,7 +1649,7 @@ Parser.prototype.SelectorCompiler = class {
     }
 
 
-    astSerialize(parts) {
+    astSerialize(parts, plainCSS = true) {
         const out = [];
         for ( const part of parts ) {
             const { data } = part;
@@ -1650,8 +1662,14 @@ Parser.prototype.SelectorCompiler = class {
             case 'Nth':
             case 'PseudoClassSelector':
             case 'PseudoElementSelector':
+            case 'TypeSelector': {
+                const s = this.astSerializePart(part);
+                if ( typeof s !== 'string' ) { return; }
+                out.push(s);
+                break;
+            }
             case 'Raw':
-            case 'TypeSelector':
+                if ( plainCSS ) { return; }
                 out.push(this.astSerializePart(part));
                 break;
             case 'Selector':
@@ -1798,7 +1816,7 @@ Parser.prototype.SelectorCompiler = class {
 
         let arg;
         if ( Array.isArray(parts) && parts.length !== 0 ) {
-            arg = this.astSerialize(parts);
+            arg = this.astSerialize(parts, false);
         }
         if ( arg === undefined ) { return; }
         switch ( operator ) {
@@ -1965,7 +1983,7 @@ Parser.prototype.SelectorCompiler = class {
     compileXpathExpression(s) {
         s = this.extractArg(s);
         try {
-            document.createExpression(s, null);
+            self.document.createExpression(s, null);
         } catch (e) {
             return;
         }
