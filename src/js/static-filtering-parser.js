@@ -1391,7 +1391,7 @@ Parser.prototype.SelectorCompiler = class {
         this.nativeCssHas = instanceOptions.nativeCssHas === true;
 
         // https://www.w3.org/TR/css-syntax-3/#typedef-ident-token
-        this.reValidIdentifier = /^\*|-?[A-Za-z_\xC0-\xFF\\\-]/;
+        this.reInvalidIdentifier = /^\d/;
     }
 
     compile(raw, out, compileOptions = {}) {
@@ -1579,7 +1579,7 @@ Parser.prototype.SelectorCompiler = class {
         switch ( data.type ) {
         case 'AttributeSelector': {
             const name = data.name.name;
-            if ( this.reValidIdentifier.test(name) === false ) { return; }
+            if ( this.reInvalidIdentifier.test(name) ) { return; }
             if ( data.matcher === null ) {
                 out.push(`[${name}]`);
                 break;
@@ -1591,25 +1591,25 @@ Parser.prototype.SelectorCompiler = class {
             value = value.replace(/"/g, '\\$&');
             let flags = '';
             if ( typeof data.flags === 'string' ) {
-                flags = data.flags;
-                if ( /^(i|s|is|si)$/.test(flags) === false ) { return; }
+                if ( /^(is?|si?)$/.test(data.flags) === false ) { return; }
+                flags = ` ${data.flags}`;
             }
             out.push(`[${name}${data.matcher}"${value}"${flags}]`);
             break;
         }
         case 'ClassSelector':
-            if ( this.reValidIdentifier.test(data.name) === false ) { return; }
+            if ( this.reInvalidIdentifier.test(data.name) ) { return; }
             out.push(`.${data.name}`);
             break;
         case 'Combinator':
             out.push(data.name === ' ' ? ' ' : ` ${data.name} `);
             break;
         case 'Identifier':
-            if ( this.reValidIdentifier.test(data.name) === false ) { return; }
+            if ( this.reInvalidIdentifier.test(data.name) ) { return; }
             out.push(data.name);
             break;
         case 'IdSelector':
-            if ( this.reValidIdentifier.test(data.name) === false ) { return; }
+            if ( this.reInvalidIdentifier.test(data.name) ) { return; }
             out.push(`#${data.name}`);
             break;
         case 'Nth': {
@@ -1639,7 +1639,7 @@ Parser.prototype.SelectorCompiler = class {
             out.push(data.value);
             break;
         case 'TypeSelector':
-            if ( this.reValidIdentifier.test(data.name) === false ) { return; }
+            if ( this.reInvalidIdentifier.test(data.name) ) { return; }
             out.push(data.name);
             break;
         default:
