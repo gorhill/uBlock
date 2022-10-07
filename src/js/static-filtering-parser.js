@@ -1613,18 +1613,22 @@ Parser.prototype.SelectorCompiler = class {
             out.push(`#${data.name}`);
             break;
         case 'Nth': {
-            const a = parseInt(data.nth.a, 10) || null;
-            const b = parseInt(data.nth.b, 10) || null;
-            if ( a !== null ) {
-                out.push(`${a}n`);
-                if ( b === null ) { break; }
-                if ( b < 0 ) {
+            if ( data.nth.type === 'AnPlusB' ) {
+                const a = parseInt(data.nth.a, 10) || null;
+                const b = parseInt(data.nth.b, 10) || null;
+                if ( a !== null ) {
+                    out.push(`${a}n`);
+                    if ( b === null ) { break; }
+                    if ( b < 0 ) {
+                        out.push(`${b}`);
+                    } else {
+                        out.push(`+${b}`);
+                    }
+                } else if ( b !== null ) {
                     out.push(`${b}`);
-                } else {
-                    out.push(`+${b}`);
                 }
-            } else if ( b !== null ) {
-                out.push(`${b}`);
+            } else if ( data.nth.type === 'Identifier' ) {
+                out.push(data.nth.name);
             }
             break;
         }
