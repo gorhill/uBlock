@@ -58,13 +58,15 @@
     },
     {
       "matches": [
-        "https://easylist.to/*",
         "https://*.fanboy.co.nz/*",
+        "https://*.github.io/*",
+        "https://*.letsblock.it/*",
+        "https://*.mypdns.com/*"
+        "https://*.mypdns.org/*",
+        "https://easylist.to/*",
         "https://filterlists.com/*",
         "https://forums.lanik.us/*",
-        "https://github.com/*",
-        "https://*.github.io/*",
-        "https://*.letsblock.it/*"
+        "https://github.com/*"
       ],
       "js": [
         "/js/scriptlets/subscriber.js"
