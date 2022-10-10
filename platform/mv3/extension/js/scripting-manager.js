@@ -27,7 +27,8 @@
 
 import { browser, dnr } from './ext.js';
 import { fetchJSON } from './fetch.js';
-import { getAllTrustedSiteDirectives } from './trusted-sites.js';
+import { getFilteringModeDetails } from './mode-manager.js';
+import { getEnabledRulesetsDetails } from './ruleset-manager.js';
 
 import * as ut from './utils.js';
 
@@ -51,44 +52,8 @@ function getScriptingDetails() {
 
 /******************************************************************************/
 
-const toRegisterable = (fname, hostnames, trustedSites) => {
-    const directive = {
-        id: fname,
-        allFrames: true,
-        matchOriginAsFallback: true,
-    };
-    if ( hostnames ) {
-        directive.matches = ut.matchesFromHostnames(hostnames);
-    } else {
-        directive.matches = [ '<all_urls>' ];
-    }
-    if (
-        directive.matches.length === 1 &&
-        directive.matches[0] === '<all_urls>'
-    ) {
-        directive.excludeMatches = ut.matchesFromHostnames(trustedSites);
-    }
-    directive.js = [ `/rulesets/js/${fname.slice(0,2)}/${fname.slice(2)}.js` ];
-    if ( (ut.fidFromFileName(fname) & RUN_AT_END_BIT) !== 0 ) {
-        directive.runAt = 'document_end';
-    } else {
-        directive.runAt = 'document_start';
-    }
-    if ( (ut.fidFromFileName(fname) & MAIN_WORLD_BIT) !== 0 ) {
-        directive.world = 'MAIN';
-    }
-    return directive;
-};
-
-const RUN_AT_END_BIT = 0b10;
-const MAIN_WORLD_BIT = 0b01;
-
-/******************************************************************************/
-
 // Important: We need to sort the arrays for fast comparison
-const arrayEq = (a, b) => {
-    if ( a === undefined ) { return b === undefined; }
-    if ( b === undefined ) { return false; }
+const arrayEq = (a = [], b = []) => {
     const alen = a.length;
     if ( alen !== b.length ) { return false; }
     a.sort(); b.sort();
@@ -98,29 +63,128 @@ const arrayEq = (a, b) => {
     return true;
 };
 
-const shouldUpdate = (registered, afterHostnames, afterExcludeHostnames) => {
-    if ( afterHostnames.length === 1 && afterHostnames[0] === '*' ) {
-        const beforeExcludeHostnames = registered.excludeMatches &&
-            ut.hostnamesFromMatches(registered.excludeMatches) ||
-            [];
-        if ( arrayEq(beforeExcludeHostnames, afterExcludeHostnames) === false ) { 
-            return true;
-        }
+/******************************************************************************/
+
+const toRegisterableScript = (context, fname, hostnames) => {
+    if ( context.before.has(fname) ) {
+        return toUpdatableScript(context, fname, hostnames);
     }
-    const beforeHostnames = registered.matches &&
-        ut.hostnamesFromMatches(registered.matches) ||
-        [];
-    return arrayEq(beforeHostnames, afterHostnames) === false;
+    const matches = hostnames
+        ? ut.matchesFromHostnames(hostnames)
+        : [ '<all_urls>' ];
+    const excludeMatches = matches.length === 1 && matches[0] === '<all_urls>'
+        ? ut.matchesFromHostnames(context.filteringModeDetails.none)
+        : [];
+    const runAt = (ut.fidFromFileName(fname) & RUN_AT_END_BIT) !== 0
+        ? 'document_end'
+        : 'document_start';
+    const directive = {
+        id: fname,
+        matches,
+        excludeMatches,
+        js: [ `/rulesets/js/${fname.slice(0,2)}/${fname.slice(2)}.js` ],
+        runAt,
+    };
+    if ( (ut.fidFromFileName(fname) & MAIN_WORLD_BIT) !== 0 ) {
+        directive.world = 'MAIN';
+    }
+    context.toAdd.push(directive);
 };
 
-const isTrustedHostname = (trustedSites, hn) => {
-    if ( trustedSites.size === 0 ) { return false; }
-    while ( hn ) {
-        if ( trustedSites.has(hn) ) { return true; }
-        hn = ut.toBroaderHostname(hn);
+const toUpdatableScript = (context, fname, hostnames) => {
+    const registered = context.before.get(fname);
+    context.before.delete(fname); // Important!
+    const directive = { id: fname };
+    const matches = hostnames
+        ? ut.matchesFromHostnames(hostnames)
+        : [ '<all_urls>' ];
+    if ( arrayEq(registered.matches, matches) === false ) {
+        directive.matches = matches;
     }
-    return false;
+    const excludeMatches = matches.length === 1 && matches[0] === '<all_urls>'
+        ? ut.matchesFromHostnames(context.filteringModeDetails.none)
+        : [];
+    if ( arrayEq(registered.excludeMatches, excludeMatches) === false ) {
+        directive.excludeMatches = excludeMatches;
+    }
+    if ( directive.matches || directive.excludeMatches ) {
+        context.toUpdate.push(directive);
+    }
 };
+
+const RUN_AT_END_BIT = 0b10;
+const MAIN_WORLD_BIT = 0b01;
+
+/******************************************************************************/
+
+async function registerGeneric(context, args) {
+    const { before } = context;
+    const registered = before.get('css-generic');
+    before.delete('css-generic'); // Important!
+
+    const {
+        filteringModeDetails,
+        rulesetsDetails,
+    } = args;
+
+    const js = [];
+    for ( const details of rulesetsDetails ) {
+        if ( details.css.generic.count === 0 ) { continue; }
+        js.push(`/rulesets/js/${details.id}.generic.js`);
+    }
+
+    if ( js.length === 0 ) {
+        if ( registered !== undefined ) {
+            context.toRemove.push('css-generic');
+        }
+        return;
+    }
+
+    const matches = [];
+    const excludeMatches = [];
+    if ( filteringModeDetails.extendedGeneric.has('all-urls') ) {
+        excludeMatches.push(...ut.matchesFromHostnames(filteringModeDetails.none));
+        excludeMatches.push(...ut.matchesFromHostnames(filteringModeDetails.network));
+        excludeMatches.push(...ut.matchesFromHostnames(filteringModeDetails.extendedSpecific));
+        matches.push('<all_urls>');
+    } else {
+        matches.push(...ut.matchesFromHostnames(filteringModeDetails.extendedGeneric));
+    }
+
+    if ( matches.length === 0 ) {
+        if ( registered !== undefined ) {
+            context.toRemove.push('css-generic');
+        }
+        return;
+    }
+
+    // register
+    if ( registered === undefined ) {
+        context.toAdd.push({
+            id: 'css-generic',
+            js,
+            matches,
+            excludeMatches,
+            runAt: 'document_idle',
+        });
+        return;
+    }
+
+    // update
+    const directive = { id: 'css-generic' };
+    if ( arrayEq(registered.js, js) === false ) {
+        directive.js = js;
+    }
+    if ( arrayEq(registered.matches, matches) === false ) {
+        directive.matches = matches;
+    }
+    if ( arrayEq(registered.excludeMatches, excludeMatches) === false ) {
+        directive.excludeMatches = excludeMatches;
+    }
+    if ( directive.js || directive.matches || directive.excludeMatches ) {
+        context.toUpdate.push(directive);
+    }
+}
 
 /******************************************************************************/
 
@@ -158,16 +222,27 @@ async function getInjectableCount(origin) {
 
 /******************************************************************************/
 
-function registerSomeInjectables(args) {
+function registerSpecific(args) {
     const {
-        hostnamesSet,
-        trustedSites,
-        rulesetIds,
+        filteringModeDetails,
+        rulesetsDetails,
         scriptingDetails,
     } = args;
 
+    // Combined both specific and generic sets
+    if (
+        filteringModeDetails.extendedSpecific.has('all-urls') ||
+        filteringModeDetails.extendedGeneric.has('all-urls')
+    ) {
+        return registerAllSpecific(args);
+    }
+
+    const targetHostnames = [
+        ...filteringModeDetails.extendedSpecific,
+        ...filteringModeDetails.extendedGeneric,
+    ];
+
     const toRegisterMap = new Map();
-    const trustedSitesSet = new Set(trustedSites);
 
     const checkMatches = (hostnamesToFidsMap, hn) => {
         let fids = hostnamesToFidsMap.get(hn);
@@ -189,11 +264,10 @@ function registerSomeInjectables(args) {
         }
     };
 
-    for ( const rulesetId of rulesetIds ) {
-        const hostnamesToFidsMap = scriptingDetails.get(rulesetId);
+    for ( const rulesetDetails of rulesetsDetails ) {
+        const hostnamesToFidsMap = scriptingDetails.get(rulesetDetails.id);
         if ( hostnamesToFidsMap === undefined ) { continue; }
-        for ( let hn of hostnamesSet ) {
-            if ( isTrustedHostname(trustedSitesSet, hn) ) { continue; }
+        for ( let hn of targetHostnames ) {
             while ( hn ) {
                 checkMatches(hostnamesToFidsMap, hn);
                 hn = ut.toBroaderHostname(hn);
@@ -204,21 +278,25 @@ function registerSomeInjectables(args) {
     return toRegisterMap;
 }
 
-function registerAllInjectables(args) {
+function registerAllSpecific(args) {
     const {
-        trustedSites,
-        rulesetIds,
+        filteringModeDetails,
+        rulesetsDetails,
         scriptingDetails,
     } = args;
 
     const toRegisterMap = new Map();
-    const trustedSitesSet = new Set(trustedSites);
+    const excludeSet = new Set([
+        ...filteringModeDetails.network,
+        ...filteringModeDetails.none,
+    ]);
 
-    for ( const rulesetId of rulesetIds ) {
-        const hostnamesToFidsMap = scriptingDetails.get(rulesetId);
+    for ( const rulesetDetails of rulesetsDetails ) {
+        const hostnamesToFidsMap = scriptingDetails.get(rulesetDetails.id);
         if ( hostnamesToFidsMap === undefined ) { continue; }
         for ( let [ hn, fids ] of hostnamesToFidsMap ) {
-            if ( isTrustedHostname(trustedSitesSet, hn) ) { continue; }
+            if ( excludeSet.has(hn) ) { continue; }
+            if ( ut.isDescendantHostnameOfIter(hn, excludeSet) ) { continue; }
             if ( typeof fids === 'number' ) { fids = [ fids ]; }
             for ( const fid of fids ) {
                 const fname = ut.fnameFromFileId(fid);
@@ -248,80 +326,65 @@ async function registerInjectables(origins) {
     if ( browser.scripting === undefined ) { return false; }
 
     const [
-        hostnamesSet,
-        trustedSites,
-        rulesetIds,
+        filteringModeDetails,
+        rulesetsDetails,
         scriptingDetails,
         registered,
     ] = await Promise.all([
-        browser.permissions.getAll(),
-        getAllTrustedSiteDirectives(),
-        dnr.getEnabledRulesets(),
+        getFilteringModeDetails(),
+        getEnabledRulesetsDetails(),
         getScriptingDetails(),
         browser.scripting.getRegisteredContentScripts(),
-    ]).then(results => {
-        results[0] = new Set(ut.hostnamesFromMatches(results[0].origins));
-        return results;
-    });
-
-    const toRegisterMap = hostnamesSet.has('*')
-        ? registerAllInjectables({
-            trustedSites,
-            rulesetIds,
-            scriptingDetails,
-        })
-        : registerSomeInjectables({
-            hostnamesSet,
-            trustedSites,
-            rulesetIds,
-            scriptingDetails,
-        });
+    ]);
 
     const before = new Map(registered.map(entry => [ entry.id, entry ]));
+    const toAdd = [], toUpdate = [], toRemove = [];
+    const promises = [];
+    const context = {
+        filteringModeDetails,
+        before,
+        toAdd,
+        toUpdate,
+        toRemove,
+    };
 
-    const toAdd = [];
-    const toUpdate = [];
+    await registerGeneric(context, { filteringModeDetails, rulesetsDetails, });
+
+    const toRegisterMap = registerSpecific({
+        filteringModeDetails,
+        rulesetsDetails,
+        scriptingDetails,
+    });
+
     for ( const [ fname, hostnames ] of toRegisterMap ) {
-        if ( before.has(fname) === false ) {
-            toAdd.push(toRegisterable(fname, hostnames, trustedSites));
-            continue;
-        }
-        if ( shouldUpdate(before.get(fname), hostnames, trustedSites) ) {
-            toUpdate.push(toRegisterable(fname, hostnames, trustedSites));
-        }
+        toRegisterableScript(context, fname, hostnames);
     }
+    toRemove.push(...Array.from(before.keys()));
 
-    const toRemove = [];
-    for ( const fname of before.keys() ) {
-        if ( toRegisterMap.has(fname) ) { continue; }
-        toRemove.push(fname);
-    }
-
-    const todo = [];
     if ( toRemove.length !== 0 ) {
         console.info(`Unregistered ${toRemove} content (css/js)`);
-        todo.push(
+        promises.push(
             browser.scripting.unregisterContentScripts({ ids: toRemove })
                 .catch(reason => { console.info(reason); })
         );
     }
     if ( toAdd.length !== 0 ) {
         console.info(`Registered ${toAdd.map(v => v.id)} content (css/js)`);
-        todo.push(
+        promises.push(
             browser.scripting.registerContentScripts(toAdd)
                 .catch(reason => { console.info(reason); })
         );
     }
     if ( toUpdate.length !== 0 ) {
         console.info(`Updated ${toUpdate.map(v => v.id)} content (css/js)`);
-        todo.push(
+        promises.push(
             browser.scripting.updateContentScripts(toUpdate)
                 .catch(reason => { console.info(reason); })
         );
     }
-    if ( todo.length === 0 ) { return; }
+    if ( promises.length === 0 ) { return; }
 
-    return Promise.all(todo);
+    return Promise.all(promises);
 }
 
 /******************************************************************************/

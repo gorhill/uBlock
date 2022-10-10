@@ -240,9 +240,9 @@ const onMessage = function(request, sender, callback) {
                 isUnsupported(rule)
             );
             out.push(`+ Unsupported filters (${bad.length}): ${JSON.stringify(bad, replacer, 2)}`);
-
-            out.push(`\n+ Cosmetic filters: ${result.cosmetic.length}`);
-            for ( const details of result.cosmetic ) {
+            out.push(`+ generichide exclusions (${network.generichideExclusions.length}): ${JSON.stringify(network.generichideExclusions, replacer, 2)}`);
+            out.push(`+ Cosmetic filters: ${result.specificCosmetic.size}`);
+            for ( const details of result.specificCosmetic ) {
                 out.push(`    ${JSON.stringify(details)}`);
             }
 

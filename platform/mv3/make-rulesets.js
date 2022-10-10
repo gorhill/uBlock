@@ -382,15 +382,54 @@ function addScriptingAPIResources(id, hostnames, fid) {
     }
 }
 
-const        toCSSFileId = s => (uidint32(s) & ~0b11) | 0b00;
-const         toJSFileId = s => (uidint32(s) & ~0b11) | 0b01;
-const toProceduralFileId = s => (uidint32(s) & ~0b11) | 0b10;
+const toIsolatedStartFileId = s => (uidint32(s) & ~0b11) | 0b00;
+const     toMainStartFileId = s => (uidint32(s) & ~0b11) | 0b01;
+const   toIsolatedEndFileId = s => (uidint32(s) & ~0b11) | 0b10;
 
 const pathFromFileName = fname => `${scriptletDir}/${fname.slice(0,2)}/${fname.slice(2)}.js`;
 
 /******************************************************************************/
 
-const MAX_COSMETIC_FILTERS_PER_FILE = 128;
+async function processGenericCosmeticFilters(assetDetails, bucketsMap, exclusions) {
+    const out = {
+        count: 0,
+        exclusionCount: 0,
+    };
+    if ( bucketsMap === undefined ) { return out; }
+    if ( bucketsMap.size === 0 ) { return out; }
+    const bucketsList = Array.from(bucketsMap);
+    const count = bucketsList.reduce((a, v) => a += v[1].length, 0);
+    if ( count === 0 ) { return out; }
+    out.count = count;
+
+    const selectorLists = bucketsList.map(v => [ v[0], v[1].join(',') ]);
+    const originalScriptletMap = await loadAllSourceScriptlets();
+
+    const patchedScriptlet = originalScriptletMap.get('css-generic')
+        .replace(
+            '$rulesetId$',
+            assetDetails.id
+        ).replace(
+            /\bself\.\$excludeHostnameSet\$/m,
+            `${JSON.stringify(exclusions, scriptletJsonReplacer)}`
+        ).replace(
+            /\bself\.\$genericSelectorLists\$/m,
+            `${JSON.stringify(selectorLists, scriptletJsonReplacer)}`
+        );
+
+    writeFile(
+        `${scriptletDir}/${assetDetails.id}.generic.js`,
+        patchedScriptlet
+    );
+
+    log(`CSS-generic: ${count} plain CSS selectors`);
+
+    return out;
+}
+
+/******************************************************************************/
+
+const MAX_COSMETIC_FILTERS_PER_FILE = 256;
 
 // This merges selectors which are used by the same hostnames
 
@@ -530,11 +569,11 @@ async function processCosmeticFilters(assetDetails, mapin) {
                 /\bself\.\$hostnamesMap\$/m,
                 `${JSON.stringify(hostnamesMap, scriptletJsonReplacer)}`
             );
-        const fid = toCSSFileId(patchedScriptlet);
+        const fid = toIsolatedStartFileId(patchedScriptlet);
         if ( globalPatchedScriptletsSet.has(fid) === false ) {
             globalPatchedScriptletsSet.add(fid);
             const fname = fnameFromFileId(fid);
-            writeFile(pathFromFileName(fname), patchedScriptlet, {});
+            writeFile(pathFromFileName(fname), patchedScriptlet);
             generatedFiles.push(fname);
         }
         for ( const entry of slice ) {
@@ -543,8 +582,8 @@ async function processCosmeticFilters(assetDetails, mapin) {
     }
 
     if ( generatedFiles.length !== 0 ) {
-        log(`CSS-related distinct filters: ${contentArray.length} distinct combined selectors`);
-        log(`CSS-related injectable files: ${generatedFiles.length}`);
+        log(`CSS-specific distinct filters: ${contentArray.length} distinct combined selectors`);
+        log(`CSS-specific injectable files: ${generatedFiles.length}`);
         log(`\t${generatedFiles.join(', ')}`);
     }
 
@@ -596,11 +635,11 @@ async function processProceduralCosmeticFilters(assetDetails, mapin) {
                 /\bself\.\$hostnamesMap\$/m,
                 `${JSON.stringify(hostnamesMap, scriptletJsonReplacer)}`
             );
-        const fid = toProceduralFileId(patchedScriptlet);
+        const fid = toIsolatedEndFileId(patchedScriptlet);
         if ( globalPatchedScriptletsSet.has(fid) === false ) {
             globalPatchedScriptletsSet.add(fid);
             const fname = fnameFromFileId(fid);
-            writeFile(pathFromFileName(fname), patchedScriptlet, {});
+            writeFile(pathFromFileName(fname), patchedScriptlet);
             generatedFiles.push(fname);
         }
         for ( const entry of slice ) {
@@ -725,11 +764,11 @@ async function processScriptletFilters(assetDetails, mapin) {
                 `${JSON.stringify(hostnamesMap, scriptletJsonReplacer)}`
             );
         // ends-with 1 = scriptlet resource
-        const fid = toJSFileId(patchedScriptlet);
+        const fid = toMainStartFileId(patchedScriptlet);
         if ( globalPatchedScriptletsSet.has(fid) === false ) {
             globalPatchedScriptletsSet.add(fid);
             const fname = fnameFromFileId(fid);
-            writeFile(pathFromFileName(fname), patchedScriptlet, {});
+            writeFile(pathFromFileName(fname), patchedScriptlet);
             generatedFiles.push(fname);
         }
         for ( const details of argsDetails.values() ) {
@@ -771,8 +810,8 @@ const rulesetFromURLS = async function(assetDetails) {
     const declarativeCosmetic = new Map();
     const proceduralCosmetic = new Map();
     const rejectedCosmetic = [];
-    if ( results.cosmetic ) {
-        for ( const [ selector, details ] of results.cosmetic ) {
+    if ( results.specificCosmetic ) {
+        for ( const [ selector, details ] of results.specificCosmetic ) {
             if ( details.rejected ) {
                 rejectedCosmetic.push(selector);
                 continue;
@@ -786,7 +825,12 @@ const rulesetFromURLS = async function(assetDetails) {
             proceduralCosmetic.set(JSON.stringify(parsed), details);
         }
     }
-    const cosmeticStats = await processCosmeticFilters(
+    const genericCosmeticStats = await processGenericCosmeticFilters(
+        assetDetails,
+        results.genericCosmetic,
+        results.network.generichideExclusions.filter(hn => hn.endsWith('.*') === false)
+    );
+    const specificCosmeticStats = await processCosmeticFilters(
         assetDetails,
         declarativeCosmetic
     );
@@ -824,7 +868,8 @@ const rulesetFromURLS = async function(assetDetails) {
             rejected: netStats.rejected,
         },
         css: {
-            specific: cosmeticStats,
+            generic: genericCosmeticStats,
+            specific: specificCosmeticStats,
             procedural: proceduralStats,
         },
         scriptlets: {
@@ -896,20 +941,36 @@ async function main() {
         'ara-0',
         'EST-0',
     ];
+    // Merge lists which have same target languages
+    const langToListsMap = new Map();
     for ( const [ id, asset ] of Object.entries(assets) ) {
         if ( asset.content !== 'filters' ) { continue; }
         if ( asset.off !== true ) { continue; }
         if ( typeof asset.lang !== 'string' ) { continue; }
         if ( excludedLists.includes(id) ) { continue; }
-        const contentURL = Array.isArray(asset.contentURL)
-            ? asset.contentURL[0]
-            : asset.contentURL;
+        let ids = langToListsMap.get(asset.lang);
+        if ( ids === undefined ) {
+            langToListsMap.set(asset.lang, ids = []);
+        }
+        ids.push(id);
+    }
+    for ( const ids of langToListsMap.values() ) {
+        const urls = [];
+        for ( const id of ids ) {
+            const asset = assets[id];
+            const contentURL = Array.isArray(asset.contentURL)
+                ? asset.contentURL[0]
+                : asset.contentURL;
+            urls.push(contentURL);
+        }
+        const id = ids[0];
+        const asset = assets[id];
         await rulesetFromURLS({
             id: id.toLowerCase(),
             lang: asset.lang,
             name: asset.title,
             enabled: false,
-            urls: [ contentURL ],
+            urls,
             homeURL: asset.supportURL,
         });
     }
@@ -933,6 +994,13 @@ async function main() {
     }
 
     // Handpicked rulesets from abroad
+    await rulesetFromURLS({
+        id: 'cname-trackers',
+        name: 'AdGuard CNAME-cloaked trackers',
+        enabled: true,
+        urls: [ 'https://raw.githubusercontent.com/AdguardTeam/cname-trackers/master/combined_disguised_trackers.txt' ],
+        homeURL: 'https://github.com/AdguardTeam/cname-trackers#cname-cloaked-trackers',
+    });
     await rulesetFromURLS({
         id: 'stevenblack-hosts',
         name: 'Steven Black\'s hosts file',

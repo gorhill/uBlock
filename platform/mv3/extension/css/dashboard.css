@@ -1,9 +1,11 @@
 html, body {
     align-items: center;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     height: 100vh;
     justify-content: stretch;
+    padding: 0 1em;
     overflow: hidden;
     position: relative;
     width: 100vw;

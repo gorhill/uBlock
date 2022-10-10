@@ -42,10 +42,28 @@ const toBroaderHostname = hn => {
 
 /******************************************************************************/
 
+// Is a descendant hostname of b?
+
+const isDescendantHostname = (a, b) => {
+    if ( b === 'all-urls' ) { return true; }
+    if ( a.endsWith(b) === false ) { return false; }
+    if ( a === b ) { return false; }
+    return a.charCodeAt(a.length - b.length - 1) === 0x2E /* '.' */;
+};
+
+const isDescendantHostnameOfIter = (a, iter) => {
+    for ( const b of iter ) {
+        if ( isDescendantHostname(a, b) ) { return true; }
+    }
+    return false;
+};
+
+/******************************************************************************/
+
 const matchesFromHostnames = hostnames => {
     const out = [];
     for ( const hn of hostnames ) {
-        if ( hn === '*' ) {
+        if ( hn === '*' || hn === 'all-urls' ) {
             out.length = 0;
             out.push('<all_urls>');
             break;
@@ -59,9 +77,8 @@ const hostnamesFromMatches = origins => {
     const out = [];
     for ( const origin of origins ) {
         if ( origin === '<all_urls>' ) {
-            out.length = 0;
-            out.push('*');
-            break;
+            out.push('all-urls');
+            continue;
         }
         const match = /^\*:\/\/(?:\*\.)?([^\/]+)\/\*/.exec(origin);
         if ( match === null ) { continue; }
@@ -83,6 +100,8 @@ const fidFromFileName = fname =>
 export {
     parsedURLromOrigin,
     toBroaderHostname,
+    isDescendantHostname,
+    isDescendantHostnameOfIter,
     matchesFromHostnames,
     hostnamesFromMatches,
     fnameFromFileId,

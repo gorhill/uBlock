@@ -185,6 +185,9 @@ section.notice {
     position: relative;
     width: var(--checkbox-size);
     }
+label:hover .checkbox:not([disabled]) {
+    background-color: var(--surface-2);
+    }
 .checkbox > input[type="checkbox"] {
     box-sizing: border-box;
     height: 100%;
@@ -215,6 +218,49 @@ section.notice {
 .checkbox[disabled],
 .checkbox[disabled] ~ span {
     filter: var(--checkbox-disabled-filter);
+    }
+
+.radio {
+    --margin-end: calc(var(--font-size) * 0.75);
+    box-sizing: border-box;
+    display: inline-flex;
+    flex-shrink: 0;
+    height: calc(var(--checkbox-size) + 2px);
+    margin: 0;
+    margin-inline-end: var(--margin-end);
+    -webkit-margin-end: var(--margin-end);
+    position: relative;
+    width: calc(var(--checkbox-size) + 2px);
+    }
+.radio > input[type="radio"] {
+    box-sizing: border-box;
+    height: 100%;
+    margin: 0;
+    min-width: var(--checkbox-size);
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    }
+.radio > input[type="radio"] + svg {
+    background-color: transparent;
+    box-sizing: border-box;
+    height: 100%;
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    }
+.radio > input[type="radio"] + svg > path {
+    fill: var(--checkbox-ink);
+    }
+.radio > input[type="radio"] + svg > circle {
+    fill: transparent;
+    }
+label:hover .radio > input[type="radio"]:not(:checked) + svg > circle {
+    fill: var(--surface-3);
+    }
+.radio > input[type="radio"]:checked + svg > path,
+.radio > input[type="radio"]:checked + svg > circle {
+    fill: var(--checkbox-checked-ink);
     }
 
 select {

@@ -43,6 +43,10 @@ const hostnamesMap = new Map(self.$hostnamesMap$);
 
 /******************************************************************************/
 
+let proceduralFilterer;
+
+/******************************************************************************/
+
 const addStylesheet = text => {
     try {
         const sheet = new CSSStyleSheet();
@@ -149,11 +153,8 @@ class PSelectorMatchesMediaTask extends PSelectorTask {
         this.mql = window.matchMedia(task[1]);
         if ( this.mql.media === 'not all' ) { return; }
         this.mql.addEventListener('change', ( ) => {
-            if ( typeof vAPI !== 'object' ) { return; }
-            if ( vAPI === null ) { return; }
-            const filterer = vAPI.domFilterer && vAPI.domFilterer.proceduralFilterer;
-            if ( filterer instanceof Object === false ) { return; }
-            filterer.onDOMChanged([ null ]);
+            if ( proceduralFilterer instanceof Object === false ) { return; }
+            proceduralFilterer.onDOMChanged([ null ]);
         });
     }
     transpose(node, output) {
@@ -258,25 +259,10 @@ class PSelectorSpathTask extends PSelectorTask {
             this.spath = `:scope ${this.spath.trim()}`;
         }
     }
-    qsa(node) {
-        if ( this.nth === false ) {
-            return node.querySelectorAll(this.spath);
-        }
-        const parent = node.parentElement;
-        if ( parent === null ) { return; }
-        let pos = 1;
-        for (;;) {
-            node = node.previousElementSibling;
-            if ( node === null ) { break; }
-            pos += 1;
-        }
-        return parent.querySelectorAll(
-            `:scope > :nth-child(${pos})${this.spath}`
-        );
-    }
     transpose(node, output) {
-        const nodes = this.qsa(node);
-        if ( nodes === undefined ) { return; }
+        const nodes = this.nth
+            ? PSelectorSpathTask.qsa(node, this.spath)
+            : node.querySelectorAll(this.spath);
         for ( const node of nodes ) {
             output.push(node);
         }
@@ -344,10 +330,8 @@ class PSelectorWatchAttrs extends PSelectorTask {
     }
     // TODO: Is it worth trying to re-apply only the current selector?
     handler() {
-        const filterer =
-            vAPI.domFilterer && vAPI.domFilterer.proceduralFilterer;
-        if ( filterer instanceof Object ) {
-            filterer.onDOMChanged([ null ]);
+        if ( proceduralFilterer instanceof Object ) {
+            proceduralFilterer.onDOMChanged([ null ]);
         }
     }
     transpose(node, output) {
@@ -420,12 +404,10 @@ class PSelector {
     prime(input) {
         const root = input || document;
         if ( this.selector === '' ) { return [ root ]; }
-        let selector = this.selector;
         if ( input !== document && /^ [>+~]/.test(this.selector) ) {
             return Array.from(PSelectorSpathTask.qsa(input, this.selector));
         }
-        const elems = root.querySelectorAll(selector);
-        return Array.from(elems);
+        return Array.from(root.querySelectorAll(this.selector));
     }
     exec(input) {
         let nodes = this.prime(input);
@@ -509,7 +491,7 @@ class ProceduralFilterer {
         this.onDOMChanged();
     }
 
-    commitNow() {
+    uBOL_commitNow() {
         //console.time('procedural selectors/dom layout changed');
 
         // https://github.com/uBlockOrigin/uBlock-issues/issues/341
@@ -589,7 +571,7 @@ class ProceduralFilterer {
         if ( this.timer !== undefined ) { return; }
         this.timer = self.requestAnimationFrame(( ) => {
             this.timer = undefined;
-            this.commitNow();
+            this.uBOL_commitNow();
         });
     }
 }
@@ -668,10 +650,8 @@ if ( styleSelectors.length !== 0 ) {
 
 /******************************************************************************/
 
-// Procedural selectors
-
 if ( proceduralSelectors.length !== 0 ) {
-    const filterer = new ProceduralFilterer(proceduralSelectors);
+    proceduralFilterer = new ProceduralFilterer(proceduralSelectors);
     const observer = new MutationObserver(mutations => {
         let domChanged = false;
         for ( let i = 0; i < mutations.length && !domChanged; i++ ) {
@@ -686,7 +666,7 @@ if ( proceduralSelectors.length !== 0 ) {
             }
         }
         if ( domChanged === false ) { return; }
-        filterer.onDOMChanged();
+        proceduralFilterer.onDOMChanged();
     });
     observer.observe(document, {
         childList: true,

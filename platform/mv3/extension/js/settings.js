@@ -32,7 +32,6 @@ import { simpleStorage } from './storage.js';
 
 const rulesetMap = new Map();
 let cachedRulesetData = {};
-let filteringSettingsHash = '';
 let hideUnusedSet = new Set([ 'regions' ]);
 
 /******************************************************************************/
@@ -44,7 +43,7 @@ function renderNumber(value) {
 /******************************************************************************/
 
 function rulesetStats(rulesetId) {
-    const canRemoveParams = cachedRulesetData.hasOmnipotence;
+    const canRemoveParams = cachedRulesetData.defaultFilteringMode > 1;
     const rulesetDetails = rulesetMap.get(rulesetId);
     if ( rulesetDetails === undefined ) { return; }
     const { rules, filters } = rulesetDetails;
@@ -202,27 +201,20 @@ function renderFilterLists(soft = false) {
 
     dom.remove(qsa$('#lists .listEntries .listEntry.discard'));
 
-    // Compute a hash of the settings so that we can keep track of changes
-    // affecting the loading of filter lists.
-    if ( !soft ) {
-        filteringSettingsHash = hashFromCurrentFromSettings();
-    }
-
     renderWidgets();
 }
 
 /******************************************************************************/
 
 const renderWidgets = function() {
-    dom.cl.toggle(dom.body, 'firstRun', cachedRulesetData.firstRun === true);
+    if ( cachedRulesetData.firstRun ) {
+        dom.cl.add(dom.body, 'firstRun');
+    }
 
-    qs$('#omnipotenceWidget input').checked = cachedRulesetData.hasOmnipotence;
+    const defaultLevel = cachedRulesetData.defaultFilteringMode;
+    qs$(`.filteringModeCard input[type="radio"][value="${defaultLevel}"]`).checked = true;
 
-    dom.cl.toggle(
-        qs$('#buttonApply'),
-        'disabled',
-        filteringSettingsHash === hashFromCurrentFromSettings()
-    );
+    qs$('#autoReload input[type="checkbox"').checked = cachedRulesetData.autoReload;
 
     // Compute total counts
     let filterCount = 0;
@@ -241,71 +233,54 @@ const renderWidgets = function() {
 
 /******************************************************************************/
 
-async function onOmnipotenceChanged(ev) {
+async function onFilteringModeChange(ev) {
     const input = ev.target;
-    const newState = input.checked;
+    const newLevel = parseInt(input.value, 10);
+    let granted = false;
 
-    const oldState = await browser.permissions.contains({
-        origins: [ '<all_urls>' ]
-    });
-    if ( newState === oldState ) { return; }
-
-    let actualState;
-    if ( newState ) {
-        actualState = await browser.permissions.request({
+    switch ( newLevel ) {
+    case 1: { // Revoke broad permissions
+        granted = await browser.permissions.remove({
             origins: [ '<all_urls>' ]
         });
-    } else {
-        actualState = await browser.permissions.remove({
-            origins: [ '<all_urls>' ]
-        }) !== true;
+        break;
     }
-
-    cachedRulesetData.hasOmnipotence = actualState;
-    qs$('#omnipotenceWidget input').checked = actualState;
+    case 2:
+    case 3: { // Request broad permissions
+        granted = await browser.permissions.request({
+            origins: [ '<all_urls>' ]
+        });
+        break;
+    }
+    default:
+        break;
+    }
+    if ( granted ) {
+        const actualLevel = await sendMessage({
+            what: 'setDefaultFilteringMode',
+            level: newLevel,
+        });
+        cachedRulesetData.defaultFilteringMode = actualLevel;
+    }
     renderFilterLists(true);
     renderWidgets();
 }
 
 dom.on(
-    qs$('#omnipotenceWidget input'),
+    qs$('#defaultFilteringMode'),
     'change',
-    ev => { onOmnipotenceChanged(ev); }
+    '.filteringModeCard input[type="radio"]',
+    ev => { onFilteringModeChange(ev); }
 );
 
 /******************************************************************************/
 
-function hashFromCurrentFromSettings() {
-    const hash = [];
-    const listHash = [];
-    for ( const liEntry of qsa$('#lists .listEntry[data-listkey]') ) {
-        if ( qs$('input[type="checkbox"]:checked', liEntry) ) {
-            listHash.push(dom.attr(liEntry, 'data-listkey'));
-        }
-    }
-    hash.push(listHash.sort().join());
-    return hash.join();
-}
-
-self.hasUnsavedData = function() {
-    return hashFromCurrentFromSettings() !== filteringSettingsHash;
-};
-
-/******************************************************************************/
-
-function onListsetChanged(ev) {
-    const input = ev.target;
-    const li = input.closest('.listEntry');
-    dom.cl.toggle(li, 'checked', input.checked);
-    renderWidgets();
-}
-
-dom.on(
-    qs$('#lists'),
-    'change',
-    '.listEntry input',
-    onListsetChanged
-);
+dom.on(qs$('#autoReload input[type="checkbox"'), 'change', ev => {
+    sendMessage({
+        what: 'setAutoReload',
+        state: ev.target.checked,
+    });
+});
 
 /******************************************************************************/
 
@@ -321,20 +296,12 @@ async function applyEnabledRulesets() {
         enabledRulesets,
     });
 
-    filteringSettingsHash = hashFromCurrentFromSettings();
-}
-
-async function buttonApplyHandler() {
-    dom.cl.remove(qs$('#buttonApply'), 'enabled');
-    await applyEnabledRulesets();
     renderWidgets();
 }
 
-dom.on(
-    qs$('#buttonApply'),
-    'click',
-    ( ) => { buttonApplyHandler(); }
-);
+dom.on(qs$('#lists'), 'change', '.listEntry input[type="checkbox"]', ( ) => {
+    applyEnabledRulesets();
+});
 
 /******************************************************************************/
 
@@ -406,7 +373,7 @@ simpleStorage.getItem('hideUnusedFilterLists').then(value => {
 /******************************************************************************/
 
 sendMessage({
-    what: 'getRulesetData',
+    what: 'getOptionsPageData',
 }).then(data => {
     if ( !data ) { return; }
     cachedRulesetData = data;

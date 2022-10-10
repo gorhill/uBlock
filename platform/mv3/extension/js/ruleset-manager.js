@@ -36,6 +36,7 @@ const REGEXES_REALM_END = REGEXES_REALM_START + RULE_REALM_SIZE;
 const REMOVEPARAMS_REALM_START = 2000000;
 const REMOVEPARAMS_REALM_END = REMOVEPARAMS_REALM_START + RULE_REALM_SIZE;
 const TRUSTED_DIRECTIVE_BASE_RULE_ID = 8000000;
+const BLOCKING_MODES_RULE_ID = TRUSTED_DIRECTIVE_BASE_RULE_ID + 1;
 const CURRENT_CONFIG_BASE_RULE_ID = 9000000;
 
 /******************************************************************************/
@@ -67,8 +68,8 @@ function getDynamicRules() {
         const map = new Map(
             rules.map(rule => [ rule.id, rule ])
         );
-        console.log(`Dynamic rule count: ${map.size}`);
-        console.log(`Available dynamic rule count: ${dnr.MAX_NUMBER_OF_DYNAMIC_AND_SESSION_RULES - map.size}`);
+        console.info(`Dynamic rule count: ${map.size}`);
+        console.info(`Available dynamic rule count: ${dnr.MAX_NUMBER_OF_DYNAMIC_AND_SESSION_RULES - map.size}`);
         return map;
     });
     return dynamicRuleMapPromise;
@@ -362,8 +363,9 @@ async function getEnabledRulesetsDetails() {
 /******************************************************************************/
 
 export {
-    TRUSTED_DIRECTIVE_BASE_RULE_ID,
+    BLOCKING_MODES_RULE_ID,
     CURRENT_CONFIG_BASE_RULE_ID,
+    TRUSTED_DIRECTIVE_BASE_RULE_ID,
     getRulesetDetails,
     getDynamicRules,
     enableRulesets,

@@ -4033,6 +4033,24 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
         }
     }
 
+    // Collect generichide filters
+    const generichideExclusions = [];
+    {
+        const bucket = buckets.get(AllowAction | typeNameToTypeValue['generichide']);
+        if ( bucket ) {
+            for ( const rules of bucket.values() ) {
+                for ( const rule of rules ) {
+                    if ( rule.condition === undefined ) { continue; }
+                    if ( rule.condition.initiatorDomains ) {
+                        generichideExclusions.push(...rule.condition.initiatorDomains);
+                    } else if ( rule.condition.requestDomains ) {
+                        generichideExclusions.push(...rule.condition.requestDomains);
+                    }
+                }
+            }
+        }
+    }
+
     // Patch modifier filters
     for ( const rule of ruleset ) {
         if ( rule.__modifierType === undefined ) { continue; }
@@ -4247,6 +4265,7 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
         filterCount: context.filterCount,
         acceptedFilterCount: context.acceptedFilterCount,
         rejectedFilterCount: context.rejectedFilterCount,
+        generichideExclusions,
     };
 };
 
