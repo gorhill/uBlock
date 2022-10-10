@@ -1,82 +1,84 @@
 {
-  "applications": {
-    "gecko": {
-      "id": "uBlock0@raymondhill.net",
-      "strict_min_version": "78.0"
-    }
-  },
-  "author": "Raymond Hill & contributors",
-  "background": {
-    "page": "background.html"
-  },
-  "browser_action": {
-    "browser_style": false,
-    "default_icon": {
-      "16": "img/icon_16.png",
-      "32": "img/icon_32.png"
+    "applications": {
+        "gecko": {
+            "id": "uBlock0@raymondhill.net",
+            "strict_min_version": "78.0"
+        }
     },
-    "default_title": "uBlock Origin",
-    "default_popup": "popup-fenix.html"
-  },
-  "content_scripts": [
-    {
-      "matches": [
-        "http://*/*",
-        "https://*/*",
-        "file://*/*"
-      ],
-      "js": [
-        "/js/vapi.js",
-        "/js/vapi-client.js",
-        "/js/contentscript.js"
-      ],
-      "all_frames": true,
-      "match_about_blank": true,
-      "run_at": "document_start"
+    "author": "Raymond Hill & contributors",
+    "background": {
+        "page": "background.html"
     },
-    {
-      "matches": [
-        "https://easylist.to/*",
-        "https://*.fanboy.co.nz/*",
-        "https://filterlists.com/*",
-        "https://forums.lanik.us/*",
-        "https://github.com/*",
-        "https://*.github.io/*",
-        "https://*.letsblock.it/*"
-      ],
-      "js": [
-        "/js/scriptlets/subscriber.js"
-      ],
-      "run_at": "document_idle",
-      "all_frames": false
-    }
-  ],
-  "default_locale": "en",
-  "description": "__MSG_extShortDesc__",
-  "icons": {
-    "16": "img/ublock.svg",
-    "48": "img/ublock.svg",
-    "96": "img/ublock.svg"
-  },
-  "manifest_version": 2,
-  "name": "uBlock Origin",
-  "options_ui": {
-    "page": "dashboard.html",
-    "browser_style": false,
-    "open_in_tab": true
-  },
-  "permissions": [
-    "privacy",
-    "storage",
-    "tabs",
-    "webNavigation",
-    "webRequest",
-    "webRequestBlocking",
-    "<all_urls>"
-  ],
-  "short_name": "uBlock₀",
-  "version": "1.9.15.101",
-  "web_accessible_resources": [
-    "/web_accessible_resources/*"
-  ]
+    "browser_action": {
+        "browser_style": false,
+        "default_icon": {
+            "16": "img/icon_16.png",
+            "32": "img/icon_32.png"
+        },
+        "default_title": "uBlock Origin",
+        "default_popup": "popup-fenix.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*",
+                "file://*/*"
+            ],
+            "js": [
+                "/js/vapi.js",
+                "/js/vapi-client.js",
+                "/js/contentscript.js"
+            ],
+            "all_frames": true,
+            "match_about_blank": true,
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "https://*.fanboy.co.nz/*",
+                "https://*.github.io/*",
+                "https://*.letsblock.it/*",
+                "https://*.mypdns.com/*",
+                "https://*.mypdns.org/*",
+                "https://easylist.to/*",
+                "https://filterlists.com/*",
+                "https://forums.lanik.us/*",
+                "https://github.com/*"
+            ],
+            "js": [
+                "/js/scriptlets/subscriber.js"
+            ],
+            "run_at": "document_idle",
+            "all_frames": false
+        }
+    ],
+    "default_locale": "en",
+    "description": "__MSG_extShortDesc__",
+    "icons": {
+        "16": "img/ublock.svg",
+        "48": "img/ublock.svg",
+        "96": "img/ublock.svg"
+    },
+    "manifest_version": 2,
+    "name": "uBlock Origin",
+    "options_ui": {
+        "page": "dashboard.html",
+        "browser_style": false,
+        "open_in_tab": true
+    },
+    "permissions": [
+        "privacy",
+        "storage",
+        "tabs",
+        "webNavigation",
+        "webRequest",
+        "webRequestBlocking",
+        "<all_urls>"
+    ],
+    "short_name": "uBlock₀",
+    "version": "1.9.15.101",
+    "web_accessible_resources": [
+        "/web_accessible_resources/*"
+    ]
 }

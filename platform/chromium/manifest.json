@@ -1,102 +1,104 @@
 {
-  "author": "Raymond Hill & contributors",
-  "background": {
-    "page": "background.html"
-  },
-  "browser_action": {
-    "default_icon": {
-      "16": "img/icon_16.png",
-      "32": "img/icon_32.png"
+    "author": "Raymond Hill & contributors",
+    "background": {
+        "page": "background.html"
     },
-    "default_title": "uBlock Origin",
-    "default_popup": "popup-fenix.html"
-  },
-  "commands": {
-    "launch-element-zapper": {
-      "description": "__MSG_popupTipZapper__"
+    "browser_action": {
+        "default_icon": {
+            "16": "img/icon_16.png",
+            "32": "img/icon_32.png"
+        },
+        "default_title": "uBlock Origin",
+        "default_popup": "popup-fenix.html"
     },
-    "launch-element-picker": {
-      "description": "__MSG_popupTipPicker__"
+    "commands": {
+        "launch-element-zapper": {
+            "description": "__MSG_popupTipZapper__"
+        },
+        "launch-element-picker": {
+            "description": "__MSG_popupTipPicker__"
+        },
+        "launch-logger": {
+            "description": "__MSG_popupTipLog__"
+        },
+        "open-dashboard": {
+            "description": "__MSG_popupTipDashboard__"
+        },
+        "relax-blocking-mode": {
+            "description": "__MSG_relaxBlockingMode__"
+        },
+        "toggle-cosmetic-filtering": {
+            "description": "__MSG_toggleCosmeticFiltering__"
+        }
     },
-    "launch-logger": {
-      "description": "__MSG_popupTipLog__"
+    "content_scripts": [
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "js": [
+                "/js/vapi.js",
+                "/js/vapi-client.js",
+                "/js/contentscript.js"
+            ],
+            "all_frames": true,
+            "match_about_blank": true,
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "https://*.fanboy.co.nz/*",
+                "https://*.github.io/*",
+                "https://*.letsblock.it/*",
+                "https://*.mypdns.com/*",
+                "https://*.mypdns.org/*",
+                "https://easylist.to/*",
+                "https://filterlists.com/*",
+                "https://forums.lanik.us/*",
+                "https://github.com/*"
+            ],
+            "js": [
+                "/js/scriptlets/subscriber.js"
+            ],
+            "run_at": "document_idle",
+            "all_frames": false
+        }
+    ],
+    "content_security_policy": "script-src 'self'; object-src 'self'",
+    "default_locale": "en",
+    "description": "__MSG_extShortDesc__",
+    "icons": {
+        "16": "img/icon_16.png",
+        "32": "img/icon_32.png",
+        "64": "img/icon_64.png",
+        "128": "img/icon_128.png"
     },
-    "open-dashboard": {
-      "description": "__MSG_popupTipDashboard__"
+    "incognito": "split",
+    "manifest_version": 2,
+    "minimum_chrome_version": "66.0",
+    "name": "uBlock Origin",
+    "options_ui": {
+        "page": "dashboard.html",
+        "open_in_tab": true
     },
-    "relax-blocking-mode": {
-      "description": "__MSG_relaxBlockingMode__"
+    "permissions": [
+        "contextMenus",
+        "privacy",
+        "storage",
+        "tabs",
+        "unlimitedStorage",
+        "webNavigation",
+        "webRequest",
+        "webRequestBlocking",
+        "<all_urls>"
+    ],
+    "short_name": "uBlock₀",
+    "storage": {
+        "managed_schema": "managed_storage.json"
     },
-    "toggle-cosmetic-filtering": {
-      "description": "__MSG_toggleCosmeticFiltering__"
-    }
-  },
-  "content_scripts": [
-    {
-      "matches": [
-        "http://*/*",
-        "https://*/*"
-      ],
-      "js": [
-        "/js/vapi.js",
-        "/js/vapi-client.js",
-        "/js/contentscript.js"
-      ],
-      "all_frames": true,
-      "match_about_blank": true,
-      "run_at": "document_start"
-    },
-    {
-      "matches": [
-        "https://easylist.to/*",
-        "https://*.fanboy.co.nz/*",
-        "https://filterlists.com/*",
-        "https://forums.lanik.us/*",
-        "https://github.com/*",
-        "https://*.github.io/*",
-        "https://*.letsblock.it/*"
-      ],
-      "js": [
-        "/js/scriptlets/subscriber.js"
-      ],
-      "run_at": "document_idle",
-      "all_frames": false
-    }
-  ],
-  "content_security_policy": "script-src 'self'; object-src 'self'",
-  "default_locale": "en",
-  "description": "__MSG_extShortDesc__",
-  "icons": {
-    "16": "img/icon_16.png",
-    "32": "img/icon_32.png",
-    "64": "img/icon_64.png",
-    "128": "img/icon_128.png"
-  },
-  "incognito": "split",
-  "manifest_version": 2,
-  "minimum_chrome_version": "66.0",
-  "name": "uBlock Origin",
-  "options_ui": {
-    "page": "dashboard.html",
-    "open_in_tab": true
-  },
-  "permissions": [
-    "contextMenus",
-    "privacy",
-    "storage",
-    "tabs",
-    "unlimitedStorage",
-    "webNavigation",
-    "webRequest",
-    "webRequestBlocking",
-    "<all_urls>"
-  ],
-  "short_name": "uBlock₀",
-  "storage": {
-    "managed_schema": "managed_storage.json"
-  },
-  "version": "1.15.11.0",
-  "web_accessible_resources": [
-    "/web_accessible_resources/*"
-  ]
+    "version": "1.15.11.0",
+    "web_accessible_resources": [
+        "/web_accessible_resources/*"
+    ]
 }
