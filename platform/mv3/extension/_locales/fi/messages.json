@@ -16,7 +16,7 @@
     "description": "English: uBO Lite — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Varoitus! Olet tehnyt muutoksia, joita ei ole vielä tallennettu",
+    "message": "Varoitus! Olet tehnyt tallentamattomia muutoksia",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -84,11 +84,11 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupGrantGreatPowers": {
-    "message": "Myönnä uBO Litelle laajennetut käyttöoikeudet tällä sivustolla painamalla tästä.\nLaajennetut oikeudet mahdollistavat tehokkaamman sisällöneston.",
+    "message": "Myönnä uBO Litelle laajemmat käyttöoikeudet tämän sivuston sisällön käsittelyyn painamalla tästä.\nLaajemmat oikeudet mahdollistavat tehokkaamman sisällöneston.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupRevokeGreatPowers": {
-    "message": "Peru laajennetut käyttöoikeudet tällä sivustolla painamalla tästä.",
+    "message": "Peru tämän sivuston sisällön käsittelyyn myönnetyt laajemmat käyttöoikeudet painamalla tästä.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
@@ -116,11 +116,11 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "omnipotenceLabel": {
-    "message": "Käytä laajennettua suodatusta kaikilla sivustoilla",
+    "message": "Käytä laajennettua suodatusta kaikilla verkkosivustoilla",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "omnipotenceLegend": {
-    "message": "uBO Lite can apply extended filtering on a given website only after you explicitly grant the extension permissions to modify data on that website. This setting allows you to grant permissions for extended filtering to all websites at once.",
+    "message": "uBO Liten laajennettu suodatus voi toimia sivustolla vasta, kun sille on myönnetty sivustokohtainen tietojenkäsittelyoikeus. Tämän asetuksen avulla nämä käyttöoikeudet voidaan myöntää kattamaan kaikki verkkosivustot.",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {

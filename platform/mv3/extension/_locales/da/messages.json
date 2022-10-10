@@ -84,11 +84,11 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupGrantGreatPowers": {
-    "message": "Click to grant uBO Lite extended permissions on this site.\nExtended permissions allow more effective content blocking.",
+    "message": "Klik for at give uBO Lite udvidede tilladelser på dette websted.\nUdvidede tilladelser tillader mere effektiv blokering af indhold.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupRevokeGreatPowers": {
-    "message": "Click to revoke extended permissions on this site",
+    "message": "Klik for at tilbagekalde udvidede tilladelser på dette websted",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
@@ -120,7 +120,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "omnipotenceLegend": {
-    "message": "uBO Lite kan kun anvende udvidet filtrering på et givent websted efter udtrykkelig tildeling af udvidelsestilladelser til ændring af data på webstedet. Via denne indstilling kan tilladelser til udvidet filtrering tildeles for alle websteder på én gang.",
+    "message": "uBO Lite kan kun anvende udvidet filtrering på et givent websted, efter at du udtrykkeligt har givet udvidelsen tilladelse til at ændre data på webstedet. Denne indstilling giver dig mulighed for at give tilladelse til udvidet filtrering for alle websteder på én gang.",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {

@@ -120,11 +120,11 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "omnipotenceLegend": {
-    "message": "uBO Lite mund të filtrojë më mirë vetëm po të ketë leje të posaçme për modifikimin e të dhënave të uebsajteve. Ky parametër ju mundëson të jepni leje të posaçme për një filtrim më të plotë dhe të menjëhershëm të të gjitha uebsajteve.",
+    "message": "uBO Lite mund të filtrojë më mirë kur i jepni leje të posaçme për modifikimin e të dhënave të uebsajteve. Ky parametër mundëson dhënien e lejeve të posaçme për një filtrim më të plotë dhe të menjëhershëm të të gjitha uebsajteve.",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
-    "message": "Standard",
+    "message": "Standarde",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAds": {

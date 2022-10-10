@@ -84,11 +84,11 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupGrantGreatPowers": {
-    "message": "Haz clic para otorgar permisos extendidos a uBO Lite en este sitio.\nLos permisos extendidos permiten un bloqueo de contenido más efectivo.",
+    "message": "Clic para otorgar permisos extendidos a uBO Lite en este sitio.\nLos permisos extendidos permiten un bloqueo de contenido más efectivo.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupRevokeGreatPowers": {
-    "message": "Haz clic para revocar los permisos extendidos en este sitio",
+    "message": "Clic para revocar permisos extendidos en este sitio",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
@@ -116,11 +116,11 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "omnipotenceLabel": {
-    "message": "Habilitar filtrado extendido en todo los sitios web",
+    "message": "Habilitar filtrado extendido en todos los sitios web",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "omnipotenceLegend": {
-    "message": "uBO Lite puede aplicar filtrado extendido en un sitio dado solo despues de que explicitamente hayas otorgado los permisos de extension para modificar datos en ese sitio web. Este ajuste te permite otorgar permisos para filtrado extendido a todos los sitios web a la vez.",
+    "message": "uBO Lite puede aplicar el filtrado extendido en un sitio web determinado solo después de que explícitamente hayas otorgado a la extensión permisos para modificar los datos de ese sitio web. Esta configuración te permite otorgar permisos para el filtrado extendido a todos los sitios web a la vez.",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {

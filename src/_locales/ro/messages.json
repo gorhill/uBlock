@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Lista de excluderi",
+    "message": "Situri de încredere",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Raportează o eroare cu acest site",
+    "message": "Raportează o eroare cu acest sit",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -312,7 +312,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Blochează elementul",
+    "message": "Blochează elementul…",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -340,7 +340,7 @@
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
-    "message": "Temă",
+    "message": "Aspect",
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
@@ -352,7 +352,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Sunt un utilizator avansat (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>Lectură obligatorie</a>)",
+    "message": "Sunt un utilizator avansat",
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
@@ -400,7 +400,7 @@
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsAdvanced": {
-    "message": "Avansat",
+    "message": "Avansate",
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
@@ -444,7 +444,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Această opțiune permite citirea și aplicarea <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">filtrelor compatibile Adblock Plus pentru &ldquo;ascunderea elementelor&rdquo;</a>. Aceste filtre sunt în esență vizuale, ele servesc la ascunderea elementelor dintr-o pagină web care sunt considerate drept o neplăcere vizuală și care nu pot fi blocate de motorul de filtrare bazat pe cereri de rețea.</p><p>Activând această opțiune memoria utilizată de <i>uBlock</i> va crește.</p>",
+    "message": "Filtrele cosmetice servesc la ascunderea elementelor dintr-o pagină web care sunt considerate a fi deranjante din punct de vedere vizual și care nu pot fi blocate de motoarele de filtrare bazate pe solicitări de rețea.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -500,7 +500,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Importă...",
+    "message": "Importă…",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -520,7 +520,7 @@
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "În curs de actualizare...",
+    "message": "Se actualizează…",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -576,7 +576,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Importă din fișier...",
+    "message": "Importă din fișier…",
     "description": ""
   },
   "rulesExport": {
@@ -612,7 +612,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "Lista ta de nume de gazde unde uBlock va fi dezactivat. Fiecare adresă pe o singură linie. Adresele nevalide vor fi ignorate automat.",
+    "message": "Directivele privind siturile de încredere stabilesc pe ce pagini web trebuie dezactivat uBlock Origin. O intrare pe linie.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
@@ -624,7 +624,7 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "lista-mea-de-excluderi-ublock_{{datetime}}.txt",
+    "message": "situri-de-încredere-ublock_{{datetime}}.txt",
     "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
@@ -908,15 +908,15 @@
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "Probleme cu filtrele/website-ul este defect",
+    "message": "Probleme cu filtrele/siturile defecte",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Raportați probleme cu filtrele pe anumite site-uri în <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> centralizatorul de probleme</span>. Necesită un cont GitHub.",
+    "message": "Raportează probleme cu filtrele pe anumite situri în <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> centralizatorul de probleme</span>. Necesită un cont GitHub.",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": ">Important:</b> Evitați să folosiți alte extensii cu același scop ca uBlock Origin, deoarece pot exista probleme cu filtrele pe anumite site-uri.",
+    "message": ">Important:</b> Evită să folosești alte extensii cu același scop ca uBlock Origin, deoarece pot exista probleme cu filtrele pe anumite situri.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
@@ -956,7 +956,7 @@
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "Pagina web...",
+    "message": "Pagina web…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
@@ -988,7 +988,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Etichetează pagina ca fiind NSFW (Not Safe For Work) - nerecomandată în public.",
+    "message": "Etichetează pagina ca fiind „NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
@@ -1040,7 +1040,7 @@
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "Copie de siguranță în fișier",
+    "message": "Copie de rezervă…",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
@@ -1048,11 +1048,11 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Restaurează din fișier...",
+    "message": "Restabilește din fișier…",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Restaurează la configurarea implicită...",
+    "message": "Restabilește reglările inițiale…",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
@@ -1144,7 +1144,7 @@
     "description": "English: Close this window"
   },
   "docblockedDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "Nu mă avertiza din nou despre acest sit",
     "description": "Label for checkbox in document-blocked page"
   },
   "docblockedProceed": {
@@ -1160,7 +1160,7 @@
     "description": "English: Permanently"
   },
   "docblockedDisable": {
-    "message": "Continuați",
+    "message": "Continuă",
     "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {
@@ -1204,11 +1204,11 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "Blochează element in cardu...",
+    "message": "Blochează un element în cadru…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Subscrie la lista de filtre...",
+    "message": "Înscrie-te la lista de filtre…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
@@ -1220,7 +1220,7 @@
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "Comutați derularea blocată",
+    "message": "Activează/Dezactivează Blocarea răsfoirii",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
@@ -1228,7 +1228,7 @@
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "genericSelectAll": {
-    "message": "Selectează tot",
+    "message": "Alege tot",
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleCosmeticFiltering": {

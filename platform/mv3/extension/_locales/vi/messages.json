@@ -116,11 +116,11 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "omnipotenceLabel": {
-    "message": "Enable extended filtering on all websites",
+    "message": "Bật tính năng lọc mở rộng trên tất cả các trang web",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "omnipotenceLegend": {
-    "message": "uBO Lite can apply extended filtering on a given website only after you explicitly grant the extension permissions to modify data on that website. This setting allows you to grant permissions for extended filtering to all websites at once.",
+    "message": "uBO Lite có thể áp dụng tính năng lọc mở rộng trên một trang web nhất định chỉ sau khi bạn cấp quyền một cách tường minh cho tiện ích mở rộng để sửa đổi dữ liệu trên trang web đó. Cài đặt này cho phép bạn cấp quyền cho lọc mở rộng tới tất cả các trang web cùng một lúc.",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {

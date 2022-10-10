@@ -28,7 +28,7 @@
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
-    "message": "Impostazioni",
+    "message": "Opzioni",
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {

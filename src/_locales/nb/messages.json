@@ -1040,7 +1040,7 @@
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "Sikkerhetskopier til fil",
+    "message": "Sikkerhetskopier til fil…",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
@@ -1048,11 +1048,11 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Gjenopprett fra fil",
+    "message": "Gjenopprett fra fil…",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Tilbakestill til standardinnstillinger",
+    "message": "Tilbakestill til standardinnstillinger…",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
