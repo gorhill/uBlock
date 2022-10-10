@@ -104,22 +104,33 @@ const PSelectorMinTextLengthTask = class {
 const PSelectorSpathTask = class {
     constructor(task) {
         this.spath = task[1];
+        this.nth = /^(?:\s*[+~]|:)/.test(this.spath);
+        if ( this.nth ) { return; }
+        if ( /^\s*>/.test(this.spath) ) {
+            this.spath = `:scope ${this.spath.trim()}`;
+        }
     }
     transpose(node, output) {
+        const nodes = this.nth
+            ? PSelectorSpathTask.qsa(node, this.spath)
+            : node.querySelectorAll(this.spath);
+        for ( const node of nodes ) {
+            output.push(node);
+        }
+    }
+    // Helper method for other operators.
+    static qsa(node, selector) {
         const parent = node.parentElement;
-        if ( parent === null ) { return; }
+        if ( parent === null ) { return []; }
         let pos = 1;
         for (;;) {
             node = node.previousElementSibling;
             if ( node === null ) { break; }
             pos += 1;
         }
-        const nodes = parent.querySelectorAll(
-            `:scope > :nth-child(${pos})${this.spath}`
+        return parent.querySelectorAll(
+            `:scope > :nth-child(${pos})${selector}`
         );
-        for ( const node of nodes ) {
-            output.push(node);
-        }
     }
 };
 
@@ -198,6 +209,9 @@ const PSelector = class {
     prime(input) {
         const root = input || docRegister;
         if ( this.selector === '' ) { return [ root ]; }
+        if ( input !== docRegister && /^ ?[>+~]/.test(this.selector) ) {
+            return Array.from(PSelectorSpathTask.qsa(input, this.selector));
+        }
         return Array.from(root.querySelectorAll(this.selector));
     }
     exec(input) {

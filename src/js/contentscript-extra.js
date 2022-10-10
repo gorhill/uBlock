@@ -232,25 +232,10 @@ class PSelectorSpathTask extends PSelectorTask {
             this.spath = `:scope ${this.spath.trim()}`;
         }
     }
-    qsa(node) {
-        if ( this.nth === false ) {
-            return node.querySelectorAll(this.spath);
-        }
-        const parent = node.parentElement;
-        if ( parent === null ) { return; }
-        let pos = 1;
-        for (;;) {
-            node = node.previousElementSibling;
-            if ( node === null ) { break; }
-            pos += 1;
-        }
-        return parent.querySelectorAll(
-            `:scope > :nth-child(${pos})${this.spath}`
-        );
-    }
     transpose(node, output) {
-        const nodes = this.qsa(node);
-        if ( nodes === undefined ) { return; }
+        const nodes = this.nth
+            ? PSelectorSpathTask.qsa(node, this.spath)
+            : node.querySelectorAll(this.spath);
         for ( const node of nodes ) {
             output.push(node);
         }
@@ -394,12 +379,10 @@ class PSelector {
     prime(input) {
         const root = input || document;
         if ( this.selector === '' ) { return [ root ]; }
-        let selector = this.selector;
-        if ( input !== document && /^ [>+~]/.test(this.selector) ) {
+        if ( input !== document && /^ ?[>+~]/.test(this.selector) ) {
             return Array.from(PSelectorSpathTask.qsa(input, this.selector));
         }
-        const elems = root.querySelectorAll(selector);
-        return Array.from(elems);
+        return Array.from(root.querySelectorAll(this.selector));
     }
     exec(input) {
         let nodes = this.prime(input);
