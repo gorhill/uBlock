@@ -28,14 +28,14 @@
 
 /******************************************************************************/
 
-/// name no-setTimeout-if
-/// alias nostif
+/// name no-setInterval-if
+/// alias nosiif
 
 /******************************************************************************/
 
 // Important!
 // Isolate from global scope
-(function uBOL_noSetTimeoutIf() {
+(function uBOL_noSetIntervalIf() {
 
 /******************************************************************************/
 
@@ -68,7 +68,7 @@ const scriptlet = (
     }
     const reNeedle = new RegExp(needle);
     const regexpTest = RegExp.prototype.test;
-    self.setTimeout = new Proxy(self.setTimeout, {
+    self.setInterval = new Proxy(self.setInterval, {
         apply: function(target, thisArg, args) {
             const a = String(args[0]);
             const b = args[1];

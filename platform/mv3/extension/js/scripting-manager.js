@@ -80,6 +80,7 @@ const toRegisterableScript = (context, fname, hostnames) => {
         : 'document_start';
     const directive = {
         id: fname,
+        allFrames: true,
         matches,
         excludeMatches,
         js: [ `/rulesets/js/${fname.slice(0,2)}/${fname.slice(2)}.js` ],

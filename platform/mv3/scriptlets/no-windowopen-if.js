@@ -28,14 +28,14 @@
 
 /******************************************************************************/
 
-/// name no-setTimeout-if
-/// alias nostif
+/// name no-windowOpen-if
+/// alias nowoif
 
 /******************************************************************************/
 
 // Important!
 // Isolate from global scope
-(function uBOL_noSetTimeoutIf() {
+(function uBOL_noWindowOpenIf() {
 
 /******************************************************************************/
 
@@ -50,39 +50,76 @@ const hostnamesMap = new Map(self.$hostnamesMap$);
 const scriptlet = (
     needle = '',
     delay = '',
+    options = ''
     
 ) => {
-    const needleNot = needle.charAt(0) === '!';
-    if ( needleNot ) { needle = needle.slice(1); }
-    if ( delay === '' ) { delay = undefined; }
-    let delayNot = false;
-    if ( delay !== undefined ) {
-        delayNot = delay.charAt(0) === '!';
-        if ( delayNot ) { delay = delay.slice(1); }
-        delay = parseInt(delay, 10);
+    const newSyntax = /^[01]?$/.test(needle) === false;
+    let pattern = '';
+    let targetResult = true;
+    let autoRemoveAfter = -1;
+    if ( newSyntax ) {
+        pattern = needle;
+        if ( pattern.startsWith('!') ) {
+            targetResult = false;
+            pattern = pattern.slice(1);
+        }
+        autoRemoveAfter = parseInt(delay);
+        if ( isNaN(autoRemoveAfter) ) {
+            autoRemoveAfter = -1;
+        } 
+    } else {
+        pattern = delay;
+        if ( needle === '0' ) {
+            targetResult = false;
+        }
     }
-    if ( needle.startsWith('/') && needle.endsWith('/') ) {
-        needle = needle.slice(1,-1);
-    } else if ( needle !== '' ) {
-        needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    if ( pattern === '' ) {
+        pattern = '.?';
+    } else if ( /^\/.+\/$/.test(pattern) ) {
+        pattern = pattern.slice(1,-1);
+    } else {
+        pattern = pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
-    const reNeedle = new RegExp(needle);
-    const regexpTest = RegExp.prototype.test;
-    self.setTimeout = new Proxy(self.setTimeout, {
+    const rePattern = new RegExp(pattern);
+    const createDecoy = function(tag, urlProp, url) {
+        const decoy = document.createElement(tag);
+        decoy[urlProp] = url;
+        decoy.style.setProperty('height','1px', 'important');
+        decoy.style.setProperty('position','fixed', 'important');
+        decoy.style.setProperty('top','-1px', 'important');
+        decoy.style.setProperty('width','1px', 'important');
+        document.body.appendChild(decoy);
+        setTimeout(( ) => decoy.remove(), autoRemoveAfter * 1000);
+        return decoy;
+    };
+    window.open = new Proxy(window.open, {
         apply: function(target, thisArg, args) {
-            const a = String(args[0]);
-            const b = args[1];
-            let defuse;
-            if ( needle !== '' ) {
-                defuse = regexpTest.call(reNeedle, a) !== needleNot;
+            const url = args[0];
+            if ( rePattern.test(url) !== targetResult ) {
+                return target.apply(thisArg, args);
             }
-            if ( defuse !== false && delay !== undefined ) {
-                defuse = (b === delay || isNaN(b) && isNaN(delay) ) !== delayNot;
+            if ( autoRemoveAfter < 0 ) { return null; }
+            const decoy = /\bobj\b/.test(options)
+                ? createDecoy('object', 'data', url)
+                : createDecoy('iframe', 'src', url);
+            let popup = decoy.contentWindow;
+            if ( typeof popup === 'object' && popup !== null ) {
+                Object.defineProperty(popup, 'closed', { value: false });
+            } else {
+                const noopFunc = (function(){}).bind(self);
+                popup = new Proxy(self, {
+                    get: function(target, prop) {
+                        if ( prop === 'closed' ) { return false; }
+                        const r = Reflect.get(...arguments);
+                        if ( typeof r === 'function' ) { return noopFunc; }
+                        return target[prop];
+                    },
+                    set: function() {
+                        return Reflect.set(...arguments);
+                    },
+                });
             }
-            if ( defuse ) {
-                args[0] = function(){};
-            }
-            return target.apply(thisArg, args);
+            return popup;
         }
     });
 };
