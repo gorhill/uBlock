@@ -232,47 +232,47 @@
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
-    "message": "Default filtering mode",
+    "message": "Modo de filtrado predeterminado",
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "The default filtering mode will be overriden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
+    "message": "El modo de filtrado predeterminado será anulado por los modos de filtrado por sitio web. Puedes ajustar el modo de filtrado en cualquier sitio web según el modo que funcione mejor en ese sitio web. Cada modo tiene sus ventajas y desventajas.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
-    "message": "no filtering",
+    "message": "sin filtrado",
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
-    "message": "basic",
+    "message": "básico",
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
-    "message": "optimal",
+    "message": "óptimo",
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
-    "message": "complete",
+    "message": "completo",
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Basic network filtering from selected filter lists.\n\nDoes not require permission to read and change data on websites.",
+    "message": "Filtrado de red básico a partir de listas de filtros seleccionadas.\n\nNo requiere permiso para leer y cambiar datos en sitios web.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific extended filtering from selected filter lists.\n\nRequires broad permission to read and change data on all websites.",
+    "message": "Filtrado de red avanzado más filtrado extendido específico a partir de listas de filtros seleccionadas.\n\nRequiere un amplio permiso para leer y cambiar datos en todos los sitios web.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific and generic extended filtering from selected filter lists.\n\nRequires broad permission to read and change data on all websites.\n\nGeneric extended filtering may cause higher webpage resources usage.",
+    "message": "Filtrado de red avanzado más filtrado extendido específico y genérico a partir de listas de filtros seleccionadas.\n\nRequiere un amplio permiso para leer y cambiar datos en todos los sitios web.\n\nEl filtrado genérico extendido puede causar un mayor uso de recursos de la página web.",
     "description": "This describes the 'complete' filtering mode"
   },
   "behaviorSectionLabel": {
-    "message": "Behavior",
+    "message": "Comportamiento",
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Automatically reload page when changing filtering mode",
+    "message": "Recargar automáticamente la página al cambiar el modo de filtrado",
     "description": "Label for a checkbox in the options page"
   }
 }

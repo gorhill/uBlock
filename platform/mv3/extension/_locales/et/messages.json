@@ -88,7 +88,7 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupRevokeGreatPowers": {
-    "message": "Klõpsa, et anda uBO Lite'il selle saidi jaoks laiendatud õigused.",
+    "message": "Klõpsa, et eemaldada selle saidi laiendatud õigused",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {

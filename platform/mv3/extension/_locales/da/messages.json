@@ -224,35 +224,35 @@
     "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
-    "message": "Welcome",
+    "message": "Velkommen",
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "You have just installed uBO Lite. You can choose here the default filtering mode to use on all websites.\n\nBy default, <em>Basic</em> mode is selected because it does not require the permission to read and change data. If you trust uBO Lite, you can give it broad permission to read and change data on all websites in order to enable more advanced filtering capabilities for all websites by default.",
+    "message": "Du har lige installeret uBO Lite. Her kan du vælge den standard blockering, der skal bruges på alle hjemmesider.\n\nSom standard er, <em>Basic</em> valgt, da denne indstilling ikke kræver tilladelse til at læse og/eller ændre data. Hvis du stoler på uBO Lite, kan du give det brede tilladelser til at læse og ændre data på alle hjemmesider, for at slå mere advancerede filtrerings egenskaber til, på alle hjemmesider som standard.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
-    "message": "Default filtering mode",
+    "message": "Standard filterings tilstand",
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "The default filtering mode will be overriden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
+    "message": "Standard filtrerings tilstanden vil blive overskrevet af per-hjemmeside filtrerings tilstande. Du kan justere filtrerings tilstand på enhver given hjemmeside i henhold til hvilken tilstand der fungere bedst på den givene hjemmeside. Hver tilstand har sine fordele og ulemper.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
-    "message": "no filtering",
+    "message": "Ingen filtrering",
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
-    "message": "basic",
+    "message": "Grundlæggende",
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
-    "message": "optimal",
+    "message": "Optimal",
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
-    "message": "complete",
+    "message": "Fuldstændig",
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
