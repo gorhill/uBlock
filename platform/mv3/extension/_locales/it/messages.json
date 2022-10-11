@@ -224,55 +224,55 @@
     "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
-    "message": "Welcome",
+    "message": "Benvenuto",
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "You have just installed uBO Lite. You can choose here the default filtering mode to use on all websites.\n\nBy default, <em>Basic</em> mode is selected because it does not require the permission to read and change data. If you trust uBO Lite, you can give it broad permission to read and change data on all websites in order to enable more advanced filtering capabilities for all websites by default.",
+    "message": "Hai appena installato uBO Lite. Puoi scegliere qui la modalità di filtraggio predefinita da utilizzare su tutti i siti web.\n\nPer impostazione predefinita, viene selezionata la modalità <em>Basilare</em>, che non richiede l'autorizzazione a leggere e modificare i dati. Se ti fidi di uBO Lite, puoi concedergli un'ampia autorizzazione per leggere e modificare i dati su tutti i siti web, in modo da attivare funzionalità di filtraggio più avanzate per tutti i siti web per impostazione predefinita.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
-    "message": "Default filtering mode",
+    "message": "Modalità di filtraggio predefinita",
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "The default filtering mode will be overriden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
+    "message": "La modalità di filtraggio predefinita sarà sovrascritta dalle modalità di filtraggio per sito web. È possibile regolare la modalità di filtraggio su un determinato sito web in base alla modalità che funziona meglio su quel sito. Ogni modalità presenta vantaggi e svantaggi.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
-    "message": "no filtering",
+    "message": "nessun filtraggio",
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
-    "message": "basic",
+    "message": "basilare",
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
-    "message": "optimal",
+    "message": "ottimale",
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
-    "message": "complete",
+    "message": "completo",
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Basic network filtering from selected filter lists.\n\nDoes not require permission to read and change data on websites.",
+    "message": "Filtraggio di rete di base da liste di filtri selezionate.\n\nNon richiede l'autorizzazione a leggere e modificare i dati sui siti web.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific extended filtering from selected filter lists.\n\nRequires broad permission to read and change data on all websites.",
+    "message": "Filtraggio di rete avanzato più un filtraggio esteso specifico da liste di filtri selezionate.\n\nRichiede un'ampia autorizzazione per leggere e modificare i dati su tutti i siti web.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific and generic extended filtering from selected filter lists.\n\nRequires broad permission to read and change data on all websites.\n\nGeneric extended filtering may cause higher webpage resources usage.",
+    "message": "Filtraggio di rete avanzato più un filtraggio esteso specifico e generico da liste di filtri selezionate.\n\nRichiede un'ampia autorizzazione per leggere e modificare i dati su tutti i siti web.\n\nIl filtraggio esteso generico può causare un maggiore utilizzo delle risorse della pagina web.",
     "description": "This describes the 'complete' filtering mode"
   },
   "behaviorSectionLabel": {
-    "message": "Behavior",
+    "message": "Comportamento",
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Automatically reload page when changing filtering mode",
+    "message": "Ricarica automaticamente la pagina quando si cambia la modalità di filtraggio",
     "description": "Label for a checkbox in the options page"
   }
 }

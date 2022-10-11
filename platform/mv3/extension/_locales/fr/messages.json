@@ -224,55 +224,55 @@
     "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
-    "message": "Welcome",
+    "message": "Bienvenue",
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "You have just installed uBO Lite. You can choose here the default filtering mode to use on all websites.\n\nBy default, <em>Basic</em> mode is selected because it does not require the permission to read and change data. If you trust uBO Lite, you can give it broad permission to read and change data on all websites in order to enable more advanced filtering capabilities for all websites by default.",
+    "message": "Vous venez d'installer uBO Lite. À présent vous pouvez choisir le mode de filtrage par défaut à utiliser sur tous les sites Web.\n\nPar défaut, le mode <em>Basique</em> est sélectionné car il ne requiert pas de permissions pour lire et modifier les données. Si vous faites confiance à uBO Lite, vous pouvez lui donner des permissions étendues pour lire et modifier les données sur tous les sites Web pour activer des capacités de filtrage plus avancées pour tous les sites Web par défaut.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
-    "message": "Default filtering mode",
+    "message": "Mode de filtrage par défaut",
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "The default filtering mode will be overriden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
+    "message": "Le mode de filtrage par défaut sera remplacé par des modes de filtrage au cas par cas. Vous pouvez ajuster le mode de filtrage sur un site Web donné d'après le mode qui fonctionne le mieux sur ce dernier. Chaque mode a ses avantages et ses inconvénients.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
-    "message": "no filtering",
+    "message": "Pas de filtrage",
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
-    "message": "basic",
+    "message": "Basique",
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
-    "message": "optimal",
+    "message": "Optimal",
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
-    "message": "complete",
+    "message": "Complet",
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Basic network filtering from selected filter lists.\n\nDoes not require permission to read and change data on websites.",
+    "message": "Du filtrage réseau basique issu de listes de filtres choisies.\n\nNe nécessite pas de permission pour lire et modifier les données sur les sites Web.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific extended filtering from selected filter lists.\n\nRequires broad permission to read and change data on all websites.",
+    "message": "Du filtrage réseau avancé plus du filtrage étendu spécifique issu de listes de filtres choisies.\n\nNécessite des permissions étendues pour lire et modifier les données sur tous les sites Web.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific and generic extended filtering from selected filter lists.\n\nRequires broad permission to read and change data on all websites.\n\nGeneric extended filtering may cause higher webpage resources usage.",
+    "message": "Du filtrage réseau avancé plus du filtrage étendu générique et spécifique issu de listes de filtres choisies.\n\nNécessite des permissions étendues pour lire et modifier les données sur tous les sites Web.\n\nLe filtrage étendu générique peut augmenter l'utilisation des ressources pour la page Web.",
     "description": "This describes the 'complete' filtering mode"
   },
   "behaviorSectionLabel": {
-    "message": "Behavior",
+    "message": "Comportement",
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Automatically reload page when changing filtering mode",
+    "message": "Recharger automatiquement la page lors du changement de mode de filtrage",
     "description": "Label for a checkbox in the options page"
   }
 }

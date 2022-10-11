@@ -224,27 +224,27 @@
     "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
-    "message": "Welcome",
+    "message": "Përshëndetje",
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "You have just installed uBO Lite. You can choose here the default filtering mode to use on all websites.\n\nBy default, <em>Basic</em> mode is selected because it does not require the permission to read and change data. If you trust uBO Lite, you can give it broad permission to read and change data on all websites in order to enable more advanced filtering capabilities for all websites by default.",
+    "message": "Sapo instaluat uBO Lite. Këtu mund të zgjidhni mënyrën e filtrimit që duhet përdorur për të gjitha uebsajtet.\n\n<em>Kryesorja</em> është mënyra standarde, sepse nuk ka nevojë për leje për leximin dhe ndryshimin e të dhënave. Nëse keni besim te uBO Lite, mund t'i jepni leje shtesë për leximin dhe ndryshimin e të dhënave në të gjitha uebsajtet, në mënyrë që të kryeni një filtrim më të avancuar.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
-    "message": "Default filtering mode",
+    "message": "Mënyra standarde e filtrimit",
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "The default filtering mode will be overriden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
+    "message": "Mënyra standarde e filtrimit mund të ndryshohet për çdo uebsajt. Ndryshimet mund të bëhen në varësi të mënyrës që funksionon më mirë për një uebsajt. Secila mënyrë ka avantazhet dhe disavantazhet e veta.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
-    "message": "no filtering",
+    "message": "pa filtër",
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
-    "message": "basic",
+    "message": "kryesor",
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
@@ -252,27 +252,27 @@
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
-    "message": "complete",
+    "message": "komplet",
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Basic network filtering from selected filter lists.\n\nDoes not require permission to read and change data on websites.",
+    "message": "Filtrat kryesorë të rrjetit nga listat e përzgjedhura.\n\nNuk kanë nevojë për leje për leximin dhe ndryshimin e të dhënave në uebsajte.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific extended filtering from selected filter lists.\n\nRequires broad permission to read and change data on all websites.",
+    "message": "Filtrat e avancuar të rrjetit plus filtrat e posaçëm nga listat e përzgjedhura.\n\nDuhen leje shtesë për leximin dhe ndryshimin e të dhënave në të gjitha uebsajtet.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific and generic extended filtering from selected filter lists.\n\nRequires broad permission to read and change data on all websites.\n\nGeneric extended filtering may cause higher webpage resources usage.",
+    "message": "Filtrat e avancuar të rrjetit plus filtrat e posaçëm jospecifikë nga listat e përzgjedhura.\n\nDuhen leje shtesë për leximin dhe ndryshimin e të dhënave në të gjitha uebsajtet.\n\nFiltrat e posaçëm jospecifikë mund të rritin ngarkesën e faqeve në internet.",
     "description": "This describes the 'complete' filtering mode"
   },
   "behaviorSectionLabel": {
-    "message": "Behavior",
+    "message": "Sjellja",
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Automatically reload page when changing filtering mode",
+    "message": "Freskoj automatikisht faqen kur ndryshon mënyra e filtrimit",
     "description": "Label for a checkbox in the options page"
   }
 }

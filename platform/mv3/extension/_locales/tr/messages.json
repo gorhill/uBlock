@@ -224,7 +224,7 @@
     "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
-    "message": "Welcome",
+    "message": "Hoş geldiniz",
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
@@ -232,7 +232,7 @@
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
-    "message": "Default filtering mode",
+    "message": "Varsayılan filtreleme modu",
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
@@ -240,27 +240,27 @@
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
-    "message": "no filtering",
+    "message": "filtreleme yok",
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
-    "message": "basic",
+    "message": "temel",
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
-    "message": "optimal",
+    "message": "ideal",
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
-    "message": "complete",
+    "message": "tamamen",
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Basic network filtering from selected filter lists.\n\nDoes not require permission to read and change data on websites.",
+    "message": "Seçilen filtre listelerinden temel ağ filtrelemesi.\n\nWeb sitelerindeki verileri okumak ve değiştirmek için izin gerektirmez.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific extended filtering from selected filter lists.\n\nRequires broad permission to read and change data on all websites.",
+    "message": "Gelişmiş ağ filtrelemesi ve seçilen filtre listelerinden genişletilmiş filtreleme.\n\nTüm web sitelerindeki verileri okumak ve değiştirmek için izin gerektirir.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
@@ -268,11 +268,11 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "behaviorSectionLabel": {
-    "message": "Behavior",
+    "message": "Davranış",
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Automatically reload page when changing filtering mode",
+    "message": "Filtreleme modu değiştirildiğinde sayfayı yenile",
     "description": "Label for a checkbox in the options page"
   }
 }
