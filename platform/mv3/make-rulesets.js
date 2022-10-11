@@ -57,6 +57,7 @@ const rulesetDir = `${outputDir}/rulesets`;
 const scriptletDir = `${rulesetDir}/js`;
 const env = [
     'chromium',
+    'mv3',
     'native_css_has',
     'ublock',
     'ubol',

@@ -3147,6 +3147,7 @@ Parser.utils = Parser.prototype.utils = (( ) => {
         [ 'env_firefox', 'firefox' ],
         [ 'env_legacy', 'legacy' ],
         [ 'env_mobile', 'mobile' ],
+        [ 'env_mv3', 'mv3' ],
         [ 'env_safari', 'safari' ],
         [ 'cap_html_filtering', 'html_filtering' ],
         [ 'cap_user_stylesheet', 'user_stylesheet' ],
