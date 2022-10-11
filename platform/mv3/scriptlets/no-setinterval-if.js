@@ -49,8 +49,7 @@ const hostnamesMap = new Map(self.$hostnamesMap$);
 
 const scriptlet = (
     needle = '',
-    delay = '',
-    
+    delay = ''
 ) => {
     const needleNot = needle.charAt(0) === '!';
     if ( needleNot ) { needle = needle.slice(1); }

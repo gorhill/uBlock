@@ -51,7 +51,6 @@ const scriptlet = (
     needle = '',
     delay = '',
     options = ''
-    
 ) => {
     const newSyntax = /^[01]?$/.test(needle) === false;
     let pattern = '';

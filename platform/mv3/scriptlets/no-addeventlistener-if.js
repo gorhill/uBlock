@@ -28,14 +28,15 @@
 
 /******************************************************************************/
 
-/// name no-setTimeout-if
-/// alias nostif
+/// name no-addEventListener-if
+/// alias noaelif
+/// alias aeld
 
 /******************************************************************************/
 
 // Important!
 // Isolate from global scope
-(function uBOL_noSetTimeoutIf() {
+(function uBOL_noAddEventListenerIf() {
 
 /******************************************************************************/
 
@@ -47,43 +48,39 @@ const hostnamesMap = new Map(self.$hostnamesMap$);
 
 /******************************************************************************/
 
+const regexpFromArg = arg => {
+    if ( arg === '' ) { return /^/; }
+    if ( /^\/.+\/$/.test(arg) ) { return new RegExp(arg.slice(1,-1)); }
+    return new RegExp(arg.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+};
+
+/******************************************************************************/
+
 const scriptlet = (
-    needle = '',
-    delay = ''
+    needle1 = '',
+    needle2 = ''
 ) => {
-    const needleNot = needle.charAt(0) === '!';
-    if ( needleNot ) { needle = needle.slice(1); }
-    if ( delay === '' ) { delay = undefined; }
-    let delayNot = false;
-    if ( delay !== undefined ) {
-        delayNot = delay.charAt(0) === '!';
-        if ( delayNot ) { delay = delay.slice(1); }
-        delay = parseInt(delay, 10);
-    }
-    if ( needle.startsWith('/') && needle.endsWith('/') ) {
-        needle = needle.slice(1,-1);
-    } else if ( needle !== '' ) {
-        needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
-    const reNeedle = new RegExp(needle);
-    const regexpTest = RegExp.prototype.test;
-    self.setTimeout = new Proxy(self.setTimeout, {
-        apply: function(target, thisArg, args) {
-            const a = String(args[0]);
-            const b = args[1];
-            let defuse;
-            if ( needle !== '' ) {
-                defuse = regexpTest.call(reNeedle, a) !== needleNot;
+    const reNeedle1 = regexpFromArg(needle1);
+    const reNeedle2 = regexpFromArg(needle2);
+    self.EventTarget.prototype.addEventListener = new Proxy(
+        self.EventTarget.prototype.addEventListener,
+        {
+            apply: function(target, thisArg, args) {
+                let type, handler;
+                try {
+                    type = String(args[0]);
+                    handler = String(args[1]);
+                } catch(ex) {
+                }
+                if (
+                    reNeedle1.test(type) === false ||
+                    reNeedle2.test(handler) === false
+                ) {
+                    return target.apply(thisArg, args);
+                }
             }
-            if ( defuse !== false && delay !== undefined ) {
-                defuse = (b === delay || isNaN(b) && isNaN(delay) ) !== delayNot;
-            }
-            if ( defuse ) {
-                args[0] = function(){};
-            }
-            return target.apply(thisArg, args);
         }
-    });
+    );
 };
 
 /******************************************************************************/
