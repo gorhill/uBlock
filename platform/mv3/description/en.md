@@ -9,7 +9,7 @@ uBOL does not require broad "read/modify data" [permission](https://developer.ch
 
 To grant extended permissions on a given site, open the popup panel and pick a higher filtering mode such as Optimal or Complete.
 
-![uBOL's popup panel: no permission](https://user-images.githubusercontent.com/585534/195342643-3d0272d7-ba9a-4452-8edc-2986b72ad73a.png)
+![uBOL's popup panel: no permission](https://user-images.githubusercontent.com/585534/195468156-d7e63ab9-abfa-443c-a8f6-e646a29b801e.png)
 
 The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request:
 
