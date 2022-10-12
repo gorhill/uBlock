@@ -925,6 +925,7 @@ async function main() {
         'https://ublockorigin.pages.dev/filters/resource-abuse.txt',
         'https://ublockorigin.pages.dev/filters/unbreak.txt',
         'https://ublockorigin.pages.dev/filters/quick-fixes.txt',
+        'https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/ubol-filters.txt',
         'https://secure.fanboy.co.nz/easylist.txt',
         'https://secure.fanboy.co.nz/easyprivacy.txt',
         'https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext',
