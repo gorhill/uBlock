@@ -14,8 +14,8 @@ Listset for 'default':
 	Fetching remote https://ublockorigin.pages.dev/filters/filters-2020.txt
 	Fetching remote https://ublockorigin.pages.dev/filters/filters-2021.txt
 	Fetching remote https://ublockorigin.pages.dev/filters/filters-2022.txt
-Input filter count: 79353
-	Accepted filter count: 76956
+Input filter count: 79354
+	Accepted filter count: 76957
 	Rejected filter count: 152
 Output rule count: 20740
 	Plain good: 19927
@@ -2569,7 +2569,7 @@ CSS-specific injectable files: 9
 	1po8nv0, 19r37l0, 1vr7pt4, 019lbes, 02kks40, 0m66dm4, 15otlb8, 1ajqhhk, 1e4593c
 Procedural-related distinct filters: 531 distinct combined selectors
 Procedural-related injectable files: 3
-	031m3hq, 1pnbpg2, 1sokgc6
+	031m3hq, 0ni9lki, 1sokgc6
 Rejected cosmetic filters: 29
 	Entity not supported: javmix.*##.home-h > h1:contains(ライブチャット)
 	Entity not supported: javmix.*##.home-h > h3:contains(Stripchat)
@@ -2607,8 +2607,8 @@ Scriptlet-related injectable files: 5
 Listset for 'kor-1':
 	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filter-uBO.txt
 	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filters-share/adservice.txt
-	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filters-share/adservice_firstparty.txt
 	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filters-share/general_elemhide.txt
+	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filters-share/adservice_firstparty.txt
 	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filters-uBO/specific_ELEMHIDE.txt
 	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filters-share/general_url.txt
 	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filters-share/specific_URL.txt
@@ -3017,7 +3017,7 @@ CSS-specific injectable files: 21
 	09ono5o, 068brv8, 09tffh8, 1b3qm20, 0ejohgo, 1cibmh4, 1f2ua88, 1j4ap30, 016gkso, 0udfsn4, 09fstno, 1buhvs0, 1ss2ffs, 10annvg, 0cmp2ho, 1i2lru4, 1qri3q8, 1fvr3v0, 172hemg, 0as0m9s, 0t39n60
 Procedural-related distinct filters: 951 distinct combined selectors
 Procedural-related injectable files: 4
-	1hg10rq, 0n8oobm, 0k1lmp2, 1cn3t96
+	174uc4a, 0n8oobm, 0k1lmp2, 1cn3t96
 Scriptlet-related distinct filters: 222
 Scriptlet-related injectable files: 7
 	0jh9gj5, 1bn3sfl, 1vqmdhp, 19f27t1, 0jhgst1, 1b10775, 1a113tt
