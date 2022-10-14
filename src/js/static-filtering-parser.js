@@ -1425,6 +1425,7 @@ Parser.prototype.SelectorCompiler = class {
                     if ( match === ':-abp-contains(' ) {
                         return ':has-text(';
                     } else if ( match === ':-abp-has(' ) {
+                        this.asProcedural = false;
                         return ':has(';
                     }
                     return match;
