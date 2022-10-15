@@ -42,20 +42,50 @@ const toBroaderHostname = hn => {
 
 /******************************************************************************/
 
-// Is a descendant hostname of b?
+// Is hna descendant hostname of hnb?
 
-const isDescendantHostname = (a, b) => {
-    if ( b === 'all-urls' ) { return true; }
-    if ( a.endsWith(b) === false ) { return false; }
-    if ( a === b ) { return false; }
-    return a.charCodeAt(a.length - b.length - 1) === 0x2E /* '.' */;
+const isDescendantHostname = (hna, hnb) => {
+    if ( hnb === 'all-urls' ) { return true; }
+    if ( hna.endsWith(hnb) === false ) { return false; }
+    if ( hna === hnb ) { return false; }
+    return hna.charCodeAt(hna.length - hnb.length - 1) === 0x2E /* '.' */;
 };
 
-const isDescendantHostnameOfIter = (a, iter) => {
-    for ( const b of iter ) {
-        if ( isDescendantHostname(a, b) ) { return true; }
+const isDescendantHostnameOfIter = (hna, iterb) => {
+    const setb = iterb instanceof Set ? iterb : new Set(iterb);
+    if ( setb.has('all-urls') || setb.has('*') ) { return true; }
+    let hn = hna;
+    while ( hn ) {
+        const pos = hn.indexOf('.');
+        if ( pos === -1 ) { break; }
+        hn = hn.slice(pos + 1);
+        if ( setb.has(hn) ) { return true; }
     }
     return false;
+};
+
+const intersectHostnameIters = (itera, iterb) => {
+    const setb = iterb instanceof Set ? iterb : new Set(iterb);
+    if ( setb.has('all-urls') || setb.has('*') ) { return Array.from(itera); }
+    const out = [];
+    for ( const hna of itera ) {
+        if ( setb.has(hna) || isDescendantHostnameOfIter(hna, setb) ) {
+            out.push(hna);
+        }
+    }
+    return out;
+};
+
+const subtractHostnameIters = (itera, iterb) => {
+    const setb = iterb instanceof Set ? iterb : new Set(iterb);
+    if ( setb.has('all-urls') || setb.has('*') ) { return []; }
+    const out = [];
+    for ( const hna of itera ) {
+        if ( setb.has(hna) ) { continue; }
+        if ( isDescendantHostnameOfIter(hna, setb) ) { continue; }
+        out.push(hna);
+    }
+    return out;
 };
 
 /******************************************************************************/
@@ -102,6 +132,8 @@ export {
     toBroaderHostname,
     isDescendantHostname,
     isDescendantHostnameOfIter,
+    intersectHostnameIters,
+    subtractHostnameIters,
     matchesFromHostnames,
     hostnamesFromMatches,
     fnameFromFileId,

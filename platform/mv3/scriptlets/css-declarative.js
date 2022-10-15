@@ -25,38 +25,24 @@
 
 /******************************************************************************/
 
-/// name css-generic
+/// name css-declarative
 
 /******************************************************************************/
 
 // Important!
 // Isolate from global scope
-(function uBOL_cssGenericImport() {
+(function uBOL_cssDeclarativeImport() {
 
 /******************************************************************************/
 
 // $rulesetId$
 
-const toImport = self.$genericSelectorMap$;
+const argsList = self.$argsList$;
 
-const genericSelectorMap = self.genericSelectorMap || new Map();
+const hostnamesMap = new Map(self.$hostnamesMap$);
 
-if ( genericSelectorMap.size === 0 ) {
-    self.genericSelectorMap = new Map(toImport);
-    return;
-}
-
-for ( const toImportEntry of toImport ) {
-    const existing = genericSelectorMap.get(toImportEntry[0]);
-    genericSelectorMap.set(
-        toImportEntry[0],
-        existing === undefined
-            ? toImportEntry[1]
-            : `${existing},${toImportEntry[1]}`
-    );
-}
-
-self.genericSelectorMap = genericSelectorMap;
+self.declarativeImports = self.declarativeImports || [];
+self.declarativeImports.push({ argsList, hostnamesMap });
 
 /******************************************************************************/
 

@@ -36,7 +36,7 @@ cp LICENSE.txt $DES/
 echo "*** uBOLite.mv3: Copying mv3-specific files"
 cp platform/mv3/extension/*.html $DES/
 cp platform/mv3/extension/css/* $DES/css/
-cp platform/mv3/extension/js/* $DES/js/
+cp -R platform/mv3/extension/js/* $DES/js/
 cp platform/mv3/extension/img/* $DES/img/
 cp -R platform/mv3/extension/_locales $DES/
 

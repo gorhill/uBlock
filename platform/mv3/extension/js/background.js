@@ -42,7 +42,6 @@ import {
 } from './ruleset-manager.js';
 
 import {
-    getInjectableCount,
     registerInjectables,
 } from './scripting-manager.js';
 
@@ -62,6 +61,8 @@ const rulesetConfig = {
     autoReload: 1,
     firstRun: false,
 };
+
+const UBOL_ORIGIN = runtime.getURL('').replace(/\/$/, '');
 
 /******************************************************************************/
 
@@ -165,6 +166,9 @@ function onPermissionsRemoved(permissions) {
 /******************************************************************************/
 
 function onMessage(request, sender, callback) {
+
+    if ( sender.origin !== UBOL_ORIGIN ) { return; }
+
     switch ( request.what ) {
 
     case 'applyRulesets': {
@@ -214,7 +218,6 @@ function onMessage(request, sender, callback) {
             hasOmnipotence(),
             hasGreatPowers(request.origin),
             getEnabledRulesetsDetails(),
-            getInjectableCount(request.origin),
         ]).then(results => {
             callback({
                 level: results[0],
@@ -222,7 +225,6 @@ function onMessage(request, sender, callback) {
                 hasOmnipotence: results[1],
                 hasGreatPowers: results[2],
                 rulesetDetails: results[3],
-                injectableCount: results[4],
             });
         });
         return true;

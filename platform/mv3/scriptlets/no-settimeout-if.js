@@ -28,7 +28,8 @@
 
 /******************************************************************************/
 
-/// name no-setTimeout-if
+/// name no-settimeout-if
+/// alias no-setTimeout-if
 /// alias nostif
 
 /******************************************************************************/
@@ -41,7 +42,7 @@
 
 // $rulesetId$
 
-const argsMap = new Map(self.$argsMap$);
+const argsList = self.$argsList$;
 
 const hostnamesMap = new Map(self.$hostnamesMap$);
 
@@ -92,10 +93,10 @@ let hn;
 try { hn = document.location.hostname; } catch(ex) { }
 while ( hn ) {
     if ( hostnamesMap.has(hn) ) {
-        let argsHashes = hostnamesMap.get(hn);
-        if ( typeof argsHashes === 'number' ) { argsHashes = [ argsHashes ]; }
-        for ( const argsHash of argsHashes ) {
-            const details = argsMap.get(argsHash);
+        let argsIndices = hostnamesMap.get(hn);
+        if ( typeof argsIndices === 'number' ) { argsIndices = [ argsIndices ]; }
+        for ( const argsIndex of argsIndices ) {
+            const details = argsList[argsIndex];
             if ( details.n && details.n.includes(hn) ) { continue; }
             try { scriptlet(...details.a); } catch(ex) {}
         }
@@ -109,9 +110,7 @@ while ( hn ) {
     }
 }
 
-/******************************************************************************/
-
-argsMap.clear();
+argsList.length = 0;
 hostnamesMap.clear();
 
 /******************************************************************************/

@@ -101,7 +101,7 @@ async function updateRegexRules() {
     const toFetch = [];
     for ( const details of rulesetDetails ) {
         if ( details.rules.regexes === 0 ) { continue; }
-        toFetch.push(fetchJSON(`/rulesets/${details.id}.regexes`));
+        toFetch.push(fetchJSON(`/rulesets/regex/${details.id}.regexes`));
     }
     const regexRulesets = await Promise.all(toFetch);
 
@@ -196,7 +196,7 @@ async function updateRemoveparamRules() {
     const toFetch = [];
     for ( const details of rulesetDetails ) {
         if ( details.rules.removeparams === 0 ) { continue; }
-        toFetch.push(fetchJSON(`/rulesets/${details.id}.removeparams`));
+        toFetch.push(fetchJSON(`/rulesets/removeparam/${details.id}.removeparams`));
     }
     const removeparamRulesets = await Promise.all(toFetch);
 
