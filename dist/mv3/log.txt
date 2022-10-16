@@ -1,4 +1,4 @@
-Version: 0.1.22.10135
+Version: 0.1.22.10166
 ============================
 Listset for 'default':
 	Fetching remote https://ublockorigin.pages.dev/filters/filters.txt
@@ -7,637 +7,712 @@ Listset for 'default':
 	Fetching remote https://ublockorigin.pages.dev/filters/resource-abuse.txt
 	Fetching remote https://ublockorigin.pages.dev/filters/unbreak.txt
 	Fetching remote https://ublockorigin.pages.dev/filters/quick-fixes.txt
-	Fetching remote https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/ubol-filters.txt
+	Fetching remote https://ublockorigin.pages.dev/filters/ubol-filters.txt
 	Fetching remote https://secure.fanboy.co.nz/easylist.txt
 	Fetching remote https://secure.fanboy.co.nz/easyprivacy.txt
 	Fetching remote https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
 	Fetching remote https://ublockorigin.pages.dev/filters/filters-2020.txt
 	Fetching remote https://ublockorigin.pages.dev/filters/filters-2021.txt
 	Fetching remote https://ublockorigin.pages.dev/filters/filters-2022.txt
-Input filter count: 79354
-	Accepted filter count: 76957
-	Rejected filter count: 152
-Output rule count: 20740
-	Plain good: 19927
-	Maybe good (regexes): 123
-	redirect-rule= (discarded): 0
-	csp= (discarded): 61
+Input filter count: 78896
+	Accepted filter count: 76482
+	Rejected filter count: 153
+Output rule count: 20602
+	Plain good: 19418
+	Maybe good (regexes): 124
+	redirect=: 289
+	csp= (discarded): 60
 	removeparams= (accepted/discarded): 23/5
-	Unsupported: 606
-		Entity not supported: booru.*
-		Entity not supported: silkengirl.*
-		Entity not supported: megalink.*
-		Entity not supported: gmx.*
-		Entity not supported: samehadaku.*
-		Entity not supported: ads.shopee.*
-		Entity not supported: komikcast.*
-		Entity not supported: movs4u.*
-		Entity not supported: silkengirl.*
-		Entity not supported: silkengirl.*
-		Entity not supported: gmx.*
-		Entity not supported: hydracdn.*
-		Entity not supported: ouo.*
-		Entity not supported: vinaurl.*
-		Entity not supported: mirrorace.*
-		Entity not supported: linkvertise.*
-		Entity not supported: theproxy.*
+	Unsupported: 688
+		FilterOriginEntityHit: Entity samehadaku.* not supported
+		FilterOriginEntityHit: Entity komikcast.* not supported
+		FilterOriginEntityHit: Entity movs4u.* not supported
+		FilterOriginEntityHit: Entity ouo.* not supported
+		FilterOriginEntityHit: Entity vinaurl.* not supported
+		FilterOriginEntityHit: Entity mirrorace.* not supported
 		regexFilter is not RE2-compatible: ^https:\/\/a\.[-0-9a-z]{4,16}\.(?:club|com?|cyou|info|net|ru|site|top?|xxx|xyz)\/(?=[a-z]{0,6}[0-9A-Z])[0-9a-zA-Z]{7}\.js$
-		Entity not supported: sitesunblocked.*
-		Entity not supported: 1movies.*
-		Entity not supported: slreamplay.*
-		Entity not supported: sexwebvideo.*
-		Entity not supported: dutchycorp.*
+		FilterOriginEntityHit: Entity 1movies.* not supported
+		FilterOriginEntityHit: Entity slreamplay.* not supported
+		FilterOriginEntityHit: Entity sexwebvideo.* not supported
+		FilterOriginEntityHit: Entity dutchycorp.* not supported
 		regexFilter is not RE2-compatible: ^https?:\/\/((?!www)[a-z]{3,}|\d{2})?\.?[-0-9a-z]{6,}\.[a-z]{2,6}\/(?:[a-z]{6,8}\/)?\/?\?u=[0-9a-z]{7}&o=[0-9a-z]{7}
 		regexFilter is not RE2-compatible: ^https?:\/\/((?!www)[a-z]{3,}|\d{2})?\.?[-0-9a-z]{6,}\.[a-z]{2,6}\/(?:[a-z]{6,8}\/)?\/?\?o=[0-9a-z]{7}&u=[0-9a-z]{7}
-		Entity not supported: the-voice-of-germany.*
-		Entity not supported: pobre.*
+		FilterOriginEntityHit: Entity the-voice-of-germany.* not supported
+		FilterOriginEntityHit: Entity pobre.* not supported
 		regexFilter is not RE2-compatible: ^https:\/\/(?:www\d\.)?[-a-z]{6,}\.(?:com|info|net|org)\/(?=[-_a-zA-Z]{0,42}\d)(?=[-_0-9a-z]{0,42}[A-Z])[-_0-9a-zA-Z]{43}\/\?cid=[-_0-9a-zA-Z]{16,36}(?:&qs\d=\S+)?&sid=[_0-9a-f]{1,32}$
 		regexFilter is not RE2-compatible: ^https:\/\/(?:www\d\.)?[-a-z]{6,}\.(?:com|info|net|org)\/(?=[-_a-zA-Z]{0,42}\d)(?=[-_0-9a-z]{0,42}[A-Z])[-_0-9a-zA-Z]{43}\/\?sid=[_0-9a-f]{1,32}(?:&qs\d=\S+)?&cid=[-_0-9a-zA-Z]{16,36}$
-		Entity not supported: pussyspace.*
+		FilterOriginEntityHit: Entity pussyspace.* not supported
 		regexFilter is not RE2-compatible: \/img\/(?!new).+\.gif
-		Entity not supported: slreamplay.*
+		FilterOriginEntityHit: Entity slreamplay.* not supported
 		regexFilter is not RE2-compatible: \/[a-z]{4,}\/(?!holly7)[0-9a-z]{3,}\d\.\d\.\d{1,2}\.[0-9a-f]{32}\.js$
-		Entity not supported: camwhores.*
 		regexFilter is not RE2-compatible: ^http:\/\/img[a-z]+\.(?:buzz|xyz)\/(?!shrinker).*
-		Strict partyness not supported: strict3p
-		Entity not supported: upvid.*
-		Entity not supported: uptomega.*
-		Entity not supported: clicknupload.*
-		Entity not supported: uplinkto.*
-		Entity not supported: link1s.*
-		Entity not supported: dloader.*
-		Entity not supported: isaidubhd.*
-		Entity not supported: isaidub.*
-		Entity not supported: databasegdriveplayer.*
-		Entity not supported: 10starhd.*
-		Entity not supported: earnload.*
-		Entity not supported: vipleague.*
-		Entity not supported: sxyprn.*
-		Entity not supported: palimas.*
-		Entity not supported: vjav.*
-		Entity not supported: gogoanime.*
-		Entity not supported: mazpic.*
-		Entity not supported: picrok.*
-		Entity not supported: imgviu.*
-		Entity not supported: outletpic.*
-		Entity not supported: dewimg.*
-		Entity not supported: imgtown.*
-		Entity not supported: oploverz.*
-		Entity not supported: readcomiconline.*
-		Entity not supported: daddylive.*
-		Entity not supported: animeflv.*
-		Entity not supported: kiss-anime.*
-		Entity not supported: strikeout.*
-		Entity not supported: japscan.*
-		Entity not supported: downloadhub.*
-		Entity not supported: 9xbuddy.*
-		Entity not supported: viprow.*
-		Entity not supported: anitube.*
-		Entity not supported: solarmovie.*
-		Entity not supported: dramacool9.*
-		Entity not supported: hdfriday.*
-		Entity not supported: extramovies.*
-		Entity not supported: pingit.*
-		Entity not supported: lookmovie.*
-		Entity not supported: okstream.*
-		Entity not supported: seulink.*
-		Entity not supported: megavideo.*
-		Entity not supported: leechall.*
-		Entity not supported: torrentgalaxy.*
-		Entity not supported: allcalidad.*
-		Entity not supported: movieshub.*
-		Entity not supported: dailysport.*
-		Entity not supported: mkvcinemas.*
-		Entity not supported: pelispedia.*
-		Entity not supported: btdb.*
-		Entity not supported: animesvision.*
+		FilterStrictParty: Strict partyness strict3p not supported
+		FilterOriginEntityHit: Entity upvid.* not supported
+		FilterOriginEntityHit: Entity uptomega.* not supported
+		FilterOriginEntityHit: Entity clicknupload.* not supported
+		FilterOriginEntityHit: Entity uplinkto.* not supported
+		FilterOriginEntityHit: Entity link1s.* not supported
+		FilterOriginEntityHit: Entity dloader.* not supported
+		FilterOriginEntityHit: Entity isaidub.* not supported
+		FilterOriginEntityHit: Entity databasegdriveplayer.* not supported
+		FilterOriginEntityHit: Entity 10starhd.* not supported
+		FilterOriginEntityHit: Entity earnload.* not supported
+		FilterOriginEntityHit: Entity vipleague.* not supported
+		FilterOriginEntityHit: Entity sxyprn.* not supported
+		FilterOriginEntityHit: Entity palimas.* not supported
+		FilterOriginEntityHit: Entity vjav.* not supported
+		FilterOriginEntityHit: Entity gogoanime.* not supported
+		FilterOriginEntityHit: Entity mazpic.* not supported
+		FilterOriginEntityHit: Entity picrok.* not supported
+		FilterOriginEntityHit: Entity imgviu.* not supported
+		FilterOriginEntityHit: Entity outletpic.* not supported
+		FilterOriginEntityHit: Entity dewimg.* not supported
+		FilterOriginEntityHit: Entity imgtown.* not supported
+		FilterOriginEntityHit: Entity oploverz.* not supported
+		FilterOriginEntityHit: Entity readcomiconline.* not supported
+		FilterOriginEntityHit: Entity daddylive.* not supported
+		FilterOriginEntityHit: Entity animeflv.* not supported
+		FilterOriginEntityHit: Entity kiss-anime.* not supported
+		FilterOriginEntityHit: Entity strikeout.* not supported
+		FilterOriginEntityHit: Entity japscan.* not supported
+		FilterOriginEntityHit: Entity downloadhub.* not supported
+		FilterOriginEntityHit: Entity 9xbuddy.* not supported
+		FilterOriginEntityHit: Entity viprow.* not supported
+		FilterOriginEntityHit: Entity anitube.* not supported
+		FilterOriginEntityHit: Entity dramacool9.* not supported
+		FilterOriginEntityHit: Entity hdfriday.* not supported
+		FilterOriginEntityHit: Entity extramovies.* not supported
+		FilterOriginEntityHit: Entity lookmovie.* not supported
+		FilterOriginEntityHit: Entity okstream.* not supported
+		FilterOriginEntityHit: Entity megavideo.* not supported
+		FilterOriginEntityHit: Entity leechall.* not supported
+		FilterOriginEntityHit: Entity torrentgalaxy.* not supported
+		FilterOriginEntityHit: Entity allcalidad.* not supported
+		FilterOriginEntityHit: Entity movieshub.* not supported
+		FilterOriginEntityHit: Entity dailysport.* not supported
+		FilterOriginEntityHit: Entity mkvcinemas.* not supported
+		FilterOriginEntityHit: Entity pelispedia.* not supported
+		FilterOriginEntityHit: Entity btdb.* not supported
+		FilterOriginEntityHit: Entity animesvision.* not supported
 		regexFilter is not RE2-compatible: ^https?:\/\/(?:[a-z]{2}\.)?[0-9a-z]{7,16}\.com\/[a-z](?=[a-z]{0,25}[0-9A-Z])[0-9a-zA-Z]{3,26}\/(?:[1-5]\d{4}|[3-9]\d{3})\??(?:_=\d+|v=\d)?$
 		regexFilter is not RE2-compatible: ^https?:\/\/(?:[a-z]{2}\.)?[0-9a-z]{7,16}\.website\/[a-z](?=[a-z]{0,25}[0-9A-Z])[0-9a-zA-Z]{3,26}\/(?:[1-5]\d{4}|[3-9]\d{3})\??(?:_=\d+|v=\d)?$
-		Entity not supported: uploadhub.*
-		Entity not supported: javfree.*
-		Entity not supported: shortzzy.*
-		Entity not supported: xtits.*
-		Entity not supported: shorttey.*
-		Entity not supported: hdmovieplus.*
-		Entity not supported: elitetorrent.*
-		Entity not supported: adcorto.*
-		Entity not supported: 720pstream.*
-		Entity not supported: toonanime.*
-		Entity not supported: quickclaims.*
-		Entity not supported: buffstreams.*
-		Entity not supported: hog.*
-		Entity not supported: samehadaku.*
-		Entity not supported: atishmkv.*
-		Entity not supported: hdhub4u.*
-		Entity not supported: txxx.*
-		Entity not supported: animesa.*
-		Entity not supported: hqq.*
-		Entity not supported: dropgalaxy.*
-		Entity not supported: dropgalaxy.*
-		Entity not supported: bloomberg.*
-		Entity not supported: dropgalaxy.*
-		Entity not supported: dropgalaxy.*
-		Entity not supported: gentside.*
-		Entity not supported: pasty.*
-		Entity not supported: wstream.*
-		Entity not supported: dropgalaxy.*
-		Entity not supported: dropgalaxy.*
-		Entity not supported: sms24.*
-		Entity not supported: viafree.*
-		Entity not supported: hotfrog.*
-		Strict partyness not supported: strict1p
-		Entity not supported: bloomberg.*
-		Entity not supported: bloomberg.*
-		Entity not supported: tube8.*
-		Entity not supported: tvnow.*
-		Entity not supported: audible.*
-		Entity not supported: dropgalaxy.*
-		Entity not supported: dropgalaxy.*
-		Entity not supported: sms24.*
-		Entity not supported: discoveryplus.*
-		Entity not supported: streamingcommunity.*
-		Entity not supported: filepress.*
-		Entity not supported: bloomberg.*
+		FilterOriginEntityHit: Entity uploadhub.* not supported
+		FilterOriginEntityHit: Entity shortzzy.* not supported
+		FilterOriginEntityHit: Entity xtits.* not supported
+		FilterOriginEntityHit: Entity shorttey.* not supported
+		FilterOriginEntityHit: Entity hdmovieplus.* not supported
+		FilterOriginEntityHit: Entity elitetorrent.* not supported
+		FilterOriginEntityHit: Entity adcorto.* not supported
+		FilterOriginEntityHit: Entity 720pstream.* not supported
+		FilterOriginEntityHit: Entity toonanime.* not supported
+		FilterOriginEntityHit: Entity buffstreams.* not supported
+		FilterOriginEntityHit: Entity hog.* not supported
+		FilterOriginEntityHit: Entity samehadaku.* not supported
+		FilterOriginEntityHit: Entity atishmkv.* not supported
+		FilterOriginEntityHit: Entity hdhub4u.* not supported
+		FilterOriginEntityHit: Entity txxx.* not supported
+		FilterOriginEntityHit: Entity animesa.* not supported
+		FilterOriginEntityHit: Entity hqq.* not supported
+		FilterOriginEntityHit: Entity bloomberg.* not supported
+		FilterOriginEntityHit: Entity pasty.* not supported
+		FilterOriginEntityHit: Entity sms24.* not supported
+		FilterOriginEntityHit: Entity viafree.* not supported
+		FilterOriginEntityHit: Entity hotfrog.* not supported
+		FilterStrictParty: Strict partyness strict1p not supported
+		FilterOriginEntityHit: Entity bloomberg.* not supported
+		FilterOriginEntityHit: Entity bloomberg.* not supported
+		FilterOriginEntityHit: Entity tube8.* not supported
+		FilterOriginEntityHit: Entity tvnow.* not supported
+		FilterOriginEntityHit: Entity audible.* not supported
+		FilterOriginEntityHit: Entity sms24.* not supported
+		FilterOriginEntityHit: Entity discoveryplus.* not supported
+		FilterOriginEntityHit: Entity streamingcommunity.* not supported
+		FilterOriginEntityHit: Entity filepress.* not supported
+		FilterOriginEntityHit: Entity soap2day.* not supported
+		Invalid network filter in default: ||indiatimes.com^$image,redirect-rule=1x1.gif
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=linkneverdie.net
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=web.de
+		Invalid network filter in default: *$image,redirect-rule=32x32.png,domain=afreesms.com
+		Invalid network filter in default: *$xhr,redirect-rule=1x1.gif,domain=ign.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=ignboards.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=9to5google.com|9to5mac.com|9to5toys.com|dronedj.com|electrek.co|marketrealist.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=playhydrax.com
+		Invalid network filter in default: *$image,redirect-rule=32x32.png,domain=freeplayervideo.com|junihd.com|nazarickol.com|player-cdn.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=kimcartoon.*
+		Invalid network filter in default: *$3p,script,redirect-rule=noopjs,domain=cbs.com|paramountplus.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=mylink.*|my1ink.*|myl1nk.*|myli3k.*
+		Invalid network filter in default: *$image,domain=magesypro.*,redirect-rule=1x1.gif
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=adbull.org
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=simply-hentai.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=arkadium.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=ouo.*
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=viki.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=aternos.org
+		Invalid network filter in default: *$frame,redirect-rule=noopframe,domain=xfreehd.com
+		Invalid network filter in default: ||thebookee.net^$image,redirect-rule=1x1.gif,1p
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=dubsports.to
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=freeopenvpn.org
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=spiegel.de
+		Invalid network filter in default: *$frame,redirect-rule=noopframe,domain=megaup.net
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=strikeout.*
+		Invalid network filter in default: ||wpfc.ml/b.gif$image,redirect-rule=1x1.gif,domain=satcesc.com
+		Invalid network filter in default: ||ugdturner.com/xd.sjs$script,redirect-rule=noopjs,domain=nba.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=animedao.*
+		Invalid network filter in default: ||googlesyndication.com^$image,redirect-rule=1x1.gif,domain=educatiocenter.online
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=o2tvseries.com
+		Invalid network filter in default: *$frame,redirect-rule=noopframe,domain=faucetcrypto.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=duellinksmeta.com
+		Invalid network filter in default: *$script,domain=ebookdz.com,redirect-rule=noopjs
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=marie-claire.es
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=serpadres.es
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=miarevista.es
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=muyhistoria.es
+		Invalid network filter in default: ||adblockanalytics.com^$xhr,redirect-rule=noop.txt
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=muyinteresante.es
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=linkdrop.net
+		Invalid network filter in default: *$image,1p,redirect-rule=1x1.gif,domain=leechpremium.link
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=mac-torrent-download.net
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=pentafaucet.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=canaltdt.es
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=amni8.com
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=audiotools.blog
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=smallseotools.com
+		Invalid network filter in default: *#$image,domain=freshstuff4you.com,redirect-rule=2x2.png
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=debilizator.tv
+		Invalid network filter in default: ||googlesyndication.com/pagead/js/adsbygoogle.js$script,redirect-rule=noopjs:10,domain=simsdom.com
+		Invalid network filter in default: ||fautsy.com/adblock.php$xhr,redirect-rule=nooptext,1p
+		Invalid network filter in default: ||googlesyndication.com/pagead/show_ads.js$script,redirect-rule=noopjs,domain=iblogbox.com
+		Invalid network filter in default: ||link-to.net^$image,redirect-rule=1x1.gif,1p
+		Invalid network filter in default: *$script,3p,domain=gsmturkey.net,redirect-rule=noopjs
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=ustream.to
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=thehouseofportable.com
+		Invalid network filter in default: ||mairdumont.com^$script,redirect-rule=noopjs,domain=kachelmannwetter.com
+		Invalid network filter in default: ||md-nx.com^$script,redirect-rule=noopjs,domain=meteologix.com|weather.us
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=extremereportbot.com
+		Invalid network filter in default: *$script,xhr,redirect-rule=noopjs,domain=1001tracklists.com
+		Invalid network filter in default: *$script,3p,redirect-rule=noopjs,domain=leechall.download|leechall.com
+		Invalid network filter in default: *$xhr,redirect-rule=noopjs,domain=script-stack.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=wstream.video
+		Invalid network filter in default: ||newsjizz.in^$image,redirect-rule=1x1.gif,1p
+		Invalid network filter in default: ||bebi.com^$script,redirect-rule=noopjs,domain=lifestylehack.info
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=unfriend-app.com
+		Invalid network filter in default: ||flsaudio.com^$image,redirect-rule=1x1.gif,1p
+		Invalid network filter in default: *$image,redirect-rule=32x32.png,domain=bluemediafiles.*
+		Invalid network filter in default: */assets.sidearmsports.com/$script,redirect-rule=noopjs
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=12thman.com|acusports.com|atlantic10.com|auburntigers.com|baylorbears.com|bceagles.com|bgsufalcons.com|big12sports.com|bigten.org|bradleybraves.com|butlersports.com|cmumavericks.com|conferenceusa.com|cyclones.com|dartmouthsports.com|daytonflyers.com|dbupatriots.com|dbusports.com|denverpioneers.com|fduknights.com|fgcuathletics.com|fightinghawks.com|fightingillini.com|floridagators.com|friars.com|friscofighters.com|gamecocksonline.com|goarmywestpoint.com|gobison.com|goblueraiders.com|gobobcats.com|gocards.com|gocreighton.com|godeacs.com|goexplorers.com|goetbutigers.com|gofrogs.com|gogriffs.com|gogriz.com|golobos.com|gomarquette.com|gopack.com|gophersports.com|goprincetontigers.com|gopsusports.com|goracers.com|goshockers.com|goterriers.com|gotigersgo.com|gousfbulls.com|govandals.com|gowyo.com|goxavier.com|gozags.com|gozips.com|griffinathletics.com|guhoyas.com|gwusports.com|hailstate.com|hamptonpirates.com|hawaiiathletics.com|hokiesports.com|huskers.com|icgaels.com|iuhoosiers.com|jsugamecocksports.com|longbeachstate.com|loyolaramblers.com|lrtrojans.com|lsusports.net|morrisvillemustangs.com|msuspartans.com|muleriderathletics.com|mutigers.com|navysports.com|nevadawolfpack.com|niuhuskies.com|nulakers.ca|nkunorse.com|nuhuskies.com|nusports.com|oceanbreezenyc.org|okstate.com|olemisssports.com|omavs.com|ovcsports.com|owlsports.com|purduesports.com|redstormsports.com|richmondspiders.com|sfajacks.com|shupirates.com|siusalukis.com|smcgaels.com|smumustangs.com|soconsports.com|soonersports.com|themw.com|tulsahurricane.com|txst.com|txstatebobcats.com|ubbulls.com|ucfknights.com|ucirvinesports.com|uconnhuskies.com|uhcougars.com|uicflames.com|umterps.com|uncwsports.com|unipanthers.com|unlvrebels.com|uoflsports.com|usdtoreros.com|utahstateaggies.com|utepathletics.com|utrockets.com|uvmathletics.com|uwbadgers.com|villanova.com|wkusports.com|wmubroncos.com|woffordterriers.com|1pack1goal.com|bcuathletics.com|bubraves.com|goblackbears.com|golightsgo.com|gomcpanthers.com|goutsa.com|mercerbears.com|pirateblue.com|pirateblue.net|pirateblue.org|quinnipiacbobcats.com|towsontigers.com|tribeathletics.com|tribeclub.com|utepminermaniacs.com|utepminers.com|wkutickets.com|aopathletics.org|atlantichockeyonline.com|bigsouthnetwork.com|bigsouthsports.com|chawomenshockey.com|dbupatriots.org|drakerelays.org|ecac.org|ecacsports.com|emueagles.com|emugameday.com|gculopes.com|godrakebulldog.com|godrakebulldogs.com|godrakebulldogs.net|goeags.com|goislander.com|goislanders.com|gojacks.com|gomacsports.com|gseagles.com|hubison.com|iowaconference.com|ksuowls.com|lonestarconference.org|mascac.org|midwestconference.org|mountaineast.org|niu-pack.com|niuhuskies.com|oswegolakers.com|ovcdigitalnetwork.com|pacersports.com|rmacsports.org|rollrivers.com|samfordsports.com|uncpbraves.com|usfdons.com|wiacsports.com|alaskananooks.com|broncathleticfund.com|cameronaggies.com|columbiacougars.com|etownbluejays.com|gobadgers.ca|golancers.ca|gometrostate.com|gothunderbirds.ca|kentstatesports.com|lehighsports.com|lopers.com|lycoathletics.com|lycomingathletics.com|maraudersports.com|mauiinvitational.com|msumavericks.com|nauathletics.com|nueagles.com|nwusports.com|patriotathleticfund.com|pittband.com|principiaathletics.com|roadrunnersathletics.com|sidearmsocial.com|snhupenmen.com|stablerarena.com|stoutbluedevils.com|uwlathletics.com|yumacs.com|collegefootballplayoff.com|csurams.com|cubuffs.com|gobearcats.com|gohuskies.com|mgoblue.com|osubeavers.com|pittsburghpanthers.com|rolltide.com|texassports.com|thesundevils.com|uclabruins.com|wvuathletics.com|wvusports.com|arizonawildcats.com|calbears.com|cuse.com|georgiadogs.com|goducks.com|goheels.com|insidekstatesports.com|insidekstatesports.info|insidekstatesports.net|insidekstatesports.org|k-stateathletics.com|k-statefootball.net|k-statefootball.org|k-statesports.com|k-statesports.net|k-statesports.org|k-statewomenshoops.com|k-statewomenshoops.net|k-statewomenshoops.org|kstateathletics.com|kstatefootball.net|kstatefootball.org|kstatesports.com|kstatewomenshoops.com|kstatewomenshoops.net|kstatewomenshoops.org|ksuathletics.com|ksusports.com|scarletknights.com|showdownforrelief.com|syracusecrunch.com|texastech.com|theacc.com|ukathletics.com|usctrojans.com|utahutes.com|utsports.com|wsucougars.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=animeshouse.net
+		Invalid network filter in default: *$media,redirect-rule=noop-0.1s.mp3,3p,domain=gmx.*|web.de
+		Invalid network filter in default: ||googlesyndication.com/pagead/js/adsbygoogle.js$xhr,redirect-rule=noopjs,domain=adshrink.it
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=turkanime.*
+		Invalid network filter in default: *$frame,domain=forum.release-apk.com,redirect-rule=noopframe
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=freevocabulary.com
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=hentaihaven.xxx
+		Invalid network filter in default: ||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js^$redirect-rule=googlesyndication_adsbygoogle.js,script,domain=arabseed.*
+		Invalid network filter in default: ||googlesyndication.com/pagead/js/adsbygoogle.js$xhr,domain=jmusic.me,redirect-rule=noopjs
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=btik.com
+		Invalid network filter in default: *$frame,redirect-rule=noopframe,domain=work.ink
+		Invalid network filter in default: *$script,domain=work.ink,redirect-rule=noopjs
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=sznlink.xyz
+		Invalid network filter in default: *$frame,redirect-rule=noopframe,domain=camera.aeonax.com
+		Invalid network filter in default: *$xhr,redirect-rule=noopjs,domain=audioblog.com|johnsonweld.com
+		Invalid network filter in default: *$script,redirect-rule=empty,domain=streamz.vg|streamzz.*
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=texviewer.herokuapp.com
+		Invalid network filter in default: ||imasdk.googleapis.com/js/sdkloader/ima3.js$script,redirect-rule=noopjs,domain=881903.com
+		Invalid network filter in default: ||googlesyndication.com/pagead/js/adsbygoogle.js$xhr,redirect-rule=noop.txt,domain=cinema.net.ua
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=myschool-eng.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=ehubsoft.herokuapp.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=onemanhua.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=laksa19.github.io
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=kurnasional.blogspot.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=puregym.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=tgbeautymedia.blogspot.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=sportif.id
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=motorsport.tv
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=allkaicerteam.com
+		Invalid network filter in default: *$image,redirect-rule=2x2.png,domain=redbox.com
+		Invalid network filter in default: *$xhr,redirect-rule=noop.txt,domain=tunein.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=luscious.net
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=cararoot.id
+		Invalid network filter in default: *$xhr,redirect-rule=noopjs,domain=vidlii.com
+		Invalid network filter in default: *$image,redirect-rule=2x2.png,domain=mobilelegends.shop
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=onehack.us
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=savesubs.com
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=duit.cc|ockles.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=olinevid.com
+		Invalid network filter in default: ||googlesyndication.com/pagead/js/adsbygoogle.js$xhr,redirect-rule=noopjs,domain=btgyama.blogspot.com
+		Invalid network filter in default: *$script,domain=btgyama.blogspot.com,redirect-rule=noopjs
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=thumpertalk.com
+		Invalid network filter in default: *$frame,redirect-rule=noopframe,domain=promo-visits.site|satoshi-win.xyz|shorterall.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=safelinku.icu
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=bigbrothercanada.ca
+		Invalid network filter in default: *$script,1p,redirect-rule=noopjs,domain=pstream.net
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=onbatch.my.id
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=fishki.net
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=pandora.com
+		Invalid network filter in default: *$xhr,3p,redirect-rule=nooptext,domain=podu.me
+		Invalid network filter in default: */ads$media,redirect-rule=noopmp3-0.1s,domain=podu.me
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=apps2app.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=download.web.id
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=thisav.com
+		Invalid network filter in default: ||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$script,xhr,redirect-rule=googlesyndication_adsbygoogle.js:5,domain=~zipextractor.app
+		Invalid network filter in default: ||googleads.g.doubleclick.net/$xhr,redirect-rule=nooptext
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=arcai.com
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=lumiafirmware.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=my-code4you.blogspot.com
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=made-by.org
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=akunssh.net
+		Invalid network filter in default: *$frame,redirect-rule=noopframe,domain=desktophut.com
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=desktophut.com
+		Invalid network filter in default: *$frame,redirect-rule=noopframe,domain=dropgalaxy.com|techthematter.xyz
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=dropgalaxy.com|techthematter.xyz
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=dropgalaxy.*|financemonk.net|techthematter.xyz
+		Invalid network filter in default: *$image,redirect-rule=32x32.png,domain=dropgalaxy.*|financemonk.net|techthematter.xyz
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=runmods.com
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=minorpatch.com
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=sythe.org
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=tapetus.pl
+		Invalid network filter in default: *$media,redirect-rule=noopmp3-0.1s,domain=eroasmr.com
+		Invalid network filter in default: ||oklivetv.com^$xhr,1p,redirect-rule=nooptext
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=oklivetv.com
+		Invalid network filter in default: ||doubleclick.net^$frame,redirect-rule=noopframe,domain=cpu-world.com
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=freebinchecker.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=bandab.com.br
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=animesanka.*
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=sms24.*
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=hhkungfu.tv
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=pricez.co.il
+		Invalid network filter in default: ||tv3play.skaties.lv/static/scripts/ima3.js^$script,redirect-rule=noopjs,domain=skaties.lv
+		Invalid network filter in default: ||tv3play.skaties.lv/static/scripts/trackdb/events.gif^$image,redirect-rule=1x1.gif,domain=skaties.lv
+		Invalid network filter in default: ||mssl.fwmrm.net/libs/adm/6.11.0/LinkTag2.js^$redirect-rule=noopjs,script,domain=skaties.lv
+		Invalid network filter in default: ||googlesyndication.com/pagead/js/adsbygoogle.js$xhr,domain=onlinecoursebay.com,redirect-rule=noopjs
+		Invalid network filter in default: *$xhr,domain=megainteresting.com,redirect-rule=nooptext
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=pcprogramasymas.*
+		Invalid network filter in default: ||static.adsafeprotected.com/vans-adapter-google-ima.js$script,redirect-rule=noopjs,domain=motortrend.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=siamblockchain.com
+		Invalid network filter in default: *$object,redirect-rule=noopframe,domain=larvelfaucet.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=booogle.net
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=dcode.fr
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=ctrlv.*
+		Invalid network filter in default: ||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$xhr,domain=coursevania.com,redirect-rule=noopjs
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=katholisches.info
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=atozmath.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=supreme-gamers.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=puressh.net
+		Invalid network filter in default: *$image,redirect-rule=2x2.png,domain=tel-emporio10.blogspot.com
+		Invalid network filter in default: *$image,redirect-rule=2x2.png,domain=tv-bu.blogspot.com
+		Invalid network filter in default: *$xhr,domain=indianwebseries.*,redirect-rule=nooptext
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=dynast.io
+		Invalid network filter in default: *$script,domain=outerspace.com.br,redirect-rule=noopjs
+		Invalid network filter in default: *$script,redirect-rule=noop.js,domain=flowsoft7.com
+		Invalid network filter in default: *$xhr,3p,redirect-rule=nooptext,domain=simkl.com
+		Invalid network filter in default: *$script,3p,redirect-rule=noopjs,domain=simkl.com
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=sorasi.net
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=monara.net
+		Invalid network filter in default: *$script,domain=ad-doge.com,redirect-rule=noopjs
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=nulleb.com
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=nulleb.com
+		Invalid network filter in default: *$script,3p,redirect-rule=noopjs,domain=staples.ca
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=iinbinlist.com|osqa.net|vanhawks.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=speedtesting.herokuapp.com|excelviewer.herokuapp.com|exifviewer.herokuapp.com|pdfrecover.herokuapp.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=purposegames.com
+		Invalid network filter in default: *$image,redirect-rule=32x32.png,domain=bitfly.io
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=downloadrepack.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=danc.uk
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=vuiit.net
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=seotechman.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=markiza.sk
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=linuxgizmos.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=humannootropicsindex.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=iammagnus.com|dailyvideoreports.net
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=youneed.win
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=freesslvpn.us|receivedsms.com|robotvpn.com
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=maskinbladet.dk|fritidsmarkedet.dk
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=polska-ie.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=vidmoly.me|vidmoly.net|vidmoly.to
+		Invalid network filter in default: *$script,domain=evoload.io,redirect-rule=noopjs
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=ufckhabib.com
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=muynegociosyeconomia.es
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=unityassets4free.com
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=new.lewd.ninja
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=davidbaptistechirot.blogspot.com
+		Invalid network filter in default: ||googlesyndication.com^$script,redirect-rule=googlesyndication_adsbygoogle.js,domain=pngtosvg.com
+		Invalid network filter in default: ||googlesyndication.com^$script,redirect-rule=googlesyndication_adsbygoogle.js,domain=sitarchive.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=telek.top
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=thevideos.ga
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=codimth.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=fiyaplatform.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=taufiqhdyt.com
+		Invalid network filter in default: ||googlesyndication.com^$script,redirect-rule=googlesyndication_adsbygoogle.js,domain=mr9soft.com
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=getitall.top
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=freemagazines.top
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=anihub.tv
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=konnoznet.xyz
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=examsnet.com
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=hitbits.io
+		Invalid network filter in default: ||adsafeprotected.com/vans-adapter-google-ima.js^$redirect-rule=noopjs,script,domain=unilad.co.uk
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=topnewsshow.com
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=rollercoin.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=windowsmatters.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=masbrooo.com|2ndrun.tv
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=fr.de
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=dulu.to
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=kursors.lv
+		Invalid network filter in default: *$script,domain=gainbtc.*,redirect-rule=noopjs
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=toptechtalk.xyz
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=ghostsnet.com
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=fashion.noemoda.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=fashion.noemoda.com
+		Invalid network filter in default: *$script,domain=novelmultiverse.com,redirect-rule=noopjs
+		Invalid network filter in default: ||api.adinplay.com^$redirect-rule=noopjs,script,domain=taming.io
+		Invalid network filter in default: *$image,3p,redirect-rule=1x1.gif,domain=world4.eu
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=cybermania.ws
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=pinoyalbums.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=jnckmedia.com
+		Invalid network filter in default: ||googletagmanager.com/gtag/js^$redirect-rule=google-analytics_analytics.js,domain=guardaserie.*
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=cryptojunkie.net
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=vpnstunnel.com
+		Invalid network filter in default: ||googlesyndication.com/pagead/js/adsbygoogle.js$script,redirect-rule=noop.js,domain=anidraw.net
+		Invalid network filter in default: ||static.adsafeprotected.com/vans-adapter-google-ima.js^$script,redirect-rule=noopjs,domain=sportbible.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=telegraf.rs|telegraf.tv
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=cozinha.minhasdelicias.com
+		Invalid network filter in default: ||pagead2.googlesyndication.com/pagead/show_ads.js^$script,redirect-rule=noopjs,domain=thetimetube.com
+		Invalid network filter in default: ||googleads.g.doubleclick.net/pagead/$xhr,redirect-rule=nooptext,domain=danshort.com
+		Invalid network filter in default: ||evolok.net/*/authorize/*$xhr,redirect-rule=nooptext,domain=nation.africa
+		Invalid network filter in default: ||matomo.alexbcberio.eus^$xhr,redirect-rule=nooptext,domain=alexbcberio.eus
+		Invalid network filter in default: ||pagead2.googlesyndication.com/pagead/$redirect-rule=noopjs,script,domain=overbits.herokuapp.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=pewgame.com
+		Invalid network filter in default: ||raw.githubusercontent.com/*/just-detect-adblock/*$3p,xhr,redirect-rule=nooptext
+		Invalid network filter in default: ||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js^$redirect-rule=googlesyndication_adsbygoogle.js,script,domain=crypto-fun-faucet.de
+		Invalid network filter in default: ||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js^$redirect-rule=googlesyndication_adsbygoogle.js,script,domain=unityassetcollection.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=claimfreebits.com
+		Invalid network filter in default: ||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js^$redirect-rule=googlesyndication_adsbygoogle.js,script,domain=persianhive.com
+		Invalid network filter in default: ||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js^$redirect-rule=googlesyndication_adsbygoogle.js,script,domain=andreyex.ru
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=lewdninja.com
+		Invalid network filter in default: ||sentry-cdn.com^$script,redirect-rule=noopjs,domain=mcmfaucets.xyz
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=rechub.tv
+		Invalid network filter in default: ||googletagmanager.com/gtag/js$script,redirect-rule=noopjs,domain=rotana.net
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=ver-television.online|red-point.xyz
+		Invalid network filter in default: *$frame,redirect-rule=noopframe,domain=getpaidstock.com
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=upvideo.to
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=simplebits.io
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=costumbresmexico.com
+		Invalid network filter in default: ||adsafeprotected.com/$script,redirect-rule=noopjs,domain=gamingbible.co.uk
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=chiemgau24.de|ovb-online.de|rosenheim24.de|bgland24.de|innsalzach24.de|mangfall24.de|wasserburg24.de
+		Invalid network filter in default: ||iclickcdn.com^$script,redirect-rule=noopjs,domain=gifans.com
+		Invalid network filter in default: *$xhr,redirect-rule=noopjs,domain=streamon.to
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=streamon.to
+		Invalid network filter in default: ||doubleclick.net^$xhr,redirect-rule=nooptext,domain=liveschauen.com
+		Invalid network filter in default: ||googleads.g.doubleclick.net^$xhr,redirect-rule=nooptext,domain=weltwebcams.com
+		Invalid network filter in default: ||sentry-cdn.com^$script,redirect-rule=noopjs,domain=freebitz.xyz
+		Invalid network filter in default: ||imasdk.googleapis.com/js/sdkloader/ima3.js^$script,redirect-rule=noopjs,domain=gbnews.uk
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=cinemakottaga.ml
+		Invalid network filter in default: ||explosivemenu.com^$image,redirect-rule=1x1.gif,1p
+		Invalid network filter in default: host-cdn.net^$image,redirect-rule=32x32.png,domain=maxstream.video
+		Invalid network filter in default: @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$xhr,redirect-rule,domain=carousell.*
+		Invalid network filter in default: ||sentry-cdn.com^$script,redirect-rule=noopjs,domain=phoenixfaucets.xyz|proinfinity.fun
+		Invalid network filter in default: ||imasdk.googleapis.com/js/sdkloader/ima3.js^$script,redirect-rule=noopjs,domain=howstuffworks.com
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=userload.*
+		Invalid network filter in default: ||imasdk.googleapis.com/js/sdkloader/$script,redirect-rule=noopjs,domain=timesnowhindi.com|tvid.in
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=shaalaa.com
+		Invalid network filter in default: ||doubleclick.net/tag/js/gpt.js$xhr,redirect-rule=noop.txt,domain=link.rota.cc
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=elahmad.com
+		Invalid network filter in default: *$redirect-rule=noopjs,script,domain=elahmad.com
+		Invalid network filter in default: /images/ads.$image,redirect-rule=1x1.gif
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=rbxscripts.xyz
+		Invalid network filter in default: ||adbox.lv^$script,redirect-rule=noop.js,domain=mail.ee
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=bowfile.com
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=bowfile.com
+		Invalid network filter in default: ||imasdk.googleapis.com/js/sdkloader/ima3.js^$script,redirect-rule=noopjs,domain=plex.tv
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=1cloudfile.com
+		Invalid network filter in default: ||imasdk.googleapis.com/js/sdkloader/ima3.js$script,redirect-rule=noopjs,domain=loomi.tv
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=freevpn4you.net
+		Invalid network filter in default: /px.gif?$image,redirect-rule=1x1.gif,1p
+		Invalid network filter in default: *$script,domain=miraculous.to,redirect-rule=noopjs
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=paraphrasetool.com
+		Invalid network filter in default: *$image,domain=upshrink.com,redirect-rule=1x1.gif
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=romania.bz
+		Invalid network filter in default: /banner.gif?$image,redirect-rule=1x1.gif
+		Invalid network filter in default: *$script,domain=wyze.com,redirect-rule=noopjs
+		Invalid network filter in default: *$object,redirect-rule=empty,domain=sonixgvn.net
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=zwielkopolski24.pl
+		Invalid network filter in default: ||d2klx87bgzngce.cloudfront.net/jquery.swipebox.min.js$xhr,domain=filmisub.com,redirect-rule=noopjs
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=coin-free.com|kienthucrangmieng.com|techmart4u.in|chinhnhacoban.com|chamcuuhoc.com|hocchannuoi.com|thuocdangian.net|hoclamdaubep.com|tai-mui-hong.com
+		Invalid network filter in default: ||adclixx.net^$script,3p,redirect-rule=nobab2.js:10
+		Invalid network filter in default: ||adnetasia.com^$script,3p,redirect-rule=nobab2.js:10
+		Invalid network filter in default: ||adtrackers.net^$script,3p,redirect-rule=nobab2.js:10
+		Invalid network filter in default: ||bannertrack.net^$script,3p,redirect-rule=nobab2.js:10
+		Invalid network filter in default: ||ads.twitter.com/favicon.ico$image,3p,redirect-rule=32x32.png
+		Invalid network filter in default: ||advertising.yahoo.com/favicon.ico$image,3p,redirect-rule=32x32.png
+		Invalid network filter in default: ||doubleclickbygoogle.com/favicon.ico$image,3p,redirect-rule=32x32.png
+		Invalid network filter in default: ||google.com/adsense/start/images/favicon.ico$image,3p,redirect-rule=32x32.png
+		Invalid network filter in default: ||gstatic.com/adx/doubleclick.ico$image,3p,redirect-rule=32x32.png
+		Invalid network filter in default: /ads-prebid.js$script,redirect-rule=prebid-ads.js
+		Invalid network filter in default: /prebid-ads.js$script,redirect-rule=prebid-ads.js,domain=~exey.io
+		Invalid network filter in default: /prebid-ads/adsensebase.js$script,redirect-rule=prebid-ads.js
+		Invalid network filter in default: /prebid-article-ad-ad-300x250.js$script,redirect-rule=prebid-ads.js
+		Invalid network filter in default: ||doubleclick.net^$xhr,redirect-rule=noop.txt
+		Invalid network filter in default: ||media.fastclick.net^$xhr,redirect-rule=noop.txt
+		Invalid network filter in default: ||ads.facebook.com^$xhr,redirect-rule=noop.txt
+		Invalid network filter in default: ||advice-ads.s3.amazonaws.com^$xhr,redirect-rule=noop.txt
+		Invalid network filter in default: ||ads.youtube.com^$xhr,redirect-rule=noop.txt
+		Invalid network filter in default: ||ads.reddit.com^$xhr,redirect-rule=noop.txt
+		Invalid network filter in default: ||ads-api.twitter.com^$xhr,redirect-rule=nooptext,domain=~twitter.com
+		Invalid network filter in default: ||ads.pinterest.com^$xhr,redirect-rule=noop.txt
+		Invalid network filter in default: ||www.sfr.fr^$script,redirect-rule=noop.js,domain=red-by-sfr.fr
+		Invalid network filter in default: *$image,redirect-rule=2x2.png,domain=searchenginereports.net
+		Invalid network filter in default: ||geoplugin.net^$xhr,redirect-rule=noop.txt,domain=taotronics.com
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=upvizzz.xyz
+		Invalid network filter in default: *$frame,domain=noviny.sk,redirect-rule=noopframe
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=masterduelmeta.com
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=stol.it
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=pinoyfaucet.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=crunchyscan.fr
+		Invalid network filter in default: ||googletagmanager.com^$script,redirect-rule=noopjs,domain=gainbtc.click|multiclaim.net|proinfinity.fun
+		Invalid network filter in default: ||googletagmanager.com/gtag/js$script,xhr,redirect-rule=googletagmanager_gtm.js:5
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=faucetpot.me
+		Invalid network filter in default: *$xhr,redirect-rule=noop.txt,domain=thingiverse.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=mrlabtest.com
+		Invalid network filter in default: *$script,domain=multiclaim.net,redirect-rule=noopjs
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=vimm.net
+		Invalid network filter in default: *$script,domain=surfline.com,redirect-rule=noopjs
+		Invalid network filter in default: *.png#$image,redirect-rule=1x1.gif
+		Invalid network filter in default: *.gif#$image,redirect-rule=1x1.gif
+		Invalid network filter in default: *.jpg#$image,redirect-rule=1x1.gif
+		Invalid network filter in default: *.svg#$image,redirect-rule=1x1.gif
+		Invalid network filter in default: ||doubleclick.net^$xhr,redirect-rule=nooptext,domain=soccerstreams-100.*
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=gamingfactor.xyz
+		Invalid network filter in default: *$image,domain=play.tv3.lv,redirect-rule=1x1.gif
+		Invalid network filter in default: *$script,domain=play.tv3.lv,redirect-rule=noopjs
+		Invalid network filter in default: *$image,domain=play.tv3.lt,redirect-rule=1x1.gif
+		Invalid network filter in default: *$script,domain=play.tv3.lt,redirect-rule=noopjs
+		Invalid network filter in default: *$image,domain=play.tv3.ee,redirect-rule=1x1.gif
+		Invalid network filter in default: *$script,domain=play.tv3.ee,redirect-rule=noopjs
+		Invalid network filter in default: *$script,domain=adshnk.com,redirect-rule=noopjs
+		Invalid network filter in default: ||vlitag.com^$script,redirect-rule=noopjs,domain=mangasco.com
+		Invalid network filter in default: ||sumfaucet.com/adblock.php$xhr,redirect-rule=nooptext,1p
+		Invalid network filter in default: ||media.net^$object,redirect-rule=noopjs
+		Invalid network filter in default: ||google-analytics.com^$object,redirect-rule=noopjs
+		Invalid network filter in default: ||doubleclick.net^$object,redirect-rule=noopjs
+		Invalid network filter in default: ||ssl.geoplugin.net/javascript.gp$xhr,redirect-rule=noopjs
+		Invalid network filter in default: *#*/ad/$image,redirect-rule=1x1.gif
+		Invalid network filter in default: ||a-ads.com^$xhr,redirect-rule=nooptext,domain=ezcoin.it
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=elkjop.no
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=madtrx.fun
+		Invalid network filter in default: *$script,domain=freesolana.top,redirect-rule=noopjs
+		Invalid network filter in default: ||surfe.pro/js/net.js$script,xhr,redirect-rule=noop.js
+		Invalid network filter in default: *$media,redirect-rule=noopmp3-0.1s,domain=149.56.24.226
+		Invalid network filter in default: ||static.doubleclick.net/instream/ad_status.js$xhr,redirect-rule=noop.js,domain=sshinjector.net
+		Invalid network filter in default: ||googlesyndication.com^$script,redirect-rule=noopjs,domain=youfiles.herokuapp.com
+		Invalid network filter in default: /prebid-add.js$script,redirect-rule=prebid-ads.js
+		Invalid network filter in default: ||cxense.com/cx.js$script,redirect-rule=noop.js,domain=japannews.yomiuri.co.jp
+		Invalid network filter in default: *$script,domain=discuss.com.hk,redirect-rule=noopjs
+		Invalid network filter in default: @@||g.doubleclick.net/tag/js/gpt.js$script,redirect-rule,domain=pomponik.pl
+		Invalid network filter in default: *$xhr,script,domain=tamrieltradecentre.com,redirect-rule=noopjs
+		Invalid network filter in default: *$frame,redirect-rule=noopframe,domain=tamrieltradecentre.com
+		Invalid network filter in default: ||matystudios.github.io/banner_ad.png$image,redirect-rule=2x2.png
+		Invalid network filter in default: ||www3.doubleclick.net^$xhr,redirect-rule=noop.txt,domain=lineups.fun
+		Invalid network filter in default: ||googlesyndication.com^$xhr,redirect-rule=nooptext,domain=vogel.de
+		Invalid network filter in default: ||wpadmngr.com/static/adManager.js$script,redirect-rule=noop.js,domain=madshiba.fun
+		Invalid network filter in default: *$script,domain=tieutietkiem.com,redirect-rule=noopjs
+		Invalid network filter in default: *$frame,domain=adclickersbot.com,redirect-rule=noopframe
+		Invalid network filter in default: *$image,domain=adclickersbot.com,redirect-rule=1x1.gif
+		Invalid network filter in default: ||scripts.cleverwebserver.com^$script,redirect-rule=noop.js
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=allcryptoz.net|crewbase.net|crewus.net|shinbhu.net|shinchu.net|thumb8.net|thumb9.net|topcryptoz.net|uniqueten.net|ultraten.net
+		Invalid network filter in default: *$script,domain=faucetbtc.net,redirect-rule=noopjs
+		Invalid network filter in default: ||googletagmanager.com^$xhr,domain=streamingcommunity.*,redirect-rule=noop.js
+		Invalid network filter in default: ||thaudray.com^$script,xhr,redirect-rule=noop.js,domain=streamingcommunity.*
+		Invalid network filter in default: *$script,domain=lightnovelworld.com,redirect-rule=noop.js
+		Invalid network filter in default: ||pagead2.googlesyndication.com/pagead/show_ads.js$xhr,redirect-rule=noop.js,domain=spinbot.com
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=easymc.io
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=feyorra.site
+		Invalid network filter in default: *$script,domain=doge25.in,redirect-rule=noopjs
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=btcbunch.com
+		Invalid network filter in default: *$script,xhr,domain=intibia.com,redirect-rule=noopjs
+		Invalid network filter in default: *$script,domain=pianoweb.fr,redirect-rule=noopjs
+		Invalid network filter in default: ||doubleclick.net^$frame,redirect-rule=noopframe,domain=play.aidungeon.io
+		Invalid network filter in default: ||bmfads.com^$script,redirect-rule=noopjs
+		Invalid network filter in default: ||imasdk.googleapis.com/js/sdkloader/ima3.js$script,redirect-rule=noopjs,domain=ksl.com
+		Invalid network filter in default: ||imasdk.googleapis.com/js/sdkloader/ima3.js$script,redirect-rule=noopjs,domain=liveone.com
+		Invalid network filter in default: *$xhr,script,redirect-rule=noopjs,domain=freemcserver.net
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=freemcserver.net
+		Invalid network filter in default: *$3p,xhr,redirect-rule=noop.txt,domain=mangahosted.com
+		Invalid network filter in default: ||realsrv.com^$xhr,redirect-rule=noop.txt,domain=koushoku.org
+		Invalid network filter in default: *$3p,script,redirect-rule=noop.js,domain=koushoku.org
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=sprawdzwegiel.pl
+		Invalid network filter in default: ||nitropay.com/1.gif?$image,3p,redirect-rule=1x1.gif
+		Invalid network filter in default: *$frame,redirect-rule=noopframe,domain=ppss.kr|ygosu.com|loawa.com|feedclick.net|dailian.co.kr|algumon.com|sportalkorea.com
+		Invalid network filter in default: *$script,xhr,redirect-rule=noopjs,domain=ppss.kr|ygosu.com|loawa.com|feedclick.net|dailian.co.kr|algumon.com|sportalkorea.com
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=ygosu.com|loawa.com|feedclick.net|dailian.co.kr|algumon.com|sportalkorea.com
+		Invalid network filter in default: *$image,redirect-rule=32x32.png,domain=ppss.kr
+		Invalid network filter in default: /player/player_ads.html?advertising_id=$frame,1p,redirect-rule=noop.html
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=cryptowidgets.net|wiki-topia.com
+		Invalid network filter in default: ||officepoolstop.com/images/ads/*$image,1p,redirect-rule=1x1.gif
+		Invalid network filter in default: ||nautiljon.com/static/js/adblock_detector.js$script,redirect-rule=noopjs
+		Invalid network filter in default: ||googlesyndication.com/favicon.ico$image,redirect-rule=1x1.gif
+		Invalid network filter in default: ||yieldmo.com^$script,redirect-rule=noopjs,domain=cloudcomputingtopics.net
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=freebinance.top
+		Invalid network filter in default: ||porno365.bingo^$image,1p,redirect-rule=1x1.gif
+		Invalid network filter in default: ||thothd.com^$image,1p,redirect-rule=1x1.gif
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=insurancegold.in
+		Invalid network filter in default: ||imasdk.googleapis.com^$script,redirect-rule=noopjs,domain=panhandle.newschannelnebraska.com
+		Invalid network filter in default: ||thisiswaldo.com/static/js$script,redirect-rule=noop.js
+		Invalid network filter in default: ||cloudfront.net/prebid_$script,redirect-rule=noop.js
+		Invalid network filter in default: /^https?:\/\/(?:[a-z]{2}\.)?[0-9a-z]{7,16}\.com\/[a-z](?=[a-z]{0,25}[0-9A-Z])[0-9a-zA-Z]{3,26}\/(?:[1-5]\d{4}|[3-9]\d{3})\??(?:_=\d+|v=\d)?$/$script,redirect-rule=noop.js
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=haxina.com
+		Invalid network filter in default: ||coinzillatag.com^$script,redirect-rule=noopjs
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=freelitecoin.top|freetron.top
+		Invalid network filter in default: *$script,domain=faucetcrypto.net,redirect-rule=noopjs
+		Invalid network filter in default: *$script,domain=short.freeltc.top,redirect-rule=noopjs
+		Invalid network filter in default: *$image,domain=my.optikservers.com,redirect-rule=1x1.gif
+		Invalid network filter in default: *$script,domain=criptoshark.com,redirect-rule=noopjs
+		Invalid network filter in default: *$script,domain=hatecoin.me,redirect-rule=noopjs
+		Invalid network filter in default: *$frame,redirect-rule=noopframe,domain=anydebrid.com|hotdebrid.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=anydebrid.com|hotdebrid.com
+		Invalid network filter in default: @@||googletagmanager.com/gtm.js$script,redirect-rule,domain=rocketnews24.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=kruidvat.nl
+		Invalid network filter in default: ||jsdelivr.net^*/fp.min.js$script,redirect-rule=fingerprint3.js:10
+		Invalid network filter in default: @@||google-analytics.com/ga.js$script,redirect-rule,domain=download-chromium.appspot.com
+		Invalid network filter in default: ||googlesyndication.com/safeframe/*/container.html$frame,redirect-rule=noop.html,domain=los40.com
+		Invalid network filter in default: ||assets.adobedtm.com/*/satelliteLib$script,redirect-rule=noopjs,domain=8world.com
+		Invalid network filter in default: ||imasdk.googleapis.com/js/sdkloader/ima3.js$script,redirect-rule=noopjs,domain=8world.com
+		Invalid network filter in default: ||player.ooyala.com^$script,redirect-rule=noopjs,domain=8world.com
+		Invalid network filter in default: ||amazonaws.com^$xhr,redirect-rule=nooptext,domain=viu.com
+		Invalid network filter in default: ||imasdk.googleapis.com/js/sdkloader/ima3.js^$script,redirect-rule=noopjs,domain=ilmeteo.it
+		Invalid network filter in default: ||px.moatads.com/pixel.gif$image,domain=abcya.com,redirect-rule=1x1.gif
+		Invalid network filter in default: ||amazon-adsystem.com/*/apstag.js$script,redirect-rule=amazon_apstag.js
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=play.cadenaser.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=corriere.it
+		Invalid network filter in default: ||googletagmanager.com/gtag/js$script,redirect-rule=googletagmanager_gtm.js,domain=asmhentai.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=hopkinssports.com
+		Invalid network filter in default: *$script,domain=larena.it,redirect-rule=noopjs
+		Invalid network filter in default: *$xhr,redirect-rule=noopjs,domain=themeslide.com
+		Invalid network filter in default: ||doubleclick.net/tag/js/gpt.js$script,redirect-rule=googletagservices_gpt.js,domain=aristeguinoticias.com
+		Invalid network filter in default: ||doubleclick.net/tag/js/gpt.js$script,redirect-rule=googletagservices_gpt.js,domain=usnews.com
+		Invalid network filter in default: ||otaserve.net^$frame,redirect-rule=noop.html,domain=chan.sankakucomplex.com
+		Invalid network filter in default: ||securepubads.g.doubleclick.net/tag/js/gpt.js^$script,redirect-rule=googletagservices_gpt.js,domain=pimylifeup.com
+		Invalid network filter in default: @@||google-analytics.com/analytics.js$script,redirect-rule=google-analytics.com/analytics.js,domain=indigenousoap.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=seeitlive.co
+		Invalid network filter in default: ||static.adsafeprotected.com/vans-adapter-google-ima.js^$script,redirect-rule=noopjs,domain=tyla.com
+		Invalid network filter in default: ||epimg.net/t.gif$image,redirect-rule=1x1.gif,domain=as.com
+		Invalid network filter in default: ||news38.de/resources/*$image,1p,redirect-rule=1x1.gif
+		Invalid network filter in default: @@||securepubads.g.doubleclick.net/tag/js/gpt.js$script,redirect-rule,domain=golf.com
+		Invalid network filter in default: ||assets.revistavanityfair.es/images/transparent_pixel.gif$image,1p,redirect-rule=1x1.gif
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=animalchannel.co|homehacks.co|parentingisnteasy.co|seeitlive.co|spotlightstories.co
+		Invalid network filter in default: @@||googletagmanager.com/gtm.js$script,redirect-rule,domain=bela.gifts
+		Invalid network filter in default: *$script,redirect-rule=noop.js,domain=soranews24.com
+		Invalid network filter in default: @@||googletagmanager.com/gtm.js$script,redirect-rule,domain=lingvolive.com
+		Invalid network filter in default: @@||googletagmanager.com/gtm.js$script,redirect-rule=googletagmanager.com/gtm.js,domain=ultimateclassicrock.com
+		Invalid network filter in default: ||google-analytics.com/analytics.js$script,redirect-rule=noopjs,domain=hudsonvalleypost.com|seacoastcurrent.com|popcrush.com,important
+		Invalid network filter in default: ||googletagmanager.com/gtm.js$script,redirect-rule=noopjs,domain=hudsonvalleypost.com|seacoastcurrent.com|popcrush.com,important
+		Invalid network filter in default: @@||google-analytics.com/analytics.js$script,3p,redirect-rule,domain=k2radio.com|kowb1290.com|koel.com|loudwire.com
+		Invalid network filter in default: @@||googletagmanager.com/gtm.js$script,3p,redirect-rule,domain=k2radio.com|kowb1290.com|koel.com|loudwire.com
+		Invalid network filter in default: @@||googletagmanager.com^$redirect-rule,domain=invisibleoranges.com|nj1015.com|tasteofcountry.com|wyrk.com|xxlmag.com
+		Invalid network filter in default: @@||google-analytics.com^$redirect-rule,domain=invisibleoranges.com|nj1015.com|tasteofcountry.com|wyrk.com|xxlmag.com
+		Invalid network filter in default: ||imasdk.googleapis.com/js/sdkloader/ima3.js^$script,redirect-rule=noopjs,domain=weather.com
+		Invalid network filter in default: ||clustrmaps.com^$image,redirect-rule=1x1.gif
+		Invalid network filter in default: @@||amazon-adsystem.com/*/apstag.js$script,redirect-rule=amazon_apstag.js,domain=video.sky.it
+		Invalid network filter in default: @@||googletagmanager.com/gtm.js$script,redirect-rule=googletagmanager.com/gtm.js,domain=autotrader.ca
+		Invalid network filter in default: ||wdr.de/*/tracker/tracker.min.js$script,redirect-rule=noop.js,domain=sportschau.de
+		Invalid network filter in default: @@||googletagmanager.com/gtm.js$script,redirect-rule,domain=corsair.com
+		Invalid network filter in default: @@||securepubads.g.doubleclick.net/tag/js/gpt.js$script,redirect-rule,domain=gamedeveloper.com
+		Invalid network filter in default: @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$script,redirect-rule,domain=heim.jp
+		Invalid network filter in default: @@||googletagmanager.com/gtm.js$script,redirect-rule,domain=mf-realty.jp
+		Invalid network filter in default: ||cloudflare.com/cdn-cgi/trace$xhr,3p,redirect-rule=noop.txt,domain=~funimation.com|~1bit.space|~1bitspace.com
+		Invalid network filter in default: ||d2r1yp2w7bby2u.cloudfront.net/js/localforage.min.js$script,redirect-rule=noopjs,domain=sonyliv.com
+		Invalid network filter in default: @@||googletagmanager.com/gtm.js$script,redirect-rule,domain=simon.com
+		Invalid network filter in default: ||natureetdecouvertes.com^$1p,image,redirect-rule=2x2.png
+		Invalid network filter in default: @@||google-analytics.com/analytics.js$script,redirect-rule,domain=nordvpn.com
+		Invalid network filter in default: @@||cloudflare.com/cdn-cgi/trace$xhr,redirect-rule=noop.txt,domain=benchmarkuniverse.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=sammobile.com
+		Invalid network filter in default: ||prebid.elespectador.com^$script,redirect-rule=googletagservices_gpt.js,1p,important
+		Invalid network filter in default: ||rudaw.net/images/$image,1p,redirect-rule=1x1.gif,important
+		Invalid network filter in default: @@||google-analytics.com/analytics.js$script,redirect-rule=google-analytics.com/analytics.js,domain=layrite.com
+		Invalid network filter in default: @@||googletagmanager.com/gtm.js$script,redirect-rule=googletagmanager.com/gtm.js,domain=aeriagames.com
+		Invalid network filter in default: *$script,redirect-rule=noop.js,domain=nissan.co.jp
+		Invalid network filter in default: ||dan-ball.jp/*.gif$image,redirect-rule=1x1.gif
+		Invalid network filter in default: *$image,domain=asfan.as.com,redirect-rule=1x1.gif
+		Invalid network filter in default: ||booking.rm.dk/selvbooking/*/analytics/*$xhr,1p,redirect-rule=nooptext
+		Invalid network filter in default: @@||google-analytics.com/analytics.js$script,redirect-rule=google-analytics.com/analytics.js:5,domain=stern.de
+		Invalid network filter in default: @@||googletagmanager.com/gtm.js$script,redirect-rule=googletagmanager_gtm.js:5,domain=stern.de
+		Invalid network filter in default: ||elpais.com/t.gif$image,1p,redirect-rule=1x1.gif,important
+		Invalid network filter in default: ||tag.atom.gamedistribution.com^$xhr,redirect-rule=nooptext,1p
+		Invalid network filter in default: ||hits.informer.com/log.php$image,domain=funny.pho.to,redirect-rule=1x1.gif
+		Invalid network filter in default: @@/prebid-ads/adsensebase.js$script,redirect-rule=prebid-ads.js,domain=darkreading.com
+		Invalid network filter in default: *$frame,domain=mcrypto.club|luckydice.net,redirect-rule=noopframe
+		Invalid network filter in default: ||cryptocoinsad.com/ads/show.php$frame,redirect-rule=noop.html
+		Invalid network filter in default: ||wpfc.ml^$image,redirect-rule=1x1.gif,domain=thestoryexchange.org
+		Invalid network filter in default: @@||googletagmanager.com/gtm.js$script,redirect-rule=googletagmanager_gtm.js:5,domain=ebay-kleinanzeigen.de
+		Invalid network filter in default: *$image,domain=novelgames.com,redirect-rule=1x1.gif
+		Invalid network filter in default: *$script,domain=novelgames.com,redirect-rule=noopjs
+		Invalid network filter in default: *$xhr,domain=novelgames.com,redirect-rule=nooptext
+		Invalid network filter in default: @@||securepubads.g.doubleclick.net/tag/js/gpt.js$script,redirect-rule=googletagservices_gpt.js:5,domain=olx.pt
+		Invalid network filter in default: @@||google-analytics.com/analytics.js$script,redirect-rule=google-analytics.com/analytics.js:5,domain=xeroshoes.com
+		Invalid network filter in default: @@||googletagmanager.com/gtag/js$script,redirect-rule=googletagmanager_gtm.js:5,domain=xeroshoes.com
+		Invalid network filter in default: @@||googletagmanager.com/gtm.js$script,redirect-rule=googletagmanager_gtm.js:5,domain=xeroshoes.com
+		Invalid network filter in default: @@||googletagmanager.com/gtag/js$script,redirect-rule=googletagmanager_gtm.js:5,domain=myshows.me
+		Invalid network filter in default: @@||googletagservices.com/tag/js/gpt.js$script,redirect-rule,domain=thedailybeast.com
+		Invalid network filter in default: ||imasdk.googleapis.com/js/sdkloader/ima3.js$script,domain=ultimedia.com,redirect-rule=noopjs
+		Invalid network filter in default: ||imasdk.googleapis.com/js/sdkloader/ima3.js$3p,script,redirect-rule=google-ima.js:5
+		Invalid network filter in default: @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$script,redirect-rule,domain=amachamusic.chagasi.com
+		Invalid network filter in default: @@||amazon-adsystem.com/*/apstag.js$script,redirect-rule,domain=weather.com
+		Invalid network filter in default: @@||securepubads.g.doubleclick.net/tag/js/gpt.js$script,redirect-rule,domain=honestjohn.co.uk
+		Invalid network filter in default: @@||googletagmanager.com/gtag/js$script,redirect-rule,domain=contactpoints.org
+		Invalid network filter in default: *$script,domain=wp.pl|money.pl|o2.pl|parenting.pl|pudelek.pl|autokult.pl|gadzetomania.pl|fotoblogia.pl|komorkomania.pl|polygamia.pl|abczdrowie.pl,redirect-rule=noopjs
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=rjno1.com
+		Invalid network filter in default: *$image,domain=fcdn.lauta.media,redirect-rule=32x32.png
+		Invalid network filter in default: ||adform.net^$domain=fcdn.lauta.media,script,xhr,redirect-rule=noopjs
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=promo-visits.site|satoshi-win.xyz|shorterall.com
+		Invalid network filter in default: *$frame,redirect-rule=noopframe,domain=allcryptoz.net|crewbase.net|crewus.net|shinbhu.net|shinchu.net|thumb8.net|thumb9.net|topcryptoz.net|uniqueten.net|ultraten.net
 		Invalid network filter in default: $webrtc,domain=ack.net|allthetests.com|azvideo.net|champion.gg|clicknupload.link|colourlovers.com|csgolounge.com|dispatch.com|fastplay.to|go4up.com|gounlimited.to|janjua.pw|janjua.tv|jpost.com|megaup.net|merriam-webster.com|netdna-storage.com|ouo.io|ouo.press|rlslog.net|sourceforge.net|spanishdict.com|telegram.com|torlock.icu|torlock2.com|uptobox.com|videowood.tv|vidtodo.com|yts.gs|yts.mx
-		Entity not supported: soap2day.*
-		Entity not supported: 2embed.*
-		Entity not supported: pussyspace.*
-		Entity not supported: slreamplay.*
-		Unpatchable redirect filter: empty
-		Entity not supported: guardaserie.*,		Unpatchable redirect filter: google-analytics_analytics.js
+		FilterOriginEntityHit: Entity slreamplay.* not supported
 		Unsupported regex-based removeParam: /utm_source|utm_campaign|utm_content/
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: abp-resource:blank-js
-		Unpatchable redirect filter: 2x2.png
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 32x32.png
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 2x2.png
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 32x32.png
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 2x2.png
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 3x2.png
-		Unpatchable redirect filter: 2x2.png
-		Unpatchable redirect filter: 2x2.png
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 2x2.png
-		Unpatchable redirect filter: 2x2.png
-		Entity not supported: silkengirl.*,		Unpatchable redirect filter: 2x2.png
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 32x32.png
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 2x2.png
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1-transparent.gif
-		Unpatchable redirect filter: 1x1-transparent.gif
-		Unpatchable redirect filter: 32x32-transparent.png
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: noopframe
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: empty
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: fuckadblock.js-3.2.0
-		Unpatchable redirect filter: fuckadblock.js-3.2.0
-		Unpatchable redirect filter: fuckadblock.js-3.2.0
-		Unpatchable redirect filter: fuckadblock.js-3.2.0
-		Unpatchable redirect filter: fuckadblock.js-3.2.0
-		Unpatchable redirect filter: hd-main.js
-		Unpatchable redirect filter: hd-main.js
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: fuckadblock.js-3.2.0
-		Unpatchable redirect filter: fuckadblock.js-3.2.0
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: ligatus.com/*/angular-tag.js
-		Unpatchable redirect filter: ligatus.com/*/angular-tag.js
-		Unpatchable redirect filter: popads.net.js
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: fuckadblock.js-3.2.0
-		Unpatchable redirect filter: noopjs
-		Entity not supported: gmx.*,		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: googletagmanager.com/gtm.js:10
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs:10
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: googlesyndication_adsbygoogle.js
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: google-analytics.com/analytics.js
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs:10
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Entity not supported: arabseed.*,		Unpatchable redirect filter: googlesyndication_adsbygoogle.js
-		Entity not supported: streamzz.*,		Unpatchable redirect filter: empty
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noop.js:10
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: googlesyndication_adsbygoogle.js:5
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: googletagmanager_gtm.js
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: prebid-ads.js
-		Unpatchable redirect filter: prebid-ads.js
-		Unpatchable redirect filter: prebid-ads.js
-		Unpatchable redirect filter: prebid-ads.js
-		Unpatchable redirect filter: prebid-ads.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: googletagmanager_gtm.js:5
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: prebid-ads.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: amazon_apstag.js
-		Unpatchable redirect filter: noop.js
-		Entity not supported: streamingcommunity.*,		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		regexFilter is not RE2-compatible: ^https?:\/\/(?:[a-z]{2}\.)?[0-9a-z]{7,16}\.com\/[a-z](?=[a-z]{0,25}[0-9A-Z])[0-9a-zA-Z]{3,26}\/(?:[1-5]\d{4}|[3-9]\d{3})\??(?:_=\d+|v=\d)?$,		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: google-analytics.com/analytics.js:5
-		Unpatchable redirect filter: google-analytics.com/cx/api.js:5
-		Unpatchable redirect filter: googletagservices.com/gpt.js:5
-		Unpatchable redirect filter: googletagservices_gpt.js:5
-		Unpatchable redirect filter: googletagservices_gpt.js:5
-		Unpatchable redirect filter: scorecardresearch.com/beacon.js:5
-		Unpatchable redirect filter: google-analytics.com/ga.js:5
-		Unpatchable redirect filter: addthis.com/addthis_widget.js
-		Unpatchable redirect filter: googletagmanager_gtm.js:5
-		Unpatchable redirect filter: outbrain-widget.js:5
-		Unpatchable redirect filter: googletagmanager.com/gtm.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: fingerprint2.js
-		Unpatchable redirect filter: fingerprint2.js
-		Unpatchable redirect filter: fingerprint2.js
-		Unpatchable redirect filter: fingerprint2.js
-		Unpatchable redirect filter: fingerprint3.js:10
-		Unpatchable redirect filter: fingerprint2.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: amazon-adsystem.com/aax2/amzn_ads.js
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: amazon_apstag.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: googletagmanager_gtm.js
-		Unpatchable redirect filter: googletagservices_gpt.js
-		Unpatchable redirect filter: googletagservices_gpt.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: googletagmanager.com/gtm.js
-		Unpatchable redirect filter: google-analytics.com/analytics.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: amazon_apstag.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: prebid-ads.js
-		Unpatchable redirect filter: google-analytics.com/analytics.js
-		Unpatchable redirect filter: googletagmanager_gtm.js:5
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: nooptext
-		Entity not supported: 1movies.*,		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: nooptext
 		Unsupported regex-based removeParam: /^ad/
 		Unsupported regex-based removeParam: /^ad/
-		Unpatchable redirect filter: noop.txt
-		Entity not supported: discoveryplus.*,		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: noopvmap-1.0
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: nooptext
-		Entity not supported: carousell.*
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: nooptext
-		Entity not supported: streamingcommunity.*,		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: noopframe
-		Unpatchable redirect filter: noopframe
-		Unpatchable redirect filter: noopframe
-		Unpatchable redirect filter: noopframe
-		Unpatchable redirect filter: noopframe
+		FilterOriginEntityHit: Entity discoveryplus.* not supported
 		Unsupported regex-based removeParam: /^(?:correlator|f[cr-w]|p[e-sv]|[abdeg-or-x])/
-		Unsupported modifier exception
-		Unpatchable redirect filter: noop.html
-		Unpatchable redirect filter: noopframe
-		Unpatchable redirect filter: noop.html
-		Unsupported modifier exception
-		Unpatchable redirect filter: noop.html
 		Unsupported regex-based removeParam: /^(?:correlator|f[cr-w]|p[e-sv]|u_|ga_|url|dt|adk)/
 		Unsupported modifier exception
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp4-1s
-		Unpatchable redirect filter: noopmp4-1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp4-1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp4-1s
-		Unpatchable redirect filter: noopmp4-1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp4-1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp4-1s
-		Unpatchable redirect filter: noopmp4-1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp4-1s
-		Unpatchable redirect filter: noopmp4-1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp4-1s
-		Entity not supported: the-voice-of-germany.*,		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noop-0.5s.mp3
-		Unpatchable redirect filter: noop-0.5s.mp3
-		Unpatchable redirect filter: noop-1s.mp4
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Entity not supported: pobre.*,		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp4-1s
-		Unpatchable redirect filter: noopmp4-1s
-		Unpatchable redirect filter: noop-1s.mp4
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp4-1s
-		Unpatchable redirect filter: noop-1s.mp4
 		Unsupported modifier exception
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 2x2.png
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 2x2.png
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: fuckadblock.js-3.2.0
-		Unpatchable redirect filter: fuckadblock.js-3.2.0
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: fuckadblock.js-3.2.0
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: fingerprint2.js
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: googletagservices_gpt.js
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: nooptext
 		Unsupported modifier exception
-		Unpatchable redirect filter: noopframe
-		Unpatchable redirect filter: noopframe
-		Unpatchable redirect filter: noop.html
+		FilterOriginEntityHit: Entity pobre.* not supported
 		Unsupported modifier exception
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Unpatchable redirect filter: noopmp4-1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 32x32.png
-		Unpatchable redirect filter: 32x32.png
-		Unpatchable redirect filter: 32x32.png
-		Unpatchable redirect filter: 32x32.png
-		Unpatchable redirect filter: 32x32.png
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: nobab2.js:10
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: google-ima.js:5
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp4-1s
-		Unpatchable redirect filter: noopmp3-0.1s
-		Entity not supported: gmx.*,		Unpatchable redirect filter: noop-0.1s.mp3
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
-CSS-generic: 17048 plain CSS selectors
-CSS-specific distinct filters: 4969 distinct combined selectors
-CSS-specific injectable files: 20
-	1nc3kg4, 0nh2v2o, 19t4oqc, 0d6lu5c, 0lvv2gs, 14j7q8o, 0cvi2a0, 11n6j44, 0emkm7s, 1dofh9c, 1u2i7vk, 03ghe90, 1v2treg, 13mg5do, 1prldk4, 1qqal4c, 0uo66rg, 0ekr1jk, 0iuoj34, 0jglro4
-Procedural-related distinct filters: 602 distinct combined selectors
-Procedural-related injectable files: 3
-	03j44de, 0ft4fsq, 0h3j1v6
-Rejected cosmetic filters: 1397
+		Unsupported modifier exception
+		Unsupported modifier exception
+		Invalid network filter in default: ||succeedscene.com/ads_*/ads.load.js$script,redirect-rule=noop.js
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=mp4upload.com
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=magesy.*|majesy.*
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=magesy.*|majesy.*
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=mage.si
+		Invalid network filter in default: ||vkcdnservice.com^$script,redirect-rule=noopjs,3p
+		Invalid network filter in default: *$xhr,redirect-rule=noopjs,domain=spiegel.de
+		Invalid network filter in default: *$xhr,redirect-rule=noopjs,domain=onlinefreecourse.net
+		Invalid network filter in default: /ap-plugin-scripteo/frontend/img/728x90.png$image,redirect-rule=1x1.gif
+		Invalid network filter in default: ||a-ads.com^$frame,redirect-rule=noopframe,domain=dogefaucet.com
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=vipbox.*
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=youmath.it
+		Invalid network filter in default: *$script,domain=delcotimes.com|macombdaily.com|santacruzsentinel.com|saratogian.com|theoaklandpress.com|trentonian.com,redirect-rule=noopjs
+		Invalid network filter in default: *$image,domain=delcotimes.com|macombdaily.com|santacruzsentinel.com|saratogian.com|theoaklandpress.com|trentonian.com,redirect-rule=2x2.png
+		Invalid network filter in default: @@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$script,redirect-rule,domain=leechpremium.net
+		Invalid network filter in default: ||googlesyndication.com^$script,redirect-rule=googlesyndication_adsbygoogle.js,domain=3dzip.org
+		Invalid network filter in default: ||googlesyndication.com^$script,redirect-rule=googlesyndication_adsbygoogle.js,domain=fatgirlskinny.net
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=hpjav.tv
+		Invalid network filter in default: *$1p,image,redirect-rule=1x1.gif,domain=rte.ie
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=6play.fr
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=youku.com
+		Invalid network filter in default: ||ads-twitter.com/uwt.js$xhr,3p,redirect-rule=noop.txt
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=finobe.com
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=photopea.com
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=streameast.*
+		Invalid network filter in default: *$image,redirect-rule=32x32.png,domain=streameast.*
+		Invalid network filter in default: *$script,3p,redirect-rule=noopjs,domain=freecourseweb.com
+		Invalid network filter in default: *$image,domain=grafixfather.com,redirect-rule=1x1.gif
+		Invalid network filter in default: ||googlesyndication.com/pagead/$script,redirect-rule=noopjs,domain=freetutorialseu.com|freetutorialsus.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=linternaute.com
+		Invalid network filter in default: *$script,domain=vidup.io,redirect-rule=noopjs
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=tf1.fr
+		Invalid network filter in default: /reclama/ads.js$script,redirect-rule=prebid-ads.js
+		Invalid network filter in default: @@||google-analytics.com/analytics.js$script,redirect-rule=google-analytics.com/analytics.js,domain=ultimateclassicrock.com
+Rejected cosmetic filters: 1400
 	Entity not supported: google.*###atvcap + #tvcap > .mnr-c > .commercial-unit-mobile-top
 	Entity not supported: google.*###center_col > #\5f Emc
 	Entity not supported: google.*###center_col > #main > .dfrd > .mnr-c > .c._oc._zs
@@ -1469,18 +1544,21 @@ Rejected cosmetic filters: 1397
 	Entity not supported: 4movierulz.*##.ad_btn-white
 	Entity not supported: 4movierulz1.*##.ad_btn-white
 	Entity not supported: 7movierulzfree.*##.ad_btn-white
+	Entity not supported: movierulzs.*##.ad_btn-white
 	Entity not supported: movierulz4k.*##.ad_btn-white
 	Entity not supported: movierulzfree.*##.ad_btn-white
 	Entity not supported: 123movierulz.*##.ad_watch_now
 	Entity not supported: 4movierulz.*##.ad_watch_now
 	Entity not supported: 4movierulz1.*##.ad_watch_now
 	Entity not supported: 7movierulzfree.*##.ad_watch_now
+	Entity not supported: movierulzs.*##.ad_watch_now
 	Entity not supported: moviesrulz.*##.ad_watch_now
 	Entity not supported: movierulz4k.*##.ad_watch_now
 	Entity not supported: movierulzfree.*##.ad_watch_now
 	Entity not supported: moviesrulzfree.*##.ad_watch_now
 	Entity not supported: watchmovierulz.*##.ad_watch_now
 	Entity not supported: movierulzfree.*##.hd-buttons
+	Entity not supported: movierulzs.*##.hd-buttons
 	Entity not supported: 123movierulz.*##.btn1
 	Entity not supported: 4movierulz.*##.btn1
 	Entity not supported: 4movierulz1.*##.btn1
@@ -2035,9 +2113,15 @@ Rejected cosmetic filters: 1397
 	Invalid filter: komorkomania.pl##:xpath(//*[string-length(@href) > 1600])
 	Invalid filter: polygamia.pl##:xpath(//*[string-length(@href) > 1600])
 	Invalid filter: open.fm##:xpath(//*[string-length(@href) > 1600])
-Scriptlet-related distinct filters: 1925
+CSS-generic: 16809 plain CSS selectors
+CSS-specific distinct filters: 4998 distinct combined selectors
+CSS-specific injectable files: 20
+	014tpn0, 1fhigms, 0e5n1go, 0jb9bgk, 0n4vluo, 0k0eb4g, 18pv4pg, 1bg0uno, 1td7q4o, 0hhnm44, 0vikb30, 1r3rk58, 05hn0po, 1omei4k, 1euuops, 0a56bag, 1gatm20, 1rf0450, 1p779ns, 1ml24ag
+Declarative-related distinct filters: 250 distinct combined selectors
+Procedural-related distinct filters: 348 distinct combined selectors
+Scriptlet-related distinct filters: 1926
 Scriptlet-related injectable files: 9
-	06enhfp, 1nhvakd, 0mr7k6d, 19b56q1, 11odnmp, 12ieufd, 1qjcnvl, 0e2p5bp, 12jvemp
+	default.json-prune.js, default.set-constant.js, default.no-settimeout-if.js, default.abort-on-property-read.js, default.no-addeventlistener-if.js, default.no-setinterval-if.js, default.abort-current-script.js, default.abort-on-property-write.js, default.no-windowOpen-if.js
 ============================
 Listset for 'alb-0':
 	Fetching remote https://raw.githubusercontent.com/AnXh3L0/blocklist/master/albanian-easylist-addition/Albania.txt
@@ -2047,21 +2131,14 @@ Input filter count: 29
 Output rule count: 26
 	Plain good: 22
 	Maybe good (regexes): 0
-	redirect-rule= (discarded): 0
+	redirect=: 0
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
 	Unsupported: 4
-		Entity not supported: filma24.*
-		Entity not supported: www.filma24.*
-		Entity not supported: www.filma24.*
-		Entity not supported: filma24.*
-CSS-generic: 6 plain CSS selectors
-CSS-specific distinct filters: 97 distinct combined selectors
-CSS-specific injectable files: 1
-	0pggmv0
-Procedural-related distinct filters: 9 distinct combined selectors
-Procedural-related injectable files: 1
-	1jrd2g6
+		FilterOriginEntityHit: Entity filma24.* not supported
+		FilterOriginEntityHit: Entity www.filma24.* not supported
+		FilterOriginEntityHit: Entity www.filma24.* not supported
+		FilterOriginEntityHit: Entity filma24.* not supported
 Rejected cosmetic filters: 22
 	Invalid filter: gazetatema.net###content > div > a:has-text()
 	Invalid filter: lajmifundit.al##.td_block_template_1 > a:has-text()
@@ -2085,6 +2162,12 @@ Rejected cosmetic filters: 22
 	Entity not supported: filma24.*##div.download-links:style(width: 100% !important)
 	Entity not supported: filma24.*###disqus_thread:style(width: 100% !important)
 	Entity not supported: filma24.*##div.recommended.related:style(width: 100% !important)
+CSS-generic: 6 plain CSS selectors
+CSS-specific distinct filters: 97 distinct combined selectors
+CSS-specific injectable files: 1
+	03aftlo
+Declarative-related distinct filters: 2 distinct combined selectors
+Procedural-related distinct filters: 4 distinct combined selectors
 ============================
 Listset for 'bgr-0':
 	Fetching remote https://stanev.org/abp/adblock_bg.txt
@@ -2094,7 +2177,7 @@ Input filter count: 673
 Output rule count: 664
 	Plain good: 664
 	Maybe good (regexes): 0
-	redirect-rule= (discarded): 0
+	redirect=: 0
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
 	Unsupported: 0
@@ -2102,124 +2185,81 @@ Output rule count: 664
 CSS-generic: 3 plain CSS selectors
 CSS-specific distinct filters: 185 distinct combined selectors
 CSS-specific injectable files: 1
-	1rbisko
+	0nj0u7c
 ============================
 Listset for 'chn-0':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/224.txt
-Input filter count: 19078
-	Accepted filter count: 19036
+Input filter count: 19113
+	Accepted filter count: 19071
 	Rejected filter count: 0
-Output rule count: 6661
-	Plain good: 6602
-	Maybe good (regexes): 14
-	redirect-rule= (discarded): 0
+Output rule count: 6664
+	Plain good: 6604
+	Maybe good (regexes): 15
+	redirect=: 35
 	csp= (discarded): 6
 	removeparams= (accepted/discarded): 0/0
-	Unsupported: 39
+	Unsupported: 4
 		regexFilter is not RE2-compatible: ^(?!.*(bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fastlylb.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|vk.com|yandex.|yastatic.net|ytimg.com|zencdn.net|player|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com)).*$
 		Invalid network filter in chn-0: @@||ad.alimama.com^$genericblock
 		Invalid network filter in chn-0: @@||cmechina.net^$genericblock
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: googletagservices_gpt.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: googlesyndication.com/adsbygoogle.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: googlesyndication.com/adsbygoogle.js
-		Unpatchable redirect filter: googlesyndication.com/adsbygoogle.js
-		Unpatchable redirect filter: googletagservices_gpt.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: noop.txt
 		Unsupported modifier exception
-		Unpatchable redirect filter: noop-1s.mp4
-		Unpatchable redirect filter: noop-1s.mp4
-		Unpatchable redirect filter: noop-1s.mp4
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Unpatchable redirect filter: noop-1s.mp4
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 1x1.gif
-CSS-generic: 635 plain CSS selectors
-CSS-specific distinct filters: 2591 distinct combined selectors
-CSS-specific injectable files: 11
-	16pnj8c, 0q571dk, 1u9krao, 0b1olfc, 0uhq6ls, 19hnm80, 02un6po, 0na4314, 120aus4, 1bvqgvk, 075csu0
-Procedural-related distinct filters: 168 distinct combined selectors
-Procedural-related injectable files: 1
-	0jrojqe
 Rejected cosmetic filters: 3
 	Entity not supported: 18comic.*##body .bot-per
 	Entity not supported: 18comic.*##.top-a2db
 	Entity not supported: 18comic.*##.modal-body > ul.pop-list
+CSS-generic: 638 plain CSS selectors
+CSS-specific distinct filters: 2605 distinct combined selectors
+CSS-specific injectable files: 11
+	0iikt0c, 0322lq4, 1roa5qo, 1vmgh54, 0tgk69c, 06lklfc, 169ku74, 1mvr9oo, 1rl989g, 1m84adg, 1c1aq9o
+Declarative-related distinct filters: 46 distinct combined selectors
+Procedural-related distinct filters: 84 distinct combined selectors
 Scriptlet-related distinct filters: 70
 Scriptlet-related injectable files: 7
-	08btl01, 19nl0eh, 0aov6gl, 0bgo2cl, 0khccu5, 0pmr2j5, 0dq0d9t
+	chn-0.no-settimeout-if.js, chn-0.set-constant.js, chn-0.no-setinterval-if.js, chn-0.abort-on-property-read.js, chn-0.abort-current-script.js, chn-0.abort-on-property-write.js, chn-0.json-prune.js
 ============================
 Listset for 'cze-0':
 	Fetching remote https://raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt
 	Fetching remote https://raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters_ublock.txt
-Input filter count: 228
-	Accepted filter count: 228
+Input filter count: 226
+	Accepted filter count: 226
 	Rejected filter count: 0
-Output rule count: 122
+Output rule count: 121
 	Plain good: 115
 	Maybe good (regexes): 0
-	redirect-rule= (discarded): 0
+	redirect=: 3
 	csp= (discarded): 1
 	removeparams= (accepted/discarded): 0/0
-	Unsupported: 6
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Unpatchable redirect filter: noop-1s.mp4
-		Unpatchable redirect filter: 1x1.gif
+	Unsupported: 2
+		Invalid network filter in cze-0: *$image,redirect-rule=1x1.gif,domain=seznamzpravy.cz|sport.cz|seznam.cz|sbazar.cz|firmy.cz|super.cz|garaz.cz|stream.cz
+		Invalid network filter in cze-0: *$xhr,redirect-rule=nooptext,domain=seznamzpravy.cz|sport.cz|seznam.cz|sbazar.cz|firmy.cz|super.cz|garaz.cz|stream.cz
 CSS-generic: 36 plain CSS selectors
-CSS-specific distinct filters: 141 distinct combined selectors
+CSS-specific distinct filters: 144 distinct combined selectors
 CSS-specific injectable files: 1
-	1n6o4gs
-Procedural-related distinct filters: 15 distinct combined selectors
-Procedural-related injectable files: 1
-	0mvokpq
+	14qavdo
+Declarative-related distinct filters: 7 distinct combined selectors
+Procedural-related distinct filters: 5 distinct combined selectors
 Scriptlet-related distinct filters: 30
 Scriptlet-related injectable files: 6
-	0m938lt, 097ehdt, 0av955l, 05bqmd9, 174lpqh, 1b5k8mh
+	cze-0.abort-on-property-read.js, cze-0.abort-current-script.js, cze-0.set-constant.js, cze-0.abort-on-property-write.js, cze-0.no-addeventlistener-if.js, cze-0.no-setinterval-if.js
 ============================
 Listset for 'deu-0':
 	Fetching remote https://easylist.to/easylistgermany/easylistgermany.txt
-Input filter count: 2190
-	Accepted filter count: 2190
+Input filter count: 2193
+	Accepted filter count: 2193
 	Rejected filter count: 0
-Output rule count: 1691
-	Plain good: 1687
+Output rule count: 1692
+	Plain good: 1688
 	Maybe good (regexes): 3
-	redirect-rule= (discarded): 0
+	redirect=: 0
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
 	Unsupported: 1
 		Invalid network filter in deu-0: @@||gofeminin.de^$genericblock
 CSS-generic: 350 plain CSS selectors
-CSS-specific distinct filters: 1169 distinct combined selectors
+CSS-specific distinct filters: 1191 distinct combined selectors
 CSS-specific injectable files: 5
-	074f6r8, 10eiop0, 047m22g, 1me9lp0, 1q6nabg
-Procedural-related distinct filters: 83 distinct combined selectors
-Procedural-related injectable files: 1
-	13jmkue
+	0cbc0e8, 0g12nns, 0328j0g, 1bm7f80, 01io59c
+Procedural-related distinct filters: 50 distinct combined selectors
 ============================
 Listset for 'fin-0':
 	Fetching remote https://raw.githubusercontent.com/finnish-easylist-addition/finnish-easylist-addition/master/Finland_adb.txt
@@ -2230,88 +2270,55 @@ Input filter count: 172
 Output rule count: 150
 	Plain good: 141
 	Maybe good (regexes): 3
-	redirect-rule= (discarded): 0
+	redirect=: 3
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
-	Unsupported: 6
+	Unsupported: 3
 		regexFilter is not RE2-compatible: telsu\.fi\/(?![^>]*\.\w{3}$).+
 		regexFilter is not RE2-compatible: telsu\.fi\/(?![^>].*\.(jpg|png|svg|ico)$).+
 		regexFilter is not RE2-compatible: telsu\.fi\/img\/(?!cloudcity|mindmax|navibg|prg|tvohjelmat)
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: abp-resource:blank-mp3
-		Unpatchable redirect filter: abp-resource:blank-mp3
 CSS-generic: 52 plain CSS selectors
-CSS-specific distinct filters: 368 distinct combined selectors
+CSS-specific distinct filters: 405 distinct combined selectors
 CSS-specific injectable files: 2
-	1puuj0o, 0rbthr0
-Procedural-related distinct filters: 177 distinct combined selectors
-Procedural-related injectable files: 1
-	11t738u
+	0beme9g, 0boob34
+Declarative-related distinct filters: 15 distinct combined selectors
+Procedural-related distinct filters: 83 distinct combined selectors
 Scriptlet-related distinct filters: 4
 Scriptlet-related injectable files: 3
-	1girtcp, 1qams1d, 1fkoufl
+	fin-0.no-settimeout-if.js, fin-0.abort-current-script.js, fin-0.abort-on-property-read.js
 ============================
 Listset for 'fra-0':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/16.txt
-Input filter count: 21819
-	Accepted filter count: 21765
+Input filter count: 21318
+	Accepted filter count: 21264
 	Rejected filter count: 48
-Output rule count: 7321
-	Plain good: 7270
+Output rule count: 7320
+	Plain good: 7269
 	Maybe good (regexes): 10
-	redirect-rule= (discarded): 0
+	redirect=: 28
 	csp= (discarded): 5
 	removeparams= (accepted/discarded): 0/0
-	Unsupported: 36
+	Unsupported: 8
 		regexFilter is not RE2-compatible: ^(?!.*(bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fastlylb.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|vk.com|yandex.|yastatic.net|ytimg.com|zencdn.net|player|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com)).*$
-		Entity not supported: vidembed.*
-		Entity not supported: vidembed.*
-		Entity not supported: fmovies.*
-		Entity not supported: fmovies.*
+		FilterOriginEntityHit: Entity vidembed.* not supported
+		FilterOriginEntityHit: Entity vidembed.* not supported
+		FilterOriginEntityHit: Entity fmovies.* not supported
+		FilterOriginEntityHit: Entity fmovies.* not supported
 		Invalid network filter in fra-0: @@$webrtc,domain=stream4free.live
 		Invalid network filter in fra-0: $webrtc,domain=11anim.com|1337x.st|1337x.to|2ddl.ms|adyou.me|ajplugins.com|allitebooks.com|androidadult.com|animeid.tv|animekb.net|animeland.tv|animezone.pl|avametrie.fr|avgle.com|bdurls.com|bigspeeds.com|bindassbros.com|blizzboygames.net|bonstreams.net|catrumahminimalis.me|centrum-dramy.pl|cestpasbien.pro|chatytvgratis.net|chrt.pw|cineiz.io|cinemahd.co|cinemamkv.net|cinemitas.com|cinestrenostv.tv|clik.pw|cmacapps.com|cocostreaming.com|convertinmp4.com|cpabien.ws|crictime.com|crictime.is|daclips.com|datpiff.com|ddl.to|ddmix.net|ddownload.com|deltabit.co|deportesmax.info|descargas2020.com|djs.sk|dl-protect.info|dl-protect1.com|dompl3.info|doodstream.co|doodstream.com|downlink.top|draculastream.org|drakula.top|dropapk.com|dropapk.to|dualpaste.net|earnwithshortlink.com|ebook-planete.org|ebookdz.com|fileone.tv|filmeserialeonline.org|filmtelecharger.net|flashx.net|flashx.tv|fluvore.com|free-telechargement.org|free-telecharger.com|free-telecharger.net|free-telecharger.org|free-telecharger.xyz|freecardano.com|freenem.com|fullmatchesandshows.com|gamestorrent.co|ganol.ru|ganool.im|ganool123.com|gtaall.com|gum-gum-streaming.com|hdvid.online|healthoptimizer.net|heapfiles.com|hq-porns.com|ianimes.org|iegy.best|imagenesmy.com|imgazure.com|immunicity.st|ithepiratebay.com|javher.com|jheberg.net|jkanime.net|k-streaming.cc|k-streaming.com|kinohabr.net|kinokrad.co|kinoprofi.org|kinostuff.com|kinox.me|kinox.tv|kiss-anime.ws|kissasian.ch|kissasian.sh|kooralive.info|kora-live.tv|kvid.org|lafmacun.net|larati.net|latino-webtv.com|leggendaweb.com|leitor.net|lemondedekevin.fr|lewd.ninja|libertyvf.co|libertyvf.com|libertyvf.net|libertyvf.tv|liketvw.com|likeur.org|limpi.tv|liveflashplayer.org|lordhd.com|love-drama.pl|ma-famille-dabord-streaming.com|mangaku.in|mejortorrent.org|mejortorrent1.com|mimaletamusical.blogspot.com|mkvcage.com|mladipodnikatelia.sk|modsbase.com|monova.org|movie4k.is|movie4k.org|movies123.ac|mp4mania.xyz|multiimg.com|myfeed4u.com|mywatchseries.stream|netiap.com|nicoblog.org|nonpiusolo.com|novom.ru|o2tvseries.com|oasivip.com|oceanoffgames.com|oipeirates.online|onion.ly|onion.pet|openload.cc|openload.ch|openload.fun|opensubtitles.org|ovid.online|ovid.tv|papstream.info|pastehere.xyz|pcgamestorrents.com|pdf-giant.com|peeplink.in|pelislatino3gp.biz|pinoybay.ch|piratebayblocked.com|planet-streaming.net|planet-streaming1.com|planete-bd.org|planetfools.com|povwideo.cc|powvideo.cc|powvideo.net|putload.tv|radiofly.ws|reactor.cc|readmanga.today|regarder-le-bureau-des-legendes-streaming.com|regarder-malcolm-streaming.com|regarder-peaky-blinders-streaming.xyz|regarder-prison-break-streaming.com|rivosport.co|rojadirecta.fr|sawlive.tv|scuseami.net|senmanga.com|sharemods.com|sherlockonline.ru|shippuden.tv|short.pe|short2win.com|shrink-service.it|sintelevisor.com|sleeptimer.org|slyid.com|solarmovie.one|sorteosrd.com|srt.am|starmusiq.one|strdef.world|stream2watch.org|stream4free.live|streambeam.io|streamcdn.to|streamcloud.eu|streamhunter.net|streamhunter.top|streamplay.me|streamplay.to|subswiki.com|subtorrents.tv|supervideo.tv|tamilmv.cz|tarjetarojatvonline.com|telerium.tv|teleriumtv.com|teleriumtv.net|theappguruz.com|thepiratebay.cr|thepiratebay.vip|thevid.net|thevid.tv|thevideo.ch|thevideo.io|thevideo.me|thevideo.us|tomadivx.tv|topsimages.com|torlock.com|torlock2.com|toros.co|tpbprox.com|tubetitties.com|tvpor-internet.com|tvshqiphd.com|uii.io|ukpass.co|unblocked2.fun|unblocked2.vip|unblocksites.co|up-4.net|upbom.com|upbom.net|upload.ee|uploadfiles.eu|uploadocean.com|uppom.live|uptostream.com|upvid.host|vcrypt.net|veehd.com|vergol.com|verliga1.net|vertelevisor.com|vev.io|vev.red|videobin.co|videowood.tv|vidfile.net|vidop.icu|vidoza.co|vidoza.net|vidshare.tv|vidup.io|vidup.tv|viewasian.tv|vup.to|watchonline.to|watchpornfree.ws|wearesaudis.net|wlive.tv|wstream.to|wstream.video|x1337x.eu|x1337x.se|x1337x.ws|xclusivejams.com|xfilesharing.com|xrivonet.info|xvideosharing.com|yify-torrent.org|yifyddl.movie|zenexplayer.com|zeroshare.me|zipansion.com|zone-ebook.com
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: googlesyndication.com/adsbygoogle.js
-		Unpatchable redirect filter: googlesyndication.com/adsbygoogle.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: amazon_apstag.js
-		Unpatchable redirect filter: google-analytics_ga.js
-		Unpatchable redirect filter: googletagservices_gpt.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: amazon_apstag.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop-vmap1.0.xml
-		Unpatchable redirect filter: noop-vmap1.0.xml
 		Unsupported modifier exception
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Unpatchable redirect filter: noop-1s.mp4
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Unpatchable redirect filter: noop-0.1s.mp3
-CSS-generic: 2657 plain CSS selectors
-CSS-specific distinct filters: 1186 distinct combined selectors
-CSS-specific injectable files: 5
-	0iv3k4s, 1creaq4, 0nia9f8, 0pdv0kk, 19kflfc
-Procedural-related distinct filters: 116 distinct combined selectors
-Procedural-related injectable files: 1
-	1pn6f2a
 Rejected cosmetic filters: 2
 	Entity not supported: torrent911.*###vpnvpn
 	Entity not supported: oxtorrent.*###vpnvpn
+CSS-generic: 2649 plain CSS selectors
+CSS-specific distinct filters: 1196 distinct combined selectors
+CSS-specific injectable files: 5
+	0cgbc18, 09ndnco, 1gfl0uk, 0hbm3i0, 1t7qaek
+Declarative-related distinct filters: 31 distinct combined selectors
+Procedural-related distinct filters: 74 distinct combined selectors
 Scriptlet-related distinct filters: 54
 Scriptlet-related injectable files: 7
-	10u4a7p, 0s5j6kd, 06pgoel, 0e907hd, 096uld1, 0ulij15, 0dsmhrd
+	fra-0.set-constant.js, fra-0.abort-on-property-read.js, fra-0.abort-on-property-write.js, fra-0.abort-current-script.js, fra-0.no-settimeout-if.js, fra-0.no-setinterval-if.js, fra-0.json-prune.js
 ============================
 Listset for 'grc-0':
 	Fetching remote https://www.void.gr/kargig/void-gr-filters.txt
@@ -2321,7 +2328,7 @@ Input filter count: 455
 Output rule count: 434
 	Plain good: 434
 	Maybe good (regexes): 0
-	redirect-rule= (discarded): 0
+	redirect=: 0
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
 	Unsupported: 0
@@ -2329,34 +2336,32 @@ Output rule count: 434
 CSS-generic: 1 plain CSS selectors
 CSS-specific distinct filters: 165 distinct combined selectors
 CSS-specific injectable files: 1
-	0ehbsqg
-Procedural-related distinct filters: 7 distinct combined selectors
-Procedural-related injectable files: 1
-	0lqn0r2
+	15uf0b0
+Declarative-related distinct filters: 5 distinct combined selectors
+Procedural-related distinct filters: 2 distinct combined selectors
 ============================
 Listset for 'hun-0':
 	Fetching remote https://raw.githubusercontent.com/hufilter/hufilter/master/hufilter-ublock.txt
-Input filter count: 326
-	Accepted filter count: 326
+Input filter count: 325
+	Accepted filter count: 325
 	Rejected filter count: 0
-Output rule count: 202
-	Plain good: 201
+Output rule count: 201
+	Plain good: 200
 	Maybe good (regexes): 1
-	redirect-rule= (discarded): 0
+	redirect=: 0
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
 	Unsupported: 0
 
 CSS-generic: 60 plain CSS selectors
-CSS-specific distinct filters: 447 distinct combined selectors
+CSS-specific distinct filters: 454 distinct combined selectors
 CSS-specific injectable files: 2
-	07mko00, 1pcdf9o
-Procedural-related distinct filters: 47 distinct combined selectors
-Procedural-related injectable files: 1
-	0gf8hke
+	0mqim8k, 0cd4ss4
+Declarative-related distinct filters: 15 distinct combined selectors
+Procedural-related distinct filters: 7 distinct combined selectors
 Scriptlet-related distinct filters: 16
 Scriptlet-related injectable files: 6
-	0i4dm3l, 1rhllv5, 15ttv8h, 0rql769, 1tibfod, 1v5jnst
+	hun-0.abort-current-script.js, hun-0.set-constant.js, hun-0.no-settimeout-if.js, hun-0.abort-on-property-write.js, hun-0.abort-on-property-read.js, hun-0.no-addeventlistener-if.js
 ============================
 Listset for 'idn-0':
 	Fetching remote https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/subscriptions/abpindo.txt
@@ -2366,40 +2371,36 @@ Input filter count: 4271
 Output rule count: 3032
 	Plain good: 3032
 	Maybe good (regexes): 0
-	redirect-rule= (discarded): 0
+	redirect=: 0
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
 	Unsupported: 0
 
-CSS-generic: 228 plain CSS selectors
-CSS-specific distinct filters: 403 distinct combined selectors
-CSS-specific injectable files: 2
-	16m0hak, 0gqat44
-Procedural-related distinct filters: 2 distinct combined selectors
-Procedural-related injectable files: 1
-	1ankv52
 Rejected cosmetic filters: 1
 	Invalid filter: neonime.net##[data-src^="https://neonime.net/wp-content/"]:xpath(..)
+CSS-generic: 228 plain CSS selectors
+CSS-specific distinct filters: 405 distinct combined selectors
+CSS-specific injectable files: 2
+	03ckkng, 0hpsark
+Declarative-related distinct filters: 2 distinct combined selectors
 ============================
 Listset for 'ind-0':
 	Fetching remote https://easylist-downloads.adblockplus.org/indianlist.txt
-Input filter count: 5244
-	Accepted filter count: 5244
+Input filter count: 5247
+	Accepted filter count: 5247
 	Rejected filter count: 0
-Output rule count: 5207
-	Plain good: 5207
+Output rule count: 5210
+	Plain good: 5210
 	Maybe good (regexes): 0
-	redirect-rule= (discarded): 0
+	redirect=: 0
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
 	Unsupported: 0
 
-CSS-specific distinct filters: 2233 distinct combined selectors
+CSS-specific distinct filters: 2253 distinct combined selectors
 CSS-specific injectable files: 9
-	18tn8v0, 08hau00, 0bssdvg, 1jh9sck, 13e7n4o, 03ghjo4, 0i66r5k, 1qijg4g, 1k68fgg
-Procedural-related distinct filters: 74 distinct combined selectors
-Procedural-related injectable files: 1
-	13eetsi
+	05mliag, 1dqqojk, 041qag4, 0654mdg, 0oj5j34, 132j8vk, 12lb5nc, 0u8g2q8, 17fu9ic
+Procedural-related distinct filters: 46 distinct combined selectors
 ============================
 Listset for 'irn-0':
 	Fetching remote https://raw.githubusercontent.com/MasterKia/PersianBlocker/main/PersianBlocker.txt
@@ -2409,11 +2410,11 @@ Input filter count: 1365
 Output rule count: 527
 	Plain good: 512
 	Maybe good (regexes): 0
-	redirect-rule= (discarded): 0
+	redirect=: 0
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 6/8
 	Unsupported: 9
-		Strict partyness not supported: strict3p
+		FilterStrictParty: Strict partyness strict3p not supported
 		Unsupported regex-based removeParam: /^utm_/
 		Unsupported regex-based removeParam: /^utm_/
 		Unsupported regex-based removeParam: /^promo/
@@ -2425,13 +2426,12 @@ Output rule count: 527
 CSS-generic: 6 plain CSS selectors
 CSS-specific distinct filters: 328 distinct combined selectors
 CSS-specific injectable files: 2
-	1ovd3uk, 1imip9o
-Procedural-related distinct filters: 69 distinct combined selectors
-Procedural-related injectable files: 1
-	1rj749a
-Scriptlet-related distinct filters: 33
-Scriptlet-related injectable files: 5
-	05skf05, 1me73rh, 1el3gq9, 0jhvsod, 14ju6td
+	1uv45ik, 1o2s8lc
+Declarative-related distinct filters: 35 distinct combined selectors
+Procedural-related distinct filters: 46 distinct combined selectors
+Scriptlet-related distinct filters: 34
+Scriptlet-related injectable files: 6
+	irn-0.abort-on-property-read.js, irn-0.abort-current-script.js, irn-0.set-constant.js, irn-0.no-addeventlistener-if.js, irn-0.no-windowOpen-if.js, irn-0.no-settimeout-if.js
 ============================
 Listset for 'isl-0':
 	Fetching remote https://adblock.gardar.net/is.abp.txt
@@ -2441,30 +2441,30 @@ Input filter count: 68
 Output rule count: 68
 	Plain good: 68
 	Maybe good (regexes): 0
-	redirect-rule= (discarded): 0
+	redirect=: 0
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
 	Unsupported: 0
 
-CSS-specific distinct filters: 43 distinct combined selectors
-CSS-specific injectable files: 1
-	19g0vjk
 Rejected cosmetic filters: 1
 	Invalid filter: pressan.is###13_3623
+CSS-specific distinct filters: 43 distinct combined selectors
+CSS-specific injectable files: 1
+	10m5bbk
 ============================
 Listset for 'isr-0':
 	Fetching remote https://raw.githubusercontent.com/easylist/EasyListHebrew/master/EasyListHebrew.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/EasyListHebrew/master/EasyListHebrew-uBO.txt
-Input filter count: 709
-	Accepted filter count: 708
+Input filter count: 708
+	Accepted filter count: 707
 	Rejected filter count: 1
-Output rule count: 276
-	Plain good: 243
+Output rule count: 277
+	Plain good: 244
 	Maybe good (regexes): 4
-	redirect-rule= (discarded): 0
+	redirect=: 10
 	csp= (discarded): 1
 	removeparams= (accepted/discarded): 0/0
-	Unsupported: 28
+	Unsupported: 18
 		regexFilter is not RE2-compatible: haaretz\.co\.il\/(?!.*\.(js)($|\?)).*
 		regexFilter is not RE2-compatible: ^(?![a-zA-Z0-9\-]+:\/+(api-mail|dal|dcx|isc|iscwne|6days|animals|astrology|b|buzzit|calendar|cars|celebs|e|elections|euro|fashion|finance|food|forums|fun|healthy|home|judaism|kids|mag|maps|milon|movies|mundial|nadlan|news|nick|olympics|search|sports|tags|tech|translate|travel|tv-guide|tv|usaelections|viva|vod|weather|www)\.walla\.co\.il\.?(\/|:|$))^[a-zA-Z0-9\-]+:\/+([a-zA-Z0-9\-]+\.)+walla\.co\.il\.?(\/|:|$)
 		regexFilter is not RE2-compatible: ^(?![a-zA-Z0-9\-]+:\/+www\.sheee\.co\.il\.?(\/|:|$))^[a-zA-Z0-9\-]+:\/+([a-zA-Z0-9\-]+\.)+sheee\.co\.il\.?(\/|:|$)
@@ -2475,38 +2475,26 @@ Output rule count: 276
 		regexFilter is not RE2-compatible: ^(?![a-zA-Z0-9\-]+\:\/+([^\/\:\.]+\.)*(flowplayer|amara|h5p|d3js|ampproject|promisejs|backbonejs|angularjs|dojotoolkit|openstreetmap|wmflabs|wikimapia|wikimedia|wikipedia|w3|schema|archive|mozilla|documentcloud|w|mathjax|userway|pannellum|tmdb|muses|openweathermap|uploadimage|postimages|postimage|imgsafe|4chan|4channel|4cdn|telegram|olympic|pbs|pbskids|npr|ntp|gnu|creativecommons|eff|icann|iana|ietf|wikileaks|ourworldindata|cdn77|browser-update|consensu|wp-accessibility|covid19maps|coronaisrael)\.org\.?([\/\:]|$))^[a-zA-Z0-9\-]+\:\/+[^\/\:]+\.org\.?([\/\:]|$)
 		regexFilter is not RE2-compatible: ^(?![a-zA-Z0-9\-]+\:\/+([^\/\:\.]+\.)*(google|gstatic|googleapis|jquery|youtube|ytimg|facebook|fbsbx|twitter|twimg|instagram|cdninstagram|pinterest|pinimg|tumblr|giphy|vimeo|vimeocdn|dailymotion|flickr|staticflickr|soundcloud|sndcdn|scribd|scribdassets|sharethis|addthis|addthisedge|addthiscdn|reddit|redditmedia|redditstatic|redditgifts|linkedin|licdn|fontawesome|image-maps|cloudflare|bootstrapcdn|unpkg|cdnjs|stackpathdns|stackpathcdn|maxcdn|maxcdn-edge|netdna-ssl|netdna-cdn|kxcdn|ssl-cdn|muicss|tinymce|createjs|github|githubusercontent|aspnetcdn|azure|amazonaws|elasticbeanstalk|rackcdn|netlify|jwplayer|jwpcdn|jwpltx|jwpsrv|jwplatform|brightcove|brightcovecdn|flowplayer|foliovision|streamable|omnystudio|omnycontent|mixcloud|iheart|bandcamp|bcbits|podbean|buzzsprout|nobexpartners|podtail|spreaker|simplecast|spotify|vocaroo|embedly|iframely|snapwidget|thinglink|infogram|highcharts|printfriendly|algolianet|gravatar|imgur|imgflip|gifer|gfycat|tenor|unsplash|freepik|svgur|svgshare|icons8|iconfinder|iconarchive|iconscout|flaticon|kindpng|pngitem|disqus|disquscdn|disqusservice|oneall|oneallcdn|tapatalk|tapatalk-cdn|mapbox|maptiler|mapquest|arcgis|arcgisonline|esri|here|ted|tedcdn|kickstarter|riddle|strawpoll|9gag|9cache|imageshack|tinypic|photobox|photobucket|imgbox|imagebam|gifyu|makeagif|reactiongifs|gifbin|gif-finder|kym-cdn|gyazo|prntscr|pastebin|rawgit|rawgithub|knockoutjs|gridstackjs|ravenjs|liveleak|metacafe|mcstatic|ign|ignimgs|365scores|buzzfeed|digg|stumbleupon|mix|getpocket|blogspot|wordpress|wp|videopress|wptavern|livejournal|withgoogle|googlegroups|googleusercontent|googlevideo|ggpht|youtube-nocookie|appspot|firebaseio|firebaseapp|libring|hcaptcha|paypal|paypalobjects|amazon|media-amazon|media-imdb|ebay|apple|microsoft|live|bing|msn|yahoo|yimg|yahooapis|duckduckgo|yandex|webflow|rtlcss|dropbox|dropboxusercontent|dropboxstatic|dropbox-dns|timeanddate|momentjs|weather|accuweather|theweathernetwork|windy|sat24|rainviewer|uvlens|statcounter|adobe|onesignal|livefyre|pushwoosh|tinypass|addtoany|addthisevent|addevent|addtocalendar|sumo|sumome|chatango|bitly|tinyurl|ipcamlive|playstation|discord|discordapp|mixer|tiktok|tiktokcdn|ttwstatic|muscdn|ibytedtos|rumble|bitchute|parler|gab|deviantart|firefoxusercontent|box|feedly|feedburner|phpbb|vk|userapi|whatsapp|vroptimal-3dx-assets|bbc|cnn|go|nytimes|nyt|today|gofundme|fifa|uefa|nba|turner|xkcd|mtvnservices|cc|tmz|bugsnag|zoro|hebcal|fontsproject|kayma|kayma-dashboards|kayma-insights|kampyle|vicomi|openweb|kaltura|cincopa|avplayer|vidnt|peer5|h-cdn|bynetcdn|cdnwiz|best-tv|viewbix|streamrail|smv-cdn|cloudvideoplatform|waze|hunchbots|jeeng|cloudinary|sphereup|poloriz|applicaster|cloudwm|cloudwm-waf|negishim|accessibe|accessibeapp|acsbap|vollotech|mk-sense|allyable|shortaudition|spaceil|clear-map|segmanta|opinionstage|playbuzz|apester|qmerce|outbrain|taboola|taboolasyndication|googleoptimize|google-analytics|googletagservices|googletagmanager|googleadservices|googlesyndication|dynamicyield|scorecardresearch|serving-sys|chartbeat|exposebox|coralogix|browsiprod|ip-api|petametrics|cooladata|hotjar|pusher|carto|fortvision|fortcdn|getsentry|trackjs|gamezhero|nick|nickjr|teennick|travelriskmap|sinclairstoryline|fresnobee|nbcchicago|magazina-il|raxcdn|pagewiz|pas-rahav|aniview|adnxs|sekindo)\.com\.?([\/\:]|$))^[a-zA-Z0-9\-]+\:\/+[^\/\:]+\.com\.?([\/\:]|$)
 		regexFilter is not RE2-compatible: ^(?![a-zA-Z0-9\-]+\:\/+([^\/\:]+\.(il|com|net|org|gov|mil|edu|int|(ac|nhs)\.uk)|[0-9\.]+|([^\/\:\.]+\.)*(omny\.fm|github\.io|socket\.io|codepen\.io|polyfill\.io|embed\.ly|iframe\.ly|infogr\.am|flourish\.studio|flourish\.rocks|uri\.sh|po\.st|plyr\.io|piano\.io|spot\.im|spots\.im|periscope\.tv|pscp\.tv|vine\.co|popkey\.co|tenor\.co|redd\.it|ibb\.co|vgy\.me|postimg\.cc|imageshack\.us|prnt\.sc|imagesup\.co|weserv\.nl|telesco\.pe|powr\.io|simplecast\.fm|anchor\.fm|pippa\.io|last\.fm|scdn\.co|adobe\.io|lmao\.ninja|disease\.sh|web\.app|twitch\.tv|rmbl\.ws|vid\.me|h-cdn\.co|minute\.ly|vttp\.co|tldw\.me|feeder\.co|del\.icio\.us|telegram\.me|yandex\.ru|dailymail\.co\.uk|bbc\.net\.uk|bbc\.co\.uk|cnn\.io|bit\.ly|goo\.gl|g\.co|youtu\.be|t\.co|t\.me|fb\.me|m\.me|instagr\.am|wa\.me|amzn\.to|wp\.me|git\.io|docdro\.id|arcg\.is|ow\.ly|disq\.us|discord\.gg|tiny\.cc|ex\.co|nagishly\.co|user1st\.info|knesset\.tv|103\.fm|nickjr\.tv|logidea\.info|zoomanalytics\.co|firstimpression\.io|rtk\.io|trb\.tv|ren\.tv|atom-data\.io|sentry\.io|outbid\.io))\.?([\/\:]|$))^[^\/\:\.]+\:\/+[^\/\:\.]
+		Invalid network filter in isr-0: ||doubleclick.net^$xhr,redirect-rule=nooptext,domain=13news.co.il|13tv.co.il
 		Invalid network filter in isr-0: *$webrtc,domain=walla.co.il
 		Invalid network filter in isr-0: *$webrtc,domain=ynet.co.il
 		Invalid network filter in isr-0: *$webrtc,domain=mako.co.il
 		Invalid network filter in isr-0: *$webrtc,domain=globes.co.il
+		Invalid network filter in isr-0: *$webrtc,domain=yad2.co.il
 		Invalid network filter in isr-0: *$webrtc,domain=calcalist.co.il
 		Invalid network filter in isr-0: *$webrtc,domain=13news.co.il|13tv.co.il
-		Invalid network filter in isr-0: *$webrtc,domain=yad2.co.il
-		Unpatchable redirect filter: 2x2.png
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: noopmp4-1s
-		Unpatchable redirect filter: noopmp4-1s
-		Unpatchable redirect filter: noopmp4-1s
-		Unpatchable redirect filter: noopmp4-1s
-		Unpatchable redirect filter: noopjs
-CSS-generic: 5 plain CSS selectors
-CSS-specific distinct filters: 118 distinct combined selectors
-CSS-specific injectable files: 1
-	14ta8kk
-Procedural-related distinct filters: 3 distinct combined selectors
-Procedural-related injectable files: 1
-	1li60bm
 Rejected cosmetic filters: 3
 	Invalid filter: haaretz.co.il##span:has([href*="promo"]):xpath(..)
 	Entity not supported: sdarot.*###afterLoad:style(display: block !important)
 	Entity not supported: sdarot.*##[href*="channel22.co.il"]
+CSS-generic: 5 plain CSS selectors
+CSS-specific distinct filters: 118 distinct combined selectors
+CSS-specific injectable files: 1
+	0ckllbk
+Declarative-related distinct filters: 3 distinct combined selectors
 Scriptlet-related distinct filters: 12
 Scriptlet-related injectable files: 6
-	038gr5p, 0jufv91, 1c6jrrd, 1l75lsl, 1eatfp5, 1k1ogml
+	isr-0.abort-on-property-read.js, isr-0.no-settimeout-if.js, isr-0.abort-on-property-write.js, isr-0.no-addeventlistener-if.js, isr-0.set-constant.js, isr-0.abort-current-script.js
 ============================
 Listset for 'ita-0':
 	Fetching remote https://easylist-downloads.adblockplus.org/easylistitaly.txt
@@ -2516,60 +2504,31 @@ Input filter count: 5693
 Output rule count: 5423
 	Plain good: 5419
 	Maybe good (regexes): 3
-	redirect-rule= (discarded): 0
+	redirect=: 0
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
 	Unsupported: 1
 		Invalid network filter in ita-0: $webrtc,domain=hentaisaturn.com|italydownload.com|mitoitalico.com|semprehawk.com
 CSS-generic: 356 plain CSS selectors
-CSS-specific distinct filters: 2071 distinct combined selectors
+CSS-specific distinct filters: 2083 distinct combined selectors
 CSS-specific injectable files: 9
-	1448d1k, 0vtdsng, 1recn64, 1b21lic, 0cngqok, 0gc4bcs, 18fkvj4, 0ivql34, 1m8cb50
-Procedural-related distinct filters: 38 distinct combined selectors
-Procedural-related injectable files: 1
-	14jb47i
+	1tdusvg, 0mafpfg, 1mbjd2g, 19cpmv8, 1ba448k, 0tejfv8, 1evem9c, 142e3og, 12e7m74
+Procedural-related distinct filters: 21 distinct combined selectors
 ============================
 Listset for 'jpn-1':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/7.txt
 Input filter count: 1243
 	Accepted filter count: 1242
 	Rejected filter count: 0
-Output rule count: 828
-	Plain good: 794
+Output rule count: 831
+	Plain good: 797
 	Maybe good (regexes): 12
-	redirect-rule= (discarded): 0
+	redirect=: 20
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
-	Unsupported: 22
+	Unsupported: 2
 		regexFilter is not RE2-compatible: \/kyodopress_cms\/wp-content\/(themes\/kyodopress\/img_banner\/(?!bn_newspaper\.gif)|banners).*
 		regexFilter is not RE2-compatible: ^(?!.*(bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fastlylb.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|vk.com|yandex.|yastatic.net|ytimg.com|zencdn.net|player|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com)).*$
-		Unpatchable redirect filter: 32x32.png
-		Unpatchable redirect filter: 32x32.png
-		Unpatchable redirect filter: googlesyndication.com/adsbygoogle.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: googlesyndication.com/adsbygoogle.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: googlesyndication.com/adsbygoogle.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: noop.html
-CSS-generic: 113 plain CSS selectors
-CSS-specific distinct filters: 2056 distinct combined selectors
-CSS-specific injectable files: 9
-	1po8nv0, 19r37l0, 1vr7pt4, 019lbes, 02kks40, 0m66dm4, 15otlb8, 1ajqhhk, 1e4593c
-Procedural-related distinct filters: 531 distinct combined selectors
-Procedural-related injectable files: 3
-	031m3hq, 0ni9lki, 1sokgc6
 Rejected cosmetic filters: 29
 	Entity not supported: javmix.*##.home-h > h1:contains(ライブチャット)
 	Entity not supported: javmix.*##.home-h > h3:contains(Stripchat)
@@ -2600,15 +2559,21 @@ Rejected cosmetic filters: 29
 	Entity not supported: 9tsu.*##.ads-system
 	Entity not supported: 9tsu.*##.cactus-sidebar-content > .widget_text:not(.style-5)
 	Entity not supported: matome-plus.*##.amazontotalboxtest
+CSS-generic: 113 plain CSS selectors
+CSS-specific distinct filters: 2059 distinct combined selectors
+CSS-specific injectable files: 9
+	1oa2hpo, 102j62c, 1q64n4k, 0cjtodk, 0r57rlo, 0ecrup8, 03nnvh8, 046p9hk, 0pq5e90
+Declarative-related distinct filters: 90 distinct combined selectors
+Procedural-related distinct filters: 463 distinct combined selectors
 Scriptlet-related distinct filters: 40
 Scriptlet-related injectable files: 5
-	03nf1l1, 123d4rd, 04vafj5, 1kosk3l, 19rrmlh
+	jpn-1.abort-current-script.js, jpn-1.no-settimeout-if.js, jpn-1.set-constant.js, jpn-1.abort-on-property-read.js, jpn-1.no-setinterval-if.js
 ============================
 Listset for 'kor-1':
 	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filter-uBO.txt
 	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filters-share/adservice.txt
-	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filters-share/general_elemhide.txt
 	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filters-share/adservice_firstparty.txt
+	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filters-share/general_elemhide.txt
 	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filters-uBO/specific_ELEMHIDE.txt
 	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filters-share/general_url.txt
 	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filters-share/specific_URL.txt
@@ -2628,51 +2593,34 @@ Listset for 'kor-1':
 	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filters-uBO/allowlist.txt
 	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filters-share/specific_CSS.txt
 	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filters-uBO/specific_CSS.txt
-Input filter count: 1050
-	Accepted filter count: 1046
+Input filter count: 1057
+	Accepted filter count: 1053
 	Rejected filter count: 0
-Output rule count: 766
-	Plain good: 657
-	Maybe good (regexes): 87
-	redirect-rule= (discarded): 0
+Output rule count: 773
+	Plain good: 662
+	Maybe good (regexes): 88
+	redirect=: 17
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 1/0
-	Unsupported: 21
+	Unsupported: 5
 		regexFilter is not RE2-compatible: ^https:\/\/static\.wixstatic\.com\/media\/[0-9a-z]{6}_[a-z0-9]{32}~(?!.{1,}doc).{1,}
 		regexFilter is not RE2-compatible: ^https:\/\/(www\.|)kookje\.co\.kr\/(mobile\/|)design\/(?!(bn_what300|.{0,}naver|popup|series\/)).{0,}
 		regexFilter is not RE2-compatible: ^https:\/\/thumb\.toomics\.com\/upload\/banner\/(?!main|cut)
-		Unpatchable redirect filter: noop-1s.mp4
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: 2x2.png
-		Unpatchable redirect filter: 2x2.png
-		Unpatchable redirect filter: 2x2.png
-		Unpatchable redirect filter: noop.html
-		Unpatchable redirect filter: googlesyndication_adsbygoogle.js
-		Unpatchable redirect filter: 2x2.png
-		Unpatchable redirect filter: 2x2.png
 		Unpatchable redirect filter: google-ima3.js
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: amazon_apstag.js
-		Unpatchable redirect filter: googletagservices_gpt.js
-		Unpatchable redirect filter: googletagservices_gpt.js
-CSS-generic: 3 plain CSS selectors
-CSS-specific distinct filters: 441 distinct combined selectors
-CSS-specific injectable files: 2
-	1a18ei0, 1t012lk
-Procedural-related distinct filters: 159 distinct combined selectors
-Procedural-related injectable files: 1
-	1m5np3u
+		Invalid network filter in kor-1: $redirect-rule=noop.txt,domain=lover92.net|lover93.net|lover94.net|lover95.net|lover96.net|lover97.net|lover98.net|lover99.net|lover100.net|lover101.net
 Rejected cosmetic filters: 3
 	Invalid filter: m.cafe.naver.com##img[src][alt="매니저 등록 배너"]:matches-path(/&|\\.|\\?)clubid=14605461(&|$)/)
 	Invalid filter: cafe.naver.com##img[src][alt="매니저 등록 배너"]:matches-path(/&|\\.|\\?)clubid=14605461(&|$)/)
 	Invalid filter: eggrank.com###right-sidebar > .inside-right-sidebar > div[class]:not(:has-text(Hi there, I'm EGG.))
+CSS-generic: 3 plain CSS selectors
+CSS-specific distinct filters: 446 distinct combined selectors
+CSS-specific injectable files: 2
+	10t1ag4, 0mu92g8
+Declarative-related distinct filters: 73 distinct combined selectors
+Procedural-related distinct filters: 107 distinct combined selectors
 Scriptlet-related distinct filters: 55
 Scriptlet-related injectable files: 6
-	1gbi5a9, 03i2ull, 18be2d9, 19fnar1, 08snmvp, 1h0gl9t
+	kor-1.abort-current-script.js, kor-1.set-constant.js, kor-1.no-settimeout-if.js, kor-1.json-prune.js, kor-1.abort-on-property-read.js, kor-1.abort-on-property-write.js
 ============================
 Listset for 'ltu-0':
 	Fetching remote https://raw.githubusercontent.com/EasyList-Lithuania/easylist_lithuania/master/easylistlithuania.txt
@@ -2682,23 +2630,20 @@ Input filter count: 574
 Output rule count: 523
 	Plain good: 519
 	Maybe good (regexes): 1
-	redirect-rule= (discarded): 0
+	redirect=: 3
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
-	Unsupported: 3
-		Unpatchable redirect filter: 1x1-transparent.gif
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noopmp3-0.1s
+	Unsupported: 0
+
 CSS-generic: 5 plain CSS selectors
-CSS-specific distinct filters: 281 distinct combined selectors
+CSS-specific distinct filters: 282 distinct combined selectors
 CSS-specific injectable files: 2
-	1m20vno, 13f99t4
-Procedural-related distinct filters: 14 distinct combined selectors
-Procedural-related injectable files: 1
-	0p3e42u
+	1jgup7s, 0co18pg
+Declarative-related distinct filters: 5 distinct combined selectors
+Procedural-related distinct filters: 4 distinct combined selectors
 Scriptlet-related distinct filters: 7
 Scriptlet-related injectable files: 4
-	0semvil, 1mk8tht, 0mkv67l, 0rnd4it
+	ltu-0.abort-current-script.js, ltu-0.no-settimeout-if.js, ltu-0.abort-on-property-read.js, ltu-0.no-windowOpen-if.js
 ============================
 Listset for 'lva-0':
 	Fetching remote https://raw.githubusercontent.com/Latvian-List/adblock-latvian/master/lists/latvian-list.txt
@@ -2708,14 +2653,14 @@ Input filter count: 185
 Output rule count: 144
 	Plain good: 144
 	Maybe good (regexes): 0
-	redirect-rule= (discarded): 0
+	redirect=: 0
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
 	Unsupported: 0
 
 CSS-specific distinct filters: 62 distinct combined selectors
 CSS-specific injectable files: 1
-	1cp66eg
+	04u4kss
 ============================
 Listset for 'nld-0':
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/gh-pages/EasyDutch.txt
@@ -2729,79 +2674,66 @@ Listset for 'nld-0':
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/gh-pages/EasyDutch/Hide_Whitelist.txt
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/gh-pages/EasyDutch/Anti-Adblock.txt
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/gh-pages/EasyDutch/No_uBlock_Filters.txt
-Input filter count: 752
-	Accepted filter count: 749
+Input filter count: 750
+	Accepted filter count: 747
 	Rejected filter count: 0
-Output rule count: 645
-	Plain good: 636
+Output rule count: 643
+	Plain good: 634
 	Maybe good (regexes): 3
-	redirect-rule= (discarded): 0
+	redirect=: 3
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
-	Unsupported: 6
-		Entity not supported: allestoringen.*
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: 2x2.png
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopmp3-0.1s
-CSS-generic: 15 plain CSS selectors
-CSS-specific distinct filters: 645 distinct combined selectors
-CSS-specific injectable files: 3
-	0ho1f1s, 154fcpk, 1to81dc
-Procedural-related distinct filters: 174 distinct combined selectors
-Procedural-related injectable files: 1
-	0r1nog6
-Rejected cosmetic filters: 1
+	Unsupported: 3
+		FilterOriginEntityHit: Entity allestoringen.* not supported
+		Invalid network filter in nld-0: *$image,domain=kijk.nl,redirect-rule=1x1.gif
+		Invalid network filter in nld-0: *$image,redirect-rule=2x2.png,domain=tweakers.net
+Rejected cosmetic filters: 2
+	Invalid filter: vastgoedjournaal.nl##aside:has([class]:has-text(/advert/i)):has([href]:has([src*="media.prdn.nl"])
 	Entity not supported: morningstar.*###ad_top_page
+CSS-generic: 15 plain CSS selectors
+CSS-specific distinct filters: 646 distinct combined selectors
+CSS-specific injectable files: 3
+	1t4vs0k, 1qe8oq8, 0vbngtg
+Declarative-related distinct filters: 4 distinct combined selectors
+Procedural-related distinct filters: 171 distinct combined selectors
 Scriptlet-related distinct filters: 15
 Scriptlet-related injectable files: 8
-	0e9qmj1, 0kvpult, 1932s8l, 10l9e7h, 1sgpv3h, 1d3abrh, 0d640sh, 1avqchd
+	nld-0.no-settimeout-if.js, nld-0.abort-current-script.js, nld-0.set-constant.js, nld-0.abort-on-property-write.js, nld-0.abort-on-property-read.js, nld-0.no-addeventlistener-if.js, nld-0.no-windowOpen-if.js, nld-0.no-setinterval-if.js
 ============================
 Listset for 'nor-0':
 	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianList.txt
-	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/AntiAdblockEntries.txt
 	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/NordicFilters-NotFirefox.txt
+	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/AntiAdblockEntries.txt
 	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/NordicFilters-NotBrave.txt
 Input filter count: 862
 	Accepted filter count: 855
 	Rejected filter count: 0
-Output rule count: 484
-	Plain good: 435
+Output rule count: 483
+	Plain good: 434
 	Maybe good (regexes): 3
-	redirect-rule= (discarded): 0
+	redirect=: 3
 	csp= (discarded): 1
 	removeparams= (accepted/discarded): 23/4
-	Unsupported: 22
-		Entity not supported: discoveryplus.*
-		Entity not supported: gamereactor.*
-		Entity not supported: gamereactor.*
-		Entity not supported: gamereactor.*
-		Entity not supported: eniro.*
-		Entity not supported: eurosport.*
-		Entity not supported: gamereactor.*
-		Entity not supported: gamereactor.*
-		Entity not supported: discoveryplus.*
-		Entity not supported: discoveryplus.*
-		Entity not supported: gamereactor.*
-		Entity not supported: gamereactor.*
-		Entity not supported: discoveryplus.*,		Unpatchable redirect filter: empty
-		Entity not supported: gamereactor.*,		Unpatchable redirect filter: noopmp4-1s
-		Entity not supported: gamereactor.*,		Unpatchable redirect filter: noopmp4-1s
+	Unsupported: 19
+		FilterOriginEntityHit: Entity discoveryplus.* not supported
+		FilterOriginEntityHit: Entity gamereactor.* not supported
+		FilterOriginEntityHit: Entity gamereactor.* not supported
+		FilterOriginEntityHit: Entity gamereactor.* not supported
+		FilterOriginEntityHit: Entity eniro.* not supported
+		FilterOriginEntityHit: Entity eurosport.* not supported
+		FilterOriginEntityHit: Entity gamereactor.* not supported
+		FilterOriginEntityHit: Entity gamereactor.* not supported
+		FilterOriginEntityHit: Entity discoveryplus.* not supported
+		FilterOriginEntityHit: Entity discoveryplus.* not supported
+		FilterOriginEntityHit: Entity gamereactor.* not supported
+		FilterOriginEntityHit: Entity gamereactor.* not supported
+		FilterOriginEntityHit: Entity discoveryplus.* not supported
+		FilterOriginEntityHit: Entity gamereactor.* not supported
+		FilterOriginEntityHit: Entity gamereactor.* not supported
 		Unsupported regex-based removeParam: /^rs[0-9]/
 		Unsupported regex-based removeParam: /^source=partnerads$/
 		Unsupported regex-based removeParam: /^source=tradedoubler$/
 		Unsupported regex-based removeParam: /^amp;/
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopmp3-0.1s
-CSS-generic: 124 plain CSS selectors
-CSS-specific distinct filters: 494 distinct combined selectors
-CSS-specific injectable files: 2
-	1cguhj0, 06ocb9g
-Procedural-related distinct filters: 140 distinct combined selectors
-Procedural-related injectable files: 1
-	1jlgj2q
 Rejected cosmetic filters: 53
 	Entity not supported: costume.*##.teaser__native:upward(4)
 	Entity not supported: eurosport.*##.AdContainer
@@ -2856,9 +2788,15 @@ Rejected cosmetic filters: 53
 	Entity not supported: gamereactor.*##div[class^=ad300]
 	Entity not supported: gamereactor.*##div[style*="width:300px;height:600px;"]
 	Entity not supported: gamereactor.*##div[style="min-height: 600px; margin-bottom: 20px;"]
+CSS-generic: 124 plain CSS selectors
+CSS-specific distinct filters: 494 distinct combined selectors
+CSS-specific injectable files: 2
+	1odnog0, 1ul6k84
+Declarative-related distinct filters: 29 distinct combined selectors
+Procedural-related distinct filters: 119 distinct combined selectors
 Scriptlet-related distinct filters: 13
 Scriptlet-related injectable files: 6
-	0f94bid, 1h135h1, 1uairfp, 1ll47t1, 0jjt1et, 11gq29l
+	nor-0.set-constant.js, nor-0.abort-current-script.js, nor-0.abort-on-property-read.js, nor-0.json-prune.js, nor-0.abort-on-property-write.js, nor-0.no-addeventlistener-if.js
 ============================
 Listset for 'pol-0':
 	Fetching remote https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt
@@ -2868,13 +2806,13 @@ Listset for 'pol-0':
 Input filter count: 1429
 	Accepted filter count: 1427
 	Rejected filter count: 1
-Output rule count: 1054
+Output rule count: 1053
 	Plain good: 958
 	Maybe good (regexes): 59
-	redirect-rule= (discarded): 0
+	redirect=: 27
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
-	Unsupported: 37
+	Unsupported: 9
 		regexFilter is not RE2-compatible: ^https:\/\/eku24.net\/images\/slajdy\/(?!zyczenia)[a-z]{3,10}\/[a-zA-Z0-9_-]{10,50}\.jpg
 		regexFilter is not RE2-compatible: ^https:\/\/(?!horrortube)(?!filman.cc)(?!horlol.pl)[a-z.0-9]{3,15}\.[a-z]{2,3}\/
 		regexFilter is not RE2-compatible: https?:\/\/naekranie\.pl\/wp-content\/uploads\/[0-9]{4,4}\/[0-9]{2,2}\/(?!jpg)[0-9a-z]{7,10}$
@@ -2882,43 +2820,8 @@ Output rule count: 1054
 		regexFilter is not RE2-compatible: ^http:\/\/((?!192\.168)(?!10\.)(?!172\.16)(?!172\.17)(?!172\.18)(?!172\.19)(?!172\.2)(?!172\.30)(?!172\.31)([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\/[a-zA-Z0-9]{30,}
 		regexFilter is not RE2-compatible: ^(http|https):\/\/www\.portel\.pl\/(?!pasaz)[-a-z0-9A-Z_%$&+=[\].]{1,200}\/[-a-z0-9A-Z_%$&+=[\]/.]{2,200}.(html|htm)
 		regexFilter is not RE2-compatible: ^(http|https):\/\/(?!www.speedvid)(?!streamcherry.com)(?!vshare)(?!vidoza)(?!openload)(?!www.youtube)[a-zA-Z0-9\W]{5,10}.[a-z]{2,20}\/(?!anime)[\w\W\d]{5,20}\/[a-z]{5,20}\/
-		Entity not supported: trojmiasto.*
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: nofab.js
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: googlesyndication.com/adsbygoogle.js
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: googlesyndication.com/adsbygoogle.js
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: nooptext
-		Unpatchable redirect filter: abp-resource:blank-mp3
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Entity not supported: trojmiasto.*,		Unpatchable redirect filter: noopmp4-1s
-		Unpatchable redirect filter: noop-1s.mp4
-		Unpatchable redirect filter: noopmp4-1s
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: click2load.html
-CSS-generic: 61 plain CSS selectors
-CSS-specific distinct filters: 2687 distinct combined selectors
-CSS-specific injectable files: 11
-	0igcol0, 0t6kuqs, 1u2scnk, 12983v8, 07jj0sk, 1gt7gvs, 05atfio, 1g1hee4, 06gb88c, 1k71d4k, 1e7u4mc
-Procedural-related distinct filters: 198 distinct combined selectors
-Procedural-related injectable files: 1
-	05smr5a
+		FilterOriginEntityHit: Entity trojmiasto.* not supported
+		FilterOriginEntityHit: Entity trojmiasto.* not supported
 Rejected cosmetic filters: 15
 	Invalid filter: www.money.pl###app > div > div:matches-css(background-image: /^url\("https:\/\/v\.wpimg\.pl/)
 	Invalid filter: www.dobreprogramy.pl##:xpath(//div[contains(text(), 'REKLAMA')])
@@ -2935,9 +2838,15 @@ Rejected cosmetic filters: 15
 	Invalid filter: stooq.pl##:xpath(//*[@align="center"]/*[@id][contains(text(),"REKLAMA")])
 	Invalid filter: stooq.com##:xpath(//*[@align="center"]/*[@id][contains(text(),"REKLAMA")])
 	Invalid filter: epidemia-koronawirus.pl##body > div:nth-of-type(1)[style^="display: block;"]:not(#page)
+CSS-generic: 61 plain CSS selectors
+CSS-specific distinct filters: 2704 distinct combined selectors
+CSS-specific injectable files: 11
+	0t3mipg, 0ts0u94, 0r012t0, 0tqvjhk, 1s6btns, 02k2l4g, 0926u50, 0pbeomg, 143tua4, 07hngng, 0aov74s
+Declarative-related distinct filters: 98 distinct combined selectors
+Procedural-related distinct filters: 74 distinct combined selectors
 Scriptlet-related distinct filters: 35
 Scriptlet-related injectable files: 6
-	196ok41, 0mgacpt, 09ctee5, 1bqpofp, 00i84cp, 1mf3pd1
+	pol-0.no-settimeout-if.js, pol-0.abort-current-script.js, pol-0.abort-on-property-read.js, pol-0.set-constant.js, pol-0.no-addeventlistener-if.js, pol-0.abort-on-property-write.js
 ============================
 Listset for 'rou-1':
 	Fetching remote https://road.adblock.ro/lista.txt
@@ -2949,24 +2858,22 @@ Input filter count: 498
 Output rule count: 392
 	Plain good: 389
 	Maybe good (regexes): 3
-	redirect-rule= (discarded): 0
+	redirect=: 0
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
 	Unsupported: 0
 
 CSS-generic: 8 plain CSS selectors
-CSS-specific distinct filters: 217 distinct combined selectors
+CSS-specific distinct filters: 246 distinct combined selectors
 CSS-specific injectable files: 1
-	0q0coco
-Procedural-related distinct filters: 79 distinct combined selectors
-Procedural-related injectable files: 1
-	0sj49uu
+	169n64s
+Procedural-related distinct filters: 25 distinct combined selectors
 ============================
 Listset for 'rus-0':
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/RuAdList-uBO.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/adservers.txt
-	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/first_level.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/general_block.txt
+	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/first_level.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/general_hide.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/popup.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/specific_antisocial.txt
@@ -2978,49 +2885,35 @@ Listset for 'rus-0':
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/css-fixes-experimental.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/js-fixes-experimental.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/AWRL-non-sync.txt
-Input filter count: 17350
-	Accepted filter count: 17332
+Input filter count: 17346
+	Accepted filter count: 17328
 	Rejected filter count: 15
-Output rule count: 5990
-	Plain good: 5899
-	Maybe good (regexes): 21
-	redirect-rule= (discarded): 0
+Output rule count: 5985
+	Plain good: 5895
+	Maybe good (regexes): 20
+	redirect=: 13
 	csp= (discarded): 38
 	removeparams= (accepted/discarded): 9/2
-	Unsupported: 23
+	Unsupported: 10
 		regexFilter is not RE2-compatible: ^(?!.*(24liveblog.com|24liveplus.com|acint.net|addthis.com|addthisedge.com|akamai.net|akamaiedge.net|alloha.tv|ampproject.org|anycomment.io|apester.com|api-ssl.bitly.com|api.corr.life|api.here.com|api.sypexgeo.net|app.hoversignal.com|appsmail.ru|bam.nr-data.net|blogger.com|bootstrapcdn.com|cackle.me|cdn.ampproject.org|cdn.iframe.ly|cdn.rawgit.com|cdnstats.ru|cdnvideo.ru|chartbeat.com|chatango.com|chatbro.com|chimpstatic.com|cloudflare.com|cloudflare.net|cloudfront.net|code.createjs.com|columbus.te.ua|cultserv.ru|disqus.com|disquscdn.com|dmca.com|each.im|ebacdn.com|edgecastcdn.net|ellinagraypel.com|embed.ex.co|embed.widgetpack.com|embedstorage.net|eurosolidarity.org|facebook.com|facebook.net|fastly.net|fastlylb.net|fbcdn.net|fbvkcdn.com|feonet.net|fluidplayer.com|fontawesome.com|fonts.w.tools|freecurrencyrates.com|fwcdn1.com|fwdcdn.com|gcdn.co|getsitecontrol.com|gismeteo.ru|gismeteo.ua|github.io|gitlab.io|google-analytics.com|google.com|googleadservices.com|googleapis.com|googleoptimize.com|googletagmanager.com|googletagservices.com|gravatar.com|gravitec.media|gravitec.net|gstatic.com|hcaptcha.com|hupso.com|hwcdn.net|hypercomments.com|ibytedtos.com|imgsmail.ru|imgur.com|informers.ukr.net|instagram.com|intensedebate.com|intercom.io|intercomcdn.com|intravideo.net|issuu.com|ivideon.com|jivosite.com|jquery.com|js-agent.newrelic.com|jsdelivr.net|jsonip.com|jwpcdn.com|jwplatform.com|keycaptcha.com|kin-x.com|kinogram.best|kinohod.ru|kinoplayer.co|kinotreiler.com|kitbit.net|kodik-add.com|kodikapi.com|libria.fun|licdn.com|likebtn.com|linkedin.com|lp4.io|luxnet.ua|mail.ru|mailchimp.com|mapbox.com|media-imdb.com|media.reformal.ru|mediator.media|meteobar.com|meteonova.ru|mirtesen.ru|netdna-cdn.com|ngenix.net|nuipogoda.ru|odnaknopka.ru|odnoklassniki.ru|ok.ru|oneall.com|onesignal.com|onthe.io|phnx.click|piktochart.com|pinterest.com|pixars.org|platformcraft.ru|playbuzz.com|player|player.panda.video|pljs.ru|plrjs.com|plyr.io|polldaddy.com|polyfill.io|pv.pjtsu.com|quiz.ink|raincaptcha.com|readymag.com|recaptcha.net|relap.io|renteres.ru|rumer.club|s5o.ru|securedtouch.com|selcdn.net|sendpulse.com|pluso.ru|shareaholic.com|shareaholic.net|sharethis.com|shrink.pe|sinoptik.ua|source.mmi.bemobile.ua|sporcle.com|sportradar.com|sportrecs.com|sports.ru|stackpathcdn.com|static.addtoany.com|statically.io|streamvid.club|telegram.im|telegram.org|tenews.org.ua|tenews.te.ua|tiktok.com|tilda.ws|tildacdn.com|tns-counter.ru|tolstoycomments.com|traq.li|trbcdn.net|trbna.com|ttrace.ru|tumblr.com|tvget.ru|tvsok.ru|twimg.com|twitter.com|typekit.net|uanews.org.ua|ui.ill.in.ua|unpkg.com|uptolike.com|userapi.com|usocial.pro|uweb.ru|vicomi.com|vidazoo.com|videocdn.tv|videoplayers.club|viglink.com|viqeo.tv|vk.com|vkontakte.ru|vuukle.com|widget.speechki.org|widget.vp.ru|widgets.getpocket.com|world-weather.ru|wp.com|yabber.cloud|yandex.ru|yandex.st|yastatic.net|yohoho.cc|yohoho.online|yoomoney.ru|youtube-nocookie.com|youtube.com|ytimg.com|zencdn.net)).*$
-		Entity not supported: m.rp5.*
-		Unpatchable redirect filter: 32x32.png
-		Unpatchable redirect filter: 32x32.png
-		Unpatchable redirect filter: 1x1-transparent.gif
-		Unpatchable redirect filter: empty
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: silent-noeval.js
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: empty
-		Unpatchable redirect filter: noopjs
-		Unpatchable redirect filter: noopframe
+		FilterOriginEntityHit: Entity m.rp5.* not supported
+		Invalid network filter in rus-0: *$image,redirect-rule=32x32.png,domain=ukr.net
+		Invalid network filter in rus-0: *$script,redirect-rule=noopjs,domain=all-episodes.club|otzovik.com|ukr.net
+		Invalid network filter in rus-0: *$subdocument,redirect-rule=noopframe,domain=ukr.net
+		Invalid network filter in rus-0: *$xmlhttprequest,redirect-rule=noopjs,domain=all-episodes.club|otzovik.com
+		Invalid network filter in rus-0: ||clustrmaps.com/counter/$image,redirect-rule=32x32.png
+		Invalid network filter in rus-0: ||ru/count/$image,important,redirect-rule=1x1.gif,domain=mail.ru|sportmail.ru
 		Unsupported modifier exception
-		Unpatchable redirect filter: noopframe
 		Unsupported regex-based removeParam: /autostart|skin_name/
-		Unpatchable redirect filter: noopmp3-0.1s
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Unpatchable redirect filter: empty
-		Unpatchable redirect filter: noop-0.1s.mp3
-CSS-generic: 306 plain CSS selectors
-CSS-specific distinct filters: 5176 distinct combined selectors
+CSS-generic: 307 plain CSS selectors
+CSS-specific distinct filters: 5290 distinct combined selectors
 CSS-specific injectable files: 21
-	09ono5o, 068brv8, 09tffh8, 1b3qm20, 0ejohgo, 1cibmh4, 1f2ua88, 1j4ap30, 016gkso, 0udfsn4, 09fstno, 1buhvs0, 1ss2ffs, 10annvg, 0cmp2ho, 1i2lru4, 1qri3q8, 1fvr3v0, 172hemg, 0as0m9s, 0t39n60
-Procedural-related distinct filters: 951 distinct combined selectors
-Procedural-related injectable files: 4
-	174uc4a, 0n8oobm, 0k1lmp2, 1cn3t96
-Scriptlet-related distinct filters: 222
+	0aodupo, 1bbksqc, 1d59gcc, 0avq1sg, 1vp0de4, 0of1ais, 0jmalh0, 063brbk, 05fm88k, 1frrno0, 0aplghg, 05cr21g, 1p50sg0, 16uarc0, 07dk5u8, 1r473mg, 0dcvjj0, 17oe7fg, 0hva1gk, 18ld0t8, 0m9bun8
+Declarative-related distinct filters: 501 distinct combined selectors
+Procedural-related distinct filters: 220 distinct combined selectors
+Scriptlet-related distinct filters: 223
 Scriptlet-related injectable files: 7
-	0jh9gj5, 1bn3sfl, 1vqmdhp, 19f27t1, 0jhgst1, 1b10775, 1a113tt
+	rus-0.set-constant.js, rus-0.abort-on-property-read.js, rus-0.abort-current-script.js, rus-0.no-settimeout-if.js, rus-0.abort-on-property-write.js, rus-0.no-setinterval-if.js, rus-0.json-prune.js
 ============================
 Listset for 'spa-0':
 	Fetching remote https://easylist-downloads.adblockplus.org/easylistspanish.txt
@@ -3030,18 +2923,16 @@ Input filter count: 1254
 Output rule count: 714
 	Plain good: 705
 	Maybe good (regexes): 8
-	redirect-rule= (discarded): 0
+	redirect=: 0
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
 	Unsupported: 1
 		Invalid network filter in spa-0: $webrtc,domain=allpeliculas.com|animeid.tv|booksmedicos.org|dompl3.info|gnula.biz|jkanime.net|pelispedia.tv
 CSS-generic: 221 plain CSS selectors
-CSS-specific distinct filters: 744 distinct combined selectors
+CSS-specific distinct filters: 746 distinct combined selectors
 CSS-specific injectable files: 3
-	1abu0kk, 0o3g34c, 0de04kk
-Procedural-related distinct filters: 21 distinct combined selectors
-Procedural-related injectable files: 1
-	0jgsig6
+	16ddco0, 10ifj4g, 1mvpbk0
+Procedural-related distinct filters: 17 distinct combined selectors
 ============================
 Listset for 'spa-1':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/9.txt
@@ -3049,48 +2940,16 @@ Input filter count: 1423
 	Accepted filter count: 1418
 	Rejected filter count: 0
 Output rule count: 947
-	Plain good: 912
+	Plain good: 913
 	Maybe good (regexes): 6
-	redirect-rule= (discarded): 0
+	redirect=: 24
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
-	Unsupported: 29
-		Entity not supported: netcine.*
-		Entity not supported: netcine.*
-		Entity not supported: cuevana3.*
+	Unsupported: 4
+		FilterOriginEntityHit: Entity netcine.* not supported
+		FilterOriginEntityHit: Entity netcine.* not supported
 		regexFilter is not RE2-compatible: ^(?!.*(bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fastlylb.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|vk.com|yandex.|yastatic.net|ytimg.com|zencdn.net|player|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com)).*$
-		Entity not supported: anitube.*
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: 1x1.gif
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: googlesyndication.com/adsbygoogle.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: googlesyndication.com/adsbygoogle.js
-		Unpatchable redirect filter: googlesyndication.com/adsbygoogle.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: googletagservices_gpt.js
-		Unpatchable redirect filter: googletagservices_gpt.js
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: googlesyndication.com/adsbygoogle.js
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Unpatchable redirect filter: noop-1s.mp4
-CSS-generic: 81 plain CSS selectors
-CSS-specific distinct filters: 1060 distinct combined selectors
-CSS-specific injectable files: 5
-	0ektci4, 0hbeopc, 09r10gg, 18ivo48, 10lgnck
-Procedural-related distinct filters: 167 distinct combined selectors
-Procedural-related injectable files: 1
-	05snl8a
+		FilterOriginEntityHit: Entity anitube.* not supported
 Rejected cosmetic filters: 8
 	Entity not supported: atomixhq.*##.featured-slides > li.slide:not([id]):has(a[href^="https://startgaming.net/"])
 	Entity not supported: atomixhq.*##.ads
@@ -3100,9 +2959,15 @@ Rejected cosmetic filters: 8
 	Entity not supported: lectulandia.*###rightPromo
 	Entity not supported: lectulandia.*##.perfbtns2
 	Entity not supported: lectulandia.*##.bloky > a > img
-Scriptlet-related distinct filters: 98
+CSS-generic: 81 plain CSS selectors
+CSS-specific distinct filters: 1060 distinct combined selectors
+CSS-specific injectable files: 5
+	1b4ffig, 00dfk80, 0n7p90g, 1k4jrt8, 0st075o
+Declarative-related distinct filters: 70 distinct combined selectors
+Procedural-related distinct filters: 109 distinct combined selectors
+Scriptlet-related distinct filters: 99
 Scriptlet-related injectable files: 6
-	0e3oe1h, 0sp27f1, 1glv8d1, 1sbv7tt, 0f2h459, 0p0nb1d
+	spa-1.no-settimeout-if.js, spa-1.abort-on-property-write.js, spa-1.abort-on-property-read.js, spa-1.set-constant.js, spa-1.abort-current-script.js, spa-1.json-prune.js
 ============================
 Listset for 'svn-0':
 	Fetching remote https://raw.githubusercontent.com/betterwebleon/slovenian-list/master/filters.txt
@@ -3112,7 +2977,7 @@ Input filter count: 148
 Output rule count: 103
 	Plain good: 103
 	Maybe good (regexes): 0
-	redirect-rule= (discarded): 0
+	redirect=: 0
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
 	Unsupported: 0
@@ -3120,48 +2985,36 @@ Output rule count: 103
 CSS-generic: 4 plain CSS selectors
 CSS-specific distinct filters: 167 distinct combined selectors
 CSS-specific injectable files: 1
-	134nt6c
+	0qj9l9s
 Procedural-related distinct filters: 2 distinct combined selectors
-Procedural-related injectable files: 1
-	0mssc1i
 ============================
 Listset for 'swe-1':
 	Fetching remote https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Frellwits-Swedish-Filter.txt
 	Fetching remote https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Swedish/swe-ubo-filters.txt
 	Fetching remote https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Swedish/chromium.txt
 	Fetching remote https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Swedish/not_mobile.txt
-Input filter count: 1523
-	Accepted filter count: 1523
+Input filter count: 1525
+	Accepted filter count: 1525
 	Rejected filter count: 0
-Output rule count: 1156
-	Plain good: 1137
+Output rule count: 1157
+	Plain good: 1138
 	Maybe good (regexes): 2
-	redirect-rule= (discarded): 0
+	redirect=: 9
 	csp= (discarded): 2
 	removeparams= (accepted/discarded): 3/3
-	Unsupported: 12
-		Unpatchable redirect filter: empty
-		Unpatchable redirect filter: 32x32.png
-		Unpatchable redirect filter: 32x32.png
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
+	Unsupported: 3
 		Unsupported regex-based removeParam: /^ap/
 		Unsupported regex-based removeParam: /^browser/
-		Unpatchable redirect filter: click2load.html
-		Unpatchable redirect filter: click2load.html
-		Unpatchable redirect filter: click2load.html
-		Unpatchable redirect filter: noopmp4-1s
 		Unsupported regex-based removeParam: /^utm_/
 CSS-generic: 142 plain CSS selectors
 CSS-specific distinct filters: 594 distinct combined selectors
 CSS-specific injectable files: 3
-	0u369ig, 0bkck4k, 0ufroug
-Procedural-related distinct filters: 248 distinct combined selectors
-Procedural-related injectable files: 1
-	0ee8u76
-Scriptlet-related distinct filters: 67
+	043q28c, 04qfhnc, 1in5s1g
+Declarative-related distinct filters: 58 distinct combined selectors
+Procedural-related distinct filters: 202 distinct combined selectors
+Scriptlet-related distinct filters: 66
 Scriptlet-related injectable files: 8
-	0f368kp, 1hkmi9t, 1pa1ckp, 0hue6g5, 1k1brpt, 081rdet, 0th4gt1, 01oml7d
+	swe-1.no-settimeout-if.js, swe-1.json-prune.js, swe-1.abort-current-script.js, swe-1.no-addeventlistener-if.js, swe-1.set-constant.js, swe-1.abort-on-property-write.js, swe-1.no-setinterval-if.js, swe-1.abort-on-property-read.js
 ============================
 Listset for 'tha-0':
 	Fetching remote https://raw.githubusercontent.com/easylist-thailand/easylist-thailand/master/subscription/easylist-thailand.txt
@@ -3172,67 +3025,38 @@ Input filter count: 346
 Output rule count: 339
 	Plain good: 334
 	Maybe good (regexes): 3
-	redirect-rule= (discarded): 0
+	redirect=: 2
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
-	Unsupported: 2
-		Unpatchable redirect filter: noopmp4-1s
-		Unpatchable redirect filter: noopmp3-0.1s
+	Unsupported: 0
+
 CSS-specific distinct filters: 179 distinct combined selectors
 CSS-specific injectable files: 1
-	0saq8hg
+	01f249s
 Procedural-related distinct filters: 11 distinct combined selectors
-Procedural-related injectable files: 1
-	11uj97e
 Scriptlet-related distinct filters: 3
 Scriptlet-related injectable files: 3
-	1mq5641, 17o5tct, 1adnntd
+	tha-0.abort-on-property-read.js, tha-0.set-constant.js, tha-0.json-prune.js
 ============================
 Listset for 'tur-0':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/13.txt
-Input filter count: 1599
-	Accepted filter count: 1599
+Input filter count: 1600
+	Accepted filter count: 1600
 	Rejected filter count: 0
 Output rule count: 1187
-	Plain good: 1148
+	Plain good: 1152
 	Maybe good (regexes): 13
-	redirect-rule= (discarded): 0
+	redirect=: 15
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
-	Unsupported: 26
-		Entity not supported: jetfilmizle.*
-		Entity not supported: filmmakinesi.*
-		Entity not supported: hdfilmcehennemi2.*
-		Entity not supported: siyahfilmizle.*
-		Entity not supported: setfilmizle.*
-		Entity not supported: fullhdfilmizlesene.*
-		Entity not supported: filmmakinesi.*
+	Unsupported: 7
+		FilterOriginEntityHit: Entity jetfilmizle.* not supported
+		FilterOriginEntityHit: Entity siyahfilmizle.* not supported
+		FilterOriginEntityHit: Entity fullhdfilmizlesene.* not supported
+		FilterOriginEntityHit: Entity filmmakinesi.* not supported
 		regexFilter is not RE2-compatible: yenihaberden.com\/d\/other\/(?!yeni-haber-youtube)
-		Entity not supported: yabancidizi.*
 		regexFilter is not RE2-compatible: ^(?!.*(bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fastlylb.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|vk.com|yandex.|yastatic.net|ytimg.com|zencdn.net|player|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com)).*$
-		Unpatchable redirect filter: googlesyndication.com/adsbygoogle.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: googletagservices_gpt.js
-		Unpatchable redirect filter: noop.js
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: noop.txt
-		Unpatchable redirect filter: noop-vmap1.0.xml
-		Unpatchable redirect filter: noop-1s.mp4
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Unpatchable redirect filter: noop-0.1s.mp3
-		Unpatchable redirect filter: noop-1s.mp4
-		Unpatchable redirect filter: noop-1s.mp4
-CSS-generic: 107 plain CSS selectors
-CSS-specific distinct filters: 1484 distinct combined selectors
-CSS-specific injectable files: 6
-	0h8d87g, 1cbg6eo, 0s427e0, 0k07lgs, 0dae82s, 06p3b20
-Procedural-related distinct filters: 318 distinct combined selectors
-Procedural-related injectable files: 2
-	043p4o6, 1sm9836
+		Invalid network filter in tur-0: ||diziyoucdn.xyz/*.mp4$media,redirect-rule=noop-1s.mp4
 Rejected cosmetic filters: 147
 	Entity not supported: torrentarsivi.*###wrapfabtest { height: 1px !important; }
 	Entity not supported: torrentarsivi.*###eazy_ad_unblocker_holder
@@ -3381,33 +3205,38 @@ Rejected cosmetic filters: 147
 	Entity not supported: fullhdfilmizlesene.*##.psk
 	Entity not supported: fullhdfilmizlesene.*##.rekgec-div
 	Entity not supported: webteizle.*##img[alt="reklam"]
+CSS-generic: 107 plain CSS selectors
+CSS-specific distinct filters: 1487 distinct combined selectors
+CSS-specific injectable files: 6
+	0kcs6qo, 0i95q0s, 0vk15dk, 0g07648, 0p051tk, 13458u8
+Declarative-related distinct filters: 108 distinct combined selectors
+Procedural-related distinct filters: 229 distinct combined selectors
 Scriptlet-related distinct filters: 77
 Scriptlet-related injectable files: 7
-	153rebp, 17r798h, 06j0e9p, 07utm6p, 0oga2ml, 1h6efpd, 1j24m85
+	tur-0.no-settimeout-if.js, tur-0.set-constant.js, tur-0.abort-on-property-read.js, tur-0.abort-current-script.js, tur-0.abort-on-property-write.js, tur-0.json-prune.js, tur-0.no-setinterval-if.js
 ============================
 Listset for 'vie-1':
 	Fetching remote https://raw.githubusercontent.com/abpvn/abpvn/master/filter/abpvn_ublock.txt
-Input filter count: 746
-	Accepted filter count: 746
+Input filter count: 751
+	Accepted filter count: 751
 	Rejected filter count: 0
-Output rule count: 565
-	Plain good: 560
+Output rule count: 568
+	Plain good: 563
 	Maybe good (regexes): 3
-	redirect-rule= (discarded): 0
+	redirect=: 0
 	csp= (discarded): 2
 	removeparams= (accepted/discarded): 0/0
 	Unsupported: 0
 
 CSS-generic: 24 plain CSS selectors
-CSS-specific distinct filters: 416 distinct combined selectors
+CSS-specific distinct filters: 420 distinct combined selectors
 CSS-specific injectable files: 2
-	0tin0a8, 12n0i14
-Procedural-related distinct filters: 8 distinct combined selectors
-Procedural-related injectable files: 1
-	12lfusu
-Scriptlet-related distinct filters: 39
+	0cdhtp0, 1emp5ms
+Declarative-related distinct filters: 2 distinct combined selectors
+Procedural-related distinct filters: 1 distinct combined selectors
+Scriptlet-related distinct filters: 40
 Scriptlet-related injectable files: 6
-	127vhc1, 0ujpd2h, 1ftsr09, 0sgr5vl, 1b2744t, 1c6bi1p
+	vie-1.abort-current-script.js, vie-1.abort-on-property-read.js, vie-1.abort-on-property-write.js, vie-1.no-settimeout-if.js, vie-1.json-prune.js, vie-1.set-constant.js
 ============================
 Listset for 'block-lan':
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/lan-block.txt
@@ -3417,7 +3246,7 @@ Input filter count: 44
 Output rule count: 10
 	Plain good: 4
 	Maybe good (regexes): 6
-	redirect-rule= (discarded): 0
+	redirect=: 0
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
 	Unsupported: 0
@@ -3431,7 +3260,7 @@ Input filter count: 11389
 Output rule count: 1
 	Plain good: 1
 	Maybe good (regexes): 0
-	redirect-rule= (discarded): 0
+	redirect=: 0
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
 	Unsupported: 0
@@ -3445,7 +3274,7 @@ Input filter count: 791
 Output rule count: 285
 	Plain good: 0
 	Maybe good (regexes): 0
-	redirect-rule= (discarded): 0
+	redirect=: 0
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 237/48
 	Unsupported: 48
@@ -3506,7 +3335,7 @@ Input filter count: 53609
 Output rule count: 3
 	Plain good: 3
 	Maybe good (regexes): 0
-	redirect-rule= (discarded): 0
+	redirect=: 0
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
 	Unsupported: 0
@@ -3514,13 +3343,13 @@ Output rule count: 3
 ============================
 Listset for 'stevenblack-hosts':
 	Fetching remote https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
-Input filter count: 152589
-	Accepted filter count: 152589
+Input filter count: 155189
+	Accepted filter count: 155189
 	Rejected filter count: 0
 Output rule count: 2
 	Plain good: 2
 	Maybe good (regexes): 0
-	redirect-rule= (discarded): 0
+	redirect=: 0
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
 	Unsupported: 0
