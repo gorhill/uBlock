@@ -1742,8 +1742,7 @@ const FilterOriginEntityHit = class extends FilterOriginHit {
     }
 
     static dnrFromCompiled(args, rule) {
-        dnrAddRuleError(rule, `Entity not supported: ${args[1]}`);
-        super.dnrFromCompiled(args, rule);
+        dnrAddRuleError(rule, `FilterOriginEntityHit: Entity ${args[1]} not supported`);
     }
 };
 
@@ -1761,8 +1760,7 @@ const FilterOriginEntityMiss = class extends FilterOriginMiss {
     }
 
     static dnrFromCompiled(args, rule) {
-        dnrAddRuleError(rule, `Entity not supported: ${args[1]}`);
-        super.dnrFromCompiled(args, rule);
+        dnrAddRuleError(rule, `FilterOriginEntityMiss: Entity ${args[1]} not supported`);
     }
 };
 
@@ -2623,7 +2621,7 @@ const FilterStrictParty = class {
 
     static dnrFromCompiled(args, rule) {
         const partyness = args[1] === 0 ? 1 : 3;
-        dnrAddRuleError(rule, `Strict partyness not supported: strict${partyness}p`);
+        dnrAddRuleError(rule, `FilterStrictParty: Strict partyness strict${partyness}p not supported`);
     }
 
     static keyFromArgs(args) {
@@ -2891,6 +2889,7 @@ class FilterCompiler {
             [ parser.OPTTokenWebrtc, bitFromType('unsupported') ],
             [ parser.OPTTokenWebsocket, bitFromType('websocket') ],
         ]);
+        this.excludedOptionSet = new Set();
         // These top 100 "bad tokens" are collated using the "miss" histogram
         // from tokenHistograms(). The "score" is their occurrence among the
         // 200K+ URLs used in the benchmark and executed against default
@@ -3053,6 +3052,12 @@ class FilterCompiler {
         return '';
     }
 
+    excludeOptions(options) {
+        for ( const option of options ) {
+            this.excludedOptionSet.add(option);
+        }
+    }
+
     // https://github.com/chrisaljoudi/uBlock/issues/589
     // Be ready to handle multiple negated types
 
@@ -3109,30 +3114,31 @@ class FilterCompiler {
     }
 
     processOptions() {
-        for ( let { id, val, not } of this.parser.netOptions() ) {
+        const { parser } = this;
+        for ( let { id, val, not } of parser.netOptions() ) {
             switch ( id ) {
-            case this.parser.OPTToken1p:
+            case parser.OPTToken1p:
                 this.processPartyOption(true, not);
                 break;
-            case this.parser.OPTToken1pStrict:
+            case parser.OPTToken1pStrict:
                 this.strictParty = this.strictParty === -1 ? 0 : 1;
                 this.optionUnitBits |= this.STRICT_PARTY_BIT;
                 break;
-            case this.parser.OPTToken3p:
+            case parser.OPTToken3p:
                 this.processPartyOption(false, not);
                 break;
-            case this.parser.OPTToken3pStrict:
+            case parser.OPTToken3pStrict:
                 this.strictParty = this.strictParty === 1 ? 0 : -1;
                 this.optionUnitBits |= this.STRICT_PARTY_BIT;
                 break;
-            case this.parser.OPTTokenAll:
+            case parser.OPTTokenAll:
                 this.processTypeOption(-1);
                 break;
             // https://github.com/uBlockOrigin/uAssets/issues/192
-            case this.parser.OPTTokenBadfilter:
+            case parser.OPTTokenBadfilter:
                 this.badFilter = true;
                 break;
-            case this.parser.OPTTokenCsp:
+            case parser.OPTTokenCsp:
                 if ( this.processModifierOption(id, val) === false ) {
                     return false;
                 }
@@ -3144,7 +3150,7 @@ class FilterCompiler {
             // https://github.com/gorhill/uBlock/issues/2294
             //   Detect and discard filter if domain option contains
             //   nonsensical characters.
-            case this.parser.OPTTokenDomain:
+            case parser.OPTTokenDomain:
                 this.domainOpt = this.processHostnameList(
                     val,
                     0b1010,
@@ -3153,73 +3159,76 @@ class FilterCompiler {
                 if ( this.domainOpt === '' ) { return false; }
                 this.optionUnitBits |= this.DOMAIN_BIT;
                 break;
-            case this.parser.OPTTokenDenyAllow:
+            case parser.OPTTokenDenyAllow:
                 this.denyallowOpt = this.processHostnameList(val, 0b0000);
                 if ( this.denyallowOpt === '' ) { return false; }
                 this.optionUnitBits |= this.DENYALLOW_BIT;
                 break;
             // https://www.reddit.com/r/uBlockOrigin/comments/d6vxzj/
             //   Add support for `elemhide`. Rarely used but it happens.
-            case this.parser.OPTTokenEhide:
-                this.processTypeOption(this.parser.OPTTokenShide, not);
-                this.processTypeOption(this.parser.OPTTokenGhide, not);
+            case parser.OPTTokenEhide:
+                this.processTypeOption(parser.OPTTokenShide, not);
+                this.processTypeOption(parser.OPTTokenGhide, not);
                 break;
-            case this.parser.OPTTokenHeader:
+            case parser.OPTTokenHeader:
                 this.headerOpt = val !== undefined ? val : '';
                 this.optionUnitBits |= this.HEADER_BIT;
                 break;
-            case this.parser.OPTTokenImportant:
+            case parser.OPTTokenImportant:
                 if ( this.action === AllowAction ) { return false; }
                 this.optionUnitBits |= this.IMPORTANT_BIT;
                 this.action = BlockImportant;
                 break;
             // Used by Adguard:
             // https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters#empty-modifier
-            case this.parser.OPTTokenEmpty:
+            case parser.OPTTokenEmpty:
                 id = this.action === AllowAction
-                    ? this.parser.OPTTokenRedirectRule
-                    : this.parser.OPTTokenRedirect;
+                    ? parser.OPTTokenRedirectRule
+                    : parser.OPTTokenRedirect;
                 if ( this.processModifierOption(id, 'empty') === false ) {
                     return false;
                 }
                 this.optionUnitBits |= this.REDIRECT_BIT;
                 break;
-            case this.parser.OPTTokenMatchCase:
+            case parser.OPTTokenMatchCase:
                 this.patternMatchCase = true;
                 break;
-            case this.parser.OPTTokenMp4:
+            case parser.OPTTokenMp4:
                 id = this.action === AllowAction
-                    ? this.parser.OPTTokenRedirectRule
-                    : this.parser.OPTTokenRedirect;
+                    ? parser.OPTTokenRedirectRule
+                    : parser.OPTTokenRedirect;
                 if ( this.processModifierOption(id, 'noopmp4-1s') === false ) {
                     return false;
                 }
                 this.optionUnitBits |= this.REDIRECT_BIT;
                 break;
-            case this.parser.OPTTokenNoop:
+            case parser.OPTTokenNoop:
                 break;
-            case this.parser.OPTTokenRemoveparam:
+            case parser.OPTTokenRemoveparam:
                 if ( this.processModifierOption(id, val) === false ) {
                     return false;
                 }
                 this.optionUnitBits |= this.REMOVEPARAM_BIT;
                 break;
-            case this.parser.OPTTokenRedirect:
+            case parser.OPTTokenRedirect:
                 if ( this.action === AllowAction ) {
-                    id = this.parser.OPTTokenRedirectRule;
+                    id = parser.OPTTokenRedirectRule;
                 }
                 if ( this.processModifierOption(id, val) === false ) {
                     return false;
                 }
                 this.optionUnitBits |= this.REDIRECT_BIT;
                 break;
-            case this.parser.OPTTokenRedirectRule:
+            case parser.OPTTokenRedirectRule:
+                if ( this.excludedOptionSet.has(parser.OPTTokenRedirectRule) ) {
+                    return false;
+                }
                 if ( this.processModifierOption(id, val) === false ) {
                     return false;
                 }
                 this.optionUnitBits |= this.REDIRECT_BIT;
                 break;
-            case this.parser.OPTTokenInvalid:
+            case parser.OPTTokenInvalid:
                 return false;
             default:
                 if ( this.tokenIdToNormalizedType.has(id) === false ) {
@@ -4051,6 +4060,34 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
         }
     }
 
+    // Try to recover from errors for when the rule is still useful despite not
+    // being complete.
+    for ( const rule of ruleset ) {
+        if ( rule._error === undefined ) { continue; }
+        let i = rule._error.length;
+        while ( i-- ) {
+            const error = rule._error[i];
+            if ( error.startsWith('FilterOriginEntityHit:') ) {
+                if (
+                    Array.isArray(rule.condition.initiatorDomains) &&
+                    rule.condition.initiatorDomains.length > 0
+                ) {
+                    rule._error.splice(i, 1);
+                }
+            } else if ( error.startsWith('FilterOriginEntityMiss:') ) {
+                if (
+                    Array.isArray(rule.condition.excludedInitiatorDomains) &&
+                    rule.condition.excludedInitiatorDomains.length > 0
+                ) {
+                    rule._error.splice(i, 1);
+                }
+            }
+        }
+        if ( rule._error.length === 0 ) {
+            delete rule._error;
+        }
+    }
+
     // Patch modifier filters
     for ( const rule of ruleset ) {
         if ( rule.__modifierType === undefined ) { continue; }
@@ -4067,10 +4104,12 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
             }
             break;
         case 'redirect-rule': {
+            let priority = rule.priority || 0;
             let token = rule.__modifierValue;
             if ( token !== '' ) {
-                const match = /:\d+$/.exec(token);
+                const match = /:(\d+)$/.exec(token);
                 if ( match !== null ) {
+                    priority += parseInt(match[1], 10);
                     token = token.slice(0, match.index);
                 }
             }
@@ -4078,14 +4117,14 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
             if ( rule.__modifierValue !== '' && resource === undefined ) {
                 dnrAddRuleError(rule, `Unpatchable redirect filter: ${rule.__modifierValue}`);
             }
-            const extensionPath = resource && resource.extensionPath || token;
             if ( rule.__modifierAction !== AllowAction ) {
+                const extensionPath = resource || token;
                 rule.action.type = 'redirect';
                 rule.action.redirect = { extensionPath };
-                rule.priority = (rule.priority || 1) + 1;
+                rule.priority = priority + 1;
             } else {
                 rule.action.type = 'block';
-                rule.priority = (rule.priority || 1) + 2;
+                rule.priority = priority + 2;
             }
             break;
         }

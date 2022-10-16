@@ -51,6 +51,8 @@ if [ "$1" != "quick" ]; then
     cp platform/mv3/extension/js/utils.js $TMPDIR/js/
     cp assets/assets.json $TMPDIR/
     cp -R platform/mv3/scriptlets $TMPDIR/
+    mkdir -p $TMPDIR/web_accessible_resources
+    cp src/web_accessible_resources/* $TMPDIR/web_accessible_resources/
     cd $TMPDIR
     node --no-warnings make-rulesets.js output=$DES
     cd - > /dev/null

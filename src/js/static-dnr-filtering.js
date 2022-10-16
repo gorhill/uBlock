@@ -219,6 +219,9 @@ function addToDNR(context, list) {
     });
     const compiler = staticNetFilteringEngine.createCompiler(parser);
 
+    // Can't enforce `redirect-rule=` with DNR
+    compiler.excludeOptions([ parser.OPTTokenRedirectRule ]);
+
     writer.properties.set('name', list.name);
     compiler.start(writer);
 

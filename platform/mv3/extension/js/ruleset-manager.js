@@ -33,8 +33,10 @@ import { fetchJSON } from './fetch.js';
 const RULE_REALM_SIZE = 1000000;
 const REGEXES_REALM_START = 1000000;
 const REGEXES_REALM_END = REGEXES_REALM_START + RULE_REALM_SIZE;
-const REMOVEPARAMS_REALM_START = 2000000;
+const REMOVEPARAMS_REALM_START = REGEXES_REALM_END;
 const REMOVEPARAMS_REALM_END = REMOVEPARAMS_REALM_START + RULE_REALM_SIZE;
+const REDIRECT_REALM_START = REMOVEPARAMS_REALM_END;
+const REDIRECT_REALM_END = REDIRECT_REALM_START + RULE_REALM_SIZE;
 const TRUSTED_DIRECTIVE_BASE_RULE_ID = 8000000;
 const BLOCKING_MODES_RULE_ID = TRUSTED_DIRECTIVE_BASE_RULE_ID + 1;
 const CURRENT_CONFIG_BASE_RULE_ID = 9000000;
@@ -100,8 +102,8 @@ async function updateRegexRules() {
     // Fetch regexes for all enabled rulesets
     const toFetch = [];
     for ( const details of rulesetDetails ) {
-        if ( details.rules.regexes === 0 ) { continue; }
-        toFetch.push(fetchJSON(`/rulesets/regex/${details.id}.regexes`));
+        if ( details.rules.regex === 0 ) { continue; }
+        toFetch.push(fetchJSON(`/rulesets/regex/${details.id}`));
     }
     const regexRulesets = await Promise.all(toFetch);
 
@@ -195,8 +197,8 @@ async function updateRemoveparamRules() {
     // Fetch removeparam rules for all enabled rulesets
     const toFetch = [];
     for ( const details of rulesetDetails ) {
-        if ( details.rules.removeparams === 0 ) { continue; }
-        toFetch.push(fetchJSON(`/rulesets/removeparam/${details.id}.removeparams`));
+        if ( details.rules.removeparam === 0 ) { continue; }
+        toFetch.push(fetchJSON(`/rulesets/removeparam/${details.id}`));
     }
     const removeparamRulesets = await Promise.all(toFetch);
 
@@ -253,17 +255,90 @@ async function updateRemoveparamRules() {
 
 /******************************************************************************/
 
+async function updateRedirectRules() {
+    const [
+        hasOmnipotence,
+        rulesetDetails,
+        dynamicRuleMap,
+    ] = await Promise.all([
+        browser.permissions.contains({ origins: [ '<all_urls>' ] }),
+        getEnabledRulesetsDetails(),
+        getDynamicRules(),
+    ]);
+
+    // Fetch redirect rules for all enabled rulesets
+    const toFetch = [];
+    for ( const details of rulesetDetails ) {
+        if ( details.rules.redirect === 0 ) { continue; }
+        toFetch.push(fetchJSON(`/rulesets/redirect/${details.id}`));
+    }
+    const redirectRulesets = await Promise.all(toFetch);
+
+    // Redirect rules can only be enforced with omnipotence
+    const newRules = [];
+    if ( hasOmnipotence ) {
+        let redirectRuleId = REDIRECT_REALM_START;
+        for ( const rules of redirectRulesets ) {
+            if ( Array.isArray(rules) === false ) { continue; }
+            for ( const rule of rules ) {
+                rule.id = redirectRuleId++;
+                newRules.push(rule);
+            }
+        }
+    }
+
+    // Add redirect rules to dynamic ruleset without affecting rules
+    // outside redirect rules realm.
+    const newRuleMap = new Map(newRules.map(rule => [ rule.id, rule ]));
+    const addRules = [];
+    const removeRuleIds = [];
+
+    for ( const oldRule of dynamicRuleMap.values() ) {
+        if ( oldRule.id < REDIRECT_REALM_START ) { continue; }
+        if ( oldRule.id >= REDIRECT_REALM_END ) { continue; }
+        const newRule = newRuleMap.get(oldRule.id);
+        if ( newRule === undefined ) {
+            removeRuleIds.push(oldRule.id);
+            dynamicRuleMap.delete(oldRule.id);
+        } else if ( JSON.stringify(oldRule) !== JSON.stringify(newRule) ) {
+            removeRuleIds.push(oldRule.id);
+            addRules.push(newRule);
+            dynamicRuleMap.set(oldRule.id, newRule);
+        }
+    }
+
+    for ( const newRule of newRuleMap.values() ) {
+        if ( dynamicRuleMap.has(newRule.id) ) { continue; }
+        addRules.push(newRule);
+        dynamicRuleMap.set(newRule.id, newRule);
+    }
+
+    if ( addRules.length === 0 && removeRuleIds.length === 0 ) { return; }
+
+    if ( removeRuleIds.length !== 0 ) {
+        console.info(`Remove ${removeRuleIds.length} DNR redirect rules`);
+    }
+    if ( addRules.length !== 0 ) {
+        console.info(`Add ${addRules.length} DNR redirect rules`);
+    }
+
+    return dnr.updateDynamicRules({ addRules, removeRuleIds });
+}
+
+/******************************************************************************/
+
 async function updateDynamicRules() {
     return Promise.all([
         updateRegexRules(),
         updateRemoveparamRules(),
+        updateRedirectRules(),
     ]);
 }
 
 /******************************************************************************/
 
 async function defaultRulesetsFromLanguage() {
-    const out = [ 'default' ];
+    const out = [ 'default', 'cname-trackers' ];
 
     const dropCountry = lang => {
         const pos = lang.indexOf('-');
@@ -335,10 +410,7 @@ async function enableRulesets(ids) {
     }
     await dnr.updateEnabledRulesets({ enableRulesetIds, disableRulesetIds });
     
-    return Promise.all([
-        updateRegexRules(),
-        updateRemoveparamRules(),
-    ]);
+    return updateDynamicRules();
 }
 
 /******************************************************************************/

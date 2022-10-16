@@ -291,9 +291,9 @@ async function init() {
         const div = qs$('#templates .rulesetDetails').cloneNode(true);
         dom.text(qs$('h1', div), details.name);
         const { rules, filters, css } = details;
-        let ruleCount = rules.plain + rules.regexes;
+        let ruleCount = rules.plain + rules.regex;
         if ( popupPanelData.hasOmnipotence ) {
-            ruleCount += rules.removeparams;
+            ruleCount += rules.removeparam + rules.redirect;
         }
         dom.text(
             qs$('p', div),

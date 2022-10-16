@@ -47,9 +47,9 @@ function rulesetStats(rulesetId) {
     const rulesetDetails = rulesetMap.get(rulesetId);
     if ( rulesetDetails === undefined ) { return; }
     const { rules, filters } = rulesetDetails;
-    let ruleCount = rules.plain + rules.regexes;
+    let ruleCount = rules.plain + rules.regex;
     if ( canRemoveParams ) {
-        ruleCount += rules.removeparams;
+        ruleCount += rules.removeparam + rules.redirect;
     }
     const filterCount = filters.accepted;
     return { ruleCount, filterCount };

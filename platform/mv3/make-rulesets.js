@@ -28,6 +28,7 @@ import https from 'https';
 import path from 'path';
 import process from 'process';
 import { createHash } from 'crypto';
+import redirectResourcesMap from './js/redirect-resources.js';
 import { dnrRulesetFromRawLists } from './js/static-dnr-filtering.js';
 import { StaticFilteringParser } from './js/static-filtering-parser.js';
 import { fnameFromFileId } from './js/utils.js';
@@ -142,6 +143,14 @@ const writeFile = async (fname, data) => {
     return promise;
 };
 
+const copyFile = async (from, to) => {
+    const dir = path.dirname(to);
+    await fs.mkdir(dir, { recursive: true });
+    const promise = fs.copyFile(from, to);
+    writeOps.push(promise);
+    return promise;
+};
+
 const writeOps = [];
 
 /******************************************************************************/
@@ -153,6 +162,7 @@ const proceduralDetails = new Map();
 const scriptletStats = new Map();
 const specificDetails = new Map();
 const genericDetails = new Map();
+const requiredRedirectResources = new Set();
 
 /******************************************************************************/
 
@@ -265,7 +275,12 @@ async function processNetworkFilters(assetDetails, network) {
         isUnsupported(rule) === false &&
         isRedirect(rule)
     );
-    log(`\tredirect-rule= (discarded): ${redirects.length}`);
+    redirects.forEach(rule => {
+        requiredRedirectResources.add(
+            rule.action.redirect.extensionPath.replace(/^\/+/, '')
+        );
+    });
+    log(`\tredirect=: ${redirects.length}`);
 
     const headers = rules.filter(rule =>
         isUnsupported(rule) === false &&
@@ -294,15 +309,22 @@ async function processNetworkFilters(assetDetails, network) {
 
     if ( regexes.length !== 0 ) {
         writeFile(
-            `${rulesetDir}/regex/${assetDetails.id}.regexes.json`,
+            `${rulesetDir}/regex/${assetDetails.id}.json`,
             `${JSON.stringify(regexes, replacer)}\n`
         );
     }
 
     if ( removeparamsGood.length !== 0 ) {
         writeFile(
-            `${rulesetDir}/removeparam/${assetDetails.id}.removeparams.json`,
+            `${rulesetDir}/removeparam/${assetDetails.id}.json`,
             `${JSON.stringify(removeparamsGood, replacer)}\n`
+        );
+    }
+
+    if ( redirects.length !== 0 ) {
+        writeFile(
+            `${rulesetDir}/redirect/${assetDetails.id}.json`,
+            `${JSON.stringify(redirects, replacer)}\n`
         );
     }
 
@@ -311,8 +333,9 @@ async function processNetworkFilters(assetDetails, network) {
         plain: plainGood.length,
         discarded: redirects.length + headers.length + removeparamsBad.length,
         rejected: bad.length,
-        regexes: regexes.length,
-        removeparams: removeparamsGood.length,
+        regex: regexes.length,
+        removeparam: removeparamsGood.length,
+        redirect: redirects.length,
     };
 }
 
@@ -902,9 +925,25 @@ async function rulesetFromURLs(assetDetails) {
         assetDetails.text = text;
     }
 
+
+    const extensionPaths = [];
+    for ( const [ fname, details ] of redirectResourcesMap ) {
+        const path = `/web_accessible_resources/${fname}`;
+        extensionPaths.push([ fname, path ]);
+        if ( details.alias === undefined ) { continue; }
+        if ( typeof details.alias === 'string' ) {
+            extensionPaths.push([ details.alias, path ]);
+            continue;
+        }
+        if ( Array.isArray(details.alias) === false ) { continue; }
+        for ( const alias of details.alias ) {
+            extensionPaths.push([ alias, path ]);
+        }
+    }
+
     const results = await dnrRulesetFromRawLists(
         [ { name: assetDetails.id, text: assetDetails.text } ],
-        { env }
+        { env, extensionPaths }
     );
 
     const netStats = await processNetworkFilters(
@@ -972,8 +1011,9 @@ async function rulesetFromURLs(assetDetails) {
         rules: {
             total: netStats.total,
             plain: netStats.plain,
-            regexes: netStats.regexes,
-            removeparams: netStats.removeparams,
+            regex: netStats.regex,
+            removeparam: netStats.removeparam,
+            redirect: netStats.redirect,
             discarded: netStats.discarded,
             rejected: netStats.rejected,
         },
@@ -1113,6 +1153,7 @@ async function main() {
         urls: [ 'https://raw.githubusercontent.com/AdguardTeam/cname-trackers/master/combined_disguised_trackers.txt' ],
         homeURL: 'https://github.com/AdguardTeam/cname-trackers#cname-cloaked-trackers',
     });
+
     await rulesetFromURLs({
         id: 'stevenblack-hosts',
         name: 'Steven Black\'s hosts file',
@@ -1159,16 +1200,30 @@ async function main() {
         `${JSON.stringify(genericDetails, jsonSetMapReplacer, 1)}\n`
     );
 
+    // Copy required redirect resources
+    for ( const path of requiredRedirectResources ) {
+        copyFile(`./${path}`, `${outputDir}/${path}`);
+    }
+
     await Promise.all(writeOps);
 
     // Patch manifest
+    // Patch declarative_net_request key
     manifest.declarative_net_request = { rule_resources: ruleResources };
+    // Patch web_accessible_resources key
+    manifest.web_accessible_resources = [{
+        resources: Array.from(requiredRedirectResources).map(path => `/${path}`),
+        matches: [ '<all_urls>' ],
+        use_dynamic_url: true,
+    }];
+    // Patch version key
     const now = new Date();
     const yearPart = now.getUTCFullYear() - 2000;
     const monthPart = (now.getUTCMonth() + 1) * 1000;
     const dayPart = now.getUTCDate() * 10;
     const hourPart = Math.floor(now.getUTCHours() / 3) + 1;
     manifest.version = manifest.version + `.${yearPart}.${monthPart + dayPart + hourPart}`;
+    // Commit changes
     await fs.writeFile(
         `${outputDir}/manifest.json`,
         JSON.stringify(manifest, null, 2) + '\n'
