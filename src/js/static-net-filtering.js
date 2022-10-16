@@ -1743,6 +1743,7 @@ const FilterOriginEntityHit = class extends FilterOriginHit {
 
     static dnrFromCompiled(args, rule) {
         dnrAddRuleError(rule, `FilterOriginEntityHit: Entity ${args[1]} not supported`);
+        super.dnrFromCompiled(args, rule);
     }
 };
 
@@ -1761,6 +1762,7 @@ const FilterOriginEntityMiss = class extends FilterOriginMiss {
 
     static dnrFromCompiled(args, rule) {
         dnrAddRuleError(rule, `FilterOriginEntityMiss: Entity ${args[1]} not supported`);
+        super.dnrFromCompiled(args, rule);
     }
 };
 
@@ -4057,34 +4059,6 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
                     }
                 }
             }
-        }
-    }
-
-    // Try to recover from errors for when the rule is still useful despite not
-    // being complete.
-    for ( const rule of ruleset ) {
-        if ( rule._error === undefined ) { continue; }
-        let i = rule._error.length;
-        while ( i-- ) {
-            const error = rule._error[i];
-            if ( error.startsWith('FilterOriginEntityHit:') ) {
-                if (
-                    Array.isArray(rule.condition.initiatorDomains) &&
-                    rule.condition.initiatorDomains.length > 0
-                ) {
-                    rule._error.splice(i, 1);
-                }
-            } else if ( error.startsWith('FilterOriginEntityMiss:') ) {
-                if (
-                    Array.isArray(rule.condition.excludedInitiatorDomains) &&
-                    rule.condition.excludedInitiatorDomains.length > 0
-                ) {
-                    rule._error.splice(i, 1);
-                }
-            }
-        }
-        if ( rule._error.length === 0 ) {
-            delete rule._error;
         }
     }
 
