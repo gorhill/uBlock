@@ -1069,13 +1069,13 @@ async function main() {
 
     // Assemble all default lists as the default ruleset
     const contentURLs = [
-        'https://ublockorigin.pages.dev/filters/filters.txt',
-        'https://ublockorigin.pages.dev/filters/badware.txt',
-        'https://ublockorigin.pages.dev/filters/privacy.txt',
-        'https://ublockorigin.pages.dev/filters/resource-abuse.txt',
-        'https://ublockorigin.pages.dev/filters/unbreak.txt',
-        'https://ublockorigin.pages.dev/filters/quick-fixes.txt',
-        'https://ublockorigin.pages.dev/filters/ubol-filters.txt',
+        'https://ublockorigin.github.io/uAssets/filters/filters.txt',
+        'https://ublockorigin.github.io/uAssets/filters/badware.txt',
+        'https://ublockorigin.github.io/uAssets/filters/privacy.txt',
+        'https://ublockorigin.github.io/uAssets/filters/resource-abuse.txt',
+        'https://ublockorigin.github.io/uAssets/filters/unbreak.txt',
+        'https://ublockorigin.github.io/uAssets/filters/quick-fixes.txt',
+        'https://ublockorigin.github.io/uAssets/filters/ubol-filters.txt',
         'https://secure.fanboy.co.nz/easylist.txt',
         'https://secure.fanboy.co.nz/easyprivacy.txt',
         'https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext',
