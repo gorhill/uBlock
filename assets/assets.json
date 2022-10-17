@@ -182,7 +182,6 @@
 		],
 		"cdnURLs": [
 			"https://secure.fanboy.co.nz/easylist.txt",
-			"https://ublockorigin.github.io/uAssetsCDN/thirdparties/easylist.txt",
 			"https://ublockorigin.pages.dev/thirdparties/easylist.txt",
 			"https://gitcdn.link/cdn/uBlockOrigin/uAssetsCDN/main/thirdparties/easylist.txt",
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/thirdparties/easylist.txt",
@@ -236,7 +235,6 @@
 		],
 		"cdnURLs": [
 			"https://secure.fanboy.co.nz/easyprivacy.txt",
-			"https://ublockorigin.github.io/uAssetsCDN/thirdparties/easyprivacy.txt",
 			"https://ublockorigin.pages.dev/thirdparties/easyprivacy.txt",
 			"https://gitcdn.link/cdn/uBlockOrigin/uAssetsCDN/main/thirdparties/easyprivacy.txt",
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/thirdparties/easyprivacy.txt",
