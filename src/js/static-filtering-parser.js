@@ -1614,6 +1614,7 @@ Parser.prototype.SelectorCompiler = class {
             out.push(`#${data.name}`);
             break;
         case 'Nth': {
+            if ( data.selector !== null ) { return; }
             if ( data.nth.type === 'AnPlusB' ) {
                 const a = parseInt(data.nth.a, 10) || null;
                 const b = parseInt(data.nth.b, 10) || null;
@@ -1637,7 +1638,9 @@ Parser.prototype.SelectorCompiler = class {
         case 'PseudoElementSelector':
             out.push(`:${data.name}`);
             if ( Array.isArray(part.args) ) {
-                out.push(`(${this.astSerialize(part.args)})`);
+                const arg = this.astSerialize(part.args);
+                if ( typeof arg !== 'string' ) { return; }
+                out.push(`(${arg})`);
             }
             break;
         case 'Raw':
