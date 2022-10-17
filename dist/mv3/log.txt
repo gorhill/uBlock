@@ -14,11 +14,11 @@ Listset for 'default':
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/filters-2020.txt
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/filters-2021.txt
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/filters-2022.txt
-Input filter count: 78928
-	Accepted filter count: 76515
+Input filter count: 78933
+	Accepted filter count: 76520
 	Rejected filter count: 152
-Output rule count: 20623
-	Plain good: 19407
+Output rule count: 20626
+	Plain good: 19410
 	Maybe good (regexes): 123
 	redirect=: 288
 	csp= (discarded): 61
@@ -2187,9 +2187,9 @@ Rejected cosmetic filters: 1440
 	Invalid filter: youporn.com##:-abp-properties(image/)
 	Invalid filter: youporngay.com##:-abp-properties(image/)
 CSS-generic: 16819 plain CSS selectors
-CSS-specific distinct filters: 4994 distinct combined selectors
+CSS-specific distinct filters: 4995 distinct combined selectors
 CSS-specific injectable files: 20
-	0phl6f0, 19sgafc, 11flrsc, 0pr3djo, 0l32hfg, 0qa7kug, 07djdic, 1vtl5d8, 0ls9nos, 0t117mc, 1ps345o, 1armsbk, 0u1nfpo, 1mmjfvc, 0r0aegc, 12i09gs, 1tccqhs, 08pgukc, 0fup3t0, 0d8oa7g
+	0phl6f0, 19sgafc, 11flrsc, 0pr3djo, 0l32hfg, 0qa7kug, 07djdic, 1vtl5d8, 0ls9nos, 0t117mc, 1ps345o, 1armsbk, 0u1nfpo, 1mmjfvc, 0r0aegc, 12i09gs, 1tccqhs, 08pgukc, 0fup3t0, 095ec6g
 Declarative-related distinct filters: 250 distinct combined selectors
 Procedural-related distinct filters: 348 distinct combined selectors
 Scriptlet-related distinct filters: 1928
@@ -2484,7 +2484,7 @@ Output rule count: 5210
 
 CSS-specific distinct filters: 2255 distinct combined selectors
 CSS-specific injectable files: 9
-	11guamg, 1dqqojk, 17go8tc, 0jpejk4, 0r40hok, 026gte8, 0b235ts, 1ok7cpg, 0h134is
+	0bmm81g, 1dqqojk, 17go8tc, 0jpejk4, 0r40hok, 026gte8, 0b235ts, 1ok7cpg, 0h134is
 Procedural-related distinct filters: 46 distinct combined selectors
 ============================
 Listset for 'irn-0':
@@ -2752,8 +2752,8 @@ CSS-specific injectable files: 1
 Listset for 'nld-0':
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/gh-pages/EasyDutch.txt
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/gh-pages/EasyDutch/Block_General.txt
-	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/gh-pages/EasyDutch/Block_first_party_Server.txt
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/gh-pages/EasyDutch/Block_third_party_Server.txt
+	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/gh-pages/EasyDutch/Block_first_party_Server.txt
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/gh-pages/EasyDutch/Block_Resources.txt
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/gh-pages/EasyDutch/Block_Whitelist.txt
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/gh-pages/EasyDutch/Hide_General.txt
@@ -2790,8 +2790,8 @@ Scriptlet-related injectable files: 8
 Listset for 'nor-0':
 	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianList.txt
 	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/AntiAdblockEntries.txt
-	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/NordicFilters-NotFirefox.txt
 	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/NordicFilters-NotBrave.txt
+	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/NordicFilters-NotFirefox.txt
 Input filter count: 862
 	Accepted filter count: 855
 	Rejected filter count: 0
