@@ -236,7 +236,7 @@
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "The default filtering mode will be overriden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
+    "message": "웹사이트별 필터링 모드가 있다면 기본 필터링 모드를 덮어씁니다. 각 웹사이트에서 가장 잘 작동하는 필터링 모드로 조정할 수 있습니다. 각 모드에는 장단점이 있습니다.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
@@ -256,7 +256,7 @@
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Basic network filtering from selected filter lists.\n\nDoes not require permission to read and change data on websites.",
+    "message": "선택한 필터 목록을 바탕으로 기본적인 네트워크 필터링을 수행합니다.\n\n웹사이트의 데이터를 읽고 수정하는 권한이 필요하지 않습니다.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {

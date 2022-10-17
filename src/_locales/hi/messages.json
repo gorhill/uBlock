@@ -1144,7 +1144,7 @@
     "description": "English: Close this window"
   },
   "docblockedDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "इस साइट के बारे में मुझे दोबारा चेतावनी न दें",
     "description": "Label for checkbox in document-blocked page"
   },
   "docblockedProceed": {

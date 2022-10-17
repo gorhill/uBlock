@@ -236,7 +236,7 @@
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "Mënyra standarde e filtrimit mund të ndryshohet për çdo uebsajt. Ndryshimet mund të bëhen në varësi të mënyrës që funksionon më mirë për një uebsajt. Secila mënyrë ka avantazhet dhe disavantazhet e veta.",
+    "message": "Mënyra standarde e filtrimit mund të ndryshohet për çdo uebsajt. Ndryshimet mund të bëhen në varësi të mënyrës që funksionon më mirë. Secila mënyrë ka avantazhet dhe disavantazhet e veta.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
@@ -256,7 +256,7 @@
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Filtrat kryesorë të rrjetit nga listat e përzgjedhura.\n\nNuk kanë nevojë për leje për leximin dhe ndryshimin e të dhënave në uebsajte.",
+    "message": "Filtrat kryesorë të rrjetit nga listat e përzgjedhura.\n\nNuk duhen leje për leximin dhe ndryshimin e të dhënave në uebsajte.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
@@ -272,7 +272,7 @@
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Freskoj automatikisht faqen kur ndryshon mënyra e filtrimit",
+    "message": "Freskoj automatikisht faqen kur ndryshoj mënyrën e filtrimit",
     "description": "Label for a checkbox in the options page"
   }
 }

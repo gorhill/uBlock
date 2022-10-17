@@ -224,55 +224,55 @@
     "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
-    "message": "Welcome",
+    "message": "Καλώς ήρθατε",
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "You have just installed uBO Lite. You can choose here the default filtering mode to use on all websites.\n\nBy default, <em>Basic</em> mode is selected because it does not require the permission to read and change data. If you trust uBO Lite, you can give it broad permission to read and change data on all websites in order to enable more advanced filtering capabilities for all websites by default.",
+    "message": "Μόλις εγκαταστήσατε το uBO Lite. Μπορείτε να επιλέξετε εδώ την προεπιλεγμένη λειτουργία φιλτραρίσματος για χρήση σε όλους τους ιστότοπους.\n\nΑπό προεπιλογή, έχει επιλεγεί η λειτουργία <em>Βασική</em> επειδή δεν απαιτεί άδεια ανάγνωσης και αλλαγής δεδομένων. Εάν εμπιστεύεστε το uBO Lite, μπορείτε να του δώσετε ευρεία άδεια να διαβάζει και να αλλάζει δεδομένα σε όλους τους ιστότοπους, προκειμένου να ενεργοποιηθούν πιο προηγμένες δυνατότητες φιλτραρίσματος για όλους τους ιστότοπους από προεπιλογή.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
-    "message": "Default filtering mode",
+    "message": "Προεπιλεγμένη λειτουργία φιλτραρίσματος",
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "The default filtering mode will be overriden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
+    "message": "Η προεπιλεγμένη λειτουργία φιλτραρίσματος θα αντικατασταθεί από τις λειτουργίες φιλτραρίσματος ανά ιστότοπο. Μπορείτε να προσαρμόσετε τη λειτουργία φιλτραρίσματος σε οποιονδήποτε ιστότοπο, σύμφωνα με όποια λειτουργία λειτουργεί καλύτερα σε αυτόν τον ιστότοπο. Κάθε λειτουργία έχει τα πλεονεκτήματα και τα μειονεκτήματά της.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
-    "message": "no filtering",
+    "message": "χωρίς φιλτράρισμα",
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
-    "message": "basic",
+    "message": "βασικό",
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
-    "message": "optimal",
+    "message": "βέλτιστο",
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
-    "message": "complete",
+    "message": "πλήρης",
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Basic network filtering from selected filter lists.\n\nDoes not require permission to read and change data on websites.",
+    "message": "Βασικό φιλτράρισμα δικτύου από επιλεγμένες λίστες φίλτρων.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific extended filtering from selected filter lists.\n\nRequires broad permission to read and change data on all websites.",
+    "message": "Προηγμένο φιλτράρισμα δικτύου και συγκεκριμένο εκτεταμένο φιλτράρισμα από επιλεγμένες λίστες φίλτρων.\n\nΑπαιτεί ευρεία άδεια για την ανάγνωση και την αλλαγή δεδομένων σε όλους τους ιστότοπους.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific and generic extended filtering from selected filter lists.\n\nRequires broad permission to read and change data on all websites.\n\nGeneric extended filtering may cause higher webpage resources usage.",
+    "message": "Προηγμένο φιλτράρισμα δικτύου και ειδικό και γενικό εκτεταμένο φιλτράρισμα από επιλεγμένες λίστες φίλτρων.\n\nΑπαιτεί ευρεία άδεια για την ανάγνωση και την αλλαγή δεδομένων σε όλους τους ιστότοπους.\n\nΤο γενικό εκτεταμένο φιλτράρισμα μπορεί να προκαλέσει μεγαλύτερη χρήση πόρων ιστοσελίδας.",
     "description": "This describes the 'complete' filtering mode"
   },
   "behaviorSectionLabel": {
-    "message": "Behavior",
+    "message": "Συμπεριφορά",
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Automatically reload page when changing filtering mode",
+    "message": "Αυτόματη επαναφόρτωση της σελίδας κατά την αλλαγή της λειτουργίας φιλτραρίσματος",
     "description": "Label for a checkbox in the options page"
   }
 }
