@@ -348,11 +348,9 @@ async function defaultRulesetsFromLanguage() {
 
     const langSet = new Set();
 
-    await i18n.getAcceptLanguages().then(langs => {
-        for ( const lang of langs.map(dropCountry) ) {
-            langSet.add(lang);
-        }
-    });
+    for ( const lang of navigator.languages.map(dropCountry) ) {
+        langSet.add(lang);
+    }
     langSet.add(dropCountry(i18n.getUILanguage()));
 
     const reTargetLang = new RegExp(
