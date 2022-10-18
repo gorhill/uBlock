@@ -304,27 +304,27 @@ async function processNetworkFilters(assetDetails, network) {
 
     writeFile(
         `${rulesetDir}/main/${assetDetails.id}.json`,
-        `${JSON.stringify(plainGood, replacer)}\n`
+        `${JSON.stringify(plainGood, replacer, 1)}\n`
     );
 
     if ( regexes.length !== 0 ) {
         writeFile(
             `${rulesetDir}/regex/${assetDetails.id}.json`,
-            `${JSON.stringify(regexes, replacer)}\n`
+            `${JSON.stringify(regexes, replacer, 1)}\n`
         );
     }
 
     if ( removeparamsGood.length !== 0 ) {
         writeFile(
             `${rulesetDir}/removeparam/${assetDetails.id}.json`,
-            `${JSON.stringify(removeparamsGood, replacer)}\n`
+            `${JSON.stringify(removeparamsGood, replacer, 1)}\n`
         );
     }
 
     if ( redirects.length !== 0 ) {
         writeFile(
             `${rulesetDir}/redirect/${assetDetails.id}.json`,
-            `${JSON.stringify(redirects, replacer)}\n`
+            `${JSON.stringify(redirects, replacer, 1)}\n`
         );
     }
 

@@ -4277,6 +4277,7 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
     }
 
     // Patch id
+    const rulesetFinal = [];
     {
         let ruleId = 1;
         for ( const rule of rulesetMap.values() ) {
@@ -4285,16 +4286,15 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
             } else {
                 rule.id = 0;
             }
+            rulesetFinal.push(rule);
         }
         for ( const invalid of context.invalid ) {
-            rulesetMap.set(ruleId++, {
-                _error: [ invalid ],
-            });
+            rulesetFinal.push({ _error: [ invalid ] });
         }
     }
 
     return {
-        ruleset: Array.from(rulesetMap.values()),
+        ruleset: rulesetFinal,
         filterCount: context.filterCount,
         acceptedFilterCount: context.acceptedFilterCount,
         rejectedFilterCount: context.rejectedFilterCount,
