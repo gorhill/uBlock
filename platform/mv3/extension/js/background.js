@@ -50,7 +50,7 @@ import {
     setFilteringMode,
     getDefaultFilteringMode,
     setDefaultFilteringMode,
-    syncWithDemotedOrigins,
+    syncWithBrowserPermissions,
 } from './mode-manager.js';
 
 /******************************************************************************/
@@ -154,13 +154,15 @@ function hasOmnipotence() {
     });
 }
 
-function onPermissionsRemoved(permissions) {
-    if ( permissions.origins?.includes('<all_urls>') ) {
+async function onPermissionsRemoved() {
+    const beforeMode = await getDefaultFilteringMode();
+    const modified = await syncWithBrowserPermissions();
+    if ( modified === false ) { return; }
+    const afterMode = await getDefaultFilteringMode();
+    if ( beforeMode > 1 && afterMode <= 1 ) {
         updateDynamicRules();
     }
-    syncWithDemotedOrigins(permissions.origins).then(( ) => {
-        registerInjectables(permissions.origins);
-    });
+    registerInjectables();
 }
 
 /******************************************************************************/
@@ -287,6 +289,9 @@ async function start() {
         });
     }
 
+    // Permissions may have been removed while the extension was disabled
+    await onPermissionsRemoved();
+
     // Unsure whether the browser remembers correctly registered css/scripts
     // after we quit the browser. For now uBOL will check unconditionally at
     // launch time whether content css/scripts are properly registered.
@@ -307,7 +312,9 @@ async function start() {
 
     runtime.onMessage.addListener(onMessage);
 
-    browser.permissions.onRemoved.addListener(onPermissionsRemoved);
+    browser.permissions.onRemoved.addListener(
+        ( ) => { onPermissionsRemoved(); }
+    );
 
     if ( rulesetConfig.firstRun ) {
         runtime.openOptionsPage();

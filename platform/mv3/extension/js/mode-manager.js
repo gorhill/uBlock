@@ -25,7 +25,10 @@
 
 /******************************************************************************/
 
-import { dnr } from './ext.js';
+import {
+    browser,
+    dnr,
+} from './ext.js';
 
 import {
     hostnamesFromMatches,
@@ -326,22 +329,31 @@ async function setDefaultFilteringMode(afterLevel) {
 
 /******************************************************************************/
 
-async function syncWithDemotedOrigins(demotedOrigins) {
-    const demotedHostnames = new Set(hostnamesFromMatches(demotedOrigins));
-    if ( demotedHostnames.has('all-urls') ) {
+async function syncWithBrowserPermissions() {
+    const permissions = await browser.permissions.getAll();
+    const allowedHostnames = new Set(hostnamesFromMatches(permissions.origins || []));
+    const beforeMode = await getDefaultFilteringMode();
+    let modified = false;
+    if ( beforeMode > 1 && allowedHostnames.has('all-urls') === false ) {
         await setDefaultFilteringMode(1);
+        modified = true;
     }
+    const afterMode = await getDefaultFilteringMode();
+    if ( afterMode > 1 ) { return false; }
     const filteringModes = await getFilteringModeDetails();
     const { extendedSpecific, extendedGeneric } = filteringModes;
     for ( const hn of extendedSpecific ) {
-        if ( demotedHostnames.has(hn) === false ) { continue; }
+        if ( allowedHostnames.has(hn) ) { continue; }
         extendedSpecific.delete(hn);
+        modified = true;
     }
     for ( const hn of extendedGeneric ) {
-        if ( demotedHostnames.has(hn) === false ) { continue; }
+        if ( allowedHostnames.has(hn) ) { continue; }
         extendedGeneric.delete(hn);
+        modified = true;
     }
-    return setFilteringModeDetails(filteringModes);
+    await setFilteringModeDetails(filteringModes);
+    return modified;
 }
 
 /******************************************************************************/
@@ -362,5 +374,5 @@ export {
     setDefaultFilteringMode,
     getFilteringModeDetails,
     getAllTrustedSiteDirectives,
-    syncWithDemotedOrigins,
+    syncWithBrowserPermissions,
 };
