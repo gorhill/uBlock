@@ -1977,7 +1977,7 @@ Parser.prototype.SelectorCompiler = class {
     }
 
     compileAttrList(s) {
-        if ( s === '' ) { return; }
+        if ( s === '' ) { return s; }
         const attrs = s.split('\s*,\s*');
         const out = [];
         for ( const attr of attrs ) {
