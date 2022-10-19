@@ -1710,12 +1710,13 @@ const getURLFilteringData = function(details) {
         }
         if ( response.dirty ) { continue; }
         puf.evaluateZ(context, url, type);
-        response.dirty = colorEntry.own !== (
+        const pown = (
             puf.r !== 0 &&
             puf.context === context &&
             puf.url === url &&
             puf.type === type
         );
+        response.dirty = colorEntry.own !== pown || colorEntry.r !== puf.r;
     }
     return response;
 };
