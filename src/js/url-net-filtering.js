@@ -261,7 +261,7 @@ class DynamicURLRuleFiltering {
                              this.context === context &&
                              this.url === url &&
                              this.type === type;
-            if ( otherOwn && !thisOwn ) {
+            if ( otherOwn && !thisOwn || other.r !== this.r ) {
                 this.setRule(context, url, type, other.r);
                 this.changed = true;
             }
