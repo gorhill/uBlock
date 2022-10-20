@@ -1,4 +1,4 @@
-Version: 0.1.22.10187
+Version: 0.1.22.10207
 ============================
 Listset for 'default':
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/filters.txt
@@ -14,16 +14,16 @@ Listset for 'default':
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/filters-2020.txt
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/filters-2021.txt
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/filters-2022.txt
-Input filter count: 79067
-	Accepted filter count: 76653
-	Rejected filter count: 153
-Output rule count: 21165
-	Plain good: 19955
-	Maybe good (regexes): 123
+Input filter count: 79044
+	Accepted filter count: 76632
+	Rejected filter count: 152
+Output rule count: 21177
+	Plain good: 19963
+	Maybe good (regexes): 124
 	redirect=: 290
 	csp= (discarded): 59
 	removeparams= (accepted/discarded): 23/5
-	Unsupported: 715
+	Unsupported: 718
 		Could not salvage rule with only entity-based domain= option: megalink.*
 		Could not salvage rule with only entity-based domain= option: samehadaku.*
 		Could not salvage rule with only entity-based domain= option: komikcast.*
@@ -71,7 +71,6 @@ Output rule count: 21165
 		Could not salvage rule with only entity-based domain= option: sxyprn.*
 		Could not salvage rule with only entity-based domain= option: palimas.*
 		Could not salvage rule with only entity-based domain= option: vjav.*
-		Could not salvage rule with only entity-based domain= option: gogoanime.*
 		Could not salvage rule with only entity-based domain= option: mazpic.*
 		Could not salvage rule with only entity-based domain= option: picrok.*
 		Could not salvage rule with only entity-based domain= option: imgviu.*
@@ -612,10 +611,9 @@ Output rule count: 21165
 		Invalid network filter in default: *$3p,script,redirect-rule=noop.js,domain=koushoku.org
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=sprawdzwegiel.pl
 		Invalid network filter in default: ||nitropay.com/1.gif?$image,3p,redirect-rule=1x1.gif
-		Invalid network filter in default: *$frame,redirect-rule=noopframe,domain=ppss.kr|ygosu.com|loawa.com|feedclick.net|dailian.co.kr|algumon.com|sportalkorea.com
-		Invalid network filter in default: *$script,xhr,redirect-rule=noopjs,domain=ppss.kr|ygosu.com|loawa.com|feedclick.net|dailian.co.kr|algumon.com|sportalkorea.com
-		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=ygosu.com|loawa.com|feedclick.net|dailian.co.kr|algumon.com|sportalkorea.com
-		Invalid network filter in default: *$image,redirect-rule=32x32.png,domain=ppss.kr
+		Invalid network filter in default: *$frame,redirect-rule=noopframe,domain=ppss.kr|ygosu.com|loawa.com|feedclick.net|dailian.co.kr|algumon.com|sportalkorea.com|ondemandkorea.com
+		Invalid network filter in default: *$script,xhr,redirect-rule=noopjs,domain=ppss.kr|ygosu.com|loawa.com|feedclick.net|dailian.co.kr|algumon.com|sportalkorea.com|ondemandkorea.com
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=ppss.kr|ygosu.com|loawa.com|feedclick.net|dailian.co.kr|algumon.com|sportalkorea.com|ondemandkorea.com
 		Invalid network filter in default: /player/player_ads.html?advertising_id=$frame,1p,redirect-rule=noop.html
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=cryptowidgets.net|wiki-topia.com
 		Invalid network filter in default: ||officepoolstop.com/images/ads/*$image,1p,redirect-rule=1x1.gif
@@ -640,6 +638,8 @@ Output rule count: 21165
 		Invalid network filter in default: *$script,domain=hatecoin.me,redirect-rule=noopjs
 		Invalid network filter in default: *$frame,redirect-rule=noopframe,domain=anydebrid.com|hotdebrid.com
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=anydebrid.com|hotdebrid.com
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=hacksnation.com
+		Invalid network filter in default: ||fundingchoicesmessages.google.com^$script,redirect-rule=noop.js,domain=rocketnews24.com
 		Invalid network filter in default: @@||googletagmanager.com/gtm.js$script,redirect-rule,domain=rocketnews24.com
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=kruidvat.nl
 		Invalid network filter in default: ||jsdelivr.net^*/fp.min.js$script,redirect-rule=fingerprint3.js:10
@@ -738,35 +738,19 @@ Output rule count: 21165
 		Invalid network filter in default: ||googletagmanager.com/gtag/js$script,redirect-rule=googletagmanager_gtm.js:10,domain=satoshi-win.xyz
 		Invalid network filter in default: ||id5-sync.com^$image,redirect-rule=1x1.gif,domain=satoshi-win.xyz
 		Invalid network filter in default: *$frame,redirect-rule=noopframe,domain=allcryptoz.net|crewbase.net|crewus.net|shinbhu.net|shinchu.net|thumb8.net|thumb9.net|topcryptoz.net|uniqueten.net|ultraten.net
+		Invalid network filter in default: *$frame,redirect-rule=noopframe,domain=ondemandkorea.com
+		Invalid network filter in default: *$script,xhr,redirect-rule=noopjs,domain=ondemandkorea.com
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=ondemandkorea.com
 		Invalid network filter in default: $webrtc,domain=ack.net|allthetests.com|azvideo.net|champion.gg|clicknupload.link|colourlovers.com|csgolounge.com|dispatch.com|fastplay.to|go4up.com|gounlimited.to|janjua.pw|janjua.tv|jpost.com|megaup.net|merriam-webster.com|netdna-storage.com|ouo.io|ouo.press|rlslog.net|sourceforge.net|spanishdict.com|telegram.com|torlock.icu|torlock2.com|uptobox.com|videowood.tv|vidtodo.com|yts.gs|yts.mx
-Rejected cosmetic filters: 1377
-	Entity not supported: google.*###atvcap + #tvcap > .mnr-c > .commercial-unit-mobile-top
-	Entity not supported: google.*###taw > .med + div > #tvcap > .mnr-c:not(.qs-ic) > .commercial-unit-mobile-top
-	Entity not supported: google.*###topstuff > #tads
-	Entity not supported: google.*##.commercial-unit-mobile-top .jackpot-main-content-container > .UpgKEd + .nZZLFc > .vci
-	Entity not supported: google.*##.commercial-unit-mobile-top .jackpot-main-content-container > .UpgKEd + .nZZLFc > div > .vci
-	Entity not supported: google.*##.commercial-unit-mobile-top > .v7hl4d
-	Entity not supported: google.*##.commercial-unit-mobile-top > div[data-pla="1"]
-	Entity not supported: google.*##div[jsdata*="CarouselPLA-"][data-id^="CarouselPLA-"]
-	Entity not supported: google.*##div[data-ismultirow="true"][data-id^="CarouselPLA-"]
-	Entity not supported: google.*##div[data-flt-ve="sponsored_search_ads"]
-	Entity not supported: google.*##div[jscontroller="U835zd"] + c-wiz[jsrenderer="YnuqN"]
-	Entity not supported: google.*##div[role="navigation"] + c-wiz > div > .kxhcC
-	Entity not supported: google.*##div[role="navigation"] + c-wiz > script + div > .kxhcC
-	Entity not supported: google.*##.ads-ad
-	Entity not supported: google.*###sqh
-	Entity not supported: www.google.*##div.ellip > span:has-text(/^Ads?$/):upward(2)
-	Entity not supported: www.google.*##[href^="https://www.googleadservices.com/pagead/aclk?"][href$="adurl="]:upward(3)
-	Entity not supported: www.google.*##:not(:matches-path(/^/search\?.*tbm=shop|^/shopping/)) *:not([class^="sh-sr__shop-result-group"]) [href^="/aclk"][href$="adurl="]:upward(3)
-	Entity not supported: www.google.*##.sh-sr__shop-result-group[data-hveid] .sh-sp__btn:matches-css(font-size: 13px):upward(.sh-sr__shop-result-group):has(a[href^="/aclk"][href$="adurl="])
-	Entity not supported: www.google.*##c-wiz div[data-hveid] > div > div > ul:has(> li[style="max-width:200px;"] > div > div[data-hveid] > a[href*="/aclk"]):upward(3)
-	Entity not supported: www.google.*##div[data-section-id] > a[href^="/aclk"][href*="placesheetAdFix="][href*="adurl="]:upward(1)
-	Entity not supported: www.google.*##:matches-path(/travel/hotels/) div[data-is-promoted="true"]
-	Entity not supported: transfermarkt.*##.noscript
-	Entity not supported: kisscartoon.*###upgrade_pop
-	Entity not supported: redtube.*###paid_tabs_list
-	Entity not supported: pornhub.*##div[id^="customSkin"]
-	Entity not supported: pornhub.*##div.container:style(margin-top: 0px !important)
+Rejected cosmetic filters: 180
+	Entity-based filter not supported: div.ellip > span:has-text(/^Ads?$/):upward(2)
+	Entity-based filter not supported: [href^="https://www.googleadservices.com/pagead/aclk?"][href$="adurl="]:upward(3)
+	Entity-based filter not supported: :not(:matches-path(/^/search\?.*tbm=shop|^/shopping/)) *:not([class^="sh-sr__shop-result-group"]) [href^="/aclk"][href$="adurl="]:upward(3)
+	Entity-based filter not supported: .sh-sr__shop-result-group[data-hveid] .sh-sp__btn:matches-css(font-size: 13px):upward(.sh-sr__shop-result-group):has(a[href^="/aclk"][href$="adurl="])
+	Entity-based filter not supported: c-wiz div[data-hveid] > div > div > ul:has(> li[style="max-width:200px;"] > div > div[data-hveid] > a[href*="/aclk"]):upward(3)
+	Entity-based filter not supported: div[data-section-id] > a[href^="/aclk"][href*="placesheetAdFix="][href*="adurl="]:upward(1)
+	Entity-based filter not supported: :matches-path(/travel/hotels/) div[data-is-promoted="true"]
+	Entity-based filter not supported: div.container:style(margin-top: 0px !important)
 	Invalid filter: timesofindia.indiatimes.com##:xpath(//p[contains(text(),"Ad ")]/../..)
 	Invalid filter: timesofindia.indiatimes.com##[onclick] .btxt:matches-css-before(content:/Ad/):xpath(../../..)
 	Invalid filter: indiatimes.com##[onclick] .btxt:has-text(/Ad/):xpath(../../..)
@@ -783,1292 +767,114 @@ Rejected cosmetic filters: 1377
 	Invalid filter: economictimes.indiatimes.com##:xpath(//span[contains(text(),"More from ")]/../preceding-sibling::div)
 	Invalid filter: economictimes.indiatimes.com##:xpath(//span[contains(text(),"Around The")])
 	Invalid filter: economictimes.indiatimes.com##:xpath(//p[contains(text(),"Ad:")]/../..)
-	Entity not supported: wetteronline.*###topcontainer
-	Entity not supported: finanzen.*###adup1
-	Entity not supported: finanzen.*###bs_abstand
-	Entity not supported: finanzen.*##[id^="sas_"]:style(height: 1px !important)
+	Entity-based filter not supported: [id^="sas_"]:style(height: 1px !important)
 	Invalid filter: finanzen.net##:xpath(//*[contains(text(),"Werbung")]) + [class]
-	Entity not supported: amazon.*###s-results-list-atf > .s-result-item:has(> .s-item-container h5.s-sponsored-list-header)
-	Entity not supported: amazon.*###s-results-list-atf > .s-result-item:has(.s-item-container h5.s-sponsored-header)
-	Entity not supported: amazon.*##.s-result-item:has(> .s-item-container > h5 .s-sponsored-info-icon)
-	Entity not supported: amazon.*##.s-widget > [data-cel-widget^="MAIN"] > [data-cel-widget^="tetris"] > div[id^="CardInstance"][class^="_tetris-"]:upward(3)
-	Entity not supported: amazon.*##.a-carousel-card > div > div[cel_widget_id^="adplacements:"]:upward(2):remove()
-	Entity not supported: amazon.*##.AdHolder
-	Entity not supported: amazon.*###similarities_feature_div span[id^="ad-feedback-text"]:upward(#similarities_feature_div)
-	Entity not supported: amazon.*##div[cel_widget_id="sims-consolidated-5_csm_instrumentation_wrapper"]
-	Entity not supported: 1337x.*##.stream-torrent
-	Entity not supported: x1337x.*##.stream-torrent
-	Entity not supported: 1337x.*##.link-info-stream
-	Entity not supported: x1337x.*##.link-info-stream
-	Entity not supported: 1337x.*##.download-links-dontblock > LI:has-text(Anon)
-	Entity not supported: 1337x.*##.download-links-dontblock > LI:has-text(Stream)
-	Entity not supported: 1337x.*##a[href^="/redirectmusic.php"]
-	Entity not supported: 1337x.*##a[href^="/spyoff"]
-	Entity not supported: 1337x.*##a[href*="//steepto.com/"]
-	Entity not supported: 1337x.*##[href*="vpn"]
-	Entity not supported: 1337x.*##.no-top-radius div > a[href]:has-text(VPN)
-	Entity not supported: x1337x.*##.no-top-radius div > a[href]:has-text(VPN)
-	Entity not supported: gmx.*##.main [data-ac]:empty
+	Entity-based filter not supported: .s-widget > [data-cel-widget^="MAIN"] > [data-cel-widget^="tetris"] > div[id^="CardInstance"][class^="_tetris-"]:upward(3)
+	Entity-based filter not supported: .a-carousel-card > div > div[cel_widget_id^="adplacements:"]:upward(2):remove()
+	Entity-based filter not supported: #similarities_feature_div span[id^="ad-feedback-text"]:upward(#similarities_feature_div)
+	Entity-based filter not supported: .download-links-dontblock > LI:has-text(Anon)
+	Entity-based filter not supported: .download-links-dontblock > LI:has-text(Stream)
+	Entity-based filter not supported: .no-top-radius div > a[href]:has-text(VPN)
 	Invalid filter: quora.com##:xpath(//div[not(@class="ui_qtext_para") and contains(text(), 'ad by')]/parent::div/parent::div/parent::div[@id])
 	Invalid filter: quora.com##:xpath(//div[not(@class="ui_qtext_para") and contains(text(), 'promoted') and contains(text(), 'by')]/parent::a/parent::div/parent::div/parent::div[@id])
 	Invalid filter: quora.com##:xpath(//div[not(@class="ui_qtext_para") and contains(text(), 'Quora') and contains(text(), 'by') and contains(text(), 'Business')]/parent::a/parent::div/parent::div/parent::div[@id])
 	Invalid filter: quora.com##:xpath(//span[contains(text(), 'by')]/ancestor::*[contains(concat(' ', @class, ' '), ' external_link ')]/../../..)
 	Invalid filter: quora.com##:xpath(//p[(text()='d')]/../../../../..)
-	Entity not supported: eurogamer.*##.advert
-	Entity not supported: proxyrarbg.*##.lista > tbody > tr:has-text(/v\s{0,}p\s{0,}n/i)
-	Entity not supported: rarbgmirror.*##.lista > tbody > tr:has-text(/v\s{0,}p\s{0,}n/i)
-	Entity not supported: rarbgproxied.*##.lista > tbody > tr:has-text(/v\s{0,}p\s{0,}n/i)
-	Entity not supported: rarbgproxy.*##.lista > tbody > tr:has-text(/v\s{0,}p\s{0,}n/i)
-	Entity not supported: rarbgunblock.*##.lista > tbody > tr:has-text(/v\s{0,}p\s{0,}n/i)
-	Entity not supported: transfermarkt.*##body > div[id]:has(a[href^="/intern/adblock"])
-	Entity not supported: transfermarkt.*###werbung_superbanner
-	Entity not supported: transfermarkt.*##.werbung
-	Entity not supported: transfermarkt.*##[id^="home-rectangle-"]
-	Entity not supported: kissasian.*##.ksAds
-	Entity not supported: kissasian.*##[id*="ScriptRoot"]
-	Entity not supported: kissasian.*###videoAd
-	Entity not supported: kissasian.*###hideAds
-	Entity not supported: kissasian.*##.adsbyvli:upward(div[style$="width: 610px;"])
-	Entity not supported: kissasian.*###leftside .adsbyvli:upward(div[style$="height: 90px;"])
-	Entity not supported: kissasian.*###overplay
-	Entity not supported: mma-core.*###tlbrd
-	Entity not supported: mma-core.*##.rsky
-	Entity not supported: mma-core.*##.outVidAd
-	Entity not supported: mma-core.*##.banr
-	Entity not supported: hamsterix.*##.thumb-list > .video-thumb:style(margin-right: 0px !important;)
-	Entity not supported: xhamster.*##.thumb-list > .video-thumb:style(margin-right: 0px !important;)
-	Entity not supported: xhamster1.*##.thumb-list > .video-thumb:style(margin-right: 0px !important;)
-	Entity not supported: xhamster10.*##.thumb-list > .video-thumb:style(margin-right: 0px !important;)
-	Entity not supported: xhamster11.*##.thumb-list > .video-thumb:style(margin-right: 0px !important;)
-	Entity not supported: xhamster12.*##.thumb-list > .video-thumb:style(margin-right: 0px !important;)
-	Entity not supported: xhamster13.*##.thumb-list > .video-thumb:style(margin-right: 0px !important;)
-	Entity not supported: xhamster14.*##.thumb-list > .video-thumb:style(margin-right: 0px !important;)
-	Entity not supported: xhamster15.*##.thumb-list > .video-thumb:style(margin-right: 0px !important;)
-	Entity not supported: xhamster16.*##.thumb-list > .video-thumb:style(margin-right: 0px !important;)
-	Entity not supported: xhamster17.*##.thumb-list > .video-thumb:style(margin-right: 0px !important;)
-	Entity not supported: xhamster18.*##.thumb-list > .video-thumb:style(margin-right: 0px !important;)
-	Entity not supported: xhamster19.*##.thumb-list > .video-thumb:style(margin-right: 0px !important;)
-	Entity not supported: xhamster2.*##.thumb-list > .video-thumb:style(margin-right: 0px !important;)
-	Entity not supported: xhamster3.*##.thumb-list > .video-thumb:style(margin-right: 0px !important;)
-	Entity not supported: xhamster4.*##.thumb-list > .video-thumb:style(margin-right: 0px !important;)
-	Entity not supported: xhamster5.*##.thumb-list > .video-thumb:style(margin-right: 0px !important;)
-	Entity not supported: xhamster7.*##.thumb-list > .video-thumb:style(margin-right: 0px !important;)
-	Entity not supported: xhamster8.*##.thumb-list > .video-thumb:style(margin-right: 0px !important;)
-	Entity not supported: hamsterix.*##.recomm-promo-banner
-	Entity not supported: xhamster.*##.recomm-promo-banner
-	Entity not supported: xhamster1.*##.recomm-promo-banner
-	Entity not supported: xhamster10.*##.recomm-promo-banner
-	Entity not supported: xhamster11.*##.recomm-promo-banner
-	Entity not supported: xhamster12.*##.recomm-promo-banner
-	Entity not supported: xhamster13.*##.recomm-promo-banner
-	Entity not supported: xhamster14.*##.recomm-promo-banner
-	Entity not supported: xhamster15.*##.recomm-promo-banner
-	Entity not supported: xhamster16.*##.recomm-promo-banner
-	Entity not supported: xhamster17.*##.recomm-promo-banner
-	Entity not supported: xhamster18.*##.recomm-promo-banner
-	Entity not supported: xhamster19.*##.recomm-promo-banner
-	Entity not supported: xhamster2.*##.recomm-promo-banner
-	Entity not supported: xhamster3.*##.recomm-promo-banner
-	Entity not supported: xhamster4.*##.recomm-promo-banner
-	Entity not supported: xhamster5.*##.recomm-promo-banner
-	Entity not supported: xhamster7.*##.recomm-promo-banner
-	Entity not supported: xhamster8.*##.recomm-promo-banner
-	Entity not supported: hamsterix.*##.clipstore-bottom
-	Entity not supported: xhamster.*##.clipstore-bottom
-	Entity not supported: xhamster1.*##.clipstore-bottom
-	Entity not supported: xhamster10.*##.clipstore-bottom
-	Entity not supported: xhamster11.*##.clipstore-bottom
-	Entity not supported: xhamster12.*##.clipstore-bottom
-	Entity not supported: xhamster13.*##.clipstore-bottom
-	Entity not supported: xhamster14.*##.clipstore-bottom
-	Entity not supported: xhamster15.*##.clipstore-bottom
-	Entity not supported: xhamster16.*##.clipstore-bottom
-	Entity not supported: xhamster17.*##.clipstore-bottom
-	Entity not supported: xhamster18.*##.clipstore-bottom
-	Entity not supported: xhamster19.*##.clipstore-bottom
-	Entity not supported: xhamster2.*##.clipstore-bottom
-	Entity not supported: xhamster3.*##.clipstore-bottom
-	Entity not supported: xhamster4.*##.clipstore-bottom
-	Entity not supported: xhamster5.*##.clipstore-bottom
-	Entity not supported: xhamster7.*##.clipstore-bottom
-	Entity not supported: xhamster8.*##.clipstore-bottom
-	Entity not supported: hamsterix.*##.xplayer-banner
-	Entity not supported: xhamster.*##.xplayer-banner
-	Entity not supported: xhamster1.*##.xplayer-banner
-	Entity not supported: xhamster10.*##.xplayer-banner
-	Entity not supported: xhamster11.*##.xplayer-banner
-	Entity not supported: xhamster12.*##.xplayer-banner
-	Entity not supported: xhamster13.*##.xplayer-banner
-	Entity not supported: xhamster14.*##.xplayer-banner
-	Entity not supported: xhamster15.*##.xplayer-banner
-	Entity not supported: xhamster16.*##.xplayer-banner
-	Entity not supported: xhamster17.*##.xplayer-banner
-	Entity not supported: xhamster18.*##.xplayer-banner
-	Entity not supported: xhamster19.*##.xplayer-banner
-	Entity not supported: xhamster2.*##.xplayer-banner
-	Entity not supported: xhamster3.*##.xplayer-banner
-	Entity not supported: xhamster4.*##.xplayer-banner
-	Entity not supported: xhamster5.*##.xplayer-banner
-	Entity not supported: xhamster7.*##.xplayer-banner
-	Entity not supported: xhamster8.*##.xplayer-banner
-	Entity not supported: hamsterix.*##.wio-d
-	Entity not supported: xhamster.*##.wio-d
-	Entity not supported: xhamster1.*##.wio-d
-	Entity not supported: xhamster10.*##.wio-d
-	Entity not supported: xhamster11.*##.wio-d
-	Entity not supported: xhamster12.*##.wio-d
-	Entity not supported: xhamster13.*##.wio-d
-	Entity not supported: xhamster14.*##.wio-d
-	Entity not supported: xhamster15.*##.wio-d
-	Entity not supported: xhamster16.*##.wio-d
-	Entity not supported: xhamster17.*##.wio-d
-	Entity not supported: xhamster18.*##.wio-d
-	Entity not supported: xhamster19.*##.wio-d
-	Entity not supported: xhamster2.*##.wio-d
-	Entity not supported: xhamster3.*##.wio-d
-	Entity not supported: xhamster4.*##.wio-d
-	Entity not supported: xhamster5.*##.wio-d
-	Entity not supported: xhamster7.*##.wio-d
-	Entity not supported: xhamster8.*##.wio-d
-	Entity not supported: hamsterix.*##.thumb-list__look-like-item
-	Entity not supported: xhamster.*##.thumb-list__look-like-item
-	Entity not supported: xhamster1.*##.thumb-list__look-like-item
-	Entity not supported: xhamster10.*##.thumb-list__look-like-item
-	Entity not supported: xhamster11.*##.thumb-list__look-like-item
-	Entity not supported: xhamster12.*##.thumb-list__look-like-item
-	Entity not supported: xhamster13.*##.thumb-list__look-like-item
-	Entity not supported: xhamster14.*##.thumb-list__look-like-item
-	Entity not supported: xhamster15.*##.thumb-list__look-like-item
-	Entity not supported: xhamster16.*##.thumb-list__look-like-item
-	Entity not supported: xhamster17.*##.thumb-list__look-like-item
-	Entity not supported: xhamster18.*##.thumb-list__look-like-item
-	Entity not supported: xhamster19.*##.thumb-list__look-like-item
-	Entity not supported: xhamster2.*##.thumb-list__look-like-item
-	Entity not supported: xhamster3.*##.thumb-list__look-like-item
-	Entity not supported: xhamster4.*##.thumb-list__look-like-item
-	Entity not supported: xhamster5.*##.thumb-list__look-like-item
-	Entity not supported: xhamster7.*##.thumb-list__look-like-item
-	Entity not supported: xhamster8.*##.thumb-list__look-like-item
-	Entity not supported: hamsterix.*##.player-container > div[class*="-"]:not([class*="player"])
-	Entity not supported: xhamster.*##.player-container > div[class*="-"]:not([class*="player"])
-	Entity not supported: xhamster1.*##.player-container > div[class*="-"]:not([class*="player"])
-	Entity not supported: xhamster10.*##.player-container > div[class*="-"]:not([class*="player"])
-	Entity not supported: xhamster11.*##.player-container > div[class*="-"]:not([class*="player"])
-	Entity not supported: xhamster12.*##.player-container > div[class*="-"]:not([class*="player"])
-	Entity not supported: xhamster13.*##.player-container > div[class*="-"]:not([class*="player"])
-	Entity not supported: xhamster14.*##.player-container > div[class*="-"]:not([class*="player"])
-	Entity not supported: xhamster15.*##.player-container > div[class*="-"]:not([class*="player"])
-	Entity not supported: xhamster16.*##.player-container > div[class*="-"]:not([class*="player"])
-	Entity not supported: xhamster17.*##.player-container > div[class*="-"]:not([class*="player"])
-	Entity not supported: xhamster18.*##.player-container > div[class*="-"]:not([class*="player"])
-	Entity not supported: xhamster19.*##.player-container > div[class*="-"]:not([class*="player"])
-	Entity not supported: xhamster2.*##.player-container > div[class*="-"]:not([class*="player"])
-	Entity not supported: xhamster3.*##.player-container > div[class*="-"]:not([class*="player"])
-	Entity not supported: xhamster4.*##.player-container > div[class*="-"]:not([class*="player"])
-	Entity not supported: xhamster5.*##.player-container > div[class*="-"]:not([class*="player"])
-	Entity not supported: xhamster7.*##.player-container > div[class*="-"]:not([class*="player"])
-	Entity not supported: xhamster8.*##.player-container > div[class*="-"]:not([class*="player"])
-	Entity not supported: hamsterix.*##div[class*="cams-widget"]
-	Entity not supported: xhamster.*##div[class*="cams-widget"]
-	Entity not supported: xhamster1.*##div[class*="cams-widget"]
-	Entity not supported: xhamster10.*##div[class*="cams-widget"]
-	Entity not supported: xhamster11.*##div[class*="cams-widget"]
-	Entity not supported: xhamster12.*##div[class*="cams-widget"]
-	Entity not supported: xhamster13.*##div[class*="cams-widget"]
-	Entity not supported: xhamster14.*##div[class*="cams-widget"]
-	Entity not supported: xhamster15.*##div[class*="cams-widget"]
-	Entity not supported: xhamster16.*##div[class*="cams-widget"]
-	Entity not supported: xhamster17.*##div[class*="cams-widget"]
-	Entity not supported: xhamster18.*##div[class*="cams-widget"]
-	Entity not supported: xhamster19.*##div[class*="cams-widget"]
-	Entity not supported: xhamster2.*##div[class*="cams-widget"]
-	Entity not supported: xhamster3.*##div[class*="cams-widget"]
-	Entity not supported: xhamster4.*##div[class*="cams-widget"]
-	Entity not supported: xhamster5.*##div[class*="cams-widget"]
-	Entity not supported: xhamster7.*##div[class*="cams-widget"]
-	Entity not supported: xhamster8.*##div[class*="cams-widget"]
-	Entity not supported: hamsterix.*##[class*="sp-l"]
-	Entity not supported: xhamster.*##[class*="sp-l"]
-	Entity not supported: xhamster1.*##[class*="sp-l"]
-	Entity not supported: xhamster10.*##[class*="sp-l"]
-	Entity not supported: xhamster11.*##[class*="sp-l"]
-	Entity not supported: xhamster12.*##[class*="sp-l"]
-	Entity not supported: xhamster13.*##[class*="sp-l"]
-	Entity not supported: xhamster14.*##[class*="sp-l"]
-	Entity not supported: xhamster15.*##[class*="sp-l"]
-	Entity not supported: xhamster16.*##[class*="sp-l"]
-	Entity not supported: xhamster17.*##[class*="sp-l"]
-	Entity not supported: xhamster18.*##[class*="sp-l"]
-	Entity not supported: xhamster19.*##[class*="sp-l"]
-	Entity not supported: xhamster2.*##[class*="sp-l"]
-	Entity not supported: xhamster3.*##[class*="sp-l"]
-	Entity not supported: xhamster4.*##[class*="sp-l"]
-	Entity not supported: xhamster5.*##[class*="sp-l"]
-	Entity not supported: xhamster7.*##[class*="sp-l"]
-	Entity not supported: xhamster8.*##[class*="sp-l"]
-	Entity not supported: hamsterix.*##[href*="/faphouse/out"]
-	Entity not supported: xhamster.*##[href*="/faphouse/out"]
-	Entity not supported: xhamster1.*##[href*="/faphouse/out"]
-	Entity not supported: xhamster10.*##[href*="/faphouse/out"]
-	Entity not supported: xhamster11.*##[href*="/faphouse/out"]
-	Entity not supported: xhamster12.*##[href*="/faphouse/out"]
-	Entity not supported: xhamster13.*##[href*="/faphouse/out"]
-	Entity not supported: xhamster14.*##[href*="/faphouse/out"]
-	Entity not supported: xhamster15.*##[href*="/faphouse/out"]
-	Entity not supported: xhamster16.*##[href*="/faphouse/out"]
-	Entity not supported: xhamster17.*##[href*="/faphouse/out"]
-	Entity not supported: xhamster18.*##[href*="/faphouse/out"]
-	Entity not supported: xhamster19.*##[href*="/faphouse/out"]
-	Entity not supported: xhamster2.*##[href*="/faphouse/out"]
-	Entity not supported: xhamster3.*##[href*="/faphouse/out"]
-	Entity not supported: xhamster4.*##[href*="/faphouse/out"]
-	Entity not supported: xhamster5.*##[href*="/faphouse/out"]
-	Entity not supported: xhamster7.*##[href*="/faphouse/out"]
-	Entity not supported: xhamster8.*##[href*="/faphouse/out"]
-	Entity not supported: hamsterix.*##div[class*="premium-overlay"]
-	Entity not supported: xhamster.*##div[class*="premium-overlay"]
-	Entity not supported: xhamster1.*##div[class*="premium-overlay"]
-	Entity not supported: xhamster10.*##div[class*="premium-overlay"]
-	Entity not supported: xhamster11.*##div[class*="premium-overlay"]
-	Entity not supported: xhamster12.*##div[class*="premium-overlay"]
-	Entity not supported: xhamster13.*##div[class*="premium-overlay"]
-	Entity not supported: xhamster14.*##div[class*="premium-overlay"]
-	Entity not supported: xhamster15.*##div[class*="premium-overlay"]
-	Entity not supported: xhamster16.*##div[class*="premium-overlay"]
-	Entity not supported: xhamster17.*##div[class*="premium-overlay"]
-	Entity not supported: xhamster18.*##div[class*="premium-overlay"]
-	Entity not supported: xhamster19.*##div[class*="premium-overlay"]
-	Entity not supported: xhamster2.*##div[class*="premium-overlay"]
-	Entity not supported: xhamster3.*##div[class*="premium-overlay"]
-	Entity not supported: xhamster4.*##div[class*="premium-overlay"]
-	Entity not supported: xhamster5.*##div[class*="premium-overlay"]
-	Entity not supported: xhamster7.*##div[class*="premium-overlay"]
-	Entity not supported: xhamster8.*##div[class*="premium-overlay"]
 	Invalid filter: primewire.*##:xpath(//*[contains(text(),"Sponsored")]):upward(2)
-	Entity not supported: primewire.*##[href="/user/profile/premium-membership"][target="_blank"]
-	Entity not supported: primewire.*##.ico.close
-	Entity not supported: steamplay.*##.ad
-	Entity not supported: steanplay.*##.ad
-	Entity not supported: streamp1ay.*##.ad
-	Entity not supported: streanplay.*##.ad
-	Entity not supported: slreamplay.*###uverlay
-	Entity not supported: steamplay.*###uverlay
-	Entity not supported: steanplay.*###uverlay
-	Entity not supported: stemplay.*###uverlay
-	Entity not supported: streamp1ay.*###uverlay
-	Entity not supported: streampiay.*###uverlay
-	Entity not supported: streanplay.*###uverlay
-	Entity not supported: steanplay.*##div[style*="z-index: 2147483647;"][style*="position: fixed;"]
-	Entity not supported: streanplay.*##div[style*="z-index: 2147483647;"][style*="position: fixed;"]
-	Entity not supported: yourbittorrent.*##.grid_4:has(a[href*=".download/torrent/"])
-	Entity not supported: yourbittorrent.*##a[href*=".t0r.download/torrent/"]
-	Entity not supported: yourbittorrent.*##.trtbl:has-text(VPN)
-	Entity not supported: yourbittorrent.*##[href*=".premium"]
-	Entity not supported: yourbittorrent.*##.extneed
-	Entity not supported: yourbittorrent.*##[href*="direct"]
+	Entity-based filter not supported: .trtbl:has-text(VPN)
 	Invalid filter: torrentfunk.com##:xpath(//strong[contains(text(),"VPN")]/../../..)
-	Entity not supported: torrentz2.*##[class]:not(body):not(html):has-text(/Protect your privacy/i)
-	Entity not supported: torrentz2.*##[class]:not(body):not(html):has-text(Sponsored)
-	Entity not supported: torrentz2.*##.xpressa
+	Entity-based filter not supported: [class]:not(body):not(html):has-text(/Protect your privacy/i)
+	Entity-based filter not supported: [class]:not(body):not(html):has-text(Sponsored)
 	Invalid filter: torlock.*##:xpath(//strong[contains(text(),"VPN")]/../../..)
 	Invalid filter: torlock2.*##:xpath(//strong[contains(text(),"VPN")]/../../..)
-	Entity not supported: torlock.*##.extneed
-	Entity not supported: torlock2.*##.extneed
-	Entity not supported: fmovies.*###modalshare
-	Entity not supported: fmovies.*##.modal-backdrop
-	Entity not supported: fmovies.*##body.modal-open:style(overflow: auto!important)
-	Entity not supported: fmovies.*###gift-middle
-	Entity not supported: fmovies.*###gift-top
-	Entity not supported: hydracdn.*##div#over:remove()
-	Entity not supported: 9anime.*##section.sda
-	Entity not supported: 9anime.*##.mba-block
-	Entity not supported: 9anime.*##.adx
-	Entity not supported: vizcloud.*##.xad-wrapper
-	Entity not supported: vizcloud2.*##.xad-wrapper
-	Entity not supported: torrentdownloads.*##.download [href^="/td/?"]
-	Entity not supported: torrentdownload.*##[href^="/bing."]
-	Entity not supported: torrentdownload.*##[href^="/get.php"]
-	Entity not supported: torrentdownload.*##[href^="https://goo.gl/"]
-	Entity not supported: torrentdownload.*##TR:has-text(Stream:)
-	Entity not supported: torrentdownload.*##.table2:has-text(Sponsored)
-	Entity not supported: torrentdownload.*##[href^="/td."]
-	Entity not supported: kimcartoon.*###subcontent > div:has(.adsbyvli)
-	Entity not supported: kimcartoon.*##div[style*="width: 300px; height: 250px"]
-	Entity not supported: kimcartoon.*##.kcAds1
-	Entity not supported: kimcartoon.*###ads-top-wrap
-	Entity not supported: vipleague.*##.bg-dark.ratio > .position-absolute
-	Entity not supported: putlocker.*##[id*="ScriptRoot"]
-	Entity not supported: putlocker.*##.ep_buttons
-	Entity not supported: vidsrc.*###pop_asdf
-	Entity not supported: putlocker.*##[href="/user/profile/premium-membership"]
-	Entity not supported: radio.*##.topAdSpacer
-	Entity not supported: mylink.*##a[href^="https://go.nordvpn.net/"], [src^="/nordcode.php"]
-	Entity not supported: my1ink.*##a[href^="https://go.nordvpn.net/"], [src^="/nordcode.php"]
-	Entity not supported: myl1nk.*##a[href^="https://go.nordvpn.net/"], [src^="/nordcode.php"]
-	Entity not supported: myli3k.*##a[href^="https://go.nordvpn.net/"], [src^="/nordcode.php"]
-	Entity not supported: mylink.*##div[id][style^="width: 970px; height: 250px;"]
-	Entity not supported: my1ink.*##div[id][style^="width: 970px; height: 250px;"]
-	Entity not supported: myl1nk.*##div[id][style^="width: 970px; height: 250px;"]
-	Entity not supported: myli3k.*##div[id][style^="width: 970px; height: 250px;"]
-	Entity not supported: mylink.*##div[id][style="width: 300px; height: 250px;"]
-	Entity not supported: my1ink.*##div[id][style="width: 300px; height: 250px;"]
-	Entity not supported: myl1nk.*##div[id][style="width: 300px; height: 250px;"]
-	Entity not supported: myli3k.*##div[id][style="width: 300px; height: 250px;"]
-	Entity not supported: mylink.*##div[id][style="width: 728px; height: 90px;"]:upward(#pub1)
-	Entity not supported: my1ink.*##div[id][style="width: 728px; height: 90px;"]:upward(#pub1)
-	Entity not supported: myl1nk.*##div[id][style="width: 728px; height: 90px;"]:upward(#pub1)
-	Entity not supported: myli3k.*##div[id][style="width: 728px; height: 90px;"]:upward(#pub1)
-	Entity not supported: mylink.*##html > iframe
-	Entity not supported: my1ink.*##html > iframe
-	Entity not supported: myl1nk.*##html > iframe
-	Entity not supported: myli3k.*##html > iframe
+	Entity-based filter not supported: body.modal-open:style(overflow: auto!important)
+	Entity-based filter not supported: TR:has-text(Stream:)
+	Entity-based filter not supported: .table2:has-text(Sponsored)
+	Entity-based filter not supported: div[id][style="width: 728px; height: 90px;"]:upward(#pub1)
 	Invalid filter: nytimes.com##:xpath(//div[starts-with(@id, "dfp-ad")]/../..)
 	Invalid filter: nytimes3xbfgragh.onion##:xpath(//div[starts-with(@id, "dfp-ad")]/../..)
-	Entity not supported: userupload.*##.btn-danger:has-text(/download/i)
-	Entity not supported: yts.*##[id*="container"][id^="id"]
-	Entity not supported: yts.*##html:style(overflow: auto !important;)
-	Entity not supported: yts.*##.vpn-link:upward(1)
-	Entity not supported: yts.*##.cborz-bordered
-	Entity not supported: yts.*##.madikf
-	Entity not supported: sxyprn.*##.post_el_wrap > .tdn
-	Entity not supported: sxyprn.*###vid_container_id > .tdn
-	Entity not supported: magesy.*###adblockplus
-	Entity not supported: majesy.*##.dark.jquery-adi
-	Entity not supported: magesy.*##.chw-widget
-	Entity not supported: magesy.*##.adsbygoogle
-	Entity not supported: majesy.*##.widget_execphp
-	Entity not supported: magesypro.*##.adsbygoogle
-	Entity not supported: hqq.*##[href="https://t.me/Russia_Vs_Ukraine_War3"]
-	Entity not supported: hqq.*##a[onclick="openAuc();"]
-	Entity not supported: adbull.*##[href^="https://www.cryptominingfarm.io/"]
-	Entity not supported: adbull.*##[src^="https://i.imgur.com/"]
-	Entity not supported: 123link.*##.ads-block-warning
-	Entity not supported: adshort.*##A[href$=".html"][rel="nofollow norefferer noopener"]
-	Entity not supported: adshort.*##[id*="frme"]
-	Entity not supported: adsrt.*##[id*="frme"]
-	Entity not supported: adsrt.*##div[id^="SC_TBlock"]
-	Entity not supported: tube8.*##.adsbytrafficjunky
-	Entity not supported: tube8.*##.js-remove-ads-premium-link
-	Entity not supported: tube8.*##main.row > aside.col-4 > div[class]
-	Entity not supported: tube8.*##input + div:has(.adsbytrafficjunky)
-	Entity not supported: tube8.*##.gridList > [class]:has(.adsbytrafficjunky)
-	Entity not supported: tube8.*##[href^="https://ads.trafficjunky.net/ads"]
-	Entity not supported: tube8.*##[style="background-color: rgb(255, 255, 255); display: block;"]
-	Entity not supported: tube8.*###flvplayer > [style]:has(.js-remove-ads-premium-link)
-	Entity not supported: tube8.*###result_container_wrapper > [style]:has(.js-remove-ads-premium-link)
-	Entity not supported: tube8.*###result_container > [class]:not(.video_box)
-	Entity not supported: txxx.*##.content.page.page-video .video-content > div[class] > div > div[class] > div[class][style^="background-image:"]:style(background-image: none !important;)
-	Entity not supported: txxx.*##div[style="display:flex !important"] > div
-	Entity not supported: txxx.*##.page-video > div.video-videos-slider ~ div[class]:matches-css(justify-content: center)
-	Entity not supported: txxx.*##.video-videos-slider
-	Entity not supported: txxx.*##.video-content > div + div:last-child
-	Entity not supported: txxx.*##.video-content > div:first-child > div[class]:has(> div > a[href="#"])
-	Entity not supported: txxx.*##.videos-tube-friends
-	Entity not supported: upornia.*##div[style="display:flex !important"] > div
-	Entity not supported: upornia.*##.video-content > div[class] > div.text > a[href="#"]:upward(2)
-	Entity not supported: upornia.*##.videoplayer-wrapper + div > div[class]:only-child
-	Entity not supported: upornia.*##.video-ad-videos + div.aa_label
-	Entity not supported: upornia.*##div[class$="related"] + div.aa_label
-	Entity not supported: upornia.*##.video-videos-slider
-	Entity not supported: upornia.*##.aa_label + div:not([class])
-	Entity not supported: upornia.*##.video-videos-slider + .aa_label
-	Entity not supported: hotmovs.*##.block_label--last + div[class]
-	Entity not supported: hotmovs.*##.pagination + div.block_label--last
-	Entity not supported: hotmovs.*##.underplayer__info > div[class]:first-child
-	Entity not supported: hotmovs.*##.video-page__content > div.left + div[class]:last-child
-	Entity not supported: hotmovs.*##div[style="display:flex !important"] > div
-	Entity not supported: hotmovs.*##.video-page > div.block_label.mt-15 + div[class]
-	Entity not supported: hotmovs.*##.videos-tube-friends
-	Entity not supported: vjav.*##.hv-block
-	Entity not supported: vjav.*##.suggestions
-	Entity not supported: vjav.*##div[style="display:flex !important"] > div
-	Entity not supported: vjav.*##.album-page > div.video-page__wrapper + div[class]
-	Entity not supported: vjav.*##.content > div:not([class]) > div.video-page + div[class]
-	Entity not supported: vjav.*##.video-page__content > div.left + div[class]:last-child
-	Entity not supported: vjav.*##.video-page__player + div[class] > div[class]
-	Entity not supported: thegay.*##.content > div:not([class]) > .wrapper ~ div[class]:not(.wrapper)
-	Entity not supported: thegay.*##.underplayer__info > div[class]:first-child
-	Entity not supported: thegay.*##.video-page__content > div.left + div[class]:last-child
-	Entity not supported: thegay.*##div[style="display:flex !important"] > div
-	Entity not supported: mrgay.*##.right
+	Entity-based filter not supported: .btn-danger:has-text(/download/i)
+	Entity-based filter not supported: .vpn-link:upward(1)
+	Entity-based filter not supported: .content.page.page-video .video-content > div[class] > div > div[class] > div[class][style^="background-image:"]:style(background-image: none !important;)
+	Entity-based filter not supported: .page-video > div.video-videos-slider ~ div[class]:matches-css(justify-content: center)
+	Entity-based filter not supported: .video-content > div[class] > div.text > a[href="#"]:upward(2)
 	Invalid filter: spankwire.com##:xpath(//*[contains(text(),"Advertisement")]):upward(1)
-	Entity not supported: bdupload.*##[href*="/dloadbutton.php"]
-	Entity not supported: arawatch.*##A[href$=".html"][rel="nofollow norefferer noopener"]
-	Entity not supported: arawatch.*##[id*="ScriptRoot"]
-	Entity not supported: arawatch.*##a[href="https://vidfast.co"]
-	Entity not supported: europixhd.*###MyImageId
-	Entity not supported: hdeuropix.*###MyImageId
-	Entity not supported: topeuropix.*###MyImageId
-	Entity not supported: europixhd.*##[id^="MyAdsId"]
-	Entity not supported: topeuropix.*##[id^="MyAdsId"]
 	Invalid filter: descargas2020.*##[src*="banner_728x90"]:xpath(..)
-	Entity not supported: descargas2020.*###idx-1
-	Entity not supported: vidlox.*##A[href$=".html"][rel="nofollow norefferer noopener"]
-	Entity not supported: ouo.*##[style*="width:300px"] > a[href][target="_blank"] > img
-	Entity not supported: ouo.*##[href^="https://dynamicadx.com/"]
-	Entity not supported: ouo.*##iframe:not([src])
-	Entity not supported: ouo.*##[id*="ScriptRoot"]
-	Entity not supported: ouo.*##.dlbtns
-	Entity not supported: x1337x.*##[href*=".php"]
-	Entity not supported: 1337x.*##ul > li:has-text(/‌/i)
-	Entity not supported: x1337x.*##ul > li:has-text(/‌/i)
-	Entity not supported: 1337x.unblocked.*##ul > li:has-text(/‌/i)
-	Entity not supported: 1337x.unblockit.*##ul > li:has-text(/‌/i)
 	Invalid filter: 1337x.*##:xpath(//*[contains(text(),"IP Address")]/..)
 	Invalid filter: x1337x.*##:xpath(//*[contains(text(),"IP Address")]/..)
 	Invalid filter: 1337x.unblock2.xyz##:xpath(//*[contains(text(),"IP Address")]/..)
 	Invalid filter: 1337x.unblocked.*##:xpath(//*[contains(text(),"IP Address")]/..)
 	Invalid filter: 1337x.unblockit.*##:xpath(//*[contains(text(),"IP Address")]/..)
-	Entity not supported: 1337x.unblocked.*###lb-banner
-	Entity not supported: seirsanduk.*##[href^="https://www.bybit.com/"]
-	Entity not supported: seirsanduk.*##.adsbygoogle
-	Entity not supported: seirsanduk.*##[href^="//bgtop.net/"]
-	Entity not supported: watch-series.*##.freeEpisode
-	Entity not supported: watchseries.*##.freeEpisode
-	Entity not supported: watch-series.*##.sp-leader
-	Entity not supported: watchseries.*##.sp-leader
-	Entity not supported: watch-series.*##.shd_button
-	Entity not supported: watchseries.*##.shd_button
-	Entity not supported: watch-series.*##.sp-leader-bottom
-	Entity not supported: watchseries.*##.sp-leader-bottom
-	Entity not supported: watch-series.*##.category-item-ad
-	Entity not supported: watchseries.*##.category-item-ad
-	Entity not supported: watch-series.*###related
-	Entity not supported: watchseries.*###related
-	Entity not supported: watch-series.*###rotating-item-wrapper
-	Entity not supported: watchseries.*###rotating-item-wrapper
-	Entity not supported: watch-series.*##div.block-left-home-inside[style^="height:252"]
-	Entity not supported: watchseries.*##div.block-left-home-inside[style^="height:252"]
-	Entity not supported: watchseries.*##.modal
-	Entity not supported: watchseries.*##.show.fade.modal-backdrop
 	Invalid filter: pussyspace.*##:xpath(//span[contains(text(),"PARTNER")]/..)
-	Entity not supported: pussyspace.*##div[id] > div[class] > *:not(div) > img:only-child
-	Entity not supported: flashx.*##A[href$=".html"][rel="nofollow norefferer noopener"]
-	Entity not supported: flashx.*###download_div2
-	Entity not supported: flashx.*##[src*="/img/player.png"]
-	Entity not supported: xvideos.*###video-ad + div[class]
-	Entity not supported: perfectgirls.*##.advertisement
-	Entity not supported: perfektdamen.*##.advertisement
-	Entity not supported: perfectgirls.*##.promo
-	Entity not supported: perfektdamen.*##.promo
-	Entity not supported: shrtfly.*##.adsbygoogle
-	Entity not supported: shrtfly.*##.banner
-	Entity not supported: gogoanime.*##.banner_center
-	Entity not supported: gogoanime.*##.anime_video_body_cate > div[style]:has(> div[id] + script[src])
-	Entity not supported: gogoanime.*##.adx
-	Entity not supported: linkshorts.*##.blog-item
-	Entity not supported: pixhost.*###js
-	Entity not supported: pixhost.*###web:style(display: block !important;)
-	Entity not supported: dewimg.*##div[style^="z-index: 999999; background-image: url(\"data:image/gif;base64,"][style$="position: absolute;"]
-	Entity not supported: imgtown.*##div[style^="z-index: 999999; background-image: url(\"data:image/gif;base64,"][style$="position: absolute;"]
-	Entity not supported: imgviu.*##div[style^="z-index: 999999; background-image: url(\"data:image/gif;base64,"][style$="position: absolute;"]
-	Entity not supported: mazpic.*##div[style^="z-index: 999999; background-image: url(\"data:image/gif;base64,"][style$="position: absolute;"]
-	Entity not supported: outletpic.*##div[style^="z-index: 999999; background-image: url(\"data:image/gif;base64,"][style$="position: absolute;"]
-	Entity not supported: picrok.*##div[style^="z-index: 999999; background-image: url(\"data:image/gif;base64,"][style$="position: absolute;"]
-	Entity not supported: dewimg.*##[href^="//"][rel="nofollow norefferer noopener"]
-	Entity not supported: imgtown.*##[href^="//"][rel="nofollow norefferer noopener"]
-	Entity not supported: imgviu.*##[href^="//"][rel="nofollow norefferer noopener"]
-	Entity not supported: mazpic.*##[href^="//"][rel="nofollow norefferer noopener"]
-	Entity not supported: outletpic.*##[href^="//"][rel="nofollow norefferer noopener"]
-	Entity not supported: picrok.*##[href^="//"][rel="nofollow norefferer noopener"]
-	Entity not supported: oploverz.*###overplay
-	Entity not supported: readcomiconline.*##.adsbyvli:upward(div[style^="width: 300px; height: 250px"])
-	Entity not supported: readcomiconline.*##.divCloseBut
-	Entity not supported: mejortorrento.*##iframe[src^="publi"]
-	Entity not supported: mejortorrents.*##iframe[src^="publi"]
-	Entity not supported: mejortorrents1.*##iframe[src^="publi"]
-	Entity not supported: mejortorrentt.*##iframe[src^="publi"]
-	Entity not supported: 1movies.*##a[href^="https://vpn-stream.com"]
-	Entity not supported: stream2watch.*##p[style="color:white;"]
-	Entity not supported: stream2watch.*##.min-test
-	Entity not supported: daddylive.*###floatLayer1
-	Entity not supported: daddylive.*###html1
-	Entity not supported: daddylive.*##div > a.btn-outline-primary.btn
-	Entity not supported: xmovies8.*###upgrade_pop
-	Entity not supported: divxtotal.*###banner_publi
-	Entity not supported: divxtotal1.*###banner_publi
-	Entity not supported: pelisplus.*##[class^="smartadtags"]
-	Entity not supported: pelisplus.*##.links > a.btn[class*="fa-"]
-	Entity not supported: pelisplus2.*##[style^="margin:-30px"] > [href][target="_blank"]
-	Entity not supported: pouvideo.*##[src^="/ben/mgnat.html?"]
-	Entity not supported: povvideo.*##[src^="/ben/mgnat.html?"]
-	Entity not supported: povw1deo.*##[src^="/ben/mgnat.html?"]
-	Entity not supported: povwideo.*##[src^="/ben/mgnat.html?"]
-	Entity not supported: powv1deo.*##[src^="/ben/mgnat.html?"]
-	Entity not supported: powvibeo.*##[src^="/ben/mgnat.html?"]
-	Entity not supported: powvideo.*##[src^="/ben/mgnat.html?"]
-	Entity not supported: powvldeo.*##[src^="/ben/mgnat.html?"]
-	Entity not supported: pouvideo.*###embed
-	Entity not supported: povvideo.*###embed
-	Entity not supported: povw1deo.*###embed
-	Entity not supported: povwideo.*###embed
-	Entity not supported: powv1deo.*###embed
-	Entity not supported: powvibeo.*###embed
-	Entity not supported: powvideo.*###embed
-	Entity not supported: powvldeo.*###embed
-	Entity not supported: pouvideo.*###keepFloatin
-	Entity not supported: povvideo.*###keepFloatin
-	Entity not supported: povw1deo.*###keepFloatin
-	Entity not supported: povwideo.*###keepFloatin
-	Entity not supported: powv1deo.*###keepFloatin
-	Entity not supported: powvibeo.*###keepFloatin
-	Entity not supported: powvideo.*###keepFloatin
-	Entity not supported: powvldeo.*###keepFloatin
-	Entity not supported: pouvideo.*##iframe:not([src*="recaptcha"])
-	Entity not supported: povvideo.*##iframe:not([src*="recaptcha"])
-	Entity not supported: povw1deo.*##iframe:not([src*="recaptcha"])
-	Entity not supported: povwideo.*##iframe:not([src*="recaptcha"])
-	Entity not supported: powv1deo.*##iframe:not([src*="recaptcha"])
-	Entity not supported: powvibeo.*##iframe:not([src*="recaptcha"])
-	Entity not supported: powvideo.*##iframe:not([src*="recaptcha"])
-	Entity not supported: powvldeo.*##iframe:not([src*="recaptcha"])
+	Entity-based filter not supported: #web:style(display: block !important;)
+	Entity-based filter not supported: .adsbyvli:upward(div[style^="width: 300px; height: 250px"])
 	Invalid filter: pcbolsa.com##.InfoPcBolsaAdBlock:xpath(..)
-	Entity not supported: desiupload.*##[href*="desifile.in/404"]
-	Entity not supported: cinedetodo.*##.alignnone
-	Entity not supported: cinedetodo.*##.bnr
-	Entity not supported: cinedetodo.*##[id*="yellow"]
-	Entity not supported: anime-extremo.*##[href="https://cero.tv/"]
-	Entity not supported: cliver.*##.btn_pub
-	Entity not supported: kiss-anime.*###rightside > .clear2 ~ .rightBox
-	Entity not supported: kiss-anime.*##.episodeList > div > div[style*="text-align: center"]
-	Entity not supported: tubsexer.*##.sponsored_top
-	Entity not supported: tubsexer.*##.table
-	Entity not supported: tubsexer.*##.desktop_link
-	Entity not supported: tubsexer.*##.advertising
-	Entity not supported: strikeout.*##.position-absolute:style(opacity: 0 !important;)
-	Entity not supported: strikeout.*##.d-none.d-lg-block.col-lg-3
-	Entity not supported: strikeout.*##.m-1.btn-danger.btn
-	Entity not supported: strikeout.*##.w-100.position-absolute.h-100
-	Entity not supported: vipbox.*##a[href^="https://s3.amazonaws.com/"]
-	Entity not supported: vipbox.*##button[data-open="_blank"]
-	Entity not supported: vipbox.*##.btn-lg.btn
-	Entity not supported: vipbox.*##.position-absolute
-	Entity not supported: vipboxtv.*##.position-absolute
-	Entity not supported: vipbox.*##.btn-success.btn
-	Entity not supported: peliculas-dvdrip.*##[class*="col-"] > p > [href] > img.alignnone
-	Entity not supported: animedao.*##.gads
-	Entity not supported: einthusan.*##.adspace-lb
-	Entity not supported: einthusan.*##.adspace-lr
-	Entity not supported: pornfay.*##.rmedia
-	Entity not supported: pornfay.*##.zone
-	Entity not supported: pornfay.*##.bottom-adv
-	Entity not supported: grantorrents.*##.myButton
-	Entity not supported: grantorrents.*##.custom-html-widget.textwidget > [style*="width:300px; height:600px"]
-	Entity not supported: camwhores.*##.place
-	Entity not supported: camwhorestv.*##.place
-	Entity not supported: camwhores.*##[href^="https://go.schjmp.com"]
-	Entity not supported: camwhorestv.*##[href^="https://go.schjmp.com"]
-	Entity not supported: camwhores.*##.row-models
-	Entity not supported: camwhorestv.*##.row-models
-	Entity not supported: camwhores.*##.topad
-	Entity not supported: camwhorestv.*##.topad
-	Entity not supported: camwhores.*###list_videos_friends
-	Entity not supported: camwhorestv.*###list_videos_friends
-	Entity not supported: bestialzoo.*##[href^="https://www.skypeis"]
-	Entity not supported: youporn.*##[data-zone="underplayer_970x90"]:upward(1)
-	Entity not supported: youporn.*##.ad-bottom-text
-	Entity not supported: youporn.*##.adLinkText
-	Entity not supported: youporn.*##.adsbytrafficjunky
-	Entity not supported: youporn.*##.e8-column
-	Entity not supported: youporn.*##[data-removelink="removeLink"]
-	Entity not supported: redtube.*##.abovePlayer
-	Entity not supported: redtube.*##.adsbytrafficjunky
-	Entity not supported: redtube.*##.adsbytrafficjunky:upward(li)
-	Entity not supported: redtube.*##.remove_ads
-	Entity not supported: mydownloadtube.*##.movie-box > .vert-add
-	Entity not supported: douploads.*##[href^="https://href.li/"]
-	Entity not supported: douploads.*##a[rel="nofollow"]
-	Entity not supported: kickassanime.*##.ka-axx-wr
-	Entity not supported: nekopoi.*##[href^="http://bit.ly/"]
-	Entity not supported: vinaurl.*###ads-notice
-	Entity not supported: vinaurl.*##[href^="https://dembuon.vn"]
-	Entity not supported: vinaurl.*##.alert-danger
-	Entity not supported: vinaurl.*##[href^="https://kttm.club/"]
-	Entity not supported: vinaurl.*##.adsbygoogle:style(max-height: 1px !important;)
-	Entity not supported: filecrypt.*##div > [href*=".html"]:upward(div)
-	Entity not supported: filecrypt.*###jvb
-	Entity not supported: filecrypt.*##li:has-text(100% Anonym)
-	Entity not supported: filecrypt.*##.bums
-	Entity not supported: filecrypt.*##.support
-	Entity not supported: filecrypt.*##[src^="https://filecrypt.cc/images/"]
-	Entity not supported: filecrypt.*##[src^="../../../images/"]
-	Entity not supported: filecrypt.*##[href^="/xux/"]
-	Entity not supported: filecrypt.*##div[class] > i[style*="background:url"][onclick*="openLink"]
-	Entity not supported: filecrypt.*##div[class] > i[style][onclick]
-	Entity not supported: filecrypt.*##button[id]:has-text(/High-speed/i)
+	Entity-based filter not supported: .position-absolute:style(opacity: 0 !important;)
+	Entity-based filter not supported: .adsbytrafficjunky:upward(li)
+	Entity-based filter not supported: div > [href*=".html"]:upward(div)
+	Entity-based filter not supported: li:has-text(100% Anonym)
+	Entity-based filter not supported: button[id]:has-text(/High-speed/i)
 	Invalid filter: ettv.*##:xpath(//*[contains(text(),"VPN")]):upward(2)
-	Entity not supported: pelisgratis.*##a[href*="look.kfiopkln.com"]
-	Entity not supported: pelisgratis.*##a[href*="look.opskln.com"]
-	Entity not supported: peliculas24.*##[href^="http://refpadsm.host/"]
-	Entity not supported: kissjav.*##.column > .card > .adv:upward(2)
-	Entity not supported: kissjav.*##.is-12-touch.is-narrow-desktop.has-text-centered
-	Entity not supported: onlinevideoconverter.*##.music-container > div[style] > a[href][target] > img
-	Entity not supported: pnd.*##A[href$=".html"][rel="nofollow norefferer noopener"]
-	Entity not supported: pnd.*##.banner-captcha
-	Entity not supported: adfloz.*##.banner
-	Entity not supported: movies123.*##[href^="//himekingrow.com/"]
-	Entity not supported: movies123.*###list-eps:style(display:block!important)
-	Entity not supported: movies123.*##.les-title:has-text(HD)
-	Entity not supported: movies123.*##.vip.server-item.le-server:first-child
-	Entity not supported: voirfilms.*##.lefermeur
-	Entity not supported: repelisgoo.*###ads
-	Entity not supported: repelisgooo.*###ads
-	Entity not supported: repelisgt.*###ads
-	Entity not supported: repelisxd.*###ads
-	Entity not supported: pelisplusgo.*###ads
-	Entity not supported: pelisplusxd.*###ads
-	Entity not supported: repelisgoo.*##div[class]:has(> div[class] > iframe[src*="/srv-pv/tag-"])
-	Entity not supported: repelisgooo.*##div[class]:has(> div[class] > iframe[src*="/srv-pv/tag-"])
-	Entity not supported: repelisgt.*##div[class]:has(> div[class] > iframe[src*="/srv-pv/tag-"])
-	Entity not supported: repelisxd.*##div[class]:has(> div[class] > iframe[src*="/srv-pv/tag-"])
-	Entity not supported: pelisplusgo.*##div[class]:has(> div[class] > iframe[src*="/srv-pv/tag-"])
-	Entity not supported: pelisplusxd.*##div[class]:has(> div[class] > iframe[src*="/srv-pv/tag-"])
-	Entity not supported: tornadomovies.*##[href="/user/premiumregistration"]
-	Entity not supported: sexwebvideo.*##.spot-vertical-wrap
-	Entity not supported: piratebay.*##[href]:has-text(PLAY)
-	Entity not supported: pirateproxy.*##[href]:has-text(PLAY)
-	Entity not supported: pirateproxy.*###content > div > iframe
-	Entity not supported: vidcloud.*###overlay-center
-	Entity not supported: icdrama.*###closeADV
-	Entity not supported: file-upload.*##.adsbygoogle
-	Entity not supported: file-upload.*##center
-	Entity not supported: limetorrents.*##[href^="/fast.php"]
-	Entity not supported: limetorrents.*##tr:has-text(VPN)
-	Entity not supported: limetorrents.*##[href^="https://affiliate.rusvpn.com/"]
-	Entity not supported: limetorrents.*##.head:has-text(Adv)
-	Entity not supported: telerium.*###overlay
-	Entity not supported: file4go.*##div.banner300b, .lateral
-	Entity not supported: player.javqd.*###preroll
-	Entity not supported: player.javwide.*###preroll
-	Entity not supported: hdvid.*##.video_batman
-	Entity not supported: onvid.*##.video_batman
-	Entity not supported: ovid.*##.video_batman
-	Entity not supported: vidhd.*##.video_batman
-	Entity not supported: 123short.*###topbar, .banner
-	Entity not supported: downloadhub.*##.alignnone
-	Entity not supported: mirrorace.*##[href^="https://fastspeedtest.ml/search/"]
-	Entity not supported: mirrorace.*##.uk-card-secondary:has-text(VPN)
-	Entity not supported: mirrorace.*##[href*="search/"]
-	Entity not supported: prostoporno.*##.spot
-	Entity not supported: pornid.*##.rsidebar-spots-holder, .spots-bottom
-	Entity not supported: zbporn.*##.top-spot
-	Entity not supported: zbporn.*##.view-aside-block
-	Entity not supported: 0123movies.*##.fake_player, #tab-ad
-	Entity not supported: 0123movies.*##[href="#tab-ad"]
-	Entity not supported: 0123movies.*##.les-title:has-text(HD)
-	Entity not supported: 0123movies.*##.mvic-btn
-	Entity not supported: ymovies.*###banner_publi
-	Entity not supported: lindung.*##.adsbygoogle
-	Entity not supported: cambabe.*##.topad
-	Entity not supported: cambabe.*##.place
-	Entity not supported: audiotools.*##.adsbygoogle
-	Entity not supported: xhardhempus.*##.adsbygoogle:style(max-height: 1px !important;)
-	Entity not supported: viprow.*##.position-absolute
-	Entity not supported: uploadrar.*##.btn
-	Entity not supported: uploadrar.*##[class^="banner"]
-	Entity not supported: dl.gamecopyworld.*##.t2 > tbody > tr:nth-of-type(1) > td
-	Entity not supported: dl.gamecopyworld.*##td:nth-of-type(2)
-	Entity not supported: dl.gamecopyworld.*##tr:nth-of-type(6) > td
-	Entity not supported: javmost.*##center > div[style^="width:100%; height: 100px"]
-	Entity not supported: vidmoly.*###mg_vd
-	Entity not supported: anitube.*###iframeCore____
-	Entity not supported: anitube.*##div[style^="pointer-events: none; position: absolute; "]
-	Entity not supported: mixdrop.*##div[onclick^="$(this).remove"]
-	Entity not supported: hellporno.*##.bnnrs-player
-	Entity not supported: yesmovies.*##a.btn-successful
-	Entity not supported: solarmovie.*##[class="close ico"]:upward(1)
-	Entity not supported: solarmovie.*##[href="/user/profile/premium-membership"]
-	Entity not supported: solarmovie.*##.close
-	Entity not supported: solarmovie.*##[href*="/4k"]
-	Entity not supported: solarmovie.*##table.movie_version:has-text(Promo)
-	Entity not supported: solarmovie.*##div.row:has-text(in HD)
-	Entity not supported: solarmovie.*##.jw-reset.jw-logo-top-left.jw-logo
-	Entity not supported: mycoolmoviez.*##[href="javascript:void(0);"]
-	Entity not supported: putlocker9.*##.pframe:has([href^="javascript: void(0);"])
-	Entity not supported: bdlive.*###AdDiv
-	Entity not supported: mangovideo.*##.sponsor
-	Entity not supported: mangovideo.*##.top
-	Entity not supported: mangovideo.*##.table
-	Entity not supported: mangovideo.*##[target="_blank"]
-	Entity not supported: azsoft.*##div.display ~ h2.text-center
-	Entity not supported: azsoft.*##div.display ~ p
-	Entity not supported: megaurl.*##[id*="ScriptRoot"]
-	Entity not supported: megaurl.*##a[href^="//"]
-	Entity not supported: bmovies.*###upgrade_pop
-	Entity not supported: watchfree.*###vpnvpn
-	Entity not supported: uploadproper.*##.adsbygoogle
-	Entity not supported: uploadproper.*##.ads_small
-	Entity not supported: uploadproper.*##.ads_big
-	Entity not supported: uploadproper.*##[href*=".info/"]
-	Entity not supported: uploadproper.*##div.small_res
-	Entity not supported: dramacool.*##h2.widget-title:has-text(Advertisement)
-	Entity not supported: dramacool.*##[class$="_ads"]
-	Entity not supported: stadionowioprawcy.*##.adsbygoogle
-	Entity not supported: bolly4u.*##.code-block
-	Entity not supported: torrent9.*###vpnvpn
-	Entity not supported: brainly.*##[class^="BrainlyAdsPlaceholder"]
-	Entity not supported: brainly.*##.brn-ads-box
-	Entity not supported: brainly.*##.js-scroll-to-unlock-section.brn-kodiak-answer-redesigned__unlock
-	Entity not supported: moretvtime.*##.sc-banner
-	Entity not supported: 4movierulz.*##.ad_btn-white
-	Entity not supported: 4movierulz1.*##.ad_btn-white
-	Entity not supported: 7movierulzfree.*##.ad_btn-white
-	Entity not supported: movierulzs.*##.ad_btn-white
-	Entity not supported: movierulz4k.*##.ad_btn-white
-	Entity not supported: movierulzfree.*##.ad_btn-white
-	Entity not supported: 123movierulz.*##.ad_watch_now
-	Entity not supported: 4movierulz.*##.ad_watch_now
-	Entity not supported: 4movierulz1.*##.ad_watch_now
-	Entity not supported: 7movierulzfree.*##.ad_watch_now
-	Entity not supported: movierulzs.*##.ad_watch_now
-	Entity not supported: moviesrulz.*##.ad_watch_now
-	Entity not supported: movierulz4k.*##.ad_watch_now
-	Entity not supported: movierulzfree.*##.ad_watch_now
-	Entity not supported: moviesrulzfree.*##.ad_watch_now
-	Entity not supported: watchmovierulz.*##.ad_watch_now
-	Entity not supported: movierulzfree.*##.hd-buttons
-	Entity not supported: movierulzs.*##.hd-buttons
-	Entity not supported: 123movierulz.*##.btn1
-	Entity not supported: 4movierulz.*##.btn1
-	Entity not supported: 4movierulz1.*##.btn1
-	Entity not supported: moviesrulz.*##.btn1
-	Entity not supported: movierulz4k.*##.btn1
-	Entity not supported: moviesrulzfree.*##.btn1
-	Entity not supported: 7movierulzfree.*##.display\:none\;\"hd-buttons\"
-	Entity not supported: dutchycorp.*##center > .hide-on-med-and-down
-	Entity not supported: dutchycorp.*##[class^="bmadblock"]
-	Entity not supported: dutchycorp.*##div[class][style="width:468px;height:60px;display: inline-block;margin: 0 auto"]
-	Entity not supported: dutchycorp.*##.adsbygoogle
-	Entity not supported: dutchycorp.*##[class$="-page"] .box-main center center
-	Entity not supported: dutchycorp.*##[class$="-page"] > .hide-on-small-only
-	Entity not supported: dutchycorp.*##[class$="-page"] > .container > .row > .col-md-offset-1 .text-left > *:not(.box-main)
-	Entity not supported: dutchycorp.*##[class$="-page"] center > p
-	Entity not supported: dutchycorp.*##.box-main > .row > center
-	Entity not supported: dutchycorp.*##.box-main > center > div
-	Entity not supported: dutchycorp.*##.nav-ad
-	Entity not supported: dutchycorp.*##.row [style*="width:728px;height:90px"]
-	Entity not supported: dutchycorp.*##.sidenav_left
-	Entity not supported: dutchycorp.*##.sidenav_right
-	Entity not supported: dutchycorp.*##[id*="ScriptRoot"]
-	Entity not supported: dutchycorp.*##[style*="width:300px;height:250px"]
-	Entity not supported: dutchycorp.*###link-view [style^="width:468px"]
-	Entity not supported: dutchycorp.*###boxes
-	Entity not supported: dutchycorp.*###link-view > center > br
-	Entity not supported: hackstore.*##.onp-sl-content:style(display: block !important;)
-	Entity not supported: hackstore.*##.onp-sl-social-locker
-	Entity not supported: hdfriday.*##[href*="pop"]
-	Entity not supported: hdfriday.*##.btn_d:has-text(/high/i)
-	Entity not supported: extramovies.*##[href^="http://ghoto-12.win/"]
-	Entity not supported: extramovies.*##[href^="//vennala.pw/"]
-	Entity not supported: extramovies.*##center
-	Entity not supported: extramovies.*##[href^="/dlbutton.php"]
-	Entity not supported: extramovies.*###theme_back
-	Entity not supported: extralinks.*##[href^="https://t.me/"]
-	Entity not supported: extramovies.*##[href^="https://t.me/"]
-	Entity not supported: extralinks.*##[class^="ad_btn"]:upward(center)
-	Entity not supported: extramovies.*##[class^="ad_btn"]:upward(center)
-	Entity not supported: atomixhq.*##.ads
-	Entity not supported: pctfenix.*##.ads
-	Entity not supported: pctnew.*##.ads
-	Entity not supported: allfeeds.*###overlay
-	Entity not supported: teleriumtv.*###overlay
-	Entity not supported: shortearn.*##.banner
-	Entity not supported: shortearn.*##.box-main > .blog-item
-	Entity not supported: pelisplay.*##[data-lang="Publicidad"]
-	Entity not supported: lookmovie.*##.view-top-ab
-	Entity not supported: lookmovie.*##.notifyjs-corner
-	Entity not supported: lookmovie.*##.nord-vpn.home-banner
-	Entity not supported: lookmovie.*###single.dtsingle > .content > center > a[href] > img
-	Entity not supported: lookmovie.*###single.dtsingle > .content > .sheader > .poster > .extra > center > a[href] > img
-	Entity not supported: ver-pelis-online.*##a.lav_btn
-	Entity not supported: ver-pelis-online.*##[href$="player.html"]
-	Entity not supported: ver-pelis-online.*##.holder >li:has([href="/pelis/descargar.html"])
-	Entity not supported: ver-pelis-online.*##a.eli_lav_btn, .mobile_btn
-	Entity not supported: thefmovies.*##.mobile-btn
-	Entity not supported: series9.*##div[style="padding:15px 0;text-align:right;"]
-	Entity not supported: sk-ip.*##[target="_blank"], .blog-item
-	Entity not supported: urlty.*##[href^="https://hololinks.com"]
+	Entity-based filter not supported: .column > .card > .adv:upward(2)
+	Entity-based filter not supported: #list-eps:style(display:block!important)
+	Entity-based filter not supported: .les-title:has-text(HD)
+	Entity-based filter not supported: [href]:has-text(PLAY)
+	Entity-based filter not supported: tr:has-text(VPN)
+	Entity-based filter not supported: .head:has-text(Adv)
+	Entity-based filter not supported: .uk-card-secondary:has-text(VPN)
+	Entity-based filter not supported: [class="close ico"]:upward(1)
+	Entity-based filter not supported: table.movie_version:has-text(Promo)
+	Entity-based filter not supported: div.row:has-text(in HD)
+	Entity-based filter not supported: h2.widget-title:has-text(Advertisement)
+	Entity-based filter not supported: .btn_d:has-text(/high/i)
+	Entity-based filter not supported: [class^="ad_btn"]:upward(center)
 	Invalid filter: ndtv.com##.composite-branding.branding:has-text(/sponsored/i):xpath(..)
 	Invalid filter: ndtv.com##:xpath(//div[contains(text(),"Advert")])
-	Entity not supported: egydead.*##.adHolder
-	Entity not supported: egydead.*##.FooterAds
-	Entity not supported: okstream.*##[id^="click"]
 	Invalid filter: extratorrent.*##:xpath(//a[contains(text(),"VPN")]/../../..)
-	Entity not supported: seulink.*##.banner-inner
-	Entity not supported: cinetux.*##span.button
-	Entity not supported: cinetux.*##.links_table > .fix-table > table > tbody > tr:has-text(Patrocinador)
-	Entity not supported: streameast.*##[id^="Advertisement"]
-	Entity not supported: pornsexer.*##.bottom-adv1
-	Entity not supported: pornsexer.*###pre-1adv
-	Entity not supported: pornsexer.*##.sponsor
-	Entity not supported: pornsexer.*##.table
-	Entity not supported: sexvid.*###banner_video
-	Entity not supported: sexvid.*##.sponsor.shown
-	Entity not supported: sexvid.*##.spots_field.spots_thumbs
-	Entity not supported: sexvid.*##.box_site
-	Entity not supported: sexvid.*##.download_link
-	Entity not supported: sexvid.*##.spot-content, .spot-title
-	Entity not supported: getfreecourses.*##.adsbygoogle
-	Entity not supported: nsw2u.*##[href^="https://bit.ly/"]
-	Entity not supported: mlwbd.*##input[value^="http"]:style(width: 70% !important)
-	Entity not supported: hdfilme.*###fake-player-wrapper
-	Entity not supported: pornhub.*##.video-wrapper > #player ~ .hd.clear
-	Entity not supported: pornhub.*##.sniperModeEngaged
-	Entity not supported: pornhub.*##a[href^="http://ads.trafficjunky.net/"]
-	Entity not supported: pornhub.*##.realsex
-	Entity not supported: pornhub.*###pb_template
-	Entity not supported: thevidhd.*##.video_batman
-	Entity not supported: thevidhd.*##h1
-	Entity not supported: ebay.*##.sresult:has(.promoted-lv)
-	Entity not supported: ebay.*##li.s-item:has(span:has-text(/S[^P]*?P[^O]*?O[^N]*?N[^S]*?S[^O]*?O[^R]*?R[^E]*?E[^D]*?D/))
-	Entity not supported: ebay.*##.s-item__title-tag:has-text(/^SPONSORED$/):upward(.s-item)
+	Entity-based filter not supported: .links_table > .fix-table > table > tbody > tr:has-text(Patrocinador)
+	Entity-based filter not supported: input[value^="http"]:style(width: 70% !important)
+	Entity-based filter not supported: li.s-item:has(span:has-text(/S[^P]*?P[^O]*?O[^N]*?N[^S]*?S[^O]*?O[^R]*?R[^E]*?E[^D]*?D/))
+	Entity-based filter not supported: .s-item__title-tag:has-text(/^SPONSORED$/):upward(.s-item)
 	Invalid filter: ebay.*##.s-item:has-text(Sponsored):xpath(//*[string-length(@aria-labelledby) = 8]):upward(.s-item)
-	Entity not supported: uptomega.*##.ads
-	Entity not supported: uwatchfree.*##[href*="deceittoured.com"]
-	Entity not supported: uwatchfree.*##.hd-links
-	Entity not supported: uwatchfree.*##center
-	Entity not supported: watch4hd.*##.btn-block.btn
-	Entity not supported: 5movies.*###cookiedata
-	Entity not supported: 5movies.*##.btn-lg
-	Entity not supported: 5movies.*###content-embed:style(display: block!important)
-	Entity not supported: 5movies.*##.mvi-cover
-	Entity not supported: 5movies.*##.streamaly
-	Entity not supported: 5movies.*##.les-title:has-text(HD)
-	Entity not supported: pandamovie.*###tracking-url
-	Entity not supported: speedporn.*###tracking-url
-	Entity not supported: pandamovie.*##.video-block-happy-absolute:upward(.order-1)
-	Entity not supported: speedporn.*##.video-block-happy-absolute:upward(.order-1)
-	Entity not supported: pandamovie.*##.happy-player-beside, .happy-section, .widget_execphp:has-text(/Advertisement|ExoLoader/)
-	Entity not supported: speedporn.*##.happy-player-beside, .happy-section, .widget_execphp:has-text(/Advertisement|ExoLoader/)
-	Entity not supported: serialy.bombuj.*##.ad_banner
-	Entity not supported: serialy.bombuj.*##[id*="reklam"]
+	Entity-based filter not supported: #content-embed:style(display: block!important)
 	Invalid filter: washingtonpost.com##:xpath(//*[(text()='AD')]/..)
-	Entity not supported: watchgameofthrones.*###keeper2
-	Entity not supported: vidup.*##.sponsored-container
-	Entity not supported: vev.*##.vjs-overlay
-	Entity not supported: vev.*##body > div[style="position: fixed; display: block; width: 100%; height: 100%; inset: 0px; background-color: rgba(0, 0, 0, 0); z-index: 300000;"]
-	Entity not supported: okanime.*###calque
-	Entity not supported: rainanime.*##.fake_player
-	Entity not supported: shrink.*##center
-	Entity not supported: shrink.*##.banner
-	Entity not supported: losmovies.*##.aPlaceHolder
-	Entity not supported: sportlemons.*###happyDog
-	Entity not supported: sportlemons.*###lazyCat
-	Entity not supported: multiup.*##.text-center.bg-info
-	Entity not supported: multiup.*##div.col-md-4:nth-of-type(1):has-text(Usemet)
-	Entity not supported: multiup.*##.panel-featured-success.panel-featured-bottom.panel-featured-top.panel.text-center:has([alt="Usemet.nl"]):upward(1)
-	Entity not supported: multiup.*##.mfp-ready
-	Entity not supported: multiup.*##div.text-center:has(a[class="btn btn-success"][href^="abp:subscribe"])
-	Entity not supported: tmearn.*##.banner
-	Entity not supported: leechall.*###adBanner:style(height:25px !important;left:-3000px !important;position:absolute !important)
-	Entity not supported: leechall.*##.text-center.alert-info.alert
-	Entity not supported: cb01.*##[href*="/4k"]
-	Entity not supported: dpstream.*##.movie-aye
-	Entity not supported: upclips.*##[id*="ScriptRoot"]
-	Entity not supported: sports24.*##iframe[src^="//sports24.site/"]:upward(div)
-	Entity not supported: sports24.*##div[style*="z-index: 30000"]
-	Entity not supported: sports24.*##div[style^="width:300px;height:250px"]:upward(1)
-	Entity not supported: sports24.*##.adrespl
-	Entity not supported: sports24.*##.landscape_ad_pos
-	Entity not supported: sports24.*##[href*="/vpn"]
-	Entity not supported: sports24.*##[href^="https://brave.com/"]
-	Entity not supported: sports24.*##[src^="/tv/ol.php?"]
-	Entity not supported: sports24.*##div[data-player] > .container:style(max-width: 100% !important;)
-	Entity not supported: sports24.*###ao
-	Entity not supported: sports24.*##.sp24
-	Entity not supported: sports24.*##a.btn[href*="/a?live="]
+	Entity-based filter not supported: div.col-md-4:nth-of-type(1):has-text(Usemet)
+	Entity-based filter not supported: .panel-featured-success.panel-featured-bottom.panel-featured-top.panel.text-center:has([alt="Usemet.nl"]):upward(1)
+	Entity-based filter not supported: #adBanner:style(height:25px !important;left:-3000px !important;position:absolute !important)
+	Entity-based filter not supported: iframe[src^="//sports24.site/"]:upward(div)
+	Entity-based filter not supported: div[style^="width:300px;height:250px"]:upward(1)
+	Entity-based filter not supported: div[data-player] > .container:style(max-width: 100% !important;)
 	Invalid filter: sports24.*##:xpath(//*[contains(text(),"Watch HD")])
-	Entity not supported: sports24.*###notice
-	Entity not supported: sports24.*##.btn-outline-primary:has-text(/HD$/)
-	Entity not supported: sports24.*##.container > div.col[style^="height: 225px; width: 400px"]
-	Entity not supported: sports24.*##.container > div.row[style="margin-top: 20px;"] > div.col
-	Entity not supported: sports24.*###id-custom_banner
-	Entity not supported: animetake27.*##.gads
-	Entity not supported: linkvertise.*##lv-msnnewsfeed
-	Entity not supported: camhub.*##.popunder-opener
-	Entity not supported: megalink.*##[href^="https://mob1ledev1ces.com/r/"]
-	Entity not supported: megalink.*###__bgd_link
-	Entity not supported: moonline.*###clickfakeplayer
-	Entity not supported: shorten.*###chromepop
+	Entity-based filter not supported: .btn-outline-primary:has-text(/HD$/)
 	Invalid filter: bitcointalk.org##:xpath(//span[contains(text(),"Advert")]/../..)
-	Entity not supported: turkanime.*##div.col-xs-12:has-text(MMPORG OYUNLAR)
-	Entity not supported: turkanime.*###sponsored
-	Entity not supported: turkanime.*##.panel-title:has-text(REKLAM)
-	Entity not supported: turkanime.*##.AltkisimMenu
-	Entity not supported: allcalidad.*##.table-hover.table > tbody > tr:has-text(Descargar Premium)
-	Entity not supported: 123animes.*##div[id][style^="position: fixed; inset: 0px; z-index: 2147483647;"]
-	Entity not supported: mega1080p.*##.bnr
-	Entity not supported: hentaihaven.*##.main-sidebar[role="complementary"]
-	Entity not supported: streamango.*###ad_buts
-	Entity not supported: arabseed.*##.ads-aa
-	Entity not supported: bde4.*##a[href*=".yabo816."]:remove()
+	Entity-based filter not supported: div.col-xs-12:has-text(MMPORG OYUNLAR)
+	Entity-based filter not supported: .panel-title:has-text(REKLAM)
+	Entity-based filter not supported: .table-hover.table > tbody > tr:has-text(Descargar Premium)
+	Entity-based filter not supported: a[href*=".yabo816."]:remove()
 	Invalid filter: trakt.tv##:xpath(//*[(text()='Advertisement')]/..)
-	Entity not supported: rmcmv.*##[class*="ads"]
-	Entity not supported: safetxt.*##.adsbygoogle
-	Entity not supported: evileaks.*##.adsbygoogle
-	Entity not supported: 9hentai.*###ads
-	Entity not supported: web2.0calc.*###abmodal, body > .in.modal-backdrop
-	Entity not supported: web2.0calc.*##body:style(overflow: auto !important)
-	Entity not supported: web2.0calc.*###nocreditsmodal
-	Entity not supported: web2.0calc.*##.first
-	Entity not supported: streamz.*##body > div:nth-of-type(3), [href^="http://deloplen.com"]
-	Entity not supported: streamzz.*##body > div:nth-of-type(3), [href^="http://deloplen.com"]
-	Entity not supported: streamz.*##button:has(span:has-text(Skip))
-	Entity not supported: streamzz.*##button:has(span:has-text(Skip))
-	Entity not supported: mkvcinema.*##[href="https://www.hostire.com"]
-	Entity not supported: mkvcinemas.*##[href="https://www.hostire.com"]
-	Entity not supported: pelispedia.*##a.btns
-	Entity not supported: pelispedia.*##div.mb-5.text-center
-	Entity not supported: pelispedia.*##.cont.principal > .site-main > .links
-	Entity not supported: pelispedia.*##.img-responsive
-	Entity not supported: pelispedia.*##.mvic-btn
-	Entity not supported: pelispedia.*##[class^="page_speed_"][href] > img[src$="app.png"]
-	Entity not supported: pelispedia24.*##.button
-	Entity not supported: pelispedia24.*##.asgdc
-	Entity not supported: pelispedia24.*##.preplayer
-	Entity not supported: pelispedia24.*##[href^="/acceso-total-sin-limite"]
-	Entity not supported: pelis28.*##.buttons-p
-	Entity not supported: pelis28.*###options-0
+	Entity-based filter not supported: button:has(span:has-text(Skip))
 	Invalid filter: pelis-gratis.com##.holder > li [href*="/descargar.html"]:xpath(../..)
-	Entity not supported: pornhat.*##.bns-bl-new.bns-bl
-	Entity not supported: pornhat.*##div.player-bn
-	Entity not supported: pornhat.*##.video-block > .show.before-player
-	Entity not supported: pornhat.*##b
-	Entity not supported: pornhat.*##.top_spot
-	Entity not supported: vipracing.*##[href="https://www.tvbarata.club/"]
-	Entity not supported: vipracing.*###vpp
-	Entity not supported: btdb.*##.alert-dismissible
-	Entity not supported: btdb.*##.alert
-	Entity not supported: atdhe.*##[href^="https://horti.brovada.eu/"]
-	Entity not supported: atdhe.*###bannerInCenter
-	Entity not supported: popcornstream.*##.aoa_overlay
-	Entity not supported: animesvision.*##[href^="https://bit.ly/"]
-	Entity not supported: miniurl.*##.banner
-	Entity not supported: miniurl.*##div[style="width:970px;height:90px;display: inline-block;margin: 0 auto"]
-	Entity not supported: sledujserialy.*##div[id][style="position: absolute; top: 0; left: 0; width: 100%; height: 380px; text-align: center;"]
-	Entity not supported: sledujserialy.*###super_secret_ad
-	Entity not supported: imgkia.*##[id*="ScriptRootC"]
-	Entity not supported: imgkia.*##div[id][style^="position: fixed; display: block; width: 100%;"]
-	Entity not supported: imgkia.*##div[style="width:100%;height:110px"]
-	Entity not supported: redecanais.*###guerejo
-	Entity not supported: redecanais.*###guerejoback
-	Entity not supported: redecanais.*###iframeCore____
-	Entity not supported: allgamesejogos.*##[id="colunas"]:style(display: block !important;)
-	Entity not supported: bemestarglobal.*##[id="colunas"]:style(display: block !important;)
-	Entity not supported: gamesgo.*##[id="colunas"]:style(display: block !important;)
-	Entity not supported: redecanais.*##[id="colunas"]:style(display: block !important;)
-	Entity not supported: zt-protect.*##.adsbygoogle
-	Entity not supported: zt-protect.*##main.py-4:style(min-height:0px !important)
-	Entity not supported: dropgalaxy.*##[href^="https://bit.ly/"]
-	Entity not supported: dropgalaxy.*###operadata + br + [href][target="_blank"]
-	Entity not supported: dropgalaxy.*##body > div[style^="position: fixed; display: block"]
-	Entity not supported: dropgalaxy.*##.adsbygoogle:style(max-height: 1px !important;)
-	Entity not supported: dropgalaxy.*##[id^="aswift"]:style(display:none!important;)
-	Entity not supported: dropgalaxy.*##iframe[id*="_mN_main_"]
-	Entity not supported: dropgalaxy.*##[target="_blank"]:has-text(Download)
-	Entity not supported: dropgalaxy.*###modalpop
-	Entity not supported: adblockstreamtape.*##[class*="bn-container"], div[style*="z-index: 300000;"]
-	Entity not supported: adblockstrtape.*##[class*="bn-container"], div[style*="z-index: 300000;"]
-	Entity not supported: adblockstrtech.*##[class*="bn-container"], div[style*="z-index: 300000;"]
-	Entity not supported: shavetape.*##[class*="bn-container"], div[style*="z-index: 300000;"]
-	Entity not supported: stape.*##[class*="bn-container"], div[style*="z-index: 300000;"]
-	Entity not supported: strcloud.*##[class*="bn-container"], div[style*="z-index: 300000;"]
-	Entity not supported: streamtape.*##[class*="bn-container"], div[style*="z-index: 300000;"]
-	Entity not supported: streamta.*##[class*="bn-container"], div[style*="z-index: 300000;"]
-	Entity not supported: strtape.*##[class*="bn-container"], div[style*="z-index: 300000;"]
-	Entity not supported: strtpe.*##[class*="bn-container"], div[style*="z-index: 300000;"]
-	Entity not supported: strtapeadblock.*##[class*="bn-container"], div[style*="z-index: 300000;"]
-	Entity not supported: strcloud.*##iframe[src^="data:"]
-	Entity not supported: streamtape.*##iframe[src^="data:"]
-	Entity not supported: streamta.*##iframe[src^="data:"]
-	Entity not supported: strtape.*##iframe[src^="data:"]
-	Entity not supported: strtpe.*##iframe[src^="data:"]
-	Entity not supported: strtapeadblock.*##iframe[src^="data:"]
-	Entity not supported: seriemega.*##.bnr
-	Entity not supported: anoboy.*##div#judi2, #coloma, [href^="//kokipoker.net"]
-	Entity not supported: anoboy.*##[href^="https://bit.ly/"]
-	Entity not supported: anoboy.*##[href^="http://click2go.me/"]
-	Entity not supported: anoboy.*###popup_box
-	Entity not supported: anoboy.*###popup_bawah
-	Entity not supported: 123europix.*##[target="_blank"][onclick]
-	Entity not supported: animesanka.*##[id*="-ads-"]
-	Entity not supported: viralfeed.*##.admania-widgettit
-	Entity not supported: sms24.*##body > div[style^="position: fixed; z-index: 1000"]
-	Entity not supported: sms24.*##.spinner-border
-	Entity not supported: sms24.*##.placeholder
-	Entity not supported: sms24.*##.placeholder-glow
-	Entity not supported: sms24.*##.placeholder-content:style(display: inline-block !important)
-	Entity not supported: sms24.*##div[id^="div-ado-ad-"]
-	Entity not supported: pcprogramasymas.*##.box-main > .blog-item
-	Entity not supported: fullcinema.*##.mobile-btn
-	Entity not supported: fullreal.*##.mobile-btn
-	Entity not supported: fullcinema.*##.mvic-btn
-	Entity not supported: fullreal.*##.mvic-btn
-	Entity not supported: fullcinema.*##div.content-kuss
-	Entity not supported: fullreal.*##div.content-kuss
-	Entity not supported: drtuber.*###video_list_banner
-	Entity not supported: drtuber.*##.abtext
-	Entity not supported: drtuber.*##.drt-spot-box
-	Entity not supported: drtuber.*##.f_width.footer > .item_box
-	Entity not supported: drtuber.*##.fh.heading
-	Entity not supported: drtuber.*##.item_spots
-	Entity not supported: drtuber.*##.livecams_main
-	Entity not supported: drtuber.*##.puFloatLine
-	Entity not supported: drtuber.*##.title-sponsored
-	Entity not supported: vid4up.*###aoverlay
-	Entity not supported: link1s.*##.banner-inner
-	Entity not supported: link1s.*###baolink1s
-	Entity not supported: youtubetomp3.*##a[href="/button.php"]
-	Entity not supported: player.javsun.*###preroll
-	Entity not supported: player.javtc.*###preroll
-	Entity not supported: javsun.*##[style^="height: 250px;overflow"]
-	Entity not supported: javtc.*##[style^="height: 250px;overflow"]
-	Entity not supported: lookcam.*##div.prefix-adlabel
-	Entity not supported: javmec.*##[style^="height: 250px;overflow"]
-	Entity not supported: player.javmec.*###preroll
-	Entity not supported: bfstrms.*###iframe_preview
-	Entity not supported: bfstrms.*##.in.modal
-	Entity not supported: bfstrms.*##.in.modal-backdrop
-	Entity not supported: bfstrms.*###fcnbox
-	Entity not supported: live.crackstreams.*##.m-1.fw-bold.btn-danger.btn[data-openuri="|BTN_URL|"]
-	Entity not supported: crackstreams.*###iframe_preview
-	Entity not supported: shortzzy.*##.banner
-	Entity not supported: shortzzy.*##.box-main > center > a[href][target="_blank"]
-	Entity not supported: shortzzy.*##.navbar-right.navbar-nav.nav
-	Entity not supported: shortzzy.*##.btnlink
-	Entity not supported: megadede.*###buttonposter, #videoplayer.blue, .purple.play
-	Entity not supported: camsclips.*##.place
-	Entity not supported: xtits.*##.adv-title
-	Entity not supported: xtits.*##.table
-	Entity not supported: xtits.*##.spot-holder
-	Entity not supported: shorttey.*##.short
-	Entity not supported: shorttey.*###link-view > center > [href]
-	Entity not supported: kissanime.*###upgrade_pop
-	Entity not supported: filmyzilla.*##[href^="https://ak.hetadinh.com/"]
-	Entity not supported: proxybit.*##[id*="banner"]
-	Entity not supported: hdss.*##.homi
-	Entity not supported: hdss.*##.widget_media_image
-	Entity not supported: lite-link.*##.banner
-	Entity not supported: discoveryplus.*##.bmpui-seekbar-markers
-	Entity not supported: discoveryplus.*##.bmpui-ui-ads-status
-	Entity not supported: pureshort.*##.banner
-	Entity not supported: pureshort.*###link-view > br
-	Entity not supported: pureshort.*###link-view > a[href] > img
-	Entity not supported: akwams.*##.adsbygoogle
-	Entity not supported: akwams.*##.ads
-	Entity not supported: kissmanga.*###myModal
-	Entity not supported: adcorto.*##.banner
-	Entity not supported: adcorto.*##.box-main > table
-	Entity not supported: streamonsport.*###iframe_preview
-	Entity not supported: dulinks.*###__bgd_link
-	Entity not supported: dulinks.*##.banner
-	Entity not supported: dulinks.*##.row > .col-md-offset-1 > .box > .box-body center > a[href]
-	Entity not supported: dulinks.*###btm_banner
-	Entity not supported: dulinks.*##.captcha-page center > p > button.button
-	Entity not supported: dulinks.*##.captcha-page > center h,.box-main h
-	Entity not supported: dulinks.*##[href^="https://dropmms.com/"]
-	Entity not supported: newdmn.*###overlay
-	Entity not supported: hd21.*##.aside_video
-	Entity not supported: iceporn.*###spot_video_livecams
-	Entity not supported: iceporn.*##.furtherance
-	Entity not supported: iceporn.*##.take_place + .take_place
-	Entity not supported: iceporn.*###spot_video_partner_banner
-	Entity not supported: iceporn.*###spot_video_partner_banner + span[style]
-	Entity not supported: nuvid.*##div[style^="height:477px"]
-	Entity not supported: nuvid.*##footer > .rfix
-	Entity not supported: nuvid.*##.aside > h2
-	Entity not supported: nuvid.*##.download_adv_text_photo
-	Entity not supported: nuvid.*##.video-options
-	Entity not supported: nuvid.*##.advertisement
-	Entity not supported: tubeon.*##.spots
-	Entity not supported: tubeon.*##.thr-rcol
-	Entity not supported: vivatube.*##.livecams
-	Entity not supported: vivatube.*##.clear + .mt15.container[style="margin-top:15px; border-bottom:0;"]
-	Entity not supported: yeptube.*##.spots
-	Entity not supported: yeptube.*##.thr-rcol
-	Entity not supported: wmoviesfree.*##.orange.big-color-btn
-	Entity not supported: filmpertutti.*##.ads
-	Entity not supported: filmpertutti.*##.no_pop
-	Entity not supported: pornhd8k.*###invideo_wrapper
-	Entity not supported: 1todaypk.*##[href="/watchnow.php"]
-	Entity not supported: todaypktv.*##.ad_watch_now
-	Entity not supported: todaypktv.*##.hd-buttons1
-	Entity not supported: hd-pornos.*##.vjs-overlayed
-	Entity not supported: hd-pornos.*###spezial_column
-	Entity not supported: hd-pornos.*##div[id="wrapper_content"] > aside
-	Entity not supported: kat.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kickass.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kickass2.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kickasstorrents.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kat2.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kattracker.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: thekat.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: thekickass.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kickassz.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kickasstorrents2.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: topkickass.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kickassgo.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kkickass.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kkat.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kickasst.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kick4ss.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: katbay.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kickasshydra.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kickasskat.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kickassbay.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: torrentkat.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kickassuk.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: torrentskickass.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kickasspk.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kickasstrusty.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: katkickass.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kickassindia.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kickass-usa.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kickassaustralia.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kickassdb.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kathydra.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kickassminds.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kickassunlocked.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kickassmovies.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kickassfull.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: bigkickass.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kickasstracker.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: katfreak.*##[style*="decoration"]:not([style^="width"])
-	Entity not supported: kat.*##[href="/k.php?q=q"]
-	Entity not supported: katbay.*##[href="/k.php?q=q"]
-	Entity not supported: kickass.*##[href="/k.php?q=q"]
-	Entity not supported: kickasshydra.*##[href="/k.php?q=q"]
-	Entity not supported: kickasskat.*##[href="/k.php?q=q"]
-	Entity not supported: kickass2.*##[href="/k.php?q=q"]
-	Entity not supported: kickasstorrents.*##[href="/k.php?q=q"]
-	Entity not supported: kat2.*##[href="/k.php?q=q"]
-	Entity not supported: kattracker.*##[href="/k.php?q=q"]
-	Entity not supported: thekat.*##[href="/k.php?q=q"]
-	Entity not supported: thekickass.*##[href="/k.php?q=q"]
-	Entity not supported: kickassz.*##[href="/k.php?q=q"]
-	Entity not supported: kickasstorrents2.*##[href="/k.php?q=q"]
-	Entity not supported: topkickass.*##[href="/k.php?q=q"]
-	Entity not supported: kickassgo.*##[href="/k.php?q=q"]
-	Entity not supported: kkickass.*##[href="/k.php?q=q"]
-	Entity not supported: kkat.*##[href="/k.php?q=q"]
-	Entity not supported: kickasst.*##[href="/k.php?q=q"]
-	Entity not supported: kick4ss.*##[href="/k.php?q=q"]
+	Entity-based filter not supported: main.py-4:style(min-height:0px !important)
+	Entity-based filter not supported: .placeholder-content:style(display: inline-block !important)
 	Invalid filter: akvi.icu##:xpath(//*[contains(text(),"Disable")])
-	Entity not supported: 123unblock.*##.alert-dismissible
-	Entity not supported: 720pstream.*##.bg-dark.position-absolute
-	Entity not supported: fulltube.*##.mvic-btn
-	Entity not supported: cine-calidad.*##.links
-	Entity not supported: hindilinks4u.*##.mvic-btn
-	Entity not supported: otakudesu.*##.box_item_ads_popup
-	Entity not supported: otakudesu.*##[href="https://bisnis4d.co/"]
-	Entity not supported: latesthdmovies.*##[href^="https://bit.ly/"]
-	Entity not supported: cimanow.*###ad
-	Entity not supported: thothub.*##.sponsor
-	Entity not supported: thothub.*##.table
-	Entity not supported: seriesflv.*##.adx > a[href]
-	Entity not supported: zshort.*###fafsf2:style(display:block !important)
-	Entity not supported: zshort.*###showContainer,.textfk
-	Entity not supported: ebay.*##.s-item__sep:matches-css(display: none):remove()
+	Entity-based filter not supported: .s-item__sep:matches-css(display: none):remove()
 	Invalid filter: ebay.*##:xpath(//span[(text()='S')]):upward(.s-item)
-	Entity not supported: hds-streaming.*###fakeplayer
-	Entity not supported: hds-streaming.*##.asgdc
-	Entity not supported: mrunblock.*###lb-banner
-	Entity not supported: mrunblock.*##[id^="cookieConsent"]:upward(1)
-	Entity not supported: mrunblock.*##.alert-dismissible
-	Entity not supported: akwam.*##.ads
-	Entity not supported: netpornix.*##div#responseads:style(display:block !important)
-	Entity not supported: netpornix.*###videoadsid
-	Entity not supported: netpornix.*##[href^="https://bit.ly/"]
-	Entity not supported: netpornix.*##.videoads
-	Entity not supported: streamsb.*##body > div[style*="z-index:"]
-	Entity not supported: youwatch.*##[href^="https://minilink.id/"]
-	Entity not supported: youwatch.*##.sgpb-popup-dialog-main-div-wrapper
-	Entity not supported: youwatch.*##.sgpb-popup-overlay
-	Entity not supported: youwatch.*###custom_html-65
-	Entity not supported: fxstreet.*##.fxs_leaderboard
-	Entity not supported: xn--stream-oe64e.*###abm
-	Entity not supported: tripadvisor.*###component_2 > div[class^="_"] > div > div[class^="iab_"][style="min-height:90px"]:upward(2)
-	Entity not supported: tripadvisor.*##.ui_container > div[class] > div[class^="_"] > .iab_medRec:only-child:upward(1)
-	Entity not supported: unblocknow.*##.adstg
-	Entity not supported: unblocknow.*##.alert
-	Entity not supported: unblocknow.*###cookieConsentVPN666
-	Entity not supported: hog.*##.content__info--vis
-	Entity not supported: hog.*##.player-block__line
-	Entity not supported: hog.*##.player-block__square
-	Entity not supported: hog.*##.player__side
-	Entity not supported: hog.*##.related-view > div.title--sm
-	Entity not supported: samehadaku.*###playVideo:style(display: block !important; visibility: visible !important;)
-	Entity not supported: samehadaku.*###player_embed:style(display: block !important; visibility: visible !important;)
-	Entity not supported: samehadaku.*###skipbtn
-	Entity not supported: samehadaku.*##.box_item_berlangganan_popup
-	Entity not supported: userload.*##div[style="position: fixed; display: block; width: 100%; height: 100%; inset: 0px; background-color: rgba(0, 0, 0, 0); z-index: 300000;"]
-	Entity not supported: userload.*##.adp-underlay
-	Entity not supported: fapnado.*##.pause-ad-pullup
-	Entity not supported: fapnado.*##[class^="zpot"]
-	Entity not supported: videovard.*##.jw-reset.jw-wrapper:style(z-index:2147483647 !important)
-	Entity not supported: videovard.*###nux > div > div > div[id]
-	Entity not supported: wcofun.*##.anti-ad
-	Entity not supported: wcofun.*##.reklam_kapat
-	Entity not supported: myflixer.*###gift-middle
-	Entity not supported: myflixer.*##.premodal.modal
-	Entity not supported: myflixer.*##.show.modal-backdrop
-	Entity not supported: gomoviz.*##.mvic-btn
-	Entity not supported: gomoviz.*##.mobile-btn
-	Entity not supported: gomoviz.*##div.content-kuss
-	Entity not supported: pobre.*###messageModal
-	Entity not supported: pobre.*##.generalModal
-	Entity not supported: rp5.*##.adsbygoogle:upward(1)
-	Entity not supported: stooq.*##div[style="position:relative;width:970px;height:250px"]
-	Entity not supported: stooq.*##div[style="position:relative;width:300px;height:250px"]
-	Entity not supported: stooq.*###f13 > table > tbody > tr > td > .f13
-	Entity not supported: stooq.*###f13 > b:has-text(Sponsor):upward(4)
-	Entity not supported: stooq.*##td#f13:nth-of-type(3) > table:nth-of-type(4) > tbody > tr > td:upward(3)
-	Entity not supported: shinchu.*##.g-recaptcha:upward(form > div):style(display: block !important;)
-	Entity not supported: cricstream.*##.w-100.position-absolute.h-100
-	Entity not supported: ibomma.*##[style="display:none"]:style(display: block !important;)
-	Entity not supported: ibomma.*###abEnabled-note
-	Entity not supported: filma24.*###vidad
-	Entity not supported: filma24.*##[href^="https://bit.ly/"]
-	Entity not supported: filma24.*##[href="https://codeit.al/services/"]
-	Entity not supported: pinterest.*##div[data-test-id="pin"] span:not([class]):has-text(Promoted by):upward([data-grid-item="true"])
-	Entity not supported: gomoviefree.*##.mobile-btn
-	Entity not supported: g3g.*##.text-center.alert-danger.alert-dismissible.alert
-	Entity not supported: pornocomics.*###dclm_modal_screen
-	Entity not supported: pornocomics.*###dclm_modal_content
-	Entity not supported: pornocomics.*##*:style(filter: none !important)
+	Entity-based filter not supported: [id^="cookieConsent"]:upward(1)
+	Entity-based filter not supported: div#responseads:style(display:block !important)
+	Entity-based filter not supported: #component_2 > div[class^="_"] > div > div[class^="iab_"][style="min-height:90px"]:upward(2)
+	Entity-based filter not supported: .ui_container > div[class] > div[class^="_"] > .iab_medRec:only-child:upward(1)
+	Entity-based filter not supported: #playVideo:style(display: block !important; visibility: visible !important;)
+	Entity-based filter not supported: #player_embed:style(display: block !important; visibility: visible !important;)
+	Entity-based filter not supported: #f13 > b:has-text(Sponsor):upward(4)
+	Entity-based filter not supported: td#f13:nth-of-type(3) > table:nth-of-type(4) > tbody > tr > td:upward(3)
+	Entity-based filter not supported: .g-recaptcha:upward(form > div):style(display: block !important;)
+	Entity-based filter not supported: [style="display:none"]:style(display: block !important;)
+	Entity-based filter not supported: div[data-test-id="pin"] span:not([class]):has-text(Promoted by):upward([data-grid-item="true"])
 	Invalid filter: digminecraft.com##:xpath(//*[contains(text(),"Advertisements")]):upward(1)
 	Invalid filter: masterduelmeta.com##:xpath(//*[contains(text(),"adblock")]):upward(3)
-	Entity not supported: faselhd.*##.alert-danger.alert
-	Entity not supported: fashionunited.*##.adunitContainer:upward(3)
-	Entity not supported: atishmkv.*##.idmuvi-bannerplayer
-	Entity not supported: atishmkv.*##[href^="https://go.aff.thecasinoaffiliates.com/"]
-	Entity not supported: jalshamoviezhd.*##[href^="https://usounoul.com/"]
-	Entity not supported: poki.*##div[class*="_AdvertisementContainer"]
-	Entity not supported: filmy.*##.btn-dwn:not([href*="filmy."])
-	Entity not supported: filmyhit.*##.dwn-btn:not([href*="filmy"])
-	Entity not supported: filmy.*##.dwn-btn
-	Entity not supported: filmyhit.*##.btn-dwn1:not([href*="filmy"])
-	Entity not supported: eztv.*##table:has-text(VPN)
-	Entity not supported: technicalatg.*###wpsafe-generate, #wpsafe-link:style(display: block !important;)
-	Entity not supported: technicalatg.*##div[id^="wpsafe-wait"]
-	Entity not supported: moviesjoy.*###fcnbox
-	Entity not supported: moviesjoy.*##[href*="moviesflix4k"]
-	Entity not supported: moviesjoy.*##.premodal.modal
-	Entity not supported: moviesjoy.*##.show.modal-backdrop
-	Entity not supported: apkmaven.*###wpsafe-generate, #wpsafe-link:style(display: block !important;)
-	Entity not supported: apkmaven.*##div[id^="wpsafe-wait"]
-	Entity not supported: apkmaven.*###countdown
-	Entity not supported: apkmaven.*###download_link:style(display: block !important;)
-	Entity not supported: 1377x.*###chatme-box
-	Entity not supported: player.tormalayalamhd.*##[href="https://t.me/Russia_Vs_Ukraine_War3"]
-	Entity not supported: player.tormalayalamhd.*##a[onclick="openAuc();"]
-	Entity not supported: 90phut2.*##.uk-modal
-	Entity not supported: 90phut2.*##html:style(overflow: auto !important;)
-	Entity not supported: voirseries.*##.salidor_inner
-	Entity not supported: voirseries.*###playerOver
-	Entity not supported: netu.*###qdiv
-	Entity not supported: financerites.*##.footerLink.hidden:style(display: block !important;)
-	Entity not supported: financerites.*##.getlink:others()
+	Entity-based filter not supported: .adunitContainer:upward(3)
+	Entity-based filter not supported: table:has-text(VPN)
+	Entity-based filter not supported: #download_link:style(display: block !important;)
 	Invalid filter: wp.pl##:xpath(//*[string-length(@href) > 1600])
 	Invalid filter: money.pl##:xpath(//*[string-length(@href) > 1600])
 	Invalid filter: o2.pl##:xpath(//*[string-length(@href) > 1600])
@@ -2118,14 +924,23 @@ Rejected cosmetic filters: 1377
 	Invalid filter: youporn.com##:-abp-properties(image/)
 	Invalid filter: youporngay.com##:-abp-properties(image/)
 CSS-generic: 16821 plain CSS selectors
-CSS-specific distinct filters: 4996 distinct combined selectors
-CSS-specific injectable files: 20
-	0od8gp0, 0oaqaso, 1nuo8vk, 0pr3djo, 0gcmt08, 0qa7kug, 07djdic, 1vtl5d8, 0ls9nos, 0t117mc, 17moj7s, 0tu7rf8, 1ma2ujo, 10aql08, 1lmah10, 0f95rg0, 1tccqhs, 08pgukc, 0nj7si4, 0esa230
-Declarative-related distinct filters: 251 distinct combined selectors
-Procedural-related distinct filters: 349 distinct combined selectors
-Scriptlet-related distinct filters: 1930
+CSS-specific domain-based: 7956 distinct filters
+	Combined into 5001 distinct entries
+CSS-specific entity-based: 627 distinct filters
+	Combined into 330 distinct entries
+CSS-specific injectable files: 21
+	0j8bcsc, 1qiqeoo, 0uotp7o, 0pr3djo, 1gqt1ns, 0qa7kug, 1gr3la4, 1rta8f0, 18fd7u8, 0ndgd8s, 197ltv8, 1armsbk, 0u1nfpo, 1mmjfvc, 06pu88g, 1mquf2o, 00svrmc, 0hrr0ds, 14q2t80, 0eu4bc0, default
+Declarative-related distinct filters: 253 distinct combined selectors
+Procedural-related distinct filters: 351 distinct combined selectors
+Rejected scriptlet filters: 0
+
+Scriptlet-related distinct filters: 1932
 Scriptlet-related injectable files: 9
-	default.json-prune.js, default.set-constant.js, default.no-settimeout-if.js, default.abort-on-property-read.js, default.no-addeventlistener-if.js, default.no-setinterval-if.js, default.abort-current-script.js, default.abort-on-property-write.js, default.no-windowopen-if.js
+	default.json-prune.js, default.set-constant.js, default.no-settimeout-if.js, default.abort-on-property-read.js, default.no-addeventlistener-if.js, default.no-setinterval-if.js, default.abort-on-property-write.js, default.abort-current-script.js, default.no-windowopen-if.js
+Rejected scriptlet filters: 0
+
+Scriptlet-related entity-based injectable files: 7
+	default.no-settimeout-if.js, default.no-addeventlistener-if.js, default.abort-on-property-write.js, default.abort-on-property-read.js, default.abort-current-script.js, default.set-constant.js, default.no-windowopen-if.js
 ============================
 Listset for 'alb-0':
 	Fetching remote https://raw.githubusercontent.com/AnXh3L0/blocklist/master/albanian-easylist-addition/Albania.txt
@@ -2143,33 +958,24 @@ Output rule count: 26
 		Could not salvage rule with only entity-based domain= option: www.filma24.*
 		Could not salvage rule with only entity-based domain= option: www.filma24.*
 		Could not salvage rule with only entity-based domain= option: filma24.*
-Rejected cosmetic filters: 22
+Rejected cosmetic filters: 10
 	Invalid filter: gazetatema.net###content > div > a:has-text()
 	Invalid filter: lajmifundit.al##.td_block_template_1 > a:has-text()
 	Invalid filter: lajmifundit.al##.td_block_template_1 > center > a:has-text()
-	Entity not supported: www.filma24.*###vidad
-	Entity not supported: www.filma24.*##.widgets
-	Entity not supported: www.filma24.*##.bottom.adrek-space > .widget
-	Entity not supported: www.filma24.*###boost-145
-	Entity not supported: www.filma24.*##.njoftim
-	Entity not supported: www.filma24.*##.watch-movie > center
-	Entity not supported: www.filma24.*##div.movie-info > center
-	Entity not supported: www.filma24.*###imgad
-	Entity not supported: www.filma24.*##center:nth-of-type(2)
-	Entity not supported: www.filma24.*##center:nth-of-type(4)
-	Entity not supported: www.filma24.*##center:nth-of-type(5)
-	Entity not supported: www.filma24.*##div.movie-info:nth-of-type(5)
-	Entity not supported: filma24.*##div.player:style(width: 100% !important)
-	Entity not supported: filma24.*##div.movie-info:style(width: 100% !important)
-	Entity not supported: filma24.*##div.movie-optional:style(width: 100% !important)
-	Entity not supported: filma24.*##div.watch-links:style(width: 100% !important)
-	Entity not supported: filma24.*##div.download-links:style(width: 100% !important)
-	Entity not supported: filma24.*###disqus_thread:style(width: 100% !important)
-	Entity not supported: filma24.*##div.recommended.related:style(width: 100% !important)
+	Entity-based filter not supported: div.player:style(width: 100% !important)
+	Entity-based filter not supported: div.movie-info:style(width: 100% !important)
+	Entity-based filter not supported: div.movie-optional:style(width: 100% !important)
+	Entity-based filter not supported: div.watch-links:style(width: 100% !important)
+	Entity-based filter not supported: div.download-links:style(width: 100% !important)
+	Entity-based filter not supported: #disqus_thread:style(width: 100% !important)
+	Entity-based filter not supported: div.recommended.related:style(width: 100% !important)
 CSS-generic: 6 plain CSS selectors
-CSS-specific distinct filters: 97 distinct combined selectors
-CSS-specific injectable files: 1
-	03aftlo
+CSS-specific domain-based: 195 distinct filters
+	Combined into 97 distinct entries
+CSS-specific entity-based: 12 distinct filters
+	Combined into 2 distinct entries
+CSS-specific injectable files: 2
+	03aftlo, alb-0
 Declarative-related distinct filters: 2 distinct combined selectors
 Procedural-related distinct filters: 4 distinct combined selectors
 ============================
@@ -2187,17 +993,20 @@ Output rule count: 664
 	Unsupported: 0
 
 CSS-generic: 3 plain CSS selectors
-CSS-specific distinct filters: 185 distinct combined selectors
+CSS-specific domain-based: 361 distinct filters
+	Combined into 185 distinct entries
+CSS-specific entity-based: 0 distinct filters
+	Combined into 0 distinct entries
 CSS-specific injectable files: 1
 	0nj0u7c
 ============================
 Listset for 'chn-0':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/224.txt
-Input filter count: 18575
-	Accepted filter count: 18533
+Input filter count: 18615
+	Accepted filter count: 18573
 	Rejected filter count: 0
-Output rule count: 6585
-	Plain good: 6525
+Output rule count: 6590
+	Plain good: 6530
 	Maybe good (regexes): 15
 	redirect=: 35
 	csp= (discarded): 6
@@ -2207,21 +1016,27 @@ Output rule count: 6585
 		Unsupported modifier exception
 		Invalid network filter in chn-0: @@||ad.alimama.com^$genericblock
 		Invalid network filter in chn-0: @@||cmechina.net^$genericblock
-Rejected cosmetic filters: 5
-	Entity not supported: 18comic.*##body .bot-per
+Rejected cosmetic filters: 2
 	Invalid filter: 69xx.one##.q-body--prevent-scroll: { position: static !important; }
 	Invalid filter: theporn.cc##.q-body--prevent-scroll: { position: static !important; }
-	Entity not supported: 18comic.*##.top-a2db
-	Entity not supported: 18comic.*##.modal-body > ul.pop-list
 CSS-generic: 638 plain CSS selectors
-CSS-specific distinct filters: 2605 distinct combined selectors
-CSS-specific injectable files: 11
-	1sbg4ic, 0322lq4, 1roa5qo, 0dt90bo, 0tgk69c, 06lklfc, 169ku74, 1mvr9oo, 02m8bn8, 1m84adg, 1c1aq9o
+CSS-specific domain-based: 6335 distinct filters
+	Combined into 2609 distinct entries
+CSS-specific entity-based: 3 distinct filters
+	Combined into 2 distinct entries
+CSS-specific injectable files: 12
+	1sbg4ic, 0322lq4, 0a645gs, 1ckcl5c, 0hijt40, 1s5buo0, 116eivg, 12cc5ks, 17dc3jg, 1ap7m3s, 1j0c3k4, chn-0
 Declarative-related distinct filters: 46 distinct combined selectors
 Procedural-related distinct filters: 84 distinct combined selectors
+Rejected scriptlet filters: 0
+
 Scriptlet-related distinct filters: 71
 Scriptlet-related injectable files: 7
 	chn-0.no-settimeout-if.js, chn-0.set-constant.js, chn-0.no-setinterval-if.js, chn-0.abort-on-property-read.js, chn-0.abort-current-script.js, chn-0.abort-on-property-write.js, chn-0.json-prune.js
+Rejected scriptlet filters: 0
+
+Scriptlet-related entity-based injectable files: 1
+	chn-0.abort-current-script.js
 ============================
 Listset for 'cze-0':
 	Fetching remote https://raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt
@@ -2239,11 +1054,16 @@ Output rule count: 122
 		Invalid network filter in cze-0: *$image,redirect-rule=1x1.gif,domain=seznamzpravy.cz|sport.cz|seznam.cz|sbazar.cz|firmy.cz|super.cz|garaz.cz|stream.cz
 		Invalid network filter in cze-0: *$xhr,redirect-rule=nooptext,domain=seznamzpravy.cz|sport.cz|seznam.cz|sbazar.cz|firmy.cz|super.cz|garaz.cz|stream.cz
 CSS-generic: 36 plain CSS selectors
-CSS-specific distinct filters: 144 distinct combined selectors
+CSS-specific domain-based: 224 distinct filters
+	Combined into 144 distinct entries
+CSS-specific entity-based: 0 distinct filters
+	Combined into 0 distinct entries
 CSS-specific injectable files: 1
 	14qavdo
 Declarative-related distinct filters: 7 distinct combined selectors
 Procedural-related distinct filters: 5 distinct combined selectors
+Rejected scriptlet filters: 0
+
 Scriptlet-related distinct filters: 30
 Scriptlet-related injectable files: 6
 	cze-0.abort-on-property-read.js, cze-0.abort-current-script.js, cze-0.set-constant.js, cze-0.abort-on-property-write.js, cze-0.no-addeventlistener-if.js, cze-0.no-setinterval-if.js
@@ -2264,9 +1084,12 @@ Output rule count: 1696
 Rejected cosmetic filters: 1
 	Invalid filter: golem.de##li[data-article-id]:-abp-has(h3:-abp-properties(ANZEIGE))
 CSS-generic: 350 plain CSS selectors
-CSS-specific distinct filters: 1192 distinct combined selectors
+CSS-specific domain-based: 2029 distinct filters
+	Combined into 1192 distinct entries
+CSS-specific entity-based: 0 distinct filters
+	Combined into 0 distinct entries
 CSS-specific injectable files: 5
-	0pqh5a0, 0s6vbe4, 02selpo, 0esd648, 1ql1ip0
+	0pqh5a0, 06g0g8o, 02selpo, 0esd648, 1ql1ip0
 Procedural-related distinct filters: 51 distinct combined selectors
 ============================
 Listset for 'fin-0':
@@ -2290,22 +1113,27 @@ Rejected cosmetic filters: 3
 	Invalid filter: iltalehti.fi##div.container:not(.sub-category-unikulma):not(.sub-category-rahapuhe):not(.sub-category-santander):not(.sub-category-miehen-terveys):not(.sub-category-kehon-hyvinvointi-ja-vitaepro):not(.sub-category-unijaterveys):not(.sub-category-huippukivaa-seksia):not(.sub-category-puhti):not(.sub-category-hyvinvointivinkit):not(.sub-category-hetki):not(.sub-category-kaalimato):not(.sub-category-oslo-skin-lab):not(.sub-category-kodin-siivousvinkit):not(.sub-category-qled-tv):not(.sub-category-jatevesiratkaisut):not(.sub-category-bluestep):not(.sub-category-sortter-reilua-lainavertailua):not(.sub-category-rahalaitos):not(.sub-category-aitien-keittiosta):not(.sub-category-koko-kansan-autokauppa):not(.sub-category-kuljetusten-kestava-kehitys):not(.sub-category-kestavat-liikkuvuusratkaisut):not(.sub-category-hintaopas):not(.sub-category-boltworks):not(.sub-category-samsung-tv):not(.sub-category-reseptit):not(.sub-category-terveystalo):not(.sub-category-etuafi-lainanottajan-asialla):not(.sub-category-vinkit-yrityslainaan) > div > div > main div[class="card "]:-abp-has(.half-article:has-text(Kaupallinen yhteistyö)):not(:-abp-has(.half-article:not(:has-text(Kaupallinen yhteistyö))))
 	Invalid filter: uusisuomi.fi##[width]:-abp-has(.lazyload-wrapper):not(aside)
 CSS-generic: 52 plain CSS selectors
-CSS-specific distinct filters: 405 distinct combined selectors
+CSS-specific domain-based: 944 distinct filters
+	Combined into 405 distinct entries
+CSS-specific entity-based: 0 distinct filters
+	Combined into 0 distinct entries
 CSS-specific injectable files: 2
 	0flihg4, 002nsds
 Declarative-related distinct filters: 15 distinct combined selectors
 Procedural-related distinct filters: 83 distinct combined selectors
+Rejected scriptlet filters: 0
+
 Scriptlet-related distinct filters: 4
 Scriptlet-related injectable files: 3
 	fin-0.no-settimeout-if.js, fin-0.abort-current-script.js, fin-0.abort-on-property-read.js
 ============================
 Listset for 'fra-0':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/16.txt
-Input filter count: 21940
-	Accepted filter count: 21884
+Input filter count: 21978
+	Accepted filter count: 21922
 	Rejected filter count: 50
-Output rule count: 7319
-	Plain good: 7268
+Output rule count: 7318
+	Plain good: 7267
 	Maybe good (regexes): 10
 	redirect=: 28
 	csp= (discarded): 5
@@ -2319,15 +1147,17 @@ Output rule count: 7319
 		Unsupported modifier exception
 		Invalid network filter in fra-0: @@$webrtc,domain=stream4free.live
 		Invalid network filter in fra-0: $webrtc,domain=11anim.com|1337x.st|1337x.to|2ddl.ms|adyou.me|ajplugins.com|allitebooks.com|androidadult.com|animeid.tv|animekb.net|animeland.tv|animezone.pl|avametrie.fr|avgle.com|bdurls.com|bigspeeds.com|bindassbros.com|blizzboygames.net|bonstreams.net|catrumahminimalis.me|centrum-dramy.pl|cestpasbien.pro|chatytvgratis.net|chrt.pw|cineiz.io|cinemahd.co|cinemamkv.net|cinemitas.com|cinestrenostv.tv|clik.pw|cmacapps.com|cocostreaming.com|convertinmp4.com|cpabien.ws|crictime.com|crictime.is|daclips.com|datpiff.com|ddl.to|ddmix.net|ddownload.com|deltabit.co|deportesmax.info|descargas2020.com|djs.sk|dl-protect.info|dl-protect1.com|dompl3.info|doodstream.co|doodstream.com|downlink.top|draculastream.org|drakula.top|dropapk.com|dropapk.to|dualpaste.net|earnwithshortlink.com|ebook-planete.org|ebookdz.com|fileone.tv|filmeserialeonline.org|filmtelecharger.net|flashx.net|flashx.tv|fluvore.com|free-telechargement.org|free-telecharger.com|free-telecharger.net|free-telecharger.org|free-telecharger.xyz|freecardano.com|freenem.com|fullmatchesandshows.com|gamestorrent.co|ganol.ru|ganool.im|ganool123.com|gtaall.com|gum-gum-streaming.com|hdvid.online|healthoptimizer.net|heapfiles.com|hq-porns.com|ianimes.org|iegy.best|imagenesmy.com|imgazure.com|immunicity.st|ithepiratebay.com|javher.com|jheberg.net|jkanime.net|k-streaming.cc|k-streaming.com|kinohabr.net|kinokrad.co|kinoprofi.org|kinostuff.com|kinox.me|kinox.tv|kiss-anime.ws|kissasian.ch|kissasian.sh|kooralive.info|kora-live.tv|kvid.org|lafmacun.net|larati.net|latino-webtv.com|leggendaweb.com|leitor.net|lemondedekevin.fr|lewd.ninja|libertyvf.co|libertyvf.com|libertyvf.net|libertyvf.tv|liketvw.com|likeur.org|limpi.tv|liveflashplayer.org|lordhd.com|love-drama.pl|ma-famille-dabord-streaming.com|mangaku.in|mejortorrent.org|mejortorrent1.com|mimaletamusical.blogspot.com|mkvcage.com|mladipodnikatelia.sk|modsbase.com|monova.org|movie4k.is|movie4k.org|movies123.ac|mp4mania.xyz|multiimg.com|myfeed4u.com|mywatchseries.stream|netiap.com|nicoblog.org|nonpiusolo.com|novom.ru|o2tvseries.com|oasivip.com|oceanoffgames.com|oipeirates.online|onion.ly|onion.pet|openload.cc|openload.ch|openload.fun|opensubtitles.org|ovid.online|ovid.tv|papstream.info|pastehere.xyz|pcgamestorrents.com|pdf-giant.com|peeplink.in|pelislatino3gp.biz|pinoybay.ch|piratebayblocked.com|planet-streaming.net|planet-streaming1.com|planete-bd.org|planetfools.com|povwideo.cc|powvideo.cc|powvideo.net|putload.tv|radiofly.ws|reactor.cc|readmanga.today|regarder-le-bureau-des-legendes-streaming.com|regarder-malcolm-streaming.com|regarder-peaky-blinders-streaming.xyz|regarder-prison-break-streaming.com|rivosport.co|rojadirecta.fr|sawlive.tv|scuseami.net|senmanga.com|sharemods.com|sherlockonline.ru|shippuden.tv|short.pe|short2win.com|shrink-service.it|sintelevisor.com|sleeptimer.org|slyid.com|solarmovie.one|sorteosrd.com|srt.am|starmusiq.one|strdef.world|stream2watch.org|stream4free.live|streambeam.io|streamcdn.to|streamcloud.eu|streamhunter.net|streamhunter.top|streamplay.me|streamplay.to|subswiki.com|subtorrents.tv|supervideo.tv|tamilmv.cz|tarjetarojatvonline.com|telerium.tv|teleriumtv.com|teleriumtv.net|theappguruz.com|thepiratebay.cr|thepiratebay.vip|thevid.net|thevid.tv|thevideo.ch|thevideo.io|thevideo.me|thevideo.us|tomadivx.tv|topsimages.com|torlock.com|torlock2.com|toros.co|tpbprox.com|tubetitties.com|tvpor-internet.com|tvshqiphd.com|uii.io|ukpass.co|unblocked2.fun|unblocked2.vip|unblocksites.co|up-4.net|upbom.com|upbom.net|upload.ee|uploadfiles.eu|uploadocean.com|uppom.live|uptostream.com|upvid.host|vcrypt.net|veehd.com|vergol.com|verliga1.net|vertelevisor.com|vev.io|vev.red|videobin.co|videowood.tv|vidfile.net|vidop.icu|vidoza.co|vidoza.net|vidshare.tv|vidup.io|vidup.tv|viewasian.tv|vup.to|watchonline.to|watchpornfree.ws|wearesaudis.net|wlive.tv|wstream.to|wstream.video|x1337x.eu|x1337x.se|x1337x.ws|xclusivejams.com|xfilesharing.com|xrivonet.info|xvideosharing.com|yify-torrent.org|yifyddl.movie|zenexplayer.com|zeroshare.me|zipansion.com|zone-ebook.com
-Rejected cosmetic filters: 2
-	Entity not supported: torrent911.*###vpnvpn
-	Entity not supported: oxtorrent.*###vpnvpn
 CSS-generic: 2649 plain CSS selectors
-CSS-specific distinct filters: 1196 distinct combined selectors
-CSS-specific injectable files: 5
-	0cgbc18, 09ndnco, 1gfl0uk, 0hbm3i0, 1t7qaek
+CSS-specific domain-based: 2129 distinct filters
+	Combined into 1196 distinct entries
+CSS-specific entity-based: 1 distinct filters
+	Combined into 1 distinct entries
+CSS-specific injectable files: 6
+	0cgbc18, 09ndnco, 1gfl0uk, 0hbm3i0, 1t7qaek, fra-0
 Declarative-related distinct filters: 31 distinct combined selectors
 Procedural-related distinct filters: 74 distinct combined selectors
+Rejected scriptlet filters: 0
+
 Scriptlet-related distinct filters: 54
 Scriptlet-related injectable files: 7
 	fra-0.set-constant.js, fra-0.abort-on-property-read.js, fra-0.abort-on-property-write.js, fra-0.abort-current-script.js, fra-0.no-settimeout-if.js, fra-0.no-setinterval-if.js, fra-0.json-prune.js
@@ -2346,7 +1176,10 @@ Output rule count: 434
 	Unsupported: 0
 
 CSS-generic: 1 plain CSS selectors
-CSS-specific distinct filters: 165 distinct combined selectors
+CSS-specific domain-based: 490 distinct filters
+	Combined into 165 distinct entries
+CSS-specific entity-based: 0 distinct filters
+	Combined into 0 distinct entries
 CSS-specific injectable files: 1
 	15uf0b0
 Declarative-related distinct filters: 5 distinct combined selectors
@@ -2369,22 +1202,27 @@ Rejected cosmetic filters: 2
 	Invalid filter: autosjog.hu##p + center:-abp-has(iframe[data-src*="facebook"])
 	Invalid filter: hirado.hu##.hover_bkgr_fricc:-abp-has(.facebookPopupCloseButton)
 CSS-generic: 60 plain CSS selectors
-CSS-specific distinct filters: 454 distinct combined selectors
+CSS-specific domain-based: 1117 distinct filters
+	Combined into 454 distinct entries
+CSS-specific entity-based: 0 distinct filters
+	Combined into 0 distinct entries
 CSS-specific injectable files: 2
 	1g16olg, 0cd4ss4
 Declarative-related distinct filters: 15 distinct combined selectors
 Procedural-related distinct filters: 7 distinct combined selectors
+Rejected scriptlet filters: 0
+
 Scriptlet-related distinct filters: 16
 Scriptlet-related injectable files: 6
 	hun-0.abort-current-script.js, hun-0.set-constant.js, hun-0.no-settimeout-if.js, hun-0.abort-on-property-write.js, hun-0.abort-on-property-read.js, hun-0.no-addeventlistener-if.js
 ============================
 Listset for 'idn-0':
 	Fetching remote https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/subscriptions/abpindo.txt
-Input filter count: 4271
-	Accepted filter count: 4271
+Input filter count: 4272
+	Accepted filter count: 4272
 	Rejected filter count: 0
-Output rule count: 3032
-	Plain good: 3032
+Output rule count: 3033
+	Plain good: 3033
 	Maybe good (regexes): 0
 	redirect=: 0
 	csp= (discarded): 0
@@ -2395,33 +1233,39 @@ Rejected cosmetic filters: 2
 	Invalid filter: detik.com##.mr2:-abp-has([id^="div-gpt-ad"])
 	Invalid filter: neonime.net##[data-src^="https://neonime.net/wp-content/"]:xpath(..)
 CSS-generic: 228 plain CSS selectors
-CSS-specific distinct filters: 405 distinct combined selectors
+CSS-specific domain-based: 732 distinct filters
+	Combined into 406 distinct entries
+CSS-specific entity-based: 0 distinct filters
+	Combined into 0 distinct entries
 CSS-specific injectable files: 2
-	1rik0gs, 0hpsark
+	0k0mg4k, 0ett68k
 Declarative-related distinct filters: 2 distinct combined selectors
 ============================
 Listset for 'ind-0':
 	Fetching remote https://easylist-downloads.adblockplus.org/indianlist.txt
-Input filter count: 5262
-	Accepted filter count: 5262
+Input filter count: 5266
+	Accepted filter count: 5266
 	Rejected filter count: 0
-Output rule count: 5225
-	Plain good: 5225
+Output rule count: 5229
+	Plain good: 5229
 	Maybe good (regexes): 0
 	redirect=: 0
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
 	Unsupported: 0
 
-CSS-specific distinct filters: 2256 distinct combined selectors
+CSS-specific domain-based: 3259 distinct filters
+	Combined into 2258 distinct entries
+CSS-specific entity-based: 0 distinct filters
+	Combined into 0 distinct entries
 CSS-specific injectable files: 9
-	0fb8dt0, 0kuomtc, 1ojpt8o, 07dvf28, 16s3r4c, 15d5ne0, 1cmqlqg, 1ir9vpo, 172sp28
+	1aclcak, 150ori8, 1ojpt8o, 0cp8e6c, 1r42nek, 1ec5vj8, 0ou2t4k, 148iftc, 0s4hjh0
 Procedural-related distinct filters: 46 distinct combined selectors
 ============================
 Listset for 'irn-0':
 	Fetching remote https://raw.githubusercontent.com/MasterKia/PersianBlocker/main/PersianBlocker.txt
-Input filter count: 1365
-	Accepted filter count: 1365
+Input filter count: 1357
+	Accepted filter count: 1357
 	Rejected filter count: 0
 Output rule count: 527
 	Plain good: 512
@@ -2440,11 +1284,16 @@ Output rule count: 527
 		Unsupported regex-based removeParam: /^utm_/
 		Unsupported regex-based removeParam: /^utm_/
 CSS-generic: 6 plain CSS selectors
-CSS-specific distinct filters: 328 distinct combined selectors
+CSS-specific domain-based: 700 distinct filters
+	Combined into 329 distinct entries
+CSS-specific entity-based: 0 distinct filters
+	Combined into 0 distinct entries
 CSS-specific injectable files: 2
-	1uv45ik, 1o2s8lc
+	1frne7k, 1bp7210
 Declarative-related distinct filters: 35 distinct combined selectors
 Procedural-related distinct filters: 47 distinct combined selectors
+Rejected scriptlet filters: 0
+
 Scriptlet-related distinct filters: 34
 Scriptlet-related injectable files: 6
 	irn-0.no-windowopen-if.js, irn-0.abort-on-property-read.js, irn-0.abort-current-script.js, irn-0.set-constant.js, irn-0.no-addeventlistener-if.js, irn-0.no-settimeout-if.js
@@ -2464,7 +1313,10 @@ Output rule count: 68
 
 Rejected cosmetic filters: 1
 	Invalid filter: pressan.is###13_3623
-CSS-specific distinct filters: 43 distinct combined selectors
+CSS-specific domain-based: 121 distinct filters
+	Combined into 43 distinct entries
+CSS-specific entity-based: 0 distinct filters
+	Combined into 0 distinct entries
 CSS-specific injectable files: 1
 	10m5bbk
 ============================
@@ -2499,26 +1351,30 @@ Output rule count: 283
 		Invalid network filter in isr-0: *$webrtc,domain=calcalist.co.il
 		Invalid network filter in isr-0: *$webrtc,domain=13news.co.il|13tv.co.il
 		Invalid network filter in isr-0: *$webrtc,domain=yad2.co.il
-Rejected cosmetic filters: 3
+Rejected cosmetic filters: 2
 	Invalid filter: haaretz.co.il##span:has([href*="promo"]):xpath(..)
-	Entity not supported: sdarot.*###afterLoad:style(display: block !important)
-	Entity not supported: sdarot.*##[href*="channel22.co.il"]
+	Entity-based filter not supported: #afterLoad:style(display: block !important)
 CSS-generic: 5 plain CSS selectors
-CSS-specific distinct filters: 118 distinct combined selectors
-CSS-specific injectable files: 1
-	0ckllbk
+CSS-specific domain-based: 371 distinct filters
+	Combined into 118 distinct entries
+CSS-specific entity-based: 1 distinct filters
+	Combined into 1 distinct entries
+CSS-specific injectable files: 2
+	0ckllbk, isr-0
 Declarative-related distinct filters: 3 distinct combined selectors
+Rejected scriptlet filters: 0
+
 Scriptlet-related distinct filters: 12
 Scriptlet-related injectable files: 6
 	isr-0.abort-on-property-read.js, isr-0.no-settimeout-if.js, isr-0.abort-on-property-write.js, isr-0.no-addeventlistener-if.js, isr-0.set-constant.js, isr-0.abort-current-script.js
 ============================
 Listset for 'ita-0':
 	Fetching remote https://easylist-downloads.adblockplus.org/easylistitaly.txt
-Input filter count: 5696
-	Accepted filter count: 5696
+Input filter count: 5698
+	Accepted filter count: 5698
 	Rejected filter count: 0
-Output rule count: 5425
-	Plain good: 5421
+Output rule count: 5426
+	Plain good: 5422
 	Maybe good (regexes): 3
 	redirect=: 0
 	csp= (discarded): 0
@@ -2526,64 +1382,46 @@ Output rule count: 5425
 	Unsupported: 1
 		Invalid network filter in ita-0: $webrtc,domain=hentaisaturn.com|italydownload.com|mitoitalico.com|semprehawk.com
 CSS-generic: 356 plain CSS selectors
-CSS-specific distinct filters: 2086 distinct combined selectors
+CSS-specific domain-based: 3293 distinct filters
+	Combined into 2089 distinct entries
+CSS-specific entity-based: 0 distinct filters
+	Combined into 0 distinct entries
 CSS-specific injectable files: 9
-	1ip7ras, 11hvdm8, 1mbjd2g, 0ii76oc, 0idumr4, 1emtnmk, 0fq4fdo, 0hdn44s, 1eu0k68
+	1ip7ras, 1jg2qj0, 0c799ic, 0bapc1o, 01smcls, 1nlf4as, 003pe7c, 0id83g4, 0vccsck
 Procedural-related distinct filters: 21 distinct combined selectors
 ============================
 Listset for 'jpn-1':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/7.txt
-Input filter count: 1254
-	Accepted filter count: 1253
+Input filter count: 1259
+	Accepted filter count: 1258
 	Rejected filter count: 0
-Output rule count: 831
-	Plain good: 796
+Output rule count: 833
+	Plain good: 797
 	Maybe good (regexes): 13
-	redirect=: 20
+	redirect=: 21
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
 	Unsupported: 2
 		regexFilter is not RE2-compatible: \/kyodopress_cms\/wp-content\/(themes\/kyodopress\/img_banner\/(?!bn_newspaper\.gif)|banners).*
 		regexFilter is not RE2-compatible: ^(?!.*(bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fastlylb.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|vk.com|yandex.|yastatic.net|ytimg.com|zencdn.net|player|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com)).*$
-Rejected cosmetic filters: 29
-	Entity not supported: javmix.*##.home-h > h1:contains(ライブチャット)
-	Entity not supported: javmix.*##.home-h > h3:contains(Stripchat)
-	Entity not supported: hatenablog.*##.hatena-module-html > div.hatena-module-body > ins.adsbygoogle:upward(2)
-	Entity not supported: hatenadiary.*##.hatena-module-html > div.hatena-module-body > ins.adsbygoogle:upward(2)
-	Entity not supported: hatenablog.*##.hatena-module-html > div.hatena-module-body > script[src^="//z-fe.amazon-adsystem.com/"]:upward(2)
-	Entity not supported: hatenadiary.*##.hatena-module-html > div.hatena-module-body > script[src^="//z-fe.amazon-adsystem.com/"]:upward(2)
-	Entity not supported: hatenablog.*##.hatena-module-html > div.hatena-module-body > a[href^="https://adf.shinobi.jp/"]:upward(2)
-	Entity not supported: hatenadiary.*##.hatena-module-html > div.hatena-module-body > a[href^="https://adf.shinobi.jp/"]:upward(2)
-	Entity not supported: hatenablog.*##.hatena-module-html > div.hatena-module-body > script[src^="//adm.shinobi.jp/"]:upward(2)
-	Entity not supported: hatenadiary.*##.hatena-module-html > div.hatena-module-body > script[src^="//adm.shinobi.jp/"]:upward(2)
-	Entity not supported: hatenablog.*##.hatena-module-html > div.hatena-module-body > a[href*="//hb.afl.rakuten.co.jp/hsc/"]:upward(2)
-	Entity not supported: hatenadiary.*##.hatena-module-html > div.hatena-module-body > a[href*="//hb.afl.rakuten.co.jp/hsc/"]:upward(2)
-	Entity not supported: hatenablog.*##.hatena-module-html > div.hatena-module-body > a[href^="https://click.linksynergy.com"]:upward(2)
-	Entity not supported: hatenadiary.*##.hatena-module-html > div.hatena-module-body > a[href^="https://click.linksynergy.com"]:upward(2)
-	Entity not supported: 48idol.*##.ads-above-single-player
-	Entity not supported: free-erobooks.*###right-side > div.side-box > div.side-title:first-child
-	Entity not supported: free-erobooks.*##.open
-	Entity not supported: 48idol.*###custom_html-2
-	Entity not supported: 48idol.*###custom_html-4
-	Entity not supported: fc2.*##.AdContainer
-	Entity not supported: manga.okiba.*##.amazon-ranking-outer
-	Entity not supported: javmix.*##div[style^="width: 300px; height: 250px"]
-	Entity not supported: javmix.*##div[style^="max-width: 1000px;"]
-	Entity not supported: javmix.*##div[style^="width: 728px; height: 90px"]
-	Entity not supported: renote.*##.ad__bit
-	Entity not supported: renote.*##div[class$="ad__container"]
-	Entity not supported: 9tsu.*##.ads-system
-	Entity not supported: 9tsu.*##.cactus-sidebar-content > .widget_text:not(.style-5)
-	Entity not supported: matome-plus.*##.amazontotalboxtest
 CSS-generic: 113 plain CSS selectors
-CSS-specific distinct filters: 2069 distinct combined selectors
-CSS-specific injectable files: 9
-	1scmk5s, 18blqa8, 1i1hg8g, 17u0fu8, 0m6cpjo, 05c7c60, 1idls0g, 0e9o08s, 0nd5pmg
+CSS-specific domain-based: 3847 distinct filters
+	Combined into 2076 distinct entries
+CSS-specific entity-based: 15 distinct filters
+	Combined into 8 distinct entries
+CSS-specific injectable files: 10
+	04gbd30, 1q4onqc, 1v3oh8s, 0016nok, 074tqac, 1qs3v3g, 18hkga8, 037uei0, 1spol9g, jpn-1
 Declarative-related distinct filters: 90 distinct combined selectors
-Procedural-related distinct filters: 467 distinct combined selectors
-Scriptlet-related distinct filters: 40
+Procedural-related distinct filters: 472 distinct combined selectors
+Rejected scriptlet filters: 0
+
+Scriptlet-related distinct filters: 42
 Scriptlet-related injectable files: 5
-	jpn-1.abort-current-script.js, jpn-1.no-settimeout-if.js, jpn-1.set-constant.js, jpn-1.abort-on-property-read.js, jpn-1.no-setinterval-if.js
+	jpn-1.set-constant.js, jpn-1.abort-current-script.js, jpn-1.no-settimeout-if.js, jpn-1.abort-on-property-read.js, jpn-1.no-setinterval-if.js
+Rejected scriptlet filters: 0
+
+Scriptlet-related entity-based injectable files: 2
+	jpn-1.no-settimeout-if.js, jpn-1.abort-current-script.js
 ============================
 Listset for 'kor-1':
 	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filter-uBO.txt
@@ -2609,16 +1447,17 @@ Listset for 'kor-1':
 	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filters-uBO/allowlist.txt
 	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filters-share/specific_CSS.txt
 	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filters-uBO/specific_CSS.txt
-Input filter count: 1069
-	Accepted filter count: 1065
+Input filter count: 1076
+	Accepted filter count: 1072
 	Rejected filter count: 0
-Output rule count: 782
-	Plain good: 670
+Output rule count: 788
+	Plain good: 675
 	Maybe good (regexes): 89
 	redirect=: 17
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 1/0
-	Unsupported: 5
+	Unsupported: 6
+		regexFilter is not RE2-compatible: ^https:\/\/image\.aladin\.co\.kr\/img\/banner\/flash\/welcome\/nav\/(?!181010)[0-9]+_tab
 		regexFilter is not RE2-compatible: ^https:\/\/static\.wixstatic\.com\/media\/[0-9a-z]{6}_[a-z0-9]{32}~(?!.{1,}doc).{1,}
 		regexFilter is not RE2-compatible: ^https:\/\/(www\.|)kookje\.co\.kr\/(mobile\/|)design\/(?!(bn_what300|.{0,}naver|popup|series\/)).{0,}
 		regexFilter is not RE2-compatible: ^https:\/\/thumb\.toomics\.com\/upload\/banner\/(?!main|cut)
@@ -2631,11 +1470,16 @@ Rejected cosmetic filters: 5
 	Invalid filter: cafe.naver.com###editorMainContent a[href*="//cafe.naver.com/eyejoker7?iframe"][target="_blank"] ~ *:mathces-path(/(&|\\.|\\?)clubid=29560217($|&)/)
 	Invalid filter: eggrank.com###right-sidebar > .inside-right-sidebar > div[class]:not(:has-text(Hi there, I'm EGG.))
 CSS-generic: 3 plain CSS selectors
-CSS-specific distinct filters: 448 distinct combined selectors
+CSS-specific domain-based: 826 distinct filters
+	Combined into 450 distinct entries
+CSS-specific entity-based: 0 distinct filters
+	Combined into 0 distinct entries
 CSS-specific injectable files: 2
-	074hnr8, 1nuir04
-Declarative-related distinct filters: 75 distinct combined selectors
-Procedural-related distinct filters: 109 distinct combined selectors
+	0s35u78, 1vnuvls
+Declarative-related distinct filters: 76 distinct combined selectors
+Procedural-related distinct filters: 110 distinct combined selectors
+Rejected scriptlet filters: 0
+
 Scriptlet-related distinct filters: 56
 Scriptlet-related injectable files: 6
 	kor-1.abort-current-script.js, kor-1.set-constant.js, kor-1.no-settimeout-if.js, kor-1.json-prune.js, kor-1.abort-on-property-read.js, kor-1.abort-on-property-write.js
@@ -2654,11 +1498,16 @@ Output rule count: 523
 	Unsupported: 0
 
 CSS-generic: 5 plain CSS selectors
-CSS-specific distinct filters: 282 distinct combined selectors
+CSS-specific domain-based: 516 distinct filters
+	Combined into 282 distinct entries
+CSS-specific entity-based: 0 distinct filters
+	Combined into 0 distinct entries
 CSS-specific injectable files: 2
 	1ie2hr8, 0co18pg
 Declarative-related distinct filters: 5 distinct combined selectors
 Procedural-related distinct filters: 4 distinct combined selectors
+Rejected scriptlet filters: 0
+
 Scriptlet-related distinct filters: 7
 Scriptlet-related injectable files: 4
 	ltu-0.abort-current-script.js, ltu-0.no-settimeout-if.js, ltu-0.abort-on-property-read.js, ltu-0.no-windowopen-if.js
@@ -2676,7 +1525,10 @@ Output rule count: 144
 	removeparams= (accepted/discarded): 0/0
 	Unsupported: 0
 
-CSS-specific distinct filters: 62 distinct combined selectors
+CSS-specific domain-based: 184 distinct filters
+	Combined into 62 distinct entries
+CSS-specific entity-based: 0 distinct filters
+	Combined into 0 distinct entries
 CSS-specific injectable files: 1
 	04u4kss
 ============================
@@ -2705,15 +1557,19 @@ Output rule count: 645
 		Could not salvage rule with only entity-based domain= option: allestoringen.*
 		Invalid network filter in nld-0: *$image,domain=kijk.nl,redirect-rule=1x1.gif
 		Invalid network filter in nld-0: *$image,redirect-rule=2x2.png,domain=tweakers.net
-Rejected cosmetic filters: 2
+Rejected cosmetic filters: 1
 	Invalid filter: vastgoedjournaal.nl##aside:has([class]:has-text(/advert/i)):has([href]:has([src*="media.prdn.nl"])
-	Entity not supported: morningstar.*###ad_top_page
 CSS-generic: 15 plain CSS selectors
-CSS-specific distinct filters: 646 distinct combined selectors
-CSS-specific injectable files: 3
-	1t4vs0k, 1qe8oq8, 0vbngtg
-Declarative-related distinct filters: 4 distinct combined selectors
-Procedural-related distinct filters: 171 distinct combined selectors
+CSS-specific domain-based: 952 distinct filters
+	Combined into 647 distinct entries
+CSS-specific entity-based: 1 distinct filters
+	Combined into 1 distinct entries
+CSS-specific injectable files: 4
+	1emsg2k, 1i38r1s, 02ltuek, nld-0
+Declarative-related distinct filters: 5 distinct combined selectors
+Procedural-related distinct filters: 172 distinct combined selectors
+Rejected scriptlet filters: 0
+
 Scriptlet-related distinct filters: 15
 Scriptlet-related injectable files: 8
 	nld-0.no-settimeout-if.js, nld-0.abort-current-script.js, nld-0.set-constant.js, nld-0.abort-on-property-write.js, nld-0.abort-on-property-read.js, nld-0.no-addeventlistener-if.js, nld-0.no-windowopen-if.js, nld-0.no-setinterval-if.js
@@ -2753,69 +1609,34 @@ Output rule count: 484
 		Unsupported regex-based removeParam: /^source=partnerads$/
 		Unsupported regex-based removeParam: /^source=tradedoubler$/
 		Unsupported regex-based removeParam: /^amp;/
-Rejected cosmetic filters: 53
-	Entity not supported: costume.*##.teaser__native:upward(4)
-	Entity not supported: eurosport.*##.AdContainer
-	Entity not supported: momondo.*##.type-provider.clearfix.flights
-	Entity not supported: ticketmaster.*##div[id^=ad-slot-]
-	Entity not supported: viaplay.*##.interaction-block
-	Entity not supported: 180.*##.ad-min-height
-	Entity not supported: 180.*##.cc-top-ad-outer
-	Entity not supported: 180.*##.idle-timeout-outer
-	Entity not supported: 180.*##td[class^=frame-shadow-]
-	Entity not supported: 180.*##div[class$=-ad-container]
-	Entity not supported: google.*###cnsi ~ [jsaction*=dismiss]
-	Entity not supported: intrafish.*##.text-center.mb-3
-	Entity not supported: kimbino.*##.signad
-	Entity not supported: manuall.*##form + div[style^="border-style:solid; "]
-	Entity not supported: prisjakt.*###footer_header
-	Entity not supported: prisjakt.*##.desktop-inline-ad
-	Entity not supported: prisjakt.*##.outsider-ads
-	Entity not supported: qxl.*###crosslistingLauritzAdsenseBanner
-	Entity not supported: qxl.*###GoogleAdsenseFooter + div[style^="width: 100%;"]
-	Entity not supported: qxl.*###lauritzListingView
-	Entity not supported: qxl.*###leaderBoardListingviewTop
-	Entity not supported: qxl.*###whitetop:style(margin-top: 0px !important)
-	Entity not supported: qxl.*##.n_ListHeader:style(margin-top: 5px !important)
-	Entity not supported: eurosport.*##div[class$=-top-advert]
-	Entity not supported: ehandel.*###div-leeadsFullpageAd
-	Entity not supported: ehandel.*##.article-ad-container
-	Entity not supported: ehandel.*##.article-content > .code-block
-	Entity not supported: ehandel.*##.article-sponsored
-	Entity not supported: ehandel.*##.annons
-	Entity not supported: ehandel.*##.commercial-row
-	Entity not supported: ehandel.*##body[data-scrolling] .post-container-sponsored
-	Entity not supported: ehandel.*##.aside-image-with-link:has([href^="https://www.whatsnxt.io/"])
-	Entity not supported: prisjakt.*##.adbox
-	Entity not supported: gamereactor.*###ad_mobiletopinsidetext
-	Entity not supported: gamereactor.*###ad_video
-	Entity not supported: gamereactor.*###bigVideoAd
-	Entity not supported: gamereactor.*###eventad
-	Entity not supported: gamereactor.*###pagebackground:style(background-image: none !important)
-	Entity not supported: gamereactor.*###sky2_1
-	Entity not supported: gamereactor.*##.ad_smartphbig
-	Entity not supported: gamereactor.*##.ad_video
-	Entity not supported: gamereactor.*##.artistyle3:-abp-has(h4:has-text(/sponsored/i))
-	Entity not supported: gamereactor.*##.cocacola
-	Entity not supported: gamereactor.*##.external_div_bigVideoAd:remove()
-	Entity not supported: gamereactor.*##.sponsor
-	Entity not supported: gamereactor.*##.vast_ad_video
-	Entity not supported: gamereactor.*##.videoContent > .clickTag
-	Entity not supported: gamereactor.*##a[href*="/adclick.php"]
-	Entity not supported: gamereactor.*##a[href^="/grtv/"][title*=Sponsored]:upward(1)
-	Entity not supported: gamereactor.*##article.rwd_row:has(a[href$="/sponsoredcontent/"])
-	Entity not supported: gamereactor.*##div[class^=ad300]
-	Entity not supported: gamereactor.*##div[style*="width:300px;height:600px;"]
-	Entity not supported: gamereactor.*##div[style="min-height: 600px; margin-bottom: 20px;"]
+Rejected cosmetic filters: 9
+	Entity-based filter not supported: .teaser__native:upward(4)
+	Entity-based filter not supported: #whitetop:style(margin-top: 0px !important)
+	Entity-based filter not supported: .n_ListHeader:style(margin-top: 5px !important)
+	Entity-based filter not supported: .aside-image-with-link:has([href^="https://www.whatsnxt.io/"])
+	Entity-based filter not supported: #pagebackground:style(background-image: none !important)
+	Entity-based filter not supported: .artistyle3:has(h4:has-text(/sponsored/i))
+	Entity-based filter not supported: .external_div_bigVideoAd:remove()
+	Entity-based filter not supported: a[href^="/grtv/"][title*=Sponsored]:upward(1)
+	Entity-based filter not supported: article.rwd_row:has(a[href$="/sponsoredcontent/"])
 CSS-generic: 124 plain CSS selectors
-CSS-specific distinct filters: 494 distinct combined selectors
-CSS-specific injectable files: 2
-	1g7ho5s, 1ul6k84
+CSS-specific domain-based: 890 distinct filters
+	Combined into 494 distinct entries
+CSS-specific entity-based: 44 distinct filters
+	Combined into 13 distinct entries
+CSS-specific injectable files: 3
+	1g7ho5s, 0f5jmvs, nor-0
 Declarative-related distinct filters: 29 distinct combined selectors
-Procedural-related distinct filters: 119 distinct combined selectors
+Procedural-related distinct filters: 121 distinct combined selectors
+Rejected scriptlet filters: 0
+
 Scriptlet-related distinct filters: 13
 Scriptlet-related injectable files: 6
 	nor-0.set-constant.js, nor-0.abort-current-script.js, nor-0.abort-on-property-read.js, nor-0.json-prune.js, nor-0.abort-on-property-write.js, nor-0.no-addeventlistener-if.js
+Rejected scriptlet filters: 0
+
+Scriptlet-related entity-based injectable files: 4
+	nor-0.no-addeventlistener-if.js, nor-0.set-constant.js, nor-0.abort-current-script.js, nor-0.abort-on-property-write.js
 ============================
 Listset for 'pol-0':
 	Fetching remote https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt
@@ -2858,11 +1679,16 @@ Rejected cosmetic filters: 15
 	Invalid filter: stooq.com##:xpath(//*[@align="center"]/*[@id][contains(text(),"REKLAMA")])
 	Invalid filter: epidemia-koronawirus.pl##body > div:nth-of-type(1)[style^="display: block;"]:not(#page)
 CSS-generic: 61 plain CSS selectors
-CSS-specific distinct filters: 2704 distinct combined selectors
+CSS-specific domain-based: 4155 distinct filters
+	Combined into 2704 distinct entries
+CSS-specific entity-based: 0 distinct filters
+	Combined into 0 distinct entries
 CSS-specific injectable files: 11
 	0t3mipg, 0ts0u94, 0r012t0, 0tqvjhk, 1s6btns, 02k2l4g, 0926u50, 0pbeomg, 143tua4, 07hngng, 0aov74s
 Declarative-related distinct filters: 98 distinct combined selectors
 Procedural-related distinct filters: 74 distinct combined selectors
+Rejected scriptlet filters: 0
+
 Scriptlet-related distinct filters: 35
 Scriptlet-related injectable files: 6
 	pol-0.no-settimeout-if.js, pol-0.abort-current-script.js, pol-0.abort-on-property-read.js, pol-0.set-constant.js, pol-0.no-addeventlistener-if.js, pol-0.abort-on-property-write.js
@@ -2885,7 +1711,10 @@ Output rule count: 392
 Rejected cosmetic filters: 1
 	Invalid filter: istoria.md##div.d2011-block-lateral-middle:-abp-has(a[href*="voceabasarabiei.net"])
 CSS-generic: 8 plain CSS selectors
-CSS-specific distinct filters: 245 distinct combined selectors
+CSS-specific domain-based: 485 distinct filters
+	Combined into 245 distinct entries
+CSS-specific entity-based: 0 distinct filters
+	Combined into 0 distinct entries
 CSS-specific injectable files: 1
 	1f7c8dk
 Procedural-related distinct filters: 25 distinct combined selectors
@@ -2906,18 +1735,17 @@ Listset for 'rus-0':
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/css-fixes-experimental.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/js-fixes-experimental.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/AWRL-non-sync.txt
-Input filter count: 17349
-	Accepted filter count: 17331
+Input filter count: 17348
+	Accepted filter count: 17330
 	Rejected filter count: 15
-Output rule count: 5992
-	Plain good: 5902
+Output rule count: 5993
+	Plain good: 5904
 	Maybe good (regexes): 20
 	redirect=: 13
 	csp= (discarded): 38
 	removeparams= (accepted/discarded): 9/2
-	Unsupported: 10
+	Unsupported: 9
 		regexFilter is not RE2-compatible: ^(?!.*(24liveblog.com|24liveplus.com|acint.net|addthis.com|addthisedge.com|akamai.net|akamaiedge.net|alloha.tv|ampproject.org|anycomment.io|apester.com|api-ssl.bitly.com|api.corr.life|api.here.com|api.sypexgeo.net|app.hoversignal.com|appsmail.ru|bam.nr-data.net|blogger.com|bootstrapcdn.com|cackle.me|cdn.ampproject.org|cdn.iframe.ly|cdn.rawgit.com|cdnstats.ru|cdnvideo.ru|chartbeat.com|chatango.com|chatbro.com|chimpstatic.com|cloudflare.com|cloudflare.net|cloudfront.net|code.createjs.com|columbus.te.ua|cultserv.ru|disqus.com|disquscdn.com|dmca.com|each.im|ebacdn.com|edgecastcdn.net|ellinagraypel.com|embed.ex.co|embed.widgetpack.com|embedstorage.net|eurosolidarity.org|facebook.com|facebook.net|fastly.net|fastlylb.net|fbcdn.net|fbvkcdn.com|feonet.net|fluidplayer.com|fontawesome.com|fonts.w.tools|freecurrencyrates.com|fwcdn1.com|fwdcdn.com|gcdn.co|getsitecontrol.com|gismeteo.ru|gismeteo.ua|github.io|gitlab.io|google-analytics.com|google.com|googleadservices.com|googleapis.com|googleoptimize.com|googletagmanager.com|googletagservices.com|gravatar.com|gravitec.media|gravitec.net|gstatic.com|hcaptcha.com|hupso.com|hwcdn.net|hypercomments.com|ibytedtos.com|imgsmail.ru|imgur.com|informers.ukr.net|instagram.com|intensedebate.com|intercom.io|intercomcdn.com|intravideo.net|issuu.com|ivideon.com|jivosite.com|jquery.com|js-agent.newrelic.com|jsdelivr.net|jsonip.com|jwpcdn.com|jwplatform.com|keycaptcha.com|kin-x.com|kinogram.best|kinohod.ru|kinoplayer.co|kinotreiler.com|kitbit.net|kodik-add.com|kodikapi.com|libria.fun|licdn.com|likebtn.com|linkedin.com|lp4.io|luxnet.ua|mail.ru|mailchimp.com|mapbox.com|media-imdb.com|media.reformal.ru|mediator.media|meteobar.com|meteonova.ru|mirtesen.ru|netdna-cdn.com|ngenix.net|nuipogoda.ru|odnaknopka.ru|odnoklassniki.ru|ok.ru|oneall.com|onesignal.com|onthe.io|phnx.click|piktochart.com|pinterest.com|pixars.org|platformcraft.ru|playbuzz.com|player|player.panda.video|pljs.ru|plrjs.com|plyr.io|polldaddy.com|polyfill.io|pv.pjtsu.com|quiz.ink|raincaptcha.com|readymag.com|recaptcha.net|relap.io|renteres.ru|rumer.club|s5o.ru|securedtouch.com|selcdn.net|sendpulse.com|pluso.ru|shareaholic.com|shareaholic.net|sharethis.com|shrink.pe|sinoptik.ua|source.mmi.bemobile.ua|sporcle.com|sportradar.com|sportrecs.com|sports.ru|stackpathcdn.com|static.addtoany.com|statically.io|streamvid.club|telegram.im|telegram.org|tenews.org.ua|tenews.te.ua|tiktok.com|tilda.ws|tildacdn.com|tns-counter.ru|tolstoycomments.com|traq.li|trbcdn.net|trbna.com|ttrace.ru|tumblr.com|tvget.ru|tvsok.ru|twimg.com|twitter.com|typekit.net|uanews.org.ua|ui.ill.in.ua|unpkg.com|uptolike.com|userapi.com|usocial.pro|uweb.ru|vicomi.com|vidazoo.com|videocdn.tv|videoplayers.club|viglink.com|viqeo.tv|vk.com|vkontakte.ru|vuukle.com|widget.speechki.org|widget.vp.ru|widgets.getpocket.com|world-weather.ru|wp.com|yabber.cloud|yandex.ru|yandex.st|yastatic.net|yohoho.cc|yohoho.online|yoomoney.ru|youtube-nocookie.com|youtube.com|ytimg.com|zencdn.net)).*$
-		Could not salvage rule with only entity-based domain= option: m.rp5.*
 		Unsupported modifier exception
 		Unsupported regex-based removeParam: /autostart|skin_name/
 		Invalid network filter in rus-0: *$image,redirect-rule=32x32.png,domain=ukr.net
@@ -2926,49 +1754,54 @@ Output rule count: 5992
 		Invalid network filter in rus-0: *$xmlhttprequest,redirect-rule=noopjs,domain=all-episodes.club|otzovik.com
 		Invalid network filter in rus-0: ||clustrmaps.com/counter/$image,redirect-rule=32x32.png
 		Invalid network filter in rus-0: ||ru/count/$image,important,redirect-rule=1x1.gif,domain=mail.ru|sportmail.ru
-Rejected cosmetic filters: 6
-	Invalid filter: pb.wtf##.table > tbody[id^="post_"]:-abp-has(a[style="position: relative;left: 13px; font-size: 16px; background: yellow;"])
-	Invalid filter: piratbit.fun##.table > tbody[id^="post_"]:-abp-has(a[style="position: relative;left: 13px; font-size: 16px; background: yellow;"])
-	Invalid filter: piratbit.org##.table > tbody[id^="post_"]:-abp-has(a[style="position: relative;left: 13px; font-size: 16px; background: yellow;"])
-	Invalid filter: piratbit.pw##.table > tbody[id^="post_"]:-abp-has(a[style="position: relative;left: 13px; font-size: 16px; background: yellow;"])
-	Invalid filter: piratbit.top##.table > tbody[id^="post_"]:-abp-has(a[style="position: relative;left: 13px; font-size: 16px; background: yellow;"])
-	Invalid filter: vidak.icu##.table > tbody[id^="post_"]:-abp-has(a[style="position: relative;left: 13px; font-size: 16px; background: yellow;"])
 CSS-generic: 307 plain CSS selectors
-CSS-specific distinct filters: 5293 distinct combined selectors
+CSS-specific domain-based: 9555 distinct filters
+	Combined into 5287 distinct entries
+CSS-specific entity-based: 0 distinct filters
+	Combined into 0 distinct entries
 CSS-specific injectable files: 21
-	1glp29o, 0saj1vs, 0abclu8, 01ma2hs, 1jmv4cc, 0of1ais, 0jmalh0, 063brbk, 1rqj29s, 0a3c4m8, 0k749d0, 0a5oujs, 1vvdu5o, 0g16tek, 00vv6bc, 03rd1sg, 1hdjf9c, 1kt7f1o, 1hq9n8c, 05mbuao, 0inn5s0
-Declarative-related distinct filters: 501 distinct combined selectors
+	0b7s408, 12ao3dc, 0t43tjs, 1s7vhk0, 18cpjhg, 0giksmo, 1e17doc, 15lkfug, 0kn76nk, 0o6r14k, 1jhoj54, 1p5qrvk, 1o31718, 0utlmc4, 17kni5k, 0cq7nn8, 079qpjg, 1ukjqo4, 1opron4, 08ekgqo, 068p13s
+Declarative-related distinct filters: 499 distinct combined selectors
 Procedural-related distinct filters: 221 distinct combined selectors
+Rejected scriptlet filters: 0
+
 Scriptlet-related distinct filters: 223
 Scriptlet-related injectable files: 7
 	rus-0.set-constant.js, rus-0.abort-on-property-read.js, rus-0.abort-current-script.js, rus-0.no-settimeout-if.js, rus-0.abort-on-property-write.js, rus-0.no-setinterval-if.js, rus-0.json-prune.js
+Rejected scriptlet filters: 0
+
+Scriptlet-related entity-based injectable files: 4
+	rus-0.abort-current-script.js, rus-0.set-constant.js, rus-0.abort-on-property-read.js, rus-0.no-settimeout-if.js
 ============================
 Listset for 'spa-0':
 	Fetching remote https://easylist-downloads.adblockplus.org/easylistspanish.txt
-Input filter count: 1254
-	Accepted filter count: 1254
+Input filter count: 1256
+	Accepted filter count: 1256
 	Rejected filter count: 0
-Output rule count: 715
-	Plain good: 706
+Output rule count: 716
+	Plain good: 707
 	Maybe good (regexes): 8
 	redirect=: 0
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
 	Unsupported: 1
 		Invalid network filter in spa-0: $webrtc,domain=allpeliculas.com|animeid.tv|booksmedicos.org|dompl3.info|gnula.biz|jkanime.net|pelispedia.tv
-CSS-generic: 221 plain CSS selectors
-CSS-specific distinct filters: 747 distinct combined selectors
+CSS-generic: 222 plain CSS selectors
+CSS-specific domain-based: 1274 distinct filters
+	Combined into 755 distinct entries
+CSS-specific entity-based: 0 distinct filters
+	Combined into 0 distinct entries
 CSS-specific injectable files: 3
-	0ur2bk0, 10ifj4g, 14vb3k8
-Procedural-related distinct filters: 17 distinct combined selectors
+	0btmnak, 1gl0v5c, 0p9fokk
+Procedural-related distinct filters: 18 distinct combined selectors
 ============================
 Listset for 'spa-1':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/9.txt
-Input filter count: 1423
-	Accepted filter count: 1418
+Input filter count: 1425
+	Accepted filter count: 1420
 	Rejected filter count: 0
-Output rule count: 947
-	Plain good: 913
+Output rule count: 950
+	Plain good: 916
 	Maybe good (regexes): 6
 	redirect=: 24
 	csp= (discarded): 0
@@ -2978,24 +1811,26 @@ Output rule count: 947
 		Could not salvage rule with only entity-based domain= option: netcine.*
 		regexFilter is not RE2-compatible: ^(?!.*(bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fastlylb.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|vk.com|yandex.|yastatic.net|ytimg.com|zencdn.net|player|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com)).*$
 		Could not salvage rule with only entity-based domain= option: anitube.*
-Rejected cosmetic filters: 8
-	Entity not supported: atomixhq.*##.featured-slides > li.slide:not([id]):has(a[href^="https://startgaming.net/"])
-	Entity not supported: atomixhq.*##.ads
-	Entity not supported: cuevana3.*##p[align="center"] > a[target="_blank"] > img
-	Entity not supported: atomixhq.*##a[href^="https://startgaming.net/"]
-	Entity not supported: mejortorrents1.*##iframe[src^="publi"]
-	Entity not supported: lectulandia.*###rightPromo
-	Entity not supported: lectulandia.*##.perfbtns2
-	Entity not supported: lectulandia.*##.bloky > a > img
+Rejected cosmetic filters: 1
+	Entity-based filter not supported: .featured-slides > li.slide:not([id]):has(a[href^="https://startgaming.net/"])
 CSS-generic: 81 plain CSS selectors
-CSS-specific distinct filters: 1063 distinct combined selectors
-CSS-specific injectable files: 5
-	1kacsi4, 137k76g, 0buqjfo, 10e1mto, 1dfshh4
+CSS-specific domain-based: 2023 distinct filters
+	Combined into 1069 distinct entries
+CSS-specific entity-based: 7 distinct filters
+	Combined into 4 distinct entries
+CSS-specific injectable files: 6
+	12nl4jo, 0k2c4ak, 0d8sj18, 1h1np5g, 0jirpe8, spa-1
 Declarative-related distinct filters: 70 distinct combined selectors
-Procedural-related distinct filters: 110 distinct combined selectors
+Procedural-related distinct filters: 112 distinct combined selectors
+Rejected scriptlet filters: 0
+
 Scriptlet-related distinct filters: 99
 Scriptlet-related injectable files: 6
 	spa-1.no-settimeout-if.js, spa-1.abort-on-property-write.js, spa-1.abort-on-property-read.js, spa-1.set-constant.js, spa-1.abort-current-script.js, spa-1.json-prune.js
+Rejected scriptlet filters: 0
+
+Scriptlet-related entity-based injectable files: 3
+	spa-1.set-constant.js, spa-1.abort-on-property-read.js, spa-1.abort-current-script.js
 ============================
 Listset for 'svn-0':
 	Fetching remote https://raw.githubusercontent.com/betterwebleon/slovenian-list/master/filters.txt
@@ -3011,7 +1846,10 @@ Output rule count: 103
 	Unsupported: 0
 
 CSS-generic: 4 plain CSS selectors
-CSS-specific distinct filters: 167 distinct combined selectors
+CSS-specific domain-based: 349 distinct filters
+	Combined into 167 distinct entries
+CSS-specific entity-based: 0 distinct filters
+	Combined into 0 distinct entries
 CSS-specific injectable files: 1
 	0qj9l9s
 Procedural-related distinct filters: 2 distinct combined selectors
@@ -3021,11 +1859,11 @@ Listset for 'swe-1':
 	Fetching remote https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Swedish/swe-ubo-filters.txt
 	Fetching remote https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Swedish/chromium.txt
 	Fetching remote https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Swedish/not_mobile.txt
-Input filter count: 1524
-	Accepted filter count: 1524
+Input filter count: 1518
+	Accepted filter count: 1518
 	Rejected filter count: 0
-Output rule count: 1156
-	Plain good: 1137
+Output rule count: 1150
+	Plain good: 1131
 	Maybe good (regexes): 2
 	redirect=: 9
 	csp= (discarded): 2
@@ -3035,11 +1873,16 @@ Output rule count: 1156
 		Unsupported regex-based removeParam: /^browser/
 		Unsupported regex-based removeParam: /^utm_/
 CSS-generic: 142 plain CSS selectors
-CSS-specific distinct filters: 592 distinct combined selectors
+CSS-specific domain-based: 647 distinct filters
+	Combined into 591 distinct entries
+CSS-specific entity-based: 0 distinct filters
+	Combined into 0 distinct entries
 CSS-specific injectable files: 3
-	1iuud28, 04qfhnc, 0ssc4d8
+	04norm4, 04qfhnc, 1jckslg
 Declarative-related distinct filters: 58 distinct combined selectors
 Procedural-related distinct filters: 201 distinct combined selectors
+Rejected scriptlet filters: 0
+
 Scriptlet-related distinct filters: 66
 Scriptlet-related injectable files: 8
 	swe-1.no-settimeout-if.js, swe-1.json-prune.js, swe-1.abort-current-script.js, swe-1.no-addeventlistener-if.js, swe-1.set-constant.js, swe-1.abort-on-property-write.js, swe-1.no-setinterval-if.js, swe-1.abort-on-property-read.js
@@ -3058,21 +1901,26 @@ Output rule count: 339
 	removeparams= (accepted/discarded): 0/0
 	Unsupported: 0
 
-CSS-specific distinct filters: 179 distinct combined selectors
+CSS-specific domain-based: 614 distinct filters
+	Combined into 179 distinct entries
+CSS-specific entity-based: 0 distinct filters
+	Combined into 0 distinct entries
 CSS-specific injectable files: 1
 	01f249s
 Procedural-related distinct filters: 11 distinct combined selectors
+Rejected scriptlet filters: 0
+
 Scriptlet-related distinct filters: 3
 Scriptlet-related injectable files: 3
 	tha-0.abort-on-property-read.js, tha-0.set-constant.js, tha-0.json-prune.js
 ============================
 Listset for 'tur-0':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/13.txt
-Input filter count: 1603
-	Accepted filter count: 1603
+Input filter count: 1605
+	Accepted filter count: 1605
 	Rejected filter count: 0
-Output rule count: 1191
-	Plain good: 1155
+Output rule count: 1193
+	Plain good: 1157
 	Maybe good (regexes): 13
 	redirect=: 15
 	csp= (discarded): 0
@@ -3086,163 +1934,44 @@ Output rule count: 1191
 		Could not salvage rule with only entity-based domain= option: yabancidizi.*
 		regexFilter is not RE2-compatible: ^(?!.*(bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fastlylb.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|vk.com|yandex.|yastatic.net|ytimg.com|zencdn.net|player|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com)).*$
 		Invalid network filter in tur-0: ||diziyoucdn.xyz/*.mp4$media,redirect-rule=noop-1s.mp4
-Rejected cosmetic filters: 147
-	Entity not supported: torrentarsivi.*###wrapfabtest { height: 1px !important; }
-	Entity not supported: torrentarsivi.*###eazy_ad_unblocker_holder
-	Entity not supported: vipfilmlerizle.*##.video-content > div[id^="welcomeDiv"] { remove: true; }
-	Entity not supported: filmizletv.*##.content-container .fw_playerAlti:has(> a[target="_blank"])
-	Entity not supported: filmizletv.*##.side-box > .fw_playerYaniKat2Ustu:has(> iframe[src*="filmizletv."][src*="/sidrek.htm"])
-	Entity not supported: diziyo.*###contenedor > div[class*="onceki"]:has(> center > iframe[src^="https://www.diziyo."][src*="/rklm/"])
-	Entity not supported: webteizle.*###sol > #embed:has(iframe) ~ #video-onu2 { remove: true; }
-	Entity not supported: dafflix.*##.rek-0 { remove: true; }
-	Entity not supported: dizitime.*##.col.pr-0 > div[class="bg-dt2"]:has(> a[href][target="_blank"])
-	Entity not supported: vipfilmlerizle.*##body { margin-top: 0 !important; }
-	Entity not supported: vipfilmlerizle.*##header.container { margin-top: 0 !important; }
-	Entity not supported: hdfilmcehennemi2.*##.money--video { display: none !important; }
-	Entity not supported: filmmakinesi.*##.wrapper { margin-top: 0 !important; }
-	Entity not supported: filmmakinesi.*##body { background-image: none !important; }
-	Entity not supported: fullhdfilmizlesene.*##div.duyuru-izle.duyuru-izle { margin-top: 20px !important; }
-	Entity not supported: fullhdfilmizlesene.*##div.orta[style^="margin-top:"]:not(.izle) { margin-top: 131px !important; }
-	Entity not supported: fullhdfilmizlesene.*##div.orta.izle[style^="margin-top:"]:not(#style_important) { margin-top: 180px !important; }
-	Entity not supported: filmizletv.*###mysite { margin-top: 0 !important; }
-	Entity not supported: filmzal.*###header { margin-top: 0 !important; }
-	Entity not supported: dizilla.*##div[style="float: left; width: calc(100% - 300px);"] { width: 100% !important; }
-	Entity not supported: tranimeizle.*##.previd-link { visibility: hidden!important; }
-	Entity not supported: vipfilmlerizle.*###cn-content { display: block !important; }
-	Entity not supported: vipfilmlerizle.*##.video-content > div[id^="welcomeDiv"] { display: none !important; }
-	Entity not supported: filmizlesene.*##.vidcontainer { display: none !important; }
-	Entity not supported: filmizlesene.*###episode { height: unset !important; width: unset !important; position: unset !important; overflow: unset !important; }
-	Entity not supported: elzemfilmizle.*###kendisi { display: block !important; }
-	Entity not supported: elzemfilmizle.*###reki2 { display: none !important; }
-	Entity not supported: siyahfilmizle.*###reki1 { display: none !important; }
-	Entity not supported: siyahfilmizle.*###player { display: block !important; }
-	Entity not supported: fullhdizle.*###kendisi { display: block !important; }
-	Entity not supported: fullhdizle.*###vrklm { display: none !important; }
-	Entity not supported: filmizletv.*###reki1 { display: none !important; }
-	Entity not supported: filmizletv.*###kendisi { display: block !important; }
-	Entity not supported: fullhdfilmmodu.*###reki1 { display: none !important; }
-	Entity not supported: fullhdfilmmodu.*###kendisi { display: block !important; }
-	Entity not supported: hdfilmcehennemi2.*##div[id^="reki"] { display: none !important; }
-	Entity not supported: hdfilmcehennemi2.*###kendisi { display: block !important; }
-	Entity not supported: vipfilmlerizle.*##html > body { background-image: none !important; }
-	Entity not supported: jetfilmizle.*##body { background-image: none !important; }
-	Entity not supported: dizilab9.*##body { background-image: none !important; }
-	Entity not supported: dizilab8.*##body { background-image: none !important; }
-	Entity not supported: filmizletv.*##body { background-image: none !important; }
-	Entity not supported: dizilab9.*##body .banner
-	Entity not supported: dizilab8.*##body .banner
-	Entity not supported: fullhdizle.*##.footer-sticky
-	Entity not supported: altyazilifilm.*##.footer-sticky
-	Entity not supported: vipfilmlerizle.*###iframe-reklam
-	Entity not supported: hdfilmcehennemi2.*##.money:not(.money--video)
-	Entity not supported: dafflix.*##.right.floated > div[data-gets] > a[href][target="_blank"] > img
-	Entity not supported: dafflix.*##.rek-wrap > *:not(b)
-	Entity not supported: dafflix.*##.rek-0
-	Entity not supported: fullhdizle.*###footer-fixed
-	Entity not supported: jetfilmizle.*###movie-sidebar > a[target="_blank"]
-	Entity not supported: elzemfilmizle.*##.ust-reklam
-	Entity not supported: sinepal.*###reki
-	Entity not supported: sinepal.*##body .ads-skin
-	Entity not supported: siyahfilmizle.*##.sticky-footer-banner
-	Entity not supported: filmzal.*##.mst_ad
-	Entity not supported: jetfilmizle.*##.singleSag
-	Entity not supported: jetfilmizle.*##.row > div.container > div.table-container
-	Entity not supported: fullhdizle.*##div[onclick^="event.preventDefault();window.open("]
-	Entity not supported: dizilab9.*##.close_page_skin
-	Entity not supported: dizilab8.*##.close_page_skin
-	Entity not supported: dizilab9.*##div[data-tur^="ads"]
-	Entity not supported: dizilab8.*##div[data-tur^="ads"]
-	Entity not supported: setfilmizle.*##.pageskin-top
-	Entity not supported: setfilmizle.*##.set-pageskin
-	Entity not supported: setfilmizle.*##.menu_alti_reklam
-	Entity not supported: setfilmizle.*###footadskpt
-	Entity not supported: diziyo.*###footadskpt
-	Entity not supported: filmzal.*##.player-top-ad a
-	Entity not supported: dizisup.*##.player-top-ad a
-	Entity not supported: dizibox.*##.pull-right > div.box-sidebar
-	Entity not supported: dizibox.*##.adv.full-width.pull-left
-	Entity not supported: dizisup.*##.st_ad
-	Entity not supported: filmzal.*##.st_ad
-	Entity not supported: filmizletv.*##.fw_footerFixed
-	Entity not supported: filmizletv.*##.ustheadreklam
-	Entity not supported: filmizletv.*##div[style^="min-height:"]
-	Entity not supported: filmizletv.*##.fw_anaRklm
-	Entity not supported: filmizletv.*##.fw_headerRklm
-	Entity not supported: filmizletv.*##.side-box > .fw_playerYaniKat2Ustu:empty
-	Entity not supported: filmizletv.*##.content-container > .fw_playerAlti[style]:empty
-	Entity not supported: filmizletv.*##iframe[src*="filmizletv."][src*="/sidrek.htm"]
-	Entity not supported: filmizletv.*##.footerFixReklam
-	Entity not supported: filmizletv.*##.footerKapat
-	Entity not supported: filmizletv.*###mysite > div > a > img
-	Entity not supported: filmizletv.*##.content-container > div > a > img
-	Entity not supported: yabancidizi.*##hr[style^="margin: 5px 0;"][style*="border-color: #42e3d0;"]
-	Entity not supported: webteizle.*##a[href^="https://accounts.binance.me/"]
-	Entity not supported: hdfilmcehennemi2.*##a[href^="https://bgel.moderjat.com/?partner"]
-	Entity not supported: hdfilmcehennemi.*##a[href^="https://bgel.moderjat.com/?partner"]
-	Entity not supported: hdfilmcehennemi2.*##.rotorfon-top-indent
-	Entity not supported: hdfilmcehennemi.*##.rotorfon-top-indent
-	Entity not supported: hdfilmcehennemi2.*##.card-money
-	Entity not supported: hdfilmcehennemi.*##.card-money
-	Entity not supported: hdfilmcehennemi2.*##.money-text
-	Entity not supported: hdfilmcehennemi.*##.money-text
-	Entity not supported: hdfilmcehennemi.*##.play-that-video a[target="_blank"]
-	Entity not supported: filmzal.*##.pgskn
-	Entity not supported: hdfilmcehennemi.*##.pgskn
-	Entity not supported: hdfilmcehennemi.*##.money
-	Entity not supported: filmmakinesi1.*##.malker
-	Entity not supported: filmmakinesi.*##.malker
-	Entity not supported: filmmakinesi.*###benzerler
-	Entity not supported: yabancidizi.*##*:not(.poster) > a[href][target="_blank"] > img
-	Entity not supported: yabancidizi.*##a[href^="https://accounts.binance.com/tr/register"]
-	Entity not supported: yabancidizitv.*##.videoalt
-	Entity not supported: yabancidizitv.*##.videoust
-	Entity not supported: dizilla.*##img[src^="https://finema-net.cdn.ampproject.org/"]
-	Entity not supported: yabancidizi.*##center > a[href][target="_blank"]
-	Entity not supported: 31vakti.*###advid > iframe + div[style^="display: block;"][style*="position: absolute;"][style*="z-index:"]
-	Entity not supported: radyodinle.*##.ad-right-area
-	Entity not supported: fullhdizle.*##a[href^="https://bit.ly/"]
-	Entity not supported: hdfilmcehennemi2.*##a[href^="https://bit.ly/"]
-	Entity not supported: filmyani.*##a[href^="https://bit.ly/"]
-	Entity not supported: yabancidizi.*###rek-container
-	Entity not supported: filmmakinesi.*##.adbetnetwork
-	Entity not supported: dizisup.*###footerFixedDiv
-	Entity not supported: dizilla.*###footerFixedDiv
-	Entity not supported: webteizle.*##iframe[src^="https://wlearnlounge.adsrv.eacdn.com/"]
-	Entity not supported: dizimov.*##.rek-wrap
-	Entity not supported: dizitime.*##.prevideo
-	Entity not supported: dizitime.*##.col.pr-0 a[href][target="_blank"] > img
-	Entity not supported: dizibox.*##a[href][target="_blank"] > img
-	Entity not supported: dizilla.*###preRollBd
-	Entity not supported: tranimeizle.*##.video-ad-container
-	Entity not supported: enyenifilmizle.*##.body-clickable
-	Entity not supported: dizitime.*###melbet
-	Entity not supported: tranimeizle.*##.add-inner
-	Entity not supported: fullhdfilmmodu.*###wrap a[target="_blank"] > img
-	Entity not supported: fullhdfilmmodu.*##.btbg
-	Entity not supported: fullhdfilmizlesene.*##.btbg
-	Entity not supported: dizitime.*##.btbg
-	Entity not supported: filmmakinesi.*###single_1_aciklama_alt
-	Entity not supported: filmmakinesi.*###film > div[class*="-metin"]
-	Entity not supported: dizitime.*##a[href][target="_blank"][rel="nofollow"] > img
-	Entity not supported: filmyani.*##a[href][target="_blank"][rel="nofollow"] > img
-	Entity not supported: dizilab9.*###sticky
-	Entity not supported: dizilab8.*###sticky
-	Entity not supported: filmmakinesi.*###fixedreklam
-	Entity not supported: hdfilmcehennemi2.*###pageskin
-	Entity not supported: yabancidizi.*###pageskin
-	Entity not supported: dizibox.*###pageskin
-	Entity not supported: fullhdfilmizlesene.*##.psk
-	Entity not supported: fullhdfilmizlesene.*##.rekgec-div
-	Entity not supported: webteizle.*##img[alt="reklam"]
+Rejected cosmetic filters: 19
+	Entity-based filter not supported: .video-content > div[id^="welcomeDiv"]:remove()
+	Entity-based filter not supported: .content-container .fw_playerAlti:has(> a[target="_blank"])
+	Entity-based filter not supported: .side-box > .fw_playerYaniKat2Ustu:has(> iframe[src*="filmizletv."][src*="/sidrek.htm"])
+	Entity-based filter not supported: #contenedor > div[class*="onceki"]:has(> center > iframe[src^="https://www.diziyo."][src*="/rklm/"])
+	Entity-based filter not supported: #sol > #embed:has(iframe) ~ #video-onu2:remove()
+	Entity-based filter not supported: .rek-0:remove()
+	Entity-based filter not supported: .col.pr-0 > div[class="bg-dt2"]:has(> a[href][target="_blank"])
+	Entity-based filter not supported: body:style(margin-top: 0 !important;)
+	Entity-based filter not supported: header.container:style(margin-top: 0 !important;)
+	Entity-based filter not supported: .wrapper:style(margin-top: 0 !important;)
+	Entity-based filter not supported: div.duyuru-izle.duyuru-izle:style(margin-top: 20px !important;)
+	Entity-based filter not supported: div.orta[style^="margin-top:"]:not(.izle):style(margin-top: 131px !important;)
+	Entity-based filter not supported: div.orta.izle[style^="margin-top:"]:not(#style_important):style(margin-top: 180px !important;)
+	Entity-based filter not supported: #mysite:style(margin-top: 0 !important;)
+	Entity-based filter not supported: div[style="float: left; width: calc(100% - 300px);"]:style(width: 100% !important;)
+	Entity-based filter not supported: .previd-link:style(visibility: hidden!important;)
+	Entity-based filter not supported: #episode:style(height: unset !important; width: unset !important; position: unset !important; overflow: unset !important;)
+	Entity-based filter not supported: #player:style(display: block !important;)
+	Entity-based filter not supported: html > body:style(background-image: none !important;)
 CSS-generic: 107 plain CSS selectors
-CSS-specific distinct filters: 1489 distinct combined selectors
-CSS-specific injectable files: 6
-	0kcs6qo, 0i95q0s, 1mpg43c, 0g07648, 0o8c2t8, 1rmo71g
+CSS-specific domain-based: 2874 distinct filters
+	Combined into 1491 distinct entries
+CSS-specific entity-based: 91 distinct filters
+	Combined into 42 distinct entries
+CSS-specific injectable files: 7
+	0f3nrm0, 0uk8av0, 03eu3b8, 0pp0cdc, 1mvedjs, 10motoc, tur-0
 Declarative-related distinct filters: 108 distinct combined selectors
 Procedural-related distinct filters: 230 distinct combined selectors
+Rejected scriptlet filters: 0
+
 Scriptlet-related distinct filters: 77
 Scriptlet-related injectable files: 7
 	tur-0.no-settimeout-if.js, tur-0.set-constant.js, tur-0.abort-on-property-read.js, tur-0.abort-current-script.js, tur-0.abort-on-property-write.js, tur-0.json-prune.js, tur-0.no-setinterval-if.js
+Rejected scriptlet filters: 0
+
+Scriptlet-related entity-based injectable files: 2
+	tur-0.set-constant.js, tur-0.abort-on-property-read.js
 ============================
 Listset for 'vie-1':
 	Fetching remote https://raw.githubusercontent.com/abpvn/abpvn/master/filter/abpvn_ublock.txt
@@ -3260,11 +1989,16 @@ Output rule count: 568
 Rejected cosmetic filters: 1
 	Invalid filter: m.blogtruyen.vn##.mb10.item:-abp-has(a[href^="https://www.vb135.com/"])
 CSS-generic: 24 plain CSS selectors
-CSS-specific distinct filters: 419 distinct combined selectors
+CSS-specific domain-based: 769 distinct filters
+	Combined into 418 distinct entries
+CSS-specific entity-based: 0 distinct filters
+	Combined into 0 distinct entries
 CSS-specific injectable files: 2
-	0j3m0i8, 0d3lvr8
+	0hrshq0, 0kcmcds
 Declarative-related distinct filters: 2 distinct combined selectors
 Procedural-related distinct filters: 1 distinct combined selectors
+Rejected scriptlet filters: 0
+
 Scriptlet-related distinct filters: 39
 Scriptlet-related injectable files: 6
 	vie-1.abort-current-script.js, vie-1.abort-on-property-read.js, vie-1.abort-on-property-write.js, vie-1.no-settimeout-if.js, vie-1.json-prune.js, vie-1.set-constant.js
@@ -3375,8 +2109,8 @@ Output rule count: 6
 ============================
 Listset for 'stevenblack-hosts':
 	Fetching remote https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
-Input filter count: 155214
-	Accepted filter count: 155214
+Input filter count: 155891
+	Accepted filter count: 155891
 	Rejected filter count: 0
 Output rule count: 2
 	Plain good: 2
