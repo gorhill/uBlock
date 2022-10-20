@@ -133,8 +133,9 @@ function registerGeneric(context, genericDetails) {
         if ( hostnames !== undefined ) {
             excludeHostnames.push(...hostnames);
         }
+        if ( details.css.generic instanceof Object === false ) { continue; }
         if ( details.css.generic.count === 0 ) { continue; }
-        js.push(`/rulesets/scripting/generic/${details.id}.generic.js`);
+        js.push(`/rulesets/scripting/generic/${details.id}.js`);
     }
 
     if ( js.length === 0 ) { return; }
@@ -202,7 +203,7 @@ function registerProcedural(context, proceduralDetails) {
     const hostnameMatches = [];
     for ( const details of rulesetsDetails ) {
         if ( details.css.procedural === 0 ) { continue; }
-        js.push(`/rulesets/scripting/procedural/${details.id}.procedural.js`);
+        js.push(`/rulesets/scripting/procedural/${details.id}.js`);
         if ( proceduralDetails.has(details.id) ) {
             hostnameMatches.push(...proceduralDetails.get(details.id));
         }
@@ -278,7 +279,7 @@ function registerDeclarative(context, declarativeDetails) {
     const hostnameMatches = [];
     for ( const details of rulesetsDetails ) {
         if ( details.css.declarative === 0 ) { continue; }
-        js.push(`/rulesets/scripting/declarative/${details.id}.declarative.js`);
+        js.push(`/rulesets/scripting/declarative/${details.id}.js`);
         if ( declarativeDetails.has(details.id) ) {
             hostnameMatches.push(...declarativeDetails.get(details.id));
         }
@@ -415,6 +416,71 @@ function registerScriptlet(context, scriptletDetails) {
                 context.toUpdate.push(directive);
             }
         }
+    }
+}
+
+/******************************************************************************/
+
+function registerScriptletEntity(context) {
+    const { before, filteringModeDetails, rulesetsDetails } = context;
+
+    const js = [];
+    for ( const details of rulesetsDetails ) {
+        const { scriptlets }  = details;
+        if ( scriptlets instanceof Object === false ) { continue; }
+        if ( Array.isArray(scriptlets.entityBasedTokens) === false ) { continue; }
+        if ( scriptlets.entityBasedTokens.length === 0 ) { continue; }
+        for ( const token of scriptlets.entityBasedTokens ) {
+            js.push(`/rulesets/scripting/scriptlet-entity/${details.id}.${token}.js`);
+        }
+    }
+
+    if ( js.length === 0 ) { return; }
+
+    const matches = [];
+    const excludeMatches = [];
+    if ( filteringModeDetails.extendedGeneric.has('all-urls') ) {
+        excludeMatches.push(...ut.matchesFromHostnames(filteringModeDetails.none));
+        excludeMatches.push(...ut.matchesFromHostnames(filteringModeDetails.network));
+        excludeMatches.push(...ut.matchesFromHostnames(filteringModeDetails.extendedSpecific));
+        matches.push('<all_urls>');
+    } else {
+        matches.push(
+            ...ut.matchesFromHostnames(filteringModeDetails.extendedGeneric)
+        );
+    }
+
+    if ( matches.length === 0 ) { return; }
+
+    const registered = before.get('scriptlet.entity');
+    before.delete('scriptlet.entity'); // Important!
+
+    // register
+    if ( registered === undefined ) {
+        context.toAdd.push({
+            id: 'scriptlet.entity',
+            js,
+            matches,
+            excludeMatches,
+            runAt: 'document_start',
+            world: 'MAIN',
+        });
+        return;
+    }
+
+    // update
+    const directive = { id: 'scriptlet.entity' };
+    if ( arrayEq(registered.js, js, false) === false ) {
+        directive.js = js;
+    }
+    if ( arrayEq(registered.matches, matches) === false ) {
+        directive.matches = matches;
+    }
+    if ( arrayEq(registered.excludeMatches, excludeMatches) === false ) {
+        directive.excludeMatches = excludeMatches;
+    }
+    if ( directive.js || directive.matches || directive.excludeMatches ) {
+        context.toUpdate.push(directive);
     }
 }
 
@@ -561,6 +627,68 @@ const toUpdatableScript = (context, fname, hostnames) => {
 
 /******************************************************************************/
 
+function registerSpecificEntity(context) {
+    const { before, filteringModeDetails, rulesetsDetails } = context;
+
+    const js = [];
+    for ( const details of rulesetsDetails ) {
+        if ( details.css.specific instanceof Object === false ) { continue; }
+        if ( details.css.specific.entityBased === 0 ) { continue; }
+        js.push(`/rulesets/scripting/specific-entity/${details.id}.js`);
+    }
+
+    if ( js.length === 0 ) { return; }
+
+    const matches = [];
+    const excludeMatches = [];
+    if ( filteringModeDetails.extendedGeneric.has('all-urls') ) {
+        excludeMatches.push(...ut.matchesFromHostnames(filteringModeDetails.none));
+        excludeMatches.push(...ut.matchesFromHostnames(filteringModeDetails.network));
+        excludeMatches.push(...ut.matchesFromHostnames(filteringModeDetails.extendedSpecific));
+        matches.push('<all_urls>');
+    } else {
+        matches.push(
+            ...ut.matchesFromHostnames(filteringModeDetails.extendedGeneric)
+        );
+    }
+
+    if ( matches.length === 0 ) { return; }
+
+    js.push('/js/scripting/css-specific.entity.js');
+
+    const registered = before.get('css-specific.entity');
+    before.delete('css-specific.entity'); // Important!
+
+    // register
+    if ( registered === undefined ) {
+        context.toAdd.push({
+            id: 'css-specific.entity',
+            js,
+            matches,
+            excludeMatches,
+            runAt: 'document_start',
+        });
+        return;
+    }
+
+    // update
+    const directive = { id: 'css-specific.entity' };
+    if ( arrayEq(registered.js, js, false) === false ) {
+        directive.js = js;
+    }
+    if ( arrayEq(registered.matches, matches) === false ) {
+        directive.matches = matches;
+    }
+    if ( arrayEq(registered.excludeMatches, excludeMatches) === false ) {
+        directive.excludeMatches = excludeMatches;
+    }
+    if ( directive.js || directive.matches || directive.excludeMatches ) {
+        context.toUpdate.push(directive);
+    }
+}
+
+/******************************************************************************/
+
 async function registerInjectables(origins) {
     void origins;
 
@@ -604,7 +732,9 @@ async function registerInjectables(origins) {
     registerDeclarative(context, declarativeDetails);
     registerProcedural(context, proceduralDetails);
     registerScriptlet(context, scriptletDetails);
+    registerScriptletEntity(context);
     registerSpecific(context, specificDetails);
+    registerSpecificEntity(context);
     registerGeneric(context, genericDetails);
 
     toRemove.push(...Array.from(before.keys()));

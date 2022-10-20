@@ -295,12 +295,17 @@ async function init() {
         if ( popupPanelData.hasOmnipotence ) {
             ruleCount += rules.removeparam + rules.redirect;
         }
+        let specificCount = 0;
+        if ( css.specific instanceof Object ) {
+            specificCount += css.specific.domainBased;
+            specificCount += css.specific.entityBased;
+        }
         dom.text(
             qs$('p', div),
             i18n$('perRulesetStats')
                 .replace('{{ruleCount}}', ruleCount.toLocaleString())
                 .replace('{{filterCount}}', filters.accepted.toLocaleString())
-                .replace('{{cssSpecificCount}}', css.specific.toLocaleString())
+                .replace('{{cssSpecificCount}}', specificCount.toLocaleString())
         );
         parent.append(div);
     }

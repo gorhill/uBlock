@@ -134,6 +134,7 @@ async function setFilteringModeDetails(afterDetails) {
                 requestDomains: [],
                 resourceTypes: [ 'main_frame' ],
             },
+            priority: 100,
         };
         if ( actualDetails.none.size ) {
             rule.condition.requestDomains = Array.from(actualDetails.none);

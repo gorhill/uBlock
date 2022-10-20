@@ -100,12 +100,10 @@ function addExtendedToDNR(context, parser) {
         const { raw, exception } = parser.result;
         for ( const { hn, not, bad } of parser.extOptions() ) {
             if ( bad ) { continue; }
-            if ( hn.endsWith('.*') ) { continue; }
             if ( exception ) { continue; }
             let details = context.scriptletFilters.get(raw);
             if ( details === undefined ) {
-                details = {};
-                context.scriptletFilters.set(raw, details);
+                context.scriptletFilters.set(raw, details = {});
             }
             if ( not ) {
                 if ( details.excludeMatches === undefined ) {
@@ -174,8 +172,6 @@ function addExtendedToDNR(context, parser) {
         let rejected;
         if ( compiled === undefined ) {
             rejected = `Invalid filter: ${hn}##${raw}`;
-        } else if ( hn.endsWith('.*') ) {
-            rejected = `Entity not supported: ${hn}##${raw}`;
         }
         if ( rejected ) {
             compiled = rejected;

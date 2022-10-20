@@ -4298,7 +4298,7 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
         filterCount: context.filterCount,
         acceptedFilterCount: context.acceptedFilterCount,
         rejectedFilterCount: context.rejectedFilterCount,
-        generichideExclusions,
+        generichideExclusions: Array.from(new Set(generichideExclusions)),
     };
 };
 
