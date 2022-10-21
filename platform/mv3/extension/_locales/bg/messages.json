@@ -80,15 +80,15 @@
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {
-    "message": "Повече",
+    "message": "Още",
     "description": "Label to be used to show popup panel sections"
   },
   "popupGrantGreatPowers": {
-    "message": "Кликнете, за да предоставите разширени разрешения на uBO Lite на този сайт.\nРазширените разрешения позволяват по-ефективно блокиране на съдържание.",
+    "message": "Щракнете, за да предоставите на uBO Lite разширени разрешения за този сайт.\nРазширените разрешения позволяват по-ефективно блокиране на съдържанието.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupRevokeGreatPowers": {
-    "message": "Кликнете, за да отмените разширените разрешения на този сайт",
+    "message": "Щракнете, за да отмените разширените разрешения за този сайт",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
@@ -114,6 +114,14 @@
   "settingsNoCSPReportsPrompt": {
     "message": "Блокиране на CSP отчетите",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
+  },
+  "omnipotenceLabel": {
+    "message": "Активиране на разширеното филтриране на всички уебсайтове",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "omnipotenceLegend": {
+    "message": "uBO Lite може да приложи разширено филтриране на даден уебсайт само след като изрично предоставите разрешения на разширението за промяна на данни на този уебсайт. Тази настройка ви позволява да предоставите разрешения за разширено филтриране на всички уебсайтове наведнъж.",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Стандартни",
@@ -214,5 +222,57 @@
   "genericRevert": {
     "message": "Връщане",
     "description": "for generic 'Revert' buttons"
+  },
+  "firstRunSectionLabel": {
+    "message": "Добре дошли",
+    "description": "The header text for the welcome message section"
+  },
+  "firstRunDescription": {
+    "message": "Току-що инсталирахте uBO Lite. Тук можете да изберете режима на филтриране по подразбиране, който да се използва за всички уебсайтове.\n\nПо подразбиране е избран <em>основен</em> режим, тъй като той не изисква разрешение за четене и промяна на данни. Ако се доверите на uBO Lite, можете да му дадете широко разрешение да чете и променя данни на всички уебсайтове, за да активирате по-разширени възможности за филтриране за всички уебсайтове по подразбиране.",
+    "description": "Descriptive text shown at first install time only "
+  },
+  "defaultFilteringModeSectionLabel": {
+    "message": "Режим на филтриране по подразбиране",
+    "description": "The header text for the default filtering mode section"
+  },
+  "defaultFilteringModeDescription": {
+    "message": "Режимът на филтриране по подразбиране ще бъде заменен от режимите на филтриране за всеки сайт. Можете да регулирате режима на филтриране на всеки уебсайт в зависимост от това кой режим работи най-добре за този уебсайт. Всеки режим има своите предимства и недостатъци.",
+    "description": "This describes the default filtering mode setting"
+  },
+  "filteringMode0Name": {
+    "message": "без филтриране",
+    "description": "Name of blocking mode 0"
+  },
+  "filteringMode1Name": {
+    "message": "основен",
+    "description": "Name of blocking mode 1"
+  },
+  "filteringMode2Name": {
+    "message": "оптимален",
+    "description": "Name of blocking mode 2"
+  },
+  "filteringMode3Name": {
+    "message": "пълен",
+    "description": "Name of blocking mode 3"
+  },
+  "basicFilteringModeDescription": {
+    "message": "Основно мрежово филтриране от избрани списъци с филтри.\n\nНе изисква разрешение за четене и промяна на данни в уебсайтове.",
+    "description": "This describes the 'basic' filtering mode"
+  },
+  "optimalFilteringModeDescription": {
+    "message": "Разширено мрежово филтриране и специфично разширено филтриране от избрани списъци с филтри.\n\nИзисква широко разрешение за четене и промяна на данни във всички уебсайтове.",
+    "description": "This describes the 'optimal' filtering mode"
+  },
+  "completeFilteringModeDescription": {
+    "message": "Разширено мрежово филтриране и специфично и общо разширено филтриране от избрани списъци с филтри.\n\nИзисква широко разрешение за четене и промяна на данни във всички уебсайтове.\n\nОбщото разширено филтриране може да доведе до по-голямо използване на ресурси от уебстраницата.",
+    "description": "This describes the 'complete' filtering mode"
+  },
+  "behaviorSectionLabel": {
+    "message": "Поведение",
+    "description": "The header text for the 'Behavior' section"
+  },
+  "autoReloadLabel": {
+    "message": "Автоматично презареждане на страницата при промяна на режима на филтриране",
+    "description": "Label for a checkbox in the options page"
   }
 }

@@ -142,8 +142,8 @@ const typeValueToTypeName = [
     'image',
     'object',
     'script',
-    'xmlhttprequest',
-    'sub_frame',
+    'xhr',
+    'frame',
     'font',
     'media',
     'websocket',
@@ -162,6 +162,22 @@ const typeValueToTypeName = [
     'webrtc',
     'unsupported',
 ];
+
+const typeValueToDNRTypeName = [
+    '',
+    'stylesheet',
+    'image',
+    'object',
+    'script',
+    'xmlhttprequest',
+    'sub_frame',
+    'font',
+    'media',
+    'websocket',
+    'ping',
+    'other',
+];
+
 
 //const typeValueFromCatBits = catBits => (catBits >>> TypeBitsOffset) & 0b11111;
 
@@ -615,11 +631,6 @@ const dnrRuleFromCompiled = (args, rule) => {
 const dnrAddRuleError = (rule, msg) => {
     rule._error = rule._error || [];
     rule._error.push(msg);
-};
-
-const dnrAddRuleWarning = (rule, msg) => {
-    rule._warning = rule._warning || [];
-    rule._warning.push(msg);
 };
 
 /*******************************************************************************
@@ -1279,15 +1290,19 @@ const FilterNotType = class {
 
     static dnrFromCompiled(args, rule) {
         rule.condition = rule.condition || {};
-        if ( rule.condition.excludedResourceTypes === undefined ) {
-            rule.condition.excludedResourceTypes = [];
+        const rc = rule.condition;
+        if ( rc.excludedResourceTypes === undefined ) {
+            rc.excludedResourceTypes = [ 'main_frame' ];
         }
         let bits = args[1];
-        for ( let i = 1; bits !== 0 && i < typeValueToTypeName.length; i++ ) {
+        for ( let i = 1; bits !== 0 && i < typeValueToDNRTypeName.length; i++ ) {
             const bit = 1 << (i - 1);
             if ( (bits & bit) === 0 ) { continue; }
             bits &= ~bit;
-            rule.condition.excludedResourceTypes.push(`${typeValueToTypeName[i]}`);
+            const type = typeValueToDNRTypeName[i];
+            if ( type === undefined ) { continue; }
+            if ( rc.excludedResourceTypes.includes(type) ) { continue; }
+            rc.excludedResourceTypes.push(type);
         }
     }
 
@@ -1725,11 +1740,6 @@ const FilterOriginEntityHit = class extends FilterOriginHit {
     static compile(entity) {
         return [ FilterOriginEntityHit.fid, entity ];
     }
-
-    static dnrFromCompiled(args, rule) {
-        dnrAddRuleError(rule, `Entity not supported: ${args[1]}`);
-        super.dnrFromCompiled(args, rule);
-    }
 };
 
 registerFilterClass(FilterOriginEntityHit);
@@ -1743,11 +1753,6 @@ const FilterOriginEntityMiss = class extends FilterOriginMiss {
 
     static compile(entity) {
         return [ FilterOriginEntityMiss.fid, entity ];
-    }
-
-    static dnrFromCompiled(args, rule) {
-        dnrAddRuleError(rule, `Entity not supported: ${args[1]}`);
-        super.dnrFromCompiled(args, rule);
     }
 };
 
@@ -2608,7 +2613,7 @@ const FilterStrictParty = class {
 
     static dnrFromCompiled(args, rule) {
         const partyness = args[1] === 0 ? 1 : 3;
-        dnrAddRuleError(rule, `Strict partyness not supported: strict${partyness}p`);
+        dnrAddRuleError(rule, `FilterStrictParty: Strict partyness strict${partyness}p not supported`);
     }
 
     static keyFromArgs(args) {
@@ -2876,6 +2881,7 @@ class FilterCompiler {
             [ parser.OPTTokenWebrtc, bitFromType('unsupported') ],
             [ parser.OPTTokenWebsocket, bitFromType('websocket') ],
         ]);
+        this.excludedOptionSet = new Set();
         // These top 100 "bad tokens" are collated using the "miss" histogram
         // from tokenHistograms(). The "score" is their occurrence among the
         // 200K+ URLs used in the benchmark and executed against default
@@ -3038,6 +3044,12 @@ class FilterCompiler {
         return '';
     }
 
+    excludeOptions(options) {
+        for ( const option of options ) {
+            this.excludedOptionSet.add(option);
+        }
+    }
+
     // https://github.com/chrisaljoudi/uBlock/issues/589
     // Be ready to handle multiple negated types
 
@@ -3094,30 +3106,31 @@ class FilterCompiler {
     }
 
     processOptions() {
-        for ( let { id, val, not } of this.parser.netOptions() ) {
+        const { parser } = this;
+        for ( let { id, val, not } of parser.netOptions() ) {
             switch ( id ) {
-            case this.parser.OPTToken1p:
+            case parser.OPTToken1p:
                 this.processPartyOption(true, not);
                 break;
-            case this.parser.OPTToken1pStrict:
+            case parser.OPTToken1pStrict:
                 this.strictParty = this.strictParty === -1 ? 0 : 1;
                 this.optionUnitBits |= this.STRICT_PARTY_BIT;
                 break;
-            case this.parser.OPTToken3p:
+            case parser.OPTToken3p:
                 this.processPartyOption(false, not);
                 break;
-            case this.parser.OPTToken3pStrict:
+            case parser.OPTToken3pStrict:
                 this.strictParty = this.strictParty === 1 ? 0 : -1;
                 this.optionUnitBits |= this.STRICT_PARTY_BIT;
                 break;
-            case this.parser.OPTTokenAll:
+            case parser.OPTTokenAll:
                 this.processTypeOption(-1);
                 break;
             // https://github.com/uBlockOrigin/uAssets/issues/192
-            case this.parser.OPTTokenBadfilter:
+            case parser.OPTTokenBadfilter:
                 this.badFilter = true;
                 break;
-            case this.parser.OPTTokenCsp:
+            case parser.OPTTokenCsp:
                 if ( this.processModifierOption(id, val) === false ) {
                     return false;
                 }
@@ -3129,7 +3142,7 @@ class FilterCompiler {
             // https://github.com/gorhill/uBlock/issues/2294
             //   Detect and discard filter if domain option contains
             //   nonsensical characters.
-            case this.parser.OPTTokenDomain:
+            case parser.OPTTokenDomain:
                 this.domainOpt = this.processHostnameList(
                     val,
                     0b1010,
@@ -3138,73 +3151,76 @@ class FilterCompiler {
                 if ( this.domainOpt === '' ) { return false; }
                 this.optionUnitBits |= this.DOMAIN_BIT;
                 break;
-            case this.parser.OPTTokenDenyAllow:
+            case parser.OPTTokenDenyAllow:
                 this.denyallowOpt = this.processHostnameList(val, 0b0000);
                 if ( this.denyallowOpt === '' ) { return false; }
                 this.optionUnitBits |= this.DENYALLOW_BIT;
                 break;
             // https://www.reddit.com/r/uBlockOrigin/comments/d6vxzj/
             //   Add support for `elemhide`. Rarely used but it happens.
-            case this.parser.OPTTokenEhide:
-                this.processTypeOption(this.parser.OPTTokenShide, not);
-                this.processTypeOption(this.parser.OPTTokenGhide, not);
+            case parser.OPTTokenEhide:
+                this.processTypeOption(parser.OPTTokenShide, not);
+                this.processTypeOption(parser.OPTTokenGhide, not);
                 break;
-            case this.parser.OPTTokenHeader:
+            case parser.OPTTokenHeader:
                 this.headerOpt = val !== undefined ? val : '';
                 this.optionUnitBits |= this.HEADER_BIT;
                 break;
-            case this.parser.OPTTokenImportant:
+            case parser.OPTTokenImportant:
                 if ( this.action === AllowAction ) { return false; }
                 this.optionUnitBits |= this.IMPORTANT_BIT;
                 this.action = BlockImportant;
                 break;
             // Used by Adguard:
             // https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters#empty-modifier
-            case this.parser.OPTTokenEmpty:
+            case parser.OPTTokenEmpty:
                 id = this.action === AllowAction
-                    ? this.parser.OPTTokenRedirectRule
-                    : this.parser.OPTTokenRedirect;
+                    ? parser.OPTTokenRedirectRule
+                    : parser.OPTTokenRedirect;
                 if ( this.processModifierOption(id, 'empty') === false ) {
                     return false;
                 }
                 this.optionUnitBits |= this.REDIRECT_BIT;
                 break;
-            case this.parser.OPTTokenMatchCase:
+            case parser.OPTTokenMatchCase:
                 this.patternMatchCase = true;
                 break;
-            case this.parser.OPTTokenMp4:
+            case parser.OPTTokenMp4:
                 id = this.action === AllowAction
-                    ? this.parser.OPTTokenRedirectRule
-                    : this.parser.OPTTokenRedirect;
+                    ? parser.OPTTokenRedirectRule
+                    : parser.OPTTokenRedirect;
                 if ( this.processModifierOption(id, 'noopmp4-1s') === false ) {
                     return false;
                 }
                 this.optionUnitBits |= this.REDIRECT_BIT;
                 break;
-            case this.parser.OPTTokenNoop:
+            case parser.OPTTokenNoop:
                 break;
-            case this.parser.OPTTokenRemoveparam:
+            case parser.OPTTokenRemoveparam:
                 if ( this.processModifierOption(id, val) === false ) {
                     return false;
                 }
                 this.optionUnitBits |= this.REMOVEPARAM_BIT;
                 break;
-            case this.parser.OPTTokenRedirect:
+            case parser.OPTTokenRedirect:
                 if ( this.action === AllowAction ) {
-                    id = this.parser.OPTTokenRedirectRule;
+                    id = parser.OPTTokenRedirectRule;
                 }
                 if ( this.processModifierOption(id, val) === false ) {
                     return false;
                 }
                 this.optionUnitBits |= this.REDIRECT_BIT;
                 break;
-            case this.parser.OPTTokenRedirectRule:
+            case parser.OPTTokenRedirectRule:
+                if ( this.excludedOptionSet.has(parser.OPTTokenRedirectRule) ) {
+                    return false;
+                }
                 if ( this.processModifierOption(id, val) === false ) {
                     return false;
                 }
                 this.optionUnitBits |= this.REDIRECT_BIT;
                 break;
-            case this.parser.OPTTokenInvalid:
+            case parser.OPTTokenInvalid:
                 return false;
             default:
                 if ( this.tokenIdToNormalizedType.has(id) === false ) {
@@ -3903,65 +3919,65 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
         const bucket = buckets.get(bits);
 
         switch ( tokenHash ) {
-            case DOT_TOKEN_HASH: {
-                if ( bucket.has(DOT_TOKEN_HASH) === false ) {
-                    bucket.set(DOT_TOKEN_HASH, [{
-                        condition: {
-                            requestDomains: []
-                        }
-                    }]);
-                }
-                const rule = bucket.get(DOT_TOKEN_HASH)[0];
-                rule.condition.requestDomains.push(fdata);
-                break;
+        case DOT_TOKEN_HASH: {
+            if ( bucket.has(DOT_TOKEN_HASH) === false ) {
+                bucket.set(DOT_TOKEN_HASH, [{
+                    condition: {
+                        requestDomains: []
+                    }
+                }]);
             }
-            case ANY_TOKEN_HASH: {
-                if ( bucket.has(ANY_TOKEN_HASH) === false ) {
-                    bucket.set(ANY_TOKEN_HASH, [{
-                        condition: {
-                            initiatorDomains: []
-                        }
-                    }]);
-                }
-                const rule = bucket.get(ANY_TOKEN_HASH)[0];
-                rule.condition.initiatorDomains.push(fdata);
-                break;
+            const rule = bucket.get(DOT_TOKEN_HASH)[0];
+            rule.condition.requestDomains.push(fdata);
+            break;
+        }
+        case ANY_TOKEN_HASH: {
+            if ( bucket.has(ANY_TOKEN_HASH) === false ) {
+                bucket.set(ANY_TOKEN_HASH, [{
+                    condition: {
+                        initiatorDomains: []
+                    }
+                }]);
             }
-            case ANY_HTTPS_TOKEN_HASH: {
-                if ( bucket.has(ANY_HTTPS_TOKEN_HASH) === false ) {
-                    bucket.set(ANY_HTTPS_TOKEN_HASH, [{
-                        condition: {
-                            urlFilter: '|https://',
-                            initiatorDomains: []
-                        }
-                    }]);
-                }
-                const rule = bucket.get(ANY_HTTPS_TOKEN_HASH)[0];
-                rule.condition.initiatorDomains.push(fdata);
-                break;
+            const rule = bucket.get(ANY_TOKEN_HASH)[0];
+            rule.condition.initiatorDomains.push(fdata);
+            break;
+        }
+        case ANY_HTTPS_TOKEN_HASH: {
+            if ( bucket.has(ANY_HTTPS_TOKEN_HASH) === false ) {
+                bucket.set(ANY_HTTPS_TOKEN_HASH, [{
+                    condition: {
+                        urlFilter: '|https://',
+                        initiatorDomains: []
+                    }
+                }]);
             }
-            case ANY_HTTP_TOKEN_HASH: {
-                if ( bucket.has(ANY_HTTP_TOKEN_HASH) === false ) {
-                    bucket.set(ANY_HTTP_TOKEN_HASH, [{
-                        condition: {
-                            urlFilter: '|http://',
-                            initiatorDomains: []
-                        }
-                    }]);
-                }
-                const rule = bucket.get(ANY_HTTP_TOKEN_HASH)[0];
-                rule.condition.initiatorDomains.push(fdata);
-                break;
+            const rule = bucket.get(ANY_HTTPS_TOKEN_HASH)[0];
+            rule.condition.initiatorDomains.push(fdata);
+            break;
+        }
+        case ANY_HTTP_TOKEN_HASH: {
+            if ( bucket.has(ANY_HTTP_TOKEN_HASH) === false ) {
+                bucket.set(ANY_HTTP_TOKEN_HASH, [{
+                    condition: {
+                        urlFilter: '|http://',
+                        initiatorDomains: []
+                    }
+                }]);
             }
-            default: {
-                if ( bucket.has(EMPTY_TOKEN_HASH) === false ) {
-                    bucket.set(EMPTY_TOKEN_HASH, []);
-                }
-                const rule = {};
-                dnrRuleFromCompiled(fdata, rule);
-                bucket.get(EMPTY_TOKEN_HASH).push(rule);
-                break;
+            const rule = bucket.get(ANY_HTTP_TOKEN_HASH)[0];
+            rule.condition.initiatorDomains.push(fdata);
+            break;
+        }
+        default: {
+            if ( bucket.has(EMPTY_TOKEN_HASH) === false ) {
+                bucket.set(EMPTY_TOKEN_HASH, []);
             }
+            const rule = {};
+            dnrRuleFromCompiled(fdata, rule);
+            bucket.get(EMPTY_TOKEN_HASH).push(rule);
+            break;
+        }
         }
     }
 
@@ -4018,6 +4034,54 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
         }
     }
 
+    // Collect generichide filters
+    const generichideExclusions = [];
+    {
+        const bucket = buckets.get(AllowAction | typeNameToTypeValue['generichide']);
+        if ( bucket ) {
+            for ( const rules of bucket.values() ) {
+                for ( const rule of rules ) {
+                    if ( rule.condition === undefined ) { continue; }
+                    if ( rule.condition.initiatorDomains ) {
+                        generichideExclusions.push(...rule.condition.initiatorDomains);
+                    } else if ( rule.condition.requestDomains ) {
+                        generichideExclusions.push(...rule.condition.requestDomains);
+                    }
+                }
+            }
+        }
+    }
+
+    // Detect and attempt salvage of rules with entity-based hostnames.
+    for ( const rule of ruleset ) {
+        if ( rule.condition === undefined ) { continue; }
+        if (
+            Array.isArray(rule.condition.initiatorDomains) &&
+            rule.condition.initiatorDomains.some(hn => hn.endsWith('.*'))
+        ) {
+            const domains = rule.condition.initiatorDomains.filter(
+                hn => hn.endsWith('.*') === false
+            );
+            if ( domains.length === 0 ) {
+                dnrAddRuleError(rule, `Could not salvage rule with only entity-based domain= option: ${rule.condition.initiatorDomains.join('|')}`);
+            } else {
+                rule.condition.initiatorDomains = domains;
+            }
+        }
+        if (
+            Array.isArray(rule.condition.excludedInitiatorDomains) &&
+            rule.condition.excludedInitiatorDomains.some(hn => hn.endsWith('.*'))
+        ) {
+            const domains = rule.condition.excludedInitiatorDomains.filter(
+                hn => hn.endsWith('.*') === false
+            );
+            rule.condition.excludedInitiatorDomains =
+                domains.length !== 0
+                    ? domains
+                    : undefined;
+        }
+    }
+
     // Patch modifier filters
     for ( const rule of ruleset ) {
         if ( rule.__modifierType === undefined ) { continue; }
@@ -4030,34 +4094,39 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
                 value: rule.__modifierValue,
             }];
             if ( rule.__modifierAction === AllowAction ) {
-                dnrAddRuleError(rule, 'Unhandled modifier exception');
+                dnrAddRuleError(rule, 'Unsupported modifier exception');
             }
             break;
         case 'redirect-rule': {
+            let priority = rule.priority || 0;
             let token = rule.__modifierValue;
             if ( token !== '' ) {
-                const match = /:\d+$/.exec(token);
+                const match = /:(\d+)$/.exec(token);
                 if ( match !== null ) {
+                    priority += parseInt(match[1], 10);
                     token = token.slice(0, match.index);
                 }
             }
             const resource = context.extensionPaths.get(token);
             if ( rule.__modifierValue !== '' && resource === undefined ) {
-                dnrAddRuleWarning(rule, `Unpatchable redirect filter: ${rule.__modifierValue}`);
+                dnrAddRuleError(rule, `Unpatchable redirect filter: ${rule.__modifierValue}`);
             }
-            const extensionPath = resource && resource.extensionPath || token;
             if ( rule.__modifierAction !== AllowAction ) {
+                const extensionPath = resource || token;
                 rule.action.type = 'redirect';
                 rule.action.redirect = { extensionPath };
-                rule.priority = (rule.priority || 1) + 1;
+                rule.priority = priority + 1;
             } else {
                 rule.action.type = 'block';
-                rule.priority = (rule.priority || 1) + 2;
+                rule.priority = priority + 2;
             }
             break;
         }
         case 'removeparam':
             rule.action.type = 'redirect';
+            if ( rule.__modifierValue === '|' ) {
+                rule.__modifierValue = '';
+            }
             if ( rule.__modifierValue !== '' ) {
                 rule.action.redirect = {
                     transform: {
@@ -4066,7 +4135,7 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
                         }
                     }
                 };
-                if ( /^\/.+\/$/.test(rule.__modifierValue) ) {
+                if ( /^~?\/.+\/$/.test(rule.__modifierValue) ) {
                     dnrAddRuleError(rule, `Unsupported regex-based removeParam: ${rule.__modifierValue}`);
                 }
             } else {
@@ -4076,8 +4145,19 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
                     }
                 };
             }
+            if ( rule.condition === undefined ) {
+                rule.condition = {
+                };
+            }
+            if ( rule.condition.resourceTypes === undefined ) {
+                rule.condition.resourceTypes = [
+                    'main_frame',
+                    'sub_frame',
+                    'xmlhttprequest',
+                ];
+            }
             if ( rule.__modifierAction === AllowAction ) {
-                dnrAddRuleError(rule, 'Unhandled modifier exception');
+                dnrAddRuleError(rule, 'Unsupported modifier exception');
             }
             break;
         default:
@@ -4197,6 +4277,7 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
     }
 
     // Patch id
+    const rulesetFinal = [];
     {
         let ruleId = 1;
         for ( const rule of rulesetMap.values() ) {
@@ -4205,19 +4286,19 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
             } else {
                 rule.id = 0;
             }
+            rulesetFinal.push(rule);
         }
         for ( const invalid of context.invalid ) {
-            rulesetMap.set(ruleId++, {
-                _error: [ invalid ],
-            });
+            rulesetFinal.push({ _error: [ invalid ] });
         }
     }
 
     return {
-        ruleset: Array.from(rulesetMap.values()),
+        ruleset: rulesetFinal,
         filterCount: context.filterCount,
         acceptedFilterCount: context.acceptedFilterCount,
         rejectedFilterCount: context.rejectedFilterCount,
+        generichideExclusions: Array.from(new Set(generichideExclusions)),
     };
 };
 

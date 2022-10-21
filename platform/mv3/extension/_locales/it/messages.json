@@ -28,7 +28,7 @@
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
-    "message": "Impostazioni",
+    "message": "Opzioni",
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
@@ -114,6 +114,14 @@
   "settingsNoCSPReportsPrompt": {
     "message": "Blocca i report CSP",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
+  },
+  "omnipotenceLabel": {
+    "message": "Abilita il filtraggio esteso su tutti i siti web",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "omnipotenceLegend": {
+    "message": "uBO Lite può applicare il filtraggio esteso a un determinato sito web solo dopo aver concesso esplicitamente all'estensione le autorizzazioni per la modifica dei dati su quel sito web. Questa impostazione consente di concedere le autorizzazioni per il filtraggio esteso a tutti i siti web contemporaneamente.",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Predefinite",
@@ -214,5 +222,57 @@
   "genericRevert": {
     "message": "Ripristina",
     "description": "for generic 'Revert' buttons"
+  },
+  "firstRunSectionLabel": {
+    "message": "Benvenuto",
+    "description": "The header text for the welcome message section"
+  },
+  "firstRunDescription": {
+    "message": "Hai appena installato uBO Lite. Puoi scegliere qui la modalità di filtraggio predefinita da utilizzare su tutti i siti web.\n\nPer impostazione predefinita, viene selezionata la modalità <em>Basilare</em>, che non richiede l'autorizzazione a leggere e modificare i dati. Se ti fidi di uBO Lite, puoi concedergli un'ampia autorizzazione per leggere e modificare i dati su tutti i siti web, in modo da attivare funzionalità di filtraggio più avanzate per tutti i siti web per impostazione predefinita.",
+    "description": "Descriptive text shown at first install time only "
+  },
+  "defaultFilteringModeSectionLabel": {
+    "message": "Modalità di filtraggio predefinita",
+    "description": "The header text for the default filtering mode section"
+  },
+  "defaultFilteringModeDescription": {
+    "message": "La modalità di filtraggio predefinita sarà sovrascritta dalle modalità di filtraggio per sito web. È possibile regolare la modalità di filtraggio su un determinato sito web in base alla modalità che funziona meglio su quel sito. Ogni modalità presenta vantaggi e svantaggi.",
+    "description": "This describes the default filtering mode setting"
+  },
+  "filteringMode0Name": {
+    "message": "nessun filtraggio",
+    "description": "Name of blocking mode 0"
+  },
+  "filteringMode1Name": {
+    "message": "basilare",
+    "description": "Name of blocking mode 1"
+  },
+  "filteringMode2Name": {
+    "message": "ottimale",
+    "description": "Name of blocking mode 2"
+  },
+  "filteringMode3Name": {
+    "message": "completo",
+    "description": "Name of blocking mode 3"
+  },
+  "basicFilteringModeDescription": {
+    "message": "Filtraggio di rete di base da liste di filtri selezionate.\n\nNon richiede l'autorizzazione a leggere e modificare i dati sui siti web.",
+    "description": "This describes the 'basic' filtering mode"
+  },
+  "optimalFilteringModeDescription": {
+    "message": "Filtraggio di rete avanzato più un filtraggio esteso specifico da liste di filtri selezionate.\n\nRichiede un'ampia autorizzazione per leggere e modificare i dati su tutti i siti web.",
+    "description": "This describes the 'optimal' filtering mode"
+  },
+  "completeFilteringModeDescription": {
+    "message": "Filtraggio di rete avanzato più un filtraggio esteso specifico e generico da liste di filtri selezionate.\n\nRichiede un'ampia autorizzazione per leggere e modificare i dati su tutti i siti web.\n\nIl filtraggio esteso generico può causare un maggiore utilizzo delle risorse della pagina web.",
+    "description": "This describes the 'complete' filtering mode"
+  },
+  "behaviorSectionLabel": {
+    "message": "Comportamento",
+    "description": "The header text for the 'Behavior' section"
+  },
+  "autoReloadLabel": {
+    "message": "Ricarica automaticamente la pagina quando si cambia la modalità di filtraggio",
+    "description": "Label for a checkbox in the options page"
   }
 }

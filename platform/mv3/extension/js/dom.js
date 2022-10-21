@@ -62,7 +62,11 @@ class dom {
             if ( value === undefined ) {
                 return elem.getAttribute(attr);
             }
-            elem.setAttribute(attr, value);
+            if ( value === null ) {
+                elem.removeAttribute(attr);
+            } else {
+                elem.setAttribute(attr, value);
+            }
         }
     }
 

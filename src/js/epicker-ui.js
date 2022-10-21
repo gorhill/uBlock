@@ -834,7 +834,10 @@ const startPicker = function() {
     $id('candidateFilters').addEventListener('click', onCandidateClicked);
     $stor('#resultsetDepth input').addEventListener('input', onDepthChanged);
     $stor('#resultsetSpecificity input').addEventListener('input', onSpecificityChanged);
-    staticFilteringParser = new StaticFilteringParser({ interactive: true });
+    staticFilteringParser = new StaticFilteringParser({
+        interactive: true,
+        nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
+    });
 };
 
 /******************************************************************************/

@@ -115,6 +115,14 @@
     "message": "Blockera CSP-rapporter",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
+  "omnipotenceLabel": {
+    "message": "Aktivera utökad filtrering på alla webbplatser",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "omnipotenceLegend": {
+    "message": "uBO Lite kan endast använda utökad filtrering på en given webbplats efter att du uttryckligen har gett tilläggsbehörighet att ändra data på den webbplatsen. Med den här inställningen kan du ge behörigheter för utökad filtrering till alla webbplatser samtidigt.",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
   "3pGroupDefault": {
     "message": "Standard",
     "description": "Header for a ruleset section in 'Filter lists pane'"
@@ -214,5 +222,57 @@
   "genericRevert": {
     "message": "Ångra",
     "description": "for generic 'Revert' buttons"
+  },
+  "firstRunSectionLabel": {
+    "message": "Välkommen",
+    "description": "The header text for the welcome message section"
+  },
+  "firstRunDescription": {
+    "message": "Du har precis installerat uBO Lite. Du kan här välja standardfiltreringsläget som ska användas på alla webbplatser.\n\nSom standard är läget <em>Grundläggande</em> valt eftersom det inte kräver behörighet att läsa och ändra data. Om du litar på uBO Lite kan du ge den högre behörighet att läsa och ändra data på alla webbplatser för att som standard aktivera mer avancerade filtreringsmöjligheter för alla webbplatser.",
+    "description": "Descriptive text shown at first install time only "
+  },
+  "defaultFilteringModeSectionLabel": {
+    "message": "Standardfiltreringsläge",
+    "description": "The header text for the default filtering mode section"
+  },
+  "defaultFilteringModeDescription": {
+    "message": "Standardfiltreringsläget kommer att åsidosättas av filtreringslägen per webbplats. Du kan justera filtreringsläget på vilken webbplats som helst enligt vilket läge som fungerar bäst på den webbplatsen. Varje läge har sina fördelar och nackdelar.",
+    "description": "This describes the default filtering mode setting"
+  },
+  "filteringMode0Name": {
+    "message": "ingen filtrering",
+    "description": "Name of blocking mode 0"
+  },
+  "filteringMode1Name": {
+    "message": "grundläggande",
+    "description": "Name of blocking mode 1"
+  },
+  "filteringMode2Name": {
+    "message": "optimal",
+    "description": "Name of blocking mode 2"
+  },
+  "filteringMode3Name": {
+    "message": "fullständig",
+    "description": "Name of blocking mode 3"
+  },
+  "basicFilteringModeDescription": {
+    "message": "Grundläggande nätverksfiltrering från valda filterlistor.\n\nKräver ingen behörighet för att läsa och ändra data på webbplatser.",
+    "description": "This describes the 'basic' filtering mode"
+  },
+  "optimalFilteringModeDescription": {
+    "message": "Avancerad nätverksfiltrering plus specifik utökad filtrering från utvalda filterlistor.\n\nKräver högre behörighet för att läsa och ändra data på alla webbplatser.",
+    "description": "This describes the 'optimal' filtering mode"
+  },
+  "completeFilteringModeDescription": {
+    "message": "Avancerad nätverksfiltrering plus specifik och allmän utökad filtrering från utvalda filterlistor.\n\nKräver bred behörighet för att läsa och ändra data på alla webbplatser.\n\nAllmän utökad filtrering kan orsaka högre användning av webbsidors resurser.",
+    "description": "This describes the 'complete' filtering mode"
+  },
+  "behaviorSectionLabel": {
+    "message": "Beteende",
+    "description": "The header text for the 'Behavior' section"
+  },
+  "autoReloadLabel": {
+    "message": "Ladda automatiskt om sidan när du byter filtreringsläge",
+    "description": "Label for a checkbox in the options page"
   }
 }

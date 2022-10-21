@@ -47,34 +47,32 @@ hr {
     padding: 0;
     }
 
-#sticky {
-    background-color: var(--surface-1);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    }
-#stickyTools {
-    align-items: stretch;
+#filteringModeText {
+    background-color: var(--surface-2);
+    color: var(--ink-3);
     display: flex;
-    justify-content: space-between;
+    padding: var(--default-gap-xsmall);
+    text-transform: lowercase;
     }
-#switch {
-    color: var(--popup-power-ink);
-    cursor: pointer;
-    display: flex;
-    fill: var(--popup-power-ink);
-    flex-grow: 1;
-    font-size: 96px;
-    justify-content: center;
-    margin: var(--popup-gap-thin) var(--popup-gap-thin) 0;
-    padding: 0;
-    stroke: none;
-    stroke-width: 64;
+#filteringModeText > span:nth-of-type(2) {
+    display: none;
     }
-body.off #switch {
-    fill: var(--surface-1);
-    stroke: var(--checkbox-ink);
+#filteringModeText > span:nth-of-type(2):not(:empty) {
+    display: inline;
     }
+#filteringModeText > span:nth-of-type(2):not(:empty)::before {
+    content: '\2002\2192\2002';
+    }
+[dir="rtl"] #filteringModeText > span:nth-of-type(2):not(:empty)::before {
+    content: '\2002\2190\2002';
+    }
+
+.filteringModeSlider {
+    height: 32px;
+    margin: 8px;
+    width: 128px;
+    }
+
 .rulesetTools {
     background-color: transparent;
     border: 0;
@@ -100,9 +98,7 @@ body.off #switch {
 .rulesetTools [id] > svg {
     fill: var(--ink-4);
     }
-body.needReload #refresh,
-body.needSave #saveRules,
-body.needSave #revertRules {
+body.needReload #refresh {
     visibility: visible;
     }
 #hostname {
@@ -123,12 +119,13 @@ body.needSave #revertRules {
 #rulesetStats .rulesetDetails h1 {
     font-size: 1em;
     font-weight: normal;
-    margin: 0.5em 0;
+    margin: 0.5em 0 0.25em 0;
     text-transform: capitalize;
     }
 #rulesetStats .rulesetDetails p {
+    color: var(--ink-2);
     font-size: var(--font-size-smaller);
-    margin: 0.5em 0 0.5em var(--popup-gap-thin);
+    margin: 0.25em 0 0.5em 0.5em;
     }
 
 .itemRibbon {
@@ -181,29 +178,6 @@ body.mobile.no-tooltips .toolRibbon .tool {
     }
 .toolRibbon.genericTools {
     margin-bottom: 0;
-    }
-
-#toggleGreatPowers {
-    position: relative;
-    }
-#toggleGreatPowers .badge {
-    bottom: 4px;
-    font-size: var(--font-size-xsmall);
-    line-height: 1;
-    pointer-events: none;
-    position: absolute;
-    right: 4px;
-    }
-body:not(.hasGreatPowers) [data-i18n-title="popupGrantGreatPowers"],
-body.hasGreatPowers [data-i18n-title="popupRevokeGreatPowers"] {
-    display: flex;
-    }
-body:not(.hasGreatPowers) [data-i18n-title="popupRevokeGreatPowers"],
-body.hasGreatPowers [data-i18n-title="popupGrantGreatPowers"] {
-    display: none;
-    }
-body [data-i18n-title="popupRevokeGreatPowers"] {
-    fill: var(--popup-power-ink);
     }
 
 #moreOrLess {
@@ -277,21 +251,11 @@ body:not([data-section~="b"]) [data-section="b"] {
 :root.desktop body {
     --popup-gap: calc(var(--font-size) * 0.875);
     }
-:root.desktop body:not(.off) #switch:hover {
-    fill: rgb(var(--popup-power-ink-rgb) / 90%);
-    }
-:root.desktop body.off #switch:hover {
-    stroke: var(--popup-power-ink);
-    }
 :root.desktop .rulesetTools [id]:hover {
     background-color: var(--popup-ruleset-tool-surface-hover);
     }
 :root.desktop .rulesetTools [id]:hover > svg {
     fill: var(--ink-2);
-    }
-:root.desktop #firewall {
-    direction: rtl;
-    line-height: 1.4;
     }
 :root.desktop .tool:hover {
     background-color: var(--popup-toolbar-surface-hover);

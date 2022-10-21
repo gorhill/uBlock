@@ -115,6 +115,14 @@
     "message": "CSP-მოხსენებების აკრძალვა",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
+  "omnipotenceLabel": {
+    "message": "გაფართოებული ფილტრაციის ჩართვა ყველა საიტზე",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "omnipotenceLegend": {
+    "message": "uBO Lite შეძლებს გაფართოებული ფილტრაციის გამოყენებას მითითებულ საიტზე მას შემდეგ, რაც დართავთ მას ამ საიტზე მონაცემების შეცვლის ნებას. ამ პარამეტრით კი შეძლებთ ერთბაშად  დართოთ გაფართოებული ფილტრაციის გამოყენების ნება ყველა საიტზე.",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
   "3pGroupDefault": {
     "message": "ნაგულისხმევი",
     "description": "Header for a ruleset section in 'Filter lists pane'"
@@ -214,5 +222,57 @@
   "genericRevert": {
     "message": "დაბრუნება",
     "description": "for generic 'Revert' buttons"
+  },
+  "firstRunSectionLabel": {
+    "message": "მოგესალმებით",
+    "description": "The header text for the welcome message section"
+  },
+  "firstRunDescription": {
+    "message": "თქვენ ახლახან დააყენეთ uBO Lite. აქვე შეგიძლიათ აირჩიოთ ფილტრაციის ნაგულისხმევი რეჟიმი ყველა საიტზე გამოსაყენებლად.\n\nნაგულისხმევად, <em>ძირითადი</em> რეჟიმია შერჩეული, ვინაიდან არ საჭიროებს მონაცემთა წაკითხვისა და ცვლილების ნებართვებს. თუ თქვენთვის სანდოა uBO Lite, შეგიძლიათ დართოთ მონაცემთა წაკითხვისა და შეცვლის ნება ყველა საიტზე გაუმჯობესებული ფილტრაციის ნაგულისხმევად გამოყენებისთვის.",
+    "description": "Descriptive text shown at first install time only "
+  },
+  "defaultFilteringModeSectionLabel": {
+    "message": "ფილტრაციის ნაგულისხმევი რეჟიმი",
+    "description": "The header text for the default filtering mode section"
+  },
+  "defaultFilteringModeDescription": {
+    "message": "ფილტრაციის ნაგულისხმევი რეჟიმი ჩაანაცვლებს ცალკეულ საიტზე მითითებულს. ფილტრაციის რეჟიმის მორგება შეგიძლიათ ნებისმიერ სასურველ საიტზე იმისდა მიხედვით, რა უფრო გამოსადეგი იქნება თქვენთვის იმ საიტზე. თითოეულ რეჟიმს თავისი დადებითი და უარყოფითი მხარეები აქვს.",
+    "description": "This describes the default filtering mode setting"
+  },
+  "filteringMode0Name": {
+    "message": "ფილტრის გარეშე",
+    "description": "Name of blocking mode 0"
+  },
+  "filteringMode1Name": {
+    "message": "ძირითადი",
+    "description": "Name of blocking mode 1"
+  },
+  "filteringMode2Name": {
+    "message": "წონასწორული",
+    "description": "Name of blocking mode 2"
+  },
+  "filteringMode3Name": {
+    "message": "სრული",
+    "description": "Name of blocking mode 3"
+  },
+  "basicFilteringModeDescription": {
+    "message": "ქსელის ძირითადი ფილტრაცია შერჩეული სიებით.\n\nარ საჭიროებს საიტებზე მონაცემთა წაკითხვისა და ცვლილების ნებართვებს.",
+    "description": "This describes the 'basic' filtering mode"
+  },
+  "optimalFilteringModeDescription": {
+    "message": "ქსელის გაუმჯობესებულ ფილტრაციასთან ერთად გაფართოებული ფილტრები შერჩეული სიებიდან.\n\nსაჭიროებს ყველა საიტზე მონაცემთა სრულად წაკითხვისა და შეცვლის ნებართვას.",
+    "description": "This describes the 'optimal' filtering mode"
+  },
+  "completeFilteringModeDescription": {
+    "message": "ქსელის გაუმჯობესებულ ფილტრაციასთან ერთად საერთო გაფართოებული ფილტრები შერჩეული სიებიდან.\n\nსაჭიროებს ყველა საიტზე მონაცემთა სრულად წაკითხვისა და შეცვლის ნებართვას.\n\nგაფართოებული ფილტრაცია ზოგჯერ ზედმეტად ზრდის დატვირთვას ვებგვერდის მონახულებისას.",
+    "description": "This describes the 'complete' filtering mode"
+  },
+  "behaviorSectionLabel": {
+    "message": "მოქმედება",
+    "description": "The header text for the 'Behavior' section"
+  },
+  "autoReloadLabel": {
+    "message": "გვერდის ავტომატური განახლება ფილტრაციის რეჟიმის შეცვლისას",
+    "description": "Label for a checkbox in the options page"
   }
 }

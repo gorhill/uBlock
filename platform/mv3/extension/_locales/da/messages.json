@@ -84,11 +84,11 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupGrantGreatPowers": {
-    "message": "Click to grant uBO Lite extended permissions on this site.\nExtended permissions allow more effective content blocking.",
+    "message": "Klik for at give uBO Lite udvidede tilladelser på dette websted.\nUdvidede tilladelser tillader mere effektiv blokering af indhold.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupRevokeGreatPowers": {
-    "message": "Click to revoke extended permissions on this site",
+    "message": "Klik for at tilbagekalde udvidede tilladelser på dette websted",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
@@ -114,6 +114,14 @@
   "settingsNoCSPReportsPrompt": {
     "message": "Blokér CSP-anmldelser",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
+  },
+  "omnipotenceLabel": {
+    "message": "Aktivér udvidet filtrering på alle websteder",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "omnipotenceLegend": {
+    "message": "uBO Lite kan kun anvende udvidet filtrering på et givent websted, efter at du udtrykkeligt har givet udvidelsen tilladelse til at ændre data på webstedet. Denne indstilling giver dig mulighed for at give tilladelse til udvidet filtrering for alle websteder på én gang.",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Standard",
@@ -214,5 +222,57 @@
   "genericRevert": {
     "message": "Tilbagefør",
     "description": "for generic 'Revert' buttons"
+  },
+  "firstRunSectionLabel": {
+    "message": "Velkommen",
+    "description": "The header text for the welcome message section"
+  },
+  "firstRunDescription": {
+    "message": "Du har netop installeret uBO Lite. Du kan her vælge den standardfiltreringstilstand, der skal bruges på alle websteder.\n\nStandardvalget er <em>Basis</em>-tilstand, da den ikke kræver tilladelse til at læse og ændre data. Stoler du på uBO Lite, kan du give den vidtrækkende tilladelse til at læse og ændre data på alle websteder ved at aktivere mere avancerede filtreringsfunktioner for alle websteder som standard.",
+    "description": "Descriptive text shown at first install time only "
+  },
+  "defaultFilteringModeSectionLabel": {
+    "message": "Standardfiltreringstilstand",
+    "description": "The header text for the default filtering mode section"
+  },
+  "defaultFilteringModeDescription": {
+    "message": "Standardfiltreringstilstanden tilsidesættes af per-websted filtreringstilstande. Filtreringstilstanden kan justeres på ethvert givent websted iht., hvilken tilstand der fungere bedst på det givne websted. Hver tilstand har sine fordele og ulemper.",
+    "description": "This describes the default filtering mode setting"
+  },
+  "filteringMode0Name": {
+    "message": "ingen filtrering",
+    "description": "Name of blocking mode 0"
+  },
+  "filteringMode1Name": {
+    "message": "basis",
+    "description": "Name of blocking mode 1"
+  },
+  "filteringMode2Name": {
+    "message": "optimal",
+    "description": "Name of blocking mode 2"
+  },
+  "filteringMode3Name": {
+    "message": "fuldstændig",
+    "description": "Name of blocking mode 3"
+  },
+  "basicFilteringModeDescription": {
+    "message": "Basis netværksfiltrering ud fra valgte filterlister.\n\nTilladelse kræves ikke til at læse og ændre data på websteder.",
+    "description": "This describes the 'basic' filtering mode"
+  },
+  "optimalFilteringModeDescription": {
+    "message": "Avanceret netværksfiltrering plus specifik udvidet filtrering ud fra valgte filterlister.\n\nVidtrækkende tilladelse kræves for at læse og ændre data på alle websteder.",
+    "description": "This describes the 'optimal' filtering mode"
+  },
+  "completeFilteringModeDescription": {
+    "message": "Avanceret netværksfiltrering plus specifik og generisk udvidet filtrering ud fra valgte filterlister.\n\nVidtrækkende tilladelse kræves for at læse og ændre data på alle websteder.\n\nGenerisk, udvidet filtrering kan medføre højere webside-ressourceforbrug.",
+    "description": "This describes the 'complete' filtering mode"
+  },
+  "behaviorSectionLabel": {
+    "message": "Adfærd",
+    "description": "The header text for the 'Behavior' section"
+  },
+  "autoReloadLabel": {
+    "message": "Automatisk sidegenindlæsning ved skift af filtreringstilstand",
+    "description": "Label for a checkbox in the options page"
   }
 }

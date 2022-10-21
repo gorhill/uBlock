@@ -19,13 +19,12 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* globals document */
-
 'use strict';
 
 /******************************************************************************/
 
 import Regex from '../lib/regexanalyzer/regex.js';
+import * as cssTree from '../lib/csstree/css-tree.js';
 
 /*******************************************************************************
 
@@ -75,8 +74,8 @@ import Regex from '../lib/regexanalyzer/regex.js';
 /******************************************************************************/
 
 const Parser = class {
-    constructor(options = {}) {
-        this.interactive = options.interactive === true;
+    constructor(instanceOptions = {}) {
+        this.interactive = instanceOptions.interactive === true;
         this.raw = '';
         this.slices = [];
         this.leftSpaceSpan = new Span();
@@ -105,7 +104,7 @@ const Parser = class {
         this.netOptionsIterator = new NetOptionsIterator(this);
         this.extOptionsIterator = new ExtOptionsIterator(this);
         this.maxTokenLength = Number.MAX_SAFE_INTEGER;
-        this.expertMode = options.expertMode !== false;
+        this.expertMode = instanceOptions.expertMode !== false;
         this.reIsLocalhostRedirect = /(?:0\.0\.0\.0|broadcasthost|local|localhost(?:\.localdomain)?|ip6-\w+)(?:[^\w.-]|$)/;
         this.reHostname = /^[^\x00-\x24\x26-\x29\x2B\x2C\x2F\x3A-\x40\x5B-\x5E\x60\x7B-\x7F]+/;
         this.reHostsSink = /^[\w%.:\[\]-]+$/;
@@ -124,7 +123,7 @@ const Parser = class {
         // TODO: mind maxTokenLength
         this.reGoodRegexToken
             = /[^\x01%0-9A-Za-z][%0-9A-Za-z]{7,}|[^\x01%0-9A-Za-z][%0-9A-Za-z]{1,6}[^\x01%0-9A-Za-z]/;
-        this.selectorCompiler = new this.SelectorCompiler(this);
+        this.selectorCompiler = new this.SelectorCompiler(this, instanceOptions);
         // TODO: reuse for network filtering analysis
         this.result = {
             exception: false,
@@ -263,9 +262,9 @@ const Parser = class {
         //   ^^
         else if ( hasBits(this.slices[to], BITPercent | BITQuestion) ) {
             if ( this.slices[to+2] !== 1 ) { return; }
-            flavorBits |= hasBits(this.slices[to], BITQuestion)
-                ? BITFlavorExtStrong
-                : BITFlavorUnsupported;
+            flavorBits |= hasBits(this.slices[to], BITPercent)
+                ? BITFlavorUnsupported
+                : BITFlavorExtStrong;
             to += 3; if ( to === end ) { return; }
         }
         // ##...
@@ -289,6 +288,8 @@ const Parser = class {
     analyzeExtPattern() {
         this.result.exception = this.isException();
         this.result.compiled = undefined;
+
+        if ( hasBits(this.flavorBits, BITFlavorUnsupported) ) { return; }
 
         let selector = this.strFromSpan(this.patternSpan);
         if ( selector === '' ) {
@@ -335,11 +336,9 @@ const Parser = class {
         }
         this.result.raw = selector;
         if (
-            this.selectorCompiler.compile(
-                selector,
-                hasBits(this.flavorBits, BITFlavorExtStrong | BITFlavorExtStyle),
-                this.result
-            ) === false
+            this.selectorCompiler.compile(selector, this.result, {
+                asProcedural: hasBits(this.flavorBits, BITFlavorExtStrong | BITFlavorExtStyle),
+            }) === false
         ) {
             this.flavorBits |= BITFlavorUnsupported;
         }
@@ -1320,91 +1319,84 @@ Parser.removableHTTPHeaders = Parser.prototype.removableHTTPHeaders = new Set([
 //   Do not discard unknown pseudo-elements.
 
 Parser.prototype.SelectorCompiler = class {
-    constructor(parser) {
+    constructor(parser, instanceOptions) {
         this.parser = parser;
-        this.reExtendedSyntax = /\[-(?:abp|ext)-[a-z-]+=(['"])(?:.+?)(?:\1)\]/;
-        this.reExtendedSyntaxParser = /\[-(?:abp|ext)-([a-z-]+)=(['"])(.+?)\2\]/;
         this.reParseRegexLiteral = /^\/(.+)\/([imu]+)?$/;
-        this.normalizedExtendedSyntaxOperators = new Map([
-            [ 'contains', ':has-text' ],
-            [ 'has', ':has' ],
-            [ 'matches-css', ':matches-css' ],
-            [ 'matches-css-after', ':matches-css-after' ],
-            [ 'matches-css-before', ':matches-css-before' ],
-        ]);
 
         // Use a regex for most common CSS selectors known to be valid in any
         // context.
         const cssIdentifier = '[A-Za-z_][\\w-]*';
         const cssClassOrId = `[.#]${cssIdentifier}`;
-        const cssAttribute = `\\[${cssIdentifier}(?:[*^$]?="[^"\\]\\\\]+")\\]`;
+        const cssAttribute = `\\[${cssIdentifier}(?:[*^$]?="[^"\\]\\\\]+")?\\]`;
         const cssSimple =
             '(?:' +
             `${cssIdentifier}(?:${cssClassOrId})*(?:${cssAttribute})*` + '|' +
             `${cssClassOrId}(?:${cssClassOrId})*(?:${cssAttribute})*` + '|' +
             `${cssAttribute}(?:${cssAttribute})*` +
             ')';
-        const cssCombinator = '(?:\\s+|\\s*[>+~]\\s*)';
+        const cssCombinator = '(?:\\s+|\\s*[+>~]\\s*)';
         this.reCommonSelector = new RegExp(
             `^${cssSimple}(?:${cssCombinator}${cssSimple})*$`
         );
         // Resulting regex literal:
-        // ^(?:[A-Za-z_][\w-]*(?:[.#][A-Za-z_][\w-]*)*(?:\[[A-Za-z_][\w-]*[*^$]?="[^"\]\\]+"\])*|[.#][A-Za-z_][\w-]*(?:[.#][A-Za-z_][\w-]*)*(?:\[[A-Za-z_][\w-]*[*^$]?="[^"\]\\]+"\])*|\[[A-Za-z_][\w-]*[*^$]?="[^"\]\\]+"\](?:\[[A-Za-z_][\w-]*[*^$]?="[^"\]\\]+"\])*)(?:(?:\s+|\s*[>+~]\s*)(?:[A-Za-z_][\w-]*(?:[.#][A-Za-z_][\w-]*)*(?:\[[A-Za-z_][\w-]*[*^$]?="[^"\]\\]+"\])*|[.#][A-Za-z_][\w-]*(?:[.#][A-Za-z_][\w-]*)*(?:\[[A-Za-z_][\w-]*[*^$]?="[^"\]\\]+"\])*|\[[A-Za-z_][\w-]*[*^$]?="[^"\]\\]+"\](?:\[[A-Za-z_][\w-]*[*^$]?="[^"\]\\]+"\])*))*$
+        // /^(?:[A-Za-z_][\w-]*(?:[.#][A-Za-z_][\w-]*)*(?:\[[A-Za-z_][\w-]*(?:[*^$]?="[^"\]\\]+")?\])*|[.#][A-Za-z_][\w-]*(?:[.#][A-Za-z_][\w-]*)*(?:\[[A-Za-z_][\w-]*(?:[*^$]?="[^"\]\\]+")?\])*|\[[A-Za-z_][\w-]*(?:[*^$]?="[^"\]\\]+")?\](?:\[[A-Za-z_][\w-]*(?:[*^$]?="[^"\]\\]+")?\])*)(?:(?:\s+|\s*[>+~]\s*)(?:[A-Za-z_][\w-]*(?:[.#][A-Za-z_][\w-]*)*(?:\[[A-Za-z_][\w-]*(?:[*^$]?="[^"\]\\]+")?\])*|[.#][A-Za-z_][\w-]*(?:[.#][A-Za-z_][\w-]*)*(?:\[[A-Za-z_][\w-]*(?:[*^$]?="[^"\]\\]+")?\])*|\[[A-Za-z_][\w-]*(?:[*^$]?="[^"\]\\]+")?\](?:\[[A-Za-z_][\w-]*(?:[*^$]?="[^"\]\\]+")?\])*))*$/
 
-        // We use an actual stylesheet to validate uncommon CSS selectors and
-        // CSS properties which can be used in a CSS declaration.
-        this.cssValidatorElement = null;
-        (( ) => {
-            if ( typeof document !== 'object' ) { return; }
-            if ( document === null ) { return; }
-            try {
-                const styleElement = document.createElement('style');
-                styleElement.appendChild(document.createTextNode(' '));
-                document.body.append(styleElement);
-                this.cssValidatorElement = styleElement;
-            } catch(ex) {
-            }
-        })();
-
-        // We use an HTML element to validate selectors which are
-        // querySelector-able.
-        this.div = (( ) => {
-            if ( typeof document !== 'object' ) { return null; }
-            if ( document instanceof Object === false ) { return null; }
-            return document.createElement('div');
-        })();
-
-        const allProceduralOperators = Array.from(
-            parser.proceduralOperatorTokens.keys()
-        );
-        this.reProceduralOperator = new RegExp(
-            `^(?:${allProceduralOperators.join('|')})\\(`
-        );
-        this.reHasProceduralOperator = new RegExp(
-            `:(?:${allProceduralOperators.filter(s => s !== 'not').join('|')})\\(`
-        );
         this.reEatBackslashes = /\\([()])/g;
         this.reEscapeRegex = /[.*+?^${}()|[\]\\]/g;
-        this.reDropScope = /^\s*:scope\s*(?=[+>~])/;
-        this.reIsDanglingSelector = /[+>~\s]\s*$/;
-        this.reIsCombinator = /^\s*[+>~]/;
-        this.reForgivingOps = /:has\(/;
         this.regexToRawValue = new Map();
         // https://github.com/gorhill/uBlock/issues/2793
         this.normalizedOperators = new Map([
-            [ ':-abp-contains', ':has-text' ],
-            [ ':-abp-has', ':has' ],
-            [ ':contains', ':has-text' ],
-            [ ':nth-ancestor', ':upward' ],
-            [ ':watch-attrs', ':watch-attr' ],
+            [ '-abp-has', 'has' ],
+            [ '-abp-contains', 'has-text' ],
+            [ 'contains', 'has-text' ],
+            [ 'nth-ancestor', 'upward' ],
+            [ 'watch-attrs', 'watch-attr' ],
         ]);
         this.actionOperators = new Set([
             ':remove',
             ':style',
         ]);
+
+        this.proceduralOperatorNames = new Set([
+            'has-text',
+            'if',
+            'if-not',
+            'matches-css',
+            'matches-css-after',
+            'matches-css-before',
+            'matches-media',
+            'matches-path',
+            'min-text-length',
+            'others',
+            'upward',
+            'watch-attr',
+            'xpath',
+        ]);
+        this.maybeProceduralOperatorNames = new Set([
+            'has',
+            'not',
+        ]);
+        this.proceduralActionNames = new Set([
+            'remove',
+            'style',
+        ]);
+        this.normalizedExtendedSyntaxOperators = new Map([
+            [ 'contains', 'has-text' ],
+            [ 'has', 'has' ],
+        ]);
+        this.reIsRelativeSelector = /^\s*[+>~]/;
+        this.reExtendedSyntax = /\[-(?:abp|ext)-[a-z-]+=(['"])(?:.+?)(?:\1)\]/;
+        this.reExtendedSyntaxReplacer = /\[-(?:abp|ext)-([a-z-]+)=(['"])(.+?)\2\]/g;
+        this.abpProceduralOpReplacer = /:-abp-(?:contains|has)\(/g;
+        this.nativeCssHas = instanceOptions.nativeCssHas === true;
+
+        // https://www.w3.org/TR/css-syntax-3/#typedef-ident-token
+        this.reInvalidIdentifier = /^\d/;
     }
 
-    compile(raw, asProcedural, out) {
+    compile(raw, out, compileOptions = {}) {
+        this.asProcedural = compileOptions.asProcedural === true;
+
         // https://github.com/gorhill/uBlock/issues/952
         //   Find out whether we are dealing with an Adguard-specific cosmetic
         //   filter, and if so, translate it if supported, or discard it if not
@@ -1417,56 +1409,379 @@ Parser.prototype.SelectorCompiler = class {
             raw = this.translateAdguardCSSInjectionFilter(raw);
             if ( raw === '' ) { return false; }
             this.parser.flavorBits &= ~BITFlavorExtStyle;
-            out.raw = raw;
         }
 
-        // Can be used in a declarative CSS rule?
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/2228
-        //   Some operators are forgiving, so we need to exclude them for now
-        //   as potentially declarative selectors until we validate that their
-        //   arguments are themselves valid plain CSS selector.
-        if (
-            asProcedural === false &&
-            this.reForgivingOps.test(raw) === false &&
-            this.sheetSelectable(raw)
-        ) {
+        // Normalize AdGuard's attribute-based procedural operators.
+        // Normalize ABP's procedural operator names
+        if ( this.asProcedural ) {
+            if ( this.reExtendedSyntax.test(raw) ) {
+                raw = raw.replace(this.reExtendedSyntaxReplacer, (a, a1, a2, a3) => {
+                    const op = this.normalizedExtendedSyntaxOperators.get(a1);
+                    if ( op === undefined ) { return a; }
+                    return `:${op}(${a3})`;
+                });
+            } else {
+                raw = raw.replace(this.abpProceduralOpReplacer, match => {
+                    if ( match === ':-abp-contains(' ) {
+                        return ':has-text(';
+                    } else if ( match === ':-abp-has(' ) {
+                        this.asProcedural = false;
+                        return ':has(';
+                    }
+                    return match;
+                });
+            }
+        }
+
+        // Relative selectors not allowed at top level.
+        if ( this.reIsRelativeSelector.test(raw) ) { return false; }
+
+        if ( this.reCommonSelector.test(raw) ) {
             out.compiled = raw;
             return true;
         }
 
-        // We  rarely reach this point -- majority of selectors are plain
-        // CSS selectors.
+        out.compiled = this.compileSelector(raw);
+        if ( out.compiled === undefined ) { return false; }
 
-        // Supported Adguard/ABP advanced selector syntax: will translate
-        // into uBO's syntax before further processing.
-        // Mind unsupported advanced selector syntax, such as ABP's
-        // `-abp-properties`.
-        // Note: extended selector syntax has been deprecated in ABP, in
-        // favor of the procedural one (i.e. `:operator(...)`).
-        // See https://issues.adblockplus.org/ticket/5287
-        if ( asProcedural && this.reExtendedSyntax.test(raw) ) {
-            let matches;
-            while ( (matches = this.reExtendedSyntaxParser.exec(raw)) !== null ) {
-                const operator = this.normalizedExtendedSyntaxOperators.get(matches[1]);
-                if ( operator === undefined ) { return false; }
-                raw = raw.slice(0, matches.index) +
-                      operator + '(' + matches[3] + ')' +
-                      raw.slice(matches.index + matches[0].length);
+        if ( out.compiled instanceof Object ) {
+            out.compiled.raw = raw;
+            out.compiled = JSON.stringify(out.compiled);
+        }
+        return true;
+    }
+
+    compileSelector(raw) {
+        const parts = this.astFromRaw(raw, 'selectorList');
+        if ( parts === undefined ) { return; }
+        if ( this.astHasType(parts, 'Error') ) { return; }
+        if ( this.astHasType(parts, 'Selector') === false ) { return; }
+        if (
+            this.astHasType(parts, 'ProceduralSelector') === false &&
+            this.astHasType(parts, 'ActionSelector') === false
+        ) {
+            return this.astSerialize(parts);
+        }
+        const r = this.astCompile(parts);
+        if ( this.isCssable(r) ) {
+            r.cssable = true;
+        }
+        return r;
+    }
+
+    isCssable(r) {
+        if ( r instanceof Object === false ) { return false; }
+        if ( Array.isArray(r.action) && r.action[0] !== 'style' ) { return false; }
+        if ( r.tasks === undefined ) { return true; }
+        if ( r.tasks.length > 1 ) { return false; }
+        if ( r.tasks[0][0] === 'matches-media' ) { return true; }
+        return false;
+    }
+
+    astFromRaw(raw, type) {
+        let ast;
+        try {
+            ast = cssTree.parse(raw, {
+                context: type,
+                parseValue: false,
+            });
+        } catch(reason) {
+            return;
+        }
+        const parts = [];
+        this.astFlatten(ast, parts);
+        return parts;
+    }
+
+    astFlatten(data, out) {
+        const head = data.children && data.children.head;
+        let args;
+        switch ( data.type ) {
+        case 'AttributeSelector':
+        case 'ClassSelector':
+        case 'Combinator':
+        case 'IdSelector':
+        case 'MediaFeature':
+        case 'Nth':
+        case 'Raw':
+        case 'TypeSelector':
+            out.push({ data });
+            break;
+        case 'Declaration':
+            if ( data.value ) {
+                this.astFlatten(data.value, args = []);
             }
-            return this.compile(raw, true, out);
+            out.push({ data, args });
+            args = undefined;
+            break;
+        case 'DeclarationList':
+        case 'Identifier':
+        case 'MediaQueryList':
+        case 'Selector':
+        case 'SelectorList':
+            args = out;
+            out.push({ data });
+            break;
+        case 'MediaQuery':
+        case 'PseudoClassSelector':
+        case 'PseudoElementSelector':
+            if ( head ) { args = []; }
+            out.push({ data, args });
+            break;
+        case 'Value':
+            args = out;
+            break;
+        default:
+            break;
         }
 
-        // Procedural selector?
-        const compiled = this.compileProceduralSelector(raw, asProcedural);
-        if ( compiled === undefined ) { return false; }
+        if ( head ) {
+            if ( args ) {
+                this.astFlatten(head.data, args);
+            }
+            let next = head.next;
+            while ( next ) {
+                this.astFlatten(next.data, args);
+                next = next.next;
+            }
+        }
+        if ( data.type !== 'PseudoClassSelector' ) { return; }
 
-        out.compiled =
-            compiled.selector !== compiled.raw ||
-            this.sheetSelectable(compiled.selector) === false
-                ? JSON.stringify(compiled)
-                : compiled.selector;
+        // Post-analysis
+        // Mind https://w3c.github.io/csswg-drafts/selectors-4/#has-pseudo
+        data.name = this.normalizedOperators.get(data.name) || data.name;
+        if ( this.proceduralOperatorNames.has(data.name) ) {
+            data.type = 'ProceduralSelector';
+        } else if ( this.proceduralActionNames.has(data.name) ) {
+            data.type = 'ActionSelector';
+        }
+        if ( this.maybeProceduralOperatorNames.has(data.name) ) {
+            if ( this.astHasType(args, 'ProceduralSelector') ) {
+                data.type = 'ProceduralSelector';
+            } else if ( data.name === 'has' ) {
+                if (
+                    this.asProcedural ||
+                    this.nativeCssHas !== true ||
+                    this.astHasName(args, 'has')
+                ) {
+                    data.type = 'ProceduralSelector';
+                } else if ( this.astHasType(args, 'PseudoElementSelector') ) {
+                    data.type = 'Error';
+                }
+            }
+        }
+    }
 
-        return true;
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/2300
+    //   Unquoted attribute values are parsed as Identifier instead of String.
+    astSerializePart(part) {
+        const out = [];
+        const { data } = part;
+        switch ( data.type ) {
+        case 'AttributeSelector': {
+            const name = data.name.name;
+            if ( this.reInvalidIdentifier.test(name) ) { return; }
+            if ( data.matcher === null ) {
+                out.push(`[${name}]`);
+                break;
+            }
+            let value = data.value.value;
+            if ( typeof value !== 'string' ) {
+                value = data.value.name;
+            }
+            value = value.replace(/"/g, '\\$&');
+            let flags = '';
+            if ( typeof data.flags === 'string' ) {
+                if ( /^(is?|si?)$/.test(data.flags) === false ) { return; }
+                flags = ` ${data.flags}`;
+            }
+            out.push(`[${name}${data.matcher}"${value}"${flags}]`);
+            break;
+        }
+        case 'ClassSelector':
+            if ( this.reInvalidIdentifier.test(data.name) ) { return; }
+            out.push(`.${data.name}`);
+            break;
+        case 'Combinator':
+            out.push(data.name === ' ' ? ' ' : ` ${data.name} `);
+            break;
+        case 'Identifier':
+            if ( this.reInvalidIdentifier.test(data.name) ) { return; }
+            out.push(data.name);
+            break;
+        case 'IdSelector':
+            if ( this.reInvalidIdentifier.test(data.name) ) { return; }
+            out.push(`#${data.name}`);
+            break;
+        case 'Nth': {
+            if ( data.selector !== null ) { return; }
+            if ( data.nth.type === 'AnPlusB' ) {
+                const a = parseInt(data.nth.a, 10) || null;
+                const b = parseInt(data.nth.b, 10) || null;
+                if ( a !== null ) {
+                    out.push(`${a}n`);
+                    if ( b === null ) { break; }
+                    if ( b < 0 ) {
+                        out.push(`${b}`);
+                    } else {
+                        out.push(`+${b}`);
+                    }
+                } else if ( b !== null ) {
+                    out.push(`${b}`);
+                }
+            } else if ( data.nth.type === 'Identifier' ) {
+                out.push(data.nth.name);
+            }
+            break;
+        }
+        case 'PseudoClassSelector':
+        case 'PseudoElementSelector':
+            out.push(`:${data.name}`);
+            if ( Array.isArray(part.args) ) {
+                const arg = this.astSerialize(part.args);
+                if ( typeof arg !== 'string' ) { return; }
+                out.push(`(${arg})`);
+            }
+            break;
+        case 'Raw':
+            out.push(data.value);
+            break;
+        case 'TypeSelector':
+            if ( this.reInvalidIdentifier.test(data.name) ) { return; }
+            out.push(data.name);
+            break;
+        default:
+            break;
+        }
+        return out.join('');
+    }
+
+
+    astSerialize(parts, plainCSS = true) {
+        const out = [];
+        for ( const part of parts ) {
+            const { data } = part;
+            switch ( data.type ) {
+            case 'AttributeSelector':
+            case 'ClassSelector':
+            case 'Combinator':
+            case 'Identifier':
+            case 'IdSelector':
+            case 'Nth':
+            case 'PseudoClassSelector':
+            case 'PseudoElementSelector':
+            case 'TypeSelector': {
+                const s = this.astSerializePart(part);
+                if ( typeof s !== 'string' ) { return; }
+                out.push(s);
+                break;
+            }
+            case 'Raw':
+                if ( plainCSS ) { return; }
+                out.push(this.astSerializePart(part));
+                break;
+            case 'Selector':
+                if ( out.length !== 0 ) { out.push(','); }
+                break;
+            case 'SelectorList':
+                break;
+            default:
+                return;
+            }
+        }
+        return out.join('');
+    }
+
+    astCompile(parts) {
+        if ( Array.isArray(parts) === false ) { return; }
+        if ( parts.length === 0 ) { return; }
+        if ( parts[0].data.type !== 'SelectorList' ) { return; }
+        const out = { selector: '' };
+        const prelude = [];
+        const tasks = [];
+        for ( const part of parts ) {
+            const { data } = part;
+            switch ( data.type ) {
+            case 'ActionSelector': {
+                if ( prelude.length !== 0 ) {
+                    if ( tasks.length === 0 ) {
+                        out.selector = prelude.join('');
+                    } else {
+                        tasks.push(this.createSpathTask(prelude.join('')));
+                    }
+                    prelude.length = 0;
+                }
+                const args = this.compileArgumentAst(data.name, part.args);
+                if ( args === undefined ) { return; }
+                out.action = [ data.name, args ];
+                break;
+            }
+            case 'AttributeSelector':
+            case 'ClassSelector':
+            case 'Combinator':
+            case 'IdSelector':
+            case 'PseudoClassSelector':
+            case 'PseudoElementSelector':
+            case 'TypeSelector':
+                prelude.push(this.astSerializePart(part));
+                break;
+            case 'ProceduralSelector':
+                if ( prelude.length !== 0 ) {
+                    if ( tasks.length === 0 ) {
+                        out.selector = prelude.join('');
+                    } else {
+                        tasks.push(this.createSpathTask(prelude.join('')));
+                    }
+                    prelude.length = 0;
+                }
+                const args = this.compileArgumentAst(data.name, part.args);
+                if ( args === undefined ) { return; }
+                tasks.push([ data.name, args ]);
+                break;
+            case 'Selector':
+                if ( prelude.length !== 0 ) {
+                    prelude.push(', ');
+                }
+                break;
+            case 'SelectorList':
+                break;
+            default:
+                return;
+            }
+        }
+        if ( tasks.length === 0 && out.action === undefined ) {
+            if ( prelude.length === 0 ) { return; }
+            return prelude.join('');
+        }
+        if ( prelude.length !== 0 ) {
+            tasks.push(this.createSpathTask(prelude.join('')));
+        }
+        if ( tasks.length !== 0 ) {
+            out.tasks = tasks;
+        }
+        return out;
+    }
+
+    astHasType(parts, type) {
+        if ( Array.isArray(parts) === false ) { return false; }
+        for ( const part of parts ) {
+            if ( part.data.type === type ) { return true; }
+            if ( Array.isArray(part.args) && this.astHasType(part.args, type) ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    astHasName(parts, name) {
+        if ( Array.isArray(parts) === false ) { return false; }
+        for ( const part of parts ) {
+            if ( part.data.name === name ) { return true; }
+            if ( Array.isArray(part.args) && this.astHasName(part.args, name) ) {
+                return true;
+            }
+        }
+        return false;
     }
 
     translateAdguardCSSInjectionFilter(suffix) {
@@ -1487,67 +1802,65 @@ Parser.prototype.SelectorCompiler = class {
             : `${selector}:style(${style})`;
     }
 
-    // Quick regex-based validation -- most cosmetic filters are of the
-    // simple form and in such case a regex is much faster.
-    // Keep in mind:
-    //   https://github.com/gorhill/uBlock/issues/693
-    //   https://github.com/gorhill/uBlock/issues/1955
-    // https://github.com/gorhill/uBlock/issues/3111
-    //   Workaround until https://bugzilla.mozilla.org/show_bug.cgi?id=1406817
-    //   is fixed.
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/1751
-    //   Do not rely on matches() or querySelector() to test whether a
-    //   selector is declarative or not.
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/1806#issuecomment-963278382
-    //   Forbid multiple and unexpected CSS style declarations.
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/2170#issuecomment-1207921464
-    //   Assigning text content to the `style` element resets the `disabled`
-    //   state of the sheet, so we need to explicitly disable it each time we
-    //   assign new text.
-    sheetSelectable(s) {
-        if ( this.reCommonSelector.test(s) ) { return true; }
-        if ( this.cssValidatorElement === null ) {
-            return this.reHasProceduralOperator.test(s) === false;
-        }
-        let valid = false;
-        try {
-            this.cssValidatorElement.childNodes[0].nodeValue = `_z + ${s}{color:red;} _z{color:red;}`;
-            this.cssValidatorElement.sheet.disabled =  true;
-            const rules = this.cssValidatorElement.sheet.cssRules;
-            valid = rules.length === 2 &&
-                rules[0].style.cssText !== '' &&
-                rules[1].style.cssText !== '';
-        } catch (ex) {
-        }
-        return valid;
+    createSpathTask(selector) {
+        return [ 'spath', selector ];
     }
 
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/1806
-    //   Forbid instances of:
-    //   - opening comment `/*`
-    querySelectable(s) {
-        if ( this.reCommonSelector.test(s) ) { return true; }
-        if ( this.div === null ) {
-            return this.reHasProceduralOperator.test(s) === false;
-        }
-        try {
-            this.div.querySelector(`${s},${s}:not(#foo)`);
-            if ( s.includes('/*') ) { return false; }
-        } catch (ex) {
-            return false;
-        }
-        return true;
-    }
-
-    compileProceduralSelector(raw, asProcedural = false) {
-        const compiled = this.compileProcedural(raw, true, asProcedural);
-        if ( compiled !== undefined ) {
-            if ( asProcedural ) {
-                this.optimizeCompiledProcedural(compiled);
+    compileArgumentAst(operator, parts) {
+        switch ( operator ) {
+        case 'has': {
+            let r = this.astCompile(parts);
+            if ( typeof r === 'string' ) {
+                r = { selector: r.replace(/^\s*:scope\s*/, ' ') };
             }
-            compiled.raw = this.decompileProcedural(compiled);
+            return r;
         }
-        return compiled;
+        case 'not': {
+            return this.astCompile(parts);
+        }
+        default:
+            break;
+        }
+
+        let arg;
+        if ( Array.isArray(parts) && parts.length !== 0 ) {
+            arg = this.astSerialize(parts, false);
+        }
+        if ( arg === undefined ) { return; }
+        switch ( operator ) {
+        case 'has-text':
+            return this.compileText(arg);
+        case 'if':
+            return this.compileSelector(arg);
+        case 'if-not':
+            return this.compileSelector(arg);
+        case 'matches-css':
+            return this.compileCSSDeclaration(arg);
+        case 'matches-css-after':
+            return this.compileCSSDeclaration(`after, ${arg}`);
+        case 'matches-css-before':
+            return this.compileCSSDeclaration(`before, ${arg}`);
+        case 'matches-media':
+            return this.compileMediaQuery(arg);
+        case 'matches-path':
+            return this.compileText(arg);
+        case 'min-text-length':
+            return this.compileInteger(arg);
+        case 'others':
+            return this.compileNoArgument(arg);
+        case 'remove':
+            return this.compileNoArgument(arg);
+        case 'style':
+            return this.compileStyleProperties(arg);
+        case 'upward':
+            return this.compileUpwardArgument(arg);
+        case 'watch-attr':
+            return this.compileAttrList(arg);
+        case 'xpath':
+            return this.compileXpathExpression(arg);
+        default:
+            break;
+        }
     }
 
     isBadRegex(s) {
@@ -1560,9 +1873,19 @@ Parser.prototype.SelectorCompiler = class {
         return false;
     }
 
+    extractArg(s) {
+        if ( /^(['"]).+\1$/.test(s) ) {
+            s = s.slice(1, -1);
+        }
+        return s.replace(/\\(['"])/g, '$1');
+    }
+
     // When dealing with literal text, we must first eat _some_
     // backslash characters.
+    // Remove potentially present quotes before processing.
     compileText(s) {
+        if ( s === '' ) { return; }
+        s = this.extractArg(s);
         const match = this.reParseRegexLiteral.exec(s);
         let regexDetails;
         if ( match !== null ) {
@@ -1614,44 +1937,26 @@ Parser.prototype.SelectorCompiler = class {
     }
 
     compileMediaQuery(s) {
-        if ( typeof self !== 'object' ) { return; }
-        if ( self === null ) { return; }
-        if ( typeof self.matchMedia !== 'function' ) { return; }
-        try {
-            const mql = self.matchMedia(s);
-            if ( mql instanceof self.MediaQueryList === false ) { return; }
-            if ( mql.media !== 'not all' ) { return s; }
-        } catch(ex) {
-        }
-    }
-
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/341#issuecomment-447603588
-    //   Reject instances of :not() filters for which the argument is
-    //   a valid CSS selector, otherwise we would be adversely changing the
-    //   behavior of CSS4's :not().
-    compileNotSelector(s) {
-        if ( this.querySelectable(s) === false ) {
-            return this.compileProcedural(s);
-        }
+        const parts = this.astFromRaw(s, 'mediaQueryList');
+        if ( parts === undefined ) { return; }
+        if ( this.astHasType(parts, 'Raw') ) { return; }
+        if ( this.astHasType(parts, 'MediaQuery') === false ) { return; }
+        // TODO: normalize by serializing resulting AST
         return s;
     }
 
     compileUpwardArgument(s) {
         const i = this.compileInteger(s, 1, 256);
         if ( i !== undefined ) { return i; }
-        if ( this.querySelectable(s) ) { return s; }
+        const parts = this.astFromRaw(s, 'selectorList' );
+        if ( this.astHasType(parts, 'ProceduralSelector') ) { return; }
+        if ( this.astHasType(parts, 'ActionSelector') ) { return; }
+        if ( this.astHasType(parts, 'Error') ) { return; }
+        return s;
     }
 
     compileNoArgument(s) {
         if ( s === '' ) { return s; }
-    }
-
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/382#issuecomment-703725346
-    //   Prepend `:scope` only when it can be deemed implicit.
-    compileSpathExpression(s) {
-        if ( this.querySelectable(/^\s*[+:>~]/.test(s) ? `:scope${s}` : s) ) {
-            return s;
-        }
     }
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/668
@@ -1665,21 +1970,14 @@ Parser.prototype.SelectorCompiler = class {
     //   - opening comment `/*`
     compileStyleProperties(s) {
         if ( /image-set\(|url\(|\/\s*\/|\\|\/\*/i.test(s) ) { return; }
-        if ( this.cssValidatorElement === null ) { return s; }
-        let valid = false;
-        try {
-            this.cssValidatorElement.childNodes[0].nodeValue = `_z{${s}} _z{color:red;}`;
-            this.cssValidatorElement.sheet.disabled =  true;
-            const rules = this.cssValidatorElement.sheet.cssRules;
-            valid = rules.length >= 2 &&
-                rules[0].style.cssText !== '' &&
-                rules[1].style.cssText !== '';
-        } catch(ex) {
-        }
-        if ( valid ) { return s; }
+        const parts = this.astFromRaw(s, 'declarationList');
+        if ( parts === undefined ) { return; }
+        if ( this.astHasType(parts, 'Declaration') === false ) { return; }
+        return s;
     }
 
     compileAttrList(s) {
+        if ( s === '' ) { return s; }
         const attrs = s.split('\s*,\s*');
         const out = [];
         for ( const attr of attrs ) {
@@ -1691,320 +1989,13 @@ Parser.prototype.SelectorCompiler = class {
     }
 
     compileXpathExpression(s) {
+        s = this.extractArg(s);
         try {
-            document.createExpression(s, null);
+            self.document.createExpression(s, null);
         } catch (e) {
             return;
         }
         return s;
-    }
-
-    optimizeCompiledProcedural(compiled) {
-        if ( typeof compiled === 'string' ) { return; }
-        if ( Array.isArray(compiled.tasks) === false ) { return; }
-        const tasks = [];
-        let selector = compiled.selector;
-        for ( const task of compiled.tasks ) {
-            switch ( task[0] ) {
-            case ':not':
-            case ':if-not':
-                this.optimizeCompiledProcedural(task[1]);
-                if ( tasks.length === 0 && typeof task[1] === 'string' ) {
-                    selector += `:not(${task[1]})`;
-                    break;
-                }
-                tasks.push(task);
-                break;
-            default:
-                tasks.push(task);
-                break;
-            }
-        }
-        compiled.selector = selector;
-        compiled.tasks = tasks.length !== 0 ? tasks : undefined;
-    }
-
-    // https://github.com/gorhill/uBlock/issues/2793#issuecomment-333269387
-    //   Normalize (somewhat) the stringified version of procedural
-    //   cosmetic filters -- this increase the likelihood of detecting
-    //   duplicates given that uBO is able to understand syntax specific
-    //   to other blockers.
-    //   The normalized string version is what is reported in the logger,
-    //   by design.
-    decompileProcedural(compiled) {
-        if ( typeof compiled === 'string' ) { return compiled; }
-        const tasks = compiled.tasks || [];
-        const raw = [ compiled.selector ];
-        for ( const task of tasks ) {
-            let value;
-            switch ( task[0] ) {
-            case ':has':
-            case ':if':
-                raw.push(`:has(${this.decompileProcedural(task[1])})`);
-                break;
-            case ':has-text':
-            case ':matches-path':
-                if ( Array.isArray(task[1]) ) {
-                    value = `/${task[1][0]}/${task[1][1]}`;
-                } else {
-                    value = this.regexToRawValue.get(task[1]);
-                    if ( value === undefined ) {
-                        value = `/${task[1]}/`;
-                    }
-                }
-                raw.push(`${task[0]}(${value})`);
-                break;
-            case ':matches-css':
-            case ':matches-css-after':
-            case ':matches-css-before':
-                if ( Array.isArray(task[1].value) ) {
-                    value = `/${task[1].value[0]}/${task[1].value[1]}`;
-                } else {
-                    value = this.regexToRawValue.get(task[1].value);
-                    if ( value === undefined ) {
-                        value = `/${task[1].value}/`;
-                    }
-                }
-                if ( task[1].pseudo ) {
-                    raw.push(`:matches-css(${task[1].pseudo}, ${task[1].name}: ${value})`);
-                } else {
-                    raw.push(`:matches-css(${task[1].name}: ${value})`);
-                }
-                break;
-            case ':not':
-            case ':if-not':
-                if ( typeof(task[1]) === 'string' ) {
-                    raw.push(`:not(${task[1]})`);
-                    break;
-                }
-                raw.push(`:not(${this.decompileProcedural(task[1])})`);
-                break;
-            case ':spath':
-                raw.push(task[1]);
-                break;
-            case ':matches-media':
-            case ':min-text-length':
-            case ':others':
-            case ':upward':
-            case ':watch-attr':
-            case ':xpath':
-                raw.push(`${task[0]}(${task[1]})`);
-                break;
-            }
-        }
-        if ( Array.isArray(compiled.action) ) {
-            const [ op, arg ] = compiled.action;
-            raw.push(`${op}(${arg})`);
-        }
-        return raw.join('');
-    }
-
-    compileProcedural(raw, root = false, asProcedural = false) {
-        if ( raw === '' ) { return; }
-
-        const tasks = [];
-        const n = raw.length;
-        let prefix = '';
-        let i = 0;
-        let opPrefixBeg = 0;
-        let action;
-
-        // TODO: use slices instead of charCodeAt()
-        for (;;) {
-            let c, match;
-            // Advance to next operator.
-            while ( i < n ) {
-                c = raw.charCodeAt(i++);
-                if ( c === 0x3A /* ':' */ ) {
-                    match = this.reProceduralOperator.exec(raw.slice(i));
-                    if ( match !== null ) { break; }
-                }
-            }
-            if ( i === n ) { break; }
-            const opNameBeg = i - 1;
-            const opNameEnd = i + match[0].length - 1;
-            i += match[0].length;
-            // Find end of argument: first balanced closing parenthesis.
-            // Note: unbalanced parenthesis can be used in a regex literal
-            // when they are escaped using `\`.
-            // TODO: need to handle quoted parentheses.
-            let pcnt = 1;
-            while ( i < n ) {
-                c = raw.charCodeAt(i++);
-                if ( c === 0x5C /* '\\' */ ) {
-                    if ( i < n ) { i += 1; }
-                } else if ( c === 0x28 /* '(' */ ) {
-                    pcnt +=1 ;
-                } else if ( c === 0x29 /* ')' */ ) {
-                    pcnt -= 1;
-                    if ( pcnt === 0 ) { break; }
-                }
-            }
-            // Unbalanced parenthesis? An unbalanced parenthesis is fine
-            // as long as the last character is a closing parenthesis.
-            if ( pcnt !== 0 && c !== 0x29 ) { return; }
-            // Extract and remember operator/argument details.
-            const opname = raw.slice(opNameBeg, opNameEnd);
-            const oparg = raw.slice(opNameEnd + 1, i - 1);
-            const operator = this.normalizedOperators.get(opname) || opname;
-            // https://github.com/uBlockOrigin/uBlock-issues/issues/341#issuecomment-447603588
-            //   Maybe that one operator is a valid CSS selector and if so,
-            //   then consider it to be part of the prefix.
-            // https://github.com/uBlockOrigin/uBlock-issues/issues/2228
-            //   Maybe an operator is a valid CSS selector, but if it is
-            //   "forgiving", we also need to validate that the argument itself
-            //   is also a valid CSS selector.
-            if (
-                asProcedural === false &&
-                this.querySelectable(raw.slice(opNameBeg, i)) &&
-                this.querySelectable(oparg)
-            ) {
-                continue;
-            }
-            // Action operator can only be used as trailing operator in the
-            // root task list.
-            // Per-operator arguments validation
-            const args = this.compileArgument(operator, oparg);
-            if ( args === undefined ) { return; }
-            if ( opPrefixBeg === 0 ) {
-                prefix = raw.slice(0, opNameBeg);
-            } else if ( opNameBeg !== opPrefixBeg ) {
-                if ( action !== undefined ) { return; }
-                const spath = this.compileSpathExpression(
-                    raw.slice(opPrefixBeg, opNameBeg)
-                );
-                if ( spath === undefined ) { return; }
-                tasks.push([ ':spath', spath ]);
-            }
-            if ( action !== undefined ) { return; }
-            const task = [ operator, args ];
-            if ( this.actionOperators.has(operator) ) {
-                if ( root === false ) { return; }
-                action = task;
-            } else {
-                tasks.push(task);
-            }
-            opPrefixBeg = i;
-            if ( i === n ) { break; }
-        }
-
-        // When there is an explicit action, nothing should be left to parse.
-        if ( action !== undefined && opPrefixBeg < n ) { return; }
-
-        // No task found: then we have a CSS selector.
-        // At least one task found: either nothing or a valid plain CSS selector
-        // should be left to parse
-        if ( tasks.length === 0 ) {
-            if ( action === undefined ) {
-                prefix = raw;
-            }
-            if ( root && this.sheetSelectable(prefix) ) {
-                if ( action === undefined ) {
-                    return { selector: prefix, cssable: true };
-                } else if ( action[0] === ':style' ) {
-                    return { selector: prefix, cssable: true, action };
-                }
-            }
-
-        } else if ( opPrefixBeg < n ) {
-            const spath = this.compileSpathExpression(raw.slice(opPrefixBeg));
-            if ( spath === undefined ) { return; }
-            tasks.push([ ':spath', spath ]);
-        }
-
-        // https://github.com/NanoAdblocker/NanoCore/issues/1#issuecomment-354394894
-        // https://www.reddit.com/r/uBlockOrigin/comments/c6iem5/
-        //   Convert sibling-selector prefix into :spath operator, but
-        //   only if context is not the root.
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/1011#issuecomment-884806241
-        //   Drop explicit `:scope` in case of leading combinator, all such
-        //   cases are normalized to implicit `:scope`.
-        if ( prefix !== '' ) {
-            if ( this.reIsDanglingSelector.test(prefix) && tasks.length !== 0 ) {
-                prefix += ' *';
-            }
-            prefix = prefix.replace(this.reDropScope, '');
-            if ( this.querySelectable(prefix) === false ) {
-                if (
-                    root ||
-                    this.reIsCombinator.test(prefix) === false ||
-                    this.compileSpathExpression(prefix) === undefined
-                ) {
-                    return;
-                }
-                tasks.unshift([ ':spath', prefix ]);
-                prefix = '';
-            }
-        }
-
-        const out = { selector: prefix };
-
-        if ( tasks.length !== 0 ) {
-            out.tasks = tasks;
-        }
-
-        // Expose action to take in root descriptor.
-        if ( action !== undefined ) {
-            out.action = action;
-        }
-
-        // Flag to quickly find out whether the filter can be converted into
-        // a declarative CSS rule.
-        if (
-            root &&
-            (action === undefined || action[0] === ':style') &&
-            (
-                tasks.length === 0 ||
-                tasks.length === 1 && tasks[0][0] === ':matches-media'
-            )
-        ) {
-            out.cssable = this.sheetSelectable(prefix);
-        }
-
-        return out;
-    }
-
-    compileArgument(operator, args) {
-        switch ( operator ) {
-        case ':has':
-            return this.compileProcedural(args);
-        case ':has-text':
-            return this.compileText(args);
-        case ':if':
-            return this.compileProcedural(args);
-        case ':if-not':
-            return this.compileProcedural(args);
-        case ':matches-css':
-            return this.compileCSSDeclaration(args);
-        case ':matches-css-after':
-            return this.compileCSSDeclaration(`after, ${args}`);
-        case ':matches-css-before':
-            return this.compileCSSDeclaration(`before, ${args}`);
-        case ':matches-media':
-            return this.compileMediaQuery(args);
-        case ':matches-path':
-            return this.compileText(args);
-        case ':min-text-length':
-            return this.compileInteger(args);
-        case ':not':
-            return this.compileNotSelector(args);
-        case ':others':
-            return this.compileNoArgument(args);
-        case ':remove':
-            return this.compileNoArgument(args);
-        case ':spath':
-            return this.compileSpathExpression(args);
-        case ':style':
-            return this.compileStyleProperties(args);
-        case ':upward':
-            return this.compileUpwardArgument(args);
-        case ':watch-attr':
-            return this.compileAttrList(args);
-        case ':xpath':
-            return this.compileXpathExpression(args);
-        default:
-            break;
-        }
     }
 };
 
@@ -2020,8 +2011,6 @@ Parser.prototype.proceduralOperatorTokens = new Map([
     [ 'if', 0b00 ],
     [ 'if-not', 0b00 ],
     [ 'matches-css', 0b11 ],
-    [ 'matches-css-after', 0b11 ],
-    [ 'matches-css-before', 0b11 ],
     [ 'matches-media', 0b11 ],
     [ 'matches-path', 0b11 ],
     [ 'min-text-length', 0b01 ],
@@ -3162,6 +3151,7 @@ Parser.utils = Parser.prototype.utils = (( ) => {
         [ 'env_firefox', 'firefox' ],
         [ 'env_legacy', 'legacy' ],
         [ 'env_mobile', 'mobile' ],
+        [ 'env_mv3', 'mv3' ],
         [ 'env_safari', 'safari' ],
         [ 'cap_html_filtering', 'html_filtering' ],
         [ 'cap_user_stylesheet', 'user_stylesheet' ],

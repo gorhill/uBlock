@@ -8,11 +8,11 @@
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
-    "message": "{{ruleCount}} kural, şuradan dönüştürüldü {{filterCount}} ağ filtresi",
+    "message": "{{ruleCount}} kural, {{filterCount}} ağ filtresinden dönüştürüldü",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
-    "message": "uBO Lite — Panel",
+    "message": "uBO Lite — Kontrol Paneli",
     "description": "English: uBO Lite — Dashboard"
   },
   "dashboardUnsavedWarning": {
@@ -20,11 +20,11 @@
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Kal",
+    "message": "Burada kal",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Görmezden gel",
+    "message": "Yok say",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
@@ -48,15 +48,15 @@
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
-    "message": "Gizlilik politikası ",
+    "message": "Gizlilik ilkesi",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupPowerSwitchInfo": {
-    "message": "Bu site için uBO Lite'ı etkinleştirin/devre dışı bırakın",
+    "message": "Bu site için uBO Lite'ı etkinleştir/devre dışı bırak",
     "description": "Tooltip for the main power button in the popup panel"
   },
   "popupTipDashboard": {
-    "message": "Paneli açın",
+    "message": "Kontrol panelini aç",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
@@ -72,7 +72,7 @@
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipSaveRules": {
-    "message": "Değişikliklerinizi daimi yapmak için tıklayın.",
+    "message": "Değişikliklerinizi kalıcı hale getirmek için tıklayın.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
@@ -84,11 +84,11 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupGrantGreatPowers": {
-    "message": "Click to grant uBO Lite extended permissions on this site.\nExtended permissions allow more effective content blocking.",
+    "message": "Bu sitede uBO Lite'a daha kapsamlı izinler vermek için tıklayın.\nİzinlerin kapsamını artırmak, daha etkili içerik engelleme sağlar.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupRevokeGreatPowers": {
-    "message": "Click to revoke extended permissions on this site",
+    "message": "Bu sitedeki kapsamı artırılan izinleri iptal etmek için tıklayın.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
@@ -96,7 +96,7 @@
     "description": "Label to be used to hide popup panel sections"
   },
   "settingsIconBadgePrompt": {
-    "message": "Engellenen istek sayısını simge üstünde göster",
+    "message": "Simge üzerinde engellenen isteklerin sayısını göster",
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsAppearance": {
@@ -115,6 +115,14 @@
     "message": "CSP raporlarını engelle",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
+  "omnipotenceLabel": {
+    "message": "Tüm web sitelerinde genişletilmiş filtrelemeyi etkinleştir.",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "omnipotenceLegend": {
+    "message": "uBO Lite, belirli bir web sitesinde, yalnızca o web sitesindeki verileri değiştirmek için uzantı izinlerini açıkça verdikten sonra genişletilmiş filtreleme uygulayabilir. Bu ayar, tüm web sitelerine bir kerede genişletilmiş filtreleme için izinler vermenizi sağlar.",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
   "3pGroupDefault": {
     "message": "Varsayılan",
     "description": "Header for a ruleset section in 'Filter lists pane'"
@@ -132,11 +140,11 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
-    "message": "Can sıkıcı olanlar",
+    "message": "Rahatsız ediciler",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMisc": {
-    "message": "Diğer",
+    "message": "Diğer Ayarlar",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupRegions": {
@@ -144,7 +152,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "1pFormatHint": {
-    "message": "Her satırda bir filtre. Bir filtre yalın bir alan adı veya EasyList uyumlu bir filtre olabilir. <code>!</code> ile başlayan satırlar yok sayılacaktır.",
+    "message": "Satır başına bir filtre. Filtre yalın bir alan adı veya EasyList uyumlu bir filtre olabilir. <code>!</code> ile başlayan satırlar yok sayılacaktır.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -160,11 +168,11 @@
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "whitelistPrompt": {
-    "message": "The trusted site directives dictate on which web pages uBO Lite should be disabled. One entry per line.",
+    "message": "Güvenilen site yönergeleri, uBO Lite'ın devre dışı bırakılması gerektiği web sayfalarını belirler. Her satırda bir girdi.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "İçe aktar ve ekle",
+    "message": "İçe aktar ve sonuna ekle",
     "description": "English: Import and append"
   },
   "whitelistExport": {
@@ -172,7 +180,7 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "ublock-statik-filtrelerim_{{datetime}}.txt",
+    "message": "ublock-guvenilen-siteler_{{datetime}}.txt",
     "description": "The default filename to use for import/export purpose"
   },
   "aboutChangelog": {
@@ -200,19 +208,71 @@
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "External dependencies (GPLv3-compatible):",
+    "message": "Dış bağımlılıklar (GPLv3-uyumlu):",
     "description": "Shown in the About pane"
   },
   "genericSubmit": {
-    "message": "Submit",
+    "message": "Gönder",
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Apply changes",
+    "message": "Değişiklikleri uygula",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
-    "message": "Revert",
+    "message": "Geri al",
     "description": "for generic 'Revert' buttons"
+  },
+  "firstRunSectionLabel": {
+    "message": "Hoş geldiniz",
+    "description": "The header text for the welcome message section"
+  },
+  "firstRunDescription": {
+    "message": "Az önce uBO Lite'ı indirdiniz. Buradan tüm siteler için varsayılan filtreleme modlarını seçebilirsiniz.\n\nVarsayılan olarak, <em>Basit</em> mod seçilidir çünkü verileri okuma ve yazma izni gerektirmez. Eğer uBO Lite'a güveniyorsanız, tüm sitelerde verileri okuma ve yazma izni verebilirsiniz ve daha gelişmiş filtreleme yeteneklerine tüm sitelerde sahip olabilirsiniz.",
+    "description": "Descriptive text shown at first install time only "
+  },
+  "defaultFilteringModeSectionLabel": {
+    "message": "Varsayılan filtreleme modu",
+    "description": "The header text for the default filtering mode section"
+  },
+  "defaultFilteringModeDescription": {
+    "message": "The default filtering mode will be overriden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
+    "description": "This describes the default filtering mode setting"
+  },
+  "filteringMode0Name": {
+    "message": "filtreleme yok",
+    "description": "Name of blocking mode 0"
+  },
+  "filteringMode1Name": {
+    "message": "temel",
+    "description": "Name of blocking mode 1"
+  },
+  "filteringMode2Name": {
+    "message": "ideal",
+    "description": "Name of blocking mode 2"
+  },
+  "filteringMode3Name": {
+    "message": "tamamen",
+    "description": "Name of blocking mode 3"
+  },
+  "basicFilteringModeDescription": {
+    "message": "Seçilen filtre listelerinden temel ağ filtrelemesi.\n\nWeb sitelerindeki verileri okumak ve değiştirmek için izin gerektirmez.",
+    "description": "This describes the 'basic' filtering mode"
+  },
+  "optimalFilteringModeDescription": {
+    "message": "Gelişmiş ağ filtrelemesi ve seçilen filtre listelerinden genişletilmiş filtreleme.\n\nTüm web sitelerindeki verileri okumak ve değiştirmek için izin gerektirir.",
+    "description": "This describes the 'optimal' filtering mode"
+  },
+  "completeFilteringModeDescription": {
+    "message": "Advanced network filtering plus specific and generic extended filtering from selected filter lists.\n\nRequires broad permission to read and change data on all websites.\n\nGeneric extended filtering may cause higher webpage resources usage.",
+    "description": "This describes the 'complete' filtering mode"
+  },
+  "behaviorSectionLabel": {
+    "message": "Davranış",
+    "description": "The header text for the 'Behavior' section"
+  },
+  "autoReloadLabel": {
+    "message": "Filtreleme modu değiştirildiğinde sayfayı yenile",
+    "description": "Label for a checkbox in the options page"
   }
 }

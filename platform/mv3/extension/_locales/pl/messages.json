@@ -115,6 +115,14 @@
     "message": "Blokuj raporty CSP",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
+  "omnipotenceLabel": {
+    "message": "Włącz rozszerzone filtrowanie na wszystkich witrynach internetowych",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "omnipotenceLegend": {
+    "message": "uBO Lite może zastosować rozszerzone filtrowanie na danej witrynie internetowej tylko po wyraźnym przyznaniu rozszerzeniu uprawnień do modyfikowania danych na tej witrynie. To ustawienie pozwala na przyznanie uprawnień do rozszerzonego filtrowania wszystkich witryn jednocześnie.",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
   "3pGroupDefault": {
     "message": "Domyślne",
     "description": "Header for a ruleset section in 'Filter lists pane'"
@@ -214,5 +222,57 @@
   "genericRevert": {
     "message": "Przywróć",
     "description": "for generic 'Revert' buttons"
+  },
+  "firstRunSectionLabel": {
+    "message": "Witaj",
+    "description": "The header text for the welcome message section"
+  },
+  "firstRunDescription": {
+    "message": "Właśnie został zainstalowany uBO Lite. Tutaj możesz wybrać domyślny tryb filtrowania, który będzie używany na wszystkich witrynach internetowych.\n\nDomyślnie wybrany jest tryb <em>Podstawowy</em>, ponieważ nie wymaga uprawnień do odczytu i zmiany danych. Jeśli ufasz uBO Lite, możesz nadać mu szerokie uprawnienia do odczytu i zmiany danych na wszystkich witrynach internetowych w celu domyślnego włączenia bardziej zaawansowanych funkcji filtrowania wszystkich witryn internetowych.",
+    "description": "Descriptive text shown at first install time only "
+  },
+  "defaultFilteringModeSectionLabel": {
+    "message": "Domyślny tryb filtrowania",
+    "description": "The header text for the default filtering mode section"
+  },
+  "defaultFilteringModeDescription": {
+    "message": "Domyślny tryb filtrowania zostanie zastąpiony przez tryby filtrowania poszczególnych witryn. Możesz dostosować tryb filtrowania na dowolnej witrynie zgodnie z trybem, który najlepiej działa na tej witrynie. Każdy tryb ma swoje wady i zalety.",
+    "description": "This describes the default filtering mode setting"
+  },
+  "filteringMode0Name": {
+    "message": "bez filtrowania",
+    "description": "Name of blocking mode 0"
+  },
+  "filteringMode1Name": {
+    "message": "podstawowy",
+    "description": "Name of blocking mode 1"
+  },
+  "filteringMode2Name": {
+    "message": "optymalny",
+    "description": "Name of blocking mode 2"
+  },
+  "filteringMode3Name": {
+    "message": "kompletny",
+    "description": "Name of blocking mode 3"
+  },
+  "basicFilteringModeDescription": {
+    "message": "Podstawowe filtrowanie sieciowe z wybranych list filtrów.\n\nNie wymaga uprawnień do odczytu i zmiany danych na witrynach internetowych.",
+    "description": "This describes the 'basic' filtering mode"
+  },
+  "optimalFilteringModeDescription": {
+    "message": "Zaawansowane filtrowanie sieciowe oraz konkretne filtrowanie rozszerzone z wybranych list filtrów.\n\nWymaga szerokich uprawnień do odczytu i zmiany danych na wszystkich witrynach internetowych.",
+    "description": "This describes the 'optimal' filtering mode"
+  },
+  "completeFilteringModeDescription": {
+    "message": "Zaawansowane filtrowanie sieciowe oraz konkretne i ogólne filtrowanie rozszerzone z wybranych list filtrów.\n\nWymaga szerokich uprawnień do odczytu i zmiany danych na wszystkich witrynach internetowych.\n\nOgólne filtrowanie rozszerzone może powodować większe zużycie zasobów przez witryny internetowe.",
+    "description": "This describes the 'complete' filtering mode"
+  },
+  "behaviorSectionLabel": {
+    "message": "Zachowanie",
+    "description": "The header text for the 'Behavior' section"
+  },
+  "autoReloadLabel": {
+    "message": "Automatycznie wczytaj ponownie stronę po zmianie trybu filtrowania",
+    "description": "Label for a checkbox in the options page"
   }
 }

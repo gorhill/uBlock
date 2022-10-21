@@ -504,7 +504,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "Một URL cho mỗi dòng. Các URL không hợp lệ sẽ được bỏ qua âm thầm.",
+    "message": "Một URL cho mỗi dòng. URL không hợp lệ sẽ âm thầm bị bỏ qua.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -612,7 +612,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "Danh sách tên các máy chủ mà uBlock Origin sẽ bị chặn. Một mục nhập trên mỗi dòng. Tên máy chủ không hợp lệ sẽ được tự động bỏ qua.",
+    "message": "Các chỉ thị trang web đáng tin cậy ra lệnh trên đó các trang web uBlock Origin sẽ bị vô hiệu hóa. Một mục nhập cho mỗi dòng. Chỉ thị không hợp lệ sẽ được âm thầm bỏ qua và nhận xét ra.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {

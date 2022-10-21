@@ -1160,7 +1160,7 @@
     "description": "English: Permanently"
   },
   "docblockedDisable": {
-    "message": "İlerle",
+    "message": "Devam et",
     "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {

@@ -115,6 +115,14 @@
     "message": "Bloquear relatórios CSP",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
+  "omnipotenceLabel": {
+    "message": "Habilitar filtragem estendida em todos os websites",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "omnipotenceLegend": {
+    "message": "O uBO Lite pode aplicar filtragem estendida em um determinado site somente após você conceder explicitamente as permissões de extensão para modificar dados nesse site. Essa configuração permite que você conceda permissões para filtragem estendida a todos os sites de uma só vez.",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
   "3pGroupDefault": {
     "message": "Padrão",
     "description": "Header for a ruleset section in 'Filter lists pane'"
@@ -214,5 +222,57 @@
   "genericRevert": {
     "message": "Reverter",
     "description": "for generic 'Revert' buttons"
+  },
+  "firstRunSectionLabel": {
+    "message": "Bem-vindo",
+    "description": "The header text for the welcome message section"
+  },
+  "firstRunDescription": {
+    "message": "Você acabou de instalar o uBO Lite. Você pode escolher aqui o modo de filtragem padrão para usar em todos os sites.\n\nPor padrão, o modo <em>Básico</em> está selecionado porque não requer permissão para ler e alterar dados. Se você confia no uBO Lite, pode conceder ampla permissão para ler e alterar dados em todos os sites para habilitar recursos de filtragem mais avançados para todos os sites por padrão.",
+    "description": "Descriptive text shown at first install time only "
+  },
+  "defaultFilteringModeSectionLabel": {
+    "message": "Modo de filtragem padrão",
+    "description": "The header text for the default filtering mode section"
+  },
+  "defaultFilteringModeDescription": {
+    "message": "O modo de filtragem padrão será substituído pelos modos de filtragem por site. Você pode ajustar o modo de filtragem em qualquer site de acordo com o modo que funcionar melhor nesse site. Cada modo tem suas vantagens e desvantagens.",
+    "description": "This describes the default filtering mode setting"
+  },
+  "filteringMode0Name": {
+    "message": "sem filtragem",
+    "description": "Name of blocking mode 0"
+  },
+  "filteringMode1Name": {
+    "message": "básico",
+    "description": "Name of blocking mode 1"
+  },
+  "filteringMode2Name": {
+    "message": "ótimo",
+    "description": "Name of blocking mode 2"
+  },
+  "filteringMode3Name": {
+    "message": "completo",
+    "description": "Name of blocking mode 3"
+  },
+  "basicFilteringModeDescription": {
+    "message": "Filtragem de rede básica de listas de filtros selecionadas.\n\nNão requer permissão para ler e alterar dados em sites.",
+    "description": "This describes the 'basic' filtering mode"
+  },
+  "optimalFilteringModeDescription": {
+    "message": "Filtragem de rede avançada mais filtragem estendida específica de listas de filtros selecionadas.\n\nRequer ampla permissão para ler e alterar dados em todos os sites.",
+    "description": "This describes the 'optimal' filtering mode"
+  },
+  "completeFilteringModeDescription": {
+    "message": "Filtragem de rede avançada mais filtragem estendida específica e genérica de listas de filtros selecionadas.\n\nRequer ampla permissão para ler e alterar dados em todos os sites.\n\nA filtragem estendida genérica pode causar maior uso de recursos da página da Web.",
+    "description": "This describes the 'complete' filtering mode"
+  },
+  "behaviorSectionLabel": {
+    "message": "Comportamento",
+    "description": "The header text for the 'Behavior' section"
+  },
+  "autoReloadLabel": {
+    "message": "Recarregue a página automaticamente ao alterar o modo de filtragem",
+    "description": "Label for a checkbox in the options page"
   }
 }

@@ -115,6 +115,14 @@
     "message": "Φραγή αναφορών CSP",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
+  "omnipotenceLabel": {
+    "message": "Ενεργοποιήστε το εκτεταμένο φιλτράρισμα σε όλους τους ιστότοπους",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "omnipotenceLegend": {
+    "message": "Το uBO Lite μπορεί να εφαρμόσει εκτεταμένο φιλτράρισμα σε έναν συγκεκριμένο ιστότοπο μόνο αφού εκχωρήσετε ρητά στην επέκταση δικαιώματα τροποποίησης δεδομένων σε αυτόν τον ιστότοπο. Αυτή η ρύθμιση σάς επιτρέπει να εκχωρήσετε δικαιώματα για εκτεταμένο φιλτράρισμα σε όλους τους ιστότοπους ταυτόχρονα.",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
   "3pGroupDefault": {
     "message": "Προεπιλογή",
     "description": "Header for a ruleset section in 'Filter lists pane'"
@@ -214,5 +222,57 @@
   "genericRevert": {
     "message": "Επαναφορά",
     "description": "for generic 'Revert' buttons"
+  },
+  "firstRunSectionLabel": {
+    "message": "Καλώς ήρθατε",
+    "description": "The header text for the welcome message section"
+  },
+  "firstRunDescription": {
+    "message": "Μόλις εγκαταστήσατε το uBO Lite. Μπορείτε να επιλέξετε εδώ την προεπιλεγμένη λειτουργία φιλτραρίσματος για χρήση σε όλους τους ιστότοπους.\n\nΑπό προεπιλογή, έχει επιλεγεί η λειτουργία <em>Βασική</em> επειδή δεν απαιτεί άδεια ανάγνωσης και αλλαγής δεδομένων. Εάν εμπιστεύεστε το uBO Lite, μπορείτε να του δώσετε ευρεία άδεια να διαβάζει και να αλλάζει δεδομένα σε όλους τους ιστότοπους, προκειμένου να ενεργοποιηθούν πιο προηγμένες δυνατότητες φιλτραρίσματος για όλους τους ιστότοπους από προεπιλογή.",
+    "description": "Descriptive text shown at first install time only "
+  },
+  "defaultFilteringModeSectionLabel": {
+    "message": "Προεπιλεγμένη λειτουργία φιλτραρίσματος",
+    "description": "The header text for the default filtering mode section"
+  },
+  "defaultFilteringModeDescription": {
+    "message": "Η προεπιλεγμένη λειτουργία φιλτραρίσματος θα αντικατασταθεί από τις λειτουργίες φιλτραρίσματος ανά ιστότοπο. Μπορείτε να προσαρμόσετε τη λειτουργία φιλτραρίσματος σε οποιονδήποτε ιστότοπο, σύμφωνα με όποια λειτουργία λειτουργεί καλύτερα σε αυτόν τον ιστότοπο. Κάθε λειτουργία έχει τα πλεονεκτήματα και τα μειονεκτήματά της.",
+    "description": "This describes the default filtering mode setting"
+  },
+  "filteringMode0Name": {
+    "message": "χωρίς φιλτράρισμα",
+    "description": "Name of blocking mode 0"
+  },
+  "filteringMode1Name": {
+    "message": "βασικό",
+    "description": "Name of blocking mode 1"
+  },
+  "filteringMode2Name": {
+    "message": "βέλτιστο",
+    "description": "Name of blocking mode 2"
+  },
+  "filteringMode3Name": {
+    "message": "πλήρης",
+    "description": "Name of blocking mode 3"
+  },
+  "basicFilteringModeDescription": {
+    "message": "Βασικό φιλτράρισμα δικτύου από επιλεγμένες λίστες φίλτρων.",
+    "description": "This describes the 'basic' filtering mode"
+  },
+  "optimalFilteringModeDescription": {
+    "message": "Προηγμένο φιλτράρισμα δικτύου και συγκεκριμένο εκτεταμένο φιλτράρισμα από επιλεγμένες λίστες φίλτρων.\n\nΑπαιτεί ευρεία άδεια για την ανάγνωση και την αλλαγή δεδομένων σε όλους τους ιστότοπους.",
+    "description": "This describes the 'optimal' filtering mode"
+  },
+  "completeFilteringModeDescription": {
+    "message": "Προηγμένο φιλτράρισμα δικτύου και ειδικό και γενικό εκτεταμένο φιλτράρισμα από επιλεγμένες λίστες φίλτρων.\n\nΑπαιτεί ευρεία άδεια για την ανάγνωση και την αλλαγή δεδομένων σε όλους τους ιστότοπους.\n\nΤο γενικό εκτεταμένο φιλτράρισμα μπορεί να προκαλέσει μεγαλύτερη χρήση πόρων ιστοσελίδας.",
+    "description": "This describes the 'complete' filtering mode"
+  },
+  "behaviorSectionLabel": {
+    "message": "Συμπεριφορά",
+    "description": "The header text for the 'Behavior' section"
+  },
+  "autoReloadLabel": {
+    "message": "Αυτόματη επαναφόρτωση της σελίδας κατά την αλλαγή της λειτουργίας φιλτραρίσματος",
+    "description": "Label for a checkbox in the options page"
   }
 }

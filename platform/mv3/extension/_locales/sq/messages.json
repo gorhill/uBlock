@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Një bllokues eksperimental, i cili bllokon pa kushte reklamat, gjurmuesit, kriptominatorët etj. menjëherë pas instalimit.",
+    "message": "Një bllokues eksperimental që bllokon pa kushte reklamat, gjurmuesit, kriptominatorët etj. menjëherë pas instalimit.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -80,7 +80,7 @@
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {
-    "message": "Të tjera",
+    "message": "Më shumë",
     "description": "Label to be used to show popup panel sections"
   },
   "popupGrantGreatPowers": {
@@ -115,8 +115,16 @@
     "message": "Bllokoj raportet e CSP-së",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
+  "omnipotenceLabel": {
+    "message": "Lejoj filtrimin më të plotë të uebsajteve",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "omnipotenceLegend": {
+    "message": "uBO Lite mund të filtrojë më mirë kur i jepni leje të posaçme për modifikimin e të dhënave të uebsajteve. Ky parametër mundëson dhënien e lejeve të posaçme për një filtrim më të plotë dhe të menjëhershëm të të gjitha uebsajteve.",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
   "3pGroupDefault": {
-    "message": "Standard",
+    "message": "Standarde",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -214,5 +222,57 @@
   "genericRevert": {
     "message": "Rikthej",
     "description": "for generic 'Revert' buttons"
+  },
+  "firstRunSectionLabel": {
+    "message": "Përshëndetje",
+    "description": "The header text for the welcome message section"
+  },
+  "firstRunDescription": {
+    "message": "Sapo instaluat uBO Lite. Këtu mund të zgjidhni mënyrën e filtrimit që duhet përdorur për të gjitha uebsajtet.\n\n<em>Kryesorja</em> është mënyra standarde, sepse nuk ka nevojë për leje për leximin dhe ndryshimin e të dhënave. Nëse keni besim te uBO Lite, mund t'i jepni leje shtesë për leximin dhe ndryshimin e të dhënave në të gjitha uebsajtet, në mënyrë që të kryeni një filtrim më të avancuar.",
+    "description": "Descriptive text shown at first install time only "
+  },
+  "defaultFilteringModeSectionLabel": {
+    "message": "Mënyra standarde e filtrimit",
+    "description": "The header text for the default filtering mode section"
+  },
+  "defaultFilteringModeDescription": {
+    "message": "Mënyra standarde e filtrimit mund të ndryshohet për çdo uebsajt. Ndryshimet mund të bëhen në varësi të mënyrës që funksionon më mirë. Secila mënyrë ka avantazhet dhe disavantazhet e veta.",
+    "description": "This describes the default filtering mode setting"
+  },
+  "filteringMode0Name": {
+    "message": "pa filtër",
+    "description": "Name of blocking mode 0"
+  },
+  "filteringMode1Name": {
+    "message": "kryesor",
+    "description": "Name of blocking mode 1"
+  },
+  "filteringMode2Name": {
+    "message": "optimal",
+    "description": "Name of blocking mode 2"
+  },
+  "filteringMode3Name": {
+    "message": "komplet",
+    "description": "Name of blocking mode 3"
+  },
+  "basicFilteringModeDescription": {
+    "message": "Filtrat kryesorë të rrjetit nga listat e përzgjedhura.\n\nNuk duhen leje për leximin dhe ndryshimin e të dhënave në uebsajte.",
+    "description": "This describes the 'basic' filtering mode"
+  },
+  "optimalFilteringModeDescription": {
+    "message": "Filtrat e avancuar të rrjetit plus filtrat e posaçëm nga listat e përzgjedhura.\n\nDuhen leje shtesë për leximin dhe ndryshimin e të dhënave në të gjitha uebsajtet.",
+    "description": "This describes the 'optimal' filtering mode"
+  },
+  "completeFilteringModeDescription": {
+    "message": "Filtrat e avancuar të rrjetit plus filtrat e posaçëm jospecifikë nga listat e përzgjedhura.\n\nDuhen leje shtesë për leximin dhe ndryshimin e të dhënave në të gjitha uebsajtet.\n\nFiltrat e posaçëm jospecifikë mund të rritin ngarkesën e faqeve në internet.",
+    "description": "This describes the 'complete' filtering mode"
+  },
+  "behaviorSectionLabel": {
+    "message": "Sjellja",
+    "description": "The header text for the 'Behavior' section"
+  },
+  "autoReloadLabel": {
+    "message": "Freskoj automatikisht faqen kur ndryshoj mënyrën e filtrimit",
+    "description": "Label for a checkbox in the options page"
   }
 }

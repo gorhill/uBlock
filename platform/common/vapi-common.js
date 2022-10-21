@@ -22,6 +22,8 @@
 
 // For background page or non-background pages
 
+/* global browser */
+
 'use strict';
 
 /******************************************************************************/
@@ -89,6 +91,9 @@ vAPI.webextFlavor = {
         soup.add('chromium')
             .add('user_stylesheet');
         flavor.major = parseInt(match[1], 10) || 0;
+        if ( flavor.major >= 105 ) {
+            soup.add('native_css_has');
+        }
     }
 
     // Don't starve potential listeners

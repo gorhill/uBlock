@@ -4,155 +4,163 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "An experimental, permission-less content blocker. Blocks ads, trackers, miners, and more immediately upon installation.",
+    "message": "एक प्रयोगात्मक, अनुमति-रहित सामग्री अवरोधक. इंस्टालेशन के तुरंत बाद विज्ञापनों, ट्रैकर्स, माइनर्स और बहुत कुछ को ब्लॉक कर देता है.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
-    "message": "{{ruleCount}} rules, converted from {{filterCount}} network filters",
+    "message": "{{filterCount}} नेटवर्क फ़िल्टर से रूपांतरित, {{ruleCount}} नियम",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
-    "message": "uBO Lite — Dashboard",
+    "message": "uBO Lite — डैशबोर्ड",
     "description": "English: uBO Lite — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Warning! You have unsaved changes",
+    "message": "चेतावनी! आपके कुछ परिवर्तनों को सहेजना अभी बाकी है",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Stay",
+    "message": "रुकें",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Ignore",
+    "message": "अनदेखा करें",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
-    "message": "Settings",
+    "message": "सेटिंग्स",
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Filter lists",
+    "message": "फिल्टर सूची",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
-    "message": "My filters",
+    "message": "मेरे फ़िल्टर्स",
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Trusted sites",
+    "message": "विश्वस्त साइटें",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
-    "message": "About",
+    "message": "परिचय",
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
-    "message": "Privacy policy",
+    "message": "गोपनीयता नीति",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupPowerSwitchInfo": {
-    "message": "Disable/enable uBO Lite for this site",
+    "message": "इस साइट के लिए uBO Lite को अक्षम/सक्षम करें",
     "description": "Tooltip for the main power button in the popup panel"
   },
   "popupTipDashboard": {
-    "message": "Open the dashboard",
+    "message": "डैशबोर्ड खोलें",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Enter element zapper mode",
+    "message": "चीजें मिटाने के मोड में जाएं",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Enter element picker mode",
+    "message": "चीजें चुनने के मोड में जाएं",
     "description": "English: Enter element picker mode"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "इस वेबसाइट पर किसी समस्या को रिपोर्ट करें",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipSaveRules": {
-    "message": "Click to make your changes permanent.",
+    "message": "अपने परिवर्तनों को स्थायी बनाने के लिए क्लिक करें.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Click to revert your changes.",
+    "message": "आपके परिवर्तनों को पूर्ववत के लिए क्लिक करें",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {
-    "message": "More",
+    "message": "अधिक",
     "description": "Label to be used to show popup panel sections"
   },
   "popupGrantGreatPowers": {
-    "message": "Click to grant uBO Lite extended permissions on this site.\nExtended permissions allow more effective content blocking.",
+    "message": "इस साइट पर uBO Lite को विस्तारित अनुमति देने के लिए क्लिक करें.\nविस्तारित अनुमतियाँ अधिक प्रभावी सामग्री अवरोधन की अनुमति देती हैं.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupRevokeGreatPowers": {
-    "message": "Click to revoke extended permissions on this site",
+    "message": "इस साइट पर विस्तारित अनुमतियों को निरस्त करने के लिए क्लिक करें",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Less",
+    "message": "कम",
     "description": "Label to be used to hide popup panel sections"
   },
   "settingsIconBadgePrompt": {
-    "message": "Show the number of blocked requests on the icon",
+    "message": "ब्लॉक कि गयी चीज़ों की गिनती आइकॉन पर दिखाएं",
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsAppearance": {
-    "message": "Appearance",
+    "message": "रंगरूप",
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
-    "message": "Theme",
+    "message": "थीम",
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "Custom accent color",
+    "message": "निर्मित रंग शैली",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsNoCSPReportsPrompt": {
-    "message": "Block CSP reports",
+    "message": " CSP रिपोर्टों को ब्लॉक करें",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
+  "omnipotenceLabel": {
+    "message": "सभी वेबसाइटों पर विस्तारित फ़िल्टरिंग सक्षम करें",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "omnipotenceLegend": {
+    "message": "uBO Lite किसी वेबसाइट पर विस्तारित फ़िल्टरिंग तभी लागू कर सकता है जब आप उस वेबसाइट पर डेटा को संशोधित करने के लिए स्पष्ट रूप से विस्तारित अनुमतियाँ प्रदान करते हैं. यह सेटिंग आपको सभी वेबसाइटों को एक साथ विस्तारित फ़िल्टरिंग की अनुमति देने की अनुमति देती है.",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
   "3pGroupDefault": {
-    "message": "Default",
+    "message": "डिफॉल्ट",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAds": {
-    "message": "Ads",
+    "message": "विज्ञापन",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupPrivacy": {
-    "message": "Privacy",
+    "message": "गोपनीयता",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Malware domains",
+    "message": "मैलवेयर डोमेन",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
-    "message": "Annoyances",
+    "message": "झुंझलाहटें",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMisc": {
-    "message": "Miscellaneous",
+    "message": "विविध",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupRegions": {
-    "message": "Regions, languages",
+    "message": "क्षेत्र, भाषाएँ",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "1pFormatHint": {
-    "message": "One filter per line. A filter can be a plain hostname, or an EasyList-compatible filter. Lines prefixed with <code>!</code> will be ignored.",
+    "message": "प्रति पंक्ति एक फ़िल्टर. कोई फ़िल्टर एक सादा होस्टनाम, या एक EasyList-संगत फ़िल्टर हो सकता है। <code>!</code> से पहले लगी पंक्तियों को अनदेखा कर दिया जाएगा.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
-    "message": "Import and append",
+    "message": "आयात करके जोड़ें",
     "description": "English: Import and append"
   },
   "1pExport": {
-    "message": "Export",
+    "message": "निर्यात",
     "description": "English: Export"
   },
   "1pExportFilename": {
@@ -160,15 +168,15 @@
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "whitelistPrompt": {
-    "message": "The trusted site directives dictate on which web pages uBO Lite should be disabled. One entry per line.",
+    "message": "विश्वसनीय साइट निर्देश तय करते हैं कि कौन से वेब पेज पर uBO Lite को अक्षम किया जाना चाहिए. प्रति पंक्ति एक प्रविष्टि.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Import and append",
+    "message": "आयात करके जोड़ें",
     "description": "English: Import and append"
   },
   "whitelistExport": {
-    "message": "Export",
+    "message": "निर्यात",
     "description": "English: Export"
   },
   "whitelistExportFilename": {
@@ -176,43 +184,95 @@
     "description": "The default filename to use for import/export purpose"
   },
   "aboutChangelog": {
-    "message": "Changelog",
+    "message": "परिवर्तन लॉग",
     "description": ""
   },
   "aboutCode": {
-    "message": "Source code (GPLv3)",
+    "message": "सोर्स कोड {GPLv3}",
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Contributors",
+    "message": "योगदानकर्ता",
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Source code",
+    "message": "सोर्स कोड",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
-    "message": "Translations",
+    "message": "अनुवाद",
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
-    "message": "Filter lists",
+    "message": "फिल्टर सूची",
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "External dependencies (GPLv3-compatible):",
+    "message": "बाहरी निर्भरता (GPLv3-compatible):",
     "description": "Shown in the About pane"
   },
   "genericSubmit": {
-    "message": "Submit",
+    "message": "सबमिट करें",
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Apply changes",
+    "message": "परिवर्तन लागू करें",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
-    "message": "Revert",
+    "message": "पूर्ववत",
     "description": "for generic 'Revert' buttons"
+  },
+  "firstRunSectionLabel": {
+    "message": "स्वागत",
+    "description": "The header text for the welcome message section"
+  },
+  "firstRunDescription": {
+    "message": "आपने अभी-अभी uBO Lite स्थापित किया है. आप यहां सभी वेबसाइटों पर उपयोग करने के लिए डिफ़ॉल्ट फ़िल्टरिंग मोड चुन सकते हैं.\n\nडिफ़ॉल्ट रूप से, <em>बुनियादी</em> मोड चुना जाता है क्योंकि इसमें डेटा को पढ़ने और बदलने की अनुमति की आवश्यकता नहीं होती है. यदि आप uBO Lite पर भरोसा करते हैं, तो आप डिफ़ॉल्ट रूप से सभी वेबसाइटों के लिए अधिक उन्नत फ़िल्टरिंग क्षमताओं को सक्षम करने के लिए सभी वेबसाइटों पर डेटा को पढ़ने और बदलने की व्यापक अनुमति दे सकते हैं.",
+    "description": "Descriptive text shown at first install time only "
+  },
+  "defaultFilteringModeSectionLabel": {
+    "message": "डिफ़ॉल्ट फ़िल्टरिंग मोड",
+    "description": "The header text for the default filtering mode section"
+  },
+  "defaultFilteringModeDescription": {
+    "message": "डिफ़ॉल्ट फ़िल्टरिंग मोड प्रति-वेबसाइट फ़िल्टरिंग मोड द्वारा ओवरराइड किया जाएगा. आप किसी भी वेबसाइट पर फ़िल्टरिंग मोड को उस वेबसाइट पर सबसे अच्छा काम करने वाले मोड के अनुसार समायोजित कर सकते हैं. प्रत्येक मोड के अपने फायदे और नुकसान हैं.",
+    "description": "This describes the default filtering mode setting"
+  },
+  "filteringMode0Name": {
+    "message": "कोई फ़िल्टर नहीं",
+    "description": "Name of blocking mode 0"
+  },
+  "filteringMode1Name": {
+    "message": "बुनियादी",
+    "description": "Name of blocking mode 1"
+  },
+  "filteringMode2Name": {
+    "message": "अनुकूलतम",
+    "description": "Name of blocking mode 2"
+  },
+  "filteringMode3Name": {
+    "message": "पूर्ण",
+    "description": "Name of blocking mode 3"
+  },
+  "basicFilteringModeDescription": {
+    "message": "चयनित फ़िल्टर सूचियों में से बुनियादी नेटवर्क फ़िल्टरिंग.\n\nवेबसाइटों पर डेटा पढ़ने और बदलने के लिए अनुमति की आवश्यकता नहीं हौती है.",
+    "description": "This describes the 'basic' filtering mode"
+  },
+  "optimalFilteringModeDescription": {
+    "message": "चयनित फ़िल्टर सूचियों में से उन्नत नेटवर्क फ़िल्टरिंग के साथ  विशिष्ट विस्तारित फ़िल्टरिंग.\n\nसभी वेबसाइटों पर डेटा पढ़ने और बदलने के लिए व्यापक अनुमति की आवश्यकता है.",
+    "description": "This describes the 'optimal' filtering mode"
+  },
+  "completeFilteringModeDescription": {
+    "message": "चयनित फ़िल्टर सूचियों में से उन्नत नेटवर्क फ़िल्टरिंग के साथ  विशिष्ट विस्तारित फ़िल्टरिंग.\n\nसभी वेबसाइटों पर डेटा पढ़ने और बदलने के लिए व्यापक अनुमति की आवश्यकता है.\n\nसामान्य विस्तारित फ़िल्टरिंग के कारण वेबपृष्ठ संसाधनों का अधिक उपयोग हो सकता है.",
+    "description": "This describes the 'complete' filtering mode"
+  },
+  "behaviorSectionLabel": {
+    "message": "व्यवहार",
+    "description": "The header text for the 'Behavior' section"
+  },
+  "autoReloadLabel": {
+    "message": "फ़िल्टरिंग मोड बदलते समय स्वचालित रूप से पृष्ठ पुनः लोड करें",
+    "description": "Label for a checkbox in the options page"
   }
 }

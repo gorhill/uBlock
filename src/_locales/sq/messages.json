@@ -208,7 +208,7 @@
     "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
-    "message": "Të tjera",
+    "message": "Më shumë",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton_v2": {
@@ -372,7 +372,7 @@
     "description": ""
   },
   "settingPerSiteSwitchGroupSynopsis": {
-    "message": "Këto vlera mund të ndryshohen për çdo faqe",
+    "message": "Këto vlera mund të ndryshohen për çdo uebsajt",
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
@@ -948,7 +948,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Verifikoni a është raportuar më parë problemi, që të mos i lodhni vullnetarët e tjerë me raporte të njëllojta.",
+    "message": "Verifikoni a është raportuar më parë problemi që të mos i lodhni vullnetarët e tjerë me të njëjtat raporte.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -1040,7 +1040,7 @@
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "Kopjoj në skedar",
+    "message": "Kopjoj në skedar…",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {

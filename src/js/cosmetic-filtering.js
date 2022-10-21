@@ -429,7 +429,7 @@ FilterContainer.prototype.compileGenericHideSelector = function(
     // https://github.com/uBlockOrigin/uBlock-issues/issues/131
     //   Support generic procedural filters as per advanced settings.
     //   TODO: prevent double compilation.
-    if ( compiled !== raw ) {
+    if ( compiled.charCodeAt(0) === 0x7B /* '{' */ ) {
         if ( µb.hiddenSettings.allowGenericProceduralFilters === true ) {
             return this.compileSpecificSelector(parser, '', false, writer);
         }
@@ -830,12 +830,12 @@ FilterContainer.prototype.cssRuleFromProcedural = function(json) {
     let mq;
     if ( tasks !== undefined ) {
         if ( tasks.length > 1 ) { return; }
-        if ( tasks[0][0] !== ':matches-media' ) { return; }
+        if ( tasks[0][0] !== 'matches-media' ) { return; }
         mq = tasks[0][1];
     }
     let style;
     if ( Array.isArray(action) ) {
-        if ( action[0] !== ':style' ) { return; }
+        if ( action[0] !== 'style' ) { return; }
         style = action[1];
     }
     if ( mq === undefined && style === undefined ) { return; }

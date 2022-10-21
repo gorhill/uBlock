@@ -115,6 +115,14 @@
     "message": "CSP レポートをブロックする",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
+  "omnipotenceLabel": {
+    "message": "すべてのウェブサイトで拡張フィルタリングを有効化",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "omnipotenceLegend": {
+    "message": "uBO Liteはウェブサイトに対して、そのウェブサイトのデータを変更する権限を拡張機能に明示的に付与した場合にのみ、拡張フィルタリングを適用できます。この設定を有効化すると、すべてのウェブサイトに対して一括で拡張フィルタリングの許可を与えられます。",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
   "3pGroupDefault": {
     "message": "既定",
     "description": "Header for a ruleset section in 'Filter lists pane'"
@@ -160,7 +168,7 @@
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "whitelistPrompt": {
-    "message": "[信頼するサイト] では uBO Lite を無効にするウェブページを指定します。1 行につき 1 ページです。",
+    "message": "[信頼するサイト] では uBO Lite を無効にするウェブページを指定します。1 行に つき 1 つです。",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
@@ -214,5 +222,57 @@
   "genericRevert": {
     "message": "元に戻す",
     "description": "for generic 'Revert' buttons"
+  },
+  "firstRunSectionLabel": {
+    "message": "ようこそ",
+    "description": "The header text for the welcome message section"
+  },
+  "firstRunDescription": {
+    "message": "uBO Lite のインストールが完了しました。すべてのサイトに適用するデフォルトのフィルタリングモードを選んでください。\n\nデフォルトでは、データの読み書きの権限が必要ない<em>基本</em>モードが選択されています。 uBO Lite を信用してもらえるなら、データの読み書きや変更の権限を許可してもらえればすべてのサイトに対してより詳細なフィルタリングを有効化できます。",
+    "description": "Descriptive text shown at first install time only "
+  },
+  "defaultFilteringModeSectionLabel": {
+    "message": "デフォルトのフィルタリングモード",
+    "description": "The header text for the default filtering mode section"
+  },
+  "defaultFilteringModeDescription": {
+    "message": "デフォルトのフィルタリングモードは、サイト毎のフィルタリングモードで上書きされます。サイトにぴったりなモードにいつでも好きなように調整できます。どのモードも一長一短です。",
+    "description": "This describes the default filtering mode setting"
+  },
+  "filteringMode0Name": {
+    "message": "フィルタリングなし",
+    "description": "Name of blocking mode 0"
+  },
+  "filteringMode1Name": {
+    "message": "基本",
+    "description": "Name of blocking mode 1"
+  },
+  "filteringMode2Name": {
+    "message": "最適",
+    "description": "Name of blocking mode 2"
+  },
+  "filteringMode3Name": {
+    "message": "完全",
+    "description": "Name of blocking mode 3"
+  },
+  "basicFilteringModeDescription": {
+    "message": "特定のフィルターリストを使った基本ネットワークフィルタリングです。\n\nウェブサイトのデータの読み書き権限を必要としません。",
+    "description": "This describes the 'basic' filtering mode"
+  },
+  "optimalFilteringModeDescription": {
+    "message": "特定のフィルターリストを使ったネットワークフィルタリングとサイト別の拡張フィルタリングです。\n\nすべてのウェブサイトのデータの読み書き権限を必要とします。",
+    "description": "This describes the 'optimal' filtering mode"
+  },
+  "completeFilteringModeDescription": {
+    "message": "特定のフィルターリストを使ったネットワークフィルタリングと一般的・サイト別の拡張フィルタリングです。\n\nすべてのウェブサイトのデータの読み書き権限を必要とします。\n\n一般的な拡張フィルタリングを使うとリソース消費量が増えるかもしれません。",
+    "description": "This describes the 'complete' filtering mode"
+  },
+  "behaviorSectionLabel": {
+    "message": "動作",
+    "description": "The header text for the 'Behavior' section"
+  },
+  "autoReloadLabel": {
+    "message": "フィルタリングモード変更時にページを自動再読み込みする",
+    "description": "Label for a checkbox in the options page"
   }
 }

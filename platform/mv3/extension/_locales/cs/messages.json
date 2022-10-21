@@ -115,6 +115,14 @@
     "message": "Blokovat CSP reporty",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
+  "omnipotenceLabel": {
+    "message": "Zapnout rozšířené filtrování na všech webových stránkách",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "omnipotenceLegend": {
+    "message": "uBO Lite může použít rozšířené filtrování na dané webové stránce pouze poté, co výslovně udělíte oprávnění k úpravě dat na této webové stránce. Toto nastavení umožňuje udělit oprávnění pro rozšířené filtrování všem webům najednou.",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
   "3pGroupDefault": {
     "message": "Výchozí",
     "description": "Header for a ruleset section in 'Filter lists pane'"
@@ -214,5 +222,57 @@
   "genericRevert": {
     "message": "Vrátit",
     "description": "for generic 'Revert' buttons"
+  },
+  "firstRunSectionLabel": {
+    "message": "Vítejte",
+    "description": "The header text for the welcome message section"
+  },
+  "firstRunDescription": {
+    "message": "Právě jste nainstalovali uBO Lite. Zde si můžete vybrat výchozí režim filtrování pro použití na všech webových stránkách.\n\nVe výchozím nastavení je vybrán režim <em>Základní</em>, protože nevyžaduje oprávnění ke čtení a změně dat. Pokud důvěřujete uBO Lite, můžete mu udělit široké oprávnění číst a měnit data na všech webových stránkách, abyste ve výchozím nastavení povolili pokročilejší možnosti filtrování pro všechny webové stránky.",
+    "description": "Descriptive text shown at first install time only "
+  },
+  "defaultFilteringModeSectionLabel": {
+    "message": "Výchozí režim filtrování",
+    "description": "The header text for the default filtering mode section"
+  },
+  "defaultFilteringModeDescription": {
+    "message": "Výchozí režim filtrování bude přepsán režimy filtrování pro jednotlivé webové stránky. Režim filtrování na libovolném webu můžete upravit podle toho, který režim na daném webu funguje nejlépe. Každý režim má své výhody a nevýhody.",
+    "description": "This describes the default filtering mode setting"
+  },
+  "filteringMode0Name": {
+    "message": "žádné filtrování",
+    "description": "Name of blocking mode 0"
+  },
+  "filteringMode1Name": {
+    "message": "základní",
+    "description": "Name of blocking mode 1"
+  },
+  "filteringMode2Name": {
+    "message": "optimální",
+    "description": "Name of blocking mode 2"
+  },
+  "filteringMode3Name": {
+    "message": "kompletní",
+    "description": "Name of blocking mode 3"
+  },
+  "basicFilteringModeDescription": {
+    "message": "Základní filtrování sítě z vybraných seznamů filtrů.\n\nNevyžaduje oprávnění ke čtení a změně údajů na webových stránkách.",
+    "description": "This describes the 'basic' filtering mode"
+  },
+  "optimalFilteringModeDescription": {
+    "message": "Pokročilé síťové filtrování plus specificky rozšířené filtrování z vybraných seznamů filtrů.\n\nVyžaduje rozsáhlé oprávnění ke čtení a změně dat na všech webech.",
+    "description": "This describes the 'optimal' filtering mode"
+  },
+  "completeFilteringModeDescription": {
+    "message": "Pokročilé síťové filtrování plus specificky a obecně rozšířené filtrování z vybraných seznamů filtrů.\n\nVyžaduje rozsáhlé oprávnění ke čtení a změně dat na všech webech.\n\nObecně rozšířené filtrování může způsobit vyšší využití zdrojů webových stránek.",
+    "description": "This describes the 'complete' filtering mode"
+  },
+  "behaviorSectionLabel": {
+    "message": "Chování",
+    "description": "The header text for the 'Behavior' section"
+  },
+  "autoReloadLabel": {
+    "message": "Automaticky znovu načíst stránku při změně filtračního režimu",
+    "description": "Label for a checkbox in the options page"
   }
 }

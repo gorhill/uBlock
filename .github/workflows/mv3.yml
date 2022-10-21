@@ -1,0 +1,54 @@
+name: uBO Lite release
+
+on: workflow_dispatch
+
+permissions:
+  contents: read
+
+# I used the following project as template to get started:
+# https://github.com/dessant/search-by-image/blob/master/.github/workflows/ci.yml
+
+jobs:
+  build:
+    permissions:
+      contents: write # for creating release
+    name: Build packages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      # https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
+      - name: Build uBOLite MV3 packages
+        run: |
+          tools/make-mv3.sh full
+          echo "PACKAGE=$(basename $(ls dist/build/uBOLite_*.mv3.zip))" >> $GITHUB_ENV
+          echo "TAGNAME=$(basename $(ls dist/build/uBOLite_*.mv3.zip) .mv3.zip)" >> $GITHUB_ENV
+          RELEASENAME=${TAGNAME/_/ }
+          echo "RELEASENAME=$RELEASENAME" >> $GITHUB_ENV
+          cp dist/build/uBOLite.mv3/log.txt dist/mv3/
+      - name: Commit uBOLite MV3 build log file
+        # https://github.com/marketplace/actions/github-action-for-committing-changes-to-a-repository
+        uses: devops-infra/action-commit-push@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          commit_message: Update build log file
+      - name: Create GitHub release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          tag_name: ${{ env.TAGNAME }}
+          release_name: ${{ env.TAGNAME }}
+          prerelease: true
+      - name: Upload uBOLite MV3 package
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/build/${{ env.PACKAGE }}
+          asset_name: ${{ env.PACKAGE }}
+          asset_content_type: application/octet-stream

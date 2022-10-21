@@ -1040,7 +1040,7 @@
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "Copiar para ficheiro",
+    "message": "Cópia para ficheiro",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {

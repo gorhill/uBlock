@@ -32,69 +32,172 @@ import { simpleStorage } from './storage.js';
 
 /******************************************************************************/
 
-let currentTab = {};
+const popupPanelData = {};
+const  currentTab = {};
 let tabHostname = '';
 
-
 /******************************************************************************/
 
-let originalStateHash = '';
-
-function getCurrentStateHash() {
-    const parts = [
-        dom.cl.has(dom.body, 'off'),
-        dom.cl.has(dom.body, 'hasGreatPowers'),
-    ];
-    return parts.join('\t');
-}
-
-function onStateHashChanged() {
-    dom.cl.toggle(
-        dom.body, 
-        'needReload',
-        getCurrentStateHash() !== originalStateHash
-    );
+function normalizedHostname(hn) {
+    return hn.replace(/^www\./, '');
 }
 
 /******************************************************************************/
 
-async function toggleTrustedSiteDirective() {
-    let url;
-    try {
-        url = new URL(currentTab.url);
-    } catch(ex) {
-        return;
+const BLOCKING_MODE_MAX = 3;
+
+function setFilteringMode(level, commit = false) {
+    const modeSlider = qs$('.filteringModeSlider');
+    modeSlider.dataset.level = level;
+    if ( qs$('.filteringModeSlider.moving') === null ) {
+        dom.text(
+            qs$('#filteringModeText > span:nth-of-type(1)'),
+            i18n$(`filteringMode${level}Name`)
+        );
     }
-    if ( url instanceof URL === false ) { return; }
+    if ( commit !== true ) { return; }
+    commitFilteringMode();
+}
 
-    const targetTrustedState = dom.cl.has(dom.body, 'off');
-
-    const newTrustedState = await sendMessage({
-        what: 'toggleTrustedSiteDirective',
-        origin: url.origin,
-        state: targetTrustedState,
-        tabId: currentTab.id,
-    }).catch(( ) =>
-        targetTrustedState === false
+async function commitFilteringMode() {
+    if ( tabHostname === '' ) { return; }
+    const targetHostname = normalizedHostname(tabHostname);
+    const modeSlider = qs$('.filteringModeSlider');
+    const afterLevel = parseInt(modeSlider.dataset.level, 10);
+    const beforeLevel = parseInt(modeSlider.dataset.levelBefore, 10);
+    if ( afterLevel > 1 ) {
+        let granted = false;
+        try {
+            granted = await browser.permissions.request({
+                origins: [ `*://*.${targetHostname}/*` ],
+            });
+        } catch(ex) {
+        }
+        if ( granted !== true ) {
+            setFilteringMode(beforeLevel);
+            return;
+        }
+    }
+    dom.text(
+        qs$('#filteringModeText > span:nth-of-type(1)'),
+        i18n$(`filteringMode${afterLevel}Name`)
     );
-
-    dom.cl.toggle(dom.body, 'off', newTrustedState === true);
-    onStateHashChanged();
-}
-
-dom.on(qs$('#switch'), 'click', toggleTrustedSiteDirective);
-
-/******************************************************************************/
-
-function reloadTab(ev) {
-    browser.tabs.reload(currentTab.id, {
-        bypassCache: ev.ctrlKey || ev.metaKey || ev.shiftKey,
+    const actualLevel = await sendMessage({
+        what: 'setFilteringMode',
+        hostname: targetHostname,
+        level: afterLevel,
     });
-    dom.cl.remove(dom.body, 'needReload');
-    originalStateHash = getCurrentStateHash();
+    if ( actualLevel !== afterLevel ) {
+        setFilteringMode(actualLevel);
+    }
+    if ( actualLevel !== beforeLevel && popupPanelData.autoReload ) {
+        browser.tabs.reload(currentTab.id);
+    }
 }
 
-dom.on(qs$('#refresh'), 'click', reloadTab);
+{
+    let mx0 = 0;
+    let mx1 = 0;
+    let l0 = 0;
+    let lMax = 0;
+    let timer;
+
+    const move = ( ) => {
+        timer = undefined;
+        const l1 = Math.min(Math.max(l0 + mx1 - mx0, 0), lMax);
+        let level = Math.floor(l1 * BLOCKING_MODE_MAX / lMax);
+        if ( qs$('body[dir="rtl"]') !== null ) {
+            level = 3 - level;
+        }
+        const modeSlider = qs$('.filteringModeSlider');
+        if ( `${level}` === modeSlider.dataset.level ) { return; }
+        dom.text(
+            qs$('#filteringModeText > span:nth-of-type(2)'),
+            i18n$(`filteringMode${level}Name`)
+        );
+        setFilteringMode(level);
+    };
+
+    const moveAsync = ev => {
+        if ( timer !== undefined ) { return; }
+        mx1 = ev.pageX;
+        timer = self.requestAnimationFrame(move);
+    };
+
+    const stop = ev => {
+        if ( ev.button !== 0 ) { return; }
+        const modeSlider = qs$('.filteringModeSlider');
+        if ( dom.cl.has(modeSlider, 'moving') === false ) { return; }
+        dom.cl.remove(modeSlider, 'moving');
+        self.removeEventListener('mousemove', moveAsync, { capture: true });
+        self.removeEventListener('mouseup', stop, { capture: true });
+        dom.text(qs$('#filteringModeText > span:nth-of-type(2)'), '');
+        commitFilteringMode();
+        ev.stopPropagation();
+        ev.preventDefault();
+        if ( timer !== undefined ) {
+            self.cancelAnimationFrame(timer);
+            timer = undefined;
+        }
+    };
+
+    const startSliding = ev => {
+        if ( ev.button !== 0 ) { return; }
+        const modeButton = qs$('.filteringModeButton');
+        if ( ev.currentTarget !== modeButton ) { return; }
+        const modeSlider = qs$('.filteringModeSlider');
+        if ( dom.cl.has(modeSlider, 'moving') ) { return; }
+        modeSlider.dataset.levelBefore = modeSlider.dataset.level;
+        mx0 = ev.pageX;
+        const buttonRect = modeButton.getBoundingClientRect();
+        l0 = buttonRect.left + buttonRect.width / 2;
+        const sliderRect = modeSlider.getBoundingClientRect();
+        lMax = sliderRect.width - buttonRect.width ;
+        dom.cl.add(modeSlider, 'moving');
+        self.addEventListener('mousemove', moveAsync, { capture: true });
+        self.addEventListener('mouseup', stop, { capture: true });
+        ev.stopPropagation();
+        ev.preventDefault();
+    };
+
+    dom.on(qs$('.filteringModeButton'), 'mousedown', startSliding);
+}
+
+dom.on(
+    qs$('.filteringModeSlider'),
+    'click',
+    '.filteringModeSlider span[data-level]',
+    ev => {
+        const modeSlider = qs$('.filteringModeSlider');
+        modeSlider.dataset.levelBefore = modeSlider.dataset.level;
+        const span = ev.target;
+        const level = parseInt(span.dataset.level, 10);
+        setFilteringMode(level, true);
+    }
+);
+
+dom.on(
+    qs$('.filteringModeSlider'),
+    'mouseenter',
+    '.filteringModeSlider span[data-level]',
+    ev => {
+        const span = ev.target;
+        const level = parseInt(span.dataset.level, 10);
+        dom.text(
+            qs$('#filteringModeText > span:nth-of-type(2)'),
+            i18n$(`filteringMode${level}Name`)
+        );
+    }
+);
+
+dom.on(
+    qs$('.filteringModeSlider'),
+    'mouseleave',
+    '.filteringModeSlider span[data-level]',
+    ( ) => {
+        dom.text(qs$('#filteringModeText > span:nth-of-type(2)'), '');
+    }
+);
 
 /******************************************************************************/
 
@@ -156,40 +259,10 @@ dom.on(qs$('#lessButton'), 'click', ( ) => {
 
 /******************************************************************************/
 
-async function grantGreatPowers() {
-    const granted = await sendMessage({
-        what: 'grantGreatPowers',
-        hostname: tabHostname,
-    });
-    if ( granted !== true ) { return; }
-    dom.cl.add(dom.body, 'hasGreatPowers');
-    onStateHashChanged();
-}
-
-async function revokeGreatPowers() {
-    const removed = await sendMessage({
-        what: 'revokeGreatPowers',
-        hostname: tabHostname,
-    });
-    if ( removed !== true ) { return; }
-    dom.cl.remove(dom.body, 'hasGreatPowers');
-    onStateHashChanged();
-}
-
-dom.on(qs$('#toggleGreatPowers'), 'click', ( ) => {
-    if ( dom.cl.has(dom.body, 'hasGreatPowers' ) ) {
-        revokeGreatPowers();
-    } else {
-        grantGreatPowers();
-    }
-});
-
-/******************************************************************************/
-
 async function init() {
     const [ tab ] = await browser.tabs.query({ active: true });
     if ( tab instanceof Object === false ) { return true; }
-    currentTab = tab;
+    Object.assign(currentTab, tab);
 
     let url;
     try {
@@ -198,50 +271,46 @@ async function init() {
     } catch(ex) {
     }
 
-    let popupPanelData = {};
     if ( url !== undefined ) {
-        popupPanelData = await sendMessage({
+        const response = await sendMessage({
             what: 'popupPanelData',
             origin: url.origin,
+            hostname: normalizedHostname(tabHostname),
         });
+        if ( response instanceof Object ) {
+            Object.assign(popupPanelData, response);
+        }
     }
 
-    dom.cl.toggle(
-        dom.body,
-        'off',
-        popupPanelData.isTrusted === true
-    );
-
-    dom.cl.toggle(
-        dom.body,
-        'hasGreatPowers',
-        popupPanelData.hasGreatPowers === true
-    );
+    setFilteringMode(popupPanelData.level);
 
     dom.text(qs$('#hostname'), tabHostname);
-    dom.text(
-        qs$('#toggleGreatPowers .badge'),
-        popupPanelData.injectableCount || ''
-    );
 
     const parent = qs$('#rulesetStats');
     for ( const details of popupPanelData.rulesetDetails || [] ) {
         const div = qs$('#templates .rulesetDetails').cloneNode(true);
         dom.text(qs$('h1', div), details.name);
         const { rules, filters, css } = details;
+        let ruleCount = rules.plain + rules.regex;
+        if ( popupPanelData.hasOmnipotence ) {
+            ruleCount += rules.removeparam + rules.redirect;
+        }
+        let specificCount = 0;
+        if ( css.specific instanceof Object ) {
+            specificCount += css.specific.domainBased;
+            specificCount += css.specific.entityBased;
+        }
         dom.text(
             qs$('p', div),
             i18n$('perRulesetStats')
-                .replace('{{ruleCount}}', rules.accepted.toLocaleString())
+                .replace('{{ruleCount}}', ruleCount.toLocaleString())
                 .replace('{{filterCount}}', filters.accepted.toLocaleString())
-                .replace('{{cssSpecificCount}}', css.specific.toLocaleString())
+                .replace('{{cssSpecificCount}}', specificCount.toLocaleString())
         );
         parent.append(div);
     }
 
     dom.cl.remove(dom.body, 'loading');
-
-    originalStateHash = getCurrentStateHash();
 
     return true;
 }

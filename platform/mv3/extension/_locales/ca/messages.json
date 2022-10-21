@@ -115,6 +115,14 @@
     "message": "Bloca els informes CSP",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
+  "omnipotenceLabel": {
+    "message": "Habilita el filtratge addicional a tots els llocs web",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "omnipotenceLegend": {
+    "message": "L'uBO Lite pot aplicar el filtratge estès a un lloc web determinat, només després que concediu permisos al complement per modificar les dades de forma explícita. Aquesta configuració us permet concedir permisos de filtratge estès a tots els llocs web alhora.",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
   "3pGroupDefault": {
     "message": "Per defecte",
     "description": "Header for a ruleset section in 'Filter lists pane'"
@@ -214,5 +222,57 @@
   "genericRevert": {
     "message": "Desfés",
     "description": "for generic 'Revert' buttons"
+  },
+  "firstRunSectionLabel": {
+    "message": "Us donem la benvinguda",
+    "description": "The header text for the welcome message section"
+  },
+  "firstRunDescription": {
+    "message": "Acabeu d'instal·lar l'uBO Lite. Aquí podeu triar el mode de filtrat per defecte per utilitzar-lo a tots els llocs web.\n\nPer defecte, el mode <em>Bàsic</em> està seleccionat perquè no requereix permís per llegir i canviar dades. Si confieu en l'uBO Lite, podeu donar-li un ampli permís per llegir i canviar dades a tots els llocs web per tal d'activar capacitats de filtratge més avançades per a tots els llocs web per defecete.",
+    "description": "Descriptive text shown at first install time only "
+  },
+  "defaultFilteringModeSectionLabel": {
+    "message": "Mode de filtratge per defecte",
+    "description": "The header text for the default filtering mode section"
+  },
+  "defaultFilteringModeDescription": {
+    "message": "El mode de filtratge per defecte serà substituït pels modes de filtrat per lloc web. Podeu ajustar el mode de filtratge a qualsevol lloc web segons el qual funcioni millor en aquest lloc web. Cada mode té els seus avantatges i desavantatges.",
+    "description": "This describes the default filtering mode setting"
+  },
+  "filteringMode0Name": {
+    "message": "sense filtres",
+    "description": "Name of blocking mode 0"
+  },
+  "filteringMode1Name": {
+    "message": "bàsic",
+    "description": "Name of blocking mode 1"
+  },
+  "filteringMode2Name": {
+    "message": "òptim",
+    "description": "Name of blocking mode 2"
+  },
+  "filteringMode3Name": {
+    "message": "complet",
+    "description": "Name of blocking mode 3"
+  },
+  "basicFilteringModeDescription": {
+    "message": "Filtratge bàsic de xarxa a partir de llistes de filtres seleccionades.\n\nNo requereix permís per llegir i canviar dades als llocs web.",
+    "description": "This describes the 'basic' filtering mode"
+  },
+  "optimalFilteringModeDescription": {
+    "message": "Filtratge de xarxa avançat més un filtratge ampli específic de les llistes de filtres seleccionades.\n\nRequereix un ampli permís per llegir i canviar dades a tots els llocs web.",
+    "description": "This describes the 'optimal' filtering mode"
+  },
+  "completeFilteringModeDescription": {
+    "message": "Filtratge de xarxa avançat més un filtratge estès específic i genèric de les llistes de filtres seleccionades.\n\nRequereix un ampli permís per llegir i canviar dades a tots els llocs web.\n\nEl filtratge estès genèric pot provocar un ús més elevat dels recursos de la pàgina web.",
+    "description": "This describes the 'complete' filtering mode"
+  },
+  "behaviorSectionLabel": {
+    "message": "Comportament",
+    "description": "The header text for the 'Behavior' section"
+  },
+  "autoReloadLabel": {
+    "message": "Recarrega automàticament la pàgina quan canvieu el mode de filtratge",
+    "description": "Label for a checkbox in the options page"
   }
 }

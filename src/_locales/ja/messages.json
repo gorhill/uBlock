@@ -612,7 +612,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "[信頼するサイト] では uBlock Origin を無効にするウェブページを指定します。1 行につき 1 ページです。",
+    "message": "[信頼するサイト] では uBlock Origin を無効にするウェブページを指定します。1 行につき 1 つです。",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
@@ -1040,7 +1040,7 @@
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "ファイルにバックアップ",
+    "message": "ファイルにバックアップ...",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {

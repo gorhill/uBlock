@@ -28,7 +28,7 @@
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
-    "message": "Configurări",
+    "message": "Opțiuni",
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Siteuri de încredere",
+    "message": "Situri de încredere",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -52,7 +52,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupPowerSwitchInfo": {
-    "message": "Dezactivează/activează uBO Lite pentru acest site",
+    "message": "Dezactivează/Activează uBO Lite pentru acest sit",
     "description": "Tooltip for the main power button in the popup panel"
   },
   "popupTipDashboard": {
@@ -60,15 +60,15 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Accesați modul de eliminare elemente",
+    "message": "Elimină un element",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Modul alege element",
+    "message": "Alege un element",
     "description": "English: Enter element picker mode"
   },
   "popupTipReport": {
-    "message": "Raportează o eroare cu acest site",
+    "message": "Raportează o eroare cu acest sit web",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipSaveRules": {
@@ -80,23 +80,23 @@
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {
-    "message": "More",
+    "message": "Mai mult",
     "description": "Label to be used to show popup panel sections"
   },
   "popupGrantGreatPowers": {
-    "message": "Apasă pentru a acorda uBO Lite permisiuni extinse pe acest site.\nAcestea sunt mai eficiente în blocarea conținutului.",
+    "message": "Apasă pentru a acorda uBO Lite permisiuni extinse pentru acest sit.\nAcestea sunt mai eficiente pentru blocarea conținutului.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupRevokeGreatPowers": {
-    "message": "Apasă pentru a revoca permisiunile extinse pentru acest site.",
+    "message": "Apasă pentru a revoca permisiunile extinse pentru acest sit.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Less",
+    "message": "Mai puțin",
     "description": "Label to be used to hide popup panel sections"
   },
   "settingsIconBadgePrompt": {
-    "message": "Arată numărul cererilor blocate pe pictogramă",
+    "message": "Arată numărul cererilor blocate pe simbolul extensiei",
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsAppearance": {
@@ -104,7 +104,7 @@
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
-    "message": "Temă",
+    "message": "Aspect",
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
@@ -114,6 +114,14 @@
   "settingsNoCSPReportsPrompt": {
     "message": "Blochează rapoartele CSP",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
+  },
+  "omnipotenceLabel": {
+    "message": "Activează filtrarea extinsă pe toate siturile web",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "omnipotenceLegend": {
+    "message": "uBO Lite poate aplica filtrarea extinsă pentru un anumit sit web numai după ce s-au acordat în mod explicit extensiei permisiunile de modificare a datelor de pe acel sit web.  Această reglare permite acordarea de permisiuni pentru filtrarea extinsă a tuturor siturilor web simultan.",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Implicit",
@@ -160,7 +168,7 @@
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "whitelistPrompt": {
-    "message": "Instrucțiunile pentru site-uri de încredere specifică paginile pentru care uBO Lite trebuie dezactivat. O intrare pe linie.",
+    "message": "Directivele privind siturile de încredere stabilesc pe ce pagini web trebuie dezactivat uBO Lite. O intrare pe linie.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
@@ -172,7 +180,7 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "filtrele-mele-siteuri-de-incredere-ublock_{{datetime}}.txt",
+    "message": "situri-de-încredere-ublock_{{datetime}}.txt",
     "description": "The default filename to use for import/export purpose"
   },
   "aboutChangelog": {
@@ -214,5 +222,57 @@
   "genericRevert": {
     "message": "Înlătură",
     "description": "for generic 'Revert' buttons"
+  },
+  "firstRunSectionLabel": {
+    "message": "Bun venit",
+    "description": "The header text for the welcome message section"
+  },
+  "firstRunDescription": {
+    "message": "Tocmai ați instalat uBO Lite. Aici puteți alege modul de filtrare implicit pe toate site-urile.\n\nImplicit, modul de <em>bază,/em> este selectat întrucât nu necesită permisiuni pentru a citi și modifica date. Dacă aveți încredere în uBO Lite, puteți să-i acordați permisiuni sporite pentru a citi și modifica datele tututor sitte-rilor pentru a activa capabilități mai avansate de filtrare.",
+    "description": "Descriptive text shown at first install time only "
+  },
+  "defaultFilteringModeSectionLabel": {
+    "message": "Mod de filtrare implicit",
+    "description": "The header text for the default filtering mode section"
+  },
+  "defaultFilteringModeDescription": {
+    "message": "Modul implicit de filtrare va fi suprascris de modul specific fiecărui site. Puteți ajusta filtrarea pentru fiecare site conform caracteristicilor acestuia. Modurile au avantaje și dezavantaje.",
+    "description": "This describes the default filtering mode setting"
+  },
+  "filteringMode0Name": {
+    "message": "fără filtrare",
+    "description": "Name of blocking mode 0"
+  },
+  "filteringMode1Name": {
+    "message": "de bază",
+    "description": "Name of blocking mode 1"
+  },
+  "filteringMode2Name": {
+    "message": "optim",
+    "description": "Name of blocking mode 2"
+  },
+  "filteringMode3Name": {
+    "message": "complet",
+    "description": "Name of blocking mode 3"
+  },
+  "basicFilteringModeDescription": {
+    "message": "Basic network filtering from selected filter lists.\n\nDoes not require permission to read and change data on websites.",
+    "description": "This describes the 'basic' filtering mode"
+  },
+  "optimalFilteringModeDescription": {
+    "message": "Advanced network filtering plus specific extended filtering from selected filter lists.\n\nRequires broad permission to read and change data on all websites.",
+    "description": "This describes the 'optimal' filtering mode"
+  },
+  "completeFilteringModeDescription": {
+    "message": "Advanced network filtering plus specific and generic extended filtering from selected filter lists.\n\nRequires broad permission to read and change data on all websites.\n\nGeneric extended filtering may cause higher webpage resources usage.",
+    "description": "This describes the 'complete' filtering mode"
+  },
+  "behaviorSectionLabel": {
+    "message": "Comportament",
+    "description": "The header text for the 'Behavior' section"
+  },
+  "autoReloadLabel": {
+    "message": "Reîncărcare automată a paginii la schimbarea modului de filtrare",
+    "description": "Label for a checkbox in the options page"
   }
 }

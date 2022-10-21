@@ -1040,7 +1040,7 @@
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "备份到文件",
+    "message": "备份到文件…",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {

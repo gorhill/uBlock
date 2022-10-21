@@ -1,0 +1,92 @@
+.filteringModeSlider {
+    align-items: center;
+    display: flex;
+    height: 60px;
+    justify-content: center;
+    position: relative;
+    width: 240px;
+    }
+
+.filteringModeButton {
+    background-color: var(--surface-1);
+    box-sizing: border-box;
+    border-radius: 30% 15% / 15% 30%;
+    height: 100%;
+    position: absolute;
+    width: 25%;
+    z-index: 10;
+    }
+
+.filteringModeButton > div {
+    background-color: var(--accent-surface-1);
+    border: 4px solid var(--accent-surface-1);
+    border-radius: inherit;
+    box-sizing: border-box;
+    height: calc(100% - 2px);
+    margin: 1px;
+    width: calc(100% - 2px);
+    }
+
+.filteringModeSlider.moving .filteringModeButton > div,
+.filteringModeButton > div:hover {
+    filter: brightness(0.9);
+    }
+
+.filteringModeSlider[data-level="0"] .filteringModeButton > div {
+    background-color: var(--surface-2);
+    border-color: var(--surface-2);
+    }
+
+.filteringModeSlider span[data-level] {
+    background-color: var(--accent-surface-1);
+    display: inline-flex;
+    height: 30%;
+    margin-left: 1px;
+    width: 25%;
+    }
+
+.filteringModeSlider.moving span[data-level] {
+    pointer-events: none;
+    }
+
+.filteringModeSlider[data-level="0"] .filteringModeButton {
+    left: 0;
+    }
+.filteringModeSlider[data-level="1"] .filteringModeButton {
+    left: 25%;
+    }
+.filteringModeSlider[data-level="2"] .filteringModeButton {
+    left: 50%;
+    }
+.filteringModeSlider[data-level="3"] .filteringModeButton {
+    left: 75%;
+    }
+[dir="rtl"] .filteringModeSlider[data-level="0"] .filteringModeButton {
+    left: 75%;
+    }
+[dir="rtl"] .filteringModeSlider[data-level="1"] .filteringModeButton {
+    left: 50%;
+    }
+[dir="rtl"] .filteringModeSlider[data-level="2"] .filteringModeButton {
+    left: 25%;
+    }
+[dir="rtl"] .filteringModeSlider[data-level="3"] .filteringModeButton {
+    left: 0;
+    }
+
+
+.filteringModeSlider[data-level="0"] span[data-level] {
+    background-color: var(--surface-2);
+    }
+
+.filteringModeSlider[data-level="1"] span[data-level]:nth-of-type(1) ~ span[data-level] {
+    background-color: var(--surface-2);
+    }
+
+.filteringModeSlider[data-level="2"] span[data-level]:nth-of-type(2) ~ span[data-level] {
+    background-color: var(--surface-2);
+    }
+
+.filteringModeSlider[data-level]:not(.moving) span[data-level]:hover {
+    filter: brightness(0.9);
+    }

@@ -22,6 +22,8 @@
 
 // For background page
 
+/* globals browser */
+
 'use strict';
 
 /******************************************************************************/
@@ -721,7 +723,8 @@ vAPI.setIcon = (( ) => {
             for ( const img of imgs ) {
                 if ( img.r.complete === false ) { return; }
             }
-            const ctx = document.createElement('canvas').getContext('2d');
+            const ctx = document.createElement('canvas')
+                .getContext('2d', { willReadFrequently: true });
             const iconData = [ null, null ];
             for ( const img of imgs ) {
                 if ( img.cached ) { continue; }

@@ -23,26 +23,41 @@
 
 /******************************************************************************/
 
-import { sendMessage } from './ext.js';
+import { browser, sendMessage } from './ext.js';
 import { i18n$ } from './i18n.js';
 import { dom, qs$, qsa$ } from './dom.js';
 import { simpleStorage } from './storage.js';
 
 /******************************************************************************/
 
+const rulesetMap = new Map();
 let cachedRulesetData = {};
-let filteringSettingsHash = '';
 let hideUnusedSet = new Set([ 'regions' ]);
 
 /******************************************************************************/
 
-const renderNumber = function(value) {
+function renderNumber(value) {
     return value.toLocaleString();
-};
+}
 
 /******************************************************************************/
 
-const renderFilterLists = function(soft) {
+function rulesetStats(rulesetId) {
+    const canRemoveParams = cachedRulesetData.defaultFilteringMode > 1;
+    const rulesetDetails = rulesetMap.get(rulesetId);
+    if ( rulesetDetails === undefined ) { return; }
+    const { rules, filters } = rulesetDetails;
+    let ruleCount = rules.plain + rules.regex;
+    if ( canRemoveParams ) {
+        ruleCount += rules.removeparam + rules.redirect;
+    }
+    const filterCount = filters.accepted;
+    return { ruleCount, filterCount };
+}
+
+/******************************************************************************/
+
+function renderFilterLists(soft = false) {
     const { enabledRulesets, rulesetDetails } = cachedRulesetData;
     const listGroupTemplate = qs$('#templates .groupEntry');
     const listEntryTemplate = qs$('#templates .listEntry');
@@ -77,12 +92,19 @@ const renderFilterLists = function(soft) {
             dom.cl.toggle(li, 'unused', hideUnused && !on);
         }
         // https://github.com/gorhill/uBlock/issues/1429
-        if ( !soft ) {
+        if ( soft !== true ) {
             qs$('input[type="checkbox"]', li).checked = on;
         }
+        const stats = rulesetStats(ruleset.id);
         li.title = listStatsTemplate
-            .replace('{{ruleCount}}', renderNumber(ruleset.rules.accepted))
-            .replace('{{filterCount}}', renderNumber(ruleset.filters.accepted));
+            .replace('{{ruleCount}}', renderNumber(stats.ruleCount))
+            .replace('{{filterCount}}', renderNumber(stats.filterCount));
+        dom.attr(
+            qs$('.input.checkbox', li),
+            'disabled',
+            stats.ruleCount === 0 ? '' : null
+        );
+        dom.cl.remove(li, 'discard');
         return li;
     };
 
@@ -179,36 +201,30 @@ const renderFilterLists = function(soft) {
 
     dom.remove(qsa$('#lists .listEntries .listEntry.discard'));
 
-    // Compute a hash of the settings so that we can keep track of changes
-    // affecting the loading of filter lists.
-    if ( !soft ) {
-        filteringSettingsHash = hashFromCurrentFromSettings();
-    }
-
     renderWidgets();
-};
+}
 
 /******************************************************************************/
 
 const renderWidgets = function() {
-    dom.cl.toggle(
-        qs$('#buttonApply'),
-        'disabled',
-        filteringSettingsHash === hashFromCurrentFromSettings()
-    );
+    if ( cachedRulesetData.firstRun ) {
+        dom.cl.add(dom.body, 'firstRun');
+    }
+
+    const defaultLevel = cachedRulesetData.defaultFilteringMode;
+    qs$(`.filteringModeCard input[type="radio"][value="${defaultLevel}"]`).checked = true;
+
+    qs$('#autoReload input[type="checkbox"').checked = cachedRulesetData.autoReload;
 
     // Compute total counts
-    const rulesetMap = new Map(
-        cachedRulesetData.rulesetDetails.map(rule => [ rule.id, rule ])
-    );
     let filterCount = 0;
     let ruleCount = 0;
     for ( const liEntry of qsa$('#lists .listEntry[data-listkey]') ) {
         if ( qs$('input[type="checkbox"]:checked', liEntry)  === null ) { continue; }
-        const ruleset = rulesetMap.get(liEntry.dataset.listkey);
-        if ( ruleset === undefined ) { continue; }
-        filterCount += ruleset.filters.accepted;
-        ruleCount += ruleset.rules.accepted;
+        const stats = rulesetStats(liEntry.dataset.listkey);
+        if ( stats === undefined ) { continue; }
+        ruleCount += stats.ruleCount;
+        filterCount += stats.filterCount;
     }
     qs$('#listsOfBlockedHostsPrompt').textContent = i18n$('perRulesetStats')
         .replace('{{ruleCount}}', ruleCount.toLocaleString())
@@ -217,41 +233,58 @@ const renderWidgets = function() {
 
 /******************************************************************************/
 
-const hashFromCurrentFromSettings = function() {
-    const hash = [];
-    const listHash = [];
-    for ( const liEntry of qsa$('#lists .listEntry[data-listkey]') ) {
-        if ( qs$('input[type="checkbox"]:checked', liEntry) ) {
-            listHash.push(dom.attr(liEntry, 'data-listkey'));
-        }
-    }
-    hash.push(listHash.sort().join());
-    return hash.join();
-};
-
-self.hasUnsavedData = function() {
-    return hashFromCurrentFromSettings() !== filteringSettingsHash;
-};
-
-/******************************************************************************/
-
-function onListsetChanged(ev) {
+async function onFilteringModeChange(ev) {
     const input = ev.target;
-    const li = input.closest('.listEntry');
-    dom.cl.toggle(li, 'checked', input.checked);
+    const newLevel = parseInt(input.value, 10);
+    let granted = false;
+
+    switch ( newLevel ) {
+    case 1: { // Revoke broad permissions
+        granted = await browser.permissions.remove({
+            origins: [ '<all_urls>' ]
+        });
+        break;
+    }
+    case 2:
+    case 3: { // Request broad permissions
+        granted = await browser.permissions.request({
+            origins: [ '<all_urls>' ]
+        });
+        break;
+    }
+    default:
+        break;
+    }
+    if ( granted ) {
+        const actualLevel = await sendMessage({
+            what: 'setDefaultFilteringMode',
+            level: newLevel,
+        });
+        cachedRulesetData.defaultFilteringMode = actualLevel;
+    }
+    renderFilterLists(true);
     renderWidgets();
 }
 
 dom.on(
-    qs$('#lists'),
+    qs$('#defaultFilteringMode'),
     'change',
-    '.listEntry input',
-    onListsetChanged
+    '.filteringModeCard input[type="radio"]',
+    ev => { onFilteringModeChange(ev); }
 );
 
 /******************************************************************************/
 
-const applyEnabledRulesets = async function() {
+dom.on(qs$('#autoReload input[type="checkbox"'), 'change', ev => {
+    sendMessage({
+        what: 'setAutoReload',
+        state: ev.target.checked,
+    });
+});
+
+/******************************************************************************/
+
+async function applyEnabledRulesets() {
     const enabledRulesets = [];
     for ( const liEntry of qsa$('#lists .listEntry[data-listkey]') ) {
         if ( qs$('input[type="checkbox"]:checked', liEntry) === null ) { continue; }
@@ -263,32 +296,24 @@ const applyEnabledRulesets = async function() {
         enabledRulesets,
     });
 
-    filteringSettingsHash = hashFromCurrentFromSettings();
-};
-
-const buttonApplyHandler = async function() {
-    dom.cl.remove(qs$('#buttonApply'), 'enabled');
-    await applyEnabledRulesets();
     renderWidgets();
-};
+}
 
-dom.on(
-    qs$('#buttonApply'),
-    'click',
-    ( ) => { buttonApplyHandler(); }
-);
+dom.on(qs$('#lists'), 'change', '.listEntry input[type="checkbox"]', ( ) => {
+    applyEnabledRulesets();
+});
 
 /******************************************************************************/
 
 // Collapsing of unused lists.
 
-const mustHideUnusedLists = function(which) {
+function mustHideUnusedLists(which) {
     const hideAll = hideUnusedSet.has('*');
     if ( which === '*' ) { return hideAll; }
     return hideUnusedSet.has(which) !== hideAll;
-};
+}
 
-const toggleHideUnusedLists = function(which) {
+function toggleHideUnusedLists(which) {
     const doesHideAll = hideUnusedSet.has('*');
     let groupSelector;
     let mustHide;
@@ -325,7 +350,7 @@ const toggleHideUnusedLists = function(which) {
         'hideUnusedFilterLists',
         Array.from(hideUnusedSet)
     );
-};
+}
 
 dom.on(
     qs$('#lists'),
@@ -348,10 +373,12 @@ simpleStorage.getItem('hideUnusedFilterLists').then(value => {
 /******************************************************************************/
 
 sendMessage({
-    what: 'getRulesetData',
+    what: 'getOptionsPageData',
 }).then(data => {
     if ( !data ) { return; }
     cachedRulesetData = data;
+    rulesetMap.clear();
+    cachedRulesetData.rulesetDetails.forEach(rule => rulesetMap.set(rule.id, rule));
     try {
         renderFilterLists();
     } catch(ex) {

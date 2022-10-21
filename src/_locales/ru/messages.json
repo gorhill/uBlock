@@ -1040,7 +1040,7 @@
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "Резервное копирование в файл...",
+    "message": "Резервное копирование в файл…",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {

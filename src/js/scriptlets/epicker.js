@@ -756,7 +756,7 @@ const filterToDOMInterface = (( ) => {
         try {
             const o = JSON.parse(raw);
             elems = vAPI.domFilterer.createProceduralFilter(o).exec();
-            style = o.action === undefined || o.action[0] !== ':style'
+            style = o.action === undefined || o.action[0] !== 'style'
                 ? vAPI.hideStyle
                 : o.action[1];
         } catch(ex) {

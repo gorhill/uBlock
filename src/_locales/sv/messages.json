@@ -1040,7 +1040,7 @@
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "Säkerhetskopiera till fil",
+    "message": "Säkerhetskopiera till fil...",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {

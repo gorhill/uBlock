@@ -115,6 +115,14 @@
     "message": "CSP-rapporten blokkeren",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
+  "omnipotenceLabel": {
+    "message": "Uitgebreide filtering op alle websites inschakelen",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "omnipotenceLegend": {
+    "message": "uBO Lite kan alleen uitgebreide filtering op een bepaalde website toepassen nadat u de extensie expliciet toestemmingen hebt verleend om gegevens op die website aan te passen. Via deze instelling kunt u toestemmingen voor uitgebreide filtering aan alle websites tegelijk verlenen.",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
   "3pGroupDefault": {
     "message": "Standaard",
     "description": "Header for a ruleset section in 'Filter lists pane'"
@@ -214,5 +222,57 @@
   "genericRevert": {
     "message": "Ongedaan maken",
     "description": "for generic 'Revert' buttons"
+  },
+  "firstRunSectionLabel": {
+    "message": "Welkom",
+    "description": "The header text for the welcome message section"
+  },
+  "firstRunDescription": {
+    "message": "U hebt zojuist uBO Lite geïnstalleerd. Hier kunt u de standaard filtermodus voor het gebruik op alle websites kiezen.\n\nStandaard wordt de modus <em>Basis</em> geselecteerd, omdat hiervoor geen toestemming voor het lezen en wijzigen van gegevens is vereist. Als u uBO Lite vertrouwt, kunt u het brede toestemming voor het lezen en wijzigen van gegevens op alle websites verlenen, zodat standaard meer geavanceerde filtermogelijkheden voor alle websites beschikbaar zijn.",
+    "description": "Descriptive text shown at first install time only "
+  },
+  "defaultFilteringModeSectionLabel": {
+    "message": "Standaard filtermodus",
+    "description": "The header text for the default filtering mode section"
+  },
+  "defaultFilteringModeDescription": {
+    "message": "De standaard filtermodus wordt genegeerd door filtermodi per website. U kunt de filtermodus op een gewenste website aanpassen naar de modus die op die website het beste werkt. Elke modus heeft zijn voordelen en nadelen.",
+    "description": "This describes the default filtering mode setting"
+  },
+  "filteringMode0Name": {
+    "message": "geen filtering",
+    "description": "Name of blocking mode 0"
+  },
+  "filteringMode1Name": {
+    "message": "basis",
+    "description": "Name of blocking mode 1"
+  },
+  "filteringMode2Name": {
+    "message": "optimaal",
+    "description": "Name of blocking mode 2"
+  },
+  "filteringMode3Name": {
+    "message": "volledig",
+    "description": "Name of blocking mode 3"
+  },
+  "basicFilteringModeDescription": {
+    "message": "Basale netwerkfiltering vanuit geselecteerde filterlijsten.\n\nVereist geen toestemming voor het lezen en wijzigen van gegevens op websites.",
+    "description": "This describes the 'basic' filtering mode"
+  },
+  "optimalFilteringModeDescription": {
+    "message": "Geavanceerde netwerkfiltering plus specifieke uitgebreide filtering vanuit geselecteerde filterlijsten.\n\nVereist brede toestemming voor het lezen en wijzigen van gegevens op alle websites.",
+    "description": "This describes the 'optimal' filtering mode"
+  },
+  "completeFilteringModeDescription": {
+    "message": "Geavanceerde netwerkfiltering plus specifieke en algemene uitgebreide filtering vanuit geselecteerde filterlijsten.\n\nVereist brede toestemming voor het lezen en wijzigen van gegevens op alle websites.\n\nAlgemene uitgebreide filtering kan een hoger gebruik van webpaginabronnen veroorzaken.",
+    "description": "This describes the 'complete' filtering mode"
+  },
+  "behaviorSectionLabel": {
+    "message": "Gedrag",
+    "description": "The header text for the 'Behavior' section"
+  },
+  "autoReloadLabel": {
+    "message": "Pagina automatisch vernieuwen bij wijzigen van filtermodus",
+    "description": "Label for a checkbox in the options page"
   }
 }

@@ -115,7 +115,7 @@ if ( self.location.hash.slice(1) === 'no-dashboard.html' ) {
     if ( self.location.hash !== '' ) {
         pane = self.location.hash.slice(1) || null;
     }
-    loadDashboardPanel(pane !== null ? pane : '3p-filters.html', true);
+    loadDashboardPanel(pane !== null ? pane : 'settings.html', true);
 
     dom.on(
         qs$('#dashboard-nav'),
