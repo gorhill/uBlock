@@ -26,6 +26,7 @@
     window.addthis = {
         addEventListener: noopfn,
         button: noopfn,
+        counter: noopfn,
         init: noopfn,
         layers: noopfn,
         ready: noopfn,
