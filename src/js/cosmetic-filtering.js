@@ -186,7 +186,6 @@ SelectorCacheEntry.junkyard = [];
 // Specific filers can be enforced before the main document is loaded.
 
 const FilterContainer = function() {
-    this.reHasUnicode = /[^\x00-\x7F]/;
     this.rePlainSelector = /^[#.][\w\\-]+/;
     this.rePlainSelectorEscaped = /^[#.](?:\\[0-9A-Fa-f]+ |\\.|\w|-)+/;
     this.rePlainSelectorEx = /^[^#.\[(]+([#.][\w-]+)|([#.][\w-]+)$/;
