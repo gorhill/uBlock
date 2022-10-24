@@ -2984,10 +2984,7 @@ const ExtOptionsIterator = class {
         }
         if ( i === i0 ) { value.bad = true; }
         value.hn = parser.raw.slice(slices[i0+1], slices[i+1]);
-        if (
-            hasBits(this.parser.allBits, BITUnicode) &&
-            parser.reUnicodeChar.test(value.hn)
-        ) {
+        if ( parser.hasUnicode() && parser.reUnicodeChar.test(value.hn) ) {
             value.hn = parser.normalizeHostnameValue(value.hn, 0b0110);
         }
         if ( i < this.r ) { i += 3; }
