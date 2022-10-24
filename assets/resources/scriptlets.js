@@ -1754,7 +1754,9 @@
     const regexFromArg = arg => {
         if ( arg === '' ) { return /^/; }
         if ( /^\/.*\/$/.test(arg) ) { return new RegExp(arg.slice(1, -1)); }
-        return new RegExp(arg.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+        return new RegExp(
+            arg.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*+/g, '.*?')
+        );
     };
     const reM3u = regexFromArg(m3uPattern);
     const reUrl = regexFromArg(urlPattern);
