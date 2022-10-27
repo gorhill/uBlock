@@ -1276,8 +1276,8 @@ async function main() {
         'https://ublockorigin.github.io/uAssets/filters/unbreak.txt',
         'https://ublockorigin.github.io/uAssets/filters/quick-fixes.txt',
         'https://ublockorigin.github.io/uAssets/filters/ubol-filters.txt',
-        'https://secure.fanboy.co.nz/easylist.txt',
-        'https://secure.fanboy.co.nz/easyprivacy.txt',
+        'https://ublockorigin.github.io/uAssets/thirdparties/easylist.txt',
+        'https://ublockorigin.github.io/uAssets/thirdparties/easyprivacy.txt',
         'https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext',
     ];
     await rulesetFromURLs({
