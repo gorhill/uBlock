@@ -1331,7 +1331,8 @@ vAPI.DOMFilterer = class {
 
         // Library of resources is located at:
         // https://github.com/gorhill/uBlock/blob/master/assets/ublock/resources.txt
-        if ( scriptlets ) {
+        if ( scriptlets && typeof self.uBO_scriptletsInjected !== 'boolean' ) {
+            self.uBO_scriptletsInjected = true;
             vAPI.injectScriptlet(document, scriptlets);
             vAPI.injectedScripts = scriptlets;
         }
@@ -1362,9 +1363,7 @@ vAPI.DOMFilterer = class {
         vAPI.messaging.send('contentscript', {
             what: 'retrieveContentScriptParameters',
             url: vAPI.effectiveSelf.location.href,
-            scriptletsInjected:
-                typeof self.uBO_scriptletsInjected === 'boolean' &&
-                self.uBO_scriptletsInjected,
+            needScriptlets: typeof self.uBO_scriptletsInjected !== 'boolean',
         }).then(response => {
             bootstrapPhase1(response);
         });

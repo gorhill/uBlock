@@ -432,13 +432,17 @@ scriptletFilteringEngine.injectNow = function(details) {
         matchAboutBlank: true,
         runAt: 'document_start',
     });
-    if ( logEntries === undefined ) { return; }
-    promise.then(results => {
-        if ( Array.isArray(results) === false || results[0] !== 0 ) { return; }
-        for ( const entry of logEntries ) {
-            logOne(entry.tabId, entry.url, entry.token);
-        }
-    });
+    if ( logEntries !== undefined ) {
+        promise.then(results => {
+            if ( Array.isArray(results) === false || results[0] !== 0 ) {
+                return;
+            }
+            for ( const entry of logEntries ) {
+                logOne(entry.tabId, entry.url, entry.token);
+            }
+        });
+    }
+    return scriptlets;
 };
 
 scriptletFilteringEngine.toSelfie = function() {
