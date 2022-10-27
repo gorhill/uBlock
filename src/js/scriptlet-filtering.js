@@ -91,7 +91,8 @@ const contentscriptCode = (( ) => {
         function(hostname, scriptlets) {
             if (
                 document.location === null ||
-                hostname !== document.location.hostname
+                hostname !== document.location.hostname ||
+                typeof self.uBO_scriptletsInjected === 'boolean'
             ) {
                 return;
             }
