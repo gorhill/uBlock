@@ -1362,6 +1362,9 @@ vAPI.DOMFilterer = class {
         vAPI.messaging.send('contentscript', {
             what: 'retrieveContentScriptParameters',
             url: vAPI.effectiveSelf.location.href,
+            scriptletsInjected:
+                typeof self.uBO_scriptletsInjected === 'boolean' &&
+                self.uBO_scriptletsInjected,
         }).then(response => {
             bootstrapPhase1(response);
         });

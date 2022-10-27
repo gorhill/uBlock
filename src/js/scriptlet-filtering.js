@@ -95,6 +95,7 @@ const contentscriptCode = (( ) => {
             ) {
                 return;
             }
+            self.uBO_scriptletsInjected = true;
             const injectScriptlets = function(d) {
                 let script;
                 try {
