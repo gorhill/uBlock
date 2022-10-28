@@ -116,7 +116,7 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "omnipotenceLabel": {
-    "message": "Erweiterte Filterung auf allen Websites aktivieren",
+    "message": "Erweitertes Filtern auf allen Websites aktivieren",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "omnipotenceLegend": {

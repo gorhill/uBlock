@@ -236,7 +236,7 @@
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "Mënyra standarde e filtrimit mund të ndryshohet për çdo uebsajt. Ndryshimet mund të bëhen në varësi të mënyrës që funksionon më mirë. Secila mënyrë ka avantazhet dhe disavantazhet e veta.",
+    "message": "Mënyra standarde e filtrimit mund të ndryshohet në çdo kohë, në varësi të kërkesave që kanë uebsajte të caktuara. Secila mënyrë ka avantazhet dhe disavantazhet e veta.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
@@ -256,7 +256,7 @@
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Filtrat kryesorë të rrjetit nga listat e përzgjedhura.\n\nNuk duhen leje për leximin dhe ndryshimin e të dhënave në uebsajte.",
+    "message": "Filtrat kryesorë të rrjetit nga listat e përzgjedhura.\n\nNuk merret leje për leximin dhe ndryshimin e të dhënave në uebsajte.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
@@ -264,7 +264,7 @@
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Filtrat e avancuar të rrjetit plus filtrat e posaçëm jospecifikë nga listat e përzgjedhura.\n\nDuhen leje shtesë për leximin dhe ndryshimin e të dhënave në të gjitha uebsajtet.\n\nFiltrat e posaçëm jospecifikë mund të rritin ngarkesën e faqeve në internet.",
+    "message": "Filtrat e avancuar të rrjetit plus filtrat e posaçëm jospecifikë nga listat e përzgjedhura.\n\nDuhen leje shtesë për leximin dhe ndryshimin e të dhënave në të gjitha uebsajtet.\n\nFiltrat e posaçëm jospecifikë mund ta rëndojnë hapjen e faqeve në internet.",
     "description": "This describes the 'complete' filtering mode"
   },
   "behaviorSectionLabel": {
