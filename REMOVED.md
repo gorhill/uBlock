@@ -3,7 +3,7 @@
 For convenience, list of commits of removed assets, so that they can be
 more easily found.
 
-Use the parent commit to
+Use the _Before_ link to browse the repo before the removal of assets.
 
 #### 2022-10-28
 
