@@ -1,4 +1,4 @@
-Version: 0.1.22.10207
+Version: 0.1.22.10281
 ============================
 Listset for 'default':
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/filters.txt
@@ -8,22 +8,22 @@ Listset for 'default':
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/unbreak.txt
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/quick-fixes.txt
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/ubol-filters.txt
-	Fetching remote https://secure.fanboy.co.nz/easylist.txt
-	Fetching remote https://secure.fanboy.co.nz/easyprivacy.txt
+	Fetching remote https://ublockorigin.github.io/uAssets/thirdparties/easylist.txt
+	Fetching remote https://ublockorigin.github.io/uAssets/thirdparties/easyprivacy.txt
 	Fetching remote https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/filters-2020.txt
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/filters-2021.txt
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/filters-2022.txt
-Input filter count: 79044
-	Accepted filter count: 76632
+Input filter count: 78965
+	Accepted filter count: 76536
 	Rejected filter count: 152
-Output rule count: 21177
-	Plain good: 19963
-	Maybe good (regexes): 124
-	redirect=: 290
-	csp= (discarded): 59
-	removeparams= (accepted/discarded): 23/5
-	Unsupported: 718
+Output rule count: 21185
+	Plain good: 19973
+	Maybe good (regexes): 126
+	redirect=: 287
+	csp= (discarded): 60
+	removeparams= (accepted/discarded): 23/6
+	Unsupported: 716
 		Could not salvage rule with only entity-based domain= option: megalink.*
 		Could not salvage rule with only entity-based domain= option: samehadaku.*
 		Could not salvage rule with only entity-based domain= option: komikcast.*
@@ -155,6 +155,7 @@ Output rule count: 21177
 		Unsupported regex-based removeParam: /^ad/
 		Unsupported regex-based removeParam: /^ad/
 		Could not salvage rule with only entity-based domain= option: discoveryplus.*
+		Unsupported regex-based removeParam: /^([a-dfmnr-u]|e[ir]|ga|i[dfm]|o[hi]|p[s-v]|vi)/
 		Could not salvage rule with only entity-based domain= option: isohunt.*|isohunters.*|isohunthydra.*|isohunting.*|isohunts.*|isohuntx.*|isohuntz.*|myisohunt.*
 		Unsupported regex-based removeParam: /^(?:correlator|f[cr-w]|p[e-sv]|[abdeg-or-x])/
 		Unsupported regex-based removeParam: /^(?:correlator|f[cr-w]|p[e-sv]|u_|ga_|url|dt|adk)/
@@ -176,7 +177,7 @@ Output rule count: 21177
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=ignboards.com
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=9to5google.com|9to5mac.com|9to5toys.com|dronedj.com|electrek.co|marketrealist.com
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=playhydrax.com
-		Invalid network filter in default: *$image,redirect-rule=32x32.png,domain=freeplayervideo.com|junihd.com|nazarickol.com|player-cdn.com
+		Invalid network filter in default: *$image,redirect-rule=32x32.png,domain=freeplayervideo.com|nazarickol.com|player-cdn.com
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=kimcartoon.*
 		Invalid network filter in default: *$3p,script,redirect-rule=noopjs,domain=cbs.com|paramountplus.com
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=mylink.*|my1ink.*|myl1nk.*|myli3k.*
@@ -284,11 +285,10 @@ Output rule count: 21177
 		Invalid network filter in default: *$script,domain=work.ink,redirect-rule=noopjs
 		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=sznlink.xyz
 		Invalid network filter in default: *$frame,redirect-rule=noopframe,domain=camera.aeonax.com
-		Invalid network filter in default: *$xhr,redirect-rule=noopjs,domain=audioblog.com|johnsonweld.com
+		Invalid network filter in default: *$xhr,redirect-rule=noopjs,domain=audioblog.com
 		Invalid network filter in default: *$script,redirect-rule=empty,domain=streamz.vg|streamzz.*
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=texviewer.herokuapp.com
 		Invalid network filter in default: ||imasdk.googleapis.com/js/sdkloader/ima3.js$script,redirect-rule=noopjs,domain=881903.com
-		Invalid network filter in default: ||googlesyndication.com/pagead/js/adsbygoogle.js$xhr,redirect-rule=noop.txt,domain=cinema.net.ua
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=myschool-eng.com
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=ehubsoft.herokuapp.com
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=onemanhua.com
@@ -302,7 +302,6 @@ Output rule count: 21177
 		Invalid network filter in default: *$image,redirect-rule=2x2.png,domain=redbox.com
 		Invalid network filter in default: *$xhr,redirect-rule=noop.txt,domain=tunein.com
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=luscious.net
-		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=cararoot.id
 		Invalid network filter in default: *$xhr,redirect-rule=noopjs,domain=vidlii.com
 		Invalid network filter in default: *$image,redirect-rule=2x2.png,domain=mobilelegends.shop
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=onehack.us
@@ -313,7 +312,6 @@ Output rule count: 21177
 		Invalid network filter in default: *$script,domain=btgyama.blogspot.com,redirect-rule=noopjs
 		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=thumpertalk.com
 		Invalid network filter in default: *$frame,redirect-rule=noopframe,domain=promo-visits.site|satoshi-win.xyz|shorterall.com
-		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=safelinku.icu
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=bigbrothercanada.ca
 		Invalid network filter in default: *$script,1p,redirect-rule=noopjs,domain=pstream.net
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=onbatch.my.id
@@ -378,6 +376,7 @@ Output rule count: 21177
 		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=sorasi.net
 		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=monara.net
 		Invalid network filter in default: *$script,domain=ad-doge.com,redirect-rule=noopjs
+		Invalid network filter in default: ||delivery.adrecover.com^$image,redirect-rule=1x1.gif
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=nulleb.com
 		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=nulleb.com
 		Invalid network filter in default: *$script,3p,redirect-rule=noopjs,domain=staples.ca
@@ -394,7 +393,7 @@ Output rule count: 21177
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=humannootropicsindex.com
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=iammagnus.com|dailyvideoreports.net
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=youneed.win
-		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=freesslvpn.us|receivedsms.com|robotvpn.com
+		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=freesslvpn.us|robotvpn.com
 		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=maskinbladet.dk|fritidsmarkedet.dk
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=polska-ie.com
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=vidmoly.me|vidmoly.net|vidmoly.to
@@ -424,10 +423,8 @@ Output rule count: 21177
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=windowsmatters.com
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=masbrooo.com|2ndrun.tv
 		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=fr.de
-		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=dulu.to
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=kursors.lv
 		Invalid network filter in default: *$script,domain=gainbtc.*,redirect-rule=noopjs
-		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=toptechtalk.xyz
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=ghostsnet.com
 		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=fashion.noemoda.com
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=fashion.noemoda.com
@@ -447,7 +444,6 @@ Output rule count: 21177
 		Invalid network filter in default: ||pagead2.googlesyndication.com/pagead/show_ads.js^$script,redirect-rule=noopjs,domain=thetimetube.com
 		Invalid network filter in default: ||googleads.g.doubleclick.net/pagead/$xhr,redirect-rule=nooptext,domain=danshort.com
 		Invalid network filter in default: ||evolok.net/*/authorize/*$xhr,redirect-rule=nooptext,domain=nation.africa
-		Invalid network filter in default: ||matomo.alexbcberio.eus^$xhr,redirect-rule=nooptext,domain=alexbcberio.eus
 		Invalid network filter in default: ||pagead2.googlesyndication.com/pagead/$redirect-rule=noopjs,script,domain=overbits.herokuapp.com
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=pewgame.com
 		Invalid network filter in default: ||raw.githubusercontent.com/*/just-detect-adblock/*$3p,xhr,redirect-rule=nooptext
@@ -495,7 +491,7 @@ Output rule count: 21177
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=1cloudfile.com
 		Invalid network filter in default: ||imasdk.googleapis.com/js/sdkloader/ima3.js$script,redirect-rule=noopjs,domain=loomi.tv
 		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=freevpn4you.net
-		Invalid network filter in default: /px.gif?$image,redirect-rule=1x1.gif,1p
+		Invalid network filter in default: /px.gif?$image,redirect-rule=1x1.gif
 		Invalid network filter in default: ||cse.google.com/adsense/search/async-ads.js$xhr,redirect-rule=noop.txt,domain=asiaon.top
 		Invalid network filter in default: *$script,domain=miraculous.to,redirect-rule=noopjs
 		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=paraphrasetool.com
@@ -507,7 +503,7 @@ Output rule count: 21177
 		Invalid network filter in default: *$object,redirect-rule=empty,domain=sonixgvn.net
 		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=zwielkopolski24.pl
 		Invalid network filter in default: ||d2klx87bgzngce.cloudfront.net/jquery.swipebox.min.js$xhr,domain=filmisub.com,redirect-rule=noopjs
-		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=coin-free.com|kienthucrangmieng.com|techmart4u.in|chinhnhacoban.com|chamcuuhoc.com|hocchannuoi.com|thuocdangian.net|hoclamdaubep.com|tai-mui-hong.com
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=coin-free.com|kienthucrangmieng.com|techmart4u.in|chinhnhacoban.com|chamcuuhoc.com|hocchannuoi.com|thuocdangian.net|hoclamdaubep.com|tai-mui-hong.com|95news.com|vnpttelle.com|dhlgame.com|nhacremix.biz|hynews.biz|fanclup.info
 		Invalid network filter in default: ||adclixx.net^$script,3p,redirect-rule=nobab2.js:10
 		Invalid network filter in default: ||adnetasia.com^$script,3p,redirect-rule=nobab2.js:10
 		Invalid network filter in default: ||adtrackers.net^$script,3p,redirect-rule=nobab2.js:10
@@ -583,7 +579,6 @@ Output rule count: 21177
 		Invalid network filter in default: ||matystudios.github.io/banner_ad.png$image,redirect-rule=2x2.png
 		Invalid network filter in default: ||www3.doubleclick.net^$xhr,redirect-rule=noop.txt,domain=lineups.fun
 		Invalid network filter in default: ||googlesyndication.com^$xhr,redirect-rule=nooptext,domain=vogel.de
-		Invalid network filter in default: ||wpadmngr.com/static/adManager.js$script,redirect-rule=noop.js,domain=madshiba.fun
 		Invalid network filter in default: *$script,domain=tieutietkiem.com,redirect-rule=noopjs
 		Invalid network filter in default: *$frame,domain=adclickersbot.com,redirect-rule=noopframe
 		Invalid network filter in default: *$image,domain=adclickersbot.com,redirect-rule=1x1.gif
@@ -630,6 +625,7 @@ Output rule count: 21177
 		Invalid network filter in default: /^https?:\/\/(?:[a-z]{2}\.)?[0-9a-z]{7,16}\.com\/[a-z](?=[a-z]{0,25}[0-9A-Z])[0-9a-zA-Z]{3,26}\/(?:[1-5]\d{4}|[3-9]\d{3})\??(?:_=\d+|v=\d)?$/$script,redirect-rule=noop.js
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=haxina.com
 		Invalid network filter in default: ||coinzillatag.com^$script,redirect-rule=noopjs
+		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=bitcotasks.com
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=freelitecoin.top|freetron.top
 		Invalid network filter in default: *$script,domain=faucetcrypto.net,redirect-rule=noopjs
 		Invalid network filter in default: *$script,domain=short.freeltc.top,redirect-rule=noopjs
@@ -639,7 +635,7 @@ Output rule count: 21177
 		Invalid network filter in default: *$frame,redirect-rule=noopframe,domain=anydebrid.com|hotdebrid.com
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=anydebrid.com|hotdebrid.com
 		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=hacksnation.com
-		Invalid network filter in default: ||fundingchoicesmessages.google.com^$script,redirect-rule=noop.js,domain=rocketnews24.com
+		Invalid network filter in default: ||imasdk.googleapis.com^$script,redirect-rule=noopjs,domain=mynorthwest.com
 		Invalid network filter in default: @@||googletagmanager.com/gtm.js$script,redirect-rule,domain=rocketnews24.com
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=kruidvat.nl
 		Invalid network filter in default: ||jsdelivr.net^*/fp.min.js$script,redirect-rule=fingerprint3.js:10
@@ -672,6 +668,7 @@ Output rule count: 21177
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=animalchannel.co|homehacks.co|parentingisnteasy.co|seeitlive.co|spotlightstories.co
 		Invalid network filter in default: @@||googletagmanager.com/gtm.js$script,redirect-rule,domain=bela.gifts
 		Invalid network filter in default: *$script,redirect-rule=noop.js,domain=soranews24.com
+		Invalid network filter in default: @@||googletagmanager.com/gtm.js$script,redirect-rule,domain=soranews24.com
 		Invalid network filter in default: @@||googletagmanager.com/gtm.js$script,redirect-rule,domain=lingvolive.com
 		Invalid network filter in default: @@||google-analytics.com/analytics.js$script,redirect-rule=google-analytics.com/analytics.js,domain=ultimateclassicrock.com
 		Invalid network filter in default: @@||googletagmanager.com/gtm.js$script,redirect-rule=googletagmanager.com/gtm.js,domain=ultimateclassicrock.com
@@ -709,6 +706,7 @@ Output rule count: 21177
 		Invalid network filter in default: @@||googletagmanager.com/gtm.js$script,redirect-rule=googletagmanager_gtm.js:5,domain=stern.de
 		Invalid network filter in default: ||elpais.com/t.gif$image,1p,redirect-rule=1x1.gif,important
 		Invalid network filter in default: ||tag.atom.gamedistribution.com^$xhr,redirect-rule=nooptext,1p
+		Invalid network filter in default: @@||googlesyndication.com/pagead/js/adsbygoogle.js$script,redirect-rule,domain=html5.gamedistribution.com
 		Invalid network filter in default: ||hits.informer.com/log.php$image,domain=funny.pho.to,redirect-rule=1x1.gif
 		Invalid network filter in default: @@/prebid-ads/adsensebase.js$script,redirect-rule=prebid-ads.js,domain=darkreading.com
 		Invalid network filter in default: *$frame,domain=mcrypto.club|luckydice.net,redirect-rule=noopframe
@@ -730,6 +728,7 @@ Output rule count: 21177
 		Invalid network filter in default: @@||amazon-adsystem.com/*/apstag.js$script,redirect-rule,domain=weather.com
 		Invalid network filter in default: @@||securepubads.g.doubleclick.net/tag/js/gpt.js$script,redirect-rule,domain=honestjohn.co.uk
 		Invalid network filter in default: @@||googletagmanager.com/gtag/js$script,redirect-rule,domain=contactpoints.org
+		Invalid network filter in default: ||encar.com/js/*/analytics.js$script,1p,redirect-rule=noop.js
 		Invalid network filter in default: *$script,domain=wp.pl|money.pl|o2.pl|parenting.pl|pudelek.pl|autokult.pl|gadzetomania.pl|fotoblogia.pl|komorkomania.pl|polygamia.pl|abczdrowie.pl,redirect-rule=noopjs
 		Invalid network filter in default: *$script,redirect-rule=noopjs,domain=rjno1.com
 		Invalid network filter in default: *$image,domain=fcdn.lauta.media,redirect-rule=32x32.png
@@ -738,9 +737,8 @@ Output rule count: 21177
 		Invalid network filter in default: ||googletagmanager.com/gtag/js$script,redirect-rule=googletagmanager_gtm.js:10,domain=satoshi-win.xyz
 		Invalid network filter in default: ||id5-sync.com^$image,redirect-rule=1x1.gif,domain=satoshi-win.xyz
 		Invalid network filter in default: *$frame,redirect-rule=noopframe,domain=allcryptoz.net|crewbase.net|crewus.net|shinbhu.net|shinchu.net|thumb8.net|thumb9.net|topcryptoz.net|uniqueten.net|ultraten.net
-		Invalid network filter in default: *$frame,redirect-rule=noopframe,domain=ondemandkorea.com
-		Invalid network filter in default: *$script,xhr,redirect-rule=noopjs,domain=ondemandkorea.com
-		Invalid network filter in default: *$image,redirect-rule=1x1.gif,domain=ondemandkorea.com
+		Invalid network filter in default: *$xhr,redirect-rule=nooptext,domain=allcryptoz.net|crewbase.net|crewus.net|shinbhu.net|shinchu.net|thumb8.net|thumb9.net|topcryptoz.net|uniqueten.net|ultraten.net
+		Invalid network filter in default: ||pagead2.googlesyndication.com/pagead/$script,redirect-rule=googlesyndication_adsbygoogle.js,domain=rocketnews24.com
 		Invalid network filter in default: $webrtc,domain=ack.net|allthetests.com|azvideo.net|champion.gg|clicknupload.link|colourlovers.com|csgolounge.com|dispatch.com|fastplay.to|go4up.com|gounlimited.to|janjua.pw|janjua.tv|jpost.com|megaup.net|merriam-webster.com|netdna-storage.com|ouo.io|ouo.press|rlslog.net|sourceforge.net|spanishdict.com|telegram.com|torlock.icu|torlock2.com|uptobox.com|videowood.tv|vidtodo.com|yts.gs|yts.mx
 Rejected cosmetic filters: 180
 	Entity-based filter not supported: div.ellip > span:has-text(/^Ads?$/):upward(2)
@@ -865,12 +863,12 @@ Rejected cosmetic filters: 180
 	Entity-based filter not supported: .ui_container > div[class] > div[class^="_"] > .iab_medRec:only-child:upward(1)
 	Entity-based filter not supported: #playVideo:style(display: block !important; visibility: visible !important;)
 	Entity-based filter not supported: #player_embed:style(display: block !important; visibility: visible !important;)
+	Entity-based filter not supported: .jw-reset.jw-wrapper:style(z-index:2147483647 !important)
 	Entity-based filter not supported: #f13 > b:has-text(Sponsor):upward(4)
 	Entity-based filter not supported: td#f13:nth-of-type(3) > table:nth-of-type(4) > tbody > tr > td:upward(3)
 	Entity-based filter not supported: .g-recaptcha:upward(form > div):style(display: block !important;)
 	Entity-based filter not supported: [style="display:none"]:style(display: block !important;)
 	Entity-based filter not supported: div[data-test-id="pin"] span:not([class]):has-text(Promoted by):upward([data-grid-item="true"])
-	Invalid filter: digminecraft.com##:xpath(//*[contains(text(),"Advertisements")]):upward(1)
 	Invalid filter: masterduelmeta.com##:xpath(//*[contains(text(),"adblock")]):upward(3)
 	Entity-based filter not supported: .adunitContainer:upward(3)
 	Entity-based filter not supported: table:has-text(VPN)
@@ -923,18 +921,18 @@ Rejected cosmetic filters: 180
 	Invalid filter: youjizz.com##:-abp-properties(image/)
 	Invalid filter: youporn.com##:-abp-properties(image/)
 	Invalid filter: youporngay.com##:-abp-properties(image/)
-CSS-generic: 16821 plain CSS selectors
-CSS-specific domain-based: 7956 distinct filters
-	Combined into 5001 distinct entries
-CSS-specific entity-based: 627 distinct filters
+CSS-generic: 16498 plain CSS selectors
+CSS-specific domain-based: 7936 distinct filters
+	Combined into 4979 distinct entries
+CSS-specific entity-based: 628 distinct filters
 	Combined into 330 distinct entries
 CSS-specific injectable files: 21
-	0j8bcsc, 1qiqeoo, 0uotp7o, 0pr3djo, 1gqt1ns, 0qa7kug, 1gr3la4, 1rta8f0, 18fd7u8, 0ndgd8s, 197ltv8, 1armsbk, 0u1nfpo, 1mmjfvc, 06pu88g, 1mquf2o, 00svrmc, 0hrr0ds, 14q2t80, 0eu4bc0, default
-Declarative-related distinct filters: 253 distinct combined selectors
-Procedural-related distinct filters: 351 distinct combined selectors
+	04vraes, 1a83q80, 0tiqddk, 0c96i9c, 00d86s4, 0hb9kuc, 05k1o5s, 1aeb9a4, 15ipibg, 0719lgo, 0c466po, 1k6da64, 04uheh0, 04d24u8, 0qu8mko, 0c48uio, 1df0qoo, 1a1ssmg, 0mopjtg, 0i3pttk, default
+Declarative-related distinct filters: 251 distinct combined selectors
+Procedural-related distinct filters: 352 distinct combined selectors
 Rejected scriptlet filters: 0
 
-Scriptlet-related distinct filters: 1932
+Scriptlet-related distinct filters: 1918
 Scriptlet-related injectable files: 9
 	default.json-prune.js, default.set-constant.js, default.no-settimeout-if.js, default.abort-on-property-read.js, default.no-addeventlistener-if.js, default.no-setinterval-if.js, default.abort-on-property-write.js, default.abort-current-script.js, default.no-windowopen-if.js
 Rejected scriptlet filters: 0
@@ -944,35 +942,28 @@ Scriptlet-related entity-based injectable files: 7
 ============================
 Listset for 'alb-0':
 	Fetching remote https://raw.githubusercontent.com/AnXh3L0/blocklist/master/albanian-easylist-addition/Albania.txt
-Input filter count: 29
-	Accepted filter count: 29
+Input filter count: 28
+	Accepted filter count: 28
 	Rejected filter count: 0
-Output rule count: 26
+Output rule count: 25
 	Plain good: 22
 	Maybe good (regexes): 0
 	redirect=: 0
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
-	Unsupported: 4
+	Unsupported: 3
 		Could not salvage rule with only entity-based domain= option: filma24.*
 		Could not salvage rule with only entity-based domain= option: www.filma24.*
-		Could not salvage rule with only entity-based domain= option: www.filma24.*
 		Could not salvage rule with only entity-based domain= option: filma24.*
-Rejected cosmetic filters: 10
+Rejected cosmetic filters: 4
 	Invalid filter: gazetatema.net###content > div > a:has-text()
 	Invalid filter: lajmifundit.al##.td_block_template_1 > a:has-text()
 	Invalid filter: lajmifundit.al##.td_block_template_1 > center > a:has-text()
-	Entity-based filter not supported: div.player:style(width: 100% !important)
-	Entity-based filter not supported: div.movie-info:style(width: 100% !important)
-	Entity-based filter not supported: div.movie-optional:style(width: 100% !important)
-	Entity-based filter not supported: div.watch-links:style(width: 100% !important)
-	Entity-based filter not supported: div.download-links:style(width: 100% !important)
-	Entity-based filter not supported: #disqus_thread:style(width: 100% !important)
-	Entity-based filter not supported: div.recommended.related:style(width: 100% !important)
+	Entity-based filter not supported: div.col-8:style(width: 100% !important)
 CSS-generic: 6 plain CSS selectors
 CSS-specific domain-based: 195 distinct filters
 	Combined into 97 distinct entries
-CSS-specific entity-based: 12 distinct filters
+CSS-specific entity-based: 13 distinct filters
 	Combined into 2 distinct entries
 CSS-specific injectable files: 2
 	03aftlo, alb-0
@@ -1002,11 +993,11 @@ CSS-specific injectable files: 1
 ============================
 Listset for 'chn-0':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/224.txt
-Input filter count: 18615
-	Accepted filter count: 18573
+Input filter count: 18689
+	Accepted filter count: 18647
 	Rejected filter count: 0
-Output rule count: 6590
-	Plain good: 6530
+Output rule count: 6557
+	Plain good: 6497
 	Maybe good (regexes): 15
 	redirect=: 35
 	csp= (discarded): 6
@@ -1019,18 +1010,18 @@ Output rule count: 6590
 Rejected cosmetic filters: 2
 	Invalid filter: 69xx.one##.q-body--prevent-scroll: { position: static !important; }
 	Invalid filter: theporn.cc##.q-body--prevent-scroll: { position: static !important; }
-CSS-generic: 638 plain CSS selectors
-CSS-specific domain-based: 6335 distinct filters
-	Combined into 2609 distinct entries
+CSS-generic: 642 plain CSS selectors
+CSS-specific domain-based: 6327 distinct filters
+	Combined into 2607 distinct entries
 CSS-specific entity-based: 3 distinct filters
 	Combined into 2 distinct entries
 CSS-specific injectable files: 12
-	1sbg4ic, 0322lq4, 0a645gs, 1ckcl5c, 0hijt40, 1s5buo0, 116eivg, 12cc5ks, 17dc3jg, 1ap7m3s, 1j0c3k4, chn-0
+	146mug8, 0a022v8, 15hnn48, 0lj7t5k, 15piqr0, 0iu8ncs, 1dapna0, 01q2hp4, 00fe3dk, 0lcg1p0, 1qfmkc0, chn-0
 Declarative-related distinct filters: 46 distinct combined selectors
-Procedural-related distinct filters: 84 distinct combined selectors
+Procedural-related distinct filters: 85 distinct combined selectors
 Rejected scriptlet filters: 0
 
-Scriptlet-related distinct filters: 71
+Scriptlet-related distinct filters: 72
 Scriptlet-related injectable files: 7
 	chn-0.no-settimeout-if.js, chn-0.set-constant.js, chn-0.no-setinterval-if.js, chn-0.abort-on-property-read.js, chn-0.abort-current-script.js, chn-0.abort-on-property-write.js, chn-0.json-prune.js
 Rejected scriptlet filters: 0
@@ -1041,11 +1032,11 @@ Scriptlet-related entity-based injectable files: 1
 Listset for 'cze-0':
 	Fetching remote https://raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt
 	Fetching remote https://raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters_ublock.txt
-Input filter count: 226
-	Accepted filter count: 226
+Input filter count: 227
+	Accepted filter count: 227
 	Rejected filter count: 0
-Output rule count: 122
-	Plain good: 115
+Output rule count: 123
+	Plain good: 116
 	Maybe good (regexes): 0
 	redirect=: 4
 	csp= (discarded): 1
@@ -1055,23 +1046,23 @@ Output rule count: 122
 		Invalid network filter in cze-0: *$xhr,redirect-rule=nooptext,domain=seznamzpravy.cz|sport.cz|seznam.cz|sbazar.cz|firmy.cz|super.cz|garaz.cz|stream.cz
 CSS-generic: 36 plain CSS selectors
 CSS-specific domain-based: 224 distinct filters
-	Combined into 144 distinct entries
+	Combined into 145 distinct entries
 CSS-specific entity-based: 0 distinct filters
 	Combined into 0 distinct entries
 CSS-specific injectable files: 1
-	14qavdo
+	00n3qgc
 Declarative-related distinct filters: 7 distinct combined selectors
 Procedural-related distinct filters: 5 distinct combined selectors
 Rejected scriptlet filters: 0
 
-Scriptlet-related distinct filters: 30
+Scriptlet-related distinct filters: 28
 Scriptlet-related injectable files: 6
 	cze-0.abort-on-property-read.js, cze-0.abort-current-script.js, cze-0.set-constant.js, cze-0.abort-on-property-write.js, cze-0.no-addeventlistener-if.js, cze-0.no-setinterval-if.js
 ============================
 Listset for 'deu-0':
 	Fetching remote https://easylist.to/easylistgermany/easylistgermany.txt
-Input filter count: 2196
-	Accepted filter count: 2196
+Input filter count: 2197
+	Accepted filter count: 2197
 	Rejected filter count: 0
 Output rule count: 1696
 	Plain good: 1692
@@ -1084,22 +1075,22 @@ Output rule count: 1696
 Rejected cosmetic filters: 1
 	Invalid filter: golem.de##li[data-article-id]:-abp-has(h3:-abp-properties(ANZEIGE))
 CSS-generic: 350 plain CSS selectors
-CSS-specific domain-based: 2029 distinct filters
-	Combined into 1192 distinct entries
+CSS-specific domain-based: 2049 distinct filters
+	Combined into 1196 distinct entries
 CSS-specific entity-based: 0 distinct filters
 	Combined into 0 distinct entries
 CSS-specific injectable files: 5
-	0pqh5a0, 06g0g8o, 02selpo, 0esd648, 1ql1ip0
-Procedural-related distinct filters: 51 distinct combined selectors
+	04dic4k, 1v0omr8, 11oooa8, 0jc4uu4, 06a3meo
+Procedural-related distinct filters: 52 distinct combined selectors
 ============================
 Listset for 'fin-0':
 	Fetching remote https://raw.githubusercontent.com/finnish-easylist-addition/finnish-easylist-addition/master/Finland_adb.txt
 	Fetching remote https://raw.githubusercontent.com/finnish-easylist-addition/finnish-easylist-addition/master/Finland_adb_uBO_extras.txt
-Input filter count: 175
-	Accepted filter count: 175
+Input filter count: 176
+	Accepted filter count: 176
 	Rejected filter count: 0
-Output rule count: 153
-	Plain good: 144
+Output rule count: 154
+	Plain good: 145
 	Maybe good (regexes): 3
 	redirect=: 3
 	csp= (discarded): 0
@@ -1108,19 +1099,15 @@ Output rule count: 153
 		regexFilter is not RE2-compatible: telsu\.fi\/(?![^>]*\.\w{3}$).+
 		regexFilter is not RE2-compatible: telsu\.fi\/(?![^>].*\.(jpg|png|svg|ico)$).+
 		regexFilter is not RE2-compatible: telsu\.fi\/img\/(?!cloudcity|mindmax|navibg|prg|tvohjelmat)
-Rejected cosmetic filters: 3
-	Invalid filter: iltalehti.fi##div.container:not(.sub-category-unikulma):not(.sub-category-rahapuhe):not(.sub-category-santander):not(.sub-category-miehen-terveys):not(.sub-category-kehon-hyvinvointi-ja-vitaepro):not(.sub-category-unijaterveys):not(.sub-category-huippukivaa-seksia):not(.sub-category-puhti):not(.sub-category-hyvinvointivinkit):not(.sub-category-hetki):not(.sub-category-kaalimato):not(.sub-category-oslo-skin-lab):not(.sub-category-kodin-siivousvinkit):not(.sub-category-qled-tv):not(.sub-category-jatevesiratkaisut):not(.sub-category-bluestep):not(.sub-category-sortter-reilua-lainavertailua):not(.sub-category-rahalaitos):not(.sub-category-aitien-keittiosta):not(.sub-category-koko-kansan-autokauppa):not(.sub-category-kuljetusten-kestava-kehitys):not(.sub-category-kestavat-liikkuvuusratkaisut):not(.sub-category-hintaopas):not(.sub-category-boltworks):not(.sub-category-samsung-tv):not(.sub-category-reseptit):not(.sub-category-terveystalo):not(.sub-category-etuafi-lainanottajan-asialla):not(.sub-category-vinkit-yrityslainaan) > div > div > main div[class="card "]:-abp-has(.full-article:has-text(Kaupallinen yhteistyö))
-	Invalid filter: iltalehti.fi##div.container:not(.sub-category-unikulma):not(.sub-category-rahapuhe):not(.sub-category-santander):not(.sub-category-miehen-terveys):not(.sub-category-kehon-hyvinvointi-ja-vitaepro):not(.sub-category-unijaterveys):not(.sub-category-huippukivaa-seksia):not(.sub-category-puhti):not(.sub-category-hyvinvointivinkit):not(.sub-category-hetki):not(.sub-category-kaalimato):not(.sub-category-oslo-skin-lab):not(.sub-category-kodin-siivousvinkit):not(.sub-category-qled-tv):not(.sub-category-jatevesiratkaisut):not(.sub-category-bluestep):not(.sub-category-sortter-reilua-lainavertailua):not(.sub-category-rahalaitos):not(.sub-category-aitien-keittiosta):not(.sub-category-koko-kansan-autokauppa):not(.sub-category-kuljetusten-kestava-kehitys):not(.sub-category-kestavat-liikkuvuusratkaisut):not(.sub-category-hintaopas):not(.sub-category-boltworks):not(.sub-category-samsung-tv):not(.sub-category-reseptit):not(.sub-category-terveystalo):not(.sub-category-etuafi-lainanottajan-asialla):not(.sub-category-vinkit-yrityslainaan) > div > div > main div[class="card "]:-abp-has(.half-article:has-text(Kaupallinen yhteistyö)):not(:-abp-has(.half-article:not(:has-text(Kaupallinen yhteistyö))))
-	Invalid filter: uusisuomi.fi##[width]:-abp-has(.lazyload-wrapper):not(aside)
 CSS-generic: 52 plain CSS selectors
-CSS-specific domain-based: 944 distinct filters
-	Combined into 405 distinct entries
+CSS-specific domain-based: 970 distinct filters
+	Combined into 415 distinct entries
 CSS-specific entity-based: 0 distinct filters
 	Combined into 0 distinct entries
 CSS-specific injectable files: 2
-	0flihg4, 002nsds
+	119a3fs, 0qk0af4
 Declarative-related distinct filters: 15 distinct combined selectors
-Procedural-related distinct filters: 83 distinct combined selectors
+Procedural-related distinct filters: 87 distinct combined selectors
 Rejected scriptlet filters: 0
 
 Scriptlet-related distinct filters: 4
@@ -1129,16 +1116,17 @@ Scriptlet-related injectable files: 3
 ============================
 Listset for 'fra-0':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/16.txt
-Input filter count: 21978
-	Accepted filter count: 21922
-	Rejected filter count: 50
-Output rule count: 7318
-	Plain good: 7267
-	Maybe good (regexes): 10
+Input filter count: 21679
+	Accepted filter count: 21072
+	Rejected filter count: 601
+Output rule count: 7041
+	Plain good: 6992
+	Maybe good (regexes): 7
 	redirect=: 28
 	csp= (discarded): 5
 	removeparams= (accepted/discarded): 0/0
-	Unsupported: 8
+	Unsupported: 9
+		regexFilter is not RE2-compatible: ^https?:\/\/vitamiiin\.com\/(?!wp-content|uploads|plugins|themes)(.*)
 		regexFilter is not RE2-compatible: ^(?!.*(bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fastlylb.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|vk.com|yandex.|yastatic.net|ytimg.com|zencdn.net|player|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com)).*$
 		Could not salvage rule with only entity-based domain= option: vidembed.*
 		Could not salvage rule with only entity-based domain= option: vidembed.*
@@ -1153,9 +1141,9 @@ CSS-specific domain-based: 2129 distinct filters
 CSS-specific entity-based: 1 distinct filters
 	Combined into 1 distinct entries
 CSS-specific injectable files: 6
-	0cgbc18, 09ndnco, 1gfl0uk, 0hbm3i0, 1t7qaek, fra-0
+	0id0lvo, 05dk9a8, 0b06ul0, 14easp8, 1cndfb0, fra-0
 Declarative-related distinct filters: 31 distinct combined selectors
-Procedural-related distinct filters: 74 distinct combined selectors
+Procedural-related distinct filters: 75 distinct combined selectors
 Rejected scriptlet filters: 0
 
 Scriptlet-related distinct filters: 54
@@ -1218,8 +1206,8 @@ Scriptlet-related injectable files: 6
 ============================
 Listset for 'idn-0':
 	Fetching remote https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/subscriptions/abpindo.txt
-Input filter count: 4272
-	Accepted filter count: 4272
+Input filter count: 4273
+	Accepted filter count: 4273
 	Rejected filter count: 0
 Output rule count: 3033
 	Plain good: 3033
@@ -1229,46 +1217,45 @@ Output rule count: 3033
 	removeparams= (accepted/discarded): 0/0
 	Unsupported: 0
 
-Rejected cosmetic filters: 2
-	Invalid filter: detik.com##.mr2:-abp-has([id^="div-gpt-ad"])
+Rejected cosmetic filters: 1
 	Invalid filter: neonime.net##[data-src^="https://neonime.net/wp-content/"]:xpath(..)
 CSS-generic: 228 plain CSS selectors
-CSS-specific domain-based: 732 distinct filters
-	Combined into 406 distinct entries
+CSS-specific domain-based: 737 distinct filters
+	Combined into 408 distinct entries
 CSS-specific entity-based: 0 distinct filters
 	Combined into 0 distinct entries
 CSS-specific injectable files: 2
-	0k0mg4k, 0ett68k
+	0bqnfjg, 11uov3c
 Declarative-related distinct filters: 2 distinct combined selectors
 ============================
 Listset for 'ind-0':
 	Fetching remote https://easylist-downloads.adblockplus.org/indianlist.txt
-Input filter count: 5266
-	Accepted filter count: 5266
+Input filter count: 5268
+	Accepted filter count: 5268
 	Rejected filter count: 0
-Output rule count: 5229
-	Plain good: 5229
+Output rule count: 5231
+	Plain good: 5231
 	Maybe good (regexes): 0
 	redirect=: 0
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 0/0
 	Unsupported: 0
 
-CSS-specific domain-based: 3259 distinct filters
-	Combined into 2258 distinct entries
+CSS-specific domain-based: 3262 distinct filters
+	Combined into 2260 distinct entries
 CSS-specific entity-based: 0 distinct filters
 	Combined into 0 distinct entries
 CSS-specific injectable files: 9
-	1aclcak, 150ori8, 1ojpt8o, 0cp8e6c, 1r42nek, 1ec5vj8, 0ou2t4k, 148iftc, 0s4hjh0
+	100dor4, 0p579k4, 0ormtpk, 0dsug34, 10po0v4, 0nhn3hg, 0ue9i2c, 11mh8mk, 0as929c
 Procedural-related distinct filters: 46 distinct combined selectors
 ============================
 Listset for 'irn-0':
 	Fetching remote https://raw.githubusercontent.com/MasterKia/PersianBlocker/main/PersianBlocker.txt
-Input filter count: 1357
-	Accepted filter count: 1357
+Input filter count: 1388
+	Accepted filter count: 1388
 	Rejected filter count: 0
-Output rule count: 527
-	Plain good: 512
+Output rule count: 530
+	Plain good: 515
 	Maybe good (regexes): 0
 	redirect=: 0
 	csp= (discarded): 0
@@ -1284,12 +1271,12 @@ Output rule count: 527
 		Unsupported regex-based removeParam: /^utm_/
 		Unsupported regex-based removeParam: /^utm_/
 CSS-generic: 6 plain CSS selectors
-CSS-specific domain-based: 700 distinct filters
+CSS-specific domain-based: 701 distinct filters
 	Combined into 329 distinct entries
 CSS-specific entity-based: 0 distinct filters
 	Combined into 0 distinct entries
 CSS-specific injectable files: 2
-	1frne7k, 1bp7210
+	00fsd0s, 1bp7210
 Declarative-related distinct filters: 35 distinct combined selectors
 Procedural-related distinct filters: 47 distinct combined selectors
 Rejected scriptlet filters: 0
@@ -1355,12 +1342,12 @@ Rejected cosmetic filters: 2
 	Invalid filter: haaretz.co.il##span:has([href*="promo"]):xpath(..)
 	Entity-based filter not supported: #afterLoad:style(display: block !important)
 CSS-generic: 5 plain CSS selectors
-CSS-specific domain-based: 371 distinct filters
+CSS-specific domain-based: 373 distinct filters
 	Combined into 118 distinct entries
 CSS-specific entity-based: 1 distinct filters
 	Combined into 1 distinct entries
 CSS-specific injectable files: 2
-	0ckllbk, isr-0
+	03h0qs0, isr-0
 Declarative-related distinct filters: 3 distinct combined selectors
 Rejected scriptlet filters: 0
 
@@ -1382,42 +1369,43 @@ Output rule count: 5426
 	Unsupported: 1
 		Invalid network filter in ita-0: $webrtc,domain=hentaisaturn.com|italydownload.com|mitoitalico.com|semprehawk.com
 CSS-generic: 356 plain CSS selectors
-CSS-specific domain-based: 3293 distinct filters
+CSS-specific domain-based: 3294 distinct filters
 	Combined into 2089 distinct entries
 CSS-specific entity-based: 0 distinct filters
 	Combined into 0 distinct entries
 CSS-specific injectable files: 9
-	1ip7ras, 1jg2qj0, 0c799ic, 0bapc1o, 01smcls, 1nlf4as, 003pe7c, 0id83g4, 0vccsck
+	0agbmt8, 00ciqsg, 02hlcvk, 1jh5iqc, 0rfe60c, 02hdmhs, 1lgu9rs, 02bs750, 0vccsck
 Procedural-related distinct filters: 21 distinct combined selectors
 ============================
 Listset for 'jpn-1':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/7.txt
-Input filter count: 1259
-	Accepted filter count: 1258
+Input filter count: 1267
+	Accepted filter count: 1266
 	Rejected filter count: 0
-Output rule count: 833
-	Plain good: 797
+Output rule count: 844
+	Plain good: 808
 	Maybe good (regexes): 13
-	redirect=: 21
+	redirect=: 20
 	csp= (discarded): 0
-	removeparams= (accepted/discarded): 0/0
-	Unsupported: 2
+	removeparams= (accepted/discarded): 0/1
+	Unsupported: 3
 		regexFilter is not RE2-compatible: \/kyodopress_cms\/wp-content\/(themes\/kyodopress\/img_banner\/(?!bn_newspaper\.gif)|banners).*
 		regexFilter is not RE2-compatible: ^(?!.*(bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fastlylb.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|vk.com|yandex.|yastatic.net|ytimg.com|zencdn.net|player|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com)).*$
+		Unsupported regex-based removeParam: /^([a-dfmnr-u]|e[ir]|ga|i[dfm]|o[hi]|p[s-v]|vi)/
 CSS-generic: 113 plain CSS selectors
-CSS-specific domain-based: 3847 distinct filters
-	Combined into 2076 distinct entries
+CSS-specific domain-based: 3888 distinct filters
+	Combined into 2104 distinct entries
 CSS-specific entity-based: 15 distinct filters
 	Combined into 8 distinct entries
 CSS-specific injectable files: 10
-	04gbd30, 1q4onqc, 1v3oh8s, 0016nok, 074tqac, 1qs3v3g, 18hkga8, 037uei0, 1spol9g, jpn-1
+	16fnu9g, 0h4vv0c, 07rb2h4, 1tm2vgc, 0d4ur7g, 1l9fvr4, 0v2pl9c, 003dmk0, 0u1larc, jpn-1
 Declarative-related distinct filters: 90 distinct combined selectors
-Procedural-related distinct filters: 472 distinct combined selectors
+Procedural-related distinct filters: 482 distinct combined selectors
 Rejected scriptlet filters: 0
 
 Scriptlet-related distinct filters: 42
 Scriptlet-related injectable files: 5
-	jpn-1.set-constant.js, jpn-1.abort-current-script.js, jpn-1.no-settimeout-if.js, jpn-1.abort-on-property-read.js, jpn-1.no-setinterval-if.js
+	jpn-1.abort-current-script.js, jpn-1.no-settimeout-if.js, jpn-1.set-constant.js, jpn-1.abort-on-property-read.js, jpn-1.no-setinterval-if.js
 Rejected scriptlet filters: 0
 
 Scriptlet-related entity-based injectable files: 2
@@ -1447,12 +1435,12 @@ Listset for 'kor-1':
 	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filters-uBO/allowlist.txt
 	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filters-share/specific_CSS.txt
 	Fetching remote https://raw.githubusercontent.com/List-KR/List-KR/master/filters-uBO/specific_CSS.txt
-Input filter count: 1076
-	Accepted filter count: 1072
+Input filter count: 1095
+	Accepted filter count: 1091
 	Rejected filter count: 0
-Output rule count: 788
-	Plain good: 675
-	Maybe good (regexes): 89
+Output rule count: 804
+	Plain good: 685
+	Maybe good (regexes): 95
 	redirect=: 17
 	csp= (discarded): 0
 	removeparams= (accepted/discarded): 1/0
@@ -1470,19 +1458,19 @@ Rejected cosmetic filters: 5
 	Invalid filter: cafe.naver.com###editorMainContent a[href*="//cafe.naver.com/eyejoker7?iframe"][target="_blank"] ~ *:mathces-path(/(&|\\.|\\?)clubid=29560217($|&)/)
 	Invalid filter: eggrank.com###right-sidebar > .inside-right-sidebar > div[class]:not(:has-text(Hi there, I'm EGG.))
 CSS-generic: 3 plain CSS selectors
-CSS-specific domain-based: 826 distinct filters
-	Combined into 450 distinct entries
+CSS-specific domain-based: 843 distinct filters
+	Combined into 454 distinct entries
 CSS-specific entity-based: 0 distinct filters
 	Combined into 0 distinct entries
 CSS-specific injectable files: 2
-	0s35u78, 1vnuvls
-Declarative-related distinct filters: 76 distinct combined selectors
+	03nr2k8, 0acn26c
+Declarative-related distinct filters: 78 distinct combined selectors
 Procedural-related distinct filters: 110 distinct combined selectors
 Rejected scriptlet filters: 0
 
-Scriptlet-related distinct filters: 56
-Scriptlet-related injectable files: 6
-	kor-1.abort-current-script.js, kor-1.set-constant.js, kor-1.no-settimeout-if.js, kor-1.json-prune.js, kor-1.abort-on-property-read.js, kor-1.abort-on-property-write.js
+Scriptlet-related distinct filters: 54
+Scriptlet-related injectable files: 5
+	kor-1.abort-current-script.js, kor-1.set-constant.js, kor-1.no-settimeout-if.js, kor-1.json-prune.js, kor-1.abort-on-property-read.js
 ============================
 Listset for 'ltu-0':
 	Fetching remote https://raw.githubusercontent.com/EasyList-Lithuania/easylist_lithuania/master/easylistlithuania.txt
@@ -1544,8 +1532,8 @@ Listset for 'nld-0':
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/gh-pages/EasyDutch/Hide_Whitelist.txt
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/gh-pages/EasyDutch/Anti-Adblock.txt
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/gh-pages/EasyDutch/No_uBlock_Filters.txt
-Input filter count: 750
-	Accepted filter count: 747
+Input filter count: 751
+	Accepted filter count: 748
 	Rejected filter count: 0
 Output rule count: 645
 	Plain good: 636
@@ -1560,12 +1548,12 @@ Output rule count: 645
 Rejected cosmetic filters: 1
 	Invalid filter: vastgoedjournaal.nl##aside:has([class]:has-text(/advert/i)):has([href]:has([src*="media.prdn.nl"])
 CSS-generic: 15 plain CSS selectors
-CSS-specific domain-based: 952 distinct filters
-	Combined into 647 distinct entries
+CSS-specific domain-based: 954 distinct filters
+	Combined into 648 distinct entries
 CSS-specific entity-based: 1 distinct filters
 	Combined into 1 distinct entries
 CSS-specific injectable files: 4
-	1emsg2k, 1i38r1s, 02ltuek, nld-0
+	1mj4ts4, 1fk22fg, 17cj5i0, nld-0
 Declarative-related distinct filters: 5 distinct combined selectors
 Procedural-related distinct filters: 172 distinct combined selectors
 Rejected scriptlet filters: 0
@@ -1684,9 +1672,9 @@ CSS-specific domain-based: 4155 distinct filters
 CSS-specific entity-based: 0 distinct filters
 	Combined into 0 distinct entries
 CSS-specific injectable files: 11
-	0t3mipg, 0ts0u94, 0r012t0, 0tqvjhk, 1s6btns, 02k2l4g, 0926u50, 0pbeomg, 143tua4, 07hngng, 0aov74s
+	17gfon8, 0ts0u94, 0r012t0, 0tqvjhk, 1s6btns, 02k2l4g, 0926u50, 0pbeomg, 143tua4, 07hngng, 0aov74s
 Declarative-related distinct filters: 98 distinct combined selectors
-Procedural-related distinct filters: 74 distinct combined selectors
+Procedural-related distinct filters: 73 distinct combined selectors
 Rejected scriptlet filters: 0
 
 Scriptlet-related distinct filters: 35
@@ -1735,11 +1723,11 @@ Listset for 'rus-0':
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/css-fixes-experimental.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/js-fixes-experimental.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/AWRL-non-sync.txt
-Input filter count: 17348
-	Accepted filter count: 17330
+Input filter count: 17287
+	Accepted filter count: 17269
 	Rejected filter count: 15
-Output rule count: 5993
-	Plain good: 5904
+Output rule count: 5991
+	Plain good: 5902
 	Maybe good (regexes): 20
 	redirect=: 13
 	csp= (discarded): 38
@@ -1754,18 +1742,18 @@ Output rule count: 5993
 		Invalid network filter in rus-0: *$xmlhttprequest,redirect-rule=noopjs,domain=all-episodes.club|otzovik.com
 		Invalid network filter in rus-0: ||clustrmaps.com/counter/$image,redirect-rule=32x32.png
 		Invalid network filter in rus-0: ||ru/count/$image,important,redirect-rule=1x1.gif,domain=mail.ru|sportmail.ru
-CSS-generic: 307 plain CSS selectors
-CSS-specific domain-based: 9555 distinct filters
-	Combined into 5287 distinct entries
+CSS-generic: 306 plain CSS selectors
+CSS-specific domain-based: 9566 distinct filters
+	Combined into 5293 distinct entries
 CSS-specific entity-based: 0 distinct filters
 	Combined into 0 distinct entries
 CSS-specific injectable files: 21
-	0b7s408, 12ao3dc, 0t43tjs, 1s7vhk0, 18cpjhg, 0giksmo, 1e17doc, 15lkfug, 0kn76nk, 0o6r14k, 1jhoj54, 1p5qrvk, 1o31718, 0utlmc4, 17kni5k, 0cq7nn8, 079qpjg, 1ukjqo4, 1opron4, 08ekgqo, 068p13s
-Declarative-related distinct filters: 499 distinct combined selectors
-Procedural-related distinct filters: 221 distinct combined selectors
+	1t02q5k, 0qcivlc, 1hevfcc, 03maafk, 0essth8, 1jgkn7c, 13h07ec, 0msb6ds, 0lml00s, 0jets14, 1dtfmg8, 03q1618, 001h034, 0kk5fpg, 15bu48s, 1ruv64s, 1klnmag, 198ebo8, 1lcnpa4, 19lnrd8, 1gmsmso
+Declarative-related distinct filters: 500 distinct combined selectors
+Procedural-related distinct filters: 218 distinct combined selectors
 Rejected scriptlet filters: 0
 
-Scriptlet-related distinct filters: 223
+Scriptlet-related distinct filters: 225
 Scriptlet-related injectable files: 7
 	rus-0.set-constant.js, rus-0.abort-on-property-read.js, rus-0.abort-current-script.js, rus-0.no-settimeout-if.js, rus-0.abort-on-property-write.js, rus-0.no-setinterval-if.js, rus-0.json-prune.js
 Rejected scriptlet filters: 0
@@ -1775,11 +1763,11 @@ Scriptlet-related entity-based injectable files: 4
 ============================
 Listset for 'spa-0':
 	Fetching remote https://easylist-downloads.adblockplus.org/easylistspanish.txt
-Input filter count: 1256
-	Accepted filter count: 1256
+Input filter count: 1261
+	Accepted filter count: 1261
 	Rejected filter count: 0
-Output rule count: 716
-	Plain good: 707
+Output rule count: 721
+	Plain good: 712
 	Maybe good (regexes): 8
 	redirect=: 0
 	csp= (discarded): 0
@@ -1787,21 +1775,21 @@ Output rule count: 716
 	Unsupported: 1
 		Invalid network filter in spa-0: $webrtc,domain=allpeliculas.com|animeid.tv|booksmedicos.org|dompl3.info|gnula.biz|jkanime.net|pelispedia.tv
 CSS-generic: 222 plain CSS selectors
-CSS-specific domain-based: 1274 distinct filters
-	Combined into 755 distinct entries
+CSS-specific domain-based: 1282 distinct filters
+	Combined into 763 distinct entries
 CSS-specific entity-based: 0 distinct filters
 	Combined into 0 distinct entries
 CSS-specific injectable files: 3
-	0btmnak, 1gl0v5c, 0p9fokk
+	1pio3tk, 00cg5ag, 0753170
 Procedural-related distinct filters: 18 distinct combined selectors
 ============================
 Listset for 'spa-1':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/9.txt
-Input filter count: 1425
-	Accepted filter count: 1420
+Input filter count: 1434
+	Accepted filter count: 1429
 	Rejected filter count: 0
-Output rule count: 950
-	Plain good: 916
+Output rule count: 952
+	Plain good: 918
 	Maybe good (regexes): 6
 	redirect=: 24
 	csp= (discarded): 0
@@ -1814,14 +1802,14 @@ Output rule count: 950
 Rejected cosmetic filters: 1
 	Entity-based filter not supported: .featured-slides > li.slide:not([id]):has(a[href^="https://startgaming.net/"])
 CSS-generic: 81 plain CSS selectors
-CSS-specific domain-based: 2023 distinct filters
-	Combined into 1069 distinct entries
+CSS-specific domain-based: 2048 distinct filters
+	Combined into 1085 distinct entries
 CSS-specific entity-based: 7 distinct filters
 	Combined into 4 distinct entries
 CSS-specific injectable files: 6
-	12nl4jo, 0k2c4ak, 0d8sj18, 1h1np5g, 0jirpe8, spa-1
-Declarative-related distinct filters: 70 distinct combined selectors
-Procedural-related distinct filters: 112 distinct combined selectors
+	14m0n3s, 1m3k3sk, 0ka70cc, 1m4fs7s, 0oevs90, spa-1
+Declarative-related distinct filters: 71 distinct combined selectors
+Procedural-related distinct filters: 116 distinct combined selectors
 Rejected scriptlet filters: 0
 
 Scriptlet-related distinct filters: 99
@@ -1859,11 +1847,11 @@ Listset for 'swe-1':
 	Fetching remote https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Swedish/swe-ubo-filters.txt
 	Fetching remote https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Swedish/chromium.txt
 	Fetching remote https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Swedish/not_mobile.txt
-Input filter count: 1518
-	Accepted filter count: 1518
+Input filter count: 1520
+	Accepted filter count: 1520
 	Rejected filter count: 0
-Output rule count: 1150
-	Plain good: 1131
+Output rule count: 1152
+	Plain good: 1133
 	Maybe good (regexes): 2
 	redirect=: 9
 	csp= (discarded): 2
@@ -1873,17 +1861,17 @@ Output rule count: 1150
 		Unsupported regex-based removeParam: /^browser/
 		Unsupported regex-based removeParam: /^utm_/
 CSS-generic: 142 plain CSS selectors
-CSS-specific domain-based: 647 distinct filters
-	Combined into 591 distinct entries
+CSS-specific domain-based: 651 distinct filters
+	Combined into 595 distinct entries
 CSS-specific entity-based: 0 distinct filters
 	Combined into 0 distinct entries
 CSS-specific injectable files: 3
-	04norm4, 04qfhnc, 1jckslg
-Declarative-related distinct filters: 58 distinct combined selectors
-Procedural-related distinct filters: 201 distinct combined selectors
+	1llo7ao, 1ridu60, 0qk2pco
+Declarative-related distinct filters: 59 distinct combined selectors
+Procedural-related distinct filters: 202 distinct combined selectors
 Rejected scriptlet filters: 0
 
-Scriptlet-related distinct filters: 66
+Scriptlet-related distinct filters: 65
 Scriptlet-related injectable files: 8
 	swe-1.no-settimeout-if.js, swe-1.json-prune.js, swe-1.abort-current-script.js, swe-1.no-addeventlistener-if.js, swe-1.set-constant.js, swe-1.abort-on-property-write.js, swe-1.no-setinterval-if.js, swe-1.abort-on-property-read.js
 ============================
@@ -1916,11 +1904,11 @@ Scriptlet-related injectable files: 3
 ============================
 Listset for 'tur-0':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/13.txt
-Input filter count: 1605
-	Accepted filter count: 1605
+Input filter count: 1619
+	Accepted filter count: 1618
 	Rejected filter count: 0
-Output rule count: 1193
-	Plain good: 1157
+Output rule count: 1203
+	Plain good: 1167
 	Maybe good (regexes): 13
 	redirect=: 15
 	csp= (discarded): 0
@@ -1934,7 +1922,7 @@ Output rule count: 1193
 		Could not salvage rule with only entity-based domain= option: yabancidizi.*
 		regexFilter is not RE2-compatible: ^(?!.*(bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fastlylb.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|vk.com|yandex.|yastatic.net|ytimg.com|zencdn.net|player|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com)).*$
 		Invalid network filter in tur-0: ||diziyoucdn.xyz/*.mp4$media,redirect-rule=noop-1s.mp4
-Rejected cosmetic filters: 19
+Rejected cosmetic filters: 18
 	Entity-based filter not supported: .video-content > div[id^="welcomeDiv"]:remove()
 	Entity-based filter not supported: .content-container .fw_playerAlti:has(> a[target="_blank"])
 	Entity-based filter not supported: .side-box > .fw_playerYaniKat2Ustu:has(> iframe[src*="filmizletv."][src*="/sidrek.htm"])
@@ -1952,17 +1940,16 @@ Rejected cosmetic filters: 19
 	Entity-based filter not supported: div[style="float: left; width: calc(100% - 300px);"]:style(width: 100% !important;)
 	Entity-based filter not supported: .previd-link:style(visibility: hidden!important;)
 	Entity-based filter not supported: #episode:style(height: unset !important; width: unset !important; position: unset !important; overflow: unset !important;)
-	Entity-based filter not supported: #player:style(display: block !important;)
 	Entity-based filter not supported: html > body:style(background-image: none !important;)
 CSS-generic: 107 plain CSS selectors
-CSS-specific domain-based: 2874 distinct filters
-	Combined into 1491 distinct entries
+CSS-specific domain-based: 2893 distinct filters
+	Combined into 1501 distinct entries
 CSS-specific entity-based: 91 distinct filters
 	Combined into 42 distinct entries
 CSS-specific injectable files: 7
-	0f3nrm0, 0uk8av0, 03eu3b8, 0pp0cdc, 1mvedjs, 10motoc, tur-0
-Declarative-related distinct filters: 108 distinct combined selectors
-Procedural-related distinct filters: 230 distinct combined selectors
+	0iks60g, 0cmgig4, 081m2fo, 17qdcbs, 11gojuc, 102sqqg, tur-0
+Declarative-related distinct filters: 109 distinct combined selectors
+Procedural-related distinct filters: 233 distinct combined selectors
 Rejected scriptlet filters: 0
 
 Scriptlet-related distinct filters: 77
@@ -1975,13 +1962,13 @@ Scriptlet-related entity-based injectable files: 2
 ============================
 Listset for 'vie-1':
 	Fetching remote https://raw.githubusercontent.com/abpvn/abpvn/master/filter/abpvn_ublock.txt
-Input filter count: 750
-	Accepted filter count: 750
+Input filter count: 758
+	Accepted filter count: 758
 	Rejected filter count: 0
-Output rule count: 568
-	Plain good: 563
+Output rule count: 575
+	Plain good: 568
 	Maybe good (regexes): 3
-	redirect=: 0
+	redirect=: 2
 	csp= (discarded): 2
 	removeparams= (accepted/discarded): 0/0
 	Unsupported: 0
@@ -1989,12 +1976,12 @@ Output rule count: 568
 Rejected cosmetic filters: 1
 	Invalid filter: m.blogtruyen.vn##.mb10.item:-abp-has(a[href^="https://www.vb135.com/"])
 CSS-generic: 24 plain CSS selectors
-CSS-specific domain-based: 769 distinct filters
-	Combined into 418 distinct entries
+CSS-specific domain-based: 781 distinct filters
+	Combined into 425 distinct entries
 CSS-specific entity-based: 0 distinct filters
 	Combined into 0 distinct entries
 CSS-specific injectable files: 2
-	0hrshq0, 0kcmcds
+	0oarm9o, 0meaa3c
 Declarative-related distinct filters: 2 distinct combined selectors
 Procedural-related distinct filters: 1 distinct combined selectors
 Rejected scriptlet filters: 0
@@ -2033,15 +2020,15 @@ Output rule count: 1
 ============================
 Listset for 'adguard-spyware-url':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/17.txt
-Input filter count: 792
-	Accepted filter count: 791
+Input filter count: 793
+	Accepted filter count: 792
 	Rejected filter count: 0
-Output rule count: 286
+Output rule count: 287
 	Plain good: 0
 	Maybe good (regexes): 0
 	redirect=: 0
 	csp= (discarded): 0
-	removeparams= (accepted/discarded): 237/49
+	removeparams= (accepted/discarded): 238/49
 	Unsupported: 49
 		Unsupported regex-based removeParam: /^__s=[A-Za-z0-9]{6\,}/
 		Unsupported regex-based removeParam: /elq/
@@ -2095,8 +2082,8 @@ Output rule count: 286
 ============================
 Listset for 'cname-trackers':
 	Fetching remote https://raw.githubusercontent.com/AdguardTeam/cname-trackers/master/combined_disguised_trackers.txt
-Input filter count: 48854
-	Accepted filter count: 37999
+Input filter count: 47189
+	Accepted filter count: 38666
 	Rejected filter count: 0
 Output rule count: 6
 	Plain good: 6
@@ -2109,8 +2096,8 @@ Output rule count: 6
 ============================
 Listset for 'stevenblack-hosts':
 	Fetching remote https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
-Input filter count: 155891
-	Accepted filter count: 155891
+Input filter count: 157803
+	Accepted filter count: 157803
 	Rejected filter count: 0
 Output rule count: 2
 	Plain good: 2
