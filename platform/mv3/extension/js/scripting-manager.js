@@ -247,6 +247,7 @@ function registerProcedural(context, proceduralDetails) {
         context.toAdd.push({
             id: 'css-procedural',
             js,
+            allFrames: true,
             matches,
             excludeMatches,
             runAt: 'document_end',
@@ -323,6 +324,7 @@ function registerDeclarative(context, declarativeDetails) {
         context.toAdd.push({
             id: 'css-declarative',
             js,
+            allFrames: true,
             matches,
             excludeMatches,
             runAt: 'document_start',
@@ -396,6 +398,7 @@ function registerScriptlet(context, scriptletDetails) {
                 context.toAdd.push({
                     id,
                     js: [ `/rulesets/scripting/scriptlet/${id}.js` ],
+                    allFrames: true,
                     matches,
                     excludeMatches,
                     runAt: 'document_start',
@@ -460,6 +463,7 @@ function registerScriptletEntity(context) {
         context.toAdd.push({
             id: 'scriptlet.entity',
             js,
+            allFrames: true,
             matches,
             excludeMatches,
             runAt: 'document_start',
@@ -664,6 +668,7 @@ function registerSpecificEntity(context) {
         context.toAdd.push({
             id: 'css-specific.entity',
             js,
+            allFrames: true,
             matches,
             excludeMatches,
             runAt: 'document_start',
