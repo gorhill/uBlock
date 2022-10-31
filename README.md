@@ -59,7 +59,7 @@ For any support, questions or help, visit [/r/uBlockOrigin][Reddit].
 
 ## Philosophy
 
-uBO is **NOT** an "ad blocker"; it is a wide-spectrum content blocker. uBO blocks ads through the [Adblock Plus filter syntax][How To Filters] and [extends][Extended Syntax] the syntax to work with custom rules and filters. Furthermore, the advanced mode allows uBO to work in [default-deny mode][Default Deny], which will cause [all 3rd-party network requests][3rd Party Requests] to be blocked by default unless allowed by the user.
+uBO is **NOT** an "ad blocker"; it is a wide-spectrum content blocker. uBO blocks ads through the [EasyList filter syntax][How To Filters] and [extends][Extended Syntax] the syntax to work with custom rules and filters. Furthermore, the advanced mode allows uBO to work in [default-deny mode][Default Deny], which will cause [all 3rd-party network requests][3rd Party Requests] to be blocked by default unless allowed by the user.
 
 It is important to note that using a blocker is **NOT** [theft]. Do not fall for this creepy idea. The _ultimate_ logical consequence of `blocking = theft` is the criminalization of the inalienable right to privacy.
 
