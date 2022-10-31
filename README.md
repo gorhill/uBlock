@@ -59,7 +59,7 @@ For any support, questions or help, visit [/r/uBlockOrigin][Reddit].
 
 ## Philosophy
 
-uBO is **NOT** an "ad blocker"; it is a wide-spectrum content blocker. uBO blocks ads through the [EasyList filter syntax][How To Filters] and [extends][Extended Syntax] the syntax to work with custom rules and filters. Furthermore, the advanced mode allows uBO to work in [default-deny mode][Default Deny], which will cause [all 3rd-party network requests][3rd Party Requests] to be blocked by default unless allowed by the user.
+uBO is **NOT** an "ad blocker"; it is a wide-spectrum content blocker. uBO blocks ads through the EasyList filter syntax and [extends][Extended Syntax] the syntax to work with custom rules and filters. Furthermore, the advanced mode allows uBO to work in [default-deny mode][Default Deny], which will cause [all 3rd-party network requests][3rd Party Requests] to be blocked by default unless allowed by the user.
 
 It is important to note that using a blocker is **NOT** [theft]. Do not fall for this creepy idea. The _ultimate_ logical consequence of `blocking = theft` is the criminalization of the inalienable right to privacy.
 
@@ -141,7 +141,6 @@ You can help contribute by translating uBO on [Crowdin].
 [Malicious Blocklist]: https://gitlab.com/malware-filter/urlhaus-filter#malicious-url-blocklist
 [3rd Party Requests]: https://requestpolicycontinued.github.io/#what-are-cross-site-requests
 [Similarly-Purposed]: https://twitter.com/gorhill/status/1033706103782170625
-[How To Filters]: https://help.eyeo.com/en/adblockplus/how-to-write-filters
 [Debian Package]: https://packages.debian.org/stable/source/ublock-origin
 [Performance]: https://www.debugbear.com/blog/chrome-extension-performance-2021#how-do-ad-blockers-and-privacy-tools-affect-browser-performance
 [EasyPrivacy]: https://easylist.to/#easyprivacy
