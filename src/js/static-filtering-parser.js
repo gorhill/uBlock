@@ -1589,7 +1589,7 @@ Parser.prototype.SelectorCompiler = class {
             if ( typeof value !== 'string' ) {
                 value = data.value.name;
             }
-            value = value.replace(/"/g, '\\$&');
+            value = value.replace(/["\\]/g, '\\$&');
             let flags = '';
             if ( typeof data.flags === 'string' ) {
                 if ( /^(is?|si?)$/.test(data.flags) === false ) { return; }
