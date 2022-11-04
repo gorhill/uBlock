@@ -1636,7 +1636,8 @@ Parser.prototype.SelectorCompiler = class {
         }
         case 'PseudoClassSelector':
         case 'PseudoElementSelector':
-            out.push(`:${data.name}`);
+            out.push(data.type === 'PseudoClassSelector' ? ':' : '::');
+            out.push(data.name);
             if ( Array.isArray(part.args) ) {
                 const arg = this.astSerialize(part.args);
                 if ( typeof arg !== 'string' ) { return; }
@@ -1655,7 +1656,6 @@ Parser.prototype.SelectorCompiler = class {
         }
         return out.join('');
     }
-
 
     astSerialize(parts, plainCSS = true) {
         const out = [];
