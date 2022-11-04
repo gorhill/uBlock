@@ -1634,10 +1634,11 @@ Parser.prototype.SelectorCompiler = class {
             }
             break;
         }
-        case 'PseudoClassSelector':
         case 'PseudoElementSelector':
-            out.push(data.type === 'PseudoClassSelector' ? ':' : '::');
-            out.push(data.name);
+            out.push(':');
+            /* fall through */
+        case 'PseudoClassSelector':
+            out.push(`:${data.name}`);
             if ( Array.isArray(part.args) ) {
                 const arg = this.astSerialize(part.args);
                 if ( typeof arg !== 'string' ) { return; }
