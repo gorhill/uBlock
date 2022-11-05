@@ -37,6 +37,8 @@ const REMOVEPARAMS_REALM_START = REGEXES_REALM_END;
 const REMOVEPARAMS_REALM_END = REMOVEPARAMS_REALM_START + RULE_REALM_SIZE;
 const REDIRECT_REALM_START = REMOVEPARAMS_REALM_END;
 const REDIRECT_REALM_END = REDIRECT_REALM_START + RULE_REALM_SIZE;
+const CSP_REALM_START = REDIRECT_REALM_END;
+const CSP_REALM_END = CSP_REALM_START + RULE_REALM_SIZE;
 const TRUSTED_DIRECTIVE_BASE_RULE_ID = 8000000;
 const BLOCKING_MODES_RULE_ID = TRUSTED_DIRECTIVE_BASE_RULE_ID + 1;
 const CURRENT_CONFIG_BASE_RULE_ID = 9000000;
@@ -327,11 +329,86 @@ async function updateRedirectRules() {
 
 /******************************************************************************/
 
+async function updateCspRules() {
+    const [
+        hasOmnipotence,
+        rulesetDetails,
+        dynamicRuleMap,
+    ] = await Promise.all([
+        browser.permissions.contains({ origins: [ '<all_urls>' ] }),
+        getEnabledRulesetsDetails(),
+        getDynamicRules(),
+    ]);
+
+    // Fetch csp rules for all enabled rulesets
+    const toFetch = [];
+    for ( const details of rulesetDetails ) {
+        if ( details.rules.csp === 0 ) { continue; }
+        toFetch.push(fetchJSON(`/rulesets/csp/${details.id}`));
+    }
+    const cspRulesets = await Promise.all(toFetch);
+
+    // Redirect rules can only be enforced with omnipotence
+    const newRules = [];
+    if ( hasOmnipotence ) {
+        let cspRuleId = CSP_REALM_START;
+        for ( const rules of cspRulesets ) {
+            if ( Array.isArray(rules) === false ) { continue; }
+            for ( const rule of rules ) {
+                rule.id = cspRuleId++;
+                newRules.push(rule);
+            }
+        }
+    }
+
+    // Add csp rules to dynamic ruleset without affecting rules
+    // outside csp rules realm.
+    const newRuleMap = new Map(newRules.map(rule => [ rule.id, rule ]));
+    const addRules = [];
+    const removeRuleIds = [];
+
+    for ( const oldRule of dynamicRuleMap.values() ) {
+        if ( oldRule.id < CSP_REALM_START ) { continue; }
+        if ( oldRule.id >= CSP_REALM_END ) { continue; }
+        const newRule = newRuleMap.get(oldRule.id);
+        if ( newRule === undefined ) {
+            removeRuleIds.push(oldRule.id);
+            dynamicRuleMap.delete(oldRule.id);
+        } else if ( JSON.stringify(oldRule) !== JSON.stringify(newRule) ) {
+            removeRuleIds.push(oldRule.id);
+            addRules.push(newRule);
+            dynamicRuleMap.set(oldRule.id, newRule);
+        }
+    }
+
+    for ( const newRule of newRuleMap.values() ) {
+        if ( dynamicRuleMap.has(newRule.id) ) { continue; }
+        addRules.push(newRule);
+        dynamicRuleMap.set(newRule.id, newRule);
+    }
+
+    if ( addRules.length === 0 && removeRuleIds.length === 0 ) { return; }
+
+    if ( removeRuleIds.length !== 0 ) {
+        console.info(`Remove ${removeRuleIds.length} DNR redirect rules`);
+    }
+    if ( addRules.length !== 0 ) {
+        console.info(`Add ${addRules.length} DNR redirect rules`);
+    }
+
+    return dnr.updateDynamicRules({ addRules, removeRuleIds });
+}
+
+/******************************************************************************/
+
+// TODO: group all omnipotence-related rules into one realm.
+
 async function updateDynamicRules() {
     return Promise.all([
         updateRegexRules(),
         updateRemoveparamRules(),
         updateRedirectRules(),
+        updateCspRules(),
     ]);
 }
 

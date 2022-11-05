@@ -282,12 +282,6 @@ async function processNetworkFilters(assetDetails, network) {
     });
     log(`\tredirect=: ${redirects.length}`);
 
-    const headers = rules.filter(rule =>
-        isUnsupported(rule) === false &&
-        isCsp(rule)
-    );
-    log(`\tcsp= (discarded): ${headers.length}`);
-
     const removeparamsGood = rules.filter(rule =>
         isUnsupported(rule) === false && isRemoveparam(rule)
     );
@@ -295,6 +289,12 @@ async function processNetworkFilters(assetDetails, network) {
         isUnsupported(rule) && isRemoveparam(rule)
     );
     log(`\tremoveparams= (accepted/discarded): ${removeparamsGood.length}/${removeparamsBad.length}`);
+
+    const csps = rules.filter(rule =>
+        isUnsupported(rule) === false &&
+        isCsp(rule)
+    );
+    log(`\tcsp=: ${csps.length}`);
 
     const bad = rules.filter(rule =>
         isUnsupported(rule)
@@ -328,14 +328,22 @@ async function processNetworkFilters(assetDetails, network) {
         );
     }
 
+    if ( csps.length !== 0 ) {
+        writeFile(
+            `${rulesetDir}/csp/${assetDetails.id}.json`,
+            `${JSON.stringify(csps, replacer, 1)}\n`
+        );
+    }
+
     return {
         total: rules.length,
         plain: plainGood.length,
-        discarded: redirects.length + headers.length + removeparamsBad.length,
+        discarded: removeparamsBad.length,
         rejected: bad.length,
         regex: regexes.length,
         removeparam: removeparamsGood.length,
         redirect: redirects.length,
+        csp: csps.length,
     };
 }
 
@@ -1216,6 +1224,7 @@ async function rulesetFromURLs(assetDetails) {
             regex: netStats.regex,
             removeparam: netStats.removeparam,
             redirect: netStats.redirect,
+            csp: netStats.csp,
             discarded: netStats.discarded,
             rejected: netStats.rejected,
         },

@@ -293,7 +293,7 @@ async function init() {
         const { rules, filters, css } = details;
         let ruleCount = rules.plain + rules.regex;
         if ( popupPanelData.hasOmnipotence ) {
-            ruleCount += rules.removeparam + rules.redirect;
+            ruleCount += rules.removeparam + rules.redirect + rules.csp;
         }
         let specificCount = 0;
         if ( css.specific instanceof Object ) {

@@ -43,13 +43,13 @@ function renderNumber(value) {
 /******************************************************************************/
 
 function rulesetStats(rulesetId) {
-    const canRemoveParams = cachedRulesetData.defaultFilteringMode > 1;
+    const hasOmnipotence = cachedRulesetData.defaultFilteringMode > 1;
     const rulesetDetails = rulesetMap.get(rulesetId);
     if ( rulesetDetails === undefined ) { return; }
     const { rules, filters } = rulesetDetails;
     let ruleCount = rules.plain + rules.regex;
-    if ( canRemoveParams ) {
-        ruleCount += rules.removeparam + rules.redirect;
+    if ( hasOmnipotence ) {
+        ruleCount += rules.removeparam + rules.redirect + rules.csp;
     }
     const filterCount = filters.accepted;
     return { ruleCount, filterCount };
