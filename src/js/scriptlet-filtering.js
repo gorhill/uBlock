@@ -96,7 +96,6 @@ const contentscriptCode = (( ) => {
             ) {
                 return;
             }
-            self.uBO_scriptletsInjected = true;
             const injectScriptlets = function(d) {
                 let script;
                 try {
@@ -105,12 +104,11 @@ const contentscriptCode = (( ) => {
                         decodeURIComponent(scriptlets))
                     );
                     (d.head || d.documentElement).appendChild(script);
+                    self.uBO_scriptletsInjected = true;
                 } catch (ex) {
                 }
                 if ( script ) {
-                    if ( script.parentNode ) {
-                        script.parentNode.removeChild(script);
-                    }
+                    script.remove();
                     script.textContent = '';
                 }
             };

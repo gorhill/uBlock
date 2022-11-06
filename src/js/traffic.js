@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* globals browser */
+
 'use strict';
 
 /******************************************************************************/
@@ -1131,6 +1133,11 @@ const strictBlockBypasser = {
 
 /******************************************************************************/
 
+// https://github.com/uBlockOrigin/uBlock-issues/issues/2350
+//   Added scriptlet injection attempt at onResponseStarted time as per
+//   https://github.com/AdguardTeam/AdguardBrowserExtension/issues/1029 and
+//   https://github.com/AdguardTeam/AdguardBrowserExtension/blob/9ab85be5/Extension/src/background/webrequest.js#L620
+
 const webRequest = {
     onBeforeRequest,
 
@@ -1147,6 +1154,19 @@ const webRequest = {
                 onHeadersReceived,
                 { urls: [ 'http://*/*', 'https://*/*' ] },
                 [ 'blocking', 'responseHeaders' ]
+            );
+            vAPI.net.addListener(
+                'onResponseStarted',
+                details => {
+                    const pageStore = µb.pageStoreFromTabId(details.tabId);
+                    if ( pageStore === null ) { return; }
+                    if ( pageStore.getNetFilteringSwitch() === false ) { return; }
+                    scriptletFilteringEngine.injectNow(details);
+                },
+                {
+                    types: [ 'main_frame', 'sub_frame' ],
+                    urls: [ 'http://*/*', 'https://*/*' ]
+                }
             );
             vAPI.net.unsuspend({ all: true });
         };

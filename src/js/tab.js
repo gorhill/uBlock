@@ -933,10 +933,7 @@ vAPI.Tabs = class extends vAPI.Tabs {
         const pageStore = µb.pageStoreFromTabId(tabId);
         if ( pageStore === null ) { return; }
         pageStore.setFrameURL(details);
-        if (
-            vAPI.webextFlavor.soup.has('firefox') === false &&
-            pageStore.getNetFilteringSwitch()
-        ) {
+        if ( pageStore.getNetFilteringSwitch() ) {
             scriptletFilteringEngine.injectNow(details);
         }
     }
