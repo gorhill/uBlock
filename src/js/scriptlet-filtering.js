@@ -89,36 +89,34 @@ const contentscriptCode = (( ) => {
     const parts = [
         '(',
         function(hostname, scriptlets) {
+            const doc = document;
             if (
-                document.location === null ||
-                hostname !== document.location.hostname ||
+                doc.location === null ||
+                hostname !== doc.location.hostname ||
                 typeof self.uBO_scriptletsInjected === 'boolean'
             ) {
                 return;
             }
-            const injectScriptlets = function(d) {
-                let script;
-                try {
-                    script = d.createElement('script');
-                    script.appendChild(d.createTextNode(
-                        decodeURIComponent(scriptlets))
-                    );
-                    (d.head || d.documentElement).appendChild(script);
-                    self.uBO_scriptletsInjected = true;
-                } catch (ex) {
-                }
-                if ( script ) {
-                    script.remove();
-                    script.textContent = '';
-                }
-            };
-            injectScriptlets(document);
+            let script;
+            try {
+                script = doc.createElement('script');
+                script.appendChild(doc.createTextNode(
+                    decodeURIComponent(scriptlets))
+                );
+                (doc.head || doc.documentElement).appendChild(script);
+                self.uBO_scriptletsInjected = true;
+            } catch (ex) {
+            }
+            if ( script ) {
+                script.remove();
+                script.textContent = '';
+            }
+            if ( typeof self.uBO_scriptletsInjected === 'boolean' ) { return 0; }
         }.toString(),
         ')(',
             '"', 'hostname-slot', '", ',
             '"', 'scriptlets-slot', '"',
         ');',
-        '\n0;',
     ];
     return {
         parts: parts,
