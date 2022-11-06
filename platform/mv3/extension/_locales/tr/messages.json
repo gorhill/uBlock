@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "An experimental, permission-less lite content blocker -- block ads, trackers, miners and more by default.",
+    "message": "Deneysel, izin gerektirmeyen içerik engelleyicisi. Kurulumdan hemen sonra Reklamları, izleyicileri, kripto madencilerini, ve [...]",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {

@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Un blocco dei contenuti sperimentale, senza permessi, che blocca per impostazione predefinita annunci, tracker, minatori.",
+    "message": "Un blocco dei contenuti sperimentale, senza permessi, che blocca per impostazione predefinita annunci, tracker, minatori e [...]",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {

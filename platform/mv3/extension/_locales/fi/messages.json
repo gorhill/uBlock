@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Kokeellinen, kevyempi estotyökalu, joka ei vaadi erityisiä käyttöoikeuksia -- oletuksena estää mm. mainokset, seuranta.",
+    "message": "Kokeellinen estotyökalu, joka ei tarvitse erityisiä käyttöoikeuksia. Estää heti asennuksen jälkeen mm. mainokset, seurannat ja [...]",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {

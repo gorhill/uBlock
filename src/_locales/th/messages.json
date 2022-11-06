@@ -740,7 +740,7 @@
     "description": "Label to identify a filter list field"
   },
   "loggerEntryDetailsRule": {
-    "message": "Rule",
+    "message": "กฎ",
     "description": "Label to identify a rule field"
   },
   "loggerEntryDetailsContext": {
@@ -844,7 +844,7 @@
     "description": "A logger setting"
   },
   "loggerSettingHideColumnsPrompt": {
-    "message": "Hide columns:",
+    "message": "ซ่อนคอลัมน์",
     "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
   },
   "loggerSettingHideColumnTime": {
@@ -864,7 +864,7 @@
     "description": "A label for the partyness column"
   },
   "loggerExportFormatList": {
-    "message": "List",
+    "message": "รายการ",
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportFormatTable": {
@@ -880,11 +880,11 @@
     "description": "Label for radio-button to pick export text format"
   },
   "supportOpenButton": {
-    "message": "Open",
+    "message": "เปิด",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Create new report",
+    "message": "สร้างรายงานใหม่",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
@@ -892,7 +892,7 @@
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
-    "message": "Documentation",
+    "message": "เอกสารอ้างอิง",
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
@@ -924,7 +924,7 @@
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
-    "message": "Bug report",
+    "message": "รายงานข้อผิดพลาด",
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {

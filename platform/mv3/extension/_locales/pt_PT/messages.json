@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Um bloqueador de conteúdo experimental, sem permissão. Bloqueia anúncios, seguidores, mineiros(criptomoedas) e mais.",
+    "message": "Um bloqueador de conteúdo experimental, sem permissão. Bloqueia anúncios, seguidores, mineiros(criptomoedas) e mais [...]",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {

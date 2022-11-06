@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Eksperymentalne blokowanie treści bez pozwolenia. Natychmiast po instalacji blokuje reklamy, trackery, koparki i inne.",
+    "message": "Eksperymentalny, niewymagający uprawnień bloker treści. Natychmiast po instalacji blokuje reklamy, moduły śledzące, koparki i [...]",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
