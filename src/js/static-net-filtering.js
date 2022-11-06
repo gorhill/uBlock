@@ -4175,6 +4175,9 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
     }
 
     // Merge rules where possible by merging arrays of a specific property.
+    //
+    // https://github.com/uBlockOrigin/uBOL-issues/issues/10#issuecomment-1304822579
+    //   Do not merge rules which have errors.
     const mergeRules = (rulesetMap, mergeTarget) => {
         const mergeMap = new Map();
         const sorter = (_, v) => {
@@ -4216,6 +4219,7 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
             }
         };
         for ( const [ id, rule ] of rulesetMap ) {
+            if ( rule._error !== undefined ) { continue; }
             const hash = ruleHasher(rule, mergeTarget);
             if ( mergeMap.has(hash) === false ) {
                 mergeMap.set(hash, []);

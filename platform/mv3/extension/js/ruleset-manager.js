@@ -131,18 +131,22 @@ async function updateRegexRules() {
     // Collate results
     const results = await Promise.all(toCheck);
     const newRules = [];
+    const rejectedRegexRules = [];
     for ( let i = 0; i < allRules.length; i++ ) {
         const rule = allRules[i];
         const result = results[i];
         if ( result instanceof Object && result.isSupported ) {
             newRules.push(rule);
         } else {
-            //console.info(`${result.reason}: ${rule.condition.regexFilter}`);
+            rejectedRegexRules.push(rule);
         }
     }
-    console.info(
-        `Rejected regex filters: ${allRules.length-newRules.length} out of ${allRules.length}`
-    );
+    if ( rejectedRegexRules.length !== 0 ) {
+        console.info(
+            'Rejected regexes:',
+            rejectedRegexRules.map(rule => rule.condition.regexFilter)
+        );
+    }
 
     // Add validated regex rules to dynamic ruleset without affecting rules
     // outside regex rules realm.
