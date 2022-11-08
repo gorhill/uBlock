@@ -17,6 +17,20 @@ Git:
 - Commit: https://github.com/gorhill/uBlock/commit/ba637bb22e48f98383b9f1191a0c30e965475068
 - Before: https://github.com/gorhill/uBlock/tree/6c046ed95cd02d023453c66f766159f6410ae7f7
 
+#### 2022-05-08
+
+Removed:
+
+- ./src/css/popup.css
+- ./src/js/popup.js
+- ./src/popup.html
+
+Git:
+
+-  After: https://github.com/gorhill/uBlock/tree/cef36518edd4d6ca4b3278493cb93329b0833408
+- Commit: https://github.com/gorhill/uBlock/commit/cef36518edd4d6ca4b3278493cb93329b0833408
+- Before: https://github.com/gorhill/uBlock/tree/cef36518edd4d6ca4b3278493cb93329b0833408
+
 #### 2021-07-16
 
 Moved:
