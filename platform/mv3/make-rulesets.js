@@ -942,7 +942,10 @@ async function processDomainScriptletFilters(assetDetails, domainBased, original
             continue;
         }
         const normalized = parseScriptletFilter(rawFilter, originalScriptletMap);
-        if ( normalized === undefined ) { continue; }
+        if ( normalized === undefined ) {
+            log(`Discarded unsupported scriptlet filter: ${rawFilter}`, true);
+            continue;
+        }
         let argsDetails = scriptletDetails.get(normalized.token);
         if ( argsDetails === undefined ) {
             argsDetails = new Map();
@@ -1046,7 +1049,10 @@ async function processEntityScriptletFilters(assetDetails, entityBased, original
             continue;
         }
         const normalized = parseScriptletFilter(rawFilter, originalScriptletMap, '.entity');
-        if ( normalized === undefined ) { continue; }
+        if ( normalized === undefined ) {
+            log(`Discarded unsupported scriptlet filter: ${rawFilter}`, true);
+            continue;
+        }
         let argsDetails = scriptletMap.get(normalized.token);
         if ( argsDetails === undefined ) {
             argsDetails = new Map();

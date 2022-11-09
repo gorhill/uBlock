@@ -28,16 +28,13 @@
 
 /******************************************************************************/
 
-/// name no-addeventlistener-if
-/// alias noaelif
-/// alias addEventListener-defuser
-/// alias aeld
+/// name no-fetch-if
 
 /******************************************************************************/
 
 // Important!
 // Isolate from global scope
-(function uBOL_noAddEventListenerIf() {
+(function uBOL_noFetchIf() {
 
 /******************************************************************************/
 
@@ -49,39 +46,67 @@ const hostnamesMap = new Map(self.$hostnamesMap$);
 
 /******************************************************************************/
 
-const regexpFromArg = arg => {
-    if ( arg === '' ) { return /^/; }
-    if ( /^\/.+\/$/.test(arg) ) { return new RegExp(arg.slice(1,-1)); }
-    return new RegExp(arg.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-};
-
-/******************************************************************************/
-
 const scriptlet = (
-    needle1 = '',
-    needle2 = ''
+    conditions = ''
 ) => {
-    const reNeedle1 = regexpFromArg(needle1);
-    const reNeedle2 = regexpFromArg(needle2);
-    self.EventTarget.prototype.addEventListener = new Proxy(
-        self.EventTarget.prototype.addEventListener,
-        {
-            apply: function(target, thisArg, args) {
-                let type, handler;
-                try {
-                    type = String(args[0]);
-                    handler = String(args[1]);
-                } catch(ex) {
-                }
-                if (
-                    reNeedle1.test(type) === false ||
-                    reNeedle2.test(handler) === false
-                ) {
-                    return target.apply(thisArg, args);
-                }
-            }
+    const needles = [];
+    for ( const condition of conditions.split(/\s+/) ) {
+        if ( condition === '' ) { continue; }
+        const pos = condition.indexOf(':');
+        let key, value;
+        if ( pos !== -1 ) {
+            key = condition.slice(0, pos);
+            value = condition.slice(pos + 1);
+        } else {
+            key = 'url';
+            value = condition;
         }
-    );
+        if ( value === '' ) {
+            value = '^';
+        } else if ( value.startsWith('/') && value.endsWith('/') ) {
+            value = value.slice(1, -1);
+        } else {
+            value = value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+        needles.push({ key, re: new RegExp(value) });
+    }
+    self.fetch = new Proxy(self.fetch, {
+        apply: function(target, thisArg, args) {
+            let proceed = true;
+            try {
+                let details;
+                if ( args[0] instanceof self.Request ) {
+                    details = args[0];
+                } else {
+                    details = Object.assign({ url: args[0] }, args[1]);
+                }
+                const props = new Map();
+                for ( const prop in details ) {
+                    let v = details[prop];
+                    if ( typeof v !== 'string' ) {
+                        try { v = JSON.stringify(v); }
+                        catch(ex) { }
+                    }
+                    if ( typeof v !== 'string' ) { continue; }
+                    props.set(prop, v);
+                }
+                proceed = needles.length === 0;
+                for ( const { key, re } of needles ) {
+                    if (
+                        props.has(key) === false ||
+                        re.test(props.get(key)) === false
+                    ) {
+                        proceed = true;
+                        break;
+                    }
+                }
+            } catch(ex) {
+            }
+            return proceed
+                ? Reflect.apply(target, thisArg, args)
+                : Promise.resolve(new Response());
+        }
+    });
 };
 
 /******************************************************************************/

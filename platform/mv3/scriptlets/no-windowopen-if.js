@@ -31,6 +31,7 @@
 /// name no-windowopen-if
 /// alias no-windowOpen-if
 /// alias nowoif
+/// alias window.open-defuser
 
 /******************************************************************************/
 

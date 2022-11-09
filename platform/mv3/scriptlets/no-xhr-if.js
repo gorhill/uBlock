@@ -28,16 +28,13 @@
 
 /******************************************************************************/
 
-/// name no-addeventlistener-if
-/// alias noaelif
-/// alias addEventListener-defuser
-/// alias aeld
+/// name no-xhr-if
 
 /******************************************************************************/
 
 // Important!
 // Isolate from global scope
-(function uBOL_noAddEventListenerIf() {
+(function uBOL_noXhrIf() {
 
 /******************************************************************************/
 
@@ -49,39 +46,69 @@ const hostnamesMap = new Map(self.$hostnamesMap$);
 
 /******************************************************************************/
 
-const regexpFromArg = arg => {
-    if ( arg === '' ) { return /^/; }
-    if ( /^\/.+\/$/.test(arg) ) { return new RegExp(arg.slice(1,-1)); }
-    return new RegExp(arg.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-};
-
-/******************************************************************************/
-
 const scriptlet = (
-    needle1 = '',
-    needle2 = ''
+    conditions = ''
 ) => {
-    const reNeedle1 = regexpFromArg(needle1);
-    const reNeedle2 = regexpFromArg(needle2);
-    self.EventTarget.prototype.addEventListener = new Proxy(
-        self.EventTarget.prototype.addEventListener,
-        {
-            apply: function(target, thisArg, args) {
-                let type, handler;
-                try {
-                    type = String(args[0]);
-                    handler = String(args[1]);
-                } catch(ex) {
+    const xhrInstances = new WeakMap();
+    const needles = [];
+    for ( const condition of conditions.split(/\s+/) ) {
+        if ( condition === '' ) { continue; }
+        const pos = condition.indexOf(':');
+        let key, value;
+        if ( pos !== -1 ) {
+            key = condition.slice(0, pos);
+            value = condition.slice(pos + 1);
+        } else {
+            key = 'url';
+            value = condition;
+        }
+        if ( value === '' ) {
+            value = '^';
+        } else if ( value.startsWith('/') && value.endsWith('/') ) {
+            value = value.slice(1, -1);
+        } else {
+            value = value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+        needles.push({ key, re: new RegExp(value) });
+    }
+    self.XMLHttpRequest = class extends self.XMLHttpRequest {
+        open(...args) {
+            const argNames = [ 'method', 'url' ];
+            const haystack = new Map();
+            for ( let i = 0; i < args.length && i < argNames.length; i++  ) {
+                haystack.set(argNames[i], args[i]);
+            }
+            if ( haystack.size !== 0 ) {
+                let matches = true;
+                for ( const { key, re } of needles ) {
+                    matches = re.test(haystack.get(key) || '');
+                    if ( matches === false ) { break; }
                 }
-                if (
-                    reNeedle1.test(type) === false ||
-                    reNeedle2.test(handler) === false
-                ) {
-                    return target.apply(thisArg, args);
+                if ( matches ) {
+                    xhrInstances.set(this, haystack);
                 }
             }
+            return super.open(...args);
         }
-    );
+        send(...args) {
+            const haystack = xhrInstances.get(this);
+            if ( haystack === undefined ) {
+                return super.send(...args);
+            }
+            Object.defineProperties(this, {
+                readyState: { value: 4, writable: false },
+                response: { value: '', writable: false },
+                responseText: { value: '', writable: false },
+                responseURL: { value: haystack.get('url'), writable: false },
+                responseXML: { value: '', writable: false },
+                status: { value: 200, writable: false },
+                statusText: { value: 'OK', writable: false },
+            });
+            this.dispatchEvent(new Event('readystatechange'));
+            this.dispatchEvent(new Event('load'));
+            this.dispatchEvent(new Event('loadend'));
+        }
+    };
 };
 
 /******************************************************************************/
