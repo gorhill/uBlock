@@ -486,6 +486,9 @@ class ProceduralFilterer {
         this.styledNodes = new Set();
         this.timer = undefined;
         this.addSelectors(selectors);
+        // Important: commit now (do not go through onDOMChanged) to be sure
+        // first pass is going to happen asap.
+        this.uBOL_commitNow();
     }
 
     addSelectors() {
@@ -506,8 +509,6 @@ class ProceduralFilterer {
     }
 
     uBOL_commitNow() {
-        //console.time('procedural selectors/dom layout changed');
-
         // https://github.com/uBlockOrigin/uBlock-issues/issues/341
         //   Be ready to unhide nodes which no longer matches any of
         //   the procedural selectors.
@@ -554,8 +555,8 @@ class ProceduralFilterer {
     styleNodes(nodes, styleToken) {
         if ( styleToken === undefined ) {
             for ( const node of nodes ) {
-                node.textContent = '';
                 node.remove();
+                node.textContent = '';
             }
             return;
         }
