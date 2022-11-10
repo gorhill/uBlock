@@ -200,12 +200,14 @@ function registerProcedural(context, proceduralDetails) {
     const { before, filteringModeDetails, rulesetsDetails } = context;
 
     const js = [];
-    const hostnameMatches = [];
+    const hostnameMatches = new Set();
     for ( const details of rulesetsDetails ) {
         if ( details.css.procedural === 0 ) { continue; }
         js.push(`/rulesets/scripting/procedural/${details.id}.js`);
         if ( proceduralDetails.has(details.id) ) {
-            hostnameMatches.push(...proceduralDetails.get(details.id));
+            for ( const hn of proceduralDetails.get(details.id) ) {
+                hostnameMatches.add(hn);
+            }
         }
     }
 
