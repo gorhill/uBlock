@@ -1549,15 +1549,14 @@ Parser.prototype.SelectorCompiler = class {
 
         // Post-analysis
         // Mind https://w3c.github.io/csswg-drafts/selectors-4/#has-pseudo
-        if ( data.name.startsWith('-abp-') ) {
-            data.type = 'Error';
-            return;
-        }
         data.name = this.normalizedOperators.get(data.name) || data.name;
         if ( this.proceduralOperatorNames.has(data.name) ) {
             data.type = 'ProceduralSelector';
         } else if ( this.proceduralActionNames.has(data.name) ) {
             data.type = 'ActionSelector';
+        } else if ( data.name.startsWith('-abp-') ) {
+            data.type = 'Error';
+            return;
         }
         if ( this.maybeProceduralOperatorNames.has(data.name) ) {
             if ( this.astHasType(args, 'ProceduralSelector') ) {
