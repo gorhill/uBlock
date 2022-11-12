@@ -81,7 +81,11 @@ class dom {
     }
 
     static text(target, text) {
-        for ( const elem of normalizeTarget(target) ) {
+        const targets = normalizeTarget(target);
+        if ( text === undefined ) {
+            return targets.length !== 0 ? targets[0].textContent : undefined;
+        }
+        for ( const elem of targets ) {
             elem.textContent = text;
         }
     }
