@@ -441,8 +441,6 @@ PSelectorRoot.prototype.hit = false;
 class ProceduralFilterer {
     constructor(domFilterer) {
         this.domFilterer = domFilterer;
-        this.domIsReady = false;
-        this.domIsWatched = false;
         this.mustApplySelectors = false;
         this.selectors = new Map();
         this.masterToken = vAPI.randomToken();
@@ -455,7 +453,7 @@ class ProceduralFilterer {
 
     addProceduralSelectors(selectors) {
         const addedSelectors = [];
-        let mustCommit = this.domIsWatched;
+        let mustCommit = false;
         for ( const selector of selectors ) {
             if ( this.selectors.has(selector.raw) ) { continue; }
             let style, styleToken;
@@ -483,9 +481,7 @@ class ProceduralFilterer {
     }
 
     commitNow() {
-        if ( this.selectors.size === 0 || this.domIsReady === false ) {
-            return;
-        }
+        if ( this.selectors.size === 0 ) { return; }
 
         this.mustApplySelectors = false;
 
@@ -567,8 +563,6 @@ class ProceduralFilterer {
     }
 
     onDOMCreated() {
-        this.domIsReady = true;
-        this.domFilterer.commit();
     }
 
     onDOMChanged(addedNodes, removedNodes) {

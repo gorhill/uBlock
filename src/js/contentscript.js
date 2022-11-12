@@ -495,7 +495,6 @@ vAPI.DOMFilterer = class {
         this.commitTimer = new vAPI.SafeAnimationFrame(
             ( ) => { this.commitNow(); }
         );
-        this.domIsReady = document.readyState !== 'loading';
         this.disabled = false;
         this.listeners = [];
         this.stylesheets = [];
@@ -503,18 +502,6 @@ vAPI.DOMFilterer = class {
         this.exceptions = [];
         this.convertedProceduralFilters = [];
         this.proceduralFilterer = null;
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/167
-        //   By the time the DOMContentLoaded is fired, the content script might
-        //   have been disconnected from the background page. Unclear why this
-        //   would happen, so far seems to be a Chromium-specific behavior at
-        //   launch time.
-        if ( this.domIsReady !== true ) {
-            document.addEventListener('DOMContentLoaded', ( ) => {
-                if ( vAPI instanceof Object === false ) { return; }
-                this.domIsReady = true;
-                this.commit();
-            });
-        }
     }
 
     explodeCSS(css) {
@@ -1240,6 +1227,10 @@ vAPI.DOMFilterer = class {
         vAPI.messaging.send('contentscript', {
             what: 'shouldRenderNoscriptTags',
         });
+
+        if ( vAPI.domFilterer instanceof Object ) {
+            vAPI.domFilterer.commitNow();
+        }
 
         if ( vAPI.domWatcher instanceof Object ) {
             vAPI.domWatcher.start();
