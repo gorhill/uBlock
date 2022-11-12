@@ -113,6 +113,16 @@ const getElementBoundingClientRect = function(elem) {
 
 /******************************************************************************/
 
+const elementsFromPoint = function(parent, x, y) {
+    const elems = parent.elementsFromPoint(x, y);
+    if ( elems.length !== 0 && elems[0].shadowRoot !== null ) {
+        return elementsFromPoint(elems[0].shadowRoot, x, y);
+    }
+    return elems;
+};
+
+/******************************************************************************/
+
 const highlightElements = function(elems, force) {
     // To make mouse move handler more efficient
     if (
@@ -554,11 +564,11 @@ const filtersFrom = function(x, y) {
     //   Network filter candidates from all other elements found at [x,y].
     // https://www.reddit.com/r/uBlockOrigin/comments/qmjk36/
     //   Extract network candidates first.
+    const magicAttr = `${vAPI.sessionId}-clickblind`;
+    pickerRoot.setAttribute(magicAttr, '');
+    const elems = elementsFromPoint(document, x, y);
+    pickerRoot.removeAttribute(magicAttr);
     if ( typeof x === 'number' ) {
-        const magicAttr = `${vAPI.sessionId}-clickblind`;
-        pickerRoot.setAttribute(magicAttr, '');
-        const elems = document.elementsFromPoint(x, y);
-        pickerRoot.removeAttribute(magicAttr);
         for ( const elem of elems ) {
             netFilterFromElement(elem);
         }
@@ -570,11 +580,14 @@ const filtersFrom = function(x, y) {
     // https://github.com/gorhill/uBlock/issues/2519
     // https://github.com/uBlockOrigin/uBlock-issues/issues/17
     //   Prepend `body` if full selector is ambiguous.
-    let elem = first;
-    while ( elem && elem !== document.body ) {
+    for ( const elem of elems ) {
         cosmeticFilterFromElement(elem);
-        elem = elem.parentNode;
     }
+    //let elem = first;
+    //while ( elem && elem !== document.body ) {
+    //    cosmeticFilterFromElement(elem);
+    //    elem = elem.parentNode;
+    //}
     // The body tag is needed as anchor only when the immediate child
     // uses `nth-of-type`.
     let i = cosmeticFilterCandidates.length;

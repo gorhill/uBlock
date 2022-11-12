@@ -1311,40 +1311,6 @@ const modifyRuleset = function(details) {
     }
 };
 
-// Shortcuts
-const getShortcuts = function(callback) {
-    if ( µb.canUseShortcuts === false ) {
-        return callback([]);
-    }
-
-    vAPI.commands.getAll(commands => {
-        let response = [];
-        for ( let command of commands ) {
-            let desc = command.description;
-            let match = /^__MSG_(.+?)__$/.exec(desc);
-            if ( match !== null ) {
-                desc = i18n$(match[1]);
-            }
-            if ( desc === '' ) { continue; }
-            command.description = desc;
-            response.push(command);
-        }
-        callback(response);
-    });
-};
-
-const setShortcut = function(details) {
-    if  ( µb.canUpdateShortcuts === false ) { return; }
-    if ( details.shortcut === undefined ) {
-        vAPI.commands.reset(details.name);
-        µb.commandShortcuts.delete(details.name);
-    } else {
-        vAPI.commands.update({ name: details.name, shortcut: details.shortcut });
-        µb.commandShortcuts.set(details.name, details.shortcut);
-    }
-    vAPI.storage.set({ commandShortcuts: Array.from(µb.commandShortcuts) });
-};
-
 // Support
 const getSupportData = async function() {
     const diffArrays = function(modified, original) {
@@ -1506,9 +1472,6 @@ const onMessage = function(request, sender, callback) {
             callback(localData);
         });
 
-    case 'getShortcuts':
-        return getShortcuts(callback);
-
     case 'getSupportData': {
         getSupportData().then(response => {
             callback(response);
@@ -1536,7 +1499,6 @@ const onMessage = function(request, sender, callback) {
     switch ( request.what ) {
     case 'dashboardConfig':
         response = {
-            canUpdateShortcuts: µb.canUpdateShortcuts,
             noDashboard: µb.noDashboard,
         };
         break;
@@ -1595,10 +1557,6 @@ const onMessage = function(request, sender, callback) {
 
     case 'resetUserData':
         resetUserData();
-        break;
-
-    case 'setShortcut':
-        setShortcut(request);
         break;
 
     case 'writeHiddenSettings':

@@ -21,15 +21,13 @@
 
 'use strict';
 
-/******************************************************************************/
-
 import { simpleStorage } from './storage.js';
 import { dom, qs$ } from './dom.js';
 
 /******************************************************************************/
 
 const discardUnsavedData = function(synchronous = false) {
-    const paneFrame = document.getElementById('iframe');
+    const paneFrame = qs$('#iframe');
     const paneWindow = paneFrame.contentWindow;
     if (
         typeof paneWindow.hasUnsavedData !== 'function' ||
@@ -44,11 +42,11 @@ const discardUnsavedData = function(synchronous = false) {
 
     return new Promise(resolve => {
         const modal = document.querySelector('#unsavedWarning');
-        modal.classList.add('on');
+        dom.cl.add(modal, 'on');
         modal.focus();
 
         const onDone = status => {
-            modal.classList.remove('on');
+            dom.cl.remove(modal, 'on');
             document.removeEventListener('click', onClick, true);
             resolve(status);
         };
@@ -73,15 +71,15 @@ const discardUnsavedData = function(synchronous = false) {
 
 const loadDashboardPanel = function(pane, first) {
     const tabButton = document.querySelector(`[data-pane="${pane}"]`);
-    if ( tabButton === null || tabButton.classList.contains('selected') ) {
+    if ( tabButton === null || dom.cl.has(tabButton, 'selected') ) {
         return;
     }
     const loadPane = ( ) => {
         self.location.replace(`#${pane}`);
         for ( const node of document.querySelectorAll('.tabButton.selected') ) {
-            node.classList.remove('selected');
+            dom.cl.remove(node, 'selected');
         }
-        tabButton.classList.add('selected');
+        dom.cl.add(tabButton, 'selected');
         tabButton.scrollIntoView();
         document.querySelector('#iframe').contentWindow.location.replace(pane);
         if ( pane !== 'no-dashboard.html' ) {
@@ -103,11 +101,11 @@ const loadDashboardPanel = function(pane, first) {
 };
 
 const onTabClickHandler = function(ev) {
-    loadDashboardPanel(ev.target.getAttribute('data-pane'));
+    loadDashboardPanel(dom.attr(ev.target, 'data-pane'));
 };
 
 if ( self.location.hash.slice(1) === 'no-dashboard.html' ) {
-    document.body.classList.add('noDashboard');
+    dom.cl.add(dom.body, 'noDashboard');
 }
 
 (async ( ) => {
@@ -117,12 +115,7 @@ if ( self.location.hash.slice(1) === 'no-dashboard.html' ) {
     }
     loadDashboardPanel(pane !== null ? pane : 'settings.html', true);
 
-    dom.on(
-        qs$('#dashboard-nav'),
-        'click',
-        '.tabButton',
-        onTabClickHandler
-    );
+    dom.on('#dashboard-nav', 'click', '.tabButton', onTabClickHandler);
 
     // https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
     window.addEventListener('beforeunload', ( ) => {

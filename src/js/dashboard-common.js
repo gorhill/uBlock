@@ -19,9 +19,9 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global uDom */
-
 'use strict';
+
+import { dom } from './dom.js';
 
 /******************************************************************************/
 
@@ -196,7 +196,7 @@ self.uBlockDashboard.openOrSelectPage = function(url, options = {}) {
     let ev;
     if ( url instanceof MouseEvent ) {
         ev = url;
-        url = ev.target.getAttribute('href');
+        url = dom.attr(ev.target, 'href');
     } 
     const details = Object.assign({ url, select: true, index: -1 }, options);
     vAPI.messaging.send('default', {
@@ -211,5 +211,5 @@ self.uBlockDashboard.openOrSelectPage = function(url, options = {}) {
 /******************************************************************************/
 
 // Open links in the proper window
-uDom('a').attr('target', '_blank');
-uDom('a[href*="dashboard.html"]').attr('target', '_parent');
+dom.attr('a', 'target', '_blank');
+dom.attr('a[href*="dashboard.html"]', 'target', '_parent');

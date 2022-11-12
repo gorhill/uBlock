@@ -25,6 +25,7 @@
 
 /******************************************************************************/
 
+import { dom, qs$ } from './dom.js';
 import './codemirror/ubo-static-filtering.js';
 
 /******************************************************************************/
@@ -36,19 +37,19 @@ import './codemirror/ubo-static-filtering.js';
     if ( assetKey === null ) { return; }
 
     const subscribeElem = subscribeParams.get('subscribe') !== null
-        ? document.getElementById('subscribe')
+        ? qs$('#subscribe')
         : null;
     if ( subscribeElem !== null && subscribeURL.hash !== '#subscribed' ) {
         const title = subscribeParams.get('title');
-        const promptElem = document.getElementById('subscribePrompt');
-        promptElem.children[0].textContent = title;
+        const promptElem = qs$('#subscribePrompt');
+        dom.text(promptElem.children[0], title);
         const a = promptElem.children[1];
-        a.textContent = assetKey;
-        a.setAttribute('href', assetKey);
-        subscribeElem.classList.remove('hide');
+        dom.text(a, assetKey);
+        dom.attr(a, 'href', assetKey);
+        dom.cl.remove(subscribeElem, 'hide');
     }
 
-    const cmEditor = new CodeMirror(document.getElementById('content'), {
+    const cmEditor = new CodeMirror(qs$('#content'), {
         autofocus: true,
         foldGutter: true,
         gutters: [ 'CodeMirror-linenumbers', 'CodeMirror-foldgutter' ],
@@ -81,28 +82,24 @@ import './codemirror/ubo-static-filtering.js';
     cmEditor.setValue(details && details.content || '');
 
     if ( subscribeElem !== null ) {
-        document.getElementById('subscribeButton').addEventListener(
-            'click',
-            ( ) => {
-                subscribeElem.classList.add('hide');
+        dom.on('#subscribeButton', 'click', ( ) => {
+            dom.cl.add(subscribeElem, 'hide');
+            vAPI.messaging.send('scriptlets', {
+                what: 'applyFilterListSelection',
+                toImport: assetKey,
+            }).then(( ) => {
                 vAPI.messaging.send('scriptlets', {
-                    what: 'applyFilterListSelection',
-                    toImport: assetKey,
-                }).then(( ) => {
-                    vAPI.messaging.send('scriptlets', {
-                        what: 'reloadAllFilters'
-                    });
+                    what: 'reloadAllFilters'
                 });
-            },
-            { once: true }
-        );
+            });
+        }, { once: true });
     }
 
     if ( details.sourceURL ) {
-        const a = document.querySelector('.cm-search-widget .sourceURL');
-        a.setAttribute('href', details.sourceURL);
-        a.setAttribute('title', details.sourceURL);
+        const a = qs$('.cm-search-widget .sourceURL');
+        dom.attr(a, 'href', details.sourceURL);
+        dom.attr(a, 'title', details.sourceURL);
     }
 
-    document.body.classList.remove('loading');
+    dom.cl.remove(dom.body, 'loading');
 })();

@@ -19,9 +19,9 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global uDom */
-
 'use strict';
+
+import { dom } from './dom.js';
 
 /******************************************************************************/
 
@@ -30,5 +30,5 @@
         what: 'getAppData',
     });
 
-    uDom('#aboutNameVer').text(appData.name + ' ' + appData.version);
+    dom.text('#aboutNameVer', appData.name + ' ' + appData.version);
 })();

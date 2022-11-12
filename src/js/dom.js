@@ -26,11 +26,11 @@
 /******************************************************************************/
 
 const normalizeTarget = target => {
+    if ( typeof target === 'string' ) { return Array.from(qsa$(target)); }
+    if ( target instanceof Element ) { return [ target ]; }
     if ( target === null ) { return []; }
-    if ( Array.isArray(target) ) { return target; } 
-    return target instanceof Element
-        ? [ target ]
-        : Array.from(target);
+    if ( Array.isArray(target) ) { return target; }
+    return Array.from(target);
 };
 
 const makeEventHandler = (selector, callback) => {
@@ -70,6 +70,16 @@ class dom {
         }
     }
 
+    static clone(target) {
+        return normalizeTarget(target)[0].cloneNode(true);
+    }
+
+    static create(a) {
+        if ( typeof a === 'string' ) {
+            return document.createElement(a);
+        }
+    }
+
     static text(target, text) {
         for ( const elem of normalizeTarget(target) ) {
             elem.textContent = text;
@@ -82,15 +92,43 @@ class dom {
         }
     }
 
-    static on(target, type, selector, callback) {
-        if ( typeof selector === 'function' ) {
-            callback = selector;
-            selector = undefined;
+    // target, type, callback, [options]
+    // target, type, subtarget, callback, [options]
+    
+    static on(target, type, subtarget, callback, options) {
+        if ( typeof subtarget === 'function' ) {
+            options = callback;
+            callback = subtarget;
+            subtarget = undefined;
+            if ( typeof options === 'boolean' ) {
+                options = { capture: true };
+            }
         } else {
-            callback = makeEventHandler(selector, callback);
+            callback = makeEventHandler(subtarget, callback);
+            if ( options === undefined || typeof options === 'boolean' ) {
+                options = { capture: true };
+            } else {
+                options.capture = true;
+            }
         }
-        for ( const elem of normalizeTarget(target) ) {
-            elem.addEventListener(type, callback, selector !== undefined);
+        const targets = target instanceof Window || target instanceof Document
+            ? [ target ]
+            : normalizeTarget(target);
+        for ( const elem of targets ) {
+            elem.addEventListener(type, callback, options);
+        }
+    }
+
+    static off(target, type, callback, options) {
+        if ( typeof callback !== 'function' ) { return; }
+        if ( typeof options === 'boolean' ) {
+            options = { capture: true };
+        }
+        const targets = target instanceof Window || target instanceof Document
+            ? [ target ]
+            : normalizeTarget(target);
+        for ( const elem of targets ) {
+            elem.removeEventListener(type, callback, options);
         }
     }
 }
@@ -109,9 +147,11 @@ dom.cl = class {
     }
 
     static toggle(target, name, state) {
+        let r;
         for ( const elem of normalizeTarget(target) ) {
-            elem.classList.toggle(name, state);
+            r = elem.classList.toggle(name, state);
         }
+        return r;
     }
 
     static has(target, name) {
@@ -124,30 +164,26 @@ dom.cl = class {
     }
 };
 
+/******************************************************************************/
+
+function qs$(a, b) {
+    if ( typeof a === 'string') {
+        return document.querySelector(a);
+    }
+    return a.querySelector(b);
+}
+
+function qsa$(a, b) {
+    if ( typeof a === 'string') {
+        return document.querySelectorAll(a);
+    }
+    return a.querySelectorAll(b);
+}
+
+dom.root = qs$(':root');
 dom.html = document.documentElement;
 dom.head = document.head;
 dom.body = document.body;
-
-/******************************************************************************/
-
-function qs$(s, elem = undefined) {
-    return (elem || document).querySelector(s);
-}
-
-function qsa$(s, elem = undefined) {
-    return (elem || document).querySelectorAll(s);
-}
-
-/******************************************************************************/
-
-{
-    const mql = self.matchMedia('(prefers-color-scheme: dark)');
-    const theme = mql instanceof Object && mql.matches === true
-        ? 'dark'
-        : 'light';
-    dom.cl.toggle(dom.html, 'dark', theme === 'dark');
-    dom.cl.toggle(dom.html, 'light', theme !== 'dark');
-}
 
 /******************************************************************************/
 

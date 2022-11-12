@@ -19,14 +19,14 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global uDom */
-
 'use strict';
+
+import { dom, qs$ } from './dom.js';
 
 /******************************************************************************/
 
 const discardUnsavedData = function(synchronous = false) {
-    const paneFrame = document.getElementById('iframe');
+    const paneFrame = qs$('#iframe');
     const paneWindow = paneFrame.contentWindow;
     if (
         typeof paneWindow.hasUnsavedData !== 'function' ||
@@ -40,13 +40,13 @@ const discardUnsavedData = function(synchronous = false) {
     }
 
     return new Promise(resolve => {
-        const modal = uDom.nodeFromId('unsavedWarning');
-        modal.classList.add('on');
+        const modal = qs$('#unsavedWarning');
+        dom.cl.add(modal, 'on');
         modal.focus();
 
         const onDone = status => {
-            modal.classList.remove('on');
-            document.removeEventListener('click', onClick, true);
+            dom.cl.remove(modal, 'on');
+            dom.off(document, 'click', onClick, true);
             resolve(status);
         };
 
@@ -58,27 +58,25 @@ const discardUnsavedData = function(synchronous = false) {
             if ( target.matches('[data-i18n="dashboardUnsavedWarningIgnore"]') ) {
                 return onDone(true);
             }
-            if ( modal.querySelector('[data-i18n="dashboardUnsavedWarning"]').contains(target) ) {
+            if ( qs$(modal, '[data-i18n="dashboardUnsavedWarning"]').contains(target) ) {
                 return;
             }
             onDone(false);
         };
 
-        document.addEventListener('click', onClick, true);
+        dom.on(document, 'click', onClick, true);
     });
 };
 
 const loadDashboardPanel = function(pane, first) {
-    const tabButton = uDom.nodeFromSelector(`[data-pane="${pane}"]`);
-    if ( tabButton === null || tabButton.classList.contains('selected') ) {
-        return;
-    }
+    const tabButton = qs$(`[data-pane="${pane}"]`);
+    if ( tabButton === null || dom.cl.has(tabButton, 'selected') ) { return; }
     const loadPane = ( ) => {
         self.location.replace(`#${pane}`);
-        uDom('.tabButton.selected').toggleClass('selected', false);
-        tabButton.classList.add('selected');
+        dom.cl.remove('.tabButton.selected', 'selected');
+        dom.cl.add(tabButton, 'selected');
         tabButton.scrollIntoView();
-        uDom.nodeFromId('iframe').contentWindow.location.replace(pane);
+        qs$('#iframe').contentWindow.location.replace(pane);
         if ( pane !== 'no-dashboard.html' ) {
             vAPI.localStorage.setItem('dashboardLastVisitedPane', pane);
         }
@@ -88,9 +86,7 @@ const loadDashboardPanel = function(pane, first) {
     }
     const r = discardUnsavedData();
     if ( r === false ) { return; }
-    if ( r === true ) {
-        return loadPane();
-    }
+    if ( r === true ) { return loadPane(); }
     r.then(status => {
         if ( status === false ) { return; }
         loadPane();
@@ -98,11 +94,11 @@ const loadDashboardPanel = function(pane, first) {
 };
 
 const onTabClickHandler = function(ev) {
-    loadDashboardPanel(ev.target.getAttribute('data-pane'));
+    loadDashboardPanel(dom.attr(ev.target, 'data-pane'));
 };
 
 if ( self.location.hash.slice(1) === 'no-dashboard.html' ) {
-    document.body.classList.add('noDashboard');
+    dom.cl.add(dom.body, 'noDashboard');
 }
 
 (async ( ) => {
@@ -114,13 +110,9 @@ if ( self.location.hash.slice(1) === 'no-dashboard.html' ) {
 
     {
         const details = results[0] || {};
-        document.body.classList.toggle(
-            'canUpdateShortcuts',
-            details.canUpdateShortcuts === true
-        );
         if ( details.noDashboard ) {
             self.location.hash = '#no-dashboard.html';
-            document.body.classList.add('noDashboard');
+            dom.cl.add(dom.body, 'noDashboard');
         } else if ( self.location.hash === '#no-dashboard.html' ) {
             self.location.hash = '';
         }
@@ -133,10 +125,10 @@ if ( self.location.hash.slice(1) === 'no-dashboard.html' ) {
         }
         loadDashboardPanel(pane !== null ? pane : 'settings.html', true);
 
-        uDom('.tabButton').on('click', onTabClickHandler);
+        dom.on('.tabButton', 'click', onTabClickHandler);
 
         // https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
-        window.addEventListener('beforeunload', ( ) => {
+        dom.on(window, 'beforeunload', ( ) => {
             if ( discardUnsavedData(true) ) { return; }
             event.preventDefault();
             event.returnValue = '';

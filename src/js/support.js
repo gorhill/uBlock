@@ -19,9 +19,11 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global CodeMirror, uBlockDashboard, uDom */
+/* global CodeMirror, uBlockDashboard */
 
 'use strict';
+
+import { dom, qs$ } from './dom.js';
 
 /******************************************************************************/
 
@@ -130,10 +132,10 @@ function configToMarkdown(collapse = false) {
 }
 
 function addDetailsToReportURL(id, collapse = false) {
-    const elem = uDom.nodeFromId(id);
-    const url = new URL(elem.getAttribute('data-url'));
+    const elem = qs$(`#${id}`);
+    const url = new URL(dom.attr(elem, 'data-url'));
     url.searchParams.set('configuration', configToMarkdown(collapse));
-    elem.setAttribute('data-url', url);
+    dom.attr(elem, 'data-url', url);
 }
 
 function showData() {
@@ -180,21 +182,21 @@ const reportedPage = (( ) => {
         parsedURL.username = '';
         parsedURL.password = '';
         parsedURL.hash = '';
-        const select = document.querySelector('select[name="url"]');
-        select.options[0].textContent = parsedURL.href;
+        const select = qs$('select[name="url"]');
+        dom.text(select.options[0], parsedURL.href);
         if ( parsedURL.search !== '' ) {
-            const option = document.createElement('option');
+            const option = dom.create('option');
             parsedURL.search = '';
-            option.textContent = parsedURL.href;
+            dom.text(option, parsedURL.href);
             select.append(option);
         }
         if ( parsedURL.pathname !== '/' ) {
-            const option = document.createElement('option');
+            const option = dom.create('option');
             parsedURL.pathname = '';
-            option.textContent = parsedURL.href;
+            dom.text(option, parsedURL.href);
             select.append(option);
         }
-        document.body.classList.add('filterIssue');
+        dom.cl.add(dom.body, 'filterIssue');
         return {
             hostname: parsedURL.hostname.replace(/^(m|mobile|www)\./, ''),
             popupPanel: JSON.parse(url.searchParams.get('popupPanel')),
@@ -205,21 +207,20 @@ const reportedPage = (( ) => {
 })();
 
 function reportSpecificFilterType() {
-    return document.querySelector('select[name="type"]').value;
+    return qs$('select[name="type"]').value;
 }
 
 function reportSpecificFilterIssue(ev) {
     const githubURL = new URL('https://github.com/uBlockOrigin/uAssets/issues/new?template=specific_report_from_ubo.yml');
     const issueType = reportSpecificFilterType();
     let title = `${reportedPage.hostname}: ${issueType}`;
-    if ( document.getElementById('isNSFW').checked ) {
+    if ( qs$('#isNSFW').checked ) {
         title = `[nsfw] ${title}`;
     }
     githubURL.searchParams.set('title', title);
     githubURL.searchParams.set(
-        'url_address_of_the_web_page', '`' +
-        document.querySelector('select[name="url"]').value +
-        '`'
+        'url_address_of_the_web_page',
+        '`' + qs$('select[name="url"]').value + '`'
     );
     githubURL.searchParams.set('category', issueType);
     githubURL.searchParams.set('configuration', configToMarkdown(true));
@@ -232,7 +233,7 @@ function reportSpecificFilterIssue(ev) {
 
 /******************************************************************************/
 
-const cmEditor = new CodeMirror(document.getElementById('supportData'), {
+const cmEditor = new CodeMirror(qs$('#supportData'), {
     autofocus: true,
     readOnly: true,
     styleActiveLine: true,
@@ -249,9 +250,9 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 
     showData();
 
-    uDom('[data-url]').on('click', ev => {
+    dom.on('[data-url]', 'click', ev => {
         const elem = ev.target.closest('[data-url]');
-        const url = elem.getAttribute('data-url');
+        const url = dom.attr(elem, 'data-url');
         if ( typeof url !== 'string' || url === '' ) { return; }
         vAPI.messaging.send('default', {
             what: 'gotoURL',
@@ -261,11 +262,11 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
     });
 
     if ( reportedPage !== null ) {
-        uDom('[data-i18n="supportReportSpecificButton"]').on('click', ev => {
+        dom.on('[data-i18n="supportReportSpecificButton"]', 'click', ev => {
             reportSpecificFilterIssue(ev);
         });
 
-        uDom('[data-i18n="supportFindSpecificButton"]').on('click', ev => {
+        dom.on('[data-i18n="supportFindSpecificButton"]', 'click', ev => {
             const url = new URL('https://github.com/uBlockOrigin/uAssets/issues');
             url.searchParams.set('q', `is:issue sort:updated-desc "${reportedPage.hostname}" in:title`);
             vAPI.messaging.send('default', {
@@ -275,15 +276,15 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
             ev.preventDefault();
         });
 
-        uDom('#showSupportInfo').on('click', ev => {
+        dom.on('#showSupportInfo', 'click', ev => {
             const button = ev.target;
-            button.classList.add('hidden');
-            uDom.nodeFromSelector('.a.b.c.d').classList.add('e');
+            dom.cl.add(button, 'hidden');
+            dom.cl.add('.a.b.c.d', 'e');
             cmEditor.refresh();
         });
     }
 
-    uDom('#selectAllButton').on('click', ( ) => {
+    dom.on('#selectAllButton', 'click', ( ) => {
         cmEditor.focus();
         cmEditor.execCommand('selectAll');
     });

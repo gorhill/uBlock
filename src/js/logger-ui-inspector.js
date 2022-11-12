@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2015-2018 Raymond Hill
+    Copyright (C) 2015-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,9 +19,9 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global uDom */
-
 'use strict';
+
+import { dom, qs$, qsa$ } from './dom.js';
 
 /******************************************************************************/
 
@@ -29,7 +29,7 @@
 
 /******************************************************************************/
 
-const showdomButton = uDom.nodeFromId('showdom');
+const showdomButton = qs$('#showdom');
 
 // Don't bother if the browser is not modern enough.
 if (
@@ -37,7 +37,7 @@ if (
     Map.polyfill ||
     typeof WeakMap === 'undefined'
 ) {
-    showdomButton.classList.add('disabled');
+    dom.cl.add(showdomButton, 'disabled');
     return;
 }
 
@@ -48,8 +48,8 @@ var inspectorConnectionId;
 var inspectedTabId = 0;
 var inspectedURL = '';
 var inspectedHostname = '';
-var inspector = uDom.nodeFromId('domInspector');
-var domTree = uDom.nodeFromId('domTree');
+var inspector = qs$('#domInspector');
+var domTree = qs$('#domTree');
 var uidGenerator = 1;
 var filterToIdMap = new Map();
 
@@ -92,8 +92,8 @@ vAPI.MessagingConnection.addListener(function(msg) {
 
 const nodeFromDomEntry = function(entry) {
     var node, value;
-    var li = document.createElement('li');
-    li.setAttribute('id', entry.nid);
+    const li = document.createElement('li');
+    dom.attr(li, 'id', entry.nid);
     // expander/collapser
     li.appendChild(document.createElement('span'));
     // selector
@@ -104,24 +104,24 @@ const nodeFromDomEntry = function(entry) {
     value = entry.cnt || 0;
     node = document.createElement('span');
     node.textContent = value !== 0 ? value.toLocaleString() : '';
-    node.setAttribute('data-cnt', value);
+    dom.attr(node, 'data-cnt', value);
     li.appendChild(node);
     // cosmetic filter
     if ( entry.filter === undefined ) {
         return li;
     }
     node = document.createElement('code');
-    node.classList.add('filter');
+    dom.cl.add(node, 'filter');
     value = filterToIdMap.get(entry.filter);
     if ( value === undefined ) {
         value = uidGenerator.toString();
         filterToIdMap.set(entry.filter, value);
         uidGenerator += 1;
     }
-    node.setAttribute('data-filter-id', value);
+    dom.attr(node, 'data-filter-id', value);
     node.textContent = entry.filter;
     li.appendChild(node);
-    li.classList.add('isCosmeticHide');
+    dom.cl.add(li, 'isCosmeticHide');
     return li;
 };
 
@@ -131,11 +131,11 @@ const appendListItem = function(ul, li) {
     ul.appendChild(li);
     // Ancestor nodes of a node which is affected by a cosmetic filter will
     // be marked as "containing cosmetic filters", for user convenience.
-    if ( li.classList.contains('isCosmeticHide') === false ) { return; }
+    if ( dom.cl.has(li, 'isCosmeticHide') === false ) { return; }
     for (;;) {
         li = li.parentElement.parentElement;
         if ( li === null ) { break; }
-        li.classList.add('hasCosmeticHide');
+        dom.cl.add(li, 'hasCosmeticHide');
     }
 };
 
@@ -162,7 +162,7 @@ const renderDOMFull = function(response) {
         if ( entry.lvl > lvl ) {
             ul = document.createElement('ul');
             li.appendChild(ul);
-            li.classList.add('branch');
+            dom.cl.add(li, 'branch');
             li = nodeFromDomEntry(entry);
             appendListItem(ul, li);
             lvl = entry.lvl;
@@ -181,7 +181,7 @@ const renderDOMFull = function(response) {
     while ( ul.parentNode !== null ) {
         ul = ul.parentNode;
     }
-    ul.firstElementChild.classList.add('show');
+    dom.cl.add(ul.firstElementChild, 'show');
 
     domTreeParent.appendChild(domTree);
 };
@@ -194,8 +194,8 @@ const patchIncremental = function(from, delta) {
     var span, cnt;
     var li = from.parentElement.parentElement;
     var patchCosmeticHide = delta >= 0 &&
-                            from.classList.contains('isCosmeticHide') &&
-                            li.classList.contains('hasCosmeticHide') === false;
+                            dom.cl.has(from, 'isCosmeticHide') &&
+                            dom.cl.has(li, 'hasCosmeticHide') === false;
     // Include descendants count when removing a node
     if ( delta < 0 ) {
         delta -= countFromNode(from);
@@ -205,10 +205,10 @@ const patchIncremental = function(from, delta) {
         if ( delta !== 0 ) {
             cnt = countFromNode(li) + delta;
             span.textContent = cnt !== 0 ? cnt.toLocaleString() : '';
-            span.setAttribute('data-cnt', cnt);
+            dom.attr(span, 'data-cnt', cnt);
         }
         if ( patchCosmeticHide ) {
-            li.classList.add('hasCosmeticHide');
+            dom.cl.add(li, 'hasCosmeticHide');
         }
     }
 };
@@ -226,7 +226,7 @@ const renderDOMIncremental = function(response) {
         entry = journal[i];
         // Remove node
         if ( entry.what === -1 ) {
-            li = document.getElementById(entry.nid);
+            li = qs$(`#${entry.nid}`);
             if ( li === null ) { continue; }
             patchIncremental(li, -1);
             li.parentNode.removeChild(li);
@@ -239,7 +239,7 @@ const renderDOMIncremental = function(response) {
         }
         // Add node as sibling
         if ( entry.what === 1 && entry.l ) {
-            previous = document.getElementById(entry.l);
+            previous = qs$(`#{entry.l}`);
             // This should not happen
             if ( previous === null ) {
                 // throw new Error('No left sibling!?');
@@ -253,17 +253,17 @@ const renderDOMIncremental = function(response) {
         }
         // Add node as child
         if ( entry.what === 1 && entry.u ) {
-            li = document.getElementById(entry.u);
+            li = qs$(`#${entry.u}`);
             // This should not happen
             if ( li === null ) {
                 // throw new Error('No parent!?');
                 continue;
             }
-            ul = li.querySelector('ul');
+            ul = qs$(li, 'ul');
             if ( ul === null ) {
                 ul = document.createElement('ul');
                 li.appendChild(ul);
-                li.classList.add('branch');
+                dom.cl.add(li, 'branch');
             }
             li = nodeFromDomEntry(nodes.get(entry.nid));
             ul.appendChild(li);
@@ -273,13 +273,11 @@ const renderDOMIncremental = function(response) {
     }
 };
 
-// https://www.youtube.com/watch?v=6u2KPtJB9h8
-
 /******************************************************************************/
 
 const countFromNode = function(li) {
     var span = li.children[2];
-    var cnt = parseInt(span.getAttribute('data-cnt'), 10);
+    var cnt = parseInt(dom.attr(span, 'data-cnt'), 10);
     return isNaN(cnt) ? 0 : cnt;
 };
 
@@ -290,7 +288,7 @@ const selectorFromNode = function(node) {
     var code;
     while ( node !== null ) {
         if ( node.localName === 'li' ) {
-            code = node.querySelector('code');
+            code = qs$(node, 'code');
             if ( code !== null ) {
                 selector = code.textContent + ' > ' + selector;
                 if ( selector.indexOf('#') !== -1 ) {
@@ -308,7 +306,7 @@ const selectorFromNode = function(node) {
 const selectorFromFilter = function(node) {
     while ( node !== null ) {
         if ( node.localName === 'li' ) {
-            var code = node.querySelector('code:nth-of-type(2)');
+            var code = qs$(node, 'code:nth-of-type(2)');
             if ( code !== null ) {
                 return code.textContent;
             }
@@ -409,10 +407,10 @@ const startDialog = (function() {
 
     const start = function() {
         dialog = logger.modalDialog.create('#cosmeticFilteringDialog', stop);
-        textarea = dialog.querySelector('textarea');
+        textarea = qs$(dialog, 'textarea');
         hideSelectors = [];
-        for ( const node of domTree.querySelectorAll('code.off') ) {
-            if ( node.classList.contains('filter') ) { continue; }
+        for ( const node of qsa$(domTree, 'code.off') ) {
+            if ( dom.cl.has(node, 'filter') ) { continue; }
             hideSelectors.push(selectorFromNode(node));
         }
         const taValue = [];
@@ -420,8 +418,8 @@ const startDialog = (function() {
             taValue.push(inspectedHostname + '##' + selector);
         }
         const ids = new Set();
-        for ( const node of domTree.querySelectorAll('code.filter.off') ) {
-            const id = node.getAttribute('data-filter-id');
+        for ( const node of qsa$(domTree, 'code.filter.off') ) {
+            const id = dom.attr(node, 'data-filter-id');
             if ( ids.has(id) ) { continue; }
             ids.add(id);
             unhideSelectors.push(node.textContent);
@@ -465,13 +463,13 @@ const onClicked = function(ev) {
     if (
         target.localName === 'span' &&
         parent instanceof HTMLLIElement &&
-        parent.classList.contains('branch') &&
+        dom.cl.has(parent, 'branch') &&
         target === parent.firstElementChild
     ) {
-        var state = parent.classList.toggle('show');
+        const state = dom.cl.toggle(parent, 'show');
         if ( !state ) {
-            for ( var node of parent.querySelectorAll('.branch') ) {
-                node.classList.remove('show');
+            for ( const node of qsa$(parent, '.branch') ) {
+                dom.cl.remove(node, 'show');
             }
         }
         return;
@@ -481,18 +479,19 @@ const onClicked = function(ev) {
     if ( target.localName !== 'code' ) { return; }
 
     // Toggle cosmetic filter
-    if ( target.classList.contains('filter') ) {
+    if ( dom.cl.has(target, 'filter') ) {
         vAPI.MessagingConnection.sendTo(inspectorConnectionId, {
             what: 'toggleFilter',
             original: false,
-            target: target.classList.toggle('off'),
+            target: dom.cl.toggle(target, 'off'),
             selector: selectorFromNode(target),
             filter: selectorFromFilter(target),
             nid: nidFromNode(target)
         });
-        uDom('[data-filter-id="' + target.getAttribute('data-filter-id') + '"]', inspector).toggleClass(
+        dom.cl.toggle(
+            qsa$(inspector, `[data-filter-id="${dom.attr(target, 'data-filter-id')}"]`),
             'off',
-            target.classList.contains('off')
+            dom.cl.has(target, 'off')
         );
     }
     // Toggle node
@@ -500,15 +499,15 @@ const onClicked = function(ev) {
         vAPI.MessagingConnection.sendTo(inspectorConnectionId, {
             what: 'toggleNodes',
             original: true,
-            target: target.classList.toggle('off') === false,
+            target: dom.cl.toggle(target, 'off') === false,
             selector: selectorFromNode(target),
             nid: nidFromNode(target)
         });
     }
 
-    var cantCreate = domTree.querySelector('.off') === null;
-    inspector.querySelector('.permatoolbar .revert').classList.toggle('disabled', cantCreate);
-    inspector.querySelector('.permatoolbar .commit').classList.toggle('disabled', cantCreate);
+    const cantCreate = qs$(domTree, '.off') === null;
+    dom.cl.toggle(qs$(inspector, '.permatoolbar .revert'), 'disabled', cantCreate);
+    dom.cl.toggle(qs$(inspector, '.permatoolbar .commit'), 'disabled', cantCreate);
 };
 
 /******************************************************************************/
@@ -548,7 +547,7 @@ const onMouseOver = (function() {
 /******************************************************************************/
 
 const currentTabId = function() {
-    if ( showdomButton.classList.contains('active') === false ) { return 0; }
+    if ( dom.cl.has(showdomButton, 'active') === false ) { return 0; }
     return logger.tabIdFromPageSelector();
 };
 
@@ -573,7 +572,7 @@ const shutdownInspector = function() {
         inspectorConnectionId = undefined;
     }
     logger.removeAllChildren(domTree);
-    inspector.classList.remove('vExpanded');
+    dom.cl.remove(inspector, 'vExpanded');
     inspectedTabId = 0;
 };
 
@@ -593,76 +592,65 @@ const onTabIdChanged = function() {
 /******************************************************************************/
 
 const toggleVCompactView = function() {
-    var state = inspector.classList.toggle('vExpanded');
-    var branches = document.querySelectorAll('#domInspector li.branch');
-    for ( var branch of branches ) {
-        branch.classList.toggle('show', state);
+    const state = dom.cl.toggle(inspector, 'vExpanded');
+    const branches = qsa$('#domInspector li.branch');
+    for ( const branch of branches ) {
+        dom.cl.toggle(branch, 'show', state);
     }
 };
 
 const toggleHCompactView = function() {
-    inspector.classList.toggle('hCompact');
+    dom.cl.toggle(inspector, 'hCompact');
 };
 
-/******************************************************************************/
-/*
-var toggleHighlightMode = function() {
-    vAPI.MessagingConnection.sendTo(inspectorConnectionId, {
-        what: 'highlightMode',
-        invert: uDom.nodeFromSelector('#domInspector .permatoolbar .highlightMode').classList.toggle('invert')
-    });
-};
-*/
 /******************************************************************************/
 
 const revert = function() {
-    uDom('#domTree .off').removeClass('off');
+    dom.cl.remove('#domTree .off', 'off');
     vAPI.MessagingConnection.sendTo(
         inspectorConnectionId,
         { what: 'resetToggledNodes' }
     );
-    inspector.querySelector('.permatoolbar .revert').classList.add('disabled');
-    inspector.querySelector('.permatoolbar .commit').classList.add('disabled');
+    dom.cl.add(qs$(inspector, '.permatoolbar .revert'), 'disabled');
+    dom.cl.add(qs$(inspector, '.permatoolbar .commit'), 'disabled');
 };
 
 /******************************************************************************/
 
 const toggleOn = function() {
-    uDom.nodeFromId('inspectors').classList.add('dom');
+    dom.cl.add('#inspectors', 'dom');
     window.addEventListener('beforeunload', toggleOff);
     document.addEventListener('tabIdChanged', onTabIdChanged);
     domTree.addEventListener('click', onClicked, true);
     domTree.addEventListener('mouseover', onMouseOver, true);
-    uDom.nodeFromSelector('#domInspector .vCompactToggler').addEventListener('click', toggleVCompactView);
-    uDom.nodeFromSelector('#domInspector .hCompactToggler').addEventListener('click', toggleHCompactView);
-    //uDom.nodeFromSelector('#domInspector .permatoolbar .highlightMode').addEventListener('click', toggleHighlightMode);
-    uDom.nodeFromSelector('#domInspector .permatoolbar .revert').addEventListener('click', revert);
-    uDom.nodeFromSelector('#domInspector .permatoolbar .commit').addEventListener('click', startDialog);
+    dom.on('#domInspector .vCompactToggler', 'click', toggleVCompactView);
+    dom.on('#domInspector .hCompactToggler', 'click', toggleHCompactView);
+    dom.on('#domInspector .permatoolbar .revert', 'click', revert);
+    dom.on('#domInspector .permatoolbar .commit', 'click', startDialog);
     injectInspector();
 };
 
 /******************************************************************************/
 
 const toggleOff = function() {
-    showdomButton.classList.remove('active');
-    uDom.nodeFromId('inspectors').classList.remove('dom');
+    dom.cl.remove(showdomButton, 'active');
+    dom.cl.remove('#inspectors', 'dom');
     shutdownInspector();
     window.removeEventListener('beforeunload', toggleOff);
     document.removeEventListener('tabIdChanged', onTabIdChanged);
     domTree.removeEventListener('click', onClicked, true);
     domTree.removeEventListener('mouseover', onMouseOver, true);
-    uDom.nodeFromSelector('#domInspector .vCompactToggler').removeEventListener('click', toggleVCompactView);
-    uDom.nodeFromSelector('#domInspector .hCompactToggler').removeEventListener('click', toggleHCompactView);
-    //uDom.nodeFromSelector('#domInspector .permatoolbar .highlightMode').removeEventListener('click', toggleHighlightMode);
-    uDom.nodeFromSelector('#domInspector .permatoolbar .revert').removeEventListener('click', revert);
-    uDom.nodeFromSelector('#domInspector .permatoolbar .commit').removeEventListener('click', startDialog);
+    dom.off('#domInspector .vCompactToggler', 'click', toggleVCompactView);
+    dom.off('#domInspector .hCompactToggler', 'click', toggleHCompactView);
+    dom.off('#domInspector .permatoolbar .revert', 'click', revert);
+    dom.off('#domInspector .permatoolbar .commit', 'click', startDialog);
     inspectedTabId = 0;
 };
 
 /******************************************************************************/
 
 const toggle = function() {
-    if ( showdomButton.classList.toggle('active') ) {
+    if ( dom.cl.toggle(showdomButton, 'active') ) {
         toggleOn();
     } else {
         toggleOff();
@@ -670,9 +658,7 @@ const toggle = function() {
     logger.resize();
 };
 
-/******************************************************************************/
-
-showdomButton.addEventListener('click', toggle);
+dom.on(showdomButton, 'click', toggle);
 
 /******************************************************************************/
 

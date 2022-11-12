@@ -19,11 +19,11 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global uDom */
-
 'use strict';
 
 import { i18n$ } from './i18n.js';
+import { dom, qs$, qsa$ } from './dom.js';
+import { setAccentColor, setTheme } from './theme.js';
 
 /******************************************************************************/
 
@@ -84,7 +84,7 @@ const handleImportFilePicker = function() {
 /******************************************************************************/
 
 const startImportFilePicker = function() {
-    const input = document.getElementById('restoreFilePicker');
+    const input = qs$('#restoreFilePicker');
     // Reset to empty string, this will ensure an change event is properly
     // triggered if the user pick a file, even if it is the same as the last
     // one picked.
@@ -134,10 +134,12 @@ const onLocalDataReceived = function(details) {
         v = '?';
         unit = '';
     }
-    uDom.nodeFromId('storageUsed').textContent =
+    dom.text(
+        '#storageUsed',
         i18n$('storageUsed')
             .replace('{{value}}', v.toLocaleString(undefined, { maximumSignificantDigits: 3 }))
-            .replace('{{unit}}', unit && i18n$(unit) || '');
+            .replace('{{unit}}', unit && i18n$(unit) || '')
+    );
 
     const timeOptions = {
         weekday: 'long',
@@ -153,7 +155,7 @@ const onLocalDataReceived = function(details) {
     if ( lastBackupFile !== '' ) {
         const dt = new Date(details.lastBackupTime);
         const text = i18n$('settingsLastBackupPrompt');
-        const node = uDom.nodeFromId('settingsLastBackupPrompt');
+        const node = qs$('#settingsLastBackupPrompt');
         node.textContent = text + '\xA0' + dt.toLocaleString('fullwide', timeOptions);
         node.style.display = '';
     }
@@ -162,19 +164,19 @@ const onLocalDataReceived = function(details) {
     if ( lastRestoreFile !== '' ) {
         const dt = new Date(details.lastRestoreTime);
         const text = i18n$('settingsLastRestorePrompt');
-        const node = uDom.nodeFromId('settingsLastRestorePrompt');
+        const node = qs$('#settingsLastRestorePrompt');
         node.textContent = text + '\xA0' + dt.toLocaleString('fullwide', timeOptions);
         node.style.display = '';
     }
 
     if ( details.cloudStorageSupported === false ) {
-        uDom('[data-setting-name="cloudStorageEnabled"]').attr('disabled', '');
+        dom.attr('[data-setting-name="cloudStorageEnabled"]', 'disabled', '');
     }
 
     if ( details.privacySettingsSupported === false ) {
-        uDom('[data-setting-name="prefetchingDisabled"]').attr('disabled', '');
-        uDom('[data-setting-name="hyperlinkAuditingDisabled"]').attr('disabled', '');
-        uDom('[data-setting-name="webrtcIPAddressHidden"]').attr('disabled', '');
+        dom.attr('[data-setting-name="prefetchingDisabled"]', 'disabled', '');
+        dom.attr('[data-setting-name="hyperlinkAuditingDisabled"]', 'disabled', '');
+        dom.attr('[data-setting-name="webrtcIPAddressHidden"]', 'disabled', '');
     }
 };
 
@@ -192,9 +194,10 @@ const resetUserData = function() {
 /******************************************************************************/
 
 const synchronizeDOM = function() {
-    document.body.classList.toggle(
+    dom.cl.toggle(
+        dom.body,
         'advancedUser',
-        uDom.nodeFromSelector('[data-setting-name="advancedUserEnabled"]').checked === true
+        qs$('[data-setting-name="advancedUserEnabled"]').checked === true
     );
 };
 
@@ -210,13 +213,13 @@ const changeUserSettings = function(name, value) {
     // Maybe reflect some changes immediately
     switch ( name ) {
     case 'uiTheme':
-        uDom.setTheme(value, true);
+        setTheme(value, true);
         break;
     case 'uiAccentCustom':
     case 'uiAccentCustom0':
-        uDom.setAccentColor(
-            uDom.nodeFromSelector('[data-setting-name="uiAccentCustom"]').checked,
-            uDom.nodeFromSelector('[data-setting-name="uiAccentCustom0"]').value,
+        setAccentColor(
+            qs$('[data-setting-name="uiAccentCustom"]').checked,
+            qs$('[data-setting-name="uiAccentCustom0"]').value,
             true
         );
         break;
@@ -229,7 +232,7 @@ const changeUserSettings = function(name, value) {
 
 const onValueChanged = function(ev) {
     const input = ev.target;
-    const name = this.getAttribute('data-setting-name');
+    const name = dom.attr(input, 'data-setting-name');
     let value = input.value;
     // Maybe sanitize value
     switch ( name ) {
@@ -251,36 +254,36 @@ const onValueChanged = function(ev) {
 // TODO: use data-* to declare simple settings
 
 const onUserSettingsReceived = function(details) {
-    const checkboxes = document.querySelectorAll('[data-setting-type="bool"]');
+    const checkboxes = qsa$('[data-setting-type="bool"]');
     for ( const checkbox of checkboxes ) {
-        const name = checkbox.getAttribute('data-setting-name') || '';
+        const name = dom.attr(checkbox, 'data-setting-name') || '';
         if ( details[name] === undefined ) {
-            checkbox.closest('.checkbox').setAttribute('disabled', '');
-            checkbox.setAttribute('disabled', '');
+            dom.attr(checkbox.closest('.checkbox'), 'disabled', '');
+            dom.attr(checkbox, 'disabled', '');
             continue;
         }
         checkbox.checked = details[name] === true;
-        checkbox.addEventListener('change', ( ) => {
+        dom.on(checkbox, 'change', ( ) => {
             changeUserSettings(name, checkbox.checked);
             synchronizeDOM();
         });
     }
 
     if ( details.canLeakLocalIPAddresses === true ) {
-        uDom('[data-setting-name="webrtcIPAddressHidden"]')
-            .ancestors('div.li')
-            .css('display', '');
+        qs$('[data-setting-name="webrtcIPAddressHidden"]')
+            .closest('div.li')
+            .style.display = '';
     }
 
-    uDom('[data-setting-type="value"]').forEach(function(uNode) {
-        uNode.val(details[uNode.attr('data-setting-name')])
-             .on('change', onValueChanged);
+    qsa$('[data-setting-type="value"]').forEach(function(elem) {
+        elem.value = details[dom.attr(elem, 'data-setting-name')];
+        dom.on(elem, 'change', onValueChanged);
     });
 
-    uDom('#export').on('click', ( ) => { exportToFile(); });
-    uDom('#import').on('click', startImportFilePicker);
-    uDom('#reset').on('click', resetUserData);
-    uDom('#restoreFilePicker').on('change', handleImportFilePicker);
+    dom.on('#export', 'click', ( ) => { exportToFile(); });
+    dom.on('#import', 'click', startImportFilePicker);
+    dom.on('#reset', 'click', resetUserData);
+    dom.on('#restoreFilePicker', 'change', handleImportFilePicker);
 
     synchronizeDOM();
 };
@@ -296,9 +299,8 @@ vAPI.messaging.send('dashboard', { what: 'getLocalData' }).then(result => {
 });
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/591
-document.querySelector(
-    '[data-i18n-title="settingsAdvancedUserSettings"]'
-).addEventListener(
+dom.on(
+    '[data-i18n-title="settingsAdvancedUserSettings"]',
     'click',
     self.uBlockDashboard.openOrSelectPage
 );

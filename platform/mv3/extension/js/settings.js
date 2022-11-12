@@ -21,8 +21,6 @@
 
 'use strict';
 
-/******************************************************************************/
-
 import { browser, sendMessage } from './ext.js';
 import { i18n$ } from './i18n.js';
 import { dom, qs$, qsa$ } from './dom.js';
@@ -66,25 +64,24 @@ function renderFilterLists(soft = false) {
 
     const liFromListEntry = function(ruleset, li, hideUnused) {
         if ( !li ) {
-            li = listEntryTemplate.cloneNode(true);
+            li = dom.clone(listEntryTemplate);
         }
         const on = enabledRulesets.includes(ruleset.id);
-        li.classList.toggle('checked', on);
+        dom.cl.toggle(li, 'checked', on);
         if ( dom.attr(li, 'data-listkey') !== ruleset.id ) {
             dom.attr(li, 'data-listkey', ruleset.id);
-            qs$('input[type="checkbox"]', li).checked = on;
-            qs$('.listname', li).textContent = ruleset.name || ruleset.id;
+            qs$(li, 'input[type="checkbox"]').checked = on;
+            dom.text(qs$(li, '.listname'), ruleset.name || ruleset.id);
             dom.cl.remove(li, 'toRemove');
             if ( ruleset.homeURL ) {
                 dom.cl.add(li, 'support');
-                const elem = qs$('a.support', li);
-                dom.attr(elem, 'href', ruleset.homeURL);
+                dom.attr(qs$(li, 'a.support'), 'href', ruleset.homeURL);
             } else {
                 dom.cl.remove(li, 'support');
             }
             if ( ruleset.instructionURL ) {
                 dom.cl.add(li, 'mustread');
-                dom.attr(qs$('a.mustread', li), 'href', ruleset.instructionURL);
+                dom.attr(qs$(li, 'a.mustread'), 'href', ruleset.instructionURL);
             } else {
                 dom.cl.remove(li, 'mustread');
             }
@@ -93,14 +90,14 @@ function renderFilterLists(soft = false) {
         }
         // https://github.com/gorhill/uBlock/issues/1429
         if ( soft !== true ) {
-            qs$('input[type="checkbox"]', li).checked = on;
+            qs$(li, 'input[type="checkbox"]').checked = on;
         }
         const stats = rulesetStats(ruleset.id);
         li.title = listStatsTemplate
             .replace('{{ruleCount}}', renderNumber(stats.ruleCount))
             .replace('{{filterCount}}', renderNumber(stats.filterCount));
         dom.attr(
-            qs$('.input.checkbox', li),
+            qs$(li, '.input.checkbox'),
             'disabled',
             stats.ruleCount === 0 ? '' : null
         );
@@ -126,22 +123,25 @@ function renderFilterLists(soft = false) {
     const liFromListGroup = function(groupKey, groupRulesets) {
         let liGroup = qs$(`#lists > .groupEntry[data-groupkey="${groupKey}"]`);
         if ( liGroup === null ) {
-            liGroup = listGroupTemplate.cloneNode(true);
+            liGroup = dom.clone(listGroupTemplate);
             let groupName = groupNames.get(groupKey);
             if ( groupName === undefined ) {
                 groupName = i18n$('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1));
                 groupNames.set(groupKey, groupName);
             }
             if ( groupName !== '' ) {
-                qs$('.geName', liGroup).textContent = groupName;
+                dom.text(qs$(liGroup, '.geName'), groupName);
             }
         }
-        if ( qs$('.geName:empty', liGroup) === null ) {
-            qs$('.geCount', liGroup).textContent = listEntryCountFromGroup(groupRulesets);
+        if ( qs$(liGroup, '.geName:empty') === null ) {
+            dom.text(
+                qs$(liGroup, '.geCount'),
+                listEntryCountFromGroup(groupRulesets)
+            );
         }
         const hideUnused = mustHideUnusedLists(groupKey);
-        liGroup.classList.toggle('hideUnused', hideUnused);
-        const ulGroup = qs$('.listEntries', liGroup);
+        dom.cl.toggle(liGroup, 'hideUnused', hideUnused);
+        const ulGroup = qs$(liGroup, '.listEntries');
         if ( !groupRulesets ) { return liGroup; }
         groupRulesets.sort(function(a, b) {
             return (a.name || '').localeCompare(b.name || '');
@@ -161,10 +161,7 @@ function renderFilterLists(soft = false) {
 
     // Incremental rendering: this will allow us to easily discard unused
     // DOM list entries.
-    dom.cl.add(
-        qsa$('#lists .listEntries .listEntry[data-listkey]'),
-        'discard'
-    );
+    dom.cl.add('#lists .listEntries .listEntry[data-listkey]', 'discard');
 
     // Visually split the filter lists in three groups
     const ulLists = qs$('#lists');
@@ -192,14 +189,14 @@ function renderFilterLists(soft = false) {
     dom.cl.toggle(dom.body, 'hideUnused', mustHideUnusedLists('*'));
 
     for ( const [ groupKey, groupRulesets ] of groups ) {
-        let liGroup = liFromListGroup(groupKey, groupRulesets);
-        liGroup.setAttribute('data-groupkey', groupKey);
+        const liGroup = liFromListGroup(groupKey, groupRulesets);
+        dom.attr(liGroup, 'data-groupkey', groupKey);
         if ( liGroup.parentElement === null ) {
             ulLists.appendChild(liGroup);
         }
     }
 
-    dom.remove(qsa$('#lists .listEntries .listEntry.discard'));
+    dom.remove('#lists .listEntries .listEntry.discard');
 
     renderWidgets();
 }
@@ -220,15 +217,16 @@ const renderWidgets = function() {
     let filterCount = 0;
     let ruleCount = 0;
     for ( const liEntry of qsa$('#lists .listEntry[data-listkey]') ) {
-        if ( qs$('input[type="checkbox"]:checked', liEntry)  === null ) { continue; }
+        if ( qs$(liEntry, 'input[type="checkbox"]:checked')  === null ) { continue; }
         const stats = rulesetStats(liEntry.dataset.listkey);
         if ( stats === undefined ) { continue; }
         ruleCount += stats.ruleCount;
         filterCount += stats.filterCount;
     }
-    qs$('#listsOfBlockedHostsPrompt').textContent = i18n$('perRulesetStats')
+    dom.text('#listsOfBlockedHostsPrompt', i18n$('perRulesetStats')
         .replace('{{ruleCount}}', ruleCount.toLocaleString())
-        .replace('{{filterCount}}', filterCount.toLocaleString());
+        .replace('{{filterCount}}', filterCount.toLocaleString())
+    );
 };
 
 /******************************************************************************/
@@ -267,7 +265,7 @@ async function onFilteringModeChange(ev) {
 }
 
 dom.on(
-    qs$('#defaultFilteringMode'),
+    '#defaultFilteringMode',
     'change',
     '.filteringModeCard input[type="radio"]',
     ev => { onFilteringModeChange(ev); }
@@ -275,7 +273,7 @@ dom.on(
 
 /******************************************************************************/
 
-dom.on(qs$('#autoReload input[type="checkbox"'), 'change', ev => {
+dom.on('#autoReload input[type="checkbox"', 'change', ev => {
     sendMessage({
         what: 'setAutoReload',
         state: ev.target.checked,
@@ -287,7 +285,7 @@ dom.on(qs$('#autoReload input[type="checkbox"'), 'change', ev => {
 async function applyEnabledRulesets() {
     const enabledRulesets = [];
     for ( const liEntry of qsa$('#lists .listEntry[data-listkey]') ) {
-        if ( qs$('input[type="checkbox"]:checked', liEntry) === null ) { continue; }
+        if ( qs$(liEntry, 'input[type="checkbox"]:checked') === null ) { continue; }
         enabledRulesets.push(liEntry.dataset.listkey);
     }
 
@@ -299,7 +297,7 @@ async function applyEnabledRulesets() {
     renderWidgets();
 }
 
-dom.on(qs$('#lists'), 'change', '.listEntry input[type="checkbox"]', ( ) => {
+dom.on('#lists', 'change', '.listEntry input[type="checkbox"]', ( ) => {
     applyEnabledRulesets();
 });
 
@@ -324,8 +322,8 @@ function toggleHideUnusedLists(which) {
         if ( mustHide ) {
             hideUnusedSet.add(which);
         }
-        document.body.classList.toggle('hideUnused', mustHide);
-        dom.cl.toggle(qsa$('.groupEntry[data-groupkey]'), 'hideUnused', mustHide);
+        dom.cl.toggle(dom.body, 'hideUnused', mustHide);
+        dom.cl.toggle('.groupEntry[data-groupkey]', 'hideUnused', mustHide);
     } else {
         const doesHide = hideUnusedSet.has(which);
         if ( doesHide ) {
@@ -335,7 +333,7 @@ function toggleHideUnusedLists(which) {
         }
         mustHide = doesHide === doesHideAll;
         groupSelector = `.groupEntry[data-groupkey="${which}"]`;
-        dom.cl.toggle(qsa$(groupSelector), 'hideUnused', mustHide);
+        dom.cl.toggle(groupSelector, 'hideUnused', mustHide);
     }
 
     for ( const elem of qsa$(`#lists ${groupSelector} .listEntry[data-listkey] input[type="checkbox"]:not(:checked)`) ) {
@@ -352,16 +350,11 @@ function toggleHideUnusedLists(which) {
     );
 }
 
-dom.on(
-    qs$('#lists'),
-    'click',
-    '.groupEntry[data-groupkey] > .geDetails',
-    ev => {
-        toggleHideUnusedLists(
-            dom.attr(ev.target.closest('[data-groupkey]'), 'data-groupkey')
-        );
-    }
-);
+dom.on('#lists', 'click', '.groupEntry[data-groupkey] > .geDetails', ev => {
+    toggleHideUnusedLists(
+        dom.attr(ev.target.closest('[data-groupkey]'), 'data-groupkey')
+    );
+});
 
 // Initialize from saved state.
 simpleStorage.getItem('hideUnusedFilterLists').then(value => {

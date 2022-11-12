@@ -21,12 +21,10 @@
 
 'use strict';
 
-/******************************************************************************/
-
-import { dom, qsa$ } from './dom.js';
+import { dom } from './dom.js';
 
 /******************************************************************************/
 
 // Open links in the proper window
-dom.attr(qsa$('a'), 'target', '_blank');
-dom.attr(qsa$('a[href*="dashboard.html"]'), 'target', '_parent');
+dom.attr('a', 'target', '_blank');
+dom.attr('a[href*="dashboard.html"]', 'target', '_parent');

@@ -28,44 +28,12 @@ import { hostnameFromURI } from './uri-utils.js';
 
 /******************************************************************************/
 
-µb.canUseShortcuts = vAPI.commands instanceof Object;
-
-// https://github.com/uBlockOrigin/uBlock-issues/issues/386
-//   Firefox 74 and above has complete shortcut assignment user interface.
-µb.canUpdateShortcuts = false;
-
-if (
-    µb.canUseShortcuts &&
-    vAPI.webextFlavor.soup.has('firefox') &&
-    typeof vAPI.commands.update === 'function'
-) {
-    self.addEventListener(
-        'webextFlavor',
-        ( ) => {
-            µb.canUpdateShortcuts = vAPI.webextFlavor.major < 74;
-            if ( µb.canUpdateShortcuts === false ) { return; }
-            vAPI.storage.get('commandShortcuts').then(bin => {
-                if ( bin instanceof Object === false ) { return; }
-                const shortcuts = bin.commandShortcuts;
-                if ( Array.isArray(shortcuts) === false ) { return; }
-                µb.commandShortcuts = new Map(shortcuts);
-                for ( const [ name, shortcut ] of shortcuts ) {
-                    vAPI.commands.update({ name, shortcut });
-                }
-            });
-        },
-        { once: true }
-    );
-}
-
-/******************************************************************************/
-
 (( ) => {
 
 // *****************************************************************************
 // start of local namespace
 
-if ( µb.canUseShortcuts === false ) { return; }
+if ( vAPI.commands instanceof Object === false ) { return; }
 
 const relaxBlockingMode = (( ) => {
     const reloadTimers = new Map();

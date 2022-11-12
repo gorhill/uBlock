@@ -19,18 +19,17 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global CodeMirror, uDom, uBlockDashboard */
+/* global CodeMirror, uBlockDashboard */
 
 'use strict';
 
-/******************************************************************************/
-
 import { i18n$ } from './i18n.js';
+import { dom, qs$ } from './dom.js';
 import './codemirror/ubo-static-filtering.js';
 
 /******************************************************************************/
 
-const cmEditor = new CodeMirror(document.getElementById('userFilters'), {
+const cmEditor = new CodeMirror(qs$('#userFilters'), {
     autoCloseBrackets: true,
     autofocus: true,
     extraKeys: {
@@ -103,8 +102,8 @@ const userFiltersChanged = function(changed) {
     if ( typeof changed !== 'boolean' ) {
         changed = self.hasUnsavedData();
     }
-    uDom.nodeFromId('userFiltersApply').disabled = !changed;
-    uDom.nodeFromId('userFiltersRevert').disabled = !changed;
+    qs$('#userFiltersApply').disabled = !changed;
+    qs$('#userFiltersRevert').disabled = !changed;
 };
 
 /******************************************************************************/
@@ -222,7 +221,7 @@ const handleImportFilePicker = function() {
 /******************************************************************************/
 
 const startImportFilePicker = function() {
-    const input = document.getElementById('importFilePicker');
+    const input = qs$('#importFilePicker');
     // Reset to empty string, this will ensure an change event is properly
     // triggered if the user pick a file, even if it is the same as the last
     // one picked.
@@ -290,11 +289,11 @@ self.hasUnsavedData = function() {
 /******************************************************************************/
 
 // Handle user interaction
-uDom('#importUserFiltersFromFile').on('click', startImportFilePicker);
-uDom('#importFilePicker').on('change', handleImportFilePicker);
-uDom('#exportUserFiltersToFile').on('click', exportUserFiltersToFile);
-uDom('#userFiltersApply').on('click', ( ) => { applyChanges(); });
-uDom('#userFiltersRevert').on('click', revertChanges);
+dom.on('#importUserFiltersFromFile', 'click', startImportFilePicker);
+dom.on('#importFilePicker', 'change', handleImportFilePicker);
+dom.on('#exportUserFiltersToFile', 'click', exportUserFiltersToFile);
+dom.on('#userFiltersApply', 'click', ( ) => { applyChanges(); });
+dom.on('#userFiltersRevert', 'click', revertChanges);
 
 (async ( ) => {
     await renderUserFilters();

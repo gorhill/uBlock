@@ -19,9 +19,11 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global CodeMirror, uDom, uBlockDashboard */
+/* global CodeMirror, uBlockDashboard */
 
 'use strict';
+
+import { dom, qs$ } from './dom.js';
 
 /******************************************************************************/
 
@@ -60,19 +62,16 @@ CodeMirror.registerGlobalHelper(
     }
 );
 
-const cmEditor = new CodeMirror(
-    document.getElementById('console'),
-    {
-        autofocus: true,
-        foldGutter: true,
-        gutters: [ 'CodeMirror-linenumbers', 'CodeMirror-foldgutter' ],
-        lineNumbers: true,
-        lineWrapping: true,
-        mode: 'ubo-dump',
-        styleActiveLine: true,
-        undoDepth: 5,
-    }
-);
+const cmEditor = new CodeMirror(qs$('#console'), {
+    autofocus: true,
+    foldGutter: true,
+    gutters: [ 'CodeMirror-linenumbers', 'CodeMirror-foldgutter' ],
+    lineNumbers: true,
+    lineWrapping: true,
+    mode: 'ubo-dump',
+    styleActiveLine: true,
+    undoDepth: 5,
+});
 
 uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 
@@ -84,11 +83,11 @@ function log(text) {
 
 /******************************************************************************/
 
-uDom.nodeFromId('console-clear').addEventListener('click', ( ) => {
-        cmEditor.setValue('');
+dom.on('#console-clear', 'click', ( ) => {
+    cmEditor.setValue('');
 });
 
-uDom.nodeFromId('console-fold').addEventListener('click', ( ) => {
+dom.on('#console-fold', 'click', ( ) => {
     const unfolded = [];
     let maxUnfolded = -1;
     cmEditor.eachLine(handle => {
@@ -110,7 +109,7 @@ uDom.nodeFromId('console-fold').addEventListener('click', ( ) => {
     cmEditor.endOperation();
 });
 
-uDom.nodeFromId('console-unfold').addEventListener('click', ( ) => {
+dom.on('#console-unfold', 'click', ( ) => {
     const folded = [];
     let minFolded = Number.MAX_SAFE_INTEGER;
     cmEditor.eachLine(handle => {
@@ -132,54 +131,54 @@ uDom.nodeFromId('console-unfold').addEventListener('click', ( ) => {
     cmEditor.endOperation();
 });
 
-uDom.nodeFromId('snfe-dump').addEventListener('click', ev => {
-        const button = ev.target;
-        button.setAttribute('disabled', '');
-        vAPI.messaging.send('dashboard', {
-            what: 'snfeDump',
-        }).then(result => {
-            log(result);
-            button.removeAttribute('disabled');
-        });
+dom.on('#snfe-dump', 'click', ev => {
+    const button = ev.target;
+    dom.attr(button, 'disabled', '');
+    vAPI.messaging.send('dashboard', {
+        what: 'snfeDump',
+    }).then(result => {
+        log(result);
+        dom.attr(button, 'disabled', null);
+    });
 });
 
-uDom.nodeFromId('snfe-todnr').addEventListener('click', ev => {
-        const button = ev.target;
-        button.setAttribute('disabled', '');
-        vAPI.messaging.send('dashboard', {
-            what: 'snfeToDNR',
-        }).then(result => {
-            log(result);
-            button.removeAttribute('disabled');
-        });
+dom.on('#snfe-todnr', 'click', ev => {
+    const button = ev.target;
+    dom.attr(button, 'disabled', '');
+    vAPI.messaging.send('dashboard', {
+        what: 'snfeToDNR',
+    }).then(result => {
+        log(result);
+        dom.attr(button, 'disabled', null);
+    });
 });
 
 vAPI.messaging.send('dashboard', {
     what: 'getAppData',
 }).then(appData => {
     if ( appData.canBenchmark !== true ) { return; }
-    uDom.nodeFromId('snfe-benchmark').removeAttribute('disabled');
-    uDom.nodeFromId('snfe-benchmark').addEventListener('click', ev => {
+    dom.attr('#snfe-benchmark', 'disabled', null);
+    dom.on('#snfe-benchmark', 'click', ev => {
         const button = ev.target;
-        button.setAttribute('disabled', '');
+        dom.attr(button, 'disabled', '');
         vAPI.messaging.send('dashboard', {
             what: 'snfeBenchmark',
         }).then(result => {
             log(result);
-            button.removeAttribute('disabled');
+            dom.attr(button, 'disabled', null);
         });
     });
 });
 
-uDom.nodeFromId('cfe-dump').addEventListener('click', ev => {
-        const button = ev.target;
-        button.setAttribute('disabled', '');
-        vAPI.messaging.send('dashboard', {
-            what: 'cfeDump',
-        }).then(result => {
-            log(result);
-            button.removeAttribute('disabled');
-        });
+dom.on('#cfe-dump', 'click', ev => {
+    const button = ev.target;
+    dom.attr(button, 'disabled', '');
+    vAPI.messaging.send('dashboard', {
+        what: 'cfeDump',
+    }).then(result => {
+        log(result);
+        dom.attr(button, 'disabled', null);
+    });
 });
 
 /******************************************************************************/

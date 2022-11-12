@@ -19,13 +19,10 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global uDom */
-
 'use strict';
 
-/******************************************************************************/
-
 import { i18n, i18n$ } from './i18n.js';
+import { dom, qs$, qsa$ } from './dom.js';
 
 /******************************************************************************/
 
@@ -47,7 +44,7 @@ vAPI.broadcastListener.add(msg => {
         updateAssetStatus(msg);
         break;
     case 'assetsUpdated':
-        document.body.classList.remove('updating');
+        dom.cl.remove(dom.body, 'updating');
         renderWidgets();
         break;
     case 'staticFilteringDataChanged':
@@ -67,8 +64,8 @@ const renderNumber = function(value) {
 /******************************************************************************/
 
 const renderFilterLists = function(soft) {
-    const listGroupTemplate = uDom('#templates .groupEntry');
-    const listEntryTemplate = uDom('#templates .listEntry');
+    const listGroupTemplate = qs$('#templates .groupEntry');
+    const listEntryTemplate = qs$('#templates .listEntry');
     const listStatsTemplate = i18n$('3pListsOfBlockedHostsPerListStats');
     const renderElapsedTimeToString = i18n.renderElapsedTimeToString;
     const groupNames = new Map([ [ 'user', '' ] ]);
@@ -84,65 +81,62 @@ const renderFilterLists = function(soft) {
     const liFromListEntry = function(listKey, li, hideUnused) {
         const entry = listDetails.available[listKey];
         if ( !li ) {
-            li = listEntryTemplate.clone().nodeAt(0);
+            li = dom.clone(listEntryTemplate);
         }
         const on = entry.off !== true;
-        li.classList.toggle('checked', on);
+        dom.cl.toggle(li, 'checked', on);
         let elem;
-        if ( li.getAttribute('data-listkey') !== listKey ) {
-            li.setAttribute('data-listkey', listKey);
-            elem = li.querySelector('input[type="checkbox"]');
+        if ( dom.attr(li, 'data-listkey') !== listKey ) {
+            dom.attr(li, 'data-listkey', listKey);
+            elem = qs$(li, 'input[type="checkbox"]');
             elem.checked = on;
-            elem = li.querySelector('.listname');
-            elem.textContent = listNameFromListKey(listKey);
-            elem = li.querySelector('a.content');
-            elem.setAttribute('href', 'asset-viewer.html?url=' + encodeURIComponent(listKey));
-            elem.setAttribute('type', 'text/html');
-            li.classList.remove('toRemove');
+            dom.text(qs$(li, '.listname'), listNameFromListKey(listKey));
+            elem = qs$(li, 'a.content');
+            dom.attr(elem, 'href', 'asset-viewer.html?url=' + encodeURIComponent(listKey));
+            dom.attr(elem, 'type', 'text/html');
+            dom.cl.remove(li, 'toRemove');
             if ( entry.supportName ) {
-                li.classList.add('support');
-                elem = li.querySelector('a.support');
-                elem.setAttribute('href', entry.supportURL);
-                elem.setAttribute('title', entry.supportName);
+                dom.cl.add(li, 'support');
+                elem = qs$(li, 'a.support');
+                dom.attr(elem, 'href', entry.supportURL);
+                dom.attr(elem, 'title', entry.supportName);
             } else {
-                li.classList.remove('support');
+                dom.cl.remove(li, 'support');
             }
             if ( entry.external ) {
-                li.classList.add('external');
+                dom.cl.add(li, 'external');
             } else {
-                li.classList.remove('external');
+                dom.cl.remove(li, 'external');
             }
             if ( entry.instructionURL ) {
-                li.classList.add('mustread');
-                elem = li.querySelector('a.mustread');
-                elem.setAttribute('href', entry.instructionURL);
+                dom.cl.add(li, 'mustread');
+                dom.attr(qs$(li, 'a.mustread'), 'href', entry.instructionURL);
             } else {
-                li.classList.remove('mustread');
+                dom.cl.remove(li, 'mustread');
             }
-            li.classList.toggle('isDefault', entry.isDefault === true);
-            li.classList.toggle('unused', hideUnused && !on);
+            dom.cl.toggle(li, 'isDefault', entry.isDefault === true);
+            dom.cl.toggle(li, 'unused', hideUnused && !on);
         }
         // https://github.com/gorhill/uBlock/issues/1429
         if ( !soft ) {
-            li.querySelector('input[type="checkbox"]').checked = on;
+            qs$(li, 'input[type="checkbox"]').checked = on;
         }
-        elem = li.querySelector('span.counts');
+        elem = qs$(li, 'span.counts');
         let text = '';
         if ( !isNaN(+entry.entryUsedCount) && !isNaN(+entry.entryCount) ) {
             text = listStatsTemplate
                 .replace('{{used}}', renderNumber(on ? entry.entryUsedCount : 0))
                 .replace('{{total}}', renderNumber(entry.entryCount));
         }
-        elem.textContent = text;
+        dom.text(elem, text);
         // https://github.com/chrisaljoudi/uBlock/issues/104
         const asset = listDetails.cache[listKey] || {};
         const remoteURL = asset.remoteURL;
-        li.classList.toggle(
-            'unsecure',
+        dom.cl.toggle(li, 'unsecure',
             typeof remoteURL === 'string' && remoteURL.lastIndexOf('http:', 0) === 0
         );
-        li.classList.toggle('failed', asset.error !== undefined);
-        li.classList.toggle('obsolete', asset.obsolete === true);
+        dom.cl.toggle(li, 'failed', asset.error !== undefined);
+        dom.cl.toggle(li, 'obsolete', asset.obsolete === true);
         const lastUpdateString = lastUpdateTemplateString.replace(
             '{{ago}}',
             renderElapsedTimeToString(asset.writeTime || 0)
@@ -152,18 +146,15 @@ const renderFilterLists = function(soft) {
             if ( asset.cached && asset.writeTime !== 0 ) {
                 title += '\n' + lastUpdateString;
             }
-            li.querySelector('.status.obsolete').setAttribute('title', title);
+            dom.attr(qs$(li, '.status.obsolete'), 'title', title);
         }
         if ( asset.cached === true ) {
-            li.classList.add('cached');
-            li.querySelector('.status.cache').setAttribute(
-                'title',
-                lastUpdateString
-            );
+            dom.cl.add(li, 'cached');
+            dom.attr(qs$(li, '.status.cache'), 'title', lastUpdateString);
         } else {
-            li.classList.remove('cached');
+            dom.cl.remove(li, 'cached');
         }
-        li.classList.remove('discard');
+        dom.cl.remove(li, 'discard');
         return li;
     };
 
@@ -183,24 +174,24 @@ const renderFilterLists = function(soft) {
     };
 
     const liFromListGroup = function(groupKey, listKeys) {
-        let liGroup = document.querySelector(`#lists > .groupEntry[data-groupkey="${groupKey}"]`);
+        let liGroup = qs$(`#lists > .groupEntry[data-groupkey="${groupKey}"]`);
         if ( liGroup === null ) {
-            liGroup = listGroupTemplate.clone().nodeAt(0);
+            liGroup = dom.clone(listGroupTemplate);
             let groupName = groupNames.get(groupKey);
             if ( groupName === undefined ) {
                 groupName = i18n$('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1));
                 groupNames.set(groupKey, groupName);
             }
             if ( groupName !== '' ) {
-                liGroup.querySelector('.geName').textContent = groupName;
+                dom.text(qs$(liGroup, '.geName'), groupName);
             }
         }
-        if ( liGroup.querySelector('.geName:empty') === null ) {
-            liGroup.querySelector('.geCount').textContent = listEntryCountFromGroup(listKeys);
+        if ( qs$(liGroup, '.geName:empty') === null ) {
+            dom.text(qs$(liGroup, '.geCount'), listEntryCountFromGroup(listKeys));
         }
         let hideUnused = mustHideUnusedLists(groupKey);
-        liGroup.classList.toggle('hideUnused', hideUnused);
-        let ulGroup = liGroup.querySelector('.listEntries');
+        dom.cl.toggle(liGroup, 'hideUnused', hideUnused);
+        let ulGroup = qs$(liGroup, '.listEntries');
         if ( !listKeys ) { return liGroup; }
         listKeys.sort(function(a, b) {
             return (listDetails.available[a].title || '').localeCompare(listDetails.available[b].title || '');
@@ -246,13 +237,14 @@ const renderFilterLists = function(soft) {
 
         // Incremental rendering: this will allow us to easily discard unused
         // DOM list entries.
-        uDom('#lists .listEntries .listEntry[data-listkey]').addClass('discard');
+        dom.cl.add('#lists .listEntries .listEntry[data-listkey]', 'discard');
 
         // Remove import widget while we recreate list of lists.
-        const importWidget = uDom('.listEntry.toImport').detach();
+        const importWidget = qs$('.listEntry.toImport');
+        importWidget.remove();
 
         // Visually split the filter lists in purpose-based groups
-        const ulLists = document.querySelector('#lists');
+        const ulLists = qs$('#lists');
         const groups = groupsFromLists(details.available);
         const groupKeys = [
             'user',
@@ -265,11 +257,11 @@ const renderFilterLists = function(soft) {
             'regions',
             'custom'
         ];
-        document.body.classList.toggle('hideUnused', mustHideUnusedLists('*'));
+        dom.cl.toggle(dom.body, 'hideUnused', mustHideUnusedLists('*'));
         for ( let i = 0; i < groupKeys.length; i++ ) {
             let groupKey = groupKeys[i];
             let liGroup = liFromListGroup(groupKey, groups.get(groupKey));
-            liGroup.setAttribute('data-groupkey', groupKey);
+            dom.attr(liGroup, 'data-groupkey', groupKey);
             if ( liGroup.parentElement === null ) {
                 ulLists.appendChild(liGroup);
             }
@@ -280,28 +272,23 @@ const renderFilterLists = function(soft) {
             ulLists.appendChild(liFromListGroup(groupKey, groupKey));
         }
 
-        uDom('#lists .listEntries .listEntry.discard').remove();
+        dom.remove('#lists .listEntries .listEntry.discard');
 
         // Re-insert import widget.
-        uDom('[data-groupkey="custom"] .listEntries').append(importWidget);
+        qs$('[data-groupkey="custom"] .listEntries').append(importWidget);
 
-        uDom.nodeFromId('autoUpdate').checked =
-            listDetails.autoUpdate === true;
-        uDom.nodeFromId('listsOfBlockedHostsPrompt').textContent =
+        qs$('#autoUpdate').checked = listDetails.autoUpdate === true;
+        dom.text(
+            '#listsOfBlockedHostsPrompt',
             i18n$('3pListsOfBlockedHostsPrompt')
-                .replace(
-                    '{{netFilterCount}}',
-                    renderNumber(details.netFilterCount)
-                )
-                .replace(
-                    '{{cosmeticFilterCount}}',
-                    renderNumber(details.cosmeticFilterCount)
-                );
-        uDom.nodeFromId('parseCosmeticFilters').checked =
+                .replace('{{netFilterCount}}', renderNumber(details.netFilterCount))
+                .replace('{{cosmeticFilterCount}}', renderNumber(details.cosmeticFilterCount))
+        );
+        qs$('#parseCosmeticFilters').checked =
             listDetails.parseCosmeticFilters === true;
-        uDom.nodeFromId('ignoreGenericCosmeticFilters').checked =
+        qs$('#ignoreGenericCosmeticFilters').checked =
             listDetails.ignoreGenericCosmeticFilters === true;
-        uDom.nodeFromId('suspendUntilListsAreLoaded').checked =
+        qs$('#suspendUntilListsAreLoaded').checked =
             listDetails.suspendUntilListsAreLoaded === true;
 
         // Compute a hash of the settings so that we can keep track of changes
@@ -311,7 +298,7 @@ const renderFilterLists = function(soft) {
         }
 
         // https://github.com/gorhill/uBlock/issues/2394
-        document.body.classList.toggle('updating', listDetails.isUpdating);
+        dom.cl.toggle(dom.body, 'updating', listDetails.isUpdating);
 
         renderWidgets();
     };
@@ -326,39 +313,30 @@ const renderFilterLists = function(soft) {
 /******************************************************************************/
 
 const renderWidgets = function() {
-    let cl = uDom.nodeFromId('buttonApply').classList;
-    cl.toggle(
-        'disabled',
+    dom.cl.toggle('#buttonApply', 'disabled',
         filteringSettingsHash === hashFromCurrentFromSettings()
     );
-    const updating = document.body.classList.contains('updating');
-    cl = uDom.nodeFromId('buttonUpdate').classList;
-    cl.toggle('active', updating);
-    cl.toggle(
-        'disabled',
+    const updating = dom.cl.has(dom.body, 'updating');
+    dom.cl.toggle('#buttonUpdate', 'active', updating);
+    dom.cl.toggle('#buttonUpdate', 'disabled',
         updating === false &&
-        document.querySelector('#lists .listEntry.obsolete:not(.toRemove) input[type="checkbox"]:checked') === null
-        );
-    cl = uDom.nodeFromId('buttonPurgeAll').classList;
-    cl.toggle(
-        'disabled',
-        updating || document.querySelector('#lists .listEntry.cached:not(.obsolete)') === null
+        qs$('#lists .listEntry.obsolete:not(.toRemove) input[type="checkbox"]:checked') === null
+    );
+    dom.cl.toggle('#buttonPurgeAll', 'disabled',
+        updating || qs$('#lists .listEntry.cached:not(.obsolete)') === null
     );
 };
 
 /******************************************************************************/
 
 const updateAssetStatus = function(details) {
-    const li = document.querySelector(
-        '#lists .listEntry[data-listkey="' + details.key + '"]'
-    );
+    const li = qs$(`#lists .listEntry[data-listkey="${details.key}"]`);
     if ( li === null ) { return; }
-    li.classList.toggle('failed', !!details.failed);
-    li.classList.toggle('obsolete', !details.cached);
-    li.classList.toggle('cached', !!details.cached);
+    dom.cl.toggle(li, 'failed', !!details.failed);
+    dom.cl.toggle(li, 'obsolete', !details.cached);
+    dom.cl.toggle(li, 'cached', !!details.cached);
     if ( details.cached ) {
-        li.querySelector('.status.cache').setAttribute(
-            'title',
+        dom.attr(qs$(li, '.status.cache'), 'title',
             lastUpdateTemplateString.replace(
                 '{{ago}}',
                 i18n.renderElapsedTimeToString(Date.now())
@@ -377,21 +355,21 @@ const updateAssetStatus = function(details) {
 
 const hashFromCurrentFromSettings = function() {
     const hash = [
-        uDom.nodeFromId('parseCosmeticFilters').checked,
-        uDom.nodeFromId('ignoreGenericCosmeticFilters').checked
+        qs$('#parseCosmeticFilters').checked,
+        qs$('#ignoreGenericCosmeticFilters').checked
     ];
     const listHash = [];
-    const listEntries = document.querySelectorAll('#lists .listEntry[data-listkey]:not(.toRemove)');
+    const listEntries = qsa$('#lists .listEntry[data-listkey]:not(.toRemove)');
     for ( const liEntry of listEntries ) {
-        if ( liEntry.querySelector('input[type="checkbox"]:checked') !== null ) {
-            listHash.push(liEntry.getAttribute('data-listkey'));
+        if ( qs$(liEntry, 'input[type="checkbox"]:checked') !== null ) {
+            listHash.push(dom.attr(liEntry, 'data-listkey'));
         }
     }
     hash.push(
         listHash.sort().join(),
-        uDom.nodeFromId('importLists').checked &&
-            reValidExternalList.test(uDom.nodeFromId('externalLists').value),
-        document.querySelector('#lists .listEntry.toRemove') !== null
+        qs$('#importLists').checked &&
+            reValidExternalList.test(qs$('#externalLists').value),
+        qs$('#lists .listEntry.toRemove') !== null
     );
     return hash.join();
 };
@@ -400,8 +378,7 @@ const hashFromCurrentFromSettings = function() {
 
 const onListsetChanged = function(ev) {
     const input = ev.target;
-    const li = input.closest('.listEntry');
-    li.classList.toggle('checked', input.checked);
+    dom.cl.toggle(input.closest('.listEntry'), 'checked', input.checked);
     onFilteringSettingsChanged();
 };
 
@@ -416,7 +393,7 @@ const onFilteringSettingsChanged = function() {
 const onRemoveExternalList = function(ev) {
     const liEntry = ev.target.closest('[data-listkey]');
     if ( liEntry === null ) { return; }
-    liEntry.classList.toggle('toRemove');
+    dom.cl.toggle(liEntry, 'toRemove');
     renderWidgets();
 };
 
@@ -424,7 +401,7 @@ const onRemoveExternalList = function(ev) {
 
 const onPurgeClicked = function(ev) {
     const liEntry = ev.target.closest('[data-listkey]');
-    const listKey = liEntry.getAttribute('data-listkey') || '';
+    const listKey = dom.attr(liEntry, 'data-listkey') || '';
     if ( listKey === '' ) { return; }
 
     messaging.send('dashboard', {
@@ -437,10 +414,10 @@ const onPurgeClicked = function(ev) {
     // https://github.com/gorhill/uBlock/issues/1733
     //   An external filter list must not be marked as obsolete, they will
     //   always be fetched anyways if there is no cached copy.
-    liEntry.classList.add('obsolete');
-    liEntry.classList.remove('cached');
+    dom.cl.add(liEntry, 'obsolete');
+    dom.cl.remove(liEntry, 'cached');
 
-    if ( liEntry.querySelector('input[type="checkbox"]').checked ) {
+    if ( qs$(liEntry, 'input[type="checkbox"]').checked ) {
         renderWidgets();
     }
 };
@@ -452,41 +429,35 @@ const selectFilterLists = async function() {
     messaging.send('dashboard', {
         what: 'userSettings',
         name: 'parseAllABPHideFilters',
-        value: uDom.nodeFromId('parseCosmeticFilters').checked,
+        value: qs$('#parseCosmeticFilters').checked,
     });
     messaging.send('dashboard', {
         what: 'userSettings',
         name: 'ignoreGenericCosmeticFilters',
-        value: uDom.nodeFromId('ignoreGenericCosmeticFilters').checked,
+        value: qs$('#ignoreGenericCosmeticFilters').checked,
     });
 
     // Filter lists to select
     const toSelect = [];
-    for (
-        const liEntry of
-        document.querySelectorAll('#lists .listEntry[data-listkey]:not(.toRemove)')
-    ) {
-        if ( liEntry.querySelector('input[type="checkbox"]:checked') !== null ) {
-            toSelect.push(liEntry.getAttribute('data-listkey'));
+    for ( const liEntry of qsa$('#lists .listEntry[data-listkey]:not(.toRemove)') ) {
+        if ( qs$(liEntry, 'input[type="checkbox"]:checked') !== null ) {
+            toSelect.push(dom.attr(liEntry, 'data-listkey'));
         }
     }
 
     // External filter lists to remove
     const toRemove = [];
-    for (
-        const liEntry of
-        document.querySelectorAll('#lists .listEntry.toRemove[data-listkey]')
-    ) {
-        toRemove.push(liEntry.getAttribute('data-listkey'));
+    for ( const liEntry of qsa$('#lists .listEntry.toRemove[data-listkey]') ) {
+        toRemove.push(dom.attr(liEntry, 'data-listkey'));
     }
 
     // External filter lists to import
-    const externalListsElem = document.getElementById('externalLists');
+    const externalListsElem = qs$('#externalLists');
     const toImport = externalListsElem.value.trim();
     {
         const liEntry = externalListsElem.closest('.listEntry');
-        liEntry.classList.remove('checked');
-        liEntry.querySelector('input[type="checkbox"]').checked = false;
+        dom.cl.remove(liEntry, 'checked');
+        qs$(liEntry, 'input[type="checkbox"]').checked = false;
         externalListsElem.value = '';
     }
 
@@ -503,7 +474,7 @@ const selectFilterLists = async function() {
 /******************************************************************************/
 
 const buttonApplyHandler = async function() {
-    uDom('#buttonApply').removeClass('enabled');
+    dom.cl.remove('#buttonApply', 'enabled');
     await selectFilterLists();
     renderWidgets();
     messaging.send('dashboard', { what: 'reloadAllFilters' });
@@ -513,7 +484,7 @@ const buttonApplyHandler = async function() {
 
 const buttonUpdateHandler = async function() {
     await selectFilterLists();
-    document.body.classList.add('updating');
+    dom.cl.add(dom.body, 'updating');
     renderWidgets();
     messaging.send('dashboard', { what: 'forceUpdateAssets' });
 };
@@ -521,7 +492,7 @@ const buttonUpdateHandler = async function() {
 /******************************************************************************/
 
 const buttonPurgeAllHandler = async function(hard) {
-    uDom('#buttonPurgeAll').removeClass('enabled');
+    dom.cl.remove('#buttonPurgeAll', 'enabled');
     await messaging.send('dashboard', {
         what: 'purgeAllCaches',
         hard,
@@ -561,8 +532,8 @@ const toggleHideUnusedLists = function(which) {
         if ( mustHide ) {
             hideUnusedSet.add(which);
         }
-        document.body.classList.toggle('hideUnused', mustHide);
-        uDom('.groupEntry[data-groupkey]').toggleClass('hideUnused', mustHide);
+        dom.cl.toggle(dom.body, 'hideUnused', mustHide);
+        dom.cl.toggle('.groupEntry[data-groupkey]', 'hideUnused', mustHide);
     } else {
         const doesHide = hideUnusedSet.has(which);
         if ( doesHide ) {
@@ -571,12 +542,13 @@ const toggleHideUnusedLists = function(which) {
             hideUnusedSet.add(which);
         }
         mustHide = doesHide === doesHideAll;
-        groupSelector = '.groupEntry[data-groupkey="' + which + '"] ';
-        uDom(groupSelector).toggleClass('hideUnused', mustHide);
+        groupSelector = `.groupEntry[data-groupkey="${which}"] `;
+        dom.cl.toggle(groupSelector, 'hideUnused', mustHide);
     }
-    uDom(groupSelector + '.listEntry input[type="checkbox"]:not(:checked)')
-        .ancestors('.listEntry[data-listkey]')
-        .toggleClass('unused', mustHide);
+    qsa$(`${groupSelector}.listEntry input[type="checkbox"]:not(:checked)`)
+        .forEach(elem => {
+            dom.cl.toggle(elem.closest('.listEntry[data-listkey]'), 'unused', mustHide);
+        });
     vAPI.localStorage.setItem(
         'hideUnusedFilterLists',
         Array.from(hideUnusedSet)
@@ -584,20 +556,19 @@ const toggleHideUnusedLists = function(which) {
 };
 
 const revealHiddenUsedLists = function() {
-    uDom('#lists .listEntry.unused input[type="checkbox"]:checked')
-        .ancestors('.listEntry[data-listkey]')
-        .removeClass('unused');
+    qsa$('#lists .listEntry.unused input[type="checkbox"]:checked')
+        .forEach(elem => {
+            dom.cl.remove(elem.closest('.listEntry[data-listkey]'), 'unused');
+        });
 };
 
-uDom('#listsOfBlockedHostsPrompt').on('click', function() {
+dom.on('#listsOfBlockedHostsPrompt', 'click', ( ) => {
     toggleHideUnusedLists('*');
 });
 
-uDom('#lists').on('click', '.groupEntry[data-groupkey] > .geDetails', function(ev) {
+dom.on('#lists', 'click', '.groupEntry[data-groupkey] > .geDetails', ev => {
     toggleHideUnusedLists(
-        uDom(ev.target)
-            .ancestors('.groupEntry[data-groupkey]')
-            .attr('data-groupkey')
+        dom.attr(ev.target.closest('.groupEntry[data-groupkey]'), 'data-groupkey')
     );
 });
 
@@ -614,15 +585,15 @@ vAPI.localStorage.getItemAsync('hideUnusedFilterLists').then(value => {
 
 const toCloudData = function() {
     const bin = {
-        parseCosmeticFilters: uDom.nodeFromId('parseCosmeticFilters').checked,
-        ignoreGenericCosmeticFilters: uDom.nodeFromId('ignoreGenericCosmeticFilters').checked,
+        parseCosmeticFilters: qs$('#parseCosmeticFilters').checked,
+        ignoreGenericCosmeticFilters: qs$('#ignoreGenericCosmeticFilters').checked,
         selectedLists: []
     };
 
-    const liEntries = document.querySelectorAll('#lists .listEntry');
+    const liEntries = qsa$('#lists .listEntry');
     for ( const liEntry of liEntries ) {
-        if ( liEntry.querySelector('input').checked ) {
-            bin.selectedLists.push(liEntry.getAttribute('data-listkey'));
+        if ( qs$(liEntry, 'input').checked ) {
+            bin.selectedLists.push(dom.attr(liEntry, 'data-listkey'));
         }
     }
 
@@ -634,24 +605,22 @@ const fromCloudData = function(data, append) {
 
     let elem, checked;
 
-    elem = uDom.nodeFromId('parseCosmeticFilters');
+    elem = qs$('#parseCosmeticFilters');
     checked = data.parseCosmeticFilters === true || append && elem.checked;
     elem.checked = listDetails.parseCosmeticFilters = checked;
 
-    elem = uDom.nodeFromId('ignoreGenericCosmeticFilters');
+    elem = qs$('#ignoreGenericCosmeticFilters');
     checked = data.ignoreGenericCosmeticFilters === true || append && elem.checked;
     elem.checked = listDetails.ignoreGenericCosmeticFilters = checked;
 
     const selectedSet = new Set(data.selectedLists);
-    const listEntries = uDom('#lists .listEntry');
-    for ( let i = 0, n = listEntries.length; i < n; i++ ) {
-        const listEntry = listEntries.at(i);
-        const listKey = listEntry.attr('data-listkey');
+    for ( const listEntry of qsa$('#lists .listEntry') ) {
+        const listKey = dom.attr(listEntry, 'data-listkey');
         const hasListKey = selectedSet.has(listKey);
         selectedSet.delete(listKey);
-        const input = listEntry.descendants('input').first();
-        if ( append && input.prop('checked') ) { continue; }
-        input.prop('checked', hasListKey);
+        const input = qs$(listEntry, 'input');
+        if ( append && input.checked ) { continue; }
+        input.checked = hasListKey;
     }
 
     // If there are URL-like list keys left in the selected set, import them.
@@ -661,14 +630,14 @@ const fromCloudData = function(data, append) {
         }
     }
     if ( selectedSet.size !== 0 ) {
-        elem = uDom.nodeFromId('externalLists');
+        elem = qs$('#externalLists');
         if ( append ) {
             if ( elem.value.trim() !== '' ) { elem.value += '\n'; }
         } else {
             elem.value = '';
         }
         elem.value += Array.from(selectedSet).join('\n');
-        uDom.nodeFromId('importLists').checked = true;
+        qs$('#importLists').checked = true;
     }
 
     revealHiddenUsedLists();
@@ -686,21 +655,18 @@ self.hasUnsavedData = function() {
 
 /******************************************************************************/
 
-uDom('#autoUpdate').on('change', userSettingCheckboxChanged);
-uDom('#parseCosmeticFilters').on('change', onFilteringSettingsChanged);
-uDom('#ignoreGenericCosmeticFilters').on('change', onFilteringSettingsChanged);
-uDom('#suspendUntilListsAreLoaded').on('change', userSettingCheckboxChanged);
-uDom('#buttonApply').on('click', ( ) => { buttonApplyHandler(); });
-uDom('#buttonUpdate').on('click', ( ) => { buttonUpdateHandler(); });
-uDom('#buttonPurgeAll').on('click', ev => {
-    buttonPurgeAllHandler(ev.shiftKey);
-});
-uDom('#lists').on('change', '.listEntry input', onListsetChanged);
-uDom('#lists').on('click', '.listEntry .remove', onRemoveExternalList);
-uDom('#lists').on('click', 'span.cache', onPurgeClicked);
-uDom('#externalLists').on('input', onFilteringSettingsChanged);
-
-uDom('#lists').on('click', '.listEntry label *', ev => {
+dom.on('#autoUpdate', 'change', userSettingCheckboxChanged);
+dom.on('#parseCosmeticFilters', 'change', onFilteringSettingsChanged);
+dom.on('#ignoreGenericCosmeticFilters', 'change', onFilteringSettingsChanged);
+dom.on('#suspendUntilListsAreLoaded', 'change', userSettingCheckboxChanged);
+dom.on('#buttonApply', 'click', ( ) => { buttonApplyHandler(); });
+dom.on('#buttonUpdate', 'click', ( ) => { buttonUpdateHandler(); });
+dom.on('#buttonPurgeAll', 'click', ev => { buttonPurgeAllHandler(ev.shiftKey); });
+dom.on('#lists', 'change', '.listEntry input', onListsetChanged);
+dom.on('#lists', 'click', '.listEntry .remove', onRemoveExternalList);
+dom.on('#lists', 'click', 'span.cache', onPurgeClicked);
+dom.on('#externalLists', 'input', onFilteringSettingsChanged);
+dom.on('#lists','click', '.listEntry label *', ev => {
     if ( ev.target.matches('a,input,.forinput') ) { return; }
     ev.preventDefault();
 });

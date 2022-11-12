@@ -1,6 +1,7 @@
-/**
+/*******************************************************************************
+
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2018-present Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,38 +19,17 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-.commandEntries {
-    margin: 2em;
-    }
+/* jshint esversion:11 */
 
-.commandEntries td {
-    padding: 0.5em 0.25em;
-    }
+'use strict';
 
-.commandEntries td.commandDesc {
-    text-align: end;
-    }
+import { dom } from './dom.js';
 
-.commandEntries td.commandShortcut {
-    white-space: nowrap;
-    }
+/******************************************************************************/
 
-.commandEntries td.commandShortcut input {
-    padding: 0.4em;
-    }
-
-.commandEntries td.commandShortcut input:focus {
-    outline: 2px solid blue;
-    }
-
-.commandEntries td.commandShortcut input ~ .commandReset {
-    cursor: pointer;
-    font-size: 150%;
-    padding: 0 0.2em;
-    vertical-align: middle;
-    }
-
-.commandEntries td.commandShortcut input:placeholder-shown ~ .commandReset,
-.commandEntries td.commandShortcut input:focus ~ .commandReset {
-    display: none;
-    }
+const mql = self.matchMedia('(prefers-color-scheme: dark)');
+const theme = mql instanceof Object && mql.matches === true
+    ? 'dark'
+    : 'light';
+dom.cl.toggle(dom.html, 'dark', theme === 'dark');
+dom.cl.toggle(dom.html, 'light', theme !== 'dark');

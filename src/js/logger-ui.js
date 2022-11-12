@@ -19,14 +19,11 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global uDom */
-
 'use strict';
-
-/******************************************************************************/
 
 import { hostnameFromURI } from './uri-utils.js';
 import { i18n, i18n$ } from './i18n.js';
+import { dom, qs$, qsa$ } from './dom.js';
 
 /******************************************************************************/
 
@@ -55,12 +52,12 @@ let cnameOfEnabled = false;
 // Various helpers.
 
 const tabIdFromPageSelector = logger.tabIdFromPageSelector = function() {
-    const value = uDom.nodeFromId('pageSelector').value;
+    const value = qs$('#pageSelector').value;
     return value !== '_' ? (parseInt(value, 10) || 0) : activeTabId;
 };
 
 const tabIdFromAttribute = function(elem) {
-    const value = elem.getAttribute('data-tabid') || '';
+    const value = dom.attr(elem, 'data-tabid') || '';
     const tabId = parseInt(value, 10);
     return isNaN(tabId) ? 0 : tabId;
 };
@@ -71,13 +68,9 @@ const tabIdFromAttribute = function(elem) {
 // Current design allows for only one modal DOM-based dialog at any given time.
 //
 const modalDialog = (( ) => {
-    const overlay = uDom.nodeFromId('modalOverlay');
-    const container = overlay.querySelector(
-        ':scope > div > div:nth-of-type(1)'
-    );
-    const closeButton = overlay.querySelector(
-        ':scope > div > div:nth-of-type(2)'
-    );
+    const overlay = qs$('#modalOverlay');
+    const container = qs$(overlay, ':scope > div > div:nth-of-type(1)');
+    const closeButton = qs$(overlay, ':scope > div > div:nth-of-type(2)');
     let onDestroyed;
 
     const removeChildren = logger.removeAllChildren = function(node) {
@@ -87,8 +80,8 @@ const modalDialog = (( ) => {
     };
 
     const create = function(selector, destroyListener) {
-        const template = document.querySelector(selector);
-        const dialog = template.cloneNode(true);
+        const template = qs$(selector);
+        const dialog = dom.clone(template);
         removeChildren(container);
         container.appendChild(dialog);
         onDestroyed = destroyListener;
@@ -96,11 +89,11 @@ const modalDialog = (( ) => {
     };
 
     const show = function() {
-        overlay.classList.add('on');
+        dom.cl.add(overlay, 'on');
     };
 
     const destroy = function() {
-        overlay.classList.remove('on');
+        dom.cl.remove(overlay, 'on');
         const dialog = container.firstElementChild;
         removeChildren(container);
         if ( typeof onDestroyed === 'function' ) {
@@ -114,8 +107,8 @@ const modalDialog = (( ) => {
             destroy();
         }
     };
-    overlay.addEventListener('click', onClose);
-    closeButton.addEventListener('click', onClose);
+    dom.on(overlay, 'click', onClose);
+    dom.on(closeButton, 'click', onClose);
 
     return { create, show, destroy };
 })();
@@ -188,8 +181,8 @@ const nodeFromURL = function(parent, url, re) {
     }
     if ( /^https?:\/\//.test(url) ) {
         const a = document.createElement('a');
-        a.setAttribute('href', url);
-        a.setAttribute('target', '_blank');
+        dom.attr(a, 'href', url);
+        dom.attr(a, 'target', '_blank');
         fragment.appendChild(a);
     }
     parent.appendChild(fragment);
@@ -289,7 +282,7 @@ const processLoggerEntries = function(response) {
     const entries = response.entries;
     if ( entries.length === 0 ) { return; }
 
-    const autoDeleteVoidedRows = uDom.nodeFromId('pageSelector').value === '_';
+    const autoDeleteVoidedRows = qs$('#pageSelector').value === '_';
     const previousCount = filteredLoggerEntries.length;
 
     for ( const entry of entries ) {
@@ -323,7 +316,7 @@ const processLoggerEntries = function(response) {
             }
         }
         if ( cnameOfEnabled === false && parsed.aliased ) {
-            uDom.nodeFromId('filterExprCnameOf').style.display = '';
+            qs$('#filterExprCnameOf').style.display = '';
             cnameOfEnabled = true;
         }
         loggerEntries.unshift(parsed);
@@ -442,12 +435,12 @@ const parseLogEntry = function(details) {
 /******************************************************************************/
 
 const viewPort = (( ) => {
-    const vwRenderer = document.getElementById('vwRenderer');
-    const vwScroller = document.getElementById('vwScroller');
-    const vwVirtualContent = document.getElementById('vwVirtualContent');
-    const vwContent = document.getElementById('vwContent');
-    const vwLineSizer = document.getElementById('vwLineSizer');
-    const vwLogEntryTemplate = document.querySelector('#logEntryTemplate > div');
+    const vwRenderer = qs$('#vwRenderer');
+    const vwScroller = qs$('#vwScroller');
+    const vwVirtualContent = qs$('#vwVirtualContent');
+    const vwContent = qs$('#vwContent');
+    const vwLineSizer = qs$('#vwLineSizer');
+    const vwLogEntryTemplate = qs$('#logEntryTemplate > div');
     const vwEntries = [];
 
     const detailableRealms = new Set([ 'network', 'extended' ]);
@@ -505,19 +498,16 @@ const viewPort = (( ) => {
         );
     };
 
-    vwScroller.addEventListener('scroll', onScroll, { passive: true });
+    dom.on(vwScroller, 'scroll', onScroll, { passive: true });
 
     const onLayoutChanged = function() {
         vwHeight = vwRenderer.clientHeight;
         vwContent.style.height = `${vwScroller.clientHeight}px`;
 
         const vExpanded =
-            uDom.nodeFromSelector('#netInspector .vCompactToggler')
-                .classList
-                .contains('vExpanded');
+            dom.cl.has('#netInspector .vCompactToggler', 'vExpanded');
 
-        let newLineHeight =
-            vwLineSizer.querySelector('.oneLine').clientHeight;
+        let newLineHeight = qs$(vwLineSizer, '.oneLine').clientHeight;
 
         if ( vExpanded ) {
             newLineHeight *= loggerSettings.linesPerEntry;
@@ -537,7 +527,7 @@ const viewPort = (( ) => {
         }
 
         const cellWidths = Array.from(
-            vwLineSizer.querySelectorAll('.oneLine span')
+            qsa$(vwLineSizer, '.oneLine span')
         ).map((el, i) => {
             return loggerSettings.columns[i] !== false
                 ? el.clientWidth + 1
@@ -559,7 +549,7 @@ const viewPort = (( ) => {
             cellWidths[3] = 0.25;
             cellWidths[6] = 0.5;
         }
-        const style = document.getElementById('vwRendererRuntimeStyles');
+        const style = qs$('#vwRendererRuntimeStyles');
         const cssRules = [
             '#vwContent .logEntry {',
             `  height: ${newLineHeight}px;`,
@@ -602,9 +592,7 @@ const viewPort = (( ) => {
 
         lineHeight = newLineHeight;
         positionLines();
-        uDom.nodeFromId('netInspector')
-            .classList
-            .toggle('vExpanded', vExpanded);
+        dom.cl.toggle('#netInspector', 'vExpanded', vExpanded);
 
         updateContent(0);
     };
@@ -622,7 +610,7 @@ const viewPort = (( ) => {
         );
     };
 
-    window.addEventListener('resize', updateLayout, { passive: true });
+    dom.on(window, 'resize', updateLayout, { passive: true });
 
     updateLayout();
 
@@ -653,7 +641,7 @@ const viewPort = (( ) => {
         vwEntry.logEntry = details;
 
         const cells = details.textContent.split('\t');
-        const div = vwLogEntryTemplate.cloneNode(true);
+        const div = dom.clone(vwLogEntryTemplate);
         const divcl = div.classList;
         let span;
 
@@ -668,7 +656,7 @@ const viewPort = (( ) => {
 
         // Tab id
         if ( details.tabId !== undefined ) {
-            div.setAttribute('data-tabid', details.tabId);
+            dom.attr(div, 'data-tabid', details.tabId);
             if ( details.voided ) {
                 divcl.add('voided');
             }
@@ -676,7 +664,7 @@ const viewPort = (( ) => {
 
         if ( details.realm === 'message' ) {
             if ( details.type !== undefined ) {
-                div.setAttribute('data-type', details.type);
+                dom.attr(div, 'data-type', details.type);
             }
             span = div.children[1];
             span.textContent = cells[1];
@@ -701,7 +689,7 @@ const viewPort = (( ) => {
                 divcl.toggle('isException', filter.raw.startsWith('#@#'));
             }
             if ( filter.modifier === true ) {
-                div.setAttribute('data-modifier', '');
+                dom.attr(div, 'data-modifier', '');
             }
         }
         span = div.children[1];
@@ -711,11 +699,11 @@ const viewPort = (( ) => {
 
         // Event
         if ( cells[2] === '--' ) {
-            div.setAttribute('data-status', '1');
+            dom.attr(div, 'data-status', '1');
         } else if ( cells[2] === '++' ) {
-            div.setAttribute('data-status', '2');
+            dom.attr(div, 'data-status', '2');
         } else if ( cells[2] === '**' ) {
-            div.setAttribute('data-status', '3');
+            dom.attr(div, 'data-status', '3');
         } else if ( cells[2] === '<<' ) {
             divcl.add('redirect');
         }
@@ -724,10 +712,10 @@ const viewPort = (( ) => {
 
         // Origins
         if ( details.tabHostname ) {
-            div.setAttribute('data-tabhn', details.tabHostname);
+            dom.attr(div, 'data-tabhn', details.tabHostname);
         }
         if ( details.docHostname ) {
-            div.setAttribute('data-dochn', details.docHostname);
+            dom.attr(div, 'data-dochn', details.docHostname);
         }
         span = div.children[3];
         span.textContent = cells[3];
@@ -743,7 +731,7 @@ const viewPort = (( ) => {
                 text += ` \u22ef ${details.docDomain}`;
             }
             text += ` \u21d2 ${details.domain}`;
-            div.setAttribute('data-parties', text);
+            dom.attr(div, 'data-parties', text);
         }
         span = div.children[4];
         span.textContent = cells[4];
@@ -765,7 +753,7 @@ const viewPort = (( ) => {
         if ( cells.length > 7 ) {
             const pos = details.textContent.lastIndexOf('\taliasURL=');
             if ( pos !== -1 ) {
-                div.setAttribute('data-aliasid', details.id);
+                dom.attr(div, 'data-aliasid', details.id);
             }
         }
 
@@ -873,10 +861,10 @@ const updateCurrentTabTitle = (( ) => {
     const i18nCurrentTab = i18n$('loggerCurrentTab');
 
     return function() {
-        const select = uDom.nodeFromId('pageSelector');
+        const select = qs$('#pageSelector');
         if ( select.value !== '_' || activeTabId === 0 ) { return; }
-        const opt0 = select.querySelector('[value="_"]');
-        const opt1 = select.querySelector(`[value="${activeTabId}"]`);
+        const opt0 = qs$(select, '[value="_"]');
+        const opt1 = qs$(select, `[value="${activeTabId}"]`);
         let text = i18nCurrentTab;
         if ( opt1 !== null ) {
             text += ' / ' + opt1.textContent;
@@ -888,7 +876,7 @@ const updateCurrentTabTitle = (( ) => {
 /******************************************************************************/
 
 const synchronizeTabIds = function(newTabIds) {
-    const select = uDom.nodeFromId('pageSelector');
+    const select = qs$('#pageSelector');
     const selectedTabValue = select.value;
     const oldTabIds = allTabIds;
 
@@ -942,12 +930,12 @@ const synchronizeTabIds = function(newTabIds) {
         const option = select.options[j];
         // Truncate too long labels.
         option.textContent = newTabIds.get(tabId).slice(0, 80);
-        option.setAttribute('value', tabId);
+        dom.attr(option, 'value', tabId);
         if ( option.value === selectedTabValue ) {
             select.selectedIndex = j;
-            option.setAttribute('selected', '');
+            dom.attr(option, 'selected', '');
         } else {
-            option.removeAttribute('selected');
+            dom.attr(option, 'selected', null);
         }
         j += 1;
     }
@@ -957,7 +945,7 @@ const synchronizeTabIds = function(newTabIds) {
     if ( select.value !== selectedTabValue ) {
         select.selectedIndex = 0;
         select.value = '';
-        select.options[0].setAttribute('selected', '');
+        dom.attr(select.options[0], 'selected', '');
         pageSelectorChanged();
     }
 
@@ -976,7 +964,7 @@ const onLogBufferRead = function(response) {
     ) {
         popupLoggerTooltips = response.tooltips;
         if ( popupLoggerTooltips === false ) {
-            uDom('[data-i18n-title]').attr('title', '');
+            dom.attr('[data-i18n-title]', 'title', '');
         }
     }
 
@@ -1006,18 +994,9 @@ const onLogBufferRead = function(response) {
     processLoggerEntries(response);
 
     // Synchronize DOM with sent logger data
-    document.documentElement.classList.toggle(
-        'colorBlind',
-        response.colorBlind === true
-    );
-    uDom.nodeFromId('clean').classList.toggle(
-        'disabled',
-        filteredLoggerEntryVoidedCount === 0
-    );
-    uDom.nodeFromId('clear').classList.toggle(
-        'disabled',
-        filteredLoggerEntries.length === 0
-    );
+    dom.cl.toggle(dom.html, 'colorBlind', response.colorBlind === true);
+    dom.cl.toggle('#clean', 'disabled', filteredLoggerEntryVoidedCount === 0);
+    dom.cl.toggle('#clear', 'disabled', filteredLoggerEntries.length === 0);
 };
 
 /******************************************************************************/
@@ -1073,7 +1052,7 @@ const readLogBuffer = (( ) => {
 /******************************************************************************/
 
 const pageSelectorChanged = function() {
-    const select = uDom.nodeFromId('pageSelector');
+    const select = qs$('#pageSelector');
     window.location.replace('#' + select.value);
     pageSelectorFromURLHash();
 };
@@ -1092,10 +1071,8 @@ const pageSelectorFromURLHash = (( ) => {
         }
 
         if ( hash !== lastHash ) {
-            const select = uDom.nodeFromId('pageSelector');
-            let option = select.querySelector(
-                'option[value="' + hash + '"]'
-            );
+            const select = qs$('#pageSelector');
+            let option = qs$(select, `option[value="${hash}"]`);
             if ( option === null ) {
                 hash = '0';
                 option = select.options[0];
@@ -1114,8 +1091,8 @@ const pageSelectorFromURLHash = (( ) => {
         rowFilterer.filterAll();
         document.dispatchEvent(new Event('tabIdChanged'));
         updateCurrentTabTitle();
-        uDom('.needdom').toggleClass('disabled', selectedTabId <= 0);
-        uDom('.needscope').toggleClass('disabled', selectedTabId <= 0);
+        dom.cl.toggle('.needdom', 'disabled', selectedTabId <= 0);
+        dom.cl.toggle('.needscope', 'disabled', selectedTabId <= 0);
         lastSelectedTabId = selectedTabId;
     };
 })();
@@ -1168,7 +1145,7 @@ const reloadTab = function(ev) {
     };
 
     const selectNode = function(selector) {
-        return dialog.querySelector(selector);
+        return qs$(dialog, selector);
     };
 
     const selectValue = function(selector) {
@@ -1176,20 +1153,20 @@ const reloadTab = function(ev) {
     };
 
     const staticFilterNode = function() {
-        return dialog.querySelector('div.panes > div.static textarea');
+        return qs$(dialog, 'div.panes > div.static textarea');
     };
 
     const onColorsReady = function(response) {
-        document.body.classList.toggle('dirty', response.dirty);
+        dom.cl.toggle(dom.body, 'dirty', response.dirty);
         for ( const url in response.colors ) {
             if ( response.colors.hasOwnProperty(url) === false ) { continue; }
             const colorEntry = response.colors[url];
-            const node = dialog.querySelector('.dynamic .entry .action[data-url="' + url + '"]');
+            const node = qs$(dialog, `.dynamic .entry .action[data-url="${url}"]`);
             if ( node === null ) { continue; }
-            node.classList.toggle('allow', colorEntry.r === 2);
-            node.classList.toggle('noop', colorEntry.r === 3);
-            node.classList.toggle('block', colorEntry.r === 1);
-            node.classList.toggle('own', colorEntry.own);
+            dom.cl.toggle(node, 'allow', colorEntry.r === 2);
+            dom.cl.toggle(node, 'noop', colorEntry.r === 3);
+            dom.cl.toggle(node, 'block', colorEntry.r === 1);
+            dom.cl.toggle(node, 'own', colorEntry.own);
         }
     };
 
@@ -1248,7 +1225,8 @@ const reloadTab = function(ev) {
 
     const updateWidgets = function() {
         const value = staticFilterNode().value;
-        dialog.querySelector('#createStaticFilter').classList.toggle(
+        dom.cl.toggle(
+            qs$(dialog, '#createStaticFilter'),
             'disabled',
             createdStaticFilters.hasOwnProperty(value) || value === ''
         );
@@ -1261,7 +1239,7 @@ const reloadTab = function(ev) {
         // Select a mode
         if ( tcl.contains('header') ) {
             ev.stopPropagation();
-            dialog.setAttribute('data-pane', target.getAttribute('data-pane') );
+            dom.attr(dialog, 'data-pane', dom.attr(target, 'data-pane'));
             return;
         }
 
@@ -1273,7 +1251,7 @@ const reloadTab = function(ev) {
                 filter: filterFromTargetRow(),
             });
             const row = target.closest('div');
-            row.classList.toggle('exceptored', status);
+            dom.cl.toggle(row, 'exceptored', status);
             return;
         }
         
@@ -1321,7 +1299,7 @@ const reloadTab = function(ev) {
             await messaging.send('loggerUI', {
                 what: 'setURLFilteringRule',
                 context: selectValue('select.dynamic.origin'),
-                url: target.getAttribute('data-url'),
+                url: dom.attr(target, 'data-url'),
                 type: uglyTypeFromSelector('dynamic'),
                 action: 0,
                 persist: persist,
@@ -1336,7 +1314,7 @@ const reloadTab = function(ev) {
             await messaging.send('loggerUI', {
                 what: 'setURLFilteringRule',
                 context: selectValue('select.dynamic.origin'),
-                url: target.parentNode.getAttribute('data-url'),
+                url: dom.attr(target.parentNode, 'data-url'),
                 type: uglyTypeFromSelector('dynamic'),
                 action: 2,
                 persist: persist,
@@ -1351,7 +1329,7 @@ const reloadTab = function(ev) {
             await messaging.send('loggerUI', {
                 what: 'setURLFilteringRule',
                 context: selectValue('select.dynamic.origin'),
-                url: target.parentNode.getAttribute('data-url'),
+                url: dom.attr(target.parentNode, 'data-url'),
                 type: uglyTypeFromSelector('dynamic'),
                 action: 3,
                 persist: persist,
@@ -1366,7 +1344,7 @@ const reloadTab = function(ev) {
             await messaging.send('loggerUI', {
                 what: 'setURLFilteringRule',
                 context: selectValue('select.dynamic.origin'),
-                url: target.parentNode.getAttribute('data-url'),
+                url: dom.attr(target.parentNode, 'data-url'),
                 type: uglyTypeFromSelector('dynamic'),
                 action: 1,
                 persist: persist,
@@ -1419,11 +1397,12 @@ const reloadTab = function(ev) {
     const createPreview = function(type, url) {
         const cantPreview =
             type !== 'image' ||
-            targetRow.classList.contains('networkRealm') === false  ||
-            targetRow.getAttribute('data-status') === '1';
+            dom.cl.has(targetRow, 'networkRealm') === false  ||
+            dom.attr(targetRow, 'data-status') === '1';
 
         // Whether picker can be used
-        dialog.querySelector('.picker').classList.toggle(
+        dom.cl.toggle(
+            qs$(dialog, '.picker'),
             'hide',
             targetTabId < 0 || cantPreview
         );
@@ -1431,18 +1410,14 @@ const reloadTab = function(ev) {
         // Whether the resource can be previewed
         if ( cantPreview ) { return; }
 
-        const container = dialog.querySelector('.preview');
-        container.querySelector('span').addEventListener(
-            'click',
-            ( ) => {
-                const preview = document.createElement('img');
-                preview.setAttribute('src', url);
-                container.replaceChild(preview, container.firstElementChild);
-            },
-            { once: true }
-        );
+        const container = qs$(dialog, '.preview');
+        dom.on(qs$(container, 'span'), 'click', ( ) => {
+            const preview = dom.create('img');
+            dom.attr(preview, 'src', url);
+            container.replaceChild(preview, container.firstElementChild);
+        }, { once: true });
 
-        container.classList.remove('hide');
+        dom.cl.remove(container, 'hide');
     };
 
     // https://github.com/gorhill/uBlock/issues/1511
@@ -1486,7 +1461,7 @@ const reloadTab = function(ev) {
     };
 
     const filterFromTargetRow = function() {
-        return targetRow.children[1].textContent;
+        return dom.text(targetRow.children[1]);
     };
 
     const aliasURLFromID = function(id) {
@@ -1516,7 +1491,7 @@ const reloadTab = function(ev) {
             what: 'hasTemporaryException',
             filter,
         });
-        receiver.classList.toggle('exceptored', isTemporaryException);
+        dom.cl.toggle(receiver, 'exceptored', isTemporaryException);
         if ( match[0] === '##' || isTemporaryException ) {
             receiver.children[2].style.visibility = '';
         }
@@ -1529,17 +1504,15 @@ const reloadTab = function(ev) {
 
         const nodeFromFilter = function(filter, lists) {
             const fragment = document.createDocumentFragment();
-            const template = document.querySelector(
-                '#filterFinderListEntry > span'
-            );
+            const template = qs$('#filterFinderListEntry > span');
             for ( const list of lists ) {
-                const span = template.cloneNode(true);
-                let a = span.querySelector('a:nth-of-type(1)');
+                const span = dom.clone(template);
+                let a = qs$(span, 'a:nth-of-type(1)');
                 a.href += encodeURIComponent(list.assetKey);
                 a.textContent = list.title;
-                a = span.querySelector('a:nth-of-type(2)');
+                a = qs$(span, 'a:nth-of-type(2)');
                 if ( list.supportURL ) {
-                    a.setAttribute('href', list.supportURL);
+                    dom.attr(a, 'href', list.supportURL);
                 } else {
                     a.style.display = 'none';
                 }
@@ -1581,13 +1554,13 @@ const reloadTab = function(ev) {
             }
         };
 
-        if ( targetRow.classList.contains('networkRealm') ) {
+        if ( dom.cl.has(targetRow, 'networkRealm') ) {
             const response = await messaging.send('loggerUI', {
                 what: 'listsFromNetFilter',
                 rawFilter: rawFilter,
             });
             handleResponse(response);
-        } else if ( targetRow.classList.contains('extendedRealm') ) {
+        } else if ( dom.cl.has(targetRow, 'extendedRealm') ) {
             const response = await messaging.send('loggerUI', {
                 what: 'listsFromCosmeticFilter',
                 url: targetRow.children[6].textContent,
@@ -1598,7 +1571,7 @@ const reloadTab = function(ev) {
     };
 
     const fillSummaryPane = function() {
-        const rows = dialog.querySelectorAll('.pane.details > div');
+        const rows = qsa$(dialog, '.pane.details > div');
         const tr = targetRow;
         const trcl = tr.classList;
         const trch = tr.children;
@@ -1633,8 +1606,8 @@ const reloadTab = function(ev) {
             rows[1].style.display = 'none';
         }
         // Root and immediate contexts
-        const tabhn = tr.getAttribute('data-tabhn') || '';
-        const dochn = tr.getAttribute('data-dochn') || '';
+        const tabhn = dom.attr(tr, 'data-tabhn') || '';
+        const dochn = dom.attr(tr, 'data-dochn') || '';
         if ( tabhn !== '' && tabhn !== dochn ) {
             rows[3].children[1].textContent = tabhn;
         } else {
@@ -1646,7 +1619,7 @@ const reloadTab = function(ev) {
             rows[4].style.display = 'none';
         }
         // Partyness
-        text = tr.getAttribute('data-parties') || '';
+        text = dom.attr(tr, 'data-parties') || '';
         if ( text !== '' ) {
             rows[5].children[1].textContent = `(${trch[4].textContent})\u2002${text}`;
         } else {
@@ -1662,19 +1635,19 @@ const reloadTab = function(ev) {
         // URL
         const canonicalURL = trch[6].textContent;
         if ( canonicalURL !== '' ) {
-            const attr = tr.getAttribute('data-status') || '';
+            const attr = dom.attr(tr, 'data-status') || '';
             if ( attr !== '' ) {
-                rows[7].setAttribute('data-status', attr);
+                dom.attr(rows[7], 'data-status', attr);
                 if ( tr.hasAttribute('data-modifier') ) {
-                    rows[7].setAttribute('data-modifier', '');
+                    dom.attr(rows[7], 'data-modifier', '');
                 }
             }
-            rows[7].children[1].appendChild(trch[6].cloneNode(true));
+            rows[7].children[1].appendChild(dom.clone(trch[6]));
         } else {
             rows[7].style.display = 'none';
         }
         // Alias URL
-        text = tr.getAttribute('data-aliasid');
+        text = dom.attr(tr, 'data-aliasid');
         const aliasURL = text ? aliasURLFromID(text) : '';
         if ( aliasURL !== '' ) {
             rows[8].children[1].textContent =
@@ -1689,9 +1662,7 @@ const reloadTab = function(ev) {
 
     // Fill dynamic URL filtering pane
     const fillDynamicPane = function() {
-        if ( targetRow.classList.contains('extendedRealm') ) {
-            return;
-        }
+        if ( dom.cl.has(targetRow, 'extendedRealm') ) { return; }
 
         // https://github.com/uBlockOrigin/uBlock-issues/issues/662#issuecomment-509220702
         if ( targetType === 'doc' ) { return; }
@@ -1706,21 +1677,21 @@ const reloadTab = function(ev) {
         fillOriginSelect(select, targetPageHostname, targetPageDomain);
         const option = document.createElement('option');
         option.textContent = '*';
-        option.setAttribute('value', '*');
+        dom.attr(option, 'value', '*');
         select.appendChild(option);
 
         // Fill type selector
         select = selectNode('select.dynamic.type');
         select.options[0].textContent = targetType;
-        select.options[0].setAttribute('value', targetType);
+        dom.attr(select.options[0], 'value', targetType);
         select.selectedIndex = 0;
 
         // Fill entries
-        const menuEntryTemplate = dialog.querySelector('.dynamic .toolbar .entry');
-        const tbody = dialog.querySelector('.dynamic .entries');
+        const menuEntryTemplate = qs$(dialog, '.dynamic .toolbar .entry');
+        const tbody = qs$(dialog, '.dynamic .entries');
         for ( const targetURL of  targetURLs ) {
-            const menuEntry = menuEntryTemplate.cloneNode(true);
-            menuEntry.children[0].setAttribute('data-url', targetURL);
+            const menuEntry = dom.clone(menuEntryTemplate);
+            dom.attr(menuEntry.children[0], 'data-url', targetURL);
             menuEntry.children[1].textContent = shortenLongString(targetURL, 128);
             tbody.appendChild(menuEntry);
         }
@@ -1733,7 +1704,7 @@ const reloadTab = function(ev) {
         let value = hostname;
         for (;;) {
             const option = document.createElement('option');
-            option.setAttribute('value', value);
+            dom.attr(option, 'value', value);
             option.textContent = template.replace('{{origin}}', value);
             select.appendChild(option);
             if ( value === domain ) { break; }
@@ -1745,9 +1716,7 @@ const reloadTab = function(ev) {
 
     // Fill static filtering pane
     const fillStaticPane = function() {
-        if ( targetRow.classList.contains('extendedRealm') ) {
-            return;
-        }
+        if ( dom.cl.has(targetRow, 'extendedRealm') ) { return; }
 
         const template = i18n$('loggerStaticFilteringSentence');
         const rePlaceholder = /\{\{[^}]+?\}\}/g;
@@ -1770,11 +1739,11 @@ const reloadTab = function(ev) {
                 select = document.createElement('select');
                 select.className = 'static action';
                 option = document.createElement('option');
-                option.setAttribute('value', '');
+                dom.attr(option, 'value', '');
                 option.textContent = i18n$('loggerStaticFilteringSentencePartBlock');
                 select.appendChild(option);
                 option = document.createElement('option');
-                option.setAttribute('value', '@@');
+                dom.attr(option, 'value', '@@');
                 option.textContent = i18n$('loggerStaticFilteringSentencePartAllow');
                 select.appendChild(option);
                 nodes.push(select);
@@ -1785,11 +1754,11 @@ const reloadTab = function(ev) {
                 select = document.createElement('select');
                 select.className = 'static type';
                 option = document.createElement('option');
-                option.setAttribute('value', filterType);
+                dom.attr(option, 'value', filterType);
                 option.textContent = i18n$('loggerStaticFilteringSentencePartType').replace('{{type}}', filterType);
                 select.appendChild(option);
                 option = document.createElement('option');
-                option.setAttribute('value', '');
+                dom.attr(option, 'value', '');
                 option.textContent = i18n$('loggerStaticFilteringSentencePartAnyType');
                 select.appendChild(option);
                 nodes.push(select);
@@ -1801,7 +1770,7 @@ const reloadTab = function(ev) {
                 for ( const targetURL of targetURLs ) {
                     const value = targetURL.replace(/^[a-z-]+:\/\//, '');
                     option = document.createElement('option');
-                    option.setAttribute('value', value);
+                    dom.attr(option, 'value', value);
                     option.textContent = shortenLongString(value, 128);
                     select.appendChild(option);
                 }
@@ -1813,7 +1782,7 @@ const reloadTab = function(ev) {
                 select.className = 'static origin';
                 fillOriginSelect(select, targetFrameHostname, targetFrameDomain);
                 option = document.createElement('option');
-                option.setAttribute('value', '');
+                dom.attr(option, 'value', '');
                 option.textContent = i18n$('loggerStaticFilteringSentencePartAnyOrigin');
                 select.appendChild(option);
                 nodes.push(select);
@@ -1823,11 +1792,11 @@ const reloadTab = function(ev) {
                 select = document.createElement('select');
                 select.className = 'static importance';
                 option = document.createElement('option');
-                option.setAttribute('value', '');
+                dom.attr(option, 'value', '');
                 option.textContent = i18n$('loggerStaticFilteringSentencePartNotImportant');
                 select.appendChild(option);
                 option = document.createElement('option');
-                option.setAttribute('value', 'important');
+                dom.attr(option, 'value', 'important');
                 option.textContent = i18n$('loggerStaticFilteringSentencePartImportant');
                 select.appendChild(option);
                 nodes.push(select);
@@ -1840,7 +1809,7 @@ const reloadTab = function(ev) {
         if ( pos < template.length ) {
             nodes.push(document.createTextNode(template.slice(pos)));
         }
-        const parent = dialog.querySelector('div.panes > .static > div:first-of-type');
+        const parent = qs$(dialog, 'div.panes > .static > div:first-of-type');
         for ( let i = 0; i < nodes.length; i++ ) {
             parent.appendChild(nodes[i]);
         }
@@ -1856,9 +1825,10 @@ const reloadTab = function(ev) {
                 dialog = null;
             }
         );
-        dialog.classList.toggle(
+        dom.cl.toggle(
+            dialog,
             'extendedRealm',
-            targetRow.classList.contains('extendedRealm')
+            dom.cl.has(targetRow, 'extendedRealm')
         );
         targetDomain = domains[0];
         targetPageDomain = domains[1];
@@ -1867,9 +1837,9 @@ const reloadTab = function(ev) {
         fillSummaryPane();
         fillDynamicPane();
         fillStaticPane();
-        dialog.addEventListener('click', ev => { onClick(ev); }, true);
-        dialog.addEventListener('change', onSelectChange, true);
-        dialog.addEventListener('input', onInputChange, true);
+        dom.on(dialog, 'click', ev => { onClick(ev); }, true);
+        dom.on(dialog, 'change', onSelectChange, true);
+        dom.on(dialog, 'input', onInputChange, true);
         modalDialog.show();
     };
 
@@ -1880,8 +1850,8 @@ const reloadTab = function(ev) {
         targetTabId = tabIdFromAttribute(targetRow);
         targetType = targetRow.children[5].textContent.trim() || '';
         targetURLs = createTargetURLs(targetRow.children[6].textContent);
-        targetPageHostname = targetRow.getAttribute('data-tabhn') || '';
-        targetFrameHostname = targetRow.getAttribute('data-dochn') || '';
+        targetPageHostname = dom.attr(targetRow, 'data-tabhn') || '';
+        targetFrameHostname = dom.attr(targetRow, 'data-dochn') || '';
 
         // We need the root domain names for best user experience.
         const domains = await messaging.send('loggerUI', {
@@ -1895,7 +1865,8 @@ const reloadTab = function(ev) {
         fillDialog(domains);
     };
 
-    uDom('#netInspector').on(
+    dom.on(
+        '#netInspector',
         'click',
         '.canDetails > span:nth-of-type(2),.canDetails > span:nth-of-type(3),.canDetails > span:nth-of-type(5)',
         ev => { toggleOn(ev); }
@@ -1915,11 +1886,7 @@ const rowFilterer = (( ) => {
     const parseInput = function() {
         userFilters.length = 0;
 
-        const rawParts =
-            uDom.nodeFromSelector('#filterInput > input')
-                .value
-                .trim()
-                .split(/\s+/);
+        const rawParts = qs$('#filterInput > input').value.trim().split(/\s+/);
         const n = rawParts.length;
         const reStrs = [];
         let not = false;
@@ -2015,18 +1982,9 @@ const rowFilterer = (( ) => {
             }
         }
         viewPort.updateContent(0);
-        uDom.nodeFromId('filterButton').classList.toggle(
-            'active',
-            filters.length !== 0
-        );
-        uDom.nodeFromId('clean').classList.toggle(
-            'disabled',
-            filteredLoggerEntryVoidedCount === 0
-        );
-        uDom.nodeFromId('clear').classList.toggle(
-            'disabled',
-            filteredLoggerEntries.length === 0
-        );
+        dom.cl.toggle('#filterButton', 'active', filters.length !== 0);
+        dom.cl.toggle('#clean', 'disabled', filteredLoggerEntryVoidedCount === 0);
+        dom.cl.toggle('#clear', 'disabled', filteredLoggerEntries.length === 0);
     };
 
     const onFilterChangedAsync = (( ) => {
@@ -2046,27 +2004,24 @@ const rowFilterer = (( ) => {
 
     const onFilterButton = function() {
         masterFilterSwitch = !masterFilterSwitch;
-        uDom.nodeFromId('netInspector').classList.toggle(
-            'f',
-            masterFilterSwitch
-        );
+        dom.cl.toggle('#netInspector', 'f', masterFilterSwitch);
         filterAll();            
     };
 
     const onToggleExtras = function(ev) {
-        ev.target.classList.toggle('expanded');
+        dom.cl.toggle(ev.target, 'expanded');
     };
 
     const onToggleBuiltinExpression = function(ev) {
         builtinFilters.length = 0;
 
-        ev.target.classList.toggle('on');
-        const filtexElems = ev.currentTarget.querySelectorAll('[data-filtex]');
+        dom.cl.toggle(ev.target, 'on');
+        const filtexElems = qsa$(ev.currentTarget, '[data-filtex]');
         const orExprs = [];
         let not = false;
         for ( const filtexElem of filtexElems ) {
-            let filtex = filtexElem.getAttribute('data-filtex');
-            let active = filtexElem.classList.contains('on');
+            let filtex = dom.attr(filtexElem, 'data-filtex');
+            let active = dom.cl.has(filtexElem, 'on');
             if ( filtex === '!' ) {
                 if ( orExprs.length !== 0 ) {
                     builtinFilters.push({
@@ -2087,17 +2042,14 @@ const rowFilterer = (( ) => {
             });
         }
         filters = builtinFilters.concat(userFilters);
-        uDom.nodeFromId('filterExprButton').classList.toggle(
-            'active',
-            builtinFilters.length !== 0
-        );
+        dom.cl.toggle('#filterExprButton', 'active', builtinFilters.length !== 0);
         filterAll();
     };
 
-    uDom('#filterButton').on('click', onFilterButton);
-    uDom('#filterInput > input').on('input', onFilterChangedAsync);
-    uDom('#filterExprButton').on('click', onToggleExtras);
-    uDom('#filterExprPicker').on('click', '[data-filtex]', onToggleBuiltinExpression);
+    dom.on('#filterButton', 'click', onFilterButton);
+    dom.on('#filterInput > input', 'input', onFilterChangedAsync);
+    dom.on('#filterExprButton', 'click', onToggleExtras);
+    dom.on('#filterExprPicker', 'click', '[data-filtex]', onToggleBuiltinExpression);
 
     // https://github.com/gorhill/uBlock/issues/404
     //   Ensure page state is in sync with the state of its various widgets.
@@ -2294,8 +2246,8 @@ const rowJanitor = (( ) => {
 
     discardAsync();
 
-    uDom.nodeFromId('clean').addEventListener('click', clean);
-    uDom.nodeFromId('clear').addEventListener('click', clear);
+    dom.on('#clean', 'click', clean);
+    dom.on('#clear', 'click', clear);
 
     return {
         inserted: function(count) {
@@ -2309,17 +2261,13 @@ const rowJanitor = (( ) => {
 /******************************************************************************/
 
 const pauseNetInspector = function() {
-    netInspectorPaused = uDom.nodeFromId('netInspector')
-                             .classList
-                             .toggle('paused');
+    netInspectorPaused = dom.cl.toggle('#netInspector', 'paused');
 };
 
 /******************************************************************************/
 
 const toggleVCompactView = function() {
-    uDom.nodeFromSelector('#netInspector .vCompactToggler')
-        .classList
-        .toggle('vExpanded');
+    dom.cl.toggle('#netInspector .vCompactToggler', 'vExpanded');
     viewPort.updateLayout();
 };
 
@@ -2351,7 +2299,7 @@ const popupManager = (( ) => {
 
     const setTabId = function(tabId) {
         if ( popup === null ) { return; }
-        popup.setAttribute('src', 'popup-fenix.html?portrait=1&tabId=' + tabId);
+        dom.attr(popup, 'src', `popup-fenix.html?portrait=1&tabId=${tabId}`);
     };
 
     const onTabIdChanged = function() {
@@ -2366,30 +2314,30 @@ const popupManager = (( ) => {
         if ( tabId === 0 ) { return; }
         realTabId = tabId;
 
-        popup = uDom.nodeFromId('popupContainer');
+        popup = qs$('#popupContainer');
 
-        popup.addEventListener('load', onLoad);
+        dom.on(popup, 'load', onLoad);
         popupObserver = new MutationObserver(resizePopup);
 
-        const parent = uDom.nodeFromId('inspectors');
+        const parent = qs$('#inspectors');
         const rect = parent.getBoundingClientRect();
         popup.style.setProperty('right', `${rect.right - parent.clientWidth}px`);
-        parent.classList.add('popupOn');
+        dom.cl.add(parent, 'popupOn');
 
-        document.addEventListener('tabIdChanged', onTabIdChanged);
+        dom.on(document, 'tabIdChanged', onTabIdChanged);
 
         setTabId(realTabId);
-        uDom.nodeFromId('showpopup').classList.add('active');
+        dom.cl.add('#showpopup', 'active');
     };
 
     const toggleOff = function() {
-        uDom.nodeFromId('showpopup').classList.remove('active');
-        document.removeEventListener('tabIdChanged', onTabIdChanged);
-        uDom.nodeFromId('inspectors').classList.remove('popupOn');
-        popup.removeEventListener('load', onLoad);
+        dom.cl.remove('#showpopup', 'active');
+        dom.off(document, 'tabIdChanged', onTabIdChanged);
+        dom.cl.remove('#inspectors', 'popupOn');
+        dom.off(popup, 'load', onLoad);
         popupObserver.disconnect();
         popupObserver = null;
-        popup.setAttribute('src', '');
+        dom.attr(popup, 'src', '');
     
         realTabId = 0;
     };
@@ -2403,12 +2351,9 @@ const popupManager = (( ) => {
         }
     };
 
-    uDom.nodeFromId('showpopup').addEventListener(
-        'click',
-        ( ) => {
-            void (realTabId === 0 ? toggleOn() : toggleOff());
-        }
-    );
+    dom.on('#showpopup', 'click', ( ) => {
+        void (realTabId === 0 ? toggleOn() : toggleOff());
+    });
 
     return api;
 })();
@@ -2440,7 +2385,7 @@ const loggerStats = (( ) => {
         });
 
         const doc = document;
-        const parent = dialog.querySelector('.sortedEntries');
+        const parent = qs$(dialog, '.sortedEntries');
         let i = 0;
 
         // Reuse existing rows
@@ -2481,7 +2426,7 @@ const loggerStats = (( ) => {
         modalDialog.show();
     };
 
-    uDom.nodeFromId('loggerStats').addEventListener('click', toggleOn);
+    dom.on('#loggerStats', 'click', toggleOn);
 
     return {
         processFilter: function(filter) {
@@ -2608,7 +2553,7 @@ const loggerStats = (( ) => {
     };
 
     const format = function() {
-        const output = dialog.querySelector('.output');
+        const output = qs$(dialog, '.output');
         if ( options.format === 'list' ) {
             output.textContent = formatAsList();
         } else {
@@ -2618,12 +2563,13 @@ const loggerStats = (( ) => {
 
     const setRadioButton = function(group, value) {
         if ( options.hasOwnProperty(group) === false ) { return; }
-        const groupEl = dialog.querySelector(`[data-radio="${group}"]`);
-        const buttonEls = groupEl.querySelectorAll('[data-radio-item]');
+        const groupEl = qs$(dialog, `[data-radio="${group}"]`);
+        const buttonEls = qsa$(groupEl, '[data-radio-item]');
         for ( const buttonEl of buttonEls ) {
-            buttonEl.classList.toggle(
+            dom.cl.toggle(
+                buttonEl,
                 'on',
-                buttonEl.getAttribute('data-radio-item') === value
+                dom.attr(buttonEl, 'data-radio-item') === value
             );
         }
         options[group] = value;
@@ -2635,7 +2581,7 @@ const loggerStats = (( ) => {
 
         // Copy to clipboard
         if ( target.matches('.pushbutton') ) {
-            const textarea = dialog.querySelector('textarea');
+            const textarea = qs$(dialog, 'textarea');
             textarea.focus();
             if ( textarea.selectionEnd === textarea.selectionStart ) {
                 textarea.select();
@@ -2652,8 +2598,8 @@ const loggerStats = (( ) => {
         const item = target.closest('[data-radio-item]');
         if ( item === null ) { return; }
         setRadioButton(
-            group.getAttribute('data-radio'),
-            item.getAttribute('data-radio-item')
+            dom.attr(group, 'data-radio'),
+            dom.attr(item, 'data-radio-item')
         );
         format();
         ev.stopPropagation();
@@ -2674,16 +2620,12 @@ const loggerStats = (( ) => {
         collectLines();
         format();
 
-        dialog.querySelector('.options').addEventListener(
-            'click',
-            onOption,
-            { capture: true }
-        );
+        dom.on(qs$(dialog, '.options'), 'click', onOption, { capture: true });
 
         modalDialog.show();
     };
 
-    uDom.nodeFromId('loggerExport').addEventListener('click', toggleOn);
+    dom.on('#loggerExport', 'click', toggleOn);
 })();
 
 /******************************************************************************/
@@ -2729,11 +2671,11 @@ const loggerSettings = (( ) => {
     const valueFromInput = function(input, def) {
         let value = parseInt(input.value, 10);
         if ( isNaN(value) ) { value = def; }
-        const min = parseInt(input.getAttribute('min'), 10);
+        const min = parseInt(dom.attr(input, 'min'), 10);
         if ( isNaN(min) === false ) {
             value = Math.max(value, min);
         }
-        const max = parseInt(input.getAttribute('max'), 10);
+        const max = parseInt(dom.attr(input, 'max'), 10);
         if ( isNaN(max) === false ) {
             value = Math.min(value, max);
         }
@@ -2749,12 +2691,12 @@ const loggerSettings = (( ) => {
         );
 
         // Number inputs
-        let inputs = dialog.querySelectorAll('input[type="number"]');
+        let inputs = qsa$(dialog, 'input[type="number"]');
         inputs[0].value = settings.discard.maxAge;
         inputs[1].value = settings.discard.maxLoadCount;
         inputs[2].value = settings.discard.maxEntryCount;
         inputs[3].value = settings.linesPerEntry;
-        inputs[3].addEventListener('input', ev => {
+        dom.on(inputs[3], 'input', ev => {
             settings.linesPerEntry = valueFromInput(ev.target, 4);
             viewPort.updateLayout();
         });
@@ -2762,15 +2704,15 @@ const loggerSettings = (( ) => {
         // Column checkboxs
         const onColumnChanged = ev => {
             const input = ev.target;
-            const i = parseInt(input.getAttribute('data-column'), 10);
+            const i = parseInt(dom.attr(input, 'data-column'), 10);
             settings.columns[i] = input.checked !== true;
             viewPort.updateLayout();
         };
-        inputs = dialog.querySelectorAll('input[type="checkbox"][data-column]');
+        inputs = qsa$(dialog, 'input[type="checkbox"][data-column]');
         for ( const input of inputs ) {
-            const i = parseInt(input.getAttribute('data-column'), 10);
+            const i = parseInt(dom.attr(input, 'data-column'), 10);
             input.checked = settings.columns[i] === false;
-            input.addEventListener('change', onColumnChanged);
+            dom.on(input, 'change', onColumnChanged);
         }
 
         modalDialog.show();
@@ -2778,16 +2720,16 @@ const loggerSettings = (( ) => {
 
     const toggleOff = function(dialog) {
         // Number inputs
-        let inputs = dialog.querySelectorAll('input[type="number"]');
+        let inputs = qsa$(dialog, 'input[type="number"]');
         settings.discard.maxAge = valueFromInput(inputs[0], 240);
         settings.discard.maxLoadCount = valueFromInput(inputs[1], 25);
         settings.discard.maxEntryCount = valueFromInput(inputs[2], 2000);
         settings.linesPerEntry = valueFromInput(inputs[3], 4);
 
         // Column checkboxs
-        inputs = dialog.querySelectorAll('input[type="checkbox"][data-column]');
+        inputs = qsa$(dialog, 'input[type="checkbox"][data-column]');
         for ( const input of inputs ) {
-            const i = parseInt(input.getAttribute('data-column'), 10);
+            const i = parseInt(dom.attr(input, 'data-column'), 10);
             settings.columns[i] = input.checked !== true;
         }
 
@@ -2799,7 +2741,7 @@ const loggerSettings = (( ) => {
         viewPort.updateLayout();
     };
 
-    uDom.nodeFromId('loggerSettings').addEventListener('click', toggleOn);
+    dom.on('#loggerSettings', 'click', toggleOn);
 
     return settings;
 })();
@@ -2810,9 +2752,8 @@ logger.resize = (function() {
     let timer;
 
     const resize = function() {
-        const vrect = document.body.getBoundingClientRect();
-        const elems = document.querySelectorAll('.vscrollable');
-        for ( const elem of elems ) {
+        const vrect = dom.body.getBoundingClientRect();
+        for ( const elem of qsa$('.vscrollable') ) {
             const crect = elem.getBoundingClientRect();
             const dh = crect.bottom - vrect.bottom;
             if ( dh === 0 ) { continue; }
@@ -2830,7 +2771,7 @@ logger.resize = (function() {
 
     resizeAsync();
 
-    window.addEventListener('resize', resizeAsync, { passive: true });
+    dom.on(window, 'resize', resizeAsync, { passive: true });
 
     return resizeAsync;
 })();
@@ -2853,42 +2794,38 @@ const releaseView = function() {
     logger.ownerId = undefined;
 };
 
-window.addEventListener('pagehide', releaseView);
-window.addEventListener('pageshow', grabView);
+dom.on(window, 'pagehide', releaseView);
+dom.on(window, 'pageshow', grabView);
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1398625
-window.addEventListener('beforeunload', releaseView);
+dom.on(window, 'beforeunload', releaseView);
 
 /******************************************************************************/
 
-uDom('#pageSelector').on('change', pageSelectorChanged);
-uDom('#refresh').on('click', reloadTab);
-uDom('#netInspector .vCompactToggler').on('click', toggleVCompactView);
-uDom('#pause').on('click', pauseNetInspector);
+dom.on('#pageSelector', 'change', pageSelectorChanged);
+dom.on('#refresh', 'click', reloadTab);
+dom.on('#netInspector .vCompactToggler', 'click', toggleVCompactView);
+dom.on('#pause', 'click', pauseNetInspector);
 
 // https://github.com/gorhill/uBlock/issues/507
 //   Ensure tab selector is in sync with URL hash
 pageSelectorFromURLHash();
-window.addEventListener('hashchange', pageSelectorFromURLHash);
+dom.on(window, 'hashchange', pageSelectorFromURLHash);
 
 // Start to watch the current window geometry 2 seconds after the document
 // is loaded, to be sure no spurious geometry changes will be triggered due
 // to the window geometry pontentially not settling fast enough.
 if ( self.location.search.includes('popup=1') ) {
-    window.addEventListener(
-        'load',
-        ( ) => {
-            setTimeout(
-                ( ) => {
-                    popupLoggerBox = {
-                        x: self.screenX,
-                        y: self.screenY,
-                        w: self.outerWidth,
-                        h: self.outerHeight,
-                    };
-            }, 2000);
-        },
-        { once: true }
-    );
+    dom.on(window, 'load', ( ) => {
+        setTimeout(
+            ( ) => {
+                popupLoggerBox = {
+                    x: self.screenX,
+                    y: self.screenY,
+                    w: self.outerWidth,
+                    h: self.outerHeight,
+                };
+        }, 2000);
+    }, { once: true });
 }
 
 /******************************************************************************/

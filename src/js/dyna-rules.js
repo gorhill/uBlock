@@ -19,16 +19,15 @@
     Home: https://github.com/gorhill/uMatrix
 */
 
-/* global CodeMirror, diff_match_patch, uDom, uBlockDashboard */
+/* global CodeMirror, diff_match_patch, uBlockDashboard */
 
 'use strict';
-
-/******************************************************************************/
 
 import publicSuffixList from '../lib/publicsuffixlist/publicsuffixlist.js';
 
 import { hostnameFromURI } from './uri-utils.js';
 import { i18n$ } from './i18n.js';
+import { dom, qs$, qsa$ } from './dom.js';
 
 import './codemirror/ubo-dynamic-filtering.js';
 
@@ -37,7 +36,7 @@ import './codemirror/ubo-dynamic-filtering.js';
 const hostnameToDomainMap = new Map();
 
 const mergeView = new CodeMirror.MergeView(
-    document.querySelector('.codeMirrorMergeContainer'),
+    qs$('.codeMirrorMergeContainer'),
     {
         allowEditingOriginals: true,
         connect: 'align',
@@ -86,24 +85,23 @@ let isCollapsed = false;
     const commitArrowSelector = '.CodeMirror-merge-copybuttons-left .CodeMirror-merge-copy-reverse:not([title="' + i18nCommitStr + '"])';
     const revertArrowSelector = '.CodeMirror-merge-copybuttons-left .CodeMirror-merge-copy:not([title="' + i18nRevertStr + '"])';
 
-    uDom.nodeFromSelector('.CodeMirror-merge-scrolllock')
-        .setAttribute('title', i18n$('genericMergeViewScrollLock'));
+    dom.attr('.CodeMirror-merge-scrolllock', 'title', i18n$('genericMergeViewScrollLock'));
 
     const translate = function() {
-        let elems = document.querySelectorAll(commitArrowSelector);
+        let elems = qsa$(commitArrowSelector);
         for ( const elem of elems ) {
-            elem.setAttribute('title', i18nCommitStr);
+            dom.attr(elem, 'title', i18nCommitStr);
         }
-        elems = document.querySelectorAll(revertArrowSelector);
+        elems = qsa$(revertArrowSelector);
         for ( const elem of elems ) {
-            elem.setAttribute('title', i18nRevertStr);
+            dom.attr(elem, 'title', i18nRevertStr);
         }
     };
 
     const mergeGapObserver = new MutationObserver(translate);
 
     mergeGapObserver.observe(
-        uDom.nodeFromSelector('.CodeMirror-merge-copybuttons-left'),
+        qs$('.CodeMirror-merge-copybuttons-left'),
         { attributes: true, attributeFilter: [ 'title' ], subtree: true }
     );
 
@@ -247,7 +245,7 @@ const rulesToDoc = function(clearHistory) {
 /******************************************************************************/
 
 const filterRules = function(key) {
-    const filter = uDom.nodeFromSelector('#ruleFilter input').value;
+    const filter = qs$('#ruleFilter input').value;
     const rules = thePanes[key].modified;
     if ( filter === '' ) { return rules; }
     const out = [];
@@ -283,7 +281,7 @@ mergeView.options.revertChunk = function(
     to, toStart, toEnd
 ) {
     // https://github.com/gorhill/uBlock/issues/3611
-    if ( document.body.getAttribute('dir') === 'rtl' ) {
+    if ( dom.attr(dom.body, 'dir') === 'rtl' ) {
         let tmp = from; from = to; to = tmp;
         tmp = fromStart; fromStart = toStart; toStart = tmp;
         tmp = fromEnd; fromEnd = toEnd; toEnd = tmp;
@@ -330,7 +328,7 @@ function handleImportFilePicker() {
 /******************************************************************************/
 
 const startImportFilePicker = function() {
-    const input = document.getElementById('importFilePicker');
+    const input = qs$('#importFilePicker');
     // Reset to empty string, this will ensure an change event is properly
     // triggered if the user pick a file, even if it is the same as the last
     // one picked.
@@ -363,7 +361,7 @@ const onFilterChanged = (( ) => {
     const process = function() {
         timer = undefined;
         if ( mergeView.editor().isClean(cleanEditToken) === false ) { return; }
-        const filter = uDom.nodeFromSelector('#ruleFilter input').value;
+        const filter = qs$('#ruleFilter input').value;
         if ( filter === last ) { return; }
         last = filter;
         if ( overlay !== null ) {
@@ -498,7 +496,7 @@ const onPresentationChanged = (( ) => {
         const editPane = thePanes.edit;
         origPane.modified = origPane.original.slice();
         editPane.modified = editPane.original.slice();
-        const select = document.querySelector('#ruleFilter select');
+        const select = qs$('#ruleFilter select');
         sortType = parseInt(select.value, 10);
         if ( isNaN(sortType) ) { sortType = 1; }
         {
@@ -528,7 +526,7 @@ const onTextChanged = (( ) => {
 
     const process = details => {
         timer = undefined;
-        const diff = document.getElementById('diff');
+        const diff = qs$('#diff');
         let isClean = mergeView.editor().isClean(cleanEditToken);
         if (
             details === undefined &&
@@ -539,20 +537,17 @@ const onTextChanged = (( ) => {
             isClean = true;
         }
         const isDirty = mergeView.leftChunks().length !== 0;
-        document.body.classList.toggle('editing', isClean === false);
-        diff.classList.toggle('dirty', isDirty);
-        uDom('#editSaveButton')
-            .toggleClass('disabled', isClean);
-        uDom('#exportButton,#importButton')
-            .toggleClass('disabled', isClean === false);
-        uDom('#revertButton,#commitButton')
-            .toggleClass('disabled', isClean === false || isDirty === false);
-        const input = document.querySelector('#ruleFilter input');
+        dom.cl.toggle(dom.body, 'editing', isClean === false);
+        dom.cl.toggle(diff, 'dirty', isDirty);
+        dom.cl.toggle('#editSaveButton', 'disabled', isClean);
+        dom.cl.toggle('#exportButton,#importButton', 'disabled', isClean === false);
+        dom.cl.toggle('#revertButton,#commitButton', 'disabled', isClean === false || isDirty === false);
+        const input = qs$('#ruleFilter input');
         if ( isClean ) {
-            input.removeAttribute('disabled');
+            dom.attr(input, 'disabled', null);
             CodeMirror.commands.save = undefined;
         } else {
-            input.setAttribute('disabled', '');
+            dom.attr(input, 'disabled', '');
             CodeMirror.commands.save = editSaveHandler;
         }
     };
@@ -659,23 +654,25 @@ vAPI.messaging.send('dashboard', {
 });
 
 // Handle user interaction
-uDom('#importButton').on('click', startImportFilePicker);
-uDom('#importFilePicker').on('change', handleImportFilePicker);
-uDom('#exportButton').on('click', exportUserRulesToFile);
-uDom('#revertButton').on('click', revertAllHandler);
-uDom('#commitButton').on('click', commitAllHandler);
-uDom('#editSaveButton').on('click', editSaveHandler);
-uDom('#ruleFilter input').on('input', onFilterChanged);
-uDom('#ruleFilter select').on('input', ( ) => {
+dom.on('#importButton', 'click', startImportFilePicker);
+dom.on('#importFilePicker', 'change', handleImportFilePicker);
+dom.on('#exportButton', 'click', exportUserRulesToFile);
+dom.on('#revertButton', 'click', revertAllHandler);
+dom.on('#commitButton', 'click', commitAllHandler);
+dom.on('#editSaveButton', 'click', editSaveHandler);
+dom.on('#ruleFilter input', 'input', onFilterChanged);
+dom.on('#ruleFilter select', 'input', ( ) => {
     onPresentationChanged(true);
 });
-uDom('#ruleFilter #diffCollapse').on('click', ev => {
-    isCollapsed = ev.target.classList.toggle('active');
+dom.on('#ruleFilter #diffCollapse', 'click', ev => {
+    isCollapsed = dom.cl.toggle(ev.target, 'active');
     onPresentationChanged(true);
 });
 
 // https://groups.google.com/forum/#!topic/codemirror/UQkTrt078Vs
-mergeView.editor().on('updateDiff', ( ) => { onTextChanged(); });
+mergeView.editor().on('updateDiff', ( ) => {
+    onTextChanged();
+});
 
 /******************************************************************************/
 

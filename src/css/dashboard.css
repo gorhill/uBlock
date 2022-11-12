@@ -76,9 +76,6 @@ iframe {
     width: 100vw;
     }
 
-body:not(.canUpdateShortcuts) .tabButton[data-pane="shortcuts.html"] {
-    display: none;
-    }
 body .tabButton[data-pane="no-dashboard.html"] {
     display: none;
     }

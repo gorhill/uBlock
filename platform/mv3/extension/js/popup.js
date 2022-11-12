@@ -51,7 +51,7 @@ function setFilteringMode(level, commit = false) {
     modeSlider.dataset.level = level;
     if ( qs$('.filteringModeSlider.moving') === null ) {
         dom.text(
-            qs$('#filteringModeText > span:nth-of-type(1)'),
+            '#filteringModeText > span:nth-of-type(1)',
             i18n$(`filteringMode${level}Name`)
         );
     }
@@ -79,7 +79,7 @@ async function commitFilteringMode() {
         }
     }
     dom.text(
-        qs$('#filteringModeText > span:nth-of-type(1)'),
+        '#filteringModeText > span:nth-of-type(1)',
         i18n$(`filteringMode${afterLevel}Name`)
     );
     const actualLevel = await sendMessage({
@@ -112,7 +112,7 @@ async function commitFilteringMode() {
         const modeSlider = qs$('.filteringModeSlider');
         if ( `${level}` === modeSlider.dataset.level ) { return; }
         dom.text(
-            qs$('#filteringModeText > span:nth-of-type(2)'),
+            '#filteringModeText > span:nth-of-type(2)',
             i18n$(`filteringMode${level}Name`)
         );
         setFilteringMode(level);
@@ -131,7 +131,7 @@ async function commitFilteringMode() {
         dom.cl.remove(modeSlider, 'moving');
         self.removeEventListener('mousemove', moveAsync, { capture: true });
         self.removeEventListener('mouseup', stop, { capture: true });
-        dom.text(qs$('#filteringModeText > span:nth-of-type(2)'), '');
+        dom.text('#filteringModeText > span:nth-of-type(2)', '');
         commitFilteringMode();
         ev.stopPropagation();
         ev.preventDefault();
@@ -160,11 +160,11 @@ async function commitFilteringMode() {
         ev.preventDefault();
     };
 
-    dom.on(qs$('.filteringModeButton'), 'mousedown', startSliding);
+    dom.on('.filteringModeButton', 'mousedown', startSliding);
 }
 
 dom.on(
-    qs$('.filteringModeSlider'),
+    '.filteringModeSlider',
     'click',
     '.filteringModeSlider span[data-level]',
     ev => {
@@ -177,25 +177,25 @@ dom.on(
 );
 
 dom.on(
-    qs$('.filteringModeSlider'),
+    '.filteringModeSlider',
     'mouseenter',
     '.filteringModeSlider span[data-level]',
     ev => {
         const span = ev.target;
         const level = parseInt(span.dataset.level, 10);
         dom.text(
-            qs$('#filteringModeText > span:nth-of-type(2)'),
+            '#filteringModeText > span:nth-of-type(2)',
             i18n$(`filteringMode${level}Name`)
         );
     }
 );
 
 dom.on(
-    qs$('.filteringModeSlider'),
+    '.filteringModeSlider',
     'mouseleave',
     '.filteringModeSlider span[data-level]',
     ( ) => {
-        dom.text(qs$('#filteringModeText > span:nth-of-type(2)'), '');
+        dom.text('#filteringModeText > span:nth-of-type(2)', '');
     }
 );
 
@@ -249,11 +249,11 @@ simpleStorage.getItem('popupPanelSections').then(s => {
     sectionBitsToAttribute(parseInt(s, 10) || 0);
 });
 
-dom.on(qs$('#moreButton'), 'click', ( ) => {
+dom.on('#moreButton', 'click', ( ) => {
     toggleSections(true);
 });
 
-dom.on(qs$('#lessButton'), 'click', ( ) => {
+dom.on('#lessButton', 'click', ( ) => {
     toggleSections(false);
 });
 
@@ -284,12 +284,12 @@ async function init() {
 
     setFilteringMode(popupPanelData.level);
 
-    dom.text(qs$('#hostname'), tabHostname);
+    dom.text('#hostname', tabHostname);
 
     const parent = qs$('#rulesetStats');
     for ( const details of popupPanelData.rulesetDetails || [] ) {
-        const div = qs$('#templates .rulesetDetails').cloneNode(true);
-        dom.text(qs$('h1', div), details.name);
+        const div = dom.clone('#templates .rulesetDetails');
+        dom.text(qs$(div, 'h1'), details.name);
         const { rules, filters, css } = details;
         let ruleCount = rules.plain + rules.regex;
         if ( popupPanelData.hasOmnipotence ) {
@@ -301,7 +301,7 @@ async function init() {
             specificCount += css.specific.entityBased;
         }
         dom.text(
-            qs$('p', div),
+            qs$(div, 'p'),
             i18n$('perRulesetStats')
                 .replace('{{ruleCount}}', ruleCount.toLocaleString())
                 .replace('{{filterCount}}', filters.accepted.toLocaleString())

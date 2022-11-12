@@ -21,15 +21,13 @@
 
 'use strict';
 
-/******************************************************************************/
-
 import { runtime } from './ext.js';
-import { qs$ } from './dom.js';
+import { dom } from './dom.js';
 
 /******************************************************************************/
 
 (async ( ) => {
     const manifest = runtime.getManifest();
 
-    qs$('#aboutNameVer').textContent = `${manifest.name} ${manifest.version}`;
+    dom.text('#aboutNameVer', `${manifest.name} ${manifest.version}`);
 })();

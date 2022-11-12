@@ -23,8 +23,6 @@
 
 'use strict';
 
-/******************************************************************************/
-
 import './codemirror/ubo-static-filtering.js';
 
 import { hostnameFromURI } from './uri-utils.js';

@@ -28,6 +28,7 @@ cp src/css/common.css $DES/css/
 cp src/css/dashboard-common.css $DES/css/
 cp src/css/fa-icons.css $DES/css/
 
+cp src/js/dom.js $DES/js/
 cp src/js/fa-icons.js $DES/js/
 cp src/js/i18n.js $DES/js/
 
