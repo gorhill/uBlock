@@ -264,7 +264,7 @@
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Erweiterte Netzwerkfilterung sowie spezifisches und generisches erweitertes Filtern aus ausgewählten Filterlisten.\n\nErfordert eine weitreichende Berechtigung zum Lesen und Ändern von Daten auf allen Websites.\n\nDie generische erweiterte Filterung kann zu einem höheren Ressourcenverbrauch der Website führen.",
+    "message": "Erweiterte Netzwerkfilterung plus spezifisches und generisches erweitertes Filtern aus ausgewählten Filterlisten.\n\nErfordert eine weitreichende Berechtigung zum Lesen und Ändern von Daten auf allen Websites.\n\nDie generische erweiterte Filterung kann zu einem höheren Ressourcenverbrauch der Website führen.",
     "description": "This describes the 'complete' filtering mode"
   },
   "behaviorSectionLabel": {

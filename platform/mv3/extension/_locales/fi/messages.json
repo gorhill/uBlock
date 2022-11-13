@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Kokeellinen estotyökalu, joka ei tarvitse erityisiä käyttöoikeuksia. Estää heti asennuksen jälkeen mm. mainokset, seurannat ja [...]",
+    "message": "Kokeellinen estotyökalu, joka ei tarvitse erityisiä käyttöoikeuksia. Estää välittömästi mm. mainokset, seurannat ja kryptolouhijat.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -16,7 +16,7 @@
     "description": "English: uBO Lite — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Varoitus! Olet tehnyt tallentamattomia muutoksia",
+    "message": "Varoitus! Et ole tallentanut tekemiäsi muutoksia",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -120,7 +120,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "omnipotenceLegend": {
-    "message": "uBO Liten laajennettu suodatus voi toimia sivustolla vasta, kun sille on myönnetty sivustokohtainen tietojenkäsittelyoikeus. Tämän asetuksen avulla nämä käyttöoikeudet voidaan myöntää kattamaan kaikki verkkosivustot.",
+    "message": "uBO Liten laajennettu suodatus voi toimia sivustolla vasta, kun sille erikseen myönnetään sivustokohtainen tietojen muokkausoikeus. Asetuksen avulla nämä käyttöoikeudet voidaan myöntää kattamaan kaikki verkkosivustot.",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
@@ -228,7 +228,7 @@
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "Olet juuri asentanut uBO Liten. Tästä voit valita kaikilla sivustoilla oletusarvoisesti käytettävän suodatustilan.\n\nOletusarvoisesti <em>Perus</em>-tila on valittu, koska se ei vaadi käyttöoikeutta tietojen lukuun ja muutokseen. Jos luotat uBO Liteen, voit myöntää sille laajan käyttöoikeuden tietojen lukuun ja muutokseen kaikilla sivustoilla, jolloin edistyneet suodatusominaisuudet ovat oletusarvoisesti käytössä kaikilla sivustoilla.",
+    "message": "Olet juuri asentanut uBO Liten. Tästä voit valita kaikilla sivustoilla oletusarvoisesti käytettävän suodatustilan.\n\nOletusarvoinen valinta on <em>Perus</em>-tila, koska se ei vaadi tietojen luku- ja muokkausoikeutta. Jos luotat uBO Liteen, voit myöntää sille kaikki sivustot kattavan laajan tietojen luku- ja muokkausoikeuden, jolloin edistyneemmät suodatusominaisuudet ovat oletusarvoisesti käytössä kaikilla sivustoilla.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
@@ -236,7 +236,7 @@
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "Sivustokohtaiset suodatustilat ohittavat oletusarvoisen suodatustilan. Voit säätää suodatustilaa sivustokohtaisesti kullekin sivustolle parhaiten sopivaksi. Jokaisella tilalla on hyvät ja huonot puolensa.",
+    "message": "Sivustokohtaiset suodatustilat ohittavat oletusarvoisen suodatustilan. Voit säätää suodatustilan kullekin sivustolle parhaiten sopivaksi. Jokaisella tilalla on hyvät ja huonot puolensa.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
@@ -256,15 +256,15 @@
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Perustason verkkosuodatus valikoiduilla suodatinlistoilla.\n\nEi tarvitse käyttöoikeutta sivustojen tietojen lukuun ja muutokseen.",
+    "message": "Perustason verkkosuodatus valikoiduilla suodatinlistoilla.\n\nEi edellytä sivustojen tietojen luku- ja muokkausoikeutta.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Edistynyt verkkosuodatus sekä kohdistettu laajempi suodatus valikoiduilla suodatinlistoilla.\n\nTarvitsee laajemman käyttöoikeuden kaikkien sivustojen tietojen lukuun ja muutokseen.",
+    "message": "Edistynyt verkkosuodatus sekä kohdistettu laajempi suodatus valikoiduilla suodatinlistoilla.\n\nEdellyttää kaikki sivustot kattavan, laajemman tietojen luku- ja muokkausoikeutta.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Edistynyt verkkosuodatus sekä kohdistettu ja yleinen laajempi suodatus valikoiduilla suodatinlistoilla.\n\nTarvitsee laajemman käyttöoikeuden kaikkien sivustojen tietojen lukuun ja muutokseen.\n\nYleinen laajempi suodatus saattaa lisätä verkkosivujen resurssien käyttöä.",
+    "message": "Edistynyt verkkosuodatus sekä kohdistettu ja yleinen laajempi suodatus valikoiduilla suodatinlistoilla.\n\nEdellyttää kaikki sivustot kattavan, laajemman tietojen luku- ja muokkausoikeutta.\n\nYleinen laajempi suodatus saattaa lisätä verkkosivujen resurssien käyttöä.",
     "description": "This describes the 'complete' filtering mode"
   },
   "behaviorSectionLabel": {
@@ -272,7 +272,7 @@
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Lataa sivu suodatustilan muuttuessa automaattisesti uudelleen",
+    "message": "Lataa sivu automaattisesti uudelleen suodatustilan vaihtuessa",
     "description": "Label for a checkbox in the options page"
   }
 }

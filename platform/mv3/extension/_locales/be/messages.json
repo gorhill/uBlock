@@ -152,11 +152,11 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "1pFormatHint": {
-    "message": "One filter per line. A filter can be a plain hostname, or an EasyList-compatible filter. Lines prefixed with <code>!</code> will be ignored.",
+    "message": "Адзін фільтр на радок. Фільтрам можа быць адрас сайта або сумяшчальны з EasyList фільтр. Радкі, што пачынаюцца з <code>!</code>, будуць праігнараваны.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
-    "message": "Import and append",
+    "message": "Імпартаваць і дадаць",
     "description": "English: Import and append"
   },
   "1pExport": {
@@ -168,15 +168,15 @@
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "whitelistPrompt": {
-    "message": "The trusted site directives dictate on which web pages uBO Lite should be disabled. One entry per line.",
+    "message": "Дырэктывы давераных сайтаў указваюць, на якіх вэб-старонках uBO Lite павінен быць выключаны. Адзін запіс на радок.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Import and append",
+    "message": "Імпартаваць і дадаць",
     "description": "English: Import and append"
   },
   "whitelistExport": {
-    "message": "Export",
+    "message": "Экспартаваць",
     "description": "English: Export"
   },
   "whitelistExportFilename": {
@@ -184,7 +184,7 @@
     "description": "The default filename to use for import/export purpose"
   },
   "aboutChangelog": {
-    "message": "Changelog",
+    "message": "Журнал змяненняў",
     "description": ""
   },
   "aboutCode": {
@@ -192,7 +192,7 @@
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Contributors",
+    "message": "Удзельнікі",
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
@@ -208,19 +208,19 @@
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "External dependencies (GPLv3-compatible):",
+    "message": "Вонкавыя залежнасці (GPLv3-сумяшчальныя):",
     "description": "Shown in the About pane"
   },
   "genericSubmit": {
-    "message": "Submit",
+    "message": "Пацвердзіць",
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Apply changes",
+    "message": "Ужыць змяненні",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
-    "message": "Revert",
+    "message": "Вярнуць",
     "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
@@ -228,43 +228,43 @@
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "You have just installed uBO Lite. You can choose here the default filtering mode to use on all websites.\n\nBy default, <em>Basic</em> mode is selected because it does not require the permission to read and change data. If you trust uBO Lite, you can give it broad permission to read and change data on all websites in order to enable more advanced filtering capabilities for all websites by default.",
+    "message": "Вы толькі што ўсталявалі uBO Lite. Тут вы можаце выбраць прадвызначаны рэжым фільтравання для ўсіх вэб-сайтаў.\n\nКалі не ўказана іншае, выбраны <em>базавы</em> рэжым, бо ён не патрабуе дазволаў на чытанне і змяненне звестак. Калі вы давяраеце uBO Lite, можаце даць яму шырэйшыя дазволы на чытанне і змяненне звестак на ўсіх вэб-сайтах, каб зрабіць магчымымі больш прасунутыя функцыі фільтравання прадвызначана на ўсіх вэб-сайтах.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
-    "message": "Default filtering mode",
+    "message": "Прадвызначаны рэжым фільтравання",
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "The default filtering mode will be overriden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
+    "message": "Прадвызначаны рэжым фільтравання будзе перавызначаны рэжымам, выбраным для пэўнага вэб-сайта. Вы можаце дапасаваць рэжым фільтравання для кожнага сайта згодна з тым, які рэжым працуе лепей на гэтым вэб-сайце. Кожны рэжым мае свае перавагі і недахопы.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
-    "message": "no filtering",
+    "message": "без фільтравання",
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
-    "message": "basic",
+    "message": "базавы",
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
-    "message": "optimal",
+    "message": "аптымальны",
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
-    "message": "complete",
+    "message": "поўны",
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Basic network filtering from selected filter lists.\n\nDoes not require permission to read and change data on websites.",
+    "message": "Базавае сеткавае фільтраванне па выбраных спісах фільтраў.\n\nНе патрабуе дазволу на чытанне і змяненне звестак на вэб-сайтах.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific extended filtering from selected filter lists.\n\nRequires broad permission to read and change data on all websites.",
+    "message": "Пашыранае сеткавае фільтраванне плюс дакладнае фільтраванне па выбраных спісах фільтраў.\n\nПатрабуе шырокі дазвол на чытанне і змяненне звестак на ўсіх вэб-сайтах.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific and generic extended filtering from selected filter lists.\n\nRequires broad permission to read and change data on all websites.\n\nGeneric extended filtering may cause higher webpage resources usage.",
+    "message": "Пашыранае сеткавае фільтраванне плюс дакладнае і агульнае пашыранае фільтраванне па выбраных спісах фільтраў.\n\nПатрабуе шырокі дазвол на чытанне і змяненне звестак на ўсіх вэб-сайтах.\n\nАгульнае пашыранае фільтраванне можа прывесці да павышанага спажывання рэсурсаў вэб-старонкі.",
     "description": "This describes the 'complete' filtering mode"
   },
   "behaviorSectionLabel": {
@@ -272,7 +272,7 @@
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Automatically reload page when changing filtering mode",
+    "message": "Аўтаматычна абнаўляць старонку пры змене рэжыму фільтравання",
     "description": "Label for a checkbox in the options page"
   }
 }

@@ -1056,7 +1056,7 @@
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
-    "message": "Kaikki asetuksesi korvataan {{time}} varmuuskopioiduilla tiedoilla, jonka jälkeen uBlock₀ käynnistyy uudelleen.\n\nKorvataanko kaikki nykyiset asetukset varmuuskopion tiedoilla?",
+    "message": "Kaikki asetuksesi korvataan {{time}} varmuuskopioiduilla tiedoilla ja uBlock₀ käynnistyy uudelleen.\n\nKorvataanko kaikki nykyiset asetukset varmuuskopioduilla tiedoilla?",
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {
@@ -1144,7 +1144,7 @@
     "description": "English: Close this window"
   },
   "docblockedDontWarn": {
-    "message": "Älä varoita minua tästä sivusta uudelleen",
+    "message": "Älä varoita tästä sivustosta uudelleen",
     "description": "Label for checkbox in document-blocked page"
   },
   "docblockedProceed": {

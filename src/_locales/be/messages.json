@@ -12,11 +12,11 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Warning! You have unsaved changes",
+    "message": "Увага! Ёсць незахаваныя змены",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Stay",
+    "message": "Застацца",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -52,7 +52,7 @@
     "description": "Title for the logger window"
   },
   "aboutPageName": {
-    "message": "About",
+    "message": "Пра пашырэнне",
     "description": "appears as tab name in dashboard"
   },
   "supportPageName": {
@@ -96,7 +96,7 @@
     "description": "English: since install"
   },
   "popupOr": {
-    "message": "or",
+    "message": "або",
     "description": "English: or"
   },
   "popupBlockedOnThisPage_v2": {
@@ -112,15 +112,15 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
-    "message": "Open the dashboard",
+    "message": "Адкрыць панэль кіравання",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Enter element zapper mode",
+    "message": "Перайсці ў рэжым імгненнага хавання элементаў",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Enter element picker mode",
+    "message": "Перайсці ў рэжым выбару элементаў",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "Паведаміць аб праблеме з сайтам",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -224,19 +224,19 @@
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
-    "message": "Click to make your changes permanent.",
+    "message": "Націсніце, каб захаваць змены.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Click to revert your changes.",
+    "message": "Націсніце, каб скасаваць змены.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {
-    "message": "all",
+    "message": "усе",
     "description": ""
   },
   "popupImageRulePrompt": {
-    "message": "images",
+    "message": "відарысы",
     "description": ""
   },
   "popup3pAnyRulePrompt": {
@@ -284,11 +284,11 @@
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party frames' cell"
   },
   "pickerCreate": {
-    "message": "Create",
+    "message": "Стварыць",
     "description": "English: Create"
   },
   "pickerPick": {
-    "message": "Pick",
+    "message": "Выбраць",
     "description": "English: Pick"
   },
   "pickerQuit": {
@@ -344,7 +344,7 @@
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "Custom accent color",
+    "message": "Уласны колеравы акцэнт",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsCloudStorageEnabledPrompt": {
@@ -368,7 +368,7 @@
     "description": "English: "
   },
   "settingPerSiteSwitchGroup": {
-    "message": "Default behavior",
+    "message": "Прадвызначаныя паводзіны",
     "description": ""
   },
   "settingPerSiteSwitchGroupSynopsis": {
@@ -388,11 +388,11 @@
     "description": ""
   },
   "settingsNoScriptingPrompt": {
-    "message": "Disable JavaScript",
+    "message": "Адключыць JavaScript",
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
-    "message": "Block CSP reports",
+    "message": "Блакаваць справаздачы CSP",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsUncloakCnamePrompt": {
@@ -408,11 +408,11 @@
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
-    "message": "advanced settings",
+    "message": "пашыраныя налады",
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsLastRestorePrompt": {
-    "message": "Last restore:",
+    "message": "Апошняе аднаўленне:",
     "description": "English: Last restore:"
   },
   "settingsLastBackupPrompt": {
@@ -432,7 +432,7 @@
     "description": "A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow": {
-    "message": "Update now",
+    "message": "Абнавіць зараз",
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll": {
@@ -464,15 +464,15 @@
     "description": "English: Lists of blocked hosts"
   },
   "3pApplyChanges": {
-    "message": "Apply changes",
+    "message": "Ужыць змяненні",
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Built-in",
+    "message": "Убудаваныя",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
-    "message": "Ads",
+    "message": "Рэклама",
     "description": "English: Ads"
   },
   "3pGroupPrivacy": {
@@ -480,11 +480,11 @@
     "description": "English: Privacy"
   },
   "3pGroupMalware": {
-    "message": "Malware domains",
+    "message": "Дамены шкодных праграм",
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {
-    "message": "Annoyances",
+    "message": "Надакучлівасці",
     "description": "The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose": {
@@ -492,7 +492,7 @@
     "description": "English: Multipurpose"
   },
   "3pGroupRegions": {
-    "message": "Regions, languages",
+    "message": "Рэгіёны, мовы",
     "description": "English: Regions, languages"
   },
   "3pGroupCustom": {
@@ -528,15 +528,15 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "One filter per line. A filter can be a plain hostname, or an EasyList-compatible filter. Lines prefixed with <code>!</code> will be ignored.",
+    "message": "Адзін фільтр на радок. Фільтрам можа быць адрас сайта або сумяшчальны з EasyList фільтр. Радкі, што пачынаюцца з <code>!</code>, будуць праігнараваны.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
-    "message": "Import and append",
+    "message": "Імпартаваць і дадаць",
     "description": "English: Import and append"
   },
   "1pExport": {
-    "message": "Export",
+    "message": "Экспартаваць",
     "description": "English: Export"
   },
   "1pExportFilename": {
@@ -628,7 +628,7 @@
     "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
-    "message": "Apply changes",
+    "message": "Ужыць змяненні",
     "description": "English: Apply changes"
   },
   "logRequestsHeaderType": {
@@ -760,7 +760,7 @@
     "description": "Label to identify the type of an entry"
   },
   "loggerEntryDetailsURL": {
-    "message": "URL",
+    "message": "URL-адрас",
     "description": "Label to identify the URL of an entry"
   },
   "loggerURLFilteringHeader": {
@@ -784,11 +784,11 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
-    "message": "Block",
+    "message": "Блакаваць",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAllow": {
-    "message": "Allow",
+    "message": "Дазволіць",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType": {
@@ -796,7 +796,7 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyType": {
-    "message": "any type",
+    "message": "любы тып",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin": {
@@ -892,7 +892,7 @@
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
-    "message": "Documentation",
+    "message": "Дакументацыя",
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
@@ -1000,19 +1000,19 @@
     "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
-    "message": "Privacy policy",
+    "message": "Палітыка прыватнасці",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {
-    "message": "Changelog",
+    "message": "Журнал змяненняў",
     "description": ""
   },
   "aboutCode": {
-    "message": "Source code (GPLv3)",
+    "message": "Зыходны код (GPLv3)",
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Contributors",
+    "message": "Удзельнікі",
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
@@ -1028,7 +1028,7 @@
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "External dependencies (GPLv3-compatible):",
+    "message": "Вонкавыя залежнасці (GPLv3-сумяшчальныя):",
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
@@ -1048,7 +1048,7 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Restore from file…",
+    "message": "Аднавіць з файла…",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
@@ -1080,7 +1080,7 @@
     "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
-    "message": "a minute ago",
+    "message": "хвіліну таму",
     "description": "English: a minute ago"
   },
   "elapsedManyMinutesAgo": {
@@ -1136,7 +1136,7 @@
     "description": "English: List of filter list names follows"
   },
   "docblockedBack": {
-    "message": "Go back",
+    "message": "Вярнуцца",
     "description": "English: Go back"
   },
   "docblockedClose": {
@@ -1152,7 +1152,7 @@
     "description": "English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary": {
-    "message": "Temporarily",
+    "message": "Часова",
     "description": "English: Temporarily"
   },
   "docblockedDisablePermanent": {
@@ -1196,11 +1196,11 @@
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
-    "message": "Revert",
+    "message": "Вярнуць",
     "description": "for generic 'Revert' buttons"
   },
   "genericBytes": {
-    "message": "bytes",
+    "message": "байтаў",
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
@@ -1244,15 +1244,15 @@
     "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
   },
   "KB": {
-    "message": "KB",
+    "message": "КБ",
     "description": "short for 'kilobytes'"
   },
   "MB": {
-    "message": "MB",
+    "message": "МБ",
     "description": "short for 'megabytes'"
   },
   "GB": {
-    "message": "GB",
+    "message": "ГБ",
     "description": "short for 'gigabytes'"
   },
   "clickToLoad": {

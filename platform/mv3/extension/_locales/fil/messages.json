@@ -60,15 +60,15 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Buksan ang pantanggal ng elemento",
+    "message": "Buksan ang pantanggal sa mga elemento",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Buksan ang tagapili ng elemento",
+    "message": "Buksan ang tagapili sa mga elemento",
     "description": "English: Enter element picker mode"
   },
   "popupTipReport": {
-    "message": "Mag-ulat ng isyu sa site na ito",
+    "message": "Mag-ulat ng isyu sa website na ito",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipSaveRules": {

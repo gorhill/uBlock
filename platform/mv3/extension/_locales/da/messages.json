@@ -12,7 +12,7 @@
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
-    "message": "µBlock — Kontrolpanel",
+    "message": "uBO Lite — Kontrolpanel",
     "description": "English: uBO Lite — Dashboard"
   },
   "dashboardUnsavedWarning": {
