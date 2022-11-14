@@ -6,10 +6,7 @@ run_options := $(filter-out $@,$(MAKECMDGOALS))
 
 sources := $(wildcard assets/resources/* dist/version src/* src/*/* src/*/*/* src/*/*/*/*)
 platform := $(wildcard platform/* platform/*/* platform/*/*/* platform/*/*/*/*)
-assets := $(wildcard submodules/uAssets/* \
-                     submodules/uAssets/*/* \
-                     submodules/uAssets/*/*/* \
-                     submodules/uAssets/*/*/*/*)
+assets := dist/build/uAssets
 
 all: chromium firefox npm
 
@@ -61,9 +58,8 @@ mv3-quick: tools/make-mv3.sh $(sources) $(platform)
 mv3-full: tools/make-mv3.sh $(sources) $(platform)
 	tools/make-mv3.sh full
 
-# Update submodules.
-update-submodules:
-	tools/update-submodules.sh
+dist/build/uAssets:
+	tools/pull-assets.sh
 
 clean:
 	rm -rf dist/build tmp/node_modules

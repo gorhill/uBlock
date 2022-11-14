@@ -24,7 +24,7 @@ jobs:
           persist-credentials: false
       - name: Clone uAssets
         run: |
-          git submodule update --depth 1 --init
+          tools/pull-assets.sh
       # https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
       - name: Get release information
         id: release_info

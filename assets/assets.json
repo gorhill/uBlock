@@ -177,6 +177,7 @@
 		"title": "EasyList",
 		"contentURL": [
 			"https://ublockorigin.github.io/uAssets/thirdparties/easylist.txt",
+			"assets/thirdparties/easylist/easylist.txt",
 			"assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt"
 		],
 		"cdnURLs": [
@@ -227,6 +228,7 @@
 		"title": "EasyPrivacy",
 		"contentURL": [
 			"https://ublockorigin.github.io/uAssets/thirdparties/easyprivacy.txt",
+			"assets/thirdparties/easylist/easyprivacy.txt",
 			"assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt"
 		],
 		"cdnURLs": [

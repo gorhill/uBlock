@@ -13,15 +13,20 @@ cp -R ./assets $DES/
 
 mkdir $DES/thirdparties
 
-git submodule update --depth 1 --init
-UASSETS=submodules/uAssets
+ASSETS_MAIN=dist/build/uAssets/main
+ASSETS_PROD=dist/build/uAssets/prod
 
-cp -R $UASSETS/thirdparties/easylist-downloads.adblockplus.org $DES/thirdparties/
-cp -R $UASSETS/thirdparties/pgl.yoyo.org                       $DES/thirdparties/
-cp -R $UASSETS/thirdparties/publicsuffix.org                   $DES/thirdparties/
-cp -R $UASSETS/thirdparties/urlhaus-filter                     $DES/thirdparties/
+cp -R $ASSETS_MAIN/thirdparties/pgl.yoyo.org     $DES/thirdparties/
+cp -R $ASSETS_MAIN/thirdparties/publicsuffix.org $DES/thirdparties/
+cp -R $ASSETS_MAIN/thirdparties/urlhaus-filter   $DES/thirdparties/
+
+mkdir -p $DES/thirdparties/easylist
+cp $ASSETS_PROD/thirdparties/easy*.txt $DES/thirdparties/easylist/
 
 mkdir $DES/ublock
-cp -R $UASSETS/filters/* $DES/ublock/
-# Optional filter lists: do not include in package
-rm    $DES/ublock/annoyances.txt
+cp $ASSETS_PROD/filters/* $DES/ublock/
+
+# Do not include in package
+rm $DES/ublock/annoyances.txt
+rm $DES/ublock/lan-block.txt
+rm $DES/ublock/ubol-filters.txt
