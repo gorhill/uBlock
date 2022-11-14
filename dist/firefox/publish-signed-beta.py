@@ -190,7 +190,7 @@ def get_jwt_auth():
         'iat': datetime.datetime.utcnow(),
         'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=15),
     }
-    return 'JWT ' + jwt.encode(jwt_payload, amo_secret).decode()
+    return 'JWT ' + jwt.encode(jwt_payload, amo_secret)
 
 print('Ask AMO to sign self-hosted xpi package...')
 with open(unsigned_xpi_filepath, 'rb') as f:
