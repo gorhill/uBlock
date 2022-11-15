@@ -34,11 +34,13 @@ uBO is **NOT** an "ad blocker"; it is a [wide-spectrum content blocker][Blocking
 ***
 
 * [Documentation](#documentation)
-* [Purpose & General Info](#philosophy)
+* [General Information](#general-information)
 * [Installation](#installation)
   * [Chromium](#chromium)
-  * [Firefox](#firefox--firefox-for-android--firefox-legacy)
+  * [Firefox / Firefox for Android](#firefox--firefox-for-android)
 * [Release History](#release-history)
+* [About](#about)
+* [License](#license)
 * [Privacy Policy]
 * [Wiki](https://github.com/gorhill/uBlock/wiki)
 
@@ -53,7 +55,7 @@ Visit the [wiki][Wiki] for documentation.
 
 For support, questions, or help, visit [/r/uBlockOrigin][Reddit].
 
-## Philosophy
+## General Information
 
 uBO is **NOT** an "ad blocker"; it is a wide-spectrum content blocker. uBO blocks ads through the EasyList filter syntax and [extends][Extended Syntax] the syntax to work with custom rules and filters. Furthermore, the advanced mode allows uBO to work in [default-deny mode][Default Deny], which will cause [all 3rd-party network requests][3rd Party Requests] to be blocked by default unless allowed by the user.
 
@@ -83,24 +85,11 @@ Once you install uBO, you may easily unselect any preselected filter lists if yo
 
 uBO should be compatible with any Chromium-based browser.
 
-#### Firefox / Firefox for Android / Firefox Legacy
+#### Firefox / Firefox for Android
 
 [Firefox Add-ons][Mozilla]
 
 [Development Build][Beta]
-
-[uBO Firefox Legacy][Firefox Legacy]
-
-uBO Firefox Legacy should be compatible with [SeaMonkey], [Pale Moon], or any other browsers based on Firefox.
-
-[Debian Package][Debian Package]
-
-uBO also can be installed as a Debian package.
-
-- Firefox 56-: `apt-get install xul-ext-ublock-origin`
-- Firefox 55+: `apt-get install webext-ublock-origin`
-
-There is no guarantee that the package will be available on your specific platform, in which case, you will have to install it from [Firefox Add-ons][Mozilla].
 
 #### All Browsers
 
@@ -137,12 +126,9 @@ You can help contribute by translating uBO on [Crowdin].
 [Malicious Blocklist]: https://gitlab.com/malware-filter/urlhaus-filter#malicious-url-blocklist
 [3rd Party Requests]: https://requestpolicycontinued.github.io/#what-are-cross-site-requests
 [Similarly-Purposed]: https://twitter.com/gorhill/status/1033706103782170625
-[Debian Package]: https://packages.debian.org/stable/source/ublock-origin
 [Performance]: https://www.debugbear.com/blog/chrome-extension-performance-2021#how-do-ad-blockers-and-privacy-tools-affect-browser-performance
 [EasyPrivacy]: https://easylist.to/#easyprivacy
 [Chrome Dev]: https://chrome.google.com/webstore/detail/ublock-origin-development/cgbcahbpdhpcegmbfconppldiemgcoii
-[SeaMonkey]: https://www.seamonkey-project.org/
-[Pale Moon]: https://www.palemoon.org/
 [EasyList]: https://easylist.to/#easylist
 [Mozilla]: https://addons.mozilla.org/addon/ublock-origin/
 [Crowdin]: https://crowdin.com/project/ublock
@@ -165,7 +151,6 @@ You can help contribute by translating uBO on [Crowdin].
 [Manual Installation]: https://github.com/gorhill/uBlock/tree/master/dist#install
 [Extended Syntax]: https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#extended-syntax
 [Dynamic Filters]: https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-quick-guide
-[Firefox Legacy]: https://github.com/gorhill/uBlock-for-firefox-legacy
 [Privacy Policy]: https://github.com/gorhill/uBlock/wiki/Privacy-policy
 [Default Deny]: https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-default-deny
 [uBO Filters]: https://github.com/uBlockOrigin/uAssets/tree/master/filters
