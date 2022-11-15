@@ -15,10 +15,6 @@
 uBlock Origin (uBO)
 </h1>
 <p align="center">
-<sup>
-Pronounced <i>you-block origin</i> (<code>/ˈjuːˌblɒk/</code>). <i>You</i> decide what enters your browser.
-</sup>
-<br>
 <sub><a href="https://github.com/gorhill/uBlock/wiki/uBlock-Origin-is-completely-unrelated-to-the-web-site-ublock.org"><b>BEWARE!</b> uBO is (and has always been) COMPLETELY UNRELATED to the website <code>ublock.org</code></a>.</sub>
 </p>
 
