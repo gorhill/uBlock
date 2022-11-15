@@ -79,8 +79,6 @@ Once you install uBO, you may easily unselect any preselected filter lists if yo
 
 [Opera Add-ons][Opera]
 
-[Manual Installation][Manual Installation]
-
 [Development Build][Chrome Dev]
 
 uBO should be compatible with any Chromium-based browser.
@@ -96,6 +94,8 @@ uBO should be compatible with any Chromium-based browser.
 Do **NOT** use any other content blocker concurrently with uBO to benefit from its higher efficiency. uBO will [perform][Performance] as well as or better than most of the other popular ad blockers. Other blockers can prevent uBO's privacy or anti-blocker-defusing features from working correctly.
 
 Do **NOT** use uBO along with other [similarly-purposed blockers][Similarly-Purposed].
+
+[Manual Installation][Manual Installation]
 
 #### Enterprise Deployment
 
