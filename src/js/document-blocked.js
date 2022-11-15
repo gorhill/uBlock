@@ -53,9 +53,13 @@ let details = {};
         }
     }
 
-    if ( Array.isArray(lists) === false || lists.length === 0 ) { return; }
+    if ( Array.isArray(lists) === false || lists.length === 0 ) {
+        qs$('#whyex').style.setProperty('visibility', 'collapse');
+        return;
+    }
 
     const parent = qs$('#whyex > ul');
+    parent.firstElementChild.remove(); // remove placeholder element
     for ( const list of lists ) {
         const listElem = dom.clone('#templates .filterList');
         const sourceElem = qs$(listElem, '.filterListSource');
@@ -68,7 +72,7 @@ let details = {};
         }
         parent.appendChild(listElem);
     }
-    qs$('#whyex').style.removeProperty('display');
+    qs$('#whyex').style.removeProperty('visibility');
 })();
 
 /******************************************************************************/
