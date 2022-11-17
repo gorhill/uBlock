@@ -3046,7 +3046,7 @@ Parser.utils = Parser.prototype.utils = (( ) => {
                     node.flags.NegativeLookAhead === 1 ||
                     node.flags.NegativeLookBehind === 1
                 ) {
-                    return '\x01';
+                    return '';
                 }
                 return this.tokenizableStrFromNode(node.val);
             }
