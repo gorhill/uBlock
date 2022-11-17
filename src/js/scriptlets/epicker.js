@@ -1272,6 +1272,7 @@ const pickerCSSStyle = [
     'border: 0',
     'border-radius: 0',
     'box-shadow: none',
+    'color-scheme: light dark',
     'display: block',
     'filter: none',
     'height: 100vh',
@@ -1291,7 +1292,6 @@ const pickerCSSStyle = [
     'visibility: hidden',
     'width: 100%',
     'z-index: 2147483647',
-    'color-scheme: light dark',
     ''
 ];
 
