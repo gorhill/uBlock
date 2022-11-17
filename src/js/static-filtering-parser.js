@@ -3043,12 +3043,10 @@ Parser.utils = Parser.prototype.utils = (( ) => {
             }
             case 4: /* T_GROUP, 'Group' */ {
                 if (
-                    node.flags.LookAhead === 1 ||
                     node.flags.NegativeLookAhead === 1 ||
-                    node.flags.LookBehind === 1 ||
                     node.flags.NegativeLookBehind === 1
                 ) {
-                    return '';
+                    return '\x01';
                 }
                 return this.tokenizableStrFromNode(node.val);
             }
@@ -3156,7 +3154,7 @@ Parser.utils = Parser.prototype.utils = (( ) => {
             } catch(ex) {
             }
             // Process optional sequences
-            const reOptional = /[\x02\x03]+/g;
+            const reOptional = /[\x02\x03]+/;
             for (;;) {
                 const match = reOptional.exec(s);
                 if ( match === null ) { break; }
