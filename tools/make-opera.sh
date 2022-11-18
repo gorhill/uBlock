@@ -22,13 +22,18 @@ cp platform/chromium/*.html $DES/
 echo "*** uBlock0.opera: Copying opera-specific files"
 cp platform/opera/manifest.json $DES/
 
+rm -r $DES/_locales/am
 rm -r $DES/_locales/az
+rm -r $DES/_locales/be
 rm -r $DES/_locales/cv
+rm -r $DES/_locales/ga
+rm -r $DES/_locales/gu
 rm -r $DES/_locales/hi
 rm -r $DES/_locales/hy
 rm -r $DES/_locales/ka
 rm -r $DES/_locales/kk
 rm -r $DES/_locales/mr
+rm -r $DES/_locales/si
 rm -r $DES/_locales/so
 rm -r $DES/_locales/th
 
