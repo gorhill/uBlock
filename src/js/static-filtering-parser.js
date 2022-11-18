@@ -3051,6 +3051,7 @@ Parser.utils = Parser.prototype.utils = (( ) => {
                 return this.tokenizableStrFromNode(node.val);
             }
             case 16: /* T_QUANTIFIER, 'Quantifier' */ {
+                if ( node.flags.max === 0 ) { return ''; }
                 const s = this.tokenizableStrFromNode(node.val);
                 const first = this.firstCharCodeClass(s);
                 const last = this.lastCharCodeClass(s);
