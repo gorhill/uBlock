@@ -3061,7 +3061,13 @@ Parser.utils = Parser.prototype.utils = (( ) => {
                 return String.fromCharCode(first+2, last+2);
             }
             case 64: /* T_HEXCHAR, 'HexChar' */ {
-                if ( node.flags.Code === '01' ) { return '\x00'; }
+                if (
+                    node.flags.Code === '01' ||
+                    node.flags.Code === '02' ||
+                    node.flags.Code === '03'
+                ) {
+                    return '\x00';
+                }
                 return node.flags.Char;
             }
             case 128: /* T_SPECIAL, 'Special' */ {
