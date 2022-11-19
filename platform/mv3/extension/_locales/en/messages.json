@@ -236,7 +236,7 @@
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "The default filtering mode will be overriden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
+    "message": "The default filtering mode will be overridden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
