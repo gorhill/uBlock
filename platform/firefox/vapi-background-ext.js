@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-// For background page
+/* globals browser */
 
 'use strict';
 
@@ -69,7 +69,7 @@ import {
             super();
             this.pendingRequests = [];
             this.canUncloakCnames = browser.dns instanceof Object;
-            this.cnames = new Map([ [ '', '' ] ]);
+            this.cnames = new Map([ [ '', null ] ]);
             this.cnameIgnoreList = null;
             this.cnameIgnore1stParty = true;
             this.cnameIgnoreExceptions = true;
@@ -110,7 +110,7 @@ import {
             if ( 'cnameReplayFullURL' in options ) {
                 this.cnameReplayFullURL = options.cnameReplayFullURL === true;
             }
-            this.cnames.clear(); this.cnames.set('', '');
+            this.cnames.clear(); this.cnames.set('', null);
             this.cnameFlushTime = Date.now() + this.cnameMaxTTL * 60000;
             // https://github.com/uBlockOrigin/uBlock-issues/issues/911
             //   Install/remove proxy detector.
@@ -171,16 +171,18 @@ import {
             return Array.from(out);
         }
         canonicalNameFromHostname(hn) {
-            const cn = this.cnames.get(hn);
-            if ( cn !== undefined && cn !== '' ) {
-                return cn;
+            const cnRecord = this.cnames.get(hn);
+            if ( cnRecord !== undefined && cnRecord !== null ) {
+                return cnRecord.cname;
             }
         }
-        processCanonicalName(hn, cn, details) {
+        processCanonicalName(hn, cnRecord, details) {
+            if ( cnRecord === null ) { return; }
+            if ( cnRecord.isRootDocument ) { return; }
             const hnBeg = details.url.indexOf(hn);
             if ( hnBeg === -1 ) { return; }
             const oldURL = details.url;
-            let newURL = oldURL.slice(0, hnBeg) + cn;
+            let newURL = oldURL.slice(0, hnBeg) + cnRecord.cname;
             const hnEnd = hnBeg + hn.length;
             if ( this.cnameReplayFullURL ) {
                 newURL += oldURL.slice(hnEnd);
@@ -194,11 +196,11 @@ import {
             details.aliasURL = oldURL;
             return super.onBeforeSuspendableRequest(details);
         }
-        recordCanonicalName(hn, record) {
+        recordCanonicalName(hn, record, isRootDocument) {
             if ( (this.cnames.size & 0b111111) === 0 ) {
                 const now = Date.now();
                 if ( now >= this.cnameFlushTime ) {
-                    this.cnames.clear(); this.cnames.set('', '');
+                    this.cnames.clear(); this.cnames.set('', null);
                     this.cnameFlushTime = now + this.cnameMaxTTL * 60000;
                 }
             }
@@ -221,8 +223,9 @@ import {
             ) {
                 cname = '';
             }
-            this.cnames.set(hn, cname);
-            return cname;
+            const cnRecord = cname !== '' ? { cname, isRootDocument } : null;
+            this.cnames.set(hn, cnRecord);
+            return cnRecord;
         }
         regexFromStrList(list) {
             if (
@@ -257,26 +260,20 @@ import {
                     return r;
                 }
             }
-            if (
-                details.type === 'main_frame' &&
-                this.cnameIgnoreRootDocument
-            ) {
-                return;
-            }
+            const isRootDocument = details.type === 'main_frame' &&
+                this.cnameIgnoreRootDocument;
             const hn = hostnameFromNetworkURL(details.url);
-            const cname = this.cnames.get(hn);
-            if ( cname === '' ) { return; }
-            if ( cname !== undefined ) {
-                return this.processCanonicalName(hn, cname, details);
+            const cnRecord = this.cnames.get(hn);
+            if ( cnRecord !== undefined ) {
+                return this.processCanonicalName(hn, cnRecord, details);
             }
             return browser.dns.resolve(hn, [ 'canonical_name' ]).then(
                 rec => {
-                    const cname = this.recordCanonicalName(hn, rec);
-                    if ( cname === '' ) { return; }
-                    return this.processCanonicalName(hn, cname, details);
+                    const cnRecord = this.recordCanonicalName(hn, rec, isRootDocument);
+                    return this.processCanonicalName(hn, cnRecord, details);
                 },
                 ( ) => {
-                    this.cnames.set(hn, '');
+                    this.cnames.set(hn, null);
                 }
             );
         }
