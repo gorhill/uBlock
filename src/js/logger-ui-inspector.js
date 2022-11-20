@@ -239,7 +239,7 @@ const renderDOMIncremental = function(response) {
         }
         // Add node as sibling
         if ( entry.what === 1 && entry.l ) {
-            previous = qs$(`#{entry.l}`);
+            previous = qs$(`#${entry.l}`);
             // This should not happen
             if ( previous === null ) {
                 // throw new Error('No left sibling!?');
