@@ -252,11 +252,8 @@ body.mobile.no-tooltips .toolRibbon .tool {
     border-inline-start: 1px solid var(--surface-1);
     text-align: end;
     }
-body[data-more="a b c d e f"] #moreButton {
-    pointer-events: none;
-    visibility: hidden;
-    }
-body[data-more=""] #lessButton {
+#moreButton.disabled,
+#lessButton.disabled {
     pointer-events: none;
     visibility: hidden;
     }
@@ -596,27 +593,27 @@ body.godMode #actionSelector > #dynaAllow {
 :root body[data-ui~="+logger"] [href="logger-ui.html#_"] {
     display: flex;
     }
-body:not([data-more~="a"]) [data-more="a"],
-body:not([data-more~="b"]) [data-more="b"],
-body:not([data-more~="c"]) [data-more="c"],
-body:not([data-more~="d"]) [data-more="d"],
-body:not([data-more~="f"]) [data-more="f"] {
+body:not([data-more*="a"]) [data-more="a"],
+body:not([data-more*="b"]) [data-more="b"],
+body:not([data-more*="c"]) [data-more="c"],
+body:not([data-more*="d"]) [data-more="d"],
+body:not([data-more*="f"]) [data-more="f"] {
     height: 0;
     margin-bottom: 0 !important;
     margin-top: 0 !important;
     overflow-y: hidden;
     visibility: hidden;
     }
-body[data-more~="d"] hr[data-more="a"] {
+body[data-more*="d"] hr[data-more="a"] {
     display: none;
     }
-body[data-more~="c"] hr[data-more="f"] {
+body[data-more*="c"] hr[data-more="f"] {
     display: none;
     }
-body[data-more~="c"]:not([data-more~="f"]) hr[data-more="g"] {
+body[data-more*="c"]:not([data-more*="f"]) hr[data-more="g"] {
     display: none;
     }
-body:not([data-more~="e"]) [data-more="e"] {
+body:not([data-more*="e"]) [data-more="e"] {
     display: none;
     }
 

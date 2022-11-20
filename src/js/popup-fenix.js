@@ -39,7 +39,7 @@ vAPI.localStorage.getItemAsync('popupFontSize').then(value => {
 //   pane visibility to its last known state. By default the pane is hidden.
 vAPI.localStorage.getItemAsync('popupPanelSections').then(bits => {
     if ( typeof bits !== 'number' ) { return; }
-    sectionBitsToAttribute(bits);
+    setSections(bits);
 });
 
 /******************************************************************************/
@@ -700,7 +700,7 @@ let renderOnce = function() {
 
     dom.text('#version', popupData.appVersion);
 
-    sectionBitsToAttribute(computedSections());
+    setSections(computedSections());
 
     if ( popupData.uiPopupConfig !== undefined ) {
         dom.attr(dom.body, 'data-ui', popupData.uiPopupConfig);
@@ -910,7 +910,7 @@ const sectionBitsFromAttribute = function() {
     const attr = document.body.dataset.more;
     if ( attr === '' ) { return 0; }
     let bits = 0;
-    for ( const c of attr.split(' ') ) {
+    for ( const c of attr ) {
         bits |= 1 << (c.charCodeAt(0) - 97);
     }
     return bits;
@@ -923,7 +923,18 @@ const sectionBitsToAttribute = function(bits) {
         if ( (bits & bit) === 0 ) { continue; }
         attr.push(String.fromCharCode(97 + i));
     }
-    document.body.dataset.more = attr.join(' ');
+    return attr.join('');
+};
+
+const setSections = function(bits) {
+    const value = sectionBitsToAttribute(bits);
+    const min = sectionBitsToAttribute(popupData.popupPanelLockedSections);
+    const max = sectionBitsToAttribute(
+        (1 << maxNumberOfSections) - 1 & ~popupData.popupPanelDisabledSections
+    );
+    document.body.dataset.more = value;
+    dom.cl.toggle('#lessButton', 'disabled', value === min);
+    dom.cl.toggle('#moreButton', 'disabled', value === max);
 };
 
 const toggleSections = function(more) {
@@ -943,7 +954,7 @@ const toggleSections = function(more) {
     }
     if ( newBits === currentBits ) { return; }
 
-    sectionBitsToAttribute(newBits);
+    setSections(newBits);
 
     popupData.popupPanelSections = newBits;
     messaging.send('popupPanel', {
