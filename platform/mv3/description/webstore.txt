@@ -14,7 +14,7 @@ uBOL is entirely declarative, meaning there is no need for a permanent uBOL proc
 
 uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read/modify data" permissions at install time.
 
-However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using declarative cosmetic and scriptlet injections.
+However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
 
 To grant extended permissions on a given site, open the popup panel and pick a higher filtering mode such as Optimal or Complete.
 
