@@ -980,7 +980,6 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
         options.noSpecificCosmeticFiltering !== true ||
         options.noGenericCosmeticFiltering !== true
     ) {
-        const injectedHideFilters = [];
         const specificSet = this.$specificSet;
         const proceduralSet = this.$proceduralSet;
         const exceptionSet = this.$exceptionSet;
@@ -1040,7 +1039,9 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
         }
 
         if ( specificSet.size !== 0 ) {
-            injectedHideFilters.push(Array.from(specificSet).join(',\n'));
+            injectedCSS.push(
+                `${Array.from(specificSet).join(',\n')}\n{display:none!important;}`
+            );
         }
 
         // Some procedural filters are really declarative cosmetic filters, so
@@ -1091,15 +1092,9 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
                     out.exceptedFilters.push(...str.excepted);
                 }
                 if ( str.s.length !== 0 ) {
-                    injectedHideFilters.push(str.s);
+                    injectedCSS.push(`${str.s}\n{display:none!important;}`);
                 }
             }
-        }
-
-        if ( injectedHideFilters.length !== 0 ) {
-            injectedCSS.push(
-                `${injectedHideFilters.join(',\n')}\n{display:none!important;}`
-            );
         }
 
         // Important: always clear used registers before leaving.
@@ -1130,7 +1125,7 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
         const networkFilters = [];
         cacheEntry.retrieve('net', networkFilters);
         if ( networkFilters.length !== 0 ) {
-            details.code = networkFilters.join('\n') + '\n{display:none!important;}';
+            details.code = `${networkFilters.join('\n')}\n{display:none!important;}`;
             if ( request.tabId !== undefined ) {
                 vAPI.tabs.insertCSS(request.tabId, details);
             }
