@@ -51,18 +51,37 @@ const loggedSelectors = new Set();
 
 const rePseudoElements = /:(?::?after|:?before|:[a-z-]+)$/;
 
+const hasSelector = function(selector, context = document) {
+    try {
+        return context.querySelector(selector) !== null;
+    }
+    catch(ex) {
+    }
+    return false;
+};
+
 const safeMatchSelector = function(selector, context) {
     const safeSelector = rePseudoElements.test(selector)
         ? selector.replace(rePseudoElements, '')
         : selector;
-    return context.matches(safeSelector);
+    try {
+        return context.matches(safeSelector);
+    }
+    catch(ex) {
+    }
+    return false;
 };
 
 const safeQuerySelector = function(selector, context = document) {
     const safeSelector = rePseudoElements.test(selector)
         ? selector.replace(rePseudoElements, '')
         : selector;
-    return context.querySelector(safeSelector);
+    try {
+        return context.querySelector(safeSelector);
+    }
+    catch(ex) {
+    }
+    return null;
 };
 
 const safeGroupSelectors = function(selectors) {
@@ -85,7 +104,7 @@ const processDeclarativeSimple = function(node, out) {
     }
     if (
         (node === document || node.matches(simpleDeclarativeStr) === false) &&
-        (node.querySelector(simpleDeclarativeStr) === null)
+        (hasSelector(simpleDeclarativeStr, node) === false)
     ) {
         return;
     }
@@ -110,7 +129,7 @@ const processDeclarativeComplex = function(out) {
     if ( complexDeclarativeStr === undefined ) {
         complexDeclarativeStr = safeGroupSelectors(complexDeclarativeSet);
     }
-    if ( document.querySelector(complexDeclarativeStr) === null ) { return; }
+    if ( hasSelector(complexDeclarativeStr) === false ) { return; }
     for ( const selector of complexDeclarativeSet ) {
         if ( safeQuerySelector(selector) === null ) { continue; }
         out.push(`##${selector}`);
@@ -140,7 +159,7 @@ const processExceptions = function(out) {
     if ( exceptionStr === undefined ) {
         exceptionStr = safeGroupSelectors(exceptionDict.keys());
     }
-    if ( document.querySelector(exceptionStr) === null ) { return; }
+    if ( hasSelector(exceptionStr) === false ) { return; }
     for ( const [ selector, raw ] of exceptionDict ) {
         if ( safeQuerySelector(selector) === null ) { continue; }
         out.push(`#@#${raw}`);
