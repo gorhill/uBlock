@@ -368,7 +368,7 @@ const hashFromCurrentFromSettings = function() {
     hash.push(
         listHash.sort().join(),
         qs$('#importLists').checked &&
-            reValidExternalList.test(qs$('#externalLists').value),
+            reValidExternalList.test(qs$('#externalLists').value.trim()),
         qs$('#lists .listEntry.toRemove') !== null
     );
     return hash.join();
