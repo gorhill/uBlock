@@ -32,15 +32,15 @@
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
-    "message": "Meus filtros",
+    "message": "Os meus filtros",
     "description": "appears as tab name in dashboard"
   },
   "rulesPageName": {
-    "message": "Minhas regras",
+    "message": "As minhas regras",
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Sites confiáveis",
+    "message": "Sites fidedignos",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -248,11 +248,11 @@
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
-    "message": "scripts em linha",
+    "message": "scripts inline",
     "description": ""
   },
   "popup1pScriptRulePrompt": {
-    "message": "scripts de primeiros",
+    "message": "scripts primários",
     "description": ""
   },
   "popup3pScriptRulePrompt": {
@@ -276,11 +276,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilterTip": {
-    "message": "↑: Destacar as linhas que têm scripts de terceiros",
+    "message": "↑: Realçar as linhas que têm scripts de terceiros",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party scripts' cell"
   },
   "popup3pFrameFilterTip": {
-    "message": "↑: Destacar as linhas que têm frames de terceiros",
+    "message": "↑: Realçar as linhas que têm frames de terceiros",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party frames' cell"
   },
   "pickerCreate": {
@@ -288,7 +288,7 @@
     "description": "English: Create"
   },
   "pickerPick": {
-    "message": "Selecionar",
+    "message": "Escolher",
     "description": "English: Pick"
   },
   "pickerQuit": {
@@ -484,11 +484,11 @@
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {
-    "message": "Incómodos",
+    "message": "Inconveniências",
     "description": "The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose": {
-    "message": "Multi-uso",
+    "message": "Multifunções",
     "description": "English: Multipurpose"
   },
   "3pGroupRegions": {
@@ -496,7 +496,7 @@
     "description": "English: Regions, languages"
   },
   "3pGroupCustom": {
-    "message": "Personalizado",
+    "message": "Personalizados",
     "description": "English: Custom"
   },
   "3pImport": {
@@ -604,7 +604,7 @@
     "description": "English: a sort option for list of rules."
   },
   "rulesSortBySource": {
-    "message": "Fonte",
+    "message": "Origem",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortByDestination": {
@@ -612,7 +612,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "As diretivas de sites confiáveis determinam em que páginas web o uBlock Origin deve ser desativado. Uma entrada por linha.",
+    "message": "As diretivas de sites fidedignos determinam em que páginas web o uBlock Origin deve ser desativado. Uma entrada por linha.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
@@ -720,7 +720,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
-    "message": "primeiro",
+    "message": "primário",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin3p": {
@@ -1040,7 +1040,7 @@
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "Cópia para ficheiro",
+    "message": "Copiar para ficheiro…",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
@@ -1144,7 +1144,7 @@
     "description": "English: Close this window"
   },
   "docblockedDontWarn": {
-    "message": "Não me avise novamente sobre este site",
+    "message": "Não me avisar novamente acerca deste site",
     "description": "Label for checkbox in document-blocked page"
   },
   "docblockedProceed": {
@@ -1160,7 +1160,7 @@
     "description": "English: Permanently"
   },
   "docblockedDisable": {
-    "message": "Continuar",
+    "message": "Proceder",
     "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {

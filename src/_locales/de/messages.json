@@ -1000,7 +1000,7 @@
     "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
-    "message": "Datenschutzerklärung",
+    "message": "Datenschutzhinweise",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {

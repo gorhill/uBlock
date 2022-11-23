@@ -48,7 +48,7 @@
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
-    "message": "uBlock₀ — Logger",
+    "message": "uBlock₀ — Журнал сеткавых запытаў",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
@@ -60,7 +60,7 @@
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
-    "message": "uBlock₀ — Asset viewer",
+    "message": "uBlock₀ — Прагляд рэсурсаў",
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
@@ -68,19 +68,19 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page.",
+    "message": "Націсканне: адключыць/уключыць uBlock₀ для гэтага сайта.\n\nCtrl+націсканне: адключыць uBlock₀ толькі на гэтай старонцы.",
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Click to disable uBlock₀ for this site.\n\nCtrl+click to disable uBlock₀ only on this page.",
+    "message": "Націсніце, каб адключыць uBlock₀ для гэтага сайта.\n\nНацісніце з Ctrl, каб адключыць uBlock₀ толькі на гэтай старонцы.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Click to enable uBlock₀ for this site.",
+    "message": "Націсніце, каб уключыць uBlock₀ для гэтага сайта.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
-    "message": "requests blocked",
+    "message": "запытаў заблакавана",
     "description": "English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt": {
@@ -92,7 +92,7 @@
     "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
-    "message": "since install",
+    "message": "з моманту ўсталявання",
     "description": "English: since install"
   },
   "popupOr": {
@@ -100,15 +100,15 @@
     "description": "English: or"
   },
   "popupBlockedOnThisPage_v2": {
-    "message": "Blocked on this page",
+    "message": "Заблакавана на гэтай старонцы",
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "Blocked since install",
+    "message": "Заблакавана з моманту ўсталявання",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
-    "message": "Domains connected",
+    "message": "Даменаў падлучана",
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
@@ -124,7 +124,7 @@
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "Open the logger",
+    "message": "Адкрыць журнал запытаў",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
@@ -132,75 +132,75 @@
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Toggle the blocking of all popups for this site",
+    "message": "Пераключыць блакаванне ўсіх выплыўных акон на гэтым сайце",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Click to block all popups on this site",
+    "message": "Націсніце, каб блакаваць усе выплыўныя вокны на гэтым сайце",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Click to no longer block all popups on this site",
+    "message": "Націсніце, каб выключыць блакаванне ўсіх выплыўных акон на гэтым сайце",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Toggle the blocking of large media elements for this site",
+    "message": "Пераключыць блакаванне вялікіх медыя-элементаў на гэтым сайце",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Click to block large media elements on this site",
+    "message": "Націсніце, каб блакаваць вялікія медыя-элементы на гэтым сайце",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Click to no longer block large media elements on this site",
+    "message": "Націсніце, каб выключыць блакаванне вялікіх медыя-элементаў на гэтым сайце",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Toggle cosmetic filtering for this site",
+    "message": "Пераключыць касметычнае фільтраванне на гэтым сайце",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Click to disable cosmetic filtering on this site",
+    "message": "Націсніце, каб выключыць касметычнае фільтраванне на гэтым сайце",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Click to enable cosmetic filtering on this site",
+    "message": "Націсніце, каб уключыць касметычнае фільтраванне на гэтым сайце",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Toggle the blocking of remote fonts for this site",
+    "message": "Пераключыць блакаванне аддаленых шрыфтоў на гэтым сайце",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Click to block remote fonts on this site",
+    "message": "Націсніце, каб блакаваць аддаленыя шрыфты на гэтым сайце",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Click to no longer block remote fonts on this site",
+    "message": "Націсніце, каб выключыць блакаванне аддаленых шрыфтоў на гэтым сайце",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Click to disable JavaScript on this site",
+    "message": "Націсніце, каб выключыць JavaScript на гэтым сайце",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Click to no longer disable JavaScript on this site",
+    "message": "Націсніце, каб JavaScript не быў выключаны на гэтым сайце",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
-    "message": "Pop-up windows",
+    "message": "Выплыўныя вокны",
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
-    "message": "Large media elements",
+    "message": "Вялікія медыя-элементы",
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
-    "message": "Cosmetic filtering",
+    "message": "Касметычнае фільтраванне",
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
-    "message": "Remote fonts",
+    "message": "Аддаленыя шрыфты",
     "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
@@ -216,11 +216,11 @@
     "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
-    "message": "Global rules: this column is for rules which apply to all sites.",
+    "message": "Глабальныя правілы: гэты слупок для правіл, якія прымяняюцца на ўсіх сайтах.",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Local rules: this column is for rules which apply to the current site only.\nLocal rules override global rules.",
+    "message": "Лакальныя правілы: гэты слупок для правіл, якія прымяняюцца толькі на гэтым сайце.\nЛакальныя правілы перавызначаюць глабальныя.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -240,35 +240,35 @@
     "description": ""
   },
   "popup3pAnyRulePrompt": {
-    "message": "3rd-party",
+    "message": "староннія",
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "3rd-party CSS/images",
+    "message": "староннія CSS/відарысы",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
-    "message": "inline scripts",
+    "message": "убудаваныя скрыпты",
     "description": ""
   },
   "popup1pScriptRulePrompt": {
-    "message": "1st-party scripts",
+    "message": "уласныя скрыпты",
     "description": ""
   },
   "popup3pScriptRulePrompt": {
-    "message": "3rd-party scripts",
+    "message": "староннія скрыпты",
     "description": ""
   },
   "popup3pFrameRulePrompt": {
-    "message": "3rd-party frames",
+    "message": "староннія фрэймы",
     "description": ""
   },
   "popupHitDomainCountPrompt": {
-    "message": "domains connected",
+    "message": "даменаў падлучана",
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
-    "message": "{{count}} out of {{total}}",
+    "message": "{{count}} з {{total}}",
     "description": "appears in popup"
   },
   "popupVersion": {
@@ -276,11 +276,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilterTip": {
-    "message": "↑: Emphasize rows which have 3rd-party scripts",
+    "message": "↑: Падкрэсліваць радкі, якія ўтрымліваюць староннія скрыпты",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party scripts' cell"
   },
   "popup3pFrameFilterTip": {
-    "message": "↑: Emphasize rows which have 3rd-party frames",
+    "message": "↑: Падкрэсліваць радкі, якія ўтрымліваюць староннія фрэймы",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party frames' cell"
   },
   "pickerCreate": {
@@ -292,23 +292,23 @@
     "description": "English: Pick"
   },
   "pickerQuit": {
-    "message": "Quit",
+    "message": "Выйсці",
     "description": "English: Quit"
   },
   "pickerPreview": {
-    "message": "Preview",
+    "message": "Папярэдні прагляд",
     "description": "Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters": {
-    "message": "Network filters",
+    "message": "Сеткавыя фільтры",
     "description": "English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters": {
-    "message": "Cosmetic filters",
+    "message": "Касметычныя фільтры",
     "description": "English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint": {
-    "message": "Click, Ctrl-click",
+    "message": "Клік, Ctrl-клік",
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
@@ -316,23 +316,23 @@
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
-    "message": "Hide placeholders of blocked elements",
+    "message": "Хаваць контуры заблакаваных элементаў",
     "description": "English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt": {
-    "message": "Show the number of blocked requests on the icon",
+    "message": "Паказваць колькасць заблакаваных запытаў на значцы",
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "Disable tooltips",
+    "message": "Адключыць выплыўныя падказкі",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
-    "message": "Make use of context menu where appropriate",
+    "message": "Выкарыстоўваць кантэкстнае меню, дзе магчыма",
     "description": "English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt": {
-    "message": "Color-blind friendly",
+    "message": "Колеравая схема для дальтонікаў",
     "description": "English: Color-blind friendly"
   },
   "settingsAppearance": {
@@ -348,11 +348,11 @@
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsCloudStorageEnabledPrompt": {
-    "message": "Enable cloud storage support",
+    "message": "Уключыць падтрымку воблачнага сховішча",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "I am an advanced user",
+    "message": "Я — дасведчаны карыстальнік",
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
@@ -360,11 +360,11 @@
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
-    "message": "Disable hyperlink auditing",
+    "message": "Выключыць праверку гіперспасылак",
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
-    "message": "Prevent WebRTC from leaking local IP addresses",
+    "message": "Прадухіліць уцечку лакальнага IP-адраса праз WebRTC",
     "description": "English: "
   },
   "settingPerSiteSwitchGroup": {
@@ -376,7 +376,7 @@
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "Disable cosmetic filtering",
+    "message": "Выключыць касметычныя фільтры",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
@@ -384,7 +384,7 @@
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
-    "message": "Block remote fonts",
+    "message": "Блакаваць аддаленыя шрыфты",
     "description": ""
   },
   "settingsNoScriptingPrompt": {
@@ -488,7 +488,7 @@
     "description": "The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose": {
-    "message": "Multipurpose",
+    "message": "Шматмэтавыя",
     "description": "English: Multipurpose"
   },
   "3pGroupRegions": {
@@ -500,7 +500,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Import…",
+    "message": "Імпартаваць…",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -548,23 +548,23 @@
     "description": "English: Apply changes"
   },
   "rulesPermanentHeader": {
-    "message": "Permanent rules",
+    "message": "Пастаянныя правілы",
     "description": "header"
   },
   "rulesTemporaryHeader": {
-    "message": "Temporary rules",
+    "message": "Часовыя правілы",
     "description": "header"
   },
   "rulesRevert": {
-    "message": "Revert",
+    "message": "Вярнуць",
     "description": "This will remove all temporary rules"
   },
   "rulesCommit": {
-    "message": "Commit",
+    "message": "Зацвердзіць",
     "description": "This will persist temporary rules"
   },
   "rulesEdit": {
-    "message": "Edit",
+    "message": "Змяніць",
     "description": "Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave": {
@@ -576,11 +576,11 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Import from file…",
+    "message": "Імпартаваць з файла…",
     "description": ""
   },
   "rulesExport": {
-    "message": "Export to file",
+    "message": "Экспартаваць у файл",
     "description": ""
   },
   "rulesDefaultFileName": {
@@ -600,7 +600,7 @@
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
-    "message": "Rule type",
+    "message": "Тып правіла",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortBySource": {
@@ -612,15 +612,15 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "The trusted site directives dictate on which web pages uBlock Origin should be disabled. One entry per line.",
+    "message": "Дырэктывы давераных сайтаў указваюць, на якіх вэб-старонках uBlock Origin павінен быць выключаны. Адзін запіс на радок.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Import and append",
+    "message": "Імпартаваць і дадаць",
     "description": "English: Import and append"
   },
   "whitelistExport": {
-    "message": "Export",
+    "message": "Экспартаваць",
     "description": "English: Export"
   },
   "whitelistExportFilename": {
@@ -656,7 +656,7 @@
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
-    "message": "Current tab",
+    "message": "Дзейная картка",
     "description": "Appears in the logger's tab selector"
   },
   "loggerReloadTip": {
@@ -668,7 +668,7 @@
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "Toggle the popup panel",
+    "message": "Пераключыць выплыўную панэль",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
@@ -812,7 +812,7 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartImportant": {
-    "message": "even if",
+    "message": "нават калі",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
@@ -844,19 +844,19 @@
     "description": "A logger setting"
   },
   "loggerSettingHideColumnsPrompt": {
-    "message": "Hide columns:",
+    "message": "Схаваць слупкі:",
     "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
   },
   "loggerSettingHideColumnTime": {
-    "message": "{{input}} Time",
+    "message": "{{input}} Час",
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
-    "message": "{{input}} Filter/rule",
+    "message": "{{input}} Фільтр/правіла",
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
-    "message": "{{input}} Context",
+    "message": "{{input}} Кантэкст",
     "description": "A label for the context column"
   },
   "loggerSettingHideColumnPartyness": {
@@ -1088,7 +1088,7 @@
     "description": "English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo": {
-    "message": "an hour ago",
+    "message": "гадзіну таму назад",
     "description": "English: an hour ago"
   },
   "elapsedManyHoursAgo": {
@@ -1104,7 +1104,7 @@
     "description": "English: {{value}} days ago"
   },
   "showDashboardButton": {
-    "message": "Show Dashboard",
+    "message": "Паказаць панэль кіравання",
     "description": "Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
@@ -1116,7 +1116,7 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedTitle": {
-    "message": "Page blocked",
+    "message": "Старонка заблакавана",
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {
@@ -1128,7 +1128,7 @@
     "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
-    "message": "without parameters",
+    "message": "без параметраў",
     "description": "label to be used for the parameter-less URL: https://cloud.githubusercontent.com/assets/585534/9832014/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {
@@ -1160,7 +1160,7 @@
     "description": "English: Permanently"
   },
   "docblockedDisable": {
-    "message": "Proceed",
+    "message": "Працягнуць",
     "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {
@@ -1192,7 +1192,7 @@
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Apply changes",
+    "message": "Ужыць змяненні",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
@@ -1240,7 +1240,7 @@
     "description": "Label for keyboard shortcut used to relax blocking mode"
   },
   "storageUsed": {
-    "message": "Storage used: {{value}} {{unit}}",
+    "message": "Памер сховішча: {{value}} {{unit}}",
     "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
   },
   "KB": {
@@ -1256,7 +1256,7 @@
     "description": "short for 'gigabytes'"
   },
   "clickToLoad": {
-    "message": "Click to load",
+    "message": "Націсніце, каб загрузіць",
     "description": "Message used in frame placeholders"
   },
   "dummy": {

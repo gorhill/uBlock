@@ -1,0 +1,31 @@
+uBO Lite (uBOL) on kokeellinen *käyttöoikeudeton* MV3-pohjainen sisällönestotyökalu.
+
+Oletusarvoiset sääntömääritykset vastaavat uBlock Origin -laajennuksen oletuksia:
+
+- uBlock Originin sisäänrakennetut suodatinlistat
+- EasyList
+- EasyPrivacy
+- Peter Lowe’s Ad and tracking server list
+- AdGuard CNAME-Cloaked Trackers
+
+Voit lisätä sääntömäärityksiä asetussivulta -- paina ponnahduspaneelin _Rataskuvaketta_.
+
+uBOL on täysin deklaratiivinen, eli suodatus ei edellytä pysyvää uBOL-prosessia ja CSS-/JS-koodin manipulointiin perustuva sisällöneston suorittaa laajennuksen sijaan luotettavasti selainsovellus. Tämän ansiosta itse uBOL-laajennus ei kuormita prosessoria tai keskusmuistia suodatuksen tapahtuessa -- uBOL:n työprosessia tarvitaan _ainoastaan_ ponnahduspaneelin ja asetussivun käytön yhteydessä.
+
+uBO lite ei asennuksen jälkeen vaadi erityistä "Lukea ja muokata kaikkea dataasi kaikilla sivustoilla" -käyttöoikeutta ja sen vuoksi sen toiminta on muita tätä käyttöoikeutta heti edellyttäviä estotyökaluja, kuten uBlock Orginia, rajoittuneempaa.
+
+On kuitenkin mahdollista myöntää *yksinomaisesti* uBOL:lle laajennetut käyttöoikeudet valikoiduille sivustoille niiden suodatuksen tehostamiseksi deklaratiivisella kosmeettisella suodatuksella ja scriplet-injektoinnilla.
+
+Laajemmat oikeudet myönnetään avoimelle sivustolle avaamalla ponnahduspaneeli ja valitsemalla korkeampi suodatustasi, kuten Optimaalinen tai Täysi.
+
+Tällöin selain varoittaa laajennuksen avoimelle sivustolle pyytämien käyttöoikeuksien seurauksista ja pyytää käyttäjää hyväksymään tai hyläämään pyynnön.
+
+Jos uBOL:n käyttöoikeuspyyntö avoimelle sivustolle hyväksytään, se pystyy suodattamaan sivuston sisältöä tehokkaammin.
+
+Voit määrittää oletusarvoisen suodatustilan uBOL:n asetussivulta. Jos oletustilaksi valitaan Optimaalinen tai Täysi, on uBOL:lle myönnettävä "Lukea ja muokata kaikkea dataasi kaikilla sivustoilla" -käyttöoikeus.
+
+Huomioithan, että laajennusta kehitetään edelleen seuraavien tavoitteiden saavuttamiseksi:
+
+- Laajoja käyttöoikeuksia ei tarvita asennusvaiheesssa, vaan laajennetut oikeudet myönnetään aina sivustokohtaisesti käyttäjän toimesta.
+
+- Täysin deklaratiivinen luotettavuutta ja alhaista prosessorin/muistin kuormitusta varten.

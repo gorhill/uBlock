@@ -1,0 +1,31 @@
+uBlock Origin Lite (uBOL) é um bloqueador de conteúdo baseado em MV3 experimental *sem permissão*.
+
+O conjunto de regras padrão corresponde ao conjunto de filtros padrão do uBlock Origin:
+
+- Listas de filtros integradas do uBlock Origin
+- EasyList
+- EasyPrivacy
+- Lista de filtros de anúncios e rastreadores do Pete Lowe
+- Lista de domínios mascarados do AdGuard
+
+Você pode adicionar mais conjuntos de regras visitando a página de opções -- clique no ícone _Engrenagem_ no painel pop-up.
+
+O uBOL é totalmente declarativo, o que significa que não há necessidade de um processo uBOL permanente para que a filtragem ocorra, e a filtragem de conteúdo baseada em injeção de CSS/JS é realizada de forma confiável pelo próprio navegador e não pela extensão. Isso significa que o próprio uBOL não consome recursos de CPU/memória enquanto o bloqueio de conteúdo está em andamento -- o processo de service worker do uBOL é necessário _apenas_ quando você interage com o painel pop-up ou as páginas de opções.
+
+O uBOL não requer permissões abrangentes como "ler e modificar dados" no momento da instalação, por isso tem capacidades limitadas por padrão quando comparado com o uBlock Origin ou outros bloqueadores de conteúdo que precisam da permissão "ler/modificar dados" na instalação.
+
+No entanto, o uBOL permite que você *explicitamente* conceda permissões estendidas em sites específicos de sua escolha, para que possa filtrar melhor esses sites usando filtragem cosmética e injeções de scriptlet.
+
+Para conceder permissões estendidas em um determinado site, abra o painel pop-up e escolha um modo de filtragem superior, como Otimizado ou Completo.
+
+O navegador irá avisá-lo sobre os efeitos da concessão das permissões adicionais solicitadas pela extensão no site atual, e você terá que informar ao navegador se aceita ou recusa a solicitação.
+
+Se você aceitar a solicitação do uBOL para permissões adicionais no site atual, ele poderá filtrar melhor o conteúdo do site atual.
+
+Você pode definir o modo de filtragem padrão na página de opções do uBOL. Se você escolher o Modo Otimizado ou Modo Completo como o modo padrão, você vai precisar dar a permissão de ler e modificar dados ao uBOL em todos os sites.
+
+Tenha em mente que este ainda é um trabalho em andamento, com estes objetivos finais:
+
+- Sem permissões amplas de host no momento da instalação -- as permissões estendidas são concedidas explicitamente pelo usuário por site.
+
+- Totalmente declarativo para confiabilidade e eficiência de CPU/memória.

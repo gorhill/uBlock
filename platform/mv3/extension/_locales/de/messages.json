@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Experimenteller Inhaltsblocker, der keine Berechtigungen benötigt. Blockiert Werbung, Tracker & mehr sofort nach der Installation.",
+    "message": "Experimenteller Inhaltsblocker, der ohne Berechtigungen auskommt. Blockiert Werbung, Tracker & mehr sofort nach der Installation.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -48,7 +48,7 @@
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
-    "message": "Datenschutzerklärung",
+    "message": "Datenschutzhinweise",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupPowerSwitchInfo": {

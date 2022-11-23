@@ -228,7 +228,7 @@
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "Maligayang pagdating sa uBO Lite. Dito mo mapipili ang default na mode sa pagfi-filter para sa lahat ng mga website.\n\nAng default na mode ay <em>Basic</em> dahil hindi nito kailangan ng mga karagdagang pahintulot. Pwede mong pahintulutan ang uBO Lite, kung nagtitiwala ka sa amin, na basahin at baguhin ang data ng lahat ng mga website para sa karagdagang kakayahan sa pagfi-filter.",
+    "message": "Maligayang pagdating sa uBO Lite. Dito mo mapipili ang default na mode sa pagfi-filter para sa lahat ng mga website.\n\nAng default na mode ay <em>Basic</em> dahil hindi nito kailangan ng karagdagang pahintulot na magbasa at magbago ng datos. Pwede mong pahintulutan ang uBO Lite, kung nagtitiwala ka sa amin, na basahin at baguhin ang data ng lahat ng mga website para sa karagdagang kakayahan sa pagfi-filter.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
@@ -256,15 +256,15 @@
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Basic na network filtering mula sa mga napiling listahan ng mga filter.\n\nHindi kailangan ng pahintulot na basahin o baguhin ang mga data ng website.",
+    "message": "Basic na network filtering mula sa mga napiling listahan ng mga filter.\n\nHindi kailangan ng pahintulot na basahin at baguhin ang mga data ng website.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Pinainam na network filtering at partikular na karagdagang pagfi-filter mula sa mga napiling listahan ng mga filter.\n\nKailangan ang pahintulot na basahin o baguhin ang mga data ng lahat ng mga website.",
+    "message": "Pinainam na network filtering at partikular na karagdagang pagfi-filter mula sa mga napiling listahan ng mga filter.\n\nKailangan ang pahintulot na basahin at baguhin ang mga data ng lahat ng mga website.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Pinainam na network filtering, partikular at generikong karagdagang pagfi-filter mula sa mga napiling listahan ng mga filter.\n\nKailangan ang pahintulot na basahin o baguhin ang mga data ng lahat ng mga website.\n\nMaaaring mas malaki ang konsyumo sa resource dahil sa generikong karagdagang pagfi-filter.",
+    "message": "Pinainam na network filtering, partikular at generikong karagdagang pagfi-filter mula sa mga napiling listahan ng mga filter.\n\nKailangan ang pahintulot na basahin at baguhin ang mga data ng lahat ng mga website.\n\nMaaaring mas malaki ang konsyumo sa resource dahil sa generikong karagdagang pagfi-filter.",
     "description": "This describes the 'complete' filtering mode"
   },
   "behaviorSectionLabel": {

@@ -1,0 +1,31 @@
+uBO Lite (uBOL) è un blocco dei contenuti sperimentale basato su MV3 *senza autorizzazione*.
+
+Il set di regole predefinito corrisponde al set di filtri predefinito di uBlock Origin:
+
+- Elenchi dei filtri integrati di uBlock Origin
+- EasyList
+- EasyPrivacy
+- Elenco dei server pubblicitari e di tracciamento di Peter Lowe
+- Tracker mascherati da AdGuard CNAME
+
+Puoi aggiungere altri set di regole visitando la pagina delle opzioni: fai clic sull'icona _Cogs_ nel pannello a comparsa.
+
+uBOL è interamente dichiarativo ovvero non è necessario un processo uBOL permanente per eseguire il filtraggio e il filtraggio dei contenuti CSS/JS inietattai viene eseguito in modo affidabile dal browser stesso piuttosto che dall'estensione. Ciò significa che lo stesso uBOL non consuma risorse di CPU/memoria mentre il blocco dei contenuti è in corso: il processo di lavoro di servizio di uBOL è richiesto _solo_ quando interagisci con il pannello popup o le pagine delle opzioni.
+
+uBOL non richiede un'ampia autorizzazione di "lettura e modifica dei dati" al momento dell'installazione, da qui le sue capacità limitate rispetto a uBlock Origin o ad altre estensioni che richiedono ampie autorizzazioni di "lettura/modifica dei dati" al momento dell'installazione.
+
+Tuttavia, uBOL consente di concedere *esplicitamente* permessi estesi a siti specifici di vostra scelta, in modo da poter filtrare meglio tali siti utilizzando il filtraggio cosmetico e le iniezioni di scriptlet.
+
+Per concedere autorizzazioni estese su un determinato sito, apri il pannello popup e scegli una modalità di filtraggio più restrittiva come Ottimale o Completa.
+
+Il browser ti avviserà degli effetti della concessione delle autorizzazioni aggiuntive richieste dall'estensione sul sito corrente e dovrai comunicare al browser se accetti o rifiuti la richiesta.
+
+Se accetti la richiesta di uBOL per ulteriori autorizzazioni sul sito corrente, sarà in grado di filtrare meglio i contenuti per il sito corrente.
+
+Puoi impostare la modalità di filtraggio predefinita dalla pagina delle opzioni di uBOL. Se scegli come predefinita la modalità Ottimale o Completa, dovrai concedere a uBOL il permesso di leggere e modificare i dati di tutti i siti web.
+
+Tieni presente che questo è ancora un work in progress, con questi obiettivi finali:
+
+- Nessuna autorizzazione host ampia al momento dell'installazione: le autorizzazioni estese vengono concesse esplicitamente dall'utente in base al sito.
+
+- Interamente dichiarativo per l'affidabilità e l'efficienza della CPU/memoria.

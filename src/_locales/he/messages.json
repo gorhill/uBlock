@@ -456,7 +456,7 @@
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
-    "message": "השהה פעילות רשת עד לסיום טעינת כל רשימות הסינון",
+    "message": "השהית פעילות רשת עד לסיום טעינת כל רשימות הסינון",
     "description": "A checkbox in the 'Filter lists' pane"
   },
   "3pListsOfBlockedHostsHeader": {
@@ -612,7 +612,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "הרשומות באתרים המהימנים מציינות באילו דפי אינטרנט uBlock Origin לא יהיה פעיל. רשומה אחת בכל שורה. רשומות לא חוקיות תתעלמנה בשקט ויסומנו כהערות.",
+    "message": "הנחיות אתר מהימנות, מכתיבות באילו עמודי מרשתת יש להשבית את uBlock Origin. רשומה אחת לכול שורה.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
@@ -912,7 +912,7 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "דווח על בעיות סינון באתרים קונקרטיים <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">בלוח הבעיות <code>uBlockOrigin/uAssets</code></span>. נדרש משתמש GitHub.",
+    "message": "דווח סוגיות יישומון uBlock Origin ל'מעקב הסוגייות' <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>.\n<u>נידרש חשבון גיטהאב (GitHub)</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
@@ -928,7 +928,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "דווח על בעיות סינון באתרים קונקרטיים <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\">בלוח הבעיות <code>uBlockOrigin/uBlock-issue</code></span>. נדרש משתמש GitHub.",
+    "message": "דווח סוגיות יישומון uBlock Origin ל'מעקב הסוגייות' <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>.\n<u>נידרש חשבון גיטהאב (GitHub)</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
@@ -948,7 +948,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "כדי להימנע מהעמקת מתנדבים בדוחות כפולים, ודא שהבעיה טרם דווחה.",
+    "message": "כדי להימנע מהכבדה על מתנדבים בדווחים כפולים, נא לודא שסוגיה דומה טרם דווחה.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -964,11 +964,11 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "הצגת פרסומות או שאריות של פרסומות",
+    "message": "הצגת פרסומות או שאריות שלהן",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "יש שכבות על או מטרד אחר",
+    "message": "קיים ריבוד או מטרד אחר",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
@@ -976,11 +976,11 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "יש בעיות הקשורות לפרטיות",
+    "message": " קיימות סוגיות 'פרטיות'",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "תקלות כאשר uBlock Origin מופעל",
+    "message": "כשל תפעולי בעת אפשור uBlock Origin",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
@@ -988,7 +988,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "סמן דף אינטרנט זה בתור ”NSFW” (<a href=\"https://he.wikipedia.org/wiki/NSFW\">“Not Safe For Work”</a>)",
+    "message": "תיוג עמוד המרשתת כ־לב\"ל ((<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">'לא בטוח לעבודה'</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
@@ -1040,7 +1040,7 @@
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "גבה לקובץ",
+    "message": "גיבוי לקובץ...",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {

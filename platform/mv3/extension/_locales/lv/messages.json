@@ -248,11 +248,11 @@
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
-    "message": "izdevīgais",
+    "message": "labākais",
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
-    "message": "pilnīgs",
+    "message": "pilnīgais",
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {

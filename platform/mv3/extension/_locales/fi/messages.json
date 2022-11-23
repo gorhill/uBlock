@@ -252,7 +252,7 @@
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
-    "message": "täydellinen",
+    "message": "täysi",
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
@@ -260,11 +260,11 @@
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Edistynyt verkkosuodatus sekä kohdistettu laajempi suodatus valikoiduilla suodatinlistoilla.\n\nEdellyttää kaikki sivustot kattavan, laajemman tietojen luku- ja muokkausoikeutta.",
+    "message": "Edistynyt verkkosuodatus sekä kohdistettu laajempi suodatus valikoiduilla suodatinlistoilla.\n\nEdellyttää kaikki sivustot kattavan, laajemman tietojen luku- ja muokkausoikeuden myöntöä.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Edistynyt verkkosuodatus sekä kohdistettu ja yleinen laajempi suodatus valikoiduilla suodatinlistoilla.\n\nEdellyttää kaikki sivustot kattavan, laajemman tietojen luku- ja muokkausoikeutta.\n\nYleinen laajempi suodatus saattaa lisätä verkkosivujen resurssien käyttöä.",
+    "message": "Edistynyt verkkosuodatus sekä kohdistettu ja yleinen laajempi suodatus valikoiduilla suodatinlistoilla.\n\nEdellyttää kaikki sivustot kattavan, laajemman tietojen luku- ja muokkausoikeuden myöntöä.\n\nYleinen laajempi suodatus saattaa kasvattaa sivukohtaista resurssien käyttöä.",
     "description": "This describes the 'complete' filtering mode"
   },
   "behaviorSectionLabel": {
@@ -272,7 +272,7 @@
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Lataa sivu automaattisesti uudelleen suodatustilan vaihtuessa",
+    "message": "Lataa sivu suodatustilan vaihtuessa automaattisesti uudelleen",
     "description": "Label for a checkbox in the options page"
   }
 }

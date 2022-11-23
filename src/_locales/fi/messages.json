@@ -216,11 +216,11 @@
     "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
-    "message": "Yleiset säännöt: sarake säännöille, joita käytetään kaikilla sivustoilla.",
+    "message": "Yleiset säännöt: Sarake säännöille, joita käytetään kaikilla sivustoilla.",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Paikalliset säännöt: sarake säännöille, joita käytetään vain nykyisellä sivustolla.\nPaikalliset säännöt ohittavat yleiset säännöt.",
+    "message": "Paikalliset säännöt: Sarake säännöille, joita käytetään vain nykyisellä sivustolla.\nPaikalliset säännöt ohittavat yleiset säännöt.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -460,7 +460,7 @@
     "description": "A checkbox in the 'Filter lists' pane"
   },
   "3pListsOfBlockedHostsHeader": {
-    "message": "Luettelo estetyistä osoitteista",
+    "message": "Lista estetyistä osoitteista",
     "description": "English: Lists of blocked hosts"
   },
   "3pApplyChanges": {
@@ -1176,7 +1176,7 @@
     "description": "tooltip"
   },
   "cloudNoData": {
-    "message": "...\n...",
+    "message": "…\n…",
     "description": ""
   },
   "cloudDeviceNamePrompt": {
@@ -1260,7 +1260,7 @@
     "description": "Message used in frame placeholders"
   },
   "dummy": {
-    "message": "Tämän täytyy olla viimeinen merkintä",
+    "message": "Tämän on oltava viimeinen merkintä",
     "description": "so we dont need to deal with comma for last entry"
   }
 }

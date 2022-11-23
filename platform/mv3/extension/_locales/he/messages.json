@@ -4,59 +4,59 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "An experimental, permission-less content blocker. Blocks ads, trackers, miners, and more immediately upon installation.",
+    "message": "חסם תוכן ניסיוני נטול הרשאות. מיד עם ההתקנה החסם יחסום פרסומות, עוקבים, כורים ועוד.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
-    "message": "{{ruleCount}} rules, converted from {{filterCount}} network filters",
+    "message": "{{ruleCount}} כללים, הומרו מ־{{filterCount}} מסנני רשת",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
-    "message": "uBO Lite — Dashboard",
+    "message": "לוח־מחוונים – uBO Lite",
     "description": "English: uBO Lite — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Warning! You have unsaved changes",
+    "message": "אזהרה! קיימים שינויים שטרם נשמרו",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Stay",
+    "message": "להישאר",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Ignore",
+    "message": "להתעלם",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
-    "message": "Settings",
+    "message": "הגדרות",
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Filter lists",
+    "message": "רשימות סינון",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
-    "message": "My filters",
+    "message": "מסננים שלי",
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Trusted sites",
+    "message": "אתרים מהימנים",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
-    "message": "About",
+    "message": "על אודות",
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
-    "message": "Privacy policy",
+    "message": "מדיניות פרטיות",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupPowerSwitchInfo": {
-    "message": "Disable/enable uBO Lite for this site",
+    "message": "איפשור/השבתת uBO Lite באתר זה",
     "description": "Tooltip for the main power button in the popup panel"
   },
   "popupTipDashboard": {
-    "message": "Open the dashboard",
+    "message": "פתיחת לוח־המחוונים",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
@@ -80,7 +80,7 @@
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {
-    "message": "More",
+    "message": "עוד",
     "description": "Label to be used to show popup panel sections"
   },
   "popupGrantGreatPowers": {
@@ -92,7 +92,7 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Less",
+    "message": "פחות",
     "description": "Label to be used to hide popup panel sections"
   },
   "settingsIconBadgePrompt": {
@@ -100,11 +100,11 @@
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsAppearance": {
-    "message": "Appearance",
+    "message": "מראה",
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
-    "message": "Theme",
+    "message": "ערכת נושא",
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
@@ -112,7 +112,7 @@
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsNoCSPReportsPrompt": {
-    "message": "Block CSP reports",
+    "message": "חסימת דוחות CSP",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "omnipotenceLabel": {
@@ -124,15 +124,15 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
-    "message": "Default",
+    "message": "ברירת מחדל",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAds": {
-    "message": "Ads",
+    "message": "פרסומות",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupPrivacy": {
-    "message": "Privacy",
+    "message": "פרטיות",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
@@ -140,11 +140,11 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
-    "message": "Annoyances",
+    "message": "מטרדים",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMisc": {
-    "message": "Miscellaneous",
+    "message": "שונות",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupRegions": {
@@ -160,7 +160,7 @@
     "description": "English: Import and append"
   },
   "1pExport": {
-    "message": "Export",
+    "message": "ייצוא",
     "description": "English: Export"
   },
   "1pExportFilename": {
@@ -176,7 +176,7 @@
     "description": "English: Import and append"
   },
   "whitelistExport": {
-    "message": "Export",
+    "message": "ייצוא",
     "description": "English: Export"
   },
   "whitelistExportFilename": {
@@ -184,27 +184,27 @@
     "description": "The default filename to use for import/export purpose"
   },
   "aboutChangelog": {
-    "message": "Changelog",
+    "message": "יומן שינויים",
     "description": ""
   },
   "aboutCode": {
-    "message": "Source code (GPLv3)",
+    "message": "קוד מקור (GPLv3)",
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Contributors",
+    "message": "תורמים",
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Source code",
+    "message": "קוד מקור",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
-    "message": "Translations",
+    "message": "תרגומים",
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
-    "message": "Filter lists",
+    "message": "רשימות סינון",
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
@@ -212,7 +212,7 @@
     "description": "Shown in the About pane"
   },
   "genericSubmit": {
-    "message": "Submit",
+    "message": "שיגור",
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
@@ -220,15 +220,15 @@
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
-    "message": "Revert",
+    "message": "החזרה לאחור",
     "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
-    "message": "Welcome",
+    "message": "ברוך בואך",
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "You have just installed uBO Lite. You can choose here the default filtering mode to use on all websites.\n\nBy default, <em>Basic</em> mode is selected because it does not require the permission to read and change data. If you trust uBO Lite, you can give it broad permission to read and change data on all websites in order to enable more advanced filtering capabilities for all websites by default.",
+    "message": "You have just installed uBO Lite. You can choose here the default filtering mode to use on all websites.\n\nBy default, <em>Basic</em> mode is selected because it does not require the permission to read and modify data. If you trust uBO Lite, you can give it broad permission to read and modify data on all websites in order to enable more advanced filtering capabilities for all websites by default.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
@@ -236,7 +236,7 @@
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "The default filtering mode will be overriden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
+    "message": "The default filtering mode will be overridden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
@@ -244,7 +244,7 @@
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
-    "message": "basic",
+    "message": "בסיסי",
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
@@ -256,15 +256,15 @@
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Basic network filtering from selected filter lists.\n\nDoes not require permission to read and change data on websites.",
+    "message": "Basic network filtering from selected filter lists.\n\nDoes not require permission to read and modify data on websites.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific extended filtering from selected filter lists.\n\nRequires broad permission to read and change data on all websites.",
+    "message": "Advanced network filtering plus specific extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific and generic extended filtering from selected filter lists.\n\nRequires broad permission to read and change data on all websites.\n\nGeneric extended filtering may cause higher webpage resources usage.",
+    "message": "Advanced network filtering plus specific and generic extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.\n\nGeneric extended filtering may cause higher webpage resources usage.",
     "description": "This describes the 'complete' filtering mode"
   },
   "behaviorSectionLabel": {
@@ -272,7 +272,7 @@
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Automatically reload page when changing filtering mode",
+    "message": "טעינת עמוד באופן אוטומטי עם שינוי מצב סינון",
     "description": "Label for a checkbox in the options page"
   }
 }

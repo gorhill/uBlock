@@ -1,0 +1,31 @@
+uBO Lite (uBOL) ir izmēģinājuma *bezatļauju* uz MV# balstīts satura aizturētājs.
+
+Noklusējuma nosacījumu kopa atbilst uBokc Origin noklusējuma aizturēšanas kopai:
+
+- uBlock Origin iebūvētie aizturēšanas saraksti
+- EasyList
+- EasyPrivacy
+- Pētera Lova (Peter Lowe) reklāmu un izsakošanas serveru saraksts
+- AdGuard ar CNAME aizsegtie izsekotāji
+
+Vairāk nosacījumu kopu var pievienot iestatījumu sadaļā -- jāklikšķina _Zobratu_ ikona uznirstošajā logā.
+
+uBOL ir pilnībā vispārīgs, kas nozīmē, ka nav nepieciešamības pēc pastāvīga uBOL procesa, lai notiktu aizturēšana, un uz CSS/JS ievietošanu balstīta satura aizturēšanu uzticami veic pārlūks, nevis paplašinājums. Tas nozīmē, ka uBOL pats par sevi neizmanto procesoru un atmiņu, kamēr satura aizturēšana ir notiekoša -- uBOL pakalpojuma strādņa process ir nepieciešams _tikai_ tad, kad notiek mijiedarbība ar uznirstošo logu vai iestatījumu sadaļām.
+
+uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read/modify data" permissions at install time.
+
+However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
+
+Lai nodrošinātu paplašinātas piekļuves tiesības noteiktā vietnē, jāatver uznirstošais logs un jāizvēlas striktāks aizturēšanas veids, kā, piemēram, "Labākais" vai "Pilnīgais".
+
+The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request.
+
+If you accept uBOL's request for additional permissions on the current site, it will be able to better filter content for the current site.
+
+You can set the default filtering mode from uBOL's options page. If you pick the Optimal or Complete mode as the default one, you will need to grant uBOL the permission to read and modify data on all websites.
+
+Keep in mind this is still a work in progress, with these end goals:
+
+- No broad host permissions at install time -- extended permissions are granted explicitly by the user on a per-site basis.
+
+- Entirely declarative for reliability and CPU/memory efficiency.

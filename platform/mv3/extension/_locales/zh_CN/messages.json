@@ -228,7 +228,7 @@
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "uBO Lite 现已安装完毕。接下来您可以为网页内容选择默认过滤模式。\n\n预设过滤模式为【基础】，该模式不需要读取或修改网页内容的权限。如果您信任 uBO Lite，您可以授予其用以读取或修改所有网页数据的额外权限，进而默认为所有网站开启高级过滤模式。",
+    "message": "uBO Lite 现已安装完毕。接下来您可以为网页内容选择默认过滤模式。\n\n预设过滤模式为“基础”，该模式不需要读取或修改网页内容的权限。如果您信任 uBO Lite，您可以授予其用以读取或修改所有网页数据的额外权限，进而默认为所有网站开启高级过滤模式。",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
