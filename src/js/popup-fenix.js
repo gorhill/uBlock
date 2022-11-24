@@ -1371,7 +1371,7 @@ const getPopupData = async function(tabId, first = false) {
         ) {
             dom.cl.add(dom.root, 'portrait');
         } else if ( dom.cl.has(dom.root, 'desktop') ) {
-            await nextFrames(4);
+            await nextFrames(8);
             const main = qs$('#main');
             const firewall = qs$('#firewall');
             const minWidth = (main.offsetWidth + firewall.offsetWidth) / 1.1;
