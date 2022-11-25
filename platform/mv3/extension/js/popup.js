@@ -260,7 +260,10 @@ dom.on('#lessButton', 'click', ( ) => {
 /******************************************************************************/
 
 async function init() {
-    const [ tab ] = await browser.tabs.query({ active: true });
+    const [ tab ] = await browser.tabs.query({
+        active: true,
+        windowId:  browser.windows.WINDOW_ID_CURRENT,
+    });
     if ( tab instanceof Object === false ) { return true; }
     Object.assign(currentTab, tab);
 
