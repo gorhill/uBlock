@@ -1547,8 +1547,9 @@ Parser.prototype.SelectorCompiler = class {
         }
         if ( data.type !== 'PseudoClassSelector' ) { return; }
 
-        // Post-analysis
-        // Mind https://w3c.github.io/csswg-drafts/selectors-4/#has-pseudo
+        // Post-analysis, mind:
+        // - https://w3c.github.io/csswg-drafts/selectors-4/#has-pseudo
+        // - https://w3c.github.io/csswg-drafts/selectors-4/#negation
         data.name = this.normalizedOperators.get(data.name) || data.name;
         if ( this.proceduralOperatorNames.has(data.name) ) {
             data.type = 'ProceduralSelector';
@@ -1558,20 +1559,30 @@ Parser.prototype.SelectorCompiler = class {
             data.type = 'Error';
             return;
         }
-        if ( this.maybeProceduralOperatorNames.has(data.name) ) {
-            if ( this.astHasType(args, 'ProceduralSelector') ) {
+        if ( this.maybeProceduralOperatorNames.has(data.name) === false ) {
+            return;
+        }
+        if ( this.astHasType(args, 'ProceduralSelector') ) {
+            data.type = 'ProceduralSelector';
+            return;
+        }
+        switch ( data.name ) {
+        case 'has':
+            if (
+                this.asProcedural ||
+                this.nativeCssHas !== true ||
+                this.astHasName(args, 'has')
+            ) {
                 data.type = 'ProceduralSelector';
-            } else if ( data.name === 'has' ) {
-                if (
-                    this.asProcedural ||
-                    this.nativeCssHas !== true ||
-                    this.astHasName(args, 'has')
-                ) {
-                    data.type = 'ProceduralSelector';
-                } else if ( this.astHasType(args, 'PseudoElementSelector') ) {
-                    data.type = 'Error';
-                }
+            } else if ( this.astHasType(args, 'PseudoElementSelector') ) {
+                data.type = 'Error';
             }
+            break;
+        case 'not':
+            if ( this.astHasType(args, 'Combinator', 0) ) {
+                data.type = 'Error';
+            }
+            break;
         }
     }
 
@@ -1768,11 +1779,15 @@ Parser.prototype.SelectorCompiler = class {
         return out;
     }
 
-    astHasType(parts, type) {
+    astHasType(parts, type, depth = 0x7FFFFFFF) {
         if ( Array.isArray(parts) === false ) { return false; }
         for ( const part of parts ) {
             if ( part.data.type === type ) { return true; }
-            if ( Array.isArray(part.args) && this.astHasType(part.args, type) ) {
+            if (
+                Array.isArray(part.args) &&
+                depth !== 0 &&
+                this.astHasType(part.args, type, depth-1)
+            ) {
                 return true;
             }
         }
