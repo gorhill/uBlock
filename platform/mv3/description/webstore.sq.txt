@@ -12,7 +12,7 @@ Në faqen e opsioneve mund të shtoni rregulla të tjera – klikoni ikonën e _
 
 uBOL është tërësisht deklarativ, domethënë filtrimi ndodh pa qenë nevoja që procesi i uBOL të vijojë vazhdimisht në sfond, ndërsa injektimi i filtrave CSS/JS te materialet kryhet me saktësi nga vetë shfletuesi. Pra, uBOL i bllokon materialet pa konsumuar resurset e procesorit/memories – asetet e uBOL nevojiten _vetëm_ kur ndërveproni me panelin modal ose faqen e opsioneve të tij.
 
-uBO Lite nuk kërkon leje shtesë për "leximin dhe modifikimin e të dhënave" kur e instaloni, prandaj ka aftësi më të kufizuara sesa uBlock Origin apo bllokuesit e tjerë që kërkojnë leje shtesë për "leximin/modifikimin e të dhënave" gjatë instalimit.
+uBO Lite nuk kërkon leje shtesë për "leximin dhe modifikimin e të dhënave" kur e instaloni, prandaj fillimisht ka aftësi më të kufizuara sesa uBlock Origin apo bllokuesit e tjerë që kërkojnë leje shtesë për "leximin dhe modifikimin e të dhënave" gjatë instalimit.
 
 Megjithatë ju mund t'i jepni uBOL leje të posaçme *eksplicite* për ato uebsajte që doni, në mënyrë që t'i filtrojë më mirë me filtra kozmetikë dhe skripte.
 

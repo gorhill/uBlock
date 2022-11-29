@@ -12,7 +12,7 @@ Du kan lägga till fler regeluppsättningar genom att besöka alternativsidan --
 
 uBOL är helt deklarativt, vilket innebär att det inte finns något behov av en permanent uBOL-process för att filtreringen ska ske och CSS/JS-injektionsbaserad innehållsfiltrering utförs på ett tillförlitligt sätt av webbläsaren själv snarare än av tillägget. Detta innebär att uBOL själv inte förbrukar CPU/minnesresurser medan innehållsblockering pågår -- uBOLs serviceworkerprocess krävs _endast_ när du interagerar med popup-panelen eller alternativsidorna.
 
-uBOL kräver inte högre behörighet för "läs och modifiera data" vid installationen, därav dess begränsade möjligheter jämfört med uBlock Origin eller andra innehållsblockerare som kräver högre behörighet för "läs och modifiera data" vid installationstidpunkten.
+uBOL kräver inte högre behörighet för "läs och ändra data" vid installationen, därav dess begränsade möjligheter jämfört med uBlock Origin eller andra innehållsblockerare som kräver högre behörighet för "läs och ändra data" vid installationen.
 
 Däremot låter uBOL dig *uttryckligen* ge utökade behörigheter på specifika webbplatser du väljer så att den bättre kan filtrera på dessa webbplatser med hjälp av kosmetisk filtrering och scriptletinjektioner.
 

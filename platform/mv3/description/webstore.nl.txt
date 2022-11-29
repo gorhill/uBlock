@@ -12,7 +12,7 @@ U kunt meer regelsets toevoegen door de optiespagina te bezoeken -- klik op het 
 
 uBOL is volledig declaratief, wat betekent dat er geen permanent uBOL-proces voor de filtering nodig is, en inhoudsfiltering op basis van CSS/JS-injectie op een betrouwbare manier door de browser zelf wordt uitgevoerd in plaats van door de extensie. Dit betekent dat uBOL zelf geen CPU-/geheugenbronnen gebruikt terwijl inhoudsblokkering actief is -- het serviceworker-proces van uBOL is _alleen_ vereist als u met het pop-uppaneel of de optiespagina’s werkt.
 
-uBOL vereist geen brede toestemming voor het ‘lezen en aanpassen van gegevens’ tijdens installatie, vandaar de beperkte ingebouwde mogelijkheden ervan in vergelijking met uBlock Origin of andere inhoudsblokkeerders die brede toestemmingen voor het ‘lezen/aanpassen van gegevens’ vereisen tijdens installatie.
+uBOL vereist geen brede toestemming voor het ‘lezen en aanpassen van gegevens’ tijdens installatie, vandaar de beperkte ingebouwde mogelijkheden ervan in vergelijking met uBlock Origin of andere inhoudsblokkeerders die brede toestemmingen voor het ‘lezen en aanpassen van gegevens’ vereisen tijdens installatie.
 
 U kunt in uBOL echter *expliciet* uitgebreide toestemmingen verlenen op bepaalde websites van uw keuze, zodat het op die websites beter kan filteren via cosmetische filtering en scriptlet-injecties.
 

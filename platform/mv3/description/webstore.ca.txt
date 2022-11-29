@@ -14,7 +14,7 @@ L'uBOL és totalment declaratiu, és a dir, no cal un procés uBOL permanent per
  Això vol dir que l'uBOL en si no consumeix recursos de CPU/memòria mentre el bloqueig de contingut està en curs; el procés de treballador de servei d'uBOL només es requereix quan interactueu amb el tauler emergent o les pàgines d'opcions.
 
 
-L'uBOL no requereix un ampli permís de "lectura i modificació de dades" en el moment de la instal·lació, per tant, les seves capacitats limitades en comparació amb l'uBlock Origin o altres blocadors de contingut que requereixen amplis permisos de "lectura/modificació de dades" en el moment de la instal·lació.
+L'uBOL no requereix un ampli permís de "lectura i modificació de dades" en el moment de la instal·lació, per tant, les seves capacitats limitades en comparació amb l'uBlock Origin o altres blocadors de contingut que requereixen amplis permisos de "lectura i modificació de dades" en el moment de la instal·lació.
 
 Tanmateix, l'uBOL us permet concedir *explícitament* permisos ampliats en llocs específics que trieu perquè pugui filtrar millor en aquests llocs mitjançant filtres cosmètics i injeccions de scriptlet.
 

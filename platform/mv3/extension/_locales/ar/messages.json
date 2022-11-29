@@ -4,11 +4,11 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "An experimental, permission-less content blocker. Blocks ads, trackers, miners, and more immediately upon installation.",
+    "message": "حاجب محتوى تجريبي وبلا أذونات. يحجب الإعلانات والمتتبعات والمعدنات والكثير فوراً عند التثبيت.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
-    "message": "{{ruleCount}} rules, converted from {{filterCount}} network filters",
+    "message": "شروط {{ruleCount}} محولة من مصفيّات الشبكة لـ {{filterCount}}",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
@@ -32,7 +32,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Filter lists",
+    "message": "قوائم المصفيّات",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -52,7 +52,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupPowerSwitchInfo": {
-    "message": "Disable/enable uBO Lite for this site",
+    "message": "عطّل/مكّن uBO Lite لهذه الصفحة",
     "description": "Tooltip for the main power button in the popup panel"
   },
   "popupTipDashboard": {
@@ -60,23 +60,23 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Enter element zapper mode",
+    "message": "فعّل طور حذف العناصر",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Enter element picker mode",
+    "message": "فعّل طور اختيار العناصر",
     "description": "English: Enter element picker mode"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "بلّغ عن مشكلة في هذه الصفحة",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipSaveRules": {
-    "message": "Click to make your changes permanent.",
+    "message": "اضغط لتجعل تغييراتك دائمة.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Click to revert your changes.",
+    "message": "إضغط للتراجع عن تغييراتك.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {
@@ -84,11 +84,11 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupGrantGreatPowers": {
-    "message": "Click to grant uBO Lite extended permissions on this site.\nExtended permissions allow more effective content blocking.",
+    "message": "اضغط لتمنح uBO Lite أذونات إضافية في هذه الصفحة.\nتتيح الأذونات الإضافية حجب محتوى أكثر فاعلية.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupRevokeGreatPowers": {
-    "message": "Click to revoke extended permissions on this site",
+    "message": "اضغط لتتراجع عن منح الأذونات الإضافية في هذه الصفحة",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
@@ -96,7 +96,7 @@
     "description": "Label to be used to hide popup panel sections"
   },
   "settingsIconBadgePrompt": {
-    "message": "Show the number of blocked requests on the icon",
+    "message": "أظهر عدد الطلبات المحجوبة على الأيقونة",
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsAppearance": {
@@ -112,11 +112,11 @@
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsNoCSPReportsPrompt": {
-    "message": "Block CSP reports",
+    "message": "احجب تقارير CSP",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "omnipotenceLabel": {
-    "message": "Enable extended filtering on all websites",
+    "message": "مكّن التصفية الإضافية لكل المواقع",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "omnipotenceLegend": {
@@ -228,7 +228,7 @@
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "You have just installed uBO Lite. You can choose here the default filtering mode to use on all websites.\n\nBy default, <em>Basic</em> mode is selected because it does not require the permission to read and modify data. If you trust uBO Lite, you can give it broad permission to read and modify data on all websites in order to enable more advanced filtering capabilities for all websites by default.",
+    "message": "You have just installed uBO Lite. Here you can choose the default filtering mode to use on all websites.\n\nBy default, <em>Basic</em> mode is selected because it does not require the permission to read and modify data. If you trust uBO Lite, you can give it broad permission to read and modify data on all websites in order to enable more advanced filtering capabilities for all websites by default.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {

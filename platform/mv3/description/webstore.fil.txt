@@ -12,7 +12,7 @@ Makakapagdagdag ka ng higit pang mga patakaran sa pahina ng mga opsyon -- pindut
 
 Deklaratibo lamang ang uBOL, kaya hindi nito kailangan ng permanenteng proseso upang mag-filter, at mainam na ginagawa ng browser mismo imbes na ekstensyon ang pagfi-filter sa content na nakabase sa CSS o JS. Ibig-sabihin, hindi kumokonsyumo ng CPU o memorya ang uBOL habang nanghaharang -- ang proseso ng trabahante ng serbisyo ay kailangan _lang_ kung nasa popup panel o pahina ng opsyon ka.
 
-Hindi kailangan ng uBOL ang malawakang pahintulot para "basahin at baguhin ang data" pagka-install, kaya kung bago pa lang itong install ay limitado ang kakayahan nito kumpara sa uBlock Origin o iba pang mga pangharang ng content na nangangailangan ng malawakang pahintulot para "basahin/baguhin ang data" pagka-install.
+Hindi kailangan ng uBOL ang malawakang pahintulot para "basahin at baguhin ang data" pagka-install, kaya kung bago pa lang itong install ay limitado ang kakayahan nito kumpara sa uBlock Origin o iba pang mga pangharang ng content na nangangailangan ng malawakang pahintulot para "basahin at baguhin ang data" pagka-install.
 
 Ngunit, pwede mong *pasadyang* pahintulutan ang uBOL na magkaroon ng pinalawak na pahintulot sa mga website na pipiliin mo para mas mapabuti ang pagfi-filter sa mga site na iyon gamit ang kosmetikong pagfi-filter at injeksyon ng scriptlet.
 

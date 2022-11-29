@@ -12,7 +12,7 @@ Voit lisätä sääntömäärityksiä asetussivulta -- paina ponnahduspaneelin _
 
 uBOL on täysin deklaratiivinen, eli suodatus ei edellytä pysyvää uBOL-prosessia ja CSS-/JS-koodin manipulointiin perustuva sisällöneston suorittaa laajennuksen sijaan luotettavasti selainsovellus. Tämän ansiosta itse uBOL-laajennus ei kuormita prosessoria tai keskusmuistia suodatuksen tapahtuessa -- uBOL:n työprosessia tarvitaan _ainoastaan_ ponnahduspaneelin ja asetussivun käytön yhteydessä.
 
-uBO lite ei asennuksen jälkeen vaadi erityistä "Lukea ja muokata kaikkea dataasi kaikilla sivustoilla" -käyttöoikeutta ja sen vuoksi sen toiminta on muita tätä käyttöoikeutta heti edellyttäviä estotyökaluja, kuten uBlock Orginia, rajoittuneempaa.
+uBO lite ei asennuksen jälkeen vaadi erityistä "oikeutta kaikkien tietojesi lukuun ja muokkaukseen" ja sen vuoksi sen toiminta on muita tätä käyttöoikeutta heti edellyttäviä estotyökaluja, kuten uBlock Orginia, rajoittuneempaa.
 
 On kuitenkin mahdollista myöntää *yksinomaisesti* uBOL:lle laajennetut käyttöoikeudet valikoiduille sivustoille niiden suodatuksen tehostamiseksi deklaratiivisella kosmeettisella suodatuksella ja scriplet-injektoinnilla.
 
@@ -22,7 +22,7 @@ Tällöin selain varoittaa laajennuksen avoimelle sivustolle pyytämien käyttö
 
 Jos uBOL:n käyttöoikeuspyyntö avoimelle sivustolle hyväksytään, se pystyy suodattamaan sivuston sisältöä tehokkaammin.
 
-Voit määrittää oletusarvoisen suodatustilan uBOL:n asetussivulta. Jos oletustilaksi valitaan Optimaalinen tai Täysi, on uBOL:lle myönnettävä "Lukea ja muokata kaikkea dataasi kaikilla sivustoilla" -käyttöoikeus.
+Voit määrittää oletusarvoisen suodatustilan uBOL:n asetussivulta. Jos oletustilaksi valitaan Optimaalinen tai Täysi, on uBOL:lle myönnettävä "oikeus lukea ja muokata tietojasi kaikilla sivustoilla".
 
 Huomioithan, että laajennusta kehitetään edelleen seuraavien tavoitteiden saavuttamiseksi:
 

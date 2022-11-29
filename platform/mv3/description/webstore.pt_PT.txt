@@ -12,7 +12,7 @@ You can add more rulesets by visiting the options page -- click the _Cogs_ icon 
 
 uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
 
-uBOL não requer ampla permissão de "ler e modificar dados" no momento da instalação, daí as suas capacidades limitadas de pronto a usar em comparação com uBlock Origin ou outros bloqueadores de conteúdo que requerem amplas permissões de "ler/modificar dados" no momento da instalação.
+uBOL não requer ampla permissão de "ler e modificar dados" no momento da instalação, daí as suas capacidades limitadas de pronto a usar em comparação com uBlock Origin ou outros bloqueadores de conteúdo que requerem amplas permissões de "ler e modificar dados" no momento da instalação.
 
 However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
 

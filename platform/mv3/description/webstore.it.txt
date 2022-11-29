@@ -12,7 +12,7 @@ Puoi aggiungere altri set di regole visitando la pagina delle opzioni: fai clic 
 
 uBOL è interamente dichiarativo ovvero non è necessario un processo uBOL permanente per eseguire il filtraggio e il filtraggio dei contenuti CSS/JS inietattai viene eseguito in modo affidabile dal browser stesso piuttosto che dall'estensione. Ciò significa che lo stesso uBOL non consuma risorse di CPU/memoria mentre il blocco dei contenuti è in corso: il processo di lavoro di servizio di uBOL è richiesto _solo_ quando interagisci con il pannello popup o le pagine delle opzioni.
 
-uBOL non richiede un'ampia autorizzazione di "lettura e modifica dei dati" al momento dell'installazione, da qui le sue capacità limitate rispetto a uBlock Origin o ad altre estensioni che richiedono ampie autorizzazioni di "lettura/modifica dei dati" al momento dell'installazione.
+uBOL non richiede un'ampia autorizzazione di "lettura e modifica dei dati" al momento dell'installazione, da qui le sue capacità limitate rispetto a uBlock Origin o ad altre estensioni che richiedono ampie autorizzazioni di "lettura e modifica dei dati" al momento dell'installazione.
 
 Tuttavia, uBOL consente di concedere *esplicitamente* permessi estesi a siti specifici di vostra scelta, in modo da poter filtrare meglio tali siti utilizzando il filtraggio cosmetico e le iniezioni di scriptlet.
 

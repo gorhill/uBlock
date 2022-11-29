@@ -2,17 +2,17 @@ uBO Lite (uBOL) is an experimental *permission-less* MV3-based content blocker.
 
 The default ruleset corresponds to uBlock Origin's default filterset:
 
-- uBlock Origin's built-in filter lists
+- Daftar filter asli uBlock Origin
 - EasyList
 - EasyPrivacy
-- Peter Lowe’s Ad and tracking server list
+- Daftar server iklan dan pelacak Peter Lowe
 - AdGuard CNAME-Cloaked Trackers
 
-You can add more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+kamu dapat menambahkan rulesets di halaman opsi -- klik ikon _Cogs_ di panel popup.
 
 uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
 
-uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read/modify data" permissions at install time.
+uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read and modify data" permissions at install time.
 
 However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
 

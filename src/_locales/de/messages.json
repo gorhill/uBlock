@@ -312,7 +312,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Element blockieren…",
+    "message": "Element blockieren …",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -500,7 +500,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Importieren…",
+    "message": "Importieren …",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -520,7 +520,7 @@
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Wird aktualisiert…",
+    "message": "Wird aktualisiert …",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -532,11 +532,11 @@
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
-    "message": "Importieren und anfügen…",
+    "message": "Importieren und anfügen …",
     "description": "English: Import and append"
   },
   "1pExport": {
-    "message": "Exportieren…",
+    "message": "Exportieren …",
     "description": "English: Export"
   },
   "1pExportFilename": {
@@ -576,11 +576,11 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Aus Datei importieren…",
+    "message": "Aus Datei importieren …",
     "description": ""
   },
   "rulesExport": {
-    "message": "In Datei exportieren…",
+    "message": "In Datei exportieren …",
     "description": ""
   },
   "rulesDefaultFileName": {
@@ -616,11 +616,11 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Importieren und anfügen…",
+    "message": "Importieren und anfügen …",
     "description": "English: Import and append"
   },
   "whitelistExport": {
-    "message": "Exportieren…",
+    "message": "Exportieren …",
     "description": "English: Export"
   },
   "whitelistExportFilename": {
@@ -956,7 +956,7 @@
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "Die Webseite…",
+    "message": "Die Webseite …",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
@@ -1040,7 +1040,7 @@
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "In Datei sichern…",
+    "message": "In Datei sichern …",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
@@ -1048,11 +1048,11 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Aus Datei wiederherstellen…",
+    "message": "Aus Datei wiederherstellen …",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Auf Werkseinstellungen zurücksetzen…",
+    "message": "Auf Werkseinstellungen zurücksetzen …",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
@@ -1204,11 +1204,11 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "Element im Frame blockieren…",
+    "message": "Element im Frame blockieren …",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Filterliste abonnieren…",
+    "message": "Filterliste abonnieren …",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {

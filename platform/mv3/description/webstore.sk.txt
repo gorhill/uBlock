@@ -12,7 +12,7 @@ Predvolený súbor pravidiel zodpovedá predvolenému súboru filtrov uBlock Ori
 
 uBOL je úplne deklaratívny, čo znamená, že na filtrovanie nie je potrebný trvalý proces uBOL a filtrovanie obsahu založené na injektovaní CSS/JS spoľahlivo vykonáva samotný prehliadač, a nie rozšírenie. To znamená, že samotný uBOL nespotrebúva zdroje CPU/pamäte, kým prebieha blokovanie obsahu -- proces uBOL Service Worker je potrebný _len_ pri interakcii s vyskakovacím panelom alebo stránkami možností.
 
-uBOL pri inštalácii nevyžaduje všeobecné oprávnenie "čítať a upravovať údaje", preto má obmedzené možnosti v porovnaní s uBlock Origin alebo inými blokátormi obsahu, ktoré pri inštalácii vyžadujú všeobecné oprávnenie "čítať/upravovať údaje".
+uBOL pri inštalácii nevyžaduje všeobecné oprávnenie "čítať a upravovať údaje", preto má obmedzené možnosti v porovnaní s uBlock Origin alebo inými blokátormi obsahu, ktoré pri inštalácii vyžadujú všeobecné oprávnenie "čítať a upravovať údaje".
 
 UBOL vám však umožňuje *výslovne* udeliť všebecné oprávnenia na konkrétne stránky podľa vášho výberu, aby mohol lepšie filtrovať na týchto stránkach pomocou kozmetického filtrovania a injektovaných skriptletov.
 

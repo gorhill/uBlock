@@ -6,15 +6,15 @@ Tavaline reeglitekogum vastab uBlock Origini tavalisele filtritekogumile:
 - EasyList
 - EasyPrivacy
 Peter Lowe'i reklaamides ja jälitamisserverite loend
-- AdGuard CNAME-Cloaked Trackers
+- AdGuardi CNAME-varjatud jälgijad
 
-You can add more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+Reeglitekogumeid saate lisada valikute lehelt ehk avanenud paneelis klõpsake _Cogs_ ikooni.
 
-uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
+uBOL on läbinisti deklaratiivne ehk filtreerimiseks pole vaja kogu aeg töötavat uBOLi protsessi ja CSS/JS süstipõhist sisu filtreerib tegelikult brauser, mitte laiendus. Teisisõnu, uBOL ei kasuta sisu tõkestamisel protsessori/mälu ressursse. uBOLi teenuse toimimise protsessi on vaja _vaid_ juhul, kui kasutate hüpikpaneeli või valikute lehekülgi.
 
-uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read/modify data" permissions at install time.
+uBOL ei nõua paigaldamise ajal teadatuntud andmete lugemise ja muutmise luba, seega võrreldes seda nõudva äpiga uBlock Origin või muu sisutõkestiga on uBOL-i piiratus üks selle funktsioonidest.
 
-However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
+Kuid uBOL võimaldab *selgesõnaliselt* anda täpsemaid lubasid teie valitud veebilehtedele, et neid saaks paremini filtreerida ilufiltrite ja skriptisüstidega.
 
 To grant extended permissions on a given site, open the popup panel and pick a higher filtering mode such as Optimal or Complete.
 
@@ -22,7 +22,7 @@ The browser will then warn you about the effects of granting the additional perm
 
 If you accept uBOL's request for additional permissions on the current site, it will be able to better filter content for the current site.
 
-You can set the default filtering mode from uBOL's options page. If you pick the Optimal or Complete mode as the default one, you will need to grant uBOL the permission to read and modify data on all websites.
+You can set the default filtering mode from uBOL's options page. Kui määrate optimaalse või põhjaliku režiimi tavaliseks, peate andma uBOLile loa kõikide veebilehtede andmete lugemiseks ja muutmiseks.
 
 Keep in mind this is still a work in progress, with these end goals:
 

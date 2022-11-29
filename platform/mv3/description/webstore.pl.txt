@@ -12,7 +12,7 @@ Możesz dodać więcej zestawów reguł, odwiedzając stronę opcji – kliknij 
 
 uBOL jest całkowicie deklaratywny, co oznacza, że nie jest potrzebny stały proces uBOL w celu filtrowania, a filtrowanie treści oparte na wstrzykiwaniu CSS/JS jest wykonywane niezawodnie przez samą przeglądarkę, a nie przez rozszerzenie. Oznacza to, że sam uBOL nie zużywa zasobów procesora/pamięci, gdy trwa blokowanie treści – proces Service Worker uBOL jest wymagany _tylko_ podczas interakcji z panelem wyskakującym lub stronami opcji.
 
-uBOL w trakcie instalacji nie wymaga szerokich uprawnień do „odczytu i modyfikacji danych”, stąd jego ograniczone możliwości w porównaniu z uBlock Origin lub innymi blokerami treści, które w czasie instalacji wymagają szerokich uprawnień „odczytu/modyfikacji danych”.
+uBOL w trakcie instalacji nie wymaga szerokich uprawnień do „odczytu i modyfikacji danych”, stąd jego ograniczone możliwości w porównaniu z uBlock Origin lub innymi blokerami treści, które w czasie instalacji wymagają szerokich uprawnień do „odczytu i modyfikacji danych”.
 
 Jednakże uBOL umożliwia *jawnie* udzielanie rozszerzonych uprawnień na określonych wybranych witrynach, dzięki czemu może lepiej filtrować te witryny za pomocą filtrowania kosmetycznego i wstrzykiwania skryptletów.
 
