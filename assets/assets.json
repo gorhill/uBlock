@@ -11,8 +11,7 @@
 			"https://ublockorigin.pages.dev/ublock/assets.json",
 			"https://gitcdn.link/cdn/gorhill/uBlock/master/assets/assets.json",
 			"https://cdn.jsdelivr.net/gh/gorhill/uBlock@master/assets/assets.json",
-			"https://cdn.statically.io/gh/gorhill/uBlock/master/assets/assets.json",
-			"https://combinatronics.io/gorhill/uBlock/master/assets/assets.json"
+			"https://cdn.statically.io/gh/gorhill/uBlock/master/assets/assets.json"
 		]
 	},
 	"public_suffix_list.dat": {
@@ -36,8 +35,7 @@
 			"https://ublockorigin.pages.dev/filters/badlists.txt",
 			"https://gitcdn.link/cdn/uBlockOrigin/uAssetsCDN/main/filters/badlists.txt",
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/filters/badlists.txt",
-			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/badlists.txt",
-			"https://combinatronics.io/uBlockOrigin/uAssetsCDN/main/filters/badlists.txt"
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/badlists.txt"
 		]
 	},
 	"ublock-filters": {
@@ -53,8 +51,7 @@
 			"https://ublockorigin.pages.dev/filters/filters.txt",
 			"https://gitcdn.link/cdn/uBlockOrigin/uAssetsCDN/main/filters/filters.txt",
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/filters/filters.txt",
-			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/filters.txt",
-			"https://combinatronics.io/uBlockOrigin/uAssetsCDN/main/filters/filters.txt"
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/filters.txt"
 		],
 		"supportURL": "https://github.com/uBlockOrigin/uAssets"
 	},
@@ -71,8 +68,7 @@
 			"https://ublockorigin.pages.dev/filters/badware.txt",
 			"https://gitcdn.link/cdn/uBlockOrigin/uAssetsCDN/main/filters/badware.txt",
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/filters/badware.txt",
-			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/badware.txt",
-			"https://combinatronics.io/uBlockOrigin/uAssetsCDN/main/filters/badware.txt"
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/badware.txt"
 		],
 		"supportURL": "https://github.com/uBlockOrigin/uAssets",
 		"instructionURL": "https://github.com/gorhill/uBlock/wiki/Badware-risks"
@@ -91,8 +87,7 @@
 			"https://ublockorigin.pages.dev/filters/privacy.txt",
 			"https://gitcdn.link/cdn/uBlockOrigin/uAssetsCDN/main/filters/privacy.txt",
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/filters/privacy.txt",
-			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/privacy.txt",
-			"https://combinatronics.io/uBlockOrigin/uAssetsCDN/main/filters/privacy.txt"
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/privacy.txt"
 		],
 		"supportURL": "https://github.com/uBlockOrigin/uAssets"
 	},
@@ -110,8 +105,7 @@
 			"https://ublockorigin.pages.dev/filters/resource-abuse.txt",
 			"https://gitcdn.link/cdn/uBlockOrigin/uAssetsCDN/main/filters/resource-abuse.txt",
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/filters/resource-abuse.txt",
-			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/resource-abuse.txt",
-			"https://combinatronics.io/uBlockOrigin/uAssetsCDN/main/filters/resource-abuse.txt"
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/resource-abuse.txt"
 		],
 		"supportURL": "https://github.com/uBlockOrigin/uAssets"
 	},
@@ -128,8 +122,7 @@
 			"https://ublockorigin.pages.dev/filters/unbreak.txt",
 			"https://gitcdn.link/cdn/uBlockOrigin/uAssetsCDN/main/filters/unbreak.txt",
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/filters/unbreak.txt",
-			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/unbreak.txt",
-			"https://combinatronics.io/uBlockOrigin/uAssetsCDN/main/filters/unbreak.txt"
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/unbreak.txt"
 		],
 		"supportURL": "https://github.com/uBlockOrigin/uAssets"
 	},
@@ -147,8 +140,7 @@
 			"https://ublockorigin.pages.dev/filters/quick-fixes.txt",
 			"https://gitcdn.link/cdn/uBlockOrigin/uAssetsCDN/main/filters/quick-fixes.txt",
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/filters/quick-fixes.txt",
-			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/quick-fixes.txt",
-			"https://combinatronics.io/uBlockOrigin/uAssetsCDN/main/filters/quick-fixes.txt"
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/quick-fixes.txt"
 		],
 		"supportURL": "https://github.com/uBlockOrigin/uAssets"
 	},
@@ -217,8 +209,7 @@
 			"https://ublockorigin.pages.dev/filters/lan-block.txt",
 			"https://gitcdn.link/cdn/uBlockOrigin/uAssetsCDN/main/filters/lan-block.txt",
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/filters/lan-block.txt",
-			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/lan-block.txt",
-			"https://combinatronics.io/uBlockOrigin/uAssetsCDN/main/filters/lan-block.txt"
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/lan-block.txt"
 		],
 		"supportURL": "https://github.com/uBlockOrigin/uAssets"
 	},
@@ -344,8 +335,7 @@
 			"https://ublockorigin.pages.dev/filters/annoyances.txt",
 			"https://gitcdn.link/cdn/uBlockOrigin/uAssetsCDN/main/filters/annoyances.txt",
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/filters/annoyances.txt",
-			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/annoyances.txt",
-			"https://combinatronics.io/uBlockOrigin/uAssetsCDN/main/filters/annoyances.txt"
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/annoyances.txt"
 		],
 		"supportURL": "https://github.com/uBlockOrigin/uAssets"
 	},
@@ -499,7 +489,6 @@
 		"contentURL": [
 			"https://raw.githubusercontent.com/MasterKia/PersianBlocker/main/PersianBlocker.txt",
 			"https://gitcdn.link/cdn/MasterKia/PersianBlocker/main/PersianBlocker.txt",
-			"https://combinatronics.io/MasterKia/PersianBlocker/main/PersianBlocker.txt",
 			"https://cdn.statically.io/gh/MasterKia/PersianBlocker/main/PersianBlocker.txt"
 		],
 		"supportURL": "https://github.com/MasterKia/PersianBlocker"
@@ -551,7 +540,6 @@
 		"cdnURLs": [
 			"https://cdn.jsdelivr.net/gh/List-KR/List-KR@master/filter-uBO.txt",
 			"https://cdn.statically.io/gh/List-KR/List-KR/master/filter-uBO.txt",
-			"https://combinatronics.io/List-KR/List-KR/master/filter-uBO.txt",
 			"https://gitcdn.link/cdn/List-KR/List-KR/master/filter-uBO.txt"
 		],
 		"supportURL": "https://github.com/List-KR/List-KR#readme"
@@ -587,7 +575,6 @@
 		"lang": "af fy nl",
 		"contentURL": "https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/gh-pages/EasyDutch.txt",
 		"cdnURLs": [
-			"https://combinatronics.io/EasyDutch-uBO/EasyDutch/gh-pages/EasyDutch.txt",
 			"https://cdn.statically.io/gh/EasyDutch-uBO/EasyDutch/gh-pages/EasyDutch.txt",
 			"https://cdn.jsdelivr.net/gh/EasyDutch-uBO/EasyDutch@gh-pages/EasyDutch.txt",
 			"https://cdn.statically.io/gl/BPower0036/EasyDutch/raw/gh-pages/EasyDutch.txt"
@@ -651,7 +638,6 @@
 		"cdnURLs": [
 			"https://cdn.jsdelivr.net/gh/easylist/ruadlist@master/RuAdList-uBO.txt",
 			"https://cdn.statically.io/gh/easylist/ruadlist/master/RuAdList-uBO.txt",
-			"https://combinatronics.io/easylist/ruadlist/master/RuAdList-uBO.txt",
 			"https://gitcdn.link/cdn/easylist/ruadlist/master/RuAdList-uBO.txt"
 		],
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=102",
