@@ -34,6 +34,19 @@ const nonVisualElements = {
     style: true,
 };
 
+const regexFromString = (s, exact = false) => {
+    if ( s === '' ) { return /^/; }
+    if ( /^".+"$/.test(s) ) {
+        s = s.slice(1,-1).replace(/\\(\\|")/g, '$1');
+    }
+    const match = /^\/(.+)\/([i]?)$/.exec(s);
+    if ( match !== null ) {
+        return new RegExp(match[1], match[2] || undefined);
+    }
+    const reStr = s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return new RegExp(exact ? `^${reStr}$` : reStr, 'i');
+};
+
 // 'P' stands for 'Procedural'
 
 class PSelectorTask {
@@ -84,6 +97,22 @@ PSelectorIfTask.prototype.target = true;
 class PSelectorIfNotTask extends PSelectorIfTask {
 }
 PSelectorIfNotTask.prototype.target = false;
+
+class PSelectorMatchesAttrTask extends PSelectorTask {
+    constructor(task) {
+        super();
+        this.reAttr = regexFromString(task[1].attr, true);
+        this.reValue = regexFromString(task[1].value, true);
+    }
+    transpose(node, output) {
+        const attrs = node.getAttributeNames();
+        for ( const attr of attrs ) {
+            if ( this.reAttr.test(attr) === false ) { continue; }
+            if ( this.reValue.test(node.getAttribute(attr)) === false ) { continue; }
+            output.push(node);
+        }
+    }
+}
 
 class PSelectorMatchesCSSTask extends PSelectorTask {
     constructor(task) {
@@ -350,6 +379,7 @@ class PSelector {
                 [ 'has-text', PSelectorHasTextTask ],
                 [ 'if', PSelectorIfTask ],
                 [ 'if-not', PSelectorIfNotTask ],
+                [ 'matches-attr', PSelectorMatchesAttrTask ],
                 [ 'matches-css', PSelectorMatchesCSSTask ],
                 [ 'matches-css-after', PSelectorMatchesCSSAfterTask ],
                 [ 'matches-css-before', PSelectorMatchesCSSBeforeTask ],

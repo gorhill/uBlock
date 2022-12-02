@@ -1361,6 +1361,7 @@ Parser.prototype.SelectorCompiler = class {
             'has-text',
             'if',
             'if-not',
+            'matches-attr',
             'matches-css',
             'matches-css-after',
             'matches-css-before',
@@ -1855,6 +1856,8 @@ Parser.prototype.SelectorCompiler = class {
             return this.compileSelector(arg);
         case 'if-not':
             return this.compileSelector(arg);
+        case 'matches-attr':
+            return this.compileMatchAttrArgument(arg);
         case 'matches-css':
             return this.compileCSSDeclaration(arg);
         case 'matches-css-after':
@@ -1894,11 +1897,58 @@ Parser.prototype.SelectorCompiler = class {
         return false;
     }
 
-    extractArg(s) {
-        if ( /^(['"]).+\1$/.test(s) ) {
-            s = s.slice(1, -1);
+    unquoteString(s) {
+        const end = s.length;
+        if ( end === 0 ) {
+            return { s: '', end };
         }
-        return s.replace(/\\(['"])/g, '$1');
+        if ( /^['"]/.test(s) === false ) {
+            return { s, i: end };
+        }
+        const quote = s.charCodeAt(0);
+        const out = [];
+        let i = 1, c = 0;
+        for (;;) {
+            c = s.charCodeAt(i);
+            if ( c === quote ) {
+                i += 1;
+                break;
+            }
+            if ( c === 0x5C /* '\\' */ ) {
+                i += 1;
+                if ( i === end ) { break; }
+                c = s.charCodeAt(i);
+                if ( c !== 0x5C && c !== quote ) {
+                    out.push('\\');
+                }
+            }
+            out.push(c);
+            i += 1;
+            if ( i === end ) { break; }
+        }
+        return { s: String.fromCharCode(...out), i };
+    }
+
+    compileMatchAttrArgument(s) {
+        if ( s === '' ) { return; }
+        let attr = '', value = '';
+        let r = this.unquoteString(s);
+        if ( r.i === s.length ) {
+            const pos = r.s.indexOf('=');
+            if ( pos === -1 ) {
+                attr = r.s;
+            } else {
+                attr = r.s.slice(0, pos);
+                value = r.s.slice(pos + 1);
+            }
+        } else {
+            attr = r.s;
+            if ( s.charCodeAt(r.i) !== 0x3D ) { return; }
+            r = this.unquoteString(s.slice(r.i+1));
+            value = r.s;
+        }
+        if ( attr === '' ) { return; }
+        return { attr, value };
     }
 
     // When dealing with literal text, we must first eat _some_
@@ -1906,8 +1956,9 @@ Parser.prototype.SelectorCompiler = class {
     // Remove potentially present quotes before processing.
     compileText(s) {
         if ( s === '' ) { return; }
-        s = this.extractArg(s);
-        const match = this.reParseRegexLiteral.exec(s);
+        const r = this.unquoteString(s);
+        if ( r.i !== s.length ) { return; }
+        const match = this.reParseRegexLiteral.exec(r.s);
         let regexDetails;
         if ( match !== null ) {
             regexDetails = match[1];
@@ -1915,10 +1966,12 @@ Parser.prototype.SelectorCompiler = class {
             if ( match[2] ) {
                 regexDetails = [ regexDetails, match[2] ];
             }
+        } else if ( r.s === '' ) {
+            regexDetails = '^$';
         } else {
-            regexDetails = s.replace(this.reEatBackslashes, '$1')
-                            .replace(this.reEscapeRegex, '\\$&');
-            this.regexToRawValue.set(regexDetails, s);
+            regexDetails = r.s.replace(this.reEatBackslashes, '$1')
+                              .replace(this.reEscapeRegex, '\\$&');
+            this.regexToRawValue.set(regexDetails, r.s);
         }
         return regexDetails;
     }
@@ -2010,13 +2063,14 @@ Parser.prototype.SelectorCompiler = class {
     }
 
     compileXpathExpression(s) {
-        s = this.extractArg(s);
+        const r = this.unquoteString(s);
+        if ( r.i !== s.length ) { return; }
         try {
-            self.document.createExpression(s, null);
+            self.document.createExpression(r.s, null);
         } catch (e) {
             return;
         }
-        return s;
+        return r.s;
     }
 };
 
