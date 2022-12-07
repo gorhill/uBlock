@@ -823,6 +823,10 @@ const onMessage = function(request, sender, callback) {
         cosmeticFilteringEngine.addToSelectorCache(request);
         break;
 
+    case 'disableGenericCosmeticFilteringSurveyor':
+        cosmeticFilteringEngine.disableSurveyor(request);
+        break;
+
     case 'getCollapsibleBlockedRequests':
         response = {
             id: request.id,

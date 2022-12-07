@@ -945,72 +945,65 @@ vAPI.DOMFilterer = class {
 // vAPI.domSurveyor
 
 {
-    const messaging = vAPI.messaging;
-    const queriedIds = new Set();
-    const queriedClasses = new Set();
+    // https://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
+    //   Must mirror cosmetic filtering compiler's version
+    const hashFromStr = (type, s) => {
+        const len = s.length;
+        const step = len + 7 >>> 3;
+        let hash = (type << 5) - type + (len & 0xFF) | 0;
+        for ( let i = 0; i < len; i += step ) {
+            hash = (hash << 5) - hash + s.charCodeAt(i) | 0;
+        }
+        return hash & 0xFFFFFF;
+    };
+
+    const addHashes = hashes => {
+        for ( const hash of hashes ) {
+            queriedHashes.add(hash);
+        }
+    };
+
+    const queriedHashes = new Set();
     const maxSurveyNodes = 65536;
-    const maxSurveyTimeSlice = 4;
-    const maxSurveyBuffer = 64;
+    const pendingLists = [];
+    const pendingNodes = [];
+    const processedSet = new Set();
+    let domFilterer;
+    let hostname = '';
+    let domChanged = false;
+    let scannedCount = 0;
+    let stopped = false;
 
-    let domFilterer,
-        hostname = '',
-        surveyCost = 0;
+    const addPendingList = list => {
+        if ( list.length === 0 ) { return; }
+        pendingLists.push(Array.from(list));
+    };
 
-    const pendingNodes = {
-        nodeLists: [],
-        buffer: [
-            null, null, null, null, null, null, null, null,
-            null, null, null, null, null, null, null, null,
-            null, null, null, null, null, null, null, null,
-            null, null, null, null, null, null, null, null,
-            null, null, null, null, null, null, null, null,
-            null, null, null, null, null, null, null, null,
-            null, null, null, null, null, null, null, null,
-            null, null, null, null, null, null, null, null,
-        ],
-        j: 0,
-        accepted: 0,
-        iterated: 0,
-        stopped: false,
-        add(nodes) {
-            if ( nodes.length === 0 || this.accepted >= maxSurveyNodes ) {
-                return;
+    const nextPendingNodes = ( ) => {
+        if ( pendingLists.length === 0 ) { return 0; }
+        const bufferSize = 256;
+        let j = 0;
+        do {
+            const nodeList = pendingLists[0];
+            let n = bufferSize - j;
+            if ( n > nodeList.length ) {
+                n = nodeList.length;
             }
-            this.nodeLists.push(nodes);
-            this.accepted += nodes.length;
-        },
-        next() {
-            if ( this.nodeLists.length === 0 || this.stopped ) { return 0; }
-            const nodeLists = this.nodeLists;
-            let ib = 0;
-            do {
-                const nodeList = nodeLists[0];
-                let j = this.j;
-                let n = j + maxSurveyBuffer - ib;
-                if ( n > nodeList.length ) {
-                    n = nodeList.length;
-                }
-                for ( let i = j; i < n; i++ ) {
-                    this.buffer[ib++] = nodeList[j++];
-                }
-                if ( j !== nodeList.length ) {
-                    this.j = j;
-                    break;
-                }
-                this.j = 0;
-                this.nodeLists.shift();
-            } while ( ib < maxSurveyBuffer && nodeLists.length !== 0 );
-            this.iterated += ib;
-            if ( this.iterated >= maxSurveyNodes ) {
-                this.nodeLists = [];
-                this.stopped = true;
-                //console.info(`domSurveyor> Surveyed a total of ${this.iterated} nodes. Enough.`);
+            for ( let i = 0; i < n; i++ ) {
+                pendingNodes[j+i] = nodeList[i];
             }
-            return ib;
-        },
-        hasNodes() {
-            return this.nodeLists.length !== 0;
-        },
+            j += n;
+            if ( n !== nodeList.length ) {
+                pendingLists[0] = nodeList.slice(n);
+                break;
+            }
+            pendingLists.shift();
+        } while ( j < bufferSize && pendingLists.length !== 0 );
+        return j;
+    };
+
+    const hasPendingNodes = ( ) => {
+        return pendingLists.length !== 0;
     };
 
     // Extract all classes/ids: these will be passed to the cosmetic
@@ -1024,10 +1017,10 @@ vAPI.DOMFilterer = class {
     const idFromNode = (node, out) => {
         const raw = node.id;
         if ( typeof raw !== 'string' || raw.length === 0 ) { return; }
-        const s = raw.trim();
-        if ( queriedIds.has(s) || s.length === 0 ) { return; }
-        out.push(s);
-        queriedIds.add(s);
+        const hash = hashFromStr(0x23 /* '#' */, raw.trim());
+        if ( queriedHashes.has(hash) ) { return; }
+        queriedHashes.add(hash);
+        out.push(hash);
     };
 
     // https://github.com/uBlockOrigin/uBlock-issues/discussions/2076
@@ -1036,73 +1029,83 @@ vAPI.DOMFilterer = class {
         const s = node.getAttribute('class');
         if ( typeof s !== 'string' ) { return; }
         const len = s.length;
-        for ( let beg = 0, end = 0, token = ''; beg < len; beg += 1 ) {
+        for ( let beg = 0, end = 0; beg < len; beg += 1 ) {
             end = s.indexOf(' ', beg);
             if ( end === beg ) { continue; }
             if ( end === -1 ) { end = len; }
-            token = s.slice(beg, end);
+            const hash = hashFromStr(0x2E /* '.' */, s.slice(beg, end));
             beg = end;
-            if ( queriedClasses.has(token) ) { continue; }
-            out.push(token);
-            queriedClasses.add(token);
+            if ( queriedHashes.has(hash) ) { continue; }
+            queriedHashes.add(hash);
+            out.push(hash);
         }
     };
 
-    const surveyPhase1 = function() {
-        //console.time('dom surveyor/surveying');
+    const getSurveyResults = hashes => {
+        if ( self.vAPI.messaging instanceof Object === false ) {
+            stop(); return;
+        }
+        const promise = hashes.length === 0
+            ? Promise.resolve(null)
+            : self.vAPI.messaging.send('contentscript', {
+                what: 'retrieveGenericCosmeticSelectors',
+                hostname,
+                hashes,
+                exceptions: domFilterer.exceptions,
+            });
+        promise.then(response => {
+            processSurveyResults(response);
+        });
+    };
+
+    const doSurvey = ( ) => {
         const t0 = performance.now();
-        const ids = [];
-        const classes = [];
-        const nodes = pendingNodes.buffer;
-        const deadline = t0 + maxSurveyTimeSlice;
+        const hashes = [];
+        const nodes = pendingNodes;
+        const deadline = t0 + 4;
         let processed = 0;
+        let scanned = 0;
         for (;;) {
-            const n = pendingNodes.next();
+            const n = nextPendingNodes();
             if ( n === 0 ) { break; }
             for ( let i = 0; i < n; i++ ) {
                 const node = nodes[i]; nodes[i] = null;
-                idFromNode(node, ids);
-                classesFromNode(node, classes);
+                if ( domChanged ) {
+                    if ( processedSet.has(node) ) { continue; }
+                    processedSet.add(node);
+                }
+                idFromNode(node, hashes);
+                classesFromNode(node, hashes);
+                scanned += 1;
             }
             processed += n;
             if ( performance.now() >= deadline ) { break; }
         }
-        const t1 = performance.now();
-        surveyCost += t1 - t0;
-        //console.info(`domSurveyor> Surveyed ${processed} nodes in ${(t1-t0).toFixed(2)} ms`);
-        // Phase 2: Ask main process to lookup relevant cosmetic filters.
-        if ( ids.length !== 0 || classes.length !== 0 ) {
-            messaging.send('contentscript', {
-                what: 'retrieveGenericCosmeticSelectors',
-                hostname,
-                ids, classes,
-                exceptions: domFilterer.exceptions,
-                cost: surveyCost,
-            }).then(response => {
-                surveyPhase3(response);
-            });
-        } else {
-            surveyPhase3(null);
+        //console.info(`[domSurveyor][${hostname}] Surveyed ${scanned}/${processed} nodes in ${(performance.now()-t0).toFixed(2)} ms: ${hashes.length} hashes`);
+        scannedCount += scanned;
+        if ( scannedCount >= maxSurveyNodes ) {
+            stop();
         }
-        //console.timeEnd('dom surveyor/surveying');
+        processedSet.clear();
+        getSurveyResults(hashes);
     };
 
-    const surveyTimer = new vAPI.SafeAnimationFrame(surveyPhase1);
+    const surveyTimer = new vAPI.SafeAnimationFrame(doSurvey);
 
     // This is to shutdown the surveyor if result of surveying keeps being
     // fruitless. This is useful on long-lived web page. I arbitrarily
     // picked 5 minutes before the surveyor is allowed to shutdown. I also
     // arbitrarily picked 256 misses before the surveyor is allowed to
     // shutdown.
-    let canShutdownAfter = Date.now() + 300000,
-        surveyingMissCount = 0;
+    let canShutdownAfter = Date.now() + 300000;
+    let surveyResultMissCount = 0;
 
     // Handle main process' response.
 
-    const surveyPhase3 = function(response) {
+    const processSurveyResults = response => {
+        if ( stopped ) { return; }
         const result = response && response.result;
         let mustCommit = false;
-
         if ( result ) {
             const css = result.injectedCSS;
             if ( typeof css === 'string' && css.length !== 0 ) {
@@ -1114,99 +1117,86 @@ vAPI.DOMFilterer = class {
                 domFilterer.exceptCSSRules(selectors);
             }
         }
-
-        if ( pendingNodes.stopped === false ) {
-            if ( pendingNodes.hasNodes() ) {
-                surveyTimer.start(1);
-            }
-            if ( mustCommit ) {
-                surveyingMissCount = 0;
-                canShutdownAfter = Date.now() + 300000;
-                return;
-            }
-            surveyingMissCount += 1;
-            if ( surveyingMissCount < 256 || Date.now() < canShutdownAfter ) {
-                return;
-            }
+        if ( hasPendingNodes() ) {
+            surveyTimer.start(1);
         }
-
-        //console.info('dom surveyor shutting down: too many misses');
-
-        surveyTimer.clear();
-        vAPI.domWatcher.removeListener(domWatcherInterface);
-        vAPI.domSurveyor = null;
+        if ( mustCommit ) {
+            surveyResultMissCount = 0;
+            canShutdownAfter = Date.now() + 300000;
+            return;
+        }
+        surveyResultMissCount += 1;
+        if ( surveyResultMissCount < 256 || Date.now() < canShutdownAfter ) {
+            return;
+        }
+        //console.info(`[domSurveyor][${hostname}] Shutting down, too many misses`);
+        stop();
+        self.vAPI.messaging.send('contentscript', {
+            what: 'disableGenericCosmeticFilteringSurveyor',
+            hostname,
+        });
     };
 
     const domWatcherInterface = {
         onDOMCreated: function() {
-            if (
-                self.vAPI instanceof Object === false ||
-                vAPI.domSurveyor instanceof Object === false ||
-                vAPI.domFilterer instanceof Object === false
-            ) {
-                if ( self.vAPI instanceof Object ) {
-                    if ( vAPI.domWatcher instanceof Object ) {
-                        vAPI.domWatcher.removeListener(domWatcherInterface);
-                    }
-                    vAPI.domSurveyor = null;
-                }
-                return;
-            }
-            //console.time('dom surveyor/dom layout created');
             domFilterer = vAPI.domFilterer;
-            pendingNodes.add(document.querySelectorAll(
-                '[id]:not(html):not(body),[class]:not(html):not(body)'
-            ));
-            surveyTimer.start();
             // https://github.com/uBlockOrigin/uBlock-issues/issues/1692
             //   Look-up safe-only selectors to mitigate probability of
             //   html/body elements of erroneously being targeted.
-            const ids = [], classes = [];
+            const hashes = [];
             if ( document.documentElement !== null ) {
-                idFromNode(document.documentElement, ids);
-                classesFromNode(document.documentElement, classes);
+                idFromNode(document.documentElement, hashes);
+                classesFromNode(document.documentElement, hashes);
             }
             if ( document.body !== null ) {
-                idFromNode(document.body, ids);
-                classesFromNode(document.body, classes);
+                idFromNode(document.body, hashes);
+                classesFromNode(document.body, hashes);
             }
-            if ( ids.length !== 0 || classes.length !== 0 ) {
-                messaging.send('contentscript', {
-                    what: 'retrieveGenericCosmeticSelectors',
-                    hostname,
-                    ids, classes,
-                    exceptions: domFilterer.exceptions,
-                    safeOnly: true,
-                }).then(response => {
-                    surveyPhase3(response);
-                });
+            addPendingList(document.querySelectorAll(
+                '[id]:not(html):not(body),[class]:not(html):not(body)'
+            ));
+            if ( hasPendingNodes() ) {
+                surveyTimer.start();
             }
-            //console.timeEnd('dom surveyor/dom layout created');
         },
         onDOMChanged: function(addedNodes) {
             if ( addedNodes.length === 0 ) { return; }
-            //console.time('dom surveyor/dom layout changed');
+            domChanged = true;
             for ( const node of addedNodes ) {
-                pendingNodes.add([ node ]);
+                addPendingList([ node ]);
                 if ( node.firstElementChild === null ) { continue; }
-                pendingNodes.add(node.querySelectorAll(
-                    '[id]:not(html):not(body),[class]:not(html):not(body)'
-                ));
+                addPendingList(
+                    node.querySelectorAll(
+                        '[id]:not(html):not(body),[class]:not(html):not(body)'
+                    )
+                );
             }
-            if ( pendingNodes.hasNodes() ) {
+            if ( hasPendingNodes() ) {
                 surveyTimer.start(1);
             }
-            //console.timeEnd('dom surveyor/dom layout changed');
         }
     };
 
-    const start = function(details) {
-        if ( vAPI.domWatcher instanceof Object === false ) { return; }
+    const start = details => {
+        if ( self.vAPI instanceof Object === false ) { return; }
+        if ( self.vAPI.domFilterer instanceof Object === false ) { return; }
+        if ( self.vAPI.domWatcher instanceof Object === false ) { return; }
         hostname = details.hostname;
-        vAPI.domWatcher.addListener(domWatcherInterface);
+        self.vAPI.domWatcher.addListener(domWatcherInterface);
     };
 
-    vAPI.domSurveyor = { start };
+    const stop = ( ) => {
+        stopped = true;
+        pendingLists.length = 0;
+        surveyTimer.clear();
+        if ( self.vAPI instanceof Object === false ) { return; }
+        if ( self.vAPI.domWatcher instanceof Object ) {
+            self.vAPI.domWatcher.removeListener(domWatcherInterface);
+        }
+        self.vAPI.domSurveyor = null;
+    };
+
+    self.vAPI.domSurveyor = { start, addHashes };
 }
 
 /******************************************************************************/
@@ -1218,7 +1208,7 @@ vAPI.DOMFilterer = class {
 //   to be launched if/when needed.
 
 {
-    const bootstrapPhase2 = function() {
+    const onDomReady = ( ) => {
         // This can happen on Firefox. For instance:
         // https://github.com/gorhill/uBlock/issues/1893
         if ( window.location === null ) { return; }
@@ -1279,9 +1269,8 @@ vAPI.DOMFilterer = class {
     //   an object -- let's stay around, we may be given the opportunity
     //   to try bootstrapping again later.
 
-    const bootstrapPhase1 = function(response) {
+    const onResponseReady = response => {
         if ( response instanceof Object === false ) { return; }
-
         vAPI.bootstrap = undefined;
 
         // cosmetic filtering engine aka 'cfe'
@@ -1308,7 +1297,7 @@ vAPI.DOMFilterer = class {
             vAPI.domSurveyor = null;
         } else {
             const domFilterer = vAPI.domFilterer = new vAPI.DOMFilterer();
-            if ( noGenericCosmeticFiltering || cfeDetails.noDOMSurveying ) {
+            if ( noGenericCosmeticFiltering || cfeDetails.disableSurveyor ) {
                 vAPI.domSurveyor = null;
             }
             domFilterer.exceptions = cfeDetails.exceptionFilters;
@@ -1316,9 +1305,8 @@ vAPI.DOMFilterer = class {
             domFilterer.addProceduralSelectors(cfeDetails.proceduralFilters);
             domFilterer.exceptCSSRules(cfeDetails.exceptedFilters);
             domFilterer.convertedProceduralFilters = cfeDetails.convertedProceduralFilters;
+            vAPI.userStylesheet.apply();
         }
-
-        vAPI.userStylesheet.apply();
 
         // Library of resources is located at:
         // https://github.com/gorhill/uBlock/blob/master/assets/ublock/resources.txt
@@ -1328,26 +1316,18 @@ vAPI.DOMFilterer = class {
             vAPI.injectedScripts = scriptlets;
         }
 
-        if ( vAPI.domSurveyor instanceof Object ) {
+        if ( vAPI.domSurveyor ) {
+            if ( Array.isArray(cfeDetails.genericCosmeticHashes) ) {
+                vAPI.domSurveyor.addHashes(cfeDetails.genericCosmeticHashes);
+            }
             vAPI.domSurveyor.start(cfeDetails);
         }
 
-        // https://github.com/chrisaljoudi/uBlock/issues/587
-        // If no filters were found, maybe the script was injected before
-        // uBlock's process was fully initialized. When this happens, pages
-        // won't be cleaned right after browser launch.
-        if (
-            typeof document.readyState === 'string' &&
-            document.readyState !== 'loading'
-        ) {
-            bootstrapPhase2();
-        } else {
-            document.addEventListener(
-                'DOMContentLoaded',
-                bootstrapPhase2,
-                { once: true }
-            );
+        const readyState = document.readyState;
+        if ( readyState === 'interactive' || readyState === 'complete' ) {
+            return onDomReady();
         }
+        document.addEventListener('DOMContentLoaded', onDomReady, { once: true });
     };
 
     vAPI.bootstrap = function() {
@@ -1356,7 +1336,7 @@ vAPI.DOMFilterer = class {
             url: vAPI.effectiveSelf.location.href,
             needScriptlets: typeof self.uBO_scriptletsInjected !== 'boolean',
         }).then(response => {
-            bootstrapPhase1(response);
+            onResponseReady(response);
         });
     };
 }
