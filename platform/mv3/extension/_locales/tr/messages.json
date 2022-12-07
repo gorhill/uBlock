@@ -76,7 +76,7 @@
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Değişikliklerinizi geri almak için tıklayın. ",
+    "message": "Değişikliklerinizi geri almak için tıklayın.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {

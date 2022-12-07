@@ -1,31 +1,31 @@
-uBO Lite (uBOL) is an experimental *permission-less* MV3-based content blocker.
+O uBO Lite (uBOL) é um bloqueador de conteúdo baseado em MV3 experimental *sem permissão*.
 
-The default ruleset corresponds to uBlock Origin's default filterset:
+O conjunto de regras padrão corresponde ao conjunto de filtros padrão do uBlock Origin:
 
-- uBlock Origin's built-in filter lists
+- Listas de filtros integrados do uBlock Origin
 - EasyList
 - EasyPrivacy
 - Peter Lowe’s Ad and tracking server list
 - AdGuard CNAME-Cloaked Trackers
 
-You can add more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+Pode adicionar mais conjuntos de regras visitando a página de opções -- clique no ícone _Cogs_ no painel pop-up.
 
-uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
+O uBOL é totalmente declarativo, o que significa que não há necessidade de um processo uBOL permanente para que a filtragem ocorra, e a filtragem de conteúdo baseada em injeção de CSS/JS é realizada de forma confiável pelo próprio navegador e não pela extensão. Isto significa que o próprio uBOL não consome recursos da CPU/memória enquanto o bloqueio de conteúdo está em curso -- o processo de service worker do uBOL é necessário _apenas_ quando interage com o painel pop-up ou as páginas de opções.
 
 uBOL não requer ampla permissão de "ler e modificar dados" no momento da instalação, daí as suas capacidades limitadas de pronto a usar em comparação com uBlock Origin ou outros bloqueadores de conteúdo que requerem amplas permissões de "ler e modificar dados" no momento da instalação.
 
-However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
+No entanto, o uBOL permite-lhe que *explicitamente* conceda permissões alargadas em websites específicos de sua escolha, para que possa filtrar melhor esses websites usando filtragem cosmética e injeções de scriptlet.
 
-To grant extended permissions on a given site, open the popup panel and pick a higher filtering mode such as Optimal or Complete.
+Para conceder permissões alargadas num determinado website, abra o painel pop-up e escolha um modo de filtragem superior, como Ideal ou Completo.
 
-The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request.
+O navegador irá avisá-lo sobre os efeitos da concessão das permissões adicionais solicitadas pela extensão no website atual, e terá que informar ao navegador se aceita ou recusa o pedido.
 
-If you accept uBOL's request for additional permissions on the current site, it will be able to better filter content for the current site.
+Se aceitar o pedido do uBOL para permissões adicionais no website atual, o mesmo poderá filtrar melhor o conteúdo do website atual.
 
-You can set the default filtering mode from uBOL's options page. Se escolher o modo Optimizado ou Completo como o modo predefinido, terá de conceder ao uBOL a permissão para ler e modificar dados em todos os sítios web.
+Pode definir o modo de filtragem padrão na página de opções do uBOL. Se escolher o modo Ideal ou Completo como o modo predefinido, terá de conceder ao uBOL a permissão para ler e modificar dados em todos os sítios web.
 
-Keep in mind this is still a work in progress, with these end goals:
+Tenha em mente que este ainda é um trabalho em curso, com estes objetivos finais:
 
-- No broad host permissions at install time -- extended permissions are granted explicitly by the user on a per-site basis.
+- Sem permissões amplas de host no momento da instalação -- as permissões alargadas são concedidas explicitamente pelo utilizador por website.
 
-- Entirely declarative for reliability and CPU/memory efficiency.
+- Totalmente declarativo para fiabilidade e eficiência da CPU/memória.

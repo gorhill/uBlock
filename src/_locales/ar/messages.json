@@ -180,7 +180,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "انقر لتعطيل الجافا سكريبت كُليًا على هذا الموقع",
+    "message": "انقر لتعطيل الجافا سكريبت على هذا الموقع",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
@@ -192,7 +192,7 @@
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
-    "message": "المرئيات الضخمة",
+    "message": "عناصر وسائط كبيرة",
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
@@ -612,7 +612,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "قائمة المواقع الوثوقة تحتوي على صفحات الويب التي يجب تعطيل يو بلوك أوريجين عند الدخول عليها. أدخل رابط واحد كل سطر. الروابط الغير صحيحة سوف يتم تجاهلها تلقائيًا.",
+    "message": "تحدد توجيهات الموقع الموثوق به صفحات الويب التي يجب تعطيل uBlock Origin عليها.\nأدخل رابط واحد كل سطر. ",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
