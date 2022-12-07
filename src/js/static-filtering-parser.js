@@ -1919,7 +1919,7 @@ Parser.prototype.SelectorCompiler = class {
                 if ( i === end ) { break; }
                 c = s.charCodeAt(i);
                 if ( c !== 0x5C && c !== quote ) {
-                    out.push('\\');
+                    out.push(0x5C);
                 }
             }
             out.push(c);
@@ -1939,15 +1939,18 @@ Parser.prototype.SelectorCompiler = class {
                 attr = r.s;
             } else {
                 attr = r.s.slice(0, pos);
-                value = r.s.slice(pos + 1);
+                value = r.s.slice(pos+1);
             }
         } else {
             attr = r.s;
             if ( s.charCodeAt(r.i) !== 0x3D ) { return; }
-            r = this.unquoteString(s.slice(r.i+1));
-            value = r.s;
+            value = s.slice(r.i+1);
         }
         if ( attr === '' ) { return; }
+        if ( value.length !== 0 ) {
+            r = this.unquoteString(value);
+            value = r.s;
+        }
         return { attr, value };
     }
 
