@@ -170,13 +170,15 @@ const hashFromStr = (type, s) => {
 //   It's an uncommon case, so it's best to unescape only when needed.
 
 const keyFromSelector = selector => {
+    let key = '';
     let matches = rePlainSelector.exec(selector);
-    if ( matches === null ) {
+    if ( matches !== null ) {
+        key = matches[0];
+    } else {
         matches = rePlainSelectorEx.exec(selector);
-        if ( matches !== null ) { return matches[1] || matches[2]; }
-        return;
+        if ( matches === null ) { return; }
+        key = matches[1] || matches[2];
     }
-    let key = matches[0];
     if ( key.includes('\\') === false ) { return key; }
     matches = rePlainSelectorEscaped.exec(selector);
     if ( matches === null ) { return; }
@@ -744,10 +746,17 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
         hashes.push(hash);
     }
 
+    if ( request.safeOnly ) {
+        for ( const selector of selectorsSet ) {
+            if ( selector !== keyFromSelector(selector) ) { continue; }
+            selectorsSet.delete(selector);
+        }
+    }
+
     // Apply exceptions: it is the responsibility of the caller to provide
     // the exceptions to be applied.
     const excepted = [];
-    if ( Array.isArray(request.exceptions) ) {
+    if ( selectorsSet.size !== 0 && Array.isArray(request.exceptions) ) {
         for ( const exception of request.exceptions ) {
             if ( selectorsSet.delete(exception) ) {
                 excepted.push(exception);

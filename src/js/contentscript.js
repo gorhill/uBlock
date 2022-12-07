@@ -1041,7 +1041,7 @@ vAPI.DOMFilterer = class {
         }
     };
 
-    const getSurveyResults = hashes => {
+    const getSurveyResults = (hashes, safeOnly) => {
         if ( self.vAPI.messaging instanceof Object === false ) {
             stop(); return;
         }
@@ -1052,6 +1052,7 @@ vAPI.DOMFilterer = class {
                 hostname,
                 hashes,
                 exceptions: domFilterer.exceptions,
+                safeOnly,
             });
         promise.then(response => {
             processSurveyResults(response);
@@ -1152,6 +1153,7 @@ vAPI.DOMFilterer = class {
                 idFromNode(document.body, hashes);
                 classesFromNode(document.body, hashes);
             }
+            getSurveyResults(hashes, true);
             addPendingList(document.querySelectorAll(
                 '[id]:not(html):not(body),[class]:not(html):not(body)'
             ));
