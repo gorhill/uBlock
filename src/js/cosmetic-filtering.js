@@ -737,20 +737,15 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
 
     const selectorsSet = new Set();
     const hashes = [];
+    const safeOnly = request.safeOnly === true;
     for ( const hash of request.hashes ) {
         const bucket = this.lowlyGeneric.get(hash);
         if ( bucket === undefined ) { continue; }
         for ( const selector of bucket.split(',\n') ) {
+            if ( safeOnly && selector === keyFromSelector(selector) ) { continue; }
             selectorsSet.add(selector);
         }
         hashes.push(hash);
-    }
-
-    if ( request.safeOnly ) {
-        for ( const selector of selectorsSet ) {
-            if ( selector !== keyFromSelector(selector) ) { continue; }
-            selectorsSet.delete(selector);
-        }
     }
 
     // Apply exceptions: it is the responsibility of the caller to provide

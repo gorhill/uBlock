@@ -183,33 +183,14 @@ const fromExtendedFilter = function(details) {
             const filterType = fargs[0];
 
             // https://github.com/gorhill/uBlock/issues/2763
-            if (
-                filterType >= 0 &&
-                filterType <= 5 &&
-                details.ignoreGeneric
-            ) {
-                continue;
-            }
+            if ( filterType === 0 && details.ignoreGeneric ) { continue; }
 
             // Do not confuse cosmetic filters with HTML ones.
             if ( (filterType === 64) !== isHtmlFilter ) { continue; }
 
             switch ( filterType ) {
             // Lowly generic cosmetic filters
-            case 0: // simple id-based
-                if ( exception ) { break; }
-                if ( fargs[1] !== selector.slice(1) ) { break; }
-                if ( selector.charAt(0) !== '#' ) { break; }
-                found = prefix + selector;
-                break;
-            case 2: // simple class-based
-                if ( exception ) { break; }
-                if ( fargs[1] !== selector.slice(1) ) { break; }
-                if ( selector.charAt(0) !== '.' ) { break; }
-                found = prefix + selector;
-                break;
-            case 1: // complex id-based
-            case 3: // complex class-based
+            case 0:
                 if ( exception ) { break; }
                 if ( fargs[2] !== selector ) { break; }
                 found = prefix + selector;
