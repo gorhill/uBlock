@@ -1579,10 +1579,21 @@ Parser.prototype.SelectorCompiler = class {
                 data.type = 'Error';
             }
             break;
-        case 'not':
-            if ( this.astHasType(args, 'Combinator', 0) ) {
+        case 'not': {
+            if ( this.astHasType(args, 'Combinator', 0) === false ) { break; }
+            const selectors = this.astSelectorsFromSelectorList(args);
+            if ( Array.isArray(selectors) === false || selectors.length === 0 ) {
                 data.type = 'Error';
+                break;
             }
+            for ( const selector of selectors ) {
+                if ( this.astIsValidSelector(selector) ) { continue; }
+                data.type = 'Error';
+                break;
+            }
+            break;
+        }
+        default:
             break;
         }
     }
@@ -1804,6 +1815,45 @@ Parser.prototype.SelectorCompiler = class {
             }
         }
         return false;
+    }
+
+    astSelectorsFromSelectorList(args) {
+        if ( args.length < 3 ) { return; }
+        if ( args[0].data instanceof Object === false ) { return; }
+        if ( args[0].data.type !== 'SelectorList' ) { return; }
+        if ( args[1].data instanceof Object === false ) { return; }
+        if ( args[1].data.type !== 'Selector' ) { return; }
+        const out = [];
+        let beg = 1, end = 0, i = 2;
+        for (;;) {
+            if ( i < args.length ) {
+                const type = args[i].data instanceof Object && args[i].data.type;
+                if ( type === 'Selector' ) {
+                    end = i;
+                }
+            } else {
+                end = args.length;
+            }
+            if ( end !== 0 ) {
+                const components = args.slice(beg+1, end);
+                if ( components.length === 0 ) { return; }
+                out.push(components);
+                if ( end === args.length ) { break; }
+                beg = end; end = 0;
+            }
+            if ( i === args.length ) { break; }
+            i += 1;
+        }
+        return out;
+    }
+
+    astIsValidSelector(components) {
+        const len = components.length;
+        if ( len === 0 ) { return false; }
+        if ( components[0].data.type === 'Combinator' ) { return false; }
+        if ( len === 1 ) { return true; }
+        if ( components[len-1].data.type === 'Combinator' ) { return false; }
+        return true;
     }
 
     translateAdguardCSSInjectionFilter(suffix) {
