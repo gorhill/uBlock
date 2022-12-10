@@ -36,9 +36,6 @@ const nonVisualElements = {
 
 const regexFromString = (s, exact = false) => {
     if ( s === '' ) { return /^/; }
-    if ( /^".+"$/.test(s) ) {
-        s = s.slice(1,-1).replace(/\\(\\|")/g, '$1');
-    }
     const match = /^\/(.+)\/([i]?)$/.exec(s);
     if ( match !== null ) {
         return new RegExp(match[1], match[2] || undefined);
@@ -68,11 +65,7 @@ class PSelectorVoidTask extends PSelectorTask {
 class PSelectorHasTextTask extends PSelectorTask {
     constructor(task) {
         super();
-        let arg0 = task[1], arg1;
-        if ( Array.isArray(task[1]) ) {
-            arg1 = arg0[1]; arg0 = arg0[0];
-        }
-        this.needle = new RegExp(arg0, arg1);
+        this.needle = regexFromString(task[1]);
     }
     transpose(node, output) {
         if ( this.needle.test(node.textContent) ) {
@@ -168,11 +161,7 @@ class PSelectorMatchesMediaTask extends PSelectorTask {
 class PSelectorMatchesPathTask extends PSelectorTask {
     constructor(task) {
         super();
-        let arg0 = task[1], arg1;
-        if ( Array.isArray(task[1]) ) {
-            arg1 = arg0[1]; arg0 = arg0[0];
-        }
-        this.needle = new RegExp(arg0, arg1);
+        this.needle = regexFromString(task[1]);
     }
     transpose(node, output) {
         if ( this.needle.test(self.location.pathname + self.location.search) ) {
@@ -450,13 +439,13 @@ class PSelector {
 PSelector.prototype.operatorToTaskMap = undefined;
 
 class PSelectorRoot extends PSelector {
-    constructor(o, styleToken) {
+    constructor(o) {
         super(o);
         this.budget = 200; // I arbitrary picked a 1/5 second
         this.raw = o.raw;
         this.cost = 0;
         this.lastAllowanceTime = 0;
-        this.styleToken = styleToken;
+        this.action = o.action;
     }
     prime(input) {
         try {
@@ -486,16 +475,8 @@ class ProceduralFilterer {
         let mustCommit = false;
         for ( const selector of selectors ) {
             if ( this.selectors.has(selector.raw) ) { continue; }
-            let style, styleToken;
-            if ( selector.action === undefined ) {
-                style = vAPI.hideStyle;
-            } else if ( selector.action[0] === 'style' ) {
-                style = selector.action[1];
-            }
-            if ( style !== undefined ) {
-                styleToken = this.styleTokenFromStyle(style);
-            }
-            const pselector = new PSelectorRoot(selector, styleToken);
+            const pselector = new PSelectorRoot(selector);
+            this.primeProceduralSelector(pselector);
             this.selectors.set(selector.raw, pselector);
             addedSelectors.push(pselector);
             mustCommit = true;
@@ -510,12 +491,21 @@ class ProceduralFilterer {
         }
     }
 
+    // This allows to perform potentially expensive initialization steps
+    // before the filters are ready to be applied.
+    primeProceduralSelector(pselector) {
+        if ( pselector.action === undefined ) {
+            this.styleTokenFromStyle(vAPI.hideStyle);
+        } else if ( pselector.action[0] === 'style' ) {
+            this.styleTokenFromStyle(pselector.action[1]);
+        }
+        return pselector;
+    }
+
     commitNow() {
         if ( this.selectors.size === 0 ) { return; }
 
         this.mustApplySelectors = false;
-
-        //console.time('procedural selectors/dom layout changed');
 
         // https://github.com/uBlockOrigin/uBlock-issues/issues/341
         //   Be ready to unhide nodes which no longer matches any of
@@ -543,16 +533,15 @@ class ProceduralFilterer {
             t0 = t1;
             if ( nodes.length === 0 ) { continue; }
             pselector.hit = true;
-            this.styleNodes(nodes, pselector.styleToken);
+            this.processNodes(nodes, pselector.action);
         }
 
-        this.unstyleNodes(toUnstyle);
-        //console.timeEnd('procedural selectors/dom layout changed');
+        this.unprocessNodes(toUnstyle);
     }
 
     styleTokenFromStyle(style) {
         if ( style === undefined ) { return; }
-        let styleToken = this.styleTokenMap.get(style);
+        let styleToken = this.styleTokenMap.get(vAPI.hideStyle);
         if ( styleToken !== undefined ) { return styleToken; }
         styleToken = vAPI.randomToken();
         this.styleTokenMap.set(style, styleToken);
@@ -563,25 +552,60 @@ class ProceduralFilterer {
         return styleToken;
     }
 
-    styleNodes(nodes, styleToken) {
-        if ( styleToken === undefined ) {
+    processNodes(nodes, action) {
+        const op = action && action[0] || '';
+        const arg = op !== '' ? action[1] : '';
+        switch ( op ) {
+        case '':
+            /* fall through */
+        case 'style': {
+            const styleToken = this.styleTokenFromStyle(
+                arg === '' ? vAPI.hideStyle : arg
+            );
             for ( const node of nodes ) {
-                node.textContent = '';
-                node.remove();
+                node.setAttribute(this.masterToken, '');
+                node.setAttribute(styleToken, '');
+                this.styledNodes.add(node);
             }
-            return;
+            break;
         }
-        for ( const node of nodes ) {
-            node.setAttribute(this.masterToken, '');
-            node.setAttribute(styleToken, '');
-            this.styledNodes.add(node);
+        case 'remove': {
+            for ( const node of nodes ) {
+                node.remove();
+                node.textContent = '';
+            }
+            break;
+        }
+        case 'remove-attr': {
+            const reAttr = regexFromString(arg, true);
+            for ( const node of nodes ) {
+                for ( const name of node.getAttributeNames() ) {
+                    if ( reAttr.test(name) === false ) { continue; }
+                    node.removeAttribute(name);
+                }
+            }
+            break;
+        }
+        case 'remove-class': {
+            const reClass = regexFromString(arg, true);
+            for ( const node of nodes ) {
+                const cl = node.classList;
+                for ( const name of cl.values() ) {
+                    if ( reClass.test(name) === false ) { continue; }
+                    cl.remove(name);
+                }
+            }
+            break;
+        }
+        default:
+            break;
         }
     }
 
     // TODO: Current assumption is one style per hit element. Could be an
     //       issue if an element has multiple styling and one styling is
     //       brought back. Possibly too rare to care about this for now.
-    unstyleNodes(nodes) {
+    unprocessNodes(nodes) {
         for ( const node of nodes ) {
             if ( this.styledNodes.has(node) ) { continue; }
             node.removeAttribute(this.masterToken);
@@ -589,7 +613,9 @@ class ProceduralFilterer {
     }
 
     createProceduralFilter(o) {
-        return new PSelectorRoot(typeof o === 'string' ? JSON.parse(o) : o);
+        return this.primeProceduralSelector(
+            new PSelectorRoot(typeof o === 'string' ? JSON.parse(o) : o)
+        );
     }
 
     onDOMCreated() {

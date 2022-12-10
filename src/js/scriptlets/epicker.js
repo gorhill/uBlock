@@ -756,9 +756,17 @@ const filterToDOMInterface = (( ) => {
         try {
             const o = JSON.parse(raw);
             elems = vAPI.domFilterer.createProceduralFilter(o).exec();
-            style = o.action === undefined || o.action[0] !== 'style'
-                ? vAPI.hideStyle
-                : o.action[1];
+            switch ( o.action && o.action[0] || '' ) {
+            case '':
+            case 'remove':
+                style = vAPI.hideStyle;
+                break;
+            case 'style':
+                style = o.action[1];
+                break;
+            default:
+                break;
+            }
         } catch(ex) {
             return;
         }
@@ -809,6 +817,7 @@ const filterToDOMInterface = (( ) => {
         const rootElem = document.documentElement;
         for ( const { elem, style } of lastResultset ) {
             if ( elem === pickerRoot ) { continue; }
+            if ( style === undefined ) { continue; }
             if ( elem === rootElem && style === vAPI.hideStyle ) { continue; }
             let styleToken = vAPI.epickerStyleProxies.get(style);
             if ( styleToken === undefined ) {

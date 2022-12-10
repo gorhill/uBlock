@@ -1343,7 +1343,6 @@ Parser.prototype.SelectorCompiler = class {
 
         this.reEatBackslashes = /\\([()])/g;
         this.reEscapeRegex = /[.*+?^${}()|[\]\\]/g;
-        this.regexToRawValue = new Map();
         // https://github.com/gorhill/uBlock/issues/2793
         this.normalizedOperators = new Map([
             [ '-abp-has', 'has' ],
@@ -1379,6 +1378,8 @@ Parser.prototype.SelectorCompiler = class {
         ]);
         this.proceduralActionNames = new Set([
             'remove',
+            'remove-attr',
+            'remove-class',
             'style',
         ]);
         this.normalizedExtendedSyntaxOperators = new Map([
@@ -1563,6 +1564,10 @@ Parser.prototype.SelectorCompiler = class {
         if ( this.maybeProceduralOperatorNames.has(data.name) === false ) {
             return;
         }
+        if ( this.astHasType(args, 'ActionSelector') ) {
+            data.type = 'Error';
+            return;
+        }
         if ( this.astHasType(args, 'ProceduralSelector') ) {
             data.type = 'ProceduralSelector';
             return;
@@ -1719,7 +1724,7 @@ Parser.prototype.SelectorCompiler = class {
         return out.join('');
     }
 
-    astCompile(parts) {
+    astCompile(parts, details = {}) {
         if ( Array.isArray(parts) === false ) { return; }
         if ( parts.length === 0 ) { return; }
         if ( parts[0].data.type !== 'SelectorList' ) { return; }
@@ -1730,6 +1735,8 @@ Parser.prototype.SelectorCompiler = class {
             const { data } = part;
             switch ( data.type ) {
             case 'ActionSelector': {
+                if ( details.noaction ) { return; }
+                if ( out.action !== undefined ) { return; }
                 if ( prelude.length !== 0 ) {
                     if ( tasks.length === 0 ) {
                         out.selector = prelude.join('');
@@ -1881,23 +1888,20 @@ Parser.prototype.SelectorCompiler = class {
     compileArgumentAst(operator, parts) {
         switch ( operator ) {
         case 'has': {
-            let r = this.astCompile(parts);
+            let r = this.astCompile(parts, { noaction: true });
             if ( typeof r === 'string' ) {
                 r = { selector: r.replace(/^\s*:scope\s*/, ' ') };
             }
             return r;
         }
         case 'not': {
-            return this.astCompile(parts);
+            return this.astCompile(parts, { noaction: true });
         }
         default:
             break;
         }
-
-        let arg;
-        if ( Array.isArray(parts) && parts.length !== 0 ) {
-            arg = this.astSerialize(parts, false);
-        }
+        if ( Array.isArray(parts) === false || parts.length === 0 ) { return; }
+        const arg = this.astSerialize(parts, false);
         if ( arg === undefined ) { return; }
         switch ( operator ) {
         case 'has-text':
@@ -1924,6 +1928,10 @@ Parser.prototype.SelectorCompiler = class {
             return this.compileNoArgument(arg);
         case 'remove':
             return this.compileNoArgument(arg);
+        case 'remove-attr':
+            return this.compileText(arg);
+        case 'remove-class':
+            return this.compileText(arg);
         case 'style':
             return this.compileStyleProperties(arg);
         case 'upward':
@@ -1999,6 +2007,7 @@ Parser.prototype.SelectorCompiler = class {
         if ( attr === '' ) { return; }
         if ( value.length !== 0 ) {
             r = this.unquoteString(value);
+            if ( r.i !== value.length ) { return; }
             value = r.s;
         }
         return { attr, value };
@@ -2011,22 +2020,7 @@ Parser.prototype.SelectorCompiler = class {
         if ( s === '' ) { return; }
         const r = this.unquoteString(s);
         if ( r.i !== s.length ) { return; }
-        const match = this.reParseRegexLiteral.exec(r.s);
-        let regexDetails;
-        if ( match !== null ) {
-            regexDetails = match[1];
-            if ( this.isBadRegex(regexDetails) ) { return; }
-            if ( match[2] ) {
-                regexDetails = [ regexDetails, match[2] ];
-            }
-        } else if ( r.s === '' ) {
-            regexDetails = '^$';
-        } else {
-            regexDetails = r.s.replace(this.reEatBackslashes, '$1')
-                              .replace(this.reEscapeRegex, '\\$&');
-            this.regexToRawValue.set(regexDetails, r.s);
-        }
-        return regexDetails;
+        return r.s;
     }
 
     compileCSSDeclaration(s) {
@@ -2051,7 +2045,6 @@ Parser.prototype.SelectorCompiler = class {
             }
         } else {
             regexDetails = '^' + value.replace(this.reEscapeRegex, '\\$&') + '$';
-            this.regexToRawValue.set(regexDetails, value);
         }
         return { name, pseudo, value: regexDetails };
     }
@@ -2138,6 +2131,7 @@ Parser.prototype.proceduralOperatorTokens = new Map([
     [ 'has-text', 0b01 ],
     [ 'if', 0b00 ],
     [ 'if-not', 0b00 ],
+    [ 'matches-attr', 0b01 ],
     [ 'matches-css', 0b11 ],
     [ 'matches-media', 0b11 ],
     [ 'matches-path', 0b11 ],
@@ -2146,6 +2140,8 @@ Parser.prototype.proceduralOperatorTokens = new Map([
     [ 'nth-ancestor', 0b00 ],
     [ 'others', 0b01 ],
     [ 'remove', 0b11 ],
+    [ 'remove-attr', 0b01 ],
+    [ 'remove-class', 0b01 ],
     [ 'style', 0b11 ],
     [ 'upward', 0b01 ],
     [ 'watch-attr', 0b11 ],
