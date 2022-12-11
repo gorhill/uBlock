@@ -1,31 +1,31 @@
-uBO Lite (uBOL) is an experimental *permission-less* MV3-based content blocker.
+uBO Lite (uBOL) je experimentální blokovač obsahu vyžadující méně oprávnění, založených na MV3.
 
-The default ruleset corresponds to uBlock Origin's default filterset:
+Výchozí sada pravidel koresponduje k výchozím sadám filtrů uBlock Origin:
 
-- uBlock Origin's built-in filter lists
+- Vestavěný seznam filtrů uBlock Origin
 - EasyList
 - EasyPrivacy
 - Peter Lowe’s Ad and tracking server list
 - AdGuard CNAME-Cloaked Trackers
 
-You can add more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+Můžete přidat více sad pravidel navštívením stránky nastavení -- klikněte na ikonu ozubených kol ve vyskakovácím panelu.
 
-uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
+uBOL je zcela deklarativní, což znamená, že pro filtrování není potřeba permanentní proces uBOL a filtrování obsahu založené na vstřikování CSS/JS je spolehlivě prováděno samotným prohlížečem, nikoli rozšířením. To znamená, že samotný uBOL nespotřebovává zdroje CPU/paměti, zatímco probíhá blokování obsahu – proces servisního pracovníka uBOL je vyžadován _pouze_ při interakci s vyskakovacím panelem nebo stránkami nastavení.
 
-uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read and modify data" permissions at install time.
+uBOL nevyžaduje rozsáhlá oprávnění ke "čtení a úpravě dat" v době instalace, a proto má ihned po instalaci omezené možnosti ve srovnání s uBlock Origin nebo jinými blokovači obsahu, které vyžadují rozsáhlá oprávnění ke "čtení a úpravě dat" v době instalace.
 
-However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
+Nicméně, uBOL vám umožňuje *explicitně* udělit rozšířená oprávnění na konkrétních webech podle vašeho výběru, aby mohl na těchto webech lépe filtrovat pomocí kosmetického filtrování a vstřikování skriptů.
 
-To grant extended permissions on a given site, open the popup panel and pick a higher filtering mode such as Optimal or Complete.
+Chcete-li na daném webu udělit rozšířená oprávnění, otevřete vyskakovací panel a vyberte vyšší režim filtrování, například optimální nebo kompletní.
 
-The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request.
+Prohlížeč vás poté upozorní na důsledky udělení dalších oprávnění požadovaných rozšířením na aktuálním webu a vy budete muset prohlížeči sdělit, zda žádost přijímáte nebo odmítáte.
 
-If you accept uBOL's request for additional permissions on the current site, it will be able to better filter content for the current site.
+Pokud přijmete žádost uBOL o další oprávnění na aktuálním webu, bude moci lépe filtrovat obsah aktuálního webu.
 
-You can set the default filtering mode from uBOL's options page. If you pick the Optimal or Complete mode as the default one, you will need to grant uBOL the permission to read and modify data on all websites.
+Výchozí režim filtrování můžete nastavit na stránce nastavení uBOL. Pokud jako výchozí zvolíte režim optimální nebo kompletní, budete muset uBOL udělit oprávnění ke čtení a úpravě dat na všech webových stránkách.
 
-Keep in mind this is still a work in progress, with these end goals:
+Mějte na paměti, že toto je stále nedokončená práce s těmito konečnými cíli:
 
-- No broad host permissions at install time -- extended permissions are granted explicitly by the user on a per-site basis.
+- Žádná rozsáhlá oprávnění hostitele v době instalace -- rozšířená oprávnění uděluje explicitně uživatel na jednotlivých stránkách.
 
-- Entirely declarative for reliability and CPU/memory efficiency.
+- Zcela deklarativní pro spolehlivost a efektivitu CPU/paměti.
