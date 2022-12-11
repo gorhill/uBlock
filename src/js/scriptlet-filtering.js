@@ -97,19 +97,25 @@ const contentscriptCode = (( ) => {
             ) {
                 return;
             }
-            let script;
+            let script, url;
             try {
-                script = doc.createElement('script');
-                script.appendChild(doc.createTextNode(
-                    decodeURIComponent(scriptlets))
+                const blob = new self.Blob(
+                    [ decodeURIComponent(scriptlets) ],
+                    { type: 'text/javascript' }
                 );
+                url = self.URL.createObjectURL(blob);
+                script = doc.createElement('script');
+                script.src = url;
                 (doc.head || doc.documentElement).appendChild(script);
                 self.uBO_scriptletsInjected = true;
             } catch (ex) {
             }
             if ( script ) {
                 script.remove();
-                script.textContent = '';
+                script.src = '';
+            }
+            if ( url ) {
+                self.URL.revokeObjectURL(url);
             }
             if ( typeof self.uBO_scriptletsInjected === 'boolean' ) { return 0; }
         }.toString(),
@@ -177,10 +183,7 @@ const lookupScriptlet = function(rawToken, reng, toInject) {
         } else {
             token = `${token}.js`;
         }
-        content = reng.resourceContentFromName(
-            token,
-            'application/javascript'
-        );
+        content = reng.resourceContentFromName(token, 'text/javascript');
         if ( !content ) { return; }
         if ( args ) {
             content = patchScriptlet(content, args);

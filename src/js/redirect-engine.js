@@ -35,7 +35,7 @@ import {
 const extToMimeMap = new Map([
     [  'gif', 'image/gif' ],
     [ 'html', 'text/html' ],
-    [   'js', 'application/javascript' ],
+    [   'js', 'text/javascript' ],
     [  'mp3', 'audio/mp3' ],
     [  'mp4', 'video/mp4' ],
     [  'png', 'image/png' ],
@@ -46,7 +46,7 @@ const extToMimeMap = new Map([
 const typeToMimeMap = new Map([
     [     'main_frame', 'text/html' ],
     [          'other', 'text/plain' ],
-    [         'script', 'application/javascript' ],
+    [         'script', 'text/javascript' ],
     [     'stylesheet', 'text/css' ],
     [      'sub_frame', 'text/html' ],
     [ 'xmlhttprequest', 'text/plain' ],
