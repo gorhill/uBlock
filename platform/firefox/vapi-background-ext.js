@@ -256,13 +256,14 @@ vAPI.Net = class extends vAPI.Net {
                 return r;
             }
         }
-        const isRootDocument = details.type === 'main_frame' &&
-            this.cnameIgnoreRootDocument;
         const hn = hostnameFromNetworkURL(details.url);
         const cnRecord = this.cnames.get(hn);
         if ( cnRecord !== undefined ) {
             return this.processCanonicalName(hn, cnRecord, details);
         }
+        const documentUrl = details.documentUrl || details.url;
+        const isRootDocument = this.cnameIgnoreRootDocument &&
+            hn === hostnameFromNetworkURL(documentUrl);
         return browser.dns.resolve(hn, [ 'canonical_name' ]).then(
             rec => {
                 const cnRecord = this.recordCanonicalName(hn, rec, isRootDocument);
