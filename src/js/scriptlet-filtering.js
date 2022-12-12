@@ -88,7 +88,7 @@ const scriptletFilteringEngine = {
 const contentscriptCode = (( ) => {
     const parts = [
         '(',
-        function(hostname, scriptlets) {
+        function(injector, hostname, scriptlets) {
             const doc = document;
             if (
                 doc.location === null ||
@@ -97,29 +97,11 @@ const contentscriptCode = (( ) => {
             ) {
                 return;
             }
-            let script, url;
-            try {
-                const blob = new self.Blob(
-                    [ decodeURIComponent(scriptlets) ],
-                    { type: 'text/javascript' }
-                );
-                url = self.URL.createObjectURL(blob);
-                script = doc.createElement('script');
-                script.src = url;
-                (doc.head || doc.documentElement).appendChild(script);
-                self.uBO_scriptletsInjected = true;
-            } catch (ex) {
-            }
-            if ( script ) {
-                script.remove();
-                script.src = '';
-            }
-            if ( url ) {
-                self.URL.revokeObjectURL(url);
-            }
+            injector(doc, decodeURIComponent(scriptlets));
             if ( typeof self.uBO_scriptletsInjected === 'boolean' ) { return 0; }
         }.toString(),
         ')(',
+            vAPI.scriptletsInjector, ', ',
             '"', 'hostname-slot', '", ',
             '"', 'scriptlets-slot', '"',
         ');',
@@ -130,8 +112,7 @@ const contentscriptCode = (( ) => {
         scriptletsSlot: parts.indexOf('scriptlets-slot'),
         assemble: function(hostname, scriptlets) {
             this.parts[this.hostnameSlot] = hostname;
-            this.parts[this.scriptletsSlot] =
-                encodeURIComponent(scriptlets);
+            this.parts[this.scriptletsSlot] = encodeURIComponent(scriptlets);
             return this.parts.join('');
         }
     };

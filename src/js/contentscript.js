@@ -470,15 +470,13 @@ vAPI.injectScriptlet = function(doc, text) {
         const blob = new self.Blob([ text ], { type: 'text/javascript' });
         url = self.URL.createObjectURL(blob);
         script = doc.createElement('script');
+        script.async = false;
         script.src = url;
         (doc.head || doc.documentElement || doc).appendChild(script);
     } catch (ex) {
     }
-    if ( script ) {
-        script.remove();
-        script.src = '';
-    }
     if ( url ) {
+        if ( script ) { script.remove(); }
         self.URL.revokeObjectURL(url);
     }
 };

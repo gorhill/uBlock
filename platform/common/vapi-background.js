@@ -1263,6 +1263,15 @@ vAPI.Net = class {
 /******************************************************************************/
 /******************************************************************************/
 
+// To be defined by platform-specific code.
+
+vAPI.scriptletsInjector = (( ) => {
+    self.uBO_scriptletsInjected = true;
+}).toString();
+
+/******************************************************************************/
+/******************************************************************************/
+
 // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/contextMenus#Browser_compatibility
 //   Firefox for Android does no support browser.contextMenus.
 

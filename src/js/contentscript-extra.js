@@ -541,7 +541,7 @@ class ProceduralFilterer {
 
     styleTokenFromStyle(style) {
         if ( style === undefined ) { return; }
-        let styleToken = this.styleTokenMap.get(vAPI.hideStyle);
+        let styleToken = this.styleTokenMap.get(style);
         if ( styleToken !== undefined ) { return styleToken; }
         styleToken = vAPI.randomToken();
         this.styleTokenMap.set(style, styleToken);

@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-// For background page
+/* globals browser */
 
 'use strict';
 
@@ -237,5 +237,22 @@ vAPI.prefetching = (( ) => {
         }
     };
 })();
+
+/******************************************************************************/
+
+vAPI.scriptletsInjector = ((doc, scriptlets) => {
+    let script;
+    try {
+        script = doc.createElement('script');
+        script.appendChild(doc.createTextNode(scriptlets));
+        (doc.head || doc.documentElement).appendChild(script);
+        self.uBO_scriptletsInjected = true;
+    } catch (ex) {
+    }
+    if ( script ) {
+        script.remove();
+        script.textContent = '';
+    }
+}).toString();
 
 /******************************************************************************/

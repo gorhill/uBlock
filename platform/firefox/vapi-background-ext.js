@@ -303,3 +303,23 @@ vAPI.Net = class extends vAPI.Net {
 };
 
 /******************************************************************************/
+
+vAPI.scriptletsInjector = ((doc, scriptlets) => {
+    let script, url;
+    try {
+        const blob = new self.Blob([ scriptlets ], { type: 'text/javascript' });
+        url = self.URL.createObjectURL(blob);
+        script = doc.createElement('script');
+        script.async = false;
+        script.src = url;
+        (doc.head || doc.documentElement).appendChild(script);
+        self.uBO_scriptletsInjected = true;
+    } catch (ex) {
+    }
+    if ( url ) {
+        if ( script ) { script.remove(); }
+        self.URL.revokeObjectURL(url);
+    }
+}).toString();
+
+/******************************************************************************/
