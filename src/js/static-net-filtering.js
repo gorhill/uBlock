@@ -2688,6 +2688,9 @@ registerFilterClass(FilterOnHeaders);
 // Benchmark for string-based tokens vs. safe-integer token values:
 //   https://gorhill.github.io/obj-vs-set-vs-map/tokenize-to-str-vs-to-int.html
 
+// http://www.cse.yorku.ca/~oz/hash.html#djb2
+//   Use above algorithm to generate token hash.
+
 const urlTokenizer = new (class {
     constructor() {
         this._chars = '0123456789%abcdefghijklmnopqrstuvwxyz';
@@ -2728,7 +2731,7 @@ const urlTokenizer = new (class {
     }
 
     addKnownToken(th) {
-        this.knownTokens[th & 0xFFFF ^ th >>> 16] = 1;
+        this.knownTokens[th & 0xFFFF] = 1;
     }
 
     // Tokenize on demand.
@@ -2762,15 +2765,17 @@ const urlTokenizer = new (class {
         return this._hasQuery > 0;
     }
 
+    // http://www.cse.yorku.ca/~oz/hash.html#djb2
+
     tokenHashFromString(s) {
         const l = s.length;
         if ( l === 0 ) { return EMPTY_TOKEN_HASH; }
         const vtc = this._validTokenChars;
         let th = vtc[s.charCodeAt(0)];
         for ( let i = 1; i !== 7 /* MAX_TOKEN_LENGTH */ && i !== l; i++ ) {
-            th = th << 4 ^ vtc[s.charCodeAt(i)];
+            th = (th << 5) + th ^ vtc[s.charCodeAt(i)];
         }
-        return th;
+        return th & 0xFFFFFFF;
     }
 
     stringFromTokenHash(th) {
@@ -2831,11 +2836,11 @@ const urlTokenizer = new (class {
                         break;
                     }
                     if ( n === 7 /* MAX_TOKEN_LENGTH */ ) { continue; }
-                    th = th << 4 ^ v;
+                    th = (th << 5) + th ^ v;
                     n += 1;
                 }
-                if ( knownTokens[th & 0xFFFF ^ th >>> 16] !== 0 ) {
-                    tokens[j+0] = th;
+                if ( knownTokens[th & 0xFFFF] !== 0 ) {
+                    tokens[j+0] = th & 0xFFFFFFF;
                     tokens[j+1] = ti;
                     j += 2;
                 }

@@ -50,15 +50,17 @@ let lastDomChange = Date.now();
 
 /******************************************************************************/
 
-// https://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
+// http://www.cse.yorku.ca/~oz/hash.html#djb2
+//   Must mirror dnrRulesetFromRawLists's version
+
 const hashFromStr = (type, s) => {
     const len = s.length;
     const step = len + 7 >>> 3;
-	let hash = type;
-	for ( let i = 0; i < len; i += step ) {
-		hash = (hash << 5) - hash + s.charCodeAt(i) | 0;
-	}
-	return hash & 0x00FFFFFF;
+    let hash = (type << 5) + type ^ len;
+    for ( let i = 0; i < len; i += step ) {
+        hash = (hash << 5) + hash ^ s.charCodeAt(i);
+    }
+    return hash & 0xFF_FFFF;
 };
 
 /******************************************************************************/

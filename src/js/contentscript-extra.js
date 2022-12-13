@@ -362,27 +362,6 @@ class PSelectorXpathTask extends PSelectorTask {
 
 class PSelector {
     constructor(o) {
-        if ( PSelector.prototype.operatorToTaskMap === undefined ) {
-            PSelector.prototype.operatorToTaskMap = new Map([
-                [ 'has', PSelectorIfTask ],
-                [ 'has-text', PSelectorHasTextTask ],
-                [ 'if', PSelectorIfTask ],
-                [ 'if-not', PSelectorIfNotTask ],
-                [ 'matches-attr', PSelectorMatchesAttrTask ],
-                [ 'matches-css', PSelectorMatchesCSSTask ],
-                [ 'matches-css-after', PSelectorMatchesCSSAfterTask ],
-                [ 'matches-css-before', PSelectorMatchesCSSBeforeTask ],
-                [ 'matches-media', PSelectorMatchesMediaTask ],
-                [ 'matches-path', PSelectorMatchesPathTask ],
-                [ 'min-text-length', PSelectorMinTextLengthTask ],
-                [ 'not', PSelectorIfNotTask ],
-                [ 'others', PSelectorOthersTask ],
-                [ 'spath', PSelectorSpathTask ],
-                [ 'upward', PSelectorUpwardTask ],
-                [ 'watch-attr', PSelectorWatchAttrs ],
-                [ 'xpath', PSelectorXpathTask ],
-            ]);
-        }
         this.raw = o.raw;
         this.selector = o.selector;
         this.tasks = [];
@@ -392,7 +371,6 @@ class PSelector {
             const ctor = this.operatorToTaskMap.get(task[0]) || PSelectorVoidTask;
             tasks.push(new ctor(task));
         }
-        // Initialize only after all tasks have been successfully instantiated
         this.tasks = tasks;
     }
     prime(input) {
@@ -436,7 +414,25 @@ class PSelector {
         return false;
     }
 }
-PSelector.prototype.operatorToTaskMap = undefined;
+PSelector.prototype.operatorToTaskMap = new Map([
+    [ 'has', PSelectorIfTask ],
+    [ 'has-text', PSelectorHasTextTask ],
+    [ 'if', PSelectorIfTask ],
+    [ 'if-not', PSelectorIfNotTask ],
+    [ 'matches-attr', PSelectorMatchesAttrTask ],
+    [ 'matches-css', PSelectorMatchesCSSTask ],
+    [ 'matches-css-after', PSelectorMatchesCSSAfterTask ],
+    [ 'matches-css-before', PSelectorMatchesCSSBeforeTask ],
+    [ 'matches-media', PSelectorMatchesMediaTask ],
+    [ 'matches-path', PSelectorMatchesPathTask ],
+    [ 'min-text-length', PSelectorMinTextLengthTask ],
+    [ 'not', PSelectorIfNotTask ],
+    [ 'others', PSelectorOthersTask ],
+    [ 'spath', PSelectorSpathTask ],
+    [ 'upward', PSelectorUpwardTask ],
+    [ 'watch-attr', PSelectorWatchAttrs ],
+    [ 'xpath', PSelectorXpathTask ],
+]);
 
 class PSelectorRoot extends PSelector {
     constructor(o) {
