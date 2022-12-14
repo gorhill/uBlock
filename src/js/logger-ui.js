@@ -1246,9 +1246,13 @@ const reloadTab = function(ev) {
         // Toggle temporary exception filter
         if ( tcl.contains('exceptor') ) {
             ev.stopPropagation();
+            const filter = filterFromTargetRow();
+            const exceptedFilter = dom.cl.has(targetRow, 'extendedRealm')
+                ? `#@#${filter.replace(/^.*?#@?#/, '')}`
+                : `@@${filter.replace(/^@@/, '')}`;
             const status = await messaging.send('loggerUI', {
-                what: 'toggleTemporaryException',
-                filter: filterFromTargetRow(),
+                what: 'toggleInMemoryFilter',
+                filter: exceptedFilter,
             });
             const row = target.closest('div');
             dom.cl.toggle(row, 'exceptored', status);
@@ -1477,26 +1481,16 @@ const reloadTab = function(ev) {
     const toSummaryPaneFilterNode = async function(receiver, filter) {
         receiver.children[1].textContent = filter;
         if ( filterAuthorMode !== true ) { return; }
-        const match = /#@?#/.exec(filter);
-        if ( match === null ) { return; }
-        const fragment = document.createDocumentFragment();
-        const pos = match.index + match[0].length;
-        fragment.appendChild(document.createTextNode(filter.slice(0, pos)));
-        const selector = filter.slice(pos);
-        const span = document.createElement('span');
-        span.className = 'filter';
-        span.textContent = selector;
-        fragment.appendChild(span);
+        if ( dom.cl.has(targetRow, 'canLookup') === false ) { return; }
+        const exceptedFilter = dom.cl.has(targetRow, 'extendedRealm')
+            ? `#@#${filter.replace(/^.*?#@?#/, '')}`
+            : `@@${filter.replace(/^@@/, '')}`;
         const isTemporaryException = await messaging.send('loggerUI', {
-            what: 'hasTemporaryException',
-            filter,
+            what: 'hasInMemoryFilter',
+            filter: exceptedFilter,
         });
         dom.cl.toggle(receiver, 'exceptored', isTemporaryException);
-        if ( match[0] === '##' || isTemporaryException ) {
-            receiver.children[2].style.visibility = '';
-        }
-        receiver.children[1].textContent = '';
-        receiver.children[1].appendChild(fragment);
+        receiver.children[2].style.visibility = '';
     };
 
     const fillSummaryPaneFilterList = async function(rows) {

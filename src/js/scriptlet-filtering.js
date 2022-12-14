@@ -28,10 +28,7 @@ import µb from './background.js';
 import { redirectEngine } from './redirect-engine.js';
 import { sessionFirewall } from './filtering-engines.js';
 
-import {
-    StaticExtFilteringHostnameDB,
-    StaticExtFilteringSessionDB,
-} from './static-ext-filtering-db.js';
+import { StaticExtFilteringHostnameDB } from './static-ext-filtering-db.js';
 
 import {
     domainFromHostname,
@@ -46,7 +43,6 @@ const scriptletCache = new µb.MRUCache(32);
 const reEscapeScriptArg = /[\\'"]/g;
 
 const scriptletDB = new StaticExtFilteringHostnameDB(1);
-const sessionScriptletDB = new StaticExtFilteringSessionDB();
 
 let acceptedCount = 0;
 let discardedCount = 0;
@@ -262,13 +258,6 @@ scriptletFilteringEngine.compile = function(parser, writer) {
     }
 };
 
-scriptletFilteringEngine.compileTemporary = function(parser) {
-    return {
-        session: sessionScriptletDB,
-        selector: parser.result.compiled,
-    };
-};
-
 // 01234567890123456789
 // +js(token[, arg[, ...]])
 //     ^                  ^
@@ -291,10 +280,6 @@ scriptletFilteringEngine.fromCompiledContent = function(reader) {
     }
 };
 
-scriptletFilteringEngine.getSession = function() {
-    return sessionScriptletDB;
-};
-
 const $scriptlets = new Set();
 const $exceptions = new Set();
 const $scriptletToCodeMap = new Map();
@@ -307,9 +292,6 @@ scriptletFilteringEngine.retrieve = function(request, options = {}) {
     $scriptlets.clear();
     $exceptions.clear();
 
-    if ( sessionScriptletDB.isNotEmpty ) {
-        sessionScriptletDB.retrieve([ null, $exceptions ]);
-    }
     scriptletDB.retrieve(hostname, [ $scriptlets, $exceptions ]);
     const entity = request.entity !== ''
         ? `${hostname.slice(0, -request.domain.length)}${request.entity}`

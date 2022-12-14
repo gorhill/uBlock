@@ -678,6 +678,9 @@ body[dir="rtl"] #netFilteringDialog > .panes > .details > div > span:nth-of-type
     background-color: rgb(var(--primary-50) / 50%);
     }
 #netFilteringDialog > .panes > .details .exceptor::before {
+    content: '@@';
+    }
+#netFilteringDialog.extendedRealm > .panes > .details .exceptor::before {
     content: '#@#';
     }
 #netFilteringDialog > div.panes > .dynamic > .toolbar {

@@ -919,6 +919,9 @@ vAPI.messaging = {
                 this.onPortDisconnect(port);
             }
         }
+        if ( this.defaultHandler ) {
+            this.defaultHandler(message, null, ( ) => { });
+        }
     },
 
     onFrameworkMessage: function(request, port, callback) {

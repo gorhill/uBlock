@@ -27,10 +27,7 @@ import './utils.js';
 import logger from './logger.js';
 import µb from './background.js';
 
-import {
-    StaticExtFilteringHostnameDB,
-    StaticExtFilteringSessionDB,
-} from './static-ext-filtering-db.js';
+import { StaticExtFilteringHostnameDB } from './static-ext-filtering-db.js';
 
 /******************************************************************************/
 /******************************************************************************/
@@ -236,10 +233,7 @@ const FilterContainer = function() {
     // specific filters
     this.specificFilters = new StaticExtFilteringHostnameDB(2);
 
-    // temporary filters
-    this.sessionFilterDB = new StaticExtFilteringSessionDB();
-
-    // low generic cosmetic filters: map of hash => array of selectors
+    // low generic cosmetic filters: map of hash => stringified selector list
     this.lowlyGeneric = new Map();
 
     // highly generic selectors sets
@@ -478,15 +472,6 @@ FilterContainer.prototype.compileSpecificSelector = function(
 
 /******************************************************************************/
 
-FilterContainer.prototype.compileTemporary = function(parser) {
-    return {
-        session: this.sessionFilterDB,
-        selector: parser.result.compiled,
-    };
-};
-
-/******************************************************************************/
-
 FilterContainer.prototype.fromCompiledContent = function(reader, options) {
     if ( options.skipCosmetic ) {
         this.skipCompiledContent(reader, 'SPECIFIC');
@@ -697,12 +682,6 @@ FilterContainer.prototype.disableSurveyor = function(details) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.getSession = function() {
-    return this.sessionFilterDB;
-};
-
-/******************************************************************************/
-
 FilterContainer.prototype.cssRuleFromProcedural = function(json) {
     const pfilter = JSON.parse(json);
     if ( pfilter.cssable !== true ) { return; }
@@ -829,11 +808,6 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
             if ( cacheEntry.disableSurveyor ) {
                 out.disableSurveyor = true;
             }
-        }
-
-        // Retrieve temporary filters
-        if ( this.sessionFilterDB.isNotEmpty ) {
-            this.sessionFilterDB.retrieve([ null, exceptionSet ]);
         }
 
         // Retrieve filters with a non-empty hostname

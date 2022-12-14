@@ -32,19 +32,15 @@ let writePtr = 0;
 const logBufferObsoleteAfter = 30 * 1000;
 
 const janitor = ( ) => {
-    if (
-        buffer !== null &&
-        lastReadTime < (Date.now() - logBufferObsoleteAfter)
-    ) {
-        logger.enabled = false;
-        buffer = null;
-        writePtr = 0;
-        logger.ownerId = undefined;
-        vAPI.messaging.broadcast({ what: 'loggerDisabled' });
+    if ( buffer === null ) { return; }
+    if ( lastReadTime >= (Date.now() - logBufferObsoleteAfter) ) {
+        return vAPI.setTimeout(janitor, logBufferObsoleteAfter);
     }
-    if ( buffer !== null ) {
-        vAPI.setTimeout(janitor, logBufferObsoleteAfter);
-    }
+    logger.enabled = false;
+    buffer = null;
+    writePtr = 0;
+    logger.ownerId = undefined;
+    vAPI.messaging.broadcast({ what: 'loggerDisabled' });
 };
 
 const boxEntry = function(details) {

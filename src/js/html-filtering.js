@@ -27,10 +27,7 @@ import logger from './logger.js';
 import µb from './background.js';
 import { sessionFirewall } from './filtering-engines.js';
 
-import {
-    StaticExtFilteringHostnameDB,
-    StaticExtFilteringSessionDB,
-} from './static-ext-filtering-db.js';
+import { StaticExtFilteringHostnameDB } from './static-ext-filtering-db.js';
 
 /******************************************************************************/
 
@@ -38,7 +35,6 @@ const pselectors = new Map();
 const duplicates = new Set();
 
 const filterDB = new StaticExtFilteringHostnameDB(2);
-const sessionFilterDB = new StaticExtFilteringSessionDB();
 
 let acceptedCount = 0;
 let discardedCount = 0;
@@ -347,13 +343,6 @@ htmlFilteringEngine.compile = function(parser, writer) {
     }
 };
 
-htmlFilteringEngine.compileTemporary = function(parser) {
-    return {
-        session: sessionFilterDB,
-        selector: parser.result.compiled,
-    };
-};
-
 htmlFilteringEngine.fromCompiledContent = function(reader) {
     // Don't bother loading filters if stream filtering is not supported.
     if ( µb.canFilterResponseData === false ) { return; }
@@ -373,10 +362,6 @@ htmlFilteringEngine.fromCompiledContent = function(reader) {
     }
 };
 
-htmlFilteringEngine.getSession = function() {
-    return sessionFilterDB;
-};
-
 htmlFilteringEngine.retrieve = function(details) {
     const hostname = details.hostname;
 
@@ -384,9 +369,6 @@ htmlFilteringEngine.retrieve = function(details) {
     const procedurals = new Set();
     const exceptions = new Set();
 
-    if ( sessionFilterDB.isNotEmpty ) {
-        sessionFilterDB.retrieve([ null, exceptions ]);
-    }
     filterDB.retrieve(
         hostname,
         [ plains, exceptions, procedurals, exceptions ]

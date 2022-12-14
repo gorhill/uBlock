@@ -35,7 +35,6 @@ import logger from './logger.js';
 import lz4Codec from './lz4.js';
 import io from './assets.js';
 import scriptletFilteringEngine from './scriptlet-filtering.js';
-import staticExtFilteringEngine from './static-ext-filtering.js';
 import staticFilteringReverseLookup from './reverselookup.js';
 import staticNetFilteringEngine from './static-net-filtering.js';
 import µb from './background.js';
@@ -303,6 +302,10 @@ const onMessage = function(request, sender, callback) {
         // Launched from some auxiliary pages, clear context menu coords.
         µb.epickerArgs.mouse = false;
         µb.elementPickerExec(request.tabId, 0, request.targetURL, request.zap);
+        break;
+
+    case 'loggerDisabled':
+        µb.clearInMemoryFilters();
         break;
 
     case 'gotoURL':
@@ -1680,42 +1683,11 @@ const getURLFilteringData = function(details) {
     return response;
 };
 
-const compileTemporaryException = function(filter) {
-    const parser = new StaticFilteringParser({
-        nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
-    });
-    parser.analyze(filter);
-    if ( parser.shouldDiscard() ) { return; }
-    return staticExtFilteringEngine.compileTemporary(parser);
-};
-
-const toggleTemporaryException = function(details) {
-    const result = compileTemporaryException(details.filter);
-    if ( result === undefined ) { return false; }
-    const { session, selector } = result;
-    if ( session.has(1, selector) ) {
-        session.remove(1, selector);
-        return false;
-    }
-    session.add(1, selector);
-    return true;
-};
-
-const hasTemporaryException = function(details) {
-    const result = compileTemporaryException(details.filter);
-    if ( result === undefined ) { return false; }
-    const { session, selector } = result;
-    return session && session.has(1, selector);
-};
-
 const onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
     case 'readAll':
-        if (
-            logger.ownerId !== undefined &&
-            logger.ownerId !== request.ownerId
-        ) {
+        if ( logger.ownerId !== undefined && logger.ownerId !== request.ownerId ) {
             return callback({ unavailable: true });
         }
         vAPI.tabs.getCurrent().then(tab => {
@@ -1723,6 +1695,13 @@ const onMessage = function(request, sender, callback) {
         });
         return;
 
+    case 'toggleInMemoryFilter': {
+        const promise = µb.hasInMemoryFilter(request.filter)
+            ? µb.removeInMemoryFilter(request.filter)
+            : µb.addInMemoryFilter(request.filter);
+        promise.then(status => { callback(status); });
+        return;
+    }
     default:
         break;
     }
@@ -1731,14 +1710,14 @@ const onMessage = function(request, sender, callback) {
     let response;
 
     switch ( request.what ) {
-    case 'hasTemporaryException':
-        response = hasTemporaryException(request);
+    case 'hasInMemoryFilter':
+        response = µb.hasInMemoryFilter(request.filter);
         break;
 
     case 'releaseView':
-        if ( request.ownerId === logger.ownerId ) {
-            logger.ownerId = undefined;
-        }
+        if ( request.ownerId !== logger.ownerId ) { break; }
+        logger.ownerId = undefined;
+        µb.clearInMemoryFilters();
         break;
 
     case 'saveURLFilteringRules':
@@ -1759,10 +1738,6 @@ const onMessage = function(request, sender, callback) {
 
     case 'getURLFilteringData':
         response = getURLFilteringData(request);
-        break;
-
-    case 'toggleTemporaryException':
-        response = toggleTemporaryException(request);
         break;
 
     default:

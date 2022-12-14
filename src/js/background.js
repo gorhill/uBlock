@@ -211,6 +211,9 @@ const µBlock = {  // jshint ignore:line
     availableFilterLists: {},
     badLists: new Map(),
 
+    inMemoryFilters: [],
+    inMemoryFiltersCompiled: '',
+
     // https://github.com/uBlockOrigin/uBlock-issues/issues/974
     //   This can be used to defer filtering decision-making.
     readyToFilter: false,

@@ -170,55 +170,8 @@ const StaticExtFilteringHostnameDB = class {
 
 /******************************************************************************/
 
-const StaticExtFilteringSessionDB = class {
-    constructor() {
-        this.db = new Map();
-    }
-    compile(s) {
-        return s;
-    }
-    add(bits, s) {
-        const bucket = this.db.get(bits);
-        if ( bucket === undefined ) {
-            this.db.set(bits, new Set([ s ]));
-        } else {
-            bucket.add(s);
-        }
-    }
-    remove(bits, s) {
-        const bucket = this.db.get(bits);
-        if ( bucket === undefined ) { return; }
-        bucket.delete(s);
-        if ( bucket.size !== 0 ) { return; }
-        this.db.delete(bits);
-    }
-    retrieve(out) {
-        const mask = out.length - 1;
-        for ( const [ bits, bucket ] of this.db ) {
-            const i = bits & mask;
-            if ( out[i] instanceof Object === false ) { continue; }
-            for ( const s of bucket ) {
-                out[i].add(s);
-            }
-        }
-    }
-    has(bits, s) {
-        const selectors = this.db.get(bits);
-        return selectors !== undefined && selectors.has(s);
-    }
-    clear() {
-        this.db.clear();
-    }
-    get isNotEmpty() {
-        return this.db.size !== 0;
-    }
-};
-
-/******************************************************************************/
-
 export {
     StaticExtFilteringHostnameDB,
-    StaticExtFilteringSessionDB,
 };
 
 /******************************************************************************/

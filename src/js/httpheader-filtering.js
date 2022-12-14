@@ -28,16 +28,12 @@ import µb from './background.js';
 import { entityFromDomain } from './uri-utils.js';
 import { sessionFirewall } from './filtering-engines.js';
 
-import {
-    StaticExtFilteringHostnameDB,
-    StaticExtFilteringSessionDB,
-} from './static-ext-filtering-db.js';
+import { StaticExtFilteringHostnameDB } from './static-ext-filtering-db.js';
 
 /******************************************************************************/
 
 const duplicates = new Set();
 const filterDB = new StaticExtFilteringHostnameDB(1);
-const sessionFilterDB = new StaticExtFilteringSessionDB();
 
 const $headers = new Set();
 const $exceptions = new Set();
@@ -123,13 +119,6 @@ httpheaderFilteringEngine.compile = function(parser, writer) {
     }
 };
 
-httpheaderFilteringEngine.compileTemporary = function(parser) {
-    return {
-        session: sessionFilterDB,
-        selector: parser.result.compiled.slice(15, -1),
-    };
-};
-
 // 01234567890123456789
 // responseheader(name)
 //                ^   ^
@@ -152,10 +141,6 @@ httpheaderFilteringEngine.fromCompiledContent = function(reader) {
     }
 };
 
-httpheaderFilteringEngine.getSession = function() {
-    return sessionFilterDB;
-};
-
 httpheaderFilteringEngine.apply = function(fctxt, headers) {
     if ( filterDB.size === 0 ) { return; }
 
@@ -173,9 +158,6 @@ httpheaderFilteringEngine.apply = function(fctxt, headers) {
     $headers.clear();
     $exceptions.clear();
 
-    if ( sessionFilterDB.isNotEmpty ) {
-        sessionFilterDB.retrieve([ null, $exceptions ]);
-    }
     filterDB.retrieve(hostname, [ $headers, $exceptions ]);
     filterDB.retrieve(entity, [ $headers, $exceptions ], 1);
     if ( $headers.size === 0 ) { return; }

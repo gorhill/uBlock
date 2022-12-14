@@ -132,19 +132,6 @@ staticExtFilteringEngine.compile = function(parser, writer) {
     return true;
 };
 
-staticExtFilteringEngine.compileTemporary = function(parser) {
-    if ( (parser.flavorBits & parser.BITFlavorExtScriptlet) !== 0 ) {
-        return scriptletFilteringEngine.compileTemporary(parser);
-    }
-    if ( (parser.flavorBits & parser.BITFlavorExtResponseHeader) !== 0 ) {
-        return httpheaderFilteringEngine.compileTemporary(parser);
-    }
-    if ( (parser.flavorBits & parser.BITFlavorExtHTML) !== 0 ) {
-        return htmlFilteringEngine.compileTemporary(parser);
-    }
-    return cosmeticFilteringEngine.compileTemporary(parser);
-};
-
 staticExtFilteringEngine.fromCompiledContent = function(reader, options) {
     cosmeticFilteringEngine.fromCompiledContent(reader, options);
     scriptletFilteringEngine.fromCompiledContent(reader, options);
