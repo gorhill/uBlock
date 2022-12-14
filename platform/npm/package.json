@@ -35,10 +35,10 @@
     "npm": ">=6.14.4"
   },
   "devDependencies": {
-    "c8": "^7.8.0",
-    "eslint": "^7.32.0",
-    "esm-world": "0.1.1",
-    "mocha": "^9.0.3",
+    "c8": "^7.12.0",
+    "eslint": "^8.29.0",
+    "esm-world": "0.1.3",
+    "mocha": "^10.2.0",
     "scaling-palm-tree": "github:mjethani/scaling-palm-tree#15cf1ab37e038771e1ff8005edc46d95f176739f"
   }
 }
