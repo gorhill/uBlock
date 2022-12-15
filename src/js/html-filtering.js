@@ -327,6 +327,14 @@ htmlFilteringEngine.compile = function(parser, writer) {
 
     writer.select('HTML_FILTERS');
 
+    // Only exception filters are allowed to be global.
+    if ( parser.hasOptions() === false ) {
+        if ( exception ) {
+            writer.push([ 64, '', 1, compiled ]);
+        }
+        return;
+    }
+
     // TODO: Mind negated hostnames, they are currently discarded.
 
     for ( const { hn, not, bad } of parser.extOptions() ) {
