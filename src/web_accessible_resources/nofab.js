@@ -39,15 +39,19 @@
         return this;
     };
     Fab.prototype.setOption = noopfn;
-    const fab = new Fab(),
-        getSetFab = {
-            get: function() { return Fab; },
-            set: function() {}
-        },
-        getsetfab = {
-            get: function() { return fab; },
-            set: function() {}
-        };
+    Fab.prototype.options = {
+        set: noopfn,
+        get: noopfn,
+    };
+    const fab = new Fab();
+    const getSetFab = {
+        get: function() { return Fab; },
+        set: function() {}
+    };
+    const getsetfab = {
+        get: function() { return fab; },
+        set: function() {}
+    };
     if ( window.hasOwnProperty('FuckAdBlock') ) { window.FuckAdBlock = Fab; }
     else { Object.defineProperty(window, 'FuckAdBlock', getSetFab); }
     if ( window.hasOwnProperty('BlockAdBlock') ) { window.BlockAdBlock = Fab; }
