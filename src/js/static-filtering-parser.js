@@ -1759,7 +1759,7 @@ Parser.prototype.SelectorCompiler = class {
             case 'TypeSelector':
                 prelude.push(this.astSerializePart(part));
                 break;
-            case 'ProceduralSelector':
+            case 'ProceduralSelector': {
                 if ( prelude.length !== 0 ) {
                     let spath = prelude.join('');
                     prelude.length = 0;
@@ -1774,6 +1774,7 @@ Parser.prototype.SelectorCompiler = class {
                 if ( args === undefined ) { return; }
                 tasks.push([ data.name, args ]);
                 break;
+            }
             case 'Selector':
                 if ( prelude.length !== 0 ) {
                     prelude.push(', ');
@@ -2112,7 +2113,7 @@ Parser.prototype.SelectorCompiler = class {
         const r = this.unquoteString(s);
         if ( r.i !== s.length ) { return; }
         try {
-            self.document.createExpression(r.s, null);
+            globalThis.document.createExpression(r.s, null);
         } catch (e) {
             return;
         }
@@ -3357,7 +3358,7 @@ Parser.utils = Parser.prototype.utils = (( ) => {
                 if ( match === null ) { break; }
 
                 switch ( match[1] ) {
-                case 'if':
+                case 'if': {
                     let expr = match[2].trim();
                     const target = expr.charCodeAt(0) === 0x21 /* '!' */;
                     if ( target ) { expr = expr.slice(1); }
@@ -3371,7 +3372,8 @@ Parser.utils = Parser.prototype.utils = (( ) => {
                     }
                     stack.push(startDiscard);
                     break;
-                case 'endif':
+                }
+                case 'endif': {
                     stack.pop();
                     const stopDiscard = shouldDiscard() === false;
                     if ( discard && stopDiscard ) {
@@ -3379,6 +3381,7 @@ Parser.utils = Parser.prototype.utils = (( ) => {
                         discard = false;
                     }
                     break;
+                }
                 default:
                     break;
                 }
