@@ -1124,6 +1124,7 @@ const reloadTab = function(ev) {
         'csp_report': 'other',
     };
     const createdStaticFilters = {};
+    const reIsExceptionFilter = /^@@|^[\w.-]*?#@#/;
 
     let dialog = null;
     let targetRow = null;
@@ -1136,7 +1137,7 @@ const reloadTab = function(ev) {
     let targetPageDomain;
     let targetFrameDomain;
 
-    const uglyTypeFromSelector = function(pane) {
+    const uglyTypeFromSelector = pane => {
         const prettyType = selectValue('select.type.' + pane);
         if ( pane === 'static' ) {
             return staticFilterTypes[prettyType] || prettyType;
@@ -1144,16 +1145,21 @@ const reloadTab = function(ev) {
         return uglyRequestTypes[prettyType] || prettyType;
     };
 
-    const selectNode = function(selector) {
+    const selectNode = selector => {
         return qs$(dialog, selector);
     };
 
-    const selectValue = function(selector) {
+    const selectValue = selector => {
         return selectNode(selector).value || '';
     };
 
-    const staticFilterNode = function() {
+    const staticFilterNode = ( ) => {
         return qs$(dialog, 'div.panes > div.static textarea');
+    };
+
+    const toExceptionFilter = (filter, extended) => {
+        if ( reIsExceptionFilter.test(filter) ) { return filter; }
+        return extended ? filter.replace('##', '#@#') : `@@${filter}`;
     };
 
     const onColorsReady = function(response) {
@@ -1247,12 +1253,9 @@ const reloadTab = function(ev) {
         if ( tcl.contains('exceptor') ) {
             ev.stopPropagation();
             const filter = filterFromTargetRow();
-            const exceptedFilter = dom.cl.has(targetRow, 'extendedRealm')
-                ? `#@#${filter.replace(/^.*?#@?#/, '')}`
-                : `@@${filter.replace(/^@@/, '')}`;
             const status = await messaging.send('loggerUI', {
                 what: 'toggleInMemoryFilter',
-                filter: exceptedFilter,
+                filter: toExceptionFilter(filter, dom.cl.has(targetRow, 'extendedRealm')),
             });
             const row = target.closest('div');
             dom.cl.toggle(row, 'exceptored', status);
@@ -1480,16 +1483,17 @@ const reloadTab = function(ev) {
 
     const toSummaryPaneFilterNode = async function(receiver, filter) {
         receiver.children[1].textContent = filter;
-        if ( filterAuthorMode !== true ) { return; }
         if ( dom.cl.has(targetRow, 'canLookup') === false ) { return; }
-        const exceptedFilter = dom.cl.has(targetRow, 'extendedRealm')
-            ? `#@#${filter.replace(/^.*?#@?#/, '')}`
-            : `@@${filter.replace(/^@@/, '')}`;
-        const isTemporaryException = await messaging.send('loggerUI', {
-            what: 'hasInMemoryFilter',
-            filter: exceptedFilter,
-        });
-        dom.cl.toggle(receiver, 'exceptored', isTemporaryException);
+        const isException = reIsExceptionFilter.test(filter);
+        let isExcepted = false;
+        if ( isException ) {
+            isExcepted = await messaging.send('loggerUI', {
+                what: 'hasInMemoryFilter',
+                filter: toExceptionFilter(filter, dom.cl.has(targetRow, 'extendedRealm')),
+            });
+        }
+        if ( isException && isExcepted === false ) { return; }
+        dom.cl.toggle(receiver, 'exceptored', isExcepted);
         receiver.children[2].style.visibility = '';
     };
 
