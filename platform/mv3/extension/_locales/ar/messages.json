@@ -120,7 +120,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "omnipotenceLegend": {
-    "message": "uBO Lite can apply extended filtering on a given website only after you explicitly grant the extension permissions to modify data on that website. This setting allows you to grant permissions for extended filtering to all websites at once.",
+    "message": "يمكن لـ uBO Lite تطبيق تصفية موسعة على موقع ويب معين فقط بعد منح أذونات الامتداد صراحة لتعديل البيانات الموجودة على هذا الموقع. يسمح لك هذا الإعداد بمنح أذونات للتصفية الموسعة لجميع مواقع الويب مرة واحدة.",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {

@@ -1,31 +1,31 @@
-uBO Lite (uBOL) is an experimental *permission-less* MV3-based content blocker.
+uBO Lite（uBOL）は実験的な*承認なし*の MV3 ベースのコンテンツ ブロッカーです。
 
-The default ruleset corresponds to uBlock Origin's default filterset:
+デフォルトのルールセットは uBlock Origin のデフォルトのフィルターセットと一致します。：
 
-- uBlock Origin's built-in filter lists
+- uBlock Origin のビルトイン フィルターリスト
 - EasyList
 - EasyPrivacy
-- Peter Lowe’s Ad and tracking server list
-- AdGuard CNAME-Cloaked Trackers
+Peter Lowe の広告とトラッキングサーバーのリスト
+- AdGuard の CNAME Cloak トラッカーのリスト
 
-You can add more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+オプションページでルールセットを追加できます -- ポップアップ パネルの「歯車」アイコンをクリックします。
 
-uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
+uBOL は完全に宣言的です。つまり、フィルタリングを行うための恒久的な uBOL プロセスは必要なく、CSS/JS インジェクション ベースのコンテンツフィルタリングは拡張機能ではなくブラウザによって、確実に実行されます。 これは uBOL がコンテンツブロッキングの際に CPU、メモリを消費しないことを意味します。uBOL のサービス ワーカーは ポップアップ パネルや設定ページでのみ必要とされます。
 
-uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read and modify data" permissions at install time.
+uBOL はインストール時に広範な「データの読み取りと変更」の権限を要求しません。したがって uBlock Origin やその他の、インストール時に広範な「データの読み取りと変更」の権限を要求するコンテンツ ブロッカーに比べて、行えることが制限されています。
 
-However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
+しかし、uBOL は特定のサイトに対してユーザーが *明示的に* 拡張された権限を付与することによって、より良いフィルターや綺麗なスクリプトの挿入を可能とします。
 
-To grant extended permissions on a given site, open the popup panel and pick a higher filtering mode such as Optimal or Complete.
+特定のサイトで拡張された権限を付与するには、ポップアップ パネルを開いて、「最適」や「完全」のようなより高いフィルタリングモードを選択します。
 
-The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request.
+ブラウザは、現在のサイトで拡張機能によってリクエストされた追加の権限を付与することによってもたらされる影響について警告します。承認または拒否することができます。
 
-If you accept uBOL's request for additional permissions on the current site, it will be able to better filter content for the current site.
+現在のサイトでの uBOL のリクエストを承認すると、現在のサイトにより良いフィルターを適用できるようになります。
 
-You can set the default filtering mode from uBOL's options page. If you pick the Optimal or Complete mode as the default one, you will need to grant uBOL the permission to read and modify data on all websites.
+uBOL の設定ページで規定のフィルタリング モードを設定できます。 「最適」または「完全」を規定のフィルタリング モードに設定した場合、すべてのWebサイトで「データの読み取りと変更」権限を付与する必要があります。
 
-Keep in mind this is still a work in progress, with these end goals:
+注意として、uBOL はまだ開発途中で、これらの開発目標があります。
 
-- No broad host permissions at install time -- extended permissions are granted explicitly by the user on a per-site basis.
+- インストール時に広範なホスト権限は不要 -- 拡張された権限はサイトごとにユーザーによって明示的に付与されます。
 
-- Entirely declarative for reliability and CPU/memory efficiency.
+- 完全に宣言的で、CPU、メモリの効率性が良い
