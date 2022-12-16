@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-import { browser, sendMessage } from './ext.js';
+import { browser, runtime, sendMessage } from './ext.js';
 import { dom, qs$ } from './dom.js';
 import { i18n$ } from './i18n.js';
 import { simpleStorage } from './storage.js';
@@ -255,6 +255,14 @@ dom.on('#moreButton', 'click', ( ) => {
 
 dom.on('#lessButton', 'click', ( ) => {
     toggleSections(false);
+});
+
+/******************************************************************************/
+
+dom.on('[data-i18n-title="popupTipDashboard"]', 'click', ev => {
+    if ( ev.isTrusted !== true ) { return; }
+    if ( ev.button !== 0 ) { return; }
+    runtime.openOptionsPage();
 });
 
 /******************************************************************************/
