@@ -36,12 +36,11 @@ jobs:
           commit_message: Update build log file
       - name: Create GitHub release
         id: create_release
-        uses: actions/create-release@v1
+        uses: ncipollo/release-action@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
-          tag_name: ${{ env.TAGNAME }}
-          release_name: ${{ env.TAGNAME }}
+          tag: ${{ env.TAGNAME }}
           prerelease: true
       - name: Upload uBOLite MV3 package
         uses: actions/upload-release-asset@v1
