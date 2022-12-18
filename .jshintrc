@@ -5,6 +5,7 @@
 	"esversion": 8,
 	"globals": {
 		"chrome": false,     // global variable in Chromium, Chrome, Opera
+		"globalThis": false,
 		"self": false,
 		"vAPI": false,
 		"URLSearchParams": false,

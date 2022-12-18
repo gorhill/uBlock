@@ -36,6 +36,16 @@ const logDate = new Date();
 const logDateTimezoneOffset = logDate.getTimezoneOffset() * 60000;
 const loggerEntries = [];
 
+const COLUMN_TIMESTAMP = 0;
+const COLUMN_FILTER = 1;
+const COLUMN_MESSAGE = 1;
+const COLUMN_RESULT = 2;
+const COLUMN_INITIATOR = 3;
+const COLUMN_PARTYNESS = 4;
+const COLUMN_METHOD = 5;
+const COLUMN_TYPE = 6;
+const COLUMN_URL = 7;
+
 let filteredLoggerEntries = [];
 let filteredLoggerEntryVoidedCount = 0;
 
@@ -211,7 +221,6 @@ const LogEntry = function(details) {
             this[prop] = details[prop];
         }
     }
-    this.type = details.stype || details.type;
     if ( details.aliasURL !== undefined ) {
         this.aliased = true;
     }
@@ -233,6 +242,7 @@ LogEntry.prototype = {
     domain: '',
     filter: undefined,
     id: '',
+    method: '',
     realm: '',
     tabDomain: '',
     tabHostname: '',
@@ -413,17 +423,20 @@ const parseLogEntry = function(details) {
         textContent.push('');
     }
 
-    // Cell 5
+    // Cell 5: method
+    textContent.push(entry.method || '');
+
+    // Cell 6
     textContent.push(
         normalizeToStr(prettyRequestTypes[entry.type] || entry.type)
     );
 
-    // Cell 6
+    // Cell 7
     textContent.push(normalizeToStr(details.url));
 
     // Hidden cells -- useful for row-filtering purpose
 
-    // Cell 7
+    // Cell 8
     if ( entry.aliased ) {
         textContent.push(`aliasURL=${details.aliasURL}`);
     }
@@ -534,49 +547,56 @@ const viewPort = (( ) => {
                 : 0;
         });
         const reservedWidth =
-            cellWidths[0] + cellWidths[2] + cellWidths[4] + cellWidths[5];
-        cellWidths[6] = 0.5;
-        if ( cellWidths[1] === 0 && cellWidths[3] === 0 ) {
-            cellWidths[6] = 1;
-        } else if ( cellWidths[1] === 0 ) {
-            cellWidths[3] = 0.35;
-            cellWidths[6] = 0.65;
-        } else if ( cellWidths[3] === 0 ) {
-            cellWidths[1] = 0.35;
-            cellWidths[6] = 0.65;
+            cellWidths[COLUMN_TIMESTAMP] +
+            cellWidths[COLUMN_RESULT] +
+            cellWidths[COLUMN_PARTYNESS] +
+            cellWidths[COLUMN_METHOD] +
+            cellWidths[COLUMN_TYPE];
+        cellWidths[COLUMN_URL] = 0.5;
+        if ( cellWidths[COLUMN_FILTER] === 0 && cellWidths[COLUMN_INITIATOR] === 0 ) {
+            cellWidths[COLUMN_URL] = 1;
+        } else if ( cellWidths[COLUMN_FILTER] === 0 ) {
+            cellWidths[COLUMN_INITIATOR] = 0.35;
+            cellWidths[COLUMN_URL] = 0.65;
+        } else if ( cellWidths[COLUMN_INITIATOR] === 0 ) {
+            cellWidths[COLUMN_FILTER] = 0.35;
+            cellWidths[COLUMN_URL] = 0.65;
         } else {
-            cellWidths[1] = 0.25;
-            cellWidths[3] = 0.25;
-            cellWidths[6] = 0.5;
+            cellWidths[COLUMN_FILTER] = 0.25;
+            cellWidths[COLUMN_INITIATOR] = 0.25;
+            cellWidths[COLUMN_URL] = 0.5;
         }
         const style = qs$('#vwRendererRuntimeStyles');
         const cssRules = [
             '#vwContent .logEntry {',
             `  height: ${newLineHeight}px;`,
             '}',
-            '#vwContent .logEntry > div > span:nth-of-type(1) {',
-            `  width: ${cellWidths[0]}px;`,
+            `#vwContent .logEntry > div > span:nth-of-type(${COLUMN_TIMESTAMP+1}) {`,
+            `  width: ${cellWidths[COLUMN_TIMESTAMP]}px;`,
             '}',
-            '#vwContent .logEntry > div > span:nth-of-type(2) {',
-            `  width: calc(calc(100% - ${reservedWidth}px) * ${cellWidths[1]});`,
+            `#vwContent .logEntry > div > span:nth-of-type(${COLUMN_FILTER+1}) {`,
+            `  width: calc(calc(100% - ${reservedWidth}px) * ${cellWidths[COLUMN_FILTER]});`,
             '}',
-            '#vwContent .logEntry > div.messageRealm > span:nth-of-type(2) {',
-            `  width: calc(100% - ${cellWidths[0]}px);`,
+            `#vwContent .logEntry > div.messageRealm > span:nth-of-type(${COLUMN_MESSAGE+1}) {`,
+            `  width: calc(100% - ${cellWidths[COLUMN_MESSAGE]}px);`,
             '}',
-            '#vwContent .logEntry > div > span:nth-of-type(3) {',
-            `  width: ${cellWidths[2]}px;`,
+            `#vwContent .logEntry > div > span:nth-of-type(${COLUMN_RESULT+1}) {`,
+            `  width: ${cellWidths[COLUMN_RESULT]}px;`,
             '}',
-            '#vwContent .logEntry > div > span:nth-of-type(4) {',
-            `  width: calc(calc(100% - ${reservedWidth}px) * ${cellWidths[3]});`,
+            `#vwContent .logEntry > div > span:nth-of-type(${COLUMN_INITIATOR+1}) {`,
+            `  width: calc(calc(100% - ${reservedWidth}px) * ${cellWidths[COLUMN_INITIATOR]});`,
             '}',
-            '#vwContent .logEntry > div > span:nth-of-type(5) {',
-            `  width: ${cellWidths[4]}px;`,
+            `#vwContent .logEntry > div > span:nth-of-type(${COLUMN_PARTYNESS+1}) {`,
+            `  width: ${cellWidths[COLUMN_PARTYNESS]}px;`,
             '}',
-            '#vwContent .logEntry > div > span:nth-of-type(6) {',
-            `  width: ${cellWidths[5]}px;`,
+            `#vwContent .logEntry > div > span:nth-of-type(${COLUMN_METHOD+1}) {`,
+            `  width: ${cellWidths[COLUMN_METHOD]}px;`,
             '}',
-            '#vwContent .logEntry > div > span:nth-of-type(7) {',
-            `  width: calc(calc(100% - ${reservedWidth}px) * ${cellWidths[6]});`,
+            `#vwContent .logEntry > div > span:nth-of-type(${COLUMN_TYPE+1}) {`,
+            `  width: ${cellWidths[COLUMN_TYPE]}px;`,
+            '}',
+            `#vwContent .logEntry > div > span:nth-of-type(${COLUMN_URL+1}) {`,
+            `  width: calc(calc(100% - ${reservedWidth}px) * ${cellWidths[COLUMN_URL]});`,
             '}',
             '',
         ];
@@ -651,8 +671,8 @@ const viewPort = (( ) => {
         }
 
         // Timestamp
-        span = div.children[0];
-        span.textContent = cells[0];
+        span = div.children[COLUMN_TIMESTAMP];
+        span.textContent = cells[COLUMN_TIMESTAMP];
 
         // Tab id
         if ( details.tabId !== undefined ) {
@@ -666,8 +686,8 @@ const viewPort = (( ) => {
             if ( details.type !== undefined ) {
                 dom.attr(div, 'data-type', details.type);
             }
-            span = div.children[1];
-            span.textContent = cells[1];
+            span = div.children[COLUMN_MESSAGE];
+            span.textContent = cells[COLUMN_MESSAGE];
             return div;
         }
 
@@ -692,23 +712,23 @@ const viewPort = (( ) => {
                 dom.attr(div, 'data-modifier', '');
             }
         }
-        span = div.children[1];
-        if ( renderFilterToSpan(span, cells[1]) === false ) {
-            span.textContent = cells[1];
+        span = div.children[COLUMN_FILTER];
+        if ( renderFilterToSpan(span, cells[COLUMN_FILTER]) === false ) {
+            span.textContent = cells[COLUMN_FILTER];
         }
 
         // Event
-        if ( cells[2] === '--' ) {
+        if ( cells[COLUMN_RESULT] === '--' ) {
             dom.attr(div, 'data-status', '1');
-        } else if ( cells[2] === '++' ) {
+        } else if ( cells[COLUMN_RESULT] === '++' ) {
             dom.attr(div, 'data-status', '2');
-        } else if ( cells[2] === '**' ) {
+        } else if ( cells[COLUMN_RESULT] === '**' ) {
             dom.attr(div, 'data-status', '3');
-        } else if ( cells[2] === '<<' ) {
+        } else if ( cells[COLUMN_RESULT] === '<<' ) {
             divcl.add('redirect');
         }
-        span = div.children[2];
-        span.textContent = cells[2];
+        span = div.children[COLUMN_RESULT];
+        span.textContent = cells[COLUMN_RESULT];
 
         // Origins
         if ( details.tabHostname ) {
@@ -717,12 +737,12 @@ const viewPort = (( ) => {
         if ( details.docHostname ) {
             dom.attr(div, 'data-dochn', details.docHostname);
         }
-        span = div.children[3];
-        span.textContent = cells[3];
+        span = div.children[COLUMN_INITIATOR];
+        span.textContent = cells[COLUMN_INITIATOR];
 
         // Partyness
         if (
-            cells[4] !== '' &&
+            cells[COLUMN_PARTYNESS] !== '' &&
             details.realm === 'network' &&
             details.domain !== undefined
         ) {
@@ -733,12 +753,16 @@ const viewPort = (( ) => {
             text += ` \u21d2 ${details.domain}`;
             dom.attr(div, 'data-parties', text);
         }
-        span = div.children[4];
-        span.textContent = cells[4];
+        span = div.children[COLUMN_PARTYNESS];
+        span.textContent = cells[COLUMN_PARTYNESS];
+
+        // Method
+        span = div.children[COLUMN_METHOD];
+        span.textContent = cells[COLUMN_METHOD];
 
         // Type
-        span = div.children[5];
-        span.textContent = cells[5];
+        span = div.children[COLUMN_TYPE];
+        span.textContent = cells[COLUMN_TYPE];
 
         // URL
         let re;
@@ -747,7 +771,7 @@ const viewPort = (( ) => {
         } else if ( filteringType === 'dynamicUrl' ) {
             re = regexFromURLFilteringResult(filter.rule.join(' '));
         }
-        nodeFromURL(div.children[6], cells[6], re);
+        nodeFromURL(div.children[COLUMN_URL], cells[COLUMN_URL], re);
 
         // Alias URL (CNAME, etc.)
         if ( cells.length > 7 ) {
@@ -1468,7 +1492,7 @@ const reloadTab = function(ev) {
     };
 
     const filterFromTargetRow = function() {
-        return dom.text(targetRow.children[1]);
+        return dom.text(targetRow.children[COLUMN_FILTER]);
     };
 
     const aliasURLFromID = function(id) {
@@ -1476,13 +1500,13 @@ const reloadTab = function(ev) {
         for ( const entry of loggerEntries ) {
             if ( entry.id !== id || entry.aliased ) { continue; }
             const fields = entry.textContent.split('\t');
-            return fields[6] || '';
+            return fields[COLUMN_URL] || '';
         }
         return '';
     };
 
     const toSummaryPaneFilterNode = async function(receiver, filter) {
-        receiver.children[1].textContent = filter;
+        receiver.children[COLUMN_FILTER].textContent = filter;
         if ( dom.cl.has(targetRow, 'canLookup') === false ) { return; }
         const isException = reIsExceptionFilter.test(filter);
         let isExcepted = false;
@@ -1498,7 +1522,7 @@ const reloadTab = function(ev) {
     };
 
     const fillSummaryPaneFilterList = async function(rows) {
-        const rawFilter = targetRow.children[1].textContent;
+        const rawFilter = targetRow.children[COLUMN_FILTER].textContent;
 
         const nodeFromFilter = function(filter, lists) {
             const fragment = document.createDocumentFragment();
@@ -1561,7 +1585,7 @@ const reloadTab = function(ev) {
         } else if ( dom.cl.has(targetRow, 'extendedRealm') ) {
             const response = await messaging.send('loggerUI', {
                 what: 'listsFromCosmeticFilter',
-                url: targetRow.children[6].textContent,
+                url: targetRow.children[COLUMN_URL].textContent,
                 rawFilter: rawFilter,
             });
             handleResponse(response);
@@ -1619,19 +1643,19 @@ const reloadTab = function(ev) {
         // Partyness
         text = dom.attr(tr, 'data-parties') || '';
         if ( text !== '' ) {
-            rows[5].children[1].textContent = `(${trch[4].textContent})\u2002${text}`;
+            rows[5].children[1].textContent = `(${trch[COLUMN_PARTYNESS].textContent})\u2002${text}`;
         } else {
             rows[5].style.display = 'none';
         }
         // Type
-        text = trch[5].textContent;
+        text = trch[COLUMN_TYPE].textContent;
         if ( text !== '' ) {
             rows[6].children[1].textContent = text;
         } else {
             rows[6].style.display = 'none';
         }
         // URL
-        const canonicalURL = trch[6].textContent;
+        const canonicalURL = trch[COLUMN_URL].textContent;
         if ( canonicalURL !== '' ) {
             const attr = dom.attr(tr, 'data-status') || '';
             if ( attr !== '' ) {
@@ -1640,7 +1664,7 @@ const reloadTab = function(ev) {
                     dom.attr(rows[7], 'data-modifier', '');
                 }
             }
-            rows[7].children[1].appendChild(dom.clone(trch[6]));
+            rows[7].children[1].appendChild(dom.clone(trch[COLUMN_URL]));
         } else {
             rows[7].style.display = 'none';
         }
@@ -1846,8 +1870,8 @@ const reloadTab = function(ev) {
         if ( targetRow === null ) { return; }
         ev.stopPropagation();
         targetTabId = tabIdFromAttribute(targetRow);
-        targetType = targetRow.children[5].textContent.trim() || '';
-        targetURLs = createTargetURLs(targetRow.children[6].textContent);
+        targetType = targetRow.children[COLUMN_TYPE].textContent.trim() || '';
+        targetURLs = createTargetURLs(targetRow.children[COLUMN_URL].textContent);
         targetPageHostname = dom.attr(targetRow, 'data-tabhn') || '';
         targetFrameHostname = dom.attr(targetRow, 'data-dochn') || '';
 
@@ -2640,7 +2664,7 @@ const loggerSettings = (( ) => {
             maxEntryCount: 2000,    // per-tab
             maxLoadCount: 20,       // per-tab
         },
-        columns: [ true, true, true, true, true, true, true, true ],
+        columns: [ true, true, true, true, true, true, true, true, true ],
         linesPerEntry: 4,
     };
 

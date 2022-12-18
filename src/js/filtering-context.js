@@ -84,6 +84,48 @@ const typeStrToIntMap = {
              'other': OTHER,
 };
 
+const    METHOD_NONE = 0;
+const METHOD_CONNECT = 1 << 1;
+const  METHOD_DELETE = 1 << 2;
+const     METHOD_GET = 1 << 3;
+const    METHOD_HEAD = 1 << 4;
+const METHOD_OPTIONS = 1 << 5;
+const   METHOD_PATCH = 1 << 6;
+const    METHOD_POST = 1 << 7;
+const     METHOD_PUT = 1 << 8;
+
+const methodStrToBitMap = {
+           '': METHOD_NONE,
+    'connect': METHOD_CONNECT,
+     'delete': METHOD_DELETE,
+        'get': METHOD_GET,
+       'head': METHOD_HEAD,
+    'options': METHOD_OPTIONS,
+      'patch': METHOD_PATCH,
+       'post': METHOD_POST,
+        'put': METHOD_PUT,
+    'CONNECT': METHOD_CONNECT,
+     'DELETE': METHOD_DELETE,
+        'GET': METHOD_GET,
+       'HEAD': METHOD_HEAD,
+    'OPTIONS': METHOD_OPTIONS,
+      'PATCH': METHOD_PATCH,
+       'POST': METHOD_POST,
+        'PUT': METHOD_PUT,
+};
+
+const methodBitToStrMap = new Map([
+    [ METHOD_NONE, '' ],
+    [ METHOD_CONNECT, 'connect' ],
+    [ METHOD_DELETE, 'delete' ],
+    [ METHOD_GET, 'get' ],
+    [ METHOD_HEAD, 'head' ],
+    [ METHOD_OPTIONS, 'options' ],
+    [ METHOD_PATCH, 'patch' ],
+    [ METHOD_POST, 'post' ],
+    [ METHOD_PUT, 'put' ],
+]);
+
 /******************************************************************************/
 
 const FilteringContext = class {
@@ -94,7 +136,8 @@ const FilteringContext = class {
         this.tstamp = 0;
         this.realm = '';
         this.id = undefined;
-        this.itype = 0;
+        this.method = 0;
+        this.itype = NO_TYPE;
         this.stype = undefined;
         this.url = undefined;
         this.aliasURL = undefined;
@@ -133,6 +176,7 @@ const FilteringContext = class {
     fromFilteringContext(other) {
         this.realm = other.realm;
         this.type = other.type;
+        this.method = other.method;
         this.url = other.url;
         this.hostname = other.hostname;
         this.domain = other.domain;
@@ -358,6 +402,23 @@ const FilteringContext = class {
         }
         return this;
     }
+
+    setMethod(a) {
+        this.method = methodStrToBitMap[a] || 0;
+        return this;
+    }
+
+    getMethodName() {
+        return FilteringContext.getMethodName(this.method);
+    }
+
+    static getMethod(a) {
+        return methodStrToBitMap[a] || 0;
+    }
+
+    static getMethodName(a) {
+        return methodBitToStrMap.get(a) || '';
+    }
 };
 
 /******************************************************************************/
@@ -385,6 +446,16 @@ FilteringContext.prototype.FONT_ANY = FilteringContext.FONT_ANY = FONT_ANY;
 FilteringContext.prototype.INLINE_ANY = FilteringContext.INLINE_ANY = INLINE_ANY;
 FilteringContext.prototype.PING_ANY = FilteringContext.PING_ANY = PING_ANY;
 FilteringContext.prototype.SCRIPT_ANY = FilteringContext.SCRIPT_ANY = SCRIPT_ANY;
+
+FilteringContext.prototype.METHOD_NONE = FilteringContext.METHOD_NONE = METHOD_NONE;
+FilteringContext.prototype.METHOD_CONNECT = FilteringContext.METHOD_CONNECT = METHOD_CONNECT;
+FilteringContext.prototype.METHOD_DELETE = FilteringContext.METHOD_DELETE = METHOD_DELETE;
+FilteringContext.prototype.METHOD_GET = FilteringContext.METHOD_GET = METHOD_GET;
+FilteringContext.prototype.METHOD_HEAD = FilteringContext.METHOD_HEAD = METHOD_HEAD;
+FilteringContext.prototype.METHOD_OPTIONS = FilteringContext.METHOD_OPTIONS = METHOD_OPTIONS;
+FilteringContext.prototype.METHOD_PATCH = FilteringContext.METHOD_PATCH = METHOD_PATCH;
+FilteringContext.prototype.METHOD_POST = FilteringContext.METHOD_POST = METHOD_POST;
+FilteringContext.prototype.METHOD_PUT = FilteringContext.METHOD_PUT = METHOD_PUT;
 
 /******************************************************************************/
 

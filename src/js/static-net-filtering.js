@@ -199,6 +199,7 @@ const   INVALID_TOKEN_HASH = 0xFFFFFFFF;
 // See the following as short-lived registers, used during evaluation. They are
 // valid until the next evaluation.
 
+let $requestMethodBit = 0;
 let $requestTypeValue = 0;
 let $requestURL = '';
 let $requestURLRaw = '';
@@ -1262,6 +1263,82 @@ const FilterRegex = class {
 FilterRegex.isSlow = true;
 
 registerFilterClass(FilterRegex);
+
+/******************************************************************************/
+
+const FilterMethod = class {
+    static match(idata) {
+        if ( $requestMethodBit === 0 ) { return false; }
+        const methodBits = filterData[idata+1];
+        const notMethodBits = filterData[idata+2];
+        return (methodBits !== 0 && ($requestMethodBit & methodBits) !== 0) ||
+               (notMethodBits !== 0 && ($requestMethodBit & notMethodBits) === 0);
+    }
+
+    static compile(details) {
+        return [ FilterMethod.fid, details.methodBits, details.notMethodBits ];
+    }
+
+    static fromCompiled(args) {
+        const idata = filterDataAllocLen(3);
+        filterData[idata+0] = args[0];  // fid
+        filterData[idata+1] = args[1];  // methodBits
+        filterData[idata+2] = args[2];  // notMethodBits
+        return idata;
+    }
+
+    static dnrFromCompiled(args, rule) {
+        rule.condition = rule.condition || {};
+        const rc = rule.condition;
+        let methodBits = args[1];
+        let notMethodBits = args[2];
+        if ( methodBits !== 0 && rc.requestMethods === undefined ) {
+            rc.requestMethods = [];
+        }
+        if ( notMethodBits !== 0 && rc.excludedRequestMethods === undefined ) {
+            rc.excludedRequestMethods = [];
+        }
+        for ( let i = 1; methodBits !== 0 || notMethodBits !== 0; i++ ) {
+            const bit = 1 << i;
+            const methodName = FilteringContext.getMethodName(bit);
+            if ( (methodBits & bit) !== 0 ) {
+                methodBits &= ~bit;
+                rc.requestMethods.push(methodName);
+            } else if ( (notMethodBits & bit) !== 0 ) {
+                notMethodBits &= ~bit;
+                rc.excludedRequestMethods.push(methodName);
+            }
+        }
+    }
+
+    static keyFromArgs(args) {
+        return `${args[1]} ${args[2]}`;
+    }
+
+    static logData(idata, details) {
+        const methods = [];
+        let methodBits = filterData[idata+1];
+        let notMethodBits = filterData[idata+2];
+        for ( let i = 0; methodBits !== 0 || notMethodBits !== 0; i++ ) {
+            const bit = 1 << i;
+            const methodName = FilteringContext.getMethodName(bit);
+            if ( (methodBits & bit) !== 0 ) {
+                methodBits &= ~bit;
+                methods.push(methodName);
+            } else if ( (notMethodBits & bit) !== 0 ) {
+                notMethodBits &= ~bit;
+                methods.push(`~${methodName}`);
+            }
+        }
+        details.options.push(`method=${methods.join('|')}`);
+    }
+
+    static dumpInfo(idata) {
+        return `0b${filterData[idata+1].toString(2)} 0b${filterData[idata+2].toString(2)}`;
+    }
+};
+
+registerFilterClass(FilterMethod);
 
 /******************************************************************************/
 
@@ -3025,6 +3102,8 @@ class FilterCompiler {
         this.tokenBeg = 0;
         this.typeBits = 0;
         this.notTypeBits = 0;
+        this.methodBits = 0;
+        this.notMethodBits = 0;
         this.wildcardPos = -1;
         this.caretPos = -1;
         return this;
@@ -3053,6 +3132,21 @@ class FilterCompiler {
         for ( const option of options ) {
             this.excludedOptionSet.add(option);
         }
+    }
+
+    processMethodOption(value) {
+        for ( const method of value.split('|') ) {
+            if ( method.charCodeAt(0) === 0x7E /* '~' */ ) {
+                const bit = FilteringContext.getMethod(method.slice(1)) || 0;
+                if ( bit === 0 ) { continue; }
+                this.notMethodBits |= bit;
+            } else {
+                const bit = FilteringContext.getMethod(method) || 0;
+                if ( bit === 0 ) { continue; }
+                this.methodBits |= bit;
+            }
+        }
+        this.methodBits &= ~this.notMethodBits;
     }
 
     // https://github.com/chrisaljoudi/uBlock/issues/589
@@ -3224,6 +3318,9 @@ class FilterCompiler {
                     return false;
                 }
                 this.optionUnitBits |= this.REDIRECT_BIT;
+                break;
+            case parser.OPTTokenMethod:
+                this.processMethodOption(val);
                 break;
             case parser.OPTTokenInvalid:
                 return false;
@@ -3571,6 +3668,11 @@ class FilterCompiler {
         }
         if ( (this.anchor & 0b001) !== 0 ) {
             units.push(FilterAnchorRight.compile());
+        }
+
+        // Method(s)
+        if ( this.methodBits !== 0 || this.notMethodBits !== 0 ) {
+            units.push(FilterMethod.compile(this));
         }
 
         // Not types
@@ -4566,6 +4668,7 @@ FilterContainer.prototype.matchAndFetchModifiers = function(
     $docHostname = fctxt.getDocHostname();
     $docDomain = fctxt.getDocDomain();
     $requestHostname = fctxt.getHostname();
+    $requestMethodBit = fctxt.method || 0;
     $requestTypeValue = (typeBits & TypeBitsMask) >>> TypeBitsOffset;
 
     const partyBits = fctxt.is3rdPartyToDoc() ? ThirdParty : FirstParty;
@@ -4866,6 +4969,7 @@ FilterContainer.prototype.matchRequestReverse = function(type, url) {
     // Prime tokenizer: we get a normalized URL in return.
     $requestURL = urlTokenizer.setURL(url);
     $requestURLRaw = url;
+    $requestMethodBit = 0;
     $requestTypeValue = (typeBits & TypeBitsMask) >>> TypeBitsOffset;
     $isBlockImportant = false;
     this.$filterUnit = 0;
@@ -4933,6 +5037,7 @@ FilterContainer.prototype.matchRequest = function(fctxt, modifiers = 0) {
     $docHostname = fctxt.getDocHostname();
     $docDomain = fctxt.getDocDomain();
     $requestHostname = fctxt.getHostname();
+    $requestMethodBit = fctxt.method || 0;
     $requestTypeValue = (typeBits & TypeBitsMask) >>> TypeBitsOffset;
     $isBlockImportant = false;
 
@@ -4967,6 +5072,7 @@ FilterContainer.prototype.matchHeaders = function(fctxt, headers) {
     $docHostname = fctxt.getDocHostname();
     $docDomain = fctxt.getDocDomain();
     $requestHostname = fctxt.getHostname();
+    $requestMethodBit = fctxt.method || 0;
     $requestTypeValue = (typeBits & TypeBitsMask) >>> TypeBitsOffset;
     $httpHeaders.init(headers);
 

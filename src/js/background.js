@@ -176,8 +176,8 @@ const µBlock = {  // jshint ignore:line
 
     // Read-only
     systemSettings: {
-        compiledMagic: 50,  // Increase when compiled format changes
-        selfieMagic: 50,    // Increase when selfie format changes
+        compiledMagic: 51,  // Increase when compiled format changes
+        selfieMagic: 51,    // Increase when selfie format changes
     },
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/759#issuecomment-546654501
@@ -285,6 +285,7 @@ const µBlock = {  // jshint ignore:line
         this.fromTabId(tabId); // Must be called AFTER tab context management
         this.realm = '';
         this.id = details.requestId;
+        this.setMethod(details.method);
         this.setURL(details.url);
         this.aliasURL = details.aliasURL || undefined;
         if ( this.itype !== this.SUB_FRAME ) {
@@ -337,24 +338,31 @@ const µBlock = {  // jshint ignore:line
     }
 
     toLogger() {
-        this.tstamp = Date.now();
-        if ( this.domain === undefined ) {
-            void this.getDomain();
-        }
-        if ( this.docDomain === undefined ) {
-            void this.getDocDomain();
-        }
-        if ( this.tabDomain === undefined ) {
-            void this.getTabDomain();
-        }
-        const filters = this.filter;
+        const details = {
+            id: this.id,
+            tstamp: Date.now(),
+            realm: this.realm,
+            method: this.getMethodName(),
+            type: this.stype,
+            tabId: this.tabId,
+            tabDomain: this.getTabDomain(),
+            tabHostname: this.getTabHostname(),
+            docDomain: this.getDocDomain(),
+            docHostname: this.getDocHostname(),
+            domain: this.getDomain(),
+            hostname: this.getHostname(),
+            url: this.url,
+            aliasURL: this.aliasURL,
+            filter: undefined,
+        };
         // Many filters may have been applied to the current context
-        if ( Array.isArray(filters) === false ) {
-            return logger.writeOne(this);
+        if ( Array.isArray(this.filter) === false ) {
+            details.filter = this.filter;
+            return logger.writeOne(details);
         }
-        for ( const filter of filters ) {
-            this.filter = filter;
-            logger.writeOne(this);
+        for ( const filter of this.filter ) {
+            details.filter = filter;
+            logger.writeOne(details);
         }
     }
 };

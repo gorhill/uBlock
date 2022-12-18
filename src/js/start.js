@@ -511,7 +511,7 @@ browser.runtime.onUpdateAvailable.addListener(details => {
 if ( selfieIsValid ) {
     µb.supportStats.allReadyAfter += ' (selfie)';
 }
-ubolog(`All ready ${µb.supportStats.allReadyAfter} ms after launch`);
+ubolog(`All ready ${µb.supportStats.allReadyAfter} after launch`);
 
 // <<<<< end of private scope
 })();

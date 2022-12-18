@@ -2377,7 +2377,8 @@ const OPTTokenShide              = 37;
 const OPTTokenXhr                = 38;
 const OPTTokenWebrtc             = 39;
 const OPTTokenWebsocket          = 40;
-const OPTTokenCount              = 41;
+const OPTTokenMethod             = 41;
+const OPTTokenCount              = 42;
 
 //const OPTPerOptionMask           = 0x0000ff00;
 const OPTCanNegate               = 1 <<  8;
@@ -2481,6 +2482,7 @@ Parser.prototype.OPTTokenFrame = OPTTokenFrame;
 Parser.prototype.OPTTokenXhr = OPTTokenXhr;
 Parser.prototype.OPTTokenWebrtc = OPTTokenWebrtc;
 Parser.prototype.OPTTokenWebsocket = OPTTokenWebsocket;
+Parser.prototype.OPTTokenMethod = OPTTokenMethod;
 
 Parser.prototype.OPTCanNegate = OPTCanNegate;
 Parser.prototype.OPTBlockOnly = OPTBlockOnly;
@@ -2527,6 +2529,7 @@ const netOptionTokenDescriptors = new Map([
     [ 'inline-script', OPTTokenInlineScript | OPTNonNetworkType | OPTCanNegate | OPTNonCspableType | OPTNonRedirectableType ],
     [ 'match-case', OPTTokenMatchCase ],
     [ 'media', OPTTokenMedia | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
+    [ 'method', OPTTokenMethod | OPTNetworkType | OPTMustAssign ],
     [ 'mp4', OPTTokenMp4 | OPTNetworkType | OPTBlockOnly |  OPTModifierType ],
     [ '_', OPTTokenNoop ],
     [ 'object', OPTTokenObject | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
@@ -2586,6 +2589,7 @@ Parser.netOptionTokenIds = new Map([
     [ 'inline-script', OPTTokenInlineScript ],
     [ 'match-case', OPTTokenMatchCase ],
     [ 'media', OPTTokenMedia ],
+    [ 'method', OPTTokenMethod ],
     [ 'mp4', OPTTokenMp4 ],
     [ '_', OPTTokenNoop ],
     [ 'object', OPTTokenObject ],
@@ -2635,6 +2639,7 @@ Parser.netOptionTokenNames = new Map([
     [ OPTTokenInlineScript, 'inline-script' ],
     [ OPTTokenMatchCase, 'match-case' ],
     [ OPTTokenMedia, 'media' ],
+    [ OPTTokenMethod, 'method' ],
     [ OPTTokenMp4, 'mp4' ],
     [ OPTTokenNoop, '_' ],
     [ OPTTokenObject, 'object' ],
