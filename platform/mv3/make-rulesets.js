@@ -1362,14 +1362,6 @@ async function main() {
 
     // Handpicked rulesets from abroad
     await rulesetFromURLs({
-        id: 'cname-trackers',
-        name: 'AdGuard CNAME-cloaked trackers',
-        enabled: true,
-        urls: [ 'https://raw.githubusercontent.com/AdguardTeam/cname-trackers/master/combined_disguised_trackers.txt' ],
-        homeURL: 'https://github.com/AdguardTeam/cname-trackers#cname-cloaked-trackers',
-    });
-
-    await rulesetFromURLs({
         id: 'stevenblack-hosts',
         name: 'Steven Black\'s hosts file',
         enabled: false,
