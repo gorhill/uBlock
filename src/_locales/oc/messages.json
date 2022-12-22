@@ -188,11 +188,11 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
-    "message": "Pop-up windows",
+    "message": "Fenèstras sorgissentas",
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
-    "message": "Large media elements",
+    "message": "Mèdias de granda talha",
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
@@ -248,7 +248,7 @@
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
-    "message": "inline scripts",
+    "message": "scripts en una linha",
     "description": ""
   },
   "popup1pScriptRulePrompt": {
@@ -264,7 +264,7 @@
     "description": ""
   },
   "popupHitDomainCountPrompt": {
-    "message": "domains connected",
+    "message": "domenis connectats",
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
@@ -332,7 +332,7 @@
     "description": "English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt": {
-    "message": "Color-blind friendly",
+    "message": "De bon usar pels daltonians",
     "description": "English: Color-blind friendly"
   },
   "settingsAppearance": {
@@ -352,7 +352,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "I am an advanced user",
+    "message": "Soi un-a utilizaire-a avandat-ada",
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
@@ -600,7 +600,7 @@
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
-    "message": "Rule type",
+    "message": "Tipe de règla",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortBySource": {
@@ -656,7 +656,7 @@
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
-    "message": "Current tab",
+    "message": "Onglet actual",
     "description": "Appears in the logger's tab selector"
   },
   "loggerReloadTip": {

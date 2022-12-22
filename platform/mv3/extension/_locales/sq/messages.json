@@ -228,7 +228,7 @@
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "Sapo instaluat uBO Lite. Këtu mund të zgjidhni mënyrën e filtrimit që duhet përdorur për të gjitha uebsajtet.\n\n<em>Kryesorja</em> është mënyra standarde, sepse nuk ju merret leje për leximin dhe modifikimin e të dhënave. Nëse keni besim te uBO Lite, mund t'i jepni leje shtesë për leximin dhe modifikimin e të dhënave në të gjitha uebsajtet, në mënyrë që të kryeni një filtrim më të avancuar.",
+    "message": "Sapo instaluat uBO Lite. Këtu mund të zgjidhni mënyrën e filtrimit që duhet përdorur për të gjitha uebsajtet.\n\n<em>E thjeshta</em> është mënyra standarde, sepse nuk ju merret leje për leximin dhe modifikimin e të dhënave. Nëse keni besim te uBO Lite, mund t'i jepni leje shtesë për leximin dhe modifikimin e të dhënave në të gjitha uebsajtet, në mënyrë që të kryeni një filtrim më të avancuar.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
@@ -244,7 +244,7 @@
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
-    "message": "kryesor",
+    "message": "thjesht",
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
