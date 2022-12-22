@@ -554,7 +554,7 @@
 		"cdnURLs": [
 			"https://gitcdn.link/cdn/EasyList-Lithuania/easylist_lithuania/master/easylistlithuania.txt",
 			"https://cdn.jsdelivr.net/gh/EasyList-Lithuania/easylist_lithuania@master/easylistlithuania.txt",
-			"https://cdn.statically.io/gl/DandelionSprout/easylist_lithuania/raw/master/easylistlithuania.txt"
+			"https://cdn.statically.io/gh/EasyList-Lithuania/easylist_lithuania/master/easylistlithuania.txt"
 		],
 		"supportURL": "https://github.com/EasyList-Lithuania/easylist_lithuania"
 	},
