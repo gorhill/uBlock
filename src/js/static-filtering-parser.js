@@ -2348,11 +2348,11 @@ const OPTTokenCsp                =  8;
 const OPTTokenCss                =  9;
 const OPTTokenDenyAllow          = 10;
 const OPTTokenDoc                = 11;
-const OPTTokenDomain             = 12;
-const OPTTokenEhide              = 13;
-const OPTTokenEmpty              = 14;
-const OPTTokenFont               = 15;
-const OPTTokenFrame              = 16;
+const OPTTokenEhide              = 12;
+const OPTTokenEmpty              = 13;
+const OPTTokenFont               = 14;
+const OPTTokenFrame              = 15;
+const OPTTokenFrom               = 16;
 const OPTTokenGenericblock       = 17;
 const OPTTokenGhide              = 18;
 const OPTTokenHeader             = 19;
@@ -2374,11 +2374,12 @@ const OPTTokenRedirectRule       = 34;
 const OPTTokenRemoveparam        = 35;
 const OPTTokenScript             = 36;
 const OPTTokenShide              = 37;
-const OPTTokenXhr                = 38;
-const OPTTokenWebrtc             = 39;
-const OPTTokenWebsocket          = 40;
-const OPTTokenMethod             = 41;
-const OPTTokenCount              = 42;
+const OPTTokenTo                 = 38;
+const OPTTokenXhr                = 39;
+const OPTTokenWebrtc             = 40;
+const OPTTokenWebsocket          = 41;
+const OPTTokenMethod             = 42;
+const OPTTokenCount              = 43;
 
 //const OPTPerOptionMask           = 0x0000ff00;
 const OPTCanNegate               = 1 <<  8;
@@ -2449,12 +2450,14 @@ Parser.prototype.OPTTokenAll = OPTTokenAll;
 Parser.prototype.OPTTokenBadfilter = OPTTokenBadfilter;
 Parser.prototype.OPTTokenCname = OPTTokenCname;
 Parser.prototype.OPTTokenCsp = OPTTokenCsp;
+Parser.prototype.OPTTokenCss = OPTTokenCss;
 Parser.prototype.OPTTokenDenyAllow = OPTTokenDenyAllow;
 Parser.prototype.OPTTokenDoc = OPTTokenDoc;
-Parser.prototype.OPTTokenDomain = OPTTokenDomain;
 Parser.prototype.OPTTokenEhide = OPTTokenEhide;
 Parser.prototype.OPTTokenEmpty = OPTTokenEmpty;
 Parser.prototype.OPTTokenFont = OPTTokenFont;
+Parser.prototype.OPTTokenFrame = OPTTokenFrame;
+Parser.prototype.OPTTokenFrom = OPTTokenFrom;
 Parser.prototype.OPTTokenGenericblock = OPTTokenGenericblock;
 Parser.prototype.OPTTokenGhide = OPTTokenGhide;
 Parser.prototype.OPTTokenHeader = OPTTokenHeader;
@@ -2477,8 +2480,7 @@ Parser.prototype.OPTTokenRedirect = OPTTokenRedirect;
 Parser.prototype.OPTTokenRedirectRule = OPTTokenRedirectRule;
 Parser.prototype.OPTTokenScript = OPTTokenScript;
 Parser.prototype.OPTTokenShide = OPTTokenShide;
-Parser.prototype.OPTTokenCss = OPTTokenCss;
-Parser.prototype.OPTTokenFrame = OPTTokenFrame;
+Parser.prototype.OPTTokenTo = OPTTokenTo;
 Parser.prototype.OPTTokenXhr = OPTTokenXhr;
 Parser.prototype.OPTTokenWebrtc = OPTTokenWebrtc;
 Parser.prototype.OPTTokenWebsocket = OPTTokenWebsocket;
@@ -2512,12 +2514,13 @@ const netOptionTokenDescriptors = new Map([
     [ 'denyallow', OPTTokenDenyAllow | OPTMustAssign | OPTDomainList | OPTNeedDomainOpt | OPTNonCspableType ],
     [ 'doc', OPTTokenDoc | OPTNetworkType | OPTCanNegate | OPTModifiableType | OPTRedirectableType ],
     /* synonym */ [ 'document', OPTTokenDoc | OPTNetworkType | OPTCanNegate | OPTModifiableType | OPTRedirectableType ],
-    [ 'domain', OPTTokenDomain | OPTMustAssign | OPTDomainList ],
     [ 'ehide', OPTTokenEhide | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
     /* synonym */ [ 'elemhide', OPTTokenEhide | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
     [ 'empty', OPTTokenEmpty | OPTBlockOnly | OPTModifierType ],
     [ 'frame', OPTTokenFrame | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType ],
     /* synonym */ [ 'subdocument', OPTTokenFrame | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType ],
+    [ 'from', OPTTokenFrom | OPTMustAssign | OPTDomainList ],
+    /* synonym */ [ 'domain', OPTTokenFrom | OPTMustAssign | OPTDomainList ],
     [ 'font', OPTTokenFont | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTNonCspableType ],
     [ 'genericblock', OPTTokenGenericblock | OPTNotSupported ],
     [ 'ghide', OPTTokenGhide | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
@@ -2547,6 +2550,7 @@ const netOptionTokenDescriptors = new Map([
     [ 'script', OPTTokenScript | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
     [ 'shide', OPTTokenShide | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
     /* synonym */ [ 'specifichide', OPTTokenShide | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
+    [ 'to', OPTTokenTo | OPTMustAssign | OPTDomainList ],
     [ 'xhr', OPTTokenXhr | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
     /* synonym */ [ 'xmlhttprequest', OPTTokenXhr | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
     [ 'webrtc', OPTTokenWebrtc | OPTNotSupported ],
@@ -2572,7 +2576,8 @@ Parser.netOptionTokenIds = new Map([
     [ 'denyallow', OPTTokenDenyAllow ],
     [ 'doc', OPTTokenDoc ],
     /* synonym */ [ 'document', OPTTokenDoc ],
-    [ 'domain', OPTTokenDomain ],
+    [ 'from', OPTTokenFrom ],
+    /* synonym */ [ 'domain', OPTTokenFrom ],
     [ 'ehide', OPTTokenEhide ],
     /* synonym */ [ 'elemhide', OPTTokenEhide ],
     [ 'empty', OPTTokenEmpty ],
@@ -2625,11 +2630,11 @@ Parser.netOptionTokenNames = new Map([
     [ OPTTokenCss, 'stylesheet' ],
     [ OPTTokenDenyAllow, 'denyallow' ],
     [ OPTTokenDoc, 'document' ],
-    [ OPTTokenDomain, 'domain' ],
     [ OPTTokenEhide, 'elemhide' ],
     [ OPTTokenEmpty, 'empty' ],
     [ OPTTokenFrame, 'subdocument' ],
     [ OPTTokenFont, 'font' ],
+    [ OPTTokenFrom, 'from' ],
     [ OPTTokenGenericblock, 'genericblock' ],
     [ OPTTokenGhide, 'generichide' ],
     [ OPTTokenHeader, 'header' ],
@@ -2652,6 +2657,7 @@ Parser.netOptionTokenNames = new Map([
     [ OPTTokenRedirectRule, 'redirect-rule' ],
     [ OPTTokenScript, 'script' ],
     [ OPTTokenShide, 'specifichide' ],
+    [ OPTTokenTo, 'to' ],
     [ OPTTokenXhr, 'xmlhttprequest' ],
     [ OPTTokenWebrtc, 'webrtc' ],
     [ OPTTokenWebsocket, 'websocket' ],
@@ -2802,7 +2808,7 @@ const NetOptionsIterator = class {
                 if ( this.interactive && hasBits(descriptor, OPTDomainList) ) {
                     this.parser.analyzeDomainList(
                         lval + 3, i, BITPipe,
-                        tokenId === OPTTokenDomain ? 0b1010 : 0b0000
+                        tokenId === OPTTokenDenyAllow ? 0b0000 : 0b1010 
                     );
                 }
             } else {
@@ -2825,7 +2831,7 @@ const NetOptionsIterator = class {
         // `denyallow=` option requires `domain=` option.
         {
             const i = this.tokenPos[OPTTokenDenyAllow];
-            if ( i !== -1 && this.tokenPos[OPTTokenDomain] === -1 ) {
+            if ( i !== -1 && this.tokenPos[OPTTokenFrom] === -1 ) {
                 optSlices[i] = OPTTokenInvalid;
                 if ( this.interactive ) {
                     this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
