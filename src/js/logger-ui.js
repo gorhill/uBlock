@@ -774,7 +774,7 @@ const viewPort = (( ) => {
         nodeFromURL(div.children[COLUMN_URL], cells[COLUMN_URL], re);
 
         // Alias URL (CNAME, etc.)
-        if ( cells.length > 7 ) {
+        if ( cells.length > COLUMN_URL ) {
             const pos = details.textContent.lastIndexOf('\taliasURL=');
             if ( pos !== -1 ) {
                 dom.attr(div, 'data-aliasid', details.id);

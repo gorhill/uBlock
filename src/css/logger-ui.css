@@ -349,42 +349,42 @@ body[dir="rtl"] #vwRenderer .logEntry > div > span:first-child {
 #vwRenderer .logEntry > div > span:nth-of-type(5) {
     position: relative;
     }
-#vwRenderer .logEntry > div > span:nth-of-type(6) {
-    }
-#vwRenderer #vwContent .logEntry > div > span:nth-of-type(6) {
-    }
 #vwRenderer .logEntry > div > span:nth-of-type(7) {
-    position: relative;
     }
 #vwRenderer #vwContent .logEntry > div > span:nth-of-type(7) {
+    }
+#vwRenderer .logEntry > div > span:nth-of-type(8) {
+    position: relative;
+    }
+#vwRenderer #vwContent .logEntry > div > span:nth-of-type(8) {
     text-overflow: ellipsis;
     }
-.vExpanded #vwRenderer #vwContent .logEntry > div > span:nth-of-type(7) {
+.vExpanded #vwRenderer #vwContent .logEntry > div > span:nth-of-type(8) {
     overflow-y: auto;
     white-space: pre-line;
     }
-#vwRenderer .logEntry > div > span:nth-of-type(7) b {
+#vwRenderer .logEntry > div > span:nth-of-type(8) b {
     font-weight: bold;
     }
-#vwRenderer .logEntry > div[data-status="1"] > span:nth-of-type(7) b,
+#vwRenderer .logEntry > div[data-status="1"] > span:nth-of-type(8) b,
 #netFilteringDialog > .panes > .details > div[data-status="1"] b {
     background-color: rgb(var(--popup-cell-block-surface-rgb) / 100%);
     }
-#vwRenderer .logEntry > div[data-status="1"][data-modifier] > span:nth-of-type(7) b,
+#vwRenderer .logEntry > div[data-status="1"][data-modifier] > span:nth-of-type(8) b,
 #netFilteringDialog > .panes > .details > div[data-status="1"][data-modifier] b {
     background-color: var(--logger-modified-em-surface);
     }
-#vwRenderer .logEntry > div[data-status="3"] > span:nth-of-type(7) b {
+#vwRenderer .logEntry > div[data-status="3"] > span:nth-of-type(8) b {
     background-color: rgba(108, 108, 108, 0.2);
     }
-:root.colorBlind #vwRenderer .logEntry > div[data-status="3"] > span:nth-of-type(7) b {
+:root.colorBlind #vwRenderer .logEntry > div[data-status="3"] > span:nth-of-type(8) b {
     background-color: rgba(96, 96, 96, 0.2);
     }
-#vwRenderer .logEntry > div[data-status="2"] > span:nth-of-type(7) b,
+#vwRenderer .logEntry > div[data-status="2"] > span:nth-of-type(8) b,
 #netFilteringDialog > .panes > .details > div[data-status="2"] b {
     background-color: rgb(var(--popup-cell-allow-surface-rgb) / 100%);
     }
-#vwRenderer .logEntry > div > span:nth-of-type(7) a {
+#vwRenderer .logEntry > div > span:nth-of-type(8) a {
     background-color: dimgray;
     color: white;
     display: none;
@@ -396,20 +396,20 @@ body[dir="rtl"] #vwRenderer .logEntry > div > span:first-child {
     text-decoration: none;
     top: 0;
     }
-#netInspector.vExpanded #vwRenderer .logEntry > div > span:nth-of-type(7) a {
+#netInspector.vExpanded #vwRenderer .logEntry > div > span:nth-of-type(8) a {
     bottom: 0px;
     height: unset;
     padding: 0.25em;
     top: unset;
     }
-#vwRenderer .logEntry > div > span:nth-of-type(7) a::after {
+#vwRenderer .logEntry > div > span:nth-of-type(8) a::after {
     content: '\2197';
     }
-#vwRenderer .logEntry > div.networkRealm > span:nth-of-type(7):hover a {
+#vwRenderer .logEntry > div.networkRealm > span:nth-of-type(8):hover a {
     align-items: center;
     display: inline-flex;
     }
-#vwRenderer .logEntry > div > span:nth-of-type(7) a:hover {
+#vwRenderer .logEntry > div > span:nth-of-type(8) a:hover {
     opacity: 1;
     }
 
