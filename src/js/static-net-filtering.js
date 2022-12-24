@@ -3421,6 +3421,7 @@ class FilterCompiler {
                 break;
             case parser.OPTTokenMethod:
                 this.processMethodOption(val);
+                this.optionUnitBits |= this.METHOD_BIT;
                 break;
             case parser.OPTTokenInvalid:
                 return false;
@@ -3900,16 +3901,17 @@ class FilterCompiler {
     }
 }
 
-FilterCompiler.prototype.FROM_BIT         = 0b0000000001;
-FilterCompiler.prototype.TO_BIT           = 0b0000000010;
-FilterCompiler.prototype.DENYALLOW_BIT    = 0b0000000100;
-FilterCompiler.prototype.HEADER_BIT       = 0b0000001000;
-FilterCompiler.prototype.STRICT_PARTY_BIT = 0b0000010000;
-FilterCompiler.prototype.CSP_BIT          = 0b0000100000;
-FilterCompiler.prototype.REMOVEPARAM_BIT  = 0b0001000000;
-FilterCompiler.prototype.REDIRECT_BIT     = 0b0010000000;
-FilterCompiler.prototype.NOT_TYPE_BIT     = 0b0100000000;
-FilterCompiler.prototype.IMPORTANT_BIT    = 0b1000000000;
+FilterCompiler.prototype.FROM_BIT         = 0b00000000001;
+FilterCompiler.prototype.TO_BIT           = 0b00000000010;
+FilterCompiler.prototype.DENYALLOW_BIT    = 0b00000000100;
+FilterCompiler.prototype.HEADER_BIT       = 0b00000001000;
+FilterCompiler.prototype.STRICT_PARTY_BIT = 0b00000010000;
+FilterCompiler.prototype.CSP_BIT          = 0b00000100000;
+FilterCompiler.prototype.REMOVEPARAM_BIT  = 0b00001000000;
+FilterCompiler.prototype.REDIRECT_BIT     = 0b00010000000;
+FilterCompiler.prototype.NOT_TYPE_BIT     = 0b00100000000;
+FilterCompiler.prototype.IMPORTANT_BIT    = 0b01000000000;
+FilterCompiler.prototype.METHOD_BIT       = 0b10000000000;
 
 FilterCompiler.prototype.FILTER_OK          = 0;
 FilterCompiler.prototype.FILTER_INVALID     = 1;
