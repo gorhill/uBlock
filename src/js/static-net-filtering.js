@@ -1736,10 +1736,6 @@ class FilterDomainHitSet {
 // - from=
 
 class FilterFromDomainHit extends FilterDomainHit {
-    static get hntrieContainer() {
-        return origHNTrieContainer;
-    }
-
     static hasOriginHit() {
         return true;
     }
@@ -1756,6 +1752,9 @@ class FilterFromDomainHit extends FilterDomainHit {
         details.fromDomains.push(this.getDomainOpt(idata));
     }
 }
+Object.defineProperty(FilterFromDomainHit, 'hntrieContainer', {
+    value: origHNTrieContainer
+});
 
 class FilterFromDomainMiss extends FilterFromDomainHit {
     static hasOriginHit() {
@@ -1788,10 +1787,6 @@ class FilterFromEntityMiss extends FilterFromDomainMiss {
 }
 
 class FilterFromDomainHitSet extends FilterDomainHitSet {
-    static get hntrieContainer() {
-        return origHNTrieContainer;
-    }
-
     static hasOriginHit() {
         return true;
     }
@@ -1810,6 +1805,9 @@ class FilterFromDomainHitSet extends FilterDomainHitSet {
         details.fromDomains.push(this.getDomainOpt(idata));
     }
 }
+Object.defineProperty(FilterFromDomainHitSet, 'hntrieContainer', {
+    value: origHNTrieContainer
+});
 
 class FilterFromDomainMissSet extends FilterFromDomainHitSet {
     static hasOriginHit() {
@@ -1855,10 +1853,6 @@ const compileFromDomainOpt = (...args) => {
 // - to=
 
 class FilterToDomainHit extends FilterDomainHit {
-    static get hntrieContainer() {
-        return destHNTrieContainer;
-    }
-
     static getMatchTarget() {
         return $requestHostname;
     }
@@ -1871,6 +1865,9 @@ class FilterToDomainHit extends FilterDomainHit {
         details.toDomains.push(this.getDomainOpt(idata));
     }
 }
+Object.defineProperty(FilterToDomainHit, 'hntrieContainer', {
+    value: destHNTrieContainer
+});
 
 class FilterToDomainMiss extends FilterToDomainHit {
     static get dnrConditionName() {
@@ -1899,10 +1896,6 @@ class FilterToEntityMiss extends FilterToDomainMiss {
 }
 
 class FilterToDomainHitSet extends FilterDomainHitSet {
-    static get hntrieContainer() {
-        return destHNTrieContainer;
-    }
-
     static getMatchTarget(which) {
         return (which & 0b01) !== 0
             ? $requestHostname
@@ -1917,6 +1910,9 @@ class FilterToDomainHitSet extends FilterDomainHitSet {
         details.toDomains.push(this.getDomainOpt(idata));
     }
 }
+Object.defineProperty(FilterToDomainHitSet, 'hntrieContainer', {
+    value: destHNTrieContainer
+});
 
 class FilterToDomainMissSet extends FilterToDomainHitSet {
     static match(idata) {
