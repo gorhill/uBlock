@@ -1123,15 +1123,41 @@ const pageSelectorFromURLHash = (( ) => {
 
 /******************************************************************************/
 
-const reloadTab = function(ev) {
+const reloadTab = function(bypassCache = false) {
     const tabId = tabIdFromPageSelector();
     if ( tabId <= 0 ) { return; }
     messaging.send('loggerUI', {
         what: 'reloadTab',
-        tabId: tabId,
-        bypassCache: ev && (ev.ctrlKey || ev.metaKey || ev.shiftKey),
+        tabId,
+        bypassCache,
     });
 };
+
+dom.on('#refresh', 'click', ev => {
+    reloadTab(ev.ctrlKey || ev.metaKey || ev.shiftKey);
+});
+
+dom.on(document, 'keydown', ev => {
+    if ( ev.isComposing ) { return; }
+    let bypassCache = false;
+    switch ( ev.key ) {
+        case 'F5':
+            bypassCache = ev.ctrlKey || ev.metaKey || ev.shiftKey;
+            break;
+        case 'r':
+            if ( (ev.ctrlKey || ev.metaKey) !== true ) { return; }
+            break;
+        case 'R':
+            if ( (ev.ctrlKey || ev.metaKey) !== true ) { return; }
+            bypassCache = true;
+            break;
+        default:
+            return;
+    }
+    reloadTab(bypassCache);
+    ev.preventDefault();
+    ev.stopPropagation();
+}, { capture: true });
 
 /******************************************************************************/
 /******************************************************************************/
@@ -2824,7 +2850,6 @@ dom.on(window, 'beforeunload', releaseView);
 /******************************************************************************/
 
 dom.on('#pageSelector', 'change', pageSelectorChanged);
-dom.on('#refresh', 'click', reloadTab);
 dom.on('#netInspector .vCompactToggler', 'click', toggleVCompactView);
 dom.on('#pause', 'click', pauseNetInspector);
 

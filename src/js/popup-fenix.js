@@ -1065,13 +1065,13 @@ const setFirewallRuleHandler = function(ev) {
 
 /******************************************************************************/
 
-const reloadTab = function(ev) {
+const reloadTab = function(bypassCache = false) {
     messaging.send('popupPanel', {
         what: 'reloadTab',
         tabId: popupData.tabId,
         url: popupData.pageURL,
         select: vAPI.webextFlavor.soup.has('mobile'),
-        bypassCache: ev.ctrlKey || ev.metaKey || ev.shiftKey,
+        bypassCache,
     });
 
     // Polling will take care of refreshing the popup content
@@ -1084,12 +1084,29 @@ const reloadTab = function(ev) {
     hashFromPopupData(true);
 };
 
-dom.on('#refresh', 'click', reloadTab);
+dom.on('#refresh', 'click', ev => {
+    reloadTab(ev.ctrlKey || ev.metaKey || ev.shiftKey);
+});
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/672
 dom.on(document, 'keydown', ev => {
-    if ( ev.code !== 'F5' ) { return; }
-    reloadTab(ev);
+    if ( ev.isComposing ) { return; }
+    let bypassCache = false;
+    switch ( ev.key ) {
+        case 'F5':
+            bypassCache = ev.ctrlKey || ev.metaKey || ev.shiftKey;
+            break;
+        case 'r':
+            if ( (ev.ctrlKey || ev.metaKey) !== true ) { return; }
+            break;
+        case 'R':
+            if ( (ev.ctrlKey || ev.metaKey) !== true ) { return; }
+            bypassCache = true;
+            break;
+        default:
+            return;
+    }
+    reloadTab(bypassCache);
     ev.preventDefault();
     ev.stopPropagation();
 }, { capture: true });
