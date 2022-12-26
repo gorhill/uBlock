@@ -527,7 +527,7 @@
 		"contentURL": "https://raw.githubusercontent.com/List-KR/List-KR/master/filter-uBO.txt",
 		"cdnURLs": [
 			"https://cdn.jsdelivr.net/gh/List-KR/List-KR@master/filter-uBO.txt",
-			"https://cdn.statically.io/gh/List-KR/List-KR/master/filter-uBO.txt",
+			"https://cdn.statically.io/gh/List-KR/List-KR/master/filter-uBO.txt"
 		],
 		"supportURL": "https://github.com/List-KR/List-KR#readme"
 	},
@@ -622,7 +622,7 @@
 		"contentURL": "https://raw.githubusercontent.com/easylist/ruadlist/master/RuAdList-uBO.txt",
 		"cdnURLs": [
 			"https://cdn.jsdelivr.net/gh/easylist/ruadlist@master/RuAdList-uBO.txt",
-			"https://cdn.statically.io/gh/easylist/ruadlist/master/RuAdList-uBO.txt",
+			"https://cdn.statically.io/gh/easylist/ruadlist/master/RuAdList-uBO.txt"
 		],
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=102",
 		"instructionURL": "https://forums.lanik.us/viewtopic.php?f=102&t=22512"
