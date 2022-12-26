@@ -6,7 +6,6 @@ Rregullat e tij janë të barasvlershme me filtrat standardë që përdor uBlock
 - EasyList
 - EasyPrivacy
 - Lista e Peter Lowe për reklamat dhe gjurmuesit
-- Lista e AdGuard për gjurmuesit me bazë CNAME
 
 Në faqen e opsioneve mund të shtoni rregulla të tjera – klikoni ikonën e _ingranazhit_ në panelin modal.
 

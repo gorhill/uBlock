@@ -6,7 +6,6 @@ Noklusējuma nosacījumu kopa atbilst uBokc Origin noklusējuma aizturēšanas k
 - EasyList
 - EasyPrivacy
 - Pētera Lova (Peter Lowe) reklāmu un izsakošanas serveru saraksts
-- AdGuard ar CNAME aizsegtie izsekotāji
 
 Vairāk nosacījumu kopu var pievienot iestatījumu sadaļā -- jāklikšķina _Zobratu_ ikona uznirstošajā logā.
 

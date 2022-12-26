@@ -6,7 +6,6 @@ uBO Lite（uBOL）是一个实验性的，基于浏览器最新扩展接口（Ma
 - EasyList
 - EasyPrivacy
 - Peter Lowe’s Ad and tracking server list
-- AdGuard CNAME-Cloaked Trackers
 
 您可以通过设置页面添加更多过滤规则列表——点击弹出面板的“齿轮”图标。
 

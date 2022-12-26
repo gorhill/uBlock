@@ -6,7 +6,6 @@ Il set di regole predefinito corrisponde al set di filtri predefinito di uBlock 
 - EasyList
 - EasyPrivacy
 - Elenco dei server pubblicitari e di tracciamento di Peter Lowe
-- Tracker mascherati da AdGuard CNAME
 
 Puoi aggiungere altri set di regole visitando la pagina delle opzioni: fai clic sull'icona _Cogs_ nel pannello a comparsa.
 

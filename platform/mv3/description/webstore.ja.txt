@@ -6,7 +6,6 @@ uBO Lite（uBOL）は実験的な*承認なし*の MV3 ベースのコンテン�
 - EasyList
 - EasyPrivacy
 Peter Lowe の広告とトラッキングサーバーのリスト
-- AdGuard の CNAME Cloak トラッカーのリスト
 
 オプションページでルールセットを追加できます -- ポップアップ パネルの「歯車」アイコンをクリックします。
 

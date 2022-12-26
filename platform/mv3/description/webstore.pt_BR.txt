@@ -6,7 +6,6 @@ O conjunto de regras padrão corresponde ao conjunto de filtros padrão do uBloc
 - EasyList
 - EasyPrivacy
 - Lista de filtros de anúncios e rastreadores do Pete Lowe
-- Lista de domínios mascarados do AdGuard
 
 Você pode adicionar mais conjuntos de regras visitando a página de opções -- clique no ícone _Engrenagem_ no painel pop-up.
 

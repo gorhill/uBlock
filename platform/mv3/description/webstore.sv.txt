@@ -6,7 +6,6 @@ Standardregeluppsättningen motsvarar uBlock Origins standardfilteruppsättning:
 - EasyList
 - EasyPrivacy
 - Peter Lowes reklam- och spårningsserverlista
-- AdGuard CNAME-dolda spårare
 
 Du kan lägga till fler regeluppsättningar genom att besöka alternativsidan -- klicka på ikonen _Kugghjulet_ i popup-panelen.
 

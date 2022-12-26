@@ -6,7 +6,6 @@ Zadana lista pravila odgovara uBlock Origin-ovoj zadanoj listi filtera:
 - EasyList
 - EasyPrivacy
 - Peter Lowe-ova lista oglasa i pratećih servera
-- AdGuard CNAME-prikriveni pratići serveri
 
 Možete dodati više skupova pravila tako što ćete posjetiti stranicu s opcijama -- kliknite ikonu _zupčanika_ na skočnoj ploči.
 

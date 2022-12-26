@@ -6,7 +6,6 @@ Tulad ng uBlock Origin, ito rin ang mga default na listahan ng mga filter:
 - EasyList
 - EasyPrivacy
 - Listahan ni Peter Lowe sa mga ad at tracking server (Peter Lowe’s Ad and tracking server list)
-- Listahan ng AdGuard sa mga Tracker na Nagkukunwari gamit ang CNAME (AdGuard CNAME-Cloaked Trackers)
 
 Makakapagdagdag ka ng higit pang mga patakaran sa pahina ng mga opsyon -- pindutin ang icon ng _gulong_ sa popup panel.
 

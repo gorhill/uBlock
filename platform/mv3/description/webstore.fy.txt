@@ -6,7 +6,6 @@ De standert regelset komt oerien mei de standert filterset fan uBlock Origin:
 - EasyList
 - EasyPrivacy
 - Peter Lowe’s Ad and tracking-serverlist
-- AdGuard CNAME-Cloaked Trackers
 
 Jo kinne mear regelsets tafoegje troch de opsjesside te besykjen – klik op it _tântsjilpiktogram_ yn it pop-uppaniel.
 

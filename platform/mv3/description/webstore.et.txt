@@ -6,7 +6,6 @@ Tavaline reeglitekogum vastab uBlock Origini tavalisele filtritekogumile:
 - EasyList
 - EasyPrivacy
 Peter Lowe'i reklaamides ja jälitamisserverite loend
-- AdGuardi CNAME-varjatud jälgijad
 
 Reeglitekogumeid saate lisada valikute lehelt ehk avanenud paneelis klõpsake _Cogs_ ikooni.
 

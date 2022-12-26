@@ -6,7 +6,6 @@ uBO Lite(uBOL)는 *적은 권한을 요구하는* 실험적인 MV3 기반 콘텐
 - EasyList
 - EasyPrivacy
 - Peter Lowe’s Ad and tracking server list
-- AdGuard CNAME-Cloaked Trackers
 
 설정 페이지에서 규칙 목록을 더욱 추가할 수 있습니다. 팝업 창의 _Cogs_ 아이콘을 누르세요.
 

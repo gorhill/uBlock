@@ -6,7 +6,6 @@ Die Standardregeln entsprechen den Standardfiltern von uBlock Origin:
 - EasyList
 - EasyPrivacy
 - Peter Lowe’s Ad and tracking server list
-- AdGuard CNAME-Cloaked Trackers
 
 Sie können weitere Regeln hinzufügen, indem Sie die Optionen aufrufen — klicken Sie dazu im Pop-up-Fenster auf das Symbol mit den _Zahnrädern_.
 

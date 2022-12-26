@@ -6,7 +6,6 @@ El conjunt de regles per defecte correspon al conjunt de filtres per defecte d'u
 - EasyList
 - EasyPrivacy
 - Llista de servidors de seguiment i anuncis de Peter Lowe
-- Seguidors encoberts de CNAME d'AdGuard
 
 Podeu afegir més conjunts de regles si visiteu la pàgina d'opcions: feu clic a la icona _Cogs_ al tauler emergent.
 

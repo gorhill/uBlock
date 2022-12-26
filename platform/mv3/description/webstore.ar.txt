@@ -6,7 +6,6 @@ uBo لايت (uBOL) عبارة عن مانع محتوى من نوع MV3 تجري
 - القائمة السهلة
 - الخصوصية السهلة
 - قائمة خادم الإعلانات والتتبع لبيتر لوي
-- AdGuard CNAME-Cloaked Trackers
 
 You can add more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
 

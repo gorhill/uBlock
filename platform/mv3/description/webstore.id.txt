@@ -6,7 +6,6 @@ The default ruleset corresponds to uBlock Origin's default filterset:
 - EasyList
 - EasyPrivacy
 - Daftar server iklan dan pelacak Peter Lowe
-- AdGuard CNAME-Cloaked Trackers
 
 kamu dapat menambahkan rulesets di halaman opsi -- klik ikon _Cogs_ di panel popup.
 

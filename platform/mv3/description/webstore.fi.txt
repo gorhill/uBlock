@@ -6,7 +6,6 @@ Oletusarvoiset sääntömääritykset vastaavat uBlock Origin -laajennuksen olet
 - EasyList
 - EasyPrivacy
 - Peter Lowe’s Ad and tracking server list
-- AdGuard CNAME-Cloaked Trackers
 
 Voit lisätä sääntömäärityksiä asetussivulta -- paina ponnahduspaneelin _Rataskuvaketta_.
 

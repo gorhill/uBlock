@@ -6,7 +6,6 @@ Les règles par défaut correspondent au filtrage par défaut d'uBlock Origin :
 - EasyList
 - EasyPrivacy
 - La liste anti-serveurs pub et pistage de Peter Lowe
-- La liste AdGuard anti-pisteurs à camouflage CNAME
 
 Vous pouvez ajouter plus de règles en consultant la page des paramètres -- Cliquez sur l'_Engrenage_ dans le panneau pop-up.
 

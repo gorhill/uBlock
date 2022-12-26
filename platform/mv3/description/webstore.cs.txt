@@ -6,7 +6,6 @@ Výchozí sada pravidel koresponduje k výchozím sadám filtrů uBlock Origin:
 - EasyList
 - EasyPrivacy
 - Peter Lowe’s Ad and tracking server list
-- AdGuard CNAME-Cloaked Trackers
 
 Můžete přidat více sad pravidel navštívením stránky nastavení -- klikněte na ikonu ozubených kol ve vyskakovácím panelu.
 

@@ -6,7 +6,6 @@
 - EasyList
 - EasyPrivacy
 - Peter Lowe’s Ad and tracking server list
-- AdGuard CNAME-Cloaked Trackers
 
 Μπορείτε να προσθέσετε περισσότερα σύνολα κανόνων μεταβαίνοντας στη σελίδα επιλογών -- κάντε κλικ στο εικονίδιο _Cogs_ στον αναδυόμενο πίνακα.
 

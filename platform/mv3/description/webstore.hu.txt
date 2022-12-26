@@ -6,7 +6,6 @@ Az alapértelmezett szabálykészlet megfelel a uBlock Origin alapértelmezett s
 - EasyList
 - EasyPrivacy
 - Peter Lowe hirdetés és nyomkövető szerver listája
-- AdGuard CNAME-Cloaked Trackers
 
 További szabályokat adhat hozzá a beállítások oldalon - kattintson a _Cogs_ ikonra a felugró panelen.
 

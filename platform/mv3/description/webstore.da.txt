@@ -6,7 +6,6 @@ Standardregelsættet svarer til uBlock Origins standardfiltersæt:
 - EasyList
 - EasyPrivacy
 - Peter Lowe’s Ad and tracking server list
-- AdGuard CNAME-Cloaked Trackers
 
 Flere regelsæt kan tilføjes ved at gå til indstillingssiden -- klik på ikonet _Cogs_ i pop op-panelet.
 

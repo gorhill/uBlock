@@ -6,7 +6,6 @@ uBO Lite (uBOL) 是款實驗性，以 MV3 為基礎的「免權限」內容阻�
 - EasyList
 - EasyPrivacy
 - Peter Lowe’s Ad and tracking server list
-- AdGuard CNAME-Cloaked Trackers
 
 您可以前往選項頁面（按下彈出面板的 **齒輪** 按鈕）新增更多規則集。
 

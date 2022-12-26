@@ -6,7 +6,6 @@ Predvolený súbor pravidiel zodpovedá predvolenému súboru filtrov uBlock Ori
 - EasyList
 - EasyPrivacy
 - Zoznam reklamných a sledovacích serverov Petra Lowea
-- AdGuard CNAME-Cloaked Trackers
 
 Ďalšie súbory pravidiel môžete pridať na stránke s možnosťami – kliknite na ikonu _súkolesia_ vo vyskakovacom paneli.
 
