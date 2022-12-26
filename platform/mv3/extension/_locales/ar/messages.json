@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "حاجب محتوى تجريبي وبلا أذونات. يحجب الإعلانات والمتتبعات والمعدنات والكثير فوراً عند التثبيت.",
+    "message": "حاجب محتوى تجريبي وبلا أذونا. يحجب الإعلانات والمتتبعات والمعدنات والكثير فوراً عند التثبيت.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -168,7 +168,7 @@
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "whitelistPrompt": {
-    "message": "The trusted site directives dictate on which web pages uBO Lite should be disabled. One entry per line.",
+    "message": "تحدد توجيهات الموقع الموثوق به صفحات الويب uBO Lite التي يجب تعطيلها. إدخال واحد في كل سطر.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
@@ -204,11 +204,11 @@
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
-    "message": "Filter lists",
+    "message": "قوائم التصفية",
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "External dependencies (GPLv3-compatible):",
+    "message": "التبعيات الخارجية (متوافقة مع GPLv3):",
     "description": "Shown in the About pane"
   },
   "genericSubmit": {
@@ -224,55 +224,55 @@
     "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
-    "message": "Welcome",
+    "message": "مرحبا",
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "You have just installed uBO Lite. Here you can choose the default filtering mode to use on all websites.\n\nBy default, <em>Basic</em> mode is selected because it does not require the permission to read and modify data. If you trust uBO Lite, you can give it broad permission to read and modify data on all websites in order to enable more advanced filtering capabilities for all websites by default.",
+    "message": "لقد قمت للتو بتثبيت uBO Lite. هنا يمكنك اختيار وضع التصفية الافتراضي لاستخدامه في جميع مواقع الويب.\n\nبشكل افتراضي ، يتم تحديد الوضع <em>الأساسي</em> لأنه لا يتطلب الإذن لقراءة البيانات وتعديلها. إذا كنت تثق في uBO Lite ، فيمكنك منحه إذنًا واسعًا لقراءة البيانات وتعديلها على جميع مواقع الويب من أجل تمكين المزيد من إمكانات التصفية المتقدمة لجميع مواقع الويب افتراضيًا.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
-    "message": "Default filtering mode",
+    "message": "وضع التصفية الافتراضي",
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "The default filtering mode will be overridden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
+    "message": "سيتم تجاوز وضع التصفية الافتراضي بواسطة أوضاع التصفية لكل موقع ويب. يمكنك ضبط وضع التصفية على أي موقع ويب معين وفقًا للوضع الذي يعمل بشكل أفضل على موقع الويب هذا. كل وضع له مزاياه وعيوبه.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
-    "message": "no filtering",
+    "message": "لا تصفية",
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
-    "message": "basic",
+    "message": "أساسي",
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
-    "message": "optimal",
+    "message": "الأفضل",
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
-    "message": "complete",
+    "message": "مكتمل",
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Basic network filtering from selected filter lists.\n\nDoes not require permission to read and modify data on websites.",
+    "message": "تصفية الشبكة الأساسية من قوائم التصفية المحددة.\n\nلا يتطلب إذنًا لقراءة البيانات وتعديلها على مواقع الويب.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.",
+    "message": "تصفية الشبكة المتقدمة بالإضافة إلى تصفية موسعة محددة من قوائم التصفية المحددة.\n\nيتطلب إذنًا واسعًا لقراءة البيانات وتعديلها على جميع مواقع الويب.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific and generic extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.\n\nGeneric extended filtering may cause higher webpage resources usage.",
+    "message": "تصفية الشبكة المتقدمة بالإضافة إلى تصفية موسعة محددة وعامة من قوائم التصفية المحددة.\n\nيتطلب إذنًا واسعًا لقراءة البيانات وتعديلها على جميع مواقع الويب.\n\nقد تؤدي التصفية الموسعة العامة إلى زيادة استخدام موارد صفحة الويب.",
     "description": "This describes the 'complete' filtering mode"
   },
   "behaviorSectionLabel": {
-    "message": "Behavior",
+    "message": "السلوك",
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Automatically reload page when changing filtering mode",
+    "message": "إعادة تحميل الصفحة تلقائيًا عند تغيير وضع التصفية",
     "description": "Label for a checkbox in the options page"
   }
 }

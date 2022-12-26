@@ -268,7 +268,7 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "behaviorSectionLabel": {
-    "message": "Behavior",
+    "message": "Behaviour",
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
