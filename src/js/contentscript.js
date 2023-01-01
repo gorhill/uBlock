@@ -467,7 +467,7 @@ vAPI.injectScriptlet = function(doc, text) {
     if ( !doc ) { return; }
     let script, url;
     try {
-        const blob = new self.Blob([ text ], { type: 'text/javascript' });
+        const blob = new self.Blob([ text ], { type: 'text/javascript; charset=utf-8' });
         url = self.URL.createObjectURL(blob);
         script = doc.createElement('script');
         script.async = false;
