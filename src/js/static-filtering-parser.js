@@ -1536,7 +1536,6 @@ Parser.prototype.SelectorCompiler = class {
         default:
             break;
         }
-
         if ( head ) {
             if ( args ) {
                 this.astFlatten(head.data, args);
@@ -1548,7 +1547,9 @@ Parser.prototype.SelectorCompiler = class {
             }
         }
         if ( data.type !== 'PseudoClassSelector' ) { return; }
-
+        if ( data.name.startsWith('-abp-') && this.asProcedural === false ) {
+            return;
+        }
         // Post-analysis, mind:
         // - https://w3c.github.io/csswg-drafts/selectors-4/#has-pseudo
         // - https://w3c.github.io/csswg-drafts/selectors-4/#negation
