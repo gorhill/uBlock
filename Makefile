@@ -1,7 +1,7 @@
 # https://stackoverflow.com/a/6273809
 run_options := $(filter-out $@,$(MAKECMDGOALS))
 
-.PHONY: all clean test lint chromium firefox npm dig mv3 mv3-quick \
+.PHONY: all clean test lint chromium opera firefox npm dig mv3 mv3-quick \
 	compare maxcost medcost mincost modifiers record wasm
 
 sources := $(wildcard assets/resources/* dist/version src/* src/*/* src/*/*/* src/*/*/*/*)
@@ -15,6 +15,12 @@ dist/build/uBlock0.chromium: tools/make-chromium.sh $(sources) $(platform) $(ass
 
 # Build the extension for Chromium.
 chromium: dist/build/uBlock0.chromium
+
+dist/build/uBlock0.opera: tools/make-opera.sh $(sources) $(platform) $(assets)
+	tools/make-opera.sh
+
+# Build the extension for Opera.
+opera: dist/build/uBlock0.opera
 
 dist/build/uBlock0.firefox: tools/make-firefox.sh $(sources) $(platform) $(assets)
 	tools/make-firefox.sh all
