@@ -63,6 +63,7 @@ textarea {
 #inspectors {
     flex-grow: 1;
     font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    position: relative;
     }
 .inspector {
     border-top: 1px solid #ccc;
@@ -224,11 +225,11 @@ body[dir="rtl"] #netInspector #filterExprPicker {
     white-space: nowrap;
     }
 #vwRenderer .logEntry > div[data-status="1"],
-#netFilteringDialog > .panes > .details > div[data-status="1"] {
+.netFilteringDialog > .panes > .details > div[data-status="1"] {
     background-color: rgb(var(--popup-cell-block-surface-rgb) / 50%);
     }
 #vwRenderer .logEntry > div[data-status="1"][data-modifier],
-#netFilteringDialog > .panes > .details > div[data-status="1"][data-modifier] {
+.netFilteringDialog > .panes > .details > div[data-status="1"][data-modifier] {
     background-color: var(--logger-modified-surface);
     }
 #vwRenderer .logEntry > div[data-status="3"] {
@@ -238,7 +239,7 @@ body[dir="rtl"] #netInspector #filterExprPicker {
     background-color: rgba(96, 96, 96, 0.1);
     }
 #vwRenderer .logEntry > div[data-status="2"],
-#netFilteringDialog > .panes > .details > div[data-status="2"] {
+.netFilteringDialog > .panes > .details > div[data-status="2"] {
     background-color: rgb(var(--popup-cell-allow-surface-rgb) / 50%);
     }
 #vwRenderer .logEntry > div[data-tabid="-1"] {
@@ -367,11 +368,11 @@ body[dir="rtl"] #vwRenderer .logEntry > div > span:first-child {
     font-weight: bold;
     }
 #vwRenderer .logEntry > div[data-status="1"] > span:nth-of-type(8) b,
-#netFilteringDialog > .panes > .details > div[data-status="1"] b {
+.netFilteringDialog > .panes > .details > div[data-status="1"] b {
     background-color: rgb(var(--popup-cell-block-surface-rgb) / 100%);
     }
 #vwRenderer .logEntry > div[data-status="1"][data-modifier] > span:nth-of-type(8) b,
-#netFilteringDialog > .panes > .details > div[data-status="1"][data-modifier] b {
+.netFilteringDialog > .panes > .details > div[data-status="1"][data-modifier] b {
     background-color: var(--logger-modified-em-surface);
     }
 #vwRenderer .logEntry > div[data-status="3"] > span:nth-of-type(8) b {
@@ -381,7 +382,7 @@ body[dir="rtl"] #vwRenderer .logEntry > div > span:first-child {
     background-color: rgba(96, 96, 96, 0.2);
     }
 #vwRenderer .logEntry > div[data-status="2"] > span:nth-of-type(8) b,
-#netFilteringDialog > .panes > .details > div[data-status="2"] b {
+.netFilteringDialog > .panes > .details > div[data-status="2"] b {
     background-color: rgb(var(--popup-cell-allow-surface-rgb) / 100%);
     }
 #vwRenderer .logEntry > div > span:nth-of-type(8) a {
@@ -428,6 +429,52 @@ body[dir="rtl"] #vwRenderer .logEntry > div > span:first-child {
     width: 100%;
     }
 
+#netInspector .entryTools {
+    background-color: var(--surface-0);
+    filter: drop-shadow(2px 4px 6px black);
+    max-width: 60vw;
+    min-width: max(50vw, 400px);
+    position: absolute;
+    right: 0;
+    top: 20vh;
+    }
+#netInspector .entryTools:empty {
+    display: none;
+    }
+#netInspector .entryTools .dialogControls {
+    display: flex;
+    justify-content: stretch;
+    }
+
+.closeButton {
+    stroke: var(--ink-1);
+    stroke-width: 3px;
+    width: 1.6em;
+    height: 1.6em;
+    bottom: calc(100% + 2px);
+    }
+body[dir="ltr"] .closeButton {
+    right: 0;
+    }
+body[dir="rtl"] .closeButton {
+    left: 0;
+    }
+.closeButton:hover {
+    background-color: var(--surface-2) !important;
+    }
+.closeButton > * {
+    pointer-events: none;
+    }
+.moveBand {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAFElEQVQI12NgwAfKy8v/M5ANYLoBshgEyQo6H9UAAAAASUVORK5CYII=');
+    cursor: grab;
+    flex-grow: 1;
+    opacity: 0.5;
+    }
+.moving .moveBand {
+    cursor: grabbing;
+}
+
 #popupContainer {
     background-color: var(--surface-1);
     border: 1px solid gray;
@@ -464,7 +511,12 @@ body[dir="rtl"] #vwRenderer .logEntry > div > span:first-child {
 #modalOverlay > div {
     position: relative;
     }
-#modalOverlay > div > div:nth-of-type(1) {
+#modalOverlay .closeButton {
+    background-color: var(--surface-1);
+    position: absolute;
+    }
+
+#modalOverlayContainer {
     background-color: var(--surface-1);
     border: 0;
     box-sizing: border-box;
@@ -473,39 +525,18 @@ body[dir="rtl"] #vwRenderer .logEntry > div > span:first-child {
     overflow-y: auto;
     width: 90vw;
     }
-#modalOverlay > div > div:nth-of-type(2) {
-    stroke: var(--ink-1);
-    stroke-width: 3px;
-    position: absolute;
-    width: 1.6em;
-    height: 1.6em;
-    bottom: calc(100% + 2px);
-    background-color: var(--surface-1);
-    }
-body[dir="ltr"] #modalOverlay > div > div:nth-of-type(2) {
-    right: 0;
-    }
-body[dir="rtl"] #modalOverlay > div > div:nth-of-type(2) {
-    left: 0;
-    }
-#modalOverlay > div > div:nth-of-type(2):hover {
-    background-color: var(--surface-2);
-    }
-#modalOverlay > div > div:nth-of-type(2) > * {
-    pointer-events: none;
-    }
 
-#netFilteringDialog {
+.netFilteringDialog {
     font-size: 95%;
     }
-#netFilteringDialog a {
+.netFilteringDialog a {
     text-decoration: none;
     }
-#netFilteringDialog select {
+.netFilteringDialog select {
     max-width: 75%;
     outline: none;
 }
-#netFilteringDialog > .preview {
+.netFilteringDialog > .preview {
     align-items: center;
     /* http://lea.verou.me/css3patterns/ */
     background-color: #aaa;
@@ -534,22 +565,22 @@ body[dir="rtl"] #modalOverlay > div > div:nth-of-type(2) {
     padding: 0.5em;
     text-align: center;
     }
-#netFilteringDialog > .preview > * {
+.netFilteringDialog > .preview > * {
     max-width: 100%;
     max-height: 20vh;
     }
-#netFilteringDialog > .preview > span {
+.netFilteringDialog > .preview > span {
     background-color: var(--surface-3);
     cursor: pointer;
     padding: 1em;
     }
 
-#netFilteringDialog > .headers {
+.netFilteringDialog > .headers {
     border-bottom: 1px solid var(--border-4);
     line-height: 2;
     position: relative;
     }
-#netFilteringDialog > .headers > .header {
+.netFilteringDialog > .headers > .header {
     border: 1px solid var(--border-2);
     border-bottom: 1px solid var(--border-4);
     border-top-left-radius: 4px;
@@ -562,26 +593,26 @@ body[dir="rtl"] #modalOverlay > div > div:nth-of-type(2) {
     text-align: center;
     top: 1px;
     }
-#netFilteringDialog[data-pane="details"] > .headers > [data-pane="details"],
-#netFilteringDialog[data-pane="dynamic"] > .headers > [data-pane="dynamic"],
-#netFilteringDialog[data-pane="static"] > .headers > [data-pane="static"] {
+.netFilteringDialog[data-pane="details"] > .headers > [data-pane="details"],
+.netFilteringDialog[data-pane="dynamic"] > .headers > [data-pane="dynamic"],
+.netFilteringDialog[data-pane="static"] > .headers > [data-pane="static"] {
     background-color: var(--surface-1);
     border-color: var(--border-4);
     border-bottom: 1px solid transparent;
     color: var(--ink-1);
     }
-#netFilteringDialog > .headers > .tools {
+.netFilteringDialog > .headers > .tools {
     bottom: 0;
     display: flex;
     position: absolute;
     }
-body[dir="ltr"] #netFilteringDialog > .headers > .tools {
+body[dir="ltr"] .netFilteringDialog > .headers > .tools {
     right: 0;
     }
-body[dir="rtl"] #netFilteringDialog > .headers > .tools {
+body[dir="rtl"] .netFilteringDialog > .headers > .tools {
     left: 0;
     }
-#netFilteringDialog > .headers > .tools > span {
+.netFilteringDialog > .headers > .tools > span {
     color: var(--ink-4);
         fill: var(--ink-4);
     cursor: pointer;
@@ -589,78 +620,76 @@ body[dir="rtl"] #netFilteringDialog > .headers > .tools {
     padding: 0 0.25em;
     text-align: center;
     }
-#netFilteringDialog > .headers > .tools > span:hover {
+.netFilteringDialog > .headers > .tools > span:hover {
     color: var(--ink-1);
         fill: var(--ink-1);
     }
-#netFilteringDialog.extendedRealm > .headers > .dynamic,
-#netFilteringDialog.extendedRealm > .panes > .dynamic {
+.netFilteringDialog.extendedRealm > .headers > .dynamic,
+.netFilteringDialog.extendedRealm > .panes > .dynamic {
     display: none;
     }
-#netFilteringDialog.extendedRealm > .headers > .static,
-#netFilteringDialog.extendedRealm > .panes > .static {
+.netFilteringDialog.extendedRealm > .headers > .static,
+.netFilteringDialog.extendedRealm > .panes > .static {
     display: none;
     }
-#netFilteringDialog > div.panes {
-    min-height: 40vh;
+.netFilteringDialog > div.panes {
     overflow: hidden;
     overflow-y: auto;
     padding-top: 1em;
     }
-#netFilteringDialog > div.panes > div {
+.netFilteringDialog > div.panes > div {
     display: none;
     }
-#netFilteringDialog[data-pane="details"] > .panes > [data-pane="details"],
-#netFilteringDialog[data-pane="dynamic"] > .panes > [data-pane="dynamic"],
-#netFilteringDialog[data-pane="static"] > .panes > [data-pane="static"] {
+.netFilteringDialog[data-pane="details"] > .panes > [data-pane="details"],
+.netFilteringDialog[data-pane="dynamic"] > .panes > [data-pane="dynamic"],
+.netFilteringDialog[data-pane="static"] > .panes > [data-pane="static"] {
     display: flex;
     flex-direction: column;
-    padding: 0 var(--default-gap-xsmall);
+    padding: 0 var(--default-gap-xsmall) var(--default-gap-xsmall) var(--default-gap-xsmall);
     }
-#netFilteringDialog > .panes > .details > div {
+.netFilteringDialog > .panes > .details > div {
     align-items: stretch;
     background-color: var(--surface-2);
     border: 0;
     border-bottom: 1px solid var(--surface-0);
     display: flex;
     }
-#netFilteringDialog > .panes > .details > div > span {
+.netFilteringDialog > .panes > .details > div > span {
     padding: 0.5em;
     }
-#netFilteringDialog > .panes > .details > div > span:nth-of-type(1) {
+.netFilteringDialog > .panes > .details > div > span:nth-of-type(1) {
     border: 0;
     flex-grow: 0;
     flex-shrink: 0;
     text-align: right;
     width: 8em;
     }
-body[dir="ltr"] #netFilteringDialog > .panes > .details > div > span:nth-of-type(1) {
+body[dir="ltr"] .netFilteringDialog > .panes > .details > div > span:nth-of-type(1) {
     border-right: 1px solid var(--surface-0);
     }
-body[dir="rtl"] #netFilteringDialog > .panes > .details > div > span:nth-of-type(1) {
+body[dir="rtl"] .netFilteringDialog > .panes > .details > div > span:nth-of-type(1) {
     border-left: 1px solid var(--surface-0);
     }
-#netFilteringDialog > .panes > .details > div > span:nth-of-type(2) {
+.netFilteringDialog > .panes > .details > div > span:nth-of-type(2) {
     flex-grow: 1;
-    max-height: 20vh;
+    max-height: 10vh;
     overflow: hidden auto;
     white-space: pre-line
     }
-#netFilteringDialog > .panes > .details > div > span:nth-of-type(2):not(.prose) {
+.netFilteringDialog > .panes > .details > div > span:nth-of-type(2):not(.prose) {
     word-break: break-all;
     }
-#netFilteringDialog > .panes > .details > div > span:nth-of-type(2) .listEntry {
+.netFilteringDialog > .panes > .details > div > span:nth-of-type(2) .listEntry {
     display: inline-flex;
     }
-#netFilteringDialog > .panes > .details > div > span:nth-of-type(2) .fa-icon {
+.netFilteringDialog > .panes > .details > div > span:nth-of-type(2) .fa-icon {
     font-size: 110%;
     opacity: 0.5;
-    vertical-align: bottom;
     }
-#netFilteringDialog > .panes > .details > div > span:nth-of-type(2) .fa-icon:hover {
+.netFilteringDialog > .panes > .details > div > span:nth-of-type(2) .fa-icon:hover {
     opacity: 1;
     }
-#netFilteringDialog > .panes > .details .exceptor {
+.netFilteringDialog > .panes > .details .exceptor {
     align-items: center;
     border-left: 1px solid var(--surface-0);
     cursor: pointer;
@@ -668,29 +697,29 @@ body[dir="rtl"] #netFilteringDialog > .panes > .details > div > span:nth-of-type
     font-family: monospace;
     opacity: 0.8;
     }
-#netFilteringDialog > .panes > .details .exceptor:hover {
+.netFilteringDialog > .panes > .details .exceptor:hover {
     opacity: 1;
     }
-#netFilteringDialog > .panes > .details .exceptored .filter {
+.netFilteringDialog > .panes > .details .exceptored .filter {
     text-decoration: line-through;
     }
-#netFilteringDialog > .panes > .details .exceptored .exceptor {
+.netFilteringDialog > .panes > .details .exceptored .exceptor {
     background-color: rgb(var(--primary-50) / 50%);
     }
-#netFilteringDialog > .panes > .details .exceptor::before {
+.netFilteringDialog > .panes > .details .exceptor::before {
     content: '@@';
     }
-#netFilteringDialog.extendedRealm > .panes > .details .exceptor::before {
+.netFilteringDialog.extendedRealm > .panes > .details .exceptor::before {
     content: '#@#';
     }
-#netFilteringDialog > div.panes > .dynamic > .toolbar {
+.netFilteringDialog > div.panes > .dynamic > .toolbar {
     padding-bottom: 1em;
     }
-#netFilteringDialog > div.panes > .dynamic .row {
+.netFilteringDialog > div.panes > .dynamic .row {
     display: flex;
     min-height: 2.2em;
     }
-#netFilteringDialog > div.panes > .dynamic .row > span:nth-of-type(1) {
+.netFilteringDialog > div.panes > .dynamic .row > span:nth-of-type(1) {
     align-self: stretch;
     border: 0;
     display: inline-flex;
@@ -699,17 +728,17 @@ body[dir="rtl"] #netFilteringDialog > .panes > .details > div > span:nth-of-type
     text-align: center;
     width: 4.5em;
     }
-body[dir="ltr"] #netFilteringDialog > div.panes > .dynamic .row > span:nth-of-type(1) {
+body[dir="ltr"] .netFilteringDialog > div.panes > .dynamic .row > span:nth-of-type(1) {
     border-right: 1px solid var(--surface-0);
     }
-body[dir="rtl"] #netFilteringDialog > div.panes > .dynamic .row > span:nth-of-type(1) {
+body[dir="rtl"] .netFilteringDialog > div.panes > .dynamic .row > span:nth-of-type(1) {
     border-left: 1px solid var(--surface-0);
     }
-#netFilteringDialog > div.panes > .dynamic .row > span:nth-of-type(2) {
+.netFilteringDialog > div.panes > .dynamic .row > span:nth-of-type(2) {
     align-self: center;
     padding: 0 0.5em;
     }
-#netFilteringDialog > div.panes > .dynamic > .toolbar #saveRules {
+.netFilteringDialog > div.panes > .dynamic > .toolbar #saveRules {
     background-color: #ffe;
     border: 1px solid #ddc;
     border-radius: 4px;
@@ -719,29 +748,29 @@ body[dir="rtl"] #netFilteringDialog > div.panes > .dynamic .row > span:nth-of-ty
     visibility: hidden;
     width: 100%;
     }
-body.dirty #netFilteringDialog > div.panes > .dynamic > .toolbar #saveRules {
+body.dirty .netFilteringDialog > div.panes > .dynamic > .toolbar #saveRules {
     visibility: visible;
     }
-#netFilteringDialog > div.panes > .dynamic > .toolbar #saveRules:hover {
+.netFilteringDialog > div.panes > .dynamic > .toolbar #saveRules:hover {
     fill: black;
     }
-#netFilteringDialog > div.panes > .dynamic > .toolbar .entry {
+.netFilteringDialog > div.panes > .dynamic > .toolbar .entry {
     display: none;
     }
-#netFilteringDialog > div.panes > .dynamic .entry {
+.netFilteringDialog > div.panes > .dynamic .entry {
     background-color: var(--surface-2);
     border: 0;
     border-bottom: 1px solid var(--surface-0);
     }
-#netFilteringDialog > div.panes > .dynamic .entry:hover {
+.netFilteringDialog > div.panes > .dynamic .entry:hover {
     background-color: var(--surface-3);
     }
-#netFilteringDialog > div.panes > .dynamic .entry > .action {
+.netFilteringDialog > div.panes > .dynamic .entry > .action {
     background-color: transparent;
     border: 0;
     cursor: pointer;
     }
-#netFilteringDialog > div.panes > .dynamic .entry > .action > span {
+.netFilteringDialog > div.panes > .dynamic .entry > .action > span {
     background-color: transparent;
     border: 0;
     display: inline-block;
@@ -750,80 +779,77 @@ body.dirty #netFilteringDialog > div.panes > .dynamic > .toolbar #saveRules {
     visibility: hidden;
     width: 33.33%;
     }
-#netFilteringDialog > div.panes > .dynamic .entry > .action.allow {
+.netFilteringDialog > div.panes > .dynamic .entry > .action.allow {
     background-color: rgba(0, 160, 0, 0.3);
     }
-:root.colorBlind #netFilteringDialog > div.panes > .dynamic .entry > .action.allow {
+:root.colorBlind .netFilteringDialog > div.panes > .dynamic .entry > .action.allow {
     background-color: rgba(255, 194, 57, 0.4);
     }
-#netFilteringDialog > div.panes > .dynamic .entry > .action.noop {
+.netFilteringDialog > div.panes > .dynamic .entry > .action.noop {
     background-color: rgba(108, 108, 108, 0.3);
     }
-:root.colorBlind #netFilteringDialog > div.panes > .dynamic .entry > .action.noop {
+:root.colorBlind .netFilteringDialog > div.panes > .dynamic .entry > .action.noop {
     background-color: rgba(96, 96, 96, 0.4);
     }
-#netFilteringDialog > div.panes > .dynamic .entry > .action.block {
+.netFilteringDialog > div.panes > .dynamic .entry > .action.block {
     background-color: rgba(192, 0, 0, 0.3);
     }
-:root.colorBlind #netFilteringDialog > div.panes > .dynamic .entry > .action.block {
+:root.colorBlind .netFilteringDialog > div.panes > .dynamic .entry > .action.block {
     background-color: rgba(0, 19, 110, 0.4);
     }
-#netFilteringDialog > div.panes > .dynamic .entry > .action.own.allow {
+.netFilteringDialog > div.panes > .dynamic .entry > .action.own.allow {
     background-color: rgba(0, 160, 0, 1);
     }
-:root.colorBlind #netFilteringDialog > div.panes > .dynamic .entry > .action.own.allow {
+:root.colorBlind .netFilteringDialog > div.panes > .dynamic .entry > .action.own.allow {
     background-color: rgba(255, 194, 57, 1);
     }
-#netFilteringDialog > div.panes > .dynamic .entry > .action.own.noop,
-:root.colorBlind #netFilteringDialog > div.panes > .dynamic .entry > .action.own.noop {
+.netFilteringDialog > div.panes > .dynamic .entry > .action.own.noop,
+:root.colorBlind .netFilteringDialog > div.panes > .dynamic .entry > .action.own.noop {
     background-color: rgba(108, 108, 108, 1);
     }
-#netFilteringDialog > div.panes > .dynamic .entry > .action.own.block {
+.netFilteringDialog > div.panes > .dynamic .entry > .action.own.block {
     background-color: rgba(192, 0, 0, 1);
     }
-:root.colorBlind #netFilteringDialog > div.panes > .dynamic .entry > .action.own.block {
+:root.colorBlind .netFilteringDialog > div.panes > .dynamic .entry > .action.own.block {
     background-color: rgba(0, 19, 110, 1);
     }
-#netFilteringDialog > div.panes > .dynamic .entry > .action:not(.own):hover > span {
+.netFilteringDialog > div.panes > .dynamic .entry > .action:not(.own):hover > span {
     opacity: 0.2;
     visibility: visible;
     }
-#netFilteringDialog > div.panes > .dynamic .entry > .action:not(.own):hover > span:hover {
+.netFilteringDialog > div.panes > .dynamic .entry > .action:not(.own):hover > span:hover {
     opacity: 0.75;
     }
-#netFilteringDialog > div.panes > .dynamic .entry > .action > .allow {
+.netFilteringDialog > div.panes > .dynamic .entry > .action > .allow {
     background-color: rgb(0, 160, 0);
     }
-:root.colorBlind  #netFilteringDialog > div.panes > .dynamic .entry > .action > .allow {
+:root.colorBlind  .netFilteringDialog > div.panes > .dynamic .entry > .action > .allow {
     background-color: rgb(255, 194, 57);
     }
-#netFilteringDialog > div.panes > .dynamic .entry > .action > .noop {
+.netFilteringDialog > div.panes > .dynamic .entry > .action > .noop {
     background-color: rgb(108, 108, 108);
     }
-#netFilteringDialog > div.panes > .dynamic .entry > .action > .block {
+.netFilteringDialog > div.panes > .dynamic .entry > .action > .block {
     background-color: rgb(192, 0, 0);
     }
-:root.colorBlind  #netFilteringDialog > div.panes > .dynamic .entry > .action > .block {
+:root.colorBlind  .netFilteringDialog > div.panes > .dynamic .entry > .action > .block {
     background-color: rgb(0, 19, 110);
     }
-#netFilteringDialog > div.panes > .dynamic .entry > .url {
+.netFilteringDialog > div.panes > .dynamic .entry > .url {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     }
-#netFilteringDialog > div.panes > div.static > div {
+.netFilteringDialog > div.panes > div.static > div {
     line-height: 2;
     }
-#netFilteringDialog > div.panes > div.static > div {
-    padding-bottom: 1em;
-    }
-#netFilteringDialog > div.panes > div.static textarea {
+.netFilteringDialog > div.panes > div.static textarea {
     height: 6em;
     max-height: 20vh;
     min-height: 10vh;
     word-break: break-all;
     }
-#netFilteringDialog > div.panes > div.static > div:nth-of-type(2) {
+.netFilteringDialog > div.panes > div.static > div:nth-of-type(2) {
     text-align: center;
     }
 

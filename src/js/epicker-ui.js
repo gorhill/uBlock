@@ -601,6 +601,11 @@ const onStartMoving = (( ) => {
     let rMax = 0, bMax = 0;
     let timer;
 
+    const eatEvent = function(ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+    };
+
     const move = ( ) => {
         timer = undefined;
         const r1 = Math.min(Math.max(r0 - mx1 + mx0, 2), rMax);
@@ -702,13 +707,6 @@ const svgListening = (( ) => {
         }
     };
 })();
-
-/******************************************************************************/
-
-const eatEvent = function(ev) {
-    ev.stopPropagation();
-    ev.preventDefault();
-};
 
 /******************************************************************************/
 

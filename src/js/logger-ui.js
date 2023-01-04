@@ -72,6 +72,69 @@ const tabIdFromAttribute = function(elem) {
     return isNaN(tabId) ? 0 : tabId;
 };
 
+
+/******************************************************************************/
+/******************************************************************************/
+
+const onStartMovingWidget = (( ) => {
+    let widget = null;
+    let mx0 = 0, my0 = 0;
+    let mx1 = 0, my1 = 0;
+    let r0 = 0, t0 = 0;
+    let rMax = 0, tMax = 0;
+    let timer;
+
+    const eatEvent = function(ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+    };
+
+    const move = ( ) => {
+        timer = undefined;
+        const r1 = Math.min(Math.max(r0 - mx1 + mx0, 2), rMax);
+        const t1 = Math.min(Math.max(t0 - my0 + my1, 2), tMax);
+        widget.style.setProperty('right', `${r1}px`);
+        widget.style.setProperty('top', `${t1}px`);
+    };
+
+    const moveAsync = ev => {
+        if ( timer !== undefined ) { return; }
+        mx1 = ev.pageX;
+        my1 = ev.pageY;
+        timer = self.requestAnimationFrame(move);
+    };
+
+    const stop = ev => {
+        if ( timer !== undefined ) {
+            self.cancelAnimationFrame(timer);
+            timer = undefined;
+        }
+        if ( widget.classList.contains('moving') === false ) { return; }
+        widget.classList.remove('moving');
+        self.removeEventListener('mousemove', moveAsync, { capture: true });
+        eatEvent(ev);
+        widget = null;
+    };
+
+    return function(target, ev) {
+        if ( dom.cl.has(target, 'moving') ) { return; }
+        widget = target;
+        mx0 = ev.pageX;
+        my0 = ev.pageY;
+        const style = self.getComputedStyle(target);
+        r0 = parseInt(style.right, 10);
+        t0 = parseInt(style.top, 10);
+        const rect = widget.getBoundingClientRect();
+        const widgetParent = widget.parentElement;
+        rMax = widgetParent.clientWidth - 2 - rect.width ;
+        tMax = widgetParent.clientHeight - 2 - rect.height;
+        widget.classList.add('moving');
+        self.addEventListener('mousemove', moveAsync, { capture: true });
+        self.addEventListener('mouseup', stop, { capture: true, once: true });
+        eatEvent(ev);
+    };
+})();
+
 /******************************************************************************/
 /******************************************************************************/
 
@@ -79,8 +142,8 @@ const tabIdFromAttribute = function(elem) {
 //
 const modalDialog = (( ) => {
     const overlay = qs$('#modalOverlay');
-    const container = qs$(overlay, ':scope > div > div:nth-of-type(1)');
-    const closeButton = qs$(overlay, ':scope > div > div:nth-of-type(2)');
+    const container = qs$('#modalOverlayContainer');
+    const closeButton = qs$(overlay, ':scope .closeButton');
     let onDestroyed;
 
     const removeChildren = logger.removeAllChildren = function(node) {
@@ -124,6 +187,7 @@ const modalDialog = (( ) => {
 })();
 
 self.logger.modalDialog = modalDialog;
+
 
 /******************************************************************************/
 /******************************************************************************/
@@ -1292,7 +1356,14 @@ dom.on(document, 'keydown', ev => {
         const target = ev.target;
         const tcl = target.classList;
 
-        // Select a mode
+        // Close entry tools
+        if ( tcl.contains('closeButton') ) {
+            ev.stopPropagation();
+            toggleOff();
+            return;
+        }
+
+        // Select a pane
         if ( tcl.contains('header') ) {
             ev.stopPropagation();
             dom.attr(dialog, 'data-pane', dom.attr(target, 'data-pane'));
@@ -1407,16 +1478,6 @@ dom.on(document, 'keydown', ev => {
                 persist: persist,
             });
             colorize();
-            return;
-        }
-
-        // Force a reload of the tab
-        if ( tcl.contains('reload') ) {
-            ev.stopPropagation();
-            messaging.send('loggerUI', {
-                what: 'reloadTab',
-                tabId: targetTabId,
-            });
             return;
         }
 
@@ -1865,14 +1926,7 @@ dom.on(document, 'keydown', ev => {
     };
 
     const fillDialog = function(domains) {
-        dialog = modalDialog.create(
-            '#netFilteringDialog',
-            ( ) => {
-                targetURLs = [];
-                targetRow = null;
-                dialog = null;
-            }
-        );
+        dialog = dom.clone('#templates .netFilteringDialog');
         dom.cl.toggle(
             dialog,
             'extendedRealm',
@@ -1888,7 +1942,15 @@ dom.on(document, 'keydown', ev => {
         dom.on(dialog, 'click', ev => { onClick(ev); }, true);
         dom.on(dialog, 'change', onSelectChange, true);
         dom.on(dialog, 'input', onInputChange, true);
-        modalDialog.show();
+        const container = qs$('#netInspector .entryTools');
+        if ( container.firstChild ) {
+            container.replaceChild(dialog, container.firstChild);
+        } else {
+            container.append(dialog);
+        }
+        dom.on(qs$(dialog, '.moveBand'), 'mousedown', ev => {
+            onStartMovingWidget(container, ev);
+        });
     };
 
     const toggleOn = async function(ev) {
@@ -1913,10 +1975,20 @@ dom.on(document, 'keydown', ev => {
         fillDialog(domains);
     };
 
+    const toggleOff = function() {
+        const container = qs$('#netInspector .entryTools');
+        if ( container.firstChild ) {
+            container.firstChild.remove();
+        }
+        targetURLs = [];
+        targetRow = null;
+        dialog = null;
+    };
+
     dom.on(
         '#netInspector',
         'click',
-        '.canDetails > span:nth-of-type(2),.canDetails > span:nth-of-type(3),.canDetails > span:nth-of-type(5)',
+        '.canDetails > span:nth-of-type(2),.canDetails > span:nth-of-type(3)',
         ev => { toggleOn(ev); }
     );
 })();

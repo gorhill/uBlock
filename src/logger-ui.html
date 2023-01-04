@@ -90,28 +90,33 @@
                 </div>
             </div>
         </div>
+        <div class="entryTools"></div>
     </div>
     <iframe id="popupContainer"></iframe>
 </div>
 
 <div id="modalOverlay">
     <div>
+        <div class="closeButton"><svg viewBox="0 0 64 64"><path d="M 16 16 L 48 48 M 16 48 L 48 16" /></svg></div>
         <div id="modalOverlayContainer"></div>
-        <div id="modalOverlayClose"><svg viewBox="0 0 64 64"><path d="M 16 16 L 48 48 M 16 48 L 48 16" /></svg></div>
     </div>
 </div>
 
 <div id="templates" style="display: none;">
     <div id="logEntryTemplate"><div><span></span>&#8203;<span></span>&#8203;<span></span>&#8203;<span></span>&#8203;<span></span>&#8203;<span></span>&#8203;<span></span>&#8203;<span></span></div></div>
 
-    <div id="netFilteringDialog" data-pane="details">
+    <div class="netFilteringDialog" data-pane="details">
+        <div class="dialogControls">
+            <div class="moveBand"></div>
+            <div class="closeButton"><svg viewBox="0 0 64 64"><path d="M 16 16 L 48 48 M 16 48 L 48 16" /></div>
+        </div>
         <div class="hide preview"><span>click to preview</span></div>
         <div class="headers">
             &ensp;
             <span class="header details" data-pane="details" data-i18n="loggerEntryDetailsHeader"></span>
             <span class="header dynamic" data-pane="dynamic" data-i18n="loggerURLFilteringHeader"></span>
             <span class="header static" data-pane="static" data-i18n="loggerStaticFilteringHeader"></span>
-            <span class="tools"><span class="fa-icon reload">refresh</span>&ensp;<span class="fa-icon picker">eye-dropper</span></span>
+            <span class="tools"><span class="fa-icon picker">eye-dropper</span></span>
         </div>
         <div class="panes">
             <div class="pane details" data-pane="details">
