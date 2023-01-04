@@ -85,7 +85,7 @@ button {
     color: var(--button-ink);
     display: inline-flex;
     fill: var(--button-ink);
-    font-size: var(--font-size);
+    font-size: max(calc(var(--font-size) * 0.875), 14px);
     justify-content: center;
     min-height: 36px;
     padding: 0 var(--font-size);
