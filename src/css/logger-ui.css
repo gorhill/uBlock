@@ -319,7 +319,7 @@ body[dir="rtl"] #vwRenderer .logEntry > div > span:first-child {
     text-decoration: line-through rgba(0,0,255,0.7);
     }
 #vwRenderer .logEntry > div > span:nth-of-type(3) {
-    font: 12px monospace;
+    font-family: monospace;
     padding-left: 0.3em;
     padding-right: 0.3em;
     text-align: center;
