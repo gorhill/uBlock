@@ -324,9 +324,7 @@ body[dir="rtl"] #vwRenderer .logEntry > div > span:first-child {
     padding-right: 0.3em;
     text-align: center;
     }
-#vwRenderer .logEntry > div.canDetails:hover > span:nth-of-type(2),
-#vwRenderer .logEntry > div.canDetails:hover > span:nth-of-type(3),
-#vwRenderer .logEntry > div.canDetails:hover > span:nth-of-type(5) {
+#vwRenderer .logEntry > div.canDetails:hover > span:not(:nth-of-type(4)):not(:nth-of-type(8)) {
     background: rgba(0, 0, 255, 0.1);
     cursor: zoom-in;
     }

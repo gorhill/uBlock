@@ -102,6 +102,7 @@ const onStartMovingWidget = (( ) => {
         mx1 = ev.pageX;
         my1 = ev.pageY;
         timer = self.requestAnimationFrame(move);
+        eatEvent(ev);
     };
 
     const stop = ev => {
@@ -1988,7 +1989,7 @@ dom.on(document, 'keydown', ev => {
     dom.on(
         '#netInspector',
         'click',
-        '.canDetails > span:nth-of-type(2),.canDetails > span:nth-of-type(3)',
+        '.canDetails > span:not(:nth-of-type(4)):not(:nth-of-type(8))',
         ev => { toggleOn(ev); }
     );
 })();
