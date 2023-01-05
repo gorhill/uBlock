@@ -78,6 +78,7 @@ const tabIdFromAttribute = function(elem) {
 
 const onStartMovingWidget = (( ) => {
     let widget = null;
+    let ondone = null;
     let mx0 = 0, my0 = 0;
     let mx1 = 0, my1 = 0;
     let r0 = 0, t0 = 0;
@@ -115,11 +116,16 @@ const onStartMovingWidget = (( ) => {
         self.removeEventListener('mousemove', moveAsync, { capture: true });
         eatEvent(ev);
         widget = null;
+        if ( ondone !== null ) {
+            ondone();
+            ondone = null;
+        }
     };
 
-    return function(target, ev) {
+    return function(ev, target, callback) {
         if ( dom.cl.has(target, 'moving') ) { return; }
         widget = target;
+        ondone = callback || null;
         mx0 = ev.pageX;
         my0 = ev.pageY;
         const style = self.getComputedStyle(target);
@@ -1950,7 +1956,16 @@ dom.on(document, 'keydown', ev => {
             container.append(dialog);
         }
         dom.on(qs$(dialog, '.moveBand'), 'mousedown', ev => {
-            onStartMovingWidget(container, ev);
+            onStartMovingWidget(ev, container, ( ) => {
+                const widget = qs$('#netInspector .entryTools');
+                vAPI.localStorage.setItem(
+                    'loggerUI.entryTools',
+                    JSON.stringify({
+                        right: widget.style.right,
+                        top: widget.style.top,
+                    })
+                );
+            });
         });
     };
 
@@ -1985,6 +2000,21 @@ dom.on(document, 'keydown', ev => {
         targetRow = null;
         dialog = null;
     };
+
+    // Restore position of entry tools dialog
+    vAPI.localStorage.getItemAsync(
+        'loggerUI.entryTools',
+    ).then(response => {
+        if ( typeof response !== 'string' ) { return; }
+        const settings = JSON.parse(response);
+        const widget = qs$('#netInspector .entryTools');
+        if ( settings.right ) {
+            widget.style.right = settings.right;
+        }
+        if ( settings.top ) {
+            widget.style.top = settings.top;
+        }
+    });
 
     dom.on(
         '#netInspector',
