@@ -1587,15 +1587,8 @@ Parser.prototype.SelectorCompiler = class {
             break;
         case 'not': {
             if ( this.astHasType(args, 'Combinator', 0) === false ) { break; }
-            const selectors = this.astSelectorsFromSelectorList(args);
-            if ( Array.isArray(selectors) === false || selectors.length === 0 ) {
+            if ( this.astIsValidSelectorList(args) !== true ) {
                 data.type = 'Error';
-                break;
-            }
-            for ( const selector of selectors ) {
-                if ( this.astIsValidSelector(selector) ) { continue; }
-                data.type = 'Error';
-                break;
             }
             break;
         }
@@ -1865,6 +1858,17 @@ Parser.prototype.SelectorCompiler = class {
         return true;
     }
 
+    astIsValidSelectorList(args) {
+        const selectors = this.astSelectorsFromSelectorList(args);
+        if ( Array.isArray(selectors) === false || selectors.length === 0 ) {
+            return false;
+        }
+        for ( const selector of selectors ) {
+            if ( this.astIsValidSelector(selector) !== true ) { return false; }
+        }
+        return true;
+    }
+
     translateAdguardCSSInjectionFilter(suffix) {
         const matches = /^(.*)\s*\{([^}]+)\}\s*$/.exec(suffix);
         if ( matches === null ) { return ''; }
@@ -2071,6 +2075,7 @@ Parser.prototype.SelectorCompiler = class {
         const i = this.compileInteger(s, 1, 256);
         if ( i !== undefined ) { return i; }
         const parts = this.astFromRaw(s, 'selectorList' );
+        if ( this.astIsValidSelectorList(parts) !== true ) { return; }
         if ( this.astHasType(parts, 'ProceduralSelector') ) { return; }
         if ( this.astHasType(parts, 'ActionSelector') ) { return; }
         if ( this.astHasType(parts, 'Error') ) { return; }
