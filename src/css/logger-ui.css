@@ -594,7 +594,7 @@ body[dir="rtl"] .closeButton {
 .netFilteringDialog[data-pane="details"] > .headers > [data-pane="details"],
 .netFilteringDialog[data-pane="dynamic"] > .headers > [data-pane="dynamic"],
 .netFilteringDialog[data-pane="static"] > .headers > [data-pane="static"] {
-    background-color: var(--surface-1);
+    background-color: var(--surface-0);
     border-color: var(--border-4);
     border-bottom: 1px solid transparent;
     color: var(--ink-1);
