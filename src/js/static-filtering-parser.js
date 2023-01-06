@@ -1750,9 +1750,12 @@ Parser.prototype.SelectorCompiler = class {
             case 'IdSelector':
             case 'PseudoClassSelector':
             case 'PseudoElementSelector':
-            case 'TypeSelector':
-                prelude.push(this.astSerializePart(part));
+            case 'TypeSelector': {
+                const component = this.astSerializePart(part);
+                if ( component === undefined ) { return; }
+                prelude.push(component);
                 break;
+            }
             case 'ProceduralSelector': {
                 if ( prelude.length !== 0 ) {
                     let spath = prelude.join('');
