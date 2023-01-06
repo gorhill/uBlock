@@ -81,8 +81,9 @@ const onStartMovingWidget = (( ) => {
     let ondone = null;
     let mx0 = 0, my0 = 0;
     let mx1 = 0, my1 = 0;
-    let r0 = 0, t0 = 0;
-    let rMax = 0, tMax = 0;
+    let l0 = 0, t0 = 0;
+    let pw = 0, ph = 0;
+    let cw = 0, ch = 0;
     let timer;
 
     const eatEvent = function(ev) {
@@ -92,10 +93,17 @@ const onStartMovingWidget = (( ) => {
 
     const move = ( ) => {
         timer = undefined;
-        const r1 = Math.min(Math.max(r0 - mx1 + mx0, 2), rMax);
-        const t1 = Math.min(Math.max(t0 - my0 + my1, 2), tMax);
-        widget.style.setProperty('right', `${r1}px`);
-        widget.style.setProperty('top', `${t1}px`);
+        const l1 = Math.min(Math.max(l0 + mx1 - mx0, 0), pw - cw);
+        if ( (l1+cw/2) < (pw/2) ) {
+            widget.style.left = `${l1/pw*100}%`;
+            widget.style.right = '';
+        } else {
+            widget.style.right = `${(pw-l1-cw)/pw*100}%`;
+            widget.style.left = '';
+        }
+        const t1 = Math.min(Math.max(t0 + my1 - my0, 0), ph - ch);
+        widget.style.top = `${t1/ph*100}%`;
+        widget.style.bottom = '';
     };
 
     const moveAsync = ev => {
@@ -126,15 +134,13 @@ const onStartMovingWidget = (( ) => {
         if ( dom.cl.has(target, 'moving') ) { return; }
         widget = target;
         ondone = callback || null;
-        mx0 = ev.pageX;
-        my0 = ev.pageY;
-        const style = self.getComputedStyle(target);
-        r0 = parseInt(style.right, 10);
-        t0 = parseInt(style.top, 10);
-        const rect = widget.getBoundingClientRect();
+        mx0 = ev.pageX; my0 = ev.pageY;
         const widgetParent = widget.parentElement;
-        rMax = widgetParent.clientWidth - 2 - rect.width ;
-        tMax = widgetParent.clientHeight - 2 - rect.height;
+        const crect = widget.getBoundingClientRect();
+        const prect = widgetParent.getBoundingClientRect();
+        pw = prect.width; ph = prect.height;
+        cw = crect.width; ch = crect.height;
+        l0 = crect.x - prect.x; t0 = crect.y - prect.y;
         widget.classList.add('moving');
         self.addEventListener('mousemove', moveAsync, { capture: true });
         self.addEventListener('mouseup', stop, { capture: true, once: true });
@@ -1956,11 +1962,14 @@ dom.on(document, 'keydown', ev => {
             container.append(dialog);
         }
         dom.on(qs$(dialog, '.moveBand'), 'mousedown', ev => {
+            if ( ev.button !== 0 ) { return; }
             onStartMovingWidget(ev, container, ( ) => {
                 const widget = qs$('#netInspector .entryTools');
                 vAPI.localStorage.setItem(
                     'loggerUI.entryTools',
                     JSON.stringify({
+                        bottom: widget.style.bottom,
+                        left: widget.style.left,
                         right: widget.style.right,
                         top: widget.style.top,
                     })
@@ -2008,12 +2017,10 @@ dom.on(document, 'keydown', ev => {
         if ( typeof response !== 'string' ) { return; }
         const settings = JSON.parse(response);
         const widget = qs$('#netInspector .entryTools');
-        if ( settings.right ) {
-            widget.style.right = settings.right;
-        }
-        if ( settings.top ) {
-            widget.style.top = settings.top;
-        }
+        widget.style.bottom = settings.bottom || '';
+        widget.style.left = settings.left || '';
+        widget.style.right = settings.right || '';
+        widget.style.top = settings.top || '';
     });
 
     dom.on(

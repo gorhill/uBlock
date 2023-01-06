@@ -430,11 +430,9 @@ body[dir="rtl"] #vwRenderer .logEntry > div > span:first-child {
 #netInspector .entryTools {
     background-color: var(--surface-0);
     filter: drop-shadow(2px 4px 6px black);
-    max-width: 60vw;
-    min-width: max(50vw, 400px);
+    max-width: 640px;
+    min-width: min(100%, 640px);
     position: absolute;
-    right: 0;
-    top: 20vh;
     }
 #netInspector .entryTools:empty {
     display: none;
