@@ -28,27 +28,20 @@ import µb from './background.js';
 /******************************************************************************/
 
 µb.formatCount = function(count) {
-    if ( typeof count !== 'number' ) {
-        return '';
+    if ( typeof count !== 'number' ) { return ''; }
+    const s = `${count}`;
+    if ( count < 1000 ) { return s; }
+    if ( count < 10000 ) {
+        return '>' + s.slice(0,1) + 'k';
     }
-    let s = count.toFixed(0);
-    if ( count >= 1000 ) {
-        if ( count < 10000 ) {
-            s = '>' + s.slice(0,1) + 'k';
-        } else if ( count < 100000 ) {
-            s = s.slice(0,2) + 'k';
-        } else if ( count < 1000000 ) {
-            s = s.slice(0,3) + 'k';
-        } else if ( count < 10000000 ) {
-            s = s.slice(0,1) + 'M';
-        } else {
-            s = s.slice(0,-6) + 'M';
-        }
+    if ( count < 100000 ) {
+        return s.slice(0,2) + 'k';
     }
-    return s;
+    if ( count < 1000000 ) {
+        return s.slice(0,3) + 'k';
+    }
+    return s.slice(0,-6) + 'M';
 };
-
-// https://www.youtube.com/watch?v=DyvzfyqYm_s
 
 /******************************************************************************/
 
