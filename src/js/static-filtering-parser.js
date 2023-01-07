@@ -1343,6 +1343,50 @@ Parser.prototype.SelectorCompiler = class {
 
         this.reEatBackslashes = /\\([()])/g;
         this.reEscapeRegex = /[.*+?^${}()|[\]\\]/g;
+        // https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes
+        this.knownPseudoClasses = new Set([
+            'active', 'any-link', 'autofill',
+            'blank',
+            'checked', 'current',
+            'default', 'defined', 'dir', 'disabled',
+            'empty', 'enabled',
+            'first', 'first-child', 'first-of-type', 'fullscreen', 'future', 'focus', 'focus-visible', 'focus-within',
+            'has', 'host', 'host-context', 'hover',
+            'indeterminate', 'in-range', 'invalid', 'is',
+            'lang', 'last-child', 'last-of-type', 'left', 'link', 'local-link',
+            'modal',
+            'not', 'nth-child', 'nth-col', 'nth-last-child', 'nth-last-col', 'nth-last-of-type', 'nth-of-type',
+            'only-child', 'only-of-type', 'optional', 'out-of-range',
+            'past', 'picture-in-picture', 'placeholder-shown', 'paused', 'playing',
+            'read-only', 'read-write', 'required', 'right', 'root',
+            'scope', 'state', 'target', 'target-within',
+            'user-invalid', 'valid', 'visited',
+            'where',
+        ]);
+        this.knownPseudoClassesWithArgs = new Set([
+            'dir',
+            'has', 'host-context',
+            'is',
+            'lang',
+            'not', 'nth-child', 'nth-col', 'nth-last-child', 'nth-last-col', 'nth-last-of-type', 'nth-of-type',
+            'state',
+            'where',
+        ]);
+        // https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements
+        this.knownPseudoElements = new Set([
+            'after',
+            'backdrop', 'before',
+            'cue', 'cue-region',
+            'first-letter', 'first-line', 'file-selector-button',
+            'grammar-error', 'marker',
+            'part', 'placeholder',
+            'selection', 'slotted', 'spelling-error',
+            'target-text',
+        ]);
+        this.knownPseudoElementsWithArgs = new Set([
+            'part',
+            'slotted',
+        ]);
         // https://github.com/gorhill/uBlock/issues/2793
         this.normalizedOperators = new Map([
             [ '-abp-has', 'has' ],
@@ -1355,7 +1399,6 @@ Parser.prototype.SelectorCompiler = class {
             ':remove',
             ':style',
         ]);
-
         this.proceduralOperatorNames = new Set([
             'has-text',
             'if',
@@ -1391,7 +1434,6 @@ Parser.prototype.SelectorCompiler = class {
         this.reExtendedSyntaxReplacer = /\[-(?:abp|ext)-([a-z-]+)=(['"])(.+?)\2\]/g;
         this.abpProceduralOpReplacer = /:-abp-(?:contains|has)\(/g;
         this.nativeCssHas = instanceOptions.nativeCssHas === true;
-
         // https://www.w3.org/TR/css-syntax-3/#typedef-ident-token
         this.reInvalidIdentifier = /^\d/;
     }
@@ -1659,17 +1701,34 @@ Parser.prototype.SelectorCompiler = class {
             }
             break;
         }
-        case 'PseudoElementSelector':
-            out.push(':');
-            /* fall through */
-        case 'PseudoClassSelector':
-            out.push(`:${data.name}`);
-            if ( Array.isArray(part.args) ) {
+        case 'PseudoElementSelector': {
+            const hasArgs = Array.isArray(part.args);
+            if ( data.name.charCodeAt(0) !== 0x2D /* '-' */ ) {
+                if ( this.knownPseudoElements.has(data.name) === false ) { return; }
+                if ( this.knownPseudoElementsWithArgs.has(data.name) && hasArgs === false ) { return; }
+            }
+            out.push(`::${data.name}`);
+            if ( hasArgs ) {
                 const arg = this.astSerialize(part.args);
                 if ( typeof arg !== 'string' ) { return; }
                 out.push(`(${arg})`);
             }
             break;
+        }
+        case 'PseudoClassSelector': {
+            const hasArgs = Array.isArray(part.args);
+            if ( data.name.charCodeAt(0) !== 0x2D /* '-' */ ) {
+                if ( this.knownPseudoClasses.has(data.name) === false ) { return; }
+                if ( this.knownPseudoClassesWithArgs.has(data.name) && hasArgs === false ) { return; }
+            }
+            out.push(`:${data.name}`);
+            if ( hasArgs ) {
+                const arg = this.astSerialize(part.args);
+                if ( typeof arg !== 'string' ) { return; }
+                out.push(`(${arg})`);
+            }
+            break;
+        }
         case 'Raw':
             out.push(data.value);
             break;
