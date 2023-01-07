@@ -20,7 +20,7 @@ Additionally, you can point-and-click to block JavaScript locally or globally, c
 
 Free. Open source with public license (GPLv3). For users by users. No donations sought.
 
-Without the preset filter lists, this extension is nothing. If you ever want to contribute something, think about the people working hard to maintain the filter lists you are using, which were made available to use by all for free.
+If you ever want to contribute something, think about the people working hard to maintain the filter lists you are using, which were made available to use by all for free.
 
 You can help contribute by translating uBO on Crowdin.
 
