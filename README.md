@@ -29,12 +29,19 @@ uBlock Origin (uBO)
 
 ***
 
-uBO is **NOT** an "ad blocker"; it is a [wide-spectrum content blocker][Blocking] for Chromium and Firefox with CPU and memory efficiency as primary features. After a new installation, the default behavior of uBO is to block ads, trackers, and malware sites through [EasyList][EasyList], [EasyPrivacy][EasyPrivacy], [Peter Lowe's Blocklist][Peter Lowe's Blocklist], [Online Malicious URL Blocklist][Malicious Blocklist], and uBO's [filter lists][uBO Filters].
+uBlock Origin (uBO) is a CPU and memory-efficient [wide-spectrum content blocker][Blocking] for Chromium and Firefox. It blocks ads, trackers, coin miners, popups, annoying anti-blockers, malware sites, etc., by default after installation using [EasyList][EasyList], [EasyPrivacy][EasyPrivacy], [Peter Lowe's Blocklist][Peter Lowe's Blocklist], [Online Malicious URL Blocklist][Malicious Blocklist], and uBO [filter lists][uBO Filters]. There are many other lists available to block even more. Hosts files are also supported.
+
+After installation, you may easily unselect any preselected filter lists if you think uBO blocks too much. For reference, Adblock Plus installs with only EasyList, ABP filters, and Acceptable Ads enabled by default.
+
+uBO uses the EasyList filter syntax and [extends][Extended Syntax] the syntax to work with custom rules and filters. Also, uBO has an advanced mode that allows it to work in [default-deny mode][Default Deny]. This mode will cause [all 3rd-party network requests][3rd Party Requests] to be blocked by default unless allowed by the user.
+
+It is important to note that using a blocker is **NOT** [theft]. Do not fall for this creepy idea. The _ultimate_ logical consequence of `blocking = theft` is the criminalization of the inalienable right to privacy.
+
+Ads, "unintrusive" or not, are just the visible portion of the privacy-invading means entering your browser when you visit most sites. **uBO's primary goal is to help users neutralize these privacy-invading methods** in a way that welcomes those users who do not wish to use more technical, involved means (such as [uMatrix]).
 
 ***
 
 * [Documentation](#documentation)
-* [General Information](#general-information)
 * [Installation](#installation)
   * [Chromium](#chromium)
   * [Firefox / Firefox for Android](#firefox--firefox-for-android)
@@ -42,7 +49,7 @@ uBO is **NOT** an "ad blocker"; it is a [wide-spectrum content blocker][Blocking
 * [About](#about)
 * [License](#license)
 * [Privacy Policy]
-* [Wiki](https://github.com/gorhill/uBlock/wiki)
+* [Wiki]
 
 ## Documentation
 
@@ -54,18 +61,6 @@ uBO is **NOT** an "ad blocker"; it is a [wide-spectrum content blocker][Blocking
 Visit the [wiki][Wiki] for documentation.
 
 For support, questions, or help, visit [/r/uBlockOrigin][Reddit].
-
-## General Information
-
-uBO is **NOT** an "ad blocker"; it is a wide-spectrum content blocker. uBO blocks ads through the EasyList filter syntax and [extends][Extended Syntax] the syntax to work with custom rules and filters. Furthermore, the advanced mode allows uBO to work in [default-deny mode][Default Deny], which will cause [all 3rd-party network requests][3rd Party Requests] to be blocked by default unless allowed by the user.
-
-It is important to note that using a blocker is **NOT** [theft]. Do not fall for this creepy idea. The _ultimate_ logical consequence of `blocking = theft` is the criminalization of the inalienable right to privacy.
-
-Ads, "unintrusive" or not, are just the visible portion of the privacy-invading means entering your browser when you visit most sites. **uBO's primary goal is to help users neutralize these privacy-invading methods** in a way that welcomes those users who do not wish to use more technical, involved means (such as [uMatrix]).
-
-EasyList, EasyPrivacy, Peter Lowe's Blocklist, Online Malicious URL Blocklist, and uBO's filter lists are default enabled when you install uBO. Many other lists are available to block trackers, analytics, and more. Hosts files are also supported.
-
-Once you install uBO, you may easily unselect any preselected filter lists if you think uBO blocks too much. For reference, Adblock Plus installs with only EasyList, ABP filters, and Acceptable Ads enabled by default.
 
 ## Installation
 
@@ -91,9 +86,7 @@ uBO should be compatible with any Chromium-based browser.
 
 #### All Browsers
 
-Do **NOT** use any other content blocker concurrently with uBO to benefit from its higher efficiency. uBO will [perform][Performance] as well as or better than most of the other popular ad blockers. Other blockers can prevent uBO's privacy or anti-blocker-defusing features from working correctly.
-
-Do **NOT** use uBO along with other [similarly-purposed blockers][Similarly-Purposed].
+Do **NOT** use any other [similarly-purposed blockers][Similarly-Purposed] concurrently with uBO to benefit from its higher efficiency. uBO will [perform][Performance] as well as or better than most of the other popular ad blockers. These other blockers can prevent uBO's privacy or anti-blocker-defusing features from working correctly.
 
 [Manual Installation][Manual Installation]
 
@@ -111,7 +104,7 @@ Do **NOT** use uBO along with other [similarly-purposed blockers][Similarly-Purp
 
 Free. Open-source. For users by users. No donations sought.
 
-Without the preset filter lists, this extension is nothing. If you ever want to contribute something, think about the people working hard to maintain the filter lists you are using, which were made available to use by all for free.
+If you ever want to contribute something, think about the people working hard to maintain the filter lists you are using, which were made available to use by all for free.
 
 You can help contribute by translating uBO on [Crowdin].
 
