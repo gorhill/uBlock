@@ -284,6 +284,7 @@
     --sf-notice-ink: var(--ink-4);
     --sf-readonly-ink: var(--ink-3);
     --sf-tag-ink: #006e2e /* h:135 S:100 Luv:40 */;
+    --sf-unicode-ink: var(--ink-1);
     --sf-value-ink: #974900 /* h:30 S:100 Luv:40 */;
     --sf-variable-ink: var(--ink-1);
     --sf-warning-ink: #e49d00; /* h:50 S:100 Luv:70 */

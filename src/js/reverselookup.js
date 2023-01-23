@@ -26,8 +26,8 @@
 import staticNetFilteringEngine from './static-net-filtering.js';
 import µb from './background.js';
 import { CompiledListWriter } from './static-filtering-io.js';
-import { StaticFilteringParser } from './static-filtering-parser.js';
 import { i18n$ } from './i18n.js';
+import * as sfp from './static-filtering-parser.js';
 
 import {
     domainFromHostname,
@@ -134,14 +134,14 @@ const fromNetFilter = async function(rawFilter) {
     if ( typeof rawFilter !== 'string' || rawFilter === '' ) { return; }
 
     const writer = new CompiledListWriter();
-    const parser = new StaticFilteringParser({
+    const parser = new sfp.AstFilterParser({
         nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
+        maxTokenLength: staticNetFilteringEngine.MAX_TOKEN_LENGTH,
     });
-    parser.setMaxTokenLength(staticNetFilteringEngine.MAX_TOKEN_LENGTH);
-    parser.analyze(rawFilter);
+    parser.parse(rawFilter);
 
-    const compiler = staticNetFilteringEngine.createCompiler(parser);
-    if ( compiler.compile(writer) === false ) { return; }
+    const compiler = staticNetFilteringEngine.createCompiler();
+    if ( compiler.compile(parser, writer) === false ) { return; }
 
     await initWorker();
 

@@ -26,8 +26,8 @@
 import logger from './logger.js';
 import µb from './background.js';
 import { sessionFirewall } from './filtering-engines.js';
-
 import { StaticExtFilteringHostnameDB } from './static-ext-filtering-db.js';
+import * as sfp from './static-filtering-parser.js';
 
 /******************************************************************************/
 
@@ -314,7 +314,11 @@ htmlFilteringEngine.freeze = function() {
 };
 
 htmlFilteringEngine.compile = function(parser, writer) {
-    const { raw, compiled, exception } = parser.result;
+    const isException = parser.isException();
+    const root = parser.getBranchFromType(sfp.NODE_TYPE_EXT_PATTERN_HTML);
+    const headerName = parser.getNodeString(root);
+
+    const { raw, compiled } = parser.result;
     if ( compiled === undefined ) {
         const who = writer.properties.get('name') || '?';
         logger.writeOne({
@@ -329,7 +333,7 @@ htmlFilteringEngine.compile = function(parser, writer) {
 
     // Only exception filters are allowed to be global.
     if ( parser.hasOptions() === false ) {
-        if ( exception ) {
+        if ( isException ) {
             writer.push([ 64, '', 1, compiled ]);
         }
         return;
@@ -337,10 +341,10 @@ htmlFilteringEngine.compile = function(parser, writer) {
 
     // TODO: Mind negated hostnames, they are currently discarded.
 
-    for ( const { hn, not, bad } of parser.extOptions() ) {
+    for ( const { hn, not, bad } of parser.getExtFilterDomainIterator() ) {
         if ( bad ) { continue; }
         let kind = 0;
-        if ( exception ) {
+        if ( isException ) {
             if ( not ) { continue; }
             kind |= 0b01;
         }

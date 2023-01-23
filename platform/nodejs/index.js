@@ -38,7 +38,7 @@ import publicSuffixList from './lib/publicsuffixlist/publicsuffixlist.js';
 import snfe from './js/static-net-filtering.js';
 import { FilteringContext } from './js/filtering-context.js';
 import { LineIterator } from './js/text-utils.js';
-import { StaticFilteringParser } from './js/static-filtering-parser.js';
+import * as sfp from './js/static-filtering-parser.js';
 
 import {
     CompiledListReader,
@@ -117,7 +117,9 @@ function compileList({ name, raw }, compiler, writer, options = {}) {
         writer.properties.set('name', name);
     }
 
-    const { parser } = compiler;
+    const parser = new sfp.AstFilterParser({
+        maxTokenLength: snfe.MAX_TOKEN_LENGTH,
+    });
 
     while ( lineIter.eot() === false ) {
         let line = lineIter.next();
@@ -125,13 +127,10 @@ function compileList({ name, raw }, compiler, writer, options = {}) {
             if ( lineIter.peek(4) !== '    ' ) { break; }
             line = line.slice(0, -2).trim() + lineIter.next().trim();
         }
-        parser.analyze(line);
-        if ( parser.shouldIgnore() ) { continue; }
-        if ( parser.category !== parser.CATStaticNetFilter ) { continue; }
-        if ( parser.patternHasUnicode() && parser.toASCII() === false ) {
-            continue;
-        }
-        if ( compiler.compile(writer) ) { continue; }
+        parser.parse(line);
+        if ( parser.isFilter() === false ) { continue; }
+        if ( parser.isNetworkFilter() === false ) { continue; }
+        if ( compiler.compile(parser, writer) ) { continue; }
         if ( compiler.error !== undefined && events !== undefined ) {
             options.events.push({
                 type: 'error',
@@ -164,7 +163,7 @@ async function useLists(lists, options = {}) {
         if ( typeof compiled !== 'string' || compiled === '' ) {
             const writer = new CompiledListWriter();
             if ( compiler === null ) {
-                compiler = snfe.createCompiler(new StaticFilteringParser());
+                compiler = snfe.createCompiler();
             }
             compiled = compileList(list, compiler, writer, options);
         }

@@ -108,6 +108,12 @@
     text-decoration-style: solid;
     text-decoration-line: underline;
     }
+.cm-s-default .cm-unicode {
+    text-underline-position: under;
+    text-decoration-color: var(--sf-unicode-ink);
+    text-decoration-style: dashed;
+    text-decoration-line: underline;
+    }
 .cm-s-default .cm-tag {
     color: var(--sf-tag-ink);
     }

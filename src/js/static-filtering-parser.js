@@ -27,1118 +27,1278 @@ import Regex from '../lib/regexanalyzer/regex.js';
 import * as cssTree from '../lib/csstree/css-tree.js';
 
 /*******************************************************************************
-
-    The goal is for the static filtering parser to avoid external
-    dependencies to other code in the project.
-
-    Roughly, this is how things work: each input string (passed to analyze())
-    is decomposed into a minimal set of distinct slices. Each slice is a
-    triplet of integers consisting of:
-
-    - a bit vector describing the characters inside the slice
-    - an index of where in the origin string the slice starts
-    - a length for the number of character in the slice
-
-    Slice descriptors are all flatly stored in an array of integers so as to
-    avoid the need for a secondary data structure. Example:
-
-    raw string: toto.com
-                  toto         .           com
-                  |            |           |
-        slices: [ 65536, 0, 4, 1024, 4, 1, 65536, 5, 3 ]
-                  ^      ^  ^
-                  |      |  |
-                  |      |  +---- number of characters
-                  |      +---- index in raw string
-                  +---- bit vector
-
-    Thus the number of slices to describe the `toto.com` string is made of
-    three slices, encoded into nine integers.
-
-    Once a string has been encoded into slices, the parser will only work
-    with those slices in order to parse the filter represented by the
-    string, rather than performing string operations on the original string.
-    The result is that parsing is essentially number-crunching operations
-    rather than string operations, for the most part (potentially opening
-    the door for WASM code in the future to parse static filters).
-
-    The array used to hold the slices is reused across string analysis, in
-    order to eliminate memory churning.
-
-    Beyond the slices, there are various span objects used to describe
-    consecutive sequences of slices and which are filled in as a result
-    of parsing.
-
+ * 
+ * The parser creates a simple unidirectional AST from a raw line of text.
+ * Each node in the AST is a sequence of numbers, so as to avoid the need to
+ * make frequent memory allocation to represent the AST.
+ * 
+ * All the AST nodes are allocated in the same integer-only array, which
+ * array is reused when parsing new lines.
+ * 
+ * The AST can only be walked from top to bottom, then left to right.
+ * 
+ * Each node typically refer to a corresponding string slice in the source
+ * text.
+ *
+ * It may happens a node requires to normalize the corresponding source slice,
+ * in which case there will be a reference in the AST to a transformed source
+ * string. (For example, a domain name might contain unicode characters, in
+ * which case the corresponding node will contain a reference to the
+ * (transformed) punycoded version of the domain name.)
+ * 
+ * The AST can be easily used for syntax coloring purpose, in which case it's
+ * just a matter of walking through all the nodes in natural order.
+ * 
+ * A tree walking utility class exists for compilation and syntax coloring
+ * purpose.
+ * 
 **/
 
 /******************************************************************************/
 
-const Parser = class {
-    constructor(instanceOptions = {}) {
-        this.interactive = instanceOptions.interactive === true;
+let iota = 0;
+
+iota = 0;
+export const AST_TYPE_NONE                          = iota++;
+export const AST_TYPE_UNKNOWN                       = iota++;
+export const AST_TYPE_COMMENT                       = iota++;
+export const AST_TYPE_NETWORK                       = iota++;
+export const AST_TYPE_EXTENDED                      = iota++;
+
+iota = 0;
+export const AST_TYPE_EXTENDED_COSMETIC             = iota++;
+export const AST_TYPE_EXTENDED_SCRIPTLET            = iota++;
+export const AST_TYPE_EXTENDED_HTML                 = iota++;
+export const AST_TYPE_EXTENDED_RESPONSEHEADER       = iota++;
+
+iota = 0;
+export const AST_FLAG_UNSUPPORTED                   = 1 << iota++;
+export const AST_FLAG_IGNORE                        = 1 << iota++;
+export const AST_FLAG_HAS_ERROR                     = 1 << iota++;
+export const AST_FLAG_IS_EXCEPTION                  = 1 << iota++;
+export const AST_FLAG_HAS_WHITESPACE                = 1 << iota++;
+export const AST_FLAG_HAS_UPPERCASE                 = 1 << iota++;
+export const AST_FLAG_HAS_UNICODE                   = 1 << iota++;
+export const AST_FLAG_EXT_STRONG                    = 1 << iota++;
+export const AST_FLAG_EXT_STYLE                     = 1 << iota++;
+export const AST_FLAG_NET_PATTERN_LEFT_HNANCHOR     = 1 << iota++;
+export const AST_FLAG_NET_PATTERN_RIGHT_PATHANCHOR  = 1 << iota++;
+export const AST_FLAG_NET_PATTERN_LEFT_ANCHOR       = 1 << iota++;
+export const AST_FLAG_NET_PATTERN_RIGHT_ANCHOR      = 1 << iota++;
+export const AST_FLAG_HAS_OPTIONS                   = 1 << iota++;
+
+iota = 0;
+const NODE_RIGHT_INDEX                              = iota++;
+const NOOP_NODE_SIZE                                = iota;
+const NODE_TYPE_INDEX                               = iota++;
+const NODE_DOWN_INDEX                               = iota++;
+const NODE_BEG_INDEX                                = iota++;
+const NODE_END_INDEX                                = iota++;
+const NODE_FLAGS_INDEX                              = iota++;
+const NODE_TRANSFORM_INDEX                          = iota++;
+const FULL_NODE_SIZE                                = iota;
+
+iota = 0;
+export const NODE_TYPE_NOOP                         = iota++;
+export const NODE_TYPE_LINE_RAW                     = iota++;
+export const NODE_TYPE_LINE_BODY                    = iota++;
+export const NODE_TYPE_WHITESPACE                   = iota++;
+export const NODE_TYPE_COMMENT                      = iota++;
+export const NODE_TYPE_IGNORE                       = iota++;
+export const NODE_TYPE_EXT_RAW                      = iota++;
+export const NODE_TYPE_EXT_OPTIONS_ANCHOR           = iota++;
+export const NODE_TYPE_EXT_OPTIONS                  = iota++;
+export const NODE_TYPE_EXT_DECORATION               = iota++;
+export const NODE_TYPE_EXT_PATTERN_RAW              = iota++;
+export const NODE_TYPE_EXT_PATTERN_COSMETIC         = iota++;
+export const NODE_TYPE_EXT_PATTERN_HTML             = iota++;
+export const NODE_TYPE_EXT_PATTERN_RESPONSEHEADER   = iota++;
+export const NODE_TYPE_EXT_PATTERN_SCRIPTLET        = iota++;
+export const NODE_TYPE_EXT_PATTERN_SCRIPTLET_TOKEN  = iota++;
+export const NODE_TYPE_EXT_PATTERN_SCRIPTLET_ARG    = iota++;
+export const NODE_TYPE_NET_RAW                      = iota++;
+export const NODE_TYPE_NET_EXCEPTION                = iota++;
+export const NODE_TYPE_NET_PATTERN_RAW              = iota++;
+export const NODE_TYPE_NET_PATTERN                  = iota++;
+export const NODE_TYPE_NET_PATTERN_PART             = iota++;
+export const NODE_TYPE_NET_PATTERN_PART_SPECIAL     = iota++;
+export const NODE_TYPE_NET_PATTERN_PART_UNICODE     = iota++;
+export const NODE_TYPE_NET_PATTERN_LEFT_HNANCHOR    = iota++;
+export const NODE_TYPE_NET_PATTERN_LEFT_ANCHOR      = iota++;
+export const NODE_TYPE_NET_PATTERN_RIGHT_ANCHOR     = iota++;
+export const NODE_TYPE_NET_OPTIONS_ANCHOR           = iota++;
+export const NODE_TYPE_NET_OPTIONS                  = iota++;
+export const NODE_TYPE_NET_OPTION_SEPARATOR         = iota++;
+export const NODE_TYPE_NET_OPTION_SENTINEL          = iota++;
+export const NODE_TYPE_NET_OPTION_RAW               = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_NOT          = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_UNKNOWN      = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_1P           = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_STRICT1P     = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_3P           = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_STRICT3P     = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_ALL          = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_BADFILTER    = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_CNAME        = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_CSP          = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_CSS          = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_DENYALLOW    = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_DOC          = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_EHIDE        = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_EMPTY        = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_FONT         = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_FRAME        = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_FROM         = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_GENERICBLOCK = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_GHIDE        = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_HEADER       = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_IMAGE        = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_IMPORTANT    = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_INLINEFONT   = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_INLINESCRIPT = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_MATCHCASE    = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_MEDIA        = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_METHOD       = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_MP4          = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_NOOP         = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_OBJECT       = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_OTHER        = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_PING         = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_POPUNDER     = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_POPUP        = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_REDIRECT     = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_REMOVEPARAM  = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_SCRIPT       = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_SHIDE        = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_TO           = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_XHR          = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_WEBRTC       = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_WEBSOCKET    = iota++;
+export const NODE_TYPE_NET_OPTION_ASSIGN            = iota++;
+export const NODE_TYPE_NET_OPTION_VALUE             = iota++;
+export const NODE_TYPE_OPTION_VALUE_DOMAIN_LIST     = iota++;
+export const NODE_TYPE_OPTION_VALUE_DOMAIN_RAW      = iota++;
+export const NODE_TYPE_OPTION_VALUE_NOT             = iota++;
+export const NODE_TYPE_OPTION_VALUE_DOMAIN          = iota++;
+export const NODE_TYPE_OPTION_VALUE_SEPARATOR       = iota++;
+export const NODE_TYPE_PREPARSE_DIRECTIVE           = iota++;
+export const NODE_TYPE_PREPARSE_DIRECTIVE_VALUE     = iota++;
+export const NODE_TYPE_PREPARSE_DIRECTIVE_IF        = iota++;
+export const NODE_TYPE_PREPARSE_DIRECTIVE_IF_VALUE  = iota++;
+export const NODE_TYPE_COMMENT_URL                  = iota++;
+export const NODE_TYPE_COUNT                        = iota;
+
+iota = 0;
+export const NODE_FLAG_IGNORE                       = 1 << iota++;
+export const NODE_FLAG_ERROR                        = 1 << iota++;
+export const NODE_FLAG_IS_NEGATED                   = 1 << iota++;
+export const NODE_FLAG_OPTION_HAS_VALUE             = 1 << iota++;
+export const NODE_FLAG_PATTERN_UNTOKENIZABLE        = 1 << iota++;
+export const NODE_FLAG_PATTERN_ANY                  = 1 << iota++;
+export const NODE_FLAG_PATTERN_PLAIN                = 1 << iota++;
+export const NODE_FLAG_PATTERN_HOSTNAME             = 1 << iota++;
+export const NODE_FLAG_PATTERN_GENERIC              = 1 << iota++;
+export const NODE_FLAG_PATTERN_REGEX                = 1 << iota++;
+export const NODE_FLAG_PATTERN_BAD                  = 1 << iota++;
+
+export const nodeTypeFromOptionName = new Map([
+    [ '', NODE_TYPE_NET_OPTION_NAME_UNKNOWN ],
+    [ '1p', NODE_TYPE_NET_OPTION_NAME_1P ],
+    /* synonym */ [ 'first-party', NODE_TYPE_NET_OPTION_NAME_1P ],
+    [ 'strict1p', NODE_TYPE_NET_OPTION_NAME_STRICT1P ],
+    [ '3p', NODE_TYPE_NET_OPTION_NAME_3P ],
+    /* synonym */ [ 'third-party', NODE_TYPE_NET_OPTION_NAME_3P ],
+    [ 'strict3p', NODE_TYPE_NET_OPTION_NAME_STRICT3P ],
+    [ 'all', NODE_TYPE_NET_OPTION_NAME_ALL ],
+    [ 'badfilter', NODE_TYPE_NET_OPTION_NAME_BADFILTER ],
+    [ 'cname', NODE_TYPE_NET_OPTION_NAME_CNAME ],
+    [ 'csp', NODE_TYPE_NET_OPTION_NAME_CSP ],
+    [ 'css', NODE_TYPE_NET_OPTION_NAME_CSS ],
+    /* synonym */ [ 'stylesheet', NODE_TYPE_NET_OPTION_NAME_CSS ],
+    [ 'denyallow', NODE_TYPE_NET_OPTION_NAME_DENYALLOW ],
+    [ 'doc', NODE_TYPE_NET_OPTION_NAME_DOC ],
+    /* synonym */ [ 'document', NODE_TYPE_NET_OPTION_NAME_DOC ],
+    [ 'ehide', NODE_TYPE_NET_OPTION_NAME_EHIDE ],
+    /* synonym */ [ 'elemhide', NODE_TYPE_NET_OPTION_NAME_EHIDE ],
+    [ 'empty', NODE_TYPE_NET_OPTION_NAME_EMPTY ],
+    [ 'font', NODE_TYPE_NET_OPTION_NAME_FONT ],
+    [ 'frame', NODE_TYPE_NET_OPTION_NAME_FRAME ],
+    /* synonym */ [ 'subdocument', NODE_TYPE_NET_OPTION_NAME_FRAME ],
+    [ 'from', NODE_TYPE_NET_OPTION_NAME_FROM ],
+    /* synonym */ [ 'domain', NODE_TYPE_NET_OPTION_NAME_FROM ],
+    [ 'genericblock', NODE_TYPE_NET_OPTION_NAME_GENERICBLOCK ],
+    [ 'ghide', NODE_TYPE_NET_OPTION_NAME_GHIDE ],
+    /* synonym */ [ 'generichide', NODE_TYPE_NET_OPTION_NAME_GHIDE ],
+    [ 'header', NODE_TYPE_NET_OPTION_NAME_HEADER ],
+    [ 'image', NODE_TYPE_NET_OPTION_NAME_IMAGE ],
+    [ 'important', NODE_TYPE_NET_OPTION_NAME_IMPORTANT ],
+    [ 'inline-font', NODE_TYPE_NET_OPTION_NAME_INLINEFONT ],
+    [ 'inline-script', NODE_TYPE_NET_OPTION_NAME_INLINESCRIPT ],
+    [ 'match-case', NODE_TYPE_NET_OPTION_NAME_MATCHCASE ],
+    [ 'media', NODE_TYPE_NET_OPTION_NAME_MEDIA ],
+    [ 'method', NODE_TYPE_NET_OPTION_NAME_METHOD ],
+    [ 'mp4', NODE_TYPE_NET_OPTION_NAME_MP4 ],
+    [ '_', NODE_TYPE_NET_OPTION_NAME_NOOP ],
+    [ 'object', NODE_TYPE_NET_OPTION_NAME_OBJECT ],
+    /* synonym */ [ 'object-subrequest', NODE_TYPE_NET_OPTION_NAME_OBJECT ],
+    [ 'other', NODE_TYPE_NET_OPTION_NAME_OTHER ],
+    [ 'ping', NODE_TYPE_NET_OPTION_NAME_PING ],
+    /* synonym */ [ 'beacon', NODE_TYPE_NET_OPTION_NAME_PING ],
+    [ 'popunder', NODE_TYPE_NET_OPTION_NAME_POPUNDER ],
+    [ 'popup', NODE_TYPE_NET_OPTION_NAME_POPUP ],
+    [ 'redirect', NODE_TYPE_NET_OPTION_NAME_REDIRECT ],
+    /* synonym */ [ 'rewrite', NODE_TYPE_NET_OPTION_NAME_REDIRECT ],
+    [ 'redirect-rule', NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE ],
+    [ 'removeparam', NODE_TYPE_NET_OPTION_NAME_REMOVEPARAM ],
+    /* synonym */ [ 'queryprune', NODE_TYPE_NET_OPTION_NAME_REMOVEPARAM ],
+    [ 'script', NODE_TYPE_NET_OPTION_NAME_SCRIPT ],
+    [ 'shide', NODE_TYPE_NET_OPTION_NAME_SHIDE ],
+    /* synonym */ [ 'specifichide', NODE_TYPE_NET_OPTION_NAME_SHIDE ],
+    [ 'to', NODE_TYPE_NET_OPTION_NAME_TO ],
+    [ 'xhr', NODE_TYPE_NET_OPTION_NAME_XHR ],
+    /* synonym */ [ 'xmlhttprequest', NODE_TYPE_NET_OPTION_NAME_XHR ],
+    [ 'webrtc', NODE_TYPE_NET_OPTION_NAME_WEBRTC ],
+    [ 'websocket', NODE_TYPE_NET_OPTION_NAME_WEBSOCKET ],
+]);
+
+export const nodeNameFromNodeType = new Map([
+    [ NODE_TYPE_NOOP, 'noop' ],
+    [ NODE_TYPE_LINE_RAW, 'lineRaw' ],
+    [ NODE_TYPE_LINE_BODY, 'lineBody' ],
+    [ NODE_TYPE_WHITESPACE, 'whitespace' ],
+    [ NODE_TYPE_COMMENT, 'comment' ],
+    [ NODE_TYPE_IGNORE, 'ignore' ],
+    [ NODE_TYPE_EXT_RAW, 'extRaw' ],
+    [ NODE_TYPE_EXT_OPTIONS_ANCHOR, 'extOptionsAnchor' ],
+    [ NODE_TYPE_EXT_OPTIONS, 'extOptions' ],
+    [ NODE_TYPE_EXT_DECORATION, 'extDecoration' ],
+    [ NODE_TYPE_EXT_PATTERN_RAW, 'extPatternRaw' ],
+    [ NODE_TYPE_EXT_PATTERN_COSMETIC, 'extPatternCosmetic' ],
+    [ NODE_TYPE_EXT_PATTERN_HTML, 'extPatternHtml' ],
+    [ NODE_TYPE_EXT_PATTERN_RESPONSEHEADER, 'extPatternResponseheader' ],
+    [ NODE_TYPE_EXT_PATTERN_SCRIPTLET, 'extPatternScriptlet' ],
+    [ NODE_TYPE_EXT_PATTERN_SCRIPTLET_TOKEN, 'extPatternScriptletToken' ],
+    [ NODE_TYPE_EXT_PATTERN_SCRIPTLET_ARG, 'extPatternScriptletArg' ],
+    [ NODE_TYPE_NET_RAW, 'netRaw' ],
+    [ NODE_TYPE_NET_EXCEPTION, 'netException' ],
+    [ NODE_TYPE_NET_PATTERN_RAW, 'netPatternRaw' ],
+    [ NODE_TYPE_NET_PATTERN, 'netPattern' ],
+    [ NODE_TYPE_NET_PATTERN_PART, 'netPatternPart' ],
+    [ NODE_TYPE_NET_PATTERN_PART_SPECIAL, 'netPatternPartSpecial' ],
+    [ NODE_TYPE_NET_PATTERN_PART_UNICODE, 'netPatternPartUnicode' ],
+    [ NODE_TYPE_NET_PATTERN_LEFT_HNANCHOR, 'netPatternLeftHnanchor' ],
+    [ NODE_TYPE_NET_PATTERN_LEFT_ANCHOR, 'netPatternLeftAnchor' ],
+    [ NODE_TYPE_NET_PATTERN_RIGHT_ANCHOR, 'netPatternRightAnchor' ],
+    [ NODE_TYPE_NET_OPTIONS_ANCHOR, 'netOptionsAnchor' ],
+    [ NODE_TYPE_NET_OPTIONS, 'netOptions' ],
+    [ NODE_TYPE_NET_OPTION_RAW, 'netOptionRaw' ],
+    [ NODE_TYPE_NET_OPTION_SEPARATOR, 'netOptionSeparator'],
+    [ NODE_TYPE_NET_OPTION_SENTINEL, 'netOptionSentinel' ],
+    [ NODE_TYPE_NET_OPTION_NAME_NOT, 'netOptionNameNot'],
+    [ NODE_TYPE_NET_OPTION_ASSIGN, 'netOptionAssign' ],
+    [ NODE_TYPE_NET_OPTION_VALUE, 'netOptionValue' ],
+    [ NODE_TYPE_OPTION_VALUE_DOMAIN_LIST, 'netOptionValueDomainList' ],
+    [ NODE_TYPE_OPTION_VALUE_DOMAIN_RAW, 'netOptionValueDomainRaw' ],
+    [ NODE_TYPE_OPTION_VALUE_NOT, 'netOptionValueNot' ],
+    [ NODE_TYPE_OPTION_VALUE_DOMAIN, 'netOptionValueDomain' ],
+    [ NODE_TYPE_OPTION_VALUE_SEPARATOR, 'netOptionsValueSeparator' ],
+]);
+{
+    for ( const [ name, type ] of nodeTypeFromOptionName ) {
+        nodeNameFromNodeType.set(type, name);
+    }
+}
+
+export const removableHTTPHeaders = new Set([
+    'location',
+    'refresh',
+    'report-to',
+    'set-cookie',
+]);
+
+/******************************************************************************/
+
+const exCharCodeAt = (s, i) => {
+    const pos = i >= 0 ? i : s.length + i;
+    return pos >= 0 ? s.charCodeAt(pos) : -1;
+};
+
+/******************************************************************************/
+
+class AstWalker {
+    constructor(parser, from = 0) {
+        this.parser = parser;
+        this.stack = [];
+        this.reset(from);
+    }
+    get depth() {
+        return this.stackPtr;
+    }
+    reset(from = 0) {
+        this.nodes = this.parser.nodes;
+        this.stackPtr = 0;
+        return (this.current = from || this.parser.rootNode);
+    }
+    next() {
+        const current = this.current;
+        if ( current === 0 ) { return 0; }
+        const down = this.nodes[current+NODE_DOWN_INDEX];
+        if ( down !== 0 ) {
+            this.stack[this.stackPtr++] = this.current;
+            return (this.current = down);
+        }
+        const right = this.nodes[current+NODE_RIGHT_INDEX];
+        if ( right !== 0 && this.stackPtr !== 0 ) {
+            return (this.current = right);
+        }
+        while ( this.stackPtr !== 0 ) {
+            const parent = this.stack[--this.stackPtr];
+            const right = this.nodes[parent+NODE_RIGHT_INDEX];
+            if ( right !== 0 ) {
+                return (this.current = right);
+            }
+        }
+        return (this.current = 0);
+    }
+    right() {
+        const current = this.current;
+        if ( current === 0 ) { return 0; }
+        const right = this.nodes[current+NODE_RIGHT_INDEX];
+        if ( right !== 0 && this.stackPtr !== 0 ) {
+            return (this.current = right);
+        }
+        while ( this.stackPtr !== 0 ) {
+            const parent = this.stack[--this.stackPtr];
+            const right = this.nodes[parent+NODE_RIGHT_INDEX];
+            if ( right !== 0 ) {
+                return (this.current = right);
+            }
+        }
+        return (this.current = 0);
+    }
+    until(which) {
+        let node = this.next();
+        while ( node !== 0 ) {
+            if ( this.nodes[node+NODE_TYPE_INDEX] === which ) { return node; }
+            node = this.next();
+        }
+        return 0;
+    }
+    canGoDown() {
+        return this.nodes[this.current+NODE_DOWN_INDEX] !== 0;
+    }
+    dispose() {
+        this.parser.walkerJunkyard.push(this);
+    }
+}
+
+/******************************************************************************/
+
+class DomainListIterator {
+    constructor(parser, root) {
+        this.parser = parser;
+        this.walker = parser.getWalker();
+        this.value = undefined;
+        this.item = { hn: '', not: false, bad: false };
+        this.reuse(root);
+    }
+    next() {
+        if ( this.done ) { return this.value; }
+        let node = this.walker.current;
+        let ready = false;
+        while ( node !== 0 ) {
+            switch ( this.parser.getNodeType(node) ) {
+                case NODE_TYPE_OPTION_VALUE_DOMAIN_RAW:
+                    this.item.hn = '';
+                    this.item.not = false;
+                    this.item.bad = this.parser.getNodeFlags(node, NODE_FLAG_ERROR) !== 0;
+                    break;
+                case NODE_TYPE_OPTION_VALUE_NOT:
+                    this.item.not = true;
+                    break;
+                case NODE_TYPE_OPTION_VALUE_DOMAIN:
+                    this.item.hn = this.parser.getNodeTransform(node);
+                    this.value = this.item;
+                    ready = true;
+                    break;
+                default:
+                    break;
+            }
+            node = this.walker.next();
+            if ( ready ) { return this; }
+        }
+        return this.stop();
+    }
+    reuse(root) {
+        this.walker.reset(root);
+        this.done = false;
+        return this;
+    }
+    stop() {
+        this.done = true;
+        this.value = undefined;
+        this.parser.domainListIteratorJunkyard.push(this);
+        return this;
+    }
+    [Symbol.iterator]() {
+        return this;
+    }
+}
+
+/******************************************************************************/
+
+export class AstFilterParser {
+    constructor(options = {}) {
         this.raw = '';
-        this.slices = [];
-        this.leftSpaceSpan = new Span();
-        this.exceptionSpan = new Span();
-        this.patternLeftAnchorSpan = new Span();
-        this.patternSpan = new Span();
-        this.patternRightAnchorSpan = new Span();
-        this.optionsAnchorSpan = new Span();
-        this.optionsSpan = new Span();
-        this.commentSpan = new Span();
-        this.rightSpaceSpan = new Span();
-        this.eolSpan = new Span();
-        this.spans = [
-            this.leftSpaceSpan,
-            this.exceptionSpan,
-            this.patternLeftAnchorSpan,
-            this.patternSpan,
-            this.patternRightAnchorSpan,
-            this.optionsAnchorSpan,
-            this.optionsSpan,
-            this.commentSpan,
-            this.rightSpaceSpan,
-            this.eolSpan,
-        ];
-        this.patternTokenIterator = new PatternTokenIterator(this);
-        this.netOptionsIterator = new NetOptionsIterator(this);
-        this.extOptionsIterator = new ExtOptionsIterator(this);
-        this.maxTokenLength = Number.MAX_SAFE_INTEGER;
-        this.expertMode = instanceOptions.expertMode !== false;
-        this.reIsLocalhostRedirect = /(?:0\.0\.0\.0|broadcasthost|local|localhost(?:\.localdomain)?|ip6-\w+)(?:[^\w.-]|$)/;
-        this.reHostname = /^[^\x00-\x24\x26-\x29\x2B\x2C\x2F\x3A-\x40\x5B-\x5E\x60\x7B-\x7F]+/;
-        this.reHostsSink = /^[\w%.:\[\]-]+$/;
-        this.reHostsSource = /^[^\x00-\x24\x26-\x29\x2B\x2C\x2F\x3A-\x40\x5B-\x5E\x60\x7B-\x7F]+$/;
-        this.reUnicodeChar = /[^\x00-\x7F]/;
+        this.rawEnd = 0;
+        this.nodes = new Uint32Array(16384);
+        this.nodePoolPtr = FULL_NODE_SIZE;
+        this.nodePoolEnd = this.nodes.length;
+        this.astTransforms = [ null ];
+        this.astTransformPtr = 1;
+        this.rootNode = 0;
+        this.astType = AST_TYPE_NONE;
+        this.astTypeFlavor = AST_TYPE_NONE;
+        this.astFlags = 0;
+        this.nodeTypeRegister = [];
+        this.nodeTypeRegisterPtr = 0;
+        this.nodeTypeLookupTable = new Uint32Array(NODE_TYPE_COUNT);
+        this.punycoder = new URL('https://ublock0.invalid/');
+        this.domainListIteratorJunkyard = [];
+        this.walkerJunkyard = [];
+        // Options
+        this.interactive = options.interactive || false;
+        this.expertMode = options.expertMode || false;
+        this.badTypes = new Set(options.badTypes || []);
+        this.maxTokenLength = options.maxTokenLength || 7;
+        // TODO: rethink this
+        this.result = { exception: false, raw: '', compiled: '' };
+        this.selectorCompiler = new ExtSelectorCompiler(options);
+        // Regexes
+        this.reWhitespaceStart = /^\s+/;
+        this.reWhitespaceEnd = /\s+$/;
+        this.reCommentLine = /^(?:!|#\s|####|\[adblock)/i;
+        this.reExtAnchor = /(#@?(?:\$\?|\$|%|\?)?#).{1,2}/;
+        this.reInlineComment = /(?:\s+#).*?$/;
+        this.reNetException = /^@@/;
+        this.reNetAnchor = /(?:)\$[^,\w~]/;
+        this.rePlainHostname = /^(?:[\da-z][\da-z_-]*\.)*[\da-z-]*[\da-z]$/;
+        this.rePlainAdblockHostnameAscii = /^\|\|(?:[\da-z][\da-z_-]*\.)*[\da-z_-]*[\da-z]\^$/;
+        this.rePlainAdblockHostnameUnicode = /^\|\|(?:[\p{L}\p{N}][\p{L}\p{N}\u{2d}]*\.)*[\p{L}\p{N}\u{2d}]*[\p{L}\p{N}]\^$/u;
+        this.rePlainEntity = /^(?:[\da-z][\da-z_-]*\.)+\*$/;
+        this.reHostsSink = /^[\w%.:\[\]-]+\s+/;
+        this.reHostsRedirect = /(?:0\.0\.0\.0|broadcasthost|local|localhost(?:\.localdomain)?|ip6-\w+)(?:[^\w.-]|$)/;
+        this.reNetOptionComma = /,(?!\d*\})/g;
+        this.rePointlessLeftAnchor = /^\|\|?\*+/;
+        this.reIsTokenChar = /^[%0-9A-Za-z]/;
+        this.rePointlessLeadingWildcards = /^(\*+)[^%0-9A-Za-z\u{a0}-\u{10FFFF}]/u;
+        this.rePointlessTrailingSeparator = /\*(\^\**)$/;
+        this.rePointlessTrailingWildcards = /(?:[^%0-9A-Za-z]|[%0-9A-Za-z]{7,})(\*+)$/;
+        this.reHasWhitespaceChar = /\s/;
+        this.reHasUppercaseChar = /[A-Z]/;
+        this.reHasUnicodeChar = /[^\x00-\x7F]/;
         this.reUnicodeChars = /[^\x00-\x7F]/g;
-        this.reHostnameLabel = /[^.]+/g;
-        this.rePlainHostname = /^(?:[\w-]+\.)*[a-z]+$/;
         this.reBadHostnameChars = /[\x00-\x24\x26-\x29\x2b\x2c\x2f\x3b-\x40\x5c\x5e\x60\x7b-\x7f]/;
-        this.rePlainEntity = /^(?:[\w-]+\.)+\*$/;
-        this.reEntity = /^[^*]+\.\*$/;
+        this.reIsEntity = /^[^*]+\.\*$/;
+        this.rePreparseDirectiveIf = /^!#if /;
+        this.rePreparseDirectiveAny = /^!#(?:endif|if |include )/;
+        this.reURL = /\bhttps?:\/\/\S+/;
+        this.reHasPatternSpecialChars = /[\*\^]/;
+        this.rePatternAllSpecialChars = /[\*\^]+|[^\x00-\x7f]+/g;
         // https://github.com/uBlockOrigin/uBlock-issues/issues/1146
         //   From https://codemirror.net/doc/manual.html#option_specialChars
-        this.reInvalidCharacters = /[\x00-\x1F\x7F-\x9F\xAD\u061C\u200B-\u200F\u2028\u2029\uFEFF\uFFF9-\uFFFC]/;
-        this.punycoder = new URL('https://ublock0.invalid/');
+        this.reHasInvalidChar = /[\x00-\x1F\x7F-\x9F\xAD\u061C\u200B-\u200F\u2028\u2029\uFEFF\uFFF9-\uFFFC]/;
+        this.reHostnamePatternPart = /^[^\x00-\x24\x26-\x29\x2B\x2C\x2F\x3A-\x40\x5B-\x5E\x60\x7B-\x7F]+/;
+        this.reHostnameLabel = /[^.]+/g;
+        this.reResponseheaderPattern = /^\^responseheader\(.*\)$/;
         // TODO: mind maxTokenLength
-        this.reGoodRegexToken
-            = /[^\x01%0-9A-Za-z][%0-9A-Za-z]{7,}|[^\x01%0-9A-Za-z][%0-9A-Za-z]{1,6}[^\x01%0-9A-Za-z]/;
-        this.selectorCompiler = new this.SelectorCompiler(this, instanceOptions);
-        // TODO: reuse for network filtering analysis
-        this.result = {
-            exception: false,
-            raw: '',
-            compiled: '',
-        };
-        this.reset();
+        this.reGoodRegexToken = /[^\x01%0-9A-Za-z][%0-9A-Za-z]{7,}|[^\x01%0-9A-Za-z][%0-9A-Za-z]{1,6}[^\x01%0-9A-Za-z]/;
+        this.reBadCSP = /(?:=|;)\s*report-(?:to|uri)\b/;
     }
 
-    reset() {
-        this.sliceWritePtr = 0;
-        this.category = CATNone;
-        this.allBits = 0;       // bits found in any slices
-        this.patternBits = 0;   // bits found in any pattern slices
-        this.optionsBits = 0;   // bits found in any option slices
-        this.flavorBits = 0;
-        for ( const span of this.spans ) { span.reset(); }
-        this.pattern = '';
-    }
-
-    analyze(raw) {
-        this.slice(raw);
-        let slot = this.leftSpaceSpan.len;
-        if ( slot === this.rightSpaceSpan.i ) { return; }
-
-        // test for `!`, `#`, or `[`
-        if ( hasBits(this.slices[slot], BITLineComment) ) {
-            // static extended filter?
-            if ( hasBits(this.slices[slot], BITHash) ) {
-                this.analyzeExt(slot);
-                if ( this.category === CATStaticExtFilter ) { return; }
-            }
-            // if not `#`, no ambiguity
-            this.category = CATComment;
-            return;
-        }
-
-        // assume no inline comment
-        this.commentSpan.i = this.rightSpaceSpan.i;
-
-        // extended filtering with options?
-        if ( hasBits(this.allBits, BITHash) ) {
-            let hashSlot = this.findFirstMatch(slot, BITHash);
-            if ( hashSlot !== -1 ) {
-                this.analyzeExt(hashSlot);
-                if ( this.category === CATStaticExtFilter ) { return; }
-                // inline comment? (a space followed by a hash)
-                if ( (this.allBits & BITSpace) !== 0 ) {
-                    for (;;) {
-                        if ( hasBits(this.slices[hashSlot-3], BITSpace) ) {
-                            this.commentSpan.i = hashSlot-3;
-                            this.commentSpan.len = this.rightSpaceSpan.i - hashSlot;
-                            break;
-                        }
-                        hashSlot = this.findFirstMatch(hashSlot + 6, BITHash);
-                        if ( hashSlot === -1 ) { break; }
-                    }
-                }
-            }
-        }
-        // assume network filtering
-        this.analyzeNet();
-    }
-
-    // Use in syntax highlighting contexts
-    analyzeExtra() {
-        if ( this.category === CATStaticExtFilter ) {
-            this.analyzeExtExtra();
-        } else if ( this.category === CATStaticNetFilter ) {
-            this.analyzeNetExtra();
-        }
-    }
-
-    // Static extended filters are all of the form:
-    //
-    // 1. options (optional): a comma-separated list of hostnames
-    // 2. anchor: regex equivalent => /^#@?[\$\??|%|\?)?#$/
-    // 3. pattern
-    //
-    // Return true if a valid extended filter is found, otherwise false.
-    // When a valid extended filter is found:
-    //     optionsSpan: first slot which contains options
-    //     optionsAnchorSpan: first slot to anchor
-    //     patternSpan: first slot to pattern
-    analyzeExt(from) {
-        let end = this.rightSpaceSpan.i;
-        // Number of consecutive #s.
-        const len = this.slices[from+2];
-        // More than 3 #s is likely to be a comment in a hosts file.
-        if ( len > 3 ) { return; }
-        if ( len !== 1 ) {
-            // If a space immediately follows 2 #s, assume a comment.
-            if ( len === 2 ) {
-                if ( from+3 === end || hasBits(this.slices[from+3], BITSpace) ) {
-                    return;
-                }
-            } else /* len === 3 */ {
-                this.splitSlot(from, 2);
-                end = this.rightSpaceSpan.i;
-            }
-            this.optionsSpan.i = this.leftSpaceSpan.i + this.leftSpaceSpan.len;
-            this.optionsSpan.len = from - this.optionsSpan.i;
-            this.optionsAnchorSpan.i = from;
-            this.optionsAnchorSpan.len = 3;
-            this.patternSpan.i = from + 3;
-            this.patternSpan.len = this.rightSpaceSpan.i - this.patternSpan.i;
-            this.category = CATStaticExtFilter;
-            this.analyzeExtPattern();
-            return;
-        }
-        let flavorBits = 0;
-        let to = from + 3;
-        if ( to === end ) { return; }
-        // #@...
-        //  ^
-        if ( hasBits(this.slices[to], BITAt) ) {
-            if ( this.slices[to+2] !== 1 ) { return; }
-            flavorBits |= BITFlavorException;
-            to += 3; if ( to === end ) { return; }
-        }
-        // #$...
-        //  ^
-        if ( hasBits(this.slices[to], BITDollar) ) {
-            if ( this.slices[to+2] !== 1 ) { return; }
-            flavorBits |= BITFlavorExtStyle;
-            to += 3; if ( to === end ) { return; }
-            // #$?...
-            //   ^
-            if ( hasBits(this.slices[to], BITQuestion) ) {
-                if ( this.slices[to+2] !== 1 ) { return; }
-                flavorBits |= BITFlavorExtStrong;
-                to += 3; if ( to === end ) { return; }
-            }
-        }
-        // #[%?]...
-        //   ^^
-        else if ( hasBits(this.slices[to], BITPercent | BITQuestion) ) {
-            if ( this.slices[to+2] !== 1 ) { return; }
-            flavorBits |= hasBits(this.slices[to], BITPercent)
-                ? BITFlavorUnsupported
-                : BITFlavorExtStrong;
-            to += 3; if ( to === end ) { return; }
-        }
-        // ##...
-        //  ^
-        if ( hasNoBits(this.slices[to], BITHash) ) { return; }
-        if ( this.slices[to+2] > 1 ) {
-            this.splitSlot(to, 1);
-        }
-        to += 3;
-        this.optionsSpan.i = this.leftSpaceSpan.i + this.leftSpaceSpan.len;
-        this.optionsSpan.len = from - this.optionsSpan.i;
-        this.optionsAnchorSpan.i = from;
-        this.optionsAnchorSpan.len = to - this.optionsAnchorSpan.i;
-        this.patternSpan.i = to;
-        this.patternSpan.len = this.rightSpaceSpan.i - to;
-        this.flavorBits = flavorBits;
-        this.category = CATStaticExtFilter;
-        this.analyzeExtPattern();
-    }
-
-    analyzeExtPattern() {
-        this.result.exception = this.isException();
-        this.result.compiled = undefined;
-
-        if ( hasBits(this.flavorBits, BITFlavorUnsupported) ) { return; }
-
-        let selector = this.strFromSpan(this.patternSpan);
-        if ( selector === '' ) {
-            this.flavorBits |= BITFlavorUnsupported;
-            this.result.raw = '';
-            return;
-        }
-        const { i } = this.patternSpan;
-        // ##+js(...)
-        if (
-            hasBits(this.slices[i], BITPlus) &&
-            selector.startsWith('+js(') && selector.endsWith(')')
-        ) {
-            this.flavorBits |= BITFlavorExtScriptlet;
-            this.result.raw = selector;
-            this.result.compiled = selector.slice(4, -1);
-            return;
-        }
-        // ##^...
-        if ( hasBits(this.slices[i], BITCaret) ) {
-            // ##^responseheader(...)
-            if (
-                selector.startsWith('^responseheader(') &&
-                selector.endsWith(')')
-            ) {
-                this.flavorBits |= BITFlavorExtResponseHeader;
-                this.result.raw = selector.slice(1);
-                const headerName = selector.slice(16, -1).trim().toLowerCase();
-                this.result.compiled = `responseheader(${headerName})`;
-                if ( this.removableHTTPHeaders.has(headerName) === false ) {
-                    this.flavorBits |= BITFlavorUnsupported;
-                }
-                return;
-            }
-            this.flavorBits |= BITFlavorExtHTML;
-            selector = selector.slice(1);
-            if ( (this.hasOptions() || this.isException()) === false ) {
-                this.flavorBits |= BITFlavorUnsupported;
-            }
-        }
-        // ##...
-        else {
-            this.flavorBits |= BITFlavorExtCosmetic;
-        }
-        this.result.raw = selector;
-        if (
-            this.selectorCompiler.compile(selector, this.result, {
-                asProcedural: hasBits(this.flavorBits, BITFlavorExtStrong | BITFlavorExtStyle),
-            }) === false
-        ) {
-            this.flavorBits |= BITFlavorUnsupported;
-        }
-    }
-
-    // Use in syntax highlighting contexts
-    analyzeExtExtra() {
-        if ( this.hasOptions() ) {
-            const { i, len } = this.optionsSpan;
-            this.analyzeDomainList(i, i + len, BITComma, 0b1110);
-        }
-        if ( hasBits(this.flavorBits, BITFlavorUnsupported) ) {
-            this.markSpan(this.patternSpan, BITError);
-        }
-    }
-
-    // Static network filters are all of the form:
-    //
-    // 1. exception declarator (optional): `@@`
-    // 2. left-hand pattern anchor (optional): `||` or `|`
-    // 3. pattern: a valid pattern, one of
-    //       a regex, starting and ending with `/`
-    //       a sequence of characters with optional wildcard characters
-    //          wildcard `*` : regex equivalent => /./
-    //          wildcard `^` : regex equivalent => /[^%.0-9a-z_-]|$/
-    // 4. right-hand anchor (optional): `|`
-    // 5. options declarator (optional): `$`
-    //       options: one or more options
-    // 6. inline comment (optional): ` #`
-    //
-    // When a valid static filter is found:
-    //     exceptionSpan: first slice of exception declarator
-    //     patternLeftAnchorSpan: first slice to left-hand pattern anchor
-    //     patternSpan: all slices belonging to pattern
-    //     patternRightAnchorSpan: first slice to right-hand pattern anchor
-    //     optionsAnchorSpan: first slice to options anchor
-    //     optionsSpan: first slice to options
-    //     commentSpan: first slice to trailing comment
-    analyzeNet() {
-        let islice = this.leftSpaceSpan.len;
-
-        // Assume no exception
-        this.exceptionSpan.i = this.leftSpaceSpan.len;
-        // Exception?
-        if (
-            islice < this.commentSpan.i &&
-            hasBits(this.slices[islice], BITAt)
-        ) {
-            const len = this.slices[islice+2];
-            // @@@*, ...  =>  @@, @*, ...
-            if ( len >= 2 ) {
-                if ( len > 2 ) {
-                    this.splitSlot(islice, 2);
-                }
-                this.exceptionSpan.len = 3;
-                islice += 3;
-                this.flavorBits |= BITFlavorException;
-            }
-        }
-
-        // Assume no options
-        this.optionsAnchorSpan.i = this.optionsSpan.i = this.commentSpan.i;
-
-        // Assume all is part of pattern
-        this.patternSpan.i = islice;
-        this.patternSpan.len = this.optionsAnchorSpan.i - islice;
-
-        let patternStartIsRegex =
-            islice < this.optionsAnchorSpan.i &&
-            hasBits(this.slices[islice], BITSlash);
-        let patternIsRegex = patternStartIsRegex;
-        if ( patternStartIsRegex ) {
-            const { i, len } = this.patternSpan;
-            patternIsRegex = (
-                len === 3 && this.slices[i+2] > 2 ||
-                len > 3 && hasBits(this.slices[i+len-3], BITSlash)
-            );
-            // https://github.com/uBlockOrigin/uBlock-issues/issues/1932
-            //   Resolve ambiguity with options ending with `/` by verifying
-            //   that when a `$` is present, what follows make sense regex-wise.
-            if ( patternIsRegex && hasBits(this.allBits, BITDollar) ) {
-                patternIsRegex =
-                    this.strFromSpan(this.patternSpan).search(/[^\\]\$[^/|)]/) === -1;
-            }
-        }
-
-        // If the pattern is not a regex, there might be options.
-        //
-        // The character `$` is deemed to be an option anchor if and only if
-        // all the following conditions are fulfilled:
-        // - `$` is not the last character in the filter
-        // - The character following `$` is either comma, alphanumeric, or `~`.
-        if ( patternIsRegex === false ) {
-            let optionsBits = 0;
-            let i = this.optionsAnchorSpan.i - 3;
-            for (;;) {
-                i -= 3;
-                if ( i < islice ) { break; }
-                const bits = this.slices[i];
-                if (
-                    hasBits(bits, BITDollar) &&
-                    hasBits(this.slices[i+3], BITAlphaNum | BITComma | BITTilde)
-                ) {
-                    break;
-                }
-                optionsBits |= bits;
-            }
-            if ( i >= islice ) {
-                const len = this.slices[i+2];
-                if ( len > 1 ) {
-                    // https://github.com/gorhill/uBlock/issues/952
-                    //   AdGuard-specific `$$` filters => unsupported.
-                    if ( this.findFirstOdd(0, BITHostname | BITComma | BITAsterisk) === i ) {
-                        this.flavorBits |= BITFlavorError;
-                        if ( this.interactive ) {
-                            this.errorSlices(i, i+3);
-                        }
-                    } else {
-                        this.splitSlot(i, len - 1);
-                        i += 3;
-                    }
-                }
-                this.patternSpan.len = i - this.patternSpan.i;
-                this.optionsAnchorSpan.i = i;
-                this.optionsAnchorSpan.len = 3;
-                i += 3;
-                this.optionsSpan.i = i;
-                this.optionsSpan.len = this.commentSpan.i - i;
-                this.optionsBits = optionsBits;
-                if ( patternStartIsRegex ) {
-                    const { i, len } = this.patternSpan;
-                    patternIsRegex = (
-                        len === 3 && this.slices[i+2] > 2 ||
-                        len > 3 && hasBits(this.slices[i+len-3], BITSlash)
-                    );
-                }
-            }
-        }
-
-        // Assume no anchors.
-        this.patternLeftAnchorSpan.i = this.patternSpan.i;
-        this.patternRightAnchorSpan.i = this.optionsAnchorSpan.i;
-
-        // Skip all else if pattern is a regex
-        if ( patternIsRegex ) {
-            this.patternBits = this.bitsFromSpan(this.patternSpan);
-            this.flavorBits |= BITFlavorNetRegex;
-            this.category = CATStaticNetFilter;
-            return;
-        }
-
-        // Refine by processing pattern anchors.
-        //
-        // Not a regex, there might be anchors.
-        // Left anchor?
-        //   `|`: anchor to start of URL
-        //   `||`: anchor to left of a hostname label
-        if (
-            this.patternSpan.len !== 0 &&
-            hasBits(this.slices[this.patternSpan.i], BITPipe)
-        ) {
-            this.patternLeftAnchorSpan.len = 3;
-            const len = this.slices[this.patternSpan.i+2];
-            // |||*, ...  =>  ||, |*, ...
-            if ( len > 2 ) {
-                this.splitSlot(this.patternSpan.i, 2);
-            } else {
-                this.patternSpan.len -= 3;
-            }
-            this.patternSpan.i += 3;
-            this.flavorBits |= len === 1
-                ? BITFlavorNetLeftURLAnchor
-                : BITFlavorNetLeftHnAnchor;
-        }
-        // Right anchor?
-        //   `|`: anchor to end of URL
-        //   `^`: anchor to end of hostname, when other conditions are
-        //        fulfilled:
-        //          the pattern is hostname-anchored on the left
-        //          the pattern is made only of hostname characters
-        if ( this.patternSpan.len !== 0 ) {
-            const lastPatternSlice = this.patternSpan.len > 3
-                ? this.patternRightAnchorSpan.i - 3
-                : this.patternSpan.i;
-            const bits = this.slices[lastPatternSlice];
-            if ( (bits & BITPipe) !== 0 ) {
-                this.patternRightAnchorSpan.i = lastPatternSlice;
-                this.patternRightAnchorSpan.len = 3;
-                const len = this.slices[this.patternRightAnchorSpan.i+2];
-                // ..., ||*  =>  ..., |*, |
-                if ( len > 1 ) {
-                    this.splitSlot(this.patternRightAnchorSpan.i, len - 1);
-                    this.patternRightAnchorSpan.i += 3;
-                } else {
-                    this.patternSpan.len -= 3;
-                }
-                this.flavorBits |= BITFlavorNetRightURLAnchor;
-            } else if (
-                hasBits(bits, BITCaret) &&
-                this.slices[lastPatternSlice+2] === 1 &&
-                hasBits(this.flavorBits, BITFlavorNetLeftHnAnchor) &&
-                this.skipUntilNot(
-                    this.patternSpan.i,
-                    lastPatternSlice,
-                    BITHostname
-                ) === lastPatternSlice
-            ) {
-                this.patternRightAnchorSpan.i = lastPatternSlice;
-                this.patternRightAnchorSpan.len = 3;
-                this.patternSpan.len -= 3;
-                this.flavorBits |= BITFlavorNetRightHnAnchor;
-            }
-        }
-
-        // Collate useful pattern bits information for further use.
-        //
-        // https://github.com/gorhill/httpswitchboard/issues/15
-        //   When parsing a hosts file, ensure localhost et al. don't end up
-        //   in the pattern. To accomplish this we establish the rule that
-        //   if a pattern contains a space character, the pattern will be only
-        //   the part following the space character.
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/1118
-        //   Patterns with more than one space are dubious.
-        if ( hasBits(this.allBits, BITSpace) ) {
-            const { i, len } = this.patternSpan;
-            const noOptionsAnchor = this.optionsAnchorSpan.len === 0;
-            let j = len;
-            for (;;) {
-                if ( j === 0 ) { break; }
-                j -= 3;
-                if ( noOptionsAnchor && hasBits(this.slices[i+j], BITSpace) ) {
-                    break;
-                }
-            }
-            if ( j !== 0 ) {
-                const sink = this.strFromSlices(this.patternSpan.i, j - 3);
-                if ( this.reHostsSink.test(sink) ) {
-                    this.patternSpan.i += j + 3;
-                    this.patternSpan.len -= j + 3;
-                    if ( this.interactive ) {
-                        this.markSlices(0, this.patternSpan.i, BITIgnore);
-                    }
-                    const source = this.getNetPattern();
-                    if ( this.reIsLocalhostRedirect.test(source) ) {
-                        this.flavorBits |= BITFlavorIgnore;
-                    } else if ( this.reHostsSource.test(source) === false ) {
-                        this.patternBits |= BITError;
-                    }
-                } else {
-                    this.patternBits |= BITError;
-                }
-                if ( hasBits(this.patternBits, BITError) ) {
-                    this.markSpan(this.patternSpan, BITError);
-                }
-            }
-        }
-
-        // Pointless wildcards:
-        // - Eliminate leading wildcard not followed by a pattern token slice
-        // - Eliminate trailing wildcard not preceded by a pattern token slice
-        // - Eliminate pointless trailing asterisk-caret (`*^`)
-        //
-        // Leading wildcard history:
-        // https://github.com/gorhill/uBlock/issues/1669#issuecomment-224822448
-        //   Remove pointless leading *.
-        if ( hasBits(this.allBits, BITAsterisk) ) {
-            let { i, len } = this.patternSpan;
-            let pattern = this.strFromSpan(this.patternSpan);
-            // Pointless leading wildcard
-            if ( /^\*+[^0-9a-z%]/.test(pattern) ) {
-                this.slices[i] |= BITIgnore;
-                this.patternSpan.i = (i += 3);
-                this.patternSpan.len = (len -= 3);
-                pattern = this.strFromSpan(this.patternSpan);
-            }
-            // Pointless trailing wildcard
-            if ( /([^0-9a-z%]|[0-9a-z%]{7,})\*+$/.test(pattern) ) {
-                this.patternSpan.len = (len -= 3);
-                pattern = this.strFromSpan(this.patternSpan);
-                // Ignore only if the pattern would not end up looking like
-                // a regex.
-                if ( /^\/.+\/$/.test(pattern) === false ) {
-                    this.slices[i+len] |= BITIgnore;
-                }
-                // We can ignore right-hand pattern anchor
-                if ( this.patternRightAnchorSpan.len !== 0 ) {
-                    this.slices[this.patternRightAnchorSpan.i] |= BITIgnore;
-                    this.flavorBits &= ~BITFlavorNetRightAnchor;
-                }
-            }
-            // Pointless trailing asterisk-caret: `..*^`,  `..*^|`
-            if ( hasBits(this.allBits, BITCaret) && /\*+\^$/.test(pattern) ) {
-                this.slices[i+len-3] |= BITIgnore;
-                this.slices[i+len-6] |= BITIgnore;
-                this.patternSpan.len = (len -= 6);
-                pattern = this.strFromSpan(this.patternSpan);
-                // We can ignore right-hand pattern anchor
-                if ( this.patternRightAnchorSpan.len !== 0 ) {
-                    this.slices[this.patternRightAnchorSpan.i] |= BITIgnore;
-                    this.flavorBits &= ~BITFlavorNetRightAnchor;
-                }
-            }
-        }
-
-        // Pointless left-hand pattern anchoring
-        //
-        // Leading wildcard history:
-        // https://github.com/gorhill/uBlock/issues/3034
-        //   We can remove anchoring if we need to match all at the start.
-        if ( hasBits(this.flavorBits, BITFlavorNetLeftAnchor) ) {
-            const i = this.patternLeftAnchorSpan.i;
-            if (
-                this.patternSpan.len === 0 ||
-                hasBits(this.slices[i+3], BITIgnore|BITAsterisk)
-            ) {
-                this.slices[i] |= BITIgnore;
-                this.flavorBits &= ~BITFlavorNetLeftAnchor;
-            }
-        }
-
-        // Pointless right-hand pattern anchoring
-        //
-        // Trailing wildcard history:
-        // https://github.com/gorhill/uBlock/issues/3034
-        //   We can remove anchoring if we need to match all at the end.
-        if ( hasBits(this.flavorBits, BITFlavorNetRightAnchor) ) {
-            const i = this.patternRightAnchorSpan.i;
-            if (
-                this.patternSpan.len === 0 ||
-                hasBits(this.slices[i-3], BITIgnore|BITAsterisk)
-            ) {
-                this.slices[i] |= BITIgnore;
-                this.flavorBits &= ~BITFlavorNetRightAnchor;
-            }
-        }
-
-        // Collate effective pattern bits
-        this.patternBits = this.bitsFromSpan(this.patternSpan);
-
-        this.category = CATStaticNetFilter;
-    }
-
-    analyzeNetExtra() {
-        if ( this.patternIsRegex() ) {
-            if ( this.utils.regex.isValid(this.getNetPattern()) === false ) {
-                this.markSpan(this.patternSpan, BITError);
-            }
-        } else if (
-            this.patternIsDubious() === false &&
-            this.toASCII(true) === false
-        ) {
-            this.errorSlices(
-                this.patternLeftAnchorSpan.i,
-                this.optionsAnchorSpan.i
-            );
-        }
-        this.netOptionsIterator.init();
-    }
-
-    analyzeDomainList(from, to, bitSeparator, optionBits) {
-        if ( from >= to ) { return; }
-        let beg = from;
-        // Dangling leading separator?
-        if ( hasBits(this.slices[beg], bitSeparator) ) {
-            this.errorSlices(beg, beg + 3);
-            beg += 3;
-        }
-        while ( beg < to ) {
-            let end = this.skipUntil(beg, to, bitSeparator);
-            if ( end < to && this.slices[end+2] !== 1 ) {
-                this.errorSlices(end, end + 3);
-            }
-            if ( this.analyzeDomain(beg, end, optionBits) === false ) {
-                this.errorSlices(beg, end);
-            }
-            beg = end + 3;
-        }
-        // Dangling trailing separator?
-        if ( hasBits(this.slices[to-3], bitSeparator) ) {
-            this.errorSlices(to - 3, to);
-        }
-    }
-
-    analyzeDomain(from, to, modeBits) {
-        if ( to === from ) { return false; }
-        return this.normalizeHostnameValue(
-            this.strFromSlices(from, to - 3),
-            modeBits
-        ) !== undefined;
-    }
-
-    // Ultimately, let the browser API do the hostname normalization, after
-    // making some other trivial checks.
-    //
-    // modeBits:
-    //   0: can use wildcard at any position
-    //   1: can use entity-based hostnames
-    //   2: can use single wildcard
-    //   3: can be negated
-    normalizeHostnameValue(s, modeBits = 0b0000) {
-        const not = s.charCodeAt(0) === 0x7E /* '~' */;
-        if ( not && (modeBits & 0b1000) === 0 ) { return; }
-        let hn = not === false ? s : s.slice(1);
-        if ( this.rePlainHostname.test(hn) ) { return s; }
-        if ( this.reBadHostnameChars.test(hn) ) { return; }
-        const hasWildcard = hn.lastIndexOf('*') !== -1;
-        if ( hasWildcard ) {
-            if ( modeBits === 0 ) { return; }
-            if ( hn.length === 1 ) {
-                if ( not || (modeBits & 0b0100) === 0 ) { return; }
-                return s;
-            }
-            if ( (modeBits & 0b0010) !== 0 ) {
-                if ( this.rePlainEntity.test(hn) ) { return s; }
-                if ( this.reEntity.test(hn) === false ) { return; }
-            } else if ( (modeBits & 0b0001) === 0 ) {
-                return;
-            }
-            hn = hn.replace(/\*/g, '__asterisk__');
-        }
-        this.punycoder.hostname = '_';
-        try {
-            this.punycoder.hostname = hn;
-            hn = this.punycoder.hostname;
-        } catch (_) {
-            return;
-        }
-        if ( hn === '_' || hn === '' ) { return; }
-        if ( hasWildcard ) {
-            hn = this.punycoder.hostname.replace(/__asterisk__/g, '*');
-        }
-        if (
-            (modeBits & 0b0001) === 0 && (
-                hn.charCodeAt(0) === 0x2E /* '.' */ ||
-                hn.charCodeAt(hn.length - 1) === 0x2E /* '.' */
-            )
-        ) {
-            return;
-        }
-        return not ? '~' + hn : hn;
-    }
-
-    slice(raw) {
-        this.reset();
+    parse(raw) {
         this.raw = raw;
-        const rawEnd = raw.length;
-        if ( rawEnd === 0 ) { return; }
-        // All unicode characters are allowed in hostname
-        const unicodeBits = BITUnicode | BITAlpha;
-        // Create raw slices
-        const slices = this.slices;
-        let ptr = this.sliceWritePtr;
-        let c = raw.charCodeAt(0);
-        let aBits = c < 0x80 ? charDescBits[c] : unicodeBits;
-        slices[ptr+0] = aBits;
-        slices[ptr+1] = 0;
-        ptr += 2;
-        let allBits = aBits;
-        let i = 0, j = 1;
-        while ( j < rawEnd ) {
-            c = raw.charCodeAt(j);
-            const bBits = c < 0x80 ? charDescBits[c] : unicodeBits;
-            if ( bBits !== aBits ) {
-                slices[ptr+0] = j - i;
-                slices[ptr+1] = bBits;
-                slices[ptr+2] = j;
-                ptr += 3;
-                allBits |= bBits;
-                aBits = bBits;
-                i = j;
-            }
-            j += 1;
+        this.rawEnd = raw.length;
+        this.nodePoolPtr = FULL_NODE_SIZE;
+        this.nodeTypeRegisterPtr = 0;
+        this.astTransformPtr = 1;
+        this.astType = AST_TYPE_NONE;
+        this.astTypeFlavor = AST_TYPE_NONE;
+        this.astFlags = 0;
+        this.rootNode = this.allocTypedNode(NODE_TYPE_LINE_RAW, 0, raw.length);
+        if ( raw.length === 0 ) { return; }
+        if ( this.reHasWhitespaceChar.test(raw) ) {
+            this.addFlags(AST_FLAG_HAS_WHITESPACE);
         }
-        slices[ptr+0] = j - i;
-        ptr += 1;
-        // End-of-line slice
-        this.eolSpan.i = ptr;
-        slices[ptr+0] = 0;
-        slices[ptr+1] = rawEnd;
-        slices[ptr+2] = 0;
-        ptr += 3;
-        // Trim left
-        if ( (slices[0] & BITSpace) !== 0 ) {
-            this.leftSpaceSpan.len = 3;
-        } else {
-            this.leftSpaceSpan.len = 0;
+        this.linkDown(this.rootNode, this.parseRaw(this.rootNode));
+    }
+
+    getType() {
+        return this.astType;
+    }
+
+    isComment() {
+        return this.astType === AST_TYPE_COMMENT;
+    }
+
+    isFilter() {
+        return this.isNetworkFilter() || this.isExtendedFilter();
+    }
+
+    isNetworkFilter() {
+        return this.astType === AST_TYPE_NETWORK;
+    }
+
+    isExtendedFilter() {
+        return this.astType === AST_TYPE_EXTENDED;
+    }
+
+    isCosmeticFilter() {
+        return this.astType === AST_TYPE_EXTENDED &&
+            this.astTypeFlavor === AST_TYPE_EXTENDED_COSMETIC;
+    }
+
+    isScriptletFilter() {
+        return this.astType === AST_TYPE_EXTENDED &&
+            this.astTypeFlavor === AST_TYPE_EXTENDED_SCRIPTLET;
+    }
+
+    isHtmlFilter() {
+        return this.astType === AST_TYPE_EXTENDED &&
+            this.astTypeFlavor === AST_TYPE_EXTENDED_HTML;
+    }
+
+    isResponseheaderFilter() {
+        return this.astType === AST_TYPE_EXTENDED &&
+            this.astTypeFlavor === AST_TYPE_EXTENDED_RESPONSEHEADER;
+    }
+
+    getFlags(flags = 0xFFFFFFFF) {
+        return this.astFlags & flags;
+    }
+
+    addFlags(flags) {
+        this.astFlags |= flags;
+    }
+
+    parseRaw(parent) {
+        const head = this.allocHeadNode();
+        let prev = head, next = 0;
+        const parentBeg = this.nodes[parent+NODE_BEG_INDEX];
+        const parentEnd = this.nodes[parent+NODE_END_INDEX];
+        const l1 = this.hasWhitespace()
+            ? this.leftWhitespaceCount(this.getNodeString(parent))
+            : 0;
+        if ( l1 !== 0 ) {
+            next = this.allocTypedNode(
+                NODE_TYPE_WHITESPACE,
+                parentBeg,
+                parentBeg + l1
+            );
+            prev = this.linkRight(prev, next);
+            if ( l1 === parentEnd ) { return this.throwHeadNode(head); }
         }
-        // Trim right
-        const lastSlice = this.eolSpan.i - 3;
-        if (
-            (lastSlice > this.leftSpaceSpan.i) &&
-            (slices[lastSlice] & BITSpace) !== 0
-        ) {
-            this.rightSpaceSpan.i = lastSlice;
-            this.rightSpaceSpan.len = 3;
-        } else {
-            this.rightSpaceSpan.i = this.eolSpan.i;
-            this.rightSpaceSpan.len = 0;
+        const r0 = this.hasWhitespace()
+            ? parentEnd - this.rightWhitespaceCount(this.getNodeString(parent))
+            : parentEnd;
+        if ( r0 !== l1 ) {
+            next = this.allocTypedNode(
+                NODE_TYPE_LINE_BODY,
+                parentBeg + l1,
+                parentBeg + r0
+            );
+            this.linkDown(next, this.parseFilter(next));
+            prev = this.linkRight(prev, next);
         }
-        // Quit cleanly
-        this.sliceWritePtr = ptr;
-        this.allBits = allBits;
-    }
-
-    splitSlot(slot, len) {
-        this.sliceWritePtr += 3;
-        if ( this.sliceWritePtr > this.slices.length ) {
-            this.slices.push(0, 0, 0);
+        if ( r0 !== parentEnd ) {
+            next = this.allocTypedNode(
+                NODE_TYPE_WHITESPACE,
+                parentBeg + r0,
+                parentEnd
+            );
+            this.linkRight(prev, next);
         }
-        this.slices.copyWithin(slot + 3, slot, this.sliceWritePtr - 3);
-        this.slices[slot+3+1] = this.slices[slot+1] + len;
-        this.slices[slot+3+2] = this.slices[slot+2] - len;
-        this.slices[slot+2] = len;
-        for ( const span of this.spans ) {
-            if ( span.i > slot ) {
-                span.i += 3;
-            }
-        }
+        return this.throwHeadNode(head);
     }
 
-    markSlices(beg, end, bits) {
-        while ( beg < end ) {
-            this.slices[beg] |= bits;
-            beg += 3;
-        }
-    }
+    parseFilter(parent) {
+        const parentBeg = this.nodes[parent+NODE_BEG_INDEX];
+        const parentEnd = this.nodes[parent+NODE_END_INDEX];
+        const parentStr = this.getNodeString(parent);
 
-    markSpan(span, bits) {
-        const { i, len } = span;
-        this.markSlices(i, i + len, bits);
-    }
-
-    unmarkSlices(beg, end, bits) {
-        while ( beg < end ) {
-            this.slices[beg] &= ~bits;
-            beg += 3;
-        }
-    }
-
-    errorSlices(beg, end) {
-        this.markSlices(beg, end, BITError);
-    }
-
-    findFirstMatch(from, bits) {
-        let to = from;
-        while ( to < this.sliceWritePtr ) {
-            if ( (this.slices[to] & bits) !== 0 ) { return to; }
-            to += 3;
-        }
-        return -1;
-    }
-
-    findFirstOdd(from, bits) {
-        let to = from;
-        while ( to < this.sliceWritePtr ) {
-            if ( (this.slices[to] & bits) === 0 ) { return to; }
-            to += 3;
-        }
-        return -1;
-    }
-
-    skipUntil(from, to, bits) {
-        let i = from;
-        while ( i < to ) {
-            if ( (this.slices[i] & bits) !== 0 ) { break; }
-            i += 3;
-        }
-        return i;
-    }
-
-    skipUntilNot(from, to, bits) {
-        let i = from;
-        while ( i < to ) {
-            if ( (this.slices[i] & bits) === 0 ) { break; }
-            i += 3;
-        }
-        return i;
-    }
-
-    // Important: the from-to indices are inclusive.
-    strFromSlices(from, to) {
-        return this.raw.slice(
-            this.slices[from+1],
-            this.slices[to+1] + this.slices[to+2]
-        );
-    }
-
-    strFromSpan(span) {
-        if ( span.len === 0 ) { return ''; }
-        const beg = span.i;
-        return this.strFromSlices(beg, beg + span.len - 3);
-    }
-
-    isBlank() {
-        return this.allBits === BITSpace;
-    }
-
-    hasOptions() {
-        return this.optionsSpan.len !== 0;
-    }
-
-    getPattern() {
-        if ( this.pattern !== '' ) { return this.pattern; }
-        const { i, len } = this.patternSpan;
-        if ( len === 0 ) { return ''; }
-        let beg = this.slices[i+1];
-        let end = this.slices[i+len+1];
-        this.pattern = this.raw.slice(beg, end);
-        return this.pattern;
-    }
-
-    getNetPattern() {
-        if ( this.pattern !== '' ) { return this.pattern; }
-        const { i, len } = this.patternSpan;
-        if ( len === 0 ) { return ''; }
-        let beg = this.slices[i+1];
-        let end = this.slices[i+len+1];
-        if ( hasBits(this.flavorBits, BITFlavorNetRegex) ) {
-            beg += 1; end -= 1;
-        }
-        this.pattern = this.raw.slice(beg, end);
-        return this.pattern;
-    }
-
-    // https://github.com/chrisaljoudi/uBlock/issues/1096
-    // https://github.com/ryanbr/fanboy-adblock/issues/1384
-    // Examples of dubious filter content:
-    //   - Spaces characters
-    //   - Single character with no options
-    //   - Wildcard(s) with no options
-    //   - Zero-length pattern with no options
-    patternIsDubious() {
-        if ( hasBits(this.patternBits, BITError) ) { return true; }
-        if ( hasBits(this.patternBits, BITSpace) ) {
+        // A comment?
+        if ( this.reCommentLine.test(parentStr) ) {
+            const head = this.allocTypedNode(NODE_TYPE_COMMENT, parentBeg, parentEnd);
+            this.astType = AST_TYPE_COMMENT;
             if ( this.interactive ) {
-                this.markSpan(this.patternSpan, BITError);
+                this.linkDown(head, this.parseComment(head));
             }
-            return true;
+            return head;
         }
-        if ( this.patternSpan.len > 3 || this.optionsSpan.len !== 0 ) {
-            return false;
+
+        // Good to know in advance to avoid costly tests later on
+        if ( this.reHasUppercaseChar.test(parentStr) ) {
+            this.addFlags(AST_FLAG_HAS_UPPERCASE);
         }
-        if (
-            this.patternSpan.len === 3 &&
-            this.slices[this.patternSpan.i+2] !== 1 &&
-            hasNoBits(this.patternBits, BITAsterisk)
-        ) {
-            return false;
+        if ( this.reHasUnicodeChar.test(parentStr) ) {
+            this.addFlags(AST_FLAG_HAS_UNICODE);
         }
-        if ( this.interactive === false ) { return true; }
-        let l, r;
-        if ( this.patternSpan.len !== 0 ) {
-            l = this.patternSpan.i;
-            r = this.optionsAnchorSpan.i;
-        } else {
-            l = this.patternLeftAnchorSpan.i;
-            r = this.patternLeftAnchorSpan.len !== 0
-                ? this.optionsAnchorSpan.i
-                : this.optionsSpan.i;
+
+        // An extended filter? (or rarely, a comment)
+        if ( this.reExtAnchor.test(parentStr) ) {
+            const match = this.reExtAnchor.exec(parentStr);
+            const matchLen = match[1].length;
+            const head = this.allocTypedNode(NODE_TYPE_EXT_RAW, parentBeg, parentEnd);
+            this.linkDown(head, this.parseExt(head, parentBeg + match.index, matchLen));
+            return head;
+        } else if ( parentStr.charCodeAt(0) === 0x23 /* # */ ) {
+            const head = this.allocTypedNode(NODE_TYPE_COMMENT, parentBeg, parentEnd);
+            this.astType = AST_TYPE_COMMENT;
+            return head;
         }
-        this.errorSlices(l, r);
-        return true;
-    }
 
-    patternIsMatchAll() {
-        const { len } = this.patternSpan;
-        return len === 0 ||
-               len === 3 && hasBits(this.patternBits, BITAsterisk);
-    }
+        // A network filter (probably)
+        this.astType = AST_TYPE_NETWORK;
 
-    patternIsPlainHostname() {
-        if (
-            hasBits(this.patternBits, ~BITHostname) || (
-                hasBits(this.flavorBits, BITFlavorNetAnchor) &&
-                hasNotAllBits(this.flavorBits, BITFlavorNetHnAnchor)
-            )
-        ) {
-            return false;
+        // Parse inline comment if any
+        let tail = 0, tailStart = parentEnd;
+        if ( this.hasWhitespace() && this.reInlineComment.test(parentStr) ) {
+            const match = this.reInlineComment.exec(parentStr);
+            tailStart = parentBeg + match.index;
+            tail = this.allocTypedNode(NODE_TYPE_COMMENT, tailStart, parentEnd);
         }
-        const { i, len } = this.patternSpan;
-        return hasBits(this.slices[i], BITAlphaNum) &&
-               hasBits(this.slices[i+len-3], BITAlphaNum);
+
+        const head = this.allocTypedNode(NODE_TYPE_NET_RAW, parentBeg, tailStart);
+        if ( this.linkDown(head, this.parseNet(head)) === 0 ) {
+            this.astType = AST_TYPE_UNKNOWN;
+            this.addFlags(AST_FLAG_UNSUPPORTED);
+        }
+        if ( tail !== 0 ) {
+            this.linkRight(head, tail);
+        }
+        return head;
     }
 
-    patternIsLeftHostnameAnchored() {
-        return hasBits(this.flavorBits, BITFlavorNetLeftHnAnchor);
+    parseComment(parent) {
+        const parentStr = this.getNodeString(parent);
+        if ( this.rePreparseDirectiveAny.test(parentStr) ) {
+            return this.parsePreparseDirective(parent, parentStr);
+        }
+        if ( this.reURL.test(parentStr) === false ) { return 0; }
+        const parentBeg = this.nodes[parent+NODE_BEG_INDEX];
+        const parentEnd = this.nodes[parent+NODE_END_INDEX];
+        const match = this.reURL.exec(parentStr);
+        const urlBeg = parentBeg + match.index;
+        const urlEnd = urlBeg + match[0].length;
+        const head = this.allocTypedNode(NODE_TYPE_COMMENT, parentBeg, urlBeg);
+        let next = this.allocTypedNode(NODE_TYPE_COMMENT_URL, urlBeg, urlEnd);
+        let prev = this.linkRight(head, next);
+        if ( urlEnd !== parentEnd ) {
+            next = this.allocTypedNode(NODE_TYPE_COMMENT, urlEnd, parentEnd);
+            this.linkRight(prev, next);
+        }
+        return head;
     }
 
-    patternIsRightHostnameAnchored() {
-        return hasBits(this.flavorBits, BITFlavorNetRightHnAnchor);
-    }
-
-    patternIsLeftAnchored() {
-        return hasBits(this.flavorBits, BITFlavorNetLeftURLAnchor);
-    }
-
-    patternIsRightAnchored() {
-        return hasBits(this.flavorBits, BITFlavorNetRightURLAnchor);
-    }
-
-    patternIsRegex() {
-        return (this.flavorBits & BITFlavorNetRegex) !== 0;
-    }
-
-    patternIsTokenizable() {
-        // TODO: not necessarily true, this needs more work.
-        if ( this.patternIsRegex === false ) { return true; }
-        return this.reGoodRegexToken.test(
-            this.utils.regex.toTokenizableStr(this.getNetPattern())
+    parsePreparseDirective(parent, s) {
+        const parentBeg = this.nodes[parent+NODE_BEG_INDEX];
+        const parentEnd = this.nodes[parent+NODE_END_INDEX];
+        const match = this.rePreparseDirectiveAny.exec(s);
+        const directiveEnd = parentBeg + match[0].length;
+        const head = this.allocTypedNode(
+            NODE_TYPE_PREPARSE_DIRECTIVE,
+            parentBeg,
+            directiveEnd
         );
-    }
-
-    patternHasWildcard() {
-        return hasBits(this.patternBits, BITAsterisk);
-    }
-
-    patternHasCaret() {
-        return hasBits(this.patternBits, BITCaret);
-    }
-
-    patternHasUnicode() {
-        return hasBits(this.patternBits, BITUnicode);
-    }
-
-    patternHasUppercase() {
-        return hasBits(this.patternBits, BITUppercase);
-    }
-
-    patternToLowercase() {
-        const hasUpper = this.patternHasUppercase();
-        if ( hasUpper === false && this.pattern !== '' ) {
-            return this.pattern;
+        if ( directiveEnd !== parentEnd ) {
+            const next = this.allocTypedNode(
+                s .startsWith('!#if ')
+                    ? NODE_TYPE_PREPARSE_DIRECTIVE_IF_VALUE
+                    : NODE_TYPE_PREPARSE_DIRECTIVE_VALUE,
+                directiveEnd,
+                parentEnd
+            );
+            this.linkRight(head, next);
         }
-        const { i, len } = this.patternSpan;
-        if ( len === 0 ) { return ''; }
-        const beg = this.slices[i+1];
-        const end = this.slices[i+len+1];
-        this.pattern = this.pattern || this.raw.slice(beg, end);
-        if ( hasUpper === false ) { return this.pattern; }
-        this.pattern = this.pattern.toLowerCase();
-        this.raw = this.raw.slice(0, beg) +
-                   this.pattern +
-                   this.raw.slice(end);
-        this.unmarkSlices(i, i + len, BITUppercase);
-        this.patternBits &= ~BITUppercase;
-        return this.pattern;
+        return head;
     }
 
-    patternHasSpace() {
-        return hasBits(this.flavorBits, BITFlavorNetSpaceInPattern);
-    }
-
-    patternHasLeadingWildcard() {
-        if ( hasBits(this.patternBits, BITAsterisk) === false ) {
-            return false;
+    // Very common, look into fast-tracking such plain pattern:
+    // /^[^!#\$\*\^][^#\$\*\^]*[^\$\*\|]$/
+    parseNet(parent) {
+        const parentBeg = this.nodes[parent+NODE_BEG_INDEX];
+        const parentEnd = this.nodes[parent+NODE_END_INDEX];
+        const parentStr = this.getNodeString(parent);
+        const head = this.allocHeadNode();
+        let patternBeg = parentBeg;
+        let prev = head, next = 0, tail = 0;
+        if ( this.reNetException.test(parentStr) ) {
+            this.addFlags(AST_FLAG_IS_EXCEPTION);
+            next = this.allocTypedNode(NODE_TYPE_NET_EXCEPTION, parentBeg, parentBeg+2);
+            prev = this.linkRight(prev, next);
+            patternBeg += 2;
         }
-        const { i, len } = this.patternSpan;
-        return len !== 0 && hasBits(this.slices[i], BITAsterisk);
-    }
-
-    patternHasTrailingWildcard() {
-        if ( hasBits(this.patternBits, BITAsterisk) === false ) {
-            return false;
+        let anchorBeg = this.indexOfNetAnchor(parentStr, patternBeg);
+        if ( anchorBeg === -1 ) { return 0; }
+        anchorBeg += parentBeg;
+        if ( anchorBeg !== parentStr.length ) {
+            tail = this.allocTypedNode(
+                NODE_TYPE_NET_OPTIONS_ANCHOR,
+                anchorBeg,
+                anchorBeg + 1
+            );
+            next = this.allocTypedNode(
+                NODE_TYPE_NET_OPTIONS,
+                anchorBeg + 1,
+                parentEnd
+            );
+            this.addFlags(AST_FLAG_HAS_OPTIONS);
+            this.addNodeToRegister(NODE_TYPE_NET_OPTIONS, next);
+            this.linkDown(next, this.parseNetOptions(next));
+            this.linkRight(tail, next);
         }
-        const { i, len } = this.patternSpan;
-        return len !== 0 && hasBits(this.slices[i+len-1], BITAsterisk);
-    }
-
-    optionHasUnicode() {
-        return hasBits(this.optionsBits, BITUnicode);
-    }
-
-    netOptions() {
-        return this.netOptionsIterator;
-    }
-
-    extOptions() {
-        return this.extOptionsIterator;
-    }
-
-    patternTokens() {
-        if ( this.category === CATStaticNetFilter ) {
-            return this.patternTokenIterator;
+        next = this.allocTypedNode(
+            NODE_TYPE_NET_PATTERN_RAW,
+            patternBeg,
+            anchorBeg
+        );
+        this.addNodeToRegister(NODE_TYPE_NET_PATTERN_RAW, next);
+        this.linkDown(next, this.parseNetPattern(next));
+        prev = this.linkRight(prev, next);
+        if ( tail !== 0 ) {
+            this.linkRight(prev, tail);
         }
-        return [];
+        this.validateNet();
+        return this.throwHeadNode(head);
     }
 
-    setMaxTokenLength(len) {
-        this.maxTokenLength = len;
-    }
-
-    hasUnicode() {
-        return hasBits(this.allBits, BITUnicode);
-    }
-
-    toLowerCase() {
-        if ( hasBits(this.allBits, BITUppercase) ) {
-            this.raw = this.raw.toLowerCase();
+    validateNet() {
+        const isException = this.isException();
+        let bad = false, realBad = false;
+        let abstractTypeCount = 0;
+        let behaviorTypeCount = 0;
+        let docTypeCount = 0;
+        let modifierType = 0;
+        let requestTypeCount = 0;
+        let unredirectableTypeCount = 0;
+        for ( let i = 0, n = this.nodeTypeRegisterPtr; i < n; i++ ) {
+            const type = this.nodeTypeRegister[i];
+            const targetNode = this.nodeTypeLookupTable[type];
+            if ( targetNode === 0 ) { continue; }
+            if ( this.badTypes.has(type) ) {
+                this.addNodeFlags(NODE_FLAG_ERROR);
+                this.addFlags(AST_FLAG_HAS_ERROR);
+            }
+            const flags = this.getNodeFlags(targetNode);
+            if ( (flags & NODE_FLAG_ERROR) !== 0 ) { continue; }
+            const isNegated = (flags & NODE_FLAG_IS_NEGATED) !== 0;
+            const hasValue = (flags & NODE_FLAG_OPTION_HAS_VALUE) !== 0;
+            bad = false; realBad = false;
+            switch ( type ) {
+                case NODE_TYPE_NET_OPTION_NAME_ALL:
+                    realBad = isNegated || hasValue || modifierType !== 0;
+                    break;
+                case NODE_TYPE_NET_OPTION_NAME_1P:
+                case NODE_TYPE_NET_OPTION_NAME_3P:
+                    realBad = hasValue;
+                    break;
+                case NODE_TYPE_NET_OPTION_NAME_BADFILTER:
+                case NODE_TYPE_NET_OPTION_NAME_NOOP:
+                    realBad = isNegated || hasValue;
+                    break;
+                case NODE_TYPE_NET_OPTION_NAME_CSS:
+                case NODE_TYPE_NET_OPTION_NAME_FONT:
+                case NODE_TYPE_NET_OPTION_NAME_IMAGE:
+                case NODE_TYPE_NET_OPTION_NAME_MEDIA:
+                case NODE_TYPE_NET_OPTION_NAME_OBJECT:
+                case NODE_TYPE_NET_OPTION_NAME_OTHER:
+                case NODE_TYPE_NET_OPTION_NAME_SCRIPT:
+                case NODE_TYPE_NET_OPTION_NAME_XHR:
+                    realBad = hasValue;
+                    if ( realBad ) { break; }
+                    requestTypeCount += 1;
+                    break;
+                case NODE_TYPE_NET_OPTION_NAME_CNAME:
+                    realBad = isException === false || isNegated || hasValue;
+                    if ( realBad ) { break; }
+                    modifierType = type;
+                    break;
+                case NODE_TYPE_NET_OPTION_NAME_CSP:
+                    realBad = (hasValue || isException) === false ||
+                        modifierType !== 0 ||
+                        this.reBadCSP.test(
+                            this.getNetOptionValue(NODE_TYPE_NET_OPTION_NAME_CSP)
+                        );
+                    if ( realBad ) { break; }
+                    modifierType = type;
+                    break;
+                case NODE_TYPE_NET_OPTION_NAME_DENYALLOW:
+                    realBad = isNegated || hasValue === false ||
+                        this.getBranchFromType(NODE_TYPE_NET_OPTION_NAME_FROM) === 0;
+                    break;
+                case NODE_TYPE_NET_OPTION_NAME_DOC:
+                case NODE_TYPE_NET_OPTION_NAME_FRAME:
+                    realBad = hasValue;
+                    if ( realBad ) { break; }
+                    docTypeCount += 1;
+                    break;
+                case NODE_TYPE_NET_OPTION_NAME_EHIDE:
+                case NODE_TYPE_NET_OPTION_NAME_GHIDE:
+                case NODE_TYPE_NET_OPTION_NAME_SHIDE:
+                    realBad = isNegated || hasValue || modifierType !== 0;
+                    if ( realBad ) { break; }
+                    behaviorTypeCount += 1;
+                    unredirectableTypeCount += 1;
+                    break;
+                case NODE_TYPE_NET_OPTION_NAME_EMPTY:
+                case NODE_TYPE_NET_OPTION_NAME_MP4:
+                    realBad = isNegated || hasValue || modifierType !== 0;
+                    if ( realBad ) { break; }
+                    modifierType = type;
+                    break;
+                case NODE_TYPE_NET_OPTION_NAME_FROM:
+                case NODE_TYPE_NET_OPTION_NAME_METHOD:
+                case NODE_TYPE_NET_OPTION_NAME_TO:
+                    realBad = isNegated || hasValue === false;
+                    break;
+                case NODE_TYPE_NET_OPTION_NAME_GENERICBLOCK:
+                    bad = true;
+                    realBad = isException === false || isNegated || hasValue;
+                    break;
+                case NODE_TYPE_NET_OPTION_NAME_HEADER:
+                    realBad = this.expertMode === false || isNegated || hasValue === false;
+                    break;
+                case NODE_TYPE_NET_OPTION_NAME_IMPORTANT:
+                    realBad = isException || isNegated || hasValue;
+                    break;
+                case NODE_TYPE_NET_OPTION_NAME_INLINEFONT:
+                case NODE_TYPE_NET_OPTION_NAME_INLINESCRIPT:
+                    realBad = hasValue;
+                    if ( realBad ) { break; }
+                    modifierType = type;
+                    break;
+                case NODE_TYPE_NET_OPTION_NAME_MATCHCASE:
+                    realBad = this.isRegexPattern() === false;
+                    break;
+                case NODE_TYPE_NET_OPTION_NAME_PING:
+                case NODE_TYPE_NET_OPTION_NAME_WEBSOCKET:
+                    realBad = hasValue;
+                    if ( realBad ) { break; }
+                    requestTypeCount += 1;
+                    unredirectableTypeCount += 1;
+                    break;
+                case NODE_TYPE_NET_OPTION_NAME_POPUNDER:
+                case NODE_TYPE_NET_OPTION_NAME_POPUP:
+                    realBad = hasValue;
+                    if ( realBad ) { break; }
+                    abstractTypeCount += 1;
+                    unredirectableTypeCount += 1;
+                    break;
+                case NODE_TYPE_NET_OPTION_NAME_REDIRECT:
+                case NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE:
+                    realBad = isNegated || (isException || hasValue) === false ||
+                        modifierType !== 0;
+                    if ( realBad ) { break; }
+                    modifierType = type;
+                    break;
+                case NODE_TYPE_NET_OPTION_NAME_REMOVEPARAM:
+                    realBad = isNegated || modifierType !== 0;
+                    if ( realBad ) { break; }
+                    modifierType = type;
+                    break;
+                case NODE_TYPE_NET_OPTION_NAME_STRICT1P:
+                case NODE_TYPE_NET_OPTION_NAME_STRICT3P:
+                    realBad = isNegated || hasValue;
+                    break;
+                case NODE_TYPE_NET_OPTION_NAME_UNKNOWN:
+                    realBad = true;
+                    break;
+                case NODE_TYPE_NET_OPTION_NAME_WEBRTC:
+                    bad = true;
+                    realBad = isNegated || hasValue;
+                    break;
+                case NODE_TYPE_NET_PATTERN:
+                    realBad = this.hasOptions() === false &&
+                        this.getNodeStringLen(targetNode) === 1;
+                    break;
+                default:
+                    break;
+            }
+            if ( bad || realBad ) {
+                this.addNodeFlags(targetNode, NODE_FLAG_ERROR);
+            }
+            if ( realBad ) {
+                this.addFlags(AST_FLAG_HAS_ERROR);
+            }
         }
-        return this.raw;
+        switch ( modifierType ) {
+            case NODE_TYPE_NET_OPTION_NAME_CNAME:
+                realBad = abstractTypeCount || behaviorTypeCount || requestTypeCount;
+                break;
+            case NODE_TYPE_NET_OPTION_NAME_CSP:
+                realBad = abstractTypeCount || behaviorTypeCount || requestTypeCount;
+                break;
+            case NODE_TYPE_NET_OPTION_NAME_INLINEFONT:
+            case NODE_TYPE_NET_OPTION_NAME_INLINESCRIPT:
+                realBad = abstractTypeCount || behaviorTypeCount || requestTypeCount;
+                break;
+            case NODE_TYPE_NET_OPTION_NAME_EMPTY:
+                realBad = abstractTypeCount || behaviorTypeCount;
+                break;
+            case NODE_TYPE_NET_OPTION_NAME_MEDIA:
+            case NODE_TYPE_NET_OPTION_NAME_MP4:
+                realBad = abstractTypeCount || behaviorTypeCount || docTypeCount || requestTypeCount;
+                break;
+            case NODE_TYPE_NET_OPTION_NAME_REDIRECT:
+            case NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE: {
+                realBad = abstractTypeCount || behaviorTypeCount || unredirectableTypeCount;
+                break;
+            }
+            case NODE_TYPE_NET_OPTION_NAME_REMOVEPARAM:
+                realBad = abstractTypeCount || behaviorTypeCount;
+                break;
+            default:
+                break;
+        }
+        if ( realBad ) {
+            const targetNode = this.getBranchFromType(modifierType);
+            this.addNodeFlags(targetNode, NODE_FLAG_ERROR);
+            this.addFlags(AST_FLAG_HAS_ERROR);
+        }
+    }
+
+    indexOfNetAnchor(s, start = 0) {
+        const end = s.length;
+        if ( end === start ) { return end; }
+        let j = s.lastIndexOf('$');
+        if ( j === -1 ) { return end; }
+        if ( (j+1) === end ) { return end; }
+        for (;;) {
+            if ( j !== start && s.charCodeAt(j-1) === 0x24 /* $ */ ) { return -1; }
+            const c = s.charCodeAt(j+1);
+            if ( c !== 0x29 /* ) */ && c !== 0x2F /* / */ && c !== 0x7C /* | */ ) { return j; }
+            if ( j <= start ) { break; }
+            j = s.lastIndexOf('$', j-1);
+            if ( j === -1 ) { break; }
+        }
+        return end;
+    }
+
+    parseNetPattern(parent) {
+        const parentBeg = this.nodes[parent+NODE_BEG_INDEX];
+        const parentEnd = this.nodes[parent+NODE_END_INDEX];
+
+        // Empty pattern
+        if ( parentEnd === parentBeg ) {
+            const node = this.allocTypedNode(
+                NODE_TYPE_NET_PATTERN,
+                parentBeg,
+                parentEnd
+            );
+            this.addNodeFlags(node, NODE_FLAG_PATTERN_ANY);
+            this.addNodeToRegister(NODE_TYPE_NET_PATTERN, node);
+            this.setNodeTransform(node, '*');
+            return node;
+        }
+
+        const head = this.allocHeadNode();
+        let prev = head, next = 0, tail = 0;
+        let pattern = this.getNodeString(parent);
+        const hasWildcard = pattern.includes('*');
+        const c1st = pattern.charCodeAt(0);
+        const c2nd = pattern.charCodeAt(1) || 0;
+        const clast = exCharCodeAt(pattern, -1);
+
+        // Common case: Easylist syntax-based hostname
+        if ( 
+            hasWildcard === false &&
+            c1st === 0x7C /* | */ && c2nd === 0x7C /* | */ &&
+            clast === 0x5E /* ^ */ &&
+            this.isAdblockHostnamePattern(pattern)
+        ) {
+            pattern = pattern.slice(2, -1);
+            const normal = this.hasUnicode()
+                ? this.normalizeHostnameValue(pattern)
+                : pattern;
+            this.addFlags(
+                AST_FLAG_NET_PATTERN_LEFT_HNANCHOR |
+                AST_FLAG_NET_PATTERN_RIGHT_PATHANCHOR
+            );
+            next = this.allocTypedNode(
+                NODE_TYPE_NET_PATTERN_LEFT_HNANCHOR,
+                parentBeg,
+                parentBeg + 2
+            );
+            prev = this.linkRight(prev, next);
+            next = this.allocTypedNode(
+                NODE_TYPE_NET_PATTERN,
+                parentBeg + 2,
+                parentEnd - 1
+            );
+            this.addNodeFlags(next, NODE_FLAG_PATTERN_HOSTNAME);
+            this.addNodeToRegister(NODE_TYPE_NET_PATTERN, next);
+            if ( normal !== pattern ) {
+                this.setNodeTransform(next, normal);
+            }
+            prev = this.linkRight(prev, next);
+            next = this.allocTypedNode(
+                NODE_TYPE_NET_PATTERN_PART_SPECIAL,
+                parentEnd - 1,
+                parentEnd
+            );
+            this.linkRight(prev, next);
+            return this.throwHeadNode(head);
+        }
+
+        let patternBeg = parentBeg;
+        let patternEnd = parentEnd;
+
+        // Hosts file entry?
+        if (
+            this.hasWhitespace() &&
+            this.isException() === false &&
+            this.hasOptions() === false &&
+            this.reHostsSink.test(pattern)
+        ) {
+            const match = this.reHostsSink.exec(pattern);
+            patternBeg += match[0].length;
+            pattern = pattern.slice(patternBeg);
+            next = this.allocTypedNode(NODE_TYPE_IGNORE, parentBeg, patternBeg);
+            prev = this.linkRight(prev, next);
+            if (
+                this.reHostsRedirect.test(pattern) ||
+                this.rePlainHostname.test(pattern) === false
+            ) {
+                this.astType = AST_TYPE_NONE;
+                this.addFlags(AST_FLAG_IGNORE);
+                next = this.allocTypedNode(NODE_TYPE_IGNORE, patternBeg, parentEnd);
+                prev = this.linkRight(prev, next);
+                return this.throwHeadNode(head);
+            }
+            this.addFlags(
+                AST_FLAG_NET_PATTERN_LEFT_HNANCHOR |
+                AST_FLAG_NET_PATTERN_RIGHT_PATHANCHOR
+            );
+            next = this.allocTypedNode(
+                NODE_TYPE_NET_PATTERN,
+                patternBeg,
+                parentEnd
+            );
+            this.addNodeFlags(next, NODE_FLAG_PATTERN_HOSTNAME);
+            this.addNodeToRegister(NODE_TYPE_NET_PATTERN, next);
+            this.linkRight(prev, next);
+            return this.throwHeadNode(head);
+        }
+
+        // Regex?
+        if (
+            c1st === 0x2F /* / */ && clast === 0x2F /* / */ &&
+            pattern.length > 2
+        ) {
+            const normal = this.normalizeRegexPattern(pattern);
+            next = this.allocTypedNode(
+                NODE_TYPE_NET_PATTERN,
+                patternBeg,
+                patternEnd
+            );
+            this.addNodeFlags(next, NODE_FLAG_PATTERN_REGEX);
+            this.addNodeToRegister(NODE_TYPE_NET_PATTERN, next);
+            if ( normal !== '' ) {
+                if ( normal !== pattern ) {
+                    this.setNodeTransform(next, normal);
+                }
+                if ( this.interactive ) {
+                    const tokenizable = utils.regex.toTokenizableStr(normal);
+                    if ( this.reGoodRegexToken.test(tokenizable) === false ) {
+                        this.addNodeFlags(next, NODE_FLAG_PATTERN_UNTOKENIZABLE);
+                    }
+                }
+            } else {
+                this.addNodeFlags(next, NODE_FLAG_PATTERN_BAD | NODE_FLAG_ERROR);
+                this.addFlags(AST_FLAG_HAS_ERROR);
+            }
+            this.linkRight(prev, next);
+            return this.throwHeadNode(head);
+        }
+
+        // Left anchor
+        if ( c1st === 0x7C /* '|' */ ) {
+            if ( pattern.length > 2 && c2nd === 0x7C /* '|' */ ) {
+                const type = this.isTokenCharCode(pattern.charCodeAt(2) || 0)
+                    ? NODE_TYPE_NET_PATTERN_LEFT_HNANCHOR
+                    : NODE_TYPE_IGNORE;
+                next = this.allocTypedNode(type, patternBeg, patternBeg+2);
+                if ( type === NODE_TYPE_NET_PATTERN_LEFT_HNANCHOR ) {
+                    this.addFlags(AST_FLAG_NET_PATTERN_LEFT_HNANCHOR);
+                }
+                prev = this.linkRight(prev, next);
+                patternBeg += 2;
+                pattern = pattern.slice(2);
+            } else if ( pattern.length > 1 ) {
+                const type = this.isTokenCharCode(c2nd)
+                    ? NODE_TYPE_NET_PATTERN_LEFT_ANCHOR
+                    : NODE_TYPE_IGNORE;
+                next = this.allocTypedNode(type, patternBeg, patternBeg+1);
+                if ( type === NODE_TYPE_NET_PATTERN_LEFT_ANCHOR ) {
+                    this.addFlags(AST_FLAG_NET_PATTERN_LEFT_ANCHOR);
+                }
+                prev = this.linkRight(prev, next);
+                patternBeg += 1;
+                pattern = pattern.slice(1);
+            }
+        }
+
+        // Right anchor
+        if ( clast === 0x7C /* | */ && pattern.length >= 2 ) {
+            const type = exCharCodeAt(pattern, -2) !== 0x2A /* * */
+                ? NODE_TYPE_NET_PATTERN_RIGHT_ANCHOR
+                : NODE_TYPE_IGNORE;
+            tail = this.allocTypedNode(type, patternEnd-1, patternEnd);
+            if ( type === NODE_TYPE_NET_PATTERN_RIGHT_ANCHOR ) {
+                this.addFlags(AST_FLAG_NET_PATTERN_RIGHT_ANCHOR);
+            }
+            patternEnd -= 1;
+            pattern = pattern.slice(0, -1);
+        }
+
+        // Ignore pointless leading wildcards
+        if ( hasWildcard && this.rePointlessLeadingWildcards.test(pattern) ) {
+            const match = this.rePointlessLeadingWildcards.exec(pattern);
+            const ignoreLen = match[1].length;
+            next = this.allocTypedNode(
+                NODE_TYPE_IGNORE,
+                patternBeg,
+                patternBeg + ignoreLen
+            );
+            prev = this.linkRight(prev, next);
+            patternBeg += ignoreLen;
+            pattern = pattern.slice(ignoreLen);
+        }
+
+        // Ignore pointless trailing separators
+        if ( this.rePointlessTrailingSeparator.test(pattern) ) {
+            const match = this.rePointlessTrailingSeparator.exec(pattern);
+            const ignoreLen = match[1].length;
+            next = this.allocTypedNode(
+                NODE_TYPE_IGNORE,
+                patternEnd - ignoreLen,
+                patternEnd
+            );
+            patternEnd -= ignoreLen;
+            pattern = pattern.slice(0, -ignoreLen);
+            if ( tail !== 0 ) { this.linkRight(next, tail); }
+            tail = next;
+        }
+
+        // Ignore pointless trailing wildcards. Exception: when removing the
+        // trailing wildcard make the pattern look like a regex.
+        if ( hasWildcard && this.rePointlessTrailingWildcards.test(pattern) ) {
+            const match = this.rePointlessTrailingWildcards.exec(pattern);
+            const ignoreLen = match[1].length;
+            const needWildcard = pattern.charCodeAt(0) === 0x2F &&
+                exCharCodeAt(pattern, -ignoreLen-1) === 0x2F;
+            const goodWildcardBeg = patternEnd - ignoreLen;
+            const badWildcardBeg = goodWildcardBeg + (needWildcard ? 1 : 0);
+            if ( badWildcardBeg !== patternEnd ) {
+                next = this.allocTypedNode(
+                    NODE_TYPE_IGNORE,
+                    badWildcardBeg,
+                    patternEnd
+                );
+                if ( tail !== 0 ) {this.linkRight(next, tail); }
+                tail = next;
+            }
+            if ( goodWildcardBeg !== badWildcardBeg ) {
+                next = this.allocTypedNode(
+                    NODE_TYPE_NET_PATTERN_PART_SPECIAL,
+                    goodWildcardBeg,
+                    badWildcardBeg
+                );
+                if ( tail !== 0 ) { this.linkRight(next, tail); }
+                tail = next;
+            }
+            patternEnd -= ignoreLen;
+            pattern = pattern.slice(0, -ignoreLen);
+        }
+
+        const needNormalization = this.needPatternNormalization(pattern);
+        const normal = needNormalization
+            ? this.normalizePattern(pattern)
+            : pattern;
+        next = this.allocTypedNode(NODE_TYPE_NET_PATTERN, patternBeg, patternEnd);
+        let nodeFlags = 0;
+        if ( normal === '' || pattern === '*' ) {
+            nodeFlags = NODE_FLAG_PATTERN_ANY;
+        } else if ( this.rePlainHostname.test(normal) ) {
+            nodeFlags = NODE_FLAG_PATTERN_HOSTNAME;
+        } else if ( this.reHasPatternSpecialChars.test(normal) ) {
+            nodeFlags = NODE_FLAG_PATTERN_GENERIC;
+        } else if ( normal !== undefined ) {
+            nodeFlags = NODE_FLAG_PATTERN_PLAIN;
+        } else {
+            nodeFlags = NODE_FLAG_PATTERN_BAD | NODE_FLAG_ERROR;
+            this.addFlags(AST_FLAG_HAS_ERROR);
+        }
+        this.addNodeFlags(next, nodeFlags);
+        this.addNodeToRegister(NODE_TYPE_NET_PATTERN, next);
+        if ( needNormalization && normal !== undefined ) {
+            this.setNodeTransform(next, normal);
+        }
+        if ( this.interactive ) {
+            this.linkDown(next, this.parsePatternParts(next, pattern));
+        }
+        prev = this.linkRight(prev, next);
+
+        if ( tail !== 0 ) {
+            this.linkRight(prev, tail);
+        }
+        return this.throwHeadNode(head);
+    }
+
+    isAdblockHostnamePattern(pattern) {
+        if ( this.hasUnicode() ) {
+            return this.rePlainAdblockHostnameUnicode.test(pattern);
+        }
+        return this.rePlainAdblockHostnameAscii.test(pattern);
+    }
+
+    parsePatternParts(parent, pattern) {
+        const parentBeg = this.nodes[parent+NODE_BEG_INDEX];
+        const matches = pattern.matchAll(this.rePatternAllSpecialChars);
+        const head = this.allocHeadNode();
+        let prev = head, next = 0;
+        let plainPartBeg = 0;
+        for ( const match of matches ) {
+            const plainPartEnd = match.index;
+            if ( plainPartEnd !== plainPartBeg ) {
+                next = this.allocTypedNode(
+                    NODE_TYPE_NET_PATTERN_PART,
+                    parentBeg + plainPartBeg,
+                    parentBeg + plainPartEnd
+                );
+                prev = this.linkRight(prev, next);
+            }
+            plainPartBeg = plainPartEnd + match[0].length;
+            const type = match[0].charCodeAt(0) < 0x80
+                ? NODE_TYPE_NET_PATTERN_PART_SPECIAL
+                : NODE_TYPE_NET_PATTERN_PART_UNICODE;
+            next = this.allocTypedNode(
+                type,
+                parentBeg + plainPartEnd,
+                parentBeg + plainPartBeg
+            );
+            prev = this.linkRight(prev, next);
+        }
+        if ( plainPartBeg !== pattern.length ) {
+            next = this.allocTypedNode(
+                NODE_TYPE_NET_PATTERN_PART,
+                parentBeg + plainPartBeg,
+                parentBeg + pattern.length
+            );
+            this.linkRight(prev, next);
+        }
+        return this.throwHeadNode(head);
     }
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1118#issuecomment-650730158
@@ -1147,160 +1307,1095 @@ const Parser = class {
     //   Encode Unicode characters beyond the hostname part.
     // Prepend with '*' character to prevent the browser API from refusing to
     // punycode -- this occurs when the extracted label starts with a dash.
-    toASCII(dryrun = false) {
-        if ( this.patternHasUnicode() === false ) { return true; }
-        const { i, len } = this.patternSpan;
-        if ( len === 0 ) { return true; }
-        const patternIsRegex = this.patternIsRegex();
-        let pattern = this.getNetPattern();
-        if ( this.reInvalidCharacters.test(pattern) ) { return false; }
+    needPatternNormalization() {
+        return this.hasUppercase() || this.hasUnicode();
+    }
+
+    normalizePattern(pattern) {
+        if ( this.reHasInvalidChar.test(pattern) ) { return; }
+        let normal = pattern.toLowerCase();
+        if ( this.hasUnicode() === false ) { return normal; }
         // Punycode hostname part of the pattern.
-        if ( patternIsRegex === false ) {
-            const match = this.reHostname.exec(pattern);
-            if ( match !== null ) {
-                const hn = match[0].replace(this.reHostnameLabel, s => {
-                    if ( this.reUnicodeChar.test(s) === false ) { return s; }
-                    if ( s.charCodeAt(0) === 0x2D /* '-' */ ) { s = '*' + s; }
-                    return this.normalizeHostnameValue(s, 0b0001) || s;
-                });
-                pattern = hn + pattern.slice(match.index + match[0].length);
-            }
+        if ( this.reHostnamePatternPart.test(normal) ) {
+            const match = this.reHostnamePatternPart.exec(normal);
+            const hn = match[0].replace(this.reHostnameLabel, s => {
+                if ( this.reHasUnicodeChar.test(s) === false ) { return s; }
+                if ( s.charCodeAt(0) === 0x2D /* - */ ) { s = '*' + s; }
+                return this.normalizeHostnameValue(s, 0b0001) || s;
+            });
+            normal = hn + normal.slice(match.index + match[0].length);
         }
+        if ( this.reHasUnicodeChar.test(normal) === false ) { return normal; }
         // Percent-encode remaining Unicode characters.
-        if ( this.reUnicodeChar.test(pattern) ) {
-            try {
-                pattern = pattern.replace(
-                    this.reUnicodeChars,
-                    s => encodeURIComponent(s)
-                );
-            } catch (ex) {
-                return false;
+        try {
+            normal = normal.replace(
+                this.reUnicodeChars,
+                s => encodeURIComponent(s).toLowerCase()
+            );
+        } catch (ex) {
+            return;
+        }
+        return normal;
+    }
+
+    getNetPattern() {
+        const node = this.nodeTypeLookupTable[NODE_TYPE_NET_PATTERN];
+        return this.getNodeTransform(node);
+    }
+
+    isAnyPattern() {
+        const node = this.nodeTypeLookupTable[NODE_TYPE_NET_PATTERN];
+        return (this.nodes[node+NODE_FLAGS_INDEX] & NODE_FLAG_PATTERN_ANY) !== 0;
+    }
+
+    isHostnamePattern() {
+        const node = this.nodeTypeLookupTable[NODE_TYPE_NET_PATTERN];
+        return (this.nodes[node+NODE_FLAGS_INDEX] & NODE_FLAG_PATTERN_HOSTNAME) !== 0;
+    }
+
+    isRegexPattern() {
+        const node = this.nodeTypeLookupTable[NODE_TYPE_NET_PATTERN];
+        return (this.nodes[node+NODE_FLAGS_INDEX] & NODE_FLAG_PATTERN_REGEX) !== 0;
+    }
+
+    isPlainPattern() {
+        const node = this.nodeTypeLookupTable[NODE_TYPE_NET_PATTERN];
+        return (this.nodes[node+NODE_FLAGS_INDEX] & NODE_FLAG_PATTERN_PLAIN) !== 0;
+    }
+
+    isGenericPattern() {
+        const node = this.nodeTypeLookupTable[NODE_TYPE_NET_PATTERN];
+        return (this.nodes[node+NODE_FLAGS_INDEX] & NODE_FLAG_PATTERN_GENERIC) !== 0;
+    }
+
+    isBadPattern() {
+        const node = this.nodeTypeLookupTable[NODE_TYPE_NET_PATTERN];
+        return (this.nodes[node+NODE_FLAGS_INDEX] & NODE_FLAG_PATTERN_BAD) !== 0;
+    }
+
+    parseNetOptions(parent) {
+        const parentBeg = this.nodes[parent+NODE_BEG_INDEX];
+        const parentEnd = this.nodes[parent+NODE_END_INDEX];
+        if ( parentEnd === parentBeg ) { return 0; }
+        const s = this.getNodeString(parent);
+        const optionsEnd = s.length;
+        const head = this.allocHeadNode();
+        let prev = head, next = 0;
+        let optionBeg = 0, optionEnd = 0;
+        let emptyOption = false, badComma = false;
+        while ( optionBeg !== optionsEnd ) {
+            optionEnd = this.endOfNetOption(s, optionBeg);
+            next = this.allocTypedNode(
+                NODE_TYPE_NET_OPTION_RAW,
+                parentBeg + optionBeg,
+                parentBeg + optionEnd
+            );
+            emptyOption = optionEnd === optionBeg;
+            this.linkDown(next, this.parseNetOption(next));
+            prev = this.linkRight(prev, next);
+            if ( optionEnd === optionsEnd ) { break; }
+            optionBeg = optionEnd + 1;
+            next = this.allocTypedNode(
+                NODE_TYPE_NET_OPTION_SEPARATOR,
+                parentBeg + optionEnd,
+                parentBeg + optionBeg
+            );
+            badComma = optionBeg === optionsEnd;
+            prev = this.linkRight(prev, next);
+            if ( emptyOption || badComma ) {
+                this.addNodeFlags(next, NODE_FLAG_ERROR);
+                this.addFlags(AST_FLAG_HAS_ERROR);
             }
         }
-        if ( dryrun ) { return true; }
-        if ( patternIsRegex ) {
-            pattern = `/${pattern}/`;
+        this.linkRight(prev,
+            this.allocSentinelNode(NODE_TYPE_NET_OPTION_SENTINEL, parentEnd)
+        );
+        return this.throwHeadNode(head);
+    }
+
+    endOfNetOption(s, beg) {
+        this.reNetOptionComma.lastIndex = beg;
+        const match = this.reNetOptionComma.exec(s);
+        return match !== null ? match.index : s.length;
+    }
+
+    parseNetOption(parent) {
+        const parentBeg = this.nodes[parent+NODE_BEG_INDEX];
+        const s = this.getNodeString(parent);
+        const optionEnd = s.length;
+        const head = this.allocHeadNode();
+        let prev = head, next = 0;
+        let nameBeg = 0;
+        if ( s.charCodeAt(0) === 0x7E ) {
+            this.addNodeFlags(parent, NODE_FLAG_IS_NEGATED);
+            next = this.allocTypedNode(
+                NODE_TYPE_NET_OPTION_NAME_NOT,
+                parentBeg,
+                parentBeg+1
+            );
+            prev = this.linkRight(prev, next);
+            nameBeg += 1;
         }
-        const beg = this.slices[i+1];
-        const end = this.slices[i+len+1];
-        const raw = this.raw.slice(0, beg) + pattern + this.raw.slice(end);
-        this.analyze(raw);
-        return true;
-    }
-
-    bitsFromSpan(span) {
-        const { i, len } = span;
-        let bits = 0;
-        for ( let j = 0; j < len; j += 3 ) {
-            bits |= this.slices[i+j];
+        const equalPos = s.indexOf('=');
+        const nameEnd = equalPos !== -1 ? equalPos : s.length;
+        const name = s.slice(nameBeg, nameEnd);
+        const nodeOptionType = nodeTypeFromOptionName.get(name) || NODE_TYPE_NET_OPTION_NAME_UNKNOWN;
+        next = this.allocTypedNode(
+            nodeOptionType,
+            parentBeg + nameBeg,
+            parentBeg + nameEnd
+        );
+        if ( this.getBranchFromType(nodeOptionType) !== 0 ) {
+            this.addNodeFlags(parent, NODE_FLAG_ERROR);
+            this.addFlags(AST_FLAG_HAS_ERROR);
+        } else {
+            this.addNodeToRegister(nodeOptionType, parent);
         }
-        return bits;
+        prev = this.linkRight(prev, next);
+        if ( equalPos === -1 ) {
+            return this.throwHeadNode(head);
+        }
+        const valueBeg = equalPos + 1;
+        next = this.allocTypedNode(
+            NODE_TYPE_NET_OPTION_ASSIGN,
+            parentBeg + equalPos,
+            parentBeg + valueBeg
+        );
+        prev = this.linkRight(prev, next);
+        if ( (equalPos+1) === optionEnd ) {
+            this.addNodeFlags(parent, NODE_FLAG_ERROR);
+            this.addFlags(AST_FLAG_HAS_ERROR);
+            return this.throwHeadNode(head);
+        }
+        this.addNodeFlags(parent, NODE_FLAG_OPTION_HAS_VALUE);
+        next = this.allocTypedNode(
+            NODE_TYPE_NET_OPTION_VALUE,
+            parentBeg + valueBeg,
+            parentBeg + optionEnd
+        );
+        switch ( nodeOptionType ) {
+            case NODE_TYPE_NET_OPTION_NAME_DENYALLOW:
+                this.linkDown(next, this.parseDomainList(next, '|'), 0b0000);
+                break;
+            case NODE_TYPE_NET_OPTION_NAME_FROM:
+            case NODE_TYPE_NET_OPTION_NAME_TO:
+                this.linkDown(next, this.parseDomainList(next, '|', 0b1010));
+                break;
+            default:
+                break;
+        }
+        this.linkRight(prev, next);
+        return this.throwHeadNode(head);
     }
 
-    hasFlavor(bits) {
-        return hasBits(this.flavorBits, bits);
+    getNetOptionValue(type) {
+        const optionNode = this.nodeTypeLookupTable[type];
+        if ( optionNode === 0 ) { return ''; }
+        const valueNode = this.findDescendantByType(optionNode, NODE_TYPE_NET_OPTION_VALUE);
+        if ( valueNode === 0 ) { return ''; }
+        return this.getNodeTransform(valueNode);
     }
 
-    isException() {
-        return hasBits(this.flavorBits, BITFlavorException);
+    parseDomainList(parent, separator, mode = 0b0000) {
+        const parentBeg = this.nodes[parent+NODE_BEG_INDEX];
+        const parentEnd = this.nodes[parent+NODE_END_INDEX];
+        const containerNode = this.allocTypedNode(
+            NODE_TYPE_OPTION_VALUE_DOMAIN_LIST,
+            parentBeg,
+            parentEnd
+        );
+        if ( parentEnd === parentBeg ) { return containerNode; }
+        const separatorCode = separator.charCodeAt(0);
+        const listNode = this.allocHeadNode();
+        let prev = listNode;
+        let domainNode = 0;
+        let separatorNode = 0;
+        const s = this.getNodeString(parent);
+        const listEnd = s.length;
+        let beg = 0, end = 0, c = 0;
+        while ( beg < listEnd ) {
+            c = s.charCodeAt(beg);
+            if ( c === 0x7E /* ~ */ ) {
+                c = s.charCodeAt(beg+1) || 0;
+            }
+            if ( c !== 0x2F /* / */ ) {
+                end = s.indexOf(separator, beg);
+            } else {
+                end = s.indexOf('/', beg+1);
+                end = end !== -1
+                    ? s.indexOf(separator, end+1)
+                    : s.indexOf(separator, beg);
+            }
+            if ( end === -1 ) { end = listEnd; }
+            if ( end !== beg ) {
+                domainNode = this.allocTypedNode(
+                    NODE_TYPE_OPTION_VALUE_DOMAIN_RAW,
+                    parentBeg + beg,
+                    parentBeg + end
+                );
+                this.linkDown(domainNode, this.parseDomain(domainNode, mode));
+                prev = this.linkRight(prev, domainNode);
+            } else {
+                domainNode = 0;
+                if ( this.interactive && separatorNode !== 0 ) {
+                    this.addNodeFlags(separatorNode, NODE_FLAG_ERROR);
+                }
+            }
+            if ( s.charCodeAt(end) === separatorCode ) {
+                beg = end;
+                end += 1;
+                separatorNode = this.allocTypedNode(
+                    NODE_TYPE_OPTION_VALUE_SEPARATOR,
+                    parentBeg + beg,
+                    parentBeg + end
+                );
+                prev = this.linkRight(prev, separatorNode);
+                if ( this.interactive && domainNode === 0 ) {
+                    this.addNodeFlags(separatorNode, NODE_FLAG_ERROR);
+                }
+            } else {
+                separatorNode = 0;
+            }
+            beg = end;
+        }
+        this.linkDown(containerNode, this.throwHeadNode(listNode));
+        return containerNode;
     }
 
-    shouldIgnore() {
-        return hasBits(this.flavorBits, BITFlavorIgnore);
+    parseDomain(parent, mode = 0b0000) {
+        const parentBeg = this.nodes[parent+NODE_BEG_INDEX];
+        const parentEnd = this.nodes[parent+NODE_END_INDEX];
+        let head = 0, next = 0;
+        let beg = parentBeg;
+        const c = this.charCodeAt(beg);
+        if ( c === 0x7E /* ~ */ ) {
+            this.addNodeFlags(parent, NODE_FLAG_IS_NEGATED);
+            head = this.allocTypedNode(NODE_TYPE_OPTION_VALUE_NOT, beg, beg + 1);
+            if ( (mode & 0b1000) === 0 ) {
+                this.addNodeFlags(parent, NODE_FLAG_ERROR);
+            }
+            beg += 1;
+        }
+        if ( beg !== parentEnd ) {
+            next = this.allocTypedNode(NODE_TYPE_OPTION_VALUE_DOMAIN, beg, parentEnd);
+            const hn = this.normalizeHostnameValue(this.getNodeString(next), mode);
+            if ( hn !== undefined ) {
+                if ( hn !== '' ) {
+                    this.setNodeTransform(next, hn);
+                } else {
+                    this.addNodeFlags(parent, NODE_FLAG_ERROR);
+                }
+            }
+            if ( head === 0 ) {
+                head = next;
+            } else {
+                this.linkRight(head, next);
+            }
+        }
+        return head;
+    }
+
+    parseExt(parent, anchorBeg, anchorLen) {
+        const parentBeg = this.nodes[parent+NODE_BEG_INDEX];
+        const parentEnd = this.nodes[parent+NODE_END_INDEX];
+        const head = this.allocHeadNode();
+        let prev = head, next = 0;
+        this.astType = AST_TYPE_EXTENDED;
+        this.addFlags(this.extFlagsFromAnchor(anchorBeg));
+        if ( anchorBeg > parentBeg ) {
+            next = this.allocTypedNode(
+                NODE_TYPE_EXT_OPTIONS,
+                parentBeg,
+                anchorBeg
+            );
+            this.addFlags(AST_FLAG_HAS_OPTIONS);
+            this.addNodeToRegister(NODE_TYPE_EXT_OPTIONS, next);
+            this.linkDown(next, this.parseDomainList(next, ',', 0b1110));
+            prev = this.linkRight(prev, next);
+        }
+        next = this.allocTypedNode(
+            NODE_TYPE_EXT_OPTIONS_ANCHOR,
+            anchorBeg,
+            anchorBeg + anchorLen
+        );
+        this.addNodeToRegister(NODE_TYPE_EXT_OPTIONS_ANCHOR, next);
+        prev = this.linkRight(prev, next);
+        next = this.allocTypedNode(
+            NODE_TYPE_EXT_PATTERN_RAW,
+            anchorBeg + anchorLen,
+            parentEnd
+        );
+        this.addNodeToRegister(NODE_TYPE_EXT_PATTERN_RAW, next);
+        this.linkDown(next, this.parseExtPattern(next));
+        this.linkRight(prev, next);
+        this.validateExt();
+        return this.throwHeadNode(head);
+    }
+
+    extFlagsFromAnchor(anchorBeg) {
+        let c = this.charCodeAt(anchorBeg+1) ;
+        if ( c === 0x23 /* # */ ) { return 0; }
+        if ( c === 0x3F /* ? */ ) { return AST_FLAG_EXT_STRONG; }
+        if ( c === 0x24 /* $ */ ) {
+            c = this.charCodeAt(anchorBeg+2);
+            if ( c === 0x23 /* # */ ) { return AST_FLAG_EXT_STYLE; }
+            if ( c === 0x3F /* ? */ ) {
+                return AST_FLAG_EXT_STYLE | AST_FLAG_EXT_STRONG;
+            }
+        }
+        if ( c === 0x40 /* @ */ ) {
+            return AST_FLAG_IS_EXCEPTION | this.extFlagsFromAnchor(anchorBeg+1);
+        }
+        return AST_FLAG_UNSUPPORTED;
+    }
+
+    validateExt() {
+        const isException = this.isException();
+        let realBad = false;
+        for ( let i = 0, n = this.nodeTypeRegisterPtr; i < n; i++ ) {
+            const type = this.nodeTypeRegister[i];
+            const targetNode = this.nodeTypeLookupTable[type];
+            if ( targetNode === 0 ) { continue; }
+            const flags = this.getNodeFlags(targetNode);
+            if ( (flags & NODE_FLAG_ERROR) !== 0 ) { continue; }
+            realBad = false;
+            switch ( type ) {
+                case NODE_TYPE_EXT_PATTERN_RESPONSEHEADER:
+                    const pattern = this.getNodeString(targetNode);
+                    realBad =
+                        pattern !== '' && removableHTTPHeaders.has(pattern) === false ||
+                        pattern === '' && isException === false;
+                    break;
+                default:
+                    break;
+            }
+            if ( realBad ) {
+                this.addNodeFlags(targetNode, NODE_FLAG_ERROR);
+                this.addFlags(AST_FLAG_HAS_ERROR);
+            }
+        }
+    }
+
+    parseExtPattern(parent) {
+        const c = this.charCodeAt(this.nodes[parent+NODE_BEG_INDEX]);
+        // ##+js(...)
+        if ( c === 0x2B /* '+' */ ) {
+            const s = this.getNodeString(parent);
+            if ( /^\+js\(.*\)$/.exec(s) !== null ) {
+                this.astTypeFlavor = AST_TYPE_EXTENDED_SCRIPTLET;
+                return this.parseExtPatternScriptlet(parent);
+            }
+        }
+        // ##^... | ##^responseheader(...)
+        if ( c === 0x5E /* '^' */ ) {
+            const s = this.getNodeString(parent);
+            if ( this.reResponseheaderPattern.test(s) ) {
+                this.astTypeFlavor = AST_TYPE_EXTENDED_RESPONSEHEADER;
+                return this.parseExtPatternResponseheader(parent);
+            }
+            this.astTypeFlavor = AST_TYPE_EXTENDED_HTML;
+            return this.parseExtPatternHtml(parent);
+        }
+        // ##...
+        this.astTypeFlavor = AST_TYPE_EXTENDED_COSMETIC;
+        return this.parseExtPatternCosmetic(parent);
+    }
+
+    parseExtPatternScriptlet(parent) {
+        const beg = this.nodes[parent+NODE_BEG_INDEX];
+        const end = this.nodes[parent+NODE_END_INDEX];
+        const s = this.getNodeString(parent);
+        const rawArg0 = beg + 4;
+        const rawArg1 = end - 1;
+        const head = this.allocTypedNode(NODE_TYPE_EXT_DECORATION, beg, rawArg0);
+        let prev = head, next = 0;
+        const trimmedArg0 = rawArg0 + this.leftWhitespaceCount(s);
+        const trimmedArg1 = rawArg1 - this.rightWhitespaceCount(s);
+        if ( trimmedArg0 !== rawArg0 ) {
+            next = this.allocTypedNode(NODE_TYPE_WHITESPACE, rawArg0, trimmedArg0);
+            prev = this.linkRight(prev, next);
+        }
+        next = this.allocTypedNode(NODE_TYPE_EXT_PATTERN_SCRIPTLET, trimmedArg0, trimmedArg1);
+        this.addNodeToRegister(NODE_TYPE_EXT_PATTERN_SCRIPTLET, next);
+        if ( this.interactive ) {
+            this.linkDown(next, this.parseExtPatternScriptletArgs(next));
+        }
+        prev = this.linkRight(prev, next);
+        if ( trimmedArg1 !== rawArg1 ) {
+            next = this.allocTypedNode(NODE_TYPE_WHITESPACE, trimmedArg1, rawArg1);
+            prev = this.linkRight(prev, next);
+        }
+        next = this.allocTypedNode(NODE_TYPE_EXT_DECORATION, rawArg1, end);
+        this.linkRight(prev, next);
+        return head;
+    }
+
+    parseExtPatternScriptletArgs(parent) {
+        const parentBeg = this.nodes[parent+NODE_BEG_INDEX];
+        const parentEnd = this.nodes[parent+NODE_END_INDEX];
+        if ( parentEnd === parentBeg ) { return 0; }
+        const head = this.allocHeadNode();
+        let prev = head, next = 0;
+        const s = this.getNodeString(parent);
+        const argsEnd = s.length;
+        let argCount = 0;
+        let argBeg = 0, argEnd = 0, argBodyBeg = 0, argBodyEnd = 0;
+        let rawArg = '';
+        while ( argBeg < argsEnd ) {
+            argEnd = this.indexOfNextScriptletArgSeparator(s, argBeg);
+            rawArg = s.slice(argBeg, argEnd);
+            argBodyBeg = argBeg + this.leftWhitespaceCount(rawArg);
+            if ( argBodyBeg !== argBodyEnd ) {
+                next = this.allocTypedNode(
+                    NODE_TYPE_EXT_DECORATION,
+                    parentBeg + argBodyEnd,
+                    parentBeg + argBodyBeg
+                );
+                prev = this.linkRight(prev, next);
+            }
+            argBodyEnd = argEnd - this.rightWhitespaceCount(rawArg);
+            if ( argCount === 0 ) {
+                rawArg = s.slice(argBodyBeg, argBodyEnd);
+                const tokenEnd = rawArg.endsWith('.js')
+                    ? argBodyEnd - 3
+                    : argBodyEnd;
+                next = this.allocTypedNode(
+                    NODE_TYPE_EXT_PATTERN_SCRIPTLET_TOKEN,
+                    parentBeg + argBodyBeg,
+                    parentBeg + tokenEnd
+                );
+                prev = this.linkRight(prev, next);
+                if ( tokenEnd !== argBodyEnd ) {
+                    next = this.allocTypedNode(
+                        NODE_TYPE_IGNORE,
+                        parentBeg + argBodyEnd - 3,
+                        parentBeg + argBodyEnd
+                    );
+                    prev = this.linkRight(prev, next);
+                }
+            } else {
+                next = this.allocTypedNode(
+                    NODE_TYPE_EXT_PATTERN_SCRIPTLET_ARG,
+                    parentBeg + argBodyBeg,
+                    parentBeg + argBodyEnd
+                );
+                prev = this.linkRight(prev, next);
+            }
+            argBeg = argEnd + 1;
+            argCount += 1;
+        }
+        if ( argsEnd !== argBodyEnd ) {
+            next = this.allocTypedNode(
+                NODE_TYPE_EXT_DECORATION,
+                parentBeg + argBodyEnd,
+                parentBeg + argsEnd
+            );
+            prev = this.linkRight(prev, next);
+        }
+        return this.throwHeadNode(head);
+    }
+
+    indexOfNextScriptletArgSeparator(pattern, beg = 0) {
+        const patternEnd = pattern.length;
+        if ( beg >= patternEnd ) { return patternEnd; }
+        const nextComma = pattern.indexOf(',', beg);
+        if ( nextComma === -1 ) { return patternEnd; }
+        // An odd number of backslashes immediately before the comma means
+        // it's being escaped
+        let backslashCount = 0;
+        for ( let i = nextComma; i > beg; i-- ) {
+            if ( pattern.charCodeAt(i-1) !== 0x5C /* \ */ ) { break; }
+            backslashCount += 1;
+        }
+        return (backslashCount & 1) === 0
+            ? nextComma
+            : this.indexOfNextScriptletArgSeparator(pattern, nextComma + 1);
+    }
+
+    parseExtPatternResponseheader(parent) {
+        const beg = this.nodes[parent+NODE_BEG_INDEX];
+        const end = this.nodes[parent+NODE_END_INDEX];
+        const s = this.getNodeString(parent);
+        const rawArg0 = beg + 16;
+        const rawArg1 = end - 1;
+        const head = this.allocTypedNode(NODE_TYPE_EXT_DECORATION, beg, rawArg0);
+        let prev = head, next = 0;
+        const trimmedArg0 = rawArg0 + this.leftWhitespaceCount(s);
+        const trimmedArg1 = rawArg1 - this.rightWhitespaceCount(s);
+        if ( trimmedArg0 !== rawArg0 ) {
+            next = this.allocTypedNode(NODE_TYPE_WHITESPACE, rawArg0, trimmedArg0);
+            prev = this.linkRight(prev, next);
+        }
+        next = this.allocTypedNode(NODE_TYPE_EXT_PATTERN_RESPONSEHEADER, rawArg0, rawArg1);
+        this.addNodeToRegister(NODE_TYPE_EXT_PATTERN_RESPONSEHEADER, next);
+        if ( rawArg1 === rawArg0 && this.isException() === false ) {
+            this.addNodeFlags(parent, NODE_FLAG_ERROR);
+            this.addFlags(AST_FLAG_HAS_ERROR);
+        }
+        prev = this.linkRight(prev, next);
+        if ( trimmedArg1 !== rawArg1 ) {
+            next = this.allocTypedNode(NODE_TYPE_WHITESPACE, trimmedArg1, rawArg1);
+            prev = this.linkRight(prev, next);
+        }
+        next = this.allocTypedNode(NODE_TYPE_EXT_DECORATION, rawArg1, end);
+        this.linkRight(prev, next);
+        return head;
+    }
+
+    parseExtPatternHtml(parent) {
+        const beg = this.nodes[parent+NODE_BEG_INDEX];
+        const end = this.nodes[parent+NODE_END_INDEX];
+        const head = this.allocTypedNode(NODE_TYPE_EXT_DECORATION, beg, beg + 1);
+        let prev = head, next = 0;
+        next = this.allocTypedNode(NODE_TYPE_EXT_PATTERN_HTML, beg + 1, end);
+        this.linkRight(prev, next);
+        if ( (this.hasOptions() || this.isException()) === false ) {
+            this.addNodeFlags(parent, NODE_FLAG_ERROR);
+            this.addFlags(AST_FLAG_HAS_ERROR);
+            return head;
+        }
+        this.result.exception = this.isException();
+        this.result.raw = this.getNodeString(next);
+        this.result.compiled = undefined;
+        const success = this.selectorCompiler.compile(
+            this.result.raw,
+            this.result, {
+                asProcedural: this.getFlags(AST_FLAG_EXT_STRONG) !== 0
+            }
+        );
+        if ( success !== true ) {
+            this.addNodeFlags(next, NODE_FLAG_ERROR);
+            this.addFlags(AST_FLAG_HAS_ERROR);
+        }
+        return head;
+    }
+
+    parseExtPatternCosmetic(parent) {
+        const parentBeg = this.nodes[parent+NODE_BEG_INDEX];
+        const parentEnd = this.nodes[parent+NODE_END_INDEX];
+        const head = this.allocTypedNode(
+            NODE_TYPE_EXT_PATTERN_COSMETIC,
+            parentBeg,
+            parentEnd
+        );
+        this.result.exception = this.isException();
+        this.result.raw = this.getNodeString(head);
+        this.result.compiled = undefined;
+        const success = this.selectorCompiler.compile(
+            this.result.raw,
+            this.result, {
+                asProcedural: this.getFlags(AST_FLAG_EXT_STRONG) !== 0,
+                adgStyleSyntax: this.getFlags(AST_FLAG_EXT_STYLE) !== 0,
+            }
+        );
+        if ( success !== true ) {
+            this.addNodeFlags(head, NODE_FLAG_ERROR);
+            this.addFlags(AST_FLAG_HAS_ERROR);
+        }
+        return head;
     }
 
     hasError() {
-        return hasBits(this.flavorBits, BITFlavorError);
+        return (this.astFlags & AST_FLAG_HAS_ERROR) !== 0;
     }
 
-    shouldDiscard() {
-        return hasBits(
-            this.flavorBits,
-            BITFlavorError | BITFlavorUnsupported | BITFlavorIgnore
+    hasOptions() {
+        return (this.astFlags & AST_FLAG_HAS_OPTIONS) !== 0;
+    }
+
+    isNegatedOption(type) {
+        const node = this.nodeTypeLookupTable[type];
+        const flags = this.nodes[node+NODE_FLAGS_INDEX];
+        return (flags & NODE_FLAG_IS_NEGATED) !== 0;
+    }
+
+    isException() {
+        return (this.astFlags & AST_FLAG_IS_EXCEPTION) !== 0;
+    }
+
+    isLeftHnAnchored() {
+        return (this.astFlags & AST_FLAG_NET_PATTERN_LEFT_HNANCHOR) !== 0;
+    }
+
+    isLeftAnchored() {
+        return (this.astFlags & AST_FLAG_NET_PATTERN_LEFT_ANCHOR) !== 0;
+    }
+
+    isRightAnchored() {
+        return (this.astFlags & AST_FLAG_NET_PATTERN_RIGHT_ANCHOR) !== 0;
+    }
+
+    hasWhitespace() {
+        return (this.astFlags & AST_FLAG_HAS_WHITESPACE) !== 0;
+    }
+
+    hasUppercase() {
+        return (this.astFlags & AST_FLAG_HAS_UPPERCASE) !== 0;
+    }
+
+    hasUnicode() {
+        return (this.astFlags & AST_FLAG_HAS_UNICODE) !== 0;
+    }
+
+    linkRight(prev, next) {
+        return (this.nodes[prev+NODE_RIGHT_INDEX] = next);
+    }
+
+    linkDown(node, down) {
+        return (this.nodes[node+NODE_DOWN_INDEX] = down);
+    }
+
+    makeChain(nodes) {
+        for ( let i = 1; i < nodes.length; i++ ) {
+            this.nodes[nodes[i-1]+NODE_RIGHT_INDEX] = nodes[i];
+        }
+        return nodes[0];
+    }
+
+    allocHeadNode() {
+        const node = this.nodePoolPtr;
+        this.nodePoolPtr += NOOP_NODE_SIZE;
+        if ( this.nodePoolPtr > this.nodePoolEnd ) {
+            this.growNodePool(this.nodePoolPtr);
+        }
+        this.nodes[node+NODE_RIGHT_INDEX] = 0;
+        return node;
+    }
+
+    throwHeadNode(head) {
+        return this.nodes[head+NODE_RIGHT_INDEX];
+    }
+
+    allocTypedNode(type, beg, end) {
+        const node = this.nodePoolPtr;
+        this.nodePoolPtr += FULL_NODE_SIZE;
+        if ( this.nodePoolPtr > this.nodePoolEnd ) {
+            this.growNodePool(this.nodePoolPtr);
+        }
+        this.nodes[node+NODE_RIGHT_INDEX] = 0;
+        this.nodes[node+NODE_TYPE_INDEX] = type;
+        this.nodes[node+NODE_DOWN_INDEX] = 0;
+        this.nodes[node+NODE_BEG_INDEX] = beg;
+        this.nodes[node+NODE_END_INDEX] = end;
+        this.nodes[node+NODE_TRANSFORM_INDEX] = 0;
+        this.nodes[node+NODE_FLAGS_INDEX] = 0;
+        return node;
+    }
+
+    allocSentinelNode(type, beg) {
+        return this.allocTypedNode(type, beg, beg);
+    }
+
+    growNodePool(min) {
+        const oldSize = this.nodes.length;
+        const newSize = (min + 16383) & ~16383;
+        if ( newSize === oldSize ) { return; }
+        const newArray = new Uint32Array(newSize);
+        newArray.set(this.nodes);
+        this.nodes = newArray;
+        this.nodePoolEnd = newSize;
+    }
+
+    getNodeTypes() {
+        return this.nodeTypeRegister.slice(0, this.nodeTypeRegisterPtr);
+    }
+
+    getNodeType(node) {
+        return node !== 0 ? this.nodes[node+NODE_TYPE_INDEX] : 0;
+    }
+
+    getNodeFlags(node, flags = 0xFFFFFFFF) {
+        return this.nodes[node+NODE_FLAGS_INDEX] & flags;
+    }
+
+    setNodeFlags(node, flags) {
+        this.nodes[node+NODE_FLAGS_INDEX] = flags;
+    }
+
+    addNodeFlags(node, flags) {
+        if ( node === 0 ) { return; }
+        this.nodes[node+NODE_FLAGS_INDEX] |= flags;
+    }
+
+    removeNodeFlags(node, flags) {
+        this.nodes[node+NODE_FLAGS_INDEX] &= ~flags;
+    }
+
+    addNodeToRegister(type, node) {
+        this.nodeTypeRegister[this.nodeTypeRegisterPtr++] = type;
+        this.nodeTypeLookupTable[type] = node;
+    }
+
+    getBranchFromType(type) {
+        const ptr = this.nodeTypeRegisterPtr;
+        if ( ptr === 0 ) { return 0; }
+        return this.nodeTypeRegister.lastIndexOf(type, ptr-1) !== -1
+            ? this.nodeTypeLookupTable[type]
+            : 0;
+    }
+
+    nodeIsEmptyString(node) {
+        return this.nodes[node+NODE_END_INDEX] ===
+            this.nodes[node+NODE_BEG_INDEX];
+    }
+
+    getNodeString(node) {
+        const beg = this.nodes[node+NODE_BEG_INDEX];
+        const end = this.nodes[node+NODE_END_INDEX];
+        if ( end === beg ) { return ''; }
+        if ( beg === 0 && end === this.rawEnd ) {
+            return this.raw;
+        }
+        return this.raw.slice(beg, end);
+    }
+
+    getNodeStringBeg(node) {
+        return this.nodes[node+NODE_BEG_INDEX];
+    }
+
+    getNodeStringEnd(node) {
+        return this.nodes[node+NODE_END_INDEX];
+    }
+
+    getNodeStringLen(node) {
+        if ( node === 0 ) { return ''; }
+        return this.nodes[node+NODE_END_INDEX] - this.nodes[node+NODE_BEG_INDEX];
+    }
+
+    isNodeTransformed(node) {
+        return this.nodes[node+NODE_TRANSFORM_INDEX] !== 0;
+    }
+
+    getNodeTransform(node) {
+        if ( node === 0 ) { return ''; }
+        const slot = this.nodes[node+NODE_TRANSFORM_INDEX];
+        return slot !== 0 ? this.astTransforms[slot] : this.getNodeString(node);
+    }
+
+    setNodeTransform(node, value) {
+        const slot = this.astTransformPtr++;
+        this.astTransforms[slot] = value;
+        this.nodes[node+NODE_TRANSFORM_INDEX] = slot;
+    }
+
+    getTypeString(type) {
+        const node = this.getBranchFromType(type);
+        if ( node === 0 ) { return; }
+        return this.getNodeString(node);
+    }
+
+    leftWhitespaceCount(s) {
+        const match = this.reWhitespaceStart.exec(s);
+        return match === null ? 0 : match[0].length;
+    }
+
+    rightWhitespaceCount(s) {
+        const match = this.reWhitespaceEnd.exec(s);
+        return match === null ? 0 : match[0].length;
+    }
+
+    nextCommaInCommaSeparatedListString(s, start) {
+        const n = s.length;
+        if ( n === 0 ) { return -1; }
+        const ilastchar = n - 1;
+        let i = start;
+        while ( i < n ) {
+            const c = s.charCodeAt(i);
+            if ( c === 0x2C /* ',' */ ) { return i + 1; }
+            if ( c === 0x5C /* '\\' */ ) {
+                if ( i < ilastchar ) { i += 1; }
+            }
+        }
+        return -1;
+    }
+
+    endOfLiteralRegex(s, start) {
+        const n = s.length;
+        if ( n === 0 ) { return -1; }
+        const ilastchar = n - 1;
+        let i = start + 1;
+        while ( i < n ) {
+            const c = s.charCodeAt(i);
+            if ( c === 0x2F /* '/' */ ) { return i + 1; }
+            if ( c === 0x5C /* '\\' */ ) {
+                if ( i < ilastchar ) { i += 1; }
+            }
+            i += 1;
+        }
+        return -1;
+    }
+
+    charCodeAt(pos) {
+        return pos < this.rawEnd ? this.raw.charCodeAt(pos) : -1;
+    }
+
+    isTokenCharCode(c) {
+        return c === 0x25 ||
+            c >= 0x30 && c <= 0x39 ||
+            c >= 0x41 && c <= 0x5A ||
+            c >= 0x61 && c <= 0x7A;
+    }
+
+    // Ultimately, let the browser API do the hostname normalization, after
+    // making some other trivial checks.
+    //
+    // mode bits:
+    //   0b0001: can use wildcard at any position
+    //   0b0010: can use entity-based hostnames
+    //   0b0100: can use single wildcard
+    //   0b1000: can be negated
+    normalizeHostnameValue(s, modeBits = 0b0000) {
+        if ( this.rePlainHostname.test(s) ) { return; }
+        if ( this.reBadHostnameChars.test(s) ) { return ''; }
+        let hn = s;
+        const hasWildcard = hn.includes('*');
+        if ( hasWildcard ) {
+            if ( modeBits === 0 ) { return ''; }
+            if ( hn.length === 1 ) {
+                if ( (modeBits & 0b0100) === 0 ) { return ''; }
+                return;
+            }
+            if ( (modeBits & 0b0010) !== 0 ) {
+                if ( this.rePlainEntity.test(hn) ) { return; }
+                if ( this.reIsEntity.test(hn) === false ) { return ''; }
+            } else if ( (modeBits & 0b0001) === 0 ) {
+                return '';
+            }
+            hn = hn.replace(/\*/g, '__asterisk__');
+        }
+        this.punycoder.hostname = '_';
+        try {
+            this.punycoder.hostname = hn;
+            hn = this.punycoder.hostname;
+        } catch (_) {
+            return '';
+        }
+        if ( hn === '_' || hn === '' ) { return ''; }
+        if ( hasWildcard ) {
+            hn = this.punycoder.hostname.replace(/__asterisk__/g, '*');
+        }
+        if (
+            (modeBits & 0b0001) === 0 && (
+                hn.charCodeAt(0) === 0x2E /* . */ ||
+                exCharCodeAt(hn, -1) === 0x2E /* . */
+            )
+        ) {
+            return '';
+        }
+        return hn;
+    }
+
+    normalizeRegexPattern(s) {
+        try {
+            const source = /^\/.+\/$/.test(s) ? s.slice(1,-1) : s;
+            const regex = new RegExp(source);
+            return regex.source;
+        } catch (ex) {
+            this.normalizeRegexPattern.message = ex.toString();
+        }
+        return '';
+    }
+
+    getDomainListIterator(root) {
+        const iter = this.domainListIteratorJunkyard.length !== 0
+            ? this.domainListIteratorJunkyard.pop().reuse(root)
+            : new DomainListIterator(this, root);
+        return root !== 0 ? iter : iter.stop();
+    }
+
+    getNetFilterFromOptionIterator() {
+        return this.getDomainListIterator(
+            this.getBranchFromType(NODE_TYPE_NET_OPTION_NAME_FROM)
         );
     }
 
-    static parseRedirectValue(arg) {
-        let token = arg.trim();
-        let priority = 0;
-        const asDataURI = token.charCodeAt(0) === 0x25 /* '%' */;
-        if ( asDataURI ) { token = token.slice(1); }
-        const match = /:-?\d+$/.exec(token);
-        if ( match !== null ) {
-            priority = parseInt(token.slice(match.index + 1), 10);
-            token = token.slice(0, match.index);
-        }
-        return { token, priority, asDataURI };
+    getNetFilterToOptionIterator() {
+        return this.getDomainListIterator(
+            this.getBranchFromType(NODE_TYPE_NET_OPTION_NAME_TO)
+        );
     }
 
-    static parseQueryPruneValue(arg) {
-        let s = arg.trim();
-        if ( s === '' ) { return { all: true }; }
-        const out = { };
-        out.not = s.charCodeAt(0) === 0x7E /* '~' */;
-        if ( out.not ) {
-            s = s.slice(1);
-        }
-        const match = /^\/(.+)\/(i)?$/.exec(s);
-        if ( match !== null ) {
-            try {
-                out.re = new RegExp(match[1], match[2] || '');
-            }
-            catch(ex) {
-                out.bad = true;
-            }
-            return out;
-        }
-        // TODO: remove once no longer used in filter lists
-        if ( s.startsWith('|') ) {
-            try {
-                out.re = new RegExp('^' + s.slice(1), 'i');
-            } catch(ex) {
-                out.bad = true;
-            }
-            return out;
-        }
-        // Multiple values not supported (because very inefficient)
-        if ( s.includes('|') ) {
-            out.bad = true;
-            return out;
-        }
-        out.name = s;
-        return out;
+    getNetFilterDenyallowOptionIterator() {
+        return this.getDomainListIterator(
+            this.getBranchFromType(NODE_TYPE_NET_OPTION_NAME_DENYALLOW)
+        );
     }
 
-    static parseHeaderValue(arg) {
-        let s = arg.trim();
-        const out = { };
-        let pos = s.indexOf(':');
-        if ( pos === -1 ) { pos = s.length; }
-        out.name = s.slice(0, pos);
-        out.bad = out.name === '';
-        s = s.slice(pos + 1);
-        out.not = s.charCodeAt(0) === 0x7E /* '~' */;
-        if ( out.not ) { s = s.slice(1); }
-        out.value = s;
-        const match = /^\/(.+)\/(i)?$/.exec(s);
-        if ( match !== null ) {
-            try {
-                out.re = new RegExp(match[1], match[2] || '');
-            }
-            catch(ex) {
-                out.bad = true;
+    getExtFilterDomainIterator() {
+        return this.getDomainListIterator(
+            this.getBranchFromType(NODE_TYPE_EXT_OPTIONS)
+        );
+    }
+
+    getWalker(from) {
+        if ( this.walkerJunkyard.length === 0 ) {
+            return new AstWalker(this, from);
+        }
+        const walker = this.walkerJunkyard.pop();
+        walker.reset(from);
+        return walker;
+    }
+
+    findDescendantByType(from, type) {
+        const walker = this.getWalker(from);
+        let node = walker.next();
+        while ( node !== 0 ) {
+            if ( this.getNodeType(node) === type ) { return node; }
+            node = walker.next();
+        }
+        return 0;
+    }
+
+    dump() {
+        if ( this.astType === AST_TYPE_COMMENT ) { return; }
+        const walker = this.getWalker();
+        for ( let node = walker.reset(); node !== 0; node = walker.next() ) {
+            const type = this.nodes[node+NODE_TYPE_INDEX];
+            const value = this.getNodeString(node);
+            const name = nodeNameFromNodeType.get(type) || `${type}`;
+            const bits = this.getNodeFlags(node).toString(2).padStart(4, '0');
+            const indent = '  '.repeat(walker.depth);
+            console.log(`${indent}type=${name} "${value}" 0b${bits}`);
+            if ( this.isNodeTransformed(node) ) {
+                console.log(`${indent}    transform="${this.getNodeTransform(node)}`);
             }
         }
-        return out;
     }
-};
+}
 
 /******************************************************************************/
 
-Parser.removableHTTPHeaders = Parser.prototype.removableHTTPHeaders = new Set([
-    '',
-    'location',
-    'refresh',
-    'report-to',
-    'set-cookie',
+export function parseRedirectValue(arg) {
+    let token = arg.trim();
+    let priority = 0;
+    const asDataURI = token.charCodeAt(0) === 0x25 /* '%' */;
+    if ( asDataURI ) { token = token.slice(1); }
+    const match = /:-?\d+$/.exec(token);
+    if ( match !== null ) {
+        priority = parseInt(token.slice(match.index + 1), 10);
+        token = token.slice(0, match.index);
+    }
+    return { token, priority, asDataURI };
+}
+
+export function parseQueryPruneValue(arg) {
+    let s = arg.trim();
+    if ( s === '' ) { return { all: true }; }
+    const out = { };
+    out.not = s.charCodeAt(0) === 0x7E /* '~' */;
+    if ( out.not ) {
+        s = s.slice(1);
+    }
+    const match = /^\/(.+)\/(i)?$/.exec(s);
+    if ( match !== null ) {
+        try {
+            out.re = new RegExp(match[1], match[2] || '');
+        }
+        catch(ex) {
+            out.bad = true;
+        }
+        return out;
+    }
+    // TODO: remove once no longer used in filter lists
+    if ( s.startsWith('|') ) {
+        try {
+            out.re = new RegExp('^' + s.slice(1), 'i');
+        } catch(ex) {
+            out.bad = true;
+        }
+        return out;
+    }
+    // Multiple values not supported (because very inefficient)
+    if ( s.includes('|') ) {
+        out.bad = true;
+        return out;
+    }
+    out.name = s;
+    return out;
+}
+
+export function parseHeaderValue(arg) {
+    let s = arg.trim();
+    const out = { };
+    let pos = s.indexOf(':');
+    if ( pos === -1 ) { pos = s.length; }
+    out.name = s.slice(0, pos);
+    out.bad = out.name === '';
+    s = s.slice(pos + 1);
+    out.not = s.charCodeAt(0) === 0x7E /* '~' */;
+    if ( out.not ) { s = s.slice(1); }
+    out.value = s;
+    const match = /^\/(.+)\/(i)?$/.exec(s);
+    if ( match !== null ) {
+        try {
+            out.re = new RegExp(match[1], match[2] || '');
+        }
+        catch(ex) {
+            out.bad = true;
+        }
+    }
+    return out;
+}
+
+/******************************************************************************/
+
+export const netOptionTokenDescriptors = new Map([
+    [ '1p', { canNegate: true } ],
+    /* synonym */ [ 'first-party', { canNegate: true } ],
+    [ 'strict1p', { } ],
+    [ '3p', { canNegate: true } ],
+    /* synonym */ [ 'third-party', { canNegate: true } ],
+    [ 'strict3p', { } ],
+    [ 'all', { } ],
+    [ 'badfilter', { } ],
+    [ 'cname', { allowOnly: true } ],
+    [ 'csp', { mustAssign: true } ],
+    [ 'css', { canNegate: true } ],
+    /* synonym */ [ 'stylesheet', { canNegate: true } ],
+    [ 'denyallow', { mustAssign: true } ],
+    [ 'doc', { canNegate: true } ],
+    /* synonym */ [ 'document', { canNegate: true } ],
+    [ 'ehide', { } ],
+    /* synonym */ [ 'elemhide', { } ],
+    [ 'empty', { blockOnly: true } ],
+    [ 'frame', { canNegate: true } ],
+    /* synonym */ [ 'subdocument', { canNegate: true } ],
+    [ 'from', { mustAssign: true } ],
+    /* synonym */ [ 'domain', { mustAssign: true } ],
+    [ 'font', { canNegate: true } ],
+    [ 'genericblock', { } ],
+    [ 'ghide', { } ],
+    /* synonym */ [ 'generichide', { } ],
+    [ 'header', { mustAssign: true } ],
+    [ 'image', { canNegate: true } ],
+    [ 'important', { blockOnly: true } ],
+    [ 'inline-font', { canNegate: true } ],
+    [ 'inline-script', { canNegate: true } ],
+    [ 'match-case', { } ],
+    [ 'media', { canNegate: true } ],
+    [ 'method', { mustAssign: true } ],
+    [ 'mp4', { blockOnly: true } ],
+    [ '_', { } ],
+    [ 'object', { canNegate: true } ],
+    /* synonym */ [ 'object-subrequest', { canNegate: true } ],
+    [ 'other', { canNegate: true } ],
+    [ 'ping', { canNegate: true } ],
+    /* synonym */ [ 'beacon', { canNegate: true } ],
+    [ 'popunder', { } ],
+    [ 'popup', { canNegate: true } ],
+    [ 'redirect', { mustAssign: true } ],
+    /* synonym */ [ 'rewrite', { mustAssign: true } ],
+    [ 'redirect-rule', { mustAssign: true } ],
+    [ 'removeparam', { } ],
+    /* synonym */ [ 'queryprune', { } ],
+    [ 'script', { canNegate: true } ],
+    [ 'shide', { } ],
+    /* synonym */ [ 'specifichide', { } ],
+    [ 'to', { mustAssign: true } ],
+    [ 'xhr', { canNegate: true } ],
+    /* synonym */ [ 'xmlhttprequest', { canNegate: true } ],
+    [ 'webrtc', { } ],
+    [ 'websocket', { canNegate: true } ],
 ]);
 
 /******************************************************************************/
@@ -1318,9 +2413,8 @@ Parser.removableHTTPHeaders = Parser.prototype.removableHTTPHeaders = new Set([
 // https://github.com/uBlockOrigin/uBlock-issues/issues/89
 //   Do not discard unknown pseudo-elements.
 
-Parser.prototype.SelectorCompiler = class {
-    constructor(parser, instanceOptions) {
-        this.parser = parser;
+class ExtSelectorCompiler {
+    constructor(instanceOptions) {
         this.reParseRegexLiteral = /^\/(.+)\/([imu]+)?$/;
 
         // Use a regex for most common CSS selectors known to be valid in any
@@ -1449,10 +2543,9 @@ Parser.prototype.SelectorCompiler = class {
         //   character is `$`, `%` or `?`, otherwise it's not a cosmetic
         //   filter.
         // Adguard's style injection: translate to uBO's format.
-        if ( hasBits(this.parser.flavorBits, BITFlavorExtStyle) ) {
+        if ( compileOptions.adgStyleSyntax === true ) {
             raw = this.translateAdguardCSSInjectionFilter(raw);
             if ( raw === '' ) { return false; }
-            this.parser.flavorBits &= ~BITFlavorExtStyle;
         }
 
         // Normalize AdGuard's attribute-based procedural operators.
@@ -2187,12 +3280,12 @@ Parser.prototype.SelectorCompiler = class {
         }
         return r.s;
     }
-};
+}
 
 // bit 0: can be used as auto-completion hint
 // bit 1: can not be used in HTML filtering
 //
-Parser.prototype.proceduralOperatorTokens = new Map([
+export const proceduralOperatorTokens = new Map([
     [ '-abp-contains', 0b00 ],
     [ '-abp-has', 0b00, ],
     [ 'contains', 0b00, ],
@@ -2220,986 +3313,7 @@ Parser.prototype.proceduralOperatorTokens = new Map([
 
 /******************************************************************************/
 
-const hasNoBits = (v, bits) => (v & bits) === 0;
-const hasBits = (v, bits) => (v & bits) !== 0;
-const hasNotAllBits = (v, bits) => (v & bits) !== bits;
-//const hasAllBits = (v, bits) => (v & bits) === bits;
-
-/******************************************************************************/
-
-const CATNone = 0;
-const CATStaticExtFilter = 1;
-const CATStaticNetFilter = 2;
-const CATComment = 3;
-
-const BITSpace          = 1 <<  0;
-const BITGlyph          = 1 <<  1;
-const BITExclamation    = 1 <<  2;
-const BITHash           = 1 <<  3;
-const BITDollar         = 1 <<  4;
-const BITPercent        = 1 <<  5;
-const BITParen          = 1 <<  6;
-const BITAsterisk       = 1 <<  7;
-const BITPlus           = 1 <<  8;
-const BITComma          = 1 <<  9;
-const BITDash           = 1 << 10;
-const BITPeriod         = 1 << 11;
-const BITSlash          = 1 << 12;
-const BITNum            = 1 << 13;
-const BITEqual          = 1 << 14;
-const BITQuestion       = 1 << 15;
-const BITAt             = 1 << 16;
-const BITAlpha          = 1 << 17;
-const BITUppercase      = 1 << 18;
-const BITSquareBracket  = 1 << 19;
-const BITBackslash      = 1 << 20;
-const BITCaret          = 1 << 21;
-const BITUnderscore     = 1 << 22;
-const BITBrace          = 1 << 23;
-const BITPipe           = 1 << 24;
-const BITTilde          = 1 << 25;
-const BITOpening        = 1 << 26;
-const BITClosing        = 1 << 27;
-const BITUnicode        = 1 << 28;
-// TODO: separate from character bits into a new slice slot.
-const BITIgnore         = 1 << 30;
-const BITError          = 1 << 31;
-
-const BITAll            = 0xFFFFFFFF;
-const BITAlphaNum       = BITNum | BITAlpha;
-const BITHostname       = BITNum | BITAlpha | BITUppercase | BITDash | BITPeriod | BITUnderscore | BITUnicode;
-const BITPatternToken   = BITNum | BITAlpha | BITPercent;
-const BITLineComment    = BITExclamation | BITHash | BITSquareBracket;
-
-// Important: it is expected that lines passed to the parser have been
-// trimmed of new line characters. Given this, any newline characters found
-// will be interpreted as normal white spaces.
-
-const charDescBits = [
-    /* 0x00 - 0x08 */ 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    /* 0x09   */ BITSpace,  // \t
-    /* 0x0A   */ BITSpace,  // \n
-    /* 0x0B - 0x0C */ 0, 0,
-    /* 0x0D   */ BITSpace,  // \r
-    /* 0x0E - 0x0F */ 0, 0,
-    /* 0x10 - 0x1F */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    /* 0x20   */ BITSpace,
-    /* 0x21 ! */ BITExclamation,
-    /* 0x22 " */ BITGlyph,
-    /* 0x23 # */ BITHash,
-    /* 0x24 $ */ BITDollar,
-    /* 0x25 % */ BITPercent,
-    /* 0x26 & */ BITGlyph,
-    /* 0x27 ' */ BITGlyph,
-    /* 0x28 ( */ BITParen | BITOpening,
-    /* 0x29 ) */ BITParen | BITClosing,
-    /* 0x2A * */ BITAsterisk,
-    /* 0x2B + */ BITPlus,
-    /* 0x2C , */ BITComma,
-    /* 0x2D - */ BITDash,
-    /* 0x2E . */ BITPeriod,
-    /* 0x2F / */ BITSlash,
-    /* 0x30 0 */ BITNum,
-    /* 0x31 1 */ BITNum,
-    /* 0x32 2 */ BITNum,
-    /* 0x33 3 */ BITNum,
-    /* 0x34 4 */ BITNum,
-    /* 0x35 5 */ BITNum,
-    /* 0x36 6 */ BITNum,
-    /* 0x37 7 */ BITNum,
-    /* 0x38 8 */ BITNum,
-    /* 0x39 9 */ BITNum,
-    /* 0x3A : */ BITGlyph,
-    /* 0x3B ; */ BITGlyph,
-    /* 0x3C < */ BITGlyph,
-    /* 0x3D = */ BITEqual,
-    /* 0x3E > */ BITGlyph,
-    /* 0x3F ? */ BITQuestion,
-    /* 0x40 @ */ BITAt,
-    /* 0x41 A */ BITAlpha | BITUppercase,
-    /* 0x42 B */ BITAlpha | BITUppercase,
-    /* 0x43 C */ BITAlpha | BITUppercase,
-    /* 0x44 D */ BITAlpha | BITUppercase,
-    /* 0x45 E */ BITAlpha | BITUppercase,
-    /* 0x46 F */ BITAlpha | BITUppercase,
-    /* 0x47 G */ BITAlpha | BITUppercase,
-    /* 0x48 H */ BITAlpha | BITUppercase,
-    /* 0x49 I */ BITAlpha | BITUppercase,
-    /* 0x4A J */ BITAlpha | BITUppercase,
-    /* 0x4B K */ BITAlpha | BITUppercase,
-    /* 0x4C L */ BITAlpha | BITUppercase,
-    /* 0x4D M */ BITAlpha | BITUppercase,
-    /* 0x4E N */ BITAlpha | BITUppercase,
-    /* 0x4F O */ BITAlpha | BITUppercase,
-    /* 0x50 P */ BITAlpha | BITUppercase,
-    /* 0x51 Q */ BITAlpha | BITUppercase,
-    /* 0x52 R */ BITAlpha | BITUppercase,
-    /* 0x53 S */ BITAlpha | BITUppercase,
-    /* 0x54 T */ BITAlpha | BITUppercase,
-    /* 0x55 U */ BITAlpha | BITUppercase,
-    /* 0x56 V */ BITAlpha | BITUppercase,
-    /* 0x57 W */ BITAlpha | BITUppercase,
-    /* 0x58 X */ BITAlpha | BITUppercase,
-    /* 0x59 Y */ BITAlpha | BITUppercase,
-    /* 0x5A Z */ BITAlpha | BITUppercase,
-    /* 0x5B [ */ BITSquareBracket | BITOpening,
-    /* 0x5C \ */ BITBackslash,
-    /* 0x5D ] */ BITSquareBracket | BITClosing,
-    /* 0x5E ^ */ BITCaret,
-    /* 0x5F _ */ BITUnderscore,
-    /* 0x60 ` */ BITGlyph,
-    /* 0x61 a */ BITAlpha,
-    /* 0x62 b */ BITAlpha,
-    /* 0x63 c */ BITAlpha,
-    /* 0x64 d */ BITAlpha,
-    /* 0x65 e */ BITAlpha,
-    /* 0x66 f */ BITAlpha,
-    /* 0x67 g */ BITAlpha,
-    /* 0x68 h */ BITAlpha,
-    /* 0x69 i */ BITAlpha,
-    /* 0x6A j */ BITAlpha,
-    /* 0x6B k */ BITAlpha,
-    /* 0x6C l */ BITAlpha,
-    /* 0x6D m */ BITAlpha,
-    /* 0x6E n */ BITAlpha,
-    /* 0x6F o */ BITAlpha,
-    /* 0x70 p */ BITAlpha,
-    /* 0x71 q */ BITAlpha,
-    /* 0x72 r */ BITAlpha,
-    /* 0x73 s */ BITAlpha,
-    /* 0x74 t */ BITAlpha,
-    /* 0x75 u */ BITAlpha,
-    /* 0x76 v */ BITAlpha,
-    /* 0x77 w */ BITAlpha,
-    /* 0x78 x */ BITAlpha,
-    /* 0x79 y */ BITAlpha,
-    /* 0x7A z */ BITAlpha,
-    /* 0x7B { */ BITBrace | BITOpening,
-    /* 0x7C | */ BITPipe,
-    /* 0x7D } */ BITBrace | BITClosing,
-    /* 0x7E ~ */ BITTilde,
-    /* 0x7F   */ 0,
-];
-
-const BITFlavorException         = 1 <<  0;
-const BITFlavorNetRegex          = 1 <<  1;
-const BITFlavorNetLeftURLAnchor  = 1 <<  2;
-const BITFlavorNetRightURLAnchor = 1 <<  3;
-const BITFlavorNetLeftHnAnchor   = 1 <<  4;
-const BITFlavorNetRightHnAnchor  = 1 <<  5;
-const BITFlavorNetSpaceInPattern = 1 <<  6;
-const BITFlavorExtStyle          = 1 <<  7;
-const BITFlavorExtStrong         = 1 <<  8;
-const BITFlavorExtCosmetic       = 1 <<  9;
-const BITFlavorExtScriptlet      = 1 << 10;
-const BITFlavorExtHTML           = 1 << 11;
-const BITFlavorExtResponseHeader = 1 << 12;
-const BITFlavorIgnore            = 1 << 29;
-const BITFlavorUnsupported       = 1 << 30;
-const BITFlavorError             = 1 << 31;
-
-const BITFlavorNetLeftAnchor     = BITFlavorNetLeftURLAnchor | BITFlavorNetLeftHnAnchor;
-const BITFlavorNetRightAnchor    = BITFlavorNetRightURLAnchor | BITFlavorNetRightHnAnchor;
-const BITFlavorNetHnAnchor       = BITFlavorNetLeftHnAnchor | BITFlavorNetRightHnAnchor;
-const BITFlavorNetAnchor         = BITFlavorNetLeftAnchor | BITFlavorNetRightAnchor;
-
-const OPTTokenMask               = 0x000000ff;
-const OPTTokenInvalid            =  0;
-const OPTToken1p                 =  1;
-const OPTToken1pStrict           =  2;
-const OPTToken3p                 =  3;
-const OPTToken3pStrict           =  4;
-const OPTTokenAll                =  5;
-const OPTTokenBadfilter          =  6;
-const OPTTokenCname              =  7;
-const OPTTokenCsp                =  8;
-const OPTTokenCss                =  9;
-const OPTTokenDenyAllow          = 10;
-const OPTTokenDoc                = 11;
-const OPTTokenEhide              = 12;
-const OPTTokenEmpty              = 13;
-const OPTTokenFont               = 14;
-const OPTTokenFrame              = 15;
-const OPTTokenFrom               = 16;
-const OPTTokenGenericblock       = 17;
-const OPTTokenGhide              = 18;
-const OPTTokenHeader             = 19;
-const OPTTokenImage              = 20;
-const OPTTokenImportant          = 21;
-const OPTTokenInlineFont         = 22;
-const OPTTokenInlineScript       = 23;
-const OPTTokenMatchCase          = 24;
-const OPTTokenMedia              = 25;
-const OPTTokenMp4                = 26;
-const OPTTokenNoop               = 27;
-const OPTTokenObject             = 28;
-const OPTTokenOther              = 29;
-const OPTTokenPing               = 30;
-const OPTTokenPopunder           = 31;
-const OPTTokenPopup              = 32;
-const OPTTokenRedirect           = 33;
-const OPTTokenRedirectRule       = 34;
-const OPTTokenRemoveparam        = 35;
-const OPTTokenScript             = 36;
-const OPTTokenShide              = 37;
-const OPTTokenTo                 = 38;
-const OPTTokenXhr                = 39;
-const OPTTokenWebrtc             = 40;
-const OPTTokenWebsocket          = 41;
-const OPTTokenMethod             = 42;
-const OPTTokenCount              = 43;
-
-//const OPTPerOptionMask           = 0x0000ff00;
-const OPTCanNegate               = 1 <<  8;
-const OPTBlockOnly               = 1 <<  9;
-const OPTAllowOnly               = 1 << 10;
-const OPTMustAssign              = 1 << 11;
-const OPTAllowMayAssign          = 1 << 12;
-const OPTMayAssign               = 1 << 13;
-const OPTDomainList              = 1 << 14;
-
-//const OPTGlobalMask              = 0x0fff0000;
-const OPTNetworkType             = 1 << 16;
-const OPTNonNetworkType          = 1 << 17;
-const OPTModifiableType          = 1 << 18;
-const OPTModifierType            = 1 << 19;
-const OPTRedirectableType        = 1 << 20;
-const OPTNonRedirectableType     = 1 << 21;
-const OPTNonCspableType          = 1 << 22;
-const OPTNeedDomainOpt           = 1 << 23;
-const OPTNotSupported            = 1 << 24;
-
-/******************************************************************************/
-
-Parser.prototype.CATNone = CATNone;
-Parser.prototype.CATStaticExtFilter = CATStaticExtFilter;
-Parser.prototype.CATStaticNetFilter = CATStaticNetFilter;
-Parser.prototype.CATComment = CATComment;
-
-Parser.prototype.BITSpace = BITSpace;
-Parser.prototype.BITGlyph = BITGlyph;
-Parser.prototype.BITComma = BITComma;
-Parser.prototype.BITLineComment = BITLineComment;
-Parser.prototype.BITPipe = BITPipe;
-Parser.prototype.BITAsterisk = BITAsterisk;
-Parser.prototype.BITCaret = BITCaret;
-Parser.prototype.BITUppercase = BITUppercase;
-Parser.prototype.BITHostname = BITHostname;
-Parser.prototype.BITPeriod = BITPeriod;
-Parser.prototype.BITDash = BITDash;
-Parser.prototype.BITHash = BITHash;
-Parser.prototype.BITNum = BITNum;
-Parser.prototype.BITEqual = BITEqual;
-Parser.prototype.BITQuestion = BITQuestion;
-Parser.prototype.BITPercent = BITPercent;
-Parser.prototype.BITAlpha = BITAlpha;
-Parser.prototype.BITTilde = BITTilde;
-Parser.prototype.BITUnicode = BITUnicode;
-Parser.prototype.BITIgnore = BITIgnore;
-Parser.prototype.BITError = BITError;
-Parser.prototype.BITAll = BITAll;
-
-Parser.prototype.BITFlavorException = BITFlavorException;
-Parser.prototype.BITFlavorExtStyle = BITFlavorExtStyle;
-Parser.prototype.BITFlavorExtStrong = BITFlavorExtStrong;
-Parser.prototype.BITFlavorExtCosmetic = BITFlavorExtCosmetic;
-Parser.prototype.BITFlavorExtScriptlet = BITFlavorExtScriptlet;
-Parser.prototype.BITFlavorExtHTML = BITFlavorExtHTML;
-Parser.prototype.BITFlavorExtResponseHeader = BITFlavorExtResponseHeader;
-Parser.prototype.BITFlavorIgnore = BITFlavorIgnore;
-Parser.prototype.BITFlavorUnsupported = BITFlavorUnsupported;
-Parser.prototype.BITFlavorError = BITFlavorError;
-
-Parser.prototype.OPTToken1p = OPTToken1p;
-Parser.prototype.OPTToken1pStrict = OPTToken1pStrict;
-Parser.prototype.OPTToken3p = OPTToken3p;
-Parser.prototype.OPTToken3pStrict = OPTToken3pStrict;
-Parser.prototype.OPTTokenAll = OPTTokenAll;
-Parser.prototype.OPTTokenBadfilter = OPTTokenBadfilter;
-Parser.prototype.OPTTokenCname = OPTTokenCname;
-Parser.prototype.OPTTokenCsp = OPTTokenCsp;
-Parser.prototype.OPTTokenCss = OPTTokenCss;
-Parser.prototype.OPTTokenDenyAllow = OPTTokenDenyAllow;
-Parser.prototype.OPTTokenDoc = OPTTokenDoc;
-Parser.prototype.OPTTokenEhide = OPTTokenEhide;
-Parser.prototype.OPTTokenEmpty = OPTTokenEmpty;
-Parser.prototype.OPTTokenFont = OPTTokenFont;
-Parser.prototype.OPTTokenFrame = OPTTokenFrame;
-Parser.prototype.OPTTokenFrom = OPTTokenFrom;
-Parser.prototype.OPTTokenGenericblock = OPTTokenGenericblock;
-Parser.prototype.OPTTokenGhide = OPTTokenGhide;
-Parser.prototype.OPTTokenHeader = OPTTokenHeader;
-Parser.prototype.OPTTokenImage = OPTTokenImage;
-Parser.prototype.OPTTokenImportant = OPTTokenImportant;
-Parser.prototype.OPTTokenInlineFont = OPTTokenInlineFont;
-Parser.prototype.OPTTokenInlineScript = OPTTokenInlineScript;
-Parser.prototype.OPTTokenInvalid = OPTTokenInvalid;
-Parser.prototype.OPTTokenMatchCase = OPTTokenMatchCase;
-Parser.prototype.OPTTokenMedia = OPTTokenMedia;
-Parser.prototype.OPTTokenMp4 = OPTTokenMp4;
-Parser.prototype.OPTTokenNoop = OPTTokenNoop;
-Parser.prototype.OPTTokenObject = OPTTokenObject;
-Parser.prototype.OPTTokenOther = OPTTokenOther;
-Parser.prototype.OPTTokenPing = OPTTokenPing;
-Parser.prototype.OPTTokenPopunder = OPTTokenPopunder;
-Parser.prototype.OPTTokenPopup = OPTTokenPopup;
-Parser.prototype.OPTTokenRemoveparam = OPTTokenRemoveparam;
-Parser.prototype.OPTTokenRedirect = OPTTokenRedirect;
-Parser.prototype.OPTTokenRedirectRule = OPTTokenRedirectRule;
-Parser.prototype.OPTTokenScript = OPTTokenScript;
-Parser.prototype.OPTTokenShide = OPTTokenShide;
-Parser.prototype.OPTTokenTo = OPTTokenTo;
-Parser.prototype.OPTTokenXhr = OPTTokenXhr;
-Parser.prototype.OPTTokenWebrtc = OPTTokenWebrtc;
-Parser.prototype.OPTTokenWebsocket = OPTTokenWebsocket;
-Parser.prototype.OPTTokenMethod = OPTTokenMethod;
-
-Parser.prototype.OPTCanNegate = OPTCanNegate;
-Parser.prototype.OPTBlockOnly = OPTBlockOnly;
-Parser.prototype.OPTAllowOnly = OPTAllowOnly;
-Parser.prototype.OPTMustAssign = OPTMustAssign;
-Parser.prototype.OPTAllowMayAssign = OPTAllowMayAssign;
-Parser.prototype.OPTDomainList = OPTDomainList;
-Parser.prototype.OPTNetworkType = OPTNetworkType;
-Parser.prototype.OPTModifiableType = OPTModifiableType;
-Parser.prototype.OPTNotSupported = OPTNotSupported;
-
-/******************************************************************************/
-
-const netOptionTokenDescriptors = new Map([
-    [ '1p', OPTToken1p | OPTCanNegate ],
-    /* synonym */ [ 'first-party', OPTToken1p | OPTCanNegate ],
-    [ 'strict1p', OPTToken1pStrict ],
-    [ '3p', OPTToken3p | OPTCanNegate ],
-    /* synonym */ [ 'third-party', OPTToken3p | OPTCanNegate ],
-    [ 'strict3p', OPTToken3pStrict ],
-    [ 'all', OPTTokenAll | OPTNetworkType | OPTNonCspableType ],
-    [ 'badfilter', OPTTokenBadfilter ],
-    [ 'cname', OPTTokenCname | OPTAllowOnly | OPTModifierType ],
-    [ 'csp', OPTTokenCsp | OPTMustAssign | OPTAllowMayAssign | OPTModifierType ],
-    [ 'css', OPTTokenCss | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
-    /* synonym */ [ 'stylesheet', OPTTokenCss | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
-    [ 'denyallow', OPTTokenDenyAllow | OPTMustAssign | OPTDomainList | OPTNeedDomainOpt | OPTNonCspableType ],
-    [ 'doc', OPTTokenDoc | OPTNetworkType | OPTCanNegate | OPTModifiableType | OPTRedirectableType ],
-    /* synonym */ [ 'document', OPTTokenDoc | OPTNetworkType | OPTCanNegate | OPTModifiableType | OPTRedirectableType ],
-    [ 'ehide', OPTTokenEhide | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
-    /* synonym */ [ 'elemhide', OPTTokenEhide | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
-    [ 'empty', OPTTokenEmpty | OPTBlockOnly | OPTModifierType ],
-    [ 'frame', OPTTokenFrame | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType ],
-    /* synonym */ [ 'subdocument', OPTTokenFrame | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType ],
-    [ 'from', OPTTokenFrom | OPTMustAssign | OPTDomainList ],
-    /* synonym */ [ 'domain', OPTTokenFrom | OPTMustAssign | OPTDomainList ],
-    [ 'font', OPTTokenFont | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTNonCspableType ],
-    [ 'genericblock', OPTTokenGenericblock | OPTNotSupported ],
-    [ 'ghide', OPTTokenGhide | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
-    /* synonym */ [ 'generichide', OPTTokenGhide | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
-    [ 'header', OPTTokenHeader | OPTMustAssign | OPTAllowMayAssign | OPTNonCspableType | OPTNonRedirectableType ],
-    [ 'image', OPTTokenImage | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
-    [ 'important', OPTTokenImportant | OPTBlockOnly ],
-    [ 'inline-font', OPTTokenInlineFont | OPTNonNetworkType | OPTCanNegate | OPTNonCspableType | OPTNonRedirectableType ],
-    [ 'inline-script', OPTTokenInlineScript | OPTNonNetworkType | OPTCanNegate | OPTNonCspableType | OPTNonRedirectableType ],
-    [ 'match-case', OPTTokenMatchCase ],
-    [ 'media', OPTTokenMedia | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
-    [ 'method', OPTTokenMethod | OPTNetworkType | OPTMustAssign ],
-    [ 'mp4', OPTTokenMp4 | OPTNetworkType | OPTBlockOnly |  OPTModifierType ],
-    [ '_', OPTTokenNoop ],
-    [ 'object', OPTTokenObject | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
-    /* synonym */ [ 'object-subrequest', OPTTokenObject | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
-    [ 'other', OPTTokenOther | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
-    [ 'ping', OPTTokenPing | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTNonCspableType | OPTNonRedirectableType ],
-    /* synonym */ [ 'beacon', OPTTokenPing | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTNonCspableType | OPTNonRedirectableType ],
-    [ 'popunder', OPTTokenPopunder | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
-    [ 'popup', OPTTokenPopup | OPTNonNetworkType | OPTCanNegate | OPTNonCspableType | OPTNonRedirectableType ],
-    [ 'redirect', OPTTokenRedirect | OPTMustAssign | OPTAllowMayAssign | OPTModifierType ],
-    /* synonym */ [ 'rewrite', OPTTokenRedirect | OPTMustAssign | OPTAllowMayAssign | OPTModifierType ],
-    [ 'redirect-rule', OPTTokenRedirectRule | OPTMustAssign | OPTAllowMayAssign | OPTModifierType | OPTNonCspableType ],
-    [ 'removeparam', OPTTokenRemoveparam | OPTMayAssign | OPTModifierType | OPTNonCspableType | OPTNonRedirectableType ],
-    /* synonym */ [ 'queryprune', OPTTokenRemoveparam | OPTMayAssign | OPTModifierType | OPTNonCspableType | OPTNonRedirectableType ],
-    [ 'script', OPTTokenScript | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
-    [ 'shide', OPTTokenShide | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
-    /* synonym */ [ 'specifichide', OPTTokenShide | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
-    [ 'to', OPTTokenTo | OPTMustAssign | OPTDomainList ],
-    [ 'xhr', OPTTokenXhr | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
-    /* synonym */ [ 'xmlhttprequest', OPTTokenXhr | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
-    [ 'webrtc', OPTTokenWebrtc | OPTNotSupported ],
-    [ 'websocket', OPTTokenWebsocket | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTNonCspableType | OPTNonRedirectableType ],
-]);
-
-Parser.prototype.netOptionTokenDescriptors =
-    Parser.netOptionTokenDescriptors = netOptionTokenDescriptors;
-
-Parser.netOptionTokenIds = new Map([
-    [ '1p', OPTToken1p ],
-    /* synonym */ [ 'first-party', OPTToken1p ],
-    [ 'strict1p', OPTToken1pStrict ],
-    [ '3p', OPTToken3p ],
-    /* synonym */ [ 'third-party', OPTToken3p ],
-    [ 'strict3p', OPTToken3pStrict ],
-    [ 'all', OPTTokenAll ],
-    [ 'badfilter', OPTTokenBadfilter ],
-    [ 'cname', OPTTokenCname ],
-    [ 'csp', OPTTokenCsp ],
-    [ 'css', OPTTokenCss ],
-    /* synonym */ [ 'stylesheet', OPTTokenCss ],
-    [ 'denyallow', OPTTokenDenyAllow ],
-    [ 'doc', OPTTokenDoc ],
-    /* synonym */ [ 'document', OPTTokenDoc ],
-    [ 'from', OPTTokenFrom ],
-    /* synonym */ [ 'domain', OPTTokenFrom ],
-    [ 'ehide', OPTTokenEhide ],
-    /* synonym */ [ 'elemhide', OPTTokenEhide ],
-    [ 'empty', OPTTokenEmpty ],
-    [ 'frame', OPTTokenFrame ],
-    /* synonym */ [ 'subdocument', OPTTokenFrame ],
-    [ 'font', OPTTokenFont ],
-    [ 'genericblock', OPTTokenGenericblock ],
-    [ 'ghide', OPTTokenGhide ],
-    /* synonym */ [ 'generichide', OPTTokenGhide ],
-    [ 'header', OPTTokenHeader ],
-    [ 'image', OPTTokenImage ],
-    [ 'important', OPTTokenImportant ],
-    [ 'inline-font', OPTTokenInlineFont ],
-    [ 'inline-script', OPTTokenInlineScript ],
-    [ 'match-case', OPTTokenMatchCase ],
-    [ 'media', OPTTokenMedia ],
-    [ 'method', OPTTokenMethod ],
-    [ 'mp4', OPTTokenMp4 ],
-    [ '_', OPTTokenNoop ],
-    [ 'object', OPTTokenObject ],
-    /* synonym */ [ 'object-subrequest', OPTTokenObject ],
-    [ 'other', OPTTokenOther ],
-    [ 'ping', OPTTokenPing ],
-    /* synonym */ [ 'beacon', OPTTokenPing ],
-    [ 'popunder', OPTTokenPopunder ],
-    [ 'popup', OPTTokenPopup ],
-    [ 'redirect', OPTTokenRedirect ],
-    /* synonym */ [ 'rewrite', OPTTokenRedirect ],
-    [ 'redirect-rule', OPTTokenRedirectRule ],
-    [ 'removeparam', OPTTokenRemoveparam ],
-    /* synonym */ [ 'queryprune', OPTTokenRemoveparam ],
-    [ 'script', OPTTokenScript ],
-    [ 'shide', OPTTokenShide ],
-    /* synonym */ [ 'specifichide', OPTTokenShide ],
-    [ 'xhr', OPTTokenXhr ],
-    /* synonym */ [ 'xmlhttprequest', OPTTokenXhr ],
-    [ 'webrtc', OPTTokenWebrtc ],
-    [ 'websocket', OPTTokenWebsocket ],
-]);
-
-Parser.netOptionTokenNames = new Map([
-    [ OPTToken1p, '1p' ],
-    [ OPTToken1pStrict, 'strict1p' ],
-    [ OPTToken3p, '3p' ],
-    [ OPTToken3pStrict, 'strict3p' ],
-    [ OPTTokenAll, 'all' ],
-    [ OPTTokenBadfilter, 'badfilter' ],
-    [ OPTTokenCname, 'cname' ],
-    [ OPTTokenCsp, 'csp' ],
-    [ OPTTokenCss, 'stylesheet' ],
-    [ OPTTokenDenyAllow, 'denyallow' ],
-    [ OPTTokenDoc, 'document' ],
-    [ OPTTokenEhide, 'elemhide' ],
-    [ OPTTokenEmpty, 'empty' ],
-    [ OPTTokenFrame, 'subdocument' ],
-    [ OPTTokenFont, 'font' ],
-    [ OPTTokenFrom, 'from' ],
-    [ OPTTokenGenericblock, 'genericblock' ],
-    [ OPTTokenGhide, 'generichide' ],
-    [ OPTTokenHeader, 'header' ],
-    [ OPTTokenImage, 'image' ],
-    [ OPTTokenImportant, 'important' ],
-    [ OPTTokenInlineFont, 'inline-font' ],
-    [ OPTTokenInlineScript, 'inline-script' ],
-    [ OPTTokenMatchCase, 'match-case' ],
-    [ OPTTokenMedia, 'media' ],
-    [ OPTTokenMethod, 'method' ],
-    [ OPTTokenMp4, 'mp4' ],
-    [ OPTTokenNoop, '_' ],
-    [ OPTTokenObject, 'object' ],
-    [ OPTTokenOther, 'other' ],
-    [ OPTTokenPing, 'ping' ],
-    [ OPTTokenPopunder, 'popunder' ],
-    [ OPTTokenPopup, 'popup' ],
-    [ OPTTokenRemoveparam, 'removeparam' ],
-    [ OPTTokenRedirect, 'redirect' ],
-    [ OPTTokenRedirectRule, 'redirect-rule' ],
-    [ OPTTokenScript, 'script' ],
-    [ OPTTokenShide, 'specifichide' ],
-    [ OPTTokenTo, 'to' ],
-    [ OPTTokenXhr, 'xmlhttprequest' ],
-    [ OPTTokenWebrtc, 'webrtc' ],
-    [ OPTTokenWebsocket, 'websocket' ],
-]);
-
-/******************************************************************************/
-
-const Span = class {
-    constructor() {
-        this.reset();
-    }
-    reset() {
-        this.i = this.len = 0;
-    }
-};
-
-/******************************************************************************/
-
-// https://github.com/uBlockOrigin/uBlock-issues/issues/760#issuecomment-951146371
-//   Quick fix: auto-escape commas.
-
-const NetOptionsIterator = class {
-    constructor(parser) {
-        this.parser = parser;
-        this.exception = false;
-        this.interactive = false;
-        this.optSlices = [];
-        this.writePtr = 0;
-        this.readPtr = 0;
-        this.tokenPos = (( ) => {
-            const out = [];
-            for ( let i = 0; i < OPTTokenCount; i++ ) { out[i] = -1; }
-            return out;
-        })();
-        this.item = {
-            id: OPTTokenInvalid,
-            val: undefined,
-            not: false,
-        };
-        this.value = undefined;
-        this.done = true;
-    }
-    [Symbol.iterator]() {
-        return this.init();
-    }
-    init() {
-        this.readPtr = this.writePtr = 0;
-        this.done = this.parser.optionsSpan.len === 0;
-        if ( this.done ) {
-            this.value = undefined;
-            return this;
-        }
-        // Prime iterator
-        this.value = this.item;
-        this.exception = this.parser.isException();
-        this.interactive = this.parser.interactive;
-        // Each option is encoded as follow:
-        //
-        // desc  ~token=value,
-        // 0     1|    3|    5
-        //        2     4
-        //
-        // At index 0 is the option descriptor.
-        // At indices 1-5 is a slice index.
-        this.tokenPos.fill(-1);
-        const lopts =  this.parser.optionsSpan.i;
-        const ropts =  lopts + this.parser.optionsSpan.len;
-        const slices = this.parser.slices;
-        const optSlices = this.optSlices;
-        let allBits = 0;
-        let writePtr = 0;
-        let lopt = lopts;
-        while ( lopt < ropts ) {
-            let good = true;
-            let ltok = lopt;
-            // Parse optional negation
-            if ( hasBits(slices[lopt], BITTilde) ) {
-                if ( slices[lopt+2] > 1 ) { good = false; }
-                ltok += 3;
-            }
-            // Find end of current option
-            let lval = 0;
-            let i = ltok;
-            while ( i < ropts ) {
-                const bits = slices[i];
-                if ( hasBits(bits, BITComma) ) {
-                    if ( this.interactive && (i === lopt || slices[i+2] > 1) ) {
-                        slices[i] |= BITError;
-                    } else if ( /^,\d*?\}/.test(this.parser.raw.slice(slices[i+1])) === false ) {
-                        break;
-                    }
-                }
-                if ( lval === 0 && hasBits(bits, BITEqual) ) { lval = i; }
-                i += 3;
-            }
-            // Check for proper assignment
-            let assigned = false;
-            if ( good && lval !== 0 ) {
-                good = assigned = slices[lval+2] === 1 && lval + 3 !== i;
-            }
-            let descriptor;
-            if ( good ) {
-                const rtok = lval === 0 ? i : lval;
-                const token = this.parser.raw.slice(slices[ltok+1], slices[rtok+1]);
-                descriptor = netOptionTokenDescriptors.get(token);
-            }
-            // Validate option according to context
-            if ( !this.optionIsValidInContext(descriptor, ltok !== lopt, assigned) ) {
-                descriptor = OPTTokenInvalid;
-            }
-            // Keep track of which options are present: any given option can
-            // appear only once.
-            // TODO: might need to make an exception for `header=` option so as
-            //       to allow filters which need to match more than one header.
-            const tokenId = descriptor & OPTTokenMask;
-            if ( tokenId !== OPTTokenInvalid ) {
-                if ( this.tokenPos[tokenId] !== -1 ) {
-                    descriptor = OPTTokenInvalid;
-                } else {
-                    this.tokenPos[tokenId] = writePtr;
-                }
-            }
-            // Only one modifier can be present
-            if (
-                hasBits(descriptor, OPTModifierType) &&
-                hasBits(allBits, OPTModifierType)
-            ) {
-                descriptor = OPTTokenInvalid;
-            }
-            // Accumulate description bits
-            allBits |= descriptor;
-            // Mark slices in case of invalid filter option
-            if (
-                this.interactive && (
-                    descriptor === OPTTokenInvalid ||
-                    hasBits(descriptor, OPTNotSupported)
-                )
-            ) {
-                this.parser.errorSlices(lopt, i);
-            }
-            // Store indices to raw slices, this will be used during iteration
-            optSlices[writePtr+0] = descriptor;
-            optSlices[writePtr+1] = lopt;
-            optSlices[writePtr+2] = ltok;
-            if ( lval !== 0 ) {
-                optSlices[writePtr+3] = lval;
-                optSlices[writePtr+4] = lval+3;
-                if ( this.interactive && hasBits(descriptor, OPTDomainList) ) {
-                    this.parser.analyzeDomainList(
-                        lval + 3, i, BITPipe,
-                        tokenId === OPTTokenDenyAllow ? 0b0000 : 0b1010 
-                    );
-                }
-            } else {
-                optSlices[writePtr+3] = i;
-                optSlices[writePtr+4] = i;
-            }
-            optSlices[writePtr+5] = i;
-            // Advance to next option
-            writePtr += 6;
-            lopt = i + 3;
-        }
-        this.writePtr = writePtr;
-        // Dangling comma
-        if (
-            this.interactive &&
-            hasBits(this.parser.slices[ropts-3], BITComma)
-        ) {
-            this.parser.slices[ropts-3] |= BITError;
-        }
-        // `denyallow=` option requires `domain=` option.
-        {
-            const i = this.tokenPos[OPTTokenDenyAllow];
-            if ( i !== -1 && this.tokenPos[OPTTokenFrom] === -1 ) {
-                optSlices[i] = OPTTokenInvalid;
-                if ( this.interactive ) {
-                    this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
-                }
-            }
-        }
-        // `redirect=`: can't redirect non-redirectable types
-        {
-            let i = this.tokenPos[OPTTokenRedirect];
-            if ( i === -1 ) {
-                i = this.tokenPos[OPTTokenRedirectRule];
-            }
-            if ( i !== -1 && hasBits(allBits, OPTNonRedirectableType) ) {
-                optSlices[i] = OPTTokenInvalid;
-                if ( this.interactive ) {
-                    this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
-                }
-            }
-        }
-        // `empty`: can't apply to non-redirectable types
-        {
-            let i = this.tokenPos[OPTTokenEmpty];
-            if ( i !== -1 &&  hasBits(allBits, OPTNonRedirectableType) ) {
-                optSlices[i] = OPTTokenInvalid;
-                if ( this.interactive ) {
-                    this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
-                }
-            }
-        }
-        // `csp=`: only to "csp-able" types, which currently are only
-        // document types.
-        {
-            const i = this.tokenPos[OPTTokenCsp];
-            if ( i !== -1 &&  hasBits(allBits, OPTNonCspableType) ) {
-                optSlices[i] = OPTTokenInvalid;
-                if ( this.interactive ) {
-                    this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
-                }
-            }
-        }
-        // `removeparam=`:  only for network requests.
-        {
-            const i = this.tokenPos[OPTTokenRemoveparam];
-            if ( i !== -1 ) {
-                if ( hasBits(allBits, OPTNonNetworkType) ) {
-                    optSlices[i] = OPTTokenInvalid;
-                    if ( this.interactive ) {
-                        this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
-                    }
-                } else {
-                    const val = this.parser.strFromSlices(
-                        optSlices[i+4],
-                        optSlices[i+5] - 3
-                    );
-                    const r = Parser.parseQueryPruneValue(val);
-                    if ( r.bad ) {
-                        optSlices[i] = OPTTokenInvalid;
-                        if ( this.interactive ) {
-                            this.parser.errorSlices(
-                                optSlices[i+4],
-                                optSlices[i+5]
-                            );
-                        }
-                    }
-                }
-            }
-        }
-        // `cname`: can't be used with any type
-        {
-            const i = this.tokenPos[OPTTokenCname];
-            if (
-                i !== -1 && (
-                    hasBits(allBits, OPTNetworkType) ||
-                    hasBits(allBits, OPTNonNetworkType)
-                )
-            ) {
-                optSlices[i] = OPTTokenInvalid;
-                if ( this.interactive ) {
-                    this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
-                }
-            }
-        }
-        // `header`: can't be used with any modifier type
-        {
-            const i = this.tokenPos[OPTTokenHeader];
-            if ( i !== -1 ) {
-                if (
-                    this.parser.expertMode === false ||
-                    hasBits(allBits, OPTModifierType)
-                ) {
-                    optSlices[i] = OPTTokenInvalid;
-                    if ( this.interactive ) {
-                        this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
-                    }
-                } else {
-                    const val = this.parser.strFromSlices(
-                        optSlices[i+4],
-                        optSlices[i+5] - 3
-                    );
-                    const r = Parser.parseHeaderValue(val);
-                    if ( r.bad ) {
-                        optSlices[i] = OPTTokenInvalid;
-                        if ( this.interactive ) {
-                            this.parser.errorSlices(
-                                optSlices[i+4],
-                                optSlices[i+5]
-                            );
-                        }
-                    }
-                }
-            }
-        }
-        // `match-case`: valid only for regex-based filters
-        {
-            const i = this.tokenPos[OPTTokenMatchCase];
-            if ( i !== -1 && this.parser.patternIsRegex() === false ) {
-                optSlices[i] = OPTTokenInvalid;
-                if ( this.interactive ) {
-                    this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
-                }
-            }
-        }
-        return this;
-    }
-    next() {
-        const i = this.readPtr;
-        if ( i === this.writePtr ) {
-            this.value = undefined;
-            this.done = true;
-            return this;
-        }
-        const optSlices = this.optSlices;
-        const descriptor = optSlices[i+0];
-        this.item.id = descriptor & OPTTokenMask;
-        this.item.not = optSlices[i+2] !== optSlices[i+1];
-        this.item.val = undefined;
-        if ( optSlices[i+4] !== optSlices[i+5] ) {
-            const parser = this.parser;
-            this.item.val = parser.raw.slice(
-                parser.slices[optSlices[i+4]+1],
-                parser.slices[optSlices[i+5]+1]
-            );
-        }
-        this.readPtr = i + 6;
-        return this;
-    }
-
-    optionIsValidInContext(descriptor, negated, assigned) {
-        if ( descriptor === undefined ) {
-            return false;
-        }
-        if ( negated && hasNoBits(descriptor, OPTCanNegate) )  {
-            return false;
-        }
-        if ( this.exception && hasBits(descriptor, OPTBlockOnly) ) {
-            return false;
-        }
-        if ( this.exception === false && hasBits(descriptor, OPTAllowOnly) ) {
-            return false;
-        }
-        if ( assigned && hasNoBits(descriptor, OPTMayAssign | OPTMustAssign) ) {
-            return false;
-        }
-        if ( assigned === false && hasBits(descriptor, OPTMustAssign) ) {
-            if ( this.exception === false || hasNoBits(descriptor, OPTAllowMayAssign) ) {
-                return false;
-            }
-        }
-        return true;
-    }
-};
-
-/******************************************************************************/
-
-// https://github.com/gorhill/uBlock/issues/997
-//   Ignore token if preceded by wildcard.
-
-const PatternTokenIterator = class {
-    constructor(parser) {
-        this.parser = parser;
-        this.l = this.r = this.i = 0;
-        this.value = undefined;
-        this.done = true;
-    }
-    [Symbol.iterator]() {
-        const { i, len } = this.parser.patternSpan;
-        if ( len === 0 ) {
-            return this.end();
-        }
-        this.l = i;
-        this.r = i + len;
-        this.i = i;
-        this.done = false;
-        this.value = { token: '', pos: 0 };
-        return this;
-    }
-    end() {
-        this.value = undefined;
-        this.done = true;
-        return this;
-    }
-    next() {
-        const { slices, maxTokenLength } = this.parser;
-        let { l, r, i, value } = this;
-        let sl = i, sr = 0;
-        for (;;) {
-            for (;;) {
-                if ( sl >= r ) { return this.end(); }
-                if ( hasBits(slices[sl], BITPatternToken) ) { break; }
-                sl += 3;
-            }
-            sr = sl + 3;
-            while ( sr < r && hasBits(slices[sr], BITPatternToken) ) {
-                sr += 3;
-            }
-            if (
-                (
-                    sl === 0 ||
-                    hasNoBits(slices[sl-3], BITAsterisk)
-                ) &&
-                (
-                    sr === r ||
-                    hasNoBits(slices[sr], BITAsterisk) ||
-                    (slices[sr+1] - slices[sl+1]) >= maxTokenLength
-                )
-            ) {
-                break;
-            }
-            sl = sr + 3;
-        }
-        this.i = sr + 3;
-        const beg = slices[sl+1];
-        value.token = this.parser.raw.slice(beg, slices[sr+1]);
-        value.pos = beg - slices[l+1];
-        return this;
-    }
-};
-
-/******************************************************************************/
-
-const ExtOptionsIterator = class {
-    constructor(parser) {
-        this.parser = parser;
-        this.l = this.r = 0;
-        this.value = undefined;
-        this.done = true;
-    }
-    [Symbol.iterator]() {
-        const { i, len } = this.parser.optionsSpan;
-        if ( len === 0 ) {
-            this.l = this.r = 0;
-            this.done = true;
-            this.value = undefined;
-        } else {
-            this.l = i;
-            this.r = i + len;
-            this.done = false;
-            this.value = { hn: undefined, not: false, bad: false };
-        }
-        return this;
-    }
-    next() {
-        if ( this.l === this.r ) {
-            this.value = undefined;
-            this.done = true;
-            return this;
-        }
-        const parser = this.parser;
-        const { slices, interactive } = parser;
-        const value = this.value;
-        value.not = value.bad = false;
-        let i0 = this.l;
-        let i = i0;
-        if ( hasBits(slices[i], BITTilde) ) {
-            if ( slices[i+2] !== 1 ) {
-                value.bad = true;
-                if ( interactive ) { slices[i] |= BITError; }
-            }
-            value.not = true;
-            i += 3;
-            i0 = i;
-        }
-        while ( i < this.r ) {
-            if ( hasBits(slices[i], BITComma) ) { break; }
-            i += 3;
-        }
-        if ( i === i0 ) { value.bad = true; }
-        value.hn = parser.raw.slice(slices[i0+1], slices[i+1]);
-        if ( parser.hasUnicode() && parser.reUnicodeChar.test(value.hn) ) {
-            value.hn = parser.normalizeHostnameValue(value.hn, 0b0110);
-        }
-        if ( i < this.r ) { i += 3; }
-        this.l = i;
-        return this;
-    }
-};
-
-/******************************************************************************/
-
-Parser.utils = Parser.prototype.utils = (( ) => {
+export const utils = (( ) => {
 
     // Depends on:
     // https://github.com/foo123/RegexAnalyzer
@@ -3549,7 +3663,3 @@ Parser.utils = Parser.prototype.utils = (( ) => {
 })();
 
 /******************************************************************************/
-
-const StaticFilteringParser = Parser;
-
-export { StaticFilteringParser };

@@ -117,18 +117,18 @@ export default new Map([
     [ 'monkeybroker.js', {
         alias: 'd3pkae9owd2lcf.cloudfront.net/mb105.js',
     } ],
-    [ 'noeval.js', {
-        data: 'text',
-    } ],
-    [ 'noeval-silent.js', {
-        alias: 'silent-noeval.js',
-        data: 'text',
-    } ],
     [ 'nobab.js', {
         alias: 'bab-defuser.js',
         data: 'text',
     } ],
     [ 'nobab2.js', {
+        data: 'text',
+    } ],
+    [ 'noeval.js', {
+        data: 'text',
+    } ],
+    [ 'noeval-silent.js', {
+        alias: 'silent-noeval.js',
         data: 'text',
     } ],
     [ 'nofab.js', {
@@ -144,6 +144,9 @@ export default new Map([
     [ 'noop-1s.mp4', {
         alias: 'noopmp4-1s',
         data: 'blob',
+    } ],
+    [ 'noop.css', {
+        data: 'text',
     } ],
     [ 'noop.html', {
         alias: 'noopframe',

@@ -25,7 +25,7 @@
 
 import staticNetFilteringEngine from './static-net-filtering.js';
 import { LineIterator } from './text-utils.js';
-import { StaticFilteringParser } from './static-filtering-parser.js';
+import * as sfp from './static-filtering-parser.js';
 
 import {
     CompiledListReader,
@@ -87,19 +87,17 @@ const keyFromSelector = selector => {
 /******************************************************************************/
 
 function addExtendedToDNR(context, parser) {
-    if ( parser.category !== parser.CATStaticExtFilter ) { return false; }
+    if ( parser.isExtendedFilter() === false ) { return false; }
 
     // Scriptlet injection
-    if ( (parser.flavorBits & parser.BITFlavorExtScriptlet) !== 0 ) {
-        if ( (parser.flavorBits & parser.BITFlavorUnsupported) !== 0 ) {
-            return;
-        }
+    if ( parser.isScriptletFilter() ) {
         if ( parser.hasOptions() === false ) { return; }
         if ( context.scriptletFilters === undefined ) {
             context.scriptletFilters = new Map();
         }
-        const { raw, exception } = parser.result;
-        for ( const { hn, not, bad } of parser.extOptions() ) {
+        const exception = parser.isException();
+        const raw = parser.getTypeString(sfp.NODE_TYPE_EXT_PATTERN_RAW);
+        for ( const { hn, not, bad } of parser.getExtFilterDomainIterator() ) {
             if ( bad ) { continue; }
             if ( exception ) { continue; }
             let details = context.scriptletFilters.get(raw);
@@ -166,7 +164,7 @@ function addExtendedToDNR(context, parser) {
     if ( context.specificCosmeticFilters === undefined ) {
         context.specificCosmeticFilters = new Map();
     }
-    for ( const { hn, not, bad } of parser.extOptions() ) {
+    for ( const { hn, not, bad } of parser.getExtFilterDomainIterator() ) {
         if ( bad ) { continue; }
         let { compiled, exception, raw } = parser.result;
         if ( exception ) { continue; }
@@ -209,15 +207,13 @@ function addToDNR(context, list) {
     const env = context.env || [];
     const writer = new CompiledListWriter();
     const lineIter = new LineIterator(
-        StaticFilteringParser.utils.preparser.prune(list.text, env)
+        sfp.utils.preparser.prune(list.text, env)
     );
-    const parser = new StaticFilteringParser({
+    const parser = new sfp.AstFilterParser({
         nativeCssHas: env.includes('native_css_has'),
+        badTypes: [ sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE ],
     });
-    const compiler = staticNetFilteringEngine.createCompiler(parser);
-
-    // Can't enforce `redirect-rule=` with DNR
-    compiler.excludeOptions([ parser.OPTTokenRedirectRule ]);
+    const compiler = staticNetFilteringEngine.createCompiler();
 
     writer.properties.set('name', list.name);
     compiler.start(writer);
@@ -229,22 +225,18 @@ function addToDNR(context, list) {
             line = line.slice(0, -2).trim() + lineIter.next().trim();
         }
 
-        parser.analyze(line);
+        parser.parse(line);
 
-        if ( parser.shouldIgnore() ) { continue; }
+        if ( parser.isFilter() === false ) { continue; }
+        if ( parser.hasError() ) { continue; }
 
-        if ( parser.category !== parser.CATStaticNetFilter ) {
+        if ( parser.isExtendedFilter() ) {
             addExtendedToDNR(context, parser);
             continue;
         }
+        if ( parser.isNetworkFilter() === false ) { continue; }
 
-        // https://github.com/gorhill/uBlock/issues/2599
-        //   convert hostname to punycode if needed
-        if ( parser.patternHasUnicode() && parser.toASCII() === false ) {
-            continue;
-        }
-
-        if ( compiler.compile(writer) ) { continue; }
+        if ( compiler.compile(parser, writer) ) { continue; }
 
         if ( compiler.error !== undefined ) {
             context.invalid.add(compiler.error);

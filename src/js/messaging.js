@@ -43,7 +43,7 @@ import { denseBase64 } from './base64-custom.js';
 import { dnrRulesetFromRawLists } from './static-dnr-filtering.js';
 import { i18n$ } from './i18n.js';
 import { redirectEngine } from './redirect-engine.js';
-import { StaticFilteringParser } from './static-filtering-parser.js';
+import * as sfp from './static-filtering-parser.js';
 
 import {
     permanentFirewall,
@@ -1515,9 +1515,9 @@ const onMessage = function(request, sender, callback) {
         if ( (request.hintUpdateToken || 0) === 0 ) {
             response.redirectResources = redirectEngine.getResourceDetails();
             response.preparseDirectiveTokens =
-                StaticFilteringParser.utils.preparser.getTokens(vAPI.webextFlavor.env);
+                sfp.utils.preparser.getTokens(vAPI.webextFlavor.env);
             response.preparseDirectiveHints =
-                StaticFilteringParser.utils.preparser.getHints();
+                sfp.utils.preparser.getHints();
             response.expertMode = µb.hiddenSettings.filterAuthorMode;
         }
         if ( request.hintUpdateToken !== µb.pageStoresToken ) {

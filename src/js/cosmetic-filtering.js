@@ -322,7 +322,7 @@ FilterContainer.prototype.compile = function(parser, writer) {
     //   Negated hostname means the filter applies to all non-negated hostnames
     //   of same filter OR globally if there is no non-negated hostnames.
     let applyGlobally = true;
-    for ( const { hn, not, bad } of parser.extOptions() ) {
+    for ( const { hn, not, bad } of parser.getExtFilterDomainIterator() ) {
         if ( bad ) { continue; }
         if ( not === false ) {
             applyGlobally = false;

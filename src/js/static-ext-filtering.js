@@ -95,26 +95,25 @@ staticExtFilteringEngine.freeze = function() {
 };
 
 staticExtFilteringEngine.compile = function(parser, writer) {
-    if ( parser.category !== parser.CATStaticExtFilter ) { return false; }
+    if ( parser.isExtendedFilter() === false ) { return false; }
 
-    if ( (parser.flavorBits & parser.BITFlavorUnsupported) !== 0 ) {
-        const who = writer.properties.get('name') || '?';
+    if ( parser.hasError() ) {
         logger.writeOne({
             realm: 'message',
             type: 'error',
-            text: `Invalid extended filter in ${who}: ${parser.raw}`
+            text: `Invalid extended filter in ${writer.properties.get('name') || '?'}: ${parser.raw}`
         });
         return true;
     }
 
     // Scriptlet injection
-    if ( (parser.flavorBits & parser.BITFlavorExtScriptlet) !== 0 ) {
+    if ( parser.isScriptletFilter() ) {
         scriptletFilteringEngine.compile(parser, writer);
         return true;
     }
 
     // Response header filtering
-    if ( (parser.flavorBits & parser.BITFlavorExtResponseHeader) !== 0 ) {
+    if ( parser.isResponseheaderFilter() ) {
         httpheaderFilteringEngine.compile(parser, writer);
         return true;
     }
@@ -122,13 +121,22 @@ staticExtFilteringEngine.compile = function(parser, writer) {
     // HTML filtering
     // TODO: evaluate converting Adguard's `$$` syntax into uBO's HTML
     //       filtering syntax.
-    if ( (parser.flavorBits & parser.BITFlavorExtHTML) !== 0 ) {
+    if ( parser.isHtmlFilter() ) {
         htmlFilteringEngine.compile(parser, writer);
         return true;
     }
 
     // Cosmetic filtering
-    cosmeticFilteringEngine.compile(parser, writer);
+    if ( parser.isCosmeticFilter() ) {
+        cosmeticFilteringEngine.compile(parser, writer);
+        return true;
+    }
+
+    logger.writeOne({
+        realm: 'message',
+        type: 'error',
+        text: `Unknown extended filter in ${writer.properties.get('name') || '?'}: ${parser.raw}`
+    });
     return true;
 };
 

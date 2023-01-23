@@ -40,8 +40,8 @@ import { hostnameFromURI } from './uri-utils.js';
 import { i18n, i18n$ } from './i18n.js';
 import { redirectEngine } from './redirect-engine.js';
 import { sparseBase64 } from './base64-custom.js';
-import { StaticFilteringParser } from './static-filtering-parser.js';
 import { ubolog, ubologSet } from './console.js';
+import * as sfp from './static-filtering-parser.js';
 
 import {
     permanentFirewall,
@@ -1007,19 +1007,15 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     const expertMode =
         details.assetKey !== this.userFiltersPath ||
         this.hiddenSettings.filterAuthorMode !== false;
-    // Useful references:
-    //    https://adblockplus.org/en/filter-cheatsheet
-    //    https://adblockplus.org/en/filters
-    const parser = new StaticFilteringParser({
+    const parser = new sfp.AstFilterParser({
         expertMode,
         nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
+        maxTokenLength: staticNetFilteringEngine.MAX_TOKEN_LENGTH,
     });
     const compiler = staticNetFilteringEngine.createCompiler(parser);
     const lineIter = new LineIterator(
-        parser.utils.preparser.prune(rawText, vAPI.webextFlavor.env)
+        sfp.utils.preparser.prune(rawText, vAPI.webextFlavor.env)
     );
-
-    parser.setMaxTokenLength(staticNetFilteringEngine.MAX_TOKEN_LENGTH);
 
     compiler.start(writer);
 
@@ -1031,23 +1027,19 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
             line = line.slice(0, -2).trim() + lineIter.next().trim();
         }
 
-        parser.analyze(line);
+        parser.parse(line);
 
-        if ( parser.shouldIgnore() ) { continue; }
+        if ( parser.isFilter() === false ) { continue; }
+        if ( parser.hasError() ) { continue; }
 
-        if ( parser.category === parser.CATStaticExtFilter ) {
+        if ( parser.isExtendedFilter() ) {
             staticExtFilteringEngine.compile(parser, writer);
             continue;
         }
 
-        if ( parser.category !== parser.CATStaticNetFilter ) { continue; }
+        if ( parser.isNetworkFilter() === false ) { continue; }
 
-        // https://github.com/gorhill/uBlock/issues/2599
-        //   convert hostname to punycode if needed
-        if ( parser.patternHasUnicode() && parser.toASCII() === false ) {
-            continue;
-        }
-        if ( compiler.compile(writer) ) { continue; }
+        if ( compiler.compile(parser, writer) ) { continue; }
         if ( compiler.error !== undefined ) {
             logger.writeOne({
                 realm: 'message',

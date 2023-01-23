@@ -26,7 +26,7 @@
 import './codemirror/ubo-static-filtering.js';
 
 import { hostnameFromURI } from './uri-utils.js';
-import { StaticFilteringParser } from './static-filtering-parser.js';
+import * as sfp from './static-filtering-parser.js';
 
 /******************************************************************************/
 /******************************************************************************/
@@ -110,13 +110,12 @@ const rawFilterFromTextarea = function() {
 const filterFromTextarea = function() {
     const filter = rawFilterFromTextarea();
     if ( filter === '' ) { return ''; }
-    const sfp = staticFilteringParser;
-    sfp.analyze(filter);
-    sfp.analyzeExtra();
-    if ( sfp.shouldDiscard() ) { return '!'; }
-    if ( sfp.category === sfp.CATStaticExtFilter ) {
-        if ( sfp.hasFlavor(sfp.BITFlavorExtCosmetic) === false ) { return '!'; }
-    } else if ( sfp.category !== sfp.CATStaticNetFilter ) {
+    const parser = staticFilteringParser;
+    parser.parse(filter);
+    if ( parser.isFilter() === false ) { return '!'; }
+    if ( parser.isExtendedFilter() ) {
+        if ( parser.isCosmeticFilter() === false ) { return '!'; }
+    } else if ( parser.isNetworkFilter() === false ) {
         return '!';
     }
     return filter;
@@ -829,7 +828,7 @@ const startPicker = function() {
     $id('candidateFilters').addEventListener('click', onCandidateClicked);
     $stor('#resultsetDepth input').addEventListener('input', onDepthChanged);
     $stor('#resultsetSpecificity input').addEventListener('input', onSpecificityChanged);
-    staticFilteringParser = new StaticFilteringParser({
+    staticFilteringParser = new sfp.AstFilterParser({
         interactive: true,
         nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
     });

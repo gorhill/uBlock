@@ -27,8 +27,8 @@ import logger from './logger.js';
 import µb from './background.js';
 import { redirectEngine } from './redirect-engine.js';
 import { sessionFirewall } from './filtering-engines.js';
-
 import { StaticExtFilteringHostnameDB } from './static-ext-filtering-db.js';
+import * as sfp from './static-filtering-parser.js';
 
 import {
     domainFromHostname,
@@ -117,25 +117,28 @@ const contentscriptCode = (( ) => {
 // TODO: Probably should move this into StaticFilteringParser
 // https://github.com/uBlockOrigin/uBlock-issues/issues/1031
 //   Normalize scriptlet name to its canonical, unaliased name.
-const normalizeRawFilter = function(rawFilter) {
-    const rawToken = rawFilter.slice(4, -1);
-    const rawEnd = rawToken.length;
-    let end = rawToken.indexOf(',');
-    if ( end === -1 ) { end = rawEnd; }
-    const token = rawToken.slice(0, end).trim();
-    const alias = token.endsWith('.js') ? token.slice(0, -3) : token;
-    let normalized = redirectEngine.aliases.get(`${alias}.js`);
-    normalized = normalized === undefined
-        ? alias
-        : normalized.slice(0, -3);
-    let beg = end + 1;
-    while ( beg < rawEnd ) {
-        end = rawToken.indexOf(',', beg);
-        if ( end === -1 ) { end = rawEnd; }
-        normalized += ', ' + rawToken.slice(beg, end).trim();
-        beg = end + 1;
+const normalizeRawFilter = function(parser) {
+    const root = parser.getBranchFromType(sfp.NODE_TYPE_EXT_PATTERN_SCRIPTLET);
+    const walker = parser.getWalker(root);
+    const args = [];
+    for ( let node = walker.next(); node !== 0; node = walker.next() ) {
+        switch ( parser.getNodeType(node) ) {
+            case sfp.NODE_TYPE_EXT_PATTERN_SCRIPTLET_TOKEN:
+            case sfp.NODE_TYPE_EXT_PATTERN_SCRIPTLET_ARG:
+                args.push(parser.getNodeString(node));
+                break;
+            default:
+                break;
+        }
     }
-    return `+js(${normalized})`;
+    walker.dispose();
+    if ( args.length !== 0 ) {
+        const full = `${args[0]}.js`;
+        if ( redirectEngine.aliases.has(full) ) {
+            args[0] = redirectEngine.aliases.get(full).slice(0, -3);
+        }
+    }
+    return `+js(${args.join(', ')})`;
 };
 
 const lookupScriptlet = function(rawToken, reng, toInject) {
@@ -228,14 +231,14 @@ scriptletFilteringEngine.compile = function(parser, writer) {
     writer.select('SCRIPTLET_FILTERS');
 
     // Only exception filters are allowed to be global.
-    const { raw, exception } = parser.result;
-    const normalized = normalizeRawFilter(raw);
+    const isException = parser.isException();
+    const normalized = normalizeRawFilter(parser);
 
     // Tokenless is meaningful only for exception filters.
-    if ( normalized === '+js()' && exception === false ) { return; }
+    if ( normalized === '+js()' && isException === false ) { return; }
 
     if ( parser.hasOptions() === false ) {
-        if ( exception ) {
+        if ( isException ) {
             writer.push([ 32, '', 1, normalized ]);
         }
         return;
@@ -245,10 +248,10 @@ scriptletFilteringEngine.compile = function(parser, writer) {
     //   Ignore instances of exception filter with negated hostnames,
     //   because there is no way to create an exception to an exception.
 
-    for ( const { hn, not, bad } of parser.extOptions() ) {
+    for ( const { hn, not, bad } of parser.getExtFilterDomainIterator() ) {
         if ( bad ) { continue; }
         let kind = 0;
-        if ( exception ) {
+        if ( isException ) {
             if ( not ) { continue; }
             kind |= 1;
         } else if ( not ) {

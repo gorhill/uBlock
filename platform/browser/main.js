@@ -29,7 +29,7 @@ import punycode from './lib/punycode.js';
 import staticNetFilteringEngine from './js/static-net-filtering.js';
 import { FilteringContext } from './js/filtering-context.js';
 import { LineIterator } from './js/text-utils.js';
-import { StaticFilteringParser } from './js/static-filtering-parser.js';
+import * as sfp from './js/static-filtering-parser.js';
 
 import {
     CompiledListReader,
@@ -40,10 +40,11 @@ import {
 
 function compileList(rawText, writer) {
     const lineIter = new LineIterator(rawText);
-    const parser = new StaticFilteringParser(true);
-    const compiler = staticNetFilteringEngine.createCompiler(parser);
-
-    parser.setMaxTokenLength(staticNetFilteringEngine.MAX_TOKEN_LENGTH);
+    const parser = new sfp.AstFilterParser({
+        interactive: true,
+        maxTokenLength: staticNetFilteringEngine.MAX_TOKEN_LENGTH,
+    });
+    const compiler = staticNetFilteringEngine.createCompiler();
 
     while ( lineIter.eot() === false ) {
         let line = lineIter.next();
@@ -52,13 +53,10 @@ function compileList(rawText, writer) {
             if ( lineIter.peek(4) !== '    ' ) { break; }
             line = line.slice(0, -2).trim() + lineIter.next().trim();
         }
-        parser.analyze(line);
+        parser.parse(line);
 
-        if ( parser.shouldIgnore() ) { continue; }
-        if ( parser.category !== parser.CATStaticNetFilter ) { continue; }
-        if ( parser.patternHasUnicode() && parser.toASCII() === false ) {
-            continue;
-        }
+        if ( parser.isFilter() === false ) { continue; }
+        if ( parser.isNetworkFilter() === false ) { continue; }
         if ( compiler.compile(parser, writer) ) { continue; }
         if ( compiler.error !== undefined ) {
             console.info(JSON.stringify({
