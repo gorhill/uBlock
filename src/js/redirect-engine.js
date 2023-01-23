@@ -33,6 +33,7 @@ import {
 /******************************************************************************/
 
 const extToMimeMap = new Map([
+    [  'css', 'text/css' ],
     [  'gif', 'image/gif' ],
     [ 'html', 'text/html' ],
     [   'js', 'text/javascript' ],
