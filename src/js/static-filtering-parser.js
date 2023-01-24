@@ -1717,9 +1717,7 @@ export class AstFilterParser {
         }
         next = this.allocTypedNode(NODE_TYPE_EXT_PATTERN_SCRIPTLET, trimmedArg0, trimmedArg1);
         this.addNodeToRegister(NODE_TYPE_EXT_PATTERN_SCRIPTLET, next);
-        if ( this.interactive ) {
-            this.linkDown(next, this.parseExtPatternScriptletArgs(next));
-        }
+        this.linkDown(next, this.parseExtPatternScriptletArgs(next));
         prev = this.linkRight(prev, next);
         if ( trimmedArg1 !== rawArg1 ) {
             next = this.allocTypedNode(NODE_TYPE_WHITESPACE, trimmedArg1, rawArg1);
@@ -2140,11 +2138,12 @@ export class AstFilterParser {
     // making some other trivial checks.
     //
     // mode bits:
-    //   0b0001: can use wildcard at any position
-    //   0b0010: can use entity-based hostnames
-    //   0b0100: can use single wildcard
-    //   0b1000: can be negated
-    normalizeHostnameValue(s, modeBits = 0b0000) {
+    //   0b00001: can use wildcard at any position
+    //   0b00010: can use entity-based hostnames
+    //   0b00100: can use single wildcard
+    //   0b01000: can be negated
+    //   0b10000: can be a regex
+    normalizeHostnameValue(s, modeBits = 0b00000) {
         if ( this.rePlainHostname.test(s) ) { return; }
         if ( this.reBadHostnameChars.test(s) ) { return ''; }
         let hn = s;
