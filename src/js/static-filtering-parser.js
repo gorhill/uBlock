@@ -1489,6 +1489,7 @@ export class AstFilterParser {
     }
 
     getNetOptionValue(type) {
+        if ( this.nodeTypeRegister.includes(type) === false ) { return ''; }
         const optionNode = this.nodeTypeLookupTable[type];
         if ( optionNode === 0 ) { return ''; }
         const valueNode = this.findDescendantByType(optionNode, NODE_TYPE_NET_OPTION_VALUE);

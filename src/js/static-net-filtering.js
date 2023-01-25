@@ -3336,15 +3336,16 @@ class FilterCompiler {
                 this.processMethodOption(parser.getNetOptionValue(id));
                 this.optionUnitBits |= this.METHOD_BIT;
                 break;
-            case sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECT:
-                if ( this.action === AllowAction ) {
-                    id = sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE;
-                }
-                if ( this.processModifierOption(id, parser.getNetOptionValue(id)) === false ) {
+            case sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECT: {
+                const actualId = this.action === AllowAction
+                    ? sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE
+                    : id;
+                if ( this.processModifierOption(actualId, parser.getNetOptionValue(id)) === false ) {
                     return false;
                 }
                 this.optionUnitBits |= this.REDIRECT_BIT;
                 break;
+            }
             case sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE:
                 if ( this.processModifierOption(id, parser.getNetOptionValue(id)) === false ) {
                     return false;
