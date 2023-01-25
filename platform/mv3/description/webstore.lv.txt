@@ -17,14 +17,14 @@ However, uBOL allows you to *explicitly* grant extended permissions on specific 
 
 Lai nodrošinātu paplašinātas piekļuves tiesības noteiktā vietnē, jāatver uznirstošais logs un jāizvēlas striktāks aizturēšanas veids, kā, piemēram, "Labākais" vai "Pilnīgais".
 
-The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request.
+Pārlūks tad brīdinās ietekmi, ko radīs paplašinājuma pieprasīto papildu atļauju nodrošināšana pašreizējā vietnē, un būs jānorāda, vai pieprasījums tiek apstiprināts vai noraidīts.
 
-If you accept uBOL's request for additional permissions on the current site, it will be able to better filter content for the current site.
+Ja pašreizējā vietnē tiek apstiprināts uBOL papildu atļauju pieprasījums, paplašinājums varēs labāk veikt satura aizturēšanu.
 
-You can set the default filtering mode from uBOL's options page. If you pick the Optimal or Complete mode as the default one, you will need to grant uBOL the permission to read and modify data on all websites.
+Noklusējuma aizturēšanas veids ir norādāms uBOL uzstādījumu lapā. Ja tiek izvēlēts "Labākais" vai "Pilnīgais" kā noklusējuma, tad būs nepieciešams nodrošināt uBOL tiesības rakstīt un pārveidot datus visās tīmekļa vietnēs.
 
-Keep in mind this is still a work in progress, with these end goals:
+Jāpatur prātā, ka šī iespēja joprojām tiek izstrādāta ar šādiem mērķiem:
 
-- No broad host permissions at install time -- extended permissions are granted explicitly by the user on a per-site basis.
+- Nav plašu saimniekdatora atļauju uzstādīšanas laikā -- paplašinātas atļaujas nodrošina lietotājs atsevišķi katrai vietnei.
 
-- Entirely declarative for reliability and CPU/memory efficiency.
+- Pilnībā vispārīgs - uzticamībai un procesora/atmiņas lietderīgai izmantošanai.

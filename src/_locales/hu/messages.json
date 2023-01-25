@@ -172,7 +172,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Kattints a távoli betűtípusok blokkolásához ezen a webhelyen",
+    "message": "Kattints a távoli fontok blokkolásához ezen a webhelyen",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {

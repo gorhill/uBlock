@@ -120,7 +120,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "omnipotenceLegend": {
-    "message": "uBO Lite có thể áp dụng tính năng lọc mở rộng trên một trang web nhất định chỉ sau khi bạn cấp quyền một cách tường minh cho tiện ích mở rộng để sửa đổi dữ liệu trên trang web đó. Cài đặt này cho phép bạn cấp quyền cho lọc mở rộng tới tất cả các trang web cùng một lúc.",
+    "message": "uBO Lite có thể áp dụng tính năng lọc mở rộng trên một trang web nhất định chỉ sau khi bạn chủ động cấp quyền cho tiện ích để sửa đổi dữ liệu trên trang web đó. Cài đặt này cho phép bạn cấp quyền cho lọc mở rộng tới tất cả các trang web cùng một lúc.",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
@@ -252,7 +252,7 @@
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
-    "message": "Hoàn thành",
+    "message": "Hoàn toàn",
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {

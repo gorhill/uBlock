@@ -21,7 +21,7 @@ The browser will then warn you about the effects of granting the additional perm
 
 If you accept uBOL's request for additional permissions on the current site, it will be able to better filter content for the current site.
 
-You can set the default filtering mode from uBOL's options page. If you pick the Optimal or Complete mode as the default one, you will need to grant uBOL the permission to read and modify data on all websites.
+Kamu bisa mengatur Filter default dari halaman pengaturan UBOL's  If you pick the Optimal or Complete mode as the default one, you will need to grant uBOL the permission to read and modify data on all websites.
 
 Keep in mind this is still a work in progress, with these end goals:
 

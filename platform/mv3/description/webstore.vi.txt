@@ -1,30 +1,30 @@
-uBO Lite (uBOL) is an experimental *permission-less* MV3-based content blocker.
+uBO Lite (uBOL) là một trình chặn nội dung MV3 thử nghiệm *không cần cấp phép*.
 
-The default ruleset corresponds to uBlock Origin's default filterset:
+Bộ quy tắc mặc định tương tự bộ lọc của uBlock Origin:
 
-- uBlock Origin's built-in filter lists
+- Bộ lọc cài sẵn của uBlock Origin
 - EasyList
 - EasyPrivacy
-- Peter Lowe’s Ad and tracking server list
+- Danh sách máy chủ chạy quảng cáo và trình theo dõi của Pete Lowe
 
-You can add more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+Bạn có thể tự thêm quy tắc mới ở trang cài đặt -- click vào icon _Bánh răng_ ở trong cửa sổ popup.
 
-uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
+uBOL mang tính khai báo hoàn toàn, vì vậy uBOL sẽ không cần phải liên tục chạy để chặn nội dung. Thay vào đó, chính trình duyệt sẽ thực hiện lọc nội dung bằng cách sử dụng công cụ chèn CSS/JS hiệu quả hơn có sẵn của nó. Điều này cũng đồng thời có nghĩa là uBOL sẽ không tiêu tốn tài nguyên CPU/bộ nhớ của bạn để chặn nội dung. uBOL sẽ chỉ chạy _khi và chỉ khi_ bạn đang xem cửa sổ popup của uBOL, hoặc bạn đang cấu hình uBOL ở trang cài đặt.
 
-uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read and modify data" permissions at install time.
+uBOL không yêu cầu cấp quyền "đọc và sửa đổi dữ liệu" chung khi cài đặt, vì vậy nên ban đầu nó sẽ hơi yếu hơn uBlock Origin hoặc các trình chặn nội dung khác mà có yêu cầu quyền "đọc và sửa đổi dữ liệu" chung khi cài đặt.
 
-However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
+Tuy nhiên, uBOL lại cho phép bạn cấu hình *rất cụ thể* quyền ở trên bất kỳ trang nào tự chọn của bạn, để nó có thể lọc nội dụng trên các trang đấy tốt hơn bằng các kỹ thuật như lọc hiển thị (cosmetic filtering) hay chèn kịch bản con (scriptlet injections).
 
-To grant extended permissions on a given site, open the popup panel and pick a higher filtering mode such as Optimal or Complete.
+Để cấp quyền cho uBOL chặn trang bất kỳ, hãy mở cửa sổ popup và chọn một chế độ chặn cao hơn như "Tối ưu" hoặc "Hoàn toàn".
 
-The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request.
+Trình duyệt của bạn sẽ hiện cảnh báo cho việc cấp quyền cho tiện ích trên trang web hiện tại, và bạn sẽ phải chọn đồng ý hoặc từ chối yêu cầu cấp quyền.
 
-If you accept uBOL's request for additional permissions on the current site, it will be able to better filter content for the current site.
+Nếu bạn chọn đồng ý cấp quyền cho uBOL sửa trang web bất kỳ, uBOL sẽ có thể lọc nội dung tốt hơn cho web đấy.
 
-You can set the default filtering mode from uBOL's options page. If you pick the Optimal or Complete mode as the default one, you will need to grant uBOL the permission to read and modify data on all websites.
+Bạn cũng có thể chọn chế độ chặn mặc định ở trang cài đặt của uBOL. Nếu bạn chọn chế độ Tối ưu hoặc Hoàn toàn làm mặc định, bạn sẽ cần phải cấp quyền "đọc và sửa đổi dữ liệu" trên tất cả các trang web.
 
-Keep in mind this is still a work in progress, with these end goals:
+Lưu ý rằng sản phẩm này vẫn đang trong giai đoạn phát triển, và bản hoàn thiện sẽ có những tính năng sau:
 
-- No broad host permissions at install time -- extended permissions are granted explicitly by the user on a per-site basis.
+- Không yêu cầu bất kỳ quyền nào khi cài đặt - người dùng sẽ phải tự chủ động cấp bất kỳ quyền gì cho tiện ích, cụ thể từng trang web một.
 
-- Entirely declarative for reliability and CPU/memory efficiency.
+- Hoàn toàn mang tính khai báo, để có thế chạy nhẹ hơn và ổn định hơn.

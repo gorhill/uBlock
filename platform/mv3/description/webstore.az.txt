@@ -1,11 +1,11 @@
-uBO Lite (uBOL) is an experimental *permission-less* MV3-based content blocker.
+uBO Lite (uBOL) eksperimental *icazəsiz* MV3-əsaslı məzmun bloklayıcısıdır.
 
-The default ruleset corresponds to uBlock Origin's default filterset:
+Defolt qaydalar dəsti uBlock Origin-in defolt filtr dəstinə uyğundur:
 
-- uBlock Origin's built-in filter lists
+- uBlock Origin-in daxili filtr siyahıları
 - EasyList
 - EasyPrivacy
-- Peter Lowe’s Ad and tracking server list
+- Peter Lowe-un Reklam və izləyici server siyahısı
 
 You can add more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
 

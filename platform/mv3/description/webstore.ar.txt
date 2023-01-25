@@ -7,24 +7,31 @@ uBo لايت (uBOL) عبارة عن مانع محتوى من نوع MV3 تجري
 - الخصوصية السهلة
 - قائمة خادم الإعلانات والتتبع لبيتر لوي
 
-You can add more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+يمكنك إضافة المزيد من القواعد من خلال زيارة صفحة الخيارات ومن ثم أنقر على رمز _Cogs_ في اللوحة المنبثقة.
 
-uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
+uBOL صريح تمامًا، مما يعني أنه لا تحتاج إلى uBOL بشكل دائم لحدوث تصفية المحتوى، يتم إجراء تصفية المحتوى من خلال إضافة CSS/JS بشكل موثوق به بواسطة المتصفح نفسه بدلًا من الإضافة.
+ هذا يعني أن uBOL نفسه لا يستهلك موارد وحدة المعالجة المركزية/الذاكرة أثناء استمراره في حظر المحتوى. عملية عامل الخدمة في uBOL مطلوبة _only_ عند التفاعل مع لوحة المنبثقة أو صفحات الخيار.
+عملية منجز الخدمة في uBOL مطلوبة فقط عندما تتعامل مع لوحة منبقة أو في صفحة اختيارات.
 
-uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read and modify data" permissions at install time.
+لا يتطلب uBOL صلاحية واسعة «لقراءة البيانات وتعديلها» في وقت التثبيت، وبالتالي فإن قدراته محدودة مقارنة بـ uBlock Origin أو إضافات حظر الإعلانات الأخرى التي تتطلب صلاحية واسعة «قراءة البيانات وتعديلها» في وقت التثبيت.
 
-However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
 
-To grant extended permissions on a given site, open the popup panel and pick a higher filtering mode such as Optimal or Complete.
+ومع ذلك، يسمح لك uBOL "بوضوح" بمنح صلاحية موسعة على مواقع محددة من اختيارك حتى يتمكن من التصفية بشكل أفضل على تلك المواقع باستخدام التصفية التجميلية وإضافة النص.
 
-The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request.
 
-If you accept uBOL's request for additional permissions on the current site, it will be able to better filter content for the current site.
+لمنح صلاحية موسعة على موقع معين، افتح اللوحة المنبثقة واختر وضع التصفية إما الأمثل أو الكامل.
 
-You can set the default filtering mode from uBOL's options page. If you pick the Optimal or Complete mode as the default one, you will need to grant uBOL the permission to read and modify data on all websites.
+سيحذرك المتصفح من مخاطر منح صلاحية إضافية التي يطلبها الامتداد على الموقع الحالي، وسيتعين عليك إختيار بما إذا كنت تقبل الطلب أو ترفضه.
 
-Keep in mind this is still a work in progress, with these end goals:
 
-- No broad host permissions at install time -- extended permissions are granted explicitly by the user on a per-site basis.
+إذا قبلت طلب uBOL بالحصول على صلاحية إضافية على الموقع الحالي، فستتمكن من تصفية المحتوى بشكل أفضل للموقع الحالي.
 
-- Entirely declarative for reliability and CPU/memory efficiency.
+
+بإمكانك اختيار وضع التصفية الافتراضية من خلال صفحة خيارات uBOL. إذا اخترت الوضع الأمثل أو الكامل باعتباره الوضع الافتراضي، فستحتاج إلى منح uBOL الإذن لقراءة البيانات وتعديلها على جميع مواقع الويب.
+
+
+ضع في اعتبارك أن هذا لا يزال عملًا قيد التنفيذ، هذه هي الأهداف النهائية:
+
+لا يمكنك تحديد الأذونات المستخدمة لاحقًا في التثبيت، تحديدك للأذونات سيكون خلال زيارتك لكل موقع.
+
+تقريري تمامًا للموثوقية ولكفاءة وحدة المعالجة المركزية/الذاكرة.

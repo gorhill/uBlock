@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Deneysel, izin gerektirmeyen içerik engelleyicisi. Kurulumdan hemen sonra Reklamları, izleyicileri, kripto madencilerini, ve [...]",
+    "message": "Deneysel, izin gerektirmeyen içerik engelleyicisi. Kurulumdan hemen sonra reklamları, izleyicileri, kripto madencilerini, ve daha fazlasını engeller.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -144,7 +144,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMisc": {
-    "message": "Diğer Ayarlar",
+    "message": "Diğer",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupRegions": {

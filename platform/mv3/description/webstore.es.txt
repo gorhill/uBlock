@@ -1,30 +1,30 @@
 uBO Lite (uBOL) es un bloqueador de contenido experimental con *menos permisos* basado en MV3.
 
-The default ruleset corresponds to uBlock Origin's default filterset:
+El conjunto de reglas predeterminado corresponde al conjunto de filtros predeterminado de uBlock Origin:
 
-- uBlock Origin's built-in filter lists
+- Listas de filtros integradas directamente en uBlock Origin
 - EasyList
 - EasyPrivacy
 - Peter Lowe’s Ad and tracking server list
 
-You can add more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+Puedes agregar más conjuntos de reglas visitando la página de opciones: haga clic en el icono _Cogs_ en el panel emergente.
 
 uBOL es completamente declarativo, lo que significa que no hay necesidad de un proceso uBOL permanente para que se produzca el filtrado, y el filtrado de contenido basado en la inyección de CSS/JS es realizado de forma confiable por el propio navegador y no por la extensión. Esto significa que uBOL en sí mismo no consume recursos de CPU/memoria mientras el bloqueo de contenido está en curso, el proceso service worker de uBOL se requiere _solo_ cuando se interactúa con el panel emergente o las páginas de opciones.
 
-uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read and modify data" permissions at install time.
+uBOL no requiere permisos amplios de "lectura y modificación de datos" en el momento de la instalación, de ahí sus capacidades limitadas en comparación con uBlock Origin u otros bloqueadores de contenido que requieren permisos amplios de "lectura y modificación de datos" en el momento de la instalación.
 
-However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
+Sin embargo, uBOL le permite otorgar *explícitamente* permisos amplios en sitios específicos de su elección para que pueda filtrar mejor en esos sitios usando filtrado cosmético e inyecciones de scriptlet.
 
-To grant extended permissions on a given site, open the popup panel and pick a higher filtering mode such as Optimal or Complete.
+Para conceder permisos ampliados en un sitio determinado, abra el panel emergente y elija un modo de filtrado superior, como Óptimo o Completo.
 
-The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request.
+A continuación, el navegador le advertirá sobre los efectos de conceder los permisos adicionales solicitados por la extensión en el sitio actual, y usted deberá indicar al navegador si acepta o rechaza la solicitud.
 
-If you accept uBOL's request for additional permissions on the current site, it will be able to better filter content for the current site.
+Si acepta la solicitud de usar permisos adicionales creada por uBLOL en el sitio actual, será capaz de filtrar mejor el contenido para el sitio actual.
 
-You can set the default filtering mode from uBOL's options page. If you pick the Optimal or Complete mode as the default one, you will need to grant uBOL the permission to read and modify data on all websites.
+Puedes establecer el modo de filtrado predeterminado directamente desde la página de opciones de uBOL. Si eliges como predeterminado el modo Óptimo o Completo, tendrás que conceder a uBOL el permiso para leer y modificar datos en todos los sitios web.
 
-Keep in mind this is still a work in progress, with these end goals:
+Ten en cuenta que todavía se trata de un trabajo en curso, con estos objetivos finales:
 
-- No broad host permissions at install time -- extended permissions are granted explicitly by the user on a per-site basis.
+- No hay amplios permisos de host en el momento de la instalación -- los permisos ampliados son concedidos explícitamente por el usuario para cada sitio.
 
 - Completamente declarativo para confiabilidad y eficiencia de la CPU/memoria.

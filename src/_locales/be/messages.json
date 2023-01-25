@@ -260,7 +260,7 @@
     "description": ""
   },
   "popup3pFrameRulePrompt": {
-    "message": "староннія фрэймы",
+    "message": "староннія рамкі",
     "description": ""
   },
   "popupHitDomainCountPrompt": {
@@ -280,7 +280,7 @@
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party scripts' cell"
   },
   "popup3pFrameFilterTip": {
-    "message": "↑: Падкрэсліваць радкі, якія ўтрымліваюць староннія фрэймы",
+    "message": "↑: Падкрэсліваць радкі, якія ўтрымліваюць староннія рамкі",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party frames' cell"
   },
   "pickerCreate": {
@@ -1224,7 +1224,7 @@
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
-    "message": "Капіяваць у буфер",
+    "message": "Капіяваць у буфер абмену",
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "genericSelectAll": {
