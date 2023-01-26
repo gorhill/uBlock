@@ -877,6 +877,7 @@ export class AstFilterParser {
                     realBad = hasValue;
                     if ( realBad ) { break; }
                     modifierType = type;
+                    unredirectableTypeCount += 1;
                     break;
                 case NODE_TYPE_NET_OPTION_NAME_MATCHCASE:
                     realBad = this.isRegexPattern() === false;
@@ -941,7 +942,7 @@ export class AstFilterParser {
                 break;
             case NODE_TYPE_NET_OPTION_NAME_INLINEFONT:
             case NODE_TYPE_NET_OPTION_NAME_INLINESCRIPT:
-                realBad = abstractTypeCount || behaviorTypeCount || requestTypeCount;
+                realBad = abstractTypeCount || behaviorTypeCount;
                 break;
             case NODE_TYPE_NET_OPTION_NAME_EMPTY:
                 realBad = abstractTypeCount || behaviorTypeCount;
