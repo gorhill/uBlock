@@ -135,6 +135,7 @@ const fromNetFilter = async function(rawFilter) {
 
     const writer = new CompiledListWriter();
     const parser = new sfp.AstFilterParser({
+        expertMode: true,
         nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
         maxTokenLength: staticNetFilteringEngine.MAX_TOKEN_LENGTH,
     });
