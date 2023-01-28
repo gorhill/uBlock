@@ -273,13 +273,22 @@ const µBlock = {  // jshint ignore:line
         return this;
     }
 
+    maybeFromDocumentURL(documentUrl) {
+        if ( documentUrl === undefined ) { return; }
+        if ( documentUrl.startsWith(this.tabOrigin) ) { return; }
+        this.tabOrigin = originFromURI(µBlock.normalizeTabURL(0, documentUrl));
+        this.tabHostname = hostnameFromURI(this.tabOrigin);
+        this.tabDomain = domainFromHostname(this.tabHostname);
+    }
+
     // https://github.com/uBlockOrigin/uBlock-issues/issues/459
     //   In case of a request for frame and if ever no context is specified,
     //   assume the origin of the context is the same as the request itself.
     fromWebrequestDetails(details) {
         const tabId = details.tabId;
         this.type = details.type;
-        if ( this.itype === this.MAIN_FRAME && tabId > 0 ) {
+        const isMainFrame = this.itype === this.MAIN_FRAME;
+        if ( isMainFrame && tabId > 0 ) {
             µBlock.tabContextManager.push(tabId, details.url);
         }
         this.fromTabId(tabId); // Must be called AFTER tab context management
@@ -288,6 +297,8 @@ const µBlock = {  // jshint ignore:line
         this.setMethod(details.method);
         this.setURL(details.url);
         this.aliasURL = details.aliasURL || undefined;
+        this.redirectURL = undefined;
+        this.filter = undefined;
         if ( this.itype !== this.SUB_FRAME ) {
             this.docId = details.frameId;
             this.frameId = -1;
@@ -297,33 +308,36 @@ const µBlock = {  // jshint ignore:line
         }
         if ( this.tabId > 0 ) {
             if ( this.docId === 0 ) {
+                if ( isMainFrame === false ) {
+                    this.maybeFromDocumentURL(details.documentUrl);
+                }
                 this.docOrigin = this.tabOrigin;
                 this.docHostname = this.tabHostname;
                 this.docDomain = this.tabDomain;
-            } else if ( details.documentUrl !== undefined ) {
-                this.setDocOriginFromURL(details.documentUrl);
-            } else {
-                const pageStore = µBlock.pageStoreFromTabId(this.tabId);
-                const docStore = pageStore && pageStore.getFrameStore(this.docId);
-                if ( docStore ) {
-                    this.setDocOriginFromURL(docStore.rawURL);
-                } else {
-                    this.setDocOrigin(this.tabOrigin);
-                }
+                return this;
             }
-        } else if ( details.documentUrl !== undefined ) {
+            if ( details.documentUrl !== undefined ) {
+                this.setDocOriginFromURL(details.documentUrl);
+                return this;
+            }
+            const pageStore = µBlock.pageStoreFromTabId(this.tabId);
+            const docStore = pageStore && pageStore.getFrameStore(this.docId);
+            if ( docStore ) {
+                this.setDocOriginFromURL(docStore.rawURL);
+            } else {
+                this.setDocOrigin(this.tabOrigin);
+            }
+            return this;
+        }
+        if ( details.documentUrl !== undefined ) {
             const origin = originFromURI(
                 µBlock.normalizeTabURL(0, details.documentUrl)
             );
             this.setDocOrigin(origin).setTabOrigin(origin);
-        } else if ( this.docId === -1 || (this.itype & this.FRAME_ANY) !== 0 ) {
-            const origin = originFromURI(this.url);
-            this.setDocOrigin(origin).setTabOrigin(origin);
-        } else {
-            this.setDocOrigin(this.tabOrigin);
+            return this;
         }
-        this.redirectURL = undefined;
-        this.filter = undefined;
+        const origin = originFromURI(this.url);
+        this.setDocOrigin(origin).setTabOrigin(origin);
         return this;
     }
 
