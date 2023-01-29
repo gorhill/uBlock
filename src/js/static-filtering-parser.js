@@ -1189,7 +1189,7 @@ export class AstFilterParser {
                 parentEnd - 1
             );
             this.addNodeToRegister(NODE_TYPE_NET_PATTERN, next);
-            if ( normal !== pattern ) {
+            if ( normal !== undefined && normal !== pattern ) {
                 this.setNodeTransform(next, normal);
             }
             prev = this.linkRight(prev, next);
