@@ -1169,10 +1169,6 @@ export class AstFilterParser {
             this.isAdblockHostnamePattern(pattern)
         ) {
             this.astTypeFlavor = AST_TYPE_NETWORK_PATTERN_HOSTNAME;
-            pattern = pattern.slice(2, -1);
-            const normal = this.hasUnicode
-                ? this.normalizeHostnameValue(pattern)
-                : pattern;
             this.addFlags(
                 AST_FLAG_NET_PATTERN_LEFT_HNANCHOR |
                 AST_FLAG_NET_PATTERN_RIGHT_PATHANCHOR
@@ -1188,10 +1184,14 @@ export class AstFilterParser {
                 parentBeg + 2,
                 parentEnd - 1
             );
-            this.addNodeToRegister(NODE_TYPE_NET_PATTERN, next);
+            pattern = pattern.slice(2, -1);
+            const normal = this.hasUnicode
+                ? this.normalizeHostnameValue(pattern)
+                : pattern;
             if ( normal !== undefined && normal !== pattern ) {
                 this.setNodeTransform(next, normal);
             }
+            this.addNodeToRegister(NODE_TYPE_NET_PATTERN, next);
             prev = this.linkRight(prev, next);
             next = this.allocTypedNode(
                 NODE_TYPE_NET_PATTERN_PART_SPECIAL,
@@ -2277,6 +2277,11 @@ export class AstFilterParser {
     //   0b00100: can use single wildcard
     //   0b01000: can be negated
     //   0b10000: can be a regex
+    //
+    // returns:
+    //   undefined: no normalization needed, use original hostname
+    //   empty string: hostname is invalid
+    //   non-empty string: normalized hostname
     normalizeHostnameValue(s, modeBits = 0b00000) {
         if ( this.reHostnameAscii.test(s) ) { return; }
         if ( this.reBadHostnameChars.test(s) ) { return ''; }
