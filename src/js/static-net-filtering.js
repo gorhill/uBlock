@@ -3760,21 +3760,6 @@ class FilterCompiler {
 
         const units = [];
 
-        // Method(s)
-        if ( this.methodBits !== 0 || this.notMethodBits !== 0 ) {
-            units.push(FilterMethod.compile(this));
-        }
-
-        // Not types
-        if ( this.notTypeBits !== 0 ) {
-            units.push(FilterNotType.compile(this));
-        }
-
-        // Strict partiness
-        if ( this.strictParty !== 0 ) {
-            units.push(FilterStrictParty.compile(this));
-        }
-
         // Pattern
         const patternClass = this.compilePattern(units);
 
@@ -3790,6 +3775,21 @@ class FilterCompiler {
         }
         if ( (this.anchor & 0b001) !== 0 ) {
             units.push(FilterAnchorRight.compile());
+        }
+
+        // Method(s)
+        if ( this.methodBits !== 0 || this.notMethodBits !== 0 ) {
+            units.push(FilterMethod.compile(this));
+        }
+
+        // Not types
+        if ( this.notTypeBits !== 0 ) {
+            units.push(FilterNotType.compile(this));
+        }
+
+        // Strict partiness
+        if ( this.strictParty !== 0 ) {
+            units.push(FilterStrictParty.compile(this));
         }
 
         // Origin
