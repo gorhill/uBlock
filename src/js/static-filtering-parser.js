@@ -1620,11 +1620,11 @@ export class AstFilterParser {
         );
         switch ( nodeOptionType ) {
             case NODE_TYPE_NET_OPTION_NAME_DENYALLOW:
-                this.linkDown(next, this.parseDomainList(next, '|'), 0b0000);
+                this.linkDown(next, this.parseDomainList(next, '|'), 0b00000);
                 break;
             case NODE_TYPE_NET_OPTION_NAME_FROM:
             case NODE_TYPE_NET_OPTION_NAME_TO:
-                this.linkDown(next, this.parseDomainList(next, '|', 0b1010));
+                this.linkDown(next, this.parseDomainList(next, '|', 0b11010));
                 break;
             default:
                 break;
@@ -1642,7 +1642,7 @@ export class AstFilterParser {
         return this.getNodeTransform(valueNode);
     }
 
-    parseDomainList(parent, separator, mode = 0b0000) {
+    parseDomainList(parent, separator, mode = 0b00000) {
         const parentBeg = this.nodes[parent+NODE_BEG_INDEX];
         const parentEnd = this.nodes[parent+NODE_END_INDEX];
         const containerNode = this.allocTypedNode(
@@ -1668,9 +1668,7 @@ export class AstFilterParser {
                 end = s.indexOf(separator, beg);
             } else {
                 end = s.indexOf('/', beg+1);
-                end = end !== -1
-                    ? s.indexOf(separator, end+1)
-                    : s.indexOf(separator, beg);
+                end = s.indexOf(separator, end !== -1 ? end+1 : beg);
             }
             if ( end === -1 ) { end = listEnd; }
             if ( end !== beg ) {
@@ -1683,8 +1681,9 @@ export class AstFilterParser {
                 prev = this.linkRight(prev, domainNode);
             } else {
                 domainNode = 0;
-                if ( this.interactive && separatorNode !== 0 ) {
+                if ( separatorNode !== 0 ) {
                     this.addNodeFlags(separatorNode, NODE_FLAG_ERROR);
+                    this.addFlags(AST_FLAG_HAS_ERROR);
                 }
             }
             if ( s.charCodeAt(end) === separatorCode ) {
@@ -1696,13 +1695,19 @@ export class AstFilterParser {
                     parentBeg + end
                 );
                 prev = this.linkRight(prev, separatorNode);
-                if ( this.interactive && domainNode === 0 ) {
+                if ( domainNode === 0 ) {
                     this.addNodeFlags(separatorNode, NODE_FLAG_ERROR);
+                    this.addFlags(AST_FLAG_HAS_ERROR);
                 }
             } else {
                 separatorNode = 0;
             }
             beg = end;
+        }
+        // Dangling separator node
+        if ( separatorNode !== 0 ) {
+            this.addNodeFlags(separatorNode, NODE_FLAG_ERROR);
+            this.addFlags(AST_FLAG_HAS_ERROR);
         }
         this.linkDown(containerNode, this.throwHeadNode(listNode));
         return containerNode;
@@ -1724,12 +1729,13 @@ export class AstFilterParser {
         }
         if ( beg !== parentEnd ) {
             next = this.allocTypedNode(NODE_TYPE_OPTION_VALUE_DOMAIN, beg, parentEnd);
-            const hn = this.normalizeHostnameValue(this.getNodeString(next), mode);
+            const hn = this.normalizeDomainValue(this.getNodeString(next), mode);
             if ( hn !== undefined ) {
                 if ( hn !== '' ) {
                     this.setNodeTransform(next, hn);
                 } else {
                     this.addNodeFlags(parent, NODE_FLAG_ERROR);
+                    this.addFlags(AST_FLAG_HAS_ERROR);
                 }
             }
             if ( head === 0 ) {
@@ -1737,8 +1743,30 @@ export class AstFilterParser {
             } else {
                 this.linkRight(head, next);
             }
+        } else {
+            this.addNodeFlags(parent, NODE_FLAG_ERROR);
+            this.addFlags(AST_FLAG_HAS_ERROR);
         }
         return head;
+    }
+
+    // mode bits:
+    //   0b00001: can use wildcard at any position
+    //   0b00010: can use entity-based hostnames
+    //   0b00100: can use single wildcard
+    //   0b01000: can be negated
+    //   0b10000: can be a regex
+    normalizeDomainValue(s, modeBits) {
+        if ( (modeBits & 0b10000) === 0 ||
+            s.length <= 2 ||
+            s.charCodeAt(0) !== 0x2F /* / */ ||
+            exCharCodeAt(s, -1) !== 0x2F /* / */
+        ) {
+            return this.normalizeHostnameValue(s, modeBits);
+        }
+        const source = this.normalizeRegexPattern(s);
+        if ( source === '' ) { return ''; }
+        return `/${source}/`;
     }
 
     parseExt(parent, anchorBeg, anchorLen) {
@@ -1756,7 +1784,7 @@ export class AstFilterParser {
             );
             this.addFlags(AST_FLAG_HAS_OPTIONS);
             this.addNodeToRegister(NODE_TYPE_EXT_OPTIONS, next);
-            this.linkDown(next, this.parseDomainList(next, ',', 0b1110));
+            this.linkDown(next, this.parseDomainList(next, ',', 0b01110));
             prev = this.linkRight(prev, next);
         }
         next = this.allocTypedNode(
@@ -2276,7 +2304,6 @@ export class AstFilterParser {
     //   0b00010: can use entity-based hostnames
     //   0b00100: can use single wildcard
     //   0b01000: can be negated
-    //   0b10000: can be a regex
     //
     // returns:
     //   undefined: no normalization needed, use original hostname

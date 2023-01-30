@@ -1492,21 +1492,22 @@ const compileDomainOpt = (ctors, iterable, prepend, units) => {
     const hostnameMisses = [];
     const entityHits = [];
     const entityMisses = [];
+    const regexHits = [];
+    const regexMisses = [];
     for ( const s of iterable ) {
         const len = s.length;
         const beg = len > 1 && s.charCodeAt(0) === 0x7E /* '~' */ ? 1 : 0;
         if ( len <= beg ) {  continue; }
-        if ( s.endsWith('.*') === false ) {
-            if ( beg === 0 ) {
-                hostnameHits.push(s);
-            } else {
-                hostnameMisses.push(s.slice(1));
-            }
-        } else if ( beg === 0 ) {
-            entityHits.push(s);
-        } else {
-            entityMisses.push(s.slice(1));
+        if ( s.charCodeAt(beg) === 0x2F /* / */ ) {
+            if ( beg === 0 ) { regexHits.push(s); continue; }
+            regexMisses.push(s); continue;
         }
+        if ( s.endsWith('.*') === false ) {
+            if ( beg === 0 ) { hostnameHits.push(s); continue; }
+            hostnameMisses.push(s.slice(1)); continue;
+        }
+        if ( beg === 0 ) { entityHits.push(s); continue; }
+        entityMisses.push(s.slice(1)); continue;
     }
     const toTrie = [];
     let trieWhich = 0b00;
@@ -1532,6 +1533,9 @@ const compileDomainOpt = (ctors, iterable, prepend, units) => {
     for ( const hn of entityHits ) {
         compiledHit.push(ctors[1].compile(hn));
     }
+    for ( const hn of regexHits ) {
+        compiledHit.push(ctors[3].compile(hn));
+    }
     if ( compiledHit.length > 1 ) {
         compiledHit[0] = FilterDomainHitAny.compile(compiledHit.slice());
         compiledHit.length = 1;
@@ -1550,14 +1554,17 @@ const compileDomainOpt = (ctors, iterable, prepend, units) => {
     const compiledMiss = [];
     if ( toTrie.length !== 0 ) {
         compiledMiss.push(
-            ctors[5].compile(toTrie.sort(), trieWhich)
+            ctors[6].compile(toTrie.sort(), trieWhich)
         );
     }
     for ( const hn of hostnameMisses ) {
-        compiledMiss.push(ctors[3].compile(hn));
+        compiledMiss.push(ctors[4].compile(hn));
     }
     for ( const hn of entityMisses ) {
-        compiledMiss.push(ctors[4].compile(hn));
+        compiledMiss.push(ctors[5].compile(hn));
+    }
+    for ( const hn of regexMisses ) {
+        compiledHit.push(ctors[7].compile(hn));
     }
     if ( prepend ) {
         if ( compiledHit.length !== 0 ) {
@@ -1749,6 +1756,47 @@ class FilterDomainHitSet {
 
 /******************************************************************************/
 
+class FilterDomainRegexHit {
+    static getDomainOpt(idata) {
+        const ref = filterRefs[filterData[idata+1]];
+        return ref.restr;
+    }
+
+    static match(idata) {
+        const ref = filterRefs[filterData[idata+1]];
+        if ( ref.$re === null ) {
+            ref.$re = new RegExp(ref.restr.slice(1,-1));
+        }
+        return ref.$re.test(this.getMatchTarget());
+    }
+
+    static compile(restr) {
+        return [ this.fid, restr ];
+    }
+
+    static fromCompiled(args) {
+        const idata = filterDataAllocLen(2);
+        filterData[idata+0] = args[0];  // fid
+        filterData[idata+1] = filterRefAdd({ restr: args[1], $re: null });
+        return idata;
+    }
+
+    static dnrFromCompiled(args, rule) {
+        rule.condition = rule.condition || {};
+        const prop = this.dnrConditionName;
+        if ( rule.condition[prop] === undefined ) {
+            rule.condition[prop] = [];
+        }
+        rule.condition[prop].push(args[1]);
+    }
+
+    static dumpInfo(idata) {
+        return this.getDomainOpt(idata);
+    }
+}
+
+/******************************************************************************/
+
 // Implement the following filter option:
 // - domain=
 // - from=
@@ -1845,20 +1893,44 @@ class FilterFromDomainMissSet extends FilterFromDomainHitSet {
     }
 }
 
+class FilterFromRegexHit extends FilterDomainRegexHit {
+    static getMatchTarget() {
+        return $docHostname;
+    }
+
+    static logData(idata, details) {
+        details.fromDomains.push(`${this.getDomainOpt(idata)}`);
+    }
+}
+
+class FilterFromRegexMiss extends FilterFromRegexHit {
+    static match(idata) {
+        return super.match(idata) === false;
+    }
+
+    static logData(idata, details) {
+        details.fromDomains.push(`~${this.getDomainOpt(idata)}`);
+    }
+}
+
 registerFilterClass(FilterFromDomainHit);
 registerFilterClass(FilterFromDomainMiss);
 registerFilterClass(FilterFromEntityHit);
 registerFilterClass(FilterFromEntityMiss);
 registerFilterClass(FilterFromDomainHitSet);
 registerFilterClass(FilterFromDomainMissSet);
+registerFilterClass(FilterFromRegexHit);
+registerFilterClass(FilterFromRegexMiss);
 
 const fromOptClasses = [
     FilterFromDomainHit,
     FilterFromEntityHit,
     FilterFromDomainHitSet,
+    FilterFromRegexHit,
     FilterFromDomainMiss,
     FilterFromEntityMiss,
     FilterFromDomainMissSet,
+    FilterFromRegexMiss,
 ];
 
 const compileFromDomainOpt = (...args) => {
@@ -1946,20 +2018,44 @@ class FilterToDomainMissSet extends FilterToDomainHitSet {
     }
 }
 
+class FilterToRegexHit extends FilterDomainRegexHit {
+    static getMatchTarget() {
+        return $requestHostname;
+    }
+
+    static logData(idata, details) {
+        details.toDomains.push(`${this.getDomainOpt(idata)}`);
+    }
+}
+
+class FilterToRegexMiss extends FilterToRegexHit {
+    static match(idata) {
+        return super.match(idata) === false;
+    }
+
+    static logData(idata, details) {
+        details.toDomains.push(`~${this.getDomainOpt(idata)}`);
+    }
+}
+
 registerFilterClass(FilterToDomainHit);
 registerFilterClass(FilterToDomainMiss);
 registerFilterClass(FilterToEntityHit);
 registerFilterClass(FilterToEntityMiss);
 registerFilterClass(FilterToDomainHitSet);
 registerFilterClass(FilterToDomainMissSet);
+registerFilterClass(FilterToRegexHit);
+registerFilterClass(FilterToRegexMiss);
 
 const toOptClasses = [
     FilterToDomainHit,
     FilterToEntityHit,
     FilterToDomainHitSet,
+    FilterToRegexHit,
     FilterToDomainMiss,
     FilterToEntityMiss,
     FilterToDomainMissSet,
+    FilterToRegexMiss,
 ];
 
 const compileToDomainOpt = (...args) => {
@@ -3678,7 +3774,7 @@ class FilterCompiler {
     isJustOrigin() {
         if ( this.optionUnitBits !== this.FROM_BIT ) { return false; }
         if ( this.isRegex ) { return false; }
-        if ( this.fromDomainOpt.includes('~') ) { return false; }
+        if ( /[\/~]/.test(this.fromDomainOpt) ) { return false; }
         if ( this.pattern === '*' ) { return true; }
         if ( this.anchor !== 0b010 ) { return false; }
         if ( /^(?:http[s*]?:(?:\/\/)?)$/.test(this.pattern) ) { return true; }

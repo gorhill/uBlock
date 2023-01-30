@@ -1030,7 +1030,14 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         parser.parse(line);
 
         if ( parser.isFilter() === false ) { continue; }
-        if ( parser.hasError() ) { continue; }
+        if ( parser.hasError() ) {
+            logger.writeOne({
+                realm: 'message',
+                type: 'error',
+                text: `Invalid filter: ${parser.raw}`
+            });
+            continue;
+        }
 
         if ( parser.isExtendedFilter() ) {
             staticExtFilteringEngine.compile(parser, writer);
