@@ -1066,8 +1066,7 @@ export class AstFilterParser {
                     realBad = true;
                     break;
                 case NODE_TYPE_NET_OPTION_NAME_WEBRTC:
-                    bad = true;
-                    realBad = isNegated || hasValue;
+                    realBad = true;
                     break;
                 case NODE_TYPE_NET_PATTERN:
                     realBad = this.hasOptions() === false &&
@@ -1784,7 +1783,7 @@ export class AstFilterParser {
             );
             this.addFlags(AST_FLAG_HAS_OPTIONS);
             this.addNodeToRegister(NODE_TYPE_EXT_OPTIONS, next);
-            this.linkDown(next, this.parseDomainList(next, ',', 0b01110));
+            this.linkDown(next, this.parseDomainList(next, ',', 0b11110));
             prev = this.linkRight(prev, next);
         }
         next = this.allocTypedNode(

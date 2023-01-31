@@ -27,7 +27,6 @@ import logger from './logger.js';
 import µb from './background.js';
 import { sessionFirewall } from './filtering-engines.js';
 import { StaticExtFilteringHostnameDB } from './static-ext-filtering-db.js';
-import * as sfp from './static-filtering-parser.js';
 
 /******************************************************************************/
 
@@ -315,9 +314,6 @@ htmlFilteringEngine.freeze = function() {
 
 htmlFilteringEngine.compile = function(parser, writer) {
     const isException = parser.isException();
-    const root = parser.getBranchFromType(sfp.NODE_TYPE_EXT_PATTERN_HTML);
-    const headerName = parser.getNodeString(root);
-
     const { raw, compiled } = parser.result;
     if ( compiled === undefined ) {
         const who = writer.properties.get('name') || '?';
@@ -380,19 +376,13 @@ htmlFilteringEngine.retrieve = function(details) {
     const plains = new Set();
     const procedurals = new Set();
     const exceptions = new Set();
+    const retrieveSets = [ plains, exceptions, procedurals, exceptions ];
 
-    filterDB.retrieve(
-        hostname,
-        [ plains, exceptions, procedurals, exceptions ]
-    );
+    filterDB.retrieve(hostname, retrieveSets);
     const entity = details.entity !== ''
         ? `${hostname.slice(0, -details.domain.length)}${details.entity}`
         : '*';
-    filterDB.retrieve(
-        entity,
-        [ plains, exceptions, procedurals, exceptions ],
-        1
-    );
+    filterDB.retrieve(entity, retrieveSets, 1);
 
     if ( plains.size === 0 && procedurals.size === 0 ) { return; }
 

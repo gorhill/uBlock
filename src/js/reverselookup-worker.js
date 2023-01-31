@@ -150,9 +150,14 @@ const fromExtendedFilter = function(details) {
     }
 
     const hostnameMatches = hn => {
-        return hn === '' ||
-               reHostname.test(hn) ||
-               reEntity !== undefined && reEntity.test(hn);
+        if ( hn === '' ) { return true; }
+        if ( hn.charCodeAt(0) === 0x2F /* / */ ) {
+            return (new RegExp(hn.slice(1,-1))).test(hostname);
+        }
+        if ( reHostname.test(hn) ) { return true; }
+        if ( reEntity === undefined ) { return false; }
+        if ( reEntity.test(hn) ) { return true; }
+        return false;
     };
 
     const response = Object.create(null);

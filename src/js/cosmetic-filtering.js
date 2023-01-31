@@ -811,31 +811,33 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
         }
 
         // Retrieve filters with a non-empty hostname
+        const retrieveSets = [ specificSet, exceptionSet, proceduralSet, exceptionSet ];
+        const discardSets = [ dummySet, exceptionSet ];
         this.specificFilters.retrieve(
             hostname,
-            options.noSpecificCosmeticFiltering !== true
-                ? [ specificSet, exceptionSet, proceduralSet, exceptionSet ]
-                : [ dummySet, exceptionSet ],
+            options.noSpecificCosmeticFiltering ? discardSets : retrieveSets,
             1
         );
-        // Retrieve filters with an empty hostname
+        // Retrieve filters with a regex-based hostname value
         this.specificFilters.retrieve(
             hostname,
-            options.noGenericCosmeticFiltering !== true
-                ? [ specificSet, exceptionSet, proceduralSet, exceptionSet ]
-                : [ dummySet, exceptionSet ],
-            2
+            options.noSpecificCosmeticFiltering ? discardSets : retrieveSets,
+            3
         );
-        // Retrieve filters with a non-empty entity
+        // Retrieve filters with a entity-based hostname value
         if ( request.entity !== '' ) {
             this.specificFilters.retrieve(
                 `${hostname.slice(0, -request.domain.length)}${request.entity}`,
-                options.noSpecificCosmeticFiltering !== true
-                    ? [ specificSet, exceptionSet, proceduralSet, exceptionSet ]
-                    : [ dummySet, exceptionSet ],
+                options.noSpecificCosmeticFiltering ? discardSets : retrieveSets,
                 1
             );
         }
+        // Retrieve filters with an empty hostname
+        this.specificFilters.retrieve(
+            hostname,
+            options.noGenericCosmeticFiltering ? discardSets : retrieveSets,
+            2
+        );
 
         if ( exceptionSet.size !== 0 ) {
             out.exceptionFilters = Array.from(exceptionSet);
