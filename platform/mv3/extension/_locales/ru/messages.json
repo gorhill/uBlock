@@ -208,7 +208,7 @@
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "Внешние зависимости (GPLv3-совместимые):",
+    "message": "Внешние зависимости (совместимые с GPLv3):",
     "description": "Shown in the About pane"
   },
   "genericSubmit": {

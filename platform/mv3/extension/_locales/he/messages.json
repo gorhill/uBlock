@@ -60,23 +60,23 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Enter element zapper mode",
+    "message": "כניסה למצב שלטת רכיב",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Enter element picker mode",
+    "message": "כניסה למצב דגימת רכיב",
     "description": "English: Enter element picker mode"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "דיווח על סוגיה באתר מרשתת זה",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipSaveRules": {
-    "message": "Click to make your changes permanent.",
+    "message": "הקשה לקיבוע השינויים שנעשו.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Click to revert your changes.",
+    "message": "הקשה להסגת השינויים שנעשו.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {
@@ -84,11 +84,11 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupGrantGreatPowers": {
-    "message": "Click to grant uBO Lite extended permissions on this site.\nExtended permissions allow more effective content blocking.",
+    "message": "הקשה על מנת להעניק ל־uBO Lite הרשאות מורחבות באתר זה. הרשאות מורחבות מאפשרות חסימת תוכן יעילה יותר.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupRevokeGreatPowers": {
-    "message": "Click to revoke extended permissions on this site",
+    "message": "הקשה על מנת לבטל הרשאות מורחבות באתר זה",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
@@ -96,7 +96,7 @@
     "description": "Label to be used to hide popup panel sections"
   },
   "settingsIconBadgePrompt": {
-    "message": "Show the number of blocked requests on the icon",
+    "message": "הצגת מספר הבקשות החסומות על הסמל",
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsAppearance": {
@@ -108,7 +108,7 @@
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "Custom accent color",
+    "message": "צבע הטעמה מותאם אישית",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsNoCSPReportsPrompt": {
@@ -116,11 +116,11 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "omnipotenceLabel": {
-    "message": "Enable extended filtering on all websites",
+    "message": "איפשור סינון מורחב בכל אתרי הרשת",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "omnipotenceLegend": {
-    "message": "uBO Lite can apply extended filtering on a given website only after you explicitly grant the extension permissions to modify data on that website. This setting allows you to grant permissions for extended filtering to all websites at once.",
+    "message": " ניתן להחיל ב־uBO Lite סינון מורחב לאתר נתון, רק לאחר הענקת הרשאות מפורשות שיאפשרו להרחבה לשנות נתונים באתר זה. הגדרה זו מאפשרת הענקת הרשאות לסינון מורחב לכל האתרים בבת אחת.",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
@@ -136,7 +136,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Malware domains",
+    "message": "תחומי תוכנות זדוניות",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -148,15 +148,15 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupRegions": {
-    "message": "Regions, languages",
+    "message": "אזורים, שפות",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "1pFormatHint": {
-    "message": "One filter per line. A filter can be a plain hostname, or an EasyList-compatible filter. Lines prefixed with <code>!</code> will be ignored.",
+    "message": "מסנן אחד לכל שורה. המסנן יכול להיות פשוט שם מארח , או מסנן תואם EasyList. המסנן יעלים שורות שמתחילות בתו <code>!</code>.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
-    "message": "Import and append",
+    "message": "ייבוא וצרוף",
     "description": "English: Import and append"
   },
   "1pExport": {
@@ -168,11 +168,11 @@
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "whitelistPrompt": {
-    "message": "The trusted site directives dictate on which web pages uBO Lite should be disabled. One entry per line.",
+    "message": "הנחיות אתר מהימנות, מכתיבות באילו עמודי מרשתת יש להשבית את uBO Lite. רשומה אחת לכול שורה.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Import and append",
+    "message": "ייבוא וצרוף",
     "description": "English: Import and append"
   },
   "whitelistExport": {
@@ -180,7 +180,7 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "my-ublock-trusted-sites_{{datetime}}.txt",
+    "message": "my-ublock-static-filters_{{datetime}}.txt",
     "description": "The default filename to use for import/export purpose"
   },
   "aboutChangelog": {
@@ -208,7 +208,7 @@
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "External dependencies (GPLv3-compatible):",
+    "message": "תלויות חיצוניות (תואם GPLv3):",
     "description": "Shown in the About pane"
   },
   "genericSubmit": {
@@ -216,7 +216,7 @@
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Apply changes",
+    "message": "החלת שינויים",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
@@ -228,19 +228,19 @@
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "You have just installed uBO Lite. Here you can choose the default filtering mode to use on all websites.\n\nBy default, <em>Basic</em> mode is selected because it does not require the permission to read and modify data. If you trust uBO Lite, you can give it broad permission to read and modify data on all websites in order to enable more advanced filtering capabilities for all websites by default.",
+    "message": "התקנת uBO Lite הסתיימה זה עתה. ניתן לבחור כאן את אופן סינון ברירת המחדל בכל אתרי הרשת.\n\nכברירת מחדל, ייבחר אופן סינון <em>בסיסי</em> מאחר והוא אינו דורש הרשאות קריאה ושינוי נתונים. 'סומכים על uBO Lite?' אם כן, ניתן להעניק ל־uBO Lite הרשאות נרחבות לכתיבה ושינוי נתונים בכלול אתרי הרשת על מנת לאפשר יכולות סינון מתקדמות יותר כבררת מחדל.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
-    "message": "Default filtering mode",
+    "message": "מצב סינון ברירת מחדל",
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "The default filtering mode will be overridden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
+    "message": "אופן סינון ברירת המחדל יעקף על ידי אופני סינון יעודיים לכל אתר. ניתן להתאים את אופן הסינון בכל אתר נתון, לאופן הסינון המיטבי באותו אחר. לכול אופן סינון, יתרונות וחסרונות משלו.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
-    "message": "no filtering",
+    "message": "ללא סינון",
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
@@ -248,27 +248,27 @@
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
-    "message": "optimal",
+    "message": "מיטבי",
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
-    "message": "complete",
+    "message": "מלא",
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Basic network filtering from selected filter lists.\n\nDoes not require permission to read and modify data on websites.",
+    "message": "סינון רשת בסיסי מרשימות סינון נבחרות.\n\nאינו מצריך הרשאת קריאה ושינוי נתונים באתרי רשת.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.",
+    "message": "סינון רשת מתקדם פלוס,  וסינון נרחב ייחודי מרשימות סינון נבחרות.\n\n מצריך הרשאה לקריאה ושינוי נתונים באתרי רשת.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific and generic extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.\n\nGeneric extended filtering may cause higher webpage resources usage.",
+    "message": "סינון רשת מתקדם וסינון נרחב ייחודי מרשימות סינון נבחרות.\n\n מצריך הרשאות נרחבות לקריאה ושינוי נתונים בכל אתרי הרשת.\n\nסינון כללי מורחב עלול לגרום לצריכת משאבי רשת מוגברת.",
     "description": "This describes the 'complete' filtering mode"
   },
   "behaviorSectionLabel": {
-    "message": "Behavior",
+    "message": "התנהגות",
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {

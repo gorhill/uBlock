@@ -1000,11 +1000,11 @@
     "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
-    "message": "Privacy policy",
+    "message": "Politica de confidencialitat",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {
-    "message": "Changelog",
+    "message": "Jornal de modificacions",
     "description": ""
   },
   "aboutCode": {
@@ -1024,7 +1024,7 @@
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
-    "message": "Filter lists",
+    "message": "Listas de filtres",
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
@@ -1076,7 +1076,7 @@
     "description": "No longer used"
   },
   "subscribeButton": {
-    "message": "Subscribe",
+    "message": "S'abonar",
     "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
@@ -1124,7 +1124,7 @@
     "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
-    "message": "A causa del filtre seguent",
+    "message": "A causa del filtre seguent :",
     "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
@@ -1196,11 +1196,11 @@
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
-    "message": "Revert",
+    "message": "Restablir",
     "description": "for generic 'Revert' buttons"
   },
   "genericBytes": {
-    "message": "bytes",
+    "message": "octets",
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
@@ -1228,7 +1228,7 @@
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "genericSelectAll": {
-    "message": "Select all",
+    "message": "Tot seleccionar",
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleCosmeticFiltering": {

@@ -1,30 +1,30 @@
-uBO Lite (uBOL) is an experimental *permission-less* MV3-based content blocker.
+uBO Lite (uBOL) הוא חוסם תוכן ניסיוני *ללא הרשאות* מבוסס MV3.
 
-The default ruleset corresponds to uBlock Origin's default filterset:
+ערכת הכללים ברירת מחדל שמתכתבת עם ערכת המסננים של uBlock Origin:
 
-- uBlock Origin's built-in filter lists
+- רשימת מסננים מובנים של uBlock Origin
 - EasyList
 - EasyPrivacy
-- Peter Lowe’s Ad and tracking server list
+- רשימת שרתי מודעות ומעקב של Peter Lowe
 
-You can add more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+ניתן להוסיף ערכות כללים נוספות מעמוד האפשרויות –על ידי הקשה על סמל _Cogs_ בלוח הצץ.
 
-uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
+uBOL הוא הכרזתי לחלוטין, כלומר אין צורך בתהליך uBOL קבוע כדי שהסינון יתרחש, וסינון תוכן מבוסס הזרקת CSS/JS מבוצע באופן אמין על ידי הדפדפן עצמו ולא על ידי ההרחבה. המשמעות היא ש־uBOL עצמו לא צורכך משאבי מעבד/זיכרון בזמן שחסימת התוכן מתרחשת – תהליך ה־service worker של uBOL נדרש _אך ורק_ בזמן הידוד עם החלון הקופץ או עם עמוד האפשרויות.
 
-uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read and modify data" permissions at install time.
+uBOL לא דורש הרשאת "קריאה ושינוי נתונים" נרחבות במהלך ההתקנה, לכן היכולות המוגבלות שלה הישר מהקופסה בהשוואה ל־uBlock Origin או חוסמי תוכן אחרים הדורשים הרשאות  "קריאה ושינוי נתונים" נרחבות כבר בזמן ההתקנה.
 
-However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
+עם זאת, uBOL מאפשר להעניק *באופן מפורש* הרשאות נרחבות לאתרים מסויימים על פי בחירה, למיטוב הסינון באתרים אלה, באמצעות סינון קוסמטי והזרקות סקריפלטים.
 
-To grant extended permissions on a given site, open the popup panel and pick a higher filtering mode such as Optimal or Complete.
+כדי להעניק הרשאות נרחבות באתר נתון, נא לפתוח את הלוח הקופץ ולבחור באופן סינון גבוה יותר כגון מיטבי או מלא.
 
-The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request.
+לאחר מכן, תוצג אזהרת  דפדפן על השפעות מתן הרשאות נוספות אותן מבקשת ההרחה באתר הנוכחי, הדפדפן ימתין לקבלת תשובה האם לקבל או לדוחות את בקשת ההרשאה.
 
-If you accept uBOL's request for additional permissions on the current site, it will be able to better filter content for the current site.
+במידה שבקשת uBOL להרשאות נוספות באתר הנוכחי תתקבל, סינן תוכן באתר הנוכחי יהיה טוב יותר.
 
-You can set the default filtering mode from uBOL's options page. If you pick the Optimal or Complete mode as the default one, you will need to grant uBOL the permission to read and modify data on all websites.
+ניתן להגדיר את אופן סינון ברירת המחדל מעמוד האפשרויות של uBOL. אם הבחירה היתה באופןסינון מיטבי או מלא כברירת המחדל, יידרש להעניק ל־uBOL הרשאת קריאה שנוי נתונים בכל אתרי הרשת.
 
-Keep in mind this is still a work in progress, with these end goals:
+יש לזכור שזו עדיין 'עבודה בתהליך', עם המטרות הבאות:
 
-- No broad host permissions at install time -- extended permissions are granted explicitly by the user on a per-site basis.
+- אין צורך ברשאות מארח נרחבות  בזמן ההתקנה – הרשאות נרחבות ניתנות במפורש על ידי המשתמש לכל אתר בנפרד.
 
-- Entirely declarative for reliability and CPU/memory efficiency.
+הכרזתי לחלוטין, אמין ויעיל בצריכת משאבי מעבד/זיכרון.

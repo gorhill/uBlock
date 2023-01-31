@@ -11,9 +11,9 @@ Vairāk nosacījumu kopu var pievienot iestatījumu sadaļā -- jāklikšķina _
 
 uBOL ir pilnībā vispārīgs, kas nozīmē, ka nav nepieciešamības pēc pastāvīga uBOL procesa, lai notiktu aizturēšana, un uz CSS/JS ievietošanu balstīta satura aizturēšanu uzticami veic pārlūks, nevis paplašinājums. Tas nozīmē, ka uBOL pats par sevi neizmanto procesoru un atmiņu, kamēr satura aizturēšana ir notiekoša -- uBOL pakalpojuma strādņa process ir nepieciešams _tikai_ tad, kad notiek mijiedarbība ar uznirstošo logu vai iestatījumu sadaļām.
 
-uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read and modify data" permissions at install time.
+uBOL nav nepieciešamas plašas "lasīt un pārveidot datus" atļaujas uzstādīšanas laikā, tāpēc tam ir ierobežotas spējas pēc noklusējuma, salīdzinājumā ar uBlock Origin vai citiem satura aizturētājiem, kas pieprasa plašas "lasīt un pārveidot datus" atļaujas uzstādīšanas laikā. 
 
-However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
+Tomēr uBOL ļauj piešķirt paplašinātās atļaujas *tieši* noteiktās vietnēs pēc izvēles, lai tas varētu labāk veikt aizturēšanu tajās, izmantojot kosmētisku aizturēšanu un skriptu ievietošanu.
 
 Lai nodrošinātu paplašinātas piekļuves tiesības noteiktā vietnē, jāatver uznirstošais logs un jāizvēlas striktāks aizturēšanas veids, kā, piemēram, "Labākais" vai "Pilnīgais".
 
