@@ -369,10 +369,6 @@ scriptletFilteringEngine.retrieve = function(request, options = {}) {
     return out.join('\n');
 };
 
-scriptletFilteringEngine.hasScriptlet = function(hostname, exceptionBit, scriptlet) {
-    return scriptletDB.hasStr(hostname, exceptionBit, scriptlet);
-};
-
 scriptletFilteringEngine.injectNow = function(details) {
     if ( typeof details.frameId !== 'number' ) { return; }
     const request = {
