@@ -111,15 +111,10 @@ const StaticExtFilteringHostnameDB = class {
     retrieve(hostname, out, modifiers = 0) {
         let hn = hostname;
         if ( modifiers === 2 ) { hn = ''; }
-        const mask = out.length - 1; // out.length must be power of two
         for (;;) {
-            let iHn = this.hostnameToSlotIdMap.get(hn);
-            if ( iHn !== undefined ) {
-                do {
-                    const strId = this.hostnameSlots[iHn+0];
-                    out[strId & mask].add(this.strSlots[strId >>> this.nBits]);
-                    iHn = this.hostnameSlots[iHn+1];
-                } while ( iHn !== 0 );
+            const hnSlot = this.hostnameToSlotIdMap.get(hn);
+            if ( hnSlot !== undefined ) {
+                this.retrieveFromSlot(hnSlot, out);
             }
             if ( hn === '' ) { break; }
             const pos = hn.indexOf('.');
@@ -131,6 +126,7 @@ const StaticExtFilteringHostnameDB = class {
             }
         }
         if ( modifiers !== 0 && modifiers !== 3 ) { return; }
+        if ( this.regexToSlotIdMap.size === 0 ) { return; }
         // TODO: consider using a combined regex to test once for whether
         // iterating is worth it.
         for ( const restr of this.regexToSlotIdMap.keys() ) {
@@ -139,13 +135,18 @@ const StaticExtFilteringHostnameDB = class {
                 this.regexMap.set(restr, (re = new RegExp(restr.slice(1,-1))));
             }
             if ( re.test(hostname) === false ) { continue; }
-            let iHn = this.regexToSlotIdMap.get(restr);
-            do {
-                const strId = this.hostnameSlots[iHn+0];
-                out[strId & mask].add(this.strSlots[strId >>> this.nBits]);
-                iHn = this.hostnameSlots[iHn+1];
-            } while ( iHn !== 0 );
+            this.retrieveFromSlot(this.regexToSlotIdMap.get(restr), out);
         }
+    }
+
+    retrieveFromSlot(hnSlot, out) {
+        if ( hnSlot === undefined ) { return; }
+        const mask = out.length - 1; // out.length must be power of two
+        do {
+            const strId = this.hostnameSlots[hnSlot+0];
+            out[strId & mask].add(this.strSlots[strId >>> this.nBits]);
+            hnSlot = this.hostnameSlots[hnSlot+1];
+        } while ( hnSlot !== 0 );
     }
 
     toSelfie() {
