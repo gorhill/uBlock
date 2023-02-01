@@ -1564,7 +1564,7 @@ const compileDomainOpt = (ctors, iterable, prepend, units) => {
         compiledMiss.push(ctors[5].compile(hn));
     }
     for ( const hn of regexMisses ) {
-        compiledHit.push(ctors[7].compile(hn));
+        compiledMiss.push(ctors[7].compile(hn));
     }
     if ( prepend ) {
         if ( compiledHit.length !== 0 ) {
