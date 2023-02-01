@@ -2982,7 +2982,7 @@ class ExtSelectorCompiler {
             if ( hasArgs ) {
                 const arg = this.astSerialize(part.args);
                 if ( typeof arg !== 'string' ) { return; }
-                out.push(`(${arg})`);
+                out.push(`(${arg.trim()})`);
             }
             break;
         }
@@ -3101,7 +3101,7 @@ class ExtSelectorCompiler {
         }
         if ( tasks.length === 0 && out.action === undefined ) {
             if ( prelude.length === 0 ) { return; }
-            return prelude.join('');
+            return prelude.join('').trim();
         }
         if ( prelude.length !== 0 ) {
             tasks.push(this.createSpathTask(prelude.join('')));
