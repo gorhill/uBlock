@@ -307,6 +307,235 @@ export const nodeNameFromNodeType = new Map([
     }
 }
 
+/******************************************************************************/
+
+// Precomputed AST layouts for most common filters.
+
+const astTemplates = {
+    // ||example.com^
+    netHnAnchoredHostnameAscii: {
+        flags: AST_FLAG_NET_PATTERN_LEFT_HNANCHOR |
+            AST_FLAG_NET_PATTERN_RIGHT_PATHANCHOR,
+        type: NODE_TYPE_LINE_BODY,
+        begFromBeg: 0,
+        endFromEnd: 0,
+        children: [{
+            type: NODE_TYPE_NET_RAW,
+            begFromBeg: 0,
+            endFromEnd: 0,
+            children: [{
+                type: NODE_TYPE_NET_PATTERN_RAW,
+                begFromBeg: 0,
+                endFromEnd: 0,
+                register: true,
+                children: [{
+                    type: NODE_TYPE_NET_PATTERN_LEFT_HNANCHOR,
+                    begFromBeg: 0,
+                    endFromBeg: 2,
+                }, {
+                    type: NODE_TYPE_NET_PATTERN,
+                    begFromBeg: 2,
+                    endFromEnd: -1,
+                    register: true,
+                }, {
+                    type: NODE_TYPE_NET_PATTERN_PART_SPECIAL,
+                    begFromEnd: -1,
+                    endFromEnd: 0,
+                }],
+            }],
+        }],
+    },
+    // ||example.com^$third-party
+    net3pHnAnchoredHostnameAscii: {
+        flags: AST_FLAG_NET_PATTERN_LEFT_HNANCHOR |
+            AST_FLAG_NET_PATTERN_RIGHT_PATHANCHOR |
+            AST_FLAG_HAS_OPTIONS,
+        type: NODE_TYPE_LINE_BODY,
+        begFromBeg: 0,
+        endFromEnd: 0,
+        children: [{
+            type: NODE_TYPE_NET_RAW,
+            begFromBeg: 0,
+            endFromEnd: 0,
+            children: [{
+                type: NODE_TYPE_NET_PATTERN_RAW,
+                begFromBeg: 0,
+                endFromEnd: 0,
+                register: true,
+                children: [{
+                    type: NODE_TYPE_NET_PATTERN_LEFT_HNANCHOR,
+                    begFromBeg: 0,
+                    endFromBeg: 2,
+                }, {
+                    type: NODE_TYPE_NET_PATTERN,
+                    begFromBeg: 2,
+                    endFromEnd: -13,
+                    register: true,
+                }, {
+                    type: NODE_TYPE_NET_PATTERN_PART_SPECIAL,
+                    begFromEnd: -13,
+                    endFromEnd: -12,
+                }],
+            }, {
+                type: NODE_TYPE_NET_OPTIONS_ANCHOR,
+                begFromEnd: -12,
+                endFromEnd: -11,
+            }, {
+                type: NODE_TYPE_NET_OPTIONS,
+                begFromEnd: -11,
+                endFromEnd: 0,
+                register: true,
+                children: [{
+                    type: NODE_TYPE_NET_OPTION_RAW,
+                    begFromBeg: 0,
+                    endFromEnd: 0,
+                    children: [{
+                        type: NODE_TYPE_NET_OPTION_NAME_3P,
+                        begFromBeg: 0,
+                        endFromEnd: 0,
+                        register: true,
+                    }],
+                }],
+            }],
+        }],
+    },
+    // ||example.com/path/to/resource
+    netHnAnchoredPlainAscii: {
+        flags: AST_FLAG_NET_PATTERN_LEFT_HNANCHOR,
+        type: NODE_TYPE_LINE_BODY,
+        begFromBeg: 0,
+        endFromEnd: 0,
+        children: [{
+            type: NODE_TYPE_NET_RAW,
+            begFromBeg: 0,
+            endFromEnd: 0,
+            children: [{
+                type: NODE_TYPE_NET_PATTERN_RAW,
+                begFromBeg: 0,
+                endFromEnd: 0,
+                register: true,
+                children: [{
+                    type: NODE_TYPE_NET_PATTERN_LEFT_HNANCHOR,
+                    begFromBeg: 0,
+                    endFromBeg: 2,
+                }, {
+                    type: NODE_TYPE_NET_PATTERN,
+                    begFromBeg: 2,
+                    endFromEnd: 0,
+                    register: true,
+                }],
+            }],
+        }],
+    },
+    // example.com
+    // -resource.
+    netPlainAscii: {
+        type: NODE_TYPE_LINE_BODY,
+        begFromBeg: 0,
+        endFromEnd: 0,
+        children: [{
+            type: NODE_TYPE_NET_RAW,
+            begFromBeg: 0,
+            endFromEnd: 0,
+            children: [{
+                type: NODE_TYPE_NET_PATTERN_RAW,
+                begFromBeg: 0,
+                endFromEnd: 0,
+                register: true,
+                children: [{
+                    type: NODE_TYPE_NET_PATTERN,
+                    begFromBeg: 0,
+                    endFromEnd: 0,
+                    register: true,
+                }],
+            }],
+        }],
+    },
+    // 127.0.0.1 example.com
+    netHosts1: {
+        type: NODE_TYPE_LINE_BODY,
+        begFromBeg: 0,
+        endFromEnd: 0,
+        children: [{
+            type: NODE_TYPE_NET_RAW,
+            begFromBeg: 0,
+            endFromEnd: 0,
+            children: [{
+                type: NODE_TYPE_NET_PATTERN_RAW,
+                begFromBeg: 0,
+                endFromEnd: 0,
+                register: true,
+                children: [{
+                    type: NODE_TYPE_IGNORE,
+                    begFromBeg: 0,
+                    endFromBeg: 10,
+                }, {
+                    type: NODE_TYPE_NET_PATTERN,
+                    begFromBeg: 10,
+                    endFromEnd: 0,
+                    register: true,
+                }],
+            }],
+        }],
+    },
+    // 0.0.0.0 example.com
+    netHosts2: {
+        type: NODE_TYPE_LINE_BODY,
+        begFromBeg: 0,
+        endFromEnd: 0,
+        children: [{
+            type: NODE_TYPE_NET_RAW,
+            begFromBeg: 0,
+            endFromEnd: 0,
+            children: [{
+                type: NODE_TYPE_NET_PATTERN_RAW,
+                begFromBeg: 0,
+                endFromEnd: 0,
+                register: true,
+                children: [{
+                    type: NODE_TYPE_IGNORE,
+                    begFromBeg: 0,
+                    endFromBeg: 8,
+                }, {
+                    type: NODE_TYPE_NET_PATTERN,
+                    begFromBeg: 8,
+                    endFromEnd: 0,
+                    register: true,
+                }],
+            }],
+        }],
+    },
+    // ##.ads-container
+    extPlainGenericSelector: {
+        type: NODE_TYPE_LINE_BODY,
+        begFromBeg: 0,
+        endFromEnd: 0,
+        children: [{
+            type: NODE_TYPE_EXT_RAW,
+            begFromBeg: 0,
+            endFromEnd: 0,
+            children: [{
+                type: NODE_TYPE_EXT_OPTIONS_ANCHOR,
+                begFromBeg: 0,
+                endFromBeg: 2,
+                register: true,
+            }, {
+                type: NODE_TYPE_EXT_PATTERN_RAW,
+                begFromBeg: 2,
+                endFromEnd: 0,
+                register: true,
+                children: [{
+                    type: NODE_TYPE_EXT_PATTERN_COSMETIC,
+                    begFromBeg: 0,
+                    endFromEnd: 0,
+                }],
+            }],
+        }],
+    },
+};
+
+/******************************************************************************/
+
 export const removableHTTPHeaders = new Set([
     'location',
     'refresh',
@@ -486,7 +715,11 @@ export class AstFilterParser {
         this.reHnAnchoredPlainAscii = /^\|\|[0-9a-z%&,\-.\/:;=?_]+$/;
         this.reHnAnchoredHostnameAscii = /^\|\|(?:[\da-z][\da-z_-]*\.)*[\da-z_-]*[\da-z]\^$/;
         this.reHnAnchoredHostnameUnicode = /^\|\|(?:[\p{L}\p{N}][\p{L}\p{N}\u{2d}]*\.)*[\p{L}\p{N}\u{2d}]*[\p{L}\p{N}]\^$/u;
+        this.reHn3pAnchoredHostnameAscii = /^\|\|(?:[\da-z][\da-z_-]*\.)*[\da-z_-]*[\da-z]\^\$third-party$/;
         this.rePlainAscii = /^[0-9a-z%&\-.\/:;=?_]{2,}$/;
+        this.reNetHosts1 = /^127\.0\.0\.1 (?:[\da-z][\da-z_-]*\.)*[\da-z-]*[\da-z]$/;
+        this.reNetHosts2 = /^0\.0\.0\.0 (?:[\da-z][\da-z_-]*\.)*[\da-z-]*[\da-z]$/;
+        this.rePlainGenericCosmetic = /^##[.#][A-Za-z_][\w-]*$/;
         this.reHostnameAscii = /^(?:[\da-z][\da-z_-]*\.)*[\da-z-]*[\da-z]$/;
         this.rePlainEntity = /^(?:[\da-z][\da-z_-]*\.)+\*$/;
         this.reHostsSink = /^[\w%.:\[\]-]+\s+/;
@@ -528,40 +761,138 @@ export class AstFilterParser {
         this.astType = AST_TYPE_NONE;
         this.astTypeFlavor = AST_TYPE_NONE;
         this.astFlags = 0;
-        this.rootNode = this.allocTypedNode(NODE_TYPE_LINE_RAW, 0, raw.length);
-        if ( raw.length === 0 ) { return; }
+        this.rootNode = this.allocTypedNode(NODE_TYPE_LINE_RAW, 0, this.rawEnd);
+        if ( this.rawEnd === 0 ) { return; }
 
-        // Fast-track very common simple filters to skip parsing and validation.
-        if ( this.raw.startsWith('||') ) {
-            if ( this.reHnAnchoredHostnameAscii.test(this.raw) ) {
-                this.linkDown(
-                    this.rootNode,
-                    this.parseNetHnAnchoredHostnameAscii(this.rootNode)
+        // Fast-track very common simple filters using pre-computed AST layouts
+        // to skip parsing and validation.
+        const c1st = this.raw.charCodeAt(0);
+        const clast = exCharCodeAt(this.raw, -1);
+        if ( c1st === 0x7C /* | */ ) {
+            if (
+                clast === 0x5E /* ^ */ &&
+                this.reHnAnchoredHostnameAscii.test(this.raw)
+            ) {
+                // ||example.com^
+                this.astType = AST_TYPE_NETWORK;
+                this.astTypeFlavor = AST_TYPE_NETWORK_PATTERN_HOSTNAME;
+                const node = this.astFromTemplate(this.rootNode,
+                    astTemplates.netHnAnchoredHostnameAscii
                 );
+                this.linkDown(this.rootNode, node);
+                return;
+            }
+            if (
+                this.raw.endsWith('$third-party') &&
+                this.reHn3pAnchoredHostnameAscii.test(this.raw)
+            ) {
+                // ||example.com^$third-party
+                this.astType = AST_TYPE_NETWORK;
+                this.astTypeFlavor = AST_TYPE_NETWORK_PATTERN_HOSTNAME;
+                const node = this.astFromTemplate(this.rootNode,
+                    astTemplates.net3pHnAnchoredHostnameAscii
+                );
+                this.linkDown(this.rootNode, node);
                 return;
             }
             if ( this.reHnAnchoredPlainAscii.test(this.raw) ) {
-                this.linkDown(
-                    this.rootNode,
-                    this.parseNetHnAnchoredPlainAscii(this.rootNode)
+                // ||example.com/path/to/resource
+                this.astType = AST_TYPE_NETWORK;
+                this.astTypeFlavor = AST_TYPE_NETWORK_PATTERN_PLAIN;
+                const node = this.astFromTemplate(this.rootNode,
+                    astTemplates.netHnAnchoredPlainAscii
                 );
+                this.linkDown(this.rootNode, node);
                 return;
             }
-        }
-        if (
-            (this.rePlainAscii.test(this.raw)) &&
-            (this.raw.startsWith('/') && this.raw.endsWith('/')) === false
+        } else if ( c1st === 0x23 /* # */ ) {
+            if ( this.rePlainGenericCosmetic.test(this.raw) ) {
+                // ##.ads-container
+                this.astType = AST_TYPE_EXTENDED;
+                this.astTypeFlavor = AST_TYPE_EXTENDED_COSMETIC;
+                const node = this.astFromTemplate(this.rootNode,
+                    astTemplates.extPlainGenericSelector
+                );
+                this.linkDown(this.rootNode, node);
+                this.result.exception = false;
+                this.result.raw = this.raw.slice(2);
+                this.result.compiled = this.raw.slice(2);
+                return;
+            }
+        } else if ( c1st === 0x31 /* 1 */ ) {
+            if ( this.reNetHosts1.test(this.raw) ) {
+                // 127.0.0.1 example.com
+                this.astType = AST_TYPE_NETWORK;
+                this.astTypeFlavor = AST_TYPE_NETWORK_PATTERN_HOSTNAME;
+                const node = this.astFromTemplate(this.rootNode,
+                    astTemplates.netHosts1
+                );
+                this.linkDown(this.rootNode, node);
+                return;
+            }
+        } else if ( c1st === 0x30 /* 0 */ ) {
+            if ( this.reNetHosts2.test(this.raw) ) {
+                // 0.0.0.0 example.com
+                this.astType = AST_TYPE_NETWORK;
+                this.astTypeFlavor = AST_TYPE_NETWORK_PATTERN_HOSTNAME;
+                const node = this.astFromTemplate(this.rootNode,
+                    astTemplates.netHosts2
+                );
+                this.linkDown(this.rootNode, node);
+                return;
+            }
+        } else if (
+            (c1st !== 0x2F /* / */ || clast !== 0x2F /* / */) &&
+            (this.rePlainAscii.test(this.raw))
         ) {
-            this.linkDown(
-                this.rootNode,
-                this.parseNetPlainAscii(this.rootNode)
+            // example.com
+            // -resource.
+            this.astType = AST_TYPE_NETWORK;
+            this.astTypeFlavor = this.reHostnameAscii.test(this.raw)
+                ? AST_TYPE_NETWORK_PATTERN_HOSTNAME
+                : AST_TYPE_NETWORK_PATTERN_PLAIN;
+            const node = this.astFromTemplate(this.rootNode,
+                astTemplates.netPlainAscii
             );
+            this.linkDown(this.rootNode, node);
             return;
         }
 
-        // Slow path with full parsing and validation.
+        // All else: full parsing and validation.
         this.hasWhitespace = this.reHasWhitespaceChar.test(raw);
         this.linkDown(this.rootNode, this.parseRaw(this.rootNode));
+    }
+
+    astFromTemplate(parent, template) {
+        const parentBeg = this.nodes[parent+NODE_BEG_INDEX];
+        const parentEnd = this.nodes[parent+NODE_END_INDEX];
+        const beg = template.begFromBeg !== undefined
+            ? parentBeg + template.begFromBeg
+            : parentEnd + template.begFromEnd;
+        const end = template.endFromEnd !== undefined
+            ? parentEnd + template.endFromEnd
+            : parentBeg + template.endFromBeg;
+        const node = this.allocTypedNode(template.type, beg, end);
+        if ( template.register ) {
+            this.addNodeToRegister(template.type, node);
+        }
+        if ( template.flags ) {
+            this.addFlags(template.flags);
+        }
+        if ( template.nodeFlags ) {
+            this.addNodeFlags(node, template.nodeFlags);
+        }
+        const children = template.children;
+        if ( children === undefined ) { return node; }
+        const head = this.astFromTemplate(node, children[0]);
+        this.linkDown(node, head);
+        const n = children.length;
+        if ( n === 1 ) { return node; }
+        let prev = head;
+        for ( let i = 1; i < n; i++ ) {
+            prev = this.linkRight(prev, this.astFromTemplate(node, children[i]));
+        }
+        return node;
     }
 
     getType() {
@@ -797,130 +1128,6 @@ export class AstFilterParser {
         }
         this.validateNet();
         return this.throwHeadNode(head);
-    }
-
-    parseNetHnAnchoredHostnameAscii(parent) {
-        this.astType = AST_TYPE_NETWORK;
-        this.astTypeFlavor = AST_TYPE_NETWORK_PATTERN_HOSTNAME;
-        const parentBeg = this.nodes[parent+NODE_BEG_INDEX];
-        const parentEnd = this.nodes[parent+NODE_END_INDEX];
-        const lineNode = this.allocTypedNode(
-            NODE_TYPE_LINE_BODY,
-            parentBeg,
-            parentEnd
-        );
-        const netRawNode = this.allocTypedNode(
-            NODE_TYPE_NET_RAW,
-            parentBeg,
-            parentEnd
-        );
-        this.linkDown(lineNode, netRawNode);
-        const patternRawNode = this.allocTypedNode(
-            NODE_TYPE_NET_PATTERN_RAW,
-            parentBeg,
-            parentEnd
-        );
-        this.linkDown(netRawNode, patternRawNode);
-        this.addNodeToRegister(NODE_TYPE_NET_PATTERN_RAW, patternRawNode);
-        this.addFlags(
-            AST_FLAG_NET_PATTERN_LEFT_HNANCHOR |
-            AST_FLAG_NET_PATTERN_RIGHT_PATHANCHOR
-        );
-        const head = this.allocTypedNode(
-            NODE_TYPE_NET_PATTERN_LEFT_HNANCHOR,
-            parentBeg,
-            parentBeg + 2
-        );
-        let next = this.allocTypedNode(
-            NODE_TYPE_NET_PATTERN,
-            parentBeg + 2,
-            parentEnd - 1
-        );
-        this.addNodeToRegister(NODE_TYPE_NET_PATTERN, next);
-        let prev = this.linkRight(head, next);
-        next = this.allocTypedNode(
-            NODE_TYPE_NET_PATTERN_PART_SPECIAL,
-            parentEnd - 1,
-            parentEnd
-        );
-        this.linkRight(prev, next);
-        this.linkDown(patternRawNode, head);
-        return lineNode;
-    }
-
-    parseNetHnAnchoredPlainAscii(parent) {
-        this.astType = AST_TYPE_NETWORK;
-        this.astTypeFlavor = AST_TYPE_NETWORK_PATTERN_PLAIN;
-        const parentBeg = this.nodes[parent+NODE_BEG_INDEX];
-        const parentEnd = this.nodes[parent+NODE_END_INDEX];
-        const lineNode = this.allocTypedNode(
-            NODE_TYPE_LINE_BODY,
-            parentBeg,
-            parentEnd
-        );
-        const netRawNode = this.allocTypedNode(
-            NODE_TYPE_NET_RAW,
-            parentBeg,
-            parentEnd
-        );
-        this.linkDown(lineNode, netRawNode);
-        const patternRawNode = this.allocTypedNode(
-            NODE_TYPE_NET_PATTERN_RAW,
-            parentBeg,
-            parentEnd
-        );
-        this.linkDown(netRawNode, patternRawNode);
-        this.addNodeToRegister(NODE_TYPE_NET_PATTERN_RAW, patternRawNode);
-        this.addFlags(AST_FLAG_NET_PATTERN_LEFT_HNANCHOR);
-        const head = this.allocTypedNode(
-            NODE_TYPE_NET_PATTERN_LEFT_HNANCHOR,
-            parentBeg,
-            parentBeg + 2
-        );
-        let next = this.allocTypedNode(
-            NODE_TYPE_NET_PATTERN,
-            parentBeg + 2,
-            parentEnd
-        );
-        this.addNodeToRegister(NODE_TYPE_NET_PATTERN, next);
-        this.linkRight(head, next);
-        this.linkDown(patternRawNode, head);
-        return lineNode;
-    }
-
-    parseNetPlainAscii(parent) {
-        this.astType = AST_TYPE_NETWORK;
-        this.astTypeFlavor = this.reHostnameAscii.test(this.raw)
-            ? AST_TYPE_NETWORK_PATTERN_HOSTNAME
-            : AST_TYPE_NETWORK_PATTERN_PLAIN;
-        const parentBeg = this.nodes[parent+NODE_BEG_INDEX];
-        const parentEnd = this.nodes[parent+NODE_END_INDEX];
-        const lineNode = this.allocTypedNode(
-            NODE_TYPE_LINE_BODY,
-            parentBeg,
-            parentEnd
-        );
-        const netRawNode = this.allocTypedNode(
-            NODE_TYPE_NET_RAW,
-            parentBeg,
-            parentEnd
-        );
-        this.linkDown(lineNode, netRawNode);
-        const patternRawNode = this.allocTypedNode(
-            NODE_TYPE_NET_PATTERN_RAW,
-            parentBeg,
-            parentEnd
-        );
-        this.linkDown(netRawNode, patternRawNode);
-        this.addNodeToRegister(NODE_TYPE_NET_PATTERN_RAW, patternRawNode);
-        const head = this.allocTypedNode(
-            NODE_TYPE_NET_PATTERN,
-            parentBeg,
-            parentEnd
-        );
-        this.addNodeToRegister(NODE_TYPE_NET_PATTERN, head);
-        this.linkDown(patternRawNode, head);
-        return lineNode;
     }
 
     validateNet() {
