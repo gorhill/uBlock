@@ -860,6 +860,11 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
         if ( proceduralSet.size !== 0 ) {
             for ( const json of proceduralSet ) {
                 const pfilter = JSON.parse(json);
+                if ( exceptionSet.has(json) ) {
+                    proceduralSet.delete(json);
+                    out.exceptedFilters.push(json);
+                    continue;
+                }
                 if ( exceptionSet.has(pfilter.raw) ) {
                     proceduralSet.delete(json);
                     out.exceptedFilters.push(pfilter.raw);
