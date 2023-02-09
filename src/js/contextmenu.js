@@ -137,16 +137,19 @@ const menuEntries = {
         id: 'uBlock0-blockElement',
         title: i18n$('pickerContextMenuEntry'),
         contexts: [ 'all' ],
+        documentUrlPatterns: [ 'http://*/*', 'https://*/*' ],
     },
     blockElementInFrame: {
         id: 'uBlock0-blockElementInFrame',
         title: i18n$('contextMenuBlockElementInFrame'),
         contexts: [ 'frame' ],
+        documentUrlPatterns: [ 'http://*/*', 'https://*/*' ],
     },
     blockResource: {
         id: 'uBlock0-blockResource',
         title: i18n$('pickerContextMenuEntry'),
         contexts: [ 'audio', 'frame', 'image', 'video' ],
+        documentUrlPatterns: [ 'http://*/*', 'https://*/*' ],
     },
     subscribeToList: {
         id: 'uBlock0-subscribeToList',
@@ -158,6 +161,7 @@ const menuEntries = {
         id: 'uBlock0-temporarilyAllowLargeMediaElements',
         title: i18n$('contextMenuTemporarilyAllowLargeMediaElements'),
         contexts: [ 'all' ],
+        documentUrlPatterns: [ 'http://*/*', 'https://*/*' ],
     }
 };
 
