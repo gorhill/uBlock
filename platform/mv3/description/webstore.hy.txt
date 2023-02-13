@@ -1,30 +1,34 @@
-uBO Lite (uBOL) is an experimental *permission-less* MV3-based content blocker.
+uBO Lite-ը (uBOL) *թույլտվություններ չպահանջող* բովանդակության փորձարարական արգելափակիչ է՝ հիմնված MV3-ի վրա։
 
-The default ruleset corresponds to uBlock Origin's default filterset:
+Կանոնների լռելյայն փաթեթը համապատասխանում է uBlock Origin-ի լռելյայն զտիչների փաթեթին։
 
-- uBlock Origin's built-in filter lists
+- uBlock Origin-ի ներկառուցված զտիչների ցանկ
 - EasyList
 - EasyPrivacy
-- Peter Lowe’s Ad and tracking server list
+- Peter Lowe-ի գովազդային և հետագծող սպասարկիչների ցուցակ
 
-You can add more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+Դուք կարող եք ավելացնել ուրիշ կանոններ՝ այցելելով ընտրանքների էջը. կտտացրեք Ժանանվակի_պատկերակին դուրս լողացող վահանակում։
 
-uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
+uBOL-ն ամբողջությամբ դեկլարատիվ է, այսինքն՝ զտման համար անընդհատ կատարվող uBOL գործընթացի կարիք չկա, իսկ CSS/JS արմատավորման վրա հիմնված բովանդակության զտումը հուսալիորեն իրականացվում է զննիչի կողմից, այլ ոչ թե ընդլայնման միջոցով։ Սա նշանակում է, որ uBOL հավելումը չի սպառում մշակիչի/հիշողության որևէ ռեսուրս, երբ տեղի է ունենում գովազդի արգելափակումը. uBOL աշխատանքային գործընթացն աշխատում է _միայն_ երբ Դուք փոփոխություններ եք կատարում դուրս լողացող վահանակում կամ ընտրանքների էջում։
 
-uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read and modify data" permissions at install time.
+uBOL-ը տեղադրման ժամանակ  «տվյելները լիովին ընթերցելու և փոփոխելու» թույլտվություն չի պահանջում, ուստի այն ունի սահմանափակ հնարավորություններ՝ համեմատած uBlock Origin-ի և բովանդակության այլ արգելափակիչների հետ, որոնք տեղադրման ժամանակ պահանջում են այդպիսի թույլտվություն։
 
-However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
+Однако uBOL позволяет *намеренно* давать расширенные разрешения для определенных сайтов - по вашему усмотрению, чтобы эффективнее работать, используя косметическую фильтрацию и scriptlet-внедрения.
 
-To grant extended permissions on a given site, open the popup panel and pick a higher filtering mode such as Optimal or Complete.
+Այնուամենայնիվ, uBOL-ը թույլ է տալիս *դիտմամբ* տրամադրել ընդլայնված թույլտվություններ Ձեր ընտրած կայքերի համար, որպեսզի այն կարողանա էլ ավելի լավ զտել այդ կայքերը՝ օգտագործելով կոսմետիկ զտումը և սցենարների արմատավորումները։
 
-The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request.
+Для предоставления расширенных разрешений на текущем сайте - откройте всплывающую панель и выберите повышенный режим фильтрации: Оптимальный или Полный.
 
-If you accept uBOL's request for additional permissions on the current site, it will be able to better filter content for the current site.
+Ընթացիկ կայքում ընդլայնված թույլտվություններ տրամադրելու համար բացեք դուրս լողացող վահանակը և ընտրեք ընդլայնված զտման ռեժիմ՝ Գերադասելի կամ Ամբողջական։
 
-You can set the default filtering mode from uBOL's options page. If you pick the Optimal or Complete mode as the default one, you will need to grant uBOL the permission to read and modify data on all websites.
+Այնուհետև զննիչը կզգուշացնի Ձեզ ընթացիկ կայքում ընդլայնման կողմից պահանջվող լրացուցիչ թույլտվությունների տրամադրման հետևանքների մասին, և Դուք պետք է ընտրեք՝ ընդունում եք, թե մերժում եք հայտը։
 
-Keep in mind this is still a work in progress, with these end goals:
+Եթե ​​ընդունեք uBOL-ին լրացուցիչ թույլտվություններ տալու հայտը, ապա այն կկարողանա ավելի արդյունավետ կերպով զտել ընթացիկ կայքի բովանդակությունը։
 
-- No broad host permissions at install time -- extended permissions are granted explicitly by the user on a per-site basis.
+Դուք կարող եք սահմանել զտման լռելյայն ռեժիմը uBOL-ի ընտրանքների էջում։ Եթե ​​որպես լռելյայն ընտրեք «Գերադասելի» կամ «Ամբողջական» ռեժիմը, պետք կլինի uBOL-ին թույլտվություն տրամադրեք կարդալու և փոփոխելու տվյալները բոլոր կայքերում։
 
-- Entirely declarative for reliability and CPU/memory efficiency.
+Հիշեք, որ այս նախագիծը մշակման ակտիվ փուլում է, որ ունի հետևյալ նպատակները.
+
+- Տեղադրման ընթացքում Սահմանափակ թույլտվություններով աշխատանք տեղադրման ժամանակ. օգտվողը ընդլայնված թույլտվություններ է տալիս իր հայեցողությամբ, յուրաքանչյուր կայքի համար առանձին։
+
+- Ամբողջովին դեկլարատիվ է հուսալիության և մշակիչի/հիշողության արտադրողականության համար։

@@ -228,7 +228,7 @@
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "Acabas de instalar uBO Lite. Aquí puedes elegir el modo de filtrado predeterminado que se utilizará en todos los sitios web.\n\nComo opción predeterminada, el modo <em>Básico</em> está seleccionado porque no requiere permiso para leer y modificar datos. Si confías en uBO Lite, puedes otorgarle un permiso amplio para leer y modificar datos en todos los sitios web para habilitar capacidades de filtrado más avanzadas para todos los sitios web de forma predeterminada.",
+    "message": "Acabas de instalar uBO Lite. Aquí puedes elegir el modo de filtrado predeterminado que se utilizará en todos los sitios web.\n\nPor defecto, el modo <em>básico</em> está seleccionado porque no requiere permiso para leer y modificar datos. Si confías en uBO Lite, puedes otorgarle un permiso amplio para leer y modificar datos en todos los sitios web para habilitar capacidades de filtrado más avanzadas para todos los sitios web de forma predeterminada.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {

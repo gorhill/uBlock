@@ -1116,7 +1116,7 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedTitle": {
-    "message": "Page blocked",
+    "message": "Էջն արգելաբացվեց",
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {
@@ -1144,7 +1144,7 @@
     "description": "English: Close this window"
   },
   "docblockedDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "Այլևս չզգուշացնե՛լ ինձ այս կայքի մասին",
     "description": "Label for checkbox in document-blocked page"
   },
   "docblockedProceed": {
@@ -1160,7 +1160,7 @@
     "description": "English: Permanently"
   },
   "docblockedDisable": {
-    "message": "Proceed",
+    "message": "Շարունակել",
     "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {

@@ -1,30 +1,30 @@
 uBO Lite (uBOL) es un bloqueador de contenido experimental con *menos permisos* basado en MV3.
 
-El conjunto de reglas predeterminado corresponde al conjunto de filtros predeterminado de uBlock Origin:
+Por defecto ya trae configuradas las siguientes listas de filtros:
 
-- Listas de filtros integradas directamente en uBlock Origin
+- Listas de filtros de uBlock Origin
 - EasyList
 - EasyPrivacy
 - Peter Lowe’s Ad and tracking server list
 
-Puedes agregar más conjuntos de reglas visitando la página de opciones: haga clic en el icono _Cogs_ en el panel emergente.
+Puedes añadir más conjuntos de reglas visitando la página de opciones, haz clic en el icono _Cogs_ del panel emergente.
 
-uBOL es completamente declarativo, lo que significa que no hay necesidad de un proceso uBOL permanente para que se produzca el filtrado, y el filtrado de contenido basado en la inyección de CSS/JS es realizado de forma confiable por el propio navegador y no por la extensión. Esto significa que uBOL en sí mismo no consume recursos de CPU/memoria mientras el bloqueo de contenido está en curso, el proceso service worker de uBOL se requiere _solo_ cuando se interactúa con el panel emergente o las páginas de opciones.
+uBOL es completamente declarativo, lo que significa que no hay necesidad de un proceso uBOL permanente para que se produzca el filtrado, y el filtrado de contenido basado en la inyección de CSS/JS se realiza de forma confiable por el propio navegador en lugar de la extensión. Esto significa que uBOL en sí mismo no consume recursos de CPU/memoria mientras el bloqueo de contenido está en curso, el proceso service worker de uBOL se requiere _solo_ cuando se interactúa con el panel emergente o las páginas de opciones.
 
-uBOL no requiere permisos amplios de "lectura y modificación de datos" en el momento de la instalación, de ahí sus capacidades limitadas en comparación con uBlock Origin u otros bloqueadores de contenido que requieren permisos amplios de "lectura y modificación de datos" en el momento de la instalación.
+uBOL no requiere amplios permisos para "leer y modificar datos" en el momento de la instalación, de ahí sus capacidades limitadas en comparación con uBlock Origin u otros bloqueadores de contenido que requieren amplios permisos para "leer y modificar datos" en el momento de la instalación.
 
-Sin embargo, uBOL le permite otorgar *explícitamente* permisos amplios en sitios específicos de su elección para que pueda filtrar mejor en esos sitios usando filtrado cosmético e inyecciones de scriptlet.
+Sin embargo, uBOL te permite otorgar *explícitamente* permisos extendidos en sitios específicos de tu elección para que pueda filtrar mejor en esos sitios usando filtrado cosmético e inyecciones de scriptlet.
 
-Para conceder permisos ampliados en un sitio determinado, abra el panel emergente y elija un modo de filtrado superior, como Óptimo o Completo.
+Para otorgar permisos extendidos en un sitio determinado, abre el panel emergente y elige un modo de filtrado superior, como óptimo o completo.
 
-A continuación, el navegador le advertirá sobre los efectos de conceder los permisos adicionales solicitados por la extensión en el sitio actual, y usted deberá indicar al navegador si acepta o rechaza la solicitud.
+Después el navegador te advertirá sobre los efectos de otorgar los permisos adicionales solicitados por la extensión en el sitio actual, y deberás indicar al navegador si aceptas o rechazas la solicitud.
 
-Si acepta la solicitud de usar permisos adicionales creada por uBLOL en el sitio actual, será capaz de filtrar mejor el contenido para el sitio actual.
+Si aceptas la solicitud de uBOL para permisos adicionales en el sitio actual, será capaz de filtrar mejor el contenido para el sitio actual.
 
-Puedes establecer el modo de filtrado predeterminado directamente desde la página de opciones de uBOL. Si eliges como predeterminado el modo Óptimo o Completo, tendrás que conceder a uBOL el permiso para leer y modificar datos en todos los sitios web.
+Puedes establecer el modo de filtrado predeterminado desde la página de opciones de uBOL. Si eliges como predeterminado el modo óptimo o completo, tendrás que otorgar a uBOL el permiso para leer y modificar datos en todos los sitios web.
 
-Ten en cuenta que todavía se trata de un trabajo en curso, con estos objetivos finales:
+Téngase en cuenta que esto todavía es un trabajo en progreso, con estos objetivos finales:
 
-- No hay amplios permisos de host en el momento de la instalación -- los permisos ampliados son concedidos explícitamente por el usuario para cada sitio.
+- Sin amplios permisos de host en el momento de la instalación, los permisos ampliados son otorgados explícitamente por el usuario en cada sitio.
 
 - Completamente declarativo para confiabilidad y eficiencia de la CPU/memoria.

@@ -1120,7 +1120,7 @@
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {
-    "message": "uBlock Origin は以下のページの読み込みを防ぎました:",
+    "message": "uBlock Origin は、 以下のサイトの読み込みを防止しました:",
     "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
@@ -1144,7 +1144,7 @@
     "description": "English: Close this window"
   },
   "docblockedDontWarn": {
-    "message": "次回からこのサイトについて警告を表示しない",
+    "message": "今後このサイトに関する警告を表示しない",
     "description": "Label for checkbox in document-blocked page"
   },
   "docblockedProceed": {
@@ -1160,7 +1160,7 @@
     "description": "English: Permanently"
   },
   "docblockedDisable": {
-    "message": "続行",
+    "message": "続行する",
     "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {

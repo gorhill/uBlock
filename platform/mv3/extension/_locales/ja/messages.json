@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "権限不要の実験的なコンテンツブロッカーです。インストールしてすぐに、広告、トラッキング、マイニングなどをブロックします。",
+    "message": "小さな権限で動作する実験的なコンテンツブロッカーです。インストールしてすぐに、広告、トラッキング、マイニングなどをブロックします。",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
