@@ -965,16 +965,22 @@ FilterContainer.prototype.getFilterCount = function() {
 /******************************************************************************/
 
 FilterContainer.prototype.dump = function() {
-    const generics = [];
+    const lowlyGenerics = [];
     for ( const selectors of this.lowlyGeneric.values() ) {
-        generics.push(...selectors.split(',\n'));
+        lowlyGenerics.push(...selectors.split(',\n'));
     }
+    lowlyGenerics.sort();
+    const highlyGenerics = Array.from(this.highlyGeneric.simple.dict);
+    highlyGenerics.push(Array.from(this.highlyGeneric.complex.dict));
+    highlyGenerics.sort();
     return [
         'Cosmetic Filtering Engine internals:',
         `specific: ${this.specificFilters.size}`,
-        `generic: ${generics.length}`,
-        `+ selectors: ${this.lowlyGeneric.size}`,
-        ...generics.map(a => `  ${a}`),
+        `generic: ${lowlyGenerics.length + highlyGenerics.length}`,
+        `+ lowly generic: ${lowlyGenerics.length}`,
+        ...lowlyGenerics.map(a => `  ${a}`),
+        `+ highly generic: ${highlyGenerics.length}`,
+        ...highlyGenerics.map(a => `  ${a}`),
     ].join('\n');
 };
 
