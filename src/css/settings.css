@@ -13,7 +13,7 @@ body {
     align-items: stretch;
     align-self: stretch;
     display: inline-flex;
-    justify-content: stretch
+    justify-content: stretch;
     user-select: none;
     }
 #themeMood > span {
