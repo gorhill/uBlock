@@ -1298,7 +1298,7 @@ export class AstFilterParser {
                 break;
             case NODE_TYPE_NET_OPTION_NAME_INLINEFONT:
             case NODE_TYPE_NET_OPTION_NAME_INLINESCRIPT:
-                realBad = abstractTypeCount || behaviorTypeCount;
+                realBad = behaviorTypeCount;
                 break;
             case NODE_TYPE_NET_OPTION_NAME_EMPTY:
                 realBad = abstractTypeCount || behaviorTypeCount;
