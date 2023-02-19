@@ -86,8 +86,17 @@ const onStartMovingWidget = (( ) => {
     let cw = 0, ch = 0;
     let timer;
 
+    const xyFromEvent = ev => {
+        if ( ev.type.startsWith('mouse') ) {
+            return { x: ev.pageX, y: ev.pageY };
+        }
+        const touch = ev.touches[0];
+        return  { x: touch.pageX, y: touch.pageY };
+    };
+
     const eatEvent = function(ev) {
         ev.stopPropagation();
+        if ( ev.touches !== undefined ) { return; }
         ev.preventDefault();
     };
 
@@ -108,8 +117,8 @@ const onStartMovingWidget = (( ) => {
 
     const moveAsync = ev => {
         if ( timer !== undefined ) { return; }
-        mx1 = ev.pageX;
-        my1 = ev.pageY;
+        const coord = xyFromEvent(ev);
+        mx1 = coord.x; my1 = coord.y;
         timer = self.requestAnimationFrame(move);
         eatEvent(ev);
     };
@@ -119,9 +128,11 @@ const onStartMovingWidget = (( ) => {
             self.cancelAnimationFrame(timer);
             timer = undefined;
         }
+        if ( widget === null ) { return; }
         if ( widget.classList.contains('moving') === false ) { return; }
         widget.classList.remove('moving');
         self.removeEventListener('mousemove', moveAsync, { capture: true });
+        self.removeEventListener('touchmove', moveAsync, { capture: true });
         eatEvent(ev);
         widget = null;
         if ( ondone !== null ) {
@@ -134,7 +145,8 @@ const onStartMovingWidget = (( ) => {
         if ( dom.cl.has(target, 'moving') ) { return; }
         widget = target;
         ondone = callback || null;
-        mx0 = ev.pageX; my0 = ev.pageY;
+        const coord = xyFromEvent(ev);
+        mx0 = coord.x; my0 = coord.y;
         const widgetParent = widget.parentElement;
         const crect = widget.getBoundingClientRect();
         const prect = widgetParent.getBoundingClientRect();
@@ -144,6 +156,8 @@ const onStartMovingWidget = (( ) => {
         widget.classList.add('moving');
         self.addEventListener('mousemove', moveAsync, { capture: true });
         self.addEventListener('mouseup', stop, { capture: true, once: true });
+        self.addEventListener('touchmove', moveAsync, { capture: true });
+        self.addEventListener('touchend', stop, { capture: true, once: true });
         eatEvent(ev);
     };
 })();
@@ -1938,6 +1952,22 @@ dom.on(document, 'keydown', ev => {
         parseStaticInputs();
     };
 
+    const moveDialog = ev => {
+        if ( ev.button !== 0 && ev.touches === undefined ) { return; }
+        const widget = qs$('#netInspector .entryTools');
+        onStartMovingWidget(ev, widget, ( ) => {
+            vAPI.localStorage.setItem(
+                'loggerUI.entryTools',
+                JSON.stringify({
+                    bottom: widget.style.bottom,
+                    left: widget.style.left,
+                    right: widget.style.right,
+                    top: widget.style.top,
+                })
+            );
+        });
+    };
+
     const fillDialog = function(domains) {
         dialog = dom.clone('#templates .netFilteringDialog');
         dom.cl.toggle(
@@ -1961,21 +1991,9 @@ dom.on(document, 'keydown', ev => {
         } else {
             container.append(dialog);
         }
-        dom.on(qs$(dialog, '.moveBand'), 'mousedown', ev => {
-            if ( ev.button !== 0 ) { return; }
-            onStartMovingWidget(ev, container, ( ) => {
-                const widget = qs$('#netInspector .entryTools');
-                vAPI.localStorage.setItem(
-                    'loggerUI.entryTools',
-                    JSON.stringify({
-                        bottom: widget.style.bottom,
-                        left: widget.style.left,
-                        right: widget.style.right,
-                        top: widget.style.top,
-                    })
-                );
-            });
-        });
+        const moveBand = qs$(dialog, '.moveBand');
+        dom.on(moveBand, 'mousedown', moveDialog);
+        dom.on(moveBand, 'touchstart', moveDialog);
     };
 
     const toggleOn = async function(ev) {
