@@ -523,7 +523,7 @@ body[dir="rtl"] .closeButton {
     }
 
 .netFilteringDialog {
-    font-size: 95%;
+    font-size: var(--font-size-smaller);
     }
 .netFilteringDialog a {
     text-decoration: none;
