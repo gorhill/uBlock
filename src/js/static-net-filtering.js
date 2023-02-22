@@ -1693,6 +1693,7 @@ class FilterDomainHitSet {
             ? 0b01
             : 0b10;
         filterData[idata+5] = -1;
+        filterRefs[filterData[idata+6]].$last = '';
     }
 
     static create(fid = -1) {
