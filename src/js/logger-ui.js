@@ -1519,6 +1519,17 @@ dom.on(document, 'keydown', ev => {
             });
             return;
         }
+
+        // Reload tab associated with event
+        if ( tcl.contains('reload') ) {
+            ev.stopPropagation();
+            messaging.send('loggerUI', {
+                what: 'reloadTab',
+                tabId: targetTabId,
+                bypassCache: ev.ctrlKey || ev.metaKey || ev.shiftKey,
+            });
+            return;
+        }
     };
 
     const onSelectChange = function(ev) {

@@ -600,6 +600,7 @@ body[dir="rtl"] .closeButton {
 .netFilteringDialog > .headers > .tools {
     bottom: 0;
     display: flex;
+    height: 100%;
     position: absolute;
     }
 body[dir="ltr"] .netFilteringDialog > .headers > .tools {
@@ -609,8 +610,8 @@ body[dir="rtl"] .netFilteringDialog > .headers > .tools {
     left: 0;
     }
 .netFilteringDialog > .headers > .tools > span {
-    color: var(--ink-4);
-        fill: var(--ink-4);
+    color: var(--ink-3);
+        fill: var(--ink-3);
     cursor: pointer;
     font-size: 1.5em;
     padding: 0 0.25em;
