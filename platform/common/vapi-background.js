@@ -668,7 +668,7 @@ if ( webext.browserAction instanceof Object ) {
 // https://github.com/uBlockOrigin/uBlock-issues/issues/32
 //   Ensure ImageData for toolbar icon is valid before use.
 
-vAPI.setIcon = (( ) => {
+{
     const browserAction = vAPI.browserAction;
     const  titleTemplate =
         browser.runtime.getManifest().browser_action.default_title +
@@ -765,7 +765,7 @@ vAPI.setIcon = (( ) => {
     //        bit 2 = badge color
     //        bit 3 = hide badge
 
-    return async function(tabId, details) {
+    vAPI.setIcon = async function(tabId, details) {
         tabId = toTabId(tabId);
         if ( tabId === 0 ) { return; }
 
@@ -808,7 +808,7 @@ vAPI.setIcon = (( ) => {
             vAPI.contextMenu.onMustUpdate(tabId);
         }
     };
-})();
+}
 
 browser.browserAction.onClicked.addListener(function(tab) {
     vAPI.tabs.open({

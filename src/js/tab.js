@@ -1059,7 +1059,7 @@ vAPI.tabs = new vAPI.Tabs();
 
 // Update visual of extension icon.
 
-µb.updateToolbarIcon = (( ) => {
+{
     const tabIdToDetails = new Map();
 
     const computeBadgeColor = (bits) => {
@@ -1118,7 +1118,7 @@ vAPI.tabs = new vAPI.Tabs();
     //        bit 2 = badge color
     //        bit 3 = hide badge
 
-    return function(tabId, newParts = 0b0111) {
+    µb.updateToolbarIcon = function(tabId, newParts = 0b0111) {
         if ( typeof tabId !== 'number' ) { return; }
         if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
         const currentParts = tabIdToDetails.get(tabId);
@@ -1133,7 +1133,7 @@ vAPI.tabs = new vAPI.Tabs();
         }
         tabIdToDetails.set(tabId, newParts);
     };
-})();
+}
 
 /******************************************************************************/
 
