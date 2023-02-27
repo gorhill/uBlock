@@ -717,8 +717,8 @@ export class AstFilterParser {
         this.reHnAnchoredHostnameUnicode = /^\|\|(?:[\p{L}\p{N}][\p{L}\p{N}\u{2d}]*\.)*[\p{L}\p{N}\u{2d}]*[\p{L}\p{N}]\^$/u;
         this.reHn3pAnchoredHostnameAscii = /^\|\|(?:[\da-z][\da-z_-]*\.)*[\da-z_-]*[\da-z]\^\$third-party$/;
         this.rePlainAscii = /^[0-9a-z%&\-.\/:;=?_]{2,}$/;
-        this.reNetHosts1 = /^127\.0\.0\.1 (?:[\da-z][\da-z_-]*\.)*[\da-z-]*[\da-z]$/;
-        this.reNetHosts2 = /^0\.0\.0\.0 (?:[\da-z][\da-z_-]*\.)*[\da-z-]*[\da-z]$/;
+        this.reNetHosts1 = /^127\.0\.0\.1 (?:[\da-z][\da-z_-]*\.)+[\da-z-]*[a-z]$/;
+        this.reNetHosts2 = /^0\.0\.0\.0 (?:[\da-z][\da-z_-]*\.)+[\da-z-]*[a-z]$/;
         this.rePlainGenericCosmetic = /^##[.#][A-Za-z_][\w-]*$/;
         this.reHostnameAscii = /^(?:[\da-z][\da-z_-]*\.)*[\da-z-]*[\da-z]$/;
         this.rePlainEntity = /^(?:[\da-z][\da-z_-]*\.)+\*$/;
