@@ -972,7 +972,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         let updateAfter = parseInt(matches[1], 10);
         if ( isNaN(updateAfter) === false ) {
             if ( matches[2] !== undefined ) {
-                updateAfter = Math.ceil(updateAfter / 24);
+                updateAfter = Math.ceil(updateAfter / 12) / 2;
             }
             updateAfter = Math.max(updateAfter, 0.5);
             if ( updateAfter !== listEntry.updateAfter ) {
