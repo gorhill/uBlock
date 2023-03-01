@@ -68,65 +68,67 @@
     word-break: break-all;
     }
 
-.cm-s-default .cm-comment {
+.codeMirrorFilters .cm-s-default .cm-comment {
     color: var(--sf-comment-ink);
     }
-.cm-s-default .cm-def {
+.codeMirrorFilters .cm-s-default .cm-def {
     color: var(--sf-def-ink);
     }
-.cm-s-default .cm-directive {
+.codeMirrorFilters .cm-s-default .cm-directive {
     color: var(--sf-directive-ink);
     font-weight: bold;
     }
-.cm-s-default .cm-error {
+.codeMirrorFilters .cm-s-default .cm-error {
     color: inherit;
     }
-.cm-s-default .cm-error,
+.codeMirrorFilters .cm-s-default .cm-error,
 .CodeMirror-linebackground.error {
     background-color: var(--sf-error-surface);
     text-decoration: underline var(--sf-error-ink);
     text-underline-position: under;
     }
-.cm-s-default .cm-link {
+.codeMirrorFilters .cm-s-default .cm-link {
     text-decoration: none;
     }
-.cm-s-default .cm-link:hover {
+.codeMirrorFilters .cm-s-default .cm-link:hover {
     color: var(--link-ink);
     }
-.cm-s-default .cm-keyword {
+.codeMirrorFilters .cm-s-default .cm-keyword {
     color: var(--sf-keyword-ink);
     }
-.cm-s-default .cm-negative {
+.codeMirrorFilters .cm-s-default .cm-negative {
     color: var(--cm-negative);
     }
-.cm-s-default .cm-positive {
+.codeMirrorFilters .cm-s-default .cm-positive {
     color: var(--cm-positive);
     }
-.cm-s-default .cm-notice {
+.codeMirrorFilters .cm-s-default .cm-notice {
     text-underline-position: under;
     text-decoration-color: var(--sf-notice-ink);
     text-decoration-style: solid;
     text-decoration-line: underline;
     }
-.cm-s-default .cm-unicode {
+.codeMirrorFilters .cm-s-default .cm-unicode {
     text-underline-position: under;
     text-decoration-color: var(--sf-unicode-ink);
     text-decoration-style: dashed;
     text-decoration-line: underline;
     }
-.cm-s-default .cm-tag {
+.codeMirrorFilters .cm-s-default .cm-tag {
     color: var(--sf-tag-ink);
     }
-.cm-s-default .cm-value { color: var(--sf-value-ink); }
-.cm-s-default .cm-variable {
+.codeMirrorFilters .cm-s-default .cm-value {
+    color: var(--sf-value-ink);
+    }
+.codeMirrorFilters .cm-s-default .cm-variable {
     color: var(--sf-variable-ink);
     }
-.cm-s-default .cm-warning {
+.codeMirrorFilters .cm-s-default .cm-warning {
     background-color: var(--sf-warning-surface);
     text-decoration: underline var(--sf-warning-ink);
     text-underline-position: under;
     }
-.cm-s-default .cm-readonly {
+.codeMirrorFilters .cm-s-default .cm-readonly {
     color: var(--sf-readonly-ink);
     }
 

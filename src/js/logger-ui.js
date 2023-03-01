@@ -253,7 +253,7 @@ const regexFromURLFilteringResult = function(result) {
 
 // Emphasize hostname in URL, as this is what matters in uMatrix's rules.
 
-const nodeFromURL = function(parent, url, re) {
+const nodeFromURL = function(parent, url, re, type) {
     const fragment = document.createDocumentFragment();
     if ( re === undefined ) {
         fragment.textContent = url;
@@ -282,7 +282,22 @@ const nodeFromURL = function(parent, url, re) {
     }
     if ( /^https?:\/\//.test(url) ) {
         const a = document.createElement('a');
-        dom.attr(a, 'href', url);
+        let href = url;
+        switch ( type ) {
+            case 'css':
+                href = `code-viewer.html?url=${encodeURIComponent(url)}&type=css`;
+                break;
+            case 'doc':
+            case 'frame':
+                href = `code-viewer.html?url=${encodeURIComponent(url)}&type=html`;
+                break
+            case 'script':
+                href = `code-viewer.html?url=${encodeURIComponent(url)}&type=js`;
+                break;
+            default:
+                break;
+        }
+        dom.attr(a, 'href', href);
         dom.attr(a, 'target', '_blank');
         fragment.appendChild(a);
     }
@@ -862,7 +877,7 @@ const viewPort = (( ) => {
         } else if ( filteringType === 'dynamicUrl' ) {
             re = regexFromURLFilteringResult(filter.rule.join(' '));
         }
-        nodeFromURL(div.children[COLUMN_URL], cells[COLUMN_URL], re);
+        nodeFromURL(div.children[COLUMN_URL], cells[COLUMN_URL], re, cells[COLUMN_TYPE]);
 
         // Alias URL (CNAME, etc.)
         if ( cells.length > 8 ) {

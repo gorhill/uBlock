@@ -1,0 +1,13 @@
+body {
+    border: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    width: 100vw;
+    }
+#content {
+    flex-grow: 1;
+    }
