@@ -336,7 +336,9 @@ const µBlock = {  // jshint ignore:line
             this.setDocOrigin(origin).setTabOrigin(origin);
             return this;
         }
-        const origin = originFromURI(this.url);
+        const origin = (this.itype & this.FRAME_ANY) !== 0
+            ? originFromURI(this.url)
+            : this.tabOrigin;
         this.setDocOrigin(origin).setTabOrigin(origin);
         return this;
     }
