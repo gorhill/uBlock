@@ -465,7 +465,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "IRN: PersianBlocker",
-		"lang": "fa",
+		"lang": "fa ps tg",
 		"contentURL": [
 			"https://raw.githubusercontent.com/MasterKia/PersianBlocker/main/PersianBlocker.txt",
 			"https://cdn.statically.io/gh/MasterKia/PersianBlocker/main/PersianBlocker.txt"
@@ -543,6 +543,15 @@
 		"lang": "lv",
 		"contentURL": "https://raw.githubusercontent.com/Latvian-List/adblock-latvian/master/lists/latvian-list.txt",
 		"supportURL": "https://github.com/Latvian-List/adblock-latvian"
+	},
+	"MKD-0": {
+		"content": "filters",
+		"group": "regions",
+		"off": true,
+		"title": "MKD: Macedonian adBlock Filters",
+		"lang": "mk",
+		"contentURL": "https://raw.githubusercontent.com/DeepSpaceHarbor/Macedonian-adBlock-Filters/master/Filters",
+		"supportURL": "https://github.com/DeepSpaceHarbor/Macedonian-adBlock-Filters"
 	},
 	"NLD-0": {
 		"content": "filters",
