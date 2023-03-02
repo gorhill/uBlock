@@ -37,20 +37,19 @@ import { dom, qs$ } from './dom.js';
     dom.attr(a, 'title', url);
     const response = await fetch(url);
     const text = await response.text();
-    const formatOptions = { indent_size: 2 };
     let value = '', mode = '';
     switch ( params.get('type') ) {
         case 'css':
             mode = 'text/css';
-            value = beautifier.css(text, formatOptions);
+            value = beautifier.css(text, { indent_size: 2 });
             break;
         case 'html':
             mode = 'text/html';
-            value = beautifier.html(text, formatOptions);
+            value = beautifier.html(text, { indent_size: 2 });
             break;
         case 'js':
             mode = 'text/javascript';
-            value = beautifier.js(text, formatOptions);
+            value = beautifier.js(text, { indent_size: 4 });
             break;
         default:
             break;
@@ -60,8 +59,8 @@ import { dom, qs$ } from './dom.js';
         gutters: [ 'CodeMirror-linenumbers' ],
         lineNumbers: true,
         lineWrapping: true,
+        matchBrackets: true,
         mode,
-        readOnly: true,
         styleActiveLine: {
             nonEmpty: true,
         },
