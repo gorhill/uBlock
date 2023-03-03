@@ -317,30 +317,30 @@ const astTemplates = {
         flags: AST_FLAG_NET_PATTERN_LEFT_HNANCHOR |
             AST_FLAG_NET_PATTERN_RIGHT_PATHANCHOR,
         type: NODE_TYPE_LINE_BODY,
-        begFromBeg: 0,
-        endFromEnd: 0,
+        beg: 0,
+        end: 0,
         children: [{
             type: NODE_TYPE_NET_RAW,
-            begFromBeg: 0,
-            endFromEnd: 0,
+            beg: 0,
+            end: 0,
             children: [{
                 type: NODE_TYPE_NET_PATTERN_RAW,
-                begFromBeg: 0,
-                endFromEnd: 0,
+                beg: 0,
+                end: 0,
                 register: true,
                 children: [{
                     type: NODE_TYPE_NET_PATTERN_LEFT_HNANCHOR,
-                    begFromBeg: 0,
-                    endFromBeg: 2,
+                    beg: 0,
+                    end: 2,
                 }, {
                     type: NODE_TYPE_NET_PATTERN,
-                    begFromBeg: 2,
-                    endFromEnd: -1,
+                    beg: 2,
+                    end: -1,
                     register: true,
                 }, {
                     type: NODE_TYPE_NET_PATTERN_PART_SPECIAL,
-                    begFromEnd: -1,
-                    endFromEnd: 0,
+                    beg: -1,
+                    end: 0,
                 }],
             }],
         }],
@@ -351,48 +351,48 @@ const astTemplates = {
             AST_FLAG_NET_PATTERN_RIGHT_PATHANCHOR |
             AST_FLAG_HAS_OPTIONS,
         type: NODE_TYPE_LINE_BODY,
-        begFromBeg: 0,
-        endFromEnd: 0,
+        beg: 0,
+        end: 0,
         children: [{
             type: NODE_TYPE_NET_RAW,
-            begFromBeg: 0,
-            endFromEnd: 0,
+            beg: 0,
+            end: 0,
             children: [{
                 type: NODE_TYPE_NET_PATTERN_RAW,
-                begFromBeg: 0,
-                endFromEnd: 0,
+                beg: 0,
+                end: 0,
                 register: true,
                 children: [{
                     type: NODE_TYPE_NET_PATTERN_LEFT_HNANCHOR,
-                    begFromBeg: 0,
-                    endFromBeg: 2,
+                    beg: 0,
+                    end: 2,
                 }, {
                     type: NODE_TYPE_NET_PATTERN,
-                    begFromBeg: 2,
-                    endFromEnd: -13,
+                    beg: 2,
+                    end: -13,
                     register: true,
                 }, {
                     type: NODE_TYPE_NET_PATTERN_PART_SPECIAL,
-                    begFromEnd: -13,
-                    endFromEnd: -12,
+                    beg: -13,
+                    end: -12,
                 }],
             }, {
                 type: NODE_TYPE_NET_OPTIONS_ANCHOR,
-                begFromEnd: -12,
-                endFromEnd: -11,
+                beg: -12,
+                end: -11,
             }, {
                 type: NODE_TYPE_NET_OPTIONS,
-                begFromEnd: -11,
-                endFromEnd: 0,
+                beg: -11,
+                end: 0,
                 register: true,
                 children: [{
                     type: NODE_TYPE_NET_OPTION_RAW,
-                    begFromBeg: 0,
-                    endFromEnd: 0,
+                    beg: 0,
+                    end: 0,
                     children: [{
                         type: NODE_TYPE_NET_OPTION_NAME_3P,
-                        begFromBeg: 0,
-                        endFromEnd: 0,
+                        beg: 0,
+                        end: 0,
                         register: true,
                     }],
                 }],
@@ -403,25 +403,25 @@ const astTemplates = {
     netHnAnchoredPlainAscii: {
         flags: AST_FLAG_NET_PATTERN_LEFT_HNANCHOR,
         type: NODE_TYPE_LINE_BODY,
-        begFromBeg: 0,
-        endFromEnd: 0,
+        beg: 0,
+        end: 0,
         children: [{
             type: NODE_TYPE_NET_RAW,
-            begFromBeg: 0,
-            endFromEnd: 0,
+            beg: 0,
+            end: 0,
             children: [{
                 type: NODE_TYPE_NET_PATTERN_RAW,
-                begFromBeg: 0,
-                endFromEnd: 0,
+                beg: 0,
+                end: 0,
                 register: true,
                 children: [{
                     type: NODE_TYPE_NET_PATTERN_LEFT_HNANCHOR,
-                    begFromBeg: 0,
-                    endFromBeg: 2,
+                    beg: 0,
+                    end: 2,
                 }, {
                     type: NODE_TYPE_NET_PATTERN,
-                    begFromBeg: 2,
-                    endFromEnd: 0,
+                    beg: 2,
+                    end: 0,
                     register: true,
                 }],
             }],
@@ -431,21 +431,21 @@ const astTemplates = {
     // -resource.
     netPlainAscii: {
         type: NODE_TYPE_LINE_BODY,
-        begFromBeg: 0,
-        endFromEnd: 0,
+        beg: 0,
+        end: 0,
         children: [{
             type: NODE_TYPE_NET_RAW,
-            begFromBeg: 0,
-            endFromEnd: 0,
+            beg: 0,
+            end: 0,
             children: [{
                 type: NODE_TYPE_NET_PATTERN_RAW,
-                begFromBeg: 0,
-                endFromEnd: 0,
+                beg: 0,
+                end: 0,
                 register: true,
                 children: [{
                     type: NODE_TYPE_NET_PATTERN,
-                    begFromBeg: 0,
-                    endFromEnd: 0,
+                    beg: 0,
+                    end: 0,
                     register: true,
                 }],
             }],
@@ -454,25 +454,25 @@ const astTemplates = {
     // 127.0.0.1 example.com
     netHosts1: {
         type: NODE_TYPE_LINE_BODY,
-        begFromBeg: 0,
-        endFromEnd: 0,
+        beg: 0,
+        end: 0,
         children: [{
             type: NODE_TYPE_NET_RAW,
-            begFromBeg: 0,
-            endFromEnd: 0,
+            beg: 0,
+            end: 0,
             children: [{
                 type: NODE_TYPE_NET_PATTERN_RAW,
-                begFromBeg: 0,
-                endFromEnd: 0,
+                beg: 0,
+                end: 0,
                 register: true,
                 children: [{
                     type: NODE_TYPE_IGNORE,
-                    begFromBeg: 0,
-                    endFromBeg: 10,
+                    beg: 0,
+                    end: 10,
                 }, {
                     type: NODE_TYPE_NET_PATTERN,
-                    begFromBeg: 10,
-                    endFromEnd: 0,
+                    beg: 10,
+                    end: 0,
                     register: true,
                 }],
             }],
@@ -481,25 +481,25 @@ const astTemplates = {
     // 0.0.0.0 example.com
     netHosts2: {
         type: NODE_TYPE_LINE_BODY,
-        begFromBeg: 0,
-        endFromEnd: 0,
+        beg: 0,
+        end: 0,
         children: [{
             type: NODE_TYPE_NET_RAW,
-            begFromBeg: 0,
-            endFromEnd: 0,
+            beg: 0,
+            end: 0,
             children: [{
                 type: NODE_TYPE_NET_PATTERN_RAW,
-                begFromBeg: 0,
-                endFromEnd: 0,
+                beg: 0,
+                end: 0,
                 register: true,
                 children: [{
                     type: NODE_TYPE_IGNORE,
-                    begFromBeg: 0,
-                    endFromBeg: 8,
+                    beg: 0,
+                    end: 8,
                 }, {
                     type: NODE_TYPE_NET_PATTERN,
-                    begFromBeg: 8,
-                    endFromEnd: 0,
+                    beg: 8,
+                    end: 0,
                     register: true,
                 }],
             }],
@@ -508,26 +508,26 @@ const astTemplates = {
     // ##.ads-container
     extPlainGenericSelector: {
         type: NODE_TYPE_LINE_BODY,
-        begFromBeg: 0,
-        endFromEnd: 0,
+        beg: 0,
+        end: 0,
         children: [{
             type: NODE_TYPE_EXT_RAW,
-            begFromBeg: 0,
-            endFromEnd: 0,
+            beg: 0,
+            end: 0,
             children: [{
                 type: NODE_TYPE_EXT_OPTIONS_ANCHOR,
-                begFromBeg: 0,
-                endFromBeg: 2,
+                beg: 0,
+                end: 2,
                 register: true,
             }, {
                 type: NODE_TYPE_EXT_PATTERN_RAW,
-                begFromBeg: 2,
-                endFromEnd: 0,
+                beg: 2,
+                end: 0,
                 register: true,
                 children: [{
                     type: NODE_TYPE_EXT_PATTERN_COSMETIC,
-                    begFromBeg: 0,
-                    endFromEnd: 0,
+                    beg: 0,
+                    end: 0,
                 }],
             }],
         }],
@@ -866,12 +866,8 @@ export class AstFilterParser {
     astFromTemplate(parent, template) {
         const parentBeg = this.nodes[parent+NODE_BEG_INDEX];
         const parentEnd = this.nodes[parent+NODE_END_INDEX];
-        const beg = template.begFromBeg !== undefined
-            ? parentBeg + template.begFromBeg
-            : parentEnd + template.begFromEnd;
-        const end = template.endFromEnd !== undefined
-            ? parentEnd + template.endFromEnd
-            : parentBeg + template.endFromBeg;
+        const beg = template.beg + (template.beg >= 0 ? parentBeg : parentEnd);
+        const end = template.end + (template.end <= 0 ? parentEnd : parentBeg);
         const node = this.allocTypedNode(template.type, beg, end);
         if ( template.register ) {
             this.addNodeToRegister(template.type, node);
