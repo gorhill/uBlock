@@ -769,7 +769,7 @@ class FilterImportant {
     }
 
     static dnrFromCompiled(args, rule) {
-        rule.priority = (rule.priority || 0) + 10;
+        rule.priority = (rule.priority || 1) + 10;
     }
 
     static keyFromArgs() {
@@ -4416,7 +4416,7 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
             }
             break;
         case 'redirect-rule': {
-            let priority = rule.priority || 0;
+            let priority = rule.priority || 1;
             let token = rule.__modifierValue;
             if ( token !== '' ) {
                 const match = /:(\d+)$/.exec(token);
