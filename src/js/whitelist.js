@@ -50,9 +50,7 @@ CodeMirror.defineMode("ubo-whitelist-directives", function() {
                 return null;
             }
             if ( reComment.test(line) ) {
-                return whitelistDefaultSet.has(directiveFromLine(line))
-                    ? 'keyword comment'
-                    : 'comment';
+                return 'comment';
             }
             if ( line.indexOf('/') === -1 ) {
                 if ( reBadHostname.test(line) ) { return 'error'; }
