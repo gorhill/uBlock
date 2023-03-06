@@ -3817,6 +3817,8 @@ class FilterCompiler {
             parsedBlock.modifyType = undefined;
             parsedBlock.optionUnitBits &= ~this.REDIRECT_BIT;
             parsedBlock.compileToFilter(writer);
+            // Do not generate block rule when compiling to DNR ruleset
+            if ( parser.options.toDNR ) { return true; }
         }
 
         this.compileToFilter(writer);

@@ -210,6 +210,7 @@ function addToDNR(context, list) {
         sfp.utils.preparser.prune(list.text, env)
     );
     const parser = new sfp.AstFilterParser({
+        toDNR: true,
         nativeCssHas: env.includes('native_css_has'),
         badTypes: [ sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE ],
     });

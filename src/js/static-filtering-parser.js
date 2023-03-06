@@ -697,6 +697,7 @@ export class AstFilterParser {
         this.hasUnicode = false;
         this.hasUppercase = false;
         // Options
+        this.options = options;
         this.interactive = options.interactive || false;
         this.expertMode = options.expertMode || false;
         this.badTypes = new Set(options.badTypes || []);
@@ -1364,7 +1365,7 @@ export class AstFilterParser {
         const clast = exCharCodeAt(pattern, -1);
 
         // Common case: Easylist syntax-based hostname
-        if ( 
+        if (
             hasWildcard === false &&
             c1st === 0x7C /* | */ && c2nd === 0x7C /* | */ &&
             clast === 0x5E /* ^ */ &&
@@ -1478,7 +1479,7 @@ export class AstFilterParser {
 
         // Left anchor
         if ( c1st === 0x7C /* '|' */ ) {
-            if ( pattern.length > 2 && c2nd === 0x7C /* '|' */ ) {
+            if ( c2nd === 0x7C /* '|' */ ) {
                 const type = this.isTokenCharCode(pattern.charCodeAt(2) || 0)
                     ? NODE_TYPE_NET_PATTERN_LEFT_HNANCHOR
                     : NODE_TYPE_IGNORE;
@@ -1486,10 +1487,9 @@ export class AstFilterParser {
                 if ( type === NODE_TYPE_NET_PATTERN_LEFT_HNANCHOR ) {
                     this.addFlags(AST_FLAG_NET_PATTERN_LEFT_HNANCHOR);
                 }
-                prev = this.linkRight(prev, next);
                 patternBeg += 2;
                 pattern = pattern.slice(2);
-            } else if ( pattern.length > 1 ) {
+            } else {
                 const type = this.isTokenCharCode(c2nd)
                     ? NODE_TYPE_NET_PATTERN_LEFT_ANCHOR
                     : NODE_TYPE_IGNORE;
@@ -1497,14 +1497,17 @@ export class AstFilterParser {
                 if ( type === NODE_TYPE_NET_PATTERN_LEFT_ANCHOR ) {
                     this.addFlags(AST_FLAG_NET_PATTERN_LEFT_ANCHOR);
                 }
-                prev = this.linkRight(prev, next);
                 patternBeg += 1;
                 pattern = pattern.slice(1);
+            }
+            prev = this.linkRight(prev, next);
+            if ( patternBeg === patternEnd ) {
+                this.addNodeFlags(next, NODE_FLAG_IGNORE);
             }
         }
 
         // Right anchor
-        if ( clast === 0x7C /* | */ && pattern.length >= 2 ) {
+        if ( exCharCodeAt(pattern, -1) === 0x7C /* | */ ) {
             const type = exCharCodeAt(pattern, -2) !== 0x2A /* * */
                 ? NODE_TYPE_NET_PATTERN_RIGHT_ANCHOR
                 : NODE_TYPE_IGNORE;
@@ -1514,6 +1517,9 @@ export class AstFilterParser {
             }
             patternEnd -= 1;
             pattern = pattern.slice(0, -1);
+            if ( patternEnd === patternBeg ) {
+                this.addNodeFlags(tail, NODE_FLAG_IGNORE);
+            }
         }
 
         // Ignore pointless leading wildcards
