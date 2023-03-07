@@ -1119,6 +1119,7 @@ vAPI.tabs = new vAPI.Tabs();
     //        bit 3 = hide badge
 
     µb.updateToolbarIcon = function(tabId, newParts = 0b0111) {
+        if ( this.readyToFilter === false ) { return; }
         if ( typeof tabId !== 'number' ) { return; }
         if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
         const currentParts = tabIdToDetails.get(tabId);

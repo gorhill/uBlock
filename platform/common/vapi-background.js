@@ -808,6 +808,16 @@ if ( webext.browserAction instanceof Object ) {
             vAPI.contextMenu.onMustUpdate(tabId);
         }
     };
+
+    vAPI.setDefaultIcon = function(flavor) {
+        if ( browserAction.setIcon === undefined ) { return; }
+        browserAction.setIcon({
+            path: {
+                '16': `img/icon_16${flavor}.png`,
+                '32': `img/icon_32${flavor}.png`,
+            }
+        });
+    };
 }
 
 browser.browserAction.onClicked.addListener(function(tab) {
