@@ -37,21 +37,29 @@ import { dom, qs$ } from './dom.js';
     dom.attr(a, 'title', url);
     const response = await fetch(url);
     const text = await response.text();
-    let value = '', mode = '';
-    switch ( params.get('type') ) {
-        case 'css':
-            mode = 'text/css';
+    let mime = response.headers.get('Content-Type') || '';
+    mime = mime.replace(/\s*;.*$/, '').trim();
+    let value = '';
+    switch ( mime ) {
+        case 'text/css':
             value = beautifier.css(text, { indent_size: 2 });
             break;
-        case 'html':
-            mode = 'text/html';
+        case 'text/html':
+        case 'application/xhtml+xml':
+        case 'application/xml':
+        case 'image/svg+xml':
             value = beautifier.html(text, { indent_size: 2 });
             break;
-        case 'js':
-            mode = 'text/javascript';
+        case 'text/javascript':
+        case 'application/javascript':
+        case 'application/x-javascript':
             value = beautifier.js(text, { indent_size: 4 });
             break;
+        case 'application/json':
+            value = beautifier.js(text, { indent_size: 2 });
+            break;
         default:
+            value = text;
             break;
     }
     const cmEditor = new CodeMirror(qs$('#content'), {
@@ -60,7 +68,7 @@ import { dom, qs$ } from './dom.js';
         lineNumbers: true,
         lineWrapping: true,
         matchBrackets: true,
-        mode,
+        mode: mime,
         styleActiveLine: {
             nonEmpty: true,
         },

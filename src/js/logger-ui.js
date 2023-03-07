@@ -285,14 +285,11 @@ const nodeFromURL = function(parent, url, re, type) {
         let href = url;
         switch ( type ) {
             case 'css':
-                href = `code-viewer.html?url=${encodeURIComponent(url)}&type=css`;
-                break;
             case 'doc':
             case 'frame':
-                href = `code-viewer.html?url=${encodeURIComponent(url)}&type=html`;
-                break
             case 'script':
-                href = `code-viewer.html?url=${encodeURIComponent(url)}&type=js`;
+            case 'xhr':
+                href = `code-viewer.html?url=${encodeURIComponent(href)}`;
                 break;
             default:
                 break;
