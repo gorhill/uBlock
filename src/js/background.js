@@ -219,8 +219,9 @@ const µBlock = {  // jshint ignore:line
     readyToFilter: false,
 
     supportStats: {
-        allReadyAfter: '',
-        maxAssetCacheWait: '0 ms',
+        allReadyAfter: '?',
+        maxAssetCacheWait: '?',
+        unprocessedRequestCount: '?',
     },
 
     pageStores: new Map(),

@@ -1175,6 +1175,7 @@ vAPI.Net = class {
         this.suspendableListener = undefined;
         this.listenerMap = new WeakMap();
         this.suspendDepth = 0;
+        this.unprocessedRequestCount = 0;
 
         browser.webRequest.onBeforeRequest.addListener(
             details => {
@@ -1227,8 +1228,10 @@ vAPI.Net = class {
         );
     }
     onBeforeSuspendableRequest(details) {
-        if ( this.suspendableListener === undefined ) { return; }
-        return this.suspendableListener(details);
+        if ( this.suspendableListener !== undefined ) {
+            return this.suspendableListener(details);
+        }
+        this.unprocessedRequestCount += 1;
     }
     setSuspendableListener(listener) {
         this.suspendableListener = listener;

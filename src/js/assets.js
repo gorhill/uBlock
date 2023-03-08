@@ -560,7 +560,7 @@ const assetCacheRead = async function(assetKey, updateReadTime = false) {
 
     µb.supportStats.maxAssetCacheWait = Math.max(
         Date.now() - t0,
-        parseInt(µb.supportStats.maxAssetCacheWait, 10)
+        parseInt(µb.supportStats.maxAssetCacheWait, 10) || 0
     ) + ' ms';
 
     if (
