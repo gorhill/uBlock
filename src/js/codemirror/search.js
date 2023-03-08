@@ -27,7 +27,8 @@
 
 'use strict';
 
-(function(CodeMirror) {
+{
+    const CodeMirror = self.CodeMirror;
 
     const searchOverlay = function(query, caseInsensitive) {
         if ( typeof query === 'string' )
@@ -449,4 +450,4 @@
     CodeMirror.defineInitHook(function(cm) {
         getSearchState(cm);
     });
-})(self.CodeMirror);
+}

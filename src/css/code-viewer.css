@@ -11,3 +11,10 @@ body {
 #content {
     flex-grow: 1;
     }
+
+.cm-href {
+    cursor: pointer;
+    }
+.cm-href:hover {
+    text-decoration: underline;
+    }
