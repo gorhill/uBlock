@@ -288,6 +288,7 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
                 hintHelperRegistered = true;
                 initHints();
             }
+            astParser.options.filterOnHeaders = details.filterOnHeaders === true;
         },
         parser: astParser,
     };

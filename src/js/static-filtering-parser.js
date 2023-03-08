@@ -1221,7 +1221,7 @@ export class AstFilterParser {
                     realBad = isException === false || isNegated || hasValue;
                     break;
                 case NODE_TYPE_NET_OPTION_NAME_HEADER:
-                    realBad = this.expertMode === false || isNegated || hasValue === false;
+                    realBad = this.options.filterOnHeaders !== true || isNegated || hasValue === false;
                     break;
                 case NODE_TYPE_NET_OPTION_NAME_IMPORTANT:
                     realBad = isException || isNegated || hasValue;
