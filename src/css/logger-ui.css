@@ -384,16 +384,19 @@ body[dir="rtl"] #vwRenderer .logEntry > div > span:first-child {
     background-color: rgb(var(--popup-cell-allow-surface-rgb) / 100%);
     }
 #vwRenderer .logEntry > div > span:nth-of-type(8) a {
+    align-items: center;
     background-color: dimgray;
     color: white;
     display: none;
     height: 100%;
+    justify-content: center;
     padding: 0 0.25em;
     opacity: 0.4;
     position: absolute;
     right: 0;
     text-decoration: none;
     top: 0;
+    width: 2rem;
     }
 #netInspector.vExpanded #vwRenderer .logEntry > div > span:nth-of-type(8) a {
     bottom: 0px;
@@ -405,7 +408,6 @@ body[dir="rtl"] #vwRenderer .logEntry > div > span:first-child {
     content: '\2197';
     }
 #vwRenderer .logEntry > div.networkRealm > span:nth-of-type(8):hover a {
-    align-items: center;
     display: inline-flex;
     }
 #vwRenderer .logEntry > div > span:nth-of-type(8) a:hover {
