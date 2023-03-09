@@ -1842,11 +1842,14 @@
 
 
 
-/// href-from-text.js
+/// href-sanitizer.js
 (function() {
     let selector = '{{1}}';
     if ( selector === '{{1}}' ) { selector = ''; }
     if ( selector === '' ) { return; }
+    let source = '{{2}}';
+    if ( source === '{{2}}' ) { source = ''; }
+    if ( source === '' ) { source = 'text'; }
     const sanitizeCopycats = (href, text) => {
         let elems = [];
         try {
@@ -1857,6 +1860,19 @@
         for ( const elem of elems ) {
             elem.setAttribute('href', text);
         }
+    };
+    const extractText = (elem, source) => {
+        if ( /^\[.*\]$/.test(source) ) {
+            return elem.getAttribute(source.slice(1,-1).trim()) || '';
+        }
+        if ( source !== 'text' ) { return ''; }
+        const text = elem.textContent
+            .replace(/^[^\x21-\x7e]+/, '') // remove leading invalid characters
+            .replace(/[^\x21-\x7e]+$/, '') // remove trailing invalid characters
+            ;
+        if ( /^https:\/\/./.test(text) === false ) { return ''; }
+        if ( /[^\x21-\x7e]/.test(text) ) { return ''; }
+        return text;
     };
     const sanitize = ( ) => {
         let elems = [];
@@ -1870,12 +1886,8 @@
             if ( elem.localName !== 'a' ) { continue; }
             if ( elem.hasAttribute('href') === false ) { continue; }
             const href = elem.getAttribute('href');
-            const text = elem.textContent
-                .replace(/^[^\x21-\x7e]+/, '') // remove leading invalid characters
-                .replace(/[^\x21-\x7e]+$/, '') // remove trailing invalid characters
-                ;
-            if ( /^https:\/\/./.test(text) === false ) { continue; }
-            if ( /[^\x21-\x7e]/.test(text) ) { continue; }
+            const text = extractText(elem, source);
+            if ( text === '' ) { continue; }
             if ( href === text ) { continue; }
             elem.setAttribute('href', text);
             sanitizeCopycats(href, text);
