@@ -531,8 +531,9 @@ body[dir="rtl"] .closeButton {
     text-decoration: none;
     }
 .netFilteringDialog select {
-    max-width: 75%;
+    max-width: 50vw;
     outline: none;
+    text-overflow: ellipsis;
 }
 .netFilteringDialog > .preview {
     align-items: center;
