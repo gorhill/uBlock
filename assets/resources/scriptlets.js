@@ -1842,6 +1842,81 @@
 
 
 
+/// href-from-text.js
+(function() {
+    let selector = '{{1}}';
+    if ( selector === '{{1}}' ) { selector = ''; }
+    if ( selector === '' ) { return; }
+    const sanitizeCopycats = (href, text) => {
+        let elems = [];
+        try {
+            elems = document.querySelectorAll(`a[href="${href}"`);
+        }
+        catch(ex) {
+        }
+        for ( const elem of elems ) {
+            elem.setAttribute('href', text);
+        }
+    };
+    const sanitize = ( ) => {
+        let elems = [];
+        try {
+            elems = document.querySelectorAll(selector);
+        }
+        catch(ex) {
+            return false;
+        }
+        for ( const elem of elems ) {
+            if ( elem.localName !== 'a' ) { continue; }
+            if ( elem.hasAttribute('href') === false ) { continue; }
+            const href = elem.getAttribute('href');
+            const text = elem.textContent
+                .replace(/^[^\x21-\x7e]+/, '') // remove leading invalid characters
+                .replace(/[^\x21-\x7e]+$/, '') // remove trailing invalid characters
+                ;
+            if ( /^https:\/\/./.test(text) === false ) { continue; }
+            if ( /[^\x21-\x7e]/.test(text) ) { continue; }
+            if ( href === text ) { continue; }
+            elem.setAttribute('href', text);
+            sanitizeCopycats(href, text);
+        }
+        return true;
+    };
+    let observer, timer;
+    const onDomChanged = mutations => {
+        if ( timer !== undefined ) { return; }
+        let shouldSanitize = false;
+        for ( const mutation of mutations ) {
+            if ( mutation.addedNodes.length === 0 ) { continue; }
+            for ( const node of mutation.addedNodes ) {
+                if ( node.nodeType !== 1 ) { continue; }
+                shouldSanitize = true;
+                break;
+            }
+            if ( shouldSanitize ) { break; }
+        }
+        if ( shouldSanitize === false ) { return; }
+        timer = self.requestAnimationFrame(( ) => {
+            timer = undefined;
+            sanitize();
+        });
+    };
+    const start = ( ) => {
+        if ( sanitize() === false ) { return; }
+        observer = new MutationObserver(onDomChanged);
+        observer.observe(document.body, {
+            subtree: true,
+            childList: true,
+        });
+    };
+    if ( document.readyState === 'loading' ) {
+        document.addEventListener('DOMContentLoaded', start, { once: true });
+    } else {
+        start();
+    }
+})();
+
+
 // These lines below are skipped by the resource parser.
 // <<<< end of private namespace
 })();
