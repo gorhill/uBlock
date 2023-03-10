@@ -1001,6 +1001,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     if ( details.assetKey ) {
         writer.properties.set('name', details.assetKey);
     }
+    const assetName = details.assetKey ? details.assetKey : '?';
     const expertMode =
         details.assetKey !== this.userFiltersPath ||
         this.hiddenSettings.filterAuthorMode !== false;
@@ -1031,7 +1032,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
             logger.writeOne({
                 realm: 'message',
                 type: 'error',
-                text: `Invalid filter: ${parser.raw}`
+                text: `Invalid filter (${assetName}): ${parser.raw}`
             });
             continue;
         }
