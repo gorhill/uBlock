@@ -316,9 +316,24 @@ const onPopupUpdated = (( ) => {
         if ( tabContext === null ) { return; }
         const rootOpenerURL = tabContext.rawURL;
         if ( rootOpenerURL === '' ) { return; }
-        const localOpenerURL = openerDetails.frameId !== 0
+        const pageStore = µb.pageStoreFromTabId(openerTabId);
+
+        // https://github.com/uBlockOrigin/uBlock-issues/discussions/2534#discussioncomment-5264792
+        //   An `about:blank` frame's context is that of the parent context
+        let localOpenerURL = openerDetails.frameId !== 0
             ? openerDetails.frameURL
             : undefined;
+        if ( localOpenerURL === 'about:blank' && pageStore !== null ) {
+            let openerFrameId = openerDetails.frameId;
+            do {
+                const frame = pageStore.getFrameStore(openerFrameId);
+                if ( frame === null ) { break; }
+                openerFrameId = frame.parentId;
+                const parentFrame = pageStore.getFrameStore(openerFrameId);
+                if ( parentFrame === null ) { break; }
+                localOpenerURL = parentFrame.frameURL;
+            } while ( localOpenerURL === 'about:blank' && openerFrameId !== 0 );
+        }
 
         // Popup details.
         tabContext = µb.tabContextManager.lookup(targetTabId);
@@ -392,7 +407,6 @@ const onPopupUpdated = (( ) => {
 
         // Only if a popup was blocked do we report it in the dynamic
         // filtering pane.
-        const pageStore = µb.pageStoreFromTabId(openerTabId);
         if ( pageStore ) {
             pageStore.journalAddRequest(fctxt, result);
             pageStore.popupBlockedCount += 1;
