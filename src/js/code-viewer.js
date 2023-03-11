@@ -29,107 +29,161 @@ import { dom, qs$ } from './dom.js';
 
 /******************************************************************************/
 
-(async ( ) => {
-    const params = new URLSearchParams(document.location.search);
-    const url = params.get('url');
+const urlToTextMap = new Map();
+const params = new URLSearchParams(document.location.search);
+let fromURL = '';
 
-    const a = qs$('.cm-search-widget .sourceURL');
-    dom.attr(a, 'href', url);
-    dom.attr(a, 'title', url);
+const cmEditor = new CodeMirror(qs$('#content'), {
+    autofocus: true,
+    gutters: [ 'CodeMirror-linenumbers' ],
+    lineNumbers: true,
+    lineWrapping: true,
+    matchBrackets: true,
+    styleActiveLine: {
+        nonEmpty: true,
+    },
+});
 
-    const response = await fetch(url);
-    const text = await response.text();
+uBlockDashboard.patchCodeMirrorEditor(cmEditor);
+if ( dom.cl.has(dom.html, 'dark') ) {
+    dom.cl.add('#content .cm-s-default', 'cm-s-night');
+    dom.cl.remove('#content .cm-s-default', 'cm-s-default');
+}
 
+// Convert resource URLs into clickable links to code viewer
+cmEditor.addOverlay({
+    re: /\b(?:href|src)=["']([^"']+)["']/g,
+    match: null,
+    token: function(stream) {
+        if ( stream.sol() ) {
+            this.re.lastIndex = 0;
+            this.match = this.re.exec(stream.string);
+        }
+        if ( this.match === null ) {
+            stream.skipToEnd();
+            return null;
+        }
+        const end = this.re.lastIndex - 1;
+        const beg = end - this.match[1].length;
+        if ( stream.pos < beg ) {
+            stream.pos = beg;
+            return null;
+        }
+        if ( stream.pos < end ) {
+            stream.pos = end;
+            return 'href';
+        }
+        if ( stream.pos < this.re.lastIndex ) {
+            stream.pos = this.re.lastIndex;
+            this.match = this.re.exec(stream.string);
+            return null;
+        }
+        stream.skipToEnd();
+        return null;
+    },
+});
+
+/******************************************************************************/
+
+async function fetchResource(url) {
+    if ( urlToTextMap.has(url) ) {
+        return urlToTextMap.get(url);
+    }
+    let response, text;
+    try {
+        response = await fetch(url);
+        text = await response.text();
+    } catch(reason) {
+        return;
+    }
     let mime = response.headers.get('Content-Type') || '';
     mime = mime.replace(/\s*;.*$/, '').trim();
-    let value = '';
     switch ( mime ) {
         case 'text/css':
-            value = beautifier.css(text, { indent_size: 2 });
+            text = beautifier.css(text, { indent_size: 2 });
             break;
         case 'text/html':
         case 'application/xhtml+xml':
         case 'application/xml':
         case 'image/svg+xml':
-            value = beautifier.html(text, { indent_size: 2 });
+            text = beautifier.html(text, { indent_size: 2 });
             break;
         case 'text/javascript':
         case 'application/javascript':
         case 'application/x-javascript':
-            value = beautifier.js(text, { indent_size: 4 });
+            text = beautifier.js(text, { indent_size: 4 });
             break;
         case 'application/json':
-            value = beautifier.js(text, { indent_size: 2 });
+            text = beautifier.js(text, { indent_size: 2 });
             break;
         default:
-            value = text;
             break;
     }
+    urlToTextMap.set(url, { mime, text });
+    return { mime, text };
+}
 
-    const cmEditor = new CodeMirror(qs$('#content'), {
-        autofocus: true,
-        gutters: [ 'CodeMirror-linenumbers' ],
-        lineNumbers: true,
-        lineWrapping: true,
-        matchBrackets: true,
-        mode: mime,
-        styleActiveLine: {
-            nonEmpty: true,
-        },
-        value,
-    });
+/******************************************************************************/
 
-    uBlockDashboard.patchCodeMirrorEditor(cmEditor);
-    if ( dom.cl.has(dom.html, 'dark') ) {
-        dom.cl.add('#content .cm-s-default', 'cm-s-night');
-        dom.cl.remove('#content .cm-s-default', 'cm-s-default');
+function updatePastURLs(url) {
+    const list = qs$('#pastURLs');
+    let current;
+    for ( let i = 0; i < list.children.length; i++ ) {
+        const span = list.children[i];
+        dom.cl.remove(span, 'selected');
+        if ( span.textContent !== url ) { continue; }
+        current = span;
     }
+    if ( current === undefined ) {
+        current = document.createElement('span');
+        current.textContent = url;
+        list.prepend(current);
+    }
+    dom.cl.add(current, 'selected');
+}
 
-    // Convert resource URLs into clickable links to code viewer
-    cmEditor.addOverlay({
-        re: /\b(?:href|src)=["']([^"']+)["']/g,
-        match: null,
-        token: function(stream) {
-            if ( stream.sol() ) {
-                this.re.lastIndex = 0;
-                this.match = this.re.exec(stream.string);
-            }
-            if ( this.match === null ) {
-                stream.skipToEnd();
-                return null;
-            }
-            const end = this.re.lastIndex - 1;
-            const beg = end - this.match[1].length;
-            if ( stream.pos < beg ) {
-                stream.pos = beg;
-                return null;
-            }
-            if ( stream.pos < end ) {
-                stream.pos = end;
-                return 'href';
-            }
-            if ( stream.pos < this.re.lastIndex ) {
-                stream.pos = this.re.lastIndex;
-                this.match = this.re.exec(stream.string);
-                return null;
-            }
-            stream.skipToEnd();
-            return null;
-        },
-    });
+/******************************************************************************/
 
-    dom.on('#content', 'click', '.cm-href', ev => {
-        const href = ev.target.textContent;
-        try {
-            const toURL = new URL(href, url);
-            vAPI.messaging.send('codeViewer', {
-                what: 'gotoURL',
-                details: {
-                    url: `code-viewer.html?url=${encodeURIComponent(toURL.href)}`,
-                    select: true,
-                },
-            });
-        } catch(ex) {
-        }
-    });
-})();
+async function setURL(resourceURL) {
+    const input = qs$('#header input[type="url"]');
+    let to;
+    try {
+        to = new URL(resourceURL, fromURL || undefined);
+    } catch(ex) {
+    }
+    if ( to === undefined ) { return; }
+    if ( /^https?:\/\/./.test(to.href) === false ) { return; }
+    if ( to.href === fromURL ) { return; }
+    let r;
+    try {
+        r = await fetchResource(to.href);
+    } catch(reason) {
+    }
+    if ( r === undefined ) { return; }
+    fromURL = to.href;
+    dom.attr(input, 'value', to.href);
+    input.value = to;
+    const a = qs$('.cm-search-widget .sourceURL');
+    dom.attr(a, 'href', to);
+    dom.attr(a, 'title', to);
+    cmEditor.setOption('mode', r.mime || '');
+    cmEditor.setValue(r.text);
+    updatePastURLs(to.href);
+    cmEditor.focus();
+}
+
+/******************************************************************************/
+
+setURL(params.get('url'));
+
+dom.on('#header input[type="url"]', 'change', ev => {
+    setURL(ev.target.value);
+});
+
+dom.on('#pastURLs', 'mousedown', 'span', ev => {
+    setURL(ev.target.textContent);
+});
+
+dom.on('#content', 'click', '.cm-href', ev => {
+    setURL(ev.target.textContent);
+});
