@@ -152,7 +152,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "1pFormatHint": {
-    "message": "One filter per line. A filter can be a plain hostname, or an EasyList-compatible filter. Lines prefixed with <code>!</code> will be ignored.",
+    "message": "كل مرشح في سطر وَحْدَهُ. يمكن ان يكون المرشح رابط موقع او مرشح متعارف مع نظام EasyList. السطور التي تحتوي على <code>!</code> سوف يتم تجاهلها.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {

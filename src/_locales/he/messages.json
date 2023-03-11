@@ -456,7 +456,7 @@
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
-    "message": "השהית פעילות רשת עד לסיום טעינת כל רשימות הסינון",
+    "message": "השהה פעילות רשת עד לסיום טעינת כל רשימות הסינון",
     "description": "A checkbox in the 'Filter lists' pane"
   },
   "3pListsOfBlockedHostsHeader": {

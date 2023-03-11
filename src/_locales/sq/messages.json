@@ -68,15 +68,15 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Klikimi e ç/aktivizon uBlock₀ te ky uebsajti.\n\nKlikimi+Ctrl e çaktivizon uBlock₀ vetëm te kjo faqja.",
+    "message": "Ç/aktivizoni uBlock₀ te ky uebsajti.\n\nKlikimi+Ctrl e çaktivizon uBlock₀ vetëm te kjo faqja.",
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Çaktivizoj uBlock₀ te ky uebsajti.\n\nKlikimi+Ctrl e çaktivizon uBlock₀ vetëm te kjo faqja.",
+    "message": "Çaktivizoni uBlock₀ te ky uebsajti.\n\nKlikimi+Ctrl e çaktivizon uBlock₀ vetëm te kjo faqja.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Aktivizoj uBlock₀ te ky uebsajti.",
+    "message": "Aktivizoni uBlock₀ te ky uebsajti.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -112,7 +112,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
-    "message": "Hap panelin e kontrollit",
+    "message": "Hapni panelin e kontrollit",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
@@ -128,63 +128,63 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Raportoj problemin me uebsajtin",
+    "message": "Raportoni problemin me uebsajtin",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Zh/Bllokoj të gjitha dritaret modale te uebsajti",
+    "message": "Zh/Bllokoni të gjitha dritaret modale te uebsajti",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Bllokoj të gjitha dritaret modale te uebsajti",
+    "message": "Bllokoni të gjitha dritaret modale te uebsajti",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Zhbllokoj të gjitha dritaret modale te uebsajti",
+    "message": "Zhbllokoni të gjitha dritaret modale te uebsajti",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Zh/Bllokoj elementet e mëdha multimediale te uebsajti",
+    "message": "Zh/Bllokoni elementet e mëdha multimediale te uebsajti",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Bllokoj elementet e mëdha multimediale te uebsajti",
+    "message": "Bllokoni elementet e mëdha multimediale te uebsajti",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Zbllokoj elementet e mëdha multimediale te uebsajti",
+    "message": "Zbllokoni elementet e mëdha multimediale te uebsajti",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Ç/Aktivizoj filtrat kozmetikë te uebsajti",
+    "message": "Ç/Aktivizoni filtrat kozmetikë te uebsajti",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Çaktivizoj filtrat kozmetikë te uebsajti",
+    "message": "Çaktivizoni filtrat kozmetikë te uebsajti",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Aktivizoj filtrat kozmetikë te uebsajti",
+    "message": "Aktivizoni filtrat kozmetikë te uebsajti",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Zh/Bllokoj modelet e jashtme shkronjore te uebsajti",
+    "message": "Zh/Bllokoni modelet e jashtme shkronjore te uebsajti",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Bllokoj modelet e jashtme shkronjore te uebsajti",
+    "message": "Bllokoni modelet e jashtme shkronjore te uebsajti",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Zhbllokoj modelet e jashtme shkronjore te uebsajti",
+    "message": "Zhbllokoni modelet e jashtme shkronjore te uebsajti",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Çaktivizoj JavaScript-in te uebsajti",
+    "message": "Çaktivizoni JavaScript-in te uebsajti",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Nuk e çaktivizoj më JavaScript-in te uebsajti",
+    "message": "Aktivizoni JavaScript-in te uebsajti",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
@@ -220,15 +220,15 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Rregullat lokale: rregullat në këtë shtyllë aplikohen vetëm për këtë uebsajtin dhe kanë më përparësi se rregullat globale.",
+    "message": "Rregullat lokale: rregullat në këtë shtyllë aplikohen vetëm për këtë uebsajtin. \nKëto kanë përparësi mbi rregullat globale.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
-    "message": "Ruaj përgjithnjë ndryshimet.",
+    "message": "Ruani përgjithnjë ndryshimet.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Kthej ndryshimet.",
+    "message": "Ktheni ndryshimet.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {
@@ -276,11 +276,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilterTip": {
-    "message": "↑: Theksoj rreshtat me skripte nga palët e treta",
+    "message": "↑: Theksoni rreshtat me skripte nga palët e treta",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party scripts' cell"
   },
   "popup3pFrameFilterTip": {
-    "message": "↑: Theksoj rreshtat me kuadro nga palët e treta",
+    "message": "↑: Theksoni rreshtat me kuadro nga palët e treta",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party frames' cell"
   },
   "pickerCreate": {
@@ -444,7 +444,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "Filtrat kozmetikë shërbejnë për të fshehur nga ana vizive elementet e padëshirueshme të faqes të cilat nuk bllokohen me metodën standarde të filtrimit sipas kërkesës.",
+    "message": "Filtrat kozmetikë shërbejnë për të fshehur nga ana vizive elementet e padëshirueshme të faqes, të cilat nuk bllokohen me metodën standarde të filtrimit sipas kërkesës.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -452,7 +452,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "Filtrat kozmetikë jospecifikë janë filtra të cilët aplikohen për të gjitha faqet e internetit. Aktivizimi i këtij opsioni eliminon peshën e tepërt te memoria dhe procesori.\n\nKy opsion rekomandohet për aparatet kompjuterike jo shumë të shpejta.",
+    "message": "Filtrat kozmetikë jospecifikë janë filtra të cilët aplikohen për të gjitha faqet e internetit. Me aktivizimin e këtij opsioni ulet ngarkesa e memories dhe procesorit.\n\nKy opsion rekomandohet për aparatet kompjuterike jo shumë të shpejta.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
@@ -512,11 +512,11 @@
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pViewContent": {
-    "message": "shfaq përmbajtjen",
+    "message": "shfaqni përmbajtjen",
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "Përditësimi i fundit: {{ago}}.\nKlikoni për ta kryer vetë përditësimin.",
+    "message": "Përditësimi i fundit: {{ago}}.\nKlikoni për ta përditësuar vetë.",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
@@ -600,7 +600,7 @@
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
-    "message": "Lloji i rregullit",
+    "message": "Lloji i rregullës",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortBySource": {
@@ -660,15 +660,15 @@
     "description": "Appears in the logger's tab selector"
   },
   "loggerReloadTip": {
-    "message": "Freskoj përmbajtjen e skedës",
+    "message": "Freskoni përmbajtjen e skedës",
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
-    "message": "Ç/Aktivizoj strukturën DOM",
+    "message": "Ç/Aktivizoni strukturën DOM",
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "Ç/Aktivizoj panelin modal",
+    "message": "Ç/Aktivizoni panelin modal",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
@@ -676,19 +676,19 @@
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
-    "message": "Pastroj regjistrin",
+    "message": "Pastroni regjistrin",
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
-    "message": "Ndërpres regjistrimin (nuk pranohen të dhënat e reja)",
+    "message": "Ndërprisni regjistrimin (e gjithë të dhënave të tjera)",
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {
-    "message": "Rifilloj regjistrimin",
+    "message": "Rifilloni regjistrimin",
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "Ç/Aktivizoj filtrat e regjistrit",
+    "message": "Ç/Aktivizoni filtrat e regjistrit",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
@@ -916,11 +916,11 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Vërejtje:</b> uBlock Origin nuk duhet përdorur njëkohësisht me aplikacionet e ngjashme bllokuese, pasi mund të shfaqen probleme me filtrat.",
+    "message": "<b>Vërejtje:</b> uBlock Origin nuk duhet përdorur njëkohësisht me aplikacionet e ngjashme bllokuese, pasi filtrat mund të shfaqin probleme.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Këshilla:</b> Sigurohuni që listat e filtrave janë të përditësuara. <span data-url=\"logger-ui.html#_\">Regjistri</span> është instrumenti kryesor për diagnostikimin e problemeve me filtrat.",
+    "message": "<b>Këshilla:</b> Sigurohuni që të përditësoni listat e filtrave. <span data-url=\"logger-ui.html#_\">Regjistri</span> është instrumenti kryesor për diagnostikimin e problemeve me filtrat.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
@@ -948,7 +948,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Verifikoni a është raportuar më parë problemi që të mos i lodhni vullnetarët e tjerë me të njëjtat raporte.",
+    "message": "Verifikoni a është raportuar më parë problemi që të mos i lodhni vullnetarët e tjerë me të njëjtat gjëra.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -1036,7 +1036,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "CDN-ja do të zgjidhet rastësisht për të kryer përditësimin e një liste me filtra.",
+    "message": "Përditësimi i listave do të kryhet nëpërmjet një CDN-je rastësore",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
@@ -1056,7 +1056,7 @@
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
-    "message": "Të gjithë parametrat do të mbishkruhen me të dhënat e kopjuara më {{time}}, dhe uBlock₀ do të hapet përsëri.\n\nTë mbishkruhen parametrat aktualë?",
+    "message": "Të gjithë parametrat do të mbishkruhen me të dhënat e kopjuara më {{time}}, dhe uBlock₀ do të hapet sërish.\n\nDo mbishkruani parametrat aktualë?",
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {
@@ -1064,7 +1064,7 @@
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
-    "message": "Të gjithë parametrat do të fshihen dhe uBlock₀ do të hapet përsëri.\n\nTë kthehen parametrat origjinalë?",
+    "message": "Të gjithë parametrat do të fshihen dhe uBlock₀ do të hapet sërish.\n\nDo ktheni parametrat origjinalë?",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
@@ -1164,15 +1164,15 @@
     "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {
-    "message": "Eksportoj në renë informatike",
+    "message": "Eksportoni në renë informatike",
     "description": "tooltip"
   },
   "cloudPull": {
-    "message": "Importoj nga reja informatike",
+    "message": "Importoni nga reja informatike",
     "description": "tooltip"
   },
   "cloudPullAndMerge": {
-    "message": "Importoj nga reja informatike dhe bashkoj me parametrat aktualë",
+    "message": "Importoni nga reja informatike dhe bashkoni me parametrat aktualë",
     "description": "tooltip"
   },
   "cloudNoData": {
@@ -1220,7 +1220,7 @@
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "Ç/Aktivizoj lëvizjen me rrëshqitje",
+    "message": "Ç/Aktivizoni lëvizjen me rrëshqitje",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {

@@ -9,19 +9,19 @@ Die Standardregeln entsprechen den Standardfiltern von uBlock Origin:
 
 Sie können weitere Regeln hinzufügen, indem Sie die Optionen aufrufen — klicken Sie dazu im Pop-up-Fenster auf das Symbol mit den _Zahnrädern_.
 
-uBOL ist vollständig deklarativ, d. h. es ist kein permanenter uBOL-Prozess für die Filterung erforderlich, und die auf CSS/JS-Injektion basierende Inhaltsfilterung wird zuverlässig vom Browser selbst und nicht von der Erweiterung durchgeführt. Das bedeutet, dass uBOL selbst keine CPU-/Speicherressourcen verbraucht, während der Inhalt blockiert wird — der uBOL-Service-Worker-Prozess wird _nur_ benötigt, wenn Sie mit dem Pop-up-Fenster oder den Optionen interagieren.
+uBOL ist vollständig deklarativ, d. h. es ist kein dauerhafter uBOL-Prozess für das Filtern erforderlich, und die auf CSS/JS-Injektion basierende Inhaltsfilterung wird zuverlässig vom Browser selbst und nicht von der Erweiterung durchgeführt. Das bedeutet, dass uBOL selbst keine CPU-/Speicherressourcen verbraucht, während der Inhalt blockiert wird — der uBOL-Service-Worker-Prozess wird _nur_ benötigt, wenn Sie mit dem Pop-up-Fenster oder den Optionen interagieren.
 
 uBOL erfordert bei der Installation keine weitreichende Berechtigung zum Lesen und Ändern von Daten, daher sind die Möglichkeiten im Vergleich zu uBlock Origin oder anderen Inhaltsblockern, die bei der Installation weitreichende Berechtigungen zum Lesen und Ändern von Daten erfordern, von vornherein begrenzt.
 
-Allerdings können Sie mit uBOL *explizit* erweiterte Berechtigungen für bestimmte Websites Ihrer Wahl erteilen, sodass diese Websites mithilfe kosmetischer Filterung und Scriptlet-Injektionen besser gefiltert werden können.
+Allerdings können Sie mit uBOL *explizit* erweiterte Berechtigungen für bestimmte Websites Ihrer Wahl erteilen, sodass diese Websites durch kosmetisches Filtern und Scriptlet-Injektionen besser gefiltert werden können.
 
-Um erweiterte Berechtigungen für eine bestimmte Website zu erteilen, öffnen Sie das Pop-up-Fenster und wählen Sie einen stärkeren Filtermodus wie „Optimal” oder „Vollständig”.
+Um erweiterte Berechtigungen für eine bestimmte Website zu erteilen, öffnen Sie das Pop-up-Fenster und wählen Sie einen stärkeren Filtermodus wie »Optimal« oder »Vollständig«.
 
 Der Browser warnt Sie anschließend über die Auswirkungen der zusätzlichen Berechtigungen, die von der Erweiterung für die aktuelle Website angefordert werden, und Sie können entscheiden, ob Sie zustimmen oder ablehnen.
 
 Wenn Sie die Anfrage von uBOL nach zusätzlichen Berechtigungen für die aktuelle Website zustimmen, kann uBOL die Inhalte für die aktuelle Website besser filtern.
 
-Sie können den Standardfiltermodus in den Optionen von uBOL festlegen. Wenn Sie den Modus „Optimal” oder „Vollständig” als Standardmodus wählen, müssen Sie uBOL die Berechtigung erteilen, Daten auf allen Websites lesen und ändern zu dürfen.
+Sie können den Standardfiltermodus in den Optionen von uBOL festlegen. Wenn Sie den Modus »Optimal« oder »Vollständig« als Standardmodus wählen, müssen Sie uBOL die Berechtigung erteilen, Daten auf allen Websites lesen und ändern zu dürfen.
 
 Denken Sie daran, dass sich dieses Projekt noch in Entwicklung befindet und folgende Ziele verfolgt:
 

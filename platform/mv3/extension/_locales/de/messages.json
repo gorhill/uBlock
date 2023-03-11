@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Experimenteller Inhaltsblocker, der ohne Berechtigungen auskommt. Blockiert Werbung, Tracker & mehr sofort nach der Installation.",
+    "message": "Experimenteller Inhaltsblocker, der ohne Berechtigungen auskommt. Blockiert Werbung, Tracker und mehr sofort nach der Installation.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -60,23 +60,23 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Element-Entfernungsmodus starten",
+    "message": "Element temporär entfernen",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Element-Auswahlmodus starten",
+    "message": "Element dauerhaft entfernen",
     "description": "English: Enter element picker mode"
   },
   "popupTipReport": {
-    "message": "Ein Problem auf dieser Website melden",
+    "message": "Ein Problem mit dieser Website melden",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipSaveRules": {
-    "message": "Hier klicken, um Ihre Änderungen dauerhaft zu übernehmen.",
+    "message": "Hier klicken, um die Änderungen dauerhaft zu übernehmen.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Hier klicken, um Ihre Änderungen rückgängig zu machen.",
+    "message": "Hier klicken, um die Änderungen rückgängig zu machen.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {
@@ -88,7 +88,7 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupRevokeGreatPowers": {
-    "message": "Klicken Sie hier, um erweiterte Berechtigungen für diese Website zu widerrufen.",
+    "message": "Hier klicken, um erweiterte Berechtigungen für diese Website zu widerrufen.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
@@ -216,7 +216,7 @@
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Änderungen anwenden",
+    "message": "Änderungen übernehmen",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
@@ -228,7 +228,7 @@
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "Sie haben soeben uBO Lite installiert. Sie können hier den Standardfiltermodus auswählen, der auf allen Websites angewendet werden soll.\n\nStandardmäßig ist der <em>einfache</em> Modus ausgewählt, da er keine Berechtigung zum Lesen und Ändern von Daten erfordert. Wenn Sie uBO Lite vertrauen, können Sie dieser Erweiterung eine weitreichende Berechtigung zum Lesen und Ändern von Daten auf allen Websites erteilen, um standardmäßig erweiterte Filterfunktionen für alle Websites zu aktivieren.",
+    "message": "Sie haben soeben uBO Lite installiert. Sie können hier den Standardfiltermodus auswählen, der auf allen Websites angewendet werden soll.\n\nStandardmäßig ist der <em>einfache</em> Modus ausgewählt, weil er keine Berechtigung zum Lesen und Ändern von Daten erfordert. Wenn Sie uBO Lite vertrauen, können Sie dieser Erweiterung eine weitreichende Berechtigung zum Lesen und Ändern von Daten auf allen Websites erteilen, um standardmäßig erweiterte Filterfunktionen für alle Websites zu aktivieren.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
@@ -240,7 +240,7 @@
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
-    "message": "keine Filterung",
+    "message": "nicht filtern",
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
@@ -256,15 +256,15 @@
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Einfache Netzwerkfilterung aus ausgewählten Filterlisten.\n\nErfordert keine Berechtigung zum Lesen und Ändern von Daten auf Websites.",
+    "message": "Einfaches Netzwerkfiltern aus gewählten Filterlisten.\n\nErfordert keine Berechtigung zum Lesen und Ändern von Daten auf Websites.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Erweiterte Netzwerkfilterung plus spezifisches erweitertes Filtern aus ausgewählten Filterlisten.\n\nErfordert eine weitreichende Berechtigung zum Lesen und Ändern von Daten auf allen Websites.",
+    "message": "Erweitertes Netzwerkfiltern plus spezifisches erweitertes Filtern aus ausgewählten Filterlisten.\n\nErfordert eine weitreichende Berechtigung zum Lesen und Ändern von Daten auf allen Websites.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Erweiterte Netzwerkfilterung plus spezifisches und generisches erweitertes Filtern aus ausgewählten Filterlisten.\n\nErfordert eine weitreichende Berechtigung zum Lesen und Ändern von Daten auf allen Websites.\n\nDie generische erweiterte Filterung kann zu einem höheren Ressourcenverbrauch der Website führen.",
+    "message": "Erweitertes Netzwerkfiltern plus spezifisches und allgemeines erweitertes Filtern aus gewählten Filterlisten.\n\nErfordert eine weitreichende Berechtigung zum Lesen und Ändern von Daten auf allen Websites.\n\nDas allgemeine erweiterte Filtern kann zu einem höheren Ressourcenverbrauch der Webseite führen.",
     "description": "This describes the 'complete' filtering mode"
   },
   "behaviorSectionLabel": {

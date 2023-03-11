@@ -380,7 +380,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Blocca elementi multimediali di dimensioni maggiori di {{input}} KB",
+    "message": "Blocca elementi multimediali maggiori di {{input}} KB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -1048,7 +1048,7 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Ripristina dal file...",
+    "message": "Ripristina configurazione",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {

@@ -116,11 +116,11 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Element-Entfernungsmodus starten",
+    "message": "Element temporär entfernen",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Element-Auswahlmodus starten",
+    "message": "Element dauerhaft entfernen",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Ein Problem auf dieser Website melden",
+    "message": "Ein Problem mit dieser Website melden",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -156,15 +156,15 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Kosmetische Filterung für diese Website ein-/ausschalten",
+    "message": "Kosmetisches Filtern für diese Website ein-/ausschalten",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Hier klicken, um die kosmetische Filterung auf dieser Website zu deaktivieren",
+    "message": "Hier klicken, um kosmetisches Filtern auf dieser Website zu deaktivieren",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Hier klicken, um die kosmetische Filterung auf dieser Website zu aktivieren",
+    "message": "Hier klicken, um kosmetisches Filtern auf dieser Website zu aktivieren",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -196,7 +196,7 @@
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
-    "message": "Kosmetische Filterung",
+    "message": "Kosmetisches Filtern",
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
@@ -224,11 +224,11 @@
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
-    "message": "Hier klicken, um Ihre Änderungen dauerhaft zu übernehmen.",
+    "message": "Hier klicken, um die Änderungen dauerhaft zu übernehmen.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Hier klicken, um Ihre Änderungen rückgängig zu machen.",
+    "message": "Hier klicken, um die Änderungen rückgängig zu machen.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {
@@ -356,7 +356,7 @@
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Prefetching (Vorabrufen von Webseiten) deaktivieren (um jede Verbindung für blockierte Netzwerkanfragen zu verhindern)",
+    "message": "Vorabruf von Webseiten deaktivieren (um jede Verbindung für blockierte Netzwerkanfragen zu verhindern)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
@@ -376,7 +376,7 @@
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "Kosmetische Filterung deaktivieren",
+    "message": "Kosmetisches Filtern deaktivieren",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
@@ -444,15 +444,15 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "Kosmetische Filter dienen dazu, Elemente auf einer Webseite auszublenden, die als visuell störend empfunden werden und nicht von den auf Netzwerkanforderungen basierenden Filter-Engines blockiert werden können.",
+    "message": "Kosmetische Filter dienen dazu, Elemente in einer Webseite auszublenden, die als visuell störend empfunden werden und die von den auf Netzwerkanfragen basierenden Filter-Engines nicht blockiert werden können.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
-    "message": "Generische kosmetische Filter ignorieren",
+    "message": "Allgemeine kosmetische Filter ignorieren",
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "Generische kosmetische Filter sind kosmetische Filter, die auf alle Websites angewendet werden sollen. Die Aktivierung dieser Option verhindert die Mehrbelastung des Arbeitsspeichers und der CPU, die durch die Verarbeitung generischer kosmetischer Filter auf Websites entsteht.\n\nEs wird empfohlen, diese Option auf weniger leistungsfähigen Geräten zu aktivieren.",
+    "message": "Allgemeine kosmetische Filter sind kosmetische Filter, die auf alle Websites angewendet werden sollen. Das Aktivieren dieser Option verhindert die Mehrbelastung des Arbeitsspeichers und der CPU, die durch das Verarbeiten allgemeiner kosmetischer Filter auf Websites entsteht.\n\nEs wird empfohlen, diese Option auf weniger leistungsfähigen Geräten zu aktivieren.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
@@ -464,7 +464,7 @@
     "description": "English: Lists of blocked hosts"
   },
   "3pApplyChanges": {
-    "message": "Änderungen anwenden",
+    "message": "Änderungen übernehmen",
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
@@ -544,11 +544,11 @@
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges": {
-    "message": "Änderungen anwenden",
+    "message": "Änderungen übernehmen",
     "description": "English: Apply changes"
   },
   "rulesPermanentHeader": {
-    "message": "Permanente Regeln",
+    "message": "Dauerhafte Regeln",
     "description": "header"
   },
   "rulesTemporaryHeader": {
@@ -588,11 +588,11 @@
     "description": "default file name to use"
   },
   "rulesHint": {
-    "message": "Liste Ihrer dynamischen Filterregeln.",
+    "message": "Liste eigener dynamischer Filterregeln.",
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
-    "message": "Regel-Syntax: <code>Quelle Ziel Typ Aktion</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>Ausführliche Dokumentation</a>).",
+    "message": "Regelsyntax: <code>Quelle Ziel Typ Aktion</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>Ausführliche Dokumentation</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
@@ -628,7 +628,7 @@
     "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
-    "message": "Änderungen anwenden",
+    "message": "Änderungen übernehmen",
     "description": "English: Apply changes"
   },
   "logRequestsHeaderType": {
@@ -688,7 +688,7 @@
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "Protokollierungsfilterung ein-/ausschalten",
+    "message": "Protokollfilter ein-/ausschalten",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
@@ -696,7 +696,7 @@
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
-    "message": "Einstellungen der Protokollierungsfilterung",
+    "message": "Protokollfilteroptionen",
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {
@@ -780,15 +780,15 @@
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "{{action}} Netzwerkanfragen {{type}},{{br}}deren URL-Adresse mit {{url}} übereinstimmt{{br}}und von {{origin}} stammen,{{br}}{{importance}} ein übereinstimmender Ausnahmefilter existiert.",
+    "message": "Netzwerkanfragen {{type}} {{action}},{{br}}deren URL-Adresse mit {{url}} übereinstimmt{{br}}und von {{origin}} stammen,{{br}}{{importance}} ein übereinstimmender Ausnahmefilter existiert.",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
-    "message": "Blockiere",
+    "message": "blockieren",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAllow": {
-    "message": "Erlaube",
+    "message": "erlauben",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType": {
@@ -824,7 +824,7 @@
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
-    "message": "Protokolleinträge, die nicht alle der drei folgenden Bedingungen erfüllen, werden automatisch verworfen:",
+    "message": "Protokolleinträge werden automatisch verworfen, wenn sie nicht alle der drei folgenden Bedingungen erfüllen:",
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
@@ -912,7 +912,7 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Melden Sie Filterprobleme mit spezifischen Websites an den <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> Issue Tracker</span>. <u>Erfordert einen GitHub-Account.</u>",
+    "message": "Bitte melden Sie Filterprobleme mit bestimmten Websites an den <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> Issue Tracker</span>. <u>Erfordert ein GitHub-Konto.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
@@ -928,7 +928,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Melden Sie Fehler von uBlock Origin selbst an den <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> Issue Tracker</span>. <u>Erfordert einen GitHub-Account.</u>",
+    "message": "Bitte melden Sie Probleme mit uBlock Origin an den <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> Issue Tracker</span>. <u>Erfordert ein GitHub-Konto.</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
@@ -936,11 +936,11 @@
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "Im Folgenden finden Sie technische Informationen, die nützlich sein können, wenn Freiwillige versuchen, Ihnen bei der Lösung eines Problems zu helfen.",
+    "message": "Im Folgenden sind einige technische Informationen aufgeführt, die nützlich sein können, wenn Freiwillige versuchen, bei der Lösung eines Problems zu helfen.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Wichtig:</b> Potenziell private oder sensible Informationen werden standardmäßig geschwärzt. Redigierte Informationen können die Lösung eines Problems erschweren.",
+    "message": "<b>Wichtig:</b> Potenziell private oder sensible Informationen werden standardmäßig geschwärzt. Ungeschwärzte Informationen können die Lösung eines Problems erschweren.",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
@@ -948,7 +948,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Um die Freiwilligen nicht mit doppelten Meldungen zu belasten, vergewissern Sie sich bitte, ob das Problem nicht schon einmal gemeldet wurde.",
+    "message": "Um die Freiwilligen nicht mit doppelten Meldungen zu belasten, vergewissern Sie sich bitte, dass das Problem nicht schon einmal gemeldet wurde.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -976,7 +976,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Enthält Datenschutzprobleme",
+    "message": "Hat Datenschutzprobleme",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
@@ -988,7 +988,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Kennzeichnen Sie die Webseite als „NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">„Nicht zur Ansicht bzw. Verwendung am Arbeitsplatz geeignet”</a>)",
+    "message": "Webseite als »NSFW« kennzeichnen (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">»Unpassend für den Arbeitsplatz«</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
@@ -1144,7 +1144,7 @@
     "description": "English: Close this window"
   },
   "docblockedDontWarn": {
-    "message": "Nicht noch einmal vor dieser Seite warnen",
+    "message": "Nicht erneut vor dieser Seite warnen",
     "description": "Label for checkbox in document-blocked page"
   },
   "docblockedProceed": {
@@ -1156,7 +1156,7 @@
     "description": "English: Temporarily"
   },
   "docblockedDisablePermanent": {
-    "message": "Permanent",
+    "message": "Dauerhaft",
     "description": "English: Permanently"
   },
   "docblockedDisable": {
@@ -1184,7 +1184,7 @@
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
-    "message": "Warnung! Die Veränderung dieser erweiterten Einstellungen erfolgt auf eigenes Risiko.",
+    "message": "Warnung! Das Ändern der erweiterten Einstellungen erfolgt auf eigenes Risiko.",
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {
@@ -1192,7 +1192,7 @@
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Änderungen anwenden",
+    "message": "Änderungen übernehmen",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
@@ -1212,7 +1212,7 @@
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
-    "message": "Vorübergehend große Medienelemente erlauben",
+    "message": "Große Medienelemente temporär erlauben",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
@@ -1232,7 +1232,7 @@
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleCosmeticFiltering": {
-    "message": "Kosmetische Filterung ein-/ausschalten",
+    "message": "Kosmetisches Filtern ein-/ausschalten",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "relaxBlockingMode": {

@@ -112,7 +112,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
-    "message": "Клікніть, щоб відкрити панель керування",
+    "message": "Перейти до панелі керування",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
@@ -136,7 +136,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Натисніть, щоб заблокувати всі спливні вікна на цьому сайті",
+    "message": "Натисніть для блокування всіх спливних вікон на цьому сайті",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
@@ -148,11 +148,11 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Натисніть для блокування великих медіа-елементів на цьому сайті",
+    "message": "Натисніть для блокування великих медіаелементів на цьому сайті",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Натисніть для скасування блокування великих медіа-елементів на цьому сайті",
+    "message": "Натисніть для скасування блокування великих медіаелементів на цьому сайті",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -180,11 +180,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Натисніть, щоб повністю вимкнути JavaScript на цьому сайті",
+    "message": "Натисніть для вимкнення JavaScript на цьому сайті",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Натисніть, щоб припинити вимкнення JavaScript на цьому сайті",
+    "message": "Натисніть для скасування вимкнення JavaScript на цьому сайті",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
@@ -444,7 +444,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "Косметичні фільтри служать для приховування елементів на вебсторінці, які вважаються візуально незручними, і які не можуть бути заблоковані мережевими системами фільтрації запитів.",
+    "message": "Косметичні фільтри служать для приховування елементів на вебсторінці, які вважаються візуально неприємними та не можуть бути заблоковані мережевими механізмами фільтрації на основі запитів.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -452,7 +452,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Загальні косметичні фільтри — це косметичні фільтри, які застосовуються до всіх веб-сторінок.<p>Хоча й uBlock обробує фільтри ефективно, вони все одно можуть вимагати значну кількість ресурсів на деяких, особливо навантаженних сторінках.<p>Увімкнення цього параметра знизить споживання ресурсів на таких сторінках від застосування загальних косметичних фільтрів, а також знизить споживання пам'яті самого uBlock.<p>Рекомендується увімкнути цей параметр на слабких пристроях.",
+    "message": "Загальні косметичні фільтри - це ті косметичні фільтри, які призначені для застосування на всіх веб-сайтах. Увімкнення цієї опції усуне навантаження на пам'ять і процесор, що додається до веб-сторінок у результаті обробки загальних косметичних фільтрів.\n\nРекомендується вмикати цю опцію на менш потужних пристроях.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {

@@ -92,7 +92,7 @@
     "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
-    "message": "sedan installation",
+    "message": "sedan installationen",
     "description": "English: since install"
   },
   "popupOr": {
@@ -104,7 +104,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "Blockerat sedan installation",
+    "message": "Blockerad sedan installationen",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {

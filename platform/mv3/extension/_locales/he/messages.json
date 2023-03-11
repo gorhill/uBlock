@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "חסם תוכן ניסיוני נטול הרשאות. מיד עם ההתקנה החסם יחסום פרסומות, עוקבים, כורים ועוד.",
+    "message": "חוסם תוכן ניסיוני, ללא הרשאה. חוסם מודעות, עוקבים, כורים ועוד מיד עם ההתקנה.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -44,7 +44,7 @@
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
-    "message": "על אודות",
+    "message": "אודות",
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
@@ -52,7 +52,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupPowerSwitchInfo": {
-    "message": "איפשור/השבתת uBO Lite באתר זה",
+    "message": "השבתה/הפעלה של uBO Lite עבור אתר זה",
     "description": "Tooltip for the main power button in the popup panel"
   },
   "popupTipDashboard": {
@@ -68,11 +68,11 @@
     "description": "English: Enter element picker mode"
   },
   "popupTipReport": {
-    "message": "דיווח על סוגיה באתר מרשתת זה",
+    "message": "דווח על בעיה באתר אינטרנט זה",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipSaveRules": {
-    "message": "הקשה לקיבוע השינויים שנעשו.",
+    "message": "לחץ על מנת להפוך את השינויים שלך לקבועים.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
@@ -108,7 +108,7 @@
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "צבע הטעמה מותאם אישית",
+    "message": "צבע הדגשה מותאם אישית",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsNoCSPReportsPrompt": {
@@ -116,7 +116,7 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "omnipotenceLabel": {
-    "message": "איפשור סינון מורחב בכל אתרי הרשת",
+    "message": "הפיכת סינון מורחב לזמין בכל אתרי האינטרנט",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "omnipotenceLegend": {
