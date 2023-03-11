@@ -2070,6 +2070,23 @@ dom.on(document, 'keydown', ev => {
         '.canDetails > span:not(:nth-of-type(4)):not(:nth-of-type(8))',
         ev => { toggleOn(ev); }
     );
+
+    dom.on(
+        '#netInspector',
+        'click',
+        '.logEntry > div > span:nth-of-type(8) a',
+        ev => {
+            vAPI.messaging.send('codeViewer', {
+                what: 'gotoURL',
+                details: {
+                    url: ev.target.getAttribute('href'),
+                    select: true,
+                },
+            });
+            ev.preventDefault();
+            ev.stopPropagation();
+        }
+    );
 })();
 
 /******************************************************************************/
