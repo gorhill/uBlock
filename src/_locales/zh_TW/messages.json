@@ -1215,6 +1215,10 @@
     "message": "暫時允許大型媒體元素",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
+  "contextMenuViewSource": {
+    "message": "View source…",
+    "description": "A context menu entry, to view the source code of the target resource"
+  },
   "shortcutCapturePlaceholder": {
     "message": "輸入快捷鍵",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"

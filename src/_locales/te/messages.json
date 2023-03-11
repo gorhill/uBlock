@@ -1215,6 +1215,10 @@
     "message": "భారి దృశ్య/శ్రవణ అంశాలను తాత్కాలికంగా అనుమతించు",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
+  "contextMenuViewSource": {
+    "message": "View source…",
+    "description": "A context menu entry, to view the source code of the target resource"
+  },
   "shortcutCapturePlaceholder": {
     "message": "షార్ట్కట్ టైప్ చేయండి",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"

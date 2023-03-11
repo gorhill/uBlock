@@ -1215,6 +1215,10 @@
     "message": "தற்காலிகமாகப் பெரிய ஒலி‍-ஒளி-படத்தொகுப்புகளின் கூறுகளை அனுமதி",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
+  "contextMenuViewSource": {
+    "message": "View source…",
+    "description": "A context menu entry, to view the source code of the target resource"
+  },
   "shortcutCapturePlaceholder": {
     "message": "குறுக்குவழியைத் தட்டச்சு செய்க",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"

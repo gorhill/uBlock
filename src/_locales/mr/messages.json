@@ -1215,6 +1215,10 @@
     "message": "Temporarily allow large media elements",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
+  "contextMenuViewSource": {
+    "message": "View source…",
+    "description": "A context menu entry, to view the source code of the target resource"
+  },
   "shortcutCapturePlaceholder": {
     "message": "Type a shortcut",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"

@@ -1215,6 +1215,10 @@
     "message": "সাময়িকভাবে বৃহৎ মিডিয়া উপাদান মঞ্জুরি দিন",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
+  "contextMenuViewSource": {
+    "message": "View source…",
+    "description": "A context menu entry, to view the source code of the target resource"
+  },
   "shortcutCapturePlaceholder": {
     "message": "শর্টকাট লিখুন",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"

@@ -1215,6 +1215,10 @@
     "message": "कुछ समय के लिए विशाल तत्वोंको चलने की अनुमति दे",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
+  "contextMenuViewSource": {
+    "message": "View source…",
+    "description": "A context menu entry, to view the source code of the target resource"
+  },
   "shortcutCapturePlaceholder": {
     "message": "शॉर्टकट को टाइप करें ",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
