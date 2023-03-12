@@ -26,6 +26,7 @@
 /******************************************************************************/
 
 import { dom, qs$ } from './dom.js';
+import { getActualTheme } from './theme.js';
 
 /******************************************************************************/
 
@@ -45,10 +46,14 @@ const cmEditor = new CodeMirror(qs$('#content'), {
 });
 
 uBlockDashboard.patchCodeMirrorEditor(cmEditor);
-if ( dom.cl.has(dom.html, 'dark') ) {
-    dom.cl.add('#content .cm-s-default', 'cm-s-night');
-    dom.cl.remove('#content .cm-s-default', 'cm-s-default');
-}
+
+vAPI.messaging.send('dom', { what: 'uiStyles' }).then(response => {
+    if ( typeof response !== 'object' || response === null ) { return; }
+    if ( getActualTheme(response.uiTheme) === 'dark' ) {
+        dom.cl.add('#content .cm-s-default', 'cm-s-night');
+        dom.cl.remove('#content .cm-s-default', 'cm-s-default');
+    }
+});
 
 // Convert resource URLs into clickable links to code viewer
 cmEditor.addOverlay({

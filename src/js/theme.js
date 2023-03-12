@@ -21,8 +21,9 @@
 
 'use strict';
 
-function setTheme(theme, propagate = false) {
-    if ( theme === 'auto' ) {
+function getActualTheme(nominalTheme) {
+    let theme = nominalTheme || 'light';
+    if ( nominalTheme === 'auto' ) {
         if ( typeof self.matchMedia === 'function' ) {
             const mql = self.matchMedia('(prefers-color-scheme: dark)');
             theme = mql instanceof Object && mql.matches === true
@@ -32,6 +33,11 @@ function setTheme(theme, propagate = false) {
             theme = 'light';
         }
     }
+    return theme;
+}
+
+function setTheme(theme, propagate = false) {
+    theme = getActualTheme(theme);
     let w = self;
     for (;;) {
         const rootcl = w.document.documentElement.classList;
@@ -139,6 +145,7 @@ function setAccentColor(
 }
 
 export {
+    getActualTheme,
     setTheme,
     setAccentColor,
 };
