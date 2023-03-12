@@ -1668,7 +1668,6 @@
 })();
 
 
-
 /// xml-prune.js
 (function() {
     let selector = '{{1}}';
@@ -1739,7 +1738,6 @@
 })();
 
 
-
 /// m3u-prune.js
 // https://en.wikipedia.org/wiki/M3U
 (function() {
@@ -1753,7 +1751,12 @@
     }
     const regexFromArg = arg => {
         if ( arg === '' ) { return /^/; }
-        if ( /^\/.*\/$/.test(arg) ) { return new RegExp(arg.slice(1, -1)); }
+        const match = /^\/(.+)\/([gms]*)$/.exec(arg);
+        if ( match !== null ) {
+            let flags = match[2] || '';
+            if ( flags.includes('m') ) { flags += 's'; }
+            return new RegExp(match[1], flags);
+        }
         return new RegExp(
             arg.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*+/g, '.*?')
         );
@@ -1790,6 +1793,22 @@
     };
     const pruner = text => {
         if ( (/^\s*#EXTM3U/.test(text)) === false ) { return text; }
+        if ( reM3u.multiline ) {
+            reM3u.lastIndex = 0;
+            for (;;) {
+                const match = reM3u.exec(text);
+                if ( match === null ) { break; }
+                const before = text.slice(0, match.index);
+                if ( before.length === 0 || /[\n\r]+\s*$/.test(before) ) {
+                    const after = text.slice(match.index + match[0].length);
+                    if ( after.length === 0 || /^\s*[\n\r]+/.test(after) ) {
+                        text = before.trim() + '\n' + after.trim();
+                        reM3u.lastIndex = before.length + 1;
+                    }
+                }
+                if ( reM3u.global === false ) { break; }
+            }
+        }
         const lines = text.split(/\n\r|\n|\r/);
         for ( let i = 0; i < lines.length; i++ ) {
             if ( lines[i] === undefined ) { continue; }
@@ -1839,7 +1858,6 @@
         }
     });
 })();
-
 
 
 /// href-sanitizer.js
