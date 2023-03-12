@@ -1096,7 +1096,7 @@ export class AstFilterParser {
         let anchorBeg = this.indexOfNetAnchor(parentStr, patternBeg);
         if ( anchorBeg === -1 ) { return 0; }
         anchorBeg += parentBeg;
-        if ( anchorBeg !== parentStr.length ) {
+        if ( anchorBeg !== parentEnd ) {
             tail = this.allocTypedNode(
                 NODE_TYPE_NET_OPTIONS_ANCHOR,
                 anchorBeg,
