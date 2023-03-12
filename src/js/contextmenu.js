@@ -191,7 +191,6 @@ const menuEntries = {
         title: i18n$('contextMenuViewSource'),
         contexts: [ 'page', 'frame', 'link' ],
         documentUrlPatterns: [ 'http://*/*', 'https://*/*' ],
-        targetUrlPatterns: [ 'http://*/*', 'https://*/*' ],
     },
 };
 
