@@ -150,6 +150,10 @@ function updatePastURLs(url) {
 /******************************************************************************/
 
 async function setURL(resourceURL) {
+    // For convenience, remove potentially existing quotes around the URL
+    if ( /^(["']).+\1$/.test(resourceURL) ) {
+        resourceURL = resourceURL.slice(1, -1);
+    }
     const input = qs$('#header input[type="url"]');
     let to;
     try {
@@ -174,7 +178,8 @@ async function setURL(resourceURL) {
     cmEditor.setOption('mode', r.mime || '');
     cmEditor.setValue(r.text);
     updatePastURLs(to.href);
-    cmEditor.focus();
+    // For unknown reasons, calling focus() synchronously does not work...
+    vAPI.setTimeout(( ) => { cmEditor.focus(); }, 1);
 }
 
 /******************************************************************************/
