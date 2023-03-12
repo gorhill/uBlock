@@ -256,15 +256,15 @@
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Perustason verkkosuodatus valikoiduilla suodatinlistoilla.\n\nEi edellytä sivustojen tietojen luku- ja muokkausoikeutta.",
+    "message": "Perustason verkkosuodatus valituilla suodatinlistoilla.\n\nEi edellytä sivustojen tietojen luku- ja muokkausoikeutta.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Edistynyt verkkosuodatus sekä kohdistettu laajempi suodatus valikoiduilla suodatinlistoilla.\n\nEdellyttää kaikki sivustot kattavan, laajemman tietojen luku- ja muokkausoikeuden myöntöä.",
+    "message": "Edistynyt verkkosuodatus sekä kohdistettu laajempi suodatus valituilla suodatinlistoilla.\n\nEdellyttää kaikki sivustot kattavan, laajemman tietojen luku- ja muokkausoikeuden.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Edistynyt verkkosuodatus sekä kohdistettu ja yleinen laajempi suodatus valikoiduilla suodatinlistoilla.\n\nEdellyttää kaikki sivustot kattavan, laajemman tietojen luku- ja muokkausoikeuden myöntöä.\n\nYleinen laajempi suodatus saattaa kasvattaa sivukohtaista resurssien käyttöä.",
+    "message": "Edistynyt verkkosuodatus sekä kohdistettu ja yleinen laajempi suodatus valituilla suodatinlistoilla.\n\nEdellyttää kaikki sivustot kattavan, laajemman tietojen luku- ja muokkausoikeuden.\n\nYleinen laajempi suodatus saattaa kasvattaa sivukohtaista resurssien käyttöä.",
     "description": "This describes the 'complete' filtering mode"
   },
   "behaviorSectionLabel": {

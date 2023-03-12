@@ -2,10 +2,10 @@ uBO Lite (uBOL) on MV3-l põhinev katsetusjärgus *lubadeta* sisutõkestaja.
 
 Tavaline reeglitekogum vastab uBlock Origini tavalisele filtritekogumile:
 
-- uBlock Origini sisseehitatud filtriteloendid
+- uBlock Origini sisseehitatud filtriloendid
 - EasyList
 - EasyPrivacy
-Peter Lowe'i reklaamides ja jälitamisserverite loend
+Peter Lowe'i reklaamide ja jälitusserverite loend
 
 Reeglitekogumeid saate lisada valikute lehelt ehk avanenud paneelis klõpsake _Cogs_ ikooni.
 
