@@ -63,7 +63,6 @@ const hiddenSettingsDefault = {
     cnameIgnoreRootDocument: true,
     cnameMaxTTL: 120,
     cnameReplayFullURL: false,
-    cnameUncloak: true,
     cnameUncloakProxied: false,
     consoleLogLevel: 'unset',
     debugScriptlets: false,

@@ -52,7 +52,6 @@ let filteredLoggerEntryVoidedCount = 0;
 let popupLoggerBox;
 let popupLoggerTooltips;
 let activeTabId = 0;
-let filterAuthorMode = false;
 let selectedTabId = 0;
 let netInspectorPaused = false;
 let cnameOfEnabled = false;
@@ -1111,8 +1110,6 @@ const onLogBufferRead = function(response) {
         synchronizeTabIds(response.tabIds);
         allTabIdsToken = response.tabIdsToken;
     }
-
-    filterAuthorMode = response.filterAuthorMode === true;
 
     if ( activeTabIdChanged ) {
         pageSelectorFromURLHash();
