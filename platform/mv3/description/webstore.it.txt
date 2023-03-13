@@ -1,13 +1,13 @@
-uBO Lite (uBOL) è un blocco dei contenuti sperimentale basato su MV3 *senza autorizzazione*.
+uBO Lite (uBOL) *non richiede autorizzazioni* per bloccare i contenuti. È basato su un sistema sperimentale di tipo MV3.
 
-Il set di regole predefinito corrisponde al set di filtri predefinito di uBlock Origin:
+L'insieme di regole predefinite corrisponde a quello di uBlock Origin:
 
-- Elenchi dei filtri integrati di uBlock Origin
+- Elenco dei filtri integrati in uBlock Origin
 - EasyList
 - EasyPrivacy
-- Elenco dei server pubblicitari e di tracciamento di Peter Lowe
+- Elenco dei server di tracciatura e pubblicità di Peter Lowe
 
-Puoi aggiungere altri set di regole visitando la pagina delle opzioni: fai clic sull'icona _Cogs_ nel pannello a comparsa.
+Puoi aggiungere altre regole nella pagina delle opzioni. Clicca sull'icona _Ingranaggi_ nel pannello a comparsa.
 
 uBOL è interamente dichiarativo ovvero non è necessario un processo uBOL permanente per eseguire il filtraggio e il filtraggio dei contenuti CSS/JS inietattai viene eseguito in modo affidabile dal browser stesso piuttosto che dall'estensione. Ciò significa che lo stesso uBOL non consuma risorse di CPU/memoria mentre il blocco dei contenuti è in corso: il processo di lavoro di servizio di uBOL è richiesto _solo_ quando interagisci con il pannello popup o le pagine delle opzioni.
 
