@@ -23,6 +23,16 @@ body {
 #header:focus-within #pastURLs {
     display: flex;
     }
+#currentURL {
+    display: flex;
+    gap: 0.5rem;
+    }
+#currentURL > .fa-icon {
+    padding: 0 0.5rem;
+    }
+#currentURL > .fa-icon:hover {
+    background-color: var(--surface-3);
+    }
 #pastURLs {
     background-color: var(--surface-0);
     border: 1px solid var(--border-1);
