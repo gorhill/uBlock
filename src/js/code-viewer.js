@@ -105,9 +105,9 @@ async function fetchResource(url) {
         response = await fetch(url, fetchOptions);
         text = await response.text();
     } catch(reason) {
-        text = reason;
+        text = String(reason);
     }
-    let mime = response.headers.get('Content-Type') || '';
+    let mime = response && response.headers.get('Content-Type') || '';
     mime = mime.replace(/\s*;.*$/, '').trim();
     const beautifierOptions = {
         'end_with_newline': true,
