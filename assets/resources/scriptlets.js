@@ -1981,6 +1981,34 @@
 })();
 
 
+/// call-nothrow.js
+(function() {
+    const chain = '{{1}}';
+    if ( chain === '' || chain === '{{1}}' ) { return; }
+    const parts = chain.split('.');
+    let owner = window, prop;
+    for (;;) {
+        prop = parts.shift();
+        if ( parts.length === 0 ) { break; }
+        owner = owner[prop];
+        if ( owner instanceof Object === false ) { return; }
+    }
+    if ( prop === '' ) { return; }
+    const fn = owner[prop];
+    if ( typeof fn !== 'function' ) { return; }
+    owner[prop] = new Proxy(fn, {
+        apply: function(...args) {
+            let r;
+            try {
+                r = Reflect.apply(...args);
+            } catch(ex) {
+            }
+            return r;
+        },
+    });
+})();
+
+
 // These lines below are skipped by the resource parser.
 // <<<< end of private namespace
 })();
