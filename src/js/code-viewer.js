@@ -94,15 +94,22 @@ urlToDocMap.set('', cmEditor.getDoc());
 
 async function fetchResource(url) {
     let response, text;
+    const fetchOptions = {
+        method: 'GET',
+        referrer: '',
+    };
+    if ( urlToDocMap.has(url) ) {
+        fetchOptions.cache = 'reload';
+    }
     try {
-        response = await fetch(url);
+        response = await fetch(url, fetchOptions);
         text = await response.text();
     } catch(reason) {
-        return;
+        text = reason;
     }
     let mime = response.headers.get('Content-Type') || '';
     mime = mime.replace(/\s*;.*$/, '').trim();
-    const options = {
+    const beautifierOptions = {
         'end_with_newline': true,
         'indent_size': 2,
         'html': {
@@ -112,26 +119,25 @@ async function fetchResource(url) {
         },
         'js': {
             'indent_size': 4,
-            'preserve-newlines': true,
         },
     };
     switch ( mime ) {
         case 'text/css':
-            text = beautifier.css(text, options);
+            text = beautifier.css(text, beautifierOptions);
             break;
         case 'text/html':
         case 'application/xhtml+xml':
         case 'application/xml':
         case 'image/svg+xml':
-            text = beautifier.html(text, options);
+            text = beautifier.html(text, beautifierOptions);
             break;
         case 'text/javascript':
         case 'application/javascript':
         case 'application/x-javascript':
-            text = beautifier.js(text, options);
+            text = beautifier.js(text, beautifierOptions);
             break;
         case 'application/json':
-            text = beautifier.js(text, options);
+            text = beautifier.js(text, beautifierOptions);
             break;
         default:
             break;
@@ -200,8 +206,9 @@ async function setURL(resourceURL) {
     if ( afterDoc === undefined ) {
         const r = await fetchResource(afterURL) || { mime: '', text: '' };
         afterDoc = new CodeMirror.Doc(r.text, r.mime || '');
+        urlToDocMap.set(afterURL, afterDoc);
     }
-    urlToDocMap.set(currentURL, cmEditor.swapDoc(afterDoc));
+    cmEditor.swapDoc(afterDoc);
     currentURL = afterURL;
     setInputURL(afterURL);
     const a = qs$('.cm-search-widget .sourceURL');
@@ -237,20 +244,41 @@ function removeURL(url) {
 
 /******************************************************************************/
 
-setURL(params.get('url'));
+async function start() {
+    await setURL(params.get('url'));
 
-dom.on('#header input[type="url"]', 'change', ev => {
-    setURL(ev.target.value);
-});
+    dom.on('#header input[type="url"]', 'change', ev => {
+        setURL(ev.target.value);
+    });
 
-dom.on('#removeURL', 'click', ( ) => {
-    removeURL(qs$('#header input[type="url"]').value);
-});
+    dom.on('#reloadURL', 'click', ( ) => {
+        const input = qs$('#header input[type="url"]');
+        const url = input.value;
+        const beforeDoc = cmEditor.swapDoc(new CodeMirror.Doc('', ''));
+        fetchResource(url).then(r => {
+            if ( urlToDocMap.has(url) === false ) { return; }
+            const afterDoc = r !== undefined
+                ? new CodeMirror.Doc(r.text, r.mime || '')
+                : beforeDoc;
+            urlToDocMap.set(url, afterDoc);
+            if ( currentURL !== url ) { return; }
+            cmEditor.swapDoc(afterDoc);
+        });
+    });
 
-dom.on('#pastURLs', 'mousedown', 'span', ev => {
-    setURL(ev.target.textContent);
-});
+    dom.on('#removeURL', 'click', ( ) => {
+        removeURL(qs$('#header input[type="url"]').value);
+    });
 
-dom.on('#content', 'click', '.cm-href', ev => {
-    setURL(ev.target.textContent);
-});
+    dom.on('#pastURLs', 'mousedown', 'span', ev => {
+        setURL(ev.target.textContent);
+    });
+
+    dom.on('#content', 'click', '.cm-href', ev => {
+        setURL(ev.target.textContent);
+    });
+}
+
+start();
+
+/******************************************************************************/
