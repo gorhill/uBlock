@@ -3873,6 +3873,7 @@ export const utils = (( ) => {
     const preparserTokens = new Map([
         [ 'ext_ublock', 'ublock' ],
         [ 'ext_ubol', 'ubol' ],
+        [ 'ext_devbuild', 'devbuild' ],
         [ 'env_chromium', 'chromium' ],
         [ 'env_edge', 'edge' ],
         [ 'env_firefox', 'firefox' ],
