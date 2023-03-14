@@ -52,6 +52,39 @@ const scriptlet = (
     cValue = ''
 ) => {
     if ( chain === '' ) { return; }
+    const trappedProp = (( ) => {
+        const pos = chain.lastIndexOf('.');
+        if ( pos === -1 ) { return chain; }
+        return chain.slice(pos+1);
+    })();
+    if ( trappedProp === '' ) { return; }
+    const objectDefineProperty = Object.defineProperty.bind(Object);
+    const cloakFunc = fn => {
+        objectDefineProperty(fn, 'name', { value: trappedProp });
+        const proxy = new Proxy(fn, {
+            defineProperty(target, prop) {
+                if ( prop !== 'toString' ) {
+                    return Reflect.deleteProperty(...arguments);
+                }
+                return true;
+            },
+            deleteProperty(target, prop) {
+                if ( prop !== 'toString' ) {
+                    return Reflect.deleteProperty(...arguments);
+                }
+                return true;
+            },
+            get(target, prop) {
+                if ( prop === 'toString' ) {
+                    return function() {
+                        return `function ${trappedProp}() { [native code] }`;
+                    }.bind(null);
+                }
+                return Reflect.get(...arguments);
+            },
+        });
+        return proxy;
+    };
     if ( cValue === 'undefined' ) {
         cValue = undefined;
     } else if ( cValue === 'false' ) {
@@ -67,11 +100,11 @@ const scriptlet = (
     } else if ( cValue === '{}' ) {
         cValue = {};
     } else if ( cValue === 'noopFunc' ) {
-        cValue = function(){};
+        cValue = cloakFunc(function(){});
     } else if ( cValue === 'trueFunc' ) {
-        cValue = function(){ return true; };
+        cValue = cloakFunc(function(){ return true; });
     } else if ( cValue === 'falseFunc' ) {
-        cValue = function(){ return false; };
+        cValue = cloakFunc(function(){ return false; });
     } else if ( /^\d+$/.test(cValue) ) {
         cValue = parseFloat(cValue);
         if ( isNaN(cValue) ) { return; }
@@ -104,7 +137,7 @@ const scriptlet = (
             }
         }
         try {
-            Object.defineProperty(owner, prop, {
+            objectDefineProperty(owner, prop, {
                 configurable,
                 get() {
                     if ( prevGetter !== undefined ) {
