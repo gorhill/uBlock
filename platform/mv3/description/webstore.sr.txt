@@ -11,20 +11,20 @@ uBO Lite (uBOL) је експериментални *без дозвола* бл
 
 uBOL је потпуно декларативан, што значи да нема потребе за трајним uBOL процесом да би дошло до филтрирања, а филтрирање садржаја засновано на убацивању CSS/JS се обавља поуздано од стране самог прегледача, а не проширења. То значи да сам uBOL не троши CPU/меморијске ресурсе док је блокирање садржаја у току -- сервисни радни процес uBOL-а је потребан _само_ када ступите у интеракцију са искачућим панелом или страницама опција.
 
-uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read and modify data" permissions at install time.
+uBOL не захтева широку дозволу за „читање и измену података” у тренутку инсталације, стога су његове ограничене могућности ван оквира у поређењу са uBlock Origin-ом или другим блокаторима садржаја који захтевају широке дозволе за „читање и измену података” у тренутку инсталације.
 
-However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
+Међутим, uBOL вам омогућује да *експлицитно* доделите проширене дозволе на одређеним сајтовима по вашем избору тако да може боље да филтрира те сајтове користећи козметичко филтрирање и ињекције скриптлета.
 
-To grant extended permissions on a given site, open the popup panel and pick a higher filtering mode such as Optimal or Complete.
+Да бисте доделили проширене дозволе за дати сајт, отворите искачући панел и изаберите виши режим филтрирања, као што је Оптимално или Комплетно.
 
-The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request.
+Прегледач ће вас тада упозорити на ефекте давања додатних дозвола које захтева проширење на тренутном сајту, а ви ћете морати да кажете прегледачу да ли прихватате или одбијате захтев.
 
-If you accept uBOL's request for additional permissions on the current site, it will be able to better filter content for the current site.
+Ако прихватите uBOL-ов захтев за додатне дозволе на тренутном сајту, он ће моћи боље да филтрира садржај за тренутни сајт.
 
-You can set the default filtering mode from uBOL's options page. If you pick the Optimal or Complete mode as the default one, you will need to grant uBOL the permission to read and modify data on all websites.
+Можете подесити подразумевани режим филтрирања на uBOL-овој страници са опцијама. Ако изаберете режим Оптимално или Комплетно као подразумевани, мораћете да доделите uBOL-у дозволу да чита и мења податке на свим веб сајтовима.
 
-Keep in mind this is still a work in progress, with these end goals:
+Имајте на уму да је ово још увек рад у току, са овим крајњим циљевима:
 
-- No broad host permissions at install time -- extended permissions are granted explicitly by the user on a per-site basis.
+– Нема широких дозвола за хост у тренутку инсталације – проширене дозволе се експлицитно додељују од стране корисника на основу сваког сајта.
 
-- Entirely declarative for reliability and CPU/memory efficiency.
+- Потпуно декларативан за поузданост и ефикасност CPU/меморије.
