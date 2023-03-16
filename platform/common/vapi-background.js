@@ -1231,10 +1231,16 @@ vAPI.Net = class {
         if ( this.suspendableListener !== undefined ) {
             return this.suspendableListener(details);
         }
+        if ( this.unprocessedRequestCount === 0 ) {
+            vAPI.setDefaultIcon('-loading');
+        }
         this.unprocessedRequestCount += 1;
     }
     setSuspendableListener(listener) {
         this.suspendableListener = listener;
+        if ( this.unprocessedRequestCount !== 0 ) {
+            vAPI.setDefaultIcon('');
+        }
     }
     removeListener(which, clientListener) {
         const actualListener = this.listenerMap.get(clientListener);

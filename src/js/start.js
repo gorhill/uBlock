@@ -29,8 +29,6 @@ import './vapi-common.js';
 import './vapi-background.js';
 import './vapi-background-ext.js';
 
-vAPI.setDefaultIcon('-loading'); // Do this as soon as possible
-
 /******************************************************************************/
 
 // The following modules are loaded here until their content is better organized
@@ -461,8 +459,6 @@ if ( selfieIsValid !== true ) {
 // https://github.com/uBlockOrigin/uBlock-issues/issues/974
 //   This can be used to defer filtering decision-making.
 µb.readyToFilter = true;
-
-vAPI.setDefaultIcon('');
 
 // Start network observers.
 webRequest.start();
