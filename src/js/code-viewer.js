@@ -208,7 +208,7 @@ async function setURL(resourceURL) {
         afterDoc = new CodeMirror.Doc(r.text, r.mime || '');
         urlToDocMap.set(afterURL, afterDoc);
     }
-    cmEditor.swapDoc(afterDoc);
+    swapDoc(afterDoc);
     currentURL = afterURL;
     setInputURL(afterURL);
     const a = qs$('.cm-search-widget .sourceURL');
@@ -244,6 +244,20 @@ function removeURL(url) {
 
 /******************************************************************************/
 
+function swapDoc(doc) {
+    const r = cmEditor.swapDoc(doc);
+    if ( self.searchThread ) {
+        self.searchThread.setHaystack(cmEditor.getValue());
+    }
+    const input = qs$('.cm-search-widget-input input[type="search"]');
+    if ( input.value !== '' ) {
+        qs$('.cm-search-widget').dispatchEvent(new Event('input'));
+    }
+    return r;
+}
+
+/******************************************************************************/
+
 async function start() {
     await setURL(params.get('url'));
 
@@ -254,7 +268,7 @@ async function start() {
     dom.on('#reloadURL', 'click', ( ) => {
         const input = qs$('#header input[type="url"]');
         const url = input.value;
-        const beforeDoc = cmEditor.swapDoc(new CodeMirror.Doc('', ''));
+        const beforeDoc = swapDoc(new CodeMirror.Doc('', ''));
         fetchResource(url).then(r => {
             if ( urlToDocMap.has(url) === false ) { return; }
             const afterDoc = r !== undefined
@@ -262,7 +276,7 @@ async function start() {
                 : beforeDoc;
             urlToDocMap.set(url, afterDoc);
             if ( currentURL !== url ) { return; }
-            cmEditor.swapDoc(afterDoc);
+            swapDoc(afterDoc);
         });
     });
 
