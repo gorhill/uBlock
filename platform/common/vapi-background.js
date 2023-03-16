@@ -809,7 +809,7 @@ if ( webext.browserAction instanceof Object ) {
         }
     };
 
-    vAPI.setDefaultIcon = function(flavor) {
+    vAPI.setDefaultIcon = function(flavor, badge) {
         if ( browserAction.setIcon === undefined ) { return; }
         browserAction.setIcon({
             path: {
@@ -817,6 +817,7 @@ if ( webext.browserAction instanceof Object ) {
                 '32': `img/icon_32${flavor}.png`,
             }
         });
+        browserAction.setBadgeText({ text: badge });
     };
 }
 
@@ -1188,6 +1189,8 @@ vAPI.Net = class {
             this.denormalizeFilters({ urls: [ 'http://*/*', 'https://*/*' ] }),
             [ 'blocking' ]
         );
+
+        vAPI.setDefaultIcon('-loading', '');
     }
     setOptions(/* options */) {
     }
@@ -1231,16 +1234,11 @@ vAPI.Net = class {
         if ( this.suspendableListener !== undefined ) {
             return this.suspendableListener(details);
         }
-        if ( this.unprocessedRequestCount === 0 ) {
-            vAPI.setDefaultIcon('-loading');
-        }
-        this.unprocessedRequestCount += 1;
+        this.onUnprocessedRequest();
     }
     setSuspendableListener(listener) {
         this.suspendableListener = listener;
-        if ( this.unprocessedRequestCount !== 0 ) {
-            vAPI.setDefaultIcon('');
-        }
+        vAPI.setDefaultIcon('', '');
     }
     removeListener(which, clientListener) {
         const actualListener = this.listenerMap.get(clientListener);
@@ -1255,6 +1253,12 @@ vAPI.Net = class {
         };
         this.listenerMap.set(clientListener, actualListener);
         return actualListener;
+    }
+    onUnprocessedRequest() {
+        if ( this.unprocessedRequestCount === 0 ) {
+            vAPI.setDefaultIcon('-loading', '!');
+        }
+        this.unprocessedRequestCount += 1;
     }
     suspendOneRequest() {
     }
