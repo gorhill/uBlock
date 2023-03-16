@@ -110,16 +110,11 @@ async function fetchResource(url) {
     let mime = response && response.headers.get('Content-Type') || '';
     mime = mime.replace(/\s*;.*$/, '').trim();
     const beautifierOptions = {
-        'end_with_newline': true,
-        'indent_size': 2,
-        'html': {
-            'js': {
-                'indent_size': 4,
-            },
-        },
-        'js': {
-            'indent_size': 4,
-        },
+        end_with_newline: true,
+        indent_size: 3,
+        js: {
+            max_preserve_newlines: 3,
+        }
     };
     switch ( mime ) {
         case 'text/css':
