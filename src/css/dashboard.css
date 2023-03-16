@@ -7,6 +7,9 @@ html, body {
     position: relative;
     width: 100vw;
     }
+body.notReady {
+    display: none;
+    }
 #dashboard-nav {
     border: 0;
     border-bottom: 1px solid var(--border-1);

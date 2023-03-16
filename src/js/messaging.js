@@ -312,6 +312,10 @@ const onMessage = function(request, sender, callback) {
         µb.openNewTab(request.details);
         break;
 
+    case 'readyToFilter':
+        response = µb.readyToFilter;
+        break;
+
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1954
     //   In case of document-blocked page, navigate to blocked URL instead
     //   of forcing a reload.
