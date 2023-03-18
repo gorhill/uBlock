@@ -772,7 +772,10 @@ if ( webext.browserAction instanceof Object ) {
         const tab = await vAPI.tabs.get(tabId);
         if ( tab === null ) { return; }
 
-        const { parts, state, badge, color } = details;
+        const { parts, state } = details;
+        const { badge, color } = vAPI.net && vAPI.net.hasUnprocessedRequest(tabId)
+                ? { badge: '!', color: '#FC0' }
+                : details;
 
         if ( browserAction.setIcon !== undefined ) {
             if ( parts === undefined || (parts & 0b0001) !== 0 ) {
@@ -1174,9 +1177,10 @@ vAPI.Net = class {
             }
         }
         this.suspendableListener = undefined;
+        this.deferredSuspendableListener = undefined;
         this.listenerMap = new WeakMap();
         this.suspendDepth = 0;
-        this.unprocessedRequestCount = 0;
+        this.unprocessedTabs = new Set();
 
         browser.webRequest.onBeforeRequest.addListener(
             details => {
@@ -1234,9 +1238,24 @@ vAPI.Net = class {
         if ( this.suspendableListener !== undefined ) {
             return this.suspendableListener(details);
         }
-        this.onUnprocessedRequest();
+        this.onUnprocessedRequest(details);
     }
     setSuspendableListener(listener) {
+        if ( this.unprocessedTabs.size !== 0 ) {
+            this.deferredSuspendableListener = listener;
+            listener = details => {
+                const { tabId, type  } = details;
+                if ( type === 'main_frame' && this.unprocessedTabs.has(tabId) ) {
+                    this.unprocessedTabs.delete(tabId);
+                    if ( this.unprocessedTabs.size === 0 ) {
+                        this.suspendableListener = this.deferredSuspendableListener;
+                        this.deferredSuspendableListener = undefined;
+                        return this.suspendableListener(details);
+                    }
+                }
+                return this.deferredSuspendableListener(details);
+            };
+        }
         this.suspendableListener = listener;
         vAPI.setDefaultIcon('', '');
     }
@@ -1254,11 +1273,16 @@ vAPI.Net = class {
         this.listenerMap.set(clientListener, actualListener);
         return actualListener;
     }
-    onUnprocessedRequest() {
-        if ( this.unprocessedRequestCount === 0 ) {
+    onUnprocessedRequest(details) {
+        if ( details.tabId === -1 ) { return; }
+        if ( this.unprocessedTabs.size === 0 ) {
             vAPI.setDefaultIcon('-loading', '!');
         }
-        this.unprocessedRequestCount += 1;
+        this.unprocessedTabs.add(details.tabId);
+    }
+    hasUnprocessedRequest(tabId) {
+        return this.unprocessedTabs.size !== 0 &&
+               this.unprocessedTabs.has(tabId);
     }
     suspendOneRequest() {
     }
