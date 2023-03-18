@@ -384,6 +384,8 @@ const createDefaultProps = ( ) => {
 /******************************************************************************/
 
 try {
+    ubolog(`Start sequence of loading storage-based data ${Date.now()-vAPI.T0} ms after launch`);
+
     // https://github.com/gorhill/uBlock/issues/531
     await µb.restoreAdminSettings();
     ubolog(`Admin settings ready ${Date.now()-vAPI.T0} ms after launch`);
