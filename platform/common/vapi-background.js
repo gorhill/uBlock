@@ -822,7 +822,7 @@ if ( webext.browserAction instanceof Object ) {
         });
         browserAction.setBadgeText({ text });
         browserAction.setBadgeBackgroundColor({
-            color: text === '!' ? '#FC0' : '#666'
+            color: text === '!' ? '#FFCC00' : '#666'
         });
     };
 }
