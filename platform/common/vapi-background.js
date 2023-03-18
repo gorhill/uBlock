@@ -1370,6 +1370,11 @@ vAPI.commands = browser.commands;
 // https://github.com/gorhill/uBlock/issues/900
 // Also, UC Browser: http://www.upsieutoc.com/image/WXuH
 
+// https://github.com/uBlockOrigin/uAssets/discussions/16939
+//   Use a cached version of admin settings, such that there is no blocking
+//   call on `storage.managed`. The side effect is that any changes to admin
+//   settings will require an extra extension restart to take effect.
+
 vAPI.adminStorage = (( ) => {
     if ( webext.storage.managed instanceof Object === false ) {
         return {
@@ -1378,17 +1383,44 @@ vAPI.adminStorage = (( ) => {
             },
         };
     }
+    const cacheManagedStorage = ( ) => {
+        webext.storage.managed.get().then(store => {
+            webext.storage.local.set({ cachedManagedStorage: store || {} });
+        });
+    };
+
     return {
         get: async function(key) {
             let bin;
             try {
-                bin = await webext.storage.managed.get(key);
+                bin = await webext.storage.local.get('cachedManagedStorage') || {};
+                if ( Object.keys(bin).length === 0 ) {
+                    bin = await webext.storage.managed.get() || {};
+                } else {
+                    bin = bin.cachedManagedStorage;
+                }
             } catch(ex) {
+                bin = {};
+            }
+            cacheManagedStorage();
+            if ( key === undefined || key === null ) {
+                return bin;
             }
             if ( typeof key === 'string' && bin instanceof Object ) {
                 return bin[key];
             }
-            return bin;
+            const out = {};
+            if ( Array.isArray(key) ) {
+                for ( const k of key ) {
+                    if ( bin[k] === undefined ) { continue; }
+                    out[k] = bin[k];
+                }
+                return out;
+            }
+            for ( const [ k, v ] of Object.entries(key) ) {
+                out[k] = bin[k] !== undefined ? bin[k] : v;
+            }
+            return out;
         }
     };
 })();
