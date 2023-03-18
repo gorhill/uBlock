@@ -220,7 +220,6 @@ const µBlock = {  // jshint ignore:line
     supportStats: {
         allReadyAfter: '?',
         maxAssetCacheWait: '?',
-        unprocessedRequestCount: '?',
     },
 
     pageStores: new Map(),

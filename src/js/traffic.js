@@ -1147,7 +1147,6 @@ const webRequest = {
                 }
             );
             vAPI.net.unsuspend({ all: true });
-            µb.supportStats.unprocessedRequestCount = `${vAPI.net.unprocessedRequestCount}`;
         };
     })(),
 
