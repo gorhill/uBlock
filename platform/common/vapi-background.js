@@ -812,7 +812,7 @@ if ( webext.browserAction instanceof Object ) {
         }
     };
 
-    vAPI.setDefaultIcon = function(flavor, badge) {
+    vAPI.setDefaultIcon = function(flavor, text) {
         if ( browserAction.setIcon === undefined ) { return; }
         browserAction.setIcon({
             path: {
@@ -820,7 +820,10 @@ if ( webext.browserAction instanceof Object ) {
                 '32': `img/icon_32${flavor}.png`,
             }
         });
-        browserAction.setBadgeText({ text: badge });
+        browserAction.setBadgeText({ text });
+        browserAction.setBadgeBackgroundColor({
+            color: text === '!' ? '#FC0' : '#666'
+        });
     };
 }
 
