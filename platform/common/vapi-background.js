@@ -1383,10 +1383,13 @@ vAPI.adminStorage = (( ) => {
             },
         };
     }
-    const cacheManagedStorage = ( ) => {
-        webext.storage.managed.get().then(store => {
-            webext.storage.local.set({ cachedManagedStorage: store || {} });
-        });
+    const cacheManagedStorage = async ( ) => {
+        let store;
+        try {
+            store = await webext.storage.managed.get();
+        } catch(ex) {
+        }
+        webext.storage.local.set({ cachedManagedStorage: store || {} });
     };
 
     return {
