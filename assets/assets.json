@@ -431,6 +431,15 @@
 		"contentURL": "https://www.void.gr/kargig/void-gr-filters.txt",
 		"supportURL": "https://github.com/kargig/greek-adblockplus-filter"
 	},
+	"HRV-0": {
+		"content": "filters",
+		"group": "regions",
+		"off": true,
+		"title": "HRV, SRB: Dandelion Sprout's Serbo-Croatian filters",
+		"lang": "hr sr",
+		"contentURL": "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/SerboCroatianList.txt",
+		"supportURL": "https://github.com/DandelionSprout/adfilt#readme"
+	},
 	"HUN-0": {
 		"content": "filters",
 		"group": "regions",
