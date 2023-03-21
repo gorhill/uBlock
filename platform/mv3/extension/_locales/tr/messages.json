@@ -208,7 +208,7 @@
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "Dış bağımlılıklar (GPLv3-uyumlu):",
+    "message": "Dış bağlılıklar (GPLv3-uyumlu):",
     "description": "Shown in the About pane"
   },
   "genericSubmit": {

@@ -7,7 +7,7 @@ Por defecto ya trae configuradas las siguientes listas de filtros:
 - EasyPrivacy
 - Peter Lowe’s Ad and tracking server list
 
-Puedes añadir más conjuntos de reglas visitando la página de opciones, haz clic en el icono _Cogs_ del panel emergente.
+Puedes añadir más conjuntos de reglas visitando la página de opciones, haz clic en el icono de _engranaje_ del panel emergente.
 
 uBOL es completamente declarativo, lo que significa que no hay necesidad de un proceso uBOL permanente para que se produzca el filtrado, y el filtrado de contenido basado en la inyección de CSS/JS se realiza de forma confiable por el propio navegador en lugar de la extensión. Esto significa que uBOL en sí mismo no consume recursos de CPU/memoria mientras el bloqueo de contenido está en curso, el proceso service worker de uBOL se requiere _solo_ cuando se interactúa con el panel emergente o las páginas de opciones.
 

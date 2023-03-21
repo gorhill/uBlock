@@ -348,7 +348,7 @@
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsCloudStorageEnabledPrompt": {
-    "message": "Unterstützung für Speicherung in der Cloud aktivieren",
+    "message": "Unterstützung für Cloud-Speicher aktivieren",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
@@ -916,11 +916,11 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Wichtig:</b> Vermeiden Sie die Verwendung anderer, ähnlicher Blocker zusammen mit uBlock Origin, da dies zu Filterproblemen auf bestimmten Websites führen kann.",
+    "message": "<b>Wichtig:</b> Vermeiden Sie andere ähnliche Blocker zusammen mit uBlock Origin zu verwenden, da dies bei einigen Websites zu Filterproblemen führen kann.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Tipp:</b> Stellen Sie sicher, dass Ihre Filterlisten auf dem aktuellen Stand sind. <span data-url=\"logger-ui.html#_\">Protokoll der Netzwerkanfragen</span> ist das primäre Werkzeug, um filterbezogene Fehler zu diagnostizieren.",
+    "message": "<b>Tipp:</b> Vergewissern Sie sich, dass die Filterlisten auf dem aktuellen Stand sind. <span data-url=\"logger-ui.html#_\">Protokoll der Netzwerkanfragen</span> ist das primäre Werkzeug, um filterbezogene Fehler zu diagnostizieren.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
@@ -1172,7 +1172,7 @@
     "description": "tooltip"
   },
   "cloudPullAndMerge": {
-    "message": "Sicherung aus der Cloud importieren und mit den aktuellen Einstellungen zusammenführen",
+    "message": "Aus dem Cloud-Speicher importieren und mit den aktuellen Einstellungen zusammenführen",
     "description": "tooltip"
   },
   "cloudNoData": {
@@ -1180,7 +1180,7 @@
     "description": ""
   },
   "cloudDeviceNamePrompt": {
-    "message": "Dieser Gerätename:",
+    "message": "Name dieses Gerätes:",
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {

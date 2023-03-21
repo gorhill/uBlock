@@ -52,7 +52,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupPowerSwitchInfo": {
-    "message": "このサイトで uBO Lite を無効/有効化",
+    "message": "このサイトに対する uBO Lite を無効 / 有効化",
     "description": "Tooltip for the main power button in the popup panel"
   },
   "popupTipDashboard": {
