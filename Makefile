@@ -4,7 +4,7 @@ run_options := $(filter-out $@,$(MAKECMDGOALS))
 .PHONY: all clean test lint chromium opera firefox npm dig mv3 mv3-quick \
 	compare maxcost medcost mincost modifiers record wasm
 
-sources := $(wildcard assets/resources/* dist/version src/* src/*/* src/*/*/* src/*/*/*/*)
+sources := $(wildcard assets/* assets/*/* dist/version src/* src/*/* src/*/*/* src/*/*/*/*)
 platform := $(wildcard platform/* platform/*/* platform/*/*/* platform/*/*/*/*)
 assets := dist/build/uAssets
 

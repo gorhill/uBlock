@@ -65,6 +65,7 @@ const hiddenSettingsDefault = {
     cnameReplayFullURL: false,
     cnameUncloakProxied: false,
     consoleLogLevel: 'unset',
+    debugAssetsJson: false,
     debugScriptlets: false,
     debugScriptletInjector: false,
     disableWebAssembly: false,

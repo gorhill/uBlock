@@ -649,22 +649,21 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 /******************************************************************************/
 
 µb.getAvailableLists = async function() {
-    let oldAvailableLists = {},
-        newAvailableLists = {};
+    const newAvailableLists = {};
 
-    // User filter list.
+    // User filter list
     newAvailableLists[this.userFiltersPath] = {
         content: 'filters',
         group: 'user',
         title: i18n$('1pPageName'),
     };
 
-    // Custom filter lists.
-    const importedListKeys = this.listKeysFromCustomFilterLists(
-        this.userSettings.importedLists
+    // Custom filter lists
+    const importedListKeys = new Set(
+        this.listKeysFromCustomFilterLists(this.userSettings.importedLists)
     );
     for ( const listKey of importedListKeys ) {
-        const entry = {
+        const asset = {
             content: 'filters',
             contentURL: listKey,
             external: true,
@@ -672,45 +671,17 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
             submitter: 'user',
             title: '',
         };
-        newAvailableLists[listKey] = entry;
-        io.registerAssetSource(listKey, entry);
+        newAvailableLists[listKey] = asset;
+        io.registerAssetSource(listKey, asset);
     }
 
-    // Convert a no longer existing stock list into an imported list, except
-    // when the removed stock list is deemed a "bad list".
-    const customListFromStockList = assetKey => {
-        const oldEntry = oldAvailableLists[assetKey];
-        if ( oldEntry === undefined || oldEntry.off === true ) { return; }
-        let listURL = oldEntry.contentURL;
-        if ( Array.isArray(listURL) ) {
-            listURL = listURL[0];
-        }
-        if ( this.badLists.has(listURL) ) { return; }
-        const newEntry = {
-            content: 'filters',
-            contentURL: listURL,
-            external: true,
-            group: 'custom',
-            submitter: 'user',
-            title: oldEntry.title || ''
-        };
-        newAvailableLists[listURL] = newEntry;
-        io.registerAssetSource(listURL, newEntry);
-        importedListKeys.push(listURL);
-        this.userSettings.importedLists.push(listURL.trim());
-        this.saveUserSettings();
-        this.saveSelectedFilterLists([ listURL ], true);
-    };
-
-    const promises = [
+    // Load previously saved available lists -- these contains data
+    // computed at run-time, we will reuse this data if possible
+    const [ bin, registeredAssets, badlists ] = await Promise.all([
         vAPI.storage.get('availableFilterLists'),
         io.metadata(),
         this.badLists.size === 0 ? io.get('ublock-badlists') : false,
-    ];
-
-    // Load previously saved available lists -- these contains data
-    // computed at run-time, we will reuse this data if possible.
-    const [ bin, entries, badlists ] = await Promise.all(promises);
+    ]);
 
     if ( badlists instanceof Object ) {
         for ( const line of badlists.content.split(/\s*[\n\r]+\s*/) ) {
@@ -721,51 +692,97 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         }
     }
 
-    oldAvailableLists = bin && bin.availableFilterLists || {};
+    const oldAvailableLists = bin && bin.availableFilterLists || {};
 
-    for ( const assetKey in entries ) {
-        if ( entries.hasOwnProperty(assetKey) === false ) { continue; }
-        const entry = entries[assetKey];
-        if ( entry.content !== 'filters' ) { continue; }
-        newAvailableLists[assetKey] = Object.assign({}, entry);
+    for ( const [ assetKey, asset ] of Object.entries(registeredAssets) ) {
+        if ( asset.content !== 'filters' ) { continue; }
+        newAvailableLists[assetKey] = Object.assign({}, asset);
     }
 
-    // Load set of currently selected filter lists.
-    const listKeySet = new Set(this.selectedFilterLists);
-    for ( const listKey in newAvailableLists ) {
-        if ( newAvailableLists.hasOwnProperty(listKey) ) {
-            newAvailableLists[listKey].off = !listKeySet.has(listKey);
-        }
-    }
+    // Load set of currently selected filter lists
+    const selectedListset = new Set(this.selectedFilterLists);
 
-    //finalize();
-    // Final steps:
-    // - reuse existing list metadata if any;
-    // - unregister unreferenced imported filter lists if any.
-    // Reuse existing metadata.
-    for ( const assetKey in oldAvailableLists ) {
-        const oldEntry = oldAvailableLists[assetKey];
-        const newEntry = newAvailableLists[assetKey];
-        // List no longer exists. If a stock list, try to convert to
-        // imported list if it was selected.
-        if ( newEntry === undefined ) {
-            this.removeFilterList(assetKey);
-            if ( assetKey.indexOf('://') === -1 ) {
-                customListFromStockList(assetKey);
+    // Remove imported filter lists which are already present in stock lists
+    for ( const [ stockAssetKey, stockEntry ] of Object.entries(newAvailableLists) ) {
+        if ( stockEntry.content !== 'filters' ) { continue; }
+        if ( stockEntry.group === 'user' ) { continue; }
+        if ( stockEntry.submitter === 'user' ) { continue; }
+        if ( stockAssetKey.includes('://') ) { continue; }
+        const contentURLs = Array.isArray(stockEntry.contentURL)
+            ? stockEntry.contentURL
+            : [ stockEntry.contentURL ];
+        for ( const importedAssetKey of contentURLs ) {
+            const importedEntry = newAvailableLists[importedAssetKey];
+            if ( importedEntry === undefined ) { continue; }
+            delete newAvailableLists[importedAssetKey];
+            io.unregisterAssetSource(importedAssetKey);
+            this.removeFilterList(importedAssetKey);
+            if ( selectedListset.has(importedAssetKey) ) {
+                selectedListset.add(stockAssetKey);
+                selectedListset.delete(importedAssetKey);
             }
-            continue;
+            importedListKeys.delete(importedAssetKey);
+            break;
         }
+    }
+
+    // Unregister lists in old listset not present in new listset.
+    // Convert a no longer existing stock list into an imported list, except
+    // when the removed stock list is deemed a "bad list".
+    for ( const [ assetKey, oldEntry ] of Object.entries(oldAvailableLists) ) {
+        if ( newAvailableLists[assetKey] !== undefined ) { continue; }
+        const on = selectedListset.delete(assetKey);
+        this.removeFilterList(assetKey);
+        io.unregisterAssetSource(assetKey);
+        if ( assetKey.includes('://') ) { continue; }
+        if ( on === false ) { continue; }
+        const listURL = Array.isArray(oldEntry.contentURL)
+            ? oldEntry.contentURL[0]
+            : oldEntry.contentURL;
+        if ( this.badLists.has(listURL) ) { continue; }
+        const newEntry = {
+            content: 'filters',
+            contentURL: listURL,
+            external: true,
+            group: 'custom',
+            submitter: 'user',
+            title: oldEntry.title || ''
+        };
+        newAvailableLists[listURL] = newEntry;
+        io.registerAssetSource(listURL, newEntry);
+        importedListKeys.add(listURL);
+        selectedListset.add(listURL);
+    }
+
+    // Remove unreferenced imported filter lists
+    for ( const [ assetKey, asset ] of Object.entries(newAvailableLists) ) {
+        if ( asset.submitter !== 'user' ) { continue; }
+        if ( importedListKeys.has(assetKey) ) { continue; }
+        selectedListset.delete(assetKey);
+        delete newAvailableLists[assetKey];
+        this.removeFilterList(assetKey);
+        io.unregisterAssetSource(assetKey);
+    }
+
+    // Mark lists as disabled/enabled according to selected listset
+    for ( const [ assetKey, asset ] of Object.entries(newAvailableLists) ) {
+        asset.off = selectedListset.has(assetKey) === false;
+    }
+
+    // Reuse existing metadata
+    for ( const [ assetKey, oldEntry ] of Object.entries(oldAvailableLists) ) {
+        const newEntry = newAvailableLists[assetKey];
+        if ( newEntry === undefined ) { continue; }
         if ( oldEntry.entryCount !== undefined ) {
             newEntry.entryCount = oldEntry.entryCount;
         }
         if ( oldEntry.entryUsedCount !== undefined ) {
             newEntry.entryUsedCount = oldEntry.entryUsedCount;
         }
-        // This may happen if the list name was pulled from the list
-        // content.
+        // This may happen if the list name was pulled from the list content
         // https://github.com/chrisaljoudi/uBlock/issues/982
-        // There is no guarantee the title was successfully extracted from
-        // the list content.
+        //   There is no guarantee the title was successfully extracted from
+        //   the list content
         if (
             newEntry.title === '' &&
             typeof oldEntry.title === 'string' &&
@@ -775,14 +792,13 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         }
     }
 
-    // Remove unreferenced imported filter lists.
-    for ( const assetKey in newAvailableLists ) {
-        const newEntry = newAvailableLists[assetKey];
-        if ( newEntry.submitter !== 'user' ) { continue; }
-        if ( importedListKeys.indexOf(assetKey) !== -1 ) { continue; }
-        delete newAvailableLists[assetKey];
-        io.unregisterAssetSource(assetKey);
-        this.removeFilterList(assetKey);
+    if ( Array.from(importedListKeys).join('\n') !== this.userSettings.importedLists.join('\n') ) {
+        this.userSettings.importedLists = Array.from(importedListKeys);
+        this.saveUserSettings();
+    }
+
+    if ( Array.from(selectedListset).join() !== this.selectedFilterLists.join() ) {
+        this.saveSelectedFilterLists(Array.from(selectedListset));
     }
 
     return newAvailableLists;
@@ -1580,11 +1596,39 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     if ( topic === 'builtin-asset-source-added' ) {
         if ( details.entry.content === 'filters' ) {
             if (
-                details.entry.off !== true ||
+                details.entry.off === true &&
                 this.listMatchesEnvironment(details.entry)
             ) {
                 this.saveSelectedFilterLists([ details.assetKey ], true);
             }
+        }
+        return;
+    }
+
+    if ( topic === 'assets.json-updated' ) {
+        const { newDict, oldDict } = details;
+        const newDefaultListset = new Set(newDict['assets.json'].defaultListset || []);
+        const oldDefaultListset = new Set(oldDict['assets.json'].defaultListset || []);
+        if ( oldDefaultListset.size === 0 ) {
+            Array.from(Object.entries(newDict))
+                .filter(a => a[1].content === 'filters' && a[1].off === undefined)
+                .map(a => a[0])
+                .forEach(a => oldDefaultListset.add(a));
+        }
+        const selectedListset = new Set(this.selectedFilterLists);
+        let selectedListModified = false;
+        for ( const assetKey of oldDefaultListset ) {
+            if ( newDefaultListset.has(assetKey) ) { continue; }
+            selectedListset.delete(assetKey);
+            selectedListModified = true;
+        }
+        for ( const assetKey of newDefaultListset ) {
+            if ( oldDefaultListset.has(assetKey) ) { continue; }
+            selectedListset.add(assetKey);
+            selectedListModified = true;
+        }
+        if ( selectedListModified ) {
+            this.saveSelectedFilterLists(Array.from(selectedListset));
         }
         return;
     }

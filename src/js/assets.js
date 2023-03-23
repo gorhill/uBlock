@@ -379,22 +379,21 @@ const getAssetSourceRegistry = function() {
     return assetSourceRegistryPromise;
 };
 
-const registerAssetSource = function(assetKey, dict) {
-    const entry = assetSourceRegistry[assetKey] || {};
-    for ( const prop in dict ) {
-        if ( dict.hasOwnProperty(prop) === false ) { continue; }
-        if ( dict[prop] === undefined ) {
-            delete entry[prop];
+const registerAssetSource = function(assetKey, newDict) {
+    const currentDict = assetSourceRegistry[assetKey] || {};
+    for ( const [ k, v ] of Object.entries(newDict) ) {
+        if ( v === undefined || v === null ) {
+            delete currentDict[k];
         } else {
-            entry[prop] = dict[prop];
+            currentDict[k] = newDict[k];
         }
     }
-    let contentURL = dict.contentURL;
+    let contentURL = newDict.contentURL;
     if ( contentURL !== undefined ) {
         if ( typeof contentURL === 'string' ) {
-            contentURL = entry.contentURL = [ contentURL ];
+            contentURL = currentDict.contentURL = [ contentURL ];
         } else if ( Array.isArray(contentURL) === false ) {
-            contentURL = entry.contentURL = [];
+            contentURL = currentDict.contentURL = [];
         }
         let remoteURLCount = 0;
         for ( let i = 0; i < contentURL.length; i++ ) {
@@ -402,18 +401,18 @@ const registerAssetSource = function(assetKey, dict) {
                 remoteURLCount += 1;
             }
         }
-        entry.hasLocalURL = remoteURLCount !== contentURL.length;
-        entry.hasRemoteURL = remoteURLCount !== 0;
-    } else if ( entry.contentURL === undefined ) {
-        entry.contentURL = [];
+        currentDict.hasLocalURL = remoteURLCount !== contentURL.length;
+        currentDict.hasRemoteURL = remoteURLCount !== 0;
+    } else if ( currentDict.contentURL === undefined ) {
+        currentDict.contentURL = [];
     }
-    if ( typeof entry.updateAfter !== 'number' ) {
-        entry.updateAfter = 5;
+    if ( typeof currentDict.updateAfter !== 'number' ) {
+        currentDict.updateAfter = 5;
     }
-    if ( entry.submitter ) {
-        entry.submitTime = Date.now(); // To detect stale entries
+    if ( currentDict.submitter ) {
+        currentDict.submitTime = Date.now(); // To detect stale entries
     }
-    assetSourceRegistry[assetKey] = entry;
+    assetSourceRegistry[assetKey] = currentDict;
 };
 
 const unregisterAssetSource = function(assetKey) {
@@ -443,11 +442,17 @@ const updateAssetSourceRegistry = function(json, silent = false) {
     let newDict;
     try {
         newDict = JSON.parse(json);
+        newDict['assets.json'].defaultListset =
+            Array.from(Object.entries(newDict))
+                .filter(a => a[1].content === 'filters' && a[1].off === undefined)
+                .map(a => a[0]);
     } catch (ex) {
     }
     if ( newDict instanceof Object === false ) { return; }
 
     const oldDict = assetSourceRegistry;
+
+    fireNotification('assets.json-updated', { newDict, oldDict });
 
     // Remove obsolete entries (only those which were built-in).
     for ( const assetKey in oldDict ) {
@@ -1005,7 +1010,16 @@ const updateNext = async function() {
     // In auto-update context, be gentle on remote servers.
     remoteServerFriendly = updaterAuto;
 
-    const result = await getRemote(toUpdate[0]);
+    let result;
+    if (
+        toUpdate[0] !== 'assets.json' ||
+        µb.hiddenSettings.debugAssetsJson !== true
+    ) {
+        result = await getRemote(toUpdate[0]);
+    } else {
+        result = await assets.fetchText('/assets/assets.json');
+        result.assetKey = 'assets.json';
+    }
 
     remoteServerFriendly = false;
 
