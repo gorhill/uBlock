@@ -3348,6 +3348,7 @@ class ExtSelectorCompiler {
     }
 
     astSelectorsFromSelectorList(args) {
+        if ( Array.isArray(args) === false ) { return; }
         if ( args.length < 3 ) { return; }
         if ( args[0].data instanceof Object === false ) { return; }
         if ( args[0].data.type !== 'SelectorList' ) { return; }
