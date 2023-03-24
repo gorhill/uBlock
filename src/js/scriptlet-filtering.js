@@ -149,7 +149,7 @@ const lookupScriptlet = function(rawToken, reng, toInject) {
     let content = scriptletCache.lookup(rawToken);
     if ( content === undefined ) {
         const pos = rawToken.indexOf(',');
-        let token, args;
+        let token, args = '';
         if ( pos === -1 ) {
             token = rawToken;
         } else {
@@ -165,10 +165,7 @@ const lookupScriptlet = function(rawToken, reng, toInject) {
         }
         content = reng.resourceContentFromName(token, 'text/javascript');
         if ( !content ) { return; }
-        if ( args ) {
-            content = patchScriptlet(content, args);
-            if ( !content ) { return; }
-        }
+        content = patchScriptlet(content, args);
         content =
             'try {\n' +
                 content + '\n' +
@@ -180,26 +177,36 @@ const lookupScriptlet = function(rawToken, reng, toInject) {
 
 // Fill-in scriptlet argument placeholders.
 const patchScriptlet = function(content, args) {
-    let s = args;
-    let len = s.length;
-    let beg = 0, pos = 0;
-    let i = 1;
-    while ( beg < len ) {
-        pos = s.indexOf(',', pos);
-        // Escaped comma? If so, skip.
-        if ( pos > 0 && s.charCodeAt(pos - 1) === 0x5C /* '\\' */ ) {
-            s = s.slice(0, pos - 1) + s.slice(pos);
-            len -= 1;
-            continue;
-        }
-        if ( pos === -1 ) { pos = len; }
-        content = content.replace(
-            `{{${i}}}`,
-            s.slice(beg, pos).trim().replace(reEscapeScriptArg, '\\$&')
-        );
-        beg = pos = pos + 1;
-        i++;
+    if ( content.startsWith('function') ) {
+        content = `(${content})({{args}});`;
     }
+    if ( args.startsWith('{') && args.endsWith('}') ) {
+        return content.replace('{{args}}', args);
+    }
+    const arglist = [];
+    if ( args !== '' ) {
+        let s = args;
+        let len = s.length;
+        let beg = 0, pos = 0;
+        let i = 1;
+        while ( beg < len ) {
+            pos = s.indexOf(',', pos);
+            // Escaped comma? If so, skip.
+            if ( pos > 0 && s.charCodeAt(pos - 1) === 0x5C /* '\\' */ ) {
+                s = s.slice(0, pos - 1) + s.slice(pos);
+                len -= 1;
+                continue;
+            }
+            if ( pos === -1 ) { pos = len; }
+            arglist.push(s.slice(beg, pos).trim().replace(reEscapeScriptArg, '\\$&'));
+            beg = pos = pos + 1;
+            i++;
+        }
+    }
+    for ( let i = 0; i < arglist.length; i++ ) {
+        content = content.replace(`{{${i+1}}}`, arglist[i]);
+    }
+    content = content.replace('{{args}}', arglist.map(a => `'${a}'`).join(', '));
     return content;
 };
 

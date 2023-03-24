@@ -22,37 +22,35 @@
     web page context.
 */
 
-// The lines below are skipped by the resource parser. Purpose is clean
-// jshinting.
-(function() {
-// >>>> start of private namespace
 'use strict';
 
-
-
-
+export const builtinScriptlets = [];
 
 /// abort-current-script.js
-/// alias acs.js
-/// alias abort-current-inline-script.js
-/// alias acis.js
+builtinScriptlets.push({
+    name: 'abort-current-script.js',
+    aliases: [ 'acs.js', 'abort-current-inline-script.js', 'acis.js' ],
+    fn: abortCurrentScript,
+});
 // Issues to mind before changing anything:
 //  https://github.com/uBlockOrigin/uBlock-issues/issues/2154
-(function() {
-    const target = '{{1}}';
-    if ( target === '' || target === '{{1}}' ) { return; }
+function abortCurrentScript(
+    target = '',
+    needle = '',
+    context = ''
+) {
+    if ( typeof target !== 'string' ) { return; }
+    if ( target === '' ) { return; }
     const reRegexEscape = /[.*+?^${}()|[\]\\]/g;
-    const needle = '{{2}}';
     const reNeedle = (( ) => {
-        if ( needle === '' || needle === '{{2}}' ) { return /^/; }
+        if ( needle === '' ) { return /^/; }
         if ( /^\/.+\/$/.test(needle) ) {
             return new RegExp(needle.slice(1,-1));
         }
         return new RegExp(needle.replace(reRegexEscape, '\\$&'));
     })();
-    const context = '{{3}}';
     const reContext = (( ) => {
-        if ( context === '' || context === '{{3}}' ) { return; }
+        if ( context === '' ) { return; }
         if ( /^\/.+\/$/.test(context) ) {
             return new RegExp(context.slice(1,-1));
         }
@@ -136,12 +134,20 @@
             return oe.apply(this, arguments);
         }
     }.bind();
-})();
+}
 
 
 /// abort-on-property-read.js
-/// alias aopr.js
-(function() {
+builtinScriptlets.push({
+    name: 'abort-on-property-read.js',
+    aliases: [ 'aopr.js' ],
+    fn: abortOnPropertyRead,
+});
+function abortOnPropertyRead(
+    chain = ''
+) {
+    if ( typeof chain !== 'string' ) { return; }
+    if ( chain === '' ) { return; }
     const magic = String.fromCharCode(Date.now() % 26 + 97) +
                   Math.floor(Math.random() * 982451653 + 982451653).toString(36);
     const abort = function() {
@@ -179,7 +185,6 @@
         });
     };
     const owner = window;
-    let chain = '{{1}}';
     makeProxy(owner, chain);
     const oe = window.onerror;
     window.onerror = function(msg, src, line, col, error) {
@@ -190,15 +195,22 @@
             return oe(msg, src, line, col, error);
         }
     }.bind();
-})();
+}
 
 
 /// abort-on-property-write.js
-/// alias aopw.js
-(function() {
+builtinScriptlets.push({
+    name: 'abort-on-property-write.js',
+    aliases: [ 'aopw.js' ],
+    fn: abortOnPropertyWrite,
+});
+function abortOnPropertyWrite(
+    prop = ''
+) {
+    if ( typeof prop !== 'string' ) { return; }
+    if ( prop === '' ) { return; }
     const magic = String.fromCharCode(Date.now() % 26 + 97) +
                   Math.floor(Math.random() * 982451653 + 982451653).toString(36);
-    let prop = '{{1}}';
     let owner = window;
     for (;;) {
         const pos = prop.indexOf('.');
@@ -222,18 +234,24 @@
             return oe(msg, src, line, col, error);
         }
     }.bind();
-})();
+}
 
 
 /// abort-on-stack-trace.js
-/// alias aost.js
+builtinScriptlets.push({
+    name: 'abort-on-stack-trace.js',
+    aliases: [ 'aost.js' ],
+    fn: abortOnStackTrace,
+});
 // Status is currently experimental
-(function() {
-    let chain = '{{1}}';
-    let needle = '{{2}}';
-    let logLevel = '{{3}}';
+function abortOnStackTrace(
+    chain = '',
+    needle = '',
+    logLevel = ''
+) {
+    if ( typeof chain !== 'string' ) { return; }
     const reRegexEscape = /[.*+?^${}()|[\]\\]/g;
-    if ( needle === '' || needle === '{{2}}' ) {
+    if ( needle === '' ) {
         needle = '^';
     } else if ( /^\/.+\/$/.test(needle) ) {
         needle = needle.slice(1,-1);
@@ -336,15 +354,22 @@
             return oe(msg, src, line, col, error);
         }
     }.bind();
-})();
+}
 
 
 /// addEventListener-defuser.js
-/// alias aeld.js
+builtinScriptlets.push({
+    name: 'addEventListener-defuser.js',
+    aliases: [ 'aeld.js' ],
+    fn: addEventListenerDefuser,
+});
 // https://github.com/uBlockOrigin/uAssets/issues/9123#issuecomment-848255120
-(function() {
-    let needle1 = '{{1}}';
-    if ( needle1 === '' || needle1 === '{{1}}' ) {
+function addEventListenerDefuser(
+    needle1 = '',
+    needle2 = ''
+) {
+    if ( typeof needle1 !== 'string' ) { return; }
+    if ( needle1 === '' ) {
         needle1 = '.?';
     } else if ( /^\/.+\/$/.test(needle1) ) {
         needle1 = needle1.slice(1,-1);
@@ -352,8 +377,7 @@
         needle1 = needle1.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
     needle1 = new RegExp(needle1);
-    let needle2 = '{{2}}';
-    if ( needle2 === '' || needle2 === '{{2}}' ) {
+    if ( needle2 === '' ) {
         needle2 = '.?';
     } else if ( /^\/.+\/$/.test(needle2) ) {
         needle2 = needle2.slice(1,-1);
@@ -380,13 +404,17 @@
             }
         }
     );
-})();
+}
 
 
 /// addEventListener-logger.js
-/// alias aell.js
+builtinScriptlets.push({
+    name: 'addEventListener-logger.js',
+    aliases: [ 'aell.js' ],
+    fn: addEventListenerLogger,
+});
 // https://github.com/uBlockOrigin/uAssets/issues/9123#issuecomment-848255120
-(function() {
+function addEventListenerLogger() {
     const log = console.log.bind(console);
     self.EventTarget.prototype.addEventListener = new Proxy(
         self.EventTarget.prototype.addEventListener,
@@ -403,35 +431,38 @@
             }
         }
     );
-})();
+}
 
 
 /// json-prune.js
-//
+builtinScriptlets.push({
+    name: 'json-prune.js',
+    fn: jsonPrune,
+});
 //  When no "prune paths" argument is provided, the scriptlet is
 //  used for logging purpose and the "needle paths" argument is
 //  used to filter logging output.
 //
 //  https://github.com/uBlockOrigin/uBlock-issues/issues/1545
 //  - Add support for "remove everything if needle matches" case
-//
-(function() {
-    const rawPrunePaths = '{{1}}';
-    const rawNeedlePaths = '{{2}}';
-    const prunePaths = rawPrunePaths !== '{{1}}' && rawPrunePaths !== ''
+function jsonPrune(
+    rawPrunePaths = '',
+    rawNeedlePaths = ''
+) {
+    if ( typeof rawPrunePaths !== 'string' ) { return; }
+    const prunePaths = rawPrunePaths !== ''
         ? rawPrunePaths.split(/ +/)
         : [];
     let needlePaths;
     let log, reLogNeedle;
     if ( prunePaths.length !== 0 ) {
-        needlePaths = prunePaths.length !== 0 &&
-                      rawNeedlePaths !== '{{2}}' && rawNeedlePaths !== ''
+        needlePaths = prunePaths.length !== 0 && rawNeedlePaths !== ''
             ? rawNeedlePaths.split(/ +/)
             : [];
     } else {
         log = console.log.bind(console);
         let needle;
-        if ( rawNeedlePaths === '' || rawNeedlePaths === '{{2}}' ) {
+        if ( rawNeedlePaths === '' ) {
             needle = '.?';
         } else if ( rawNeedlePaths.charAt(0) === '/' && rawNeedlePaths.slice(-1) === '/' ) {
             needle = rawNeedlePaths.slice(1, -1);
@@ -511,9 +542,15 @@
             return Reflect.apply(...arguments).then(o => pruner(o));
         },
     });
-})();
+}
 
 
+/// nano-setInterval-booster.js
+builtinScriptlets.push({
+    name: 'nano-setInterval-booster.js',
+    aliases: [ 'nano-sib.js' ],
+    fn: nanoSetIntervalBooster,
+});
 // Imported from:
 // https://github.com/NanoAdblocker/NanoFilters/blob/1f3be7211bb0809c5106996f52564bf10c4525f7/NanoFiltersSource/NanoResources.txt#L126
 //
@@ -526,15 +563,12 @@
 // boostRatio - The delay multiplier when there is a match, 0.5 speeds up by
 //      2 times and 2 slows down by 2 times, defaults to 0.05 or speed up
 //      20 times. Speed up and down both cap at 50 times.
-/// nano-setInterval-booster.js
-/// alias nano-sib.js
-(function() {
-    let needleArg = '{{1}}';
-    if ( needleArg === '{{1}}' ) { needleArg = ''; }
-    let delayArg = '{{2}}';
-    if ( delayArg === '{{2}}' ) { delayArg = ''; }
-    let boostArg = '{{3}}';
-    if ( boostArg === '{{3}}' ) { boostArg = ''; }
+function nanoSetIntervalBooster(
+    needleArg = '',
+    delayArg = '',
+    boostArg = ''
+) {
+    if ( typeof needleArg !== 'string' ) { return; }
     if ( needleArg === '' ) {
         needleArg = '.?';
     } else if ( needleArg.charAt(0) === '/' && needleArg.slice(-1) === '/' ) {
@@ -561,9 +595,15 @@
             return target.apply(thisArg, args);
         }
     });
-})();
+}
 
 
+/// nano-setTimeout-booster.js
+builtinScriptlets.push({
+    name: 'nano-setTimeout-booster.js',
+    aliases: [ 'nano-stb.js' ],
+    fn: nanoSetTimeoutBooster,
+});
 // Imported from:
 // https://github.com/NanoAdblocker/NanoFilters/blob/1f3be7211bb0809c5106996f52564bf10c4525f7/NanoFiltersSource/NanoResources.txt#L82
 //
@@ -577,15 +617,12 @@
 // boostRatio - The delay multiplier when there is a match, 0.5 speeds up by
 //      2 times and 2 slows down by 2 times, defaults to 0.05 or speed up
 //      20 times. Speed up and down both cap at 50 times.
-/// nano-setTimeout-booster.js
-/// alias nano-stb.js
-(function() {
-    let needleArg = '{{1}}';
-    if ( needleArg === '{{1}}' ) { needleArg = ''; }
-    let delayArg = '{{2}}';
-    if ( delayArg === '{{2}}' ) { delayArg = ''; }
-    let boostArg = '{{3}}';
-    if ( boostArg === '{{3}}' ) { boostArg = ''; }
+function nanoSetTimeoutBooster(
+    needleArg = '',
+    delayArg = '',
+    boostArg = ''
+) {
+    if ( typeof needleArg !== 'string' ) { return; }
     if ( needleArg === '' ) {
         needleArg = '.?';
     } else if ( needleArg.charAt(0) === '/' && needleArg.slice(-1) === '/' ) {
@@ -612,13 +649,19 @@
             return target.apply(thisArg, args);
         }
     });
-})();
+}
 
 
 /// noeval-if.js
-(function() {
-    let needle = '{{1}}';
-    if ( needle === '' || needle === '{{1}}' ) {
+builtinScriptlets.push({
+    name: 'noeval-if.js',
+    fn: noevalIf,
+});
+function noevalIf(
+    needle = ''
+) {
+    if ( typeof needle !== 'string' ) { return; }
+    if ( needle === '' ) {
         needle = '.?';
     } else if ( needle.slice(0,1) === '/' && needle.slice(-1) === '/' ) {
         needle = needle.slice(1,-1);
@@ -634,13 +677,18 @@
             }
         }
     });
-})();
+}
 
 
 /// no-fetch-if.js
-(function() {
-    let arg1 = '{{1}}';
-    if ( arg1 === '{{1}}' ) { arg1 = ''; }
+builtinScriptlets.push({
+    name: 'no-fetch-if.js',
+    fn: noFetchIf,
+});
+function noFetchIf(
+    arg1 = '',
+) {
+    if ( typeof arg1 !== 'string' ) { return; }
     const needles = [];
     for ( const condition of arg1.split(/\s+/) ) {
         if ( condition === '' ) { continue; }
@@ -706,35 +754,23 @@
                 : Promise.resolve(new Response());
         }
     });
-})();
-
-
-/// no-floc.js
-//  https://github.com/uBlockOrigin/uBlock-issues/issues/1553
-(function() {
-    if ( Document instanceof Object === false ) { return; }
-    if ( Document.prototype.interestCohort instanceof Function === false ) {
-        return;
-    }
-    Document.prototype.interestCohort = new Proxy(
-        Document.prototype.interestCohort,
-        {
-            apply: function() {
-                return Promise.reject();
-            }
-        }
-    );
-})();
+}
 
 
 /// refresh-defuser.js
+builtinScriptlets.push({
+    name: 'refresh-defuser.js',
+    fn: refreshDefuser,
+});
 // https://www.reddit.com/r/uBlockOrigin/comments/q0frv0/while_reading_a_sports_article_i_was_redirected/hf7wo9v/
-(function() {
-    const arg1 = '{{1}}';
+function refreshDefuser(
+    arg1 = ''
+) {
+    if ( typeof arg1 !== 'string' ) { return; }
     const defuse = ( ) => {
         const meta = document.querySelector('meta[http-equiv="refresh" i][content]');
         if ( meta === null ) { return; }
-        const s = arg1 === '' || arg1 === '{{1}}'
+        const s = arg1 === ''
             ? meta.getAttribute('content')
             : arg1;
         const ms = Math.max(parseFloat(s) || 0, 0) * 1000;
@@ -745,20 +781,26 @@
     } else {
         defuse();
     }
-})();
+}
 
 
 /// remove-attr.js
-/// alias ra.js
-(function() {
-    const token = '{{1}}';
-    if ( token === '' || token === '{{1}}' ) { return; }
+builtinScriptlets.push({
+    name: 'remove-attr.js',
+    aliases: [ 'ra.js' ],
+    fn: removeAttr,
+});
+function removeAttr(
+    token = '',
+    selector = '',
+    behavior = ''
+) {
+    if ( typeof token !== 'string' ) { return; }
+    if ( token === '' ) { return; }
     const tokens = token.split(/\s*\|\s*/);
-    let selector = '{{2}}';
-    if ( selector === '' || selector === '{{2}}' ) {
+    if ( selector === '' ) {
         selector = `[${tokens.join('],[')}]`;
     }
-    let behavior = '{{3}}';
     let timer;
     const rmattr = ( ) => {
         timer = undefined;
@@ -806,20 +848,26 @@
     } else {
         self.addEventListener('DOMContentLoaded', start, { once: true });
     }
-})();
+}
 
 
 /// remove-class.js
-/// alias rc.js
-(function() {
-    const token = '{{1}}';
-    if ( token === '' || token === '{{1}}' ) { return; }
+builtinScriptlets.push({
+    name: 'remove-class.js',
+    aliases: [ 'rc.js' ],
+    fn: removeClass,
+});
+function removeClass(
+    token = '',
+    selector = '',
+    behavior = ''
+) {
+    if ( typeof token !== 'string' ) { return; }
+    if ( token === '' ) { return; }
     const tokens = token.split(/\s*\|\s*/);
-    let selector = '{{2}}';
-    if ( selector === '' || selector === '{{2}}' ) {
+    if ( selector === '' ) {
         selector = '.' + tokens.map(a => CSS.escape(a)).join(',.');
     }
-    let behavior = '{{3}}';
     let timer;
     const rmclass = function() {
         timer = undefined;
@@ -865,14 +913,19 @@
     } else {
         start();
     }
-})();
+}
 
 
 /// no-requestAnimationFrame-if.js
-/// alias norafif.js
-(function() {
-    let needle = '{{1}}';
-    if ( needle === '{{1}}' ) { needle = ''; }
+builtinScriptlets.push({
+    name: 'no-requestAnimationFrame-if.js',
+    aliases: [ 'norafif.js' ],
+    fn: noRequestAnimationFrameIf,
+});
+function noRequestAnimationFrameIf(
+    needle = ''
+) {
+    if ( typeof needle !== 'string' ) { return; }
     const needleNot = needle.charAt(0) === '!';
     if ( needleNot ) { needle = needle.slice(1); }
     if ( needle.startsWith('/') && needle.endsWith('/') ) {
@@ -897,15 +950,21 @@
             return target.apply(thisArg, args);
         }
     });
-})();
+}
 
 
 /// set-constant.js
-/// alias set.js
-(function() {
-    const chain = '{{1}}';
-    if ( chain === '{{1}}' || chain === '' ) { return; }
-    let cValue = '{{2}}';
+builtinScriptlets.push({
+    name: 'set-constant.js',
+    aliases: [ 'set.js' ],
+    fn: setConstant,
+});
+function setConstant(
+    chain = '',
+    cValue = ''
+) {
+    if ( typeof chain !== 'string' ) { return; }
+    if ( chain === '' ) { return; }
     const trappedProp = (( ) => {
         const pos = chain.lastIndexOf('.');
         if ( pos === -1 ) { return chain; }
@@ -1057,24 +1116,30 @@
         });
     };
     trapChain(window, chain);
-})();
+}
 
 
 /// no-setInterval-if.js
-/// alias nosiif.js
-(function() {
-    let needle = '{{1}}';
+builtinScriptlets.push({
+    name: 'no-setInterval-if.js',
+    aliases: [ 'nosiif.js' ],
+    fn: noSetIntervalIf,
+});
+function noSetIntervalIf(
+    needle = '',
+    delay = ''
+) {
+    if ( typeof needle !== 'string' ) { return; }
     const needleNot = needle.charAt(0) === '!';
     if ( needleNot ) { needle = needle.slice(1); }
-    let delay = '{{2}}';
-    if ( delay === '{{2}}' ) { delay = undefined; }
+    if ( delay === '' ) { delay = undefined; }
     let delayNot = false;
     if ( delay !== undefined ) {
         delayNot = delay.charAt(0) === '!';
         if ( delayNot ) { delay = delay.slice(1); }
         delay = parseInt(delay, 10);
     }
-    if ( needle === '' || needle === '{{1}}' ) {
+    if ( needle === '' ) {
         needle = '';
     } else if ( needle.startsWith('/') && needle.endsWith('/') ) {
         needle = needle.slice(1,-1);
@@ -1106,25 +1171,30 @@
             return target.apply(thisArg, args);
         }
     });
-})();
+}
 
 
 /// no-setTimeout-if.js
-/// alias nostif.js
-/// alias setTimeout-defuser.js
-(function() {
-    let needle = '{{1}}';
+builtinScriptlets.push({
+    name: 'no-setTimeout-if.js',
+    aliases: [ 'nostif.js', 'setTimeout-defuser.js' ],
+    fn: noSetTimeoutIf,
+});
+function noSetTimeoutIf(
+    needle = '',
+    delay = ''
+) {
+    if ( typeof needle !== 'string' ) { return; }
     const needleNot = needle.charAt(0) === '!';
     if ( needleNot ) { needle = needle.slice(1); }
-    let delay = '{{2}}';
-    if ( delay === '{{2}}' ) { delay = undefined; }
+    if ( delay === '' ) { delay = undefined; }
     let delayNot = false;
     if ( delay !== undefined ) {
         delayNot = delay.charAt(0) === '!';
         if ( delayNot ) { delay = delay.slice(1); }
         delay = parseInt(delay, 10);
     }
-    if ( needle === '' || needle === '{{1}}' ) {
+    if ( needle === '' ) {
         needle = '';
     } else if ( needle.startsWith('/') && needle.endsWith('/') ) {
         needle = needle.slice(1,-1);
@@ -1156,12 +1226,18 @@
             return target.apply(thisArg, args);
         }
     });
-})();
+}
 
 
 /// webrtc-if.js
-(function() {
-    let good = '{{1}}';
+builtinScriptlets.push({
+    name: 'webrtc-if.js',
+    fn: webrtcIf,
+});
+function webrtcIf(
+    good = ''
+) {
+    if ( typeof good !== 'string' ) { return; }
     if ( good.startsWith('/') && good.endsWith('/') ) {
         good = good.slice(1, -1);
     } else {
@@ -1224,14 +1300,19 @@
                 return Reflect.construct(target, args);
             }
         });
-})();
+}
 
 
 /// no-xhr-if.js
-(function() {
+builtinScriptlets.push({
+    name: 'no-xhr-if.js',
+    fn: noXhrIf,
+});
+function noXhrIf(
+    arg1 = ''
+) {
+    if ( typeof arg1 !== 'string' ) { return; }
     const xhrInstances = new WeakMap();
-    let arg1 = '{{1}}';
-    if ( arg1 === '{{1}}' ) { arg1 = ''; }
     const needles = [];
     for ( const condition of arg1.split(/\s+/) ) {
         if ( condition === '' ) { continue; }
@@ -1296,18 +1377,24 @@
             this.dispatchEvent(new Event('loadend'));
         }
     };
-})();
+}
 
 
+/// window-close-if.js
+builtinScriptlets.push({
+    name: 'window-close-if.js',
+    fn: windowCloseIf,
+});
 // https://github.com/uBlockOrigin/uAssets/issues/10323#issuecomment-992312847
 // https://github.com/AdguardTeam/Scriptlets/issues/158
 // https://github.com/uBlockOrigin/uBlock-issues/discussions/2270
-/// window-close-if.js
-(function() {
-    const arg1 = '{{1}}';
+function windowCloseIf(
+    arg1 = ''
+) {
+    if ( typeof arg1 !== 'string' ) { return; }
     let reStr;
     let subject = '';
-    if ( arg1 === '{{1}}' || arg1 === '' ) {
+    if ( arg1 === '' ) {
         reStr = '^';
     } else if ( /^\/.*\/$/.test(arg1) ) {
         reStr = arg1.slice(1, -1);
@@ -1324,26 +1411,32 @@
     } catch(ex) {
         console.log(ex);
     }
-})();
+}
 
 
-// https://github.com/gorhill/uBlock/issues/1228
 /// window.name-defuser.js
-(function() {
+builtinScriptlets.push({
+    name: 'window.name-defuser.js',
+    fn: windowNameDefuser,
+});
+// https://github.com/gorhill/uBlock/issues/1228
+function windowNameDefuser() {
     if ( window === window.top ) {
         window.name = '';
     }
-})();
+}
 
 
+/// overlay-buster.js
+builtinScriptlets.push({
+    name: 'overlay-buster.js',
+    fn: overlayBuster,
+});
 // Experimental: Generic nuisance overlay buster.
 // if this works well and proves to be useful, this may end up
 // as a stock tool in uBO's popup panel.
-/// overlay-buster.js
-(function() {
-    if ( window !== window.top ) {
-        return;
-    }
+function overlayBuster() {
+    if ( window !== window.top ) { return; }
     var tstart;
     var ttl = 30000;
     var delay = 0;
@@ -1391,23 +1484,31 @@
     } else {
         domReady();
     }
-})();
+}
 
 
-// https://github.com/uBlockOrigin/uAssets/issues/8
 /// alert-buster.js
-(function() {
+builtinScriptlets.push({
+    name: 'alert-buster.js',
+    fn: alertBuster,
+});
+// https://github.com/uBlockOrigin/uAssets/issues/8
+function alertBuster() {
     window.alert = new Proxy(window.alert, {
         apply: function(a) {
             console.info(a);
         },
     });
-})();
+}
 
 
-// https://github.com/uBlockOrigin/uAssets/issues/58
 /// gpt-defuser.js
-(function() {
+builtinScriptlets.push({
+    name: 'gpt-defuser.js',
+    fn: gptDefuser,
+});
+// https://github.com/uBlockOrigin/uAssets/issues/58
+function gptDefuser() {
     const noopfn = function() {
     };
     let props = '_resetGPT resetGPT resetAndLoadGPTRecovery _resetAndLoadGPTRecovery setupGPT setupGPTuo';
@@ -1423,12 +1524,16 @@
             });
         }
     }
-})();
+}
 
 
-// Prevent web pages from using RTCPeerConnection(), and report attempts in console.
 /// nowebrtc.js
-(function() {
+builtinScriptlets.push({
+    name: 'nowebrtc.js',
+    fn: noWebrtc,
+});
+// Prevent web pages from using RTCPeerConnection(), and report attempts in console.
+function noWebrtc() {
     var rtcName = window.RTCPeerConnection ? 'RTCPeerConnection' : (
         window.webkitRTCPeerConnection ? 'webkitRTCPeerConnection' : ''
     );
@@ -1458,12 +1563,16 @@
             };
         }.bind(null);
     }
-})();
+}
 
 
-// https://github.com/uBlockOrigin/uAssets/issues/88
 /// golem.de.js
-(function() {
+builtinScriptlets.push({
+    name: 'golem.de.js',
+    fn: golemDe,
+});
+// https://github.com/uBlockOrigin/uAssets/issues/88
+function golemDe() {
     const rael = window.addEventListener;
     window.addEventListener = function(a, b) {
         rael(...arguments);
@@ -1479,13 +1588,17 @@
             b();
         }
     }.bind(window);
-})();
+}
 
 
+/// upmanager-defuser.js
+builtinScriptlets.push({
+    name: 'upmanager-defuser.js',
+    fn: upmanagerDefuser,
+});
 // https://forums.lanik.us/viewtopic.php?f=64&t=32278
 // https://www.reddit.com/r/chrome/comments/58eix6/ublock_origin_not_working_on_certain_sites/
-/// upmanager-defuser.js
-(function() {
+function upmanagerDefuser() {
     var onerror = window.onerror;
     window.onerror = function(msg, source, lineno, colno, error) {
         if ( typeof msg === 'string' && msg.indexOf('upManager') !== -1 ) {
@@ -1496,24 +1609,32 @@
         }
     };
     Object.defineProperty(window, 'upManager', { value: function() {} });
-})();
+}
 
 
 // https://github.com/uBlockOrigin/uAssets/issues/110
 /// smartadserver.com.js
-(function() {
+builtinScriptlets.push({
+    name: 'smartadserver.com.js',
+    fn: smartadserverCom,
+});
+function smartadserverCom() {
     Object.defineProperties(window, {
         SmartAdObject: { value: function(){} },
         SmartAdServerAjax: { value: function(){} },
         smartAd: { value: { LoadAds: function() {}, Register: function() {} } }
     });
-})();
+}
 
 
+/// adfly-defuser.js
+builtinScriptlets.push({
+    name: 'adfly-defuser.js',
+    fn: adflyDefuser,
+});
 // https://github.com/reek/anti-adblock-killer/issues/3774#issuecomment-348536138
 // https://github.com/uBlockOrigin/uAssets/issues/883
-/// adfly-defuser.js
-(function() {
+function adflyDefuser() {
     // Based on AdsBypasser
     // License:
     //   https://github.com/adsbypasser/adsbypasser/blob/master/LICENSE
@@ -1571,12 +1692,16 @@
     } catch (err) {
         window.console.error("Failed to set up Adfly bypasser!");
     }
-})();
+}
 
 
-// https://github.com/uBlockOrigin/uAssets/issues/913
 /// disable-newtab-links.js
-(function() {
+builtinScriptlets.push({
+    name: 'disable-newtab-links.js',
+    fn: disableNewtabLinks,
+});
+// https://github.com/uBlockOrigin/uAssets/issues/913
+function disableNewtabLinks() {
     document.addEventListener('click', function(ev) {
         var target = ev.target;
         while ( target !== null ) {
@@ -1588,11 +1713,15 @@
             target = target.parentNode;
         }
     });
-})();
+}
 
 
 /// damoh-defuser.js
-(function() {
+builtinScriptlets.push({
+    name: 'damoh-defuser.js',
+    fn: damohDefuser,
+});
+function damohDefuser() {
     const handled = new WeakSet();
     let asyncTimer;
     const cleanVideo = function() {
@@ -1615,16 +1744,20 @@
     };
     const observer = new MutationObserver(cleanVideoAsync);
     observer.observe(document, { childList: true, subtree: true });
-})();
+}
 
 
 /// twitch-videoad.js
+builtinScriptlets.push({
+    name: 'twitch-videoad.js',
+    fn: twitchVideoad,
+});
 // https://github.com/uBlockOrigin/uAssets/issues/5184
 // https://github.com/pixeltris/TwitchAdSolutions/commit/6be4c5313035
 // https://github.com/pixeltris/TwitchAdSolutions/commit/3d2883ea9e3a
 // https://github.com/pixeltris/TwitchAdSolutions/commit/7233b5fd2284
 // https://github.com/pixeltris/TwitchAdSolutions/commit/aad8946dab2b
-(function() {
+function twitchVideoad() {
     if ( /(^|\.)twitch\.tv$/.test(document.location.hostname) === false ) { return; }
     window.fetch = new Proxy(window.fetch, {
         apply: function(target, thisArg, args) {
@@ -1649,17 +1782,23 @@
             return Reflect.apply(target, thisArg, args);
         }
     });
-})();
+}
 
 
-// https://github.com/NanoAdblocker/NanoFilters/issues/149
 /// cookie-remover.js
-(function() {
-    const needle = '{{1}}';
+builtinScriptlets.push({
+    name: 'cookie-remover.js',
+    fn: cookieRemover,
+});
+// https://github.com/NanoAdblocker/NanoFilters/issues/149
+function cookieRemover(
+    needle = ''
+) {
+    if ( typeof needle !== 'string' ) { return; }
     let reName = /./;
     if ( /^\/.+\/$/.test(needle) ) {
         reName = new RegExp(needle.slice(1,-1));
-    } else if ( needle !== '' && needle !== '{{1}}' ) {
+    } else if ( needle !== '' ) {
         reName = new RegExp(needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
     }
     const removeCookie = function() {
@@ -1699,24 +1838,21 @@
     };
     removeCookie();
     window.addEventListener('beforeunload', removeCookie);
-})();
+}
 
 
 /// xml-prune.js
-(function() {
-    let selector = '{{1}}';
-    if ( selector === '{{1}}' ) {
-        selector = '';
-    }
+builtinScriptlets.push({
+    name: 'xml-prune.js',
+    fn: xmlPrune,
+});
+function xmlPrune(
+    selector = '',
+    selectorCheck = '',
+    urlPattern = ''
+) {
+    if ( typeof selector !== 'string' ) { return; }
     if ( selector === '' ) { return; }
-    let selectorCheck = '{{2}}';
-    if ( selectorCheck === '{{2}}' ) {
-        selectorCheck = '';
-    }
-    let urlPattern = '{{3}}';
-    if ( urlPattern === '{{3}}' ) {
-        urlPattern = '';
-    }
     let reUrl;
     if ( urlPattern === '' ) {
         reUrl = /^/;
@@ -1769,20 +1905,20 @@
             );
         }
     });
-})();
+}
 
 
 /// m3u-prune.js
+builtinScriptlets.push({
+    name: 'm3u-prune.js',
+    fn: m3uPrune,
+});
 // https://en.wikipedia.org/wiki/M3U
-(function() {
-    let m3uPattern = '{{1}}';
-    if ( m3uPattern === '{{1}}' ) {
-        m3uPattern = '';
-    }
-    let urlPattern = '{{2}}';
-    if ( urlPattern === '{{2}}' ) {
-        urlPattern = '';
-    }
+function m3uPrune(
+    m3uPattern = '',
+    urlPattern = ''
+) {
+    if ( typeof m3uPattern !== 'string' ) { return; }
     const regexFromArg = arg => {
         if ( arg === '' ) { return /^/; }
         const match = /^\/(.+)\/([gms]*)$/.exec(arg);
@@ -1891,16 +2027,20 @@
             return Reflect.apply(target, thisArg, args);
         }
     });
-})();
+}
 
 
 /// href-sanitizer.js
-(function() {
-    let selector = '{{1}}';
-    if ( selector === '{{1}}' ) { selector = ''; }
+builtinScriptlets.push({
+    name: 'href-sanitizer.js',
+    fn: hrefSanitizer,
+});
+function hrefSanitizer(
+    selector = '',
+    source = ''
+) {
+    if ( typeof selector !== 'string' ) { return; }
     if ( selector === '' ) { return; }
-    let source = '{{2}}';
-    if ( source === '{{2}}' ) { source = ''; }
     if ( source === '' ) { source = 'text'; }
     const sanitizeCopycats = (href, text) => {
         let elems = [];
@@ -1978,13 +2118,19 @@
     } else {
         start();
     }
-})();
+}
 
 
 /// call-nothrow.js
-(function() {
-    const chain = '{{1}}';
-    if ( chain === '' || chain === '{{1}}' ) { return; }
+builtinScriptlets.push({
+    name: 'call-nothrow.js',
+    fn: callNothrow,
+});
+function callNothrow(
+    chain = ''
+) {
+    if ( typeof chain !== 'string' ) { return; }
+    if ( chain === '' ) { return; }
     const parts = chain.split('.');
     let owner = window, prop;
     for (;;) {
@@ -2006,9 +2152,5 @@
             return r;
         },
     });
-})();
+}
 
-
-// These lines below are skipped by the resource parser.
-// <<<< end of private namespace
-})();

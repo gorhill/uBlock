@@ -325,13 +325,20 @@ RedirectEngine.prototype.loadBuiltinResources = function(fetcher) {
     this.aliases = new Map();
 
     const fetches = [
-        fetcher(
-            '/assets/resources/scriptlets.js'
-        ).then(result => {
-            const content = result.content;
-            if ( typeof content !== 'string' ) { return; }
-            if ( content.length === 0 ) { return; }
-            this.resourcesFromString(content);
+        import('/assets/resources/scriptlets.js').then(module => {
+            for ( const scriptlet of module.builtinScriptlets ) {
+                const { name, aliases, fn } = scriptlet;
+                const entry = RedirectEntry.fromContent(
+                    mimeFromName(name),
+                    fn.toString()
+                );
+                this.resources.set(name, entry);
+                if ( Array.isArray(aliases) === false ) { continue; }
+                for ( const alias of aliases ) {
+                    this.aliases.set(alias, name);
+                }
+            }
+            this.modifyTime = Date.now();
         }),
     ];
 
@@ -426,7 +433,7 @@ RedirectEngine.prototype.getResourceDetails = function() {
 
 /******************************************************************************/
 
-const RESOURCES_SELFIE_VERSION = 6;
+const RESOURCES_SELFIE_VERSION = 7;
 const RESOURCES_SELFIE_NAME = 'compiled/redirectEngine/resources';
 
 RedirectEngine.prototype.selfieFromResources = function(storage) {
