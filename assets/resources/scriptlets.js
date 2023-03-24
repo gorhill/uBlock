@@ -1502,31 +1502,6 @@ function alertBuster() {
 }
 
 
-/// gpt-defuser.js
-builtinScriptlets.push({
-    name: 'gpt-defuser.js',
-    fn: gptDefuser,
-});
-// https://github.com/uBlockOrigin/uAssets/issues/58
-function gptDefuser() {
-    const noopfn = function() {
-    };
-    let props = '_resetGPT resetGPT resetAndLoadGPTRecovery _resetAndLoadGPTRecovery setupGPT setupGPTuo';
-    props = props.split(/\s+/);
-    while ( props.length ) {
-        var prop = props.pop();
-        if ( typeof window[prop] === 'function' ) {
-            window[prop] = noopfn;
-        } else {
-            Object.defineProperty(window, prop, {
-                get: function() { return noopfn; },
-                set: noopfn
-            });
-        }
-    }
-}
-
-
 /// nowebrtc.js
 builtinScriptlets.push({
     name: 'nowebrtc.js',
@@ -1588,42 +1563,6 @@ function golemDe() {
             b();
         }
     }.bind(window);
-}
-
-
-/// upmanager-defuser.js
-builtinScriptlets.push({
-    name: 'upmanager-defuser.js',
-    fn: upmanagerDefuser,
-});
-// https://forums.lanik.us/viewtopic.php?f=64&t=32278
-// https://www.reddit.com/r/chrome/comments/58eix6/ublock_origin_not_working_on_certain_sites/
-function upmanagerDefuser() {
-    var onerror = window.onerror;
-    window.onerror = function(msg, source, lineno, colno, error) {
-        if ( typeof msg === 'string' && msg.indexOf('upManager') !== -1 ) {
-            return true;
-        }
-        if ( onerror instanceof Function ) {
-            onerror.call(window, msg, source, lineno, colno, error);
-        }
-    };
-    Object.defineProperty(window, 'upManager', { value: function() {} });
-}
-
-
-// https://github.com/uBlockOrigin/uAssets/issues/110
-/// smartadserver.com.js
-builtinScriptlets.push({
-    name: 'smartadserver.com.js',
-    fn: smartadserverCom,
-});
-function smartadserverCom() {
-    Object.defineProperties(window, {
-        SmartAdObject: { value: function(){} },
-        SmartAdServerAjax: { value: function(){} },
-        smartAd: { value: { LoadAds: function() {}, Register: function() {} } }
-    });
 }
 
 
@@ -1711,75 +1650,6 @@ function disableNewtabLinks() {
                 break;
             }
             target = target.parentNode;
-        }
-    });
-}
-
-
-/// damoh-defuser.js
-builtinScriptlets.push({
-    name: 'damoh-defuser.js',
-    fn: damohDefuser,
-});
-function damohDefuser() {
-    const handled = new WeakSet();
-    let asyncTimer;
-    const cleanVideo = function() {
-        asyncTimer = undefined;
-        const v = document.querySelector('video');
-        if ( v === null ) { return; }
-        if ( handled.has(v) ) { return; }
-        handled.add(v);
-        v.pause();
-        v.controls = true;
-        let el = v.querySelector('meta[itemprop="contentURL"][content]');
-        if ( el === null ) { return; }
-        v.src = el.getAttribute('content');
-        el = v.querySelector('meta[itemprop="thumbnailUrl"][content]');
-        if ( el !== null ) { v.poster = el.getAttribute('content'); }
-    };
-    const cleanVideoAsync = function() {
-        if ( asyncTimer !== undefined ) { return; }
-        asyncTimer = window.requestAnimationFrame(cleanVideo);
-    };
-    const observer = new MutationObserver(cleanVideoAsync);
-    observer.observe(document, { childList: true, subtree: true });
-}
-
-
-/// twitch-videoad.js
-builtinScriptlets.push({
-    name: 'twitch-videoad.js',
-    fn: twitchVideoad,
-});
-// https://github.com/uBlockOrigin/uAssets/issues/5184
-// https://github.com/pixeltris/TwitchAdSolutions/commit/6be4c5313035
-// https://github.com/pixeltris/TwitchAdSolutions/commit/3d2883ea9e3a
-// https://github.com/pixeltris/TwitchAdSolutions/commit/7233b5fd2284
-// https://github.com/pixeltris/TwitchAdSolutions/commit/aad8946dab2b
-function twitchVideoad() {
-    if ( /(^|\.)twitch\.tv$/.test(document.location.hostname) === false ) { return; }
-    window.fetch = new Proxy(window.fetch, {
-        apply: function(target, thisArg, args) {
-            const [ url, init ] = args;
-            if (
-                typeof url === 'string' &&
-                url.includes('gql') &&
-                init instanceof Object &&
-                init.headers instanceof Object &&
-                typeof init.body === 'string' &&
-                init.body.includes('PlaybackAccessToken') &&
-                init.body.includes('"isVod":true') === false
-            ) {
-                const { headers } = init;
-                if ( typeof headers['X-Device-Id'] === 'string' ) {
-                    headers['X-Device-Id'] = 'twitch-web-wall-mason';
-                }
-                if ( typeof headers['Device-ID'] === 'string' ) {
-                    headers['Device-ID'] = 'twitch-web-wall-mason';
-                }
-            }
-            return Reflect.apply(target, thisArg, args);
         }
     });
 }
