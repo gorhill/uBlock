@@ -2189,7 +2189,7 @@ export class AstFilterParser {
         const parentEnd = this.nodes[parent+NODE_END_INDEX];
         if ( parentEnd === parentBeg ) { return 0; }
         const s = this.getNodeString(parent);
-        let next = 0, prev = 0;
+        let next = 0;
         // json-based arg?
         const match = this.rePatternScriptletJsonArgs.exec(s);
         if ( match !== null ) {
@@ -2207,7 +2207,9 @@ export class AstFilterParser {
             return next;
         }
         // positional args
+        const head = this.allocHeadNode();
         const argsEnd = s.length;
+        let prev = head;
         let argBodyBeg = 0, argBodyEnd = 0, argEnd = 0;
         let t = '';
         while ( argBodyBeg < argsEnd ) {
@@ -2232,7 +2234,7 @@ export class AstFilterParser {
                 prev = this.linkRight(prev, next);
             }
         }
-        return next;
+        return this.throwHeadNode(head);
     }
 
     indexOfNextScriptletArgSeparator(pattern, beg = 0) {
