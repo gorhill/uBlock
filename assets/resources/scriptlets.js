@@ -365,72 +365,62 @@ builtinScriptlets.push({
 });
 // https://github.com/uBlockOrigin/uAssets/issues/9123#issuecomment-848255120
 function addEventListenerDefuser(
-    needle1 = '',
-    needle2 = ''
+    arg1 = '',
+    arg2 = ''
 ) {
-    if ( typeof needle1 !== 'string' ) { return; }
-    if ( needle1 === '' ) {
-        needle1 = '.?';
-    } else if ( /^\/.+\/$/.test(needle1) ) {
-        needle1 = needle1.slice(1,-1);
+    const details = typeof arg1 !== 'object'
+        ? { type: arg1, pattern: arg2 }
+        : arg1;
+    let { type = '', pattern = '' } = details;
+    if ( typeof type !== 'string' ) { return; }
+    if ( typeof pattern !== 'string' ) { return; }
+    if ( type === '' ) {
+        type = '^';
+    } else if ( /^\/.+\/$/.test(type) ) {
+        type = type.slice(1,-1);
     } else {
-        needle1 = needle1.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        type = type.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
-    needle1 = new RegExp(needle1);
-    if ( needle2 === '' ) {
-        needle2 = '.?';
-    } else if ( /^\/.+\/$/.test(needle2) ) {
-        needle2 = needle2.slice(1,-1);
+    const reType = new RegExp(type);
+    if ( pattern === '' ) {
+        pattern = '^';
+    } else if ( /^\/.+\/$/.test(pattern) ) {
+        pattern = pattern.slice(1,-1);
     } else {
-        needle2 = needle2.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        pattern = pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
-    needle2 = new RegExp(needle2);
-    self.EventTarget.prototype.addEventListener = new Proxy(
-        self.EventTarget.prototype.addEventListener,
-        {
-            apply: function(target, thisArg, args) {
-                let type, handler;
-                try {
-                    type = String(args[0]);
-                    handler = String(args[1]);
-                } catch(ex) {
-                }
-                if (
-                    needle1.test(type) === false ||
-                    needle2.test(handler) === false
-                ) {
-                    return target.apply(thisArg, args);
-                }
+    const rePattern = new RegExp(pattern);
+    const logfn = console.log.bind(console);
+    const proto = self.EventTarget.prototype;
+    proto.addEventListener = new Proxy(proto.addEventListener, {
+        apply: function(target, thisArg, args) {
+            let type, handler;
+            try {
+                type = String(args[0]);
+                handler = String(args[1]);
+            } catch(ex) {
             }
-        }
-    );
-}
-
-
-/// addEventListener-logger.js
-builtinScriptlets.push({
-    name: 'addEventListener-logger.js',
-    aliases: [ 'aell.js' ],
-    fn: addEventListenerLogger,
-});
-// https://github.com/uBlockOrigin/uAssets/issues/9123#issuecomment-848255120
-function addEventListenerLogger() {
-    const log = console.log.bind(console);
-    self.EventTarget.prototype.addEventListener = new Proxy(
-        self.EventTarget.prototype.addEventListener,
-        {
-            apply: function(target, thisArg, args) {
-                let type, handler;
-                try {
-                    type = String(args[0]);
-                    handler = String(args[1]);
-                } catch(ex) {
-                }
-                log('uBO: addEventListener("%s", %s)', type, handler);
-                return target.apply(thisArg, args);
+            const matchesType = reType.test(type);
+            const matchesHandler = rePattern.test(handler);
+            const matchesEither = matchesType || matchesHandler;
+            const matchesBoth = matchesType && matchesHandler;
+            if (
+                details.log === 1 && matchesBoth ||
+                details.log === 2 && matchesEither ||
+                details.log === 3
+            ) {
+                logfn(`uBO: addEventListener('${type}', ${handler})`);
             }
+            if (
+                details.debug === 1 && matchesBoth ||
+                details.debug === 2 && matchesEither
+            ) {
+                debugger; // jshint ignore:line
+            }
+            if ( matchesBoth ) { return; }
+            return Reflect.apply(target, thisArg, args);
         }
-    );
+    });
 }
 
 
