@@ -171,15 +171,19 @@ const lookupScriptlet = function(rawToken, scriptletMap, dependencyMap) {
         if ( Array.isArray(details.dependencies) === false ) { continue; }
         dependencies.push(...details.dependencies);
     }
-    scriptletMap.set(
-        rawToken,
-        [ 'try {', content, '} catch (e) {', '}' ].join('\n')
-    );
+    scriptletMap.set(rawToken, [
+        'try {',
+        '// >>>> scriptlet start',
+        content,
+        '// <<<< scriptlet end',
+        '} catch (e) {',
+        '}',
+    ].join('\n'));
 };
 
 // Fill-in scriptlet argument placeholders.
 const patchScriptlet = function(content, args) {
-    if ( content.startsWith('function') ) {
+    if ( content.startsWith('function') && content.endsWith('}') ) {
         content = `(${content})({{args}});`;
     }
     if ( args.startsWith('{') && args.endsWith('}') ) {
@@ -354,7 +358,7 @@ scriptletFilteringEngine.retrieve = function(request, options = {}) {
             fullCode.push(code);
         }
         cacheDetails = {
-            code: fullCode.join('\n'),
+            code: fullCode.join('\n\n'),
             tokens: Array.from($scriptlets),
             exceptions: Array.from($exceptions),
         };
