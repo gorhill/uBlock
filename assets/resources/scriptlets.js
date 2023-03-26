@@ -279,9 +279,9 @@ builtinScriptlets.push({
     aliases: [ 'aost.js' ],
     fn: abortOnStackTrace,
     dependencies: [
-        'safe-self.fn',
-        'pattern-to-regex.fn',
         'get-exception-token.fn',
+        'pattern-to-regex.fn',
+        'safe-self.fn',
     ],
 });
 // Status is currently experimental
@@ -387,6 +387,7 @@ builtinScriptlets.push({
     fn: addEventListenerDefuser,
     dependencies: [
         'pattern-to-regex.fn',
+        'safe-self.fn',
     ],
 });
 // https://github.com/uBlockOrigin/uAssets/issues/9123#issuecomment-848255120
@@ -400,6 +401,7 @@ function addEventListenerDefuser(
     let { type = '', pattern = '' } = details;
     if ( typeof type !== 'string' ) { return; }
     if ( typeof pattern !== 'string' ) { return; }
+    const safe = safeSelf();
     const reType = patternToRegex(type);
     const rePattern = patternToRegex(pattern);
     const logfn = console.log.bind(console);
@@ -412,8 +414,8 @@ function addEventListenerDefuser(
                 handler = String(args[1]);
             } catch(ex) {
             }
-            const matchesType = reType.test(type);
-            const matchesHandler = rePattern.test(handler);
+            const matchesType = safe.RegExp_test.call(reType, type);
+            const matchesHandler = safe.RegExp_test.call(rePattern, handler);
             const matchesEither = matchesType || matchesHandler;
             const matchesBoth = matchesType && matchesHandler;
             if (
