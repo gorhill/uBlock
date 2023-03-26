@@ -161,7 +161,9 @@ class PSelectorMatchesMediaTask extends PSelectorTask {
 class PSelectorMatchesPathTask extends PSelectorTask {
     constructor(task) {
         super();
-        this.needle = regexFromString(task[1]);
+        this.needle = regexFromString(
+            task[1].replace(/\P{ASCII}/gu, s => encodeURIComponent(s))
+        );
     }
     transpose(node, output) {
         if ( this.needle.test(self.location.pathname + self.location.search) ) {
