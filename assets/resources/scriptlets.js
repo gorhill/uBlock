@@ -26,11 +26,64 @@
 
 export const builtinScriptlets = [];
 
-/// abort-current-script.js
+/*******************************************************************************
+
+    Helper functions
+    
+    These are meant to be used as dependencies to injectable scriptlets.
+
+*******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'pattern-to-regex.fn',
+    fn: patternToRegex,
+});
+function patternToRegex(pattern) {
+    if ( pattern === '' ) {
+        return /^/;
+    }
+    if ( pattern.startsWith('/') && pattern.endsWith('/') ) {
+        return new RegExp(pattern.slice(1, -1));
+    }
+    return new RegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+}
+
+/******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'get-exception-token.fn',
+    fn: getExceptionToken,
+});
+function getExceptionToken() {
+    const token =
+        String.fromCharCode(Date.now() % 26 + 97) +
+        Math.floor(Math.random() * 982451653 + 982451653).toString(36);
+    const oe = self.onerror;
+    self.onerror = function(msg, ...args) {
+        if ( typeof msg === 'string' && msg.includes(token) ) { return true; }
+        if ( oe instanceof Function ) {
+            return oe.call(this, msg, ...args);
+        }
+    }.bind();
+    return token;
+}
+
+/*******************************************************************************
+
+    Injectable scriptlets
+
+    These are meant to be used in the MAIN (webpage) execution world.
+
+*******************************************************************************/
+
 builtinScriptlets.push({
     name: 'abort-current-script.js',
     aliases: [ 'acs.js', 'abort-current-inline-script.js', 'acis.js' ],
     fn: abortCurrentScript,
+    dependencies: [
+        'pattern-to-regex.fn',
+        'get-exception-token.fn',
+    ],
 });
 // Issues to mind before changing anything:
 //  https://github.com/uBlockOrigin/uBlock-issues/issues/2154
@@ -41,21 +94,8 @@ function abortCurrentScript(
 ) {
     if ( typeof target !== 'string' ) { return; }
     if ( target === '' ) { return; }
-    const reRegexEscape = /[.*+?^${}()|[\]\\]/g;
-    const reNeedle = (( ) => {
-        if ( needle === '' ) { return /^/; }
-        if ( /^\/.+\/$/.test(needle) ) {
-            return new RegExp(needle.slice(1,-1));
-        }
-        return new RegExp(needle.replace(reRegexEscape, '\\$&'));
-    })();
-    const reContext = (( ) => {
-        if ( context === '' ) { return; }
-        if ( /^\/.+\/$/.test(context) ) {
-            return new RegExp(context.slice(1,-1));
-        }
-        return new RegExp(context.replace(reRegexEscape, '\\$&'));
-    })();
+    const reNeedle = patternToRegex(needle);
+    const reContext = patternToRegex(context);
     const thisScript = document.currentScript;
     const chain = target.split('.');
     let owner = window;
@@ -75,8 +115,7 @@ function abortCurrentScript(
         value = owner[prop];
         desc = undefined;
     }
-    const magic = String.fromCharCode(Date.now() % 26 + 97) +
-                  Math.floor(Math.random() * 982451653 + 982451653).toString(36);
+    const exceptionToken = getExceptionToken();
     const scriptTexts = new WeakMap();
     const getScriptText = elem => {
         let text = elem.textContent;
@@ -103,11 +142,9 @@ function abortCurrentScript(
         const e = document.currentScript;
         if ( e instanceof HTMLScriptElement === false ) { return; }
         if ( e === thisScript ) { return; }
-        if ( reContext !== undefined && reContext.test(e.src) === false ) {
-            return;
-        }
+        if ( reContext.test(e.src) === false ) { return; }
         if ( reNeedle.test(getScriptText(e)) === false ) { return; }
-        throw new ReferenceError(magic);
+        throw new ReferenceError(exceptionToken);
     };
     Object.defineProperty(owner, prop, {
         get: function() {
@@ -125,33 +162,26 @@ function abortCurrentScript(
             }
         }
     });
-    const oe = window.onerror;
-    window.onerror = function(msg) {
-        if ( typeof msg === 'string' && msg.includes(magic) ) {
-            return true;
-        }
-        if ( oe instanceof Function ) {
-            return oe.apply(this, arguments);
-        }
-    }.bind();
 }
 
+/******************************************************************************/
 
-/// abort-on-property-read.js
 builtinScriptlets.push({
     name: 'abort-on-property-read.js',
     aliases: [ 'aopr.js' ],
     fn: abortOnPropertyRead,
+    dependencies: [
+        'get-exception-token.fn',
+    ],
 });
 function abortOnPropertyRead(
     chain = ''
 ) {
     if ( typeof chain !== 'string' ) { return; }
     if ( chain === '' ) { return; }
-    const magic = String.fromCharCode(Date.now() % 26 + 97) +
-                  Math.floor(Math.random() * 982451653 + 982451653).toString(36);
+    const exceptionToken = getExceptionToken();
     const abort = function() {
-        throw new ReferenceError(magic);
+        throw new ReferenceError(exceptionToken);
     };
     const makeProxy = function(owner, chain) {
         const pos = chain.indexOf('.');
@@ -186,31 +216,24 @@ function abortOnPropertyRead(
     };
     const owner = window;
     makeProxy(owner, chain);
-    const oe = window.onerror;
-    window.onerror = function(msg, src, line, col, error) {
-        if ( typeof msg === 'string' && msg.indexOf(magic) !== -1 ) {
-            return true;
-        }
-        if ( oe instanceof Function ) {
-            return oe(msg, src, line, col, error);
-        }
-    }.bind();
 }
 
+/******************************************************************************/
 
-/// abort-on-property-write.js
 builtinScriptlets.push({
     name: 'abort-on-property-write.js',
     aliases: [ 'aopw.js' ],
     fn: abortOnPropertyWrite,
+    dependencies: [
+        'get-exception-token.fn',
+    ],
 });
 function abortOnPropertyWrite(
     prop = ''
 ) {
     if ( typeof prop !== 'string' ) { return; }
     if ( prop === '' ) { return; }
-    const magic = String.fromCharCode(Date.now() % 26 + 97) +
-                  Math.floor(Math.random() * 982451653 + 982451653).toString(36);
+    const exceptionToken = getExceptionToken();
     let owner = window;
     for (;;) {
         const pos = prop.indexOf('.');
@@ -222,26 +245,21 @@ function abortOnPropertyWrite(
     delete owner[prop];
     Object.defineProperty(owner, prop, {
         set: function() {
-            throw new ReferenceError(magic);
+            throw new ReferenceError(exceptionToken);
         }
     });
-    const oe = window.onerror;
-    window.onerror = function(msg, src, line, col, error) {
-        if ( typeof msg === 'string' && msg.indexOf(magic) !== -1 ) {
-            return true;
-        }
-        if ( oe instanceof Function ) {
-            return oe(msg, src, line, col, error);
-        }
-    }.bind();
 }
 
+/******************************************************************************/
 
-/// abort-on-stack-trace.js
 builtinScriptlets.push({
     name: 'abort-on-stack-trace.js',
     aliases: [ 'aost.js' ],
     fn: abortOnStackTrace,
+    dependencies: [
+        'pattern-to-regex.fn',
+        'get-exception-token.fn',
+    ],
 });
 // Status is currently experimental
 function abortOnStackTrace(
@@ -250,19 +268,8 @@ function abortOnStackTrace(
     logLevel = ''
 ) {
     if ( typeof chain !== 'string' ) { return; }
-    const reRegexEscape = /[.*+?^${}()|[\]\\]/g;
-    if ( needle === '' ) {
-        needle = '^';
-    } else if ( /^\/.+\/$/.test(needle) ) {
-        needle = needle.slice(1,-1);
-    } else {
-        needle = needle.replace(reRegexEscape, '\\$&');
-    }
-    const reNeedle = new RegExp(needle);
-    const magic = String.fromCharCode(Math.random() * 26 + 97) +
-        Math.floor(
-            (0.25 + Math.random() * 0.75) * Number.MAX_SAFE_INTEGER
-        ).toString(36).slice(-8);
+    const reNeedle = patternToRegex(needle);
+    const exceptionToken = getExceptionToken();
     const log = console.log.bind(console);
     const ErrorCtor = self.Error;
     const mustAbort = function(err) {
@@ -274,7 +281,7 @@ function abortOnStackTrace(
         // Normalize stack trace
         const lines = [];
         for ( let line of err.stack.split(/[\n\r]+/) ) {
-            if ( line.includes(magic) ) { continue; }
+            if ( line.includes(exceptionToken) ) { continue; }
             line = line.trim();
             let match = /(.*?@)?(\S+)(:\d+):\d+\)?$/.exec(line);
             if ( match === null ) { continue; }
@@ -310,14 +317,14 @@ function abortOnStackTrace(
             let v = owner[chain];
             Object.defineProperty(owner, chain, {
                 get: function() {
-                    if ( mustAbort(new ErrorCtor(magic)) ) {
-                        throw new ReferenceError(magic);
+                    if ( mustAbort(new ErrorCtor(exceptionToken)) ) {
+                        throw new ReferenceError(exceptionToken);
                     }
                     return v;
                 },
                 set: function(a) {
-                    if ( mustAbort(new ErrorCtor(magic)) ) {
-                        throw new ReferenceError(magic);
+                    if ( mustAbort(new ErrorCtor(exceptionToken)) ) {
+                        throw new ReferenceError(exceptionToken);
                     }
                     v = a;
                 },
@@ -345,23 +352,17 @@ function abortOnStackTrace(
     };
     const owner = window;
     makeProxy(owner, chain);
-    const oe = window.onerror;
-    window.onerror = function(msg, src, line, col, error) {
-        if ( typeof msg === 'string' && msg.indexOf(magic) !== -1 ) {
-            return true;
-        }
-        if ( oe instanceof Function ) {
-            return oe(msg, src, line, col, error);
-        }
-    }.bind();
 }
 
+/******************************************************************************/
 
-/// addEventListener-defuser.js
 builtinScriptlets.push({
     name: 'addEventListener-defuser.js',
     aliases: [ 'aeld.js' ],
     fn: addEventListenerDefuser,
+    dependencies: [
+        'pattern-to-regex.fn',
+    ],
 });
 // https://github.com/uBlockOrigin/uAssets/issues/9123#issuecomment-848255120
 function addEventListenerDefuser(
@@ -374,22 +375,8 @@ function addEventListenerDefuser(
     let { type = '', pattern = '' } = details;
     if ( typeof type !== 'string' ) { return; }
     if ( typeof pattern !== 'string' ) { return; }
-    if ( type === '' ) {
-        type = '^';
-    } else if ( /^\/.+\/$/.test(type) ) {
-        type = type.slice(1,-1);
-    } else {
-        type = type.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
-    const reType = new RegExp(type);
-    if ( pattern === '' ) {
-        pattern = '^';
-    } else if ( /^\/.+\/$/.test(pattern) ) {
-        pattern = pattern.slice(1,-1);
-    } else {
-        pattern = pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
-    const rePattern = new RegExp(pattern);
+    const reType = patternToRegex(type);
+    const rePattern = patternToRegex(pattern);
     const logfn = console.log.bind(console);
     const proto = self.EventTarget.prototype;
     proto.addEventListener = new Proxy(proto.addEventListener, {
@@ -423,11 +410,14 @@ function addEventListenerDefuser(
     });
 }
 
+/******************************************************************************/
 
-/// json-prune.js
 builtinScriptlets.push({
     name: 'json-prune.js',
     fn: jsonPrune,
+    dependencies: [
+        'pattern-to-regex.fn',
+    ],
 });
 //  When no "prune paths" argument is provided, the scriptlet is
 //  used for logging purpose and the "needle paths" argument is
@@ -451,15 +441,7 @@ function jsonPrune(
             : [];
     } else {
         log = console.log.bind(console);
-        let needle;
-        if ( rawNeedlePaths === '' ) {
-            needle = '.?';
-        } else if ( rawNeedlePaths.charAt(0) === '/' && rawNeedlePaths.slice(-1) === '/' ) {
-            needle = rawNeedlePaths.slice(1, -1);
-        } else {
-            needle = rawNeedlePaths.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        }
-        reLogNeedle = new RegExp(needle);
+        reLogNeedle = patternToRegex(rawNeedlePaths);
     }
     const findOwner = function(root, path, prune = false) {
         let owner = root;
@@ -534,12 +516,15 @@ function jsonPrune(
     });
 }
 
+/******************************************************************************/
 
-/// nano-setInterval-booster.js
 builtinScriptlets.push({
     name: 'nano-setInterval-booster.js',
     aliases: [ 'nano-sib.js' ],
     fn: nanoSetIntervalBooster,
+    dependencies: [
+        'pattern-to-regex.fn',
+    ],
 });
 // Imported from:
 // https://github.com/NanoAdblocker/NanoFilters/blob/1f3be7211bb0809c5106996f52564bf10c4525f7/NanoFiltersSource/NanoResources.txt#L126
@@ -559,14 +544,7 @@ function nanoSetIntervalBooster(
     boostArg = ''
 ) {
     if ( typeof needleArg !== 'string' ) { return; }
-    if ( needleArg === '' ) {
-        needleArg = '.?';
-    } else if ( needleArg.charAt(0) === '/' && needleArg.slice(-1) === '/' ) {
-        needleArg = needleArg.slice(1, -1);
-    } else {
-        needleArg = needleArg.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
-    const reNeedle = new RegExp(needleArg);
+    const reNeedle = patternToRegex(needleArg);
     let delay = delayArg !== '*' ? parseInt(delayArg, 10) : -1;
     if ( isNaN(delay) || isFinite(delay) === false ) { delay = 1000; }
     let boost = parseFloat(boostArg);
@@ -587,12 +565,15 @@ function nanoSetIntervalBooster(
     });
 }
 
+/******************************************************************************/
 
-/// nano-setTimeout-booster.js
 builtinScriptlets.push({
     name: 'nano-setTimeout-booster.js',
     aliases: [ 'nano-stb.js' ],
     fn: nanoSetTimeoutBooster,
+    dependencies: [
+        'pattern-to-regex.fn',
+    ],
 });
 // Imported from:
 // https://github.com/NanoAdblocker/NanoFilters/blob/1f3be7211bb0809c5106996f52564bf10c4525f7/NanoFiltersSource/NanoResources.txt#L82
@@ -613,14 +594,7 @@ function nanoSetTimeoutBooster(
     boostArg = ''
 ) {
     if ( typeof needleArg !== 'string' ) { return; }
-    if ( needleArg === '' ) {
-        needleArg = '.?';
-    } else if ( needleArg.charAt(0) === '/' && needleArg.slice(-1) === '/' ) {
-        needleArg = needleArg.slice(1, -1);
-    } else {
-        needleArg = needleArg.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
-    const reNeedle = new RegExp(needleArg);
+    const reNeedle = patternToRegex(needleArg);
     let delay = delayArg !== '*' ? parseInt(delayArg, 10) : -1;
     if ( isNaN(delay) || isFinite(delay) === false ) { delay = 1000; }
     let boost = parseFloat(boostArg);
@@ -641,39 +615,37 @@ function nanoSetTimeoutBooster(
     });
 }
 
+/******************************************************************************/
 
-/// noeval-if.js
 builtinScriptlets.push({
     name: 'noeval-if.js',
-    fn: noevalIf,
+    fn: noEvalIf,
+    dependencies: [
+        'pattern-to-regex.fn',
+    ],
 });
-function noevalIf(
+function noEvalIf(
     needle = ''
 ) {
     if ( typeof needle !== 'string' ) { return; }
-    if ( needle === '' ) {
-        needle = '.?';
-    } else if ( needle.slice(0,1) === '/' && needle.slice(-1) === '/' ) {
-        needle = needle.slice(1,-1);
-    } else {
-        needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
-    needle = new RegExp(needle);
-    window.eval = new Proxy(window.eval, {          // jshint ignore: line
+    const reNeedle = patternToRegex(needle);
+    window.eval = new Proxy(window.eval, {  // jshint ignore: line
         apply: function(target, thisArg, args) {
             const a = args[0];
-            if ( needle.test(a.toString()) === false ) {
-                return target.apply(thisArg, args);
-            }
+            if ( reNeedle.test(a.toString()) ) { return; }
+            return target.apply(thisArg, args);
         }
     });
 }
 
+/******************************************************************************/
 
-/// no-fetch-if.js
 builtinScriptlets.push({
     name: 'no-fetch-if.js',
     fn: noFetchIf,
+    dependencies: [
+        'pattern-to-regex.fn',
+    ],
 });
 function noFetchIf(
     arg1 = '',
@@ -691,14 +663,7 @@ function noFetchIf(
             key = 'url';
             value = condition;
         }
-        if ( value === '' ) {
-            value = '^';
-        } else if ( value.startsWith('/') && value.endsWith('/') ) {
-            value = value.slice(1, -1);
-        } else {
-            value = value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        }
-        needles.push({ key, re: new RegExp(value) });
+        needles.push({ key, re: patternToRegex(value) });
     }
     const log = needles.length === 0 ? console.log.bind(console) : undefined;
     self.fetch = new Proxy(self.fetch, {
@@ -746,8 +711,8 @@ function noFetchIf(
     });
 }
 
+/******************************************************************************/
 
-/// refresh-defuser.js
 builtinScriptlets.push({
     name: 'refresh-defuser.js',
     fn: refreshDefuser,
@@ -773,8 +738,8 @@ function refreshDefuser(
     }
 }
 
+/******************************************************************************/
 
-/// remove-attr.js
 builtinScriptlets.push({
     name: 'remove-attr.js',
     aliases: [ 'ra.js' ],
@@ -840,8 +805,8 @@ function removeAttr(
     }
 }
 
+/******************************************************************************/
 
-/// remove-class.js
 builtinScriptlets.push({
     name: 'remove-class.js',
     aliases: [ 'rc.js' ],
@@ -905,12 +870,15 @@ function removeClass(
     }
 }
 
+/******************************************************************************/
 
-/// no-requestAnimationFrame-if.js
 builtinScriptlets.push({
     name: 'no-requestAnimationFrame-if.js',
     aliases: [ 'norafif.js' ],
     fn: noRequestAnimationFrameIf,
+    dependencies: [
+        'pattern-to-regex.fn',
+    ],
 });
 function noRequestAnimationFrameIf(
     needle = ''
@@ -918,13 +886,8 @@ function noRequestAnimationFrameIf(
     if ( typeof needle !== 'string' ) { return; }
     const needleNot = needle.charAt(0) === '!';
     if ( needleNot ) { needle = needle.slice(1); }
-    if ( needle.startsWith('/') && needle.endsWith('/') ) {
-        needle = needle.slice(1, -1);
-    } else if ( needle !== '' ) {
-        needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
     const log = needleNot === false && needle === '' ? console.log : undefined;
-    const reNeedle = new RegExp(needle);
+    const reNeedle = patternToRegex(needle);
     window.requestAnimationFrame = new Proxy(window.requestAnimationFrame, {
         apply: function(target, thisArg, args) {
             const a = String(args[0]);
@@ -942,8 +905,8 @@ function noRequestAnimationFrameIf(
     });
 }
 
+/******************************************************************************/
 
-/// set-constant.js
 builtinScriptlets.push({
     name: 'set-constant.js',
     aliases: [ 'set.js' ],
@@ -1108,12 +1071,15 @@ function setConstant(
     trapChain(window, chain);
 }
 
+/******************************************************************************/
 
-/// no-setInterval-if.js
 builtinScriptlets.push({
     name: 'no-setInterval-if.js',
     aliases: [ 'nosiif.js' ],
     fn: noSetIntervalIf,
+    dependencies: [
+        'pattern-to-regex.fn',
+    ],
 });
 function noSetIntervalIf(
     needle = '',
@@ -1129,17 +1095,10 @@ function noSetIntervalIf(
         if ( delayNot ) { delay = delay.slice(1); }
         delay = parseInt(delay, 10);
     }
-    if ( needle === '' ) {
-        needle = '';
-    } else if ( needle.startsWith('/') && needle.endsWith('/') ) {
-        needle = needle.slice(1,-1);
-    } else {
-        needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
     const log = needleNot === false && needle === '' && delay === undefined
         ? console.log
         : undefined;
-    const reNeedle = new RegExp(needle);
+    const reNeedle = patternToRegex(needle);
     window.setInterval = new Proxy(window.setInterval, {
         apply: function(target, thisArg, args) {
             const a = String(args[0]);
@@ -1163,12 +1122,15 @@ function noSetIntervalIf(
     });
 }
 
+/******************************************************************************/
 
-/// no-setTimeout-if.js
 builtinScriptlets.push({
     name: 'no-setTimeout-if.js',
     aliases: [ 'nostif.js', 'setTimeout-defuser.js' ],
     fn: noSetTimeoutIf,
+    dependencies: [
+        'pattern-to-regex.fn',
+    ],
 });
 function noSetTimeoutIf(
     needle = '',
@@ -1184,17 +1146,10 @@ function noSetTimeoutIf(
         if ( delayNot ) { delay = delay.slice(1); }
         delay = parseInt(delay, 10);
     }
-    if ( needle === '' ) {
-        needle = '';
-    } else if ( needle.startsWith('/') && needle.endsWith('/') ) {
-        needle = needle.slice(1,-1);
-    } else {
-        needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
     const log = needleNot === false && needle === '' && delay === undefined
         ? console.log
         : undefined;
-    const reNeedle = new RegExp(needle);
+    const reNeedle = patternToRegex(needle);
     window.setTimeout = new Proxy(window.setTimeout, {
         apply: function(target, thisArg, args) {
             const a = String(args[0]);
@@ -1218,27 +1173,20 @@ function noSetTimeoutIf(
     });
 }
 
+/******************************************************************************/
 
-/// webrtc-if.js
 builtinScriptlets.push({
     name: 'webrtc-if.js',
     fn: webrtcIf,
+    dependencies: [
+        'pattern-to-regex.fn',
+    ],
 });
 function webrtcIf(
     good = ''
 ) {
     if ( typeof good !== 'string' ) { return; }
-    if ( good.startsWith('/') && good.endsWith('/') ) {
-        good = good.slice(1, -1);
-    } else {
-        good = good.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
-    let reGood;
-    try {
-        reGood = new RegExp(good);
-    } catch(ex) {
-        return;
-    }
+    const reGood = patternToRegex(good);
     const rtcName = window.RTCPeerConnection
         ? 'RTCPeerConnection'
         : (window.webkitRTCPeerConnection ? 'webkitRTCPeerConnection' : '');
@@ -1292,11 +1240,14 @@ function webrtcIf(
         });
 }
 
+/******************************************************************************/
 
-/// no-xhr-if.js
 builtinScriptlets.push({
     name: 'no-xhr-if.js',
     fn: noXhrIf,
+    dependencies: [
+        'pattern-to-regex.fn',
+    ],
 });
 function noXhrIf(
     arg1 = ''
@@ -1315,14 +1266,7 @@ function noXhrIf(
             key = 'url';
             value = condition;
         }
-        if ( value === '' ) {
-            value = '^';
-        } else if ( value.startsWith('/') && value.endsWith('/') ) {
-            value = value.slice(1, -1);
-        } else {
-            value = value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        }
-        needles.push({ key, re: new RegExp(value) });
+        needles.push({ key, re: patternToRegex(value) });
     }
     const log = needles.length === 0 ? console.log.bind(console) : undefined;
     self.XMLHttpRequest = class extends self.XMLHttpRequest {
@@ -1369,11 +1313,14 @@ function noXhrIf(
     };
 }
 
+/******************************************************************************/
 
-/// window-close-if.js
 builtinScriptlets.push({
     name: 'window-close-if.js',
     fn: windowCloseIf,
+    dependencies: [
+        'pattern-to-regex.fn',
+    ],
 });
 // https://github.com/uBlockOrigin/uAssets/issues/10323#issuecomment-992312847
 // https://github.com/AdguardTeam/Scriptlets/issues/158
@@ -1382,19 +1329,14 @@ function windowCloseIf(
     arg1 = ''
 ) {
     if ( typeof arg1 !== 'string' ) { return; }
-    let reStr;
     let subject = '';
-    if ( arg1 === '' ) {
-        reStr = '^';
-    } else if ( /^\/.*\/$/.test(arg1) ) {
-        reStr = arg1.slice(1, -1);
+    if ( /^\/.*\/$/.test(arg1) ) {
         subject = window.location.href;
-    } else {
-        reStr = arg1.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    } else if ( arg1 !== '' ) {
         subject = `${window.location.pathname}${window.location.search}`;
     }
     try {
-        const re = new RegExp(reStr);
+        const re = patternToRegex(arg1);
         if ( re.test(subject) ) {
             window.close();
         }
@@ -1403,8 +1345,8 @@ function windowCloseIf(
     }
 }
 
+/******************************************************************************/
 
-/// window.name-defuser.js
 builtinScriptlets.push({
     name: 'window.name-defuser.js',
     fn: windowNameDefuser,
@@ -1416,8 +1358,8 @@ function windowNameDefuser() {
     }
 }
 
+/******************************************************************************/
 
-/// overlay-buster.js
 builtinScriptlets.push({
     name: 'overlay-buster.js',
     fn: overlayBuster,
@@ -1476,8 +1418,8 @@ function overlayBuster() {
     }
 }
 
+/******************************************************************************/
 
-/// alert-buster.js
 builtinScriptlets.push({
     name: 'alert-buster.js',
     fn: alertBuster,
@@ -1491,8 +1433,8 @@ function alertBuster() {
     });
 }
 
+/******************************************************************************/
 
-/// nowebrtc.js
 builtinScriptlets.push({
     name: 'nowebrtc.js',
     fn: noWebrtc,
@@ -1530,8 +1472,8 @@ function noWebrtc() {
     }
 }
 
+/******************************************************************************/
 
-/// golem.de.js
 builtinScriptlets.push({
     name: 'golem.de.js',
     fn: golemDe,
@@ -1555,8 +1497,8 @@ function golemDe() {
     }.bind(window);
 }
 
+/******************************************************************************/
 
-/// adfly-defuser.js
 builtinScriptlets.push({
     name: 'adfly-defuser.js',
     fn: adflyDefuser,
@@ -1623,8 +1565,8 @@ function adflyDefuser() {
     }
 }
 
+/******************************************************************************/
 
-/// disable-newtab-links.js
 builtinScriptlets.push({
     name: 'disable-newtab-links.js',
     fn: disableNewtabLinks,
@@ -1644,23 +1586,21 @@ function disableNewtabLinks() {
     });
 }
 
+/******************************************************************************/
 
-/// cookie-remover.js
 builtinScriptlets.push({
     name: 'cookie-remover.js',
     fn: cookieRemover,
+    dependencies: [
+        'pattern-to-regex.fn',
+    ],
 });
 // https://github.com/NanoAdblocker/NanoFilters/issues/149
 function cookieRemover(
     needle = ''
 ) {
     if ( typeof needle !== 'string' ) { return; }
-    let reName = /./;
-    if ( /^\/.+\/$/.test(needle) ) {
-        reName = new RegExp(needle.slice(1,-1));
-    } else if ( needle !== '' ) {
-        reName = new RegExp(needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-    }
+    const reName = patternToRegex(needle);
     const removeCookie = function() {
         document.cookie.split(';').forEach(cookieStr => {
             let pos = cookieStr.indexOf('=');
@@ -1700,11 +1640,14 @@ function cookieRemover(
     window.addEventListener('beforeunload', removeCookie);
 }
 
+/******************************************************************************/
 
-/// xml-prune.js
 builtinScriptlets.push({
     name: 'xml-prune.js',
     fn: xmlPrune,
+    dependencies: [
+        'pattern-to-regex.fn',
+    ],
 });
 function xmlPrune(
     selector = '',
@@ -1713,14 +1656,7 @@ function xmlPrune(
 ) {
     if ( typeof selector !== 'string' ) { return; }
     if ( selector === '' ) { return; }
-    let reUrl;
-    if ( urlPattern === '' ) {
-        reUrl = /^/;
-    } else if ( /^\/.*\/$/.test(urlPattern) ) {
-        reUrl = new RegExp(urlPattern.slice(1, -1));
-    } else {
-        reUrl = new RegExp(urlPattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-    }
+    const reUrl = patternToRegex(urlPattern);
     const pruner = text => {
         if ( (/^\s*</.test(text) && />\s*$/.test(text)) === false ) {
             return text;
@@ -1767,8 +1703,8 @@ function xmlPrune(
     });
 }
 
+/******************************************************************************/
 
-/// m3u-prune.js
 builtinScriptlets.push({
     name: 'm3u-prune.js',
     fn: m3uPrune,
@@ -1889,8 +1825,8 @@ function m3uPrune(
     });
 }
 
+/******************************************************************************/
 
-/// href-sanitizer.js
 builtinScriptlets.push({
     name: 'href-sanitizer.js',
     fn: hrefSanitizer,
@@ -1980,8 +1916,8 @@ function hrefSanitizer(
     }
 }
 
+/******************************************************************************/
 
-/// call-nothrow.js
 builtinScriptlets.push({
     name: 'call-nothrow.js',
     fn: callNothrow,
@@ -2014,3 +1950,4 @@ function callNothrow(
     });
 }
 
+/******************************************************************************/

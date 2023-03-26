@@ -141,38 +141,40 @@ const normalizeRawFilter = function(parser) {
     return `+js(${args.join(', ')})`;
 };
 
-const lookupScriptlet = function(rawToken, reng, toInject) {
-    if ( toInject.has(rawToken) ) { return; }
-    if ( scriptletCache.resetTime < reng.modifyTime ) {
-        scriptletCache.reset();
+const lookupScriptlet = function(rawToken, scriptletMap, dependencyMap) {
+    if ( scriptletMap.has(rawToken) ) { return; }
+    const pos = rawToken.indexOf(',');
+    let token, args = '';
+    if ( pos === -1 ) {
+        token = rawToken;
+    } else {
+        token = rawToken.slice(0, pos).trim();
+        args = rawToken.slice(pos + 1).trim();
     }
-    let content = scriptletCache.lookup(rawToken);
-    if ( content === undefined ) {
-        const pos = rawToken.indexOf(',');
-        let token, args = '';
-        if ( pos === -1 ) {
-            token = rawToken;
-        } else {
-            token = rawToken.slice(0, pos).trim();
-            args = rawToken.slice(pos + 1).trim();
-        }
-        // TODO: The alias lookup can be removed once scriptlet resources
-        //       with obsolete name are converted to their new name.
-        if ( reng.aliases.has(token) ) {
-            token = reng.aliases.get(token);
-        } else {
-            token = `${token}.js`;
-        }
-        content = reng.resourceContentFromName(token, 'text/javascript');
-        if ( !content ) { return; }
-        content = patchScriptlet(content, args);
-        content =
-            'try {\n' +
-                content + '\n' +
-            '} catch ( e ) { }';
-        scriptletCache.add(rawToken, content);
+    // TODO: The alias lookup can be removed once scriptlet resources
+    //       with obsolete name are converted to their new name.
+    if ( redirectEngine.aliases.has(token) ) {
+        token = redirectEngine.aliases.get(token);
+    } else {
+        token = `${token}.js`;
     }
-    toInject.set(rawToken, content);
+    const details = redirectEngine.contentFromName(token, 'text/javascript');
+    if ( details === undefined ) { return; }
+    const content = patchScriptlet(details.js, args);
+    const dependencies = details.dependencies || [];
+    while ( dependencies.length !== 0 ) {
+        const token = dependencies.shift();
+        if ( dependencyMap.has(token) ) { continue; }
+        const details = redirectEngine.contentFromName(token, 'fn/javascript');
+        if ( details === undefined ) { continue; }
+        dependencyMap.set(token, details.js);
+        if ( Array.isArray(details.dependencies) === false ) { continue; }
+        dependencies.push(...details.dependencies);
+    }
+    scriptletMap.set(
+        rawToken,
+        [ 'try {', content, '} catch (e) {', '}' ].join('\n')
+    );
 };
 
 // Fill-in scriptlet argument placeholders.
@@ -183,31 +185,31 @@ const patchScriptlet = function(content, args) {
     if ( args.startsWith('{') && args.endsWith('}') ) {
         return content.replace('{{args}}', args);
     }
+    if ( args === '' ) {
+        return content.replace('{{args}}', '');
+    }
     const arglist = [];
-    if ( args !== '' ) {
-        let s = args;
-        let len = s.length;
-        let beg = 0, pos = 0;
-        let i = 1;
-        while ( beg < len ) {
-            pos = s.indexOf(',', pos);
-            // Escaped comma? If so, skip.
-            if ( pos > 0 && s.charCodeAt(pos - 1) === 0x5C /* '\\' */ ) {
-                s = s.slice(0, pos - 1) + s.slice(pos);
-                len -= 1;
-                continue;
-            }
-            if ( pos === -1 ) { pos = len; }
-            arglist.push(s.slice(beg, pos).trim().replace(reEscapeScriptArg, '\\$&'));
-            beg = pos = pos + 1;
-            i++;
+    let s = args;
+    let len = s.length;
+    let beg = 0, pos = 0;
+    let i = 1;
+    while ( beg < len ) {
+        pos = s.indexOf(',', pos);
+        // Escaped comma? If so, skip.
+        if ( pos > 0 && s.charCodeAt(pos - 1) === 0x5C /* '\\' */ ) {
+            s = s.slice(0, pos - 1) + s.slice(pos);
+            len -= 1;
+            continue;
         }
+        if ( pos === -1 ) { pos = len; }
+        arglist.push(s.slice(beg, pos).trim().replace(reEscapeScriptArg, '\\$&'));
+        beg = pos = pos + 1;
+        i++;
     }
     for ( let i = 0; i < arglist.length; i++ ) {
         content = content.replace(`{{${i+1}}}`, arglist[i]);
     }
-    content = content.replace('{{args}}', arglist.map(a => `'${a}'`).join(', '));
-    return content;
+    return content.replace('{{args}}', arglist.map(a => `'${a}'`).join(', '));
 };
 
 const logOne = function(tabId, url, filter) {
@@ -225,6 +227,7 @@ const logOne = function(tabId, url, filter) {
 scriptletFilteringEngine.reset = function() {
     scriptletDB.clear();
     duplicates.clear();
+    scriptletCache.reset();
     acceptedCount = 0;
     discardedCount = 0;
 };
@@ -232,6 +235,7 @@ scriptletFilteringEngine.reset = function() {
 scriptletFilteringEngine.freeze = function() {
     duplicates.clear();
     scriptletDB.collectGarbage();
+    scriptletCache.reset();
 };
 
 scriptletFilteringEngine.compile = function(parser, writer) {
@@ -292,7 +296,8 @@ scriptletFilteringEngine.fromCompiledContent = function(reader) {
 
 const $scriptlets = new Set();
 const $exceptions = new Set();
-const $scriptletToCodeMap = new Map();
+const $scriptletMap = new Map();
+const $scriptletDependencyMap = new Map();
 
 scriptletFilteringEngine.retrieve = function(request, options = {}) {
     if ( scriptletDB.size === 0 ) { return; }
@@ -328,40 +333,58 @@ scriptletFilteringEngine.retrieve = function(request, options = {}) {
         return;
     }
 
-    $scriptletToCodeMap.clear();
-    for ( const token of $scriptlets ) {
-        lookupScriptlet(token, redirectEngine, $scriptletToCodeMap);
-    }
-    if ( $scriptletToCodeMap.size === 0 ) { return; }
-
-    // Return an array of scriptlets, and log results if needed.
-    const out = [];
-    for ( const [ token, code ] of $scriptletToCodeMap ) {
-        const isException = $exceptions.has(token);
-        if ( isException === false ) {
-            out.push(code);
-        }
-        if ( mustLog === false ) { continue; }
-        if ( isException ) {
-            logOne(request.tabId, request.url, `#@#+js(${token})`);
-        } else {
-            options.logEntries.push({
-                token: `##+js(${token})`,
-                tabId: request.tabId,
-                url: request.url,
-            });
-        }
+    if ( scriptletCache.resetTime < redirectEngine.modifyTime ) {
+        scriptletCache.reset();
     }
 
-    if ( out.length === 0 ) { return; }
+    let cacheDetails = scriptletCache.lookup(hostname);
+    if ( cacheDetails === undefined ) {
+        const fullCode = [];
+        for ( const token of $scriptlets ) {
+            if ( $exceptions.has(token) ) { continue; }
+            lookupScriptlet(token, $scriptletMap, $scriptletDependencyMap);
+        }
+        for ( const token of $scriptlets ) {
+            const isException = $exceptions.has(token);
+            if ( isException === false ) {
+                fullCode.push($scriptletMap.get(token));
+            }
+        }
+        for ( const code of $scriptletDependencyMap.values() ) {
+            fullCode.push(code);
+        }
+        cacheDetails = {
+            code: fullCode.join('\n'),
+            tokens: Array.from($scriptlets),
+            exceptions: Array.from($exceptions),
+        };
+        scriptletCache.add(hostname, cacheDetails);
+        $scriptletMap.clear();
+        $scriptletDependencyMap.clear();
+    }
+
+    if ( mustLog ) {
+        for ( const token of cacheDetails.tokens ) {
+            if ( cacheDetails.exceptions.includes(token) ) {
+                logOne(request.tabId, request.url, `#@#+js(${token})`);
+            } else {
+                options.logEntries.push({
+                    token: `##+js(${token})`,
+                    tabId: request.tabId,
+                    url: request.url,
+                });
+            }
+        }
+    }
+
+    if ( cacheDetails.code === '' ) { return; }
+
+    const out = [ cacheDetails.code ];
 
     if ( µb.hiddenSettings.debugScriptlets ) {
         out.unshift('debugger;');
     }
 
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/156
-    //   Provide a private Map() object available for use by all
-    //   scriptlets.
     out.unshift(
         '(function() {',
         '// >>>> start of private namespace',
