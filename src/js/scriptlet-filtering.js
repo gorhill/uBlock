@@ -379,22 +379,20 @@ scriptletFilteringEngine.retrieve = function(request, options = {}) {
 
     if ( cacheDetails.code === '' ) { return; }
 
-    const out = [ cacheDetails.code ];
-
-    if ( µb.hiddenSettings.debugScriptlets ) {
-        out.unshift('debugger;');
-    }
-
-    out.unshift(
+    const out = [
         '(function() {',
         '// >>>> start of private namespace',
-        ''
-    );
-    out.push(
+        '',
+        µb.hiddenSettings.debugScriptlets ? 'debugger;' : ';',
+        '',
+        // For use by scriptlets to share local data among themselves
+        'const sriptletGlobals = new Map();',
+        '',
+        cacheDetails.code,
         '',
         '// <<<< end of private namespace',
-        '})();'
-    );
+        '})();',
+    ];
 
     return out.join('\n');
 };

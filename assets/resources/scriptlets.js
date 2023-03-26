@@ -22,6 +22,9 @@
     web page context.
 */
 
+// Externally added to the private namespace in which scriptlets execute.
+/* global sriptletGlobals */
+
 'use strict';
 
 export const builtinScriptlets = [];
@@ -33,6 +36,25 @@ export const builtinScriptlets = [];
     These are meant to be used as dependencies to injectable scriptlets.
 
 *******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'safe-self.fn',
+    fn: safeSelf,
+});
+function safeSelf() {
+    if ( sriptletGlobals.has('safeSelf') ) {
+        return sriptletGlobals.get('safeSelf');
+    }
+    const safe = {
+        'RegExp': self.RegExp,
+        'RegExp_test': self.RegExp.prototype.test,
+        'RegExp_exec': self.RegExp.prototype.exec,
+    };
+    sriptletGlobals.set('safeSelf', safe);
+    return safe;
+}
+
+/******************************************************************************/
 
 builtinScriptlets.push({
     name: 'pattern-to-regex.fn',
@@ -257,6 +279,7 @@ builtinScriptlets.push({
     aliases: [ 'aost.js' ],
     fn: abortOnStackTrace,
     dependencies: [
+        'safe-self.fn',
         'pattern-to-regex.fn',
         'get-exception-token.fn',
     ],
@@ -268,6 +291,7 @@ function abortOnStackTrace(
     logLevel = ''
 ) {
     if ( typeof chain !== 'string' ) { return; }
+    const safe = safeSelf();
     const reNeedle = patternToRegex(needle);
     const exceptionToken = getExceptionToken();
     const log = console.log.bind(console);
@@ -279,11 +303,12 @@ function abortOnStackTrace(
             docURL = docURL.slice(0, pos);
         }
         // Normalize stack trace
+        const reLine = /(.*?@)?(\S+)(:\d+):\d+\)?$/;
         const lines = [];
         for ( let line of err.stack.split(/[\n\r]+/) ) {
             if ( line.includes(exceptionToken) ) { continue; }
             line = line.trim();
-            let match = /(.*?@)?(\S+)(:\d+):\d+\)?$/.exec(line);
+            let match = safe.RegExp_exec.call(reLine, line);
             if ( match === null ) { continue; }
             let url = match[2];
             if ( url.startsWith('(') ) { url = url.slice(1); }
@@ -301,7 +326,7 @@ function abortOnStackTrace(
         }
         lines[0] = `stackDepth:${lines.length-1}`;
         const stack = lines.join('\t');
-        const r = reNeedle.test(stack);
+        const r = safe.RegExp_test.call(reNeedle, stack);
         if (
             logLevel === '1' ||
             logLevel === '2' && r ||
