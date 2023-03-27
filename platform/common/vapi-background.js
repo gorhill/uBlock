@@ -674,8 +674,16 @@ if ( webext.browserAction instanceof Object ) {
         browser.runtime.getManifest().browser_action.default_title +
         ' ({badge})';
     const icons = [
-        { path: { '16': 'img/icon_16-off.png', '32': 'img/icon_32-off.png' } },
-        { path: { '16':     'img/icon_16.png', '32':     'img/icon_32.png' } },
+        { path: {
+            '16': 'img/icon_16-off.png',
+            '32': 'img/icon_32-off.png',
+            '64': 'img/icon_64-off.png',
+        } },
+        { path: {
+            '16': 'img/icon_16.png',
+            '32': 'img/icon_32.png',
+            '64': 'img/icon_64.png',
+        } },
     ];
 
     (( ) => {
@@ -702,9 +710,8 @@ if ( webext.browserAction instanceof Object ) {
 
         const imgs = [];
         for ( let i = 0; i < icons.length; i++ ) {
-            const path = icons[i].path;
-            for ( const key in path ) {
-                if ( path.hasOwnProperty(key) === false ) { continue; }
+            for ( const key of Object.keys(icons[i].path) ) {
+                if ( parseInt(key, 10) >= 64 ) { continue; }
                 imgs.push({ i: i, p: key, cached: false });
             }
         }
@@ -818,6 +825,7 @@ if ( webext.browserAction instanceof Object ) {
             path: {
                 '16': `img/icon_16${flavor}.png`,
                 '32': `img/icon_32${flavor}.png`,
+                '64': `img/icon_64${flavor}.png`,
             }
         });
         browserAction.setBadgeText({ text });

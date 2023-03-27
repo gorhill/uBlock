@@ -6,7 +6,8 @@
   "browser_action": {
     "default_icon": {
       "16": "img/icon_16.png",
-      "32": "img/icon_32.png"
+      "32": "img/icon_32.png",
+      "64": "img/icon_64.png"
     },
     "default_popup": "popup-fenix.html",
     "default_title": "uBlock Origin"
