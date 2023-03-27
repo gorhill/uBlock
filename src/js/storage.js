@@ -1481,9 +1481,13 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         const now = Date.now();
 
         let needEmergencyUpdate = false;
-        for ( const asset of Object.values(assetDict) ) {
+        for ( const [ assetKey, asset ] of Object.entries(assetDict) ) {
             if ( asset.hasRemoteURL !== true ) { continue; }
-            if ( asset.content === 'filters' && asset.off === true ) { continue; }
+            if ( asset.content === 'filters' ) {
+                if ( µb.selectedFilterLists.includes(assetKey) === false ) {
+                    continue;
+                }
+            }
             if ( asset.obsolete !== true ) { continue; }
             const lastUpdateInDays = (now - asset.writeTime) / 86400000;
             const daysSinceVeryObsolete = lastUpdateInDays - 2 * asset.updateAfter;
@@ -1602,7 +1606,9 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
             this.loadFilterLists();
         }
         if ( this.userSettings.autoUpdate ) {
-            this.scheduleAssetUpdater(this.hiddenSettings.autoUpdatePeriod * 3600000 || 25200000);
+            this.scheduleAssetUpdater(
+                this.hiddenSettings.autoUpdatePeriod * 3600000 || 25200000
+            );
         } else {
             this.scheduleAssetUpdater(0);
         }

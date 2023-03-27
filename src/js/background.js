@@ -50,7 +50,7 @@ const hiddenSettingsDefault = {
     autoCommentFilterTemplate: '{{date}} {{origin}}',
     autoUpdateAssetFetchPeriod: 60,
     autoUpdateDelayAfterLaunch: 105,
-    autoUpdatePeriod: 4,
+    autoUpdatePeriod: 2,
     benchmarkDatasetURL: 'unset',
     blockingProfiles: '11111/#F00 11010/#C0F 11001/#00F 00001',
     cacheStorageAPI: 'unset',
