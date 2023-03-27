@@ -213,7 +213,10 @@ const patchScriptlet = function(content, args) {
     for ( let i = 0; i < arglist.length; i++ ) {
         content = content.replace(`{{${i+1}}}`, arglist[i]);
     }
-    return content.replace('{{args}}', arglist.map(a => `'${a}'`).join(', '));
+    return content.replace(
+        '{{args}}',
+        arglist.map(a => `'${a}'`).join(', ').replace(/\$/g, '$$$')
+    );
 };
 
 const logOne = function(tabId, url, filter) {
