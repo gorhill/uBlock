@@ -44,6 +44,11 @@ class CompiledListWriter {
     push(args) {
         this.block.push(serialize(args));
     }
+    pushMany(many) {
+        for ( const args of many ) {
+            this.block.push(serialize(args));
+        }
+    }
     last() {
         if ( Array.isArray(this.block) && this.block.length !== 0 ) {
             return this.block[this.block.length - 1];

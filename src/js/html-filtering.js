@@ -299,6 +299,14 @@ function applyCSSSelector(details, selector) {
     return modified;
 }
 
+function logError(writer, msg) {
+    logger.writeOne({
+        realm: 'message',
+        type: 'error',
+        text: msg.replace('{who}', writer.properties.get('name') || '?')
+    });
+}
+
 htmlFilteringEngine.reset = function() {
     filterDB.clear();
     pselectors.clear();
@@ -316,13 +324,7 @@ htmlFilteringEngine.compile = function(parser, writer) {
     const isException = parser.isException();
     const { raw, compiled } = parser.result;
     if ( compiled === undefined ) {
-        const who = writer.properties.get('name') || '?';
-        logger.writeOne({
-            realm: 'message',
-            type: 'error',
-            text: `Invalid HTML filter in ${who}: ##${raw}`
-        });
-        return;
+        return logError(writer, `Invalid HTML filter in {who}: ##${raw}`);
     }
 
     writer.select('HTML_FILTERS');
@@ -335,20 +337,28 @@ htmlFilteringEngine.compile = function(parser, writer) {
         return;
     }
 
-    // TODO: Mind negated hostnames, they are currently discarded.
-
+    const compiledFilters = [];
+    let hasOnlyNegated = true;
     for ( const { hn, not, bad } of parser.getExtFilterDomainIterator() ) {
         if ( bad ) { continue; }
-        let kind = 0;
-        if ( isException ) {
-            if ( not ) { continue; }
-            kind |= 0b01;
+        let kind = isException ? 0b01 : 0b00;
+        if ( not ) {
+            kind ^= 0b01;
+        } else {
+            hasOnlyNegated = false;
         }
         if ( compiled.charCodeAt(0) === 0x7B /* '{' */ ) {
             kind |= 0b10;
         }
-        writer.push([ 64, hn, kind, compiled ]);
+        compiledFilters.push([ 64, hn, kind, compiled ]);
     }
+
+    // Not allowed since it's equivalent to forbidden generic HTML filters
+    if ( isException === false && hasOnlyNegated ) {
+        return logError(writer, `Invalid HTML filter in {who}: ##${raw}`);
+    }
+
+    writer.pushMany(compiledFilters);
 };
 
 htmlFilteringEngine.fromCompiledContent = function(reader) {
