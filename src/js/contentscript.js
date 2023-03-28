@@ -257,6 +257,7 @@ vAPI.SafeAnimationFrame = class {
     let timer;
 
     const send = function() {
+        if ( self.vAPI instanceof Object === false ) { return; }
         vAPI.messaging.send('scriptlets', {
             what: 'securityPolicyViolation',
             type: 'net',
@@ -1066,6 +1067,7 @@ vAPI.DOMFilterer = class {
     };
 
     const doSurvey = ( ) => {
+        if ( self.vAPI instanceof Object === false ) { return; }
         const t0 = performance.now();
         const hashes = [];
         const nodes = pendingNodes;
