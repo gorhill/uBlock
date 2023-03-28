@@ -202,6 +202,7 @@ assets.fetchText = async function(url) {
         const text = details.content.trim();
         if ( text.startsWith('<') && text.endsWith('>') ) {
             details.content = '';
+            details.error = 'assets.fetchText(): Not a text file';
         }
 
         // Important: Non empty text resource must always end with a newline
