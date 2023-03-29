@@ -1465,6 +1465,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
 {
     let timer, next = 0;
+    let lastEmergencyUpdate = 0;
 
     µb.scheduleAssetUpdater = async function(updateDelay) {
 
@@ -1477,23 +1478,28 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
             return;
         }
 
-        const assetDict = await io.metadata();
         const now = Date.now();
-
         let needEmergencyUpdate = false;
-        for ( const [ assetKey, asset ] of Object.entries(assetDict) ) {
-            if ( asset.hasRemoteURL !== true ) { continue; }
-            if ( asset.content === 'filters' ) {
-                if ( µb.selectedFilterLists.includes(assetKey) === false ) {
-                    continue;
+
+        // Respect cooldown period before launching an emergency update.
+        const timeSinceLastEmergencyUpdate = (now - lastEmergencyUpdate) / 3600000;
+        if ( timeSinceLastEmergencyUpdate > 1 ) {
+            const assetDict = await io.metadata();
+            for ( const [ assetKey, asset ] of Object.entries(assetDict) ) {
+                if ( asset.hasRemoteURL !== true ) { continue; }
+                if ( asset.content === 'filters' ) {
+                    if ( µb.selectedFilterLists.includes(assetKey) === false ) {
+                        continue;
+                    }
                 }
+                if ( asset.obsolete !== true ) { continue; }
+                const lastUpdateInDays = (now - asset.writeTime) / 86400000;
+                const daysSinceVeryObsolete = lastUpdateInDays - 2 * asset.updateAfter;
+                if ( daysSinceVeryObsolete < 0 ) { continue; }
+                needEmergencyUpdate = true;
+                lastEmergencyUpdate = now;
+                break;
             }
-            if ( asset.obsolete !== true ) { continue; }
-            const lastUpdateInDays = (now - asset.writeTime) / 86400000;
-            const daysSinceVeryObsolete = lastUpdateInDays - 2 * asset.updateAfter;
-            if ( daysSinceVeryObsolete < 0 ) { continue; }
-            needEmergencyUpdate = true;
-            break;
         }
 
         // Use the new schedule if and only if it is earlier than the previous
