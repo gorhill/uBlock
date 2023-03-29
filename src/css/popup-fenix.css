@@ -267,6 +267,7 @@ body.mobile.no-tooltips .toolRibbon .tool {
     max-width: 460px;
     min-width: var(--popup-firewall-min-width);
     padding: 0;
+    position: relative;
     overflow-y: auto;
     }
 :root.desktop #firewall {
@@ -275,18 +276,80 @@ body.mobile.no-tooltips .toolRibbon .tool {
 :root.desktop body.vMin #firewall {
     max-height: 100vh;
     }
+#firewall > * {
+    direction: ltr;
+    }
+#firewall > section {
+    align-items: flex-start;
+    display: flex;
+    left: 0;
+    position: absolute;
+    z-index: 100;
+    }
+#firewall > section .fa-icon {
+    color: var(--ink-4);
+        fill: var(--ink-4);
+    font-size: 150%;
+    padding: var(--popup-gap-thin);
+    }
+#firewall > section:hover .fa-icon {
+    color: var(--ink-1);
+        fill: var(--ink-1);
+    }
+#firewall.showBlocked > section .fa-icon,
+#firewall.showAllowed > section .fa-icon,
+#firewall.hideBlocked > section .fa-icon,
+#firewall.hideAllowed > section .fa-icon,
+#firewall.show3pScript > section .fa-icon,
+#firewall.show3pFrame > section .fa-icon,
+#firewall.hide3pScript > section .fa-icon,
+#firewall.hide3pFrame > section .fa-icon {
+    color: rgb(var(--primary-70));
+        fill: rgb(var(--primary-70));
+    }
+#firewall > section .filterExpressions {
+    background-color: var(--surface-0);
+    border: 1px solid var(--border-4);
+    display: none;
+    }
+#firewall > section:hover .filterExpressions {
+    display: flex;
+    flex-direction: column;
+    }
+#firewall > section .filterExpressions div {
+    border-bottom: 1px dotted #ddd;
+    padding: 0.25em;
+    }
+#firewall > section .filterExpressions span {
+    cursor: default;
+    display: inline-flex;
+    margin: 0 0.25em 0 0;
+    padding: 0.5em;
+    white-space: nowrap;
+    border: 1px solid var(--surface-0);
+    }
+#firewall > section .filterExpressions span:last-of-type {
+    margin: 0;
+    }
+:root:not(.mobile) #firewall > section .filterExpressions span:not(.on):hover {
+    background-color: rgb(var(--primary-70) / 15%);
+    border: 1px solid rgb(var(--primary-70));
+    }
+#firewall > section .filterExpressions span.on {
+    background-color: rgb(var(--primary-70) / 40%);
+    border: 1px solid rgb(var(--primary-70));
+    }
 #firewall > div {
     border: 0;
-    direction: ltr;
     display: flex;
     margin: 0;
     margin-top: 1px;
     padding: 0;
     }
-#firewall > div:first-child {
+#firewall > div:first-of-type {
     margin-top: 0;
     }
-#firewall > div:first-child ~ div[data-des="*"] {
+#firewall > div:first-of-type ~ div[data-des="*"] {
     display: none;
     }
 #firewall:not(.expanded) > div.isSubdomain:not(.expandException):not(.isRootContext),
@@ -302,12 +365,20 @@ body.mobile.no-tooltips .toolRibbon .tool {
     padding: 0.4em 0;
     position: relative;
     }
-#firewall > div:first-of-type > span:first-of-type {
+#firewall > div:first-of-type span[data-i18n] {
     cursor: pointer;
     flex-direction: unset;
+    flex-grow: 1;
+    }
+#firewall > div:first-of-type span[data-i18n]::before {
+    color: var(--ink-3);
+    content: '+';
+    padding-right: 0.25em;
+    }
+#firewall.expanded > div:first-of-type span[data-i18n]::before {
+    content: '\2012';
     }
 #firewall > div > span:first-of-type {
-    align-items: flex-end;
     flex-direction: column;
     flex-grow: 1;
     justify-content: flex-end;
@@ -320,36 +391,18 @@ body.mobile.no-tooltips .toolRibbon .tool {
 #firewall > div[data-des="*"] > span:first-of-type {
     flex-direction: row;
     }
-#firewall > div[data-des="*"] > span:first-of-type > span.filter {
-    flex-grow: 1;
-    padding-inline-start: 2px;
-      -webkit-padding-start: 2px;
-    text-align: left;
-    }
-#firewall:not(.has3pScript) > [data-type="3p-script"] .filter,
-#firewall:not(.has3pFrame) > [data-type="3p-frame"] .filter {
-    display: none;
-    }
-#firewall > [data-des="*"] .filter::after {
-    content: '\22EF';
-    }
-#firewall.show3pScript > [data-type="3p-script"] .filter::after,
-#firewall.show3pFrame > [data-type="3p-frame"] .filter::after {
-    content: '\2191';
-    }
-#firewall.hide3pScript > [data-type="3p-script"] .filter::after,
-#firewall.hide3pFrame > [data-type="3p-frame"] .filter::after {
-    content: '\2193';
-    }
-#firewall.show3pScript > div:not([data-des="*"]):not(.hasScript),
-#firewall.show3pScript > div:not([data-des="*"]):not(.is3p),
+#firewall.show3pScript:not(.show3pFrame) > div:not([data-des="*"]).is3p:not(.hasScript),
+#firewall.show3pFrame:not(.show3pScript) > div:not([data-des="*"]).is3p:not(.hasFrame),
+#firewall.show3pScript.show3pFrame > div:not([data-des="*"]).is3p:not(.hasScript):not(.hasFrame),
 #firewall.hide3pScript > div:not([data-des="*"]).is3p.hasScript,
-#firewall.show3pFrame > div:not([data-des="*"]):not(.hasFrame),
-#firewall.show3pFrame > div:not([data-des="*"]):not(.is3p),
 #firewall.hide3pFrame > div:not([data-des="*"]).is3p.hasFrame,
-#firewall.show3pScript.show3pFrame > div:not([data-des="*"]).hasScript:not(.hasFrame),
-#firewall.show3pScript.show3pFrame > div:not([data-des="*"]).hasFrame:not(.hasScript) {
-    opacity: 0.5;
+#firewall.showBlocked > div:not([data-des="*"]).is3p:not(.totalBlocked):not(.blocked),
+#firewall.showAllowed > div:not([data-des="*"]).is3p:not(.totalAllowed):not(.allowed),
+#firewall.hideBlocked > div:not([data-des="*"]).is3p.totalBlocked,
+#firewall.hideBlocked > div:not([data-des="*"]).is3p.blocked,
+#firewall.hideAllowed > div:not([data-des="*"]).is3p.totalAllowed,
+#firewall.hideAllowed > div:not([data-des="*"]).is3p.allowed {
+    display: none;
     }
 #firewall > div.isCname > span:first-of-type {
     color: var(--popup-cell-cname-ink);
@@ -388,14 +441,6 @@ body.mobile.no-tooltips .toolRibbon .tool {
 #firewall > div.isDomain.hasSubdomains > span:first-of-type > span::before {
     color: var(--ink-3);
     content: '\2026\A0';
-    }
-#firewall > div:first-of-type > span:first-of-type::before {
-    color: var(--ink-3);
-    content: '+';
-    padding-right: 0.25em;
-    }
-#firewall.expanded > div:first-of-type > span:first-of-type::before {
-    content: '\2012';
     }
 #firewall > div[data-des="*"] > span:nth-of-type(3),
 #firewall > div.isSubdomain > span:nth-of-type(3),
@@ -453,7 +498,7 @@ body.advancedUser #firewall > div > span:first-of-type {
 body.advancedUser #firewall > div > span:nth-of-type(2) {
     display: inline-flex;
     }
-body.advancedUser #firewall > div:first-child ~ div[data-des="*"] {
+body.advancedUser #firewall > div:first-of-type ~ div[data-des="*"] {
     display: flex;
     }
 body.advancedUser #firewall > div > span:first-of-type ~ span {

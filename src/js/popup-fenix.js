@@ -457,6 +457,75 @@ const reIP = /(\d|\])$/;
 
 /******************************************************************************/
 
+function filterFirewallRows() {
+    const firewallElem = qs$('#firewall');
+    const elems = qsa$('#firewall .filterExpressions span[data-expr]');
+    let not = false;
+    for ( const elem of elems ) {
+        const on = dom.cl.has(elem, 'on');
+        switch ( elem.dataset.expr ) {
+            case 'not':
+                not = on;
+                break;
+            case 'blocked':
+                dom.cl.toggle(firewallElem, 'showBlocked', !not && on);
+                dom.cl.toggle(firewallElem, 'hideBlocked', not && on);
+                break;
+            case 'allowed':
+                dom.cl.toggle(firewallElem, 'showAllowed', !not && on);
+                dom.cl.toggle(firewallElem, 'hideAllowed', not && on);
+                break;
+            case 'script':
+                dom.cl.toggle(firewallElem, 'show3pScript', !not && on);
+                dom.cl.toggle(firewallElem, 'hide3pScript', not && on);
+                break;
+            case 'frame':
+                dom.cl.toggle(firewallElem, 'show3pFrame', !not && on);
+                dom.cl.toggle(firewallElem, 'hide3pFrame', not && on);
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+dom.on('#firewall .filterExpressions', 'click', 'span[data-expr]', ev => {
+    const target = ev.target;
+    dom.cl.toggle(target, 'on');
+    switch ( target.dataset.expr ) {
+        case 'blocked':
+            if ( dom.cl.has(target, 'on') === false ) { break; }
+            dom.cl.remove('#firewall .filterExpressions span[data-expr="allowed"]', 'on');
+            break;
+        case 'allowed':
+            if ( dom.cl.has(target, 'on') === false ) { break; }
+            dom.cl.remove('#firewall .filterExpressions span[data-expr="blocked"]', 'on');
+            break;
+    }
+    filterFirewallRows();
+    const elems = qsa$('#firewall .filterExpressions span[data-expr]');
+    const filters = Array.from(elems) .map(el => dom.cl.has(el, 'on') ? '1' : '0');
+    filters.unshift('00');
+    vAPI.localStorage.setItem('firewallFilters', filters.join(' '));
+});
+
+{
+    vAPI.localStorage.getItemAsync('firewallFilters').then(v => {
+        if ( v === null ) { return; }
+        const filters = v.split(' ');
+        if ( filters.shift() !== '00' ) { return; }
+        if ( filters.every(v => v === '0') ) { return; }
+        const elems = qsa$('#firewall .filterExpressions span[data-expr]');
+        for ( let i = 0; i < elems.length; i++ ) {
+            if ( filters[i] === '0' ) { continue; }
+            dom.cl.add(elems[i], 'on');
+        }
+        filterFirewallRows();
+    });
+}
+
+/******************************************************************************/
+
 const renderPrivacyExposure = function() {
     const allDomains = {};
     let allDomainCount = 0;
@@ -1433,17 +1502,5 @@ dom.on('.hnSwitch', 'click', ev => { toggleHostnameSwitch(ev); });
 dom.on('#saveRules', 'click', saveFirewallRules);
 dom.on('#revertRules', 'click', ( ) => { revertFirewallRules(); });
 dom.on('a[href]', 'click', gotoURL);
-
-/******************************************************************************/
-
-// Toggle emphasis of rows with[out] 3rd-party scripts/frames
-dom.on('#firewall > [data-type="3p-script"] .filter', 'click', ( ) => {
-    dom.cl.toggle('#firewall', 'show3pScript');
-});
-
-// Toggle visibility of rows with[out] 3rd-party frames
-dom.on('#firewall > [data-type="3p-frame"] .filter', 'click', ( ) => {
-    dom.cl.toggle('#firewall', 'show3pFrame');
-});
 
 /******************************************************************************/
