@@ -1275,9 +1275,9 @@ export class AstFilterParser {
                 case NODE_TYPE_NET_OPTION_NAME_WEBRTC:
                     realBad = true;
                     break;
-                case NODE_TYPE_NET_PATTERN:
+                case NODE_TYPE_NET_PATTERN_RAW:
                     realBad = this.hasOptions() === false &&
-                        this.getNodeStringLen(targetNode) === 1;
+                        this.getNetPattern().length <= 1;
                     break;
                 default:
                     break;
