@@ -211,6 +211,12 @@ vAPI.Tabs = class {
             this.onCreatedNavigationTargetHandler(details);
         });
         browser.webNavigation.onCommitted.addListener(details => {
+            const { frameId, tabId } = details;
+            if ( frameId === 0 && tabId > 0 && details.transitionType === 'reload' ) {
+                if ( vAPI.net && vAPI.net.hasUnprocessedRequest(tabId) ) {
+                    vAPI.net.removeUnprocessedRequest(tabId);
+                }
+            }
             this.onCommittedHandler(details);
         });
         browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
@@ -1268,10 +1274,7 @@ vAPI.Net = class {
             listener = details => {
                 const { tabId, type  } = details;
                 if ( type === 'main_frame' && this.unprocessedTabs.has(tabId) ) {
-                    this.unprocessedTabs.delete(tabId);
-                    if ( this.unprocessedTabs.size === 0 ) {
-                        this.suspendableListener = this.deferredSuspendableListener;
-                        this.deferredSuspendableListener = undefined;
+                    if ( this.removeUnprocessedRequest(tabId) ) {
                         return this.suspendableListener(details);
                     }
                 }
@@ -1310,6 +1313,13 @@ vAPI.Net = class {
     hasUnprocessedRequest(tabId) {
         return this.unprocessedTabs.size !== 0 &&
                this.unprocessedTabs.has(tabId);
+    }
+    removeUnprocessedRequest(tabId) {
+        this.unprocessedTabs.delete(tabId);
+        if ( this.unprocessedTabs.size !== 0 ) { return false; }
+        this.suspendableListener = this.deferredSuspendableListener;
+        this.deferredSuspendableListener = undefined;
+        return true;
     }
     suspendOneRequest() {
     }
