@@ -3587,6 +3587,7 @@ class FilterCompiler {
                 if ( this.processModifierOption(id, 'noopmp4-1s') === false ) {
                     return this.FILTER_INVALID;
                 }
+                this.processTypeOption(sfp.NODE_TYPE_NET_OPTION_NAME_MEDIA, false);
                 this.optionUnitBits |= this.REDIRECT_BIT;
                 break;
             }
