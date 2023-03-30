@@ -275,13 +275,13 @@
     "message": "പതിപ്പ്",
     "description": "Example of use: Version 1.26.4"
   },
-  "popup3pScriptFilterTip": {
-    "message": "↑: മൂന്നാം കക്ഷി സ്ക്രിപ്റ്റുകൾ ഉള്ള വരികൾ izeന്നിപ്പറയുക",
-    "description": "Tooltip shown when hovering small filtering widget in '3rd-party scripts' cell"
+  "popup3pScriptFilter": {
+    "message": "script",
+    "description": "Appears as an option to filter out firewall rows"
   },
-  "popup3pFrameFilterTip": {
-    "message": "↑: മൂന്നാം കക്ഷി ഫ്രെയിമുകളുള്ള വരികൾക്ക് പ്രാധാന്യം നൽകുക",
-    "description": "Tooltip shown when hovering small filtering widget in '3rd-party frames' cell"
+  "popup3pFrameFilter": {
+    "message": "frame",
+    "description": "Appears as an option to filter out firewall rows"
   },
   "pickerCreate": {
     "message": "ക്രിയേറ്റ് ചെയ്യുക",
