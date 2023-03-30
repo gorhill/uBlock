@@ -805,6 +805,7 @@ assets.get = async function(assetKey, options = {}) {
                 url: contentURL,
                 silent: options.silent === true,
             });
+            registerAssetSource(assetKey, { error: undefined });
         }
         return reportBack(details.content, contentURL);
     }
