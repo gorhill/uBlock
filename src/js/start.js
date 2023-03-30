@@ -103,6 +103,7 @@ const initializeTabs = async ( ) => {
         const tabs = await vAPI.tabs.query({ url: '<all_urls>' });
         for ( const tab of tabs  ) {
             if ( tab.discarded === true ) { continue; }
+            if ( tab.status === 'unloaded' ) { continue; }
             const { id, url } = tab;
             µb.tabContextManager.commit(id, url);
             µb.bindTabToPageStore(id, 'tabCommitted', tab);
@@ -118,21 +119,23 @@ const initializeTabs = async ( ) => {
             tabIds.push(id);
         }
     }
-    const results = await Promise.all(toCheck);
-    for ( let i = 0; i < results.length; i++ ) {
-        const result = results[i];
-        if ( result.length === 0 || result[0] !== true ) { continue; }
-        // Inject declarative content scripts programmatically.
-        for ( const contentScript of manifest.content_scripts ) {
-            for ( const file of contentScript.js ) {
-                vAPI.tabs.executeScript(tabIds[i], {
-                    file: file,
-                    allFrames: contentScript.all_frames,
-                    runAt: contentScript.run_at
-                });
+    // We do not want to block on content scripts injection
+    Promise.all(toCheck).then(results => {
+        for ( let i = 0; i < results.length; i++ ) {
+            const result = results[i];
+            if ( result.length === 0 || result[0] !== true ) { continue; }
+            // Inject declarative content scripts programmatically.
+            for ( const contentScript of manifest.content_scripts ) {
+                for ( const file of contentScript.js ) {
+                    vAPI.tabs.executeScript(tabIds[i], {
+                        file: file,
+                        allFrames: contentScript.all_frames,
+                        runAt: contentScript.run_at
+                    });
+                }
             }
         }
-    }
+    });
 };
 
 /******************************************************************************/
@@ -462,6 +465,9 @@ if ( selfieIsValid !== true ) {
 //   This can be used to defer filtering decision-making.
 µb.readyToFilter = true;
 
+// Initialize internal state with maybe already existing tabs.
+await initializeTabs();
+
 // Start network observers.
 webRequest.start();
 
@@ -471,9 +477,6 @@ webRequest.start();
 // garbage collection of these resources kicks in. Relinquishing as soon
 // as possible ensure minimal memory usage baseline.
 lz4Codec.relinquish();
-
-// Initialize internal state with maybe already existing tabs.
-initializeTabs();
 
 // https://github.com/chrisaljoudi/uBlock/issues/184
 //   Check for updates not too far in the future.
