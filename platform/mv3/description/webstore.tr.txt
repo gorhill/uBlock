@@ -1,30 +1,30 @@
-uBO Lite (uBOL) is an experimental *permission-less* MV3-based content blocker.
+uBO Lite (uBOL), deneysel bir *izin gerektirmeyen* MV3 tabanlı içerik engelleyicidir.
 
-The default ruleset corresponds to uBlock Origin's default filterset:
+Varsayılan kural seti, uBlock Origin'in varsayılan filtre setine karşılık gelir:
 
-- uBlock Origin's built-in filter lists
+- uBlock Origin'in yerleşik filtre listeleri
 - EasyList
 - EasyPrivacy
-- Peter Lowe’s Ad and tracking server list
+- Peter Lowe'un Reklam ve izleme sunucusu listesi
 
-You can add more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+Seçenekler sayfasını ziyaret ederek daha fazla kural seti ekleyebilirsiniz -- açılan paneldeki _Cogs_ simgesine tıklayın.
 
-uBOL tamamen bildirimseldir, yani filtrelemenin gerçekleşmesi için kalıcı bir uBOL işlemine gerek yoktur, içerik filtreleme eklenti yerine tarayıcının kendisi tarafından CSS/JS yerleştirerek gerçekleştirilir. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
+uBOL tamamen bildirimseldir, yani filtrelemenin gerçekleşmesi için kalıcı bir uBOL işlemine gerek yoktur, içerik filtreleme eklenti yerine tarayıcının kendisi tarafından CSS/JS yerleştirerek gerçekleştirilir. Bu, içerik engelleme devam ederken uBOL'nin kendisinin CPU/bellek kaynaklarını tüketmediği anlamına gelir -- uBOL'un hizmet çalışanı işlemi, _only_ açılan panel veya seçenek sayfalarıyla etkileşim kurduğunuzda gereklidir.
 
-uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read and modify data" permissions at install time.
+uBOL, kurulum sırasında geniş "veri okuma ve değiştirme" izni gerektirmez, bu nedenle, kurulum sırasında geniş "veri okuma ve değiştirme" izinleri gerektiren uBlock Origin veya diğer içerik engelleyicilere kıyasla, kutudan çıkar çıkmaz sınırlı yetenekleri vardır.
 
-However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
+Bununla birlikte, uBOL, kozmetik filtreleme ve komut dosyası enjeksiyonları kullanarak bu sitelerde daha iyi filtre uygulayabilmesi için, seçtiğiniz belirli sitelerde *açıkça* genişletilmiş izinler vermenize izin verir.
 
-To grant extended permissions on a given site, open the popup panel and pick a higher filtering mode such as Optimal or Complete.
+Belirli bir sitede genişletilmiş izinler vermek için açılır paneli açın ve Optimal veya Complete gibi daha yüksek bir filtreleme modu seçin.
 
-The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request.
+Ardından tarayıcı, uzantı tarafından istenen ek izinlerin geçerli sitede verilmesinin etkileri konusunda sizi uyaracak ve tarayıcıya isteği kabul edip etmediğinizi söylemeniz gerekecektir.
 
-If you accept uBOL's request for additional permissions on the current site, it will be able to better filter content for the current site.
+uBOL'un mevcut site için ek izin talebini kabul ederseniz, mevcut site için içeriği daha iyi filtreleyebilecektir.
 
-You can set the default filtering mode from uBOL's options page. If you pick the Optimal or Complete mode as the default one, you will need to grant uBOL the permission to read and modify data on all websites.
+Varsayılan filtreleme modunu uBOL'un seçenekler sayfasından ayarlayabilirsiniz. Varsayılan mod olarak Optimal veya Complete modunu seçerseniz, uBOL'a tüm web sitelerindeki verileri okuma ve değiştirme izni vermeniz gerekecektir.
 
-Keep in mind this is still a work in progress, with these end goals:
+Bunun, şu nihai hedeflerle hala devam eden bir çalışma olduğunu unutmayın:
 
-- No broad host permissions at install time -- extended permissions are granted explicitly by the user on a per-site basis.
+- Yükleme sırasında geniş ana bilgisayar izinleri yoktur -- genişletilmiş izinler, her site için kullanıcı tarafından açıkça verilir.
 
-- Entirely declarative for reliability and CPU/memory efficiency.
+- Güvenilirlik ve CPU/bellek verimliliği için tamamen bildirimsel.

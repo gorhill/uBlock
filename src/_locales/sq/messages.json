@@ -84,7 +84,7 @@
     "description": "English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt": {
-    "message": "te kjo faqja",
+    "message": "te kjo faqe",
     "description": "English: on this page"
   },
   "popupBlockedStats": {
@@ -100,7 +100,7 @@
     "description": "English: or"
   },
   "popupBlockedOnThisPage_v2": {
-    "message": "Te kjo faqja janë bllokuar",
+    "message": "Te kjo faqe janë bllokuar",
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
@@ -320,7 +320,7 @@
     "description": "English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt": {
-    "message": "Shfaq te ikona numrin e kërkesave të bllokuara",
+    "message": "Shfaq në ikonë numrin e kërkesave të bllokuara",
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
@@ -356,7 +356,7 @@
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Çaktivizoj kërkesat paraprake (për të evituar çdo lidhje me kërkesat e bllokuara)",
+    "message": "Çaktivizoj kërkesat paraprake (për të mos pasur lidhje me kërkesat e bllokuara)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
@@ -452,11 +452,11 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "Filtrat kozmetikë jospecifikë janë filtra të cilët aplikohen për të gjitha faqet e internetit. Me aktivizimin e këtij opsioni ulet ngarkesa e memories dhe procesorit.\n\nKy opsion rekomandohet për aparatet kompjuterike jo shumë të shpejta.",
+    "message": "Filtrat kozmetikë jospecifikë janë filtra që aplikohen për të gjitha faqet e internetit. Me aktivizimin e këtij opsioni ulet ngarkesa e memories dhe procesorit.\n\nKy opsion rekomandohet për aparatet kompjuterike jo shumë të shpejta.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
-    "message": "Pezulloj aktivitetin derisa të jenë gati të gjitha listat e filtrave",
+    "message": "Pezulloj aktivitetin deri kur të jenë gati të gjitha listat",
     "description": "A checkbox in the 'Filter lists' pane"
   },
   "3pListsOfBlockedHostsHeader": {
@@ -468,7 +468,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Lokalë",
+    "message": "Lokale",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -496,7 +496,7 @@
     "description": "English: Regions, languages"
   },
   "3pGroupCustom": {
-    "message": "Personalizoj",
+    "message": "Personale",
     "description": "English: Custom"
   },
   "3pImport": {
@@ -824,7 +824,7 @@
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
-    "message": "Do të fshihen automatikisht zërat në regjistër që nuk plotësojnë këto tri kushte:",
+    "message": "Zërat në regjistër do të fshihen automatikisht kur nuk plotësojnë këto tri kushte:",
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
@@ -844,7 +844,7 @@
     "description": "A logger setting"
   },
   "loggerSettingHideColumnsPrompt": {
-    "message": "Fsheh shtyllat:",
+    "message": "Shtyllat e fshehura:",
     "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
   },
   "loggerSettingHideColumnTime": {
@@ -916,7 +916,7 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Vërejtje:</b> uBlock Origin nuk duhet përdorur njëkohësisht me aplikacionet e ngjashme bllokuese, pasi filtrat mund të shfaqin probleme.",
+    "message": "<b>Kujdes:</b> uBlock Origin nuk duhet përdorur njëkohësisht me aplikacionet e ngjashme bllokuese, pasi filtrat mund të shfaqin probleme.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
@@ -940,7 +940,7 @@
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Vërejtje:</b> Informacionet me sfond privat dhe delikat censurohen automatikisht. Informacioni i censuruar mund ta vështirësojë zgjidhjen e problemit.",
+    "message": "<b>Kujdes:</b> Informacionet me sfond privat dhe delikat censurohen automatikisht. Informacioni i censuruar mund ta vështirësojë zgjidhjen e problemit.",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
