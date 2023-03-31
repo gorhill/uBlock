@@ -302,7 +302,7 @@ vAPI.SafeAnimationFrame = class {
             timer = undefined;
         }
         document.removeEventListener('securitypolicyviolation', listener);
-        vAPI.shutdown.remove(stop);
+        if ( vAPI ) { vAPI.shutdown.remove(stop); }
     };
 
     document.addEventListener('securitypolicyviolation', listener);
