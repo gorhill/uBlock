@@ -711,7 +711,7 @@ const PageStore = class {
         const journal = this.journal;
         const pivot = Math.max(0, this.journalLastCommitted);
         const now = Date.now();
-        const { SCRIPT, SUB_FRAME } = µb.FilteringContext;
+        const { SCRIPT, SUB_FRAME, OBJECT } = µb.FilteringContext;
         let aggregateAllowed = 0;
         let aggregateBlocked = 0;
 
@@ -729,7 +729,7 @@ const PageStore = class {
             if ( itype === SCRIPT ) {
                 hnDetails.counts.inc(blocked, 'script');
                 this.counts.inc(blocked, 'script');
-            } else if ( itype === SUB_FRAME ) {
+            } else if ( itype === SUB_FRAME || itype === OBJECT ) {
                 hnDetails.counts.inc(blocked, 'frame');
                 this.counts.inc(blocked, 'frame');
             } else {
