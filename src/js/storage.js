@@ -520,13 +520,13 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     ) {
         const d = new Date();
         // Date in YYYY-MM-DD format - https://stackoverflow.com/a/50130338
-        const ISO8061Date = new Date(d.getTime() +
+        const ISO8601Date = new Date(d.getTime() +
             (d.getTimezoneOffset()*60000)).toISOString().split('T')[0];
         const url = new URL(options.docURL);
         comment =
             '! ' +
             this.hiddenSettings.autoCommentFilterTemplate
-                .replace('{{date}}', ISO8061Date)
+                .replace('{{date}}', ISO8601Date)
                 .replace('{{time}}', d.toLocaleTimeString())
                 .replace('{{hostname}}', url.hostname)
                 .replace('{{origin}}', url.origin)
