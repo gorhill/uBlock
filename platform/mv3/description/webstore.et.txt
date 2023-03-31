@@ -15,7 +15,7 @@ uBOL ei nõua paigaldamise ajal teadatuntud andmete lugemise ja muutmise luba, s
 
 Kuid uBOL võimaldab *selgesõnaliselt* anda täpsemaid lubasid teie valitud veebilehtedele, et neid saaks paremini filtreerida ilufiltrite ja skriptisüstidega.
 
-To grant extended permissions on a given site, open the popup panel and pick a higher filtering mode such as Optimal or Complete.
+Veebiehele täpsustatud lubade andmiseks avage hüpikpaneel ja valige põhjalikum filtreerimisrežiim, nagu Optimaalne või Põhjalik.
 
 The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request.
 

@@ -56,7 +56,7 @@
     "description": "appears as tab name in dashboard"
   },
   "supportPageName": {
-    "message": "Support",
+    "message": "Қолдау",
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
@@ -124,71 +124,71 @@
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "Open the logger",
+    "message": "Журналды ашу",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "Осы вебсайттағы мәселе жайлы хабарлау",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Toggle the blocking of all popups for this site",
+    "message": "Осы сайт үшін барлық попаптарды бұғаттау",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Click to block all popups on this site",
+    "message": "Мына сайттағы барлық қалқымалы терезелерді бұғаттау үшін басыңыз",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Click to no longer block all popups on this site",
+    "message": "Мына сайттағы барлық қалқымалы терезелерді бұғаттамау үшін басыңыз",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Toggle the blocking of large media elements for this site",
+    "message": "Мына сайттағы үлкен медиа элементтерді бұғаттауын қосу/сөндіру",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Click to block large media elements on this site",
+    "message": "Мына сайттағы үлкен медиа элементтерді бұғаттауын қосу үшін басыңыз",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Click to no longer block large media elements on this site",
+    "message": "Мына сайттағы үлкен медиа элементтерді бұғаттауын өшіру үшін басыңыз",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Toggle cosmetic filtering for this site",
+    "message": "Осы сайт үшін косметикалық сүзуді қосу/өшіру",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Click to disable cosmetic filtering on this site",
+    "message": "Мына сайт үшін косметикалық сүзуді өшіру үшін басыңыз",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Click to enable cosmetic filtering on this site",
+    "message": "Мына сайт үшін косметикалық сүзуді қосу үшін басыңыз",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Toggle the blocking of remote fonts for this site",
+    "message": "Осы сайт үшін қашықтан қосылған қаріптерді қосу/өшіру",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Click to block remote fonts on this site",
+    "message": "Мына сайттағы қашықтан қосылған қаріптерді бұғаттау үшін басыңыз",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Click to no longer block remote fonts on this site",
+    "message": "Мына сайттағы қашықтан қосылған қаріптерді бұғаттамау үшін басыңыз",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Click to disable JavaScript on this site",
+    "message": "Осы сайт үшін JavaScript-ты өшіру үшін басыңыз",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Click to no longer disable JavaScript on this site",
+    "message": "Осы сайт үшін JavaScript-ты өшірмеу үшін басыңыз",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
-    "message": "Pop-up windows",
+    "message": "Қалқымалы терезелер",
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {

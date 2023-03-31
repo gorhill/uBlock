@@ -11,7 +11,7 @@ Možete dodati više skupova pravila tako što ćete posjetiti stranicu s opcija
 
 uBOL je u potpunosti deklarativan, što znači da nema potrebe za trajnim uBOL procesom za filtriranje, a filtriranje sadržaja temeljeno na ubacivanju CSS/JS pouzdano izvodi sam preglednik, a ne ekstenzija. To znači da sam uBOL ne troši CPU/memorijske resurse dok je blokiranje sadržaja u tijeku -- uBOL-ov servisni radni proces potreban je _samo_ kada komunicirate s skočnom pločom ili stranicama s opcijama.
 
-uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read and modify data" permissions at install time.
+uBOL ne zahtijeva široku dozvolu za "čitanje i izmjenu podataka" u vrijeme instalacije, stoga ima zadane ograničene mogućnosti u usporedbi s uBlock Origin ili drugim blokatorima sadržaja koji zahtijevaju veću dozvolu za "čitanje i izmjenu podataka" u vrijeme instalacije.
 
 Međutim, uBOL vam omogućuje da *eksplicitno* dodijelite proširena dopuštenja na određenim web-stranicama po vašem izboru tako da može bolje filtrirati te web-stranice koristeći kozmetičko filtriranje i injekcijske skripte.
 
