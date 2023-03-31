@@ -393,7 +393,7 @@ scriptletFilteringEngine.retrieve = function(request, options = {}) {
         µb.hiddenSettings.debugScriptlets ? 'debugger;' : ';',
         '',
         // For use by scriptlets to share local data among themselves
-        'const sriptletGlobals = new Map();',
+        'const scriptletGlobals = new Map();',
         '',
         cacheDetails.code,
         '',

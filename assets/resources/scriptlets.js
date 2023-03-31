@@ -23,7 +23,7 @@
 */
 
 // Externally added to the private namespace in which scriptlets execute.
-/* global sriptletGlobals */
+/* global scriptletGlobals */
 
 'use strict';
 
@@ -42,15 +42,15 @@ builtinScriptlets.push({
     fn: safeSelf,
 });
 function safeSelf() {
-    if ( sriptletGlobals.has('safeSelf') ) {
-        return sriptletGlobals.get('safeSelf');
+    if ( scriptletGlobals.has('safeSelf') ) {
+        return scriptletGlobals.get('safeSelf');
     }
     const safe = {
         'RegExp': self.RegExp,
         'RegExp_test': self.RegExp.prototype.test,
         'RegExp_exec': self.RegExp.prototype.exec,
     };
-    sriptletGlobals.set('safeSelf', safe);
+    scriptletGlobals.set('safeSelf', safe);
     return safe;
 }
 
@@ -110,10 +110,14 @@ builtinScriptlets.push({
 // Issues to mind before changing anything:
 //  https://github.com/uBlockOrigin/uBlock-issues/issues/2154
 function abortCurrentScript(
-    target = '',
-    needle = '',
-    context = ''
+    arg1 = '',
+    arg2 = '',
+    arg3 = ''
 ) {
+    const details = typeof arg1 !== 'object'
+        ? { target: arg1, needle: arg2, context: arg3 }
+        : arg1;
+    const { target, needle, context } = details;
     if ( typeof target !== 'string' ) { return; }
     if ( target === '' ) { return; }
     const reNeedle = patternToRegex(needle);
