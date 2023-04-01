@@ -84,8 +84,7 @@
 .cm-theme-override .cm-s-default .cm-error,
 .CodeMirror-linebackground.error {
     background-color: var(--sf-error-surface);
-    text-decoration: underline var(--sf-error-ink);
-    text-underline-position: under;
+    text-decoration: var(--sf-error-ink) dashed underline;
     }
 .cm-theme-override .cm-s-default .cm-link {
     text-decoration: none;
