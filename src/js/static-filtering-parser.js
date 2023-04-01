@@ -1123,6 +1123,7 @@ export class AstFilterParser {
         if ( tail !== 0 ) {
             this.linkRight(prev, tail);
         }
+        if ( this.astType !== AST_TYPE_NETWORK ) { return 0; }
         this.validateNet();
         return this.throwHeadNode(head);
     }
