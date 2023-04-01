@@ -27,6 +27,9 @@
 
 'use strict';
 
+import { dom } from '../dom.js';
+import { i18n$ } from '../i18n.js';
+
 {
     const CodeMirror = self.CodeMirror;
 
@@ -101,6 +104,10 @@
             findNext(cm, -1);
         } else if ( tcl.contains('cm-search-widget-down') ) {
             findNext(cm, 1);
+        } else if ( tcl.contains('cm-linter-widget-up') ) {
+            findNextError(cm, -1);
+        } else if ( tcl.contains('cm-linter-widget-down') ) {
+            findNextError(cm, 1);
         }
         if ( ev.target.localName !== 'input' ) {
             ev.preventDefault();
@@ -137,6 +144,7 @@
         this.queryTimer = null;
         this.dirty = true;
         this.lines = [];
+        this.errorLines = [];
         cm.on('changes', (cm, changes) => {
             for ( const change of changes ) {
                 if ( change.text.length !== 0 || change.removed !== 0 ) {
@@ -365,6 +373,26 @@
         });
     };
 
+    const findNextError = function(cm, dir) {
+        const state = getSearchState(cm);
+        const lines = state.errorLines;
+        if ( lines.length === 0 ) { return; }
+        const cursor = cm.getCursor('from');
+        const start = cursor.line;
+        const next = lines.reduce((best, v) => {
+            if ( dir < 0 ) {
+                if ( v < start && (best === -1 || v > best) ) { return v; }
+                return best;
+            }
+            if ( v > start && (best === -1 || v < best) ) { return v; }
+            return best;
+        }, -1);
+        if ( next === -1 || next === start ) { return; }
+        cm.getDoc().setCursor(next);
+        const { clientHeight } = cm.getScrollInfo();
+        cm.scrollIntoView({ line: next, ch: 0 }, clientHeight >>> 1);
+    };
+
     const clearSearch = function(cm, hard) {
         cm.operation(function() {
             const state = getSearchState(cm);
@@ -444,6 +472,11 @@
                   '<span class="cm-search-widget-down cm-search-widget-button fa-icon fa-icon-vflipped">angle-up</span>&emsp;' +
                   '<span class="cm-search-widget-count"></span>' +
                 '</span>' +
+                '<span class="cm-linter-widget">' +
+                  '<span class="cm-linter-widget-count"></span>&emsp;' +
+                  '<span class="cm-linter-widget-up cm-search-widget-button fa-icon">angle-up</span>&nbsp;' +
+                  '<span class="cm-linter-widget-down cm-search-widget-button fa-icon fa-icon-vflipped">angle-up</span>&emsp;' +
+                '</span>' +
                 '<a class="fa-icon sourceURL" href>external-link</a>' +
               '</div>' +
             '</div>';
@@ -459,5 +492,14 @@
 
     CodeMirror.defineInitHook(function(cm) {
         getSearchState(cm);
+        cm.on('linterDone', details => {
+            const count = details.lines.length;
+            getSearchState(cm).errorLines = details.lines;
+            dom.cl.toggle('.cm-linter-widget', 'hasErrors', count !== 0);
+            dom.text(
+                '.cm-linter-widget .cm-linter-widget-count',
+                i18n$('linterMainReport').replace('{{count}}', count.toLocaleString())
+            );
+        });
     });
 }

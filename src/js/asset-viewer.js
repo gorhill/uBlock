@@ -52,7 +52,11 @@ import './codemirror/ubo-static-filtering.js';
     const cmEditor = new CodeMirror(qs$('#content'), {
         autofocus: true,
         foldGutter: true,
-        gutters: [ 'CodeMirror-linenumbers', 'CodeMirror-foldgutter' ],
+        gutters: [
+            'CodeMirror-foldgutter',
+            'CodeMirror-linenumbers',
+            { className: 'CodeMirror-lintgutter', style: 'width: 10px' },
+        ],
         lineNumbers: true,
         lineWrapping: true,
         matchBrackets: true,

@@ -705,7 +705,7 @@ export class AstFilterParser {
         this.badTypes = new Set(options.badTypes || []);
         this.maxTokenLength = options.maxTokenLength || 7;
         // TODO: rethink this
-        this.result = { exception: false, raw: '', compiled: '' };
+        this.result = { exception: false, raw: '', compiled: '', error: undefined };
         this.selectorCompiler = new ExtSelectorCompiler(options);
         // Regexes
         this.reWhitespaceStart = /^\s+/;
@@ -2967,6 +2967,7 @@ class ExtSelectorCompiler {
         this.nativeCssHas = instanceOptions.nativeCssHas === true;
         // https://www.w3.org/TR/css-syntax-3/#typedef-ident-token
         this.reInvalidIdentifier = /^\d/;
+        this.error = undefined;
     }
 
     compile(raw, out, compileOptions = {}) {
@@ -3016,7 +3017,10 @@ class ExtSelectorCompiler {
         }
 
         out.compiled = this.compileSelector(raw);
-        if ( out.compiled === undefined ) { return false; }
+        if ( out.compiled === undefined ) {
+            out.error = this.error || undefined;
+            return false;
+        }
 
         if ( out.compiled instanceof Object ) {
             out.compiled.raw = raw;
@@ -3060,6 +3064,7 @@ class ExtSelectorCompiler {
                 parseValue: false,
             });
         } catch(reason) {
+            this.error = reason && reason.message || undefined;
             return;
         }
         const parts = [];

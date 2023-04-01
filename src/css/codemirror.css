@@ -164,6 +164,13 @@
       -webkit-user-select: none;
     z-index: 1000;
     }
+.cm-search-widget > * {
+    flex-grow: 1;
+    }
+.cm-search-widget > :last-child {
+    justify-content: flex-end;
+    }
+
 .cm-search-widget-input {
     display: inline-flex;
     flex-grow: 1;
@@ -196,8 +203,21 @@
     color: #000;
     }
 .cm-search-widget .sourceURL[href=""] {
-    display: none;
+    visibility: hidden;
     }
+
+.cm-linter-widget {
+    display: none;
+    flex-grow: 1;
+    }
+.cm-linter-widget.hasErrors {
+    display: initial;
+    }
+.cm-linter-widget .cm-linter-widget-count {
+    color: var(--accent-surface-1);
+        fill: var(--accent-surface-1);
+    }
+
 .cm-searching.cm-overlay {
     background-color: var(--cm-searching-surface);
     border: 0;
@@ -246,4 +266,28 @@
  * */
 .CodeMirror-activeline-background {
     background-color: var(--cm-active-line);
+    }
+
+.CodeMirror-lintmarker {
+    background-color: var(--sf-error-ink);
+    height: calc(var(--font-size) - 2px);
+    margin-top: 1px;
+    position: relative;
+    }
+.CodeMirror-lintmarker > span {
+    display: none;
+    }
+.CodeMirror-lintmarker > span {
+    background-color: var(--surface-0);
+    border: 1px solid var(--sf-error-ink);
+    color: var(--ink-1);
+    left: 100%;
+    padding: var(--default-gap-xsmall);
+    position: absolute;
+    top: -2px;
+    white-space: pre;
+    }
+.CodeMirror-lintmarker:hover > span,
+.CodeMirror-lintmarker > span:hover {
+    display: initial;
     }

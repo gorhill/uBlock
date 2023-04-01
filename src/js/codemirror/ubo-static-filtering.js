@@ -39,7 +39,6 @@ let hintHelperRegistered = false;
 /******************************************************************************/
 
 CodeMirror.defineMode('ubo-static-filtering', function() {
-    if ( sfp.AstFilterParser instanceof Object === false ) { return; }
     const astParser = new sfp.AstFilterParser({
         interactive: true,
         nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
@@ -300,8 +299,6 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
 //   https://codemirror.net/demo/complete.html
 
 const initHints = function() {
-    if ( sfp.AstFilterParser instanceof Object === false ) { return; }
-
     const astParser = new sfp.AstFilterParser({
         interactive: true,
         nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
@@ -663,6 +660,146 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
         }
     };
 })());
+
+/******************************************************************************/
+
+// Linter
+
+{
+    const astParser = new sfp.AstFilterParser({
+        interactive: true,
+        nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
+    });
+
+    const markedset = [];
+    let markedsetStart = 0;
+    let markedsetTimer;
+
+    const processMarkedsetAsync = doc => {
+        if ( markedsetTimer !== undefined ) { return; }
+        markedsetTimer = self.requestIdleCallback(deadline => {
+            markedsetTimer = undefined;
+            processMarkedset(doc, deadline);
+        });
+    };
+
+    const processMarkedset = (doc, deadline) => {
+        const lineCount = doc.lineCount();
+        doc.eachLine(markedsetStart, lineCount, lineHandle => {
+            const line = markedsetStart++;
+            const markers = lineHandle.gutterMarkers || null;
+            if ( markers && markers['CodeMirror-lintgutter'] ) {
+                markedset.push(lineHandle.lineNo());
+            }
+            if ( (line & 0x0F) === 0 && deadline.timeRemaining() === 0 ) {
+                processMarkedsetAsync(doc);
+                return true;
+            }
+            if ( markedsetStart === lineCount ) {
+                CodeMirror.signal(
+                    doc.getEditor(),
+                    'linterDone',
+                    { lines: markedset }
+                );
+            }
+        });
+    };
+
+    const changeset = [];
+    let changesetTimer;
+
+    const addChanges = (doc, change) => {
+        changeset.push(change);
+        processChangesetAsync(doc);
+    };
+
+    const processChangesetAsync = doc => {
+        if ( changesetTimer !== undefined ) { return; }
+        if ( markedsetTimer ) {
+            self.cancelIdleCallback(markedsetTimer);
+            markedsetTimer = undefined;
+        }
+        changesetTimer = self.requestIdleCallback(deadline => {
+            changesetTimer = undefined;
+            processChangeset(doc, deadline);
+        });
+    };
+
+    const extractError = ( ) => {
+        if ( astParser.isComment() ) { return; }
+        if ( astParser.isFilter() === false ) { return; }
+        if ( astParser.hasError() === false ) { return; }
+        let error = 'Invalid filter';
+        if ( astParser.isCosmeticFilter() && astParser.result.error ) {
+            error = `${error}: ${astParser.result.error}`;
+        }
+        return error;
+    };
+
+    const extractMarker = lineInfo => {
+        if ( lineInfo.gutterMarkers instanceof Object === false ) { return; }
+        return lineInfo.gutterMarkers['CodeMirror-lintgutter'];
+    };
+
+    const markerTemplate = (( ) => {
+        const marker = document.createElement('div');
+        marker.classList.add('CodeMirror-lintmarker');
+        marker.textContent = '\xA0';
+        const info = document.createElement('span');
+        marker.append(info);
+        return marker;
+    })();
+
+    const makeMarker = (doc, line, marker, error) => {
+        if ( marker === undefined ) {
+            marker = markerTemplate.cloneNode(true);
+            doc.setGutterMarker(line, 'CodeMirror-lintgutter', marker);
+        }
+        marker.children[0].textContent = error;
+    };
+
+    const processChangeset = (doc, deadline) => {
+        const cm = doc.getEditor();
+        cm.startOperation();
+        while ( changeset.length !== 0 ) {
+            const { from, to } = changeset.shift();
+            for ( let line = from; line < to; line++ ) {
+                const lineInfo = doc.lineInfo(line);
+                if ( lineInfo === null ) { continue; }
+                astParser.parse(lineInfo.text);
+                const error = extractError();
+                let marker = extractMarker(lineInfo);
+                if ( error === undefined && marker ) {
+                    doc.setGutterMarker(line, 'CodeMirror-lintgutter', null);
+                } else if ( error !== undefined ) {
+                    makeMarker(doc, line, marker, error);
+                }
+                if ( (line & 0x0F) === 0 && deadline.timeRemaining() === 0 ) {
+                    changeset.unshift({ doc, from: line+1, to });
+                    break;
+                }
+            }
+        }
+        cm.endOperation();
+        if ( changeset.length !== 0 ) {
+            return processChangesetAsync(doc);
+        }
+        markedset.length = 0;
+        markedsetStart = 0;
+        processMarkedsetAsync(doc);
+    };
+
+    CodeMirror.defineInitHook(cm => {
+        cm.on('changes', function(cm, changes) {
+            const doc = cm.getDoc();
+            for ( const change of changes ) {
+                const from = change.from.line;
+                const to = from + change.text.length;
+                addChanges(doc, { from, to });
+            }
+        });
+    });
+}
 
 /******************************************************************************/
 
