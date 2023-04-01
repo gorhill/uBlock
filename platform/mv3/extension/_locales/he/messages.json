@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "חוסם תוכן ניסיוני, ללא הרשאה. חוסם מודעות, עוקבים, כורים ועוד מיד עם ההתקנה.",
+    "message": "חוסם תוכן ניסיוני, נטול הרשאות. חוסם מודעות, עוקבים, כורים, ועוד מיד עם ההתקנה.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -24,7 +24,7 @@
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "להתעלם",
+    "message": "התעלמות",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
