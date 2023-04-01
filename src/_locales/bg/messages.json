@@ -1263,6 +1263,10 @@
     "message": "Щракнете, за да се зареди",
     "description": "Message used in frame placeholders"
   },
+  "linterMainReport": {
+    "message": "Errors: {{count}}",
+    "description": "Summary of number of errors as reported by the linter "
+  },
   "dummy": {
     "message": "Това поле трябва да бъде последното",
     "description": "so we dont need to deal with comma for last entry"

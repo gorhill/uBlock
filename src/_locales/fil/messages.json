@@ -1263,6 +1263,10 @@
     "message": "Pindutin upang i-load",
     "description": "Message used in frame placeholders"
   },
+  "linterMainReport": {
+    "message": "Errors: {{count}}",
+    "description": "Summary of number of errors as reported by the linter "
+  },
   "dummy": {
     "message": "Dapat mahuli ang entry na ito",
     "description": "so we dont need to deal with comma for last entry"

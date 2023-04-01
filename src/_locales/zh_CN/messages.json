@@ -1263,6 +1263,10 @@
     "message": "单击以加载",
     "description": "Message used in frame placeholders"
   },
+  "linterMainReport": {
+    "message": "Errors: {{count}}",
+    "description": "Summary of number of errors as reported by the linter "
+  },
   "dummy": {
     "message": "此条目必须是最后一个",
     "description": "so we dont need to deal with comma for last entry"

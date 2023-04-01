@@ -1263,6 +1263,10 @@
     "message": "లోడ్ చేయడానికి క్లిక్ చేయండి",
     "description": "Message used in frame placeholders"
   },
+  "linterMainReport": {
+    "message": "Errors: {{count}}",
+    "description": "Summary of number of errors as reported by the linter "
+  },
   "dummy": {
     "message": "ఇది అంతిమంగా వుండాల్సిన నమోదు",
     "description": "so we dont need to deal with comma for last entry"
