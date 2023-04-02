@@ -222,7 +222,7 @@
 .cm-searching.cm-overlay {
     background-color: var(--cm-searching-surface);
     border: 0;
-    color: var(--cm-searching-ink);
+    color: var(--cm-searching-ink) !important;
     }
 
 .CodeMirror-merge {
