@@ -671,7 +671,7 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
         nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
     });
 
-    const markedset = [];
+    let errorCount = 0;
     let markedsetStart = 0;
     let markedsetTimer;
 
@@ -689,18 +689,14 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
             const line = markedsetStart++;
             const markers = lineHandle.gutterMarkers || null;
             if ( markers && markers['CodeMirror-lintgutter'] ) {
-                markedset.push(lineHandle.lineNo());
+                errorCount += 1;
             }
             if ( (line & 0x0F) === 0 && deadline.timeRemaining() === 0 ) {
                 processMarkedsetAsync(doc);
                 return true;
             }
             if ( markedsetStart === lineCount ) {
-                CodeMirror.signal(
-                    doc.getEditor(),
-                    'linterDone',
-                    { lines: markedset }
-                );
+                CodeMirror.signal(doc.getEditor(), 'linterDone', { errorCount });
             }
         });
     };
@@ -708,7 +704,7 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
     const changeset = [];
     let changesetTimer;
 
-    const addChanges = (doc, change) => {
+    const addChange = (doc, change) => {
         changeset.push(change);
         processChangesetAsync(doc);
     };
@@ -736,9 +732,10 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
         return error;
     };
 
-    const extractMarker = lineInfo => {
-        if ( lineInfo.gutterMarkers instanceof Object === false ) { return; }
-        return lineInfo.gutterMarkers['CodeMirror-lintgutter'];
+    const extractMarker = lineHandle => {
+        const markers = lineHandle.gutterMarkers || null;
+        if ( markers === null ) { return; }
+        return markers['CodeMirror-lintgutter'] || undefined;
     };
 
     const markerTemplate = (( ) => {
@@ -750,41 +747,49 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
         return marker;
     })();
 
-    const makeMarker = (doc, line, marker, error) => {
+    const makeMarker = (doc, lineHandle, marker, error) => {
         if ( marker === undefined ) {
             marker = markerTemplate.cloneNode(true);
-            doc.setGutterMarker(line, 'CodeMirror-lintgutter', marker);
+            doc.setGutterMarker(lineHandle, 'CodeMirror-lintgutter', marker);
         }
         marker.children[0].textContent = error;
+    };
+
+    const processChange = (doc, deadline, change) => {
+        let { from, to } = change;
+        doc.eachLine(from, to, lineHandle => {
+            astParser.parse(lineHandle.text);
+            const error = extractError();
+            const marker = extractMarker(lineHandle);
+            if ( error === undefined && marker ) {
+                doc.setGutterMarker(lineHandle, 'CodeMirror-lintgutter', null);
+            } else if ( error !== undefined ) {
+                makeMarker(doc, lineHandle, marker, error);
+            }
+            from += 1;
+            if ( (from & 0x0F) !== 0 ) { return; }
+            if ( deadline.timeRemaining() !== 0 ) { return; }
+            return true;
+        });
+        if ( from !== to ) {
+            return { from, to };
+        }
     };
 
     const processChangeset = (doc, deadline) => {
         const cm = doc.getEditor();
         cm.startOperation();
         while ( changeset.length !== 0 ) {
-            const { from, to } = changeset.shift();
-            for ( let line = from; line < to; line++ ) {
-                const lineInfo = doc.lineInfo(line);
-                if ( lineInfo === null ) { continue; }
-                astParser.parse(lineInfo.text);
-                const error = extractError();
-                let marker = extractMarker(lineInfo);
-                if ( error === undefined && marker ) {
-                    doc.setGutterMarker(line, 'CodeMirror-lintgutter', null);
-                } else if ( error !== undefined ) {
-                    makeMarker(doc, line, marker, error);
-                }
-                if ( (line & 0x0F) === 0 && deadline.timeRemaining() === 0 ) {
-                    changeset.unshift({ doc, from: line+1, to });
-                    break;
-                }
-            }
+            const change = processChange(doc, deadline, changeset.shift());
+            if ( change === undefined ) { continue; }
+            changeset.unshift(change);
+            break;
         }
         cm.endOperation();
         if ( changeset.length !== 0 ) {
             return processChangesetAsync(doc);
         }
-        markedset.length = 0;
+        errorCount = 0;
         markedsetStart = 0;
         processMarkedsetAsync(doc);
     };
@@ -795,7 +800,7 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
             for ( const change of changes ) {
                 const from = change.from.line;
                 const to = from + change.text.length;
-                addChanges(doc, { from, to });
+                addChange(doc, { from, to });
             }
         });
     });

@@ -144,7 +144,6 @@ import { i18n$ } from '../i18n.js';
         this.queryTimer = null;
         this.dirty = true;
         this.lines = [];
-        this.errorLines = [];
         cm.on('changes', (cm, changes) => {
             for ( const change of changes ) {
                 if ( change.text.length !== 0 || change.removed !== 0 ) {
@@ -374,23 +373,28 @@ import { i18n$ } from '../i18n.js';
     };
 
     const findNextError = function(cm, dir) {
-        const state = getSearchState(cm);
-        const lines = state.errorLines;
-        if ( lines.length === 0 ) { return; }
+        const doc = cm.getDoc();
         const cursor = cm.getCursor('from');
-        const start = cursor.line;
-        const next = lines.reduce((best, v) => {
+        const cursorLine = cursor.line;
+        const start = dir < 0 ? 0 : cursorLine + 1;
+        const end = dir < 0 ? cursorLine : doc.lineCount();
+        let found = -1;
+        doc.eachLine(start, end, lineHandle => {
+            const markers = lineHandle.gutterMarkers || null;
+            if ( markers === null ) { return; }
+            if ( markers['CodeMirror-lintgutter'] === undefined ) { return; }
+            const line = lineHandle.lineNo();
             if ( dir < 0 ) {
-                if ( v < start && (best === -1 || v > best) ) { return v; }
-                return best;
+                found = line;
+                return;
             }
-            if ( v > start && (best === -1 || v < best) ) { return v; }
-            return best;
-        }, -1);
-        if ( next === -1 || next === start ) { return; }
-        cm.getDoc().setCursor(next);
+            found = line;
+            return true;
+        });
+        if ( found === -1 || found === cursorLine ) { return; }
+        cm.getDoc().setCursor(found);
         const { clientHeight } = cm.getScrollInfo();
-        cm.scrollIntoView({ line: next, ch: 0 }, clientHeight >>> 1);
+        cm.scrollIntoView({ line: found, ch: 0 }, clientHeight >>> 1);
     };
 
     const clearSearch = function(cm, hard) {
@@ -493,8 +497,7 @@ import { i18n$ } from '../i18n.js';
     CodeMirror.defineInitHook(function(cm) {
         getSearchState(cm);
         cm.on('linterDone', details => {
-            const count = details.lines.length;
-            getSearchState(cm).errorLines = details.lines;
+            const count = details.errorCount;
             dom.cl.toggle('.cm-linter-widget', 'hasErrors', count !== 0);
             dom.text(
                 '.cm-linter-widget .cm-linter-widget-count',
