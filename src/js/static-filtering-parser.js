@@ -91,6 +91,11 @@ export const AST_FLAG_NET_PATTERN_RIGHT_ANCHOR      = 1 << iota++;
 export const AST_FLAG_HAS_OPTIONS                   = 1 << iota++;
 
 iota = 0;
+export const AST_ERROR_NONE                         = 1 << iota++;
+export const AST_ERROR_BAD_REGEX                    = 1 << iota++;
+export const AST_ERROR_BAD_PATTERN                  = 1 << iota++;
+
+iota = 0;
 const NODE_RIGHT_INDEX                              = iota++;
 const NOOP_NODE_SIZE                                = iota;
 const NODE_TYPE_INDEX                               = iota++;
@@ -736,7 +741,7 @@ export class AstFilterParser {
         this.reHasWhitespaceChar = /\s/;
         this.reHasUppercaseChar = /[A-Z]/;
         this.reHasUnicodeChar = /[^\x00-\x7F]/;
-        this.reUnicodeChars = /[^\x00-\x7F]/g;
+        this.reUnicodeChars = /\P{ASCII}/gu;
         this.reBadHostnameChars = /[\x00-\x24\x26-\x29\x2b\x2c\x2f\x3b-\x40\x5c\x5e\x60\x7b-\x7f]/;
         this.reIsEntity = /^[^*]+\.\*$/;
         this.rePreparseDirectiveIf = /^!#if /;
@@ -765,6 +770,7 @@ export class AstFilterParser {
         this.astType = AST_TYPE_NONE;
         this.astTypeFlavor = AST_TYPE_NONE;
         this.astFlags = 0;
+        this.astError = 0;
         this.rootNode = this.allocTypedNode(NODE_TYPE_LINE_RAW, 0, this.rawEnd);
         if ( this.rawEnd === 0 ) { return; }
 
@@ -1475,6 +1481,7 @@ export class AstFilterParser {
                 }
             } else {
                 this.astTypeFlavor = AST_TYPE_NETWORK_PATTERN_BAD;
+                this.astError = AST_ERROR_BAD_REGEX;
                 this.addFlags(AST_FLAG_HAS_ERROR);
                 this.addNodeFlags(next, NODE_FLAG_ERROR);
             }
@@ -1592,18 +1599,19 @@ export class AstFilterParser {
             ? this.normalizePattern(pattern)
             : pattern;
         next = this.allocTypedNode(NODE_TYPE_NET_PATTERN, patternBeg, patternEnd);
-        if ( normal === '' || pattern === '*' ) {
+        if ( normal === undefined ) {
+            this.astTypeFlavor = AST_TYPE_NETWORK_PATTERN_BAD;
+            this.addFlags(AST_FLAG_HAS_ERROR);
+            this.astError = AST_ERROR_BAD_PATTERN;
+            this.addNodeFlags(next, NODE_FLAG_ERROR);
+        } else if ( normal === '' || pattern === '*' ) {
             this.astTypeFlavor = AST_TYPE_NETWORK_PATTERN_ANY;
         } else if ( this.reHostnameAscii.test(normal) ) {
             this.astTypeFlavor = AST_TYPE_NETWORK_PATTERN_HOSTNAME;
         } else if ( this.reHasPatternSpecialChars.test(normal) ) {
             this.astTypeFlavor = AST_TYPE_NETWORK_PATTERN_GENERIC;
-        } else if ( normal !== undefined ) {
-            this.astTypeFlavor = AST_TYPE_NETWORK_PATTERN_PLAIN;
         } else {
-            this.astTypeFlavor = AST_TYPE_NETWORK_PATTERN_BAD;
-            this.addFlags(AST_FLAG_HAS_ERROR);
-            this.addNodeFlags(next, NODE_FLAG_ERROR);
+            this.astTypeFlavor = AST_TYPE_NETWORK_PATTERN_PLAIN;
         }
         this.addNodeToRegister(NODE_TYPE_NET_PATTERN, next);
         if ( needNormalization && normal !== undefined ) {
@@ -1692,9 +1700,8 @@ export class AstFilterParser {
         if ( this.reHasUnicodeChar.test(normal) === false ) { return normal; }
         // Percent-encode remaining Unicode characters.
         try {
-            normal = normal.replace(
-                this.reUnicodeChars,
-                s => encodeURIComponent(s).toLowerCase()
+            normal = normal.replace(this.reUnicodeChars, s =>
+                encodeURIComponent(s).toLowerCase()
             );
         } catch (ex) {
             return;

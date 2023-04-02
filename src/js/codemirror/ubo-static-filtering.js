@@ -727,7 +727,13 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
         if ( astParser.hasError() === false ) { return; }
         let error = 'Invalid filter';
         if ( astParser.isCosmeticFilter() && astParser.result.error ) {
-            error = `${error}: ${astParser.result.error}`;
+            return `${error}: ${astParser.result.error}`;
+        }
+        if ( astParser.astError === sfp.AST_ERROR_BAD_REGEX ) {
+            return `${error}: Bad regular expression`;
+        }
+        if ( astParser.astError === sfp.AST_ERROR_BAD_PATTERN ) {
+            return `${error}: Bad pattern`;
         }
         return error;
     };
