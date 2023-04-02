@@ -1264,7 +1264,7 @@
     "description": "Message used in frame placeholders"
   },
   "linterMainReport": {
-    "message": "Errors: {{count}}",
+    "message": "Ошибки: {{count}}",
     "description": "Summary of number of errors as reported by the linter "
   },
   "dummy": {

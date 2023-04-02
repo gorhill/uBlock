@@ -1,4 +1,4 @@
-uBO Lite (uBOL) is an experimental *permission-less* MV3-based content blocker.
+uBO लाइट (uBOL) एक प्रायोगिक *अनुमति-रहित* MV3-आधारित सामग्री अवरोधक है.
 
 The default ruleset corresponds to uBlock Origin's default filterset:
 

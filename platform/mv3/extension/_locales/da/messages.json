@@ -228,7 +228,7 @@
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "Du har netop installeret uBO Lite. Her kan vælges den standardfiltreringstilstand, der skal bruges på alle websteder.\n\nStandardvalget er <em>Basis</em>-tilstand, da den ikke kræver tilladelse til at læse og ændre data. Stoler du på uBO Lite, kan den omfattende tilladelse til at læse og ændre data på alle websteder tildeles for som standard at aktivere mere avancerede filtreringsfunktioner for alle websteder.",
+    "message": "Du har netop installeret uBO Lite. Her kan den standardfiltreringstilstand vælges, der skal bruges på alle websteder.\n\nStandardvalget er <em>Basis</em>-tilstand, da den ikke kræver tilladelse til at læse og ændre data. Er uBO Lite betroet, kan den udvidede tilladelse til at læse og ændre data på alle websteder tildeles for som standard at aktivere mere avancerede filtreringsfunktioner for alle websteder.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
