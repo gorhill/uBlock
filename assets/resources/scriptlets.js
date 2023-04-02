@@ -49,6 +49,12 @@ function safeSelf() {
         'RegExp': self.RegExp,
         'RegExp_test': self.RegExp.prototype.test,
         'RegExp_exec': self.RegExp.prototype.exec,
+        'safeLog': console.log.bind(console),
+        'uboLog': function(msg) {
+            if ( msg !== '' ) {
+                this.safeLog(`[uBO] ${msg}`);
+            }
+        },
     };
     scriptletGlobals.set('safeSelf', safe);
     return safe;
@@ -90,6 +96,28 @@ function getExceptionToken() {
     return token;
 }
 
+/******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'should-debug.fn',
+    fn: shouldDebug,
+});
+function shouldDebug(details) {
+    if ( details instanceof Object === false ) { return false; }
+    return scriptletGlobals.has('canDebug') && details.debug;
+}
+
+/******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'should-log.fn',
+    fn: shouldLog,
+});
+function shouldLog(details) {
+    if ( details instanceof Object === false ) { return false; }
+    return scriptletGlobals.has('canDebug') && details.log;
+}
+
 /*******************************************************************************
 
     Injectable scriptlets
@@ -105,6 +133,9 @@ builtinScriptlets.push({
     dependencies: [
         'pattern-to-regex.fn',
         'get-exception-token.fn',
+        'safe-self.fn',
+        'should-debug.fn',
+        'should-log.fn',
     ],
 });
 // Issues to mind before changing anything:
@@ -117,9 +148,10 @@ function abortCurrentScript(
     const details = typeof arg1 !== 'object'
         ? { target: arg1, needle: arg2, context: arg3 }
         : arg1;
-    const { target, needle, context } = details;
+    const { target = '', needle = '', context = '' } = details;
     if ( typeof target !== 'string' ) { return; }
     if ( target === '' ) { return; }
+    const safe = safeSelf();
     const reNeedle = patternToRegex(needle);
     const reContext = patternToRegex(context);
     const thisScript = document.currentScript;
@@ -141,6 +173,8 @@ function abortCurrentScript(
         value = owner[prop];
         desc = undefined;
     }
+    const log = shouldLog(details);
+    const debug = shouldDebug(details);
     const exceptionToken = getExceptionToken();
     const scriptTexts = new WeakMap();
     const getScriptText = elem => {
@@ -165,29 +199,38 @@ function abortCurrentScript(
         return text;
     };
     const validate = ( ) => {
+        if ( debug ) { debugger; }  // jshint ignore: line
         const e = document.currentScript;
         if ( e instanceof HTMLScriptElement === false ) { return; }
         if ( e === thisScript ) { return; }
+        if ( e.src !== '' && log ) { safe.uboLog(`src: ${e.src}`); }
         if ( reContext.test(e.src) === false ) { return; }
-        if ( reNeedle.test(getScriptText(e)) === false ) { return; }
+        const scriptText = getScriptText(e);
+        if ( log ) { safe.uboLog(`script text: ${scriptText}`); }
+        if ( reNeedle.test(scriptText) === false ) { return; }
         throw new ReferenceError(exceptionToken);
     };
-    Object.defineProperty(owner, prop, {
-        get: function() {
-            validate();
-            return desc instanceof Object
-                ? desc.get.call(owner)
-                : value;
-        },
-        set: function(a) {
-            validate();
-            if ( desc instanceof Object ) {
-                desc.set.call(owner, a);
-            } else {
-                value = a;
+    if ( debug ) { debugger; }  // jshint ignore: line
+    try {
+        Object.defineProperty(owner, prop, {
+            get: function() {
+                validate();
+                return desc instanceof Object
+                    ? desc.get.call(owner)
+                    : value;
+            },
+            set: function(a) {
+                validate();
+                if ( desc instanceof Object ) {
+                    desc.set.call(owner, a);
+                } else {
+                    value = a;
+                }
             }
-        }
-    });
+        });
+    } catch(ex) {
+        if ( log ) { safe.uboLog(ex); }
+    }
 }
 
 /******************************************************************************/
@@ -298,7 +341,6 @@ function abortOnStackTrace(
     const safe = safeSelf();
     const reNeedle = patternToRegex(needle);
     const exceptionToken = getExceptionToken();
-    const log = console.log.bind(console);
     const ErrorCtor = self.Error;
     const mustAbort = function(err) {
         let docURL = self.location.href;
@@ -336,7 +378,7 @@ function abortOnStackTrace(
             logLevel === '2' && r ||
             logLevel === '3' && !r
         ) {
-            log(stack.replace(/\t/g, '\n'));
+            safe.uboLog(stack.replace(/\t/g, '\n'));
         }
         return r;
     };
@@ -392,6 +434,8 @@ builtinScriptlets.push({
     dependencies: [
         'pattern-to-regex.fn',
         'safe-self.fn',
+        'should-debug.fn',
+        'should-log.fn',
     ],
 });
 // https://github.com/uBlockOrigin/uAssets/issues/9123#issuecomment-848255120
@@ -408,7 +452,8 @@ function addEventListenerDefuser(
     const safe = safeSelf();
     const reType = patternToRegex(type);
     const rePattern = patternToRegex(pattern);
-    const logfn = console.log.bind(console);
+    const log = shouldLog(details);
+    const debug = shouldDebug(details);
     const proto = self.EventTarget.prototype;
     proto.addEventListener = new Proxy(proto.addEventListener, {
         apply: function(target, thisArg, args) {
@@ -422,17 +467,10 @@ function addEventListenerDefuser(
             const matchesHandler = safe.RegExp_test.call(rePattern, handler);
             const matchesEither = matchesType || matchesHandler;
             const matchesBoth = matchesType && matchesHandler;
-            if (
-                details.log === 1 && matchesBoth ||
-                details.log === 2 && matchesEither ||
-                details.log === 3
-            ) {
-                logfn(`uBO: addEventListener('${type}', ${handler})`);
+            if ( log === 1 && matchesBoth || log === 2 && matchesEither || log === 3 ) {
+                safe.uboLog(`addEventListener('${type}', ${handler})`);
             }
-            if (
-                details.debug === 1 && matchesBoth ||
-                details.debug === 2 && matchesEither
-            ) {
+            if ( debug === 1 && matchesBoth || debug === 2 && matchesEither ) {
                 debugger; // jshint ignore:line
             }
             if ( matchesBoth ) { return; }

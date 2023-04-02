@@ -47,6 +47,8 @@ const scriptletDB = new StaticExtFilteringHostnameDB(1);
 let acceptedCount = 0;
 let discardedCount = 0;
 
+let isDevBuild;
+
 const scriptletFilteringEngine = {
     get acceptedCount() {
         return acceptedCount;
@@ -386,6 +388,15 @@ scriptletFilteringEngine.retrieve = function(request, options = {}) {
 
     if ( cacheDetails.code === '' ) { return; }
 
+    const scriptletGlobals = [];
+
+    if ( isDevBuild === undefined ) {
+        isDevBuild = vAPI.webextFlavor.soup.has('devbuild');
+    }
+    if ( isDevBuild || µb.hiddenSettings.filterAuthorMode ) {
+        scriptletGlobals.push([ 'canDebug', true ]);
+    }
+
     const out = [
         '(function() {',
         '// >>>> start of private namespace',
@@ -393,7 +404,7 @@ scriptletFilteringEngine.retrieve = function(request, options = {}) {
         µb.hiddenSettings.debugScriptlets ? 'debugger;' : ';',
         '',
         // For use by scriptlets to share local data among themselves
-        'const scriptletGlobals = new Map();',
+        `const scriptletGlobals = new Map(${JSON.stringify(scriptletGlobals, null, 2)});`,
         '',
         cacheDetails.code,
         '',
