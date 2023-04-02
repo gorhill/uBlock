@@ -729,11 +729,20 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
         if ( astParser.isCosmeticFilter() && astParser.result.error ) {
             return `${error}: ${astParser.result.error}`;
         }
-        if ( astParser.astError === sfp.AST_ERROR_BAD_REGEX ) {
+        if ( astParser.astError === sfp.AST_ERROR_REGEX ) {
             return `${error}: Bad regular expression`;
         }
-        if ( astParser.astError === sfp.AST_ERROR_BAD_PATTERN ) {
+        if ( astParser.astError === sfp.AST_ERROR_PATTERN ) {
             return `${error}: Bad pattern`;
+        }
+        if ( astParser.astError === sfp.AST_ERROR_DOMAIN_NAME ) {
+            return `${error}: Bad domain name`;
+        }
+        if ( astParser.astError === sfp.AST_ERROR_OPTION_DUPLICATE ) {
+            return `${error}: Duplicate filter option`;
+        }
+        if ( astParser.astError === sfp.AST_ERROR_OPTION_UNKNOWN ) {
+            return `${error}: Unsupported filter option`;
         }
         return error;
     };

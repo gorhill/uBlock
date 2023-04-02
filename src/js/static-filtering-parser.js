@@ -92,8 +92,11 @@ export const AST_FLAG_HAS_OPTIONS                   = 1 << iota++;
 
 iota = 0;
 export const AST_ERROR_NONE                         = 1 << iota++;
-export const AST_ERROR_BAD_REGEX                    = 1 << iota++;
-export const AST_ERROR_BAD_PATTERN                  = 1 << iota++;
+export const AST_ERROR_REGEX                        = 1 << iota++;
+export const AST_ERROR_PATTERN                      = 1 << iota++;
+export const AST_ERROR_DOMAIN_NAME                  = 1 << iota++;
+export const AST_ERROR_OPTION_DUPLICATE             = 1 << iota++;
+export const AST_ERROR_OPTION_UNKNOWN               = 1 << iota++;
 
 iota = 0;
 const NODE_RIGHT_INDEX                              = iota++;
@@ -1278,6 +1281,7 @@ export class AstFilterParser {
                     realBad = isNegated || hasValue;
                     break;
                 case NODE_TYPE_NET_OPTION_NAME_UNKNOWN:
+                    this.astError = AST_ERROR_OPTION_UNKNOWN;
                     realBad = true;
                     break;
                 case NODE_TYPE_NET_OPTION_NAME_WEBRTC:
@@ -1481,7 +1485,7 @@ export class AstFilterParser {
                 }
             } else {
                 this.astTypeFlavor = AST_TYPE_NETWORK_PATTERN_BAD;
-                this.astError = AST_ERROR_BAD_REGEX;
+                this.astError = AST_ERROR_REGEX;
                 this.addFlags(AST_FLAG_HAS_ERROR);
                 this.addNodeFlags(next, NODE_FLAG_ERROR);
             }
@@ -1602,7 +1606,7 @@ export class AstFilterParser {
         if ( normal === undefined ) {
             this.astTypeFlavor = AST_TYPE_NETWORK_PATTERN_BAD;
             this.addFlags(AST_FLAG_HAS_ERROR);
-            this.astError = AST_ERROR_BAD_PATTERN;
+            this.astError = AST_ERROR_PATTERN;
             this.addNodeFlags(next, NODE_FLAG_ERROR);
         } else if ( normal === '' || pattern === '*' ) {
             this.astTypeFlavor = AST_TYPE_NETWORK_PATTERN_ANY;
@@ -1813,6 +1817,7 @@ export class AstFilterParser {
         if ( this.getBranchFromType(nodeOptionType) !== 0 ) {
             this.addNodeFlags(parent, NODE_FLAG_ERROR);
             this.addFlags(AST_FLAG_HAS_ERROR);
+            this.astError = AST_ERROR_OPTION_DUPLICATE;
         } else {
             this.addNodeToRegister(nodeOptionType, parent);
         }
@@ -1956,6 +1961,7 @@ export class AstFilterParser {
                 } else {
                     this.addNodeFlags(parent, NODE_FLAG_ERROR);
                     this.addFlags(AST_FLAG_HAS_ERROR);
+                    this.astError = AST_ERROR_DOMAIN_NAME;
                 }
             }
             if ( head === 0 ) {

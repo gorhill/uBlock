@@ -191,7 +191,7 @@
     align-items: center;
     display: inline-flex;
     flex-grow: 0;
-    font-size: 95%;
+    font-size: var(--font-size-smaller);
     min-width: 6em;
     visibility: hidden;
     }
@@ -206,15 +206,17 @@
     }
 
 .cm-linter-widget {
+    align-items: center;
     display: none;
     flex-grow: 1;
     }
 .cm-linter-widget.hasErrors {
-    display: initial;
+    display: inline-flex;
     }
 .cm-linter-widget .cm-linter-widget-count {
     color: var(--accent-surface-1);
         fill: var(--accent-surface-1);
+    font-size: var(--font-size-smaller);
     }
 
 .cm-searching.cm-overlay {
