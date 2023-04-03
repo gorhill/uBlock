@@ -459,6 +459,10 @@ if ( selfieIsValid !== true ) {
     }
 }
 
+// Flush memory cache -- unsure whether the browser does this internally
+// when loading a new extension.
+vAPI.net.handlerBehaviorChanged();
+
 // Final initialization steps after all needed assets are in memory.
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/974

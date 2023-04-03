@@ -1298,6 +1298,9 @@ vAPI.Net = class {
         this.listenerMap.set(clientListener, actualListener);
         return actualListener;
     }
+    handlerBehaviorChanged() {
+        browser.webRequest.handlerBehaviorChanged();
+    }
     onUnprocessedRequest(details) {
         const { tabId } = details;
         if ( tabId === -1 ) { return; }

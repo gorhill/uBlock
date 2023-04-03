@@ -187,6 +187,10 @@ const matchBucket = function(url, hostname, bucket, start) {
         }
     }
     this.saveWhitelist();
+
+    // Flush memory cache
+    vAPI.net.handlerBehaviorChanged();
+
     return true;
 };
 
@@ -521,6 +525,11 @@ const matchBucket = function(url, hostname, bucket, start) {
     // https://github.com/chrisaljoudi/uBlock/issues/420
     cosmeticFilteringEngine.removeFromSelectorCache(srcHostname, 'net');
 
+    // Flush memory cache
+    if ( action === 1 ) {
+        vAPI.net.handlerBehaviorChanged();
+    }
+
     if ( details.tabId === undefined ) { return; }
 
     if ( requestType.startsWith('3p') ) {
@@ -577,25 +586,39 @@ const matchBucket = function(url, hostname, bucket, start) {
     );
     if ( changed === false ) { return; }
 
-    // Take action if needed
+    // Take per-switch action if needed
     switch ( details.name ) {
-    case 'no-scripting':
-        this.updateToolbarIcon(details.tabId, 0b100);
-        break;
-    case 'no-cosmetic-filtering': {
-        const scriptlet = newState ? 'cosmetic-off' : 'cosmetic-on';
-        vAPI.tabs.executeScript(details.tabId, {
-            file: `/js/scriptlets/${scriptlet}.js`,
-            allFrames: true,
-        });
-        break;
-    }
-    case 'no-large-media':
-        const pageStore = this.pageStoreFromTabId(details.tabId);
-        if ( pageStore !== null ) {
-            pageStore.temporarilyAllowLargeMediaElements(!newState);
+        case 'no-scripting':
+            this.updateToolbarIcon(details.tabId, 0b100);
+            break;
+        case 'no-cosmetic-filtering': {
+            const scriptlet = newState ? 'cosmetic-off' : 'cosmetic-on';
+            vAPI.tabs.executeScript(details.tabId, {
+                file: `/js/scriptlets/${scriptlet}.js`,
+                allFrames: true,
+            });
+            break;
         }
-        break;
+        case 'no-large-media':
+            const pageStore = this.pageStoreFromTabId(details.tabId);
+            if ( pageStore !== null ) {
+                pageStore.temporarilyAllowLargeMediaElements(!newState);
+            }
+            break;
+        default:
+            break;
+    }
+
+    // Flush memory cache if needed
+    if ( newState ) {
+        switch ( details.name ) {
+            case 'no-scripting':
+            case 'no-remote-fonts':
+                vAPI.net.handlerBehaviorChanged();
+                break;
+            default:
+                break;
+        }
     }
 
     if ( details.persist !== true ) { return; }

@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* globals browser, WebAssembly */
+/* globals WebAssembly */
 
 'use strict';
 
@@ -581,9 +581,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
     // https://www.reddit.com/r/uBlockOrigin/comments/cj7g7m/
     // https://www.reddit.com/r/uBlockOrigin/comments/cnq0bi/
-    if ( options.killCache ) {
-        browser.webRequest.handlerBehaviorChanged();
-    }
+    vAPI.net.handlerBehaviorChanged();
 
     vAPI.messaging.broadcast({ what: 'userFiltersUpdated' });
 };
@@ -818,6 +816,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         staticExtFilteringEngine.freeze();
         redirectEngine.freeze();
         vAPI.net.unsuspend();
+        vAPI.net.handlerBehaviorChanged();
 
         vAPI.storage.set({ 'availableFilterLists': µb.availableFilterLists });
 
