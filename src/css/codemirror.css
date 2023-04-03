@@ -26,6 +26,12 @@
     font-size: large;
     text-shadow: none;
     }
+.CodeMirror-foldgutter-folded::after {
+    content: '\25B6';
+    }
+.CodeMirror-foldgutter-open::after {
+    content: '\25BC';
+    }
 .CodeMirror-gutters {
     background-color: var(--cm-gutter-surface);
     border-color: var(--cm-gutter-border);
