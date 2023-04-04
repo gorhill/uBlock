@@ -907,7 +907,7 @@ const gotoReport = function() {
         popupPanel[name] = !expected;
     }
     if ( hostnameToSortableTokenMap.size !== 0 ) {
-        const blockedDetails = {};
+        const network = {};
         const hostnames =
             Array.from(hostnameToSortableTokenMap.keys()).sort(hostnameCompare);
         for ( const hostname of hostnames ) {
@@ -915,13 +915,13 @@ const gotoReport = function() {
             const count = entry.counts.blocked.any;
             if ( count === 0 ) { continue; }
             const domain = entry.domain;
-            if ( blockedDetails[domain] === undefined ) {
-                blockedDetails[domain] = 0;
+            if ( network[domain] === undefined ) {
+                network[domain] = 0;
             }
-            blockedDetails[domain] += count;
+            network[domain] += count;
         }
-        if ( Object.keys(blockedDetails).length !== 0 ) {
-            popupPanel.blockedDetails = blockedDetails;
+        if ( Object.keys(network).length !== 0 ) {
+            popupPanel.network = network;
         }
     }
     messaging.send('popupPanel', {
