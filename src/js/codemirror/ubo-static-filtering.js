@@ -752,6 +752,7 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
             const marker = extractMarker(lineHandle);
             if ( error === undefined && marker ) {
                 doc.setGutterMarker(lineHandle, 'CodeMirror-lintgutter', null);
+                deleteMarker();
             } else if ( error !== undefined ) {
                 makeMarker(doc, lineHandle, marker, error);
             }
