@@ -609,6 +609,10 @@ const onMessage = function(request, sender, callback) {
         });
         return;
 
+    // https://github.com/gorhill/uBlock/commit/6efd8eb#commitcomment-107523558
+    //   Important: for whatever reason, not using `document_start` causes the
+    //   Promise returned by `tabs.executeScript()` to resolve only when the
+    //   associated tab is closed.
     case 'launchReporter': {
         const pageStore = µb.pageStoreFromTabId(request.tabId);
         if ( pageStore === null ) { break; }
@@ -619,6 +623,7 @@ const onMessage = function(request, sender, callback) {
             allFrames: true,
             file: '/js/scriptlets/cosmetic-report.js',
             matchAboutBlank: true,
+            runAt: 'document_start',
         }).then(results => {
             const filters = results.reduce((a, v) => {
                 if ( Array.isArray(v) ) { a.push(...v); }
