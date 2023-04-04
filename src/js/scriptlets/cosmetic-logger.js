@@ -269,7 +269,7 @@ const handlers = {
                 if (
                     details.action !== undefined &&
                     details.tasks === undefined &&
-                    details.action[0] === ':style'
+                    details.action[0] === 'style'
                 ) {
                     exceptionDict.set(details.selector, details.raw);
                     continue;

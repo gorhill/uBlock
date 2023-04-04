@@ -609,6 +609,31 @@ const onMessage = function(request, sender, callback) {
         });
         return;
 
+    case 'launchReporter': {
+        const pageStore = µb.pageStoreFromTabId(request.tabId);
+        if ( pageStore === null ) { break; }
+        if ( vAPI.net.hasUnprocessedRequest(request.tabId) ) {
+            request.popupPanel.hasUnprocessedRequest = true;
+        }
+        const supportURL = new URL(vAPI.getURL('support.html'));
+        supportURL.searchParams.set('pageURL', request.pageURL);
+        supportURL.searchParams.set('popupPanel', JSON.stringify(request.popupPanel));
+        vAPI.tabs.executeScript(request.tabId, {
+            allFrames: true,
+            file: '/js/scriptlets/cosmetic-report.js',
+            matchAboutBlank: true,
+        }).then(results => {
+            const filters = results.reduce((a, v) => {
+                if ( Array.isArray(v) ) { a.push(...v); }
+                return a;
+            }, []);
+            if ( filters.length !== 0 ) {
+                supportURL.searchParams.set('cosmetic', JSON.stringify(filters));
+            }
+            µb.openNewTab({ url: supportURL.href, select: true, index: -1 });
+        });
+        return;
+    }
     default:
         break;
     }
@@ -621,18 +646,6 @@ const onMessage = function(request, sender, callback) {
         const pageStore = µb.pageStoreFromTabId(request.tabId);
         const lastModified = pageStore ? pageStore.contentLastModified : 0;
         response = lastModified !== request.contentLastModified;
-        break;
-    }
-    case 'launchReporter': {
-        const pageStore = µb.pageStoreFromTabId(request.tabId);
-        if ( pageStore === null ) { break; }
-        if ( vAPI.net.hasUnprocessedRequest(request.tabId) ) {
-            request.popupPanel.hasUnprocessedRequest = true;
-        }
-        const supportURL = new URL(vAPI.getURL('support.html'));
-        supportURL.searchParams.set('pageURL', request.pageURL);
-        supportURL.searchParams.set('popupPanel', JSON.stringify(request.popupPanel));
-        µb.openNewTab({ url: supportURL.href, select: true, index: -1 });
         break;
     }
     case 'revertFirewallRules':
