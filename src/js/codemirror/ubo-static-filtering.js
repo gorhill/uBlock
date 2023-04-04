@@ -79,9 +79,6 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
                 const raw = astParser.getNodeString(currentWalkerNode);
                 const not = raw.startsWith('!');
                 const token = not ? raw.slice(1) : raw;
-                if ( preparseDirectiveTokens.has(token) === false ) {
-                    return 'error strong';
-                }
                 return not === preparseDirectiveTokens.get(token)
                     ? 'negative strong'
                     : 'positive strong';
@@ -671,38 +668,9 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
         nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
     });
 
-    let errorCount = 0;
-    let markedsetStart = 0;
-    let markedsetTimer;
-
-    const processMarkedsetAsync = doc => {
-        if ( markedsetTimer !== undefined ) { return; }
-        markedsetTimer = self.requestIdleCallback(deadline => {
-            markedsetTimer = undefined;
-            processMarkedset(doc, deadline);
-        });
-    };
-
-    const processMarkedset = (doc, deadline) => {
-        const lineCount = doc.lineCount();
-        doc.eachLine(markedsetStart, lineCount, lineHandle => {
-            const line = markedsetStart++;
-            const markers = lineHandle.gutterMarkers || null;
-            if ( markers && markers['CodeMirror-lintgutter'] ) {
-                errorCount += 1;
-            }
-            if ( (line & 0x0F) === 0 && deadline.timeRemaining() === 0 ) {
-                processMarkedsetAsync(doc);
-                return true;
-            }
-            if ( markedsetStart === lineCount ) {
-                CodeMirror.signal(doc.getEditor(), 'linterDone', { errorCount });
-            }
-        });
-    };
-
     const changeset = [];
     let changesetTimer;
+    let errorCount = 0;
 
     const addChange = (doc, change) => {
         changeset.push(change);
@@ -711,10 +679,6 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
 
     const processChangesetAsync = doc => {
         if ( changesetTimer !== undefined ) { return; }
-        if ( markedsetTimer ) {
-            self.cancelIdleCallback(markedsetTimer);
-            markedsetTimer = undefined;
-        }
         changesetTimer = self.requestIdleCallback(deadline => {
             changesetTimer = undefined;
             processChangeset(doc, deadline);
@@ -722,27 +686,26 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
     };
 
     const extractError = ( ) => {
-        if ( astParser.isComment() ) { return; }
-        if ( astParser.isFilter() === false ) { return; }
         if ( astParser.hasError() === false ) { return; }
-        let error = 'Invalid filter';
+        const error = 'Invalid filter';
+        switch ( astParser.astError ) {
+            case sfp.AST_ERROR_REGEX:
+                return `${error}: Bad regular expression`;
+            case sfp.AST_ERROR_PATTERN:
+                return `${error}: Bad pattern`;
+            case sfp.AST_ERROR_DOMAIN_NAME:
+                return `${error}: Bad domain name`;
+            case sfp.AST_ERROR_OPTION_DUPLICATE:
+                return `${error}: Duplicate filter option`;
+            case sfp.AST_ERROR_OPTION_UNKNOWN:
+                return `${error}: Unsupported filter option`;
+            case sfp.AST_ERROR_IF_TOKEN_UNKNOWN:
+                return `${error}: Unknown preparsing token`;
+            default:
+                break;
+        }
         if ( astParser.isCosmeticFilter() && astParser.result.error ) {
             return `${error}: ${astParser.result.error}`;
-        }
-        if ( astParser.astError === sfp.AST_ERROR_REGEX ) {
-            return `${error}: Bad regular expression`;
-        }
-        if ( astParser.astError === sfp.AST_ERROR_PATTERN ) {
-            return `${error}: Bad pattern`;
-        }
-        if ( astParser.astError === sfp.AST_ERROR_DOMAIN_NAME ) {
-            return `${error}: Bad domain name`;
-        }
-        if ( astParser.astError === sfp.AST_ERROR_OPTION_DUPLICATE ) {
-            return `${error}: Duplicate filter option`;
-        }
-        if ( astParser.astError === sfp.AST_ERROR_OPTION_UNKNOWN ) {
-            return `${error}: Unsupported filter option`;
         }
         return error;
     };
@@ -764,10 +727,21 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
 
     const makeMarker = (doc, lineHandle, marker, error) => {
         if ( marker === undefined ) {
-            marker = markerTemplate.cloneNode(true);
-            doc.setGutterMarker(lineHandle, 'CodeMirror-lintgutter', marker);
+            marker = addMarker(doc, lineHandle);
         }
         marker.children[0].textContent = error;
+    };
+
+    const addMarker = (doc, lineHandle) => {
+        const marker = markerTemplate.cloneNode(true);
+        doc.setGutterMarker(lineHandle, 'CodeMirror-lintgutter', marker);
+        lineHandle.on('delete', deleteMarker);
+        errorCount += 1;
+        return marker;
+    };
+
+    const deleteMarker = ( ) => {
+        errorCount -= 1;
     };
 
     const processChange = (doc, deadline, change) => {
@@ -804,9 +778,7 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
         if ( changeset.length !== 0 ) {
             return processChangesetAsync(doc);
         }
-        errorCount = 0;
-        markedsetStart = 0;
-        processMarkedsetAsync(doc);
+        CodeMirror.signal(doc.getEditor(), 'linterDone', { errorCount });
     };
 
     CodeMirror.defineInitHook(cm => {

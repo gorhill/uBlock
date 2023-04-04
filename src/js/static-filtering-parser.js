@@ -76,6 +76,7 @@ export const AST_TYPE_EXTENDED_COSMETIC             = iota++;
 export const AST_TYPE_EXTENDED_SCRIPTLET            = iota++;
 export const AST_TYPE_EXTENDED_HTML                 = iota++;
 export const AST_TYPE_EXTENDED_RESPONSEHEADER       = iota++;
+export const AST_TYPE_COMMENT_PREPARSER             = iota++;
 
 iota = 0;
 export const AST_FLAG_UNSUPPORTED                   = 1 << iota++;
@@ -97,6 +98,7 @@ export const AST_ERROR_PATTERN                      = 1 << iota++;
 export const AST_ERROR_DOMAIN_NAME                  = 1 << iota++;
 export const AST_ERROR_OPTION_DUPLICATE             = 1 << iota++;
 export const AST_ERROR_OPTION_UNKNOWN               = 1 << iota++;
+export const AST_ERROR_IF_TOKEN_UNKNOWN             = 1 << iota++;
 
 iota = 0;
 const NODE_RIGHT_INDEX                              = iota++;
@@ -551,6 +553,34 @@ export const removableHTTPHeaders = new Set([
     'refresh',
     'report-to',
     'set-cookie',
+]);
+
+export const preparserIfTokens = new Set([
+    'ext_ublock',
+    'ext_ubol',
+    'ext_devbuild',
+    'env_chromium',
+    'env_edge',
+    'env_firefox',
+    'env_legacy',
+    'env_mobile',
+    'env_mv3',
+    'env_safari',
+    'cap_html_filtering',
+    'cap_user_stylesheet',
+    'false',
+    'ext_abp',
+    'adguard',
+    'adguard_app_android',
+    'adguard_app_ios',
+    'adguard_app_mac',
+    'adguard_app_windows',
+    'adguard_ext_android_cb',
+    'adguard_ext_chromium',
+    'adguard_ext_edge',
+    'adguard_ext_firefox',
+    'adguard_ext_opera',
+    'adguard_ext_safari',
 ]);
 
 /******************************************************************************/
@@ -1049,6 +1079,7 @@ export class AstFilterParser {
     parseComment(parent) {
         const parentStr = this.getNodeString(parent);
         if ( this.rePreparseDirectiveAny.test(parentStr) ) {
+            this.astTypeFlavor = AST_TYPE_COMMENT_PREPARSER;
             return this.parsePreparseDirective(parent, parentStr);
         }
         if ( this.reURL.test(parentStr) === false ) { return 0; }
@@ -1078,14 +1109,22 @@ export class AstFilterParser {
             directiveEnd
         );
         if ( directiveEnd !== parentEnd ) {
-            const next = this.allocTypedNode(
-                s .startsWith('!#if ')
-                    ? NODE_TYPE_PREPARSE_DIRECTIVE_IF_VALUE
-                    : NODE_TYPE_PREPARSE_DIRECTIVE_VALUE,
-                directiveEnd,
-                parentEnd
-            );
+            const type = s.startsWith('!#if ')
+                ? NODE_TYPE_PREPARSE_DIRECTIVE_IF_VALUE
+                : NODE_TYPE_PREPARSE_DIRECTIVE_VALUE;
+            const next = this.allocTypedNode(type, directiveEnd, parentEnd);
             this.linkRight(head, next);
+            if ( type === NODE_TYPE_PREPARSE_DIRECTIVE_IF_VALUE ) {
+                const rawToken = this.getNodeString(next).trim();
+                const token = rawToken.charCodeAt(0) === 0x21 /* ! */
+                    ? rawToken.slice(1)
+                    : rawToken;
+                if ( preparserIfTokens.has(token) === false ) {
+                    this.addNodeFlags(next, NODE_FLAG_ERROR);
+                    this.addFlags(AST_FLAG_HAS_ERROR);
+                    this.astError = AST_ERROR_IF_TOKEN_UNKNOWN;
+                }
+            }
         }
         return head;
     }
