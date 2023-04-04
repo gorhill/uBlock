@@ -108,13 +108,11 @@
     color: var(--cm-positive);
     }
 .cm-theme-override .cm-s-default .cm-notice {
-    text-underline-position: under;
     text-decoration-color: var(--sf-notice-ink);
     text-decoration-style: solid;
     text-decoration-line: underline;
     }
 .cm-theme-override .cm-s-default .cm-unicode {
-    text-underline-position: under;
     text-decoration-color: var(--sf-unicode-ink);
     text-decoration-style: dashed;
     text-decoration-line: underline;
@@ -131,7 +129,6 @@
 .cm-theme-override .cm-s-default .cm-warning {
     background-color: var(--sf-warning-surface);
     text-decoration: underline var(--sf-warning-ink);
-    text-underline-position: under;
     }
 .cm-theme-override .cm-s-default .cm-readonly {
     color: var(--sf-readonly-ink);
