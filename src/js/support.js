@@ -151,9 +151,6 @@ function showData() {
     }
     if ( reportedPage !== null ) {
         shownData.popupPanel = reportedPage.popupPanel;
-        if ( reportedPage.cosmeticFilters ) {
-            shownData.cosmeticFilters = reportedPage.cosmeticFilters;
-        }
     }
     const text = JSON.stringify(shownData, null, 2)
         .split('\n')
@@ -200,14 +197,9 @@ const reportedPage = (( ) => {
             select.append(option);
         }
         dom.cl.add(dom.body, 'filterIssue');
-        let cosmeticFilters;
-        if ( url.searchParams.has('cosmetic') ) {
-            cosmeticFilters = JSON.parse(url.searchParams.get('cosmetic'));
-        }
         return {
             hostname: parsedURL.hostname.replace(/^(m|mobile|www)\./, ''),
             popupPanel: JSON.parse(url.searchParams.get('popupPanel')),
-            cosmeticFilters,
         };
     } catch(ex) {
     }

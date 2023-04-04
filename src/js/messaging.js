@@ -615,9 +615,6 @@ const onMessage = function(request, sender, callback) {
         if ( vAPI.net.hasUnprocessedRequest(request.tabId) ) {
             request.popupPanel.hasUnprocessedRequest = true;
         }
-        const supportURL = new URL(vAPI.getURL('support.html'));
-        supportURL.searchParams.set('pageURL', request.pageURL);
-        supportURL.searchParams.set('popupPanel', JSON.stringify(request.popupPanel));
         vAPI.tabs.executeScript(request.tabId, {
             allFrames: true,
             file: '/js/scriptlets/cosmetic-report.js',
@@ -628,8 +625,11 @@ const onMessage = function(request, sender, callback) {
                 return a;
             }, []);
             if ( filters.length !== 0 ) {
-                supportURL.searchParams.set('cosmetic', JSON.stringify(filters));
+                request.popupPanel.cosmetic = filters;
             }
+            const supportURL = new URL(vAPI.getURL('support.html'));
+            supportURL.searchParams.set('pageURL', request.pageURL);
+            supportURL.searchParams.set('popupPanel', JSON.stringify(request.popupPanel));
             µb.openNewTab({ url: supportURL.href, select: true, index: -1 });
         });
         return;
