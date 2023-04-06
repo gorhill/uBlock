@@ -291,6 +291,7 @@
     background-color: var(--surface-0);
     border: 1px solid var(--sf-error-ink);
     color: var(--ink-1);
+    filter: drop-shadow(2px 2px 4px #0008);
     left: 100%;
     padding: var(--default-gap-xsmall);
     top: -2px;
