@@ -1648,7 +1648,7 @@ export class AstFilterParser {
             this.addFlags(AST_FLAG_HAS_ERROR);
             this.astError = AST_ERROR_PATTERN;
             this.addNodeFlags(next, NODE_FLAG_ERROR);
-        } else if ( normal === '' || pattern === '*' ) {
+        } else if ( normal === '*' ) {
             this.astTypeFlavor = AST_TYPE_NETWORK_PATTERN_ANY;
         } else if ( this.reHostnameAscii.test(normal) ) {
             this.astTypeFlavor = AST_TYPE_NETWORK_PATTERN_HOSTNAME;
@@ -1680,6 +1680,7 @@ export class AstFilterParser {
     }
 
     parsePatternParts(parent, pattern) {
+        if ( pattern.length === 0 ) { return 0; }
         const parentBeg = this.nodes[parent+NODE_BEG_INDEX];
         const matches = pattern.matchAll(this.rePatternAllSpecialChars);
         const head = this.allocHeadNode();
@@ -1723,11 +1724,12 @@ export class AstFilterParser {
     //   Encode Unicode characters beyond the hostname part.
     // Prepend with '*' character to prevent the browser API from refusing to
     // punycode -- this occurs when the extracted label starts with a dash.
-    needPatternNormalization() {
-        return this.hasUppercase || this.hasUnicode;
+    needPatternNormalization(pattern) {
+        return pattern.length === 0 || this.hasUppercase || this.hasUnicode;
     }
 
     normalizePattern(pattern) {
+        if ( pattern.length === 0 ) { return '*'; }
         if ( this.reHasInvalidChar.test(pattern) ) { return; }
         let normal = pattern.toLowerCase();
         if ( this.hasUnicode === false ) { return normal; }
