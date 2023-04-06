@@ -152,12 +152,12 @@ function showData() {
     if ( reportedPage !== null ) {
         shownData.popupPanel = reportedPage.popupPanel;
     }
-    const text = JSON.stringify(shownData, null, 2)
+    const text = JSON.stringify(shownData, null, 1)
         .split('\n')
         .slice(1, -1)
         .map(v => {
             return v
-                .replace(/^( *?)  "/, '$1')
+                .replace(/^( *?) "/, '$1')
                 .replace(/^( *.*[^\\])(?:": "|": \{$|": \[$|": )/, '$1: ')
                 .replace(/(?:",?|\},?|\],?|,)$/, '');
         })

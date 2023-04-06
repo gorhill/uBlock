@@ -23,8 +23,9 @@
     }
 .CodeMirror-foldmarker {
     color: var(--cm-foldmarker-ink);
-    font-size: large;
-    text-shadow: none;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-weight: bold;
     }
 .CodeMirror-foldgutter-folded::after {
     content: '\25B6';
@@ -213,7 +214,7 @@
     display: none;
     flex-grow: 1;
     }
-.cm-linter-widget.hasErrors {
+.cm-linter-widget:not([data-lint="0"]) {
     display: inline-flex;
     }
 .cm-linter-widget .cm-linter-widget-count {
@@ -273,25 +274,44 @@
     }
 
 .CodeMirror-lintmarker {
-    background-color: var(--sf-error-ink);
     height: calc(var(--font-size) - 2px);
     margin-top: 1px;
     position: relative;
     }
-.CodeMirror-lintmarker > span {
+.CodeMirror-lintmarker > * {
+    position: absolute;
+    }
+.CodeMirror-lintmarker[data-lint="error"] {
+    background-color: var(--sf-error-ink);
+    }
+.CodeMirror-lintmarker[data-lint="error"] .msg {
     display: none;
     }
-.CodeMirror-lintmarker > span {
+.CodeMirror-lintmarker[data-lint="error"] .msg {
     background-color: var(--surface-0);
     border: 1px solid var(--sf-error-ink);
     color: var(--ink-1);
     left: 100%;
     padding: var(--default-gap-xsmall);
-    position: absolute;
     top: -2px;
     white-space: pre;
     }
-.CodeMirror-lintmarker:hover > span,
-.CodeMirror-lintmarker > span:hover {
+.CodeMirror-lintmarker svg {
+    height: 70%;
+    left: 15%;
+    top: 15%;
+    width: 70%;
+    }
+.CodeMirror-lintmarker[data-fold="start"] {
+    fill: var(--cm-foldmarker-ink);
+    }
+.CodeMirror-lintmarker[data-fold="start"].folded svg {
+    transform: rotate(-90deg);
+    }
+.CodeMirror-lintmarker[data-fold="end"] {
+    fill: var(--border-2);
+    }
+.CodeMirror-lintmarker[data-lint="error"]:hover > span,
+.CodeMirror-lintmarker[data-lint="error"] > span:hover {
     display: initial;
     }

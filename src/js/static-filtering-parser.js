@@ -727,6 +727,7 @@ export class AstFilterParser {
         this.astType = AST_TYPE_NONE;
         this.astTypeFlavor = AST_TYPE_NONE;
         this.astFlags = 0;
+        this.astError = 0;
         this.nodeTypeRegister = [];
         this.nodeTypeRegisterPtr = 0;
         this.nodeTypeLookupTable = new Uint32Array(NODE_TYPE_COUNT);
@@ -1068,7 +1069,7 @@ export class AstFilterParser {
         const head = this.allocTypedNode(NODE_TYPE_NET_RAW, parentBeg, tailStart);
         if ( this.linkDown(head, this.parseNet(head)) === 0 ) {
             this.astType = AST_TYPE_UNKNOWN;
-            this.addFlags(AST_FLAG_UNSUPPORTED);
+            this.addFlags(AST_FLAG_UNSUPPORTED | AST_FLAG_HAS_ERROR);
         }
         if ( tail !== 0 ) {
             this.linkRight(head, tail);
@@ -2085,7 +2086,7 @@ export class AstFilterParser {
         if ( c === 0x40 /* @ */ ) {
             return AST_FLAG_IS_EXCEPTION | this.extFlagsFromAnchor(anchorBeg+1);
         }
-        return AST_FLAG_UNSUPPORTED;
+        return AST_FLAG_UNSUPPORTED | AST_FLAG_HAS_ERROR;
     }
 
     validateExt() {
@@ -2393,6 +2394,10 @@ export class AstFilterParser {
 
     hasError() {
         return (this.astFlags & AST_FLAG_HAS_ERROR) !== 0;
+    }
+
+    isUnsupported() {
+        return (this.astFlags & AST_FLAG_UNSUPPORTED) !== 0;
     }
 
     hasOptions() {
@@ -3015,7 +3020,7 @@ class ExtSelectorCompiler {
         this.reIsRelativeSelector = /^\s*[+>~]/;
         this.reExtendedSyntax = /\[-(?:abp|ext)-[a-z-]+=(['"])(?:.+?)(?:\1)\]/;
         this.reExtendedSyntaxReplacer = /\[-(?:abp|ext)-([a-z-]+)=(['"])(.+?)\2\]/g;
-        this.abpProceduralOpReplacer = /:-abp-(?:contains|has)\(/g;
+        this.abpProceduralOpReplacer = /:-abp-(?:[a-z]+)\(/g;
         this.nativeCssHas = instanceOptions.nativeCssHas === true;
         // https://www.w3.org/TR/css-syntax-3/#typedef-ident-token
         this.reInvalidIdentifier = /^\d/;
@@ -3048,15 +3053,14 @@ class ExtSelectorCompiler {
                     return `:${op}(${a3})`;
                 });
             } else {
+                let asProcedural = false;
                 raw = raw.replace(this.abpProceduralOpReplacer, match => {
-                    if ( match === ':-abp-contains(' ) {
-                        return ':has-text(';
-                    } else if ( match === ':-abp-has(' ) {
-                        this.asProcedural = false;
-                        return ':has(';
-                    }
+                    if ( match === ':-abp-contains(' ) { return ':has-text('; } 
+                    if ( match === ':-abp-has(' ) { return ':has('; }
+                    asProcedural = true;
                     return match;
                 });
+                this.asProcedural = asProcedural;
             }
         }
 
@@ -3068,9 +3072,10 @@ class ExtSelectorCompiler {
             return true;
         }
 
+        this.error = undefined;
         out.compiled = this.compileSelector(raw);
         if ( out.compiled === undefined ) {
-            out.error = this.error || undefined;
+            out.error = this.error;
             return false;
         }
 
@@ -3116,7 +3121,13 @@ class ExtSelectorCompiler {
                 parseValue: false,
             });
         } catch(reason) {
-            this.error = reason && reason.message || undefined;
+            const lines = [ reason.message ];
+            const extra = reason.sourceFragment().split('\n');
+            if ( extra.length !== 0 ) { lines.push(''); }
+            const match = /^[^|]+\|/.exec(extra[0]);
+            const beg = match !== null ? match[0].length : 0;
+            lines.push(...extra.map(a => a.slice(beg)));
+            this.error = lines.join('\n');
             return;
         }
         const parts = [];
@@ -3177,6 +3188,7 @@ class ExtSelectorCompiler {
         }
         if ( data.type !== 'PseudoClassSelector' ) { return; }
         if ( data.name.startsWith('-abp-') && this.asProcedural === false ) {
+            this.error = `${data.name} requires '#?#' separator syntax`;
             return;
         }
         // Post-analysis, mind:
@@ -3189,6 +3201,7 @@ class ExtSelectorCompiler {
             data.type = 'ActionSelector';
         } else if ( data.name.startsWith('-abp-') ) {
             data.type = 'Error';
+            this.error = `${data.name} is not supported`;
             return;
         }
         if ( this.maybeProceduralOperatorNames.has(data.name) === false ) {
@@ -3196,6 +3209,7 @@ class ExtSelectorCompiler {
         }
         if ( this.astHasType(args, 'ActionSelector') ) {
             data.type = 'Error';
+            this.error = 'invalid use of action operator';
             return;
         }
         if ( this.astHasType(args, 'ProceduralSelector') ) {

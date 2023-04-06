@@ -53,9 +53,8 @@ import './codemirror/ubo-static-filtering.js';
         autofocus: true,
         foldGutter: true,
         gutters: [
-            'CodeMirror-foldgutter',
             'CodeMirror-linenumbers',
-            { className: 'CodeMirror-lintgutter', style: 'width: 10px' },
+            { className: 'CodeMirror-lintgutter', style: 'width: 11px' },
         ],
         lineNumbers: true,
         lineWrapping: true,

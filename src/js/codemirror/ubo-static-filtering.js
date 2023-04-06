@@ -26,6 +26,7 @@
 /******************************************************************************/
 
 import * as sfp from '../static-filtering-parser.js';
+import { dom, qs$ } from '../dom.js';
 
 /******************************************************************************/
 
@@ -670,91 +671,189 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
 
     const changeset = [];
     let changesetTimer;
+
+    const includeset = new Set();
     let errorCount = 0;
 
-    const addChange = (doc, change) => {
-        changeset.push(change);
-        processChangesetAsync(doc);
-    };
-
-    const processChangesetAsync = doc => {
-        if ( changesetTimer !== undefined ) { return; }
-        changesetTimer = self.requestIdleCallback(deadline => {
-            changesetTimer = undefined;
-            processChangeset(doc, deadline);
-        });
-    };
-
-    const extractError = ( ) => {
-        if ( astParser.hasError() === false ) { return; }
-        const error = 'Invalid filter';
-        switch ( astParser.astError ) {
-            case sfp.AST_ERROR_REGEX:
-                return `${error}: Bad regular expression`;
-            case sfp.AST_ERROR_PATTERN:
-                return `${error}: Bad pattern`;
-            case sfp.AST_ERROR_DOMAIN_NAME:
-                return `${error}: Bad domain name`;
-            case sfp.AST_ERROR_OPTION_DUPLICATE:
-                return `${error}: Duplicate filter option`;
-            case sfp.AST_ERROR_OPTION_UNKNOWN:
-                return `${error}: Unsupported filter option`;
-            case sfp.AST_ERROR_IF_TOKEN_UNKNOWN:
-                return `${error}: Unknown preparsing token`;
-            default:
-                break;
+    const extractMarkerDetails = (doc, lineHandle) => {
+        if ( astParser.isUnsupported() ) {
+            return { value: 'error', msg: 'Unsupported filter syntax' };
         }
-        if ( astParser.isCosmeticFilter() && astParser.result.error ) {
-            return `${error}: ${astParser.result.error}`;
+        if ( astParser.hasError() ) {
+            let msg = 'Invalid filter';
+            switch ( astParser.astError ) {
+                case sfp.AST_ERROR_UNSUPPORTED:
+                    msg = `${msg}: Unsupported filter syntax`;
+                    break;
+                case sfp.AST_ERROR_REGEX:
+                    msg = `${msg}: Bad regular expression`;
+                    break;
+                case sfp.AST_ERROR_PATTERN:
+                    msg = `${msg}: Bad pattern`;
+                    break;
+                case sfp.AST_ERROR_DOMAIN_NAME:
+                    msg = `${msg}: Bad domain name`;
+                    break;
+                case sfp.AST_ERROR_OPTION_DUPLICATE:
+                    msg = `${msg}: Duplicate filter option`;
+                    break;
+                case sfp.AST_ERROR_OPTION_UNKNOWN:
+                    msg = `${msg}: Unsupported filter option`;
+                    break;
+                case sfp.AST_ERROR_IF_TOKEN_UNKNOWN:
+                    msg = `${msg}: Unknown preparsing token`;
+                    break;
+                default:
+                    if ( astParser.isCosmeticFilter() && astParser.result.error ) {
+                        msg = `${msg}: ${astParser.result.error}`;
+                    }
+                    break;
+            }
+            return { value: 'error', msg };
         }
-        return error;
+        if ( astParser.astType !== sfp.AST_TYPE_COMMENT ) { return; }
+        if ( astParser.astTypeFlavor !== sfp.AST_TYPE_COMMENT_PREPARSER ) {
+            if ( astParser.raw.startsWith('! <<<<<<<< ') === false ) { return; }
+            for ( const include of includeset ) {
+                if ( astParser.raw.endsWith(include) === false ) { continue; }
+                includeset.delete(include);
+                return { value: 'include-end' };
+            }
+            return;
+        }
+        if ( /^\s*!#if \S+/.test(astParser.raw) ) {
+            return { value: 'if-start' };
+        }
+        if ( /^\s*!#endif\b/.test(astParser.raw) ) {
+            return { value: 'if-end' };
+        }
+        const match = /^\s*!#include\s*(\S+)/.exec(astParser.raw);
+        if ( match === null ) { return; }
+        const nextLineHandle = doc.getLineHandle(lineHandle.lineNo() + 1);
+        if ( nextLineHandle === undefined ) { return; }
+        if ( nextLineHandle.text.startsWith('! >>>>>>>> ') === false ) { return; }
+        const includeToken = `/${match[1]}`;
+        if ( nextLineHandle.text.endsWith(includeToken) === false ) { return; }
+        includeset.add(includeToken);
+        return { value: 'include-start' };
     };
 
     const extractMarker = lineHandle => {
         const markers = lineHandle.gutterMarkers || null;
-        if ( markers === null ) { return; }
-        return markers['CodeMirror-lintgutter'] || undefined;
+        return markers !== null
+            ? markers['CodeMirror-lintgutter'] || null
+            : null;
     };
 
-    const markerTemplate = (( ) => {
-        const marker = document.createElement('div');
-        marker.classList.add('CodeMirror-lintmarker');
-        marker.textContent = '\xA0';
-        const info = document.createElement('span');
-        marker.append(info);
-        return marker;
-    })();
+    const markerTemplates = {
+        'error': {
+            node: null,
+            html: [
+                '<div class="CodeMirror-lintmarker" data-lint="error">&nbsp;',
+                  '<span class="msg"></span>',
+                '</div>',
+            ],
+        },
+        'if-start': {
+            node: null,
+            html: [
+                '<div class="CodeMirror-lintmarker" data-lint="if" data-fold="start">&nbsp;',
+                  '<svg viewBox="0 0 100 100">',
+                    '<polygon points="0,0 100,0 50,100" />',
+                  '</svg>',
+                '</div>',
+            ],
+        },
+        'if-end': {
+            node: null,
+            html: [
+                '<div class="CodeMirror-lintmarker" data-lint="if" data-fold="end">&nbsp;',
+                  '<svg viewBox="0 0 100 100">',
+                    '<polygon points="50,0 100,100 0,100" />',
+                  '</svg>',
+                '</div>',
+            ],
+        },
+        'include-start': {
+            node: null,
+            html: [
+                '<div class="CodeMirror-lintmarker" data-lint="include" data-fold="start">&nbsp;',
+                  '<svg viewBox="0 0 100 100">',
+                    '<polygon points="0,0 100,0 50,100" />',
+                  '</svg>',
+                '</div>',
+            ],
+        },
+        'include-end': {
+            node: null,
+            html: [
+                '<div class="CodeMirror-lintmarker" data-lint="include" data-fold="end">&nbsp;',
+                  '<svg viewBox="0 0 100 100">',
+                    '<polygon points="50,0 100,100 0,100" />',
+                  '</svg>',
+                '</div>',
+            ],
+        },
+    };
 
-    const makeMarker = (doc, lineHandle, marker, error) => {
-        if ( marker === undefined ) {
-            marker = addMarker(doc, lineHandle);
+    const markerFromTemplate = which => {
+        const template = markerTemplates[which];
+        if ( template.node === null ) {
+            const domParser = new DOMParser();
+            const doc = domParser.parseFromString(template.html.join(''), 'text/html');
+            template.node = document.adoptNode(qs$(doc, '.CodeMirror-lintmarker'));
         }
-        marker.children[0].textContent = error;
+        return template.node.cloneNode(true);
     };
 
-    const addMarker = (doc, lineHandle) => {
-        const marker = markerTemplate.cloneNode(true);
-        doc.setGutterMarker(lineHandle, 'CodeMirror-lintgutter', marker);
-        lineHandle.on('delete', deleteMarker);
-        errorCount += 1;
-        return marker;
+    const addMarker = (doc, lineHandle, marker, details) => {
+        if ( marker !== null && marker.dataset.lint !== details.value ) {
+            doc.setGutterMarker(lineHandle, 'CodeMirror-lintgutter', null);
+            if ( marker.dataset.lint === 'error' ) {
+                errorCount -= 1;
+            }
+            marker = null;
+        }
+        if ( marker === null ) {
+            marker = markerFromTemplate(details.value);
+            doc.setGutterMarker(lineHandle, 'CodeMirror-lintgutter', marker);
+            if ( details.value === 'error' ) {
+                errorCount += 1;
+            }
+        }
+        const msgElem = qs$(marker, '.msg');
+        if ( msgElem === null ) { return; }
+        msgElem.textContent = details.msg || '';
     };
 
-    const deleteMarker = ( ) => {
-        errorCount -= 1;
+    const removeMarker = (doc, lineHandle, marker) => {
+        doc.setGutterMarker(lineHandle, 'CodeMirror-lintgutter', null);
+        if ( marker.dataset.lint === 'error' ) {
+            errorCount -= 1;
+        }
     };
 
-    const processChange = (doc, deadline, change) => {
+    const processDeletion = (doc, change) => {
+        let { from, to } = change;
+        doc.eachLine(from.line, to.line, lineHandle => {
+            const marker = extractMarker(lineHandle);
+            if ( marker === null ) { return; }
+            if ( marker.dataset.lint === 'error' ) {
+                errorCount -= 1;
+            }
+        });
+    };
+
+    const processInsertion = (doc, deadline, change) => {
         let { from, to } = change;
         doc.eachLine(from, to, lineHandle => {
             astParser.parse(lineHandle.text);
-            const error = extractError();
+            const markerDetails = extractMarkerDetails(doc, lineHandle);
             const marker = extractMarker(lineHandle);
-            if ( error === undefined && marker ) {
-                doc.setGutterMarker(lineHandle, 'CodeMirror-lintgutter', null);
-                deleteMarker();
-            } else if ( error !== undefined ) {
-                makeMarker(doc, lineHandle, marker, error);
+            if ( markerDetails === undefined && marker !== null ) {
+                removeMarker(doc, lineHandle, marker);
+            } else if ( markerDetails !== undefined ) {
+                addMarker(doc, lineHandle, marker, markerDetails);
             }
             from += 1;
             if ( (from & 0x0F) !== 0 ) { return; }
@@ -770,7 +869,7 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
         const cm = doc.getEditor();
         cm.startOperation();
         while ( changeset.length !== 0 ) {
-            const change = processChange(doc, deadline, changeset.shift());
+            const change = processInsertion(doc, deadline, changeset.shift());
             if ( change === undefined ) { continue; }
             changeset.unshift(change);
             break;
@@ -779,17 +878,120 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
         if ( changeset.length !== 0 ) {
             return processChangesetAsync(doc);
         }
+        includeset.clear();
         CodeMirror.signal(doc.getEditor(), 'linterDone', { errorCount });
     };
 
-    CodeMirror.defineInitHook(cm => {
-        cm.on('changes', function(cm, changes) {
-            const doc = cm.getDoc();
-            for ( const change of changes ) {
-                const from = change.from.line;
-                const to = from + change.text.length;
-                addChange(doc, { from, to });
+    const processChangesetAsync = doc => {
+        if ( changesetTimer !== undefined ) { return; }
+        changesetTimer = self.requestIdleCallback(deadline => {
+            changesetTimer = undefined;
+            processChangeset(doc, deadline);
+        });
+    };
+
+    const onChanges = (cm, changes) => {
+        const doc = cm.getDoc();
+        for ( const change of changes ) {
+            const from = change.from.line;
+            const to = from + change.text.length;
+            changeset.push({ from, to });
+            processChangesetAsync(doc);
+        }
+    };
+
+    const onBeforeChanges = (cm, change) => {
+        const doc = cm.getDoc();
+        processDeletion(doc, change);
+    };
+
+    const foldRangeFinder = (cm, from) => {
+        const lineNo = from.line;
+        const lineHandle = cm.getDoc().getLineHandle(lineNo);
+        const marker = extractMarker(lineHandle);
+        if ( marker === null ) { return; }
+        if ( marker.dataset.fold === undefined ) { return; }
+        const foldName = marker.dataset.lint;
+        from.ch = lineHandle.text.length;
+        const to = { line: 0, ch: 0 };
+        const doc = cm.getDoc();
+        let depth = 0;
+        doc.eachLine(from.line, doc.lineCount(), lineHandle => {
+            const marker = extractMarker(lineHandle);
+            if ( marker === null ) { return; }
+            if ( marker.dataset.lint === foldName && marker.dataset.fold === 'start' ) {
+                depth += 1;
+                return;
             }
+            if ( marker.dataset.lint !== foldName ) { return; }
+            if ( marker.dataset.fold !== 'end' ) { return; }
+            depth -= 1;
+            if ( depth !== 0 ) { return; }
+            to.line = lineHandle.lineNo();
+            return true;
+        });
+        return { from, to };
+    };
+
+    const onGutterClick = (cm, lineNo, gutterId, ev) => {
+        if ( ev.button !== 0 ) { return; }
+        if ( gutterId !== 'CodeMirror-lintgutter' ) { return; }
+        const doc = cm.getDoc();
+        const lineHandle = doc.getLineHandle(lineNo);
+        const marker = extractMarker(lineHandle);
+        if ( marker === null ) { return; }
+        if ( marker.dataset.fold === 'start' ) {
+            if ( ev.ctrlKey ) {
+                if ( dom.cl.has(marker, 'folded') ) {
+                    CodeMirror.commands.unfoldAll(cm);
+                } else {
+                    CodeMirror.commands.foldAll(cm);
+                }
+                doc.setCursor(lineNo);
+                return;
+            }
+            cm.foldCode(lineNo, {
+                widget: '\u00A0\u22EF\u00A0',
+                rangeFinder: foldRangeFinder,
+            });
+            return;
+        }
+        if ( marker.dataset.fold === 'end' ) {
+            let depth = 1;
+            let lineNo = lineHandle.lineNo();
+            while ( lineNo-- ) {
+                const prevLineHandle = doc.getLineHandle(lineNo);
+                const markerFrom = extractMarker(prevLineHandle);
+                if ( markerFrom === null ) { continue; }
+                if ( markerFrom.dataset.fold === 'end' ) {
+                    depth += 1;
+                } else if ( markerFrom.dataset.fold === 'start' ) {
+                    depth -= 1;
+                    if ( depth === 0 ) {
+                        doc.setCursor(lineNo);
+                        break;
+                    }
+                }
+            }
+            return;
+        }
+    };
+
+    CodeMirror.defineInitHook(cm => {
+        cm.on('changes', onChanges);
+        cm.on('beforeChange', onBeforeChanges);
+        cm.on('gutterClick', onGutterClick);
+        cm.on('fold', function(cm, from) {
+            const doc = cm.getDoc();
+            const lineHandle = doc.getLineHandle(from.line);
+            const marker = extractMarker(lineHandle);
+            dom.cl.add(marker, 'folded');
+        });
+        cm.on('unfold', function(cm, from) {
+            const doc = cm.getDoc();
+            const lineHandle = doc.getLineHandle(from.line);
+            const marker = extractMarker(lineHandle);
+            dom.cl.remove(marker, 'folded');
         });
     });
 }

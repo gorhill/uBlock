@@ -320,6 +320,9 @@ body.mobile.no-tooltips .toolRibbon .tool {
     border-bottom: 1px dotted #ddd;
     padding: 0.25em;
     }
+#firewall > section .filterExpressions div:last-of-type {
+    border-bottom: 0;
+    }
 #firewall > section .filterExpressions span {
     cursor: default;
     display: inline-flex;
