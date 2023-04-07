@@ -15,11 +15,11 @@ import zipfile
 from distutils.version import StrictVersion
 from string import Template
 
-# - Download target (raw) uBOLite_*.mv3.zip from GitHub
+# - Download target (raw) uBOLite_*.chromium.mv3.zip from GitHub
 #   - This is referred to as "raw" package
 #   - This will fail if not a dev build
-# - Upload uBOLite_*.mv3.zip to Chrome store
-# - Publish uBOLite_*.mv3.zip to Chrome store
+# - Upload uBOLite_*.chromium.mv3.zip to Chrome store
+# - Publish uBOLite_*.chromium.mv3.zip to Chrome store
 
 # Find path to project root
 projdir = os.path.split(os.path.abspath(__file__))[0]
@@ -93,10 +93,10 @@ release_info = response.json()
 # Extract URL to raw package from metadata
 #
 
-# Find url for uBOLite_*.mv3.zip
+# Find url for uBOLite_*.chromium.mv3.zip
 raw_zip_url = ''
 for asset in release_info['assets']:
-    if re.search('uBOLite_\d+.\d+.\d+.\d+.mv3.zip', asset['name']):
+    if re.search('uBOLite_\d+.\d+.\d+.\d+.chromium.mv3.zip', asset['name']):
         raw_zip_url = asset['url']
         raw_zip_filename = asset['name']
         raw_zip_filepath = os.path.join(tmpdir.name, raw_zip_filename)
