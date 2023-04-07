@@ -55,10 +55,10 @@ ext_version = match.group(1);
 
 extension_id = 'uBOLite@raymondhill.net'
 tmpdir = tempfile.TemporaryDirectory()
-raw_xpi_filename = 'uBOLite_' + tag_version + '.firefox.mv3.xpi'
+raw_xpi_filename = tag_version + '.firefox.mv3.xpi'
 raw_xpi_filepath = os.path.join(tmpdir.name, raw_xpi_filename)
 unsigned_xpi_filepath = os.path.join(tmpdir.name, 'uBOLite.firefox.unsigned.xpi')
-signed_xpi_filename = 'uBlock0_' + tag_version + '.firefox.signed.mv3.xpi'
+signed_xpi_filename = tag_version + '.firefox.signed.mv3.xpi'
 signed_xpi_filepath = os.path.join(tmpdir.name, signed_xpi_filename)
 github_owner = 'gorhill'
 github_repo = 'uBlock'
