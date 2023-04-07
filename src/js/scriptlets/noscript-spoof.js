@@ -33,7 +33,7 @@
     const noscripts = document.querySelectorAll('noscript');
     if ( noscripts.length === 0 ) { return; }
 
-    const reMetaContent = /^\s*(\d+)\s*;\s*url=(['"]?)([^'"]+)\2/i;
+    const reMetaContent = /^\s*(\d+)\s*;\s*url=(?:"([^"]+)"|'([^']+)'|(.+))/i;
     const reSafeURL = /^https?:\/\//;
     let redirectTimer;
 
@@ -41,15 +41,14 @@
         const meta = root.querySelector('meta[http-equiv="refresh"][content]');
         if ( meta === null ) { return; }
         const match = reMetaContent.exec(meta.getAttribute('content'));
-        if ( match === null || match[3].trim() === '' ) { return; }
-
+        if ( match === null ) { return; }
+        const refreshURL = (match[2] || match[3] || match[4] || '').trim();
         let url;
         try {
-            url = new URL(match[3], document.baseURI);
+            url = new URL(refreshURL, document.baseURI);
         } catch(ex) {
             return;
         }
-
         if ( reSafeURL.test(url.href) === false ) { return; }
         redirectTimer = setTimeout(( ) => {
                 location.assign(url.href);
