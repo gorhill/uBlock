@@ -95,8 +95,12 @@ echo "*** uBOLite.mv3: extension ready"
 echo "Extension location: $DES/"
 
 if [ "$FULL" = "yes" ]; then
+    EXTENSION="zip"
+    if [ "$PLATFORM" = "firefox" ]; then
+        EXTENSION="xpi"
+    fi
     echo "*** uBOLite.mv3: Creating publishable package..."
-    PACKAGENAME="uBOLite_$(jq -r .version $DES/manifest.json).$PLATFORM.mv3.zip"
+    PACKAGENAME="uBOLite_$(jq -r .version $DES/manifest.json).$PLATFORM.mv3.$EXTENSION"
     TMPDIR=$(mktemp -d)
     mkdir -p $TMPDIR
     cp -R $DES/* $TMPDIR/
