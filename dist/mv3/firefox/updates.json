@@ -1,0 +1,13 @@
+{
+ "addons": {
+  "uBOLite@raymondhill.net": {
+   "updates": [
+    {
+     "version": "0.1.23.4076",
+     "browser_specific_settings": { "gecko": { "strict_min_version": "113a1" } },
+     "update_link": "https://github.com/gorhill/uBlock/releases/download/1.48.5b5/uBlock0_1.48.5b5.firefox.signed.xpi"
+    }
+   ]
+  }
+ }
+}
