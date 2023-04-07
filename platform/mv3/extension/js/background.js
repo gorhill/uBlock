@@ -169,7 +169,9 @@ async function onPermissionsRemoved() {
 
 function onMessage(request, sender, callback) {
 
-    if ( sender.origin !== UBOL_ORIGIN ) { return; }
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/MessageSender
+    //   Firefox API does not set `sender.origin`
+    if ( sender.origin !== undefined && sender.origin !== UBOL_ORIGIN ) { return; }
 
     switch ( request.what ) {
 
@@ -304,7 +306,11 @@ async function start() {
         console.log(`Available static rule count: ${count}`);
     });
 
-    dnr.setExtensionActionOptions({ displayActionCountAsBadgeText: true });
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/declarativeNetRequest
+    //   Firefox API does not support `dnr.setExtensionActionOptions`
+    if ( dnr.setExtensionActionOptions ) {
+        dnr.setExtensionActionOptions({ displayActionCountAsBadgeText: true });
+    }
 }
 
 (async ( ) => {

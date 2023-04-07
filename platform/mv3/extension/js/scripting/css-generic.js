@@ -30,9 +30,9 @@
 (function uBOL_cssGeneric() {
 
 const genericSelectorMap = self.genericSelectorMap || new Map();
-if ( genericSelectorMap.size === 0 ) { return; }
+delete self.genericSelectorMap;
 
-self.genericSelectorMap = undefined;
+if ( genericSelectorMap.size === 0 ) { return; }
 
 /******************************************************************************/
 

@@ -353,6 +353,10 @@ function registerDeclarative(context, declarativeDetails) {
 /******************************************************************************/
 
 function registerScriptlet(context, scriptletDetails) {
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=1736575
+    //   `MAIN` world not yet supported in Firefox
+    if ( navigator && navigator.product === 'Gecko' ) { return; }
+
     const { before, filteringModeDetails, rulesetsDetails } = context;
 
     const hasBroadHostPermission =
@@ -427,6 +431,10 @@ function registerScriptlet(context, scriptletDetails) {
 /******************************************************************************/
 
 function registerScriptletEntity(context) {
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=1736575
+    //   `MAIN` world not yet supported in Firefox
+    if ( navigator && navigator.product === 'Gecko' ) { return; }
+
     const { before, filteringModeDetails, rulesetsDetails } = context;
 
     const js = [];

@@ -34,6 +34,7 @@
 // $rulesetId$
 
 const specificEntityImports = self.specificEntityImports || [];
+delete self.specificEntityImports;
 
 /******************************************************************************/
 
@@ -64,8 +65,6 @@ for ( let i = 0; i < hnpartslen; i++ ) {
         );
     }
 }
-
-self.specificEntityImports = undefined;
 
 if ( selectors.length === 0 ) { return; }
 

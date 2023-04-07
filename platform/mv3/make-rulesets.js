@@ -1418,11 +1418,15 @@ async function main() {
     // Patch declarative_net_request key
     manifest.declarative_net_request = { rule_resources: ruleResources };
     // Patch web_accessible_resources key
-    manifest.web_accessible_resources = [{
+    const web_accessible_resources = {
         resources: Array.from(requiredRedirectResources).map(path => `/${path}`),
         matches: [ '<all_urls>' ],
-        use_dynamic_url: true,
-    }];
+    };
+    if ( commandLineArgs.get('platform') === 'chromium' ) {
+        web_accessible_resources.use_dynamic_url = true;
+    }
+    manifest.web_accessible_resources = [ web_accessible_resources ];
+
     // Patch version key
     const now = new Date();
     const yearPart = now.getUTCFullYear() - 2000;

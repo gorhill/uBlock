@@ -5,7 +5,7 @@ run_options := $(filter-out $@,$(MAKECMDGOALS))
 	compare maxcost medcost mincost modifiers record wasm
 
 sources := $(wildcard assets/* assets/*/* dist/version src/* src/*/* src/*/*/* src/*/*/*/*)
-platform := $(wildcard platform/* platform/*/* platform/*/*/* platform/*/*/*/*)
+platform := $(wildcard platform/* platform/*/* platform/*/*/* platform/*/*/*/* platform/*/*/*/*/*)
 assets := dist/build/uAssets
 
 all: chromium firefox npm
@@ -55,8 +55,11 @@ dig: dist/build/uBlock0.dig
 dig-snfe: dig
 	cd dist/build/uBlock0.dig && npm run snfe $(run_options)
 
-mv3: tools/make-mv3.sh $(sources) $(platform)
-	tools/make-mv3.sh
+mv3-chromium: tools/make-mv3.sh $(sources) $(platform)
+	tools/make-mv3.sh chromium
+
+mv3-firefox: tools/make-mv3.sh $(sources) $(platform)
+	tools/make-mv3.sh firefox
 
 mv3-quick: tools/make-mv3.sh $(sources) $(platform)
 	tools/make-mv3.sh quick

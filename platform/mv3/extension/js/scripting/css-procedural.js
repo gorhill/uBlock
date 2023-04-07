@@ -659,6 +659,7 @@ class ProceduralFilterer {
 /******************************************************************************/
 
 const proceduralImports = self.proceduralImports || [];
+delete self.proceduralImports;
 
 const lookupSelectors = (hn, out) => {
     for ( const { argsList, hostnamesMap } of proceduralImports ) {

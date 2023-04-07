@@ -32,6 +32,7 @@
 /******************************************************************************/
 
 const declarativeImports = self.declarativeImports || [];
+delete self.declarativeImports;
 
 const lookupSelectors = (hn, out) => {
     for ( const { argsList, hostnamesMap } of declarativeImports ) {
