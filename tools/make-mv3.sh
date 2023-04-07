@@ -14,6 +14,10 @@ for i in "$@"; do
       QUICK="yes"
       shift # past argument=value
       ;;
+    full)
+      FULL="yes"
+      shift # past argument=value
+      ;;
     firefox)
       PLATFORM="firefox"
       shift # past argument=value
@@ -90,9 +94,9 @@ fi
 echo "*** uBOLite.mv3: extension ready"
 echo "Extension location: $DES/"
 
-if [ "$1" = "full" ]; then
-    echo "*** uBOLite.mv3: Creating webstore package..."
-    PACKAGENAME=uBOLite_$(jq -r .version $DES/manifest.json).mv3.zip
+if [ "$FULL" = "yes" ]; then
+    echo "*** uBOLite.mv3: Creating publishable package..."
+    PACKAGENAME="uBOLite_$(jq -r .version $DES/manifest.json).$PLATFORM.mv3.zip"
     TMPDIR=$(mktemp -d)
     mkdir -p $TMPDIR
     cp -R $DES/* $TMPDIR/
