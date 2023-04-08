@@ -1276,35 +1276,17 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         return false;
     };
 
-    let createTimer;
-    let destroyTimer;
-
     const destroy = function() {
-        io.remove(/^selfie\//);
-        µb.selfieIsInvalid = true;
-        createTimer = vAPI.setTimeout(( ) => {
-            createTimer = undefined;
-            create();
-        }, µb.hiddenSettings.selfieAfter * 60000);
-    };
-
-    const destroyAsync = function() {
-        if ( destroyTimer !== undefined ) { return; }
-        if ( createTimer !== undefined ) {
-            clearTimeout(createTimer);
-            createTimer = undefined;
+        if ( µb.selfieIsInvalid === false ) {
+            io.remove(/^selfie\//);
+            µb.selfieIsInvalid = true;
         }
-        destroyTimer = vAPI.setTimeout(
-            ( ) => {
-                destroyTimer = undefined;
-                destroy();
-            },
-            1019
-        );
-        µb.selfieIsInvalid = true;
+        createAlarm.offon(µb.hiddenSettings.selfieAfter);
     };
 
-    µb.selfieManager = { load, destroy: destroyAsync };
+    const createAlarm = vAPI.alarms.create(create);
+
+    µb.selfieManager = { load, destroy };
 }
 
 /******************************************************************************/
