@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Um bloqueador de conteúdo leve, experimental e sem uso permissões - bloqueie anúncios, rastreadores, mineradores e muito mais [...]",
+    "message": "Um bloqueador de conteúdo experimental e de livre uso. Bloqueia instantaneamente propagandas, rastreadores, mineradores e mais, assim que instalado.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {

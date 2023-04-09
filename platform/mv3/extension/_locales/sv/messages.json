@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Pålitliga webbplatser",
+    "message": "Betrodda webbplatser",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -72,7 +72,7 @@
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipSaveRules": {
-    "message": "Klicka för att göra ändringarna permanenta.",
+    "message": "Klicka för att göra dina ändringar permanenta.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
@@ -180,7 +180,7 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "mina-ublock-pålitliga-webbplatser_{{datetime}}.txt",
+    "message": "mina-ublock-betrodda-webbplatser_{{datetime}}.txt",
     "description": "The default filename to use for import/export purpose"
   },
   "aboutChangelog": {
