@@ -86,16 +86,7 @@ import { i18n$ } from '../i18n.js';
             return;
         }
         if ( queryTextFromSearchWidget(cm) === state.queryText ) { return; }
-        if ( state.queryTimer !== null ) {
-            clearTimeout(state.queryTimer);
-        }
-        state.queryTimer = setTimeout(
-            () => {
-                state.queryTimer = null;
-                findCommit(cm, 0);
-            },
-            350
-        );
+        state.queryTimer.offon(350);
     };
 
     const searchWidgetClickHandler = function(cm, ev) {
@@ -141,7 +132,6 @@ import { i18n$ } from '../i18n.js';
             this.panel = cm.addPanel(this.widget);
         }
         this.queryText = '';
-        this.queryTimer = null;
         this.dirty = true;
         this.lines = [];
         cm.on('changes', (cm, changes) => {
@@ -154,6 +144,9 @@ import { i18n$ } from '../i18n.js';
         });
         cm.on('cursorActivity', cm => {
             updateCount(cm);
+        });
+        this.queryTimer = vAPI.defer.create(( ) => {
+            findCommit(cm, 0);
         });
     };
 
@@ -426,10 +419,7 @@ import { i18n$ } from '../i18n.js';
 
     const findCommit = function(cm, dir) {
         const state = getSearchState(cm);
-        if ( state.queryTimer !== null ) {
-            clearTimeout(state.queryTimer);
-            state.queryTimer = null;
-        }
+        state.queryTimer.off();
         const queryText = queryTextFromSearchWidget(cm);
         if ( queryText === state.queryText ) { return; }
         state.queryText = queryText;

@@ -118,19 +118,16 @@ const arrayFromString = function(s) {
 /******************************************************************************/
 
 const advancedSettingsChanged = (( ) => {
-    let timer;
-
     const handler = ( ) => {
-        timer = undefined;
-        const changed =
-            hashFromAdvancedSettings(cmEditor.getValue()) !== beforeHash;
+        const changed = hashFromAdvancedSettings(cmEditor.getValue()) !== beforeHash;
         qs$('#advancedSettingsApply').disabled = !changed;
         CodeMirror.commands.save = changed ? applyChanges : function(){};
     };
 
+    const timer = vAPI.defer.create(handler);
+
     return function() {
-        if ( timer !== undefined ) { clearTimeout(timer); }
-        timer = vAPI.setTimeout(handler, 100);
+        timer.offon(200);
     };
 })();
 

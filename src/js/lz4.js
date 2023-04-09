@@ -42,7 +42,6 @@ let lz4CodecInstance;
 let pendingInitialization;
 let textEncoder, textDecoder;
 let ttlCount = 0;
-let ttlTimer;
 let ttlDelay = 60000;
 
 const init = function() {
@@ -84,18 +83,16 @@ const destroy = function() {
     lz4CodecInstance = undefined;
     textEncoder = textDecoder = undefined;
     ttlCount = 0;
-    ttlTimer = undefined;
 };
 
+const ttlTimer = vAPI.defer.create(destroy);
+
 const ttlManage = function(count) {
-    if ( ttlTimer !== undefined ) {
-        clearTimeout(ttlTimer);
-        ttlTimer = undefined;
-    }
+    ttlTimer.off();
     ttlCount += count;
     if ( ttlCount > 0 ) { return; }
     if ( lz4CodecInstance === null ) { return; }
-    ttlTimer = vAPI.setTimeout(destroy, ttlDelay);
+    ttlTimer.on(ttlDelay);
 };
 
 const encodeValue = function(dataIn) {

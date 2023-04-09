@@ -56,12 +56,17 @@ let cachedUserFilters = '';
 
 /******************************************************************************/
 
-// Add auto-complete ability to the editor.
+// Add auto-complete ability to the editor. Polling is used as the suggested
+// hints also depend on the tabs currently opened.
 
 {
     let hintUpdateToken = 0;
 
-    const responseHandler = function(response) {
+    const getHints = async function() {
+        const response = await vAPI.messaging.send('dashboard', {
+            what: 'getAutoCompleteDetails',
+            hintUpdateToken
+        });
         if ( response instanceof Object === false ) { return; }
         if ( response.hintUpdateToken !== undefined ) {
             const mode = cmEditor.getMode();
@@ -73,15 +78,12 @@ let cachedUserFilters = '';
             }
             hintUpdateToken = response.hintUpdateToken;
         }
-        vAPI.setTimeout(getHints, 2503);
+        timer.on(2503);
     };
 
-    const getHints = function() {
-        vAPI.messaging.send('dashboard', {
-            what: 'getAutoCompleteDetails',
-            hintUpdateToken
-        }).then(responseHandler);
-    };
+    const timer = vAPI.defer.create(( ) => {
+        getHints();
+    });
 
     getHints();
 }
@@ -306,8 +308,7 @@ dom.on('#userFiltersRevert', 'click', revertChanges);
     // https://github.com/gorhill/uBlock/issues/3706
     //   Save/restore cursor position
     {
-        const line =
-            await vAPI.localStorage.getItemAsync('myFiltersCursorPosition');
+        const line = await vAPI.localStorage.getItemAsync('myFiltersCursorPosition');
         if ( typeof line === 'number' ) {
             cmEditor.setCursor(line, 0);
         }
@@ -317,15 +318,14 @@ dom.on('#userFiltersRevert', 'click', revertChanges);
     //   Save/restore cursor position
     {
         let curline = 0;
-        let timer;
         cmEditor.on('cursorActivity', ( ) => {
-            if ( timer !== undefined ) { return; }
+            if ( timer.ongoing() ) { return; }
             if ( cmEditor.getCursor().line === curline ) { return; }
-            timer = vAPI.setTimeout(( ) => {
-                timer = undefined;
-                curline = cmEditor.getCursor().line;
-                vAPI.localStorage.setItem('myFiltersCursorPosition', curline);
-            }, 701);
+            timer.on(701);
+        });
+        const timer = vAPI.defer.create(( ) => {
+            curline = cmEditor.getCursor().line;
+            vAPI.localStorage.setItem('myFiltersCursorPosition', curline);
         });
     }
 

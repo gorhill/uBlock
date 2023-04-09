@@ -113,18 +113,18 @@ self.uBlockDashboard.dateNowToSensibleString = function() {
 /******************************************************************************/
 
 self.uBlockDashboard.patchCodeMirrorEditor = (function() {
-    let grabFocusTimer;
     let grabFocusTarget;
 
     const grabFocus = function() {
         grabFocusTarget.focus();
-        grabFocusTimer = grabFocusTarget = undefined;
+        grabFocusTarget = undefined;
     };
+
+    const grabFocusTimer = vAPI.defer.create(grabFocus);
+
     const grabFocusAsync = function(cm) {
         grabFocusTarget = cm;
-        if ( grabFocusTimer === undefined ) {
-            grabFocusTimer = vAPI.setTimeout(grabFocus, 1);
-        }
+        grabFocusTimer.on(1);
     };
 
     // https://github.com/gorhill/uBlock/issues/3646

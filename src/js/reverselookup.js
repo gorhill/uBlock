@@ -36,11 +36,9 @@ import {
 
 /******************************************************************************/
 
-const workerTTL = 5 * 60 * 1000;
 const pendingResponses = new Map();
 
 let worker = null;
-let workerTTLTimer;
 let needLists = true;
 let messageId = 1;
 
@@ -52,10 +50,7 @@ const onWorkerMessage = function(e) {
 };
 
 const stopWorker = function() {
-    if ( workerTTLTimer !== undefined ) {
-        clearTimeout(workerTTLTimer);
-        workerTTLTimer = undefined;
-    }
+    stopWorker.off();
     if ( worker === null ) { return; }
     worker.terminate();
     worker = null;
@@ -66,6 +61,9 @@ const stopWorker = function() {
     pendingResponses.clear();
 };
 
+const workerTTLTimer = vAPI.defer.create(stopWorker);
+const workerTTL = { min: 5 };
+
 const initWorker = function() {
     if ( worker === null ) {
         worker = new Worker('js/reverselookup-worker.js');
@@ -73,10 +71,7 @@ const initWorker = function() {
     }
 
     // The worker will be shutdown after n minutes without being used.
-    if ( workerTTLTimer !== undefined ) {
-        clearTimeout(workerTTLTimer);
-    }
-    workerTTLTimer = vAPI.setTimeout(stopWorker, workerTTL);
+    workerTTLTimer.offon(workerTTL);
 
     if ( needLists === false ) {
         return Promise.resolve();

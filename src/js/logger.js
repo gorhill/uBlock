@@ -27,21 +27,21 @@ let buffer = null;
 let lastReadTime = 0;
 let writePtr = 0;
 
-// After 30 seconds without being read, a buffer will be considered
-// unused, and thus removed from memory.
+// After 30 seconds without being read, the logger buffer will be considered
+// unused, and thus disabled.
 const logBufferObsoleteAfter = 30 * 1000;
 
-const janitor = ( ) => {
+const janitorTimer = vAPI.defer.create(( ) => {
     if ( buffer === null ) { return; }
     if ( lastReadTime >= (Date.now() - logBufferObsoleteAfter) ) {
-        return vAPI.setTimeout(janitor, logBufferObsoleteAfter);
+        return janitorTimer.on(logBufferObsoleteAfter);
     }
     logger.enabled = false;
     buffer = null;
     writePtr = 0;
     logger.ownerId = undefined;
     vAPI.messaging.broadcast({ what: 'loggerDisabled' });
-};
+});
 
 const boxEntry = function(details) {
     if ( details.tstamp === undefined ) {
@@ -68,7 +68,7 @@ const logger = {
         if ( buffer === null ) {
             this.enabled = true;
             buffer = [];
-            vAPI.setTimeout(janitor, logBufferObsoleteAfter);
+            janitorTimer.on(logBufferObsoleteAfter);
         }
         const out = buffer.slice(0, writePtr);
         writePtr = 0;

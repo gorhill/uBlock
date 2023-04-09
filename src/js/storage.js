@@ -98,23 +98,26 @@ import {
 
 /******************************************************************************/
 
-µb.saveLocalSettings = (( ) => {
-    const saveAfter = 4 * 60 * 1000;
+{
+    let localSettingsLastSaved = Date.now();
 
-    const onTimeout = ( ) => {
-        if ( µb.localSettingsLastModified > µb.localSettingsLastSaved ) {
+    const shouldSave = ( ) => {
+        if ( µb.localSettingsLastModified > localSettingsLastSaved ) {
             µb.saveLocalSettings();
         }
-        vAPI.setTimeout(onTimeout, saveAfter);
+        saveTimer.on(saveDelay);
     };
 
-    vAPI.setTimeout(onTimeout, saveAfter);
+    const saveTimer = vAPI.defer.create(shouldSave);
+    const saveDelay = { min: 4 };
 
-    return function() {
-        this.localSettingsLastSaved = Date.now();
+    saveTimer.on(saveDelay);
+
+    µb.saveLocalSettings = function() {
+        localSettingsLastSaved = Date.now();
         return vAPI.storage.set(this.localSettings);
     };
-})();
+}
 
 /******************************************************************************/
 
@@ -1445,15 +1448,17 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 /******************************************************************************/
 
 {
-    let timer, next = 0;
+    let next = 0;
     let lastEmergencyUpdate = 0;
 
-    µb.scheduleAssetUpdater = async function(updateDelay) {
+    const launchTimer = vAPI.defer.create(fetchDelay => {
+        next = 0;
+        io.updateStart({ delay: fetchDelay, auto: true });
+    });
 
-        if ( timer ) {
-            clearTimeout(timer);
-            timer = undefined;
-        }
+    µb.scheduleAssetUpdater = async function(updateDelay) {
+        launchTimer.off();
+
         if ( updateDelay === 0 ) {
             next = 0;
             return;
@@ -1499,11 +1504,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
             ? 2000
             : this.hiddenSettings.autoUpdateAssetFetchPeriod * 1000 || 60000;
 
-        timer = vAPI.setTimeout(( ) => {
-            timer = undefined;
-            next = 0;
-            io.updateStart({ delay: fetchDelay, auto: true });
-        }, updateDelay);
+        launchTimer.on(updateDelay, fetchDelay);
     };
 }
 

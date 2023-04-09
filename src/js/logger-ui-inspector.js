@@ -336,39 +336,35 @@ const startDialog = (function() {
     let textarea;
     let hideSelectors = [];
     let unhideSelectors = [];
-    let inputTimer;
 
-    const onInputChanged = (function() {
-        const parse = function() {
-            inputTimer = undefined;
-            hideSelectors = [];
-            unhideSelectors = [];
+    const parse = function() {
+        hideSelectors = [];
+        unhideSelectors = [];
 
-            const re = /^([^#]*)(#@?#)(.+)$/;
-            for ( let line of textarea.value.split(/\s*\n\s*/) ) {
-                line = line.trim();
-                if ( line === '' || line.charAt(0) === '!' ) { continue; }
-                const matches = re.exec(line);
-                if ( matches === null || matches.length !== 4 ) { continue; }
-                if ( inspectedHostname.lastIndexOf(matches[1]) === -1 ) {
-                    continue;
-                }
-                if ( matches[2] === '##' ) {
-                    hideSelectors.push(matches[3]);
-                } else {
-                    unhideSelectors.push(matches[3]);
-                }
+        const re = /^([^#]*)(#@?#)(.+)$/;
+        for ( let line of textarea.value.split(/\s*\n\s*/) ) {
+            line = line.trim();
+            if ( line === '' || line.charAt(0) === '!' ) { continue; }
+            const matches = re.exec(line);
+            if ( matches === null || matches.length !== 4 ) { continue; }
+            if ( inspectedHostname.lastIndexOf(matches[1]) === -1 ) {
+                continue;
             }
-
-            showCommitted();
-        };
-
-        return function parseAsync() {
-            if ( inputTimer === undefined ) {
-                inputTimer = vAPI.setTimeout(parse, 743);
+            if ( matches[2] === '##' ) {
+                hideSelectors.push(matches[3]);
+            } else {
+                unhideSelectors.push(matches[3]);
             }
-        };
-    })();
+        }
+
+        showCommitted();
+    };
+
+    const inputTimer = vAPI.defer.create(parse);
+
+    const onInputChanged = ( ) => {
+        inputTimer.on(743);
+    };
 
     const onClicked = function(ev) {
         var target = ev.target;
@@ -433,10 +429,7 @@ const startDialog = (function() {
     };
 
     const stop = function() {
-        if ( inputTimer !== undefined ) {
-            clearTimeout(inputTimer);
-            inputTimer = undefined;
-        }
+        inputTimer.off();
         showInteractive();
         textarea.removeEventListener('input', onInputChanged);
         dialog.removeEventListener('click', onClicked, true);
@@ -513,11 +506,9 @@ const onClicked = function(ev) {
 /******************************************************************************/
 
 const onMouseOver = (function() {
-    var mouseoverTarget = null;
-    var mouseoverTimer = null;
+    let mouseoverTarget = null;
 
-    var timerHandler = function() {
-        mouseoverTimer = null;
+    const timerHandler = ( ) => {
         vAPI.MessagingConnection.sendTo(inspectorConnectionId, {
             what: 'highlightOne',
             selector: selectorFromNode(mouseoverTarget),
@@ -526,21 +517,17 @@ const onMouseOver = (function() {
         });
     };
 
+    const mouseoverTimer = vAPI.defer.create(timerHandler);
+
     return function(ev) {
         if ( inspectedTabId === 0 ) { return; }
         // Convenience: skip real-time highlighting if shift key is pressed.
         if ( ev.shiftKey ) { return; }
         // Find closest `li`
-        var target = ev.target;
-        while ( target !== null ) {
-            if ( target.localName === 'li' ) { break; }
-            target = target.parentElement;
-        }
+        const target = ev.target.closest('li');
         if ( target === mouseoverTarget ) { return; }
         mouseoverTarget = target;
-        if ( mouseoverTimer === null ) {
-            mouseoverTimer = vAPI.setTimeout(timerHandler, 50);
-        }
+        mouseoverTimer.on(50);
     };
 })();
 

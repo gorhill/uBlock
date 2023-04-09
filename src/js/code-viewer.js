@@ -211,7 +211,7 @@ async function setURL(resourceURL) {
     dom.attr(a, 'title', afterURL);
     addPastURLs(afterURL);
     // For unknown reasons, calling focus() synchronously does not work...
-    vAPI.setTimeout(( ) => { cmEditor.focus(); }, 1);
+    vAPI.defer.once(1).then(( ) => { cmEditor.focus(); });
 }
 
 /******************************************************************************/

@@ -104,19 +104,19 @@ if ( self.location.hash.slice(1) === 'no-dashboard.html' ) {
 (async ( ) => {
     // Wait for uBO's main process to be ready
     await new Promise(resolve => {
-        const check = ( ) => {
-            vAPI.messaging.send('dashboard', {
-                what: 'readyToFilter'
-            }).then(response => {
+        const check = async ( ) => {
+            try {
+                const response = await vAPI.messaging.send('dashboard', {
+                    what: 'readyToFilter'
+                });
                 if ( response ) { return resolve(true); }
                 const iframe = qs$('#iframe');
                 if ( iframe.src !== '' ) {
                     iframe.src = '';
                 }
-                vAPI.setTimeout(check, 250);
-            }).catch(( ) => {
-                vAPI.setTimeout(check, 250);
-            });
+            } catch(ex) {
+            }
+            vAPI.defer.once(250).then(( ) => check());
         };
         check();
     });

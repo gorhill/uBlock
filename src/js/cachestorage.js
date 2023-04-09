@@ -101,36 +101,27 @@ const cacheStorage = {
 const selectIDB = async function() {
     let db;
     let dbPromise;
-    let dbTimer;
 
     const noopfn = function () {
     };
 
     const disconnect = function() {
-        if ( dbTimer !== undefined ) {
-            clearTimeout(dbTimer);
-            dbTimer = undefined;
-        }
+        dbTimer.off();
         if ( db instanceof IDBDatabase ) {
             db.close();
             db = undefined;
         }
     };
 
+    const dbTimer = vAPI.defer.create(( ) => {
+        disconnect();
+    });
+
     const keepAlive = function() {
-        if ( dbTimer !== undefined ) {
-            clearTimeout(dbTimer);
-        }
-        dbTimer = vAPI.setTimeout(
-            ( ) => {
-                dbTimer = undefined;
-                disconnect();
-            },
-            Math.max(
-                µb.hiddenSettings.autoUpdateAssetFetchPeriod * 2 * 1000,
-                180000
-            )
-        );
+        dbTimer.offon(Math.max(
+            µb.hiddenSettings.autoUpdateAssetFetchPeriod * 2 * 1000,
+            180000
+        ));
     };
 
     // https://github.com/gorhill/uBlock/issues/3156
@@ -192,13 +183,13 @@ const selectIDB = async function() {
                 resolve(null);
                 resolve = undefined;
             };
-            setTimeout(( ) => {
+            vAPI.defer.once(5000).then(( ) => {
                 if ( resolve === undefined ) { return; }
                 db = null;
                 dbPromise = undefined;
                 resolve(null);
                 resolve = undefined;
-            }, 5000);
+            });
         });
         return dbPromise;
     };

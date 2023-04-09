@@ -73,20 +73,16 @@ assets.fetch = function(url, options = {}) {
     return new Promise((resolve, reject) => {
     // Start of executor
 
-    const timeoutAfter = µb.hiddenSettings.assetFetchTimeout * 1000 || 30000;
+    const timeoutAfter = µb.hiddenSettings.assetFetchTimeout || 30;
     const xhr = new XMLHttpRequest();
     let contentLoaded = 0;
-    let timeoutTimer;
 
     const cleanup = function() {
         xhr.removeEventListener('load', onLoadEvent);
         xhr.removeEventListener('error', onErrorEvent);
         xhr.removeEventListener('abort', onErrorEvent);
         xhr.removeEventListener('progress', onProgressEvent);
-        if ( timeoutTimer !== undefined ) {
-            clearTimeout(timeoutTimer);
-            timeoutTimer = undefined;
-        }
+        timeoutTimer.off();
     };
 
     const fail = function(details, msg) {
@@ -130,11 +126,10 @@ assets.fetch = function(url, options = {}) {
     const onProgressEvent = function(ev) {
         if ( ev.loaded === contentLoaded ) { return; }
         contentLoaded = ev.loaded;
-        if ( timeoutTimer !== undefined ) {
-            clearTimeout(timeoutTimer); 
-        }
-        timeoutTimer = vAPI.setTimeout(onTimeout, timeoutAfter);
+        timeoutTimer.offon({ sec: timeoutAfter });
     };
+
+    const timeoutTimer = vAPI.defer.create(onTimeout);
 
     // Be ready for thrown exceptions:
     // I am pretty sure it used to work, but now using a URL such as
@@ -147,7 +142,7 @@ assets.fetch = function(url, options = {}) {
         xhr.addEventListener('progress', onProgressEvent);
         xhr.responseType = options.responseType || 'text';
         xhr.send();
-        timeoutTimer = vAPI.setTimeout(onTimeout, timeoutAfter);
+        timeoutTimer.on({ sec: timeoutAfter });
     } catch (e) {
         onErrorEvent.call(xhr);
     }
@@ -422,17 +417,14 @@ const unregisterAssetSource = function(assetKey) {
 };
 
 const saveAssetSourceRegistry = (( ) => {
-    let timer;
-    const save = function() {
-        timer = undefined;
+    const save = ( ) => {
+        timer.off();
         cacheStorage.set({ assetSourceRegistry });
     };
+    const timer = vAPI.defer.create(save);
     return function(lazily) {
-        if ( timer !== undefined ) {
-            clearTimeout(timer);
-        }
         if ( lazily ) {
-            timer = vAPI.setTimeout(save, 500);
+            timer.offon(500);
         } else {
             save();
         }
@@ -533,15 +525,14 @@ const getAssetCacheRegistry = function() {
 };
 
 const saveAssetCacheRegistry = (( ) => {
-    let timer;
     const save = function() {
-        timer = undefined;
+        timer.off();
         cacheStorage.set({ assetCacheRegistry });
     };
+    const timer = vAPI.defer.create(save);
     return function(lazily) {
-        if ( timer !== undefined ) { clearTimeout(timer); }
         if ( lazily ) {
-            timer = vAPI.setTimeout(save, 30000);
+            timer.offon({ sec: 30 });
         } else {
             save();
         }
@@ -961,7 +952,6 @@ const updaterUpdated = [];
 const updaterFetched = new Set();
 
 let updaterStatus;
-let updaterTimer;
 let updaterAssetDelay = updaterAssetDelayDefault;
 let updaterAuto = false;
 
@@ -1043,8 +1033,10 @@ const updateNext = async function() {
         fireNotification('asset-update-failed', { assetKey: result.assetKey });
     }
 
-    vAPI.setTimeout(updateNext, updaterAssetDelay);
+    updaterTimer.on(updaterAssetDelay);
 };
+
+const updaterTimer = vAPI.defer.create(updateNext);
 
 const updateDone = function() {
     const assetKeys = updaterUpdated.slice(0);
@@ -1064,8 +1056,7 @@ assets.updateStart = function(details) {
     updaterAuto = details.auto === true;
     if ( updaterStatus !== undefined ) {
         if ( newUpdateDelay < oldUpdateDelay ) {
-            clearTimeout(updaterTimer);
-            updaterTimer = vAPI.setTimeout(updateNext, updaterAssetDelay);
+            updaterTimer.offon(updaterAssetDelay);
         }
         return;
     }
@@ -1073,10 +1064,7 @@ assets.updateStart = function(details) {
 };
 
 assets.updateStop = function() {
-    if ( updaterTimer ) {
-        clearTimeout(updaterTimer);
-        updaterTimer = undefined;
-    }
+    updaterTimer.off();
     if ( updaterStatus !== undefined ) {
         updateDone();
     }

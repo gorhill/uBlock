@@ -69,18 +69,13 @@ import {
 
 const loadBenchmarkDataset = (( ) => {
     let datasetPromise;
-    let ttlTimer;
+
+    const ttlTimer = vAPI.defer.create(( ) => {
+        datasetPromise = undefined;
+    });
 
     return function() {
-        if ( ttlTimer !== undefined ) {
-            clearTimeout(ttlTimer);
-            ttlTimer = undefined;
-        }
-
-        setTimeout(( ) => {
-            ttlTimer = undefined;
-            datasetPromise = undefined;
-        }, 5 * 60 * 1000);
+        ttlTimer.offon({ min: 5 });
 
         if ( datasetPromise !== undefined ) {
             return datasetPromise;

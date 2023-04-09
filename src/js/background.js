@@ -172,7 +172,6 @@ const µBlock = {  // jshint ignore:line
         allowedRequestCount: 0,
     },
     localSettingsLastModified: 0,
-    localSettingsLastSaved: 0,
 
     // Read-only
     systemSettings: {

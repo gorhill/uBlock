@@ -225,10 +225,12 @@ const FilterContainer = function() {
     this.reSimpleHighGeneric = /^(?:[a-z]*\[[^\]]+\]|\S+)$/;
 
     this.selectorCache = new Map();
-    this.selectorCachePruneDelay = 10 * 60 * 1000; // 10 minutes
+    this.selectorCachePruneDelay = 10; // 10 minutes
     this.selectorCacheCountMin = 40;
     this.selectorCacheCountMax = 50;
-    this.selectorCacheTimer = null;
+    this.selectorCacheTimer = vAPI.defer.create(( ) => {
+        this.pruneSelectorCacheAsync();
+    });
 
     // specific filters
     this.specificFilters = new StaticExtFilteringHostnameDB(2);
@@ -274,10 +276,7 @@ FilterContainer.prototype.reset = function() {
     this.duplicateBuster = new Set();
 
     this.selectorCache.clear();
-    if ( this.selectorCacheTimer !== null ) {
-        clearTimeout(this.selectorCacheTimer);
-        this.selectorCacheTimer = null;
-    }
+    this.selectorCacheTimer.off();
 
     // hostname, entity-based filters
     this.specificFilters.clear();
@@ -604,18 +603,6 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.triggerSelectorCachePruner = function() {
-    // Of interest: http://fitzgeraldnick.com/weblog/40/
-    // http://googlecode.blogspot.ca/2009/07/gmail-for-mobile-html5-series-using.html
-    if ( this.selectorCacheTimer !== null ) { return; }
-    this.selectorCacheTimer = vAPI.setTimeout(
-        ( ) => { this.pruneSelectorCacheAsync(); },
-        this.selectorCachePruneDelay
-    );
-};
-
-/******************************************************************************/
-
 FilterContainer.prototype.addToSelectorCache = function(details) {
     const hostname = details.hostname;
     if ( typeof hostname !== 'string' || hostname === '' ) { return; }
@@ -626,7 +613,7 @@ FilterContainer.prototype.addToSelectorCache = function(details) {
         entry = SelectorCacheEntry.factory();
         this.selectorCache.set(hostname, entry);
         if ( this.selectorCache.size > this.selectorCacheCountMax ) {
-            this.triggerSelectorCachePruner();
+            this.selectorCacheTimer.on({ min: this.selectorCachePruneDelay });
         }
     }
     entry.add(details);
@@ -658,7 +645,6 @@ FilterContainer.prototype.removeFromSelectorCache = function(
 /******************************************************************************/
 
 FilterContainer.prototype.pruneSelectorCacheAsync = function() {
-    this.selectorCacheTimer = null;
     if ( this.selectorCache.size <= this.selectorCacheCountMax ) { return; }
     const cache = this.selectorCache;
     const hostnames = Array.from(cache.keys())

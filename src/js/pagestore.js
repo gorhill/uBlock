@@ -56,6 +56,9 @@ To create a log of net requests
 
 const NetFilteringResultCache = class {
     constructor() {
+        this.pruneTimer = vAPI.defer.create(( ) => {
+            this.prune();
+        });
         this.init();
     }
 
@@ -63,7 +66,6 @@ const NetFilteringResultCache = class {
         this.blocked = new Map();
         this.results = new Map();
         this.hash = 0;
-        this.timer = undefined;
         return this;
     }
 
@@ -111,10 +113,7 @@ const NetFilteringResultCache = class {
         this.blocked.clear();
         this.results.clear();
         this.hash = 0;
-        if ( this.timer !== undefined ) {
-            clearTimeout(this.timer);
-            this.timer = undefined;
-        }
+        this.pruneTimer.off();
     }
 
     prune() {
@@ -136,14 +135,7 @@ const NetFilteringResultCache = class {
     }
 
     pruneAsync() {
-        if ( this.timer !== undefined ) { return; }
-        this.timer = vAPI.setTimeout(
-            ( ) => {
-                this.timer = undefined;
-                this.prune();
-            },
-            this.shelfLife
-        );
+        this.pruneTimer.on(this.shelfLife);
     }
 
     lookupResult(fctxt) {
@@ -353,12 +345,17 @@ const PageStore = class {
     constructor(tabId, details) {
         this.extraData = new Map();
         this.journal = [];
-        this.journalTimer = undefined;
         this.journalLastCommitted = this.journalLastUncommitted = -1;
         this.journalLastUncommittedOrigin = undefined;
         this.netFilteringCache = NetFilteringResultCache.factory();
         this.hostnameDetailsMap = new HostnameDetailsMap();
         this.counts = new CountDetails();
+        this.journalTimer = vAPI.defer.create(( ) => {
+            this.journalProcess();
+        });
+        this.largeMediaTimer = vAPI.defer.create(( ) => {
+            this.injectLargeMediaElementScriptlet();
+        });
         this.init(tabId, details);
     }
 
@@ -398,7 +395,6 @@ const PageStore = class {
         this.remoteFontCount = 0;
         this.popupBlockedCount = 0;
         this.largeMediaCount = 0;
-        this.largeMediaTimer = null;
         this.allowLargeMediaElementsRegex = undefined;
         this.extraData.clear();
 
@@ -441,10 +437,7 @@ const PageStore = class {
         }
 
         // A new page is completely reloaded from scratch, reset all.
-        if ( this.largeMediaTimer !== null ) {
-            clearTimeout(this.largeMediaTimer);
-            this.largeMediaTimer = null;
-        }
+        this.largeMediaTimer.off();
         this.disposeFrameStores();
         this.init(this.tabId, details);
         return this;
@@ -458,15 +451,9 @@ const PageStore = class {
         this.netFilteringCache.empty();
         this.allowLargeMediaElementsUntil = Date.now();
         this.allowLargeMediaElementsRegex = undefined;
-        if ( this.largeMediaTimer !== null ) {
-            clearTimeout(this.largeMediaTimer);
-            this.largeMediaTimer = null;
-        }
+        this.largeMediaTimer.off();
         this.disposeFrameStores();
-        if ( this.journalTimer !== undefined ) {
-            clearTimeout(this.journalTimer);
-            this.journalTimer = undefined;
-        }
+        this.journalTimer.off();
         this.journal = [];
         this.journalLastUncommittedOrigin = undefined;
         this.journalLastCommitted = this.journalLastUncommitted = -1;
@@ -668,11 +655,7 @@ const PageStore = class {
         const hostname = fctxt.getHostname();
         if ( hostname === '' ) { return; }
         this.journal.push(hostname, result, fctxt.itype);
-        if ( this.journalTimer !== undefined ) { return; }
-        this.journalTimer = vAPI.setTimeout(
-            ( ) => { this.journalProcess(true); },
-            µb.hiddenSettings.requestJournalProcessPeriod
-        );
+        this.journalTimer.on(µb.hiddenSettings.requestJournalProcessPeriod);
     }
 
     journalAddRootFrame(type, url) {
@@ -695,18 +678,11 @@ const PageStore = class {
                 this.journalLastUncommittedOrigin = newOrigin;
             }
         }
-        if ( this.journalTimer !== undefined ) {
-            clearTimeout(this.journalTimer);
-        }
-        this.journalTimer = vAPI.setTimeout(
-            ( ) => { this.journalProcess(true); },
-            µb.hiddenSettings.requestJournalProcessPeriod
-        );
+        this.journalTimer.offon(µb.hiddenSettings.requestJournalProcessPeriod);
     }
 
-    journalProcess(fromTimer = false) {
-        if ( fromTimer === false ) { clearTimeout(this.journalTimer); }
-        this.journalTimer = undefined;
+    journalProcess() {
+        this.journalTimer.off();
 
         const journal = this.journal;
         const pivot = Math.max(0, this.journalLastCommitted);
@@ -1058,12 +1034,7 @@ const PageStore = class {
         }
 
         this.largeMediaCount += 1;
-        if ( this.largeMediaTimer === null ) {
-            this.largeMediaTimer = vAPI.setTimeout(( ) => {
-                this.largeMediaTimer = null;
-                this.injectLargeMediaElementScriptlet();
-            }, 500);
-        }
+        this.largeMediaTimer.on(500);
 
         if ( logger.enabled ) {
             fctxt.filter = sessionSwitches.toLogData();
