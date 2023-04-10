@@ -23,7 +23,7 @@
 
 /******************************************************************************/
 
-const faIconsInit = (( ) => {
+export const faIconsInit = (( ) => {
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1196
     const svgIcons = new Map([

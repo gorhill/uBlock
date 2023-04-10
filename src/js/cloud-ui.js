@@ -25,6 +25,7 @@
 
 import { i18n, i18n$ } from './i18n.js';
 import { dom, qs$ } from './dom.js';
+import { faIconsInit } from './fa-icons.js';
 
 /******************************************************************************/
 
