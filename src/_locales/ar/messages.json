@@ -1263,6 +1263,10 @@
     "message": "اضغط للتحميل",
     "description": "Message used in frame placeholders"
   },
+  "unprocessedRequestTooltip": {
+    "message": "Could not filter properly at browser launch.\nReload the page to ensure proper filtering.",
+    "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
+  },
   "dummy": {
     "message": "يجب أن يكون هذا الإدخال آخر واحد",
     "description": "so we dont need to deal with comma for last entry"

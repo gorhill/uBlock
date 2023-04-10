@@ -1263,6 +1263,10 @@
     "message": "Clic para cargar",
     "description": "Message used in frame placeholders"
   },
+  "unprocessedRequestTooltip": {
+    "message": "No se puede filtrar adecuadamente al lanzar el navegador.\nRecarga la página para asegurarte de filtrar adecuadamente.",
+    "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
+  },
   "dummy": {
     "message": "Esta entrada debe ser la última",
     "description": "so we dont need to deal with comma for last entry"

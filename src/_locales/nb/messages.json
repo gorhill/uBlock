@@ -1263,6 +1263,10 @@
     "message": "Klikk for å laste",
     "description": "Message used in frame placeholders"
   },
+  "unprocessedRequestTooltip": {
+    "message": "Kan ikke filtrere riktig ved nettleseroppstart.\nLast siden på nytt for å sikre riktig filtrering.",
+    "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
+  },
   "dummy": {
     "message": "This entry must be the last one",
     "description": "so we dont need to deal with comma for last entry"

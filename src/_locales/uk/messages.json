@@ -136,7 +136,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Натисніть для блокування всіх спливних вікон на цьому сайті",
+    "message": "Натисніть, щоб заблокувати всі спливні вікна на цьому сайті",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
@@ -180,11 +180,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Натисніть для вимкнення JavaScript на цьому сайті",
+    "message": "Натисніть, щоб повністю вимкнути JavaScript на цьому сайті",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Натисніть для скасування вимкнення JavaScript на цьому сайті",
+    "message": "Натисніть, щоб скасувати вимкнення JavaScript на цьому сайті",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
@@ -452,7 +452,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "Загальні косметичні фільтри - це ті косметичні фільтри, які призначені для застосування на всіх веб-сайтах. Увімкнення цієї опції усуне навантаження на пам'ять і процесор, що додається до веб-сторінок у результаті обробки загальних косметичних фільтрів.\n\nРекомендується вмикати цю опцію на менш потужних пристроях.",
+    "message": "Загальні косметичні фільтри — це ті косметичні фільтри, які призначені для застосування на всіх вебсайтах. Увімкнення цієї опції усуне навантаження на пам'ять і процесор, що додається до вебсторінок у результаті обробки загальних косметичних фільтрів.\n\nРадимо вмикати цю опцію на менш потужних пристроях.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
@@ -1262,6 +1262,10 @@
   "clickToLoad": {
     "message": "Натисніть, щоб завантажити",
     "description": "Message used in frame placeholders"
+  },
+  "unprocessedRequestTooltip": {
+    "message": "Неможливо правильно фільтрувати під час запуску браузера.\nПерезапустіть сторінку для гарантії правильного фільтрування",
+    "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
   },
   "dummy": {
     "message": "Цей запис має бути останнім",

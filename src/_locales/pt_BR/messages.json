@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Reportar um problema com este website",
+    "message": "Relatar um problema com este site",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -904,11 +904,11 @@
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
-    "message": "Respostas a perguntas e outros tipos de suporte de ajuda são fornecidas no subreddit <code>/r/uBlockOrigin</code>.",
+    "message": "Respostas a perguntas e outros tipos de suporte são fornecidos no subreddit <code>/r/uBlockOrigin</code>.",
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "Problemas de filtro/website está quebrado",
+    "message": "Problemas de filtro/site está quebrado",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
@@ -928,7 +928,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Relate problemas do próprio uBlock Origin no <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">rastreador de problemas do <code>uBlockOrigin/uBlock-issue</code></span>. <u>Requer uma conta do GitHub.</u>",
+    "message": "Relate problemas com o próprio uBlock Origin no <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"> rastreador de problemas<code>uBlockOrigin/uBlock-issue</code></span>. <u>Requer uma conta GitHub.</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
@@ -1262,6 +1262,10 @@
   "clickToLoad": {
     "message": "Clique para carregar",
     "description": "Message used in frame placeholders"
+  },
+  "unprocessedRequestTooltip": {
+    "message": "Não foi possível filtrar corretamente na inicialização do navegador.\nRecarregue a página para garantir a filtragem adequada",
+    "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
   },
   "dummy": {
     "message": "Esta entrada deve ser a última",

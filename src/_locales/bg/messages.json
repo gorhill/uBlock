@@ -1263,6 +1263,10 @@
     "message": "Щракнете, за да се зареди",
     "description": "Message used in frame placeholders"
   },
+  "unprocessedRequestTooltip": {
+    "message": "Не може да се филтрира правилно при стартиране на браузъра.\nПрезаредете страницата, за да се уверите, че филтрирането е правилно.",
+    "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
+  },
   "dummy": {
     "message": "Това поле трябва да бъде последното",
     "description": "so we dont need to deal with comma for last entry"

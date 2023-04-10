@@ -168,15 +168,15 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Bu site için uzak yazıtiplerini engellemeyi aç/kapat",
+    "message": "Bu site için uzak yazı tiplerini engellemeyi aç/kapat",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Bu sitede uzak yazıtiplerini engellemek için tıklayın",
+    "message": "Bu sitede uzak yazı tiplerini engellemek için tıklayın",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Bu sitede uzak yazıtiplerini artık engellememek için tıklayın",
+    "message": "Bu sitede uzak yazı tiplerini artık engellememek için tıklayın",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
@@ -348,7 +348,7 @@
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsCloudStorageEnabledPrompt": {
-    "message": "Bulut depo desteğini etkinleştir",
+    "message": "Bulut depolama desteğini etkinleştir",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
@@ -384,7 +384,7 @@
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
-    "message": "Uzak yazıtiplerini engelle",
+    "message": "Uzak yazı tiplerini engelle",
     "description": ""
   },
   "settingsNoScriptingPrompt": {
@@ -468,7 +468,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Yerel",
+    "message": "Yerleşik",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -1164,15 +1164,15 @@
     "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {
-    "message": "Bulut depoya aktar",
+    "message": "Bulut depolamaya aktar",
     "description": "tooltip"
   },
   "cloudPull": {
-    "message": "Bulut depodan al",
+    "message": "Bulut depolamadan içe aktar",
     "description": "tooltip"
   },
   "cloudPullAndMerge": {
-    "message": "Bulut depodan al ve şu anki ayarlarla birleştir",
+    "message": "Bulut depolamadan içe aktar ve şu anki ayarlarla birleştir",
     "description": "tooltip"
   },
   "cloudNoData": {
@@ -1262,6 +1262,10 @@
   "clickToLoad": {
     "message": "Yüklemek için tıkla",
     "description": "Message used in frame placeholders"
+  },
+  "unprocessedRequestTooltip": {
+    "message": "Could not filter properly at browser launch.\nReload the page to ensure proper filtering.",
+    "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
   },
   "dummy": {
     "message": "Bu girdi en sonda olmalıdır",

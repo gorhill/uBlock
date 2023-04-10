@@ -1263,6 +1263,10 @@
     "message": "點擊以載入",
     "description": "Message used in frame placeholders"
   },
+  "unprocessedRequestTooltip": {
+    "message": "無法在瀏覽器啟動的時候正確過濾。\n重新載入頁面來確保正確過濾",
+    "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
+  },
   "dummy": {
     "message": "此條目須為最後一個",
     "description": "so we dont need to deal with comma for last entry"

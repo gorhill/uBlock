@@ -1263,6 +1263,10 @@
     "message": "单击以加载",
     "description": "Message used in frame placeholders"
   },
+  "unprocessedRequestTooltip": {
+    "message": "浏览器启动期间无法顺利过滤。\n重新载入页面以确保全面过滤",
+    "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
+  },
   "dummy": {
     "message": "此条目必须是最后一个",
     "description": "so we dont need to deal with comma for last entry"

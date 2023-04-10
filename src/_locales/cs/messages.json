@@ -912,7 +912,7 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Hlášení problémů s filtrem u učitých web. stránek do <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. Vyžaduje účet GitHub.",
+    "message": "<span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"> <code> </code> </span> <u> </u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
@@ -1262,6 +1262,10 @@
   "clickToLoad": {
     "message": "Klik pro načtení",
     "description": "Message used in frame placeholders"
+  },
+  "unprocessedRequestTooltip": {
+    "message": "Could not filter properly at browser launch.\nReload the page to ensure proper filtering.",
+    "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
   },
   "dummy": {
     "message": "This entry must be the last one",
