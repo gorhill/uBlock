@@ -1264,7 +1264,7 @@
     "description": "Message used in frame placeholders"
   },
   "unprocessedRequestTooltip": {
-    "message": "Could not filter properly at browser launch.\nReload the page to ensure proper filtering.",
+    "message": "브라우저 시작 시 필터링을 제대로 수행할 수 없습니다.\n정확한 필터링을 위해 페이지를 새로고침해주세요.",
     "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
   },
   "dummy": {

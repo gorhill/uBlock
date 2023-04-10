@@ -1264,7 +1264,7 @@
     "description": "Message used in frame placeholders"
   },
   "unprocessedRequestTooltip": {
-    "message": "Не удалось выполнить фильтрацию верно при запуске браузера.\nПерезагрузите страницу, чтобы убедиться в правильности фильтрации",
+    "message": "Не удалось выполнить фильтрацию при запуске браузера.\nПерезагрузите страницу, чтобы обеспечить фильтрацию.",
     "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
   },
   "dummy": {

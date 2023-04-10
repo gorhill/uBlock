@@ -1264,7 +1264,7 @@
     "description": "Message used in frame placeholders"
   },
   "unprocessedRequestTooltip": {
-    "message": "Det gick inte att filtrera ordentligt vid webbläsarstart.\nLadda om sidan för att säkerställa korrekt filtrering\n",
+    "message": "Det gick inte att filtrera ordentligt vid webbläsarstart.\nLadda om sidan för att säkerställa korrekt filtrering.\n",
     "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
   },
   "dummy": {
