@@ -3093,6 +3093,7 @@ class ExtSelectorCompiler {
         if ( parts === undefined ) { return; }
         if ( this.astHasType(parts, 'Error') ) { return; }
         if ( this.astHasType(parts, 'Selector') === false ) { return; }
+        if ( this.astIsValidSelectorList(parts) === false ) { return; }
         if (
             this.astHasType(parts, 'ProceduralSelector') === false &&
             this.astHasType(parts, 'ActionSelector') === false
