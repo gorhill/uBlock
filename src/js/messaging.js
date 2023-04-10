@@ -496,9 +496,10 @@ const popupDataFromTabId = function(tabId, tabTitle) {
         popupPanelDisabledSections: µbhs.popupPanelDisabledSections,
         popupPanelLockedSections: µbhs.popupPanelLockedSections,
         popupPanelHeightMode: µbhs.popupPanelHeightMode,
-        tabId: tabId,
-        tabTitle: tabTitle,
-        tooltipsDisabled: µbus.tooltipsDisabled
+        tabId,
+        tabTitle,
+        tooltipsDisabled: µbus.tooltipsDisabled,
+        hasUnprocessedRequest: vAPI && vAPI.net.hasUnprocessedRequest(tabId),
     };
 
     if ( µbhs.uiPopupConfig !== 'unset' ) {
@@ -647,6 +648,11 @@ const onMessage = function(request, sender, callback) {
     let response;
 
     switch ( request.what ) {
+    case 'dismissUnprocessedRequest':
+        vAPI.net.removeUnprocessedRequest(request.tabId);
+        µb.updateToolbarIcon(request.tabId, 0b110);
+        break;
+
     case 'hasPopupContentChanged': {
         const pageStore = µb.pageStoreFromTabId(request.tabId);
         const lastModified = pageStore ? pageStore.contentLastModified : 0;

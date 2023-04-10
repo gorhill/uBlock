@@ -133,7 +133,9 @@ const hashFromPopupData = function(reset = false) {
     if ( reset ) {
         cachedPopupHash = hash;
     }
-    dom.cl.toggle(dom.body, 'needReload', hash !== cachedPopupHash);
+    dom.cl.toggle(dom.body, 'needReload',
+        hash !== cachedPopupHash || popupData.hasUnprocessedRequest === true
+    );
 };
 
 /******************************************************************************/
@@ -673,6 +675,9 @@ const renderPopup = function() {
         total ? Math.min(total, 99).toLocaleString() : ''
     );
 
+    // Unprocesseed request(s) warning
+    dom.cl.toggle(dom.root, 'warn', popupData.hasUnprocessedRequest === true);
+
     dom.cl.toggle(dom.html, 'colorBlind', popupData.colorBlindFriendly === true);
 
     setGlobalExpand(popupData.firewallPaneMinimized === false, true);
@@ -684,6 +689,17 @@ const renderPopup = function() {
 
     renderTooltips();
 };
+
+/******************************************************************************/
+
+dom.on('.dismiss', 'click', ( ) => {
+    messaging.send('popupPanel', {
+        what: 'dismissUnprocessedRequest',
+        tabId: popupData.tabId,
+    }).then(( ) => {
+        dom.cl.remove(dom.root, 'warn');
+    });
+});
 
 /******************************************************************************/
 

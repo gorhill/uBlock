@@ -732,7 +732,6 @@ if ( webext.browserAction instanceof Object ) {
 {
     const browserAction = vAPI.browserAction;
     const titleTemplate = `${browser.runtime.getManifest().browser_action.default_title} ({badge})`;
-    const browserLaunchIssue = browser.i18n.getMessage('unprocessedRequestTooltip');
     const icons = [
         { path: {
             '16': 'img/icon_16-off.png',
@@ -866,10 +865,9 @@ if ( webext.browserAction instanceof Object ) {
         // - the platform does not support browserAction.setIcon(); OR
         // - the rendering of the badge is disabled
         if ( browserAction.setTitle !== undefined ) {
-            const title = hasUnprocessedRequest && browserLaunchIssue ||
-                titleTemplate.replace('{badge}',
-                    state === 1 ? (badge !== '' ? badge : '0') : 'off'
-                );
+            const title = titleTemplate.replace('{badge}',
+                state === 1 ? (badge !== '' ? badge : '0') : 'off'
+            );
             browserAction.setTitle({ tabId: tab.id, title });
         }
 
