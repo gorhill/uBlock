@@ -68,7 +68,7 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Kliknij, aby włączyć/wyłączyć uBlock₀ na tej witrynie.\n\nKliknij z wciśniętym klawiszem Ctrl, aby włączyć/wyłączyć uBlock₀ tylko na tej stronie.",
+    "message": "Kliknij, aby wyłączyć uBlock₀ dla tej witryny.\n\nKliknij z wciśniętym klawiszem Ctrl,\naby wyłączyć uBlock₀ tylko dla tej strony.",
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
@@ -216,11 +216,11 @@
     "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
-    "message": "Reguły globalne. W tej kolumnie znajdują się reguły stosowane na wszystkich witrynach.",
+    "message": "Reguły globalne:\nW tej kolumnie znajdują się reguły stosowane na wszystkich witrynach.",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Reguły lokalne. W tej kolumnie znajdują się reguły stosowane tylko na bieżącej witrynie.\nReguły lokalne zastępują reguły globalne.",
+    "message": "Reguły lokalne:\nW tej kolumnie znajdują się reguły stosowane tylko na bieżącej witrynie.\nReguły lokalne zastępują reguły globalne.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -1268,7 +1268,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Podczas uruchamiania przeglądarki nie można prawidłowo filtrować.\nAby zapewnić prawidłowe filtrowanie, wczytaj ponownie stronę.",
+    "message": "Filtrowanie nie zadziałało prawidłowo\npodczas uruchamiania przeglądarki.\nAby zapewnić prawidłowe filtrowanie,\nwczytaj ponownie stronę.",
     "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
   },
   "dummy": {
