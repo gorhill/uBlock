@@ -81,17 +81,17 @@ vAPI.defer = {
                 this.onraf(...args);
             }
         }
-        onidle(delay, ...args) {
+        onidle(delay, options, ...args) {
             if ( this.timer !== null ) { return; }
             const delayInMs = vAPI.defer.normalizeDelay(delay);
             if ( delayInMs !== 0 ) {
                 this.type = 0;
                 this.timer = vAPI.setTimeout(( ) => {
                     this.timer = null;
-                    this.onric(...args);
+                    this.onric(options, ...args);
                 }, delayInMs);
             } else {
-                this.onric(...args);
+                this.onric(options, ...args);
             }
         }
         off() {
@@ -119,13 +119,13 @@ vAPI.defer = {
                 this.callback(...args);
             });
         }
-        onric(...args) {
+        onric(options, ...args) {
             if ( this.timer !== null ) { return; }
             this.type = 2;
             this.timer = self.requestIdleCallback(deadline => {
                 this.timer = null;
                 this.callback(deadline, ...args);
-            });
+            }, options);
         }
         ongoing() {
             return this.timer !== null;

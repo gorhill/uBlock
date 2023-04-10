@@ -26,7 +26,6 @@
 const StaticExtFilteringHostnameDB = class {
     constructor(nBits, selfie = undefined) {
         this.nBits = nBits;
-        this.timer = undefined;
         this.strToIdMap = new Map();
         this.hostnameToSlotIdMap = new Map();
         this.regexToSlotIdMap = new Map();
@@ -39,6 +38,9 @@ const StaticExtFilteringHostnameDB = class {
         if ( selfie !== undefined ) {
             this.fromSelfie(selfie);
         }
+        this.cleanupTimer = vAPI.defer.create(( ) => {
+            this.strToIdMap.clear();
+        });
     }
 
     store(hn, bits, s) {
@@ -48,7 +50,7 @@ const StaticExtFilteringHostnameDB = class {
             iStr = this.strSlots.length;
             this.strSlots.push(s);
             this.strToIdMap.set(s, iStr);
-            if ( this.timer === undefined ) {
+            if ( this.cleanupTimer.ongoing() === false ) {
                 this.collectGarbage(true);
             }
         }
@@ -85,22 +87,11 @@ const StaticExtFilteringHostnameDB = class {
     }
 
     collectGarbage(later = false) {
-        if ( later === false ) {
-            if ( this.timer !== undefined ) {
-                self.cancelIdleCallback(this.timer);
-                this.timer = undefined;
-            }
-            this.strToIdMap.clear();
-            return;
+        if ( later ) {
+            return this.cleanupTimer.onidle(5000, { timeout: 5000 });
         }
-        if ( this.timer !== undefined ) { return; }
-        this.timer = self.requestIdleCallback(
-            ( ) => {
-                this.timer = undefined;
-                this.strToIdMap.clear();
-            },
-            { timeout: 5000 }
-        );
+        this.cleanupTimer.off();
+        this.strToIdMap.clear();
     }
 
     // modifiers = 0: all items
