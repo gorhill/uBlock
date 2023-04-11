@@ -9,12 +9,13 @@
   },
   "author": "Raymond Hill",
   "background": {
-    "page": "background.html"
+    "scripts": [ "/js/background.js" ],
+    "type": "module"
   },
   "browser_specific_settings": {
     "gecko": {
       "id": "uBOLite@raymondhill.net",
-      "strict_min_version": "113.*"
+      "strict_min_version": "113"
     }
   },
   "declarative_net_request": {
