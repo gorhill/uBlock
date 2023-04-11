@@ -1264,7 +1264,7 @@
     "description": "Message used in frame placeholders"
   },
   "unprocessedRequestTooltip": {
-    "message": "無法在瀏覽器啟動的時候正確過濾。\n重新載入頁面來確保正確過濾",
+    "message": "無法在瀏覽器啟動的時候正確過濾。\n請重新載入頁面來確保過濾正確。",
     "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
   },
   "dummy": {

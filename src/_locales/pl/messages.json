@@ -1264,7 +1264,7 @@
     "description": "Message used in frame placeholders"
   },
   "unprocessedRequestTooltip": {
-    "message": "Filtrowanie nie zadziałało prawidłowo\npodczas uruchamiania przeglądarki.\nAby zapewnić prawidłowe filtrowanie,\nwczytaj ponownie stronę.",
+    "message": "Podczas uruchamiania przeglądarki nie można prawidłowo filtrować.\nAby zapewnić prawidłowe filtrowanie, wczytaj ponownie stronę.",
     "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
   },
   "dummy": {
