@@ -14,7 +14,7 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "uBOLite@raymondhill.net",
-      "strict_min_version": "113a1"
+      "strict_min_version": "113.*"
     }
   },
   "declarative_net_request": {
