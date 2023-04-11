@@ -95,6 +95,45 @@ vAPI.storage = webext.storage.local;
 /******************************************************************************/
 /******************************************************************************/
 
+// https://github.com/uBlockOrigin/uBlock-issues/issues/2591
+//   Report of alarms API not being supported on Thunderbird
+if ( browser.alarms === undefined ) {
+    browser.alarms = {
+        alarmsMap: new Map(),
+        listenerSet: new Set(),
+        create(name, delayInfo) {
+            let alarm = this.alarmsMap.get(name);
+            if ( alarm !== undefined ) {
+                alarm.off();
+            } else {
+                alarm = vAPI.defer.create(( ) => {
+                    this.alarmsMap.delete(name);
+                    for ( const listener of this.listenerSet ) {
+                        listener({ name });
+                    }
+                });
+            }
+            this.alarmsMap.set(name, alarm);
+            alarm.on({ min: delayInfo.delayInMinutes });
+        },
+        clear(name) {
+            const alarm = this.alarmsMap.get(name);
+            if ( alarm === undefined ) { return; }
+            alarm.off();
+            this.alarmsMap.delete(name);
+        },
+        get: function(name, callback) {
+            callback(this.alarmsMap.has(name) && { name } || undefined);
+        },
+        onAlarm: {
+            addListener(callback) {
+                browser.alarms.listenerSet.add(callback);
+            },
+        },
+    };
+}
+
+
 vAPI.alarms = {
     create(callback) {
         this.uniqueIdGenerator += 1;
