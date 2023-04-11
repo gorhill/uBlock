@@ -50,7 +50,7 @@ const onWorkerMessage = function(e) {
 };
 
 const stopWorker = function() {
-    stopWorker.off();
+    workerTTLTimer.off();
     if ( worker === null ) { return; }
     worker.terminate();
     worker = null;
