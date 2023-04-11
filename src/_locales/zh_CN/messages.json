@@ -1268,7 +1268,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "浏览器启动期间无法顺利过滤。\n重新载入页面以确保全面过滤",
+    "message": "无法在浏览器启动期间顺利过滤。\n请重新载入页面以确保全面过滤。",
     "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
   },
   "dummy": {
