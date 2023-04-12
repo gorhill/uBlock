@@ -1370,11 +1370,11 @@ vAPI.Net = class {
         this.lastUnprocessedRequestTime = Date.now();
     }
     hasUnprocessedRequest(tabId) {
+        if ( this.unprocessedTabs.size === 0 ) { return false; }
         if ( (Date.now() - this.lastUnprocessedRequestTime) > 60000 ) {
             this.removeUnprocessedRequest();
         }
-        return this.unprocessedTabs.size !== 0 &&
-               this.unprocessedTabs.has(tabId);
+        return this.unprocessedTabs.has(tabId);
     }
     removeUnprocessedRequest(tabId) {
         if ( this.deferredSuspendableListener === undefined ) {
