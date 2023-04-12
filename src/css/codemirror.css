@@ -224,7 +224,7 @@
     }
 
 .cm-searching.cm-overlay {
-    background-color: var(--cm-searching-surface);
+    background-color: var(--cm-searching-surface) !important;
     border: 0;
     color: var(--cm-searching-ink) !important;
     }
