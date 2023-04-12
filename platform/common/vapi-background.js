@@ -1252,6 +1252,7 @@ vAPI.Net = class {
         this.listenerMap = new WeakMap();
         this.suspendDepth = 0;
         this.unprocessedTabs = new Map();
+        this.lastUnprocessedRequestTime = Number.MAX_SAFE_INTEGER;
 
         browser.webRequest.onBeforeRequest.addListener(
             details => {
@@ -1316,7 +1317,7 @@ vAPI.Net = class {
             let i = requests.length;
             while ( i-- ) {
                 const r = listener(requests[i]);
-                if ( r === undefined || r.cancel === false ) {
+                if ( r === undefined || r.cancel !== true ) {
                     requests.splice(i, 1);
                 }
             }
@@ -1366,18 +1367,26 @@ vAPI.Net = class {
             this.unprocessedTabs.set(tabId, (requests = []));
         }
         requests.push(Object.assign({}, details));
+        this.lastUnprocessedRequestTime = Date.now();
     }
     hasUnprocessedRequest(tabId) {
+        if ( (Date.now() - this.lastUnprocessedRequestTime) > 60000 ) {
+            this.removeUnprocessedRequest();
+        }
         return this.unprocessedTabs.size !== 0 &&
                this.unprocessedTabs.has(tabId);
     }
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/2589
-    // - Aggressively clear the unprocessed-request status of all tabs as
-    //   soon as there is a call to clear for one tab.
-    removeUnprocessedRequest() {
-        if ( this.unprocessedTabs.size === 0 ) { return true; }
-        this.unprocessedTabs.clear();
-        if ( this.deferredSuspendableListener === undefined ) { return true; }
+    removeUnprocessedRequest(tabId) {
+        if ( this.deferredSuspendableListener === undefined ) {
+            this.unprocessedTabs.clear();
+            return true;
+        }
+        if ( tabId !== undefined ) {
+            this.unprocessedTabs.delete(tabId);
+        } else {
+            this.unprocessedTabs.clear();
+        }
+        if ( this.unprocessedTabs.size !== 0 ) { return false; }
         this.suspendableListener = this.deferredSuspendableListener;
         this.deferredSuspendableListener = undefined;
         return true;

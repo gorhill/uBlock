@@ -105,11 +105,6 @@ vAPI.Tabs = class extends vAPI.Tabs {
     // Extend base class to normalize as per platform.
 
     vAPI.Net = class extends vAPI.Net {
-        constructor() {
-            super();
-            this.suspendedTabIds = new Set();
-        }
-
         normalizeDetails(details) {
             // Chromium 63+ supports the `initiator` property, which contains
             // the URL of the origin from which the network request was made.
@@ -184,20 +179,21 @@ vAPI.Tabs = class extends vAPI.Tabs {
         // https://github.com/uBlockOrigin/uBlock-issues/issues/2063
         //   Do not interfere with root document
         suspendOneRequest(details) {
-            this.suspendedTabIds.add(details.tabId);
+            this.onBeforeSuspendableRequest(details);
             if ( details.type === 'main_frame' ) { return; }
-            return {
-                redirectUrl: vAPI.getURL(`web_accessible_resources/empty?secret=${vAPI.warSecret()}`)
-            };
+            return { cancel: true };
         }
 
         unsuspendAllRequests(discard = false) {
-            if ( discard !== true ) {
-                for ( const tabId of this.suspendedTabIds ) {
-                    vAPI.tabs.reload(tabId);
-                }
+            if ( discard === true ) { return; }
+            const toReload = [];
+            for ( const tabId of this.unprocessedTabs.keys() ) {
+                toReload.push(tabId);
             }
-            this.suspendedTabIds.clear();
+            this.removeUnprocessedRequest();
+            for ( const tabId of toReload ) {
+                vAPI.tabs.reload(tabId);
+            }
         }
     };
 }
