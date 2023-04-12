@@ -1268,7 +1268,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "No se puede filtrar adecuadamente al lanzar el navegador.\nRecarga la página para asegurarte de filtrar adecuadamente.",
+    "message": "No se puede filtrar correctamente al iniciar el navegador.\nRecarga la página para garantizar el filtrado correcto.",
     "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
   },
   "dummy": {

@@ -12,11 +12,11 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Aviso! Tem alterações não guardadas",
+    "message": "Atenção! Tem alterações não guardadas",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Ficar",
+    "message": "Permanecer",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -280,7 +280,7 @@
     "description": "Appears as an option to filter out firewall rows"
   },
   "popup3pFrameFilter": {
-    "message": "moldura",
+    "message": "frame",
     "description": "Appears as an option to filter out firewall rows"
   },
   "pickerCreate": {
@@ -492,7 +492,7 @@
     "description": "English: Multipurpose"
   },
   "3pGroupRegions": {
-    "message": "Regiões, idiomas",
+    "message": "Regiões e idiomas",
     "description": "English: Regions, languages"
   },
   "3pGroupCustom": {
@@ -780,7 +780,7 @@
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "{{action}} pedidos de rede de {{type}} {{br}}cujo endereço URL corresponde a {{url}} {{br}}e que origina {{origin}},{{br}}{{importance}} há um filtro de exceção correspondente.",
+    "message": "{{action}} pedidos de rede de {{type}} {{br}}cujo endereço URL corresponde a {{url}} {{br}}e que origina {{origin}},{{br}}{{importance}} existe um filtro de exceção correspondente.",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
@@ -824,7 +824,7 @@
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
-    "message": "Entradas do registador que não preenchem todas as três condições abaixo irão ser automaticamente descartadas:",
+    "message": "Entradas do registador que não preenchem todas as três condições abaixo serão automaticamente descartadas:",
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
@@ -912,15 +912,15 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Relatar problemas de filtros com websites específicos para o <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">controlador de problemas <code>uBlockOrigin/uAssets</code></span>. <u>Requer uma conta GitHub.</u>",
+    "message": "Relate problemas de filtros com websites específicos para o <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">controlador de problemas <code>uBlockOrigin/uAssets</code></span>. <u>Requer uma conta GitHub.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Importante:</b> Evite a utilização de outros bloqueadores com propósitos semelhantes juntamente com uBlock Origin, uma vez que isto pode causar problemas com filtros em websites específicos.",
+    "message": "<b>Importante:</b> evite a utilização de outros bloqueadores com propósitos semelhantes juntamente com o uBlock Origin, dado que isto pode causar problemas com filtros em websites específicos.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Dicas:</b> Certifique-se de que as suas listas de filtros estão atualizadas. <span data-url=\"logger-ui.html#_\">O registador</span> é a ferramenta principal para diagnosticar problemas relacionados com filtros.",
+    "message": "<b>Dicas:</b> certifique-se de que as suas listas de filtros estão atualizadas. <span data-url=\"logger-ui.html#_\">O registador</span> é a ferramenta principal para diagnosticar problemas relacionados com filtros.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
@@ -928,7 +928,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Relatar problemas com o uBlock Origin para <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\">controlador de problemas <code>uBlockOrigin/uBlock-issue</code></span>. <u>Requer uma conta GitHub.</u>",
+    "message": "Relate problemas com o próprio uBlock Origin para o <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\">controlador de problemas <code>uBlockOrigin/uBlock-issue</code></span>. <u>Requer uma conta GitHub.</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
@@ -940,7 +940,7 @@
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Importante:</b> A informação potencialmente privada ou sensível é redigida por predefinição. A informação redigida pode tornar mais difícil a resolução de um problema.",
+    "message": "<b>Importante:</b> a informação potencialmente privada ou sensível é redigida por predefinição. A informação redigida pode tornar mais difícil a resolução de um problema.",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
@@ -980,7 +980,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Falha quando uBlock Origin é ativado",
+    "message": "Falha quando o uBlock Origin é ativado",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
@@ -988,7 +988,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Rotular a página web como “NSFW” (<a href=\"https://pt.wikipedia.org/wiki/Not_safe_for_work\">“Não seguro para o trabalho”</a>)",
+    "message": "Rotular a página web como “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Não seguro para o trabalho”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
@@ -1124,7 +1124,7 @@
     "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
-    "message": "Por causa do seguinte filtro:",
+    "message": "Devido ao seguinte filtro:",
     "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
@@ -1216,7 +1216,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "contextMenuViewSource": {
-    "message": "Ver fonte…",
+    "message": "Ver código fonte…",
     "description": "A context menu entry, to view the source code of the target resource"
   },
   "shortcutCapturePlaceholder": {
@@ -1268,7 +1268,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Não foi possível filtrar corretamente no lançamento do navegador.\nRecarregar a página para assegurar uma filtragem adequada",
+    "message": "Não foi possível filtrar adequadamente no arranque do navegador.\nRecarregue a página para assegurar uma filtragem adequada.",
     "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
   },
   "dummy": {

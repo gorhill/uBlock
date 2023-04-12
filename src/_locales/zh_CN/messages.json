@@ -964,7 +964,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "显示出广告或清除后的残留物",
+    "message": "显示广告或广告残留",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
@@ -988,7 +988,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "将该网页标记为<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“NSFW”（公众场所不宜阅览）</a>",
+    "message": "将该网页标记为 “NSFW”（<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“工作场所不宜”</a>）",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
@@ -1028,7 +1028,7 @@
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "外部依赖（与 GPLv3 协议兼容）：",
+    "message": "外部依赖（兼容 GPLv3 协议）：",
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
@@ -1268,7 +1268,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "无法在浏览器启动期间顺利过滤。\n请重新载入页面以确保全面过滤。",
+    "message": "无法在浏览器启动时正常过滤。\n重新加载此页面以确保正常过滤。",
     "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
   },
   "dummy": {
