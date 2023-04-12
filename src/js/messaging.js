@@ -499,7 +499,7 @@ const popupDataFromTabId = function(tabId, tabTitle) {
         tabId,
         tabTitle,
         tooltipsDisabled: µbus.tooltipsDisabled,
-        hasUnprocessedRequest: vAPI && vAPI.net.hasUnprocessedRequest(tabId),
+        hasUnprocessedRequest: vAPI.net && vAPI.net.hasUnprocessedRequest(tabId),
     };
 
     if ( µbhs.uiPopupConfig !== 'unset' ) {

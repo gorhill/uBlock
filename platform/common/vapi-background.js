@@ -1371,8 +1371,11 @@ vAPI.Net = class {
         return this.unprocessedTabs.size !== 0 &&
                this.unprocessedTabs.has(tabId);
     }
-    removeUnprocessedRequest(tabId) {
-        this.unprocessedTabs.delete(tabId);
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/2589
+    // - Aggressively clear the unprocessed-request status of all tabs as
+    //   soon as there is a call to clear for one tab.
+    removeUnprocessedRequest() {
+        this.unprocessedTabs.clear();
         if ( this.unprocessedTabs.size !== 0 ) { return false; }
         this.suspendableListener = this.deferredSuspendableListener;
         this.deferredSuspendableListener = undefined;
