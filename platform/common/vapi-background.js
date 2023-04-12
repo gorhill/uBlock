@@ -1376,6 +1376,7 @@ vAPI.Net = class {
     //   soon as there is a call to clear for one tab.
     removeUnprocessedRequest() {
         this.unprocessedTabs.clear();
+        if ( this.deferredSuspendableListener === undefined ) { return true; }
         if ( this.unprocessedTabs.size !== 0 ) { return false; }
         this.suspendableListener = this.deferredSuspendableListener;
         this.deferredSuspendableListener = undefined;
