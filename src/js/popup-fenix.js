@@ -628,6 +628,7 @@ dom.on('.dismiss', 'click', ( ) => {
         what: 'dismissUnprocessedRequest',
         tabId: popupData.tabId,
     }).then(( ) => {
+        popupData.hasUnprocessedRequest = false;
         dom.cl.remove(dom.root, 'warn');
     });
 });
@@ -1082,6 +1083,18 @@ const setFirewallRuleHandler = function(ev) {
 /******************************************************************************/
 
 const reloadTab = function(bypassCache = false) {
+    // Premptively clear the unprocessed-requests status since we know for sure
+    // the page is being reloaded in this code path.
+    if ( popupData.hasUnprocessedRequest === true )  {
+        messaging.send('popupPanel', {
+            what: 'dismissUnprocessedRequest',
+            tabId: popupData.tabId,
+        }).then(( ) => {
+            popupData.hasUnprocessedRequest = false;
+            dom.cl.remove(dom.root, 'warn');
+        });
+    }
+
     messaging.send('popupPanel', {
         what: 'reloadTab',
         tabId: popupData.tabId,
