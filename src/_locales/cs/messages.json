@@ -276,11 +276,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilter": {
-    "message": "skript",
+    "message": "script",
     "description": "Appears as an option to filter out firewall rows"
   },
   "popup3pFrameFilter": {
-    "message": "rámec",
+    "message": "frame",
     "description": "Appears as an option to filter out firewall rows"
   },
   "pickerCreate": {
@@ -900,7 +900,7 @@
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
-    "message": "Otázky a podpora",
+    "message": "Dotazy a hlášení",
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
@@ -912,7 +912,7 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "<span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"> <code> </code> </span> <u> </u>",
+    "message": "Hlášení problémů s filtrem u učitých web. stránek do <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. Vyžaduje účet GitHub.",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
@@ -1264,7 +1264,7 @@
     "description": "Message used in frame placeholders"
   },
   "linterMainReport": {
-    "message": "{{count}}",
+    "message": "Errors: {{count}}",
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
