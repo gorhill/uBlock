@@ -1252,7 +1252,7 @@ vAPI.Net = class {
         this.listenerMap = new WeakMap();
         this.suspendDepth = 0;
         this.unprocessedTabs = new Map();
-        this.lastUnprocessedRequestTime = Number.MAX_SAFE_INTEGER;
+        this.processRequestStartTime = Number.MAX_SAFE_INTEGER;
 
         browser.webRequest.onBeforeRequest.addListener(
             details => {
@@ -1335,6 +1335,7 @@ vAPI.Net = class {
                 }
                 return this.deferredSuspendableListener(details);
             };
+            this.processRequestStartTime = Date.now();
         }
         this.suspendableListener = listener;
         vAPI.setDefaultIcon('', '');
@@ -1367,11 +1368,10 @@ vAPI.Net = class {
             this.unprocessedTabs.set(tabId, (requests = []));
         }
         requests.push(Object.assign({}, details));
-        this.lastUnprocessedRequestTime = Date.now();
     }
     hasUnprocessedRequest(tabId) {
         if ( this.unprocessedTabs.size === 0 ) { return false; }
-        if ( (Date.now() - this.lastUnprocessedRequestTime) > 60000 ) {
+        if ( (Date.now() - this.processRequestStartTime) > 60000 ) {
             this.removeUnprocessedRequest();
         }
         return this.unprocessedTabs.has(tabId);
