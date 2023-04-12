@@ -288,7 +288,7 @@ vAPI.Tabs = class {
             });
         }
         browser.tabs.onRemoved.addListener((tabId, details) => {
-            if ( vAPI.net ) {
+            if ( vAPI.net && vAPI.net.hasUnprocessedRequest(tabId) ) {
                 vAPI.net.removeUnprocessedRequest(tabId);
             }
             this.onRemovedHandler(tabId, details);
@@ -1375,9 +1375,9 @@ vAPI.Net = class {
     // - Aggressively clear the unprocessed-request status of all tabs as
     //   soon as there is a call to clear for one tab.
     removeUnprocessedRequest() {
+        if ( this.unprocessedTabs.size === 0 ) { return true; }
         this.unprocessedTabs.clear();
         if ( this.deferredSuspendableListener === undefined ) { return true; }
-        if ( this.unprocessedTabs.size !== 0 ) { return false; }
         this.suspendableListener = this.deferredSuspendableListener;
         this.deferredSuspendableListener = undefined;
         return true;
