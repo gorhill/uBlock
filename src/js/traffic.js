@@ -1136,10 +1136,10 @@ const webRequest = {
             vAPI.defer.once({ min: 1 }).then(( ) => {
                 if ( vAPI.net.hasUnprocessedRequest() === false ) { return; }
                 vAPI.net.removeUnprocessedRequest();
-                vAPI.tabs.getCurrent().then(tab => {
-                    if ( tab === null ) { return; }
-                    µb.updateToolbarIcon(tab.id, 0b0110);
-                });
+                return vAPI.tabs.getCurrent();
+            }).then(tab => {
+                if ( tab instanceof Object === false ) { return; }
+                µb.updateToolbarIcon(tab.id, 0b0110);
             });
             vAPI.net.unsuspend({ all: true });
         };
