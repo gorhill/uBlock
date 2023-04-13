@@ -199,8 +199,11 @@
     min-width: 6em;
     visibility: hidden;
     }
-.cm-search-widget[data-query] .cm-search-widget-count:not(:empty) {
+.cm-search-widget[data-query] .cm-search-widget-count {
     visibility: visible;
+    }
+.cm-search-widget[data-query] .cm-search-widget-count:empty {
+    visibility: hidden;
     }
 .cm-search-widget .cm-search-widget-button:hover {
     color: #000;
