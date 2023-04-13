@@ -982,7 +982,7 @@ const injectCSP = function(fctxt, pageStore, responseHeaders) {
 
     if ( cspSubsets.length === 0 ) { return; }
 
-    µb.updateToolbarIcon(fctxt.tabId, 0x02);
+    µb.updateToolbarIcon(fctxt.tabId, 0b0010);
 
     // Use comma to merge CSP directives.
     // Ref.: https://www.w3.org/TR/CSP2/#implementation-considerations
@@ -1133,6 +1133,14 @@ const webRequest = {
                     urls: [ 'http://*/*', 'https://*/*' ]
                 }
             );
+            vAPI.defer.once({ min: 1 }).then(( ) => {
+                if ( vAPI.net.hasUnprocessedRequest() === false ) { return; }
+                vAPI.net.removeUnprocessedRequest();
+                vAPI.tabs.getCurrent().then(tab => {
+                    if ( tab === null ) { return; }
+                    µb.updateToolbarIcon(tab.id, 0b0110);
+                });
+            });
             vAPI.net.unsuspend({ all: true });
         };
     })(),

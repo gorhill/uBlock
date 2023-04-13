@@ -890,7 +890,7 @@ if ( webext.browserAction instanceof Object ) {
         });
         browserAction.setBadgeText({ text });
         browserAction.setBadgeBackgroundColor({
-            color: text === '!' ? '#FFCC00' : '#666'
+            color: text === '!' ? '#FC0' : '#666'
         });
     };
 }
@@ -1252,7 +1252,6 @@ vAPI.Net = class {
         this.listenerMap = new WeakMap();
         this.suspendDepth = 0;
         this.unprocessedTabs = new Map();
-        this.processRequestStartTime = Number.MAX_SAFE_INTEGER;
 
         browser.webRequest.onBeforeRequest.addListener(
             details => {
@@ -1335,7 +1334,6 @@ vAPI.Net = class {
                 }
                 return this.deferredSuspendableListener(details);
             };
-            this.processRequestStartTime = Date.now();
         }
         this.suspendableListener = listener;
         vAPI.setDefaultIcon('', '');
@@ -1371,9 +1369,7 @@ vAPI.Net = class {
     }
     hasUnprocessedRequest(tabId) {
         if ( this.unprocessedTabs.size === 0 ) { return false; }
-        if ( (Date.now() - this.processRequestStartTime) > 60000 ) {
-            this.removeUnprocessedRequest();
-        }
+        if ( tabId === undefined ) { return true; }
         return this.unprocessedTabs.has(tabId);
     }
     removeUnprocessedRequest(tabId) {
