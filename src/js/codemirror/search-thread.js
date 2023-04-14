@@ -103,11 +103,13 @@ if (
 // Main context
 
 {
-    const workerTTL = 5 * 60 * 1000;
+    const workerTTL = { min: 5 };
     const pendingResponses = new Map();
+    const workerTTLTimer = vAPI.defer.create(( ) => {
+        shutdown();
+    });
 
     let worker;
-    let workerTTLTimer;
     let messageId = 1;
 
     const onWorkerMessage = function(e) {
@@ -131,11 +133,8 @@ if (
     };
 
     const shutdown = function() {
-        if ( workerTTLTimer !== undefined ) {
-            clearTimeout(workerTTLTimer);
-            workerTTLTimer = undefined;
-        }
         if ( worker === undefined ) { return; }
+        workerTTLTimer.off();
         worker.terminate();
         worker.onmessage = undefined;
         worker = undefined;
@@ -148,10 +147,7 @@ if (
             worker = new Worker('js/codemirror/search-thread.js');
             worker.onmessage = onWorkerMessage;
         }
-        if ( workerTTLTimer !== undefined ) {
-            clearTimeout(workerTTLTimer);
-        }
-        workerTTLTimer = vAPI.setTimeout(shutdown, workerTTL);
+        workerTTLTimer.offon(workerTTL);
     };
 
     const needHaystack = function() {
