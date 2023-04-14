@@ -1133,7 +1133,7 @@ const webRequest = {
                     urls: [ 'http://*/*', 'https://*/*' ]
                 }
             );
-            vAPI.defer.once({ min: 1 }).then(( ) => {
+            vAPI.defer.once({ sec: µb.hiddenSettings.toolbarWarningTimeout }).then(( ) => {
                 if ( vAPI.net.hasUnprocessedRequest() === false ) { return; }
                 vAPI.net.removeUnprocessedRequest();
                 return vAPI.tabs.getCurrent();

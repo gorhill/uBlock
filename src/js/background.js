@@ -82,6 +82,7 @@ const hiddenSettingsDefault = {
     requestJournalProcessPeriod: 1000,
     selfieAfter: 2,
     strictBlockingBypassDuration: 120,
+    toolbarWarningTimeout: 60,
     uiPopupConfig: 'unset',
     uiStyles: 'unset',
     updateAssetBypassBrowserCache: false,
