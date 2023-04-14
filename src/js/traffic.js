@@ -1111,7 +1111,7 @@ const webRequest = {
             vAPI.net.suspend();
         }
 
-        return async ( ) => {
+        return ( ) => {
             vAPI.net.setSuspendableListener(onBeforeRequest);
             vAPI.net.addListener(
                 'onHeadersReceived',
