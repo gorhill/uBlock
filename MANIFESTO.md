@@ -1,10 +1,7 @@
-### This is uBlock's manifesto
+uBlock Origin (uBO)'s manifesto:
 
-1. The **user decides** what web content is acceptable or not in their browser.
+The **user decides** what web content is acceptable in their browser.
 
-The uBlock project does not support Adblock Plus' _"Acceptable Ads Manifesto"_,
-because the _"Acceptable Ads"_ marketing campaign is really the business
-plan of a for-profit entity.
+The uBO project does not support Adblock Plus' _"Acceptable Ads Manifesto"_ because the _"Acceptable Ads"_ marketing campaign is the business plan of a for-profit entity.
 
-Users are best placed to know what is or is not acceptable to them. uBlock's
-sole purpose is to give users the means to enforce their own choices.
+Users are the best placed to know what is or is not acceptable to them. uBO's sole purpose is to give users the means to enforce their choices.
