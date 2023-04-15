@@ -152,7 +152,6 @@ You can help contribute by translating uBO on [Crowdin].
 [Deployment]: https://github.com/gorhill/uBlock/wiki/Deploying-uBlock-Origin
 [Blocking]: https://github.com/gorhill/uBlock/wiki/Blocking-mode
 [Releases]: https://github.com/gorhill/uBlock/releases
-[UMatrix]: https://github.com/gorhill/uMatrix
 [Issues]: https://github.com/uBlockOrigin/uBlock-issues/issues
 [Beta]: https://github.com/gorhill/uBlock/blob/master/dist/README.md#for-beta-version
 [Wiki]: https://github.com/gorhill/uBlock/wiki
