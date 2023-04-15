@@ -49,11 +49,10 @@ function safeSelf() {
         'RegExp': self.RegExp,
         'RegExp_test': self.RegExp.prototype.test,
         'RegExp_exec': self.RegExp.prototype.exec,
-        'safeLog': console.log.bind(console),
+        'log': console.log.bind(console),
         'uboLog': function(msg) {
-            if ( msg !== '' ) {
-                this.safeLog(`[uBO] ${msg}`);
-            }
+            if ( msg === '' ) { return; }
+            this.log(`[uBO] ${msg}`);
         },
     };
     scriptletGlobals.set('safeSelf', safe);
