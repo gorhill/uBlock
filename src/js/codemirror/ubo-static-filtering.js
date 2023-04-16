@@ -840,6 +840,7 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
             if ( marker === null ) { return; }
             if ( marker.dataset.lint === 'error' ) {
                 errorCount -= 1;
+                marker.dataset.lint = 'void';
             }
         });
     };
