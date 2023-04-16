@@ -29,11 +29,9 @@ uBlock Origin (uBO)
 
 ***
 
-uBlock Origin (uBO) is a CPU and memory-efficient [wide-spectrum content blocker][Blocking] for Chromium and Firefox. It blocks ads, trackers, coin miners, popups, annoying anti-blockers, malware sites, etc., by default after installation using [EasyList][EasyList], [EasyPrivacy][EasyPrivacy], [Peter Lowe's Blocklist][Peter Lowe's Blocklist], [Online Malicious URL Blocklist][Malicious Blocklist], and uBO [filter lists][uBO Filters]. There are many other lists available to block even more. Hosts files are also supported.
+uBlock Origin (uBO) is a CPU and memory-efficient [wide-spectrum content blocker][Blocking] for Chromium and Firefox. It blocks ads, trackers, coin miners, popups, annoying anti-blockers, malware sites, etc., by default using [EasyList][EasyList], [EasyPrivacy][EasyPrivacy], [Peter Lowe's Blocklist][Peter Lowe's Blocklist], [Online Malicious URL Blocklist][Malicious Blocklist], and uBO [filter lists][uBO Filters]. There are many other lists available to block even more. Hosts files are also supported. uBO uses the EasyList filter syntax and [extends][Extended Syntax] the syntax to work with custom rules and filters.
 
-After installation, you may easily unselect any preselected filter lists if you think uBO blocks too much. For reference, Adblock Plus installs with only EasyList, ABP filters, and Acceptable Ads enabled by default.
-
-uBO uses the EasyList filter syntax and [extends][Extended Syntax] the syntax to work with custom rules and filters. Also, uBO has an advanced mode that allows it to work in [default-deny mode][Default Deny]. This mode will cause [all 3rd-party network requests][3rd Party Requests] to be blocked by default unless allowed by the user.
+You may easily unselect any preselected filter lists if you think uBO blocks too much. For reference, Adblock Plus installs with only EasyList, ABP filters, and Acceptable Ads enabled by default.
 
 It is important to note that using a blocker is **NOT** [theft]. Do not fall for this creepy idea. The _ultimate_ logical consequence of `blocking = theft` is the criminalization of the inalienable right to privacy.
 
@@ -44,8 +42,9 @@ Ads, "unintrusive" or not, are just the visible portion of the privacy-invading 
 * [Documentation](#documentation)
 * [Installation](#installation)
   * [Chromium](#chromium)
-  * [Firefox / Firefox for Android](#firefox--firefox-for-android)
+  * [Firefox](#firefox)
 * [Release History](#release-history)
+* [Translations](#translations)
 * [About](#about)
 * [License](#license)
 * [Privacy Policy]
@@ -74,19 +73,19 @@ For support, questions, or help, visit [/r/uBlockOrigin][Reddit].
 
 [Opera Add-ons][Opera]
 
-[Development Build][Chrome Dev]
+[Development Builds][Chrome Dev]
 
 uBO should be compatible with any Chromium-based browser.
 
-#### Firefox / Firefox for Android
+#### Firefox
 
 [Firefox Add-ons][Mozilla]
 
-[Development Build][Beta]
+[Development Builds][Beta]
 
 #### All Browsers
 
-Do **NOT** use any other [similarly-purposed blockers][Similarly-Purposed] concurrently with uBO to benefit from its higher efficiency. uBO will [perform][Performance] as well as or better than most of the other popular ad blockers. These other blockers can prevent uBO's privacy or anti-blocker-defusing features from working correctly.
+Do **NOT** use any other [similarly-purposed blockers][Similarly-Purposed] concurrently with uBO to benefit from its higher efficiency. uBO will [perform][Performance] as well as or better than most other popular ad blockers. These other blockers can prevent uBO's privacy or anti-blocker-defusing features from working correctly.
 
 [Manual Installation][Manual Installation]
 
@@ -98,15 +97,17 @@ Do **NOT** use any other [similarly-purposed blockers][Similarly-Purposed] concu
 
 [Releases Page][Releases]
 
+## Translations
+
+Help translate uBO via [Crowdin][Crowdin].
+
 ## About
 
 [Manifesto][Manifesto]
 
 Free. Open-source. For users by users. No donations sought.
 
-If you ever want to contribute something, think about the people working hard to maintain the filter lists you are using, which were made available to use by all for free.
-
-You can help contribute by translating uBO on [Crowdin].
+If you ever want to contribute something, think about the people working hard to maintain the filter lists you are using, which are available to use by all for free.
 
 ## License
 
@@ -117,7 +118,6 @@ You can help contribute by translating uBO on [Crowdin].
 
 [Peter Lowe's Blocklist]: https://pgl.yoyo.org/adservers/
 [Malicious Blocklist]: https://gitlab.com/malware-filter/urlhaus-filter#malicious-url-blocklist
-[3rd Party Requests]: https://requestpolicycontinued.github.io/#what-are-cross-site-requests
 [Similarly-Purposed]: https://twitter.com/gorhill/status/1033706103782170625
 [Performance]: https://www.debugbear.com/blog/chrome-extension-performance-2021#how-do-ad-blockers-and-privacy-tools-affect-browser-performance
 [EasyPrivacy]: https://easylist.to/#easyprivacy
@@ -145,7 +145,6 @@ You can help contribute by translating uBO on [Crowdin].
 [Extended Syntax]: https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#extended-syntax
 [Dynamic Filters]: https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-quick-guide
 [Privacy Policy]: https://github.com/gorhill/uBlock/wiki/Privacy-policy
-[Default Deny]: https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-default-deny
 [uBO Filters]: https://github.com/uBlockOrigin/uAssets/tree/master/filters
 [Permissions]: https://github.com/gorhill/uBlock/wiki/Permissions
 [Commit Rate]: https://github.com/gorhill/uBlock/commits/master
