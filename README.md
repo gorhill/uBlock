@@ -83,7 +83,7 @@ uBO should be compatible with any Chromium-based browser.
 
 [Development Builds][Beta]
 
-uBO works on Firefox for the desktop and Android.
+uBO works best on Firefox and is available for desktop and Android versions.
 
 #### All Browsers
 
