@@ -55,18 +55,14 @@ Ads, "unintrusive" or not, are just the visible portion of the privacy-invading 
 <table>
     <thead>
         <tr>
-            <th>Basic mode</th>
-            <th>Advanced-user mode</th>
+            <th>Basic Mode</th>
+            <th>Advanced Mode</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td align="center"><a href="https://github.com/gorhill/uBlock/wiki/Quick-guide:-popup-user-interface">Popup user interface</a></td>
-            <td align="center"><a href="https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-quick-guide">A point-and-click firewall that is configurable on a per-site basis</a></td>
-        </tr>
-        <tr>
-            <td align="center"><sub>Install and forget: optimally configured by default</sub></td>
-            <td align="center"><sub>Configure as you wish<br>The image shows 3rd-party scripts and frames blocked by default everywhere</sub></td>
+            <td align="center">The <a href="https://github.com/gorhill/uBlock/wiki/Quick-guide:-popup-user-interface">simple popup user interface</a> for an install-it-and-forget-it type of installation that is configured optimally by default.</td>
+            <td align="center">The <a href="https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-quick-guide">advanced popup user interface</a> includes a point-and-click firewall that is configurable on a per-site basis.</td>
         </tr>
         <tr>
             <td valign="top"><a href="https://github.com/gorhill/uBlock/wiki/Quick-guide:-popup-user-interface"><img src="https://user-images.githubusercontent.com/585534/232531044-c4ac4dd5-0b60-4c1e-aabb-914be04b846c.png"/></a></td>
@@ -160,10 +156,8 @@ If you ever want to contribute something, think about the people working hard to
 
 <!---------------------------------[ Internal ]-------------------------------->
 
-[Popup User Interface]: https://github.com/gorhill/uBlock/wiki/Quick-guide:-popup-user-interface
 [Manual Installation]: https://github.com/gorhill/uBlock/tree/master/dist#install
 [Extended Syntax]: https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#extended-syntax
-[Dynamic Filters]: https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-quick-guide
 [Privacy Policy]: https://github.com/gorhill/uBlock/wiki/Privacy-policy
 [uBO Filters]: https://github.com/uBlockOrigin/uAssets/tree/master/filters
 [Permissions]: https://github.com/gorhill/uBlock/wiki/Permissions
