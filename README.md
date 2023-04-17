@@ -83,6 +83,8 @@ uBO should be compatible with any Chromium-based browser.
 
 [Development Builds][Beta]
 
+uBO works on Firefox for the desktop and Android.
+
 #### All Browsers
 
 Do **NOT** use any other [similarly-purposed blockers][Similarly-Purposed] concurrently with uBO to benefit from its higher efficiency. uBO will [perform][Performance] as well as or better than most other popular ad blockers. These other blockers can prevent uBO's privacy or anti-blocker-defusing features from working correctly.
