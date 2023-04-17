@@ -83,7 +83,7 @@ uBO should be compatible with any Chromium-based browser.
 
 [Development Builds][Beta]
 
-uBO works best on Firefox and is available for desktop and Android versions.
+uBO [works best][Works Best] on Firefox and is available for desktop and Android versions.
 
 #### All Browsers
 
@@ -150,6 +150,7 @@ If you ever want to contribute something, think about the people working hard to
 [uBO Filters]: https://github.com/uBlockOrigin/uAssets/tree/master/filters
 [Permissions]: https://github.com/gorhill/uBlock/wiki/Permissions
 [Commit Rate]: https://github.com/gorhill/uBlock/commits/master
+[Works Best]: https://github.com/gorhill/uBlock/wiki/uBlock-Origin-works-best-on-Firefox
 [Deployment]: https://github.com/gorhill/uBlock/wiki/Deploying-uBlock-Origin
 [Blocking]: https://github.com/gorhill/uBlock/wiki/Blocking-mode
 [Releases]: https://github.com/gorhill/uBlock/releases
