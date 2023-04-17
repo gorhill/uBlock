@@ -52,10 +52,28 @@ Ads, "unintrusive" or not, are just the visible portion of the privacy-invading 
 
 ## Documentation
 
- Basic mode | Advanced-user mode
-:----------:|:------------------:
-[Popup user interface]|[A point-and-click firewall that is configurable on a per-site basis][Dynamic Filters]
-<a href="https://github.com/gorhill/uBlock/wiki/Quick-guide:-popup-user-interface"><img src="https://user-images.githubusercontent.com/585534/84045360-b10ee580-a976-11ea-9e91-29c2107b47c2.png"/></a><br><sup>.<br>.</sup>|<a href="https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-quick-guide"><img src="https://user-images.githubusercontent.com/585534/84045366-b1a77c00-a976-11ea-9121-e8c8f35c66c8.png"/></a><br><sup>Configure as you wish.<br>The image shows 3rd-party scripts and frames blocked by default everywhere.</sup>
+<table>
+    <thead>
+        <tr>
+            <th>Basic mode</th>
+            <th>Advanced-user mode</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td align="center"><a href="https://github.com/gorhill/uBlock/wiki/Quick-guide:-popup-user-interface">Popup user interface</a></td>
+            <td align="center"><a href="https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-quick-guide">A point-and-click firewall that is configurable on a per-site basis</a></td>
+        </tr>
+        <tr>
+            <td align="center"><sub>Install and forget: optimally configured by default</sub></td>
+            <td align="center"><sub>Configure as you wish<br>The image shows 3rd-party scripts and frames blocked by default everywhere</sub></td>
+        </tr>
+        <tr>
+            <td valign="top"><a href="https://github.com/gorhill/uBlock/wiki/Quick-guide:-popup-user-interface"><img src="https://user-images.githubusercontent.com/585534/232531044-c4ac4dd5-0b60-4c1e-aabb-914be04b846c.png"/></a></td>
+            <td valign="top"><a href="https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-quick-guide"><img src="https://user-images.githubusercontent.com/585534/232531439-a8f81cc3-6622-45c4-8b32-7348cecf6e98.png"/></a></td>
+        </tr>
+    </tbody>
+</table>
 
 Visit the [Wiki][Wiki] for documentation.
 
