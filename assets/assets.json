@@ -410,7 +410,7 @@
 		"off": true,
 		"title": "FIN: Adblock List for Finland",
 		"lang": "fi",
-		"contentURL": "https://raw.githubusercontent.com/finnish-easylist-addition/finnish-easylist-addition/master/Finland_adb.txt",
+		"contentURL": "https://raw.githubusercontent.com/finnish-easylist-addition/finnish-easylist-addition/gh-pages/Finland_adb.txt",
 		"supportURL": "https://github.com/finnish-easylist-addition/finnish-easylist-addition"
 	},
 	"FRA-0": {
