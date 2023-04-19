@@ -1500,7 +1500,7 @@ const compileDomainOpt = (ctors, iterable, prepend, units) => {
         if ( len <= beg ) {  continue; }
         if ( s.charCodeAt(beg) === 0x2F /* / */ ) {
             if ( beg === 0 ) { regexHits.push(s); continue; }
-            regexMisses.push(s); continue;
+            regexMisses.push(s.slice(1)); continue;
         }
         if ( s.endsWith('.*') === false ) {
             if ( beg === 0 ) { hostnameHits.push(s); continue; }
