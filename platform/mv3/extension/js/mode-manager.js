@@ -131,13 +131,17 @@ async function setFilteringModeDetails(afterDetails) {
             id: TRUSTED_DIRECTIVE_BASE_RULE_ID,
             action: { type: 'allowAllRequests' },
             condition: {
-                requestDomains: [],
                 resourceTypes: [ 'main_frame' ],
             },
             priority: 100,
         };
-        if ( actualDetails.none.size ) {
-            rule.condition.requestDomains = Array.from(actualDetails.none);
+        if ( actualDetails.none.size !== 0 ) {
+            if (
+                actualDetails.none.size !== 1 ||
+                actualDetails.none.has('all-urls') === false
+            ) {
+                rule.condition.requestDomains = Array.from(actualDetails.none);
+            }
             addRules.push(rule);
             dynamicRuleMap.set(TRUSTED_DIRECTIVE_BASE_RULE_ID, rule);
         }
