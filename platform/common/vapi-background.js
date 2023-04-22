@@ -90,7 +90,38 @@ vAPI.app = {
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.storage = webext.storage.local;
+vAPI.storage = {
+    get(...args) {
+        return webext.storage.local.get(...args).catch(reason => {
+            console.log(reason);
+        });
+    },
+    set(...args) {
+        return webext.storage.local.set(...args).catch(reason => {
+            console.log(reason);
+        });
+    },
+    remove(...args) {
+        return webext.storage.local.remove(...args).catch(reason => {
+            console.log(reason);
+        });
+    },
+    clear(...args) {
+        return webext.storage.local.clear(...args).catch(reason => {
+            console.log(reason);
+        });
+    },
+    QUOTA_BYTES: browser.storage.local.QUOTA_BYTES,
+};
+
+// Not all platforms support getBytesInUse
+if ( webext.storage.local.getBytesInUse instanceof Function ) {
+    vAPI.storage.getBytesInUse = function(...args) {
+        return webext.storage.local.getBytesInUse(...args).catch(reason => {
+            console.log(reason);
+        });
+    };
+}
 
 /******************************************************************************/
 /******************************************************************************/
