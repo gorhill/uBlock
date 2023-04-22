@@ -1,30 +1,30 @@
-uBO Lite (uBOL) is an experimental *permission-less* MV3-based content blocker.
+uBO Lite (uBOL) este blocant de conținut experimental * fără permisiuni * bazat pe MV3.
 
-The default ruleset corresponds to uBlock Origin's default filterset:
+Setul de reguli implicit corespunde setului de filtre implicit al uBlock Origin:
 
-- uBlock Origin's built-in filter lists
+Listele de filtre încorporate de uBlock Origin
 - EasyList
 - EasyPrivacy
 - Peter Lowe’s Ad and tracking server list
 
-You can add more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+Puteți adăuga mai multe seturi de reguli vizitând pagina de opțiuni -- făcând clic pe pictograma _Cogs_ din panoul pop-up
 
-uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
+uBOL este în întregime declarativ, ceea ce înseamnă că nu este nevoie de un proces uBOL permanent pentru ca filtrarea să aibă loc, iar filtrarea conținutului pe bază de injecție CSS/JS este realizată în mod fiabil de browser în sine, mai degrabă decât de extensie. Aceasta înseamnă că uBOL în sine nu consumă resurse CPU/memorie în timp ce blocarea conținutului este în desfășurare -- procesul de lucru al serviciului uBOL este necesar _doar_ atunci când interacționați cu panoul pop-up sau cu paginile de opțiuni.
 
-uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read and modify data" permissions at install time.
+uBOL nu necesită permisiunii extinse de „citire și modificare a datelor” în momentul instalării, prin urmare capacitățile sale limitate din momentul instalării în comparație cu uBlock Origin sau alte blocare de conținut care necesită permisiuni largi de „citire și modificare a datelor” în momentul instalării.
 
-However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
+Cu toate acestea, uBOL vă permite să acordați *explicit* permisiuni extinse pe anumite site-uri alese de dvs., astfel încât să poată filtra mai bine pe acele site-uri folosind filtrarea cosmetică și injecțiile de scriptlet.
 
-To grant extended permissions on a given site, open the popup panel and pick a higher filtering mode such as Optimal or Complete.
+Pentru a acorda permisiuni extinse pe un anumit site, deschideți panoul pop-up și alegeți un mod de filtrare mai ridicat, cum ar fi Optimal sau Complet.
 
-The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request.
+Browser-ul vă va avertiza apoi cu privire la efectele acordării permisiunilor suplimentare solicitate de extensie pe site-ul curent și va trebui să spuneți browserului dacă acceptați sau refuzați cererea.
 
-If you accept uBOL's request for additional permissions on the current site, it will be able to better filter content for the current site.
+Dacă acceptați solicitarea uBOL pentru permisiuni suplimentare pe site-ul curent, acesta va putea filtra mai bine conținutul pentru site-ul curent.
 
-You can set the default filtering mode from uBOL's options page. If you pick the Optimal or Complete mode as the default one, you will need to grant uBOL the permission to read and modify data on all websites.
+Puteți seta modul implicit de filtrare din pagina de opțiuni a uBOL. Dacă alegeți modul optim sau complet ca implicit, va trebui să acordați lui uBOL permisiunea de a citi și modifica datele de pe toate site-urile web.
 
-Keep in mind this is still a work in progress, with these end goals:
+Rețineți că aceasta este în curs de desfășurare, cu aceste obiective finale:
 
-- No broad host permissions at install time -- extended permissions are granted explicitly by the user on a per-site basis.
+- Fără permisiuni de gazdă largi în momentul instalării - permisiunile extinse sunt acordate în mod explicit de către utilizator pe bază de site.
 
-- Entirely declarative for reliability and CPU/memory efficiency.
+- Complet declarativ pentru fiabilitate și eficiență CPU/memorie.

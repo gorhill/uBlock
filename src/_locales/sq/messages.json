@@ -936,7 +936,7 @@
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "Informacioni teknik i mëposhtëm u shërben personave të cilët përpiqen t'ju ndihmojnë për zgjidhjen e një problemi që mund të keni.",
+    "message": "Informacioni teknik i mëposhtëm u shërben personave të cilët përpiqen të zgjidhin problemin që keni.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
