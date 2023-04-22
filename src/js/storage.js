@@ -1623,13 +1623,17 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
     if ( topic === 'assets.json-updated' ) {
         const { newDict, oldDict } = details;
+        if ( newDict['assets.json'] === undefined ) { return; }
+        if ( oldDict['assets.json'] === undefined ) { return; }
         const newDefaultListset = new Set(newDict['assets.json'].defaultListset || []);
         const oldDefaultListset = new Set(oldDict['assets.json'].defaultListset || []);
+        if ( newDefaultListset.size === 0 ) { return; }
         if ( oldDefaultListset.size === 0 ) {
-            Array.from(Object.entries(newDict))
+            Array.from(Object.entries(oldDict))
                 .filter(a => a[1].content === 'filters' && a[1].off === undefined)
                 .map(a => a[0])
                 .forEach(a => oldDefaultListset.add(a));
+            if ( oldDefaultListset.size === 0 ) { return; }
         }
         const selectedListset = new Set(this.selectedFilterLists);
         let selectedListModified = false;
