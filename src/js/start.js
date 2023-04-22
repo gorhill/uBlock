@@ -265,7 +265,7 @@ const onUserSettingsReady = fetched => {
 // https://github.com/uBlockOrigin/uBlock-issues/issues/1365
 //   Wait for removal of invalid cached data to be completed.
 
-const onCacheSettingsReady = async fetched => {
+const onCacheSettingsReady = async (fetched = {}) => {
     if ( fetched.compiledMagic !== µb.systemSettings.compiledMagic ) {
         µb.compiledFormatChanged = true;
         µb.selfieIsInvalid = true;

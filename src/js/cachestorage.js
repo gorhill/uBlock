@@ -63,10 +63,26 @@ const storageLocal = webext.storage.local;
 
 const cacheStorage = {
     name: 'browser.storage.local',
-    get: storageLocal.get.bind(storageLocal),
-    set: storageLocal.set.bind(storageLocal),
-    remove: storageLocal.remove.bind(storageLocal),
-    clear: storageLocal.clear.bind(storageLocal),
+    get: (...args) => {
+        return storageLocal.get(...args).catch(reason => {
+            console.log(reason);
+        });
+    },
+    set: (...args) => {
+        return storageLocal.set(...args).catch(reason => {
+            console.log(reason);
+        });
+    },
+    remove: (...args) => {
+        return storageLocal.remove(...args).catch(reason => {
+            console.log(reason);
+        });
+    },
+    clear: (...args) => {
+        return storageLocal.clear(...args).catch(reason => {
+            console.log(reason);
+        });
+    },
     // Not all platforms support getBytesInUse
     getBytesInUse: storageLocal.getBytesInUse
         ? storageLocal.getBytesInUse.bind(storageLocal)
