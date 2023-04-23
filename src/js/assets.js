@@ -946,6 +946,29 @@ assets.rmrf = function() {
 
 /******************************************************************************/
 
+assets.getUpdateAges = async function(conditions = {}) {
+    const assetDict = await assets.metadata();
+    const now = Date.now();
+    const out = [];
+    for ( const [ assetKey, asset ] of Object.entries(assetDict) ) {
+        if ( asset.hasRemoteURL !== true ) { continue; }
+        const tokens = conditions[asset.content];
+        if ( Array.isArray(tokens) === false ) { continue; }
+        if ( tokens.includes('*') === false ) {
+            if ( tokens.includes(assetKey) === false ) { continue; }
+        }
+        const age = now  - (asset.writeTime || 0);
+        out.push({
+            assetKey,
+            age,
+            ageNormalized: age / (asset.updateAfter * 86400000),
+        });
+    }
+    return out;
+};
+
+/******************************************************************************/
+
 // Asset updater area.
 const updaterAssetDelayDefault = 120000;
 const updaterUpdated = [];

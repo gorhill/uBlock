@@ -30,6 +30,7 @@
 
 if ( typeof vAPI !== 'object' ) { return; }
 if ( typeof vAPI.domFilterer !== 'object' ) { return; }
+if ( vAPI.domFilterer === null ) { return; }
 
 /******************************************************************************/
 

@@ -1470,18 +1470,12 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         // Respect cooldown period before launching an emergency update.
         const timeSinceLastEmergencyUpdate = (now - lastEmergencyUpdate) / 3600000;
         if ( timeSinceLastEmergencyUpdate > 1 ) {
-            const assetDict = await io.metadata();
-            for ( const [ assetKey, asset ] of Object.entries(assetDict) ) {
-                if ( asset.hasRemoteURL !== true ) { continue; }
-                if ( asset.content === 'filters' ) {
-                    if ( µb.selectedFilterLists.includes(assetKey) === false ) {
-                        continue;
-                    }
-                }
-                if ( asset.obsolete !== true ) { continue; }
-                const lastUpdateInDays = (now - asset.writeTime) / 86400000;
-                const daysSinceVeryObsolete = lastUpdateInDays - 2 * asset.updateAfter;
-                if ( daysSinceVeryObsolete < 0 ) { continue; }
+            const entries = await io.getUpdateAges({
+                filters: µb.selectedFilterLists,
+                internal: [ '*' ],
+            });
+            for ( const entry of entries ) {
+                if ( entry.ageNormalized < 2 ) { continue; }
                 needEmergencyUpdate = true;
                 lastEmergencyUpdate = now;
                 break;

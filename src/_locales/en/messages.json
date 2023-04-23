@@ -952,6 +952,14 @@
     "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported.",
     "description": "A paragraph in the filter issue reporter section"
   },
+  "supportS6P2S1": {
+    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "description": "A paragraph in the filter issue reporter section"
+  },
+  "supportS6P2S2": {
+    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "description": "A paragraph in the filter issue reporter section"
+  },
   "supportS6URL": {
     "message": "Address of the web page:",
     "description": "Label for the URL of the page"

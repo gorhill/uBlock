@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="css/themes/default.css">
 <link rel="stylesheet" href="css/common.css">
 <link rel="stylesheet" href="css/dashboard-common.css">
+<link rel="stylesheet" href="css/fa-icons.css">
 <link rel="stylesheet" href="css/support.css">
 <link rel="stylesheet" href="css/codemirror.css">
 <link rel="shortcut icon" type="image/png" href="img/icon_64.png">
@@ -62,34 +63,41 @@
     </div>
     <div class="e">
         <h3 data-i18n="supportS6H"></h3>
+        <p data-i18n="supportS3P1"></p>
+        <div class="supportEntry shouldUpdate">
+            <hr>
+            <p data-i18n="supportS6P2S1">_</p>
+            <button type="button" class="iconified"><span class="fa-icon">refresh</span><span data-i18n="3pUpdateNow">_</span><span class="hover"></span></button>
+            <u class="updated" data-i18n="supportS6P2S2">_</u>
+        </div>
         <div class="supportEntry">
-            <div>
-                <p data-i18n="supportS3P1">
-                <p data-i18n="supportS6P1S1">
-            </div>
+            <hr>
+            <p data-i18n="supportS6P1S1"></p>
             <button type="button" data-i18n="supportFindSpecificButton">_<span class="hover"></span></button>
         </div>
         <div class="supportEntry">
-            <div>
-                <p>
-                    <label data-i18n="supportS6URL"></label><br>
-                    <select name="url">
-                        <option></option>
-                    </select>
-                <p>
-                    <label data-i18n="supportS6Select1"></label><br>
-                    <select name="type">
-                        <option value="[unknown]" data-i18n="supportS6Select1Option0" selected disabled></option>
-                        <option value="ads" data-i18n="supportS6Select1Option1"></option>
-                        <option value="detection" data-i18n="supportS6Select1Option3"></option>
-                        <option value="popups" data-i18n="supportS6Select1Option6"></option>
-                        <option value="nuisance" data-i18n="supportS6Select1Option2"></option>
-                        <option value="breakage" data-i18n="supportS6Select1Option5"></option>
-                        <option value="privacy" data-i18n="supportS6Select1Option4"></option>
-                    </select>
-                <p>
-                    <label><span class="input checkbox"><input id="isNSFW" type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span><span data-i18n="supportS6Checkbox1"></span></label>
-            </div>
+            <hr>
+            <p>
+                <label data-i18n="supportS6URL"></label><br>
+                <select name="url">
+                    <option></option>
+                </select>
+            </p>
+            <p>
+                <label data-i18n="supportS6Select1"></label><br>
+                <select name="type">
+                    <option value="[unknown]" data-i18n="supportS6Select1Option0" selected disabled></option>
+                    <option value="ads" data-i18n="supportS6Select1Option1"></option>
+                    <option value="detection" data-i18n="supportS6Select1Option3"></option>
+                    <option value="popups" data-i18n="supportS6Select1Option6"></option>
+                    <option value="nuisance" data-i18n="supportS6Select1Option2"></option>
+                    <option value="breakage" data-i18n="supportS6Select1Option5"></option>
+                    <option value="privacy" data-i18n="supportS6Select1Option4"></option>
+                </select>
+            </p>
+            <p>
+                <label><span class="input checkbox"><input id="isNSFW" type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span><span data-i18n="supportS6Checkbox1"></span></label>
+            </p>
             <button type="button" data-i18n="supportReportSpecificButton" class="preferred">_<span class="hover"></span></button>
         </div>
         <hr>
@@ -109,9 +117,11 @@
 <script src="lib/codemirror/addon/selection/active-line.js"></script>
 <script src="lib/hsluv/hsluv-0.1.0.min.js"></script>
 
+<script src="js/fa-icons.js" type="module"></script>
 <script src="js/vapi.js"></script>
 <script src="js/vapi-common.js"></script>
 <script src="js/vapi-client.js"></script>
+<script src="js/vapi-client-extra.js"></script>
 <script src="js/theme.js" type="module"></script>
 <script src="js/i18n.js" type="module"></script>
 <script src="js/dashboard-common.js" type="module"></script>

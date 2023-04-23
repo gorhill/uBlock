@@ -589,6 +589,53 @@ const getElementCount = async function(tabId, what) {
     return total;
 };
 
+const launchReporter = async function(request) {
+    const pageStore = µb.pageStoreFromTabId(request.tabId);
+    if ( pageStore === null ) { return; }
+    if ( pageStore.hasUnprocessedRequest ) {
+        request.popupPanel.hasUnprocessedRequest = true;
+    }
+
+    const entries = await io.getUpdateAges({
+        filters: µb.selectedFilterLists.filter(
+            a => (/^https?:/.test(a) === false)
+        )
+    });
+    let shoudUpdateLists = false;
+    for ( const entry of entries ) {
+        if ( entry.age < (2 * 60 * 60 * 1000) ) { continue; }
+        io.purge(entry.assetKey);
+        shoudUpdateLists = true;
+    }
+
+    // https://github.com/gorhill/uBlock/commit/6efd8eb#commitcomment-107523558
+    //   Important: for whatever reason, not using `document_start` causes the
+    //   Promise returned by `tabs.executeScript()` to resolve only when the
+    //   associated tab is closed.
+    const cosmeticSurveyResults = await vAPI.tabs.executeScript(request.tabId, {
+        allFrames: true,
+        file: '/js/scriptlets/cosmetic-report.js',
+        matchAboutBlank: true,
+        runAt: 'document_start',
+    });
+
+    const filters = cosmeticSurveyResults.reduce((a, v) => {
+        if ( Array.isArray(v) ) { a.push(...v); }
+        return a;
+    }, []);
+    if ( filters.length !== 0 ) {
+        request.popupPanel.cosmetic = filters;
+    }
+
+    const supportURL = new URL(vAPI.getURL('support.html'));
+    supportURL.searchParams.set('pageURL', request.pageURL);
+    supportURL.searchParams.set('popupPanel', JSON.stringify(request.popupPanel));
+    if ( shoudUpdateLists ) {
+        supportURL.searchParams.set('shouldUpdate', 1);
+    }
+    return supportURL.href;
+};
+
 const onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
@@ -610,36 +657,6 @@ const onMessage = function(request, sender, callback) {
         });
         return;
 
-    // https://github.com/gorhill/uBlock/commit/6efd8eb#commitcomment-107523558
-    //   Important: for whatever reason, not using `document_start` causes the
-    //   Promise returned by `tabs.executeScript()` to resolve only when the
-    //   associated tab is closed.
-    case 'launchReporter': {
-        const pageStore = µb.pageStoreFromTabId(request.tabId);
-        if ( pageStore === null ) { break; }
-        if ( pageStore.hasUnprocessedRequest ) {
-            request.popupPanel.hasUnprocessedRequest = true;
-        }
-        vAPI.tabs.executeScript(request.tabId, {
-            allFrames: true,
-            file: '/js/scriptlets/cosmetic-report.js',
-            matchAboutBlank: true,
-            runAt: 'document_start',
-        }).then(results => {
-            const filters = results.reduce((a, v) => {
-                if ( Array.isArray(v) ) { a.push(...v); }
-                return a;
-            }, []);
-            if ( filters.length !== 0 ) {
-                request.popupPanel.cosmetic = filters;
-            }
-            const supportURL = new URL(vAPI.getURL('support.html'));
-            supportURL.searchParams.set('pageURL', request.pageURL);
-            supportURL.searchParams.set('popupPanel', JSON.stringify(request.popupPanel));
-            µb.openNewTab({ url: supportURL.href, select: true, index: -1 });
-        });
-        return;
-    }
     default:
         break;
     }
@@ -659,6 +676,15 @@ const onMessage = function(request, sender, callback) {
         response = lastModified !== request.contentLastModified;
         break;
     }
+
+    case 'launchReporter': {
+        launchReporter(request).then(url => {
+            if ( typeof url !== 'string' ) { return; }
+            µb.openNewTab({ url, select: true, index: -1 });
+        });
+        break;
+    }
+
     case 'revertFirewallRules':
         // TODO: use Set() to message around sets of hostnames
         sessionFirewall.copyRules(
