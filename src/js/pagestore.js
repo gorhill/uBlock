@@ -409,6 +409,10 @@ const PageStore = class {
         // Evaluated on-demand
         this._noCosmeticFiltering = undefined;
 
+        // Remember if the webpage was potentially improperly filtered, for
+        // reporting purpose.
+        this.hasUnprocessedRequest = vAPI.net.hasUnprocessedRequest(tabId);
+
         return this;
     }
 

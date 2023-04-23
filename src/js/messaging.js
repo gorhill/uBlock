@@ -617,7 +617,7 @@ const onMessage = function(request, sender, callback) {
     case 'launchReporter': {
         const pageStore = µb.pageStoreFromTabId(request.tabId);
         if ( pageStore === null ) { break; }
-        if ( vAPI.net.hasUnprocessedRequest(request.tabId) ) {
+        if ( pageStore.hasUnprocessedRequest ) {
             request.popupPanel.hasUnprocessedRequest = true;
         }
         vAPI.tabs.executeScript(request.tabId, {
@@ -1436,7 +1436,7 @@ const getSupportData = async function() {
     }
     if ( Object.keys(addedListset).length === 0 ) {
         addedListset = undefined;
-    } else if ( Object.keys(addedListset).length > 20 ) {
+    } else if ( Object.keys(addedListset).length > 15 ) {
         const added = Object.keys(addedListset);
         const truncated = added.slice(20);
         for ( const key of truncated ) {
