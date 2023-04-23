@@ -202,11 +202,11 @@ function abortCurrentScript(
         const e = document.currentScript;
         if ( e instanceof HTMLScriptElement === false ) { return; }
         if ( e === thisScript ) { return; }
-        if ( e.src !== '' && log ) { safe.uboLog(`src: ${e.src}`); }
         if ( reContext.test(e.src) === false ) { return; }
+        if ( log && e.src !== '' ) { safe.uboLog(`matched src: ${e.src}`); }
         const scriptText = getScriptText(e);
-        if ( log ) { safe.uboLog(`script text: ${scriptText}`); }
         if ( reNeedle.test(scriptText) === false ) { return; }
+        if ( log ) { safe.uboLog(`matched script text: ${scriptText}`); }
         throw new ReferenceError(exceptionToken);
     };
     if ( debug ) { debugger; }  // jshint ignore: line
