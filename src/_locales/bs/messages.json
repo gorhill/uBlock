@@ -951,6 +951,14 @@
     "message": "Da bi ste izbjegli opterećivanje dobrovoljaca sa dupliciranim prijavama, molimo vas da provjerite da li je vaš problem već prijavljen, ili nije.",
     "description": "A paragraph in the filter issue reporter section"
   },
+  "supportS6P2S1": {
+    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "description": "A paragraph in the filter issue reporter section"
+  },
+  "supportS6P2S2": {
+    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "description": "A paragraph in the filter issue reporter section"
+  },
   "supportS6URL": {
     "message": "Adresa web stranice:",
     "description": "Label for the URL of the page"

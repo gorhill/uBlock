@@ -951,6 +951,14 @@
     "message": "為了避免太多人發出重複的報告拖垮志工，請先確認是否已經有人回報過您打算報告的問題。",
     "description": "A paragraph in the filter issue reporter section"
   },
+  "supportS6P2S1": {
+    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "description": "A paragraph in the filter issue reporter section"
+  },
+  "supportS6P2S2": {
+    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "description": "A paragraph in the filter issue reporter section"
+  },
   "supportS6URL": {
     "message": "網址：",
     "description": "Label for the URL of the page"

@@ -951,6 +951,14 @@
     "message": "Per evitar carregar els voluntaris amb informes duplicats, verifiqueu que el problema encara no s'hagi notificat.",
     "description": "A paragraph in the filter issue reporter section"
   },
+  "supportS6P2S1": {
+    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "description": "A paragraph in the filter issue reporter section"
+  },
+  "supportS6P2S2": {
+    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "description": "A paragraph in the filter issue reporter section"
+  },
   "supportS6URL": {
     "message": "Adreça de la pàgina web:",
     "description": "Label for the URL of the page"

@@ -951,6 +951,14 @@
     "message": "봉사자들이 중복 신고로 인해 부담을 겪지 않도록, 해당 이슈가 이미 신고되지는 않았는지 확인해주시기 바랍니다.",
     "description": "A paragraph in the filter issue reporter section"
   },
+  "supportS6P2S1": {
+    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "description": "A paragraph in the filter issue reporter section"
+  },
+  "supportS6P2S2": {
+    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "description": "A paragraph in the filter issue reporter section"
+  },
   "supportS6URL": {
     "message": "웹 페이지의 주소:",
     "description": "Label for the URL of the page"

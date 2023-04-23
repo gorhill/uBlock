@@ -951,6 +951,14 @@
     "message": "स्वयंसेवकों पर डुप्लीकेट रिपोर्ट का बोझ डालने से बचने के लिए, कृपया सत्यापित करें कि समस्या की रिपोर्ट पहले ही नहीं की गई है।",
     "description": "A paragraph in the filter issue reporter section"
   },
+  "supportS6P2S1": {
+    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "description": "A paragraph in the filter issue reporter section"
+  },
+  "supportS6P2S2": {
+    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "description": "A paragraph in the filter issue reporter section"
+  },
   "supportS6URL": {
     "message": "वेब पेज का पता:",
     "description": "Label for the URL of the page"
