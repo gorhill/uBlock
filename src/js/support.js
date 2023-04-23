@@ -215,7 +215,9 @@ function reportSpecificFilterType() {
 }
 
 function reportSpecificFilterIssue() {
-    const githubURL = new URL('https://github.com/uBlockOrigin/uAssets/issues/new?template=specific_report_from_ubo.yml');
+    const githubURL = new URL(
+        'https://github.com/uBlockOrigin/uAssets/issues/new?template=specific_report_from_ubo.yml'
+    );
     const issueType = reportSpecificFilterType();
     let title = `${reportedPage.hostname}: ${issueType}`;
     if ( qs$('#isNSFW').checked ) {
@@ -238,18 +240,6 @@ async function updateFilterLists() {
     dom.cl.add(dom.body, 'updating');
     vAPI.messaging.send('dashboard', { what: 'forceUpdateAssets' });
 }
-
-vAPI.broadcastListener.add(msg => {
-    switch ( msg.what ) {
-    case 'assetsUpdated':
-        showSupportData();
-        dom.cl.remove(dom.body, 'updating');
-        dom.cl.add(dom.body, 'updated');
-        break;
-    default:
-        break;
-    }
-});
 
 /******************************************************************************/
 
@@ -282,6 +272,12 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
             dom.on('.shouldUpdate button', 'click', ev => {
                 updateFilterLists();
                 ev.preventDefault();
+            });
+            vAPI.broadcastListener.add(msg => {
+                if ( msg.what !== 'staticFilteringDataChanged' ) { return; }
+                showSupportData();
+                dom.cl.remove(dom.body, 'updating');
+                dom.cl.add(dom.body, 'updated');
             });
         }
 
