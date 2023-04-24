@@ -281,16 +281,16 @@
 		"group": "social",
 		"off": true,
 		"title": "Fanboy’s Annoyance",
-		"contentURL": "https://secure.fanboy.co.nz/fanboy-annoyance.txt",
-		"supportURL": "https://easylist.to/"
+		"contentURL": "https://secure.fanboy.co.nz/fanboy-annoyance_ubo.txt",
+		"supportURL": "https://github.com/easylist/easylist#fanboy-lists"
 	},
 	"fanboy-cookiemonster": {
 		"content": "filters",
 		"group": "social",
 		"off": true,
 		"title": "EasyList Cookie",
-		"contentURL": "https://secure.fanboy.co.nz/fanboy-cookiemonster.txt",
-		"supportURL": "https://github.com/easylist/easylist/issues"
+		"contentURL": "https://secure.fanboy.co.nz/fanboy-cookiemonster_ubo.txt",
+		"supportURL": "https://github.com/easylist/easylist#fanboy-lists"
 	},
 	"fanboy-social": {
 		"content": "filters",
