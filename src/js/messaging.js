@@ -1464,7 +1464,7 @@ const getSupportData = async function() {
         addedListset = undefined;
     } else if ( Object.keys(addedListset).length > 15 ) {
         const added = Object.keys(addedListset);
-        const truncated = added.slice(20);
+        const truncated = added.slice(15);
         for ( const key of truncated ) {
             delete addedListset[key];
         }
