@@ -952,11 +952,11 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "message": "過濾器清單每天更新。確保您的問題尚未在最新的過濾器清單中解決。",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "message": "重新載入有問題的網頁後，驗證問題是否仍然存在。",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {

@@ -956,7 +956,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "message": "וודא כי הבעיה עדיין קיימת לאחר רענון הדף הבעייתי.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -984,7 +984,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": " קיימות בעיות הקשורות לפרטיות",
+    "message": "בעיות הקשורות לפרטיות",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
@@ -1048,7 +1048,7 @@
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "גיבוי לקובץ...",
+    "message": "גבה לקובץ…",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
@@ -1224,7 +1224,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "contextMenuViewSource": {
-    "message": "צפייה בקוד המקור...",
+    "message": "צפה בקוד המקור…",
     "description": "A context menu entry, to view the source code of the target resource"
   },
   "shortcutCapturePlaceholder": {
@@ -1272,7 +1272,7 @@
     "description": "Message used in frame placeholders"
   },
   "linterMainReport": {
-    "message": "Errors: {{count}}",
+    "message": "שגיאות: {{count}}",
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {

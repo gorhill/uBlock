@@ -952,11 +952,11 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "message": "Las listas de filtros se actualizan diariamente. Asegúrate de que tu problema no se hay sido abordado en las listas de filtros más recientes.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "message": "Verifica que el problema aun exista después de recargar la página web problemática.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {

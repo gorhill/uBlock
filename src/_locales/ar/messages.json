@@ -276,11 +276,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilter": {
-    "message": "script",
+    "message": "سكربت",
     "description": "Appears as an option to filter out firewall rows"
   },
   "popup3pFrameFilter": {
-    "message": "frame",
+    "message": "إطار",
     "description": "Appears as an option to filter out firewall rows"
   },
   "pickerCreate": {
@@ -952,11 +952,11 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "message": "يتم تحديث قوائم الفلتر بشكل يومي. تحقق أن مشكلتك لم يتم مواجهتها في أحدث قوائم الفلتر",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "message": "تحقق من أن المشكلة ما تزال موجودة بعد إعادة تحميل صفحة الويب التي بها إشكالية.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -1272,11 +1272,11 @@
     "description": "Message used in frame placeholders"
   },
   "linterMainReport": {
-    "message": "Errors: {{count}}",
+    "message": "أخطاء: {{count}}",
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Could not filter properly at browser launch.\nReload the page to ensure proper filtering.",
+    "message": "لا يمكن الفلترة بشكل صحيح عند تشغيل المتصفح.\nقم بتحديث الصفحة للتأكد من الفلترة بشكل صحيح.",
     "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
   },
   "dummy": {

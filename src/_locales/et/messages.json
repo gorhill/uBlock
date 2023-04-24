@@ -952,11 +952,11 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "message": "Filtriloendeid uuendatakse iga päev. Kindlasti veenduge, kas probleem on juba lahendatud uusimates filtriloendites.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "message": "Kontrollige probleemi olemasolu veel kord, laadides muret tekitav veebileht uuesti.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {

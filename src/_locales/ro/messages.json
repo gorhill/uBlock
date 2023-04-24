@@ -952,11 +952,11 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "message": "Listele cu filtre sunt actualizate zilnic. Verificați că problema dumneavoastră nu a fost rezolvată în cele mai recente liste cu filtre.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "message": "Verificați că problema există și după reîncărcarea paginii.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {

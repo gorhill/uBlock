@@ -952,11 +952,11 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "message": "Листе филтера се ажурирају свакодневно. Уверите се да ваш проблем није већ решен у најновијим листама филтера.\n",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "message": "Проверите да ли проблем и даље постоји након поновног учитавања проблематичне веб странице.\n",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -1276,7 +1276,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Could not filter properly at browser launch.\nReload the page to ensure proper filtering.",
+    "message": "Није могуће правилно филтрирати при покретању прегледача.\nПоново учитајте страницу да бисте осигурали правилно филтрирање.\n",
     "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
   },
   "dummy": {
