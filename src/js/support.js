@@ -273,12 +273,6 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
                 updateFilterLists();
                 ev.preventDefault();
             });
-            vAPI.broadcastListener.add(msg => {
-                if ( msg.what !== 'staticFilteringDataChanged' ) { return; }
-                showSupportData();
-                dom.cl.remove(dom.body, 'updating');
-                dom.cl.add(dom.body, 'updated');
-            });
         }
 
         dom.on('[data-i18n="supportReportSpecificButton"]', 'click', ev => {
@@ -303,6 +297,13 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
             cmEditor.refresh();
         });
     }
+
+    vAPI.broadcastListener.add(msg => {
+        if ( msg.what !== 'staticFilteringDataChanged' ) { return; }
+        showSupportData();
+        dom.cl.remove(dom.body, 'updating');
+        dom.cl.add(dom.body, 'updated');
+    });
 
     dom.on('#selectAllButton', 'click', ( ) => {
         cmEditor.focus();
