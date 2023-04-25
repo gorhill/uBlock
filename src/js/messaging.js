@@ -1418,6 +1418,22 @@ const getSupportData = async function() {
         filterset.push(line);
     }
 
+    const now = Date.now();
+
+    const formatDelayFromNow = time => {
+        if ( (time || 0) === 0 ) { return '?'; }
+        const delayInSec = (now - time) / 1000;
+        const days = (delayInSec / 86400) | 0;
+        const hours = (delayInSec % 86400) / 3600 | 0;
+        const minutes = (delayInSec % 3600) / 60 | 0;
+        const parts = [];
+        if ( days > 0 ) { parts.push(`${days}d`); }
+        if ( hours > 0 ) { parts.push(`${hours}h`); }
+        if ( minutes > 0 ) { parts.push(`${minutes}m`); }
+        if ( parts.length === 0 ) { parts.push('now'); }
+        return parts.join('.');
+    };
+
     const lists = µb.availableFilterLists;
     let defaultListset = {};
     let addedListset = {};
@@ -1435,16 +1451,7 @@ const getSupportData = async function() {
             if ( typeof list.writeTime !== 'number' || list.writeTime === 0 ) {
                 listDetails.push('never');
             } else {
-                const delta = (Date.now() - list.writeTime) / 1000 | 0;
-                const days = (delta / 86400) | 0;
-                const hours = (delta % 86400) / 3600 | 0;
-                const minutes = (delta % 3600) / 60 | 0;
-                const parts = [];
-                if ( days > 0 ) { parts.push(`${days}d`); }
-                if ( hours > 0 ) { parts.push(`${hours}h`); }
-                if ( minutes > 0 ) { parts.push(`${minutes}m`); }
-                if ( parts.length === 0 ) { parts.push('now'); }
-                listDetails.push(parts.join('.'));
+                listDetails.push(formatDelayFromNow(list.writeTime));
             }
         }
         if ( list.isDefault || listKey === µb.userFiltersPath ) {
@@ -1462,17 +1469,21 @@ const getSupportData = async function() {
     }
     if ( Object.keys(addedListset).length === 0 ) {
         addedListset = undefined;
-    } else if ( Object.keys(addedListset).length > 15 ) {
+    } else {
         const added = Object.keys(addedListset);
-        const truncated = added.slice(15);
+        const truncated = added.slice(12);
         for ( const key of truncated ) {
             delete addedListset[key];
         }
-        addedListset[`[${truncated.length} lists not shown]`] = '[too many]';
+        if ( truncated.length !== 0 ) {
+            addedListset[`[${truncated.length} lists not shown]`] = '[too many]';
+        }
     }
     if ( Object.keys(removedListset).length === 0 ) {
         removedListset = undefined;
     }
+
+    const { versionUpdateTime = 0 } = await vAPI.storage.get('versionUpdateTime');
 
     let browserFamily = (( ) => {
         if ( vAPI.webextFlavor.soup.has('firefox') ) { return 'Firefox'; }
@@ -1484,7 +1495,9 @@ const getSupportData = async function() {
     }
 
     return {
-        [`${vAPI.app.name}`]: `${vAPI.app.version}`,
+        [`${vAPI.app.name} ${vAPI.app.version}`]: {
+            since: formatDelayFromNow(versionUpdateTime),
+        },
         [`${browserFamily}`]: `${vAPI.webextFlavor.major}`,
         'filterset (summary)': {
             network: staticNetFilteringEngine.getFilterCount(),

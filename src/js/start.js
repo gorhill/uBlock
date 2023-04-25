@@ -148,7 +148,10 @@ const initializeTabs = async ( ) => {
 const onVersionReady = lastVersion => {
     if ( lastVersion === vAPI.app.version ) { return; }
 
-    vAPI.storage.set({ version: vAPI.app.version });
+    vAPI.storage.set({
+        version: vAPI.app.version,
+        versionUpdateTime: Date.now(),
+    });
 
     const lastVersionInt = vAPI.app.intFromVersion(lastVersion);
 
@@ -161,17 +164,6 @@ const onVersionReady = lastVersion => {
     // Since built-in resources may have changed since last version, we
     // force a reload of all resources.
     redirectEngine.invalidateResourcesSelfie(io);
-
-    // https://github.com/LiCybora/NanoDefenderFirefox/issues/196
-    //   Toggle on the blocking of CSP reports by default for Firefox.
-    if (
-        lastVersionInt <= 1031003011 &&
-        vAPI.webextFlavor.soup.has('firefox')
-    ) {
-        sessionSwitches.toggle('no-csp-reports', '*', 1);
-        permanentSwitches.toggle('no-csp-reports', '*', 1);
-        µb.saveHostnameSwitches();
-    }
 };
 
 /******************************************************************************/
