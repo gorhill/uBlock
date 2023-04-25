@@ -1040,7 +1040,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "uBO 自家的過濾規則清單是透過下列 <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a> 進行代管：",
+    "message": "uBO 自家的過濾規則清單由下列 <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a> 免費代管：",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {

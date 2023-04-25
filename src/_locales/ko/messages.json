@@ -952,11 +952,11 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "message": "필터 목록은 매일 갱신됩니다. 최신 필터 목록에서 문제가 이미 해결되진 않았는지 확인하세요.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "message": "문제가 생긴 웹페이지를 새로고침해도 문제가 여전히 남아 있는지 확인하세요.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {

@@ -1044,7 +1044,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "Përditësimi i listave do të kryhet nëpërmjet një CDN-je rastësore",
+    "message": "Përditësimi i listave do të kryhet nëpërmjet një CDN-je rastësore.",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {

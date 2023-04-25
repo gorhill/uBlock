@@ -1044,7 +1044,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "需要更新过滤规则列表时会随机选用一个 CDN",
+    "message": "需要更新过滤规则列表时会随机选用一个 CDN。",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {

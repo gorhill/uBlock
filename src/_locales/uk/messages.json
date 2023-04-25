@@ -952,7 +952,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Списки фільтрів оновлюються щоденно. Переконайтесь, що ваша проблема все ще не поремонтована в найсвіжішому списку фільтрів",
+    "message": "Списки фільтрів оновлюються щоденно. Переконайтесь, що ваша проблема все ще не виправлена в найсвіжішому списку фільтрів",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {

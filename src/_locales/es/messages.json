@@ -952,11 +952,11 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Las listas de filtros se actualizan diariamente. Asegúrate de que tu problema no se hay sido abordado en las listas de filtros más recientes.",
+    "message": "Las listas de filtros se actualizan diariamente. Asegúrate de que tu problema no haya sido abordado en las listas de filtros más recientes.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verifica que el problema aun exista después de recargar la página web problemática.",
+    "message": "Verifica que el problema aún exista después de recargar la página web problemática.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -1044,7 +1044,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "Se utilizará una CDN elegida al azar cuando sea necesario actualizar una lista de filtros",
+    "message": "Se utilizará una CDN elegida al azar cuando sea necesario actualizar una lista de filtros.",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {

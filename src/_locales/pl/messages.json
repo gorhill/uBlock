@@ -1044,7 +1044,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "Losowo wybrana sieć CDN zostanie użyta, gdy lista filtrów będzie wymagała aktualizacji",
+    "message": "Losowo wybrana sieć CDN zostanie użyta, gdy lista filtrów będzie wymagała aktualizacji.",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
