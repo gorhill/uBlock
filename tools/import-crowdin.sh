@@ -20,7 +20,6 @@ for dir in $SRC/*/; do
   deslang=${srclang/-/_}
   deslang=${deslang%_AM}
   deslang=${deslang%_ES}
-  deslang=${deslang%_IE}
   deslang=${deslang%_IN}
   deslang=${deslang%_LK}
   deslang=${deslang%_NL}
