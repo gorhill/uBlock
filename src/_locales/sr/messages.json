@@ -1277,7 +1277,7 @@
   },
   "unprocessedRequestTooltip": {
     "message": "Није могуће правилно филтрирати при покретању прегледача.\nПоново учитајте страницу да бисте осигурали правилно филтрирање.\n",
-    "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
+    "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {
     "message": "This entry must be the last one",

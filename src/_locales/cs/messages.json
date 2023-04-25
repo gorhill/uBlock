@@ -1277,7 +1277,7 @@
   },
   "unprocessedRequestTooltip": {
     "message": "Nedokáže správně filtrovat při spuštění prohlížeče.\nZnovu načtěte stránku, abyste zajistili správné filtrování.",
-    "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
+    "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {
     "message": "This entry must be the last one",

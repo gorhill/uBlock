@@ -1277,7 +1277,7 @@
   },
   "unprocessedRequestTooltip": {
     "message": "Suodatus ei onnistunut selaimen käynnistyessä kunnolla.\nLataa sivu uudelleen varmistaaksesi kunnollisen suodatuksen.",
-    "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
+    "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {
     "message": "Tämän on oltava viimeinen merkintä",

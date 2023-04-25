@@ -1277,7 +1277,7 @@
   },
   "unprocessedRequestTooltip": {
     "message": "No s'ha pogut filtrar correctament en iniciar el navegador.\nTorneu a carregar la pàgina per garantir un filtratge correcte",
-    "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
+    "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {
     "message": "Aquesta entrada ha de ser l'última",

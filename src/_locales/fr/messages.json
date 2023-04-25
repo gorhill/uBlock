@@ -1277,7 +1277,7 @@
   },
   "unprocessedRequestTooltip": {
     "message": "Échec du filtrage au lancement du navigateur. Rechargez la page pour assurer un filtrage correct.",
-    "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
+    "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {
     "message": "This entry must be the last one",

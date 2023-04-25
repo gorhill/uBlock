@@ -1277,7 +1277,7 @@
   },
   "unprocessedRequestTooltip": {
     "message": "Nevarēja pienācīgi aizturēt pārlūka palaišanas laikā.\nJāpārlādē lapa, lai nodrošinātu pienācīgu aizturēšanu.",
-    "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
+    "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {
     "message": "Šim ierakstam ir jābūt pēdējam",

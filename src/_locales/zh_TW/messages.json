@@ -1277,7 +1277,7 @@
   },
   "unprocessedRequestTooltip": {
     "message": "無法在瀏覽器啟動的時候正確過濾。\n請重新載入頁面來確保過濾正確。",
-    "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
+    "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {
     "message": "此條目須為最後一個",

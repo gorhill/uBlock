@@ -1277,7 +1277,7 @@
   },
   "unprocessedRequestTooltip": {
     "message": "لا يمكن الفلترة بشكل صحيح عند تشغيل المتصفح.\nقم بتحديث الصفحة للتأكد من الفلترة بشكل صحيح.",
-    "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
+    "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {
     "message": "يجب أن يكون هذا الإدخال آخر واحد",

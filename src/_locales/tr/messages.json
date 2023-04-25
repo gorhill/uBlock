@@ -1277,7 +1277,7 @@
   },
   "unprocessedRequestTooltip": {
     "message": "Tarayıcı açılışında düzgün filtreleme yapılamadı.\nDüzgün filtreleme için sayfayı yenileyin.",
-    "description": "Tooltip for the toolbar icon. Use newline character(s) where appropriate to prevent tooltip from being too long horizontally"
+    "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {
     "message": "Bu girdi en sonda olmalıdır",
