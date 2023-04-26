@@ -143,7 +143,7 @@ vAPI.alarms = {
             const delayInMinutes = this.normalizeDelay(delay);
             browser.alarms.get(this.name, alarm => {
                 if ( alarm ) { return; }
-                return browser.alarms.create(this.name, { delayInMinutes });
+                browser.alarms.create(this.name, { delayInMinutes });
             });
         }
         offon(delay) {
