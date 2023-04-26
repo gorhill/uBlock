@@ -1276,7 +1276,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Filtrimi është i paplotë pas hapjes së shfletuesit.\nFreskoni faqen për ta filtruar siç duhet.",
+    "message": "Kur hapet shfletuesi nuk bëhet filtrimi i duhur. Freskoni faqen për ta filtruar mirë.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {

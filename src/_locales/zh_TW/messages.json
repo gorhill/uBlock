@@ -1276,7 +1276,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "無法在瀏覽器啟動的時候正確過濾。\n請重新載入頁面來確保過濾正確。",
+    "message": "無法在瀏覽器啟動的時候正確過濾。請重新載入頁面來確保過濾正確。",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {

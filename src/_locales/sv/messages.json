@@ -952,11 +952,11 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "message": "Filterlistor uppdateras dagligen. Se till att ditt problem inte redan har åtgärdats i de senaste filterlistorna.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "message": "Kontrollera att problemet kvarstår efter att du har laddat om den krånglande webbsidan.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -1044,7 +1044,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "Ett slumpmässigt valt CDN kommer att användas när en filterlista behöver uppdateras",
+    "message": "Ett slumpmässigt valt CDN kommer att användas när en filterlista behöver uppdateras.",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
@@ -1276,7 +1276,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Det gick inte att filtrera ordentligt vid webbläsarstart.\nLadda om sidan för att säkerställa korrekt filtrering\n",
+    "message": "Det gick inte att filtrera ordentligt vid webbläsarstart. Ladda om sidan för att säkerställa korrekt filtrering.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {

@@ -1044,7 +1044,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "Als een filterlijst moet worden bijgewerkt, wordt een willekeurig gekozen CDN gebruikt",
+    "message": "Als een filterlijst moet worden bijgewerkt, wordt een willekeurig gekozen CDN gebruikt.",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
@@ -1276,7 +1276,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Kon niet goed filteren bij starten van browser.\nVernieuw de pagina voor een goede filtering.",
+    "message": "Kon niet goed filteren bij het starten van de browser. Vernieuw de pagina voor een juiste filtering.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {

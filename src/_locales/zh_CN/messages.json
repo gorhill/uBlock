@@ -1276,7 +1276,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "无法在浏览器启动时正常过滤。\n重新加载此页面以确保正常过滤。",
+    "message": "无法在浏览器启动时正常过滤。请刷新页面以确保正常过滤。",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {
