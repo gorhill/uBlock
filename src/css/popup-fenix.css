@@ -64,6 +64,7 @@ hr {
     align-items: stretch;
     display: flex;
     justify-content: space-between;
+    margin: var(--popup-gap-extra-thin) 0;
     }
 #switch {
     color: var(--popup-power-ink);
@@ -73,7 +74,7 @@ hr {
     flex-grow: 1;
     font-size: 96px;
     justify-content: center;
-    margin: var(--popup-gap-thin) var(--popup-gap-thin) 0;
+    margin: var(--popup-gap) 0;
     padding: 0;
     stroke: none;
     stroke-width: 64;
@@ -113,8 +114,12 @@ body.needSave #revertRules {
     visibility: visible;
     }
 #hostname {
-    margin: var(--popup-gap) var(--popup-gap-extra-thin);
+    background-color: var(--popup-toolbar-surface);
+    margin: 0;
+    padding: var(--popup-gap-thin) 0;
     text-align: center;
+    white-space: normal;
+
     }
 #hostname > span {
     word-break: break-all;
