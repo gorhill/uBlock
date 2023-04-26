@@ -1211,6 +1211,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
     const create = async function() {
         if ( µb.inMemoryFilters.length !== 0 ) { return; }
+        if ( Object.keys(µb.availableFilterLists).length === 0 ) { return; }
         await Promise.all([
             io.put(
                 'selfie/main',
@@ -1245,12 +1246,10 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
             selfie = JSON.parse(details.content);
         } catch(ex) {
         }
-        if (
-            selfie instanceof Object === false ||
-            selfie.magic !== µb.systemSettings.selfieMagic
-        ) {
-            return false;
-        }
+        if ( selfie instanceof Object === false ) { return false; }
+        if ( selfie.magic !== µb.systemSettings.selfieMagic ) { return false; }
+        if ( selfie.availableFilterLists instanceof Object === false ) { return false; }
+        if ( Object.keys(selfie.availableFilterLists).length === 0 ) { return false; }
         µb.availableFilterLists = selfie.availableFilterLists;
         return true;
     };

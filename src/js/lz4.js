@@ -91,7 +91,7 @@ const ttlManage = function(count) {
     ttlTimer.off();
     ttlCount += count;
     if ( ttlCount > 0 ) { return; }
-    if ( lz4CodecInstance === null ) { return; }
+    if ( lz4CodecInstance === undefined ) { return; }
     ttlTimer.on(ttlDelay);
 };
 
