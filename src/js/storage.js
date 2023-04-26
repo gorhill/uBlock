@@ -1283,10 +1283,10 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
             io.remove(/^selfie\//);
             µb.selfieIsInvalid = true;
         }
-        createAlarm.offon(µb.hiddenSettings.selfieAfter);
+        createTimer.offon({ min: µb.hiddenSettings.selfieAfter });
     };
 
-    const createAlarm = vAPI.alarms.create(create);
+    const createTimer = vAPI.defer.create(create);
 
     µb.selfieManager = { load, destroy };
 }

@@ -126,61 +126,6 @@ if ( webext.storage.local.getBytesInUse instanceof Function ) {
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.alarms = {
-    create(callback) {
-        this.uniqueIdGenerator += 1;
-        const name = this.uniqueIdGenerator.toString(36);
-        const client = new this.Client(name, callback);
-        this.clientMap.set(name, client);
-        return client;
-    },
-    Client: class {
-        constructor(name, callback) {
-            this.name = name;
-            this.callback = callback;
-        }
-        on(delay) {
-            const delayInMinutes = this.normalizeDelay(delay);
-            browser.alarms.get(this.name, alarm => {
-                if ( alarm ) { return; }
-                browser.alarms.create(this.name, { delayInMinutes });
-            });
-        }
-        offon(delay) {
-            const delayInMinutes = this.normalizeDelay(delay);
-            return browser.alarms.create(this.name, { delayInMinutes });
-        }
-        off() {
-            return browser.alarms.clear(this.name);
-        }
-        normalizeDelay(delay) {
-            let delayInMinutes = 0;
-            if ( typeof delay === 'number' ) {
-                delayInMinutes = delay;
-            } else if ( typeof delay === 'object' ) {
-                if ( delay.sec !== undefined ) {
-                    delayInMinutes = delay.sec / 60;
-                } else if ( delay.ms !== undefined ) {
-                    delayInMinutes = delay.ms / 60000;
-                }
-            }
-            return Math.max(delayInMinutes, 1);
-        }
-    },
-    onAlarm(alarm) {
-        const client = this.clientMap.get(alarm.name);
-        if ( client === undefined ) { return; }
-        client.callback(alarm);
-    },
-    clientMap: new Map(),
-    uniqueIdGenerator: 1000000,
-};
-
-browser.alarms.onAlarm.addListener(alarm => vAPI.alarms.onAlarm(alarm));
-
-/******************************************************************************/
-/******************************************************************************/
-
 // https://github.com/gorhill/uMatrix/issues/234
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/privacy/network
 
