@@ -89,7 +89,7 @@ body.off #switch {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
     width: 25%;
     }
 .rulesetTools [id] {
