@@ -952,11 +952,11 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "过滤规则列表每天都会更新。请确认用最新列表无法解决您的问题。",
+    "message": "过滤规则列表每天都会更新。请确认您的问题无法用最新的过滤规则列表解决。",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "请验证刷新页面后问题依然存在。",
+    "message": "请验证重新加载问题页面后问题依然存在。",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -1276,7 +1276,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "无法在浏览器启动时正常过滤。请刷新页面以确保正常过滤。",
+    "message": "无法在浏览器启动时正常过滤。请重新加载此页面以确保正常过滤。",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {

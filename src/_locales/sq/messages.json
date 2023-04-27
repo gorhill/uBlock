@@ -356,7 +356,7 @@
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Çaktivizoj kërkesat paraprake (për të mos pasur lidhje me kërkesat e bllokuara)",
+    "message": "Çaktivizoj kërkesat paraprake (për të shmangur lidhjet me kërkesat e bllokuara)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
@@ -372,7 +372,7 @@
     "description": ""
   },
   "settingPerSiteSwitchGroupSynopsis": {
-    "message": "Këto vlera mund të ndryshohen për çdo uebsajt",
+    "message": "Këto vlera mund të ndryshohen sipas uebsajtit",
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
@@ -712,7 +712,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinAllowed": {
-    "message": "e autorizuar",
+    "message": "e lejuar",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinModified": {
@@ -788,7 +788,7 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAllow": {
-    "message": "Autorizoj",
+    "message": "Lejoj",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType": {
@@ -916,7 +916,7 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Kujdes:</b> uBlock Origin nuk duhet përdorur njëkohësisht me aplikacionet e ngjashme bllokuese, pasi filtrat mund të shfaqin probleme.",
+    "message": "<b>Kujdes:</b> uBlock Origin nuk duhet përdorur njëkohësisht me aplikacione të ngjashme bllokuese, pasi mund të keni probleme me filtrat.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
@@ -1220,7 +1220,7 @@
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
-    "message": "Autorizoj përkohësisht elementet e mëdha multimediale",
+    "message": "Lejoj përkohësisht elementet e mëdha multimediale",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "contextMenuViewSource": {

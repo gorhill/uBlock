@@ -236,7 +236,7 @@
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "Mënyra standarde e filtrimit mund të ndryshohet në çdo kohë, në varësi të kërkesave që kanë uebsajte të caktuara. Secila mënyrë ka avantazhet dhe disavantazhet e veta.",
+    "message": "Mënyra standarde e filtrimit mund të ndryshohet në çdo kohë sipas kërkesave që kanë uebsajte të caktuara. Secila mënyrë ka avantazhet dhe disavantazhet e veta.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
