@@ -28,24 +28,24 @@ import { dom, qs$ } from './dom.js';
 /******************************************************************************/
 
 const uselessKeys = [
-    'modifiedHiddenSettings.benchmarkDatasetURL',
-    'modifiedHiddenSettings.blockingProfiles',
-    'modifiedHiddenSettings.consoleLogLevel',
-    'modifiedHiddenSettings.uiPopupConfig',
-    'modifiedUserSettings.alwaysDetachLogger',
-    'modifiedUserSettings.firewallPaneMinimized',
-    'modifiedUserSettings.externalLists',
-    'modifiedUserSettings.importedLists',
-    'modifiedUserSettings.popupPanelSections',
-    'modifiedUserSettings.uiAccentCustom',
-    'modifiedUserSettings.uiAccentCustom0',
-    'modifiedUserSettings.uiTheme',
+    'hiddenSettings.benchmarkDatasetURL',
+    'hiddenSettings.blockingProfiles',
+    'hiddenSettings.consoleLogLevel',
+    'hiddenSettings.uiPopupConfig',
+    'userSettings.alwaysDetachLogger',
+    'userSettings.firewallPaneMinimized',
+    'userSettings.externalLists',
+    'userSettings.importedLists',
+    'userSettings.popupPanelSections',
+    'userSettings.uiAccentCustom',
+    'userSettings.uiAccentCustom0',
+    'userSettings.uiTheme',
 ];
 
 const sensitiveValues = [
     'filterset (user)',
-    'modifiedUserSettings.popupPanelSections',
-    'modifiedHiddenSettings.userResourcesLocation',
+    'userSettings.popupPanelSections',
+    'hiddenSettings.userResourcesLocation',
     'trustedset.added',
     'hostRuleset.added',
     'switchRuleset.added',
@@ -136,6 +136,30 @@ function addDetailsToReportURL(id, collapse = false) {
     dom.attr(elem, 'data-url', url);
 }
 
+function renderData(data, depth = 0) {
+    const indent = ' '.repeat(depth);
+    if ( Array.isArray(data) ) {
+        const out = [];
+        for ( const value of data ) {
+            out.push(renderData(value, depth));
+        }
+        return out.join('\n');
+    }
+    if ( typeof data !== 'object' ) {
+        return `${indent}${data}`;
+    }
+    const out = [];
+    for ( const [ name, value ] of Object.entries(data) ) {
+        if ( typeof value === 'object' ) {
+            out.push(`${indent}${name}:`);
+            out.push(renderData(value, depth + 1));
+            continue;
+        }
+        out.push(`${indent}${name}: ${value}`);
+    }
+    return out.join('\n');
+}
+
 async function showSupportData() {
     const supportData = await vAPI.messaging.send('dashboard', {
         what: 'getSupportData',
@@ -153,18 +177,7 @@ async function showSupportData() {
     if ( reportedPage !== null ) {
         shownData.popupPanel = reportedPage.popupPanel;
     }
-    const text = JSON.stringify(shownData, null, 1)
-        .split('\n')
-        .slice(1, -1)
-        .map(v => {
-            return v
-                .replace(/^( *?) "/, '$1')
-                .replace(/^( *.*[^\\])(?:": "|": \{$|": \[$|": )/, '$1: ')
-                .replace(/(?:",?|\},?|\],?|,)$/, '');
-        })
-        .filter(v => v.trim() !== '')
-        .join('\n') + '\n';
-
+    const text = renderData(shownData);
     cmEditor.setValue(text);
     cmEditor.clearHistory();
 
