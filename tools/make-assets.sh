@@ -21,7 +21,8 @@ cp -R $ASSETS_MAIN/thirdparties/publicsuffix.org $DES/thirdparties/
 cp -R $ASSETS_MAIN/thirdparties/urlhaus-filter   $DES/thirdparties/
 
 mkdir -p $DES/thirdparties/easylist
-cp $ASSETS_PROD/thirdparties/easy*.txt $DES/thirdparties/easylist/
+cp $ASSETS_PROD/thirdparties/easylist.txt $DES/thirdparties/easylist/
+cp $ASSETS_PROD/thirdparties/easyprivacy.txt $DES/thirdparties/easylist/
 
 mkdir $DES/ublock
 cp $ASSETS_PROD/filters/* $DES/ublock/
