@@ -679,7 +679,9 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     // Load previously saved available lists -- these contains data
     // computed at run-time, we will reuse this data if possible
     const [ bin, registeredAssets, badlists ] = await Promise.all([
-        vAPI.storage.get('availableFilterLists'),
+        Object.keys(this.availableFilterLists) !== 0
+            ? { availableFilterLists: this.availableFilterLists }
+            : vAPI.storage.get('availableFilterLists'),
         io.metadata(),
         this.badLists.size === 0 ? io.get('ublock-badlists') : false,
     ]);
