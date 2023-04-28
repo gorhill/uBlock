@@ -3686,11 +3686,12 @@ class ExtSelectorCompiler {
         return { attr, value };
     }
 
-    // When dealing with literal text, we must first eat _some_
-    // backslash characters.
     // Remove potentially present quotes before processing.
     compileText(s) {
-        if ( s === '' ) { return; }
+        if ( s === '' ) {
+            this.error = 'argument missing';
+            return;
+        }
         const r = this.unquoteString(s);
         if ( r.i !== s.length ) { return; }
         return r.s;
