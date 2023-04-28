@@ -49,6 +49,8 @@ function safeSelf() {
         'RegExp': self.RegExp,
         'RegExp_test': self.RegExp.prototype.test,
         'RegExp_exec': self.RegExp.prototype.exec,
+        'addEventListener': self.EventTarget.prototype.addEventListener,
+        'removeEventListener': self.EventTarget.prototype.removeEventListener,
         'log': console.log.bind(console),
         'uboLog': function(msg) {
             if ( msg === '' ) { return; }
@@ -122,6 +124,9 @@ function shouldLog(details) {
 builtinScriptlets.push({
     name: 'run-at.fn',
     fn: runAt,
+    dependencies: [
+        'safe-self.fn',
+    ],
 });
 function runAt(fn, when) {
     const intFromReadyState = state => {
@@ -137,13 +142,14 @@ function runAt(fn, when) {
     if ( intFromReadyState(document.readyState) >= runAt ) {
         fn(); return;
     }
-    const options = { capture: true };
     const onStateChange = ( ) => {
         if ( intFromReadyState(document.readyState) < runAt ) { return; }
         fn();
-        document.removeEventListener('readystatechange', onStateChange, options);
+        safe.removeEventListener.apply(document, args);
     };
-    document.addEventListener('readystatechange', onStateChange, options);
+    const safe = safeSelf();
+    const args = [ 'readystatechange', onStateChange, { capture: true } ];
+    safe.addEventListener.apply(document, args);
 }
 
 /*******************************************************************************
@@ -475,7 +481,7 @@ function addEventListenerDefuser(
     const details = typeof arg1 !== 'object'
         ? { type: arg1, pattern: arg2 }
         : arg1;
-    let { type = '', pattern = '' } = details;
+    const { type = '', pattern = '' } = details;
     if ( typeof type !== 'string' ) { return; }
     if ( typeof pattern !== 'string' ) { return; }
     const safe = safeSelf();
@@ -508,14 +514,6 @@ function addEventListenerDefuser(
         };
         self.EventTarget.prototype.addEventListener = new Proxy(
             self.EventTarget.prototype.addEventListener,
-            eventListenerHandler
-        );
-        self.document.addEventListener = new Proxy(
-            self.document.addEventListener,
-            eventListenerHandler
-        );
-        self.addEventListener = new Proxy(
-            self.addEventListener,
             eventListenerHandler
         );
     };
