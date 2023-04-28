@@ -43,6 +43,7 @@ Ads, "unintrusive" or not, are just the visible portion of the privacy-invading 
 * [Installation](#installation)
   * [Chromium](#chromium)
   * [Firefox](#firefox)
+  * [Thunderbird](#thunderbird)
 * [Release History](#release-history)
 * [Translations](#translations)
 * [About](#about)
@@ -99,6 +100,10 @@ uBO should be compatible with any Chromium-based browser.
 
 uBO [works best][Works Best] on Firefox and is available for desktop and Android versions.
 
+#### Thunderbird
+
+[Thunderbird Add-ons][Thunderbird]
+
 #### All Browsers
 
 Do **NOT** use any other [similarly-purposed blockers][Similarly-Purposed] concurrently with uBO to benefit from its higher efficiency. uBO will [perform][Performance] as well as or better than most other popular ad blockers. These other blockers can prevent uBO's privacy or anti-blocker-defusing features from working correctly.
@@ -144,6 +149,7 @@ If you ever want to contribute something, think about the people working hard to
 [Chrome]: https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm
 [Reddit]: https://www.reddit.com/r/uBlockOrigin/
 [Theft]: https://twitter.com/LeaVerou/status/518154828166725632
+[Thunderbird]: https://addons.thunderbird.net/thunderbird/addon/ublock-origin/
 [Opera]: https://addons.opera.com/extensions/details/ublock/
 [Edge]: https://microsoftedge.microsoft.com/addons/detail/ublock-origin/odfafepnkmbhccpbejgmiehpchacaeak
 [NPM]: https://www.npmjs.com/package/@gorhill/ubo-core
