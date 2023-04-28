@@ -282,7 +282,7 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 
     if ( reportedPage !== null ) {
         if ( dom.cl.has(dom.body, 'shouldUpdate') ) {
-            dom.on('.shouldUpdate button', 'click', ev => {
+            dom.on('.supportEntry.shouldUpdate button', 'click', ev => {
                 updateFilterLists();
                 ev.preventDefault();
             });
@@ -304,7 +304,7 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
         });
 
         dom.on('#showSupportInfo', 'click', ev => {
-            const button = ev.target;
+            const button = ev.target.closest('#showSupportInfo');
             dom.cl.add(button, 'hidden');
             dom.cl.add('.a.b.c.d', 'e');
             cmEditor.refresh();
@@ -312,10 +312,15 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
     }
 
     vAPI.broadcastListener.add(msg => {
-        if ( msg.what !== 'staticFilteringDataChanged' ) { return; }
-        showSupportData();
-        dom.cl.remove(dom.body, 'updating');
-        dom.cl.add(dom.body, 'updated');
+        if ( msg.what === 'assetsUpdated' ) {
+            dom.cl.remove(dom.body, 'updating');
+            dom.cl.add(dom.body, 'updated');
+            return;
+        }
+        if ( msg.what === 'staticFilteringDataChanged' ) {
+            showSupportData();
+            return;
+        }
     });
 
     dom.on('#selectAllButton', 'click', ( ) => {
