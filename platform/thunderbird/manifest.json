@@ -1,8 +1,8 @@
 {
-  "applications": {
+  "browser_specific_settings": {
     "gecko": {
       "id": "uBlock0@raymondhill.net",
-      "strict_min_version": "78.0"
+      "strict_min_version": "91.0"
     }
   },
   "author": "Raymond Hill & contributors",
