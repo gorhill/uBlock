@@ -160,8 +160,10 @@
     direction: ltr;
     display: flex;
     flex-shrink: 0;
+    flex-wrap: wrap;
     justify-content: space-between;
-    padding: 0.5em;
+    padding: var(--default-gap-xsmall);
+    row-gap: var(--default-gap-xsmall);
     user-select: none;
       -moz-user-select: none;
       -webkit-user-select: none;
