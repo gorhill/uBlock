@@ -145,12 +145,12 @@ function renderData(data, depth = 0) {
         }
         return out.join('\n');
     }
-    if ( typeof data !== 'object' ) {
+    if ( typeof data !== 'object' || data === null ) {
         return `${indent}${data}`;
     }
     const out = [];
     for ( const [ name, value ] of Object.entries(data) ) {
-        if ( typeof value === 'object' ) {
+        if ( typeof value === 'object' && value !== null ) {
             out.push(`${indent}${name}:`);
             out.push(renderData(value, depth + 1));
             continue;
