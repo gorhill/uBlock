@@ -141,16 +141,18 @@ const processDeclarativeComplex = function(out) {
 
 /******************************************************************************/
 
-const processProcedural = function(out) {
+function processProcedural(out) {
     if ( proceduralDict.size === 0 ) { return; }
     for ( const [ raw, pselector ] of proceduralDict ) {
-        if ( pselector.hit === false && pselector.exec().length === 0 ) {
+        if ( pselector.converted ) {
+            if ( safeQuerySelector(pselector.selector) === null ) { continue; }
+        } else if ( pselector.hit === false && pselector.exec().length === 0 ) {
             continue;
         }
         out.push(`##${raw}`);
         proceduralDict.delete(raw);
     }
-};
+}
 
 /******************************************************************************/
 

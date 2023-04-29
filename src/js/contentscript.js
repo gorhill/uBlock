@@ -663,9 +663,9 @@ vAPI.DOMFilterer = class {
             const proceduralFilterer = this.proceduralFiltererInstance();
             if ( proceduralFilterer !== null ) {
                 for ( const json of this.convertedProceduralFilters ) {
-                    out.procedural.push(
-                        proceduralFilterer.createProceduralFilter(json)
-                    );
+                    const pfilter = proceduralFilterer.createProceduralFilter(json);
+                    pfilter.converted = true;
+                    out.procedural.push(pfilter);
                 }
             }
         }
