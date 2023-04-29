@@ -22,6 +22,7 @@ uBlock Origin (uBO)
 
 <p align="center">
 <a href="https://addons.mozilla.org/addon/ublock-origin/"><img src="https://user-images.githubusercontent.com/585534/107280546-7b9b2a00-6a26-11eb-8f9f-f95932f4bfec.png" alt="Get uBlock Origin for Firefox"></a>
+<a href="https://addons.thunderbird.net/thunderbird/addon/ublock-origin/"><img src="https://user-images.githubusercontent.com/124740436/235314672-73243149-3683-4407-a2d5-ad0f2b08bc17.png" alt="Get uBlock Origin for Thunderbird"></a>
 <a href="https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm"><img src="https://user-images.githubusercontent.com/585534/107280622-91a8ea80-6a26-11eb-8d07-77c548b28665.png" alt="Get uBlock Origin for Chromium"></a>
 <a href="https://microsoftedge.microsoft.com/addons/detail/ublock-origin/odfafepnkmbhccpbejgmiehpchacaeak"><img src="https://user-images.githubusercontent.com/585534/107280673-a5ece780-6a26-11eb-9cc7-9fa9f9f81180.png" alt="Get uBlock Origin for Microsoft Edge"></a>
 <a href="https://addons.opera.com/extensions/details/ublock/"><img src="https://user-images.githubusercontent.com/585534/107280692-ac7b5f00-6a26-11eb-85c7-088926504452.png" alt="Get uBlock Origin for Opera"></a>
@@ -41,15 +42,14 @@ Ads, "unintrusive" or not, are just the visible portion of the privacy-invading 
 
 * [Documentation](#documentation)
 * [Installation](#installation)
-  * [Chromium](#chromium)
   * [Firefox](#firefox)
   * [Thunderbird](#thunderbird)
+  * [Chromium](#chromium)
+  * [All Programs](#all-programs)
+  * [Enterprise Deployment](#enterprise-deployment)
 * [Release History](#release-history)
 * [Translations](#translations)
 * [About](#about)
-* [License](#license)
-* [Privacy Policy]
-* [Wiki]
 
 ## Documentation
 
@@ -80,18 +80,6 @@ For support, questions, or help, visit [/r/uBlockOrigin][Reddit].
 
 [Required Permissions][Permissions]
 
-#### Chromium
-
-[Chrome Web Store][Chrome]
-
-[Microsoft Edge Add-ons][Edge] (Published by: [Nicole Rolls][Nicole Rolls])
-
-[Opera Add-ons][Opera]
-
-[Development Builds][Chrome Dev]
-
-uBO should be compatible with any Chromium-based browser.
-
 #### Firefox
 
 [Firefox Add-ons][Mozilla]
@@ -104,9 +92,21 @@ uBO [works best][Works Best] on Firefox and is available for desktop and Android
 
 [Thunderbird Add-ons][Thunderbird]
 
-#### All Browsers
+#### Chromium
 
-Do **NOT** use any other [similarly-purposed blockers][Similarly-Purposed] concurrently with uBO to benefit from its higher efficiency. uBO will [perform][Performance] as well as or better than most other popular ad blockers. These other blockers can prevent uBO's privacy or anti-blocker-defusing features from working correctly.
+[Chrome Web Store][Chrome]
+
+[Microsoft Edge Add-ons][Edge] (Published by: [Nicole Rolls][Nicole Rolls])
+
+[Opera Add-ons][Opera]
+
+[Development Builds][Chrome Dev]
+
+uBO should be compatible with any Chromium-based browser.
+
+#### All Programs
+
+Do **NOT** use uBO with any other content blocker. uBO [performs][Performance] as well as or better than most popular blockers. Other blockers can prevent uBO's privacy or anti-blocker-defusing features from working correctly.
 
 [Manual Installation][Manual Installation]
 
@@ -126,22 +126,22 @@ Help translate uBO via [Crowdin][Crowdin].
 
 [Manifesto][Manifesto]
 
+[Privacy Policy][Privacy Policy]
+
+[GPLv3 License][License]
+
 Free. Open-source. For users by users. No donations sought.
 
 If you ever want to contribute something, think about the people working hard to maintain the filter lists you are using, which are available to use by all for free.
-
-## License
-
-[GPLv3][License]
 
 
 <!----------------------------------------------------------------------------->
 
 [Peter Lowe's Blocklist]: https://pgl.yoyo.org/adservers/
 [Malicious Blocklist]: https://gitlab.com/malware-filter/urlhaus-filter#malicious-url-blocklist
-[Similarly-Purposed]: https://twitter.com/gorhill/status/1033706103782170625
 [Performance]: https://www.debugbear.com/blog/chrome-extension-performance-2021#how-do-ad-blockers-and-privacy-tools-affect-browser-performance
 [EasyPrivacy]: https://easylist.to/#easyprivacy
+[Thunderbird]: https://addons.thunderbird.net/thunderbird/addon/ublock-origin/
 [Chrome Dev]: https://chrome.google.com/webstore/detail/ublock-origin-development/cgbcahbpdhpcegmbfconppldiemgcoii
 [EasyList]: https://easylist.to/#easylist
 [Mozilla]: https://addons.mozilla.org/addon/ublock-origin/
@@ -149,7 +149,6 @@ If you ever want to contribute something, think about the people working hard to
 [Chrome]: https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm
 [Reddit]: https://www.reddit.com/r/uBlockOrigin/
 [Theft]: https://twitter.com/LeaVerou/status/518154828166725632
-[Thunderbird]: https://addons.thunderbird.net/thunderbird/addon/ublock-origin/
 [Opera]: https://addons.opera.com/extensions/details/ublock/
 [Edge]: https://microsoftedge.microsoft.com/addons/detail/ublock-origin/odfafepnkmbhccpbejgmiehpchacaeak
 [NPM]: https://www.npmjs.com/package/@gorhill/ubo-core
