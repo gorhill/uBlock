@@ -166,6 +166,7 @@
 		"cdnURLs": [
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/thirdparties/easylist.txt",
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/thirdparties/easylist.txt",
+			"https://ublockorigin.pages.dev/thirdparties/easylist.txt",
 			"https://easylist.to/easylist/easylist.txt"
 		],
 		"supportURL": "https://easylist.to/"
@@ -205,6 +206,7 @@
 		"cdnURLs": [
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/thirdparties/easyprivacy.txt",
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/thirdparties/easyprivacy.txt",
+			"https://ublockorigin.pages.dev/thirdparties/easyprivacy.txt",
 			"https://easylist.to/easylist/easyprivacy.txt"
 		],
 		"supportURL": "https://easylist.to/"
@@ -289,17 +291,32 @@
 		"group": "social",
 		"off": true,
 		"title": "EasyList Cookie",
-		"contentURL": "https://secure.fanboy.co.nz/fanboy-cookiemonster_ubo.txt",
+		"contentURL": [
+			"https://ublockorigin.github.io/uAssets/thirdparties/easylist-cookies.txt",
+            "https://secure.fanboy.co.nz/fanboy-cookiemonster_ubo.txt"
+        ],
+		"cdnURLs": [
+			"https://ublockorigin.github.io/uAssetsCDN/thirdparties/easylist-cookies.txt",
+			"https://ublockorigin.pages.dev/thirdparties/easylist-cookies.txt",
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/thirdparties/easylist-cookies.txt",
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/thirdparties/easylist-cookies.txt"
+		],
 		"supportURL": "https://github.com/easylist/easylist#fanboy-lists"
 	},
 	"fanboy-social": {
 		"content": "filters",
 		"group": "social",
 		"off": true,
-		"title": "Fanboy’s Social",
+		"title": "EasyList Social",
 		"contentURL": [
-			"https://easylist.to/easylist/fanboy-social.txt",
+			"https://ublockorigin.github.io/uAssets/thirdparties/easylist-social.txt",
 			"https://secure.fanboy.co.nz/fanboy-social.txt"
+		],
+		"cdnURLs": [
+			"https://ublockorigin.github.io/uAssetsCDN/thirdparties/easylist-social.txt",
+			"https://ublockorigin.pages.dev/thirdparties/easylist-social.txt",
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/thirdparties/easylist-social.txt",
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/thirdparties/easylist-social.txt"
 		],
 		"supportURL": "https://easylist.to/"
 	},
