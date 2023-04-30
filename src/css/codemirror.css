@@ -213,6 +213,9 @@
 .cm-search-widget .sourceURL[href=""] {
     visibility: hidden;
     }
+:root.mobile .cm-search-widget .sourceURL[href=""] {
+    display: none;
+    }
 
 .cm-linter-widget {
     align-items: center;
