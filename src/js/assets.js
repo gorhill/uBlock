@@ -360,11 +360,11 @@ const getAssetSourceRegistry = function() {
                 return assetSourceRegistry;
             }
             return assets.fetchText(
-                µb.assetsBootstrapLocation || 'assets/assets.json'
+                µb.assetsBootstrapLocation || µb.assetsJsonPath
             ).then(details => {
                 return details.content !== ''
                     ? details
-                    : assets.fetchText('assets/assets.json');
+                    : assets.fetchText(µb.assetsJsonPath);
             }).then(details => {
                 updateAssetSourceRegistry(details.content, true);
                 return assetSourceRegistry;
@@ -403,7 +403,7 @@ const registerAssetSource = function(assetKey, newDict) {
         currentDict.contentURL = [];
     }
     if ( typeof currentDict.updateAfter !== 'number' ) {
-        currentDict.updateAfter = 5;
+        currentDict.updateAfter = 7;
     }
     if ( currentDict.submitter ) {
         currentDict.submitTime = Date.now(); // To detect stale entries
@@ -1041,7 +1041,7 @@ const updateNext = async function() {
     ) {
         result = await getRemote(toUpdate[0]);
     } else {
-        result = await assets.fetchText('/assets/assets.json');
+        result = await assets.fetchText(µb.assetsJsonPath);
         result.assetKey = 'assets.json';
     }
 
