@@ -268,13 +268,19 @@
 		"contentURL": "https://secure.fanboy.co.nz/fanboy-antifacebook.txt",
 		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
 	},
-	"fanboy-annoyance": {
+	"easylist-annoyances": {
 		"content": "filters",
 		"group": "annoyances",
         "parent": "EasyList – Annoyances",
 		"off": true,
-		"title": "Fanboy – Annoyances",
-		"contentURL": "https://secure.fanboy.co.nz/fanboy-annoyance_ubo.txt",
+		"title": "EasyList – Other Annoyances",
+		"contentURL": "https://ublockorigin.github.io/uAssets/thirdparties/easylist-annoyances.txt",
+		"cdnURLs": [
+			"https://ublockorigin.github.io/uAssetsCDN/thirdparties/easylist-annoyances.txt",
+			"https://ublockorigin.pages.dev/thirdparties/easylist-annoyances.txt",
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/thirdparties/easylist-annoyances.txt",
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/thirdparties/easylist-annoyances.txt"
+		],
 		"supportURL": "https://github.com/easylist/easylist#fanboy-lists"
 	},
 	"fanboy-cookiemonster": {
@@ -296,7 +302,7 @@
 		],
 		"supportURL": "https://github.com/easylist/easylist#fanboy-lists"
 	},
-	"fanboy-newsletters": {
+	"easylist-newsletters": {
 		"content": "filters",
 		"group": "annoyances",
         "parent": "EasyList – Annoyances",
@@ -313,7 +319,7 @@
 		],
 		"supportURL": "https://easylist.to/"
 	},
-	"fanboy-notifications": {
+	"easylist-newsletters": {
 		"content": "filters",
 		"group": "annoyances",
         "parent": "EasyList – Annoyances",
