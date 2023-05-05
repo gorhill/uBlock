@@ -240,16 +240,6 @@
 		],
 		"supportURL": "https://gitlab.com/malware-filter/pup-filter#pup-domains-blocklist"
 	},
-	"adguard-annoyance": {
-		"content": "filters",
-		"group": "annoyances",
-        "parent": "AdGuard – Annoyances",
-		"off": true,
-		"title": "AdGuard – Annoyances",
-		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/14.txt",
-		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
-		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
-	},
 	"adguard-social": {
 		"content": "filters",
 		"group": "annoyances",
@@ -257,6 +247,56 @@
 		"off": true,
 		"title": "AdGuard – Social Media",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/4.txt",
+		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
+	},
+	"adguard-cookies": {
+		"content": "filters",
+		"group": "annoyances",
+        "parent": "AdGuard – Annoyances",
+		"off": true,
+		"title": "AdGuard – Cookie Notices",
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/18.txt",
+		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
+	},
+	"adguard-popup-overlays": {
+		"content": "filters",
+		"group": "annoyances",
+        "parent": "AdGuard – Annoyances",
+		"off": true,
+		"title": "AdGuard – Popup Overlays",
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/19.txt",
+		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
+	},
+	"adguard-mobile-app-banners": {
+		"content": "filters",
+		"group": "annoyances",
+        "parent": "AdGuard – Annoyances",
+		"off": true,
+		"title": "AdGuard – Mobile App Banners",
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/20.txt",
+		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
+	},
+	"adguard-other-annoyances": {
+		"content": "filters",
+		"group": "annoyances",
+        "parent": "AdGuard – Annoyances",
+		"off": true,
+		"title": "AdGuard – Other Annoyances",
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/21.txt",
+		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
+	},
+	"adguard-widgets": {
+		"content": "filters",
+		"group": "annoyances",
+        "parent": "AdGuard – Annoyances",
+		"off": true,
+		"title": "AdGuard – Widgets",
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/22.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
 		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
 	},
