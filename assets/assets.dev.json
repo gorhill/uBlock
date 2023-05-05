@@ -38,7 +38,7 @@
 	"ublock-filters": {
 		"content": "filters",
 		"group": "default",
-        "parent": "uBlock filters",
+		"parent": "uBlock filters",
 		"title": "uBlock filters – Ads",
 		"contentURL": [
 			"https://ublockorigin.github.io/uAssets/filters/filters.txt",
@@ -55,7 +55,7 @@
 	"ublock-badware": {
 		"content": "filters",
 		"group": "default",
-        "parent": "uBlock filters",
+		"parent": "uBlock filters",
 		"title": "uBlock filters – Badware risks",
 		"contentURL": [
 			"https://ublockorigin.github.io/uAssets/filters/badware.txt",
@@ -74,7 +74,7 @@
 		"content": "filters",
 		"updateAfter": 13,
 		"group": "default",
-        "parent": "uBlock filters",
+		"parent": "uBlock filters",
 		"title": "uBlock filters – Privacy",
 		"contentURL": [
 			"https://ublockorigin.github.io/uAssets/filters/privacy.txt",
@@ -91,7 +91,7 @@
 	"ublock-unbreak": {
 		"content": "filters",
 		"group": "default",
-        "parent": "uBlock filters",
+		"parent": "uBlock filters",
 		"title": "uBlock filters – Unbreak",
 		"contentURL": [
 			"https://ublockorigin.github.io/uAssets/filters/unbreak.txt",
@@ -109,7 +109,7 @@
 		"content": "filters",
 		"updateAfter": 1,
 		"group": "default",
-        "parent": "uBlock filters",
+		"parent": "uBlock filters",
 		"title": "uBlock filters – Quick fixes",
 		"contentURL": [
 			"https://ublockorigin.github.io/uAssets/filters/quick-fixes.txt",
@@ -243,7 +243,7 @@
 	"adguard-social": {
 		"content": "filters",
 		"group": "annoyances",
-        "parent": "AdGuard – Annoyances",
+		"parent": "AdGuard – Annoyances",
 		"off": true,
 		"title": "AdGuard – Social Media",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/4.txt",
@@ -253,7 +253,7 @@
 	"adguard-cookies": {
 		"content": "filters",
 		"group": "annoyances",
-        "parent": "AdGuard – Annoyances",
+		"parent": "AdGuard – Annoyances",
 		"off": true,
 		"title": "AdGuard – Cookie Notices",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/18.txt",
@@ -263,7 +263,7 @@
 	"adguard-popup-overlays": {
 		"content": "filters",
 		"group": "annoyances",
-        "parent": "AdGuard – Annoyances",
+		"parent": "AdGuard – Annoyances",
 		"off": true,
 		"title": "AdGuard – Popup Overlays",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/19.txt",
@@ -273,7 +273,7 @@
 	"adguard-mobile-app-banners": {
 		"content": "filters",
 		"group": "annoyances",
-        "parent": "AdGuard – Annoyances",
+		"parent": "AdGuard – Annoyances",
 		"off": true,
 		"title": "AdGuard – Mobile App Banners",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/20.txt",
@@ -283,7 +283,7 @@
 	"adguard-other-annoyances": {
 		"content": "filters",
 		"group": "annoyances",
-        "parent": "AdGuard – Annoyances",
+		"parent": "AdGuard – Annoyances",
 		"off": true,
 		"title": "AdGuard – Other Annoyances",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/21.txt",
@@ -293,7 +293,7 @@
 	"adguard-widgets": {
 		"content": "filters",
 		"group": "annoyances",
-        "parent": "AdGuard – Annoyances",
+		"parent": "AdGuard – Annoyances",
 		"off": true,
 		"title": "AdGuard – Widgets",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/22.txt",
@@ -311,7 +311,7 @@
 	"easylist-annoyances": {
 		"content": "filters",
 		"group": "annoyances",
-        "parent": "EasyList – Annoyances",
+		"parent": "EasyList – Annoyances",
 		"off": true,
 		"title": "EasyList – Other Annoyances",
 		"contentURL": "https://ublockorigin.github.io/uAssets/thirdparties/easylist-annoyances.txt",
@@ -326,13 +326,13 @@
 	"fanboy-cookiemonster": {
 		"content": "filters",
 		"group": "annoyances",
-        "parent": "EasyList – Annoyances",
+		"parent": "EasyList – Annoyances",
 		"off": true,
 		"title": "EasyList – Cookie Notices",
 		"contentURL": [
 			"https://ublockorigin.github.io/uAssets/thirdparties/easylist-cookies.txt",
-            "https://secure.fanboy.co.nz/fanboy-cookiemonster_ubo.txt"
-        ],
+			"https://secure.fanboy.co.nz/fanboy-cookiemonster_ubo.txt"
+		],
 		"cdnURLs": [
 			"https://ublockorigin.github.io/uAssetsCDN/thirdparties/easylist-cookies.txt",
 			"https://ublockorigin.pages.dev/thirdparties/easylist-cookies.txt",
@@ -345,7 +345,7 @@
 	"easylist-newsletters": {
 		"content": "filters",
 		"group": "annoyances",
-        "parent": "EasyList – Annoyances",
+		"parent": "EasyList – Annoyances",
 		"off": true,
 		"title": "EasyList – Newsletter Notices",
 		"contentURL": [
@@ -362,7 +362,7 @@
 	"easylist-newsletters": {
 		"content": "filters",
 		"group": "annoyances",
-        "parent": "EasyList – Annoyances",
+		"parent": "EasyList – Annoyances",
 		"off": true,
 		"title": "EasyList – Notifications",
 		"contentURL": [
@@ -379,7 +379,7 @@
 	"fanboy-social": {
 		"content": "filters",
 		"group": "annoyances",
-        "parent": "EasyList – Annoyances",
+		"parent": "EasyList – Annoyances",
 		"off": true,
 		"title": "EasyList – Social Widgets",
 		"contentURL": [
@@ -680,7 +680,7 @@
 	"POL-0": {
 		"content": "filters",
 		"group": "regions",
-        "parent": "🇵🇱 POL: Oficjalne Polskie Filtry",
+		"parent": "🇵🇱 POL: Oficjalne Polskie Filtry",
 		"off": true,
 		"title": "🇵🇱 POL: Oficjalne Polskie Filtry do uBlocka Origin",
 		"lang": "szl pl",
@@ -691,7 +691,7 @@
 	"POL-2": {
 		"content": "filters",
 		"group": "regions",
-        "parent": "🇵🇱 POL: Oficjalne Polskie Filtry",
+		"parent": "🇵🇱 POL: Oficjalne Polskie Filtry",
 		"off": true,
 		"title": "🇵🇱 POL: Oficjalne polskie filtry przeciwko alertom o Adblocku",
 		"lang": "szl pl",
