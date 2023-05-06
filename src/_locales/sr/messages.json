@@ -1044,7 +1044,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "Насумично одабрани CDN се користи када листу филтера треба ажурирати",
+    "message": "Насумично одабрани CDN се користи када листу филтера треба ажурирати.",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
@@ -1276,7 +1276,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Није могуће правилно филтрирати при покретању прегледача.\nПоново учитајте страницу да бисте осигурали правилно филтрирање.\n",
+    "message": "Није могуће правилно филтрирати при покретању прегледача. Поново учитајте страницу да бисте осигурали правилно филтрирање.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {

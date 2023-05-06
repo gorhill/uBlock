@@ -388,7 +388,7 @@
     "description": ""
   },
   "settingsNoScriptingPrompt": {
-    "message": "Απενεργοποίηση της JavaScript",
+    "message": "Απενεργοποίηση JavaScript",
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
@@ -1048,7 +1048,7 @@
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "Δημιουργία αρχείου αντιγράφου ασφαλείας",
+    "message": "Δημιουργία αντιγράφου ασφαλείας σε αρχείο...",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
@@ -1188,7 +1188,7 @@
     "description": ""
   },
   "cloudDeviceNamePrompt": {
-    "message": "Το όνομα αυτής της συσκευής:",
+    "message": "Όνομα αυτής της συσκευής:",
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {

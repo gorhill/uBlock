@@ -956,7 +956,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Bitte überprüfen Sie, ob das Problem nach dem Neuladen der problematischen Webseite weiterhin besteht.",
+    "message": "Bitte überprüfen Sie, ob das Problem nach dem Neuladen der Webseite weiterhin besteht.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {

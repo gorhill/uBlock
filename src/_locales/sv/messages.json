@@ -896,7 +896,7 @@
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Läs dokumentationen på <code>uBlock/wiki</code> för att lära dig allt om uBlock Origin's funktioner.",
+    "message": "Läs dokumentationen på <code>uBlock/wiki</code> för att lära dig allt om uBlock Origins funktioner.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
@@ -904,7 +904,7 @@
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
-    "message": "Svar på frågor och andra typer av hjälp finns på subreddit <code>/r/uBlockOrigin</code>.",
+    "message": "Svar på frågor och andra typer av hjälp finns på subredditen <code>/r/uBlockOrigin</code>.",
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
