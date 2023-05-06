@@ -70,13 +70,30 @@ class dom {
         }
     }
 
+    static clear(target) {
+        for ( const elem of normalizeTarget(target) ) {
+            while ( elem.firstChild !== null ) {
+                elem.removeChild(elem.firstChild);
+            }
+        }
+    }
+
     static clone(target) {
-        return normalizeTarget(target)[0].cloneNode(true);
+        const elements = normalizeTarget(target);
+        if ( elements.length === 0 ) { return null; }
+        return elements[0].cloneNode(true);
     }
 
     static create(a) {
         if ( typeof a === 'string' ) {
             return document.createElement(a);
+        }
+    }
+
+    static prop(target, prop, value = undefined) {
+        for ( const elem of normalizeTarget(target) ) {
+            if ( value === undefined ) { return elem[prop]; }
+            elem[prop] = value;
         }
     }
 
@@ -174,6 +191,7 @@ function qs$(a, b) {
     if ( typeof a === 'string') {
         return document.querySelector(a);
     }
+    if ( a === null ) { return null; }
     return a.querySelector(b);
 }
 
@@ -181,6 +199,7 @@ function qsa$(a, b) {
     if ( typeof a === 'string') {
         return document.querySelectorAll(a);
     }
+    if ( a === null ) { return []; }
     return a.querySelectorAll(b);
 }
 

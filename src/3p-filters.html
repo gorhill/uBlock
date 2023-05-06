@@ -39,34 +39,66 @@
 </div>
 
 <div>
-    <div><span id="listsOfBlockedHostsPrompt"></span>
-        <div id="lists"></div>
+</div>
+
+<div id="lists">
+    <div class="rootstats expandable" data-key="*">
+        <span class="fa-icon listExpander">angle-up</span><span id="listsOfBlockedHostsPrompt"></span>
+    </div>
+    <div class="searchbar"><input type="search" spellcheck="false"/><span class="fa-icon">search</span></div>
+    <div class="listEntries"></div>
+    <div class="li listEntry expandable" data-role="import">
+        <span class="detailbar">
+            <label><span class="fa-icon listExpander">angle-up</span><span class="listname" data-i18n="3pImport"></span></label>
+            <a class="fa-icon info towiki" href="https://github.com/gorhill/uBlock/wiki/Filter-lists-from-around-the-web" target="_blank">info-circle</a>
+        </span>
+        <textarea dir="ltr" spellcheck="false" placeholder="3pExternalListsHint"></textarea>
     </div>
 </div>
 
 </div>
 
 <div id="templates" style="display: none;">
-    <div class="groupEntry">
-        <div class="geDetails"><span class="geName"></span> <span class="geCount"></span></div>
-        <div class="listEntries"></div>
+    <div class="listEntries"></div>
+    <div class="li listEntry" data-role="leaf">
+        <span class="detailbar">
+            <label><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span><span><span class="listname forinput"></span>
+            </span></label>
+            <span class="iconbar"><!--
+             --><a class="fa-icon content" href="#" type="text/plain" target="_blank" data-i18n-title="3pViewContent">eye-open</a><!--
+             --><a class="fa-icon support" href="#" target="_blank">home</a><!--
+             --><span class="fa-icon remove">trash-o</span><!--
+             --><a class="fa-icon mustread" href="#" target="_blank">info-circle</a><!--
+             --><span class="fa-icon status unsecure" title="http">unlock-alt</span><!--
+             --><span class="fa-icon status obsolete" data-i18n-title="3pExternalListObsolete">exclamation-triangle</span><!--
+             --><span class="fa-icon status cache">clock-o</span><!--
+             --><span class="fa-icon status updating" data-i18n-title="3pUpdating">spinner</span><!--
+             --><span class="fa-icon status failed" data-i18n-title="3pNetworkError">unlink</span>
+            </span>
+            <span class="leafstats"></span>
+        </span>
     </div>
-    <div class="li listEntry">
-        <label><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span><span><span class="listname forinput"></span> <span class="iconbar"><!--
-     --><a class="fa-icon content" href="#" type="text/plain" target="_blank" data-i18n-title="3pViewContent">eye-open</a><!--
-     --><a class="fa-icon support" href="#" target="_blank">home</a><!--
-     --><span class="fa-icon remove">trash-o</span><!--
-     --><a class="fa-icon mustread" href="#" target="_blank">info-circle</a><!--
-     --><span class="fa-icon status unsecure" title="http">unlock-alt</span><!--
-     --><span class="fa-icon status obsolete" data-i18n-title="3pExternalListObsolete">exclamation-triangle</span><!--
-     --><span class="fa-icon status cache">clock-o</span><!--
-     --><span class="fa-icon status updating" data-i18n-title="3pUpdating">spinner</span><!--
-     --><span class="fa-icon status failed" data-i18n-title="3pNetworkError">unlink</span><!--
-     --><span class="counts"></span></span></span></label>
+    <div class="li listEntry expandable" data-role="node">
+        <span class="detailbar">
+            <label><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span><span class="listname forinput"></span></label>
+            <span class="nodestats"></span>
+            <span class="fa-icon listExpander">angle-up</span>
+            <span class="iconbar"><!--
+             --><a class="fa-icon support" href="#" target="_blank">home</a><!--
+             --><a class="fa-icon mustread" href="#" target="_blank">info-circle</a><!--
+             --><span class="fa-icon status obsolete" data-i18n-title="3pExternalListObsolete">exclamation-triangle</span><!--
+             --><span class="fa-icon status cache">clock-o</span><!--
+             --><span class="fa-icon status updating" data-i18n-title="3pUpdating">spinner</span><!--
+             --><span class="fa-icon status failed" data-i18n-title="3pNetworkError">unlink</span>
+            </span>
+            <span class="leafstats"></span>
+        </span>
     </div>
-    <div class="listEntry toImport"><label><span class="input checkbox"><input type="checkbox" id="importLists"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span><span><span class="forinput" data-i18n="3pImport"></span> <a class="fa-icon info towiki" href="https://github.com/gorhill/uBlock/wiki/Filter-lists-from-around-the-web" target="_blank">info-circle</a></span></label><!--
-        --><!--
-        --><textarea id="externalLists" dir="ltr" spellcheck="false" placeholder="3pExternalListsHint"></textarea>
+    <div class="li listEntry expandable" data-parent="root" data-role="node">
+        <span class="detailbar">
+            <label><span class="fa-icon listExpander">angle-up</span><span class="listname"></span></label>
+            <span class="nodestats"></span>
+        </span>
     </div>
 </div>
 

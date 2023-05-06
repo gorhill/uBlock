@@ -1616,9 +1616,11 @@ const onMessage = function(request, sender, callback) {
         }
         break;
 
-    case 'purgeCache':
-        io.purge(request.assetKey);
-        io.remove('compiled/' + request.assetKey);
+    case 'purgeCaches':
+        for ( const assetKey of request.assetKeys ) {
+            io.purge(assetKey);
+            io.remove(`compiled/${assetKey}`);
+        }
         break;
 
     case 'readHiddenSettings':

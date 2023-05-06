@@ -38,9 +38,19 @@
     }
 .fa-icon.fa-icon-hflipped > svg {
     transform: scale(-1, 1);
+    transform-origin: 50%;
     }
 .fa-icon.fa-icon-vflipped > svg {
     transform: scale(1, -1);
+    transform-origin: 50%;
+    }
+.fa-icon.fa-icon-rotright > svg {
+    transform: rotate(90deg);
+    transform-origin: 50%;
+    }
+.fa-icon.fa-icon-rotleft > svg {
+    transform: rotate(-90deg);
+    transform-origin: 50%;
     }
 
 .fa-icon > svg {

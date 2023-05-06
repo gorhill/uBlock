@@ -127,8 +127,8 @@
  * */
 :root {
     --font-size: 14px;
-    --font-size-smaller: 13px;
-    --font-size-xsmall: 11px;
+    --font-size-smaller: calc(var(--font-size) - 1px);
+    --font-size-xsmall: calc(var(--font-size) - 3px);
     --font-size-larger: 15px;
     --font-family: Inter, sans-serif;
     --monospace-size: 12px;
@@ -417,6 +417,7 @@
     --checkbox-ink: var(--ink-3);
     --checkbox-checked-ink: var(--accent-surface-1);
     --checkbox-disabled-filter: opacity(50%);
+    --checkbox-margin-end: calc(var(--font-size) * 0.75);
 
     --notice-ink: var(--accent-ink-1);
     --notice-surface: var(--accent-surface-1);

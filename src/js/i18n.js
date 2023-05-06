@@ -255,10 +255,9 @@ if ( isBackgroundProcess !== true ) {
         }
 
         for ( const elem of root.querySelectorAll('[placeholder]') ) {
-            elem.setAttribute(
-                'placeholder',
-                i18n$(elem.getAttribute('placeholder'))
-            );
+            const text = i18n$(elem.getAttribute('placeholder'));
+            if ( text === '' ) { continue; }
+            elem.setAttribute('placeholder', text);
         }
 
         for ( const elem of root.querySelectorAll('[data-i18n-tip]') ) {

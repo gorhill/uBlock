@@ -174,14 +174,13 @@ section.notice {
     - To have a single checkbox design across all platforms.
 */
 .checkbox {
-    --margin-end: calc(var(--font-size) * 0.75);
     box-sizing: border-box;
     display: inline-flex;
     flex-shrink: 0;
     height: var(--checkbox-size);
     margin: 0;
-    margin-inline-end: var(--margin-end);
-    -webkit-margin-end: var(--margin-end);
+    margin-inline-end: var(--checkbox-margin-end);
+    -webkit-margin-end: var(--checkbox-margin-end);
     position: relative;
     width: var(--checkbox-size);
     }
