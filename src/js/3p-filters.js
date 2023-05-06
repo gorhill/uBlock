@@ -380,6 +380,7 @@ const toggleFilterList = (elem, on, ui = false) => {
 const updateListNode = listNode => {
     if ( listNode === null ) { return; }
     if ( listNode.dataset.role !== 'node' ) { return; }
+    if ( listNode.dataset.parent === 'root' ) { return; }
     const listLeaves = qsa$(listNode, '.listEntry[data-role="leaf"].checked');
     let usedFilterCount = 0;
     let totalFilterCount = 0;
