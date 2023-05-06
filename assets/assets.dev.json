@@ -359,7 +359,7 @@
 		],
 		"supportURL": "https://easylist.to/"
 	},
-	"easylist-newsletters": {
+	"easylist-notifications": {
 		"content": "filters",
 		"group": "annoyances",
 		"parent": "EasyList – Annoyances",
