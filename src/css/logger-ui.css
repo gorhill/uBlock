@@ -249,6 +249,9 @@ body[dir="rtl"] #netInspector #filterExprPicker {
 #vwRenderer .logEntry > div.redirect {
     background-color: var(--logger-redirected-surface);
     }
+#vwRenderer .logEntry > div.extendedRealm.scriptlet {
+    background-color: var(--logger-scriptlet-surface);
+    }
 :root.colorBlind #vwRenderer .logEntry > div.extendedRealm,
 :root.colorBlind #vwRenderer .logEntry > div.redirect {
     background-color: rgba(0, 19, 110, 0.1);

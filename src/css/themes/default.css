@@ -297,8 +297,9 @@
 
     /* logger */
     --logger-modified-surface: #0000c010;
-    --logger-redirected-surface: rgb(var(--yellow-5) / 50%);
     --logger-modified-em-surface: #0000c028;
+    --logger-redirected-surface: rgb(var(--yellow-5) / 50%);
+    --logger-scriptlet-surface: rgb(var(--yellow-30) / 50%);
 }
 
 /* https://material.io/design/color/dark-theme.html */
@@ -374,6 +375,7 @@
     /* logger */
     --logger-modified-surface: #663efd60;
     --logger-redirected-surface: rgb(var(--yellow-5) / 40%);
+    --logger-scriptlet-surface: rgb(var(--yellow-30) / 40%);
 }
 
 :root.dark input,

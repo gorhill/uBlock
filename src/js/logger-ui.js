@@ -797,7 +797,11 @@ const viewPort = (( ) => {
             }
         }
         span = div.children[COLUMN_FILTER];
-        if ( renderFilterToSpan(span, cells[COLUMN_FILTER]) === false ) {
+        if ( renderFilterToSpan(span, cells[COLUMN_FILTER]) ) {
+            if ( /^\+js\(.*\)$/.test(span.children[1].textContent) ) {
+                divcl.add('scriptlet');
+            }
+        } else {
             span.textContent = cells[COLUMN_FILTER];
         }
 
