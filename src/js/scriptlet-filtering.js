@@ -226,7 +226,7 @@ const logOne = function(tabId, url, filter) {
         .duplicate()
         .fromTabId(tabId)
         .setRealm('extended')
-        .setType('dom')
+        .setType('scriptlet')
         .setURL(url)
         .setDocOriginFromURL(url)
         .setFilter({ source: 'extended', raw: filter })
