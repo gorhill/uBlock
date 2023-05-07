@@ -762,7 +762,7 @@ export class AstFilterParser {
         this.reNetHosts1 = /^127\.0\.0\.1 (?:[\da-z][\da-z_-]*\.)+[\da-z-]*[a-z]$/;
         this.reNetHosts2 = /^0\.0\.0\.0 (?:[\da-z][\da-z_-]*\.)+[\da-z-]*[a-z]$/;
         this.rePlainGenericCosmetic = /^##[.#][A-Za-z_][\w-]*$/;
-        this.reHostnameAscii = /^(?:[\da-z][\da-z_-]*\.)*[\da-z-]*[\da-z]$/;
+        this.reHostnameAscii = /^(?:[\da-z][\da-z_-]*\.)*[\da-z][\da-z-]*[\da-z]$/;
         this.rePlainEntity = /^(?:[\da-z][\da-z_-]*\.)+\*$/;
         this.reHostsSink = /^[\w%.:\[\]-]+\s+/;
         this.reHostsRedirect = /(?:0\.0\.0\.0|broadcasthost|local|localhost(?:\.localdomain)?|ip6-\w+)(?:[^\w.-]|$)/;
