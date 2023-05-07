@@ -380,8 +380,11 @@ const toggleFilterList = (elem, on, ui = false) => {
 const updateListNode = listNode => {
     if ( listNode === null ) { return; }
     if ( listNode.dataset.role !== 'node' ) { return; }
-    if ( listNode.dataset.parent === 'root' ) { return; }
     const listLeaves = qsa$(listNode, '.listEntry[data-role="leaf"].checked');
+    dom.text(qs$(listNode, '.nodestats'),
+        renderNodeStats(listLeaves.length, qsa$(listNode, '.listEntry[data-role="leaf"]').length)
+    );
+    if ( listNode.dataset.parent === 'root' ) { return; }
     let usedFilterCount = 0;
     let totalFilterCount = 0;
     let isCached = false;
@@ -399,9 +402,6 @@ const updateListNode = listNode => {
     }
     dom.cl.toggle(listNode, 'checked', listLeaves.length !== 0);
     dom.prop(qs$(listNode, ':scope > .detailbar input'), 'checked', listLeaves.length !== 0);
-    dom.text(qs$(listNode, '.nodestats'),
-        renderNodeStats(listLeaves.length, qsa$(listNode, '.listEntry[data-role="leaf"]').length)
-    );
     dom.text(qs$(listNode, '.leafstats'),
         renderLeafStats(usedFilterCount, totalFilterCount)
     );
