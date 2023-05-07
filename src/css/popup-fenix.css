@@ -309,7 +309,7 @@ body.needSave #revertRules {
     display: flex;
     left: 0;
     position: absolute;
-    z-index: 100;
+    z-index: 50;
     }
 #firewall > section .fa-icon {
     color: var(--ink-4);
