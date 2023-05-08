@@ -98,6 +98,9 @@ const renderFilterLists = ( ) => {
             if ( dom.cl.has(listEntryPrevious, 'toRemove') ) {
                 dom.cl.add(listEntry, 'toRemove');
             }
+            if ( dom.cl.has(listEntryPrevious, 'searchMatch') ) {
+                dom.cl.add(listEntry, 'searchMatch');
+            }
         } else {
             dom.cl.toggle(listEntry, 'checked', listDetails.off !== true);
         }
@@ -383,6 +386,9 @@ const updateListNode = listNode => {
     const listLeaves = qsa$(listNode, '.listEntry[data-role="leaf"].checked');
     dom.text(qs$(listNode, '.nodestats'),
         renderNodeStats(listLeaves.length, qsa$(listNode, '.listEntry[data-role="leaf"]').length)
+    );
+    dom.cl.toggle(listNode, 'searchMatch',
+        qs$(listNode, ':scope > .listEntries > .listEntry.searchMatch') !== null
     );
     if ( listNode.dataset.parent === 'root' ) { return; }
     let usedFilterCount = 0;
