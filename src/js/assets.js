@@ -815,7 +815,7 @@ const getRemote = async function(assetKey) {
     const assetDetails = assetRegistry[assetKey] || {};
 
     const reportBack = function(content, err) {
-        const details = { assetKey: assetKey, content: content };
+        const details = { assetKey, content };
         if ( err ) {
             details.error = assetDetails.lastError = err;
         } else {
@@ -851,8 +851,18 @@ const getRemote = async function(assetKey) {
         }
     }
 
-    for ( const contentURL of contentURLs ) {
+    for ( let contentURL of contentURLs ) {
         if ( reIsExternalPath.test(contentURL) === false ) { continue; }
+
+        // This will force uBO to fetch the proper version according to whether
+        // the dev build is being used. This can be removed when execution of
+        // this code path is widespread for dev build revisions of uBO.
+        if ( assetKey === 'assets.json' ) {
+            contentURL = contentURL.replace(
+                /\/assets\/assets\.json$/,
+                µb.assetsJsonPath
+            );
+        }
 
         const result = assetDetails.content === 'filters'
             ? await assets.fetchFilterList(contentURL)
