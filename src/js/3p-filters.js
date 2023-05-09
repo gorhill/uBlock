@@ -73,6 +73,10 @@ const renderNodeStats = (used, total) => {
     return `${used.toLocaleString()}/${total.toLocaleString()}`;
 };
 
+const i18nGroupName = name => {
+    return i18n$('3pGroup' + name.charAt(0).toUpperCase() + name.slice(1));
+};
+
 /******************************************************************************/
 
 const renderFilterLists = ( ) => {
@@ -213,7 +217,7 @@ const renderFilterLists = ( ) => {
         ];
         for ( const key of groupKeys ) {
             listTree[key] = {
-                title: i18n$('3pGroup' + key.charAt(0).toUpperCase() + key.slice(1)),
+                title: i18nGroupName(key),
                 lists: {},
             };
         }
@@ -618,21 +622,39 @@ const searchFilterLists = ( ) => {
             qs$(listEntry, ':scope > .listEntries > .listEntry.searchMatch') !== null
         );
     };
+    const toI18n = tags => {
+        if ( tags === '' ) { return ''; }
+        return tags.toLowerCase().split(/\s+/).reduce((a, v) => {
+            let s = i18n$(v);
+            if ( s === '' ) {
+                s = i18nGroupName(v);
+                if ( s === '' ) { return a; }
+            }
+            return `${a} ${s}`.trim();
+        }, '');
+    };
     const re = new RegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
     for ( const listEntry of qsa$('#lists [data-role="leaf"]') ) {
         const listkey = listEntry.dataset.key;
         const listDetails = listsetDetails.available[listkey];
-        let matches = false;
-        if ( listDetails ) {
-            matches = re.test(listDetails.title);
-            if ( matches === false && listDetails.tags ) {
-                matches = re.test(listDetails.tags);
-            }
+        if ( listDetails === undefined ) { continue; }
+        let haystack = perListHaystack.get(listDetails);
+        if ( haystack === undefined ) {
+            haystack = [
+                listDetails.title,
+                listDetails.group || '',
+                i18nGroupName(listDetails.group || ''),
+                listDetails.tags || '',
+                toI18n(listDetails.tags || ''),
+            ].join(' ').trim();
+            perListHaystack.set(listDetails, haystack);
         }
-        dom.cl.toggle(listEntry, 'searchMatch', matches);
+        dom.cl.toggle(listEntry, 'searchMatch', re.test(haystack));
         updateAncestorListNodes(listEntry, reflectSearchMatches);
     }
 };
+
+const perListHaystack = new WeakMap();
 
 dom.on('.searchbar input', 'input', searchFilterLists);
 
