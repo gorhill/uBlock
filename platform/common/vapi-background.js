@@ -1391,7 +1391,7 @@ vAPI.Net = class {
 // To be defined by platform-specific code.
 
 vAPI.scriptletsInjector = (( ) => {
-    self.uBO_scriptletsInjected = true;
+    self.uBO_scriptletsInjected = '';
 }).toString();
 
 /******************************************************************************/

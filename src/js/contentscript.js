@@ -1298,7 +1298,7 @@ vAPI.DOMFilterer = class {
         const {
             noSpecificCosmeticFiltering,
             noGenericCosmeticFiltering,
-            scriptlets,
+            scriptletDetails,
         } = response;
 
         vAPI.noSpecificCosmeticFiltering = noSpecificCosmeticFiltering;
@@ -1322,10 +1322,12 @@ vAPI.DOMFilterer = class {
 
         // Library of resources is located at:
         // https://github.com/gorhill/uBlock/blob/master/assets/ublock/resources.txt
-        if ( scriptlets && typeof self.uBO_scriptletsInjected !== 'boolean' ) {
-            self.uBO_scriptletsInjected = true;
-            vAPI.injectScriptlet(document, scriptlets);
-            vAPI.injectedScripts = scriptlets;
+        if ( scriptletDetails && typeof self.uBO_scriptletsInjected !== 'string' ) {
+            self.uBO_scriptletsInjected = scriptletDetails.filters;
+            if ( scriptletDetails.scriptlets ) {
+                vAPI.injectScriptlet(document, scriptletDetails.scriptlets);
+                vAPI.injectedScripts = scriptletDetails.scriptlets;
+            }
         }
 
         if ( vAPI.domSurveyor ) {
@@ -1346,7 +1348,7 @@ vAPI.DOMFilterer = class {
         vAPI.messaging.send('contentscript', {
             what: 'retrieveContentScriptParameters',
             url: vAPI.effectiveSelf.location.href,
-            needScriptlets: typeof self.uBO_scriptletsInjected !== 'boolean',
+            needScriptlets: typeof self.uBO_scriptletsInjected !== 'string',
         }).then(response => {
             onResponseReady(response);
         });

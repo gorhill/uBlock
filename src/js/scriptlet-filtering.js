@@ -23,7 +23,6 @@
 
 /******************************************************************************/
 
-import logger from './logger.js';
 import µb from './background.js';
 import { redirectEngine } from './redirect-engine.js';
 import { sessionFirewall } from './filtering-engines.js';
@@ -86,31 +85,32 @@ const scriptletFilteringEngine = {
 const contentscriptCode = (( ) => {
     const parts = [
         '(',
-        function(injector, hostname, scriptlets) {
+        function(injector, details) {
             const doc = document;
             if (
                 doc.location === null ||
-                hostname !== doc.location.hostname ||
-                typeof self.uBO_scriptletsInjected === 'boolean'
+                details.hostname !== doc.location.hostname ||
+                typeof self.uBO_scriptletsInjected === 'string'
             ) {
                 return;
             }
-            injector(doc, decodeURIComponent(scriptlets));
-            if ( typeof self.uBO_scriptletsInjected === 'boolean' ) { return 0; }
+            injector(doc, details);
+            if ( typeof self.uBO_scriptletsInjected === 'string' ) { return 0; }
         }.toString(),
         ')(',
             vAPI.scriptletsInjector, ', ',
-            '"', 'hostname-slot', '", ',
-            '"', 'scriptlets-slot', '"',
+            'json-slot',
         ');',
     ];
     return {
-        parts: parts,
-        hostnameSlot: parts.indexOf('hostname-slot'),
-        scriptletsSlot: parts.indexOf('scriptlets-slot'),
-        assemble: function(hostname, scriptlets) {
-            this.parts[this.hostnameSlot] = hostname;
-            this.parts[this.scriptletsSlot] = encodeURIComponent(scriptlets);
+        parts,
+        jsonSlot: parts.indexOf('json-slot'),
+        assemble: function(hostname, scriptlets, filters) {
+            this.parts[this.jsonSlot] = JSON.stringify({
+                hostname,
+                scriptlets,
+                filters,
+            });
             return this.parts.join('');
         }
     };
@@ -221,16 +221,18 @@ const patchScriptlet = function(content, args) {
     );
 };
 
-const logOne = function(tabId, url, filter) {
-    µb.filteringContext
-        .duplicate()
-        .fromTabId(tabId)
-        .setRealm('extended')
-        .setType('scriptlet')
-        .setURL(url)
-        .setDocOriginFromURL(url)
-        .setFilter({ source: 'extended', raw: filter })
-        .toLogger();
+scriptletFilteringEngine.logFilters = function(tabId, url, filters) {
+    if ( typeof filters !== 'string' ) { return; }
+    const fctxt = µb.filteringContext
+            .duplicate()
+            .fromTabId(tabId)
+            .setRealm('extended')
+            .setType('scriptlet')
+            .setURL(url)
+            .setDocOriginFromURL(url);
+    for ( const filter of filters.split('\n') ) {
+        fctxt.setFilter({ source: 'extended', raw: filter }).toLogger();
+    }
 };
 
 scriptletFilteringEngine.reset = function() {
@@ -308,7 +310,7 @@ const $exceptions = new Set();
 const $scriptletMap = new Map();
 const $scriptletDependencyMap = new Map();
 
-scriptletFilteringEngine.retrieve = function(request, options = {}) {
+scriptletFilteringEngine.retrieve = function(request) {
     if ( scriptletDB.size === 0 ) { return; }
 
     const hostname = request.hostname;
@@ -332,14 +334,13 @@ scriptletFilteringEngine.retrieve = function(request, options = {}) {
         return;
     }
 
-    const mustLog = Array.isArray(options.logEntries);
-
     // Wholly disable scriptlet injection?
     if ( $exceptions.has('') ) {
-        if ( mustLog ) {
-            logOne(request.tabId, request.url, '#@#+js()');
-        }
-        return;
+        return {
+            filters: [
+                { tabId: request.tabId, url: request.url, filter: '#@#+js()' }
+            ]
+        };
     }
 
     if ( scriptletCache.resetTime < redirectEngine.modifyTime ) {
@@ -349,44 +350,37 @@ scriptletFilteringEngine.retrieve = function(request, options = {}) {
     let cacheDetails = scriptletCache.lookup(hostname);
     if ( cacheDetails === undefined ) {
         const fullCode = [];
+        for ( const token of $exceptions ) {
+            if ( $scriptlets.has(token) ) {
+                $scriptlets.delete(token);
+            } else {
+                $exceptions.delete(token);
+            }
+        }
         for ( const token of $scriptlets ) {
-            if ( $exceptions.has(token) ) { continue; }
             lookupScriptlet(token, $scriptletMap, $scriptletDependencyMap);
         }
         for ( const token of $scriptlets ) {
-            const isException = $exceptions.has(token);
-            if ( isException === false ) {
-                fullCode.push($scriptletMap.get(token));
-            }
+            fullCode.push($scriptletMap.get(token));
         }
         for ( const code of $scriptletDependencyMap.values() ) {
             fullCode.push(code);
         }
         cacheDetails = {
             code: fullCode.join('\n\n'),
-            tokens: Array.from($scriptlets),
-            exceptions: Array.from($exceptions),
+            filters: [
+                ...Array.from($scriptlets).map(s => `##+js(${s})`),
+                ...Array.from($exceptions).map(s => `#@#+js(${s})`),
+            ].join('\n'),
         };
         scriptletCache.add(hostname, cacheDetails);
         $scriptletMap.clear();
         $scriptletDependencyMap.clear();
     }
 
-    if ( mustLog ) {
-        for ( const token of cacheDetails.tokens ) {
-            if ( cacheDetails.exceptions.includes(token) ) {
-                logOne(request.tabId, request.url, `#@#+js(${token})`);
-            } else {
-                options.logEntries.push({
-                    token: `##+js(${token})`,
-                    tabId: request.tabId,
-                    url: request.url,
-                });
-            }
-        }
+    if ( cacheDetails.code === '' ) {
+        return { filters: cacheDetails.filters };
     }
-
-    if ( cacheDetails.code === '' ) { return; }
 
     const scriptletGlobals = [];
 
@@ -412,7 +406,7 @@ scriptletFilteringEngine.retrieve = function(request, options = {}) {
         '})();',
     ];
 
-    return out.join('\n');
+    return { scriptlets: out.join('\n'), filters: cacheDetails.filters };
 };
 
 scriptletFilteringEngine.injectNow = function(details) {
@@ -427,30 +421,21 @@ scriptletFilteringEngine.injectNow = function(details) {
     };
     request.domain = domainFromHostname(request.hostname);
     request.entity = entityFromDomain(request.domain);
-    const logEntries = logger.enabled ? [] : undefined;
-    const scriptlets = this.retrieve(request, { logEntries });
-    if ( scriptlets === undefined ) { return; }
-    let code = contentscriptCode.assemble(request.hostname, scriptlets);
+    const scriptletDetails = this.retrieve(request);
+    if ( scriptletDetails === undefined ) { return; }
+    const { scriptlets = '', filters } = scriptletDetails;
+    if ( scriptlets === '' ) { return scriptletDetails; }
+    let code = contentscriptCode.assemble(request.hostname, scriptlets, filters);
     if ( µb.hiddenSettings.debugScriptletInjector ) {
         code = 'debugger;\n' + code;
     }
-    const promise = vAPI.tabs.executeScript(details.tabId, {
+    vAPI.tabs.executeScript(details.tabId, {
         code,
         frameId: details.frameId,
         matchAboutBlank: true,
         runAt: 'document_start',
     });
-    if ( logEntries !== undefined ) {
-        promise.then(results => {
-            if ( Array.isArray(results) === false || results[0] !== 0 ) {
-                return;
-            }
-            for ( const entry of logEntries ) {
-                logOne(entry.tabId, entry.url, entry.token);
-            }
-        });
-    }
-    return scriptlets;
+    return scriptletDetails;
 };
 
 scriptletFilteringEngine.toSelfie = function() {

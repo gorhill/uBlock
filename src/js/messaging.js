@@ -623,8 +623,11 @@ const launchReporter = async function(request) {
         if ( Array.isArray(v) ) { a.push(...v); }
         return a;
     }, []);
+    // Remove duplicate, truncate too long filters.
     if ( filters.length !== 0 ) {
-        request.popupPanel.cosmetic = filters;
+        request.popupPanel.extended = Array.from(
+            new Set(filters.map(s => s.length <= 64 ? s : `${s.slice(0, 64)}…`))
+        );
     }
 
     const supportURL = new URL(vAPI.getURL('support.html'));
@@ -833,8 +836,20 @@ const retrieveContentScriptParameters = async function(sender, request) {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/688#issuecomment-748179731
     //   For non-network URIs, scriptlet injection is deferred to here. The
     //   effective URL is available here in `request.url`.
-    if ( request.needScriptlets ) {
-        response.scriptlets = scriptletFilteringEngine.injectNow(request);
+    if ( logger.enabled || request.needScriptlets ) {
+        const scriptletDetails = scriptletFilteringEngine.injectNow(request);
+        if ( scriptletDetails !== undefined ) {
+            if ( logger.enabled ) {
+                scriptletFilteringEngine.logFilters(
+                    tabId,
+                    request.url,
+                    scriptletDetails.filters
+                );
+            }
+            if ( request.needScriptlets ) {
+                response.scriptletDetails = scriptletDetails;
+            }
+        }
     }
 
     // https://github.com/NanoMeow/QuickReports/issues/6#issuecomment-414516623

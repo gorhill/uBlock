@@ -304,16 +304,19 @@ vAPI.Net = class extends vAPI.Net {
 
 /******************************************************************************/
 
-vAPI.scriptletsInjector = ((doc, scriptlets) => {
+vAPI.scriptletsInjector = ((doc, details) => {
     let script, url;
     try {
-        const blob = new self.Blob([ scriptlets ], { type: 'text/javascript; charset=utf-8' });
+        const blob = new self.Blob(
+            [ details.scriptlets ],
+            { type: 'text/javascript; charset=utf-8' }
+        );
         url = self.URL.createObjectURL(blob);
         script = doc.createElement('script');
         script.async = false;
         script.src = url;
         (doc.head || doc.documentElement).appendChild(script);
-        self.uBO_scriptletsInjected = true;
+        self.uBO_scriptletsInjected = details.filters;
     } catch (ex) {
     }
     if ( url ) {

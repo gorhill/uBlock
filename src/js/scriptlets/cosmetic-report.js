@@ -127,6 +127,10 @@ if ( Array.isArray(allSelectors.exceptions) ) {
     }
 }
 
+if ( typeof self.uBO_scriptletsInjected === 'string' ) {
+    matchedSelectors.push(...self.uBO_scriptletsInjected.split('\n'));
+}
+
 if ( matchedSelectors.length === 0 ) { return; }
 
 return matchedSelectors;

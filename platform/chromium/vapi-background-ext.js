@@ -236,13 +236,13 @@ vAPI.prefetching = (( ) => {
 
 /******************************************************************************/
 
-vAPI.scriptletsInjector = ((doc, scriptlets) => {
+vAPI.scriptletsInjector = ((doc, details) => {
     let script;
     try {
         script = doc.createElement('script');
-        script.appendChild(doc.createTextNode(scriptlets));
+        script.appendChild(doc.createTextNode(details.scriptlets));
         (doc.head || doc.documentElement).appendChild(script);
-        self.uBO_scriptletsInjected = true;
+        self.uBO_scriptletsInjected = details.filters;
     } catch (ex) {
     }
     if ( script ) {
