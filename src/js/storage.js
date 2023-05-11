@@ -1625,7 +1625,11 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         if ( newDefaultListset.size === 0 ) { return; }
         if ( oldDefaultListset.size === 0 ) {
             Array.from(Object.entries(oldDict))
-                .filter(a => a[1].content === 'filters' && a[1].off === undefined)
+                .filter(a =>
+                    a[1].content === 'filters' &&
+                    a[1].off === undefined &&
+                    /^https?:\/\//.test(a[0]) === false
+                )
                 .map(a => a[0])
                 .forEach(a => oldDefaultListset.add(a));
             if ( oldDefaultListset.size === 0 ) { return; }
