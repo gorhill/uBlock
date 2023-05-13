@@ -72,7 +72,6 @@
 	},
 	"ublock-privacy": {
 		"content": "filters",
-		"updateAfter": 13,
 		"group": "default",
         "parent": "uBlock filters",
 		"title": "uBlock filters – Privacy",
@@ -90,7 +89,6 @@
 	},
 	"ublock-abuse": {
 		"content": "filters",
-		"updateAfter": 13,
 		"group": "default",
         "parent": "uBlock filters",
 		"title": "uBlock filters – Resource abuse",
@@ -116,16 +114,15 @@
 			"assets/ublock/unbreak.txt"
 		],
 		"cdnURLs": [
-			"https://ublockorigin.github.io/uAssetsCDN/filters/unbreak.txt",
-			"https://ublockorigin.pages.dev/filters/unbreak.txt",
-			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/filters/unbreak.txt",
-			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/unbreak.txt"
+			"https://ublockorigin.github.io/uAssetsCDN/filters/unbreak.min.txt",
+			"https://ublockorigin.pages.dev/filters/unbreak.min.txt",
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/filters/unbreak.min.txt",
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/unbreak.min.txt"
 		],
 		"supportURL": "https://github.com/uBlockOrigin/uAssets"
 	},
 	"ublock-quick-fixes": {
 		"content": "filters",
-		"updateAfter": 1,
 		"group": "default",
         "parent": "uBlock filters",
 		"title": "uBlock filters – Quick fixes",
@@ -338,17 +335,17 @@
 		"off": true,
 		"contentURL": "https://ublockorigin.github.io/uAssets/filters/annoyances.txt",
 		"cdnURLs": [
-			"https://ublockorigin.github.io/uAssetsCDN/filters/annoyances.txt",
-			"https://ublockorigin.pages.dev/filters/annoyances.txt",
-			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/filters/annoyances.txt",
-			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/annoyances.txt"
+			"https://ublockorigin.github.io/uAssetsCDN/filters/annoyances.min.txt",
+			"https://ublockorigin.pages.dev/filters/annoyances.min.txt",
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/filters/annoyances.min.txt",
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/annoyances.min.txt"
 		],
 		"supportURL": "https://github.com/uBlockOrigin/uAssets"
 	},
 	"dpollock-0": {
 		"content": "filters",
 		"group": "multipurpose",
-		"updateAfter": 11,
+		"updateAfter": 13,
 		"off": true,
 		"title": "Dan Pollock’s hosts file",
 		"contentURL": "https://someonewhocares.org/hosts/hosts",
