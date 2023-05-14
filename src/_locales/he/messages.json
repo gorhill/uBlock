@@ -280,7 +280,7 @@
     "description": "Appears as an option to filter out firewall rows"
   },
   "popup3pFrameFilter": {
-    "message": "frame",
+    "message": "מסגרת",
     "description": "Appears as an option to filter out firewall rows"
   },
   "pickerCreate": {
@@ -952,7 +952,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "message": "רשימות הסינון מתעדכנות מדי יום. וודא שהבעיה שלך כבר לא טופלה ברשימות המסנן האחרונות.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
@@ -1276,7 +1276,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Could not filter properly at browser launch. Reload the page to ensure proper filtering.",
+    "message": "לא יכול היה לסנן כראוי בהשקת הדפדפן. טען מחדש את הדף כדי להבטיח סינון מתאים.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {
