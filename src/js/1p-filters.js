@@ -90,26 +90,24 @@ let cachedUserFilters = '';
 
 /******************************************************************************/
 
-const getEditorText = function() {
+function getEditorText() {
     const text = cmEditor.getValue().replace(/\s+$/, '');
     return text === '' ? text : text + '\n';
-};
+}
 
-const setEditorText = function(text) {
+function setEditorText(text) {
     cmEditor.setValue(text.replace(/\s+$/, '') + '\n\n');
-};
+}
 
 /******************************************************************************/
 
-// This is to give a visual hint that the content of user blacklist has changed.
-
-const userFiltersChanged = function(changed) {
+function userFiltersChanged(changed) {
     if ( typeof changed !== 'boolean' ) {
         changed = self.hasUnsavedData();
     }
     qs$('#userFiltersApply').disabled = !changed;
     qs$('#userFiltersRevert').disabled = !changed;
-};
+}
 
 /******************************************************************************/
 
@@ -118,7 +116,7 @@ const userFiltersChanged = function(changed) {
 //   made in the editor. The code assumes that no deletion occurred in the
 //   background.
 
-const threeWayMerge = function(newContent) {
+function threeWayMerge(newContent) {
     const prvContent = cachedUserFilters.trim().split(/\n/);
     const differ = new self.diff_match_patch();
     const newChanges = differ.diff(
@@ -158,11 +156,11 @@ const threeWayMerge = function(newContent) {
         out.push(change[1]);
     }
     return out.join('\n');
-};
+}
 
 /******************************************************************************/
 
-const renderUserFilters = async function(merge = false) {
+async function renderUserFilters(merge = false) {
     const details = await vAPI.messaging.send('dashboard', {
         what: 'readUserFilters',
     });
@@ -179,34 +177,13 @@ const renderUserFilters = async function(merge = false) {
     }
 
     cachedUserFilters = newContent;
-};
+}
 
 /******************************************************************************/
 
-const handleImportFilePicker = function() {
-    // https://github.com/chrisaljoudi/uBlock/issues/1004
-    // Support extraction of filters from ABP backup file
-    const abpImporter = function(s) {
-        const reAbpSubscriptionExtractor = /\n\[Subscription\]\n+url=~[^\n]+([\x08-\x7E]*?)(?:\[Subscription\]|$)/ig;
-        const reAbpFilterExtractor = /\[Subscription filters\]([\x08-\x7E]*?)(?:\[Subscription\]|$)/i;
-        let matches = reAbpSubscriptionExtractor.exec(s);
-        // Not an ABP backup file
-        if ( matches === null ) { return s; }
-        const out = [];
-        do {
-            if ( matches.length === 2 ) {
-                let filterMatch = reAbpFilterExtractor.exec(matches[1].trim());
-                if ( filterMatch !== null && filterMatch.length === 2 ) {
-                    out.push(filterMatch[1].trim().replace(/\\\[/g, '['));
-                }
-            }
-            matches = reAbpSubscriptionExtractor.exec(s);
-        } while ( matches !== null );
-        return out.join('\n');
-    };
-
+function handleImportFilePicker() {
     const fileReaderOnLoadHandler = function() {
-        let content = abpImporter(this.result);
+        let content = this.result;
         content = uBlockDashboard.mergeNewLines(getEditorText(), content);
         cmEditor.operation(( ) => {
             const cmPos = cmEditor.getCursor();
@@ -221,22 +198,20 @@ const handleImportFilePicker = function() {
     const fr = new FileReader();
     fr.onload = fileReaderOnLoadHandler;
     fr.readAsText(file);
-};
+}
 
-/******************************************************************************/
-
-const startImportFilePicker = function() {
+function startImportFilePicker() {
     const input = qs$('#importFilePicker');
     // Reset to empty string, this will ensure an change event is properly
     // triggered if the user pick a file, even if it is the same as the last
     // one picked.
     input.value = '';
     input.click();
-};
+}
 
 /******************************************************************************/
 
-const exportUserFiltersToFile = function() {
+function exportUserFiltersToFile() {
     const val = getEditorText();
     if ( val === '' ) { return; }
     const filename = i18n$('1pExportFilename')
@@ -246,11 +221,11 @@ const exportUserFiltersToFile = function() {
         'url': 'data:text/plain;charset=utf-8,' + encodeURIComponent(val + '\n'),
         'filename': filename
     });
-};
+}
 
 /******************************************************************************/
 
-const applyChanges = async function() {
+async function applyChanges() {
     const details = await vAPI.messaging.send('dashboard', {
         what: 'writeUserFilters',
         content: getEditorText(),
@@ -262,25 +237,25 @@ const applyChanges = async function() {
     vAPI.messaging.send('dashboard', {
         what: 'reloadAllFilters',
     });
-};
+}
 
-const revertChanges = function() {
+function revertChanges() {
     setEditorText(cachedUserFilters);
-};
+}
 
 /******************************************************************************/
 
-const getCloudData = function() {
+function getCloudData() {
     return getEditorText();
-};
+}
 
-const setCloudData = function(data, append) {
+function setCloudData(data, append) {
     if ( typeof data !== 'string' ) { return; }
     if ( append ) {
         data = uBlockDashboard.mergeNewLines(getEditorText(), data);
     }
     cmEditor.setValue(data);
-};
+}
 
 self.cloud.onPush = getCloudData;
 self.cloud.onPull = setCloudData;
@@ -312,6 +287,7 @@ dom.on('#userFiltersRevert', 'click', revertChanges);
         if ( typeof line === 'number' ) {
             cmEditor.setCursor(line, 0);
         }
+        cmEditor.focus();
     }
 
     // https://github.com/gorhill/uBlock/issues/3706
