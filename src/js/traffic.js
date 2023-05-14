@@ -857,7 +857,8 @@ const filterDocument = (( ) => {
             }
         }
         // https://bugzilla.mozilla.org/show_bug.cgi?id=1426789
-        if ( headerValueFromName('content-disposition', headers) ) { return; }
+        const disposition = headerValueFromName('content-disposition', headers);
+        if ( disposition !== '' && disposition.startsWith('inline') === false ) { return; }
 
         const stream = request.stream =
             browser.webRequest.filterResponseData(extras.requestId);
