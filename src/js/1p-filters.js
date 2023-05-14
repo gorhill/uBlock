@@ -181,10 +181,14 @@ async function renderUserFilters(merge = false) {
 
 /******************************************************************************/
 
-function handleImportFilePicker() {
-    const fileReaderOnLoadHandler = function() {
-        let content = this.result;
-        content = uBlockDashboard.mergeNewLines(getEditorText(), content);
+function handleImportFilePicker(ev) {
+    const file = ev.target.files[0];
+    if ( file === undefined || file.name === '' ) { return; }
+    if ( file.type.indexOf('text') !== 0 ) { return; }
+    const fr = new FileReader();
+    fr.onload = function() {
+        if ( typeof fr.result !== 'string' ) { return; }
+        const content = uBlockDashboard.mergeNewLines(getEditorText(), fr.result);
         cmEditor.operation(( ) => {
             const cmPos = cmEditor.getCursor();
             setEditorText(content);
@@ -192,13 +196,10 @@ function handleImportFilePicker() {
             cmEditor.focus();
         });
     };
-    const file = this.files[0];
-    if ( file === undefined || file.name === '' ) { return; }
-    if ( file.type.indexOf('text') !== 0 ) { return; }
-    const fr = new FileReader();
-    fr.onload = fileReaderOnLoadHandler;
     fr.readAsText(file);
 }
+
+dom.on('#importFilePicker', 'change', handleImportFilePicker);
 
 function startImportFilePicker() {
     const input = qs$('#importFilePicker');
@@ -208,6 +209,8 @@ function startImportFilePicker() {
     input.value = '';
     input.click();
 }
+
+dom.on('#importUserFiltersFromFile', 'click', startImportFilePicker);
 
 /******************************************************************************/
 
@@ -269,8 +272,6 @@ self.hasUnsavedData = function() {
 /******************************************************************************/
 
 // Handle user interaction
-dom.on('#importUserFiltersFromFile', 'click', startImportFilePicker);
-dom.on('#importFilePicker', 'change', handleImportFilePicker);
 dom.on('#exportUserFiltersToFile', 'click', exportUserFiltersToFile);
 dom.on('#userFiltersApply', 'click', ( ) => { applyChanges(); });
 dom.on('#userFiltersRevert', 'click', revertChanges);
