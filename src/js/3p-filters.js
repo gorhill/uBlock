@@ -544,7 +544,7 @@ const selectFilterLists = async ( ) => {
     const textarea = qs$('#lists .listEntry[data-role="import"].expanded textarea');
     const toImport = textarea !== null && textarea.value.trim() || '';
     if ( textarea !== null ) {
-        dom.cl.remove(textarea.closest('expandable'), 'expanded');
+        dom.cl.remove(textarea.closest('.expandable'), 'expanded');
         textarea.value = '';
     }
 
