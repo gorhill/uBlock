@@ -469,35 +469,35 @@
   },
   "3pGroupDefault": {
     "message": "Wbudowane",
-    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+    "description": "Filter lists section name"
   },
   "3pGroupAds": {
     "message": "Reklamy",
-    "description": "English: Ads"
+    "description": "Filter lists section name"
   },
   "3pGroupPrivacy": {
     "message": "Prywatność",
-    "description": "English: Privacy"
+    "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Domeny ze złośliwym oprogramowaniem",
-    "description": "English: Malware domains"
+    "message": "Domeny ze szkodliwym oprogramowaniem",
+    "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
     "message": "Elementy irytujące",
-    "description": "The header identifying the filter lists in the category 'annoyances'"
+    "description": "Filter lists section name"
   },
   "3pGroupMultipurpose": {
     "message": "Wielofunkcyjne",
-    "description": "English: Multipurpose"
+    "description": "Filter lists section name"
   },
   "3pGroupRegions": {
     "message": "Regiony, języki",
-    "description": "English: Regions, languages"
+    "description": "Filter lists section name"
   },
   "3pGroupCustom": {
     "message": "Własne",
-    "description": "English: Custom"
+    "description": "Filter lists section name"
   },
   "3pImport": {
     "message": "Importuj…",

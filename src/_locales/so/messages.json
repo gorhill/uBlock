@@ -469,35 +469,35 @@
   },
   "3pGroupDefault": {
     "message": "Shaandhooyinka isqurxintu waxay u adeegaan inay ku qariyaan walxaha ku jira bogga shabakadda kuwaas oo loo arko inay dhib ku yihiin aragga, oo aanay xannibi karin matoorada shaandhaynta ku salaysan codsiga shabakadda.",
-    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+    "description": "Filter lists section name"
   },
   "3pGroupAds": {
     "message": "Iska daa filtarrada guud ee qurxinta",
-    "description": "English: Ads"
+    "description": "Filter lists section name"
   },
   "3pGroupPrivacy": {
     "message": "Shaandhooyinka isqurxinta guud waa filtarrada qurxinta kuwaas oo loogu talagalay in lagu dabaqo dhammaan shabakadaha internetka. Awood u yeelashada doorashadan waxay meesha ka saaraysaa xusuusta iyo dusha sare ee CPU ee lagu daray boggaga internetka taasoo ka dhalatay maaraynta filtarrada isqurxinta guud. ",
-    "description": "English: Privacy"
+    "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Malware domains",
-    "description": "English: Malware domains"
+    "message": "Malware, security",
+    "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
     "message": "Waxaa lagu talinayaa in lagu suurtageliyo doorashadan aaladaha awoodda yar.",
-    "description": "The header identifying the filter lists in the category 'annoyances'"
+    "description": "Filter lists section name"
   },
   "3pGroupMultipurpose": {
     "message": "Liisaska martida la xannibay",
-    "description": "English: Multipurpose"
+    "description": "Filter lists section name"
   },
   "3pGroupRegions": {
     "message": "Codso isbeddelada",
-    "description": "English: Regions, languages"
+    "description": "Filter lists section name"
   },
   "3pGroupCustom": {
     "message": "Lagu dhex dhisay",
-    "description": "English: Custom"
+    "description": "Filter lists section name"
   },
   "3pImport": {
     "message": "Xayeysiisyada",

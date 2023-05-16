@@ -469,35 +469,35 @@
   },
   "3pGroupDefault": {
     "message": "Built-in",
-    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+    "description": "Filter lists section name"
   },
   "3pGroupAds": {
     "message": "ಜಾಹಿರಾತು",
-    "description": "English: Ads"
+    "description": "Filter lists section name"
   },
   "3pGroupPrivacy": {
     "message": "ಗೌಪ್ಯತೆ",
-    "description": "English: Privacy"
+    "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Malware domains",
-    "description": "English: Malware domains"
+    "message": "Malware, security",
+    "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
     "message": "Annoyances",
-    "description": "The header identifying the filter lists in the category 'annoyances'"
+    "description": "Filter lists section name"
   },
   "3pGroupMultipurpose": {
     "message": "ಬಹುಪಯೋಗಿ",
-    "description": "English: Multipurpose"
+    "description": "Filter lists section name"
   },
   "3pGroupRegions": {
     "message": "ಪ್ರದೇಶಗಳು, ಭಾಷೆಗಳು",
-    "description": "English: Regions, languages"
+    "description": "Filter lists section name"
   },
   "3pGroupCustom": {
     "message": "ಇಚ್ಛೆಯ",
-    "description": "English: Custom"
+    "description": "Filter lists section name"
   },
   "3pImport": {
     "message": "Import…",

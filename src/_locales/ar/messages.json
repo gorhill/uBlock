@@ -469,35 +469,35 @@
   },
   "3pGroupDefault": {
     "message": "مدمج",
-    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+    "description": "Filter lists section name"
   },
   "3pGroupAds": {
     "message": "اعلانات",
-    "description": "English: Ads"
+    "description": "Filter lists section name"
   },
   "3pGroupPrivacy": {
     "message": "خصوصيه",
-    "description": "English: Privacy"
+    "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "مواقع مصابه او تحتوي على فايروسات",
-    "description": "English: Malware domains"
+    "message": "مواقع مصابة أو تحتوي على فايروسات",
+    "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
     "message": "عناصر مزعجة",
-    "description": "The header identifying the filter lists in the category 'annoyances'"
+    "description": "Filter lists section name"
   },
   "3pGroupMultipurpose": {
     "message": "متعددة الأغراض",
-    "description": "English: Multipurpose"
+    "description": "Filter lists section name"
   },
   "3pGroupRegions": {
     "message": "المناطق واللغات",
-    "description": "English: Regions, languages"
+    "description": "Filter lists section name"
   },
   "3pGroupCustom": {
     "message": "مخصصه",
-    "description": "English: Custom"
+    "description": "Filter lists section name"
   },
   "3pImport": {
     "message": "إسترجاع...",

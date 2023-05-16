@@ -469,35 +469,35 @@
   },
   "3pGroupDefault": {
     "message": "അന്തർനിർമ്മിതം",
-    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+    "description": "Filter lists section name"
   },
   "3pGroupAds": {
     "message": "പരസ്യങ്ങള്‍",
-    "description": "English: Ads"
+    "description": "Filter lists section name"
   },
   "3pGroupPrivacy": {
     "message": "സ്വകാര്യത",
-    "description": "English: Privacy"
+    "description": "Filter lists section name"
   },
   "3pGroupMalware": {
     "message": "മാല്‍വെയര്‍ ഡൊമൈനുകള്‍",
-    "description": "English: Malware domains"
+    "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
     "message": "ശല്യപ്പെടുത്തലുകൾ",
-    "description": "The header identifying the filter lists in the category 'annoyances'"
+    "description": "Filter lists section name"
   },
   "3pGroupMultipurpose": {
     "message": "മള്‍ട്ടിപര്‍പ്പസ്",
-    "description": "English: Multipurpose"
+    "description": "Filter lists section name"
   },
   "3pGroupRegions": {
     "message": "പ്രാദേശികം, ഭാഷകള്‍",
-    "description": "English: Regions, languages"
+    "description": "Filter lists section name"
   },
   "3pGroupCustom": {
     "message": "കസ്റ്റം",
-    "description": "English: Custom"
+    "description": "Filter lists section name"
   },
   "3pImport": {
     "message": "ഇറക്കുമതി ചെയ്യുക ...",

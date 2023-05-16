@@ -469,35 +469,35 @@
   },
   "3pGroupDefault": {
     "message": "מובנה",
-    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+    "description": "Filter lists section name"
   },
   "3pGroupAds": {
     "message": "פרסומות",
-    "description": "English: Ads"
+    "description": "Filter lists section name"
   },
   "3pGroupPrivacy": {
     "message": "פרטיות",
-    "description": "English: Privacy"
+    "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "דומיינים של תוכנות זדוניות",
-    "description": "English: Malware domains"
+    "message": "תחומי נוזקה",
+    "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
     "message": "מטרדים",
-    "description": "The header identifying the filter lists in the category 'annoyances'"
+    "description": "Filter lists section name"
   },
   "3pGroupMultipurpose": {
     "message": "רב תכליתי",
-    "description": "English: Multipurpose"
+    "description": "Filter lists section name"
   },
   "3pGroupRegions": {
     "message": "אזורים, שפות",
-    "description": "English: Regions, languages"
+    "description": "Filter lists section name"
   },
   "3pGroupCustom": {
     "message": "מותאם אישית",
-    "description": "English: Custom"
+    "description": "Filter lists section name"
   },
   "3pImport": {
     "message": "ייבא…",
