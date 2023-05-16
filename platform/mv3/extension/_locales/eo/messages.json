@@ -20,23 +20,23 @@
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Stay",
+    "message": "Resti",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Ignore",
+    "message": "Ignori",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
-    "message": "Settings",
+    "message": "Agordoj",
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Filter lists",
+    "message": "Listoj de filtriloj",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
-    "message": "My filters",
+    "message": "Miaj filtriloj",
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
@@ -44,7 +44,7 @@
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
-    "message": "About",
+    "message": "Pri",
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
@@ -80,7 +80,7 @@
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {
-    "message": "More",
+    "message": "Pli",
     "description": "Label to be used to show popup panel sections"
   },
   "popupGrantGreatPowers": {
@@ -92,7 +92,7 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Less",
+    "message": "Malpli",
     "description": "Label to be used to hide popup panel sections"
   },
   "settingsIconBadgePrompt": {
@@ -124,15 +124,15 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
-    "message": "Default",
+    "message": "Defaŭlta",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAds": {
-    "message": "Ads",
+    "message": "Reklamoj",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupPrivacy": {
-    "message": "Privacy",
+    "message": "Privateco",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
@@ -160,7 +160,7 @@
     "description": "English: Import and append"
   },
   "1pExport": {
-    "message": "Export",
+    "message": "Eksporti",
     "description": "English: Export"
   },
   "1pExportFilename": {
@@ -172,11 +172,11 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Import and append",
+    "message": "Importi kaj aldoni",
     "description": "English: Import and append"
   },
   "whitelistExport": {
-    "message": "Export",
+    "message": "Eksporti",
     "description": "English: Export"
   },
   "whitelistExportFilename": {
@@ -184,23 +184,23 @@
     "description": "The default filename to use for import/export purpose"
   },
   "aboutChangelog": {
-    "message": "Changelog",
+    "message": "Ŝanĝprotokolo",
     "description": ""
   },
   "aboutCode": {
-    "message": "Source code (GPLv3)",
+    "message": "Fontkodo (GPLv3)",
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Contributors",
+    "message": "Kontribuantoj",
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Source code",
+    "message": "Fontkodo",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
-    "message": "Translations",
+    "message": "Tradukoj",
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
@@ -212,7 +212,7 @@
     "description": "Shown in the About pane"
   },
   "genericSubmit": {
-    "message": "Submit",
+    "message": "Sendi",
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
@@ -220,11 +220,11 @@
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
-    "message": "Revert",
+    "message": "Malfari",
     "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
-    "message": "Welcome",
+    "message": "Bonvenon",
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
@@ -244,7 +244,7 @@
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
-    "message": "basic",
+    "message": "simpla",
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {

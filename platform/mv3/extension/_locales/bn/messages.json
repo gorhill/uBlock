@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "An experimental, permission-less content blocker. Blocks ads, trackers, miners, and more immediately upon installation.",
+    "message": "একটি পরীক্ষামূলক, অনুমতিহীন কন্টেন্ট নিষিদ্ধকারক। বিজ্ঞাপন, অনুসরণকারী, খননকারী, এবং আরো জিনিস নিষিদ্ধ করো ইন্সটলের সাথে সাথেই।",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -20,35 +20,35 @@
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Stay",
+    "message": "থাকো",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Ignore",
+    "message": "অবজ্ঞা",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
-    "message": "Settings",
+    "message": "পছন্দসমূহ",
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Filter lists",
+    "message": "ছাঁকন তালিকা",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
-    "message": "My filters",
+    "message": "আমার ছাঁকনি",
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Trusted sites",
+    "message": "বিশ্বস্ত সাইট",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
-    "message": "About",
+    "message": "সম্পর্কে",
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
-    "message": "Privacy policy",
+    "message": "গোপনীয়তা নীতিমালা",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupPowerSwitchInfo": {
@@ -56,7 +56,7 @@
     "description": "Tooltip for the main power button in the popup panel"
   },
   "popupTipDashboard": {
-    "message": "Open the dashboard",
+    "message": "ড্যাশবোর্ড খুলো",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
@@ -80,7 +80,7 @@
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {
-    "message": "More",
+    "message": "আরো",
     "description": "Label to be used to show popup panel sections"
   },
   "popupGrantGreatPowers": {
@@ -92,7 +92,7 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Less",
+    "message": "কম",
     "description": "Label to be used to hide popup panel sections"
   },
   "settingsIconBadgePrompt": {
@@ -100,11 +100,11 @@
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsAppearance": {
-    "message": "Appearance",
+    "message": "চেহারা",
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
-    "message": "Theme",
+    "message": "রঙ",
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
@@ -124,15 +124,15 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
-    "message": "Default",
+    "message": "পূর্ব-নির্ধারিত",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAds": {
-    "message": "Ads",
+    "message": "বিজ্ঞাপন",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupPrivacy": {
-    "message": "Privacy",
+    "message": "গোপনীয়তা",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
@@ -140,15 +140,15 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
-    "message": "Annoyances",
+    "message": "বিরক্তি",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMisc": {
-    "message": "Miscellaneous",
+    "message": "বিবিধ",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupRegions": {
-    "message": "Regions, languages",
+    "message": "অঞ্চল, ভাষা",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "1pFormatHint": {
@@ -156,11 +156,11 @@
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
-    "message": "Import and append",
+    "message": "আমদানি করে পরিশেষে যোগ করো",
     "description": "English: Import and append"
   },
   "1pExport": {
-    "message": "Export",
+    "message": "রপ্তানি",
     "description": "English: Export"
   },
   "1pExportFilename": {
@@ -176,7 +176,7 @@
     "description": "English: Import and append"
   },
   "whitelistExport": {
-    "message": "Export",
+    "message": "রপ্তানি",
     "description": "English: Export"
   },
   "whitelistExportFilename": {
@@ -184,7 +184,7 @@
     "description": "The default filename to use for import/export purpose"
   },
   "aboutChangelog": {
-    "message": "Changelog",
+    "message": "পরিবর্তনসূচি",
     "description": ""
   },
   "aboutCode": {
@@ -192,19 +192,19 @@
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Contributors",
+    "message": "অবদানকারী",
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Source code",
+    "message": "উৎস কোড",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
-    "message": "Translations",
+    "message": "অনুবাদসমূহ",
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
-    "message": "Filter lists",
+    "message": "ছাঁকন তালিকা",
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
@@ -212,19 +212,19 @@
     "description": "Shown in the About pane"
   },
   "genericSubmit": {
-    "message": "Submit",
+    "message": "জমা দাও",
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Apply changes",
+    "message": "পরিবর্তনগুলো প্রয়োগ করো",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
-    "message": "Revert",
+    "message": "প্রত্যাবর্তন",
     "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
-    "message": "Welcome",
+    "message": "স্বাগতম",
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
@@ -240,19 +240,19 @@
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
-    "message": "no filtering",
+    "message": "ছাঁকনি নেই",
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
-    "message": "basic",
+    "message": "মৌলিক",
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
-    "message": "optimal",
+    "message": "কার্যকরী",
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
-    "message": "complete",
+    "message": "সম্পূর্ণ",
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
@@ -268,7 +268,7 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "behaviorSectionLabel": {
-    "message": "Behavior",
+    "message": "আচরণ",
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
