@@ -378,8 +378,11 @@ const toggleFilterList = (elem, on, ui = false) => {
     input.checked = on;
     dom.cl.toggle(listEntry, 'checked', on);
     dom.cl.toggle(listEntry, 'stickied', ui && !on);
-    // Select/unselect descendants
-    const childListEntries = qsa$(listEntry, '.listEntry');
+    // Select/unselect descendants. Twist: if in search-mode, select only
+    // search-matched descendants.
+    const childListEntries = dom.cl.has('#lists', 'searchMode')
+        ? qsa$(listEntry, '.listEntry.searchMatch')
+        : qsa$(listEntry, '.listEntry');
     for ( const descendantList of childListEntries ) {
         dom.cl.toggle(descendantList, 'checked', on);
         qs$(descendantList, ':scope > .detailbar input').checked = on;
