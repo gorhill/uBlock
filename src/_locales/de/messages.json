@@ -476,11 +476,11 @@
     "description": "Filter lists section name"
   },
   "3pGroupPrivacy": {
-    "message": "Privatsphäre",
+    "message": "Datenschutz",
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Domains mit Schadsoftware",
+    "message": "Schadsoftware, Sicherheit",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {

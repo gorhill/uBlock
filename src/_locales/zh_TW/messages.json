@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "惡意網域",
+    "message": "惡意軟體、安全",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
@@ -952,7 +952,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "過濾器清單每天更新。確保您的問題尚未在最新的過濾器清單中解決。",
+    "message": "過濾器清單每天更新。請確認您的問題無法用最新的過濾器清單解決。",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
