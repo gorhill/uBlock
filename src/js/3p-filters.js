@@ -182,6 +182,12 @@ const renderFilterLists = ( ) => {
         }
         for ( const [ listkey, listDetails ] of treeEntries ) {
             const listEntry = createListEntry(listDetails, depth);
+            if ( dom.cl.has(dom.root, 'mobile') ) {
+                const leafStats = qs$(listEntry, '.leafstats');
+                if ( leafStats ) {
+                    listEntry.append(leafStats);
+                }
+            }
             listEntry.dataset.key = listkey;
             listEntry.dataset.parent = parentkey;
             dom.text(qs$(listEntry, '.listname'), listDetails.title);
