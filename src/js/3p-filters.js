@@ -371,16 +371,17 @@ const toggleFilterList = (elem, on, ui = false) => {
     const listEntry = elem.closest('.listEntry');
     if ( listEntry === null ) { return; }
     if ( listEntry.dataset.parent === 'root' ) { return; }
+    const searchMode = dom.cl.has('#lists', 'searchMode');
     const input = qs$(listEntry, ':scope > .detailbar input');
     if ( on === undefined ) {
         on = input.checked === false;
     }
     input.checked = on;
     dom.cl.toggle(listEntry, 'checked', on);
-    dom.cl.toggle(listEntry, 'stickied', ui && !on);
+    dom.cl.toggle(listEntry, 'stickied', ui && !on && !searchMode);
     // Select/unselect descendants. Twist: if in search-mode, select only
     // search-matched descendants.
-    const childListEntries = dom.cl.has('#lists', 'searchMode')
+    const childListEntries = searchMode
         ? qsa$(listEntry, '.listEntry.searchMatch')
         : qsa$(listEntry, '.listEntry');
     for ( const descendantList of childListEntries ) {
@@ -439,6 +440,9 @@ const updateListNode = listNode => {
         dom.attr(qs$(listNode, ':scope > .detailbar .cache'), 'title',
             lastUpdateTemplateString.replace('{{ago}}', i18n.renderElapsedTimeToString(writeTime))
         );
+    }
+    if ( qs$(listNode, '.listEntry.isDefault') !== null ) {
+        dom.cl.add(listNode, 'isDefault');
     }
     if ( qs$(listNode, '.listEntry.stickied') !== null ) {
         dom.cl.add(listNode, 'stickied');
