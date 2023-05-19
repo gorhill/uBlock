@@ -173,6 +173,15 @@
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
 		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
 	},
+	"adguard-spyware": {
+		"content": "filters",
+		"group": "privacy",
+		"off": true,
+		"title": "AdGuard Tracking Protection",
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/3.txt",
+		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
+	},
 	"block-lan": {
 		"content": "filters",
 		"group": "privacy",
