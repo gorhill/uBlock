@@ -1459,8 +1459,8 @@ Scriptlet-related entity-based injectable files: 2
 Listset for 'kor-1':
 	Fetching remote https://cdn.jsdelivr.net/gh/List-KR/List-KR@master/filter-uBlockOrigin.txt
 	Fetching remote https://cdn.jsdelivr.net/gh/List-KR/List-KR@master/filters-share/3rd_domains.txt
-	Fetching remote https://cdn.jsdelivr.net/gh/List-KR/List-KR@master/filters-share/general_elemhide.txt
 	Fetching remote https://cdn.jsdelivr.net/gh/List-KR/List-KR@master/filters-share/1st_domains.txt
+	Fetching remote https://cdn.jsdelivr.net/gh/List-KR/List-KR@master/filters-share/general_elemhide.txt
 	Fetching remote https://cdn.jsdelivr.net/gh/List-KR/List-KR@master/filters-uBO/specific_ELEMHIDE.txt
 	Fetching remote https://cdn.jsdelivr.net/gh/List-KR/List-KR@master/filters-share/general_url.txt
 	Fetching remote https://cdn.jsdelivr.net/gh/List-KR/List-KR@master/filters-uBO/general_url.txt
@@ -1601,8 +1601,8 @@ Listset for 'nld-0':
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/main/EasyDutch/Block_first_party_Server.txt
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/main/EasyDutch/Block_third_party_Server.txt
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/main/EasyDutch/Block_Resources.txt
-	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/main/EasyDutch/Block_Whitelist.txt
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/main/EasyDutch/Hide_General.txt
+	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/main/EasyDutch/Block_Whitelist.txt
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/main/EasyDutch/Hide_Specific.txt
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/main/EasyDutch/Hide_Whitelist.txt
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/main/EasyDutch/Anti-Adblock.txt
