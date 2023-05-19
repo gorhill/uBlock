@@ -130,13 +130,18 @@ builtinScriptlets.push({
 });
 function runAt(fn, when) {
     const intFromReadyState = state => {
-        return ({
-            loading: 1,
-            interactive: 2,
-            end: 2,
-            complete: 3,
-            idle: 3,
-        })[`${state}`] || 0;
+        const targets = {
+            'loading': 1,
+            'interactive': 2, 'end': 2, '2': 2,
+            'complete': 3, 'idle': 3, '3': 3,
+        };
+        const tokens = Array.isArray(state) ? state : [ state ];
+        for ( const token of tokens ) {
+            const prop = `${token}`;
+            if ( targets.hasOwnProperty(prop) === false ) { continue; }
+            return targets[prop];
+        }
+        return 0;
     };
     const runAt = intFromReadyState(when);
     if ( intFromReadyState(document.readyState) >= runAt ) {
@@ -1030,14 +1035,22 @@ builtinScriptlets.push({
 function setConstant(
     arg1 = '',
     arg2 = '',
-    arg3 = 0
+    arg3 = ''
 ) {
     const details = typeof arg1 !== 'object'
-        ? { prop: arg1, value: arg2, runAt: parseInt(arg3, 10) || 0 }
+        ? { prop: arg1, value: arg2 }
         : arg1;
+    if ( arg3 !== '' ) {
+        if ( /^\d$/.test(arg3) ) {
+            details.options = [ arg3 ];
+        } else {
+            details.options = Array.from(arguments).slice(2);
+        }
+    }
     const { prop: chain = '', value: cValue = '' } = details;
     if ( typeof chain !== 'string' ) { return; }
     if ( chain === '' ) { return; }
+    const options = details.options || [];
     function setConstant(chain, cValue) {
         const trappedProp = (( ) => {
             const pos = chain.lastIndexOf('.');
@@ -1093,12 +1106,21 @@ function setConstant(
             cValue = cloakFunc(function(){ return true; });
         } else if ( cValue === 'falseFunc' ) {
             cValue = cloakFunc(function(){ return false; });
-        } else if ( /^\d+$/.test(cValue) ) {
-            cValue = parseFloat(cValue);
+        } else if ( /^-?\d+$/.test(cValue) ) {
+            cValue = parseInt(cValue);
             if ( isNaN(cValue) ) { return; }
             if ( Math.abs(cValue) > 0x7FFF ) { return; }
         } else {
             return;
+        }
+        if ( options.includes('asFunction') ) {
+            cValue = ( ) => cValue;
+        } else if ( options.includes('asCallback') ) {
+            cValue = ( ) => (( ) => cValue);
+        } else if ( options.includes('asResolved') ) {
+            cValue = Promise.resolve(cValue);
+        } else if ( options.includes('asRejected') ) {
+            cValue = Promise.reject(cValue);
         }
         let aborted = false;
         const mustAbort = function(v) {
@@ -1193,7 +1215,7 @@ function setConstant(
     }
     runAt(( ) => {
         setConstant(chain, cValue);
-    }, details.runAt);
+    }, options);
 }
 
 /******************************************************************************/
@@ -1243,7 +1265,13 @@ function noSetIntervalIf(
                 }
             }
             return target.apply(thisArg, args);
-        }
+        },
+        get(target, prop, receiver) {
+            if ( prop === 'toString' ) {
+                return target.toString.bind(target);
+            }
+            return Reflect.get(target, prop, receiver);
+        },
     });
 }
 
@@ -1294,7 +1322,13 @@ function noSetTimeoutIf(
                 }
             }
             return target.apply(thisArg, args);
-        }
+        },
+        get(target, prop, receiver) {
+            if ( prop === 'toString' ) {
+                return target.toString.bind(target);
+            }
+            return Reflect.get(target, prop, receiver);
+        },
     });
 }
 
