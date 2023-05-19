@@ -952,11 +952,11 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "message": "Danh sách bộ lọc được cập nhật hàng ngày. Đảm bảo vấn đề của bạn chưa được giải quyết trong danh sách bộ lọc gần đây nhất.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "message": "Xác minh rằng sự cố vẫn tồn tại sau khi tải lại trang web có vấn đề.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -1272,11 +1272,11 @@
     "description": "Message used in frame placeholders"
   },
   "linterMainReport": {
-    "message": "Errors: {{count}}",
+    "message": "Lỗi: {{count}}",
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Could not filter properly at browser launch. Reload the page to ensure proper filtering.",
+    "message": "Không thể lọc đúng cách khi khởi chạy trình duyệt. Tải lại trang để đảm bảo lọc thích hợp.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {
