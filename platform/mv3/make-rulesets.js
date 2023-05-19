@@ -1284,11 +1284,10 @@ async function main() {
 
     // Assemble all default lists as the default ruleset
     const contentURLs = [
-        'https://ublockorigin.github.io/uAssets/filters/filters.txt',
+        'https://ublockorigin.github.io/uAssets/filters/filters.min.txt',
         'https://ublockorigin.github.io/uAssets/filters/badware.txt',
-        'https://ublockorigin.github.io/uAssets/filters/privacy.txt',
-        'https://ublockorigin.github.io/uAssets/filters/resource-abuse.txt',
-        'https://ublockorigin.github.io/uAssets/filters/unbreak.txt',
+        'https://ublockorigin.github.io/uAssets/filters/privacy.min.txt',
+        'https://ublockorigin.github.io/uAssets/filters/unbreak.min.txt',
         'https://ublockorigin.github.io/uAssets/filters/quick-fixes.txt',
         'https://ublockorigin.github.io/uAssets/filters/ubol-filters.txt',
         'https://ublockorigin.github.io/uAssets/thirdparties/easylist.txt',
