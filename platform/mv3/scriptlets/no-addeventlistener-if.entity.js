@@ -56,15 +56,70 @@ const regexpFromArg = arg => {
 
 /******************************************************************************/
 
+// Dependencies
+
+const scriptletGlobals = new Map();
+
+function safeSelf() {
+    if ( scriptletGlobals.has('safeSelf') ) {
+        return scriptletGlobals.get('safeSelf');
+    }
+    const safe = {
+        'RegExp': self.RegExp,
+        'RegExp_test': self.RegExp.prototype.test,
+        'RegExp_exec': self.RegExp.prototype.exec,
+        'addEventListener': self.EventTarget.prototype.addEventListener,
+        'removeEventListener': self.EventTarget.prototype.removeEventListener,
+    };
+    scriptletGlobals.set('safeSelf', safe);
+    return safe;
+}
+
+function runAt(fn, when) {
+    const intFromReadyState = state => {
+        const targets = {
+            'loading': 1,
+            'interactive': 2, 'end': 2, '2': 2,
+            'complete': 3, 'idle': 3, '3': 3,
+        };
+        const tokens = Array.isArray(state) ? state : [ state ];
+        for ( const token of tokens ) {
+            const prop = `${token}`;
+            if ( targets.hasOwnProperty(prop) === false ) { continue; }
+            return targets[prop];
+        }
+        return 0;
+    };
+    const runAt = intFromReadyState(when);
+    if ( intFromReadyState(document.readyState) >= runAt ) {
+        fn(); return;
+    }
+    const onStateChange = ( ) => {
+        if ( intFromReadyState(document.readyState) < runAt ) { return; }
+        fn();
+        safe.removeEventListener.apply(document, args);
+    };
+    const safe = safeSelf();
+    const args = [ 'readystatechange', onStateChange, { capture: true } ];
+    safe.addEventListener.apply(document, args);
+}
+
+/******************************************************************************/
+
 const scriptlet = (
-    needle1 = '',
-    needle2 = ''
+    arg1 = '',
+    arg2 = ''
 ) => {
-    const reNeedle1 = regexpFromArg(needle1);
-    const reNeedle2 = regexpFromArg(needle2);
-    self.EventTarget.prototype.addEventListener = new Proxy(
-        self.EventTarget.prototype.addEventListener,
-        {
+    const details = typeof arg1 !== 'object'
+        ? { type: arg1, pattern: arg2 }
+        : arg1;
+    const { type = '', pattern = '' } = details;
+    if ( typeof type !== 'string' ) { return; }
+    if ( typeof pattern !== 'string' ) { return; }
+    const reType = regexpFromArg(type);
+    const rePattern = regexpFromArg(pattern);
+    const trapEddEventListeners = ( ) => {
+        const eventListenerHandler = {
             apply: function(target, thisArg, args) {
                 let type, handler;
                 try {
@@ -73,14 +128,21 @@ const scriptlet = (
                 } catch(ex) {
                 }
                 if (
-                    reNeedle1.test(type) === false ||
-                    reNeedle2.test(handler) === false
+                    reType.test(type) === false ||
+                    rePattern.test(handler) === false
                 ) {
                     return target.apply(thisArg, args);
                 }
             }
-        }
-    );
+        };
+        self.EventTarget.prototype.addEventListener = new Proxy(
+            self.EventTarget.prototype.addEventListener,
+            eventListenerHandler
+        );
+    };
+    runAt(( ) => {
+        trapEddEventListeners();
+    }, details.runAt);
 };
 
 /******************************************************************************/

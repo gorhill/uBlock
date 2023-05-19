@@ -83,7 +83,13 @@ const scriptlet = (
                 args[0] = function(){};
             }
             return target.apply(thisArg, args);
-        }
+        },
+        get(target, prop, receiver) {
+            if ( prop === 'toString' ) {
+                return target.toString.bind(target);
+            }
+            return Reflect.get(target, prop, receiver);
+        },
     });
 };
 
