@@ -214,14 +214,28 @@ async function setFilteringModeDetails(afterDetails) {
 
 async function getFilteringMode(hostname) {
     const filteringModes = await getFilteringModeDetails();
-    if ( filteringModes.none.has(hostname) ) { return 0; }
-    if ( isDescendantHostnameOfIter(hostname, filteringModes.none) ) { return 0; }
-    if ( filteringModes.network.has(hostname) ) { return 1; }
-    if ( isDescendantHostnameOfIter(hostname, filteringModes.network) ) { return 1; }
-    if ( filteringModes.extendedSpecific.has(hostname) ) { return 2; }
-    if ( isDescendantHostnameOfIter(hostname, filteringModes.extendedSpecific) ) { return 2; }
-    if ( filteringModes.extendedGeneric.has(hostname) ) { return 3; }
-    if ( isDescendantHostnameOfIter(hostname, filteringModes.extendedGeneric) ) { return 3; }
+    const {
+        none,
+        network,
+        extendedSpecific,
+        extendedGeneric,
+    } = filteringModes;
+    if ( none.has(hostname) ) { return 0; }
+    if ( none.has('all-urls')  === false ) {
+        if ( isDescendantHostnameOfIter(hostname, none) ) { return 0; }
+    }
+    if ( network.has(hostname) ) { return 1; }
+    if ( network.has('all-urls')  === false ) {
+        if ( isDescendantHostnameOfIter(hostname, network) ) { return 1; }
+    }
+    if ( extendedSpecific.has(hostname) ) { return 2; }
+    if ( extendedSpecific.has('all-urls')  === false ) {
+        if ( isDescendantHostnameOfIter(hostname, extendedSpecific) ) { return 2; }
+    }
+    if ( extendedGeneric.has(hostname) ) { return 3; }
+    if ( extendedGeneric.has('all-urls')  === false ) {
+        if ( isDescendantHostnameOfIter(hostname, extendedGeneric) ) { return 3; }
+    }
     return getDefaultFilteringMode();
 }
 
