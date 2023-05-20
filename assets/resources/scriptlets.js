@@ -52,9 +52,10 @@ function safeSelf() {
         'addEventListener': self.EventTarget.prototype.addEventListener,
         'removeEventListener': self.EventTarget.prototype.removeEventListener,
         'log': console.log.bind(console),
-        'uboLog': function(msg) {
-            if ( msg === '' ) { return; }
-            this.log(`[uBO] ${msg}`);
+        'uboLog': function(...args) {
+            if ( args.length === 0 ) { return; }
+            if ( `${args[0]}` === '' ) { return; }
+            this.log('[uBO]', ...args);
         },
     };
     scriptletGlobals.set('safeSelf', safe);
@@ -1589,6 +1590,12 @@ function alertBuster() {
         apply: function(a) {
             console.info(a);
         },
+        get(target, prop, receiver) {
+            if ( prop === 'toString' ) {
+                return target.toString.bind(target);
+            }
+            return Reflect.get(target, prop, receiver);
+        },
     });
 }
 
@@ -2105,6 +2112,75 @@ function callNothrow(
             } catch(ex) {
             }
             return r;
+        },
+    });
+}
+
+
+/******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'spoof-css.js',
+    fn: spoofCSS,
+});
+function spoofCSS(
+    selector,
+    ...args
+) {
+    if ( typeof selector !== 'string' ) { return; }
+    if ( selector === '' ) { return; }
+    const toCamelCase = s => s.replace(/-[a-z]/g, s => s.charAt(1).toUpperCase());
+    const propToValueMap = new Map();
+    for ( let i = 0; i < args.length; i += 2 ) {
+        if ( typeof args[i+0] !== 'string' ) { break; }
+        if ( args[i+0] === '' ) { break; }
+        if ( typeof args[i+1] !== 'string' ) { break; }
+        propToValueMap.set(toCamelCase(args[i+0]), args[i+1]);
+    }
+    self.getComputedStyle = new Proxy(self.getComputedStyle, {
+        apply: function(target, thisArg, args) {
+            if ( propToValueMap.has('debug') ) { debugger; }    // jshint ignore: line
+            const style = Reflect.apply(target, thisArg, args);
+            const targetElements = new WeakSet(document.querySelectorAll(selector));
+            if ( targetElements.has(args[0]) === false ) { return style; }
+            const proxiedStyle = new Proxy(style, {
+                get(target, prop, receiver) {
+                    const normalProp = toCamelCase(prop);
+                    const value = propToValueMap.has(normalProp)
+                        ? propToValueMap.get(normalProp)
+                        : Reflect.get(target, prop, receiver);
+                    return value;
+                },
+            });
+            return proxiedStyle;
+        },
+        get(target, prop, receiver) {
+            if ( prop === 'toString' ) {
+                return target.toString.bind(target);
+            }
+            return Reflect.get(target, prop, receiver);
+        },
+    });
+    Element.prototype.getBoundingClientRect = new Proxy(Element.prototype.getBoundingClientRect, {
+        apply: function(target, thisArg, args) {
+            if ( propToValueMap.has('debug') ) { debugger; }    // jshint ignore: line
+            const rect = Reflect.apply(target, thisArg, args);
+            const targetElements = new WeakSet(document.querySelectorAll(selector));
+            if ( targetElements.has(thisArg) === false ) { return rect; }
+            let { height, width } = rect;
+            if ( propToValueMap.has('width') ) {
+                width = parseFloat(propToValueMap.get('width'));
+            }
+            if ( propToValueMap.has('height') ) {
+                height = parseFloat(propToValueMap.get('height'));
+            }
+            return new self.DOMRect(rect.x, rect.y, width, height);
+        },
+        get(target, prop, receiver) {
+            if ( prop === 'toString' ) {
+                return target.toString.bind(target);
+            }
+            return Reflect.get(target, prop, receiver);
         },
     });
 }
