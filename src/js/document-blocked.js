@@ -21,7 +21,7 @@
 
 'use strict';
 
-import { i18n$ } from './i18n.js';
+import { i18n, i18n$ } from './i18n.js';
 import { dom, qs$ } from './dom.js';
 
 /******************************************************************************/
@@ -64,7 +64,7 @@ let details = {};
         const listElem = dom.clone('#templates .filterList');
         const sourceElem = qs$(listElem, '.filterListSource');
         sourceElem.href += encodeURIComponent(list.assetKey);
-        dom.text(sourceElem, list.title);
+        sourceElem.append(i18n.patchUnicodeFlags(list.title));
         if ( typeof list.supportURL === 'string' && list.supportURL !== '' ) {
             const supportElem = qs$(listElem, '.filterListSupport');
             dom.attr(supportElem, 'href', list.supportURL);

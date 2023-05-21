@@ -110,7 +110,6 @@ const renderFilterLists = ( ) => {
         }
         const on = dom.cl.has(listEntry, 'checked');
         dom.prop(qs$(listEntry, ':scope > .detailbar input'), 'checked', on);
-        dom.text(qs$(listEntry, ':scope > .detailbar .listname'), listDetails.title);
         let elem = qs$(listEntry, ':scope > .detailbar a.content');
         dom.attr(elem, 'href', 'asset-viewer.html?url=' + encodeURIComponent(listkey));
         dom.attr(elem, 'type', 'text/html');
@@ -190,7 +189,9 @@ const renderFilterLists = ( ) => {
             }
             listEntry.dataset.key = listkey;
             listEntry.dataset.parent = parentkey;
-            dom.text(qs$(listEntry, '.listname'), listDetails.title);
+            qs$(listEntry, ':scope > .detailbar .listname').append(
+                i18n.patchUnicodeFlags(listDetails.title)
+            );
             if ( listDetails.lists !== undefined ) {
                 listEntry.append(createListEntries(listEntry.dataset.key, listDetails.lists, depth+1));
                 dom.cl.toggle(listEntry, 'expanded', listIsExpanded(listkey));

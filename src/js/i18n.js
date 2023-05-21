@@ -293,6 +293,48 @@ if ( isBackgroundProcess !== true ) {
         return i18n$('elapsedManyDaysAgo').replace('{{value}}', Math.floor(value).toLocaleString());
     };
 
+    const unicodeFlagToImageSrc = new Map([
+        [ '🇦🇱', 'al' ], [ '🇧🇬', 'bg' ], [ '🇧🇷', 'br' ], [ '🇨🇳', 'cn' ],
+        [ '🇨🇿', 'cz' ], [ '🇩🇪', 'de' ], [ '🇩🇰', 'dk' ], [ '🇪🇪', 'ee' ],
+        [ '🇪🇸', 'es' ], [ '🇫🇮', 'fi' ], [ '🇫🇷', 'fr' ], [ '🇬🇷', 'gr' ],
+        [ '🇭🇷', 'hr' ], [ '🇭🇺', 'hu' ], [ '🇮🇩', 'id' ], [ '🇮🇱', 'il' ],
+        [ '🇮🇳', 'in' ], [ '🇮🇷', 'ir' ], [ '🇮🇸', 'is' ], [ '🇮🇹', 'it' ],
+        [ '🇯🇵', 'jp' ], [ '🇰🇷', 'kr' ], [ '🇰🇿', 'kz' ], [ '🇱🇰', 'lk' ],
+        [ '🇱🇹', 'lt' ], [ '🇱🇻', 'lv' ], [ '🇲🇰', 'mk' ], [ '🇲🇾', 'my' ],
+        [ '🇳🇱', 'nl' ], [ '🇳🇴', 'no' ], [ '🇳🇵', 'np' ], [ '🇵🇱', 'pl' ],
+        [ '🇵🇹', 'pt' ], [ '🇷🇴', 'ro' ], [ '🇷🇸', 'rs' ], [ '🇷🇺', 'ru' ],
+        [ '🇸🇮', 'si' ], [ '🇸🇰', 'sk' ], [ '🇸🇪', 'se' ], [ '🇹🇭', 'th' ],
+        [ '🇹🇼', 'tw' ], [ '🇹🇷', 'tr' ], [ '🇺🇦', 'ua' ], [ '🇺🇿', 'uz' ],
+        [ '🇻🇳', 'vn' ],
+    ]);
+    const reUnicodeFlags = new RegExp(
+        Array.from(unicodeFlagToImageSrc).map(a => a[0]).join('|'),
+        'gu'
+    );
+    i18n.patchUnicodeFlags = function(text) {
+        const fragment = document.createDocumentFragment();
+        let i = 0;
+        for (;;) {
+            const match = reUnicodeFlags.exec(text);
+            if ( match === null ) { break; }
+            if ( match.index > i ) {
+                fragment.append(document.createTextNode(text.slice(i, match.index)));
+            }
+            const img = document.createElement('img');
+            const countryCode = unicodeFlagToImageSrc.get(match[0]);
+            img.src = `/img/flags-of-the-world/${countryCode}.png`;
+            img.title = countryCode;
+            img.classList.add('countryFlag');
+            fragment.append(img);
+            fragment.append(document.createTextNode('\u2009'));
+            i = reUnicodeFlags.lastIndex;
+        }
+        if ( i < text.length ) {
+            fragment.append(document.createTextNode(text.slice(i)));
+        }
+        return fragment; 
+    };
+
     i18n.render();
 }
 

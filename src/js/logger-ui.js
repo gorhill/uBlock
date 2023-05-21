@@ -1654,7 +1654,7 @@ dom.on(document, 'keydown', ev => {
                 const span = dom.clone(template);
                 let a = qs$(span, 'a:nth-of-type(1)');
                 a.href += encodeURIComponent(list.assetKey);
-                a.textContent = list.title;
+                a.append(i18n.patchUnicodeFlags(list.title));
                 a = qs$(span, 'a:nth-of-type(2)');
                 if ( list.supportURL ) {
                     dom.attr(a, 'href', list.supportURL);

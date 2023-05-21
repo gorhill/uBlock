@@ -309,6 +309,13 @@ select {
         }
     }
 
+.countryFlag {
+    height: var(--font-size);
+    position: relative;
+    top: calc(var(--font-size) / 6);
+    width: calc(var(--font-size) * 1.4);
+    }
+
 .logo {
     align-items: center;
     display: inline-flex;
