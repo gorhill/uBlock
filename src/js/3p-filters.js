@@ -173,9 +173,10 @@ const renderFilterLists = ( ) => {
         const listEntries = dom.clone('#templates .listEntries');
         const treeEntries = Object.entries(listTree);
         if ( depth !== 0 ) {
+            const reEmojis = /[\p{Emoji}]/gu;
             treeEntries.sort((a ,b) => {
-                const as = a[1].title || a[0];
-                const bs = b[1].title || b[0];
+                const as = (a[1].title || a[0]).replace(reEmojis, '');
+                const bs = (b[1].title || b[0]).replace(reEmojis, '');
                 return as.localeCompare(bs);
             });
         }

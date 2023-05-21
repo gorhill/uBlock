@@ -318,19 +318,18 @@ if ( isBackgroundProcess !== true ) {
             const match = reUnicodeFlags.exec(text);
             if ( match === null ) { break; }
             if ( match.index > i ) {
-                fragment.append(document.createTextNode(text.slice(i, match.index)));
+                fragment.append(text.slice(i, match.index));
             }
             const img = document.createElement('img');
             const countryCode = unicodeFlagToImageSrc.get(match[0]);
             img.src = `/img/flags-of-the-world/${countryCode}.png`;
             img.title = countryCode;
             img.classList.add('countryFlag');
-            fragment.append(img);
-            fragment.append(document.createTextNode('\u2009'));
+            fragment.append(img, '\u2009');
             i = reUnicodeFlags.lastIndex;
         }
         if ( i < text.length ) {
-            fragment.append(document.createTextNode(text.slice(i)));
+            fragment.append(text.slice(i));
         }
         return fragment; 
     };
