@@ -42,7 +42,7 @@
 		"title": "uBlock filters – Ads",
 		"contentURL": [
 			"https://ublockorigin.github.io/uAssets/filters/filters.txt",
-			"assets/ublock/filters.min.txt"
+			"assets/ublock/filters.txt"
 		],
 		"cdnURLs": [
 			"https://ublockorigin.github.io/uAssetsCDN/filters/filters.min.txt",
@@ -77,7 +77,7 @@
 		"title": "uBlock filters – Privacy",
 		"contentURL": [
 			"https://ublockorigin.github.io/uAssets/filters/privacy.txt",
-			"assets/ublock/privacy.min.txt"
+			"assets/ublock/privacy.txt"
 		],
 		"cdnURLs": [
 			"https://ublockorigin.github.io/uAssetsCDN/filters/privacy.min.txt",
