@@ -68,14 +68,13 @@ builtinScriptlets.push({
     name: 'pattern-to-regex.fn',
     fn: patternToRegex,
 });
-function patternToRegex(pattern) {
-    if ( pattern === '' ) {
-        return /^/;
+function patternToRegex(pattern, flags = undefined) {
+    if ( pattern === '' ) { return /^/; }
+    const match = /^\/(.+)\/([gimsu]*)$/.exec(pattern);
+    if ( match !== null ) {
+        return new RegExp(match[1], match[2] || flags);
     }
-    if ( pattern.startsWith('/') && pattern.endsWith('/') ) {
-        return new RegExp(pattern.slice(1, -1));
-    }
-    return new RegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    return new RegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), flags);
 }
 
 /******************************************************************************/
@@ -394,7 +393,7 @@ function abortOnStackTrace(
         for ( let line of err.stack.split(/[\n\r]+/) ) {
             if ( line.includes(exceptionToken) ) { continue; }
             line = line.trim();
-            let match = safe.RegExp_exec.call(reLine, line);
+            const match = safe.RegExp_exec.call(reLine, line);
             if ( match === null ) { continue; }
             let url = match[2];
             if ( url.startsWith('(') ) { url = url.slice(1); }
@@ -2122,6 +2121,9 @@ function callNothrow(
 builtinScriptlets.push({
     name: 'spoof-css.js',
     fn: spoofCSS,
+    dependencies: [
+        'safe-self.fn',
+    ],
 });
 function spoofCSS(
     selector,
@@ -2137,19 +2139,30 @@ function spoofCSS(
         if ( typeof args[i+1] !== 'string' ) { break; }
         propToValueMap.set(toCamelCase(args[i+0]), args[i+1]);
     }
+    const safe = safeSelf();
+    const canDebug = scriptletGlobals.has('canDebug');
+    const shouldDebug = canDebug && propToValueMap.get('debug') || 0;
+    const shouldLog = canDebug && propToValueMap.has('log') || 0;
+    const proxiedStyles = new WeakSet();
+    const spoofStyle = (prop, real) => {
+        const normalProp = toCamelCase(prop);
+        const shouldSpoof = propToValueMap.has(normalProp);
+        const value = shouldSpoof ? propToValueMap.get(normalProp) : real;
+        if ( shouldLog === 2 || shouldSpoof && shouldLog === 1 ) {
+            safe.uboLog(prop, value);
+        }
+        return value;
+    };
     self.getComputedStyle = new Proxy(self.getComputedStyle, {
         apply: function(target, thisArg, args) {
-            if ( propToValueMap.has('debug') ) { debugger; }    // jshint ignore: line
+            if ( shouldDebug !== 0 ) { debugger; }    // jshint ignore: line
             const style = Reflect.apply(target, thisArg, args);
             const targetElements = new WeakSet(document.querySelectorAll(selector));
             if ( targetElements.has(args[0]) === false ) { return style; }
+            proxiedStyles.add(target);
             const proxiedStyle = new Proxy(style, {
                 get(target, prop, receiver) {
-                    const normalProp = toCamelCase(prop);
-                    const value = propToValueMap.has(normalProp)
-                        ? propToValueMap.get(normalProp)
-                        : Reflect.get(target, prop, receiver);
-                    return value;
+                    return spoofStyle(prop, Reflect.get(target, prop, receiver));
                 },
             });
             return proxiedStyle;
@@ -2161,9 +2174,23 @@ function spoofCSS(
             return Reflect.get(target, prop, receiver);
         },
     });
+    CSSStyleDeclaration.prototype.getPropertyValue = new Proxy(CSSStyleDeclaration.prototype.getPropertyValue, {
+        apply: function(target, thisArg, args) {
+            if ( shouldDebug !== 0 ) { debugger; }    // jshint ignore: line
+            const value = Reflect.apply(target, thisArg, args);
+            if ( proxiedStyles.has(thisArg) === false ) { return value; }
+            return spoofStyle(args[0], value);
+        },
+        get(target, prop, receiver) {
+            if ( prop === 'toString' ) {
+                return target.toString.bind(target);
+            }
+            return Reflect.get(target, prop, receiver);
+        },
+    });
     Element.prototype.getBoundingClientRect = new Proxy(Element.prototype.getBoundingClientRect, {
         apply: function(target, thisArg, args) {
-            if ( propToValueMap.has('debug') ) { debugger; }    // jshint ignore: line
+            if ( shouldDebug !== 0 ) { debugger; }    // jshint ignore: line
             const rect = Reflect.apply(target, thisArg, args);
             const targetElements = new WeakSet(document.querySelectorAll(selector));
             if ( targetElements.has(thisArg) === false ) { return rect; }
@@ -2182,6 +2209,65 @@ function spoofCSS(
             }
             return Reflect.get(target, prop, receiver);
         },
+    });
+}
+
+/******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'sed.js',
+    requiresTrust: true,
+    fn: sed,
+    dependencies: [
+        'pattern-to-regex.fn',
+        'safe-self.fn',
+    ],
+});
+function sed(
+    nodeName = '',
+    pattern = '',
+    replacement = ''
+) {
+    const reNodeName = patternToRegex(nodeName, 'i');
+    const rePattern = patternToRegex(pattern, 'gms');
+    const extraArgs = new Map(
+        Array.from(arguments).slice(3).reduce((out, v, i, a) => {
+            if ( (i & 1) === 0 ) { out.push([ a[i], a[i+1] || undefined ]); }
+            return out;
+        }, [])
+    );
+    const shouldLog = scriptletGlobals.has('canDebug') && extraArgs.get('log') || 0;
+    const reCondition = patternToRegex(extraArgs.get('condition') || '', 'gms');
+    let sedCount = extraArgs.has('sedCount') ? parseInt(extraArgs.get('sedCount')) : 0;
+    let tryCount = extraArgs.has('tryCount') ? parseInt(extraArgs.get('tryCount')) : 0;
+    const safe = safeSelf();
+    const handler = mutations => {
+        for ( const mutation of mutations ) {
+            for ( const node of mutation.addedNodes ) {
+                if ( reNodeName.test(node.nodeName) === false ) { continue; }
+                const before = node.textContent;
+                if ( safe.RegExp_test.call(rePattern, before) === false ) { continue; }
+                if ( safe.RegExp_test.call(reCondition, before) === false ) { continue; }
+                if ( shouldLog !== 0 ) { safe.uboLog('sed.js before:\n', before); }
+                const after = before.replace(rePattern, replacement);
+                if ( shouldLog !== 0 ) { safe.uboLog('sed.js after:\n', after); }
+                node.textContent = after;
+                if ( sedCount !== 0 && (sedCount -= 1) === 0 ) {
+                    observer.disconnect();
+                    if ( shouldLog !== 0 ) { safe.uboLog('sed.js: quitting'); }
+                    return;
+                }
+            }
+        }
+        if ( tryCount !== 0 && (tryCount -= 1) === 0 ) {
+            observer.disconnect();
+            if ( shouldLog !== 0 ) { safe.uboLog('sed.js: quitting'); }
+        }
+    };
+    const observer = new MutationObserver(handler);
+    observer.observe(document.documentElement, {
+        childList: true,
+        subtree: true,
     });
 }
 

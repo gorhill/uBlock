@@ -86,6 +86,7 @@ class RedirectEntry {
         this.data = '';
         this.warURL = undefined;
         this.params = undefined;
+        this.requiresTrust = false;
         this.dependencies = [];
     }
 
@@ -149,21 +150,16 @@ class RedirectEntry {
         return this.data;
     }
 
-    static fromContent(mime, content, dependencies = []) {
+    static fromDetails(details) {
         const r = new RedirectEntry();
-        r.mime = mime;
-        r.data = content;
-        r.dependencies.push(...dependencies);
-        return r;
-    }
-
-    static fromSelfie(selfie) {
-        const r = new RedirectEntry();
-        r.mime = selfie.mime;
-        r.data = selfie.data;
-        r.warURL = selfie.warURL;
-        r.params = selfie.params;
-        r.dependencies = selfie.dependencies || [];
+        r.mime = details.mime;
+        r.data = details.data;
+        r.requiresTrust = details.requiresTrust === true;
+        r.warURL = details.warURL !== undefined && details.warURL || undefined;
+        r.params = details.params !== undefined && details.params || undefined;
+        if ( Array.isArray(details.dependencies) ) {
+            r.dependencies.push(...details.dependencies);
+        }
         return r;
     }
 }
@@ -211,6 +207,11 @@ class RedirectEngine {
             token = token.slice(1);
         }
         return this.resources.get(this.aliases.get(token) || token) !== undefined;
+    }
+
+    tokenRequiresTrust(token) {
+        const entry = this.resources.get(this.aliases.get(token) || token);
+        return entry && entry.requiresTrust === true || false;
     }
 
     async toSelfie() {
@@ -288,10 +289,10 @@ class RedirectEngine {
             // No more data, add the resource.
             const name = this.aliases.get(fields[0]) || fields[0];
             const mime = fields[1];
-            const content = orphanizeString(
+            const data = orphanizeString(
                 fields.slice(2).join(encoded ? '' : '\n')
             );
-            this.resources.set(name, RedirectEntry.fromContent(mime, content));
+            this.resources.set(name, RedirectEntry.fromDetails({ mime, data }));
             if ( Array.isArray(details) ) {
                 for ( const { prop, value } of details ) {
                     if ( prop !== 'alias' ) { continue; }
@@ -314,11 +315,12 @@ class RedirectEngine {
             import('/assets/resources/scriptlets.js').then(module => {
                 for ( const scriptlet of module.builtinScriptlets ) {
                     const { name, aliases, fn } = scriptlet;
-                    const entry = RedirectEntry.fromContent(
-                        mimeFromName(name),
-                        fn.toString(),
-                        scriptlet.dependencies,
-                    );
+                    const entry = RedirectEntry.fromDetails({
+                        mime: mimeFromName(name),
+                        data: fn.toString(),
+                        dependencies: scriptlet.dependencies,
+                        requiresTrust: scriptlet.requiresTrust === true,
+                    });
                     this.resources.set(name, entry);
                     if ( Array.isArray(aliases) === false ) { continue; }
                     for ( const alias of aliases ) {
@@ -331,7 +333,7 @@ class RedirectEngine {
 
         const store = (name, data = undefined) => {
             const details = redirectableResources.get(name);
-            const entry = RedirectEntry.fromSelfie({
+            const entry = RedirectEntry.fromDetails({
                 mime: mimeFromName(name),
                 data,
                 warURL: `/web_accessible_resources/${name}`,
@@ -444,7 +446,7 @@ class RedirectEngine {
         this.aliases = new Map(selfie.aliases);
         this.resources = new Map();
         for ( const [ token, entry ] of selfie.resources ) {
-            this.resources.set(token, RedirectEntry.fromSelfie(entry));
+            this.resources.set(token, RedirectEntry.fromDetails(entry));
         }
         return true;
     }

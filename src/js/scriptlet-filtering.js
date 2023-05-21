@@ -24,7 +24,7 @@
 /******************************************************************************/
 
 import µb from './background.js';
-import { redirectEngine } from './redirect-engine.js';
+import { redirectEngine as reng } from './redirect-engine.js';
 import { sessionFirewall } from './filtering-engines.js';
 import { StaticExtFilteringHostnameDB } from './static-ext-filtering-db.js';
 import * as sfp from './static-filtering-parser.js';
@@ -119,7 +119,7 @@ const contentscriptCode = (( ) => {
 // TODO: Probably should move this into StaticFilteringParser
 // https://github.com/uBlockOrigin/uBlock-issues/issues/1031
 //   Normalize scriptlet name to its canonical, unaliased name.
-const normalizeRawFilter = function(parser) {
+const normalizeRawFilter = function(parser, sourceIsTrusted = false) {
     const root = parser.getBranchFromType(sfp.NODE_TYPE_EXT_PATTERN_SCRIPTLET);
     const walker = parser.getWalker(root);
     const args = [];
@@ -135,10 +135,14 @@ const normalizeRawFilter = function(parser) {
     }
     walker.dispose();
     if ( args.length !== 0 ) {
-        const full = `${args[0]}.js`;
-        if ( redirectEngine.aliases.has(full) ) {
-            args[0] = redirectEngine.aliases.get(full).slice(0, -3);
+        let token = `${args[0]}.js`;
+        if ( reng.aliases.has(token) ) {
+            token = reng.aliases.get(token);
         }
+        if ( sourceIsTrusted !== true && reng.tokenRequiresTrust(token) ) {
+            return;
+        }
+        args[0] = token.slice(0, -3);
     }
     return `+js(${args.join(', ')})`;
 };
@@ -155,19 +159,19 @@ const lookupScriptlet = function(rawToken, scriptletMap, dependencyMap) {
     }
     // TODO: The alias lookup can be removed once scriptlet resources
     //       with obsolete name are converted to their new name.
-    if ( redirectEngine.aliases.has(token) ) {
-        token = redirectEngine.aliases.get(token);
+    if ( reng.aliases.has(token) ) {
+        token = reng.aliases.get(token);
     } else {
         token = `${token}.js`;
     }
-    const details = redirectEngine.contentFromName(token, 'text/javascript');
+    const details = reng.contentFromName(token, 'text/javascript');
     if ( details === undefined ) { return; }
     const content = patchScriptlet(details.js, args);
     const dependencies = details.dependencies || [];
     while ( dependencies.length !== 0 ) {
         const token = dependencies.shift();
         if ( dependencyMap.has(token) ) { continue; }
-        const details = redirectEngine.contentFromName(token, 'fn/javascript');
+        const details = reng.contentFromName(token, 'fn/javascript');
         if ( details === undefined ) { continue; }
         dependencyMap.set(token, details.js);
         if ( Array.isArray(details.dependencies) === false ) { continue; }
@@ -254,7 +258,10 @@ scriptletFilteringEngine.compile = function(parser, writer) {
 
     // Only exception filters are allowed to be global.
     const isException = parser.isException();
-    const normalized = normalizeRawFilter(parser);
+    const normalized = normalizeRawFilter(parser, writer.properties.get('isTrusted'));
+
+    // Can fail if there is a mismatch with trust requirement
+    if ( normalized === undefined ) { return; }
 
     // Tokenless is meaningful only for exception filters.
     if ( normalized === '+js()' && isException === false ) { return; }
@@ -343,7 +350,7 @@ scriptletFilteringEngine.retrieve = function(request) {
         };
     }
 
-    if ( scriptletCache.resetTime < redirectEngine.modifyTime ) {
+    if ( scriptletCache.resetTime < reng.modifyTime ) {
         scriptletCache.reset();
     }
 

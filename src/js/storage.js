@@ -368,6 +368,14 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
 /******************************************************************************/
 
+µb.isTrustedList = function(assetKey) {
+    if ( assetKey.startsWith('ublock-') ) { return true; }
+    if ( assetKey === this.userFiltersPath ) { return true; }
+    return false;
+};
+
+/******************************************************************************/
+
 µb.loadSelectedFilterLists = async function() {
     const bin = await vAPI.storage.get('selectedFilterLists');
     if ( bin instanceof Object && Array.isArray(bin.selectedFilterLists) ) {
@@ -560,7 +568,8 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     await this.saveUserFilters(details.content.trim() + '\n' + filters);
 
     const compiledFilters = this.compileFilters(filters, {
-        assetKey: this.userFiltersPath
+        assetKey: this.userFiltersPath,
+        isTrusted: true,
     });
     const snfe = staticNetFilteringEngine;
     const cfe = cosmeticFilteringEngine;
@@ -885,10 +894,10 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         if ( µb.inMemoryFilters.length !== 0 ) {
             if ( µb.inMemoryFiltersCompiled === '' ) {
                 µb.inMemoryFiltersCompiled =
-                    µb.compileFilters(
-                        µb.inMemoryFilters.join('\n'),
-                        { assetKey: 'in-memory'}
-                    );
+                    µb.compileFilters(µb.inMemoryFilters.join('\n'), {
+                        assetKey: 'in-memory',
+                        isTrusted: true,
+                    });
             }
             if ( µb.inMemoryFiltersCompiled !== '' ) {
                 toLoad.push(
@@ -953,8 +962,10 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         return { assetKey, content: '' };
     }
 
-    const compiledContent =
-        this.compileFilters(rawDetails.content, { assetKey });
+    const compiledContent = this.compileFilters(rawDetails.content, {
+        assetKey,
+        isTrusted: this.isTrustedList(assetKey),
+    });
     io.put(compiledPath, compiledContent);
 
     return { assetKey, content: compiledContent };
@@ -1020,6 +1031,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     // client compilers.
     if ( details.assetKey ) {
         writer.properties.set('name', details.assetKey);
+        writer.properties.set('isTrusted', details.isTrusted === true);
     }
     const assetName = details.assetKey ? details.assetKey : '?';
     const expertMode =
@@ -1539,7 +1551,8 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
                         io.put(
                             'compiled/' + details.assetKey,
                             this.compileFilters(details.content, {
-                                assetKey: details.assetKey
+                                assetKey: details.assetKey,
+                                isTrusted: this.isTrustedList(details.assetKey),
                             })
                         );
                     }
