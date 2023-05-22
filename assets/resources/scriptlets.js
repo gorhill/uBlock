@@ -2229,6 +2229,7 @@ function sed(
     pattern = '',
     replacement = ''
 ) {
+    if ( document.documentElement === null ) { return; }
     const reNodeName = patternToRegex(nodeName, 'i');
     const rePattern = patternToRegex(pattern, 'gms');
     const extraArgs = new Map(
@@ -2243,7 +2244,7 @@ function sed(
     const safe = safeSelf();
     const stop = (takeRecord = true) => {
         if ( takeRecord ) {
-            handler(observer.takeRecords());
+            handleMutations(observer.takeRecords());
         }
         observer.disconnect();
         if ( shouldLog !== 0 ) {
@@ -2251,28 +2252,51 @@ function sed(
         }
     };
     let sedCount = extraArgs.has('sedCount') ? parseInt(extraArgs.get('sedCount')) : 0;
-    const handler = mutations => {
+    const handleNode = node => {
+        const before = node.textContent;
+        if ( safe.RegExp_test.call(rePattern, before) === false ) { return true; }
+        if ( safe.RegExp_test.call(reCondition, before) === false ) { return true; }
+        const after = before.replace(rePattern, replacement);
+        node.textContent = after;
+        if ( shouldLog !== 0 ) {
+            safe.uboLog('sed.js before:\n', before);
+            safe.uboLog('sed.js after:\n', after);
+        }
+        return sedCount === 0 || (sedCount -= 1) !== 0;
+    };
+    const handleMutations = mutations => {
         for ( const mutation of mutations ) {
             for ( const node of mutation.addedNodes ) {
                 if ( reNodeName.test(node.nodeName) === false ) { continue; }
-                const before = node.textContent;
-                if ( safe.RegExp_test.call(rePattern, before) === false ) { continue; }
-                if ( safe.RegExp_test.call(reCondition, before) === false ) { continue; }
-                if ( shouldLog !== 0 ) { safe.uboLog('sed.js before:\n', before); }
-                const after = before.replace(rePattern, replacement);
-                if ( shouldLog !== 0 ) { safe.uboLog('sed.js after:\n', after); }
-                node.textContent = after;
-                if ( sedCount !== 0 && (sedCount -= 1) === 0 ) {
-                    return stop(false);
-                }
+                if ( handleNode(node) ) { continue; }
+                stop(false); return;
             }
         }
     };
-    const observer = new MutationObserver(handler);
-    observer.observe(document.documentElement, {
-        childList: true,
-        subtree: true,
-    });
+    const observer = new MutationObserver(handleMutations);
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+    {
+        const treeWalker = document.createTreeWalker(
+            document.documentElement,
+            NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT
+        );
+        const currentScriptNode = document.currentScript;
+        const currentTextNode = currentScriptNode.firstChild;
+        let count = 0;
+        for (;;) {
+            const node = treeWalker.nextNode();
+            count += 1;
+            if ( node === null ) { break; }
+            if ( reNodeName.test(node.nodeName) === false ) { continue; }
+            if ( node === currentScriptNode ) { continue; }
+            if ( node === currentTextNode ) { continue; }
+            if ( handleNode(node) ) { continue; }
+            stop(); break;
+        }
+        if ( shouldLog !== 0 ) {
+            safe.uboLog(`sed.js ${count} nodes present before installing mutation observer`);
+        }
+    }
     if ( shouldStay ) { return; }
     runAt(( ) => {
         const quitAfter = parseInt(extraArgs.get('quitAfter')) || 0;
