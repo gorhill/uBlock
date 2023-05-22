@@ -349,6 +349,22 @@
 		],
 		"supportURL": "https://github.com/easylist/easylist#fanboy-lists"
 	},
+	"easylist-chat": {
+		"content": "filters",
+		"group": "annoyances",
+		"parent": "EasyList – Annoyances",
+		"off": true,
+		"title": "EasyList – Anti-Chat",
+		"tags": "annoyances",
+		"contentURL": "https://ublockorigin.github.io/uAssets/thirdparties/easylist-chat.txt",
+		"cdnURLs": [
+			"https://ublockorigin.github.io/uAssetsCDN/thirdparties/easylist-chat.txt",
+			"https://ublockorigin.pages.dev/thirdparties/easylist-chat.txt",
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/thirdparties/easylist-chat.txt",
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/thirdparties/easylist-chat.txt"
+		],
+		"supportURL": "https://github.com/easylist/easylist#fanboy-lists"
+	},
 	"fanboy-cookiemonster": {
 		"content": "filters",
 		"group": "annoyances",
