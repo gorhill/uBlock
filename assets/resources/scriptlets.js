@@ -2220,6 +2220,7 @@ builtinScriptlets.push({
     fn: sed,
     dependencies: [
         'pattern-to-regex.fn',
+        'run-at.fn',
         'safe-self.fn',
     ],
 });
@@ -2237,10 +2238,19 @@ function sed(
         }, [])
     );
     const shouldLog = scriptletGlobals.has('canDebug') && extraArgs.get('log') || 0;
+    const shouldStay = extraArgs.get('stay') || false;
     const reCondition = patternToRegex(extraArgs.get('condition') || '', 'gms');
-    let sedCount = extraArgs.has('sedCount') ? parseInt(extraArgs.get('sedCount')) : 0;
-    let tryCount = extraArgs.has('tryCount') ? parseInt(extraArgs.get('tryCount')) : 0;
     const safe = safeSelf();
+    const stop = (takeRecord = true) => {
+        if ( takeRecord ) {
+            handler(observer.takeRecords());
+        }
+        observer.disconnect();
+        if ( shouldLog !== 0 ) {
+            safe.uboLog(`sed.js: quitting "${pattern}" => "${replacement}"`);
+        }
+    };
+    let sedCount = extraArgs.has('sedCount') ? parseInt(extraArgs.get('sedCount')) : 0;
     const handler = mutations => {
         for ( const mutation of mutations ) {
             for ( const node of mutation.addedNodes ) {
@@ -2253,15 +2263,9 @@ function sed(
                 if ( shouldLog !== 0 ) { safe.uboLog('sed.js after:\n', after); }
                 node.textContent = after;
                 if ( sedCount !== 0 && (sedCount -= 1) === 0 ) {
-                    observer.disconnect();
-                    if ( shouldLog !== 0 ) { safe.uboLog('sed.js: quitting'); }
-                    return;
+                    return stop(false);
                 }
             }
-        }
-        if ( tryCount !== 0 && (tryCount -= 1) === 0 ) {
-            observer.disconnect();
-            if ( shouldLog !== 0 ) { safe.uboLog('sed.js: quitting'); }
         }
     };
     const observer = new MutationObserver(handler);
@@ -2269,6 +2273,15 @@ function sed(
         childList: true,
         subtree: true,
     });
+    if ( shouldStay ) { return; }
+    runAt(( ) => {
+        const quitAfter = parseInt(extraArgs.get('quitAfter')) || 0;
+        if ( quitAfter !== 0 ) {
+            setTimeout(( ) => { stop(); }, quitAfter);
+        } else {
+            stop();
+        }
+    }, 'interactive');
 }
 
 /******************************************************************************/
