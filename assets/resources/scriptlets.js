@@ -2365,7 +2365,7 @@ function sed(
 builtinScriptlets.push({
     name: 'trusted-set-constant.js',
     requiresTrust: true,
-    aliases: [ 'trusted-set' ],
+    aliases: [ 'trusted-set.js' ],
     fn: trustedSetConstant,
     dependencies: [
         'set-constant-core.fn'
