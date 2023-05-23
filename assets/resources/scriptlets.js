@@ -2212,7 +2212,41 @@ function spoofCSS(
     });
 }
 
-/******************************************************************************/
+/*******************************************************************************
+ * 
+ * Scriplets below this section are only available for filter lists from
+ * trusted sources. They all have the property `requiresTrust` set to `true`.
+ * 
+ * Trusted sources are:
+ *
+ * - uBO's own filter lists, which name starts with "uBlock filters – ", and
+ *   maintained at: https://github.com/uBlockOrigin/uAssets
+ * 
+ * - The user's own filters as seen in "My filters" pane in uBO's dashboard. 
+ * 
+ * The trustworthiness of filters using these privileged scriptlets are
+ * evaluated at filter list compiled time: when a filter using one of the
+ * privileged scriptlet originates from a non-trusted filter list source, it
+ * is discarded at compile time, specifically from within:
+ * 
+ * - Source: ./src/js/scriptlet-filtering.js
+ * - Method: scriptletFilteringEngine.compile(), via normalizeRawFilter()
+ * 
+ **/
+
+/*******************************************************************************
+ * 
+ * sed.js
+ * 
+ * Replace text instance(s) with another text instance inside specific
+ * DOM nodes. By default, the scriplet stops and quits at the interactive
+ * stage of a document.
+ * 
+ * See commit messages for usage:
+ * - https://github.com/gorhill/uBlock/commit/99ce027fd702
+ * - https://github.com/gorhill/uBlock/commit/41876336db48
+ * 
+ **/
 
 builtinScriptlets.push({
     name: 'sed.js',
@@ -2239,7 +2273,6 @@ function sed(
         }, [])
     );
     const shouldLog = scriptletGlobals.has('canDebug') && extraArgs.get('log') || 0;
-    const shouldStay = extraArgs.get('stay') || false;
     const reCondition = patternToRegex(extraArgs.get('condition') || '', 'gms');
     const safe = safeSelf();
     const stop = (takeRecord = true) => {
@@ -2293,7 +2326,7 @@ function sed(
             safe.uboLog(`sed.js ${count} nodes present before installing mutation observer`);
         }
     }
-    if ( shouldStay ) { return; }
+    if ( extraArgs.has('stay') ) { return; }
     runAt(( ) => {
         const quitAfter = parseInt(extraArgs.get('quitAfter')) || 0;
         if ( quitAfter !== 0 ) {
