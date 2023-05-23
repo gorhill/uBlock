@@ -313,7 +313,7 @@ select {
     height: var(--font-size);
     position: relative;
     top: calc(var(--font-size) / 7);
-    max-width: calc(var(--font-size) * 1.4);
+    max-width: calc(var(--font-size) * 1.5);
     }
 
 .logo {
