@@ -597,9 +597,7 @@ const launchReporter = async function(request) {
     }
 
     const entries = await io.getUpdateAges({
-        filters: µb.selectedFilterLists.filter(
-            a => (/^https?:/.test(a) === false)
-        )
+        filters: µb.selectedFilterLists.slice()
     });
     let shoudUpdateLists = false;
     for ( const entry of entries ) {
