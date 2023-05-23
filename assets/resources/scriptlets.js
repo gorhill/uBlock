@@ -163,6 +163,7 @@ builtinScriptlets.push({
     name: 'set-constant-core.fn',
     fn: setConstantCore,
     dependencies: [
+        'run-at.fn',
         'safe-self.fn',
     ],
 });
