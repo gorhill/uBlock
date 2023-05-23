@@ -1324,9 +1324,9 @@ vAPI.DOMFilterer = class {
         // https://github.com/gorhill/uBlock/blob/master/assets/ublock/resources.txt
         if ( scriptletDetails && typeof self.uBO_scriptletsInjected !== 'string' ) {
             self.uBO_scriptletsInjected = scriptletDetails.filters;
-            if ( scriptletDetails.scriptlets ) {
-                vAPI.injectScriptlet(document, scriptletDetails.scriptlets);
-                vAPI.injectedScripts = scriptletDetails.scriptlets;
+            if ( scriptletDetails.mainWorld ) {
+                vAPI.injectScriptlet(document, scriptletDetails.mainWorld);
+                vAPI.injectedScripts = scriptletDetails.mainWorld;
             }
         }
 

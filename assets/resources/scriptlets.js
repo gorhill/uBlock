@@ -2218,6 +2218,7 @@ builtinScriptlets.push({
     name: 'sed.js',
     requiresTrust: true,
     fn: sed,
+    world: 'ISOLATED',
     dependencies: [
         'pattern-to-regex.fn',
         'run-at.fn',
@@ -2229,7 +2230,6 @@ function sed(
     pattern = '',
     replacement = ''
 ) {
-    if ( document.documentElement === null ) { return; }
     const reNodeName = patternToRegex(nodeName, 'i');
     const rePattern = patternToRegex(pattern, 'gms');
     const extraArgs = new Map(
@@ -2274,22 +2274,18 @@ function sed(
         }
     };
     const observer = new MutationObserver(handleMutations);
-    observer.observe(document.documentElement, { childList: true, subtree: true });
-    {
+    observer.observe(document, { childList: true, subtree: true });
+    if ( document.documentElement ) {
         const treeWalker = document.createTreeWalker(
             document.documentElement,
             NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT
         );
-        const currentScriptNode = document.currentScript;
-        const currentTextNode = currentScriptNode.firstChild;
         let count = 0;
         for (;;) {
             const node = treeWalker.nextNode();
             count += 1;
             if ( node === null ) { break; }
             if ( reNodeName.test(node.nodeName) === false ) { continue; }
-            if ( node === currentScriptNode ) { continue; }
-            if ( node === currentTextNode ) { continue; }
             if ( handleNode(node) ) { continue; }
             stop(); break;
         }

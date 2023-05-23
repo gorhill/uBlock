@@ -315,7 +315,7 @@ vAPI.scriptletsInjector = ((doc, details) => {
         script = doc.createElement('script');
         script.async = false;
         script.src = url;
-        (doc.head || doc.documentElement).appendChild(script);
+        doc.append(script);
         self.uBO_scriptletsInjected = details.filters;
     } catch (ex) {
     }

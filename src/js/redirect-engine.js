@@ -87,6 +87,7 @@ class RedirectEntry {
         this.warURL = undefined;
         this.params = undefined;
         this.requiresTrust = false;
+        this.world = 'MAIN';
         this.dependencies = [];
     }
 
@@ -157,6 +158,7 @@ class RedirectEntry {
         r.requiresTrust = details.requiresTrust === true;
         r.warURL = details.warURL !== undefined && details.warURL || undefined;
         r.params = details.params !== undefined && details.params || undefined;
+        r.world = details.world || 'MAIN';
         if ( Array.isArray(details.dependencies) ) {
             r.dependencies.push(...details.dependencies);
         }
@@ -227,6 +229,7 @@ class RedirectEngine {
         if ( entry.mime.startsWith(mime) === false ) { return; }
         return {
             js: entry.toContent(),
+            world: entry.world,
             dependencies: entry.dependencies.slice(),
         };
     }
@@ -320,6 +323,7 @@ class RedirectEngine {
                         data: fn.toString(),
                         dependencies: scriptlet.dependencies,
                         requiresTrust: scriptlet.requiresTrust === true,
+                        world: scriptlet.world || 'MAIN',
                     });
                     this.resources.set(name, entry);
                     if ( Array.isArray(aliases) === false ) { continue; }

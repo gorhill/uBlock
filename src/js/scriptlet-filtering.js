@@ -82,7 +82,7 @@ const scriptletFilteringEngine = {
 // Consequently, the programmatic-injection code path is taken only with
 // Chromium-based browsers.
 
-const contentscriptCode = (( ) => {
+const mainWorldInjector = (( ) => {
     const parts = [
         '(',
         function(injector, details) {
@@ -95,7 +95,7 @@ const contentscriptCode = (( ) => {
                 return;
             }
             injector(doc, details);
-            if ( typeof self.uBO_scriptletsInjected === 'string' ) { return 0; }
+            return 0;
         }.toString(),
         ')(',
             vAPI.scriptletsInjector, ', ',
@@ -112,7 +112,39 @@ const contentscriptCode = (( ) => {
                 filters,
             });
             return this.parts.join('');
-        }
+        },
+    };
+})();
+
+const isolatedWorldInjector = (( ) => {
+    const parts = [
+        '(',
+        function(details) {
+            const doc = document;
+            if (
+                doc.location === null ||
+                details.hostname !== doc.location.hostname ||
+                self.uBO_isolatedScriptlets === 'done'
+            ) {
+                return;
+            }
+            const isolatedScriptlets = function(){};
+            isolatedScriptlets();
+            self.uBO_isolatedScriptlets = 'done';
+            return 0;
+        }.toString(),
+        ')(',
+            'json-slot',
+        ');',
+    ];
+    return {
+        parts,
+        jsonSlot: parts.indexOf('json-slot'),
+        scriptletSlot: parts.indexOf('scriptlet-slot'),
+        assemble: function(hostname, scriptlets) {
+            this.parts[this.jsonSlot] = JSON.stringify({ hostname });
+            return this.parts.join('').replace('function(){}', scriptlets);
+        },
     };
 })();
 
@@ -147,8 +179,8 @@ const normalizeRawFilter = function(parser, sourceIsTrusted = false) {
     return `+js(${args.join(', ')})`;
 };
 
-const lookupScriptlet = function(rawToken, scriptletMap, dependencyMap) {
-    if ( scriptletMap.has(rawToken) ) { return; }
+const lookupScriptlet = function(rawToken, mainMap, isolatedMap) {
+    if ( mainMap.has(rawToken) || isolatedMap.has(rawToken) ) { return; }
     const pos = rawToken.indexOf(',');
     let token, args = '';
     if ( pos === -1 ) {
@@ -157,8 +189,6 @@ const lookupScriptlet = function(rawToken, scriptletMap, dependencyMap) {
         token = rawToken.slice(0, pos).trim();
         args = rawToken.slice(pos + 1).trim();
     }
-    // TODO: The alias lookup can be removed once scriptlet resources
-    //       with obsolete name are converted to their new name.
     if ( reng.aliases.has(token) ) {
         token = reng.aliases.get(token);
     } else {
@@ -166,18 +196,19 @@ const lookupScriptlet = function(rawToken, scriptletMap, dependencyMap) {
     }
     const details = reng.contentFromName(token, 'text/javascript');
     if ( details === undefined ) { return; }
+    const targetWorldMap = details.world !== 'ISOLATED' ? mainMap : isolatedMap;
     const content = patchScriptlet(details.js, args);
     const dependencies = details.dependencies || [];
     while ( dependencies.length !== 0 ) {
         const token = dependencies.shift();
-        if ( dependencyMap.has(token) ) { continue; }
+        if ( targetWorldMap.has(token) ) { continue; }
         const details = reng.contentFromName(token, 'fn/javascript');
         if ( details === undefined ) { continue; }
-        dependencyMap.set(token, details.js);
+        targetWorldMap.set(token, details.js);
         if ( Array.isArray(details.dependencies) === false ) { continue; }
         dependencies.push(...details.dependencies);
     }
-    scriptletMap.set(rawToken, [
+    targetWorldMap.set(rawToken, [
         'try {',
         '// >>>> scriptlet start',
         content,
@@ -314,23 +345,13 @@ scriptletFilteringEngine.fromCompiledContent = function(reader) {
 
 const $scriptlets = new Set();
 const $exceptions = new Set();
-const $scriptletMap = new Map();
-const $scriptletDependencyMap = new Map();
+const $mainWorldMap = new Map();
+const $isolatedWorldMap = new Map();
 
 scriptletFilteringEngine.retrieve = function(request) {
     if ( scriptletDB.size === 0 ) { return; }
 
     const hostname = request.hostname;
-
-    $scriptlets.clear();
-    $exceptions.clear();
-
-    scriptletDB.retrieve(hostname, [ $scriptlets, $exceptions ]);
-    const entity = request.entity !== ''
-        ? `${hostname.slice(0, -request.domain.length)}${request.entity}`
-        : '*';
-    scriptletDB.retrieve(entity, [ $scriptlets, $exceptions ], 1);
-    if ( $scriptlets.size === 0 ) { return; }
 
     // https://github.com/gorhill/uBlock/issues/2835
     //   Do not inject scriptlets if the site is under an `allow` rule.
@@ -341,22 +362,31 @@ scriptletFilteringEngine.retrieve = function(request) {
         return;
     }
 
-    // Wholly disable scriptlet injection?
-    if ( $exceptions.has('') ) {
-        return {
-            filters: [
-                { tabId: request.tabId, url: request.url, filter: '#@#+js()' }
-            ]
-        };
-    }
-
     if ( scriptletCache.resetTime < reng.modifyTime ) {
         scriptletCache.reset();
     }
 
     let cacheDetails = scriptletCache.lookup(hostname);
     if ( cacheDetails === undefined ) {
-        const fullCode = [];
+        $scriptlets.clear();
+        $exceptions.clear();
+
+        scriptletDB.retrieve(hostname, [ $scriptlets, $exceptions ]);
+        const entity = request.entity !== ''
+            ? `${hostname.slice(0, -request.domain.length)}${request.entity}`
+            : '*';
+        scriptletDB.retrieve(entity, [ $scriptlets, $exceptions ], 1);
+        if ( $scriptlets.size === 0 ) { return; }
+
+        // Wholly disable scriptlet injection?
+        if ( $exceptions.has('') ) {
+            return {
+                filters: [
+                    { tabId: request.tabId, url: request.url, filter: '#@#+js()' }
+                ]
+            };
+        }
+
         for ( const token of $exceptions ) {
             if ( $scriptlets.has(token) ) {
                 $scriptlets.delete(token);
@@ -365,27 +395,30 @@ scriptletFilteringEngine.retrieve = function(request) {
             }
         }
         for ( const token of $scriptlets ) {
-            lookupScriptlet(token, $scriptletMap, $scriptletDependencyMap);
+            lookupScriptlet(token, $mainWorldMap, $isolatedWorldMap);
         }
-        for ( const token of $scriptlets ) {
-            fullCode.push($scriptletMap.get(token));
+        const mainWorldCode = [];
+        for ( const js of $mainWorldMap.values() ) {
+            mainWorldCode.push(js);
         }
-        for ( const code of $scriptletDependencyMap.values() ) {
-            fullCode.push(code);
+        const isolatedWorldCode = [];
+        for ( const js of $isolatedWorldMap.values() ) {
+            isolatedWorldCode.push(js);
         }
         cacheDetails = {
-            code: fullCode.join('\n\n'),
+            mainWorld: mainWorldCode.join('\n\n'),
+            isolatedWorld: isolatedWorldCode.join('\n\n'),
             filters: [
                 ...Array.from($scriptlets).map(s => `##+js(${s})`),
                 ...Array.from($exceptions).map(s => `#@#+js(${s})`),
             ].join('\n'),
         };
         scriptletCache.add(hostname, cacheDetails);
-        $scriptletMap.clear();
-        $scriptletDependencyMap.clear();
+        $mainWorldMap.clear();
+        $isolatedWorldMap.clear();
     }
 
-    if ( cacheDetails.code === '' ) {
+    if ( cacheDetails.mainWorld === '' && cacheDetails.isolatedWorld === '' ) {
         return { filters: cacheDetails.filters };
     }
 
@@ -398,22 +431,37 @@ scriptletFilteringEngine.retrieve = function(request) {
         scriptletGlobals.push([ 'canDebug', true ]);
     }
 
-    const out = [
-        '(function() {',
-        '// >>>> start of private namespace',
-        '',
-        µb.hiddenSettings.debugScriptlets ? 'debugger;' : ';',
-        '',
-        // For use by scriptlets to share local data among themselves
-        `const scriptletGlobals = new Map(${JSON.stringify(scriptletGlobals, null, 2)});`,
-        '',
-        cacheDetails.code,
-        '',
-        '// <<<< end of private namespace',
-        '})();',
-    ];
-
-    return { scriptlets: out.join('\n'), filters: cacheDetails.filters };
+    return {
+        mainWorld: cacheDetails.mainWorld === '' ? '' : [
+            '(function() {',
+            '// >>>> start of private namespace',
+            '',
+            µb.hiddenSettings.debugScriptlets ? 'debugger;' : ';',
+            '',
+            // For use by scriptlets to share local data among themselves
+            `const scriptletGlobals = new Map(${JSON.stringify(scriptletGlobals, null, 2)});`,
+            '',
+            cacheDetails.mainWorld,
+            '',
+            '// <<<< end of private namespace',
+            '})();',
+        ].join('\n'),
+        isolatedWorld: cacheDetails.isolatedWorld === '' ? '' : [
+            'function() {',
+            '// >>>> start of private namespace',
+            '',
+            µb.hiddenSettings.debugScriptlets ? 'debugger;' : ';',
+            '',
+            // For use by scriptlets to share local data among themselves
+            `const scriptletGlobals = new Map(${JSON.stringify(scriptletGlobals, null, 2)});`,
+            '',
+            cacheDetails.isolatedWorld,
+            '',
+            '// <<<< end of private namespace',
+            '}',
+        ].join('\n'),
+        filters: cacheDetails.filters,
+    };
 };
 
 scriptletFilteringEngine.injectNow = function(details) {
@@ -430,18 +478,31 @@ scriptletFilteringEngine.injectNow = function(details) {
     request.entity = entityFromDomain(request.domain);
     const scriptletDetails = this.retrieve(request);
     if ( scriptletDetails === undefined ) { return; }
-    const { scriptlets = '', filters } = scriptletDetails;
-    if ( scriptlets === '' ) { return scriptletDetails; }
-    let code = contentscriptCode.assemble(request.hostname, scriptlets, filters);
-    if ( µb.hiddenSettings.debugScriptletInjector ) {
-        code = 'debugger;\n' + code;
+    const { mainWorld = '', isolatedWorld = '', filters } = scriptletDetails;
+    if ( mainWorld !== '' ) {
+        let code = mainWorldInjector.assemble(request.hostname, mainWorld, filters);
+        if ( µb.hiddenSettings.debugScriptletInjector ) {
+            code = 'debugger;\n' + code;
+        }
+        vAPI.tabs.executeScript(details.tabId, {
+            code,
+            frameId: details.frameId,
+            matchAboutBlank: true,
+            runAt: 'document_start',
+        });
     }
-    vAPI.tabs.executeScript(details.tabId, {
-        code,
-        frameId: details.frameId,
-        matchAboutBlank: true,
-        runAt: 'document_start',
-    });
+    if ( isolatedWorld !== '' ) {
+        let code = isolatedWorldInjector.assemble(request.hostname, isolatedWorld);
+        if ( µb.hiddenSettings.debugScriptletInjector ) {
+            code = 'debugger;\n' + code;
+        }
+        vAPI.tabs.executeScript(details.tabId, {
+            code,
+            frameId: details.frameId,
+            matchAboutBlank: true,
+            runAt: 'document_start',
+        });
+    }
     return scriptletDetails;
 };
 
