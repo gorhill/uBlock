@@ -2262,6 +2262,9 @@ function spoofCSS(
             proxiedStyles.add(target);
             const proxiedStyle = new Proxy(style, {
                 get(target, prop, receiver) {
+                    if ( typeof target[prop] === 'function' ) {
+                        return target[prop].bind(target);
+                    }
                     return spoofStyle(prop, Reflect.get(target, prop, receiver));
                 },
             });
@@ -2349,9 +2352,10 @@ function spoofCSS(
  **/
 
 builtinScriptlets.push({
-    name: 'sed.js',
+    name: 'replace-node-text.js',
     requiresTrust: true,
-    fn: sed,
+    aliases: [ 'rnt.js', 'sed.js' /* to be removed */ ],
+    fn: replaceNodeText,
     world: 'ISOLATED',
     dependencies: [
         'get-extra-args.fn',
@@ -2360,7 +2364,7 @@ builtinScriptlets.push({
         'safe-self.fn',
     ],
 });
-function sed(
+function replaceNodeText(
     nodeName = '',
     pattern = '',
     replacement = ''
