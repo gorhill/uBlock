@@ -160,6 +160,132 @@ function runAt(fn, when) {
 /******************************************************************************/
 
 builtinScriptlets.push({
+    name: 'run-at-html-element.fn',
+    fn: runAtHtmlElement,
+});
+function runAtHtmlElement(fn) {
+    if ( document.documentElement ) {
+        fn();
+        return;
+    }
+    const observer = new MutationObserver(( ) => {
+        fn();
+        observer.disconnect();
+    });
+    observer.observe(document, { childList: true });
+}
+
+/******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'abort-current-script-core.fn',
+    fn: abortCurrentScriptCore,
+    dependencies: [
+        'pattern-to-regex.fn',
+        'get-exception-token.fn',
+        'safe-self.fn',
+        'should-debug.fn',
+        'should-log.fn',
+    ],
+});
+// Issues to mind before changing anything:
+//  https://github.com/uBlockOrigin/uBlock-issues/issues/2154
+function abortCurrentScriptCore(
+    arg1 = '',
+    arg2 = '',
+    arg3 = ''
+) {
+    const details = typeof arg1 !== 'object'
+        ? { target: arg1, needle: arg2, context: arg3 }
+        : arg1;
+    const { target = '', needle = '', context = '' } = details;
+    if ( typeof target !== 'string' ) { return; }
+    if ( target === '' ) { return; }
+    const safe = safeSelf();
+    const reNeedle = patternToRegex(needle);
+    const reContext = patternToRegex(context);
+    const thisScript = document.currentScript;
+    const chain = target.split('.');
+    let owner = window;
+    let prop;
+    for (;;) {
+        prop = chain.shift();
+        if ( chain.length === 0 ) { break; }
+        owner = owner[prop];
+        if ( owner instanceof Object === false ) { return; }
+    }
+    let value;
+    let desc = Object.getOwnPropertyDescriptor(owner, prop);
+    if (
+        desc instanceof Object === false ||
+        desc.get instanceof Function === false
+    ) {
+        value = owner[prop];
+        desc = undefined;
+    }
+    const log = shouldLog(details);
+    const debug = shouldDebug(details);
+    const exceptionToken = getExceptionToken();
+    const scriptTexts = new WeakMap();
+    const getScriptText = elem => {
+        let text = elem.textContent;
+        if ( text.trim() !== '' ) { return text; }
+        if ( scriptTexts.has(elem) ) { return scriptTexts.get(elem); }
+        const [ , mime, content ] =
+            /^data:([^,]*),(.+)$/.exec(elem.src.trim()) ||
+            [ '', '', '' ];
+        try {
+            switch ( true ) {
+            case mime.endsWith(';base64'):
+                text = self.atob(content);
+                break;
+            default:
+                text = self.decodeURIComponent(content);
+                break;
+            }
+        } catch(ex) {
+        }
+        scriptTexts.set(elem, text);
+        return text;
+    };
+    const validate = ( ) => {
+        if ( debug ) { debugger; }  // jshint ignore: line
+        const e = document.currentScript;
+        if ( e instanceof HTMLScriptElement === false ) { return; }
+        if ( e === thisScript ) { return; }
+        if ( reContext.test(e.src) === false ) { return; }
+        if ( log && e.src !== '' ) { safe.uboLog(`matched src: ${e.src}`); }
+        const scriptText = getScriptText(e);
+        if ( reNeedle.test(scriptText) === false ) { return; }
+        if ( log ) { safe.uboLog(`matched script text: ${scriptText}`); }
+        throw new ReferenceError(exceptionToken);
+    };
+    if ( debug ) { debugger; }  // jshint ignore: line
+    try {
+        Object.defineProperty(owner, prop, {
+            get: function() {
+                validate();
+                return desc instanceof Object
+                    ? desc.get.call(owner)
+                    : value;
+            },
+            set: function(a) {
+                validate();
+                if ( desc instanceof Object ) {
+                    desc.set.call(owner, a);
+                } else {
+                    value = a;
+                }
+            }
+        });
+    } catch(ex) {
+        if ( log ) { safe.uboLog(ex); }
+    }
+}
+
+/******************************************************************************/
+
+builtinScriptlets.push({
     name: 'set-constant-core.fn',
     fn: setConstantCore,
     dependencies: [
@@ -373,106 +499,20 @@ builtinScriptlets.push({
     aliases: [ 'acs.js', 'abort-current-inline-script.js', 'acis.js' ],
     fn: abortCurrentScript,
     dependencies: [
-        'pattern-to-regex.fn',
-        'get-exception-token.fn',
-        'safe-self.fn',
-        'should-debug.fn',
-        'should-log.fn',
+        'abort-current-script-core.fn',
+        'run-at-html-element.fn',
     ],
 });
 // Issues to mind before changing anything:
 //  https://github.com/uBlockOrigin/uBlock-issues/issues/2154
 function abortCurrentScript(
-    arg1 = '',
-    arg2 = '',
-    arg3 = ''
+    arg1,
+    arg2,
+    arg3
 ) {
-    const details = typeof arg1 !== 'object'
-        ? { target: arg1, needle: arg2, context: arg3 }
-        : arg1;
-    const { target = '', needle = '', context = '' } = details;
-    if ( typeof target !== 'string' ) { return; }
-    if ( target === '' ) { return; }
-    const safe = safeSelf();
-    const reNeedle = patternToRegex(needle);
-    const reContext = patternToRegex(context);
-    const thisScript = document.currentScript;
-    const chain = target.split('.');
-    let owner = window;
-    let prop;
-    for (;;) {
-        prop = chain.shift();
-        if ( chain.length === 0 ) { break; }
-        owner = owner[prop];
-        if ( owner instanceof Object === false ) { return; }
-    }
-    let value;
-    let desc = Object.getOwnPropertyDescriptor(owner, prop);
-    if (
-        desc instanceof Object === false ||
-        desc.get instanceof Function === false
-    ) {
-        value = owner[prop];
-        desc = undefined;
-    }
-    const log = shouldLog(details);
-    const debug = shouldDebug(details);
-    const exceptionToken = getExceptionToken();
-    const scriptTexts = new WeakMap();
-    const getScriptText = elem => {
-        let text = elem.textContent;
-        if ( text.trim() !== '' ) { return text; }
-        if ( scriptTexts.has(elem) ) { return scriptTexts.get(elem); }
-        const [ , mime, content ] =
-            /^data:([^,]*),(.+)$/.exec(elem.src.trim()) ||
-            [ '', '', '' ];
-        try {
-            switch ( true ) {
-            case mime.endsWith(';base64'):
-                text = self.atob(content);
-                break;
-            default:
-                text = self.decodeURIComponent(content);
-                break;
-            }
-        } catch(ex) {
-        }
-        scriptTexts.set(elem, text);
-        return text;
-    };
-    const validate = ( ) => {
-        if ( debug ) { debugger; }  // jshint ignore: line
-        const e = document.currentScript;
-        if ( e instanceof HTMLScriptElement === false ) { return; }
-        if ( e === thisScript ) { return; }
-        if ( reContext.test(e.src) === false ) { return; }
-        if ( log && e.src !== '' ) { safe.uboLog(`matched src: ${e.src}`); }
-        const scriptText = getScriptText(e);
-        if ( reNeedle.test(scriptText) === false ) { return; }
-        if ( log ) { safe.uboLog(`matched script text: ${scriptText}`); }
-        throw new ReferenceError(exceptionToken);
-    };
-    if ( debug ) { debugger; }  // jshint ignore: line
-    try {
-        Object.defineProperty(owner, prop, {
-            get: function() {
-                validate();
-                return desc instanceof Object
-                    ? desc.get.call(owner)
-                    : value;
-            },
-            set: function(a) {
-                validate();
-                if ( desc instanceof Object ) {
-                    desc.set.call(owner, a);
-                } else {
-                    value = a;
-                }
-            }
-        });
-    } catch(ex) {
-        if ( log ) { safe.uboLog(ex); }
-    }
+    runAtHtmlElement(( ) => {
+        abortCurrentScriptCore(arg1, arg2, arg3);
+    });
 }
 
 /******************************************************************************/
