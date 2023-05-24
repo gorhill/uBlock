@@ -169,8 +169,8 @@ function runAtHtmlElement(fn) {
         return;
     }
     const observer = new MutationObserver(( ) => {
-        fn();
         observer.disconnect();
+        fn();
     });
     observer.observe(document, { childList: true });
 }
