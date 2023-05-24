@@ -2323,7 +2323,7 @@ function spoofCSS(
 
 /*******************************************************************************
  * 
- * sed.js
+ * replace-node-text.js
  * 
  * Replace text instance(s) with another text instance inside specific
  * DOM nodes. By default, the scriplet stops and quits at the interactive
@@ -2421,7 +2421,14 @@ function replaceNodeText(
     }, 'interactive');
 }
 
-/******************************************************************************/
+/*******************************************************************************
+ * 
+ * trusted-set-constant.js
+ * 
+ * Set specified property to any value. This is essentially the same as
+ * set-constant.js, but with no restriction as to which values can be used.
+ * 
+ **/
 
 builtinScriptlets.push({
     name: 'trusted-set-constant.js',
