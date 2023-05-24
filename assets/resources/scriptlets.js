@@ -2261,6 +2261,11 @@ function spoofCSS(
             const proxiedStyle = new Proxy(style, {
                 get(target, prop, receiver) {
                     if ( typeof target[prop] === 'function' ) {
+                        if ( prop === 'getPropertyValue' ) {
+                            return (function(prop) {
+                                return spoofStyle(prop, target[prop]);
+                            }).bind(target);
+                        }
                         return target[prop].bind(target);
                     }
                     return spoofStyle(prop, Reflect.get(target, prop, receiver));
