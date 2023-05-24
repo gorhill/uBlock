@@ -2243,7 +2243,6 @@ function spoofCSS(
     const canDebug = scriptletGlobals.has('canDebug');
     const shouldDebug = canDebug && propToValueMap.get('debug') || 0;
     const shouldLog = canDebug && propToValueMap.has('log') || 0;
-    const proxiedStyles = new WeakSet();
     const spoofStyle = (prop, real) => {
         const normalProp = toCamelCase(prop);
         const shouldSpoof = propToValueMap.has(normalProp);
@@ -2259,7 +2258,6 @@ function spoofCSS(
             const style = Reflect.apply(target, thisArg, args);
             const targetElements = new WeakSet(document.querySelectorAll(selector));
             if ( targetElements.has(args[0]) === false ) { return style; }
-            proxiedStyles.add(target);
             const proxiedStyle = new Proxy(style, {
                 get(target, prop, receiver) {
                     if ( typeof target[prop] === 'function' ) {
@@ -2269,20 +2267,6 @@ function spoofCSS(
                 },
             });
             return proxiedStyle;
-        },
-        get(target, prop, receiver) {
-            if ( prop === 'toString' ) {
-                return target.toString.bind(target);
-            }
-            return Reflect.get(target, prop, receiver);
-        },
-    });
-    CSSStyleDeclaration.prototype.getPropertyValue = new Proxy(CSSStyleDeclaration.prototype.getPropertyValue, {
-        apply: function(target, thisArg, args) {
-            if ( shouldDebug !== 0 ) { debugger; }    // jshint ignore: line
-            const value = Reflect.apply(target, thisArg, args);
-            if ( proxiedStyles.has(thisArg) === false ) { return value; }
-            return spoofStyle(args[0], value);
         },
         get(target, prop, receiver) {
             if ( prop === 'toString' ) {
