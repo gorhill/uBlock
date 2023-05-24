@@ -178,6 +178,47 @@ function runAtHtmlElement(fn) {
 /******************************************************************************/
 
 builtinScriptlets.push({
+    name: 'get-extra-args-entries.fn',
+    fn: getExtraArgsEntries,
+});
+function getExtraArgsEntries(args, offset) {
+    return args.slice(offset).reduce((out, v, i, a) => {
+        if ( (i & 1) === 0 ) {
+            const rawValue = a[i+1];
+            const value = /^\d+$/.test(rawValue)
+                ? parseInt(rawValue, 10)
+                : rawValue;
+            out.push([ a[i], value ]);
+        }
+        return out;
+    }, []);
+}
+
+builtinScriptlets.push({
+    name: 'get-extra-args-map.fn',
+    fn: getExtraArgsMap,
+    dependencies: [
+        'get-extra-args-entries.fn',
+    ],
+});
+function getExtraArgsMap(args, offset = 0) {
+    return new Map(getExtraArgsEntries(args, offset));
+}
+
+builtinScriptlets.push({
+    name: 'get-extra-args.fn',
+    fn: getExtraArgs,
+    dependencies: [
+        'get-extra-args-entries.fn',
+    ],
+});
+function getExtraArgs(args, offset = 0) {
+    return Object.fromEntries(getExtraArgsEntries(args, offset));
+}
+
+/******************************************************************************/
+
+builtinScriptlets.push({
     name: 'abort-current-script-core.fn',
     fn: abortCurrentScriptCore,
     dependencies: [
@@ -714,6 +755,7 @@ builtinScriptlets.push({
     aliases: [ 'aeld.js' ],
     fn: addEventListenerDefuser,
     dependencies: [
+        'get-extra-args.fn',
         'pattern-to-regex.fn',
         'run-at.fn',
         'safe-self.fn',
@@ -723,20 +765,15 @@ builtinScriptlets.push({
 });
 // https://github.com/uBlockOrigin/uAssets/issues/9123#issuecomment-848255120
 function addEventListenerDefuser(
-    arg1 = '',
-    arg2 = ''
+    type = '',
+    pattern = ''
 ) {
-    const details = typeof arg1 !== 'object'
-        ? { type: arg1, pattern: arg2 }
-        : arg1;
-    const { type = '', pattern = '' } = details;
-    if ( typeof type !== 'string' ) { return; }
-    if ( typeof pattern !== 'string' ) { return; }
+    const extraArgs = getExtraArgs(Array.from(arguments), 2);
     const safe = safeSelf();
     const reType = patternToRegex(type);
     const rePattern = patternToRegex(pattern);
-    const log = shouldLog(details);
-    const debug = shouldDebug(details);
+    const log = shouldLog(extraArgs);
+    const debug = shouldDebug(extraArgs);
     const trapEddEventListeners = ( ) => {
         const eventListenerHandler = {
             apply: function(target, thisArg, args) {
@@ -767,7 +804,7 @@ function addEventListenerDefuser(
     };
     runAt(( ) => {
         trapEddEventListeners();
-    }, details.runAt);
+    }, extraArgs.runAt);
 }
 
 /******************************************************************************/
@@ -2317,6 +2354,7 @@ builtinScriptlets.push({
     fn: sed,
     world: 'ISOLATED',
     dependencies: [
+        'get-extra-args.fn',
         'pattern-to-regex.fn',
         'run-at.fn',
         'safe-self.fn',
@@ -2329,14 +2367,9 @@ function sed(
 ) {
     const reNodeName = patternToRegex(nodeName, 'i');
     const rePattern = patternToRegex(pattern, 'gms');
-    const extraArgs = new Map(
-        Array.from(arguments).slice(3).reduce((out, v, i, a) => {
-            if ( (i & 1) === 0 ) { out.push([ a[i], a[i+1] || undefined ]); }
-            return out;
-        }, [])
-    );
-    const shouldLog = scriptletGlobals.has('canDebug') && extraArgs.get('log') || 0;
-    const reCondition = patternToRegex(extraArgs.get('condition') || '', 'gms');
+    const extraArgs = getExtraArgs(Array.from(arguments), 3);
+    const shouldLog = scriptletGlobals.has('canDebug') && extraArgs.log || 0;
+    const reCondition = patternToRegex(extraArgs.condition || '', 'gms');
     const safe = safeSelf();
     const stop = (takeRecord = true) => {
         if ( takeRecord ) {
@@ -2347,7 +2380,7 @@ function sed(
             safe.uboLog(`sed.js: quitting "${pattern}" => "${replacement}"`);
         }
     };
-    let sedCount = extraArgs.has('sedCount') ? parseInt(extraArgs.get('sedCount')) : 0;
+    let sedCount = extraArgs.sedCount || 0;
     const handleNode = node => {
         const before = node.textContent;
         if ( safe.RegExp_test.call(rePattern, before) === false ) { return true; }
@@ -2389,9 +2422,9 @@ function sed(
             safe.uboLog(`sed.js ${count} nodes present before installing mutation observer`);
         }
     }
-    if ( extraArgs.has('stay') ) { return; }
+    if ( extraArgs.stay ) { return; }
     runAt(( ) => {
-        const quitAfter = parseInt(extraArgs.get('quitAfter')) || 0;
+        const quitAfter = extraArgs.quitAfter || 0;
         if ( quitAfter !== 0 ) {
             setTimeout(( ) => { stop(); }, quitAfter);
         } else {
