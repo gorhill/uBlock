@@ -675,7 +675,7 @@ dom.on('.searchbar input', 'input', searchFilterLists);
 
 /******************************************************************************/
 
-const expandedListSet = new Set();
+const expandedListSet = new Set([ 'uBlock filters' ]);
 
 const listIsExpanded = which => {
     return expandedListSet.has(which);
