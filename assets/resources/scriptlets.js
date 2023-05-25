@@ -527,6 +527,93 @@ function setConstantCore(
     }, options);
 }
 
+/******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'replace-node-text-core.fn',
+    fn: replaceNodeTextCore,
+    dependencies: [
+        'get-extra-args.fn',
+        'pattern-to-regex.fn',
+        'run-at.fn',
+        'safe-self.fn',
+    ],
+});
+function replaceNodeTextCore(
+    nodeName = '',
+    pattern = '',
+    replacement = ''
+) {
+    const reNodeName = patternToRegex(nodeName, 'i');
+    const rePattern = patternToRegex(pattern, 'gms');
+    const extraArgs = getExtraArgs(Array.from(arguments), 3);
+    const shouldLog = scriptletGlobals.has('canDebug') && extraArgs.log || 0;
+    const reCondition = patternToRegex(extraArgs.condition || '', 'gms');
+    const safe = safeSelf();
+    const stop = (takeRecord = true) => {
+        if ( takeRecord ) {
+            handleMutations(observer.takeRecords());
+        }
+        observer.disconnect();
+        if ( shouldLog !== 0 ) {
+            safe.uboLog(`sed.js: quitting "${pattern}" => "${replacement}"`);
+        }
+    };
+    let sedCount = extraArgs.sedCount || 0;
+    const handleNode = node => {
+        const before = node.textContent;
+        if ( safe.RegExp_test.call(rePattern, before) === false ) { return true; }
+        if ( safe.RegExp_test.call(reCondition, before) === false ) { return true; }
+        const after = pattern !== ''
+            ? before.replace(rePattern, replacement)
+            : replacement;
+        node.textContent = after;
+        if ( shouldLog !== 0 ) {
+            safe.uboLog('sed.js before:\n', before);
+            safe.uboLog('sed.js after:\n', after);
+        }
+        return sedCount === 0 || (sedCount -= 1) !== 0;
+    };
+    const handleMutations = mutations => {
+        for ( const mutation of mutations ) {
+            for ( const node of mutation.addedNodes ) {
+                if ( reNodeName.test(node.nodeName) === false ) { continue; }
+                if ( handleNode(node) ) { continue; }
+                stop(false); return;
+            }
+        }
+    };
+    const observer = new MutationObserver(handleMutations);
+    observer.observe(document, { childList: true, subtree: true });
+    if ( document.documentElement ) {
+        const treeWalker = document.createTreeWalker(
+            document.documentElement,
+            NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT
+        );
+        let count = 0;
+        for (;;) {
+            const node = treeWalker.nextNode();
+            count += 1;
+            if ( node === null ) { break; }
+            if ( reNodeName.test(node.nodeName) === false ) { continue; }
+            if ( handleNode(node) ) { continue; }
+            stop(); break;
+        }
+        if ( shouldLog !== 0 ) {
+            safe.uboLog(`sed.js ${count} nodes present before installing mutation observer`);
+        }
+    }
+    if ( extraArgs.stay ) { return; }
+    runAt(( ) => {
+        const quitAfter = extraArgs.quitAfter || 0;
+        if ( quitAfter !== 0 ) {
+            setTimeout(( ) => { stop(); }, quitAfter);
+        } else {
+            stop();
+        }
+    }, 'interactive');
+}
+
 /*******************************************************************************
 
     Injectable scriptlets
@@ -2304,6 +2391,25 @@ function spoofCSS(
     });
 }
 
+/******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'remove-node-text.js',
+    aliases: [ 'rmnt.js' ],
+    fn: removeNodeText,
+    world: 'ISOLATED',
+    dependencies: [
+        'replace-node-text-core.fn',
+    ],
+});
+function removeNodeText(
+    nodeName,
+    condition,
+    ...extraArgs
+) {
+    replaceNodeTextCore(nodeName, '', '', 'condition', condition || '', ...extraArgs);
+}
+
 /*******************************************************************************
  * 
  * Scriplets below this section are only available for filter lists from
@@ -2343,87 +2449,20 @@ function spoofCSS(
 builtinScriptlets.push({
     name: 'replace-node-text.js',
     requiresTrust: true,
-    aliases: [ 'rnt.js', 'sed.js' /* to be removed */ ],
+    aliases: [ 'rpnt.js', 'sed.js' /* to be removed */ ],
     fn: replaceNodeText,
     world: 'ISOLATED',
     dependencies: [
-        'get-extra-args.fn',
-        'pattern-to-regex.fn',
-        'run-at.fn',
-        'safe-self.fn',
+        'replace-node-text-core.fn',
     ],
 });
 function replaceNodeText(
-    nodeName = '',
-    pattern = '',
-    replacement = ''
+    nodeName,
+    pattern,
+    replacement,
+    ...extraArgs
 ) {
-    const reNodeName = patternToRegex(nodeName, 'i');
-    const rePattern = patternToRegex(pattern, 'gms');
-    const extraArgs = getExtraArgs(Array.from(arguments), 3);
-    const shouldLog = scriptletGlobals.has('canDebug') && extraArgs.log || 0;
-    const reCondition = patternToRegex(extraArgs.condition || '', 'gms');
-    const safe = safeSelf();
-    const stop = (takeRecord = true) => {
-        if ( takeRecord ) {
-            handleMutations(observer.takeRecords());
-        }
-        observer.disconnect();
-        if ( shouldLog !== 0 ) {
-            safe.uboLog(`sed.js: quitting "${pattern}" => "${replacement}"`);
-        }
-    };
-    let sedCount = extraArgs.sedCount || 0;
-    const handleNode = node => {
-        const before = node.textContent;
-        if ( safe.RegExp_test.call(rePattern, before) === false ) { return true; }
-        if ( safe.RegExp_test.call(reCondition, before) === false ) { return true; }
-        const after = before.replace(rePattern, replacement);
-        node.textContent = after;
-        if ( shouldLog !== 0 ) {
-            safe.uboLog('sed.js before:\n', before);
-            safe.uboLog('sed.js after:\n', after);
-        }
-        return sedCount === 0 || (sedCount -= 1) !== 0;
-    };
-    const handleMutations = mutations => {
-        for ( const mutation of mutations ) {
-            for ( const node of mutation.addedNodes ) {
-                if ( reNodeName.test(node.nodeName) === false ) { continue; }
-                if ( handleNode(node) ) { continue; }
-                stop(false); return;
-            }
-        }
-    };
-    const observer = new MutationObserver(handleMutations);
-    observer.observe(document, { childList: true, subtree: true });
-    if ( document.documentElement ) {
-        const treeWalker = document.createTreeWalker(
-            document.documentElement,
-            NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT
-        );
-        let count = 0;
-        for (;;) {
-            const node = treeWalker.nextNode();
-            count += 1;
-            if ( node === null ) { break; }
-            if ( reNodeName.test(node.nodeName) === false ) { continue; }
-            if ( handleNode(node) ) { continue; }
-            stop(); break;
-        }
-        if ( shouldLog !== 0 ) {
-            safe.uboLog(`sed.js ${count} nodes present before installing mutation observer`);
-        }
-    }
-    if ( extraArgs.stay ) { return; }
-    runAt(( ) => {
-        const quitAfter = extraArgs.quitAfter || 0;
-        if ( quitAfter !== 0 ) {
-            setTimeout(( ) => { stop(); }, quitAfter);
-        } else {
-            stop();
-        }
-    }, 'interactive');
+    replaceNodeTextCore(nodeName, pattern, replacement, ...extraArgs);
 }
 
 /*******************************************************************************
