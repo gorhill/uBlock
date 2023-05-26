@@ -267,6 +267,12 @@ async function processNetworkFilters(assetDetails, network) {
 
     const plainGood = rules.filter(rule => isGood(rule) && isRegex(rule) === false);
     log(`\tPlain good: ${plainGood.length}`);
+    log(plainGood
+        .filter(rule => Array.isArray(rule._warning))
+        .map(rule => rule._warning.map(v => `\t\t${v}`))
+        .join('\n'),
+        true
+    );
 
     const regexes = rules.filter(rule => isGood(rule) && isRegex(rule));
     log(`\tMaybe good (regexes): ${regexes.length}`);
