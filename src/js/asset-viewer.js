@@ -73,6 +73,7 @@ import './codemirror/ubo-static-filtering.js';
     });
     if ( hints instanceof Object ) {
         const mode = cmEditor.getMode();
+        cmEditor.setOption('filterOnHeaders', hints.filterOnHeaders === true);
         if ( mode.setHints instanceof Function ) {
             mode.setHints(hints);
         }
