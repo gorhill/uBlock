@@ -1998,7 +1998,10 @@ builtinScriptlets.push({
     name: 'xml-prune.js',
     fn: xmlPrune,
     dependencies: [
+        'get-extra-args.fn',
         'pattern-to-regex.fn',
+        'safe-self.fn',
+        'should-log.fn',
     ],
 });
 function xmlPrune(
@@ -2009,15 +2012,40 @@ function xmlPrune(
     if ( typeof selector !== 'string' ) { return; }
     if ( selector === '' ) { return; }
     const reUrl = patternToRegex(urlPattern);
+    const extraArgs = getExtraArgs(Array.from(arguments), 3);
+    const log = shouldLog(extraArgs);
+    const queryAll = (xmlDoc, selector) => {
+        const isXpath = /^xpath\(.+\)$/.test(selector);
+        if ( isXpath === false ) {
+            return Array.from(xmlDoc.querySelectorAll(selector));
+        }
+        const xpr = xmlDoc.evaluate(
+            selector.slice(6, -1),
+            xmlDoc,
+            null,
+            XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
+            null
+        );
+        const out = [];
+        for ( let i = 0; i < xpr.snapshotLength; i++ ) {
+            const node = xpr.snapshotItem(i);
+            if ( node.nodeType !== 1 ) { continue; }
+            out.push(node);
+        }
+        return out;
+    };
     const pruneFromDoc = xmlDoc => {
         try {
             if ( selectorCheck !== '' && xmlDoc.querySelector(selectorCheck) === null ) {
                 return xmlDoc;
             }
-            const elems = xmlDoc.querySelectorAll(selector);
+            const elems = queryAll(xmlDoc, selector);
             if ( elems.length !== 0 ) {
                 for ( const elem of elems ) {
                     elem.remove();
+                    if ( log ) {
+                        safeSelf().uboLog(`xmlPrune: ${elem.nodeName} removed`);
+                    }
                 }
             }
         } catch(ex) {
