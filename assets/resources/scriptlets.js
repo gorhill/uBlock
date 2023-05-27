@@ -2009,24 +2009,31 @@ function xmlPrune(
     if ( typeof selector !== 'string' ) { return; }
     if ( selector === '' ) { return; }
     const reUrl = patternToRegex(urlPattern);
-    const pruner = text => {
-        if ( (/^\s*</.test(text) && />\s*$/.test(text)) === false ) {
-            return text;
-        }
+    const pruneFromDoc = xmlDoc => {
         try {
-            const xmlParser = new DOMParser();
-            const xmlDoc = xmlParser.parseFromString(text, 'text/xml');
             if ( selectorCheck !== '' && xmlDoc.querySelector(selectorCheck) === null ) {
-                return text;
+                return xmlDoc;
             }
             const elems = xmlDoc.querySelectorAll(selector);
             if ( elems.length !== 0 ) {
                 for ( const elem of elems ) {
                     elem.remove();
                 }
-                const serializer = new XMLSerializer();
-                text = serializer.serializeToString(xmlDoc);
             }
+        } catch(ex) {
+        }
+        return xmlDoc;
+    };
+    const pruneFromText = text => {
+        if ( (/^\s*</.test(text) && />\s*$/.test(text)) === false ) {
+            return text;
+        }
+        try {
+            const xmlParser = new DOMParser();
+            const xmlDoc = xmlParser.parseFromString(text, 'text/xml');
+            pruneFromDoc(xmlDoc);
+            const serializer = new XMLSerializer();
+            text = serializer.serializeToString(xmlDoc);
         } catch(ex) {
         }
         return text;
@@ -2044,13 +2051,37 @@ function xmlPrune(
             }
             return realFetch(...args).then(realResponse =>
                 realResponse.text().then(text =>
-                    new Response(pruner(text), {
+                    new Response(pruneFromText(text), {
                         status: realResponse.status,
                         statusText: realResponse.statusText,
                         headers: realResponse.headers,
                     })
                 )
             );
+        }
+    });
+    self.XMLHttpRequest.prototype.open = new Proxy(self.XMLHttpRequest.prototype.open, {
+        apply: async (target, thisArg, args) => {
+            if ( reUrl.test(urlFromArg(args[1])) === false ) {
+                return Reflect.apply(target, thisArg, args);
+            }
+            thisArg.addEventListener('readystatechange', function() {
+                if ( thisArg.readyState !== 4 ) { return; }
+                const type = thisArg.responseType;
+                if ( type === 'text' ) {
+                    const textin = thisArg.responseText;
+                    const textout = pruneFromText(textin);
+                    if ( textout === textin ) { return; }
+                    Object.defineProperty(thisArg, 'response', { value: textout });
+                    Object.defineProperty(thisArg, 'responseText', { value: textout });
+                    return;
+                }
+                if ( type === 'document' ) {
+                    pruneFromDoc(thisArg.response);
+                    return;
+                }
+            });
+            return Reflect.apply(target, thisArg, args);
         }
     });
 }
