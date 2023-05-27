@@ -2049,6 +2049,9 @@ function xmlPrune(
                 }
             }
         } catch(ex) {
+            if ( log ) {
+                safeSelf().uboLog(ex);
+            }
         }
         return xmlDoc;
     };
