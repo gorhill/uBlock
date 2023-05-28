@@ -297,9 +297,23 @@ class RedirectEngine {
             );
             this.resources.set(name, RedirectEntry.fromDetails({ mime, data }));
             if ( Array.isArray(details) ) {
+                const resource = this.resources.get(name);
                 for ( const { prop, value } of details ) {
-                    if ( prop !== 'alias' ) { continue; }
-                    this.aliases.set(value, name);
+                    switch ( prop ) {
+                    case 'alias':
+                        this.aliases.set(value, name);
+                        break;
+                    case 'world':
+                        if ( /^isolated$/i.test(value) === false ) { break; }
+                        resource.world = 'ISOLATED';
+                        break;
+                    case 'dependency':
+                        if ( this.resources.has(value) === false ) { break; }
+                        resource.dependencies.push(value);
+                        break;
+                    default:
+                        break;
+                    }
                 }
             }
 
