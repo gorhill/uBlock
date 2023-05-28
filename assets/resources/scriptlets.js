@@ -882,7 +882,13 @@ function addEventListenerDefuser(
                 }
                 if ( matchesBoth ) { return; }
                 return Reflect.apply(target, thisArg, args);
-            }
+            },
+            get(target, prop, receiver) {
+                if ( prop === 'toString' ) {
+                    return target.toString.bind(target);
+                }
+                return Reflect.get(target, prop, receiver);
+            },
         };
         self.EventTarget.prototype.addEventListener = new Proxy(
             self.EventTarget.prototype.addEventListener,
