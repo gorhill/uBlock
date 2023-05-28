@@ -556,7 +556,7 @@ function replaceNodeTextCore(
         }
         observer.disconnect();
         if ( shouldLog !== 0 ) {
-            safe.uboLog(`sed.js: quitting "${pattern}" => "${replacement}"`);
+            safe.uboLog(`replace-node-text-core.fn: quitting "${pattern}" => "${replacement}"`);
         }
     };
     let sedCount = extraArgs.sedCount || 0;
@@ -569,8 +569,8 @@ function replaceNodeTextCore(
             : replacement;
         node.textContent = after;
         if ( shouldLog !== 0 ) {
-            safe.uboLog('sed.js before:\n', before);
-            safe.uboLog('sed.js after:\n', after);
+            safe.uboLog('replace-node-text-core.fn before:\n', before);
+            safe.uboLog('replace-node-text-core.fn after:\n', after);
         }
         return sedCount === 0 || (sedCount -= 1) !== 0;
     };
@@ -600,7 +600,7 @@ function replaceNodeTextCore(
             stop(); break;
         }
         if ( shouldLog !== 0 ) {
-            safe.uboLog(`sed.js ${count} nodes present before installing mutation observer`);
+            safe.uboLog(`replace-node-text-core.fn ${count} nodes present before installing mutation observer`);
         }
     }
     if ( extraArgs.stay ) { return; }
@@ -2041,17 +2041,14 @@ function xmlPrune(
             }
             const elems = queryAll(xmlDoc, selector);
             if ( elems.length !== 0 ) {
+                if ( log ) { safeSelf().uboLog(`xmlPrune: removing ${elems.length} nodes`); }
                 for ( const elem of elems ) {
                     elem.remove();
-                    if ( log ) {
-                        safeSelf().uboLog(`xmlPrune: ${elem.nodeName} removed`);
-                    }
+                    if ( log ) { safeSelf().uboLog(`xmlPrune: ${elem.nodeName} removed`); }
                 }
             }
         } catch(ex) {
-            if ( log ) {
-                safeSelf().uboLog(ex);
-            }
+            if ( log ) { safeSelf().uboLog(ex); }
         }
         return xmlDoc;
     };
