@@ -354,7 +354,7 @@
 		"group": "annoyances",
 		"parent": "EasyList – Annoyances",
 		"off": true,
-		"title": "EasyList – Anti-Chat",
+		"title": "EasyList – Chat Widgets",
 		"tags": "annoyances",
 		"contentURL": "https://ublockorigin.github.io/uAssets/thirdparties/easylist-chat.txt",
 		"cdnURLs": [
