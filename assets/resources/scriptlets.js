@@ -614,6 +614,101 @@ function replaceNodeTextCore(
     }, 'interactive');
 }
 
+/******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'object-prune.fn',
+    fn: objectPrune,
+    dependencies: [
+        'pattern-to-regex.fn',
+    ],
+});
+//  When no "prune paths" argument is provided, the scriptlet is
+//  used for logging purpose and the "needle paths" argument is
+//  used to filter logging output.
+//
+//  https://github.com/uBlockOrigin/uBlock-issues/issues/1545
+//  - Add support for "remove everything if needle matches" case
+function objectPrune(
+    obj,
+    rawPrunePaths,
+    rawNeedlePaths
+) {
+    if ( typeof rawPrunePaths !== 'string' ) { return; }
+    const prunePaths = rawPrunePaths !== ''
+        ? rawPrunePaths.split(/ +/)
+        : [];
+    let needlePaths;
+    let log, reLogNeedle;
+    if ( prunePaths.length !== 0 ) {
+        needlePaths = prunePaths.length !== 0 && rawNeedlePaths !== ''
+            ? rawNeedlePaths.split(/ +/)
+            : [];
+    } else {
+        log = console.log.bind(console);
+        reLogNeedle = patternToRegex(rawNeedlePaths);
+    }
+    const findOwner = function(root, path, prune = false) {
+        let owner = root;
+        let chain = path;
+        for (;;) {
+            if ( typeof owner !== 'object' || owner === null  ) {
+                return false;
+            }
+            const pos = chain.indexOf('.');
+            if ( pos === -1 ) {
+                if ( prune === false ) {
+                    return owner.hasOwnProperty(chain);
+                }
+                if ( chain === '*' ) {
+                    for ( const key in owner ) {
+                        if ( owner.hasOwnProperty(key) === false ) { continue; }
+                        delete owner[key];
+                    }
+                } else if ( owner.hasOwnProperty(chain) ) {
+                    delete owner[chain];
+                }
+                return true;
+            }
+            const prop = chain.slice(0, pos);
+            if (
+                prop === '[]' && Array.isArray(owner) ||
+                prop === '*' && owner instanceof Object
+            ) {
+                const next = chain.slice(pos + 1);
+                let found = false;
+                for ( const key of Object.keys(owner) ) {
+                    found = findOwner(owner[key], next, prune) || found;
+                }
+                return found;
+            }
+            if ( owner.hasOwnProperty(prop) === false ) { return false; }
+            owner = owner[prop];
+            chain = chain.slice(pos + 1);
+        }
+    };
+    const mustProcess = function(root) {
+        for ( const needlePath of needlePaths ) {
+            if ( findOwner(root, needlePath) === false ) {
+                return false;
+            }
+        }
+        return true;
+    };
+    if ( log !== undefined ) {
+        const json = JSON.stringify(obj, null, 2);
+        if ( reLogNeedle.test(json) ) {
+            log('uBO:', location.hostname, json);
+        }
+        return obj;
+    }
+    if ( mustProcess(obj) === false ) { return obj; }
+    for ( const path of prunePaths ) {
+        findOwner(obj, path, true);
+    }
+    return obj;
+}
+
 /*******************************************************************************
 
     Injectable scriptlets
@@ -906,7 +1001,7 @@ builtinScriptlets.push({
     name: 'json-prune.js',
     fn: jsonPrune,
     dependencies: [
-        'pattern-to-regex.fn',
+        'object-prune.fn',
     ],
 });
 //  When no "prune paths" argument is provided, the scriptlet is
@@ -919,90 +1014,56 @@ function jsonPrune(
     rawPrunePaths = '',
     rawNeedlePaths = ''
 ) {
-    if ( typeof rawPrunePaths !== 'string' ) { return; }
-    const prunePaths = rawPrunePaths !== ''
-        ? rawPrunePaths.split(/ +/)
-        : [];
-    let needlePaths;
-    let log, reLogNeedle;
-    if ( prunePaths.length !== 0 ) {
-        needlePaths = prunePaths.length !== 0 && rawNeedlePaths !== ''
-            ? rawNeedlePaths.split(/ +/)
-            : [];
-    } else {
-        log = console.log.bind(console);
-        reLogNeedle = patternToRegex(rawNeedlePaths);
-    }
-    const findOwner = function(root, path, prune = false) {
-        let owner = root;
-        let chain = path;
-        for (;;) {
-            if ( typeof owner !== 'object' || owner === null  ) {
-                return false;
-            }
-            const pos = chain.indexOf('.');
-            if ( pos === -1 ) {
-                if ( prune === false ) {
-                    return owner.hasOwnProperty(chain);
-                }
-                if ( chain === '*' ) {
-                    for ( const key in owner ) {
-                        if ( owner.hasOwnProperty(key) === false ) { continue; }
-                        delete owner[key];
-                    }
-                } else if ( owner.hasOwnProperty(chain) ) {
-                    delete owner[chain];
-                }
-                return true;
-            }
-            const prop = chain.slice(0, pos);
-            if (
-                prop === '[]' && Array.isArray(owner) ||
-                prop === '*' && owner instanceof Object
-            ) {
-                const next = chain.slice(pos + 1);
-                let found = false;
-                for ( const key of Object.keys(owner) ) {
-                    found = findOwner(owner[key], next, prune) || found;
-                }
-                return found;
-            }
-            if ( owner.hasOwnProperty(prop) === false ) { return false; }
-            owner = owner[prop];
-            chain = chain.slice(pos + 1);
-        }
-    };
-    const mustProcess = function(root) {
-        for ( const needlePath of needlePaths ) {
-            if ( findOwner(root, needlePath) === false ) {
-                return false;
-            }
-        }
-        return true;
-    };
-    const pruner = function(o) {
-        if ( log !== undefined ) {
-            const json = JSON.stringify(o, null, 2);
-            if ( reLogNeedle.test(json) ) {
-                log('uBO:', location.hostname, json);
-            }
-            return o;
-        }
-        if ( mustProcess(o) === false ) { return o; }
-        for ( const path of prunePaths ) {
-            findOwner(o, path, true);
-        }
-        return o;
-    };
     JSON.parse = new Proxy(JSON.parse, {
-        apply: function() {
-            return pruner(Reflect.apply(...arguments));
+        apply: function(target, thisArg, args) {
+            return objectPrune(
+                Reflect.apply(target, thisArg, args),
+                rawPrunePaths,
+                rawNeedlePaths
+            );
         },
     });
     Response.prototype.json = new Proxy(Response.prototype.json, {
-        apply: function() {
-            return Reflect.apply(...arguments).then(o => pruner(o));
+        apply: function(target, thisArg, args) {
+            return Reflect.apply(target, thisArg, args).then(o => 
+                objectPrune(o, rawPrunePaths, rawNeedlePaths)
+            );
         },
+    });
+}
+
+/******************************************************************************/
+
+// There is still code out there which uses `eval` in lieu of `JSON.parse`.
+
+builtinScriptlets.push({
+    name: 'evaldata-prune.js',
+    fn: evaldataPrune,
+    dependencies: [
+        'object-prune.fn',
+    ],
+});
+function evaldataPrune(
+    rawPrunePaths = '',
+    rawNeedlePaths = ''
+) {
+    self.eval = new Proxy(self.eval, {
+        apply(target, thisArg, args) {
+            let dataToEval = `${args[0]}`;
+            const match = /^\s*\(\s*(\{.+\})\s*\)\s*$/.exec(dataToEval);
+            if ( match !== null ) {
+                dataToEval = match[1];
+            }
+            let data;
+            try {
+                data = JSON.parse(dataToEval);
+                if ( typeof data === 'object' ) {
+                    args[0] = objectPrune(dataToEval, rawPrunePaths, rawNeedlePaths);
+                }
+            } catch(ex) {
+            }
+            return Reflect.apply(target, thisArg, args);
+        }
     });
 }
 
