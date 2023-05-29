@@ -1058,7 +1058,10 @@ function evaldataPrune(
             try {
                 data = JSON.parse(dataToEval);
                 if ( typeof data === 'object' ) {
-                    args[0] = objectPrune(dataToEval, rawPrunePaths, rawNeedlePaths);
+                    let after = JSON.stringify(
+                        objectPrune(data, rawPrunePaths, rawNeedlePaths)
+                    );
+                    args[0] = `(${after})`;
                 }
             } catch(ex) {
             }
