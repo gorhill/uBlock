@@ -1050,7 +1050,7 @@ function evaldataPrune(
     self.eval = new Proxy(self.eval, {
         apply(target, thisArg, args) {
             let dataToEval = `${args[0]}`;
-            const match = /^\s*\(\s*(\{.+\})\s*\)\s*$/.exec(dataToEval);
+            const match = /^\s*\(\s*(\{.+\})\s*\)\s*$/s.exec(dataToEval);
             if ( match !== null ) {
                 dataToEval = match[1];
             }
