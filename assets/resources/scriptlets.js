@@ -1049,23 +1049,11 @@ function evaldataPrune(
 ) {
     self.eval = new Proxy(self.eval, {
         apply(target, thisArg, args) {
-            let dataToEval = `${args[0]}`;
-            const match = /^\s*\(\s*(\{.+\})\s*\)\s*$/s.exec(dataToEval);
-            if ( match !== null ) {
-                dataToEval = match[1];
+            let data = Reflect.apply(target, thisArg, args);
+            if ( typeof data === 'object' ) {
+                data = objectPrune(data, rawPrunePaths, rawNeedlePaths);
             }
-            let data;
-            try {
-                data = JSON.parse(dataToEval);
-                if ( typeof data === 'object' ) {
-                    let after = JSON.stringify(
-                        objectPrune(data, rawPrunePaths, rawNeedlePaths)
-                    );
-                    args[0] = `(${after})`;
-                }
-            } catch(ex) {
-            }
-            return Reflect.apply(target, thisArg, args);
+            return data;
         }
     });
 }
@@ -2332,7 +2320,7 @@ function hrefSanitizer(
     };
     const extractText = (elem, source) => {
         if ( /^\[.*\]$/.test(source) ) {
-            return elem.getAttribute(source.slice(1,-1).trim()) || '';
+            source = elem.getAttribute(source.slice(1,-1).trim()) || '';
         }
         if ( source !== 'text' ) { return ''; }
         const text = elem.textContent
