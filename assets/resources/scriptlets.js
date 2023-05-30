@@ -2318,18 +2318,35 @@ function hrefSanitizer(
             elem.setAttribute('href', text);
         }
     };
+    const validateURL = text => {
+        if ( text === '' ) { return ''; }
+        if ( /[^\x21-\x7e]/.test(text) ) { return ''; }
+        try {
+            const url = new URL(text, document.location);
+            return url.href;
+        } catch(ex) {
+        }
+        return '';
+    };
     const extractText = (elem, source) => {
         if ( /^\[.*\]$/.test(source) ) {
-            source = elem.getAttribute(source.slice(1,-1).trim()) || '';
+            return elem.getAttribute(source.slice(1,-1).trim()) || '';
         }
-        if ( source !== 'text' ) { return ''; }
-        const text = elem.textContent
-            .replace(/^[^\x21-\x7e]+/, '') // remove leading invalid characters
-            .replace(/[^\x21-\x7e]+$/, '') // remove trailing invalid characters
-            ;
-        if ( /^https:\/\/./.test(text) === false ) { return ''; }
-        if ( /[^\x21-\x7e]/.test(text) ) { return ''; }
-        return text;
+        if ( source.startsWith('?') ) {
+            try {
+                const url = new URL(elem.href, document.location);
+                return url.searchParams.get(source.slice(1)) || '';
+            } catch(x) {
+            }
+            return '';
+        }
+        if ( source === 'text' ) {
+            return elem.textContent
+                .replace(/^[^\x21-\x7e]+/, '') // remove leading invalid characters
+                .replace(/[^\x21-\x7e]+$/, '') // remove trailing invalid characters
+                ;
+        }
+        return '';
     };
     const sanitize = ( ) => {
         let elems = [];
@@ -2344,10 +2361,11 @@ function hrefSanitizer(
             if ( elem.hasAttribute('href') === false ) { continue; }
             const href = elem.getAttribute('href');
             const text = extractText(elem, source);
-            if ( text === '' ) { continue; }
-            if ( href === text ) { continue; }
-            elem.setAttribute('href', text);
-            sanitizeCopycats(href, text);
+            const hrefAfter = validateURL(text);
+            if ( hrefAfter === '' ) { continue; }
+            if ( hrefAfter === href ) { continue; }
+            elem.setAttribute('href', hrefAfter);
+            sanitizeCopycats(href, hrefAfter);
         }
         return true;
     };
