@@ -143,7 +143,15 @@ const isolatedWorldInjector = (( ) => {
         scriptletSlot: parts.indexOf('scriptlet-slot'),
         assemble: function(hostname, scriptlets) {
             this.parts[this.jsonSlot] = JSON.stringify({ hostname });
-            return this.parts.join('').replace('function(){}', scriptlets);
+            const code = this.parts.join('');
+            // Manually substitute noop function with scriptlet wrapper
+            // function, so as to not suffer instances of special
+            // replacement characters `$`,`\` when using String.replace()
+            // with in scriptlet code.
+            const match = /function\(\)\{\}/.exec(code);
+            return code.slice(0, match.index) +
+                scriptlets +
+                code.slice(match.index + match[0].length);
         },
     };
 })();
