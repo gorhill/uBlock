@@ -147,7 +147,7 @@ const isolatedWorldInjector = (( ) => {
             // Manually substitute noop function with scriptlet wrapper
             // function, so as to not suffer instances of special
             // replacement characters `$`,`\` when using String.replace()
-            // with in scriptlet code.
+            // with scriptlet code.
             const match = /function\(\)\{\}/.exec(code);
             return code.slice(0, match.index) +
                 scriptlets +
