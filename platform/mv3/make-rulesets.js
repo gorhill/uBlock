@@ -32,6 +32,7 @@ import redirectResourcesMap from './js/redirect-resources.js';
 import { dnrRulesetFromRawLists } from './js/static-dnr-filtering.js';
 import { fnameFromFileId } from './js/utils.js';
 import * as sfp from './js/static-filtering-parser.js';
+import * as makeScriptlet from './make-scriptlets.js';
 
 /******************************************************************************/
 
@@ -872,261 +873,21 @@ async function processProceduralCosmeticFilters(assetDetails, mapin) {
 async function processScriptletFilters(assetDetails, mapin) {
     if ( mapin === undefined ) { return; }
 
-    const { domainBased, entityBased } = splitDomainAndEntity(mapin);
+    makeScriptlet.init();
 
-    // Load all available scriptlets into a key-val map, where the key is the
-    // scriptlet token, and val is the whole content of the file.
-    const originalScriptletMap = await loadAllSourceScriptlets();
-
-    let domainBasedTokens;
-    if ( domainBased.size !== 0 ) {
-        domainBasedTokens = await processDomainScriptletFilters(assetDetails, domainBased, originalScriptletMap);
+    for ( const details of mapin.values() ) {
+        makeScriptlet.compile(details, assetDetails.isTrusted);
     }
-    let entityBasedTokens;
-    if ( entityBased.size !== 0 ) {
-        entityBasedTokens = await processEntityScriptletFilters(assetDetails, entityBased, originalScriptletMap);
+    const stats = await makeScriptlet.commit(
+        assetDetails.id,
+        `${scriptletDir}/scriptlet`,
+        writeFile
+    );
+    if ( stats.length !== 0 ) {
+        scriptletStats.set(assetDetails.id, stats);
     }
-
-    return { domainBasedTokens, entityBasedTokens };
-}
-
-/******************************************************************************/
-
-const parseScriptletArguments = raw => {
-    const out = [];
-    let s = raw;
-    let len = s.length;
-    let beg = 0, pos = 0;
-    let i = 1;
-    while ( beg < len ) {
-        pos = s.indexOf(',', pos);
-        // Escaped comma? If so, skip.
-        if ( pos > 0 && s.charCodeAt(pos - 1) === 0x5C /* '\\' */ ) {
-            s = s.slice(0, pos - 1) + s.slice(pos);
-            len -= 1;
-            continue;
-        }
-        if ( pos === -1 ) { pos = len; }
-        out.push(s.slice(beg, pos).trim());
-        beg = pos = pos + 1;
-        i++;
-    }
-    return out;
-};
-
-const parseScriptletFilter = (raw, scriptletMap, tokenSuffix = '') => {
-    const filter = raw.slice(4, -1);
-    const end = filter.length;
-    let pos = filter.indexOf(',');
-    if ( pos === -1 ) { pos = end; }
-    const parts = filter.trim().split(',').map(s => s.trim());
-    const token = scriptletDealiasingMap.get(parts[0]) || '';
-    if ( token === '' ) { return; }
-    if ( scriptletMap.has(`${token}${tokenSuffix}`) === false ) { return; }
-    return {
-        token,
-        args: parseScriptletArguments(parts.slice(1).join(',').trim()),
-    };
-};
-
-/******************************************************************************/
-
-async function processDomainScriptletFilters(assetDetails, domainBased, originalScriptletMap) {
-    // For each instance of distinct scriptlet, we will collect distinct
-    // instances of arguments, and for each distinct set of argument, we
-    // will collect the set of hostnames for which the scriptlet/args is meant
-    // to execute. This will allow us a single content script file and the
-    // scriptlets execution will depend on hostname testing against the
-    // URL of the document at scriptlet execution time. In the end, we
-    // should have no more generated content script per subscription than the
-    // number of distinct source scriptlets.
-    const scriptletDetails = new Map();
-    const rejectedFilters = [];
-    for ( const [ rawFilter, entry ] of domainBased ) {
-        if ( entry.rejected ) {
-            rejectedFilters.push(rawFilter);
-            continue;
-        }
-        const normalized = parseScriptletFilter(rawFilter, originalScriptletMap);
-        if ( normalized === undefined ) {
-            log(`Discarded unsupported scriptlet filter: ${rawFilter}`, true);
-            continue;
-        }
-        let argsDetails = scriptletDetails.get(normalized.token);
-        if ( argsDetails === undefined ) {
-            argsDetails = new Map();
-            scriptletDetails.set(normalized.token, argsDetails);
-        }
-        const argsHash = JSON.stringify(normalized.args);
-        let hostnamesDetails = argsDetails.get(argsHash);
-        if ( hostnamesDetails === undefined ) {
-            hostnamesDetails = {
-                a: normalized.args,
-                y: new Set(),
-                n: new Set(),
-            };
-            argsDetails.set(argsHash, hostnamesDetails);
-        }
-        if ( entry.matches ) {
-            for ( const hn of entry.matches ) {
-                hostnamesDetails.y.add(hn);
-            }
-        }
-        if ( entry.excludeMatches ) {
-            for ( const hn of entry.excludeMatches ) {
-                hostnamesDetails.n.add(hn);
-            }
-        }
-    }
-
-    log(`Rejected scriptlet filters: ${rejectedFilters.length}`);
-    log(rejectedFilters.map(line => `\t${line}`).join('\n'), true);
-
-    const generatedFiles = [];
-    const tokens = [];
-
-    for ( const [ token, argsDetails ] of scriptletDetails ) {
-        const argsMap = Array.from(argsDetails).map(entry => [
-            uidint32(entry[0]),
-            { a: entry[1].a, n: entry[1].n }
-        ]);
-        const hostnamesMap = new Map();
-        for ( const [ argsHash, details ] of argsDetails ) {
-            scriptletHostnameToIdMap(details.y, uidint32(argsHash), hostnamesMap);
-        }
-
-        const argsList = argsMap2List(argsMap, hostnamesMap);
-        const patchedScriptlet = originalScriptletMap.get(token)
-            .replace(
-                '$rulesetId$',
-                assetDetails.id
-            ).replace(
-                /\bself\.\$argsList\$/m,
-                `${JSON.stringify(argsList, scriptletJsonReplacer)}`
-            ).replace(
-                /\bself\.\$hostnamesMap\$/m,
-                `${JSON.stringify(hostnamesMap, scriptletJsonReplacer)}`
-            );
-        const fname = `${assetDetails.id}.${token}.js`;
-        const fpath = `${scriptletDir}/scriptlet/${fname}`;
-        writeFile(fpath, patchedScriptlet);
-        generatedFiles.push(fname);
-        tokens.push(token);
-
-        const hostnameMatches = new Set(hostnamesMap.keys());
-        if ( hostnameMatches.has('*') ) {
-            hostnameMatches.clear();
-            hostnameMatches.add('*');
-        }
-        let rulesetScriptlets = scriptletStats.get(assetDetails.id);
-        if ( rulesetScriptlets === undefined ) {
-            scriptletStats.set(assetDetails.id, rulesetScriptlets = []);
-        }
-        rulesetScriptlets.push([ token, Array.from(hostnameMatches).sort() ]);
-    }
-
-    if ( generatedFiles.length !== 0 ) {
-        const scriptletFilterCount = Array.from(scriptletDetails.values())
-            .reduce((a, b) => a + b.size, 0);
-        log(`Scriptlet-related distinct filters: ${scriptletFilterCount}`);
-        log(`Scriptlet-related injectable files: ${generatedFiles.length}`);
-        log(`\t${generatedFiles.join(', ')}`);
-    }
-
-    return tokens;
-}
-
-/******************************************************************************/
-
-async function processEntityScriptletFilters(assetDetails, entityBased, originalScriptletMap) {
-    // For each instance of distinct scriptlet, we will collect distinct
-    // instances of arguments, and for each distinct set of argument, we
-    // will collect the set of hostnames for which the scriptlet/args is meant
-    // to execute. This will allow us a single content script file and the
-    // scriptlets execution will depend on hostname testing against the
-    // URL of the document at scriptlet execution time. In the end, we
-    // should have no more generated content script per subscription than the
-    // number of distinct source scriptlets.
-    const scriptletMap = new Map();
-    const rejectedFilters = [];
-    for ( const [ rawFilter, entry ] of entityBased ) {
-        if ( entry.rejected ) {
-            rejectedFilters.push(rawFilter);
-            continue;
-        }
-        const normalized = parseScriptletFilter(rawFilter, originalScriptletMap, '.entity');
-        if ( normalized === undefined ) {
-            log(`Discarded unsupported scriptlet filter: ${rawFilter}`, true);
-            continue;
-        }
-        let argsDetails = scriptletMap.get(normalized.token);
-        if ( argsDetails === undefined ) {
-            argsDetails = new Map();
-            scriptletMap.set(normalized.token, argsDetails);
-        }
-        const argsHash = JSON.stringify(normalized.args);
-        let scriptletDetails = argsDetails.get(argsHash);
-        if ( scriptletDetails === undefined ) {
-            scriptletDetails = {
-                a: normalized.args,
-                y: new Set(),
-                n: new Set(),
-            };
-            argsDetails.set(argsHash, scriptletDetails);
-        }
-        if ( entry.matches ) {
-            for ( const entity of entry.matches ) {
-                scriptletDetails.y.add(entity);
-            }
-        }
-        if ( entry.excludeMatches ) {
-            for ( const hn of entry.excludeMatches ) {
-                scriptletDetails.n.add(hn);
-            }
-        }
-    }
-
-    log(`Rejected scriptlet filters: ${rejectedFilters.length}`);
-    log(rejectedFilters.map(line => `\t${line}`).join('\n'), true);
-
-    const generatedFiles = [];
-    const tokens = [];
-
-    for ( const [ token, argsDetails ] of scriptletMap ) {
-        const argsMap = Array.from(argsDetails).map(entry => [
-            uidint32(entry[0]),
-            { a: entry[1].a, n: entry[1].n }
-        ]);
-        const entitiesMap = new Map();
-        for ( const [ argsHash, details ] of argsDetails ) {
-            scriptletHostnameToIdMap(details.y, uidint32(argsHash), entitiesMap);
-        }
-
-        const argsList = argsMap2List(argsMap, entitiesMap);
-        const patchedScriptlet = originalScriptletMap.get(`${token}.entity`)
-            .replace(
-                '$rulesetId$',
-                assetDetails.id
-            ).replace(
-                /\bself\.\$argsList\$/m,
-                `${JSON.stringify(argsList, scriptletJsonReplacer)}`
-            ).replace(
-                /\bself\.\$entitiesMap\$/m,
-                `${JSON.stringify(entitiesMap, scriptletJsonReplacer)}`
-            );
-        const fname = `${assetDetails.id}.${token}.js`;
-        const fpath = `${scriptletDir}/scriptlet-entity/${fname}`;
-        writeFile(fpath, patchedScriptlet);
-        generatedFiles.push(fname);
-        tokens.push(token);
-    }
-
-    if ( generatedFiles.length !== 0 ) {
-        log(`Scriptlet-related entity-based injectable files: ${generatedFiles.length}`);
-        log(`\t${generatedFiles.join(', ')}`);
-    }
-
-    return tokens;
+    makeScriptlet.reset();
+    return { domainBasedTokens: stats.length };
 }
 
 /******************************************************************************/
@@ -1306,6 +1067,7 @@ async function main() {
         enabled: true,
         urls: contentURLs,
         homeURL: 'https://github.com/uBlockOrigin/uAssets',
+        isTrusted: true,
     });
 
     // Regional rulesets

@@ -432,76 +432,6 @@ function registerScriptlet(context, scriptletDetails) {
 
 /******************************************************************************/
 
-function registerScriptletEntity(context) {
-    // https://bugzilla.mozilla.org/show_bug.cgi?id=1736575
-    //   `MAIN` world not yet supported in Firefox
-    if ( isGecko ) { return; }
-
-    const { before, filteringModeDetails, rulesetsDetails } = context;
-
-    const js = [];
-    for ( const details of rulesetsDetails ) {
-        const { scriptlets }  = details;
-        if ( scriptlets instanceof Object === false ) { continue; }
-        if ( Array.isArray(scriptlets.entityBasedTokens) === false ) { continue; }
-        if ( scriptlets.entityBasedTokens.length === 0 ) { continue; }
-        for ( const token of scriptlets.entityBasedTokens ) {
-            js.push(`/rulesets/scripting/scriptlet-entity/${details.id}.${token}.js`);
-        }
-    }
-
-    if ( js.length === 0 ) { return; }
-
-    const matches = [];
-    const excludeMatches = [];
-    if ( filteringModeDetails.extendedGeneric.has('all-urls') ) {
-        excludeMatches.push(...ut.matchesFromHostnames(filteringModeDetails.none));
-        excludeMatches.push(...ut.matchesFromHostnames(filteringModeDetails.network));
-        excludeMatches.push(...ut.matchesFromHostnames(filteringModeDetails.extendedSpecific));
-        matches.push('<all_urls>');
-    } else {
-        matches.push(
-            ...ut.matchesFromHostnames(filteringModeDetails.extendedGeneric)
-        );
-    }
-
-    if ( matches.length === 0 ) { return; }
-
-    const registered = before.get('scriptlet.entity');
-    before.delete('scriptlet.entity'); // Important!
-
-    // register
-    if ( registered === undefined ) {
-        context.toAdd.push({
-            id: 'scriptlet.entity',
-            js,
-            allFrames: true,
-            matches,
-            excludeMatches,
-            runAt: 'document_start',
-            world: 'MAIN',
-        });
-        return;
-    }
-
-    // update
-    const directive = { id: 'scriptlet.entity' };
-    if ( arrayEq(registered.js, js, false) === false ) {
-        directive.js = js;
-    }
-    if ( arrayEq(registered.matches, matches) === false ) {
-        directive.matches = matches;
-    }
-    if ( arrayEq(registered.excludeMatches, excludeMatches) === false ) {
-        directive.excludeMatches = excludeMatches;
-    }
-    if ( directive.js || directive.matches || directive.excludeMatches ) {
-        context.toUpdate.push(directive);
-    }
-}
-
-/******************************************************************************/
-
 function registerSpecific(context, specificDetails) {
     const { filteringModeDetails } = context;
 
@@ -749,7 +679,6 @@ async function registerInjectables(origins) {
     registerDeclarative(context, declarativeDetails);
     registerProcedural(context, proceduralDetails);
     registerScriptlet(context, scriptletDetails);
-    registerScriptletEntity(context);
     registerSpecific(context, specificDetails);
     registerSpecificEntity(context);
     registerGeneric(context, genericDetails);

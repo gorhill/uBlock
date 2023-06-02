@@ -96,13 +96,27 @@ function addExtendedToDNR(context, parser) {
             context.scriptletFilters = new Map();
         }
         const exception = parser.isException();
-        const raw = parser.getTypeString(sfp.NODE_TYPE_EXT_PATTERN_RAW);
+        const root = parser.getBranchFromType(sfp.NODE_TYPE_EXT_PATTERN_SCRIPTLET);
+        const walker = parser.getWalker(root);
+        const args = [];
+        for ( let node = walker.next(); node !== 0; node = walker.next() ) {
+            switch ( parser.getNodeType(node) ) {
+                case sfp.NODE_TYPE_EXT_PATTERN_SCRIPTLET_TOKEN:
+                case sfp.NODE_TYPE_EXT_PATTERN_SCRIPTLET_ARG:
+                    args.push(parser.getNodeString(node));
+                    break;
+                default:
+                    break;
+            }
+        }
+        walker.dispose();
+        const argsToken = JSON.stringify(args);
         for ( const { hn, not, bad } of parser.getExtFilterDomainIterator() ) {
             if ( bad ) { continue; }
             if ( exception ) { continue; }
-            let details = context.scriptletFilters.get(raw);
+            let details = context.scriptletFilters.get(argsToken);
             if ( details === undefined ) {
-                context.scriptletFilters.set(raw, details = {});
+                context.scriptletFilters.set(argsToken, details = { args });
             }
             if ( not ) {
                 if ( details.excludeMatches === undefined ) {
