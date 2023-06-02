@@ -1,4 +1,4 @@
-Version: 0.1.23.5226
+Version: 0.1.23.6028
 ============================
 Listset for 'default':
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/filters.min.txt
@@ -10,141 +10,191 @@ Listset for 'default':
 	Fetching remote https://ublockorigin.github.io/uAssets/thirdparties/easylist.txt
 	Fetching remote https://ublockorigin.github.io/uAssets/thirdparties/easyprivacy.txt
 	Fetching remote https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
-Input filter count: 87332
-	Accepted filter count: 85952
-	Rejected filter count: 143
-Output rule count: 19759
-	Plain good: 18976
-	Maybe good (regexes): 139
+Input filter count: 87077
+	Accepted filter count: 85720
+	Rejected filter count: 145
+Output rule count: 19450
+	Plain good: 18665
+		Salvaged rule by ignoring 1 entity-based domain= option: erotic-beauties.com|hardsex.cc|rule34.top|sex-movies.biz|tube18.sexy|xvideos.name|booru.*
+		Salvaged rule by ignoring 19 entity-based domain= option: fullxh.com|hamsterix.*|megaxh.com|unlockxh4.com|xhadult2.com|xhadult3.com|xhamster.*|xhamster10.*|xhamster11.*|xhamster12.*|xhamster13.*|xhamster14.*|xhamster15.*|xhamster16.*|xhamster17.*|xhamster18.*|xhamster19.*|xhamster2.*|xhamster20.*|xhamster3.*|xhamster4.*|xhamster46.com|xhamster5.*|xhamster7.*|xhamster8.*|xhday.com|xhday1.com|xhmoon5.com|xhplanet1.com|xhplanet2.com|xhreal2.com|xhtab2.com|xhvictory.com|xhwebsite.com|xhwebsite2.com|xhwide1.com|xhwide8.com
+		Salvaged rule by ignoring 1 entity-based domain= option: 8boobs.com|angelgals.com|babesexy.com|babesinporn.com|fooxybabes.com|hotbabeswanted.com|hotstunners.com|mainbabes.com|nakedbabes.club|nakedgirlsroom.com|nudebabes.sexy|pleasuregirl.net|rabbitsfun.com|sexybabes.club|sexybabesart.com|wantedbabes.com|silkengirl.*
+		Salvaged rule by ignoring 1 entity-based domain= option: web.de|gmx.*
+		Salvaged rule by ignoring 2 entity-based domain= option: vizcloud.*|vizcloud2.*|mcloud.to
+		Salvaged rule by ignoring 1 entity-based domain= option: 8boobs.com|babesinporn.com|fooxybabes.com|hotstunners.com|mainbabes.com|pleasuregirl.net|rabbitsfun.com|wantedbabes.com|silkengirl.*
+		Salvaged rule by ignoring 1 entity-based domain= option: piraproxy.app|unblocksite.pw|theproxy.*
+		Salvaged rule by ignoring 1 entity-based domain= option: androidapks.biz|androidsite.net|animeonlinefree.org|animesite.net|computercrack.com|crackedsoftware.biz|crackfree.org|cracksite.info|downloadapk.info|downloadapps.info|downloadgames.info|downloadmusic.info|downloadsite.org|ebooksite.org|emulatorsite.com|fmovies24.com|freeflix.info|freemoviesu4.com|freesoccer.net|fseries.org|gamefast.org|gamesite.info|gostreamon.net|hindisite.net|isosite.org|macsite.info|mangasite.org|megamovies.org|moviefree2.com|moviesite.app|moviesx.org|musicsite.biz|patchsite.net|pdfsite.net|play1002.com|productkeysite.com|romsite.org|seriesite.net|siteapk.net|siteflix.org|sitegames.net|sitekeys.net|sitepdf.com|sitetorrent.com|softwaresite.net|superapk.org|supermovies.org|tvonlinesports.com|ultramovies.org|warezsite.net|watchmovies2.com|watchmoviesforfree.org|watchsite.net|youapk.net|sitesunblocked.*
+		Salvaged rule by ignoring 19 entity-based domain= option: fullxh.com|hamsterix.*|megaxh.com|unlockxh4.com|xhadult2.com|xhadult3.com|xhamster.*|xhamster10.*|xhamster11.*|xhamster12.*|xhamster13.*|xhamster14.*|xhamster15.*|xhamster16.*|xhamster17.*|xhamster18.*|xhamster19.*|xhamster2.*|xhamster20.*|xhamster3.*|xhamster4.*|xhamster46.com|xhamster5.*|xhamster7.*|xhamster8.*|xhday.com|xhday1.com|xhmoon5.com|xhplanet1.com|xhplanet2.com|xhreal2.com|xhtab2.com|xhvictory.com|xhwebsite.com|xhwebsite2.com|xhwide1.com|xhwide8.com
+		Salvaged rule by ignoring 19 entity-based domain= option: fullxh.com|hamsterix.*|megaxh.com|unlockxh4.com|xhadult2.com|xhadult3.com|xhamster.*|xhamster10.*|xhamster11.*|xhamster12.*|xhamster13.*|xhamster14.*|xhamster15.*|xhamster16.*|xhamster17.*|xhamster18.*|xhamster19.*|xhamster2.*|xhamster20.*|xhamster3.*|xhamster4.*|xhamster46.com|xhamster5.*|xhamster7.*|xhamster8.*|xhday.com|xhday1.com|xhmoon5.com|xhplanet1.com|xhplanet2.com|xhreal2.com|xhtab2.com|xhvictory.com|xhwebsite.com|xhwebsite2.com|xhwide1.com|xhwide8.com
+		Salvaged rule by ignoring 19 entity-based domain= option: fullxh.com|hamsterix.*|megaxh.com|unlockxh4.com|xhadult2.com|xhadult3.com|xhamster.*|xhamster10.*|xhamster11.*|xhamster12.*|xhamster13.*|xhamster14.*|xhamster15.*|xhamster16.*|xhamster17.*|xhamster18.*|xhamster19.*|xhamster2.*|xhamster20.*|xhamster3.*|xhamster4.*|xhamster46.com|xhamster5.*|xhamster7.*|xhamster8.*|xhday.com|xhday1.com|xhmoon5.com|xhplanet1.com|xhplanet2.com|xhreal2.com|xhtab2.com|xhvictory.com|xhwebsite.com|xhwebsite2.com|xhwide1.com|xhwide8.com
+		Salvaged rule by ignoring 19 entity-based domain= option: fullxh.com|hamsterix.*|megaxh.com|unlockxh4.com|xhadult2.com|xhadult3.com|xhamster.*|xhamster10.*|xhamster11.*|xhamster12.*|xhamster13.*|xhamster14.*|xhamster15.*|xhamster16.*|xhamster17.*|xhamster18.*|xhamster19.*|xhamster2.*|xhamster20.*|xhamster3.*|xhamster4.*|xhamster46.com|xhamster5.*|xhamster7.*|xhamster8.*|xhday.com|xhday1.com|xhmoon5.com|xhplanet1.com|xhplanet2.com|xhreal2.com|xhtab2.com|xhvictory.com|xhwebsite.com|xhwebsite2.com|xhwide1.com|xhwide8.com
+		Salvaged rule by ignoring 1 entity-based domain= option: sexvid.*|flashx.cc|nowvideo.sx|povw1deo.com|powvideo.net|sleeptimer.org|sorteosrd.com|streambeam.io|szukajka.tv
+		Salvaged rule by ignoring 11 entity-based domain= option: clik.pw|1ink.cc|pornfay.*|picbaron.com|bit-url.com|upbam.org|sexvid.*|sexrura.pl|isohuntz.*|isohunt.*|isohunts.*|isohuntx.*|isohunthydra.*|isohunters.*|isohunting.*|myisohunt.*|torrentproject2.*
+		Salvaged rule by ignoring 19 entity-based domain= option: fullxh.com|hamsterix.*|megaxh.com|unlockxh4.com|xhadult2.com|xhadult3.com|xhamster.*|xhamster10.*|xhamster11.*|xhamster12.*|xhamster13.*|xhamster14.*|xhamster15.*|xhamster16.*|xhamster17.*|xhamster18.*|xhamster19.*|xhamster20.*|xhamster2.*|xhamster3.*|xhamster4.*|xhamster46.com|xhamster5.*|xhamster7.*|xhamster8.*|xhday.com|xhday1.com|xhmoon5.com|xhplanet1.com|xhplanet2.com|xhreal2.com|xhtab2.com|xhvictory.com|xhwebsite.com|xhwebsite2.com|xhwide1.com|xhwide8.com
+		Salvaged rule by ignoring 1 entity-based domain= option: torrentproject2.*|click.allkeyshop.com
+		Salvaged rule by ignoring 3 entity-based domain= option: 0gomovies.*|cdn1.fastvid.co|cdnqq.net|gorockmovies.top|gotoons.org|kokostream.net|movi.pk|ncdn22.xyz|netu.ac|player.msmini.*|ply.mp4cage.com|vapley.*
+		Salvaged rule by ignoring 1 entity-based domain= option: isaidub1.com|isaidubhd.*
+		Salvaged rule by ignoring 1 entity-based domain= option: povvldeo.lol|povvldeo.*
+		Salvaged rule by ignoring 2 entity-based domain= option: mixdrop.*|mixdrp.*|mixdroop.bz
+		Salvaged rule by ignoring 1 entity-based domain= option: pngit.live|pingit.*
+		Salvaged rule by ignoring 1 entity-based domain= option: enrt.eu|seulink.*
+		Salvaged rule by ignoring 1 entity-based domain= option: imgair.net|imgblaze.net|imgfrost.net|imgwia.buzz|pixsera.net|vestimage.site|pixlev.*
+		Salvaged rule by ignoring 1 entity-based domain= option: javthe.com|javfree.*
+		Salvaged rule by ignoring 1 entity-based domain= option: dropcoins.xyz|fastcoin.ga|faucetbr.tk|is2btc.com|swift4claim.com|quickclaims.*
+		Salvaged rule by ignoring 1 entity-based domain= option: olympicstreams.me|vipboxtv.*
+		Salvaged rule by ignoring 7 entity-based domain= option: adbull.org|zdnet.fr|imgsen.com|titsbox.com|senmanga.com|hitomi.la|mangovideo.*|bolly4umovies.*|gaybeeg.info|lovelynudez.com|classicpornbest.com|topwwnews.com|elsfile.org|javdoe.to|javtc.*|webmusic.*|moviezcrush.com|pics4you.net|kiwiexploits.com|pornxp.com|silverpic.com|suicidepics.com|tanix.net|ukrainesmodels.com|freeadultcomix.com|xxxwebdlxxx.top|uproxy2.biz|crownimg.com|masaporn.xyz|dvdplay.*|mangaraw.org|imgstar.eu|imgsto.*|picdollar.com|pics4upload.com|amateurblog.tv|fashionblog.tv|latinblog.tv|silverblog.tv|tokyoblog.tv|xblog.tv|maxsport.one|sportz.football|streamgo.to|streamgoto.*|amazingstream.net|imwatchingmovies.com|javgg.club|javgg.net|zinchanmanga.com|up-4ever.net|vidoza.co|vidoza.net|govid.co|up-4ever.com|up-4ever.org|vidtodo.com|abcvideo.cc|flashx.to|flashx.tv|ouo.io|ouo.press|imgbox.com|pirateproxy.live|thehiddenbay.com|thepiratebay.org|thepiratebay10.org
+		Salvaged rule by ignoring 1 entity-based domain= option: ceesty.com|corneey.com|destyy.com|festyy.com|gestyy.com|hd-easyporn.com|bolly4umovies.*|pcgamez-download.com|torrentvhd.biz|lovelynudez.com|gayforit.eu|movieston.com|kiwiexploits.com|nsfwyoutube.com|pomvideo.cc|steampiay.cc|vidoza.co|vidoza.net|s2dfree.cc|s2dfree.de|s2dfree.is|s2dfree.nl|s2dfree.to|soap2day.ac|soap2day.mx|soap2day.sh|soap2day.to|mixdrop.co|govid.co|up-4ever.com|up-4ever.org|vidtodo.com|abcvideo.cc|flashx.to|flashx.tv|ouo.io|ouo.press|pirateproxy.live|thehiddenbay.com|thepiratebay10.org|opensubtitles.org|alltube.pl|alltube.tv
+		Salvaged rule by ignoring 19 entity-based domain= option: fullxh.com|hamsterix.*|megaxh.com|unlockxh4.com|xhadult2.com|xhadult3.com|xhamster.*|xhamster10.*|xhamster11.*|xhamster12.*|xhamster13.*|xhamster14.*|xhamster15.*|xhamster16.*|xhamster17.*|xhamster18.*|xhamster19.*|xhamster2.*|xhamster20.*|xhamster3.*|xhamster4.*|xhamster46.com|xhamster5.*|xhamster7.*|xhamster8.*|xhday.com|xhday1.com|xhmoon5.com|xhplanet1.com|xhplanet2.com|xhreal2.com|xhtab2.com|xhvictory.com|xhwebsite.com|xhwebsite2.com|xhwide1.com|xhwide8.com
+		Salvaged rule by ignoring 1 entity-based domain= option: cpmlink.net|mwpaste.com|lusthero.com|22pixx.xyz|goto.com.np|imgtorrnt.in|shrinkearn.com|9ig.de|pingit.im|pngit.live|elil.cc|vev.red|vidop.icu|vidup.io|tubepornclassic.com|ironysub.net|bolly4umovies.*|pcgamez-download.com|curto.win|freeadultcomix.com|xxxwebdlxxx.top|crownimg.com|pomvideo.cc|steampiay.cc|bc.vc|vidoza.co|vidoza.net|s2dfree.cc|s2dfree.de|s2dfree.is|s2dfree.nl|s2dfree.to|soap2day.ac|soap2day.mx|soap2day.sh|soap2day.to|vidtodo.com|flashx.to|flashx.tv|pirateproxy.live|thehiddenbay.com|thepiratebay.org|thepiratebay10.org
+		Salvaged rule by ignoring 1 entity-based domain= option: financemonk.net|dropgalaxy.*
+		Salvaged rule by ignoring 1 entity-based domain= option: financemonk.net|dropgalaxy.*
+		Salvaged rule by ignoring 2 entity-based domain= option: gentside.*|ohmymag.*|maxisciences.com
+		Salvaged rule by ignoring 2 entity-based domain= option: gentside.*|ohmymag.*|maxisciences.com
+		Salvaged rule by ignoring 2 entity-based domain= option: gentside.*|ohmymag.*|maxisciences.com
+		Salvaged rule by ignoring 2 entity-based domain= option: gentside.*|ohmymag.*|maxisciences.com
+		Salvaged rule by ignoring 2 entity-based domain= option: gentside.*|ohmymag.*|maxisciences.com
+		Salvaged rule by ignoring 1 entity-based domain= option: gentside.co.uk|gentside.com|gentside.de|gentside.it|maxisciences.com|ohmymag.co.uk|ohmymag.com|ohmymag.de|gentside.*
+		Salvaged rule by ignoring 1 entity-based domain= option: financemonk.net|dropgalaxy.*
+		Salvaged rule by ignoring 1 entity-based domain= option: financemonk.net|techthematter.xyz|dropgalaxy.*
+		Salvaged rule by ignoring 1 entity-based domain= option: ladbible.com|tyla.com|unilad.com|gamingbible.*
+		Salvaged rule by ignoring 1 entity-based domain= option: ladbible.com|tyla.com|unilad.com|gamingbible.*
+		Salvaged rule by ignoring 1 entity-based domain= option: educatiocenter.online|a2zapk.*
+		Salvaged rule by ignoring 2 entity-based domain= option: gentside.*|ohmymag.*|maxisciences.com
+		Salvaged rule by ignoring 1 entity-based domain= option: financemonk.net|dropgalaxy.*
+		Salvaged rule by ignoring 1 entity-based domain= option: ladbible.com|tyla.com|unilad.com|gamingbible.*
+		Salvaged rule by ignoring 1 entity-based domain= option: ladbible.com|tyla.com|unilad.com|gamingbible.*
+		Salvaged rule by ignoring 1 entity-based domain= option: educatiocenter.online|a2zapk.*
+		Salvaged rule by ignoring 1 entity-based domain= option: cbhours.com|pussyspace.*
+		Salvaged rule by ignoring 2 entity-based domain= option: acortalo.*|acortar.*|megadescarga.net
+		Salvaged rule by ignoring 2 entity-based domain= option: gentside.*|ohmymag.*|maxisciences.com
+		Salvaged rule by ignoring 5 entity-based domain= option: mylink.*|my1ink.*|myl1nk.*|myli3k.*|solvetube.*|promo-visits.site|satoshi-win.xyz|healdad.com|mobitaak.com|gamalk-sehetk.com|allcryptoz.net|crewbase.net|crewus.net|shinbhu.net|shinchu.net|thumb8.net|thumb9.net|topcryptoz.net|uniqueten.net|ultraten.net|audiotools.pro|magesy.blog|magesypro.pro|audioztools.com
+	Maybe good (regexes): 140
 	redirect=: 323
-	removeparams= (accepted/discarded): 27/11
+	removeparams= (accepted/discarded): 28/11
 	csp=: 60
 	Unsupported: 234
-		Could not salvage rule with only entity-based domain= option: megalink.*
-		Could not salvage rule with only entity-based domain= option: bg-gledai.*
+		Can't salvage rule with only entity-based domain= option: megalink.*
+		Can't salvage rule with only entity-based domain= option: bg-gledai.*
 		FilterStrictParty: Strict partyness strict3p not supported
-		Could not salvage rule with only entity-based domain= option: oploverz.*
-		Could not salvage rule with only entity-based domain= option: mangaku.*
-		Could not salvage rule with only entity-based domain= option: nekopoi.*
-		Could not salvage rule with only entity-based domain= option: vinaurl.*
-		Could not salvage rule with only entity-based domain= option: komikcast.*
-		Could not salvage rule with only entity-based domain= option: movs4u.*
-		Could not salvage rule with only entity-based domain= option: movieon21.*
-		Could not salvage rule with only entity-based domain= option: aagmaal.*
-		Could not salvage rule with only entity-based domain= option: otakudesu.*
-		Could not salvage rule with only entity-based domain= option: myflixer.*
-		Could not salvage rule with only entity-based domain= option: supremacy1914.*
-		Could not salvage rule with only entity-based domain= option: yts.*
+		Can't salvage rule with only entity-based domain= option: oploverz.*
+		Can't salvage rule with only entity-based domain= option: mangaku.*
+		Can't salvage rule with only entity-based domain= option: nekopoi.*
+		Can't salvage rule with only entity-based domain= option: vinaurl.*
+		Can't salvage rule with only entity-based domain= option: komikcast.*
+		Can't salvage rule with only entity-based domain= option: movs4u.*
+		Can't salvage rule with only entity-based domain= option: movieon21.*
+		Can't salvage rule with only entity-based domain= option: aagmaal.*
+		Can't salvage rule with only entity-based domain= option: otakudesu.*
+		Can't salvage rule with only entity-based domain= option: myflixer.*
+		Can't salvage rule with only entity-based domain= option: supremacy1914.*
+		Can't salvage rule with only entity-based domain= option: yts.*
 		regexFilter is not RE2-compatible: \/[a-z]{4,}\/(?!holly7)[0-9a-z]{3,}\d\.\d{1,2}\.\d{1,2}\.[0-9a-f]{32}\.js$
-		Could not salvage rule with only entity-based domain= option: ouo.*
-		Could not salvage rule with only entity-based domain= option: dewimg.*|imgtown.*|imgviu.*|mazpic.*|outletpic.*|picrok.*
-		Could not salvage rule with only entity-based domain= option: vinaurl.*
-		Could not salvage rule with only entity-based domain= option: mirrorace.*
-		Could not salvage rule with only entity-based domain= option: the-voice-of-germany.*
-		Could not salvage rule with only entity-based domain= option: linkvertise.*
-		Could not salvage rule with only entity-based domain= option: dood.*|dooood.*
+		Can't salvage rule with only entity-based domain= option: ouo.*
+		Can't salvage rule with only entity-based domain= option: dewimg.*|imgtown.*|imgviu.*|mazpic.*|outletpic.*|picrok.*
+		Can't salvage rule with only entity-based domain= option: vinaurl.*
+		Can't salvage rule with only entity-based domain= option: mirrorace.*
+		Can't salvage rule with only entity-based domain= option: the-voice-of-germany.*
+		Can't salvage rule with only entity-based domain= option: linkvertise.*
+		Can't salvage rule with only entity-based domain= option: dood.*|dooood.*
 		regexFilter is not RE2-compatible: ^https?:\/\/a\.[-0-9a-z]{4,21}\.[a-z]{2,5}\/(?=[a-z]{0,6}[0-9A-Z])[0-9a-zA-Z]{7}\.js$
 		regexFilter is not RE2-compatible: ^https?:\/\/asg\.[-0-9a-z]{4,21}\.[a-z]{2,5}\/(?=[a-z]{0,6}[0-9A-Z])[0-9a-zA-Z]{7}\.js$
 		regexFilter is not RE2-compatible: ^https?:\/\/pre\.[0-9a-z]{6,12}\.[a-z]{3,4}\/(?=[a-z]{0,6}[0-9A-Z])[0-9a-zA-Z]{7}\.js$
 		regexFilter is not RE2-compatible: ^https?:\/\/oi\.[0-9a-z]{6,12}\.[a-z]{3}\/(?=[a-z]{0,6}[0-9A-Z])[0-9a-zA-Z]{7}\.js$
-		Could not salvage rule with only entity-based domain= option: vizcloud.*|vizcloud2.*
+		Can't salvage rule with only entity-based domain= option: vizcloud.*|vizcloud2.*
 		FilterStrictParty: Strict partyness strict3p not supported
-		Could not salvage rule with only entity-based domain= option: slreamplay.*
-		Could not salvage rule with only entity-based domain= option: sexwebvideo.*
-		Could not salvage rule with only entity-based domain= option: dutchycorp.*
+		Can't salvage rule with only entity-based domain= option: slreamplay.*
+		Can't salvage rule with only entity-based domain= option: sexwebvideo.*
+		Can't salvage rule with only entity-based domain= option: dutchycorp.*
 		regexFilter is not RE2-compatible: ^https:\/\/(?:www\d\.)?[-a-z]{6,}\.(?:com|info|net|org)\/(?=[-_a-zA-Z]{0,42}\d)(?=[-_0-9a-z]{0,42}[A-Z])[-_0-9a-zA-Z]{43}\/\?cid=[-_0-9a-zA-Z]{10,36}(?:&qs\d=\S+)?&(?:s|pub)id=[-_0-9a-z{}]{1,32}(?:&s=0\.\d+)?(?:#\S+)?$
 		regexFilter is not RE2-compatible: ^https:\/\/(?:www\d\.)?[-a-z]{6,}\.(?:com|info|net|org)\/(?=[-_a-zA-Z]{0,42}\d)(?=[-_0-9a-z]{0,42}[A-Z])[-_0-9a-zA-Z]{43}\/\?(?:pub|s)id=[-_0-9a-z{}]{1,32}(?:&qs\d=\S+)?&cid=[-_0-9a-zA-Z]{10,36}(?:&s=0\.\d+)?(?:#\S+)?$
-		Could not salvage rule with only entity-based domain= option: 1337x.*|1337x.g3g.*|unblockit.*|x1337x.*
-		regexFilter is not RE2-compatible: ^https:\/\/www\.pussyspace\.(?:com|net)\/(?!style\/).*,		Could not salvage rule with only entity-based domain= option: pussyspace.*
+		Can't salvage rule with only entity-based domain= option: 1337x.*|1337x.g3g.*|unblockit.*|x1337x.*
+		regexFilter is not RE2-compatible: ^https:\/\/www\.pussyspace\.(?:com|net)\/(?!style\/).*,		Can't salvage rule with only entity-based domain= option: pussyspace.*
 		regexFilter is not RE2-compatible: \/img\/(?!new).+\.gif
-		Could not salvage rule with only entity-based domain= option: slreamplay.*
-		Could not salvage rule with only entity-based domain= option: pouvideo.*|povvideo.*|povw1deo.*|povwideo.*|powv1deo.*|powvibeo.*|powvideo.*|powvldeo.*
-		Could not salvage rule with only entity-based domain= option: pouvideo.*|povvideo.*|povw1deo.*|povwideo.*|powv1deo.*|powvibeo.*|powvideo.*|powvldeo.*
+		Can't salvage rule with only entity-based domain= option: slreamplay.*
+		Can't salvage rule with only entity-based domain= option: pouvideo.*|povvideo.*|povw1deo.*|povwideo.*|powv1deo.*|powvibeo.*|powvideo.*|powvldeo.*
+		Can't salvage rule with only entity-based domain= option: pouvideo.*|povvideo.*|povw1deo.*|povwideo.*|powv1deo.*|powvibeo.*|powvideo.*|powvldeo.*
 		regexFilter is not RE2-compatible: ^http:\/\/img[a-z]+\.(?:buzz|site|store|xyz)\/(?!shrinker).*
-		Could not salvage rule with only entity-based domain= option: strcloud.*|streamta.*|streamtape.*|strtape.*|strtapeadblock.*|strtpe.*
-		Could not salvage rule with only entity-based domain= option: bigkickass.*|kat.*|kat2.*|katbay.*|katfreak.*|kathydra.*|katkickass.*|katkickass.*|kattracker.*|kick4ss.*|kickass-usa.*|kickass.*|kickass2.*|kickassaustralia.*|kickassbay.*|kickassdb.*|kickassfull.*|kickassgo.*|kickasshydra.*|kickassindia.*|kickasskat.*|kickassminds.*|kickassmovies.*|kickasspk.*|kickasst.*|kickasstorrents.*|kickasstorrents2.*|kickasstracker.*|kickasstrusty.*|kickassuk.*|kickassunlocked.*|kickassz.*|kkat.*|kkickass.*|thekat.*|thekickass.*|topkickass.*|torrentkat.*|torrentskickass.*
-		Could not salvage rule with only entity-based domain= option: isohunt.*|isohunters.*|isohunthydra.*|isohunting.*|isohunts.*|isohuntx.*|isohuntz.*|myisohunt.*
+		Can't salvage rule with only entity-based domain= option: strcloud.*|streamta.*|streamtape.*|strtape.*|strtapeadblock.*|strtpe.*
+		Can't salvage rule with only entity-based domain= option: bigkickass.*|kat.*|kat2.*|katbay.*|katfreak.*|kathydra.*|katkickass.*|katkickass.*|kattracker.*|kick4ss.*|kickass-usa.*|kickass.*|kickass2.*|kickassaustralia.*|kickassbay.*|kickassdb.*|kickassfull.*|kickassgo.*|kickasshydra.*|kickassindia.*|kickasskat.*|kickassminds.*|kickassmovies.*|kickasspk.*|kickasst.*|kickasstorrents.*|kickasstorrents2.*|kickasstracker.*|kickasstrusty.*|kickassuk.*|kickassunlocked.*|kickassz.*|kkat.*|kkickass.*|thekat.*|thekickass.*|topkickass.*|torrentkat.*|torrentskickass.*
+		Can't salvage rule with only entity-based domain= option: isohunt.*|isohunters.*|isohunthydra.*|isohunting.*|isohunts.*|isohuntx.*|isohuntz.*|myisohunt.*
 		FilterStrictParty: Strict partyness strict1p not supported
-		Could not salvage rule with only entity-based domain= option: torrentproject2.*
-		Could not salvage rule with only entity-based domain= option: uptomega.*
-		Could not salvage rule with only entity-based domain= option: uplinkto.*
-		Could not salvage rule with only entity-based domain= option: zone-annuaire.*
-		Could not salvage rule with only entity-based domain= option: link1s.*
-		Could not salvage rule with only entity-based domain= option: moviesda1.*
-		Could not salvage rule with only entity-based domain= option: dloader.*
-		Could not salvage rule with only entity-based domain= option: isaidub.*
-		Could not salvage rule with only entity-based domain= option: zone-telechargement.*
-		Could not salvage rule with only entity-based domain= option: direct-cloud.*
-		Could not salvage rule with only entity-based domain= option: 10starhd.*
-		Could not salvage rule with only entity-based domain= option: earnload.*
+		Can't salvage rule with only entity-based domain= option: uptomega.*
+		Can't salvage rule with only entity-based domain= option: uplinkto.*
+		Can't salvage rule with only entity-based domain= option: zone-annuaire.*
+		Can't salvage rule with only entity-based domain= option: link1s.*
+		Can't salvage rule with only entity-based domain= option: moviesda1.*
+		Can't salvage rule with only entity-based domain= option: dloader.*
+		Can't salvage rule with only entity-based domain= option: isaidub.*
+		Can't salvage rule with only entity-based domain= option: zone-telechargement.*
+		Can't salvage rule with only entity-based domain= option: direct-cloud.*
+		Can't salvage rule with only entity-based domain= option: 10starhd.*
+		Can't salvage rule with only entity-based domain= option: earnload.*
 		regexFilter is not RE2-compatible: ^https?:\/\/[a-z]{7,16}\.com?\/(?=[+\/0-9a-zA-Z]*\+)(?=[+\/a-zA-Z]*\d)(?=[+\/0-9a-z]*[A-Z])[+\/0-9a-zA-Z]{140,}$
 		regexFilter is not RE2-compatible: ^https?:\/\/[a-z]{7,16}\.org\/(?=[+\/0-9a-zA-Z]*\+)(?=[+\/a-zA-Z]*\d)(?=[+\/0-9a-z]*[A-Z])[+\/0-9a-zA-Z]{140,}$
-		Could not salvage rule with only entity-based domain= option: torlock.*|torlock2.*
-		Could not salvage rule with only entity-based domain= option: vipleague.*
-		Could not salvage rule with only entity-based domain= option: my1ink.*|myl1nk.*|myli3k.*|mylink.*
-		Could not salvage rule with only entity-based domain= option: sxyprn.*
-		Could not salvage rule with only entity-based domain= option: palimas.*
-		Could not salvage rule with only entity-based domain= option: vjav.*
-		Could not salvage rule with only entity-based domain= option: linkshorts.*
-		Could not salvage rule with only entity-based domain= option: mazpic.*
-		Could not salvage rule with only entity-based domain= option: picrok.*
-		Could not salvage rule with only entity-based domain= option: imgviu.*
-		Could not salvage rule with only entity-based domain= option: outletpic.*
-		Could not salvage rule with only entity-based domain= option: dewimg.*
-		Could not salvage rule with only entity-based domain= option: imgtown.*
-		Could not salvage rule with only entity-based domain= option: oploverz.*
-		Could not salvage rule with only entity-based domain= option: readcomiconline.*
-		Could not salvage rule with only entity-based domain= option: adsrt.*
-		Could not salvage rule with only entity-based domain= option: animeflv.*
-		Could not salvage rule with only entity-based domain= option: kiss-anime.*
-		Could not salvage rule with only entity-based domain= option: japscan.*
-		Could not salvage rule with only entity-based domain= option: downloadhub.*
-		Could not salvage rule with only entity-based domain= option: 9xbuddy.*
-		Could not salvage rule with only entity-based domain= option: viprow.*
-		Could not salvage rule with only entity-based domain= option: anitube.*
-		Could not salvage rule with only entity-based domain= option: mixdrop.*|mixdrp.*
-		Could not salvage rule with only entity-based domain= option: dramacool9.*
-		Could not salvage rule with only entity-based domain= option: hdfriday.*
-		Could not salvage rule with only entity-based domain= option: extramovies.*
-		Could not salvage rule with only entity-based domain= option: atomixhq.*|pctfenix.*
-		Could not salvage rule with only entity-based domain= option: shortearn.*
-		Could not salvage rule with only entity-based domain= option: okstream.*
-		Could not salvage rule with only entity-based domain= option: megavideo.*
-		Could not salvage rule with only entity-based domain= option: tmearn.*
-		Could not salvage rule with only entity-based domain= option: leechall.*
-		Could not salvage rule with only entity-based domain= option: torrentgalaxy.*
-		Could not salvage rule with only entity-based domain= option: allcalidad.*
-		Could not salvage rule with only entity-based domain= option: movieshub.*
-		Could not salvage rule with only entity-based domain= option: dailysport.*
-		Could not salvage rule with only entity-based domain= option: mkvcinemas.*
-		Could not salvage rule with only entity-based domain= option: pelispedia.*
-		Could not salvage rule with only entity-based domain= option: linkviet.*
-		Could not salvage rule with only entity-based domain= option: btdb.*
-		Could not salvage rule with only entity-based domain= option: animesvision.*
-		Could not salvage rule with only entity-based domain= option: miniurl.*
-		Could not salvage rule with only entity-based domain= option: uploadhub.*
-		Could not salvage rule with only entity-based domain= option: bollyflix.*
-		Could not salvage rule with only entity-based domain= option: veranime.*|verhentai.*
-		Could not salvage rule with only entity-based domain= option: shortzzy.*
-		Could not salvage rule with only entity-based domain= option: xtits.*
-		Could not salvage rule with only entity-based domain= option: shorttey.*
-		Could not salvage rule with only entity-based domain= option: hdmovieplus.*
-		Could not salvage rule with only entity-based domain= option: img4fap.*
-		Could not salvage rule with only entity-based domain= option: elitetorrent.*
-		Could not salvage rule with only entity-based domain= option: lite-link.*
-		Could not salvage rule with only entity-based domain= option: adcorto.*
-		Could not salvage rule with only entity-based domain= option: 720pstream.*
-		Could not salvage rule with only entity-based domain= option: toonanime.*
-		Could not salvage rule with only entity-based domain= option: buffstreams.*
-		Could not salvage rule with only entity-based domain= option: cinemakottaga.*
-		Could not salvage rule with only entity-based domain= option: hog.*
-		Could not salvage rule with only entity-based domain= option: samehadaku.*
-		Could not salvage rule with only entity-based domain= option: atishmkv.*
-		Could not salvage rule with only entity-based domain= option: watchomovies.*
-		Could not salvage rule with only entity-based domain= option: hdhub4u.*
-		Could not salvage rule with only entity-based domain= option: 10starhd.*
-		Could not salvage rule with only entity-based domain= option: livetvon.*
-		Could not salvage rule with only entity-based domain= option: sports-stream.*
+		Can't salvage rule with only entity-based domain= option: torlock.*|torlock2.*
+		Can't salvage rule with only entity-based domain= option: vipleague.*
+		Can't salvage rule with only entity-based domain= option: my1ink.*|myl1nk.*|myli3k.*|mylink.*
+		Can't salvage rule with only entity-based domain= option: sxyprn.*
+		Can't salvage rule with only entity-based domain= option: palimas.*
+		Can't salvage rule with only entity-based domain= option: vjav.*
+		Can't salvage rule with only entity-based domain= option: linkshorts.*
+		Can't salvage rule with only entity-based domain= option: mazpic.*
+		Can't salvage rule with only entity-based domain= option: picrok.*
+		Can't salvage rule with only entity-based domain= option: imgviu.*
+		Can't salvage rule with only entity-based domain= option: outletpic.*
+		Can't salvage rule with only entity-based domain= option: dewimg.*
+		Can't salvage rule with only entity-based domain= option: imgtown.*
+		Can't salvage rule with only entity-based domain= option: oploverz.*
+		Can't salvage rule with only entity-based domain= option: readcomiconline.*
+		Can't salvage rule with only entity-based domain= option: adsrt.*
+		Can't salvage rule with only entity-based domain= option: animeflv.*
+		Can't salvage rule with only entity-based domain= option: kiss-anime.*
+		Can't salvage rule with only entity-based domain= option: japscan.*
+		Can't salvage rule with only entity-based domain= option: downloadhub.*
+		Can't salvage rule with only entity-based domain= option: 9xbuddy.*
+		Can't salvage rule with only entity-based domain= option: viprow.*
+		Can't salvage rule with only entity-based domain= option: anitube.*
+		Can't salvage rule with only entity-based domain= option: dramacool9.*
+		Can't salvage rule with only entity-based domain= option: hdfriday.*
+		Can't salvage rule with only entity-based domain= option: extramovies.*
+		Can't salvage rule with only entity-based domain= option: atomixhq.*|pctfenix.*
+		Can't salvage rule with only entity-based domain= option: shortearn.*
+		Can't salvage rule with only entity-based domain= option: okstream.*
+		Can't salvage rule with only entity-based domain= option: megavideo.*
+		Can't salvage rule with only entity-based domain= option: tmearn.*
+		Can't salvage rule with only entity-based domain= option: leechall.*
+		Can't salvage rule with only entity-based domain= option: torrentgalaxy.*
+		Can't salvage rule with only entity-based domain= option: allcalidad.*
+		Can't salvage rule with only entity-based domain= option: movieshub.*
+		Can't salvage rule with only entity-based domain= option: dailysport.*
+		Can't salvage rule with only entity-based domain= option: mkvcinemas.*
+		Can't salvage rule with only entity-based domain= option: pelispedia.*
+		Can't salvage rule with only entity-based domain= option: linkviet.*
+		Can't salvage rule with only entity-based domain= option: btdb.*
+		Can't salvage rule with only entity-based domain= option: animesvision.*
+		Can't salvage rule with only entity-based domain= option: miniurl.*
+		Can't salvage rule with only entity-based domain= option: uploadhub.*
+		Can't salvage rule with only entity-based domain= option: bollyflix.*
+		Can't salvage rule with only entity-based domain= option: veranime.*|verhentai.*
+		Can't salvage rule with only entity-based domain= option: shortzzy.*
+		Can't salvage rule with only entity-based domain= option: xtits.*
+		Can't salvage rule with only entity-based domain= option: shorttey.*
+		Can't salvage rule with only entity-based domain= option: hdmovieplus.*
+		Can't salvage rule with only entity-based domain= option: img4fap.*
+		Can't salvage rule with only entity-based domain= option: elitetorrent.*
+		Can't salvage rule with only entity-based domain= option: lite-link.*
+		Can't salvage rule with only entity-based domain= option: adcorto.*
+		Can't salvage rule with only entity-based domain= option: 720pstream.*
+		Can't salvage rule with only entity-based domain= option: toonanime.*
+		Can't salvage rule with only entity-based domain= option: buffstreams.*
+		Can't salvage rule with only entity-based domain= option: cinemakottaga.*
+		Can't salvage rule with only entity-based domain= option: hog.*
+		Can't salvage rule with only entity-based domain= option: samehadaku.*
+		Can't salvage rule with only entity-based domain= option: atishmkv.*
+		Can't salvage rule with only entity-based domain= option: watchomovies.*
+		Can't salvage rule with only entity-based domain= option: hdhub4u.*
+		Can't salvage rule with only entity-based domain= option: 10starhd.*
+		Can't salvage rule with only entity-based domain= option: livetvon.*
+		Can't salvage rule with only entity-based domain= option: sports-stream.*
 		regexFilter is not RE2-compatible: ^https?:\/\/[0-9a-z]{4,8}\.autos\/(?=[a-z]{0,6}[0-9A-Z])[0-9a-zA-Z]{7}\.js$
 		regexFilter is not RE2-compatible: ^https?:\/\/[0-9a-z]{4,8}\.beauty\/(?=[a-z]{0,6}[0-9A-Z])[0-9a-zA-Z]{7}\.js$
 		regexFilter is not RE2-compatible: ^https?:\/\/[0-9a-z]{4,8}\.lol\/(?=[a-z]{0,6}[0-9A-Z])[0-9a-zA-Z]{7}\.js$
@@ -153,100 +203,102 @@ Output rule count: 19759
 		regexFilter is not RE2-compatible: ^https?:\/\/[0-9a-z]{4,8}\.xyz\/(?=[a-z]{0,6}[0-9A-Z])[0-9a-zA-Z]{7}\.js$
 		regexFilter is not RE2-compatible: ^https?:\/\/[a-z]{8,15}\.com?\/(?=[0-9a-zA-Z]*%)(?=[%a-zA-Z]*\d)(?=[%0-9a-z]*[A-Z])[%0-9a-zA-Z]{170,}$
 		regexFilter is not RE2-compatible: ^https:\/\/[0-9a-z]{7,25}\.com\/v2(?:\/0\/)?(?=[-_0-9a-z]{0,84}[A-Z])(?=[-_a-zA-Z]{0,84}[0-9])[-_0-9a-zA-Z]{54,85}(#\?v=[0-9a-f]{32})?$
-		Could not salvage rule with only entity-based domain= option: mazpic.*
-		Could not salvage rule with only entity-based domain= option: picrok.*
-		Could not salvage rule with only entity-based domain= option: imgviu.*
-		Could not salvage rule with only entity-based domain= option: outletpic.*
-		Could not salvage rule with only entity-based domain= option: dewimg.*
-		Could not salvage rule with only entity-based domain= option: imgtown.*
-		Could not salvage rule with only entity-based domain= option: btdb.*
+		Can't salvage rule with only entity-based domain= option: mazpic.*
+		Can't salvage rule with only entity-based domain= option: picrok.*
+		Can't salvage rule with only entity-based domain= option: imgviu.*
+		Can't salvage rule with only entity-based domain= option: outletpic.*
+		Can't salvage rule with only entity-based domain= option: dewimg.*
+		Can't salvage rule with only entity-based domain= option: imgtown.*
+		Can't salvage rule with only entity-based domain= option: btdb.*
 		regexFilter is not RE2-compatible: ^https?:\/\/(?:[a-z]{2}\.)?[0-9a-z]{7,16}\.com\/[a-z](?=[a-z]{0,25}[0-9A-Z])[0-9a-zA-Z]{3,26}\/(?:[1-6]\d{4}|[3-9]\d{3})\??(?:_=\d+|v=\d)?$
 		regexFilter is not RE2-compatible: ^https?:\/\/(?:[a-z]{2}\.)?[0-9a-z]{7,16}\.website\/[a-z](?=[a-z]{0,25}[0-9A-Z])[0-9a-zA-Z]{3,26}\/(?:[1-6]\d{4}|[3-9]\d{3})\??(?:_=\d+|v=\d)?$
-		Could not salvage rule with only entity-based domain= option: 10starhd.*
+		Can't salvage rule with only entity-based domain= option: 10starhd.*
 		regexFilter is not RE2-compatible: ^https:\/\/[0-9a-z]{7,25}\.com\/v2(?:\/0\/)?(?=[-_0-9a-z]{0,84}[A-Z])(?=[-_a-zA-Z]{0,84}[0-9])[-_0-9a-zA-Z]{54,85}(#\?v=[0-9a-f]{32})?$
-		Could not salvage rule with only entity-based domain= option: sxyprn.*
-		Could not salvage rule with only entity-based domain= option: txxx.*
-		Could not salvage rule with only entity-based domain= option: mazpic.*
-		Could not salvage rule with only entity-based domain= option: picrok.*
-		Could not salvage rule with only entity-based domain= option: imgviu.*
-		Could not salvage rule with only entity-based domain= option: outletpic.*
-		Could not salvage rule with only entity-based domain= option: dewimg.*
-		Could not salvage rule with only entity-based domain= option: imgtown.*
-		Could not salvage rule with only entity-based domain= option: pouvideo.*|povvideo.*|povvldeo.*|povw1deo.*|povwideo.*|powv1deo.*|powvibeo.*|powvideo.*|powvldeo.*
-		Could not salvage rule with only entity-based domain= option: btdb.*
+		Can't salvage rule with only entity-based domain= option: sxyprn.*
+		Can't salvage rule with only entity-based domain= option: txxx.*
+		Can't salvage rule with only entity-based domain= option: mazpic.*
+		Can't salvage rule with only entity-based domain= option: picrok.*
+		Can't salvage rule with only entity-based domain= option: imgviu.*
+		Can't salvage rule with only entity-based domain= option: outletpic.*
+		Can't salvage rule with only entity-based domain= option: dewimg.*
+		Can't salvage rule with only entity-based domain= option: imgtown.*
+		Can't salvage rule with only entity-based domain= option: pouvideo.*|povvideo.*|povvldeo.*|povw1deo.*|povwideo.*|powv1deo.*|powvibeo.*|powvideo.*|powvldeo.*
+		Can't salvage rule with only entity-based domain= option: btdb.*
 		regexFilter is not RE2-compatible: ^https?:\/\/(?:[a-z]{2}\.)?[0-9a-z]{7,16}\.com\/[a-z](?=[a-z]{0,25}[0-9A-Z])[0-9a-zA-Z]{3,26}\/(?:[1-6]\d{4}|[3-9]\d{3})\??(?:_=\d+|v=\d)?$
 		regexFilter is not RE2-compatible: ^https?:\/\/(?:[a-z]{2}\.)?[0-9a-z]{7,16}\.website\/[a-z](?=[a-z]{0,25}[0-9A-Z])[0-9a-zA-Z]{3,26}\/(?:[1-6]\d{4}|[3-9]\d{3})\??(?:_=\d+|v=\d)?$
-		Could not salvage rule with only entity-based domain= option: xtits.*
-		Could not salvage rule with only entity-based domain= option: animesa.*
-		Could not salvage rule with only entity-based domain= option: 10starhd.*
+		Can't salvage rule with only entity-based domain= option: xtits.*
+		Can't salvage rule with only entity-based domain= option: animesa.*
+		Can't salvage rule with only entity-based domain= option: 10starhd.*
 		regexFilter is not RE2-compatible: ^https?:\/\/[a-z]{7,16}\.com?\/(?=[+\/0-9a-zA-Z]*\+)(?=[+\/a-zA-Z]*\d)(?=[+\/0-9a-z]*[A-Z])[+\/0-9a-zA-Z]{400,}$
 		regexFilter is not RE2-compatible: ^https?:\/\/[a-z]{7,16}\.org\/(?=[+\/0-9a-zA-Z]*\+)(?=[+\/a-zA-Z]*\d)(?=[+\/0-9a-z]*[A-Z])[+\/0-9a-zA-Z]{400,}$
 		regexFilter is not RE2-compatible: ^https:\/\/[a-z]{7}\.com\/sub\/(?=[a-z]{0,9}[0-9A-Z])[0-9A-z]{10}$
-		Could not salvage rule with only entity-based domain= option: hqq.*
-		Could not salvage rule with only entity-based domain= option: bloomberg.*
-		Could not salvage rule with only entity-based domain= option: my1ink.*|myl1nk.*|myli3k.*|mylink.*
-		Could not salvage rule with only entity-based domain= option: my1ink.*|myl1nk.*|myli3k.*|mylink.*
-		Could not salvage rule with only entity-based domain= option: hqq.*
-		Could not salvage rule with only entity-based domain= option: einthusan.*
-		Could not salvage rule with only entity-based domain= option: pasty.*
-		Could not salvage rule with only entity-based domain= option: pasty.*
-		Could not salvage rule with only entity-based domain= option: wstream.*
-		Could not salvage rule with only entity-based domain= option: viafree.*
-		Could not salvage rule with only entity-based domain= option: hotfrog.*
-		Could not salvage rule with only entity-based domain= option: goodstream.*
-		Could not salvage rule with only entity-based domain= option: now.*
-		Could not salvage rule with only entity-based domain= option: bloomberg.*
-		Could not salvage rule with only entity-based domain= option: bloomberg.*
-		Could not salvage rule with only entity-based domain= option: bloomberg.*
-		Could not salvage rule with only entity-based domain= option: allestoringen.*|downdetector.*|xn--allestrungen-9ib.*
-		Could not salvage rule with only entity-based domain= option: allestoringen.*|downdetector.*|xn--allestrungen-9ib.*
-		Could not salvage rule with only entity-based domain= option: allestoringen.*|downdetector.*|xn--allestrungen-9ib.*
-		Could not salvage rule with only entity-based domain= option: tube8.*
-		Could not salvage rule with only entity-based domain= option: tvnow.*
-		Could not salvage rule with only entity-based domain= option: tvnow.*
-		Could not salvage rule with only entity-based domain= option: audible.*
-		Could not salvage rule with only entity-based domain= option: savethechildren.*
-		Could not salvage rule with only entity-based domain= option: discoveryplus.*
-		Could not salvage rule with only entity-based domain= option: viafree.*
-		Could not salvage rule with only entity-based domain= option: streamingcommunity.*
-		Could not salvage rule with only entity-based domain= option: streamingcommunity.*
-		Could not salvage rule with only entity-based domain= option: filepress.*
-		Could not salvage rule with only entity-based domain= option: bloomberg.*
-		Could not salvage rule with only entity-based domain= option: soap2day.*
-		Could not salvage rule with only entity-based domain= option: 2embed.*
-		Could not salvage rule with only entity-based domain= option: soap2day.*
-		Could not salvage rule with only entity-based domain= option: slreamplay.*
-		Could not salvage rule with only entity-based domain= option: pouvideo.*|povvideo.*|povw1deo.*|povwideo.*|powv1deo.*|powvibeo.*|powvideo.*|powvldeo.*
+		Can't salvage rule with only entity-based domain= option: hqq.*
+		Can't salvage rule with only entity-based domain= option: bloomberg.*
+		Can't salvage rule with only entity-based domain= option: my1ink.*|myl1nk.*|myli3k.*|mylink.*
+		Can't salvage rule with only entity-based domain= option: my1ink.*|myl1nk.*|myli3k.*|mylink.*
+		Can't salvage rule with only entity-based domain= option: hqq.*
+		Can't salvage rule with only entity-based domain= option: einthusan.*
+		Can't salvage rule with only entity-based domain= option: gentside.*|ohmymag.*
+		Can't salvage rule with only entity-based domain= option: gentside.*|ohmymag.*
+		Can't salvage rule with only entity-based domain= option: pasty.*
+		Can't salvage rule with only entity-based domain= option: pasty.*
+		Can't salvage rule with only entity-based domain= option: wstream.*
+		Can't salvage rule with only entity-based domain= option: viafree.*
+		Can't salvage rule with only entity-based domain= option: hotfrog.*
+		Can't salvage rule with only entity-based domain= option: goodstream.*
+		Can't salvage rule with only entity-based domain= option: now.*
+		Can't salvage rule with only entity-based domain= option: bloomberg.*
+		Can't salvage rule with only entity-based domain= option: bloomberg.*
+		Can't salvage rule with only entity-based domain= option: bloomberg.*
+		Can't salvage rule with only entity-based domain= option: allestoringen.*|downdetector.*|xn--allestrungen-9ib.*
+		Can't salvage rule with only entity-based domain= option: allestoringen.*|downdetector.*|xn--allestrungen-9ib.*
+		Can't salvage rule with only entity-based domain= option: allestoringen.*|downdetector.*|xn--allestrungen-9ib.*
+		Can't salvage rule with only entity-based domain= option: tube8.*
+		Can't salvage rule with only entity-based domain= option: tvnow.*
+		Can't salvage rule with only entity-based domain= option: tvnow.*
+		Can't salvage rule with only entity-based domain= option: audible.*
+		Can't salvage rule with only entity-based domain= option: savethechildren.*
+		Can't salvage rule with only entity-based domain= option: discoveryplus.*
+		Can't salvage rule with only entity-based domain= option: viafree.*
+		Can't salvage rule with only entity-based domain= option: streamingcommunity.*
+		Can't salvage rule with only entity-based domain= option: streamingcommunity.*
+		Can't salvage rule with only entity-based domain= option: filepress.*
+		Can't salvage rule with only entity-based domain= option: bloomberg.*
+		Can't salvage rule with only entity-based domain= option: soap2day.*
+		Can't salvage rule with only entity-based domain= option: 2embed.*
+		Can't salvage rule with only entity-based domain= option: soap2day.*
+		Can't salvage rule with only entity-based domain= option: slreamplay.*
+		Can't salvage rule with only entity-based domain= option: pouvideo.*|povvideo.*|povw1deo.*|povwideo.*|powv1deo.*|powvibeo.*|powvideo.*|powvldeo.*
 		Unsupported regex-based removeParam: /utm_source|utm_campaign|utm_content/
 		Unsupported regex-based removeParam: /utm_source|utm_campaign|utm_content/
 		Unsupported regex-based removeParam: /utm_source|utm_campaign|utm_content|utm_term|wr/
 		Unpatchable redirect filter: abp-resource:blank-mp4
 		Unpatchable redirect filter: abp-resource:blank-mp4
 		Unsupported regex-based removeParam: /^\/_ui\/desktop\/common\/js\/uiAnalytics\//
-		Could not salvage rule with only entity-based domain= option: 1movies.*
-		Could not salvage rule with only entity-based domain= option: 1movies.*
+		Can't salvage rule with only entity-based domain= option: 1movies.*
+		Can't salvage rule with only entity-based domain= option: 1movies.*
 		Unsupported regex-based removeParam: /^ad/
 		Unsupported regex-based removeParam: /^ad/
-		Could not salvage rule with only entity-based domain= option: discoveryplus.*
+		Can't salvage rule with only entity-based domain= option: discoveryplus.*
 		Unsupported regex-based removeParam: /^(cookie|ga_|u_)/
 		Unsupported regex-based removeParam: /^((?!SMIL|formats).)*$/
 		Unsupported regex-based removeParam: /^((?!formats|profile).)*$/
 		Unsupported modifier exception
 		Unsupported modifier exception
-		Could not salvage rule with only entity-based domain= option: isohunt.*|isohunters.*|isohunthydra.*|isohunting.*|isohunts.*|isohuntx.*|isohuntz.*|myisohunt.*
-		Could not salvage rule with only entity-based domain= option: torrentproject2.*
+		Can't salvage rule with only entity-based domain= option: isohunt.*|isohunters.*|isohunthydra.*|isohunting.*|isohunts.*|isohuntx.*|isohuntz.*|myisohunt.*
+		Can't salvage rule with only entity-based domain= option: torrentproject2.*
 		Unsupported regex-based removeParam: /^(?:correlator|f[cr-w]|p[e-sv]|[abdeg-or-x])/
 		Unsupported regex-based removeParam: /^(?:correlator|f[cr-w]|p[e-sv]|u_|ga_|url|dt|adk)/
 		Unsupported modifier exception
 		Unsupported modifier exception
 		Unsupported modifier exception
-		Could not salvage rule with only entity-based domain= option: the-voice-of-germany.*
-		Could not salvage rule with only entity-based domain= option: discoveryplus.*
-		Could not salvage rule with only entity-based domain= option: pobre.*
+		Can't salvage rule with only entity-based domain= option: the-voice-of-germany.*
+		Can't salvage rule with only entity-based domain= option: discoveryplus.*
+		Can't salvage rule with only entity-based domain= option: pobre.*
 		Unsupported modifier exception
-		Could not salvage rule with only entity-based domain= option: bigkickass.*|kat.*|kat2.*|katbay.*|katfreak.*|kathydra.*|katkickass.*|katkickass.*|kattracker.*|kick4ss.*|kickass-usa.*|kickass.*|kickass2.*|kickassaustralia.*|kickassbay.*|kickassdb.*|kickassfull.*|kickassgo.*|kickasshydra.*|kickassindia.*|kickasskat.*|kickassminds.*|kickassmovies.*|kickasspk.*|kickasst.*|kickasstorrents.*|kickasstorrents2.*|kickasstracker.*|kickasstrusty.*|kickassuk.*|kickassunlocked.*|kickassz.*|kkat.*|kkickass.*|thekat.*|thekickass.*|topkickass.*|torrentkat.*|torrentskickass.*
-		Could not salvage rule with only entity-based domain= option: isohunt.*|isohunters.*|isohunthydra.*|isohunting.*|isohunts.*|isohuntx.*|isohuntz.*|myisohunt.*
-		Could not salvage rule with only entity-based domain= option: torrentproject2.*
+		Can't salvage rule with only entity-based domain= option: bigkickass.*|kat.*|kat2.*|katbay.*|katfreak.*|kathydra.*|katkickass.*|katkickass.*|kattracker.*|kick4ss.*|kickass-usa.*|kickass.*|kickass2.*|kickassaustralia.*|kickassbay.*|kickassdb.*|kickassfull.*|kickassgo.*|kickasshydra.*|kickassindia.*|kickasskat.*|kickassminds.*|kickassmovies.*|kickasspk.*|kickasst.*|kickasstorrents.*|kickasstorrents2.*|kickasstracker.*|kickasstrusty.*|kickassuk.*|kickassunlocked.*|kickassz.*|kkat.*|kkickass.*|thekat.*|thekickass.*|topkickass.*|torrentkat.*|torrentskickass.*
+		Can't salvage rule with only entity-based domain= option: isohunt.*|isohunters.*|isohunthydra.*|isohunting.*|isohunts.*|isohuntx.*|isohuntz.*|myisohunt.*
+		Can't salvage rule with only entity-based domain= option: torrentproject2.*
 		Unsupported modifier exception
 		Unsupported modifier exception
 		Unsupported modifier exception
@@ -351,546 +403,15 @@ Rejected cosmetic filters: 96
 	Entity-based filter not supported: #shortGoToCont.hidden:remove-class(hidden)
 	Entity-based filter not supported: #timerContainer > div:not(:has(#timerPercentage)):style(display: flex !important;)
 	Entity-based filter not supported: script:has-text(adblockEnabled)
-CSS-generic: 16495 plain CSS selectors
-CSS-specific domain-based: 8677 distinct filters
-	Combined into 5264 distinct entries
-CSS-specific entity-based: 651 distinct filters
+CSS-generic: 16465 plain CSS selectors
+CSS-specific domain-based: 8773 distinct filters
+	Combined into 5320 distinct entries
+CSS-specific entity-based: 652 distinct filters
 	Combined into 353 distinct entries
 CSS-specific injectable files: 22
-	1h0mk3o, 1orhsik, 1skl0ec, 1qgfssk, 1n9nrh8, 16m3mjs, 0ftgnj0, 1li7u44, 0vo07n0, 0k3r4nk, 1hk81qo, 1sr2hi4, 1q1sj8g, 03s1aps, 0bna4ao, 1s3bs74, 1ttqvfg, 0nhlhnk, 04kih24, 1b3u6ds, 009p96k, default
-Declarative-related distinct filters: 302 distinct combined selectors
-Procedural-related distinct filters: 502 distinct combined selectors
-Discarded unsupported scriptlet filter: +js(aost, document.body.appendChild)
-Discarded unsupported scriptlet filter: +js(aost, Math, onerror)
-Discarded unsupported scriptlet filter: +js(aost, Math.random, injectedScript)
-Discarded unsupported scriptlet filter: +js(aost, Math.random, /injectedScript.*inlineScript/)
-Discarded unsupported scriptlet filter: +js(aost, Math.random, /(?=.*onerror)(?=^(?!.*(https)))/)
-Discarded unsupported scriptlet filter: +js(noeval)
-Discarded unsupported scriptlet filter: +js(golem.de)
-Discarded unsupported scriptlet filter: +js(aost, open, setPopUnder)
-Discarded unsupported scriptlet filter: +js(aost, document.createElement, _0x)
-Discarded unsupported scriptlet filter: +js(nowebrtc)
-Discarded unsupported scriptlet filter: +js(nano-stb, , 10000)
-Discarded unsupported scriptlet filter: +js(nofab)
-Discarded unsupported scriptlet filter: +js(popads.net)
-Discarded unsupported scriptlet filter: +js(nano-stb, _0x, *)
-Discarded unsupported scriptlet filter: +js(nano-sib)
-Discarded unsupported scriptlet filter: +js(cookie-remover, video_view_count)
-Discarded unsupported scriptlet filter: +js(ra, style, #over)
-Discarded unsupported scriptlet filter: +js(ra, data-ad-img|data-ad-target, , stay)
-Discarded unsupported scriptlet filter: +js(aost, String.prototype.charCodeAt, ai_)
-Discarded unsupported scriptlet filter: +js(ra, checked, input#chkIsAdd)
-Discarded unsupported scriptlet filter: +js(aost, document.querySelectorAll, /onload inlineScript|onload https/)
-Discarded unsupported scriptlet filter: +js(ra, checked, #addon)
-Discarded unsupported scriptlet filter: +js(nano-stb, redirect, 4000)
-Discarded unsupported scriptlet filter: +js(disable-newtab-links)
-Discarded unsupported scriptlet filter: +js(aost, onload, inlineScript)
-Discarded unsupported scriptlet filter: +js(popads-dummy)
-Discarded unsupported scriptlet filter: +js(ra, onclick)
-Discarded unsupported scriptlet filter: +js(nano-sib, , 1200, 0)
-Discarded unsupported scriptlet filter: +js(adfly-defuser)
-Discarded unsupported scriptlet filter: +js(ra, href|target, a[href="https://imgprime.com/view.php"][target="_blank"], complete)
-Discarded unsupported scriptlet filter: +js(nano-stb)
-Discarded unsupported scriptlet filter: +js(aost, document.createElement, addZone)
-Discarded unsupported scriptlet filter: +js(norafif, exoframe)
-Discarded unsupported scriptlet filter: +js(nano-stb, dlw, 40000)
-Discarded unsupported scriptlet filter: +js(ra, href, a[href="https://vpn-choice.com"])
-Discarded unsupported scriptlet filter: +js(noeval-if, replace)
-Discarded unsupported scriptlet filter: +js(nano-stb, timeUpdater, , 0)
-Discarded unsupported scriptlet filter: +js(m3u-prune, tvessaiprod.nbcuni.com, /theplatform\.com\/.*?\.m3u8/)
-Discarded unsupported scriptlet filter: +js(nano-sib, myTimer, 1500)
-Discarded unsupported scriptlet filter: +js(nano-sib, countdown, 2000)
-Discarded unsupported scriptlet filter: +js(noeval-if, ExoLoader)
-Discarded unsupported scriptlet filter: +js(ra, src, iframe#claimAd)
-Discarded unsupported scriptlet filter: +js(nano-sib, downloadTimer)
-Discarded unsupported scriptlet filter: +js(noeval-if, adsBlocked)
-Discarded unsupported scriptlet filter: +js(aost, Math.random, stackDepth:4)
-Discarded unsupported scriptlet filter: +js(aost, Math.random, inlineScript)
-Discarded unsupported scriptlet filter: +js(aost, Math, inlineScript)
-Discarded unsupported scriptlet filter: +js(nano-sib, , , 0)
-Discarded unsupported scriptlet filter: +js(nano-sib, counter, 2000)
-Discarded unsupported scriptlet filter: +js(ra, disabled, input)
-Discarded unsupported scriptlet filter: +js(nano-sib, , 1800)
-Discarded unsupported scriptlet filter: +js(cookie-remover, da325)
-Discarded unsupported scriptlet filter: +js(aost, document.cookie, https)
-Discarded unsupported scriptlet filter: +js(ra, srcdoc, iframe)
-Discarded unsupported scriptlet filter: +js(nano-sib, yuidea-, *)
-Discarded unsupported scriptlet filter: +js(aost, Math, /(?=^(?!.*(api|jquery|inlineScript|form|Progress)))/)
-Discarded unsupported scriptlet filter: +js(ra, onclick, button[name="imgContinue"][onclick])
-Discarded unsupported scriptlet filter: +js(ra, target, #continuetoimage > [href])
-Discarded unsupported scriptlet filter: +js(ra, href|target, #continuetoimage > [href][onclick]\, #overlayera > #ajax_load_indicator > #page_effect > [href][onclick])
-Discarded unsupported scriptlet filter: +js(nano-sib, timeLeft)
-Discarded unsupported scriptlet filter: +js(ra, target)
-Discarded unsupported scriptlet filter: +js(ra, href, [href*="ccbill"])
-Discarded unsupported scriptlet filter: +js(aost, Math.round, inlineScript)
-Discarded unsupported scriptlet filter: +js(popads)
-Discarded unsupported scriptlet filter: +js(rc, hide, .button-checkbox)
-Discarded unsupported scriptlet filter: +js(rc, btn-disable, button)
-Discarded unsupported scriptlet filter: +js(ra, disabled, button)
-Discarded unsupported scriptlet filter: +js(nobab)
-Discarded unsupported scriptlet filter: +js(nano-sib, time)
-Discarded unsupported scriptlet filter: +js(nano-sib, time, 2500)
-Discarded unsupported scriptlet filter: +js(nano-stb, , 1400)
-Discarded unsupported scriptlet filter: +js(norafif, _0x)
-Discarded unsupported scriptlet filter: +js(aost, adblock)
-Discarded unsupported scriptlet filter: +js(nano-stb, run)
-Discarded unsupported scriptlet filter: +js(nano-stb, , ,0)
-Discarded unsupported scriptlet filter: +js(ra, onclick, [onclick^="window.open"])
-Discarded unsupported scriptlet filter: +js(nano-stb, tick)
-Discarded unsupported scriptlet filter: +js(noeval-if, chp_ad)
-Discarded unsupported scriptlet filter: +js(ra, onclick, [onclick^="pop"])
-Discarded unsupported scriptlet filter: +js(nano-sib, clearInterval, *)
-Discarded unsupported scriptlet filter: +js(nano-stb, , , 0.02)
-Discarded unsupported scriptlet filter: +js(nano-sib, seconds)
-Discarded unsupported scriptlet filter: +js(nano-sib, , ,0.02)
-Discarded unsupported scriptlet filter: +js(nano-sib, inner)
-Discarded unsupported scriptlet filter: +js(nano-sib, circle_animation)
-Discarded unsupported scriptlet filter: +js(nano-stb, CountBack, 990)
-Discarded unsupported scriptlet filter: +js(ra, disabled, button[id="invisibleCaptchaShortlink"])
-Discarded unsupported scriptlet filter: +js(ra, onmouseover|onclick|onmouseout, .save-btn.pull-right)
-Discarded unsupported scriptlet filter: +js(nano-sib, timer, 1000, 0.6)
-Discarded unsupported scriptlet filter: +js(ra, href, #clickfakeplayer)
-Discarded unsupported scriptlet filter: +js(aost, document.getElementById, onLoadEvent)
-Discarded unsupported scriptlet filter: +js(refresh-defuser)
-Discarded unsupported scriptlet filter: +js(ra, onclick, , stay)
-Discarded unsupported scriptlet filter: +js(aost, Object, inlineScript)
-Discarded unsupported scriptlet filter: +js(nano-stb, , ,0.02)
-Discarded unsupported scriptlet filter: +js(noeval-if, tmohentai)
-Discarded unsupported scriptlet filter: +js(cookie-remover, ref_cookie)
-Discarded unsupported scriptlet filter: +js(nano-stb, seconds)
-Discarded unsupported scriptlet filter: +js(aost, Object, mark)
-Discarded unsupported scriptlet filter: +js(nano-sib, countdown)
-Discarded unsupported scriptlet filter: +js(nano-sib, web_counter)
-Discarded unsupported scriptlet filter: +js(nano-sib, video_counter)
-Discarded unsupported scriptlet filter: +js(nano-stb, notification_state, 12000)
-Discarded unsupported scriptlet filter: +js(ra, oncontextmenu)
-Discarded unsupported scriptlet filter: +js(ra, class, div.intAdX)
-Discarded unsupported scriptlet filter: +js(ra, class, div[class^="img"][class$="ad"])
-Discarded unsupported scriptlet filter: +js(alert-buster)
-Discarded unsupported scriptlet filter: +js(nano-sib,/SplashScreen|BannerAd/)
-Discarded unsupported scriptlet filter: +js(nano-stb,/SplashScreen|BannerAd/)
-Discarded unsupported scriptlet filter: +js(nano-sib, i--)
-Discarded unsupported scriptlet filter: +js(nano-sib, , *, 0)
-Discarded unsupported scriptlet filter: +js(ra, data-ff-code)
-Discarded unsupported scriptlet filter: +js(aost, Object, /gdpr.*inlineScript/)
-Discarded unsupported scriptlet filter: +js(aost, document.addEventListener, blocker)
-Discarded unsupported scriptlet filter: +js(aost, String.prototype.charCodeAt, $)
-Discarded unsupported scriptlet filter: +js(ra, style, ins, complete)
-Discarded unsupported scriptlet filter: +js(nano-sib, curAd)
-Discarded unsupported scriptlet filter: +js(noeval-if, debugger)
-Discarded unsupported scriptlet filter: +js(nano-sib, js-btn-skip, 1000)
-Discarded unsupported scriptlet filter: +js(nano-sib, clearInterval)
-Discarded unsupported scriptlet filter: +js(nano-stb, startDownload, 8000)
-Discarded unsupported scriptlet filter: +js(ra, href, .link)
-Discarded unsupported scriptlet filter: +js(ra, href, .fake_player > a[href])
-Discarded unsupported scriptlet filter: +js(aost, console.log, stackDepth:2)
-Discarded unsupported scriptlet filter: +js(aost, String.prototype.charCodeAt, https)
-Discarded unsupported scriptlet filter: +js(nano-sib, timer, *)
-Discarded unsupported scriptlet filter: +js(ra, target, .clickbutton)
-Discarded unsupported scriptlet filter: +js(noeval-if, fab)
-Discarded unsupported scriptlet filter: +js(ra, onclick, .btn-success.get-link, stay)
-Discarded unsupported scriptlet filter: +js(ra, disabled, .btn-primary)
-Discarded unsupported scriptlet filter: +js(nano-stb, /.?/, , 0.02)
-Discarded unsupported scriptlet filter: +js(ra, oncontextmenu, body)
-Discarded unsupported scriptlet filter: +js(aost, atob, inlineScript)
-Discarded unsupported scriptlet filter: +js(nano-sib, timer)
-Discarded unsupported scriptlet filter: +js(aost, encodeURIComponent, inlineScript)
-Discarded unsupported scriptlet filter: +js(nano-stb, , , 0)
-Discarded unsupported scriptlet filter: +js(nano-stb, , 10000, 0)
-Discarded unsupported scriptlet filter: +js(nano-sib, gotolink)
-Discarded unsupported scriptlet filter: +js(rc, hidden, button)
-Discarded unsupported scriptlet filter: +js(ra, data-ppcnt_ads, main[onclick])
-Discarded unsupported scriptlet filter: +js(ra, onClick)
-Discarded unsupported scriptlet filter: +js(nano-sib, show_download_links)
-Discarded unsupported scriptlet filter: +js(nano-stb, downloadbtn)
-Discarded unsupported scriptlet filter: +js(nano-sib, , 800)
-Discarded unsupported scriptlet filter: +js(noeval-if, show)
-Discarded unsupported scriptlet filter: +js(nano-stb, counter)
-Discarded unsupported scriptlet filter: +js(noeval-if, ads)
-Discarded unsupported scriptlet filter: +js(rc, twig-body)
-Discarded unsupported scriptlet filter: +js(ra, href, [rel^="noopener"])
-Discarded unsupported scriptlet filter: +js(aost, $, /(?=^(?!.*(https)))/)
-Discarded unsupported scriptlet filter: +js(noeval-if, popUnderStage)
-Discarded unsupported scriptlet filter: +js(ra, data-item, a[href=''])
-Discarded unsupported scriptlet filter: +js(ra, href, a[href][target="_blank"])
-Discarded unsupported scriptlet filter: +js(nano-sib, counter, *)
-Discarded unsupported scriptlet filter: +js(nano-sib, countDown)
-Discarded unsupported scriptlet filter: +js(aost, Math, showModal)
-Discarded unsupported scriptlet filter: +js(nano-sib, runDownload)
-Discarded unsupported scriptlet filter: +js(aost, EventTarget.prototype.addEventListener, stackDepth:3)
-Discarded unsupported scriptlet filter: +js(ra, data-ppcnt_ads|onclick, #main)
-Discarded unsupported scriptlet filter: +js(noeval-if, fab_alert)
-Discarded unsupported scriptlet filter: +js(ra, href, a[href*="/ads.php"][target="_blank"])
-Discarded unsupported scriptlet filter: +js(nano-sib, , 100, 0)
-Discarded unsupported scriptlet filter: +js(cookie-remover, /^/)
-Discarded unsupported scriptlet filter: +js(nano-stb, readyToVote, 12000)
-Discarded unsupported scriptlet filter: +js(nano-sib, timer, 1500)
-Discarded unsupported scriptlet filter: +js(ra, onclick, a[href^="magnet:"][onclick])
-Discarded unsupported scriptlet filter: +js(nano-sib, , 1500)
-Discarded unsupported scriptlet filter: +js(ra, target, #SafelinkGenerate)
-Discarded unsupported scriptlet filter: +js(nano-sib, , , 0.3)
-Discarded unsupported scriptlet filter: +js(nano-stb, , 7000, 0)
-Discarded unsupported scriptlet filter: +js(nano-sib, sec--)
-Discarded unsupported scriptlet filter: +js(nano-stb, timer--)
-Discarded unsupported scriptlet filter: +js(ra, onclick, a[href][onclick^="getFullStory"])
-Discarded unsupported scriptlet filter: +js(nano-sib, #timer)
-Discarded unsupported scriptlet filter: +js(noeval-if, adsbygoogle)
-Discarded unsupported scriptlet filter: +js(nano-sib, timer, 1100)
-Discarded unsupported scriptlet filter: +js(ra, onclick, .player > div[onclick])
-Discarded unsupported scriptlet filter: +js(aost, Math, onreadystatechange)
-Discarded unsupported scriptlet filter: +js(aost, Math.random, /\st\.[a-zA-Z]*\s/)
-Discarded unsupported scriptlet filter: +js(aost, Object, /(?=^(?!.*(https)))/)
-Discarded unsupported scriptlet filter: +js(aost, Math.random, /\st\.[a-zA-Z]*\sinlineScript/)
-Discarded unsupported scriptlet filter: +js(aost, Object,  /(?=^(?!.*(https)))/)
-Discarded unsupported scriptlet filter: +js(aost, XMLHttpRequest, rocket)
-Discarded unsupported scriptlet filter: +js(ra, onclick, body)
-Discarded unsupported scriptlet filter: +js(ra, onclick, .previewhd > a)
-Discarded unsupported scriptlet filter: +js(aost, Object.prototype.hasOwnProperty, /(?=^(?!.*(Array|Object|facebook|google)))/)
-Discarded unsupported scriptlet filter: +js(cookie-remover, PageCount)
-Discarded unsupported scriptlet filter: +js(norafif, style.opacity)
-Discarded unsupported scriptlet filter: +js(nano-stb, download, 1100)
-Discarded unsupported scriptlet filter: +js(aost, Math.random, )
-Discarded unsupported scriptlet filter: +js(ra, onclick, a.thumb.mvi-cover)
-Discarded unsupported scriptlet filter: +js(aost, jQuery, ai_adb)
-Discarded unsupported scriptlet filter: +js(aost, JSON.parse, computed)
-Discarded unsupported scriptlet filter: +js(nano-stb, timer)
-Discarded unsupported scriptlet filter: +js(aost, XMLHttpRequest, onreadystatechange)
-Discarded unsupported scriptlet filter: +js(ra, href|target, a[href^="https://tipstertube.com/bookmaker/"][target="_blank"], stay)
-Discarded unsupported scriptlet filter: +js(nano-sib, time, , 0)
-Discarded unsupported scriptlet filter: +js(nano-stb, countDown)
-Discarded unsupported scriptlet filter: +js(aost, localStorage, inlineScript)
-Discarded unsupported scriptlet filter: +js(nano-sib, counter)
-Discarded unsupported scriptlet filter: +js(nano-stb, countdown, 10000)
-Discarded unsupported scriptlet filter: +js(aost, _pop, _init)
-Discarded unsupported scriptlet filter: +js(ra, href|target|data-ipshover-target|data-ipshover|data-autolink|rel, a[href^="https://thumpertalk.com/link/click/"][target="_blank"])
-Discarded unsupported scriptlet filter: +js(nano-sib, secs)
-Discarded unsupported scriptlet filter: +js(nano-sib, download)
-Discarded unsupported scriptlet filter: +js(m3u-prune, /^https?:\/\/redirector\.googlevideo\.com.*/, /.*m3u8/)
-Discarded unsupported scriptlet filter: +js(aost, Math.floor, /computed|\$\./)
-Discarded unsupported scriptlet filter: +js(aost, Math.floor, )
-Discarded unsupported scriptlet filter: +js(aost, Math.floor, randStr)
-Discarded unsupported scriptlet filter: +js(nano-sib, _0x)
-Discarded unsupported scriptlet filter: +js(aost, Math.round, onload)
-Discarded unsupported scriptlet filter: +js(aost, document.getElementById, inlineScript)
-Discarded unsupported scriptlet filter: +js(rc, hidden, video)
-Discarded unsupported scriptlet filter: +js(ra, href, #continue)
-Discarded unsupported scriptlet filter: +js(noeval-if, _0x)
-Discarded unsupported scriptlet filter: +js(nano-sib, timer.remove)
-Discarded unsupported scriptlet filter: +js(noeval-if, deblocker)
-Discarded unsupported scriptlet filter: +js(nano-sib, downloadButton)
-Discarded unsupported scriptlet filter: +js(aost, $, :1:1)
-Discarded unsupported scriptlet filter: +js(rc, get-link, .ybtn.get-link[target="_blank"], stay)
-Discarded unsupported scriptlet filter: +js(nano-sib, timeleft)
-Discarded unsupported scriptlet filter: +js(ra, disabled, input[id="button1"][class="btn btn-primary"][disabled])
-Discarded unsupported scriptlet filter: +js(nano-stb, .fadeIn(), 3000)
-Discarded unsupported scriptlet filter: +js(ra, style, div[style="display: none;"])
-Discarded unsupported scriptlet filter: +js(ra, type, [src*="SPOT"], asap stay)
-Discarded unsupported scriptlet filter: +js(rc, get-link, .btn-success.get-link[target="_blank"], stay)
-Discarded unsupported scriptlet filter: +js(nano-sib, counter--)
-Discarded unsupported scriptlet filter: +js(nano-sib, (i-1))
-Discarded unsupported scriptlet filter: +js(ra, class, div#player)
-Discarded unsupported scriptlet filter: +js(nano-sib, skipOptions)
-Discarded unsupported scriptlet filter: +js(ra, onclick, #invisibleCaptchaShortlink)
-Discarded unsupported scriptlet filter: +js(ra, onclick, a.btn-success.get-link)
-Discarded unsupported scriptlet filter: +js(nano-sib, countDown, 1150, 0.5)
-Discarded unsupported scriptlet filter: +js(nano-sib, btn-success)
-Discarded unsupported scriptlet filter: +js(aost, Math, ai_)
-Discarded unsupported scriptlet filter: +js(nano-stb, load_ads)
-Discarded unsupported scriptlet filter: +js(rc, has-sidebar-adz|DashboardPage-inner, div[class^="DashboardPage-inner"], stay)
-Discarded unsupported scriptlet filter: +js(rc, hasStickyAd, div.hasStickyAd[class^="SetPage"], stay)
-Discarded unsupported scriptlet filter: +js(rc, has-adz, div.has-adz, stay)
-Discarded unsupported scriptlet filter: +js(aost, document.createElement, make_rand_div)
-Discarded unsupported scriptlet filter: +js(nano-sib, timercounter)
-Discarded unsupported scriptlet filter: +js(nano-sib, count, *)
-Discarded unsupported scriptlet filter: +js(rc, rekl_test)
-Discarded unsupported scriptlet filter: +js(aost, _pop)
-Discarded unsupported scriptlet filter: +js(rc, cnx-ad-container|cnx-ad-bid-slot)
-Discarded unsupported scriptlet filter: +js(aost, localStorage, stackDepth:1)
-Discarded unsupported scriptlet filter: +js(ra, href|target|data-onclick, a[id="dl"][data-onclick^="window.open"], stay)
-Discarded unsupported scriptlet filter: +js(aost, foreverJQ, /document.createElement|stackDepth:2/)
-Discarded unsupported scriptlet filter: +js(nano-stb, _0x, 15000)
-Discarded unsupported scriptlet filter: +js(nano-stb, location.href, 8000)
-Discarded unsupported scriptlet filter: +js(aost, Math, )
-Discarded unsupported scriptlet filter: +js(nano-sib, temp)
-Discarded unsupported scriptlet filter: +js(aost, $, inlineScript)
-Discarded unsupported scriptlet filter: +js(nano-sib, sec)
-Discarded unsupported scriptlet filter: +js(aost, Math, https)
-Discarded unsupported scriptlet filter: +js(rc, disabled, #skip-btn)
-Discarded unsupported scriptlet filter: +js(aost, HTMLSelectElement, Object)
-Discarded unsupported scriptlet filter: +js(nano-stb, aTagChange, 12000)
-Discarded unsupported scriptlet filter: +js(aost, fetch, inlineScript)
-Discarded unsupported scriptlet filter: +js(ra, onclick, a[onclick^="setTimeout"])
-Discarded unsupported scriptlet filter: +js(rc, vjs-hidden, .vjs-control-bar, stay)
-Discarded unsupported scriptlet filter: +js(nano-sib, game)
-Discarded unsupported scriptlet filter: +js(ra, href, .mvi-cover)
-Discarded unsupported scriptlet filter: +js(aost, console, onload)
-Discarded unsupported scriptlet filter: +js(nano-sib, hard_work)
-Discarded unsupported scriptlet filter: +js(ra, href, .t-out-span [href*="utm_source"], stay)
-Discarded unsupported scriptlet filter: +js(ra, src, .t-out-span [src*=".gif"], stay)
-Discarded unsupported scriptlet filter: +js(nano-sib, counter, , 0.02)
-Discarded unsupported scriptlet filter: +js(nano-sib, , , 0.02)
-Discarded unsupported scriptlet filter: +js(rc, hidden, .panel-body > .text-center > button)
-Discarded unsupported scriptlet filter: +js(ra, disabled, .panel-body > .text-center > button)
-Discarded unsupported scriptlet filter: +js(ra, class, [data-name*="|"], stay)
-Discarded unsupported scriptlet filter: +js(nano-stb, isScrexed, 5000)
-Discarded unsupported scriptlet filter: +js(nano-sib, timePassed, 1300)
-Discarded unsupported scriptlet filter: +js(nano-stb, st2)
-Discarded unsupported scriptlet filter: +js(nano-stb, subentry, 4000)
-Discarded unsupported scriptlet filter: +js(nano-sib, timer, 1800)
-Discarded unsupported scriptlet filter: +js(aost, document.head.appendChild, /stackDepth:1.*inlineScript/, 2)
-Discarded unsupported scriptlet filter: +js(nano-sib, download_delay)
-Discarded unsupported scriptlet filter: +js(aost, document.getElementById, disable)
-Discarded unsupported scriptlet filter: +js(nano-stb, /__ez|window.location.href/, *)
-Discarded unsupported scriptlet filter: +js(nano-sib, countc)
-Discarded unsupported scriptlet filter: +js(aost, XMLHttpRequest, injectedScript)
-Discarded unsupported scriptlet filter: +js(aost, Math, _0x)
-Discarded unsupported scriptlet filter: +js(window-close-if, /protect?)
-Discarded unsupported scriptlet filter: +js(nano-sib, distance)
-Discarded unsupported scriptlet filter: +js(nano-stb, countdown)
-Discarded unsupported scriptlet filter: +js(nano-stb, location.href, 18000)
-Discarded unsupported scriptlet filter: +js(ra, href, [onclick], stay)
-Discarded unsupported scriptlet filter: +js(nano-sib, count)
-Discarded unsupported scriptlet filter: +js(ra, disabled, #downloadbtn)
-Discarded unsupported scriptlet filter: +js(ra, onmousedown, .ob-dynamic-rec-link, stay)
-Discarded unsupported scriptlet filter: +js(aost, onload, /app.js)
-Discarded unsupported scriptlet filter: +js(ra, disabled, a#redirect-btn)
-Discarded unsupported scriptlet filter: +js(rc, disabled, a#redirect-btn)
-Discarded unsupported scriptlet filter: +js(nano-stb, show, 4000)
-Discarded unsupported scriptlet filter: +js(ra, onclick, form > button)
-Discarded unsupported scriptlet filter: +js(aost, document.createElement, create_ad)
-Discarded unsupported scriptlet filter: +js(nano-sib, contador)
-Discarded unsupported scriptlet filter: +js(aost, document.createElement, /^(?!.*(jquery|setDocument|inlineScript|gstatic|google|root|cgi).*)/)
-Discarded unsupported scriptlet filter: +js(nano-sib, display)
-Discarded unsupported scriptlet filter: +js(nano-stb, download_loading, *)
-Discarded unsupported scriptlet filter: +js(aost, document.querySelectorAll, show)
-Discarded unsupported scriptlet filter: +js(nano-sib, second)
-Discarded unsupported scriptlet filter: +js(nano-stb, submit, 5000)
-Discarded unsupported scriptlet filter: +js(ra, href, .unlock-step-link)
-Discarded unsupported scriptlet filter: +js(nano-stb, fa-unlock, 3000)
-Discarded unsupported scriptlet filter: +js(ra, href, [href*="discord"])
-Discarded unsupported scriptlet filter: +js(cookie-remover)
-Discarded unsupported scriptlet filter: +js(nano-sib, updatePercentage, 100, 0.02)
-Discarded unsupported scriptlet filter: +js(aost, document.createElement, /(?=^(?!.*(https)))/)
-Discarded unsupported scriptlet filter: +js(aost, document.createElement, /(?=^(?!.*(http)))/)
-Discarded unsupported scriptlet filter: +js(aost, Object, webpack)
-Discarded unsupported scriptlet filter: +js(aost, String.prototype.charCodeAt, /(?=^(?!.*(https|Object)))/)
-Discarded unsupported scriptlet filter: +js(nano-sib, current())
-Discarded unsupported scriptlet filter: +js(nano-sib, l, , 0)
-Discarded unsupported scriptlet filter: +js(noeval-if, adb)
-Discarded unsupported scriptlet filter: +js(nano-stb, setinteracted, 2000)
-Discarded unsupported scriptlet filter: +js(ra, href, .MediaStep, stay)
-Discarded unsupported scriptlet filter: +js(nano-stb, waiting, 5000)
-Discarded unsupported scriptlet filter: +js(nano-stb, finalButton, *)
-Discarded unsupported scriptlet filter: +js(nano-stb, modalTimer, 1500)
-Discarded unsupported scriptlet filter: +js(ra, disabled, button#myClickButton)
-Discarded unsupported scriptlet filter: +js(ra, style, button#finalButton)
-Discarded unsupported scriptlet filter: +js(nano-stb, [native code])
-Discarded unsupported scriptlet filter: +js(nano-stb, recurseMyFunction)
-Discarded unsupported scriptlet filter: +js(nano-stb, myCount)
-Discarded unsupported scriptlet filter: +js(nano-stb, downloadBtn, *)
-Discarded unsupported scriptlet filter: +js(nano-sib, timeSec, *)
-Discarded unsupported scriptlet filter: +js(nano-stb, getlink, *)
-Discarded unsupported scriptlet filter: +js(aost, Date.now, afScript)
-Discarded unsupported scriptlet filter: +js(ra, onclick, .btn)
-Discarded unsupported scriptlet filter: +js(nano-sib, /verify_text|isCompleted/, *)
-Discarded unsupported scriptlet filter: +js(nano-stb, document[_0x, *)
-Discarded unsupported scriptlet filter: +js(xml-prune, Period[id*="-roll-"][id*="-ad-"], , pubads.g.doubleclick.net/ondemand)
-Discarded unsupported scriptlet filter: +js(nano-stb, , 3000)
-Discarded unsupported scriptlet filter: +js(window-close-if, /link-)
-Discarded unsupported scriptlet filter: +js(window-close-if, /telephone-service)
-Discarded unsupported scriptlet filter: +js(window-close-if, /^/)
-Discarded unsupported scriptlet filter: +js(aost, document.querySelectorAll, /(?=^(?!.*(https|Parse|Image)))/)
-Discarded unsupported scriptlet filter: +js(nano-sib, cnDownloadBtn, 1200, 0.02)
-Discarded unsupported scriptlet filter: +js(ra, href, [href="/bestporn.html"])
-Discarded unsupported scriptlet filter: +js(nano-sib, countdown, *, 0.02)
-Discarded unsupported scriptlet filter: +js(ra, disabled, button#getlink)
-Discarded unsupported scriptlet filter: +js(ra, disabled, button#gotolink)
-Discarded unsupported scriptlet filter: +js(ra, id, #div-gpt-ad-footer)
-Discarded unsupported scriptlet filter: +js(ra, id, #div-gpt-ad-pagebottom)
-Discarded unsupported scriptlet filter: +js(ra, id, #div-gpt-ad-relatedbottom-1)
-Discarded unsupported scriptlet filter: +js(ra, id, #div-gpt-ad-sidebottom)
-Discarded unsupported scriptlet filter: +js(ra, disabled, .downloadbtn)
-Discarded unsupported scriptlet filter: +js(noeval-if, /chp_?ad/)
-Discarded unsupported scriptlet filter: +js(aost, $, openAdsModal)
-Discarded unsupported scriptlet filter: +js(ra, onclick, #direct_link > a[onclick])
-Discarded unsupported scriptlet filter: +js(ra, disabled, .get-link)
-Discarded unsupported scriptlet filter: +js(rc, disabled, .get-link)
-Discarded unsupported scriptlet filter: +js(nano-stb, shortenbl)
-Discarded unsupported scriptlet filter: +js(nano-stb, enbll)
-Discarded unsupported scriptlet filter: +js(ra, href, [onclick^="pop"])
-Discarded unsupported scriptlet filter: +js(aost, btoa, /https|stackDepth:3/)
-Discarded unsupported scriptlet filter: +js(rc, td-ad-background-link)
-Discarded unsupported scriptlet filter: +js(rc, download-font-button2, .download-font-button)
-Discarded unsupported scriptlet filter: +js(ra, disabled, #gotolink)
-Discarded unsupported scriptlet filter: +js(nano-sib, time, , 0.02)
-Discarded unsupported scriptlet filter: +js(nano-sib, wait)
-Discarded unsupported scriptlet filter: +js(aost, document.createElement, Admiral)
-Discarded unsupported scriptlet filter: +js(aost, document.createElement, notify)
-Discarded unsupported scriptlet filter: +js(sed, script, /^window\.open.*\_blank.*\'$/, window.location.href=realurl;)
-Discarded unsupported scriptlet filter: +js(nano-stb, gotoo, *)
-Discarded unsupported scriptlet filter: +js(rc, unclickable, , stay)
-Discarded unsupported scriptlet filter: +js(aost, jQuery, window.onload)
-Discarded unsupported scriptlet filter: +js(ra, href, .atas > a[href*="/redirect"][onclick])
-Discarded unsupported scriptlet filter: +js(ra, type, [type="hidden"], stay)
-Discarded unsupported scriptlet filter: +js(ra, action, [action*="multinews"], stay)
-Discarded unsupported scriptlet filter: +js(ra, class, [class="hidden"], stay)
-Discarded unsupported scriptlet filter: +js(m3u-prune, /#EXT-X-DISCONTINUITY.{1\,100}#EXT-X-DISCONTINUITY/gm, mixed.m3u8)
-Discarded unsupported scriptlet filter: +js(rc, is-hidden)
-Discarded unsupported scriptlet filter: +js(nano-sib, downloadToken)
-Discarded unsupported scriptlet filter: +js(noeval-if, String.fromCharCode)
-Discarded unsupported scriptlet filter: +js(nano-stb, redirectpage, 13500)
-Discarded unsupported scriptlet filter: +js(aost, document.querySelectorAll, /(?=^(?!.*(https|injectedScript)))/)
-Discarded unsupported scriptlet filter: +js(aost, document.getElementById, fairAdblock)
-Discarded unsupported scriptlet filter: +js(nano-stb, countdown, , 0.02)
-Discarded unsupported scriptlet filter: +js(nano-stb, decodeURL, *)
-Discarded unsupported scriptlet filter: +js(nano-sib, updateProgress, *)
-Discarded unsupported scriptlet filter: +js(aost, Math, base64)
-Discarded unsupported scriptlet filter: +js(aost, document.querySelector, showModal)
-Discarded unsupported scriptlet filter: +js(noeval-if, fairAdblock)
-Discarded unsupported scriptlet filter: +js(noeval-if, isFairAdBlocker)
-Discarded unsupported scriptlet filter: +js(nano-sib, current-=1)
-Discarded unsupported scriptlet filter: +js(ra, onload, [onload^="window.open"])
-Discarded unsupported scriptlet filter: +js(aost, setTimeout, dontask)
-Discarded unsupported scriptlet filter: +js(cookie-remover, /vs|to|vs_spon|tgpOut|current_click/)
-Discarded unsupported scriptlet filter: +js(aost, setTimeout, adsBlocked)
-Discarded unsupported scriptlet filter: +js(ra, onclick, button[onclick^="window.open"])
-Discarded unsupported scriptlet filter: +js(aost, Object.getPrototypeOf, plugins)
-Discarded unsupported scriptlet filter: +js(aost, document.createElement, adsBlocked)
-Discarded unsupported scriptlet filter: +js(aost, Error, /stackDepth:1\s/)
-Discarded unsupported scriptlet filter: +js(sed, #text, /スポンサーリンク|Sponsored Link|广告/)
-Discarded unsupported scriptlet filter: +js(sed, #text, /^Advertisement$/)
-Discarded unsupported scriptlet filter: +js(ra, onclick, [onclick^="track"])
-Discarded unsupported scriptlet filter: +js(ra, onmousedown, [onmousedown^="return enc(this,'https://track.rediff.com"])
-Discarded unsupported scriptlet filter: +js(cookie-remover, realm.cookiesAndJavascript)
-Discarded unsupported scriptlet filter: +js(aost, btoa, send)
-Discarded unsupported scriptlet filter: +js(aost, Math.floor, injectedScript)
-Discarded unsupported scriptlet filter: +js(aost, document.cookie)
-Discarded unsupported scriptlet filter: +js(ra, data-outbound-url, .outbound)
-Discarded unsupported scriptlet filter: +js(cookie-remover, kt_qparams)
-Discarded unsupported scriptlet filter: +js(cookie-remover, kt_ips)
-Discarded unsupported scriptlet filter: +js(cookie-remover, kt_referer)
-Discarded unsupported scriptlet filter: +js(nano-stb, /outboundLink/)
-Discarded unsupported scriptlet filter: +js(ra, class|style, div[id^="los40_gpt"])
-Discarded unsupported scriptlet filter: +js(ra, onclick, a[href][onclick^="trackOutboundLink"])
-Discarded unsupported scriptlet filter: +js(nano-stb, isPeriodic, *)
-Discarded unsupported scriptlet filter: +js(fingerprint2)
-Discarded unsupported scriptlet filter: +js(ra, data-woman-ex, a[href][data-woman-ex])
-Discarded unsupported scriptlet filter: +js(ra, data-trm-action|data-trm-category|data-trm-label, .trm_event, stay)
-Discarded unsupported scriptlet filter: +js(aost, History, /(^(?!.*(Function|HTMLDocument).*))/)
-Discarded unsupported scriptlet filter: +js(nano-sib, skipAdSeconds, , 0.02)
-Discarded unsupported scriptlet filter: +js(ra, class|id, .breadcrumb + div, asap)
-Discarded unsupported scriptlet filter: +js(noeval-if, blocker)
-Discarded unsupported scriptlet filter: +js(aost, document.getElementById, adsBlocked)
-Discarded unsupported scriptlet filter: +js(ra, href, [href*="jump"], stay)
-Discarded unsupported scriptlet filter: +js(ra, data-ivad-preroll-adtag, video, stay)
-Discarded unsupported scriptlet filter: +js(aost, $, /(?=.*_)/)
-Rejected scriptlet filters: 0
-
-Scriptlet-related distinct filters: 2142
-Scriptlet-related injectable files: 11
-	default.json-prune.js, default.set-constant.js, default.no-settimeout-if.js, default.abort-on-property-read.js, default.no-addeventlistener-if.js, default.no-setinterval-if.js, default.no-fetch-if.js, default.abort-current-script.js, default.no-windowopen-if.js, default.abort-on-property-write.js, default.no-xhr-if.js
-Discarded unsupported scriptlet filter: +js(no-fetch-if, ads)
-Discarded unsupported scriptlet filter: +js(noeval)
-Discarded unsupported scriptlet filter: +js(nosiif, nrWrapper)
-Discarded unsupported scriptlet filter: +js(aost, document.createElement, _0x)
-Discarded unsupported scriptlet filter: +js(nowebrtc)
-Discarded unsupported scriptlet filter: +js(no-fetch-if, /^/)
-Discarded unsupported scriptlet filter: +js(no-xhr-if, ads)
-Discarded unsupported scriptlet filter: +js(nofab)
-Discarded unsupported scriptlet filter: +js(popads.net)
-Discarded unsupported scriptlet filter: +js(nano-sib)
-Discarded unsupported scriptlet filter: +js(cookie-remover, video_view_count)
-Discarded unsupported scriptlet filter: +js(nano-stb, grecaptcha.ready, *)
-Discarded unsupported scriptlet filter: +js(ra, data-ad-img|data-ad-target, , stay)
-Discarded unsupported scriptlet filter: +js(aost, String.prototype.charCodeAt, ai_)
-Discarded unsupported scriptlet filter: +js(ra, checked, input#chkIsAdd)
-Discarded unsupported scriptlet filter: +js(nosiif, /devtools|0x/)
-Discarded unsupported scriptlet filter: +js(nosiif, /0x|google|ecoded|==/)
-Discarded unsupported scriptlet filter: +js(disable-newtab-links)
-Discarded unsupported scriptlet filter: +js(popads-dummy)
-Discarded unsupported scriptlet filter: +js(ra, onclick)
-Discarded unsupported scriptlet filter: +js(nano-stb)
-Discarded unsupported scriptlet filter: +js(nosiif, _0x)
-Discarded unsupported scriptlet filter: +js(noeval-if, replace)
-Discarded unsupported scriptlet filter: +js(noeval-if, adsBlocked)
-Discarded unsupported scriptlet filter: +js(ra, href, #opfk)
-Discarded unsupported scriptlet filter: +js(aost, Math, inlineScript)
-Discarded unsupported scriptlet filter: +js(nano-sib, , , 0)
-Discarded unsupported scriptlet filter: +js(no-xhr-if, /^(?!.*(einthusan\.io|yahoo|rtnotif|ajax|quantcast|bugsnag))/)
-Discarded unsupported scriptlet filter: +js(nosiif, visibility, 1000)
-Discarded unsupported scriptlet filter: +js(ra, onmousemove, button)
-Discarded unsupported scriptlet filter: +js(ra, onclick, button[id][onclick*=".html"])
-Discarded unsupported scriptlet filter: +js(nano-stb, /.?/, 4000)
-Discarded unsupported scriptlet filter: +js(noeval-if, ppu)
-Discarded unsupported scriptlet filter: +js(json-prune, urls, urls.0)
-Discarded unsupported scriptlet filter: +js(aost, String.fromCharCode, stackDepth:3)
-Discarded unsupported scriptlet filter: +js(no-fetch-if, adsbygoogle)
-Discarded unsupported scriptlet filter: +js(nobab)
-Discarded unsupported scriptlet filter: +js(nano-stb, disabled)
-Discarded unsupported scriptlet filter: +js(aost, document.createElement, inlineScript)
-Discarded unsupported scriptlet filter: +js(ra, onclick, [onclick^="window.open"])
-Discarded unsupported scriptlet filter: +js(nano-stb, tick)
-Discarded unsupported scriptlet filter: +js(noeval-if, chp_ad)
-Discarded unsupported scriptlet filter: +js(nano-sib, seconds)
-Discarded unsupported scriptlet filter: +js(nano-sib, time.html, 1000)
-Discarded unsupported scriptlet filter: +js(ra, href, #clickfakeplayer)
-Discarded unsupported scriptlet filter: +js(aost, Object, inlineScript)
-Discarded unsupported scriptlet filter: +js(no-xhr-if, googlesyndication)
-Discarded unsupported scriptlet filter: +js(ra, type, input[value^="http"])
-Discarded unsupported scriptlet filter: +js(nano-stb, seconds)
-Discarded unsupported scriptlet filter: +js(nosiif, /^/)
-Discarded unsupported scriptlet filter: +js(json-prune, server)
-Discarded unsupported scriptlet filter: +js(nosiif, .submit)
-Discarded unsupported scriptlet filter: +js(nano-sib, i--)
-Discarded unsupported scriptlet filter: +js(nosiif, 0x)
-Discarded unsupported scriptlet filter: +js(no-xhr-if, damoh)
-Discarded unsupported scriptlet filter: +js(noeval-if, debugger)
-Discarded unsupported scriptlet filter: +js(nosiif, visibility)
-Discarded unsupported scriptlet filter: +js(ra, href, a#clickfakeplayer)
-Discarded unsupported scriptlet filter: +js(ra, href, .fake_player > [href][target])
-Discarded unsupported scriptlet filter: +js(nano-sib, timer)
-Discarded unsupported scriptlet filter: +js(no-fetch-if, /adtrue\.com|eningspon\.com|freychang\.fun|orquideassp\.com|popunder/)
-Discarded unsupported scriptlet filter: +js(no-xhr-if, /a-mo\.net|adnxs\.com|prebid|creativecdn\.com|e-planning\.net|quantumdex\.io/)
-Discarded unsupported scriptlet filter: +js(noeval-if, show)
-Discarded unsupported scriptlet filter: +js(nosiif, adblock)
-Discarded unsupported scriptlet filter: +js(ra, target, #downloadvideo)
-Discarded unsupported scriptlet filter: +js(nano-stb, counter)
-Discarded unsupported scriptlet filter: +js(noeval-if, ads)
-Discarded unsupported scriptlet filter: +js(noeval-if, AdBlock)
-Discarded unsupported scriptlet filter: +js(aost, $ado, ado)
-Discarded unsupported scriptlet filter: +js(aost, Math.random, t.pt)
-Discarded unsupported scriptlet filter: +js(json-prune, clickAnywhere urls)
-Discarded unsupported scriptlet filter: +js(ra, onclick, [onclick*="window.open"])
-Discarded unsupported scriptlet filter: +js(ra, target|href, a[href^="//"])
-Discarded unsupported scriptlet filter: +js(aost, String.prototype.charCodeAt, _0x)
-Discarded unsupported scriptlet filter: +js(json-prune, data.attributes.config.freewheel data.attributes.config.featureFlags.dPlayer)
-Discarded unsupported scriptlet filter: +js(aost, Math.random, /\st\.[a-zA-Z]*\s/)
-Discarded unsupported scriptlet filter: +js(aost, Object, /(?=^(?!.*(https)))/)
-Discarded unsupported scriptlet filter: +js(aost, Math.random, /\st\.[a-zA-Z]*\sinlineScript/)
-Discarded unsupported scriptlet filter: +js(aost, XMLHttpRequest, /inlineScript|stackDepth:1/)
-Discarded unsupported scriptlet filter: +js(aost, XMLHttpRequest, inlineScript)
-Discarded unsupported scriptlet filter: +js(aost, JSON.parse, computed)
-Discarded unsupported scriptlet filter: +js(aost, localStorage, inlineScript)
-Discarded unsupported scriptlet filter: +js(aost, Math.floor, )
-Discarded unsupported scriptlet filter: +js(ra, href, .button[href^="javascript"])
-Discarded unsupported scriptlet filter: +js(nano-sib, timePassed)
-Discarded unsupported scriptlet filter: +js(nosiif, daadb)
-Discarded unsupported scriptlet filter: +js(aost, Math.random, computed)
-Discarded unsupported scriptlet filter: +js(ra, href, a#clickfkplayer)
-Discarded unsupported scriptlet filter: +js(aost, Element.prototype.matches, litespeed)
-Discarded unsupported scriptlet filter: +js(nano-sib, timer, *, 0.02)
-Discarded unsupported scriptlet filter: +js(ra, uk-sticky, header, stay)
-Discarded unsupported scriptlet filter: +js(ra, style, body, stay)
-Discarded unsupported scriptlet filter: +js(aost, document.createElement, /(?=^(?!.*(http)))/)
-Discarded unsupported scriptlet filter: +js(nano-stb, downloadBtn, *)
-Discarded unsupported scriptlet filter: +js(noeval-if, /chp_?ad/)
-Discarded unsupported scriptlet filter: +js(no-xhr-if,/^/)
-Discarded unsupported scriptlet filter: +js(nano-stb, shortConfig, 15000)
-Discarded unsupported scriptlet filter: +js(aost, document.getElementById, adsBlocked)
-Rejected scriptlet filters: 0
-
-Scriptlet-related entity-based injectable files: 7
-	default.no-settimeout-if.js, default.no-addeventlistener-if.js, default.abort-on-property-read.js, default.abort-current-script.js, default.set-constant.js, default.no-windowopen-if.js, default.abort-on-property-write.js
+	1e5l0dg, 0n349io, 0923s0g, 0vgve18, 0e36sh4, 1l73cgs, 1qu5hh4, 13bo43g, 151kmi8, 1en7060, 0krf9h8, 0pb2kh0, 0jeqgog, 1v9qsl4, 1evt5i4, 1m70a6k, 1sheilk, 1o58eqo, 0rmmlt8, 1kkog44, 1qqlps4, default
+Declarative-related distinct filters: 304 distinct combined selectors
+Procedural-related distinct filters: 506 distinct combined selectors
 ============================
 Listset for 'alb-0':
 	Fetching remote https://raw.githubusercontent.com/AnXh3L0/blocklist/master/albanian-easylist-addition/Albania.txt
@@ -899,14 +420,15 @@ Input filter count: 34
 	Rejected filter count: 0
 Output rule count: 28
 	Plain good: 25
+
 	Maybe good (regexes): 0
 	redirect=: 0
 	removeparams= (accepted/discarded): 0/0
 	csp=: 0
 	Unsupported: 3
-		Could not salvage rule with only entity-based domain= option: filma24.*
-		Could not salvage rule with only entity-based domain= option: www.filma24.*
-		Could not salvage rule with only entity-based domain= option: filma24.*
+		Can't salvage rule with only entity-based domain= option: filma24.*
+		Can't salvage rule with only entity-based domain= option: www.filma24.*
+		Can't salvage rule with only entity-based domain= option: filma24.*
 Rejected cosmetic filters: 1
 	Entity-based filter not supported: div.col-8:style(width: 100% !important)
 CSS-generic: 6 plain CSS selectors
@@ -926,6 +448,7 @@ Input filter count: 673
 	Rejected filter count: 0
 Output rule count: 662
 	Plain good: 662
+
 	Maybe good (regexes): 0
 	redirect=: 0
 	removeparams= (accepted/discarded): 0/0
@@ -942,51 +465,30 @@ CSS-specific injectable files: 1
 ============================
 Listset for 'chn-0':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/224.txt
-Input filter count: 16263
-	Accepted filter count: 16210
+Input filter count: 16436
+	Accepted filter count: 16382
 	Rejected filter count: 1
 Output rule count: 6452
-	Plain good: 6390
+	Plain good: 6391
+
 	Maybe good (regexes): 12
 	redirect=: 37
 	removeparams= (accepted/discarded): 0/0
 	csp=: 8
-	Unsupported: 5
-		regexFilter is not RE2-compatible: ^(?!.*(bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|cdn.staticfile.org|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fastlylb.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|vk.com|yandex.|yastatic.net|ytimg.com|zencdn.net|player|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com)).*$
+	Unsupported: 4
 		Unsupported modifier exception
 		Unsupported modifier exception
 		Invalid network filter in chn-0: @@||ad.alimama.com^$genericblock
 		Invalid network filter in chn-0: @@||cmechina.net^$genericblock
-CSS-generic: 713 plain CSS selectors
-CSS-specific domain-based: 6378 distinct filters
-	Combined into 2627 distinct entries
+CSS-generic: 715 plain CSS selectors
+CSS-specific domain-based: 6386 distinct filters
+	Combined into 2631 distinct entries
 CSS-specific entity-based: 4 distinct filters
 	Combined into 2 distinct entries
 CSS-specific injectable files: 12
-	09osonc, 0h86thg, 1lpup6s, 1mfk1ts, 0ajvkvc, 1sknee8, 13euvds, 1bs2g4k, 1u5o7cs, 0u2auv4, 0jrmohs, chn-0
+	0uj5dq8, 0m0ld5c, 17ra5ko, 1g1bpeo, 0imiphg, 1ili530, 0p4q7n8, 0h4qcqs, 1o1bek8, 0q35uc4, 0bj578k, chn-0
 Declarative-related distinct filters: 56 distinct combined selectors
 Procedural-related distinct filters: 55 distinct combined selectors
-Discarded unsupported scriptlet filter: +js(abort-on-stack-trace, document.createElement, make_rand_div)
-Discarded unsupported scriptlet filter: +js(noeval-if, ADS_BLOCKED)
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, adCountDown, , 0.02)
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, .s--, , 0.02)
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, video-ad-timeout, *, 0.02)
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, e-, , 0.02)
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, r--, , 0.02)
-Discarded unsupported scriptlet filter: +js(remove-attr, onclick, a)
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, CloseAd, , 0.02)
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, /timerAdCountdown|_0x/, , 0.02)
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, timerAdCountdown, , 0.02)
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, timerAdCountdownCount, , 0.02)
-Rejected scriptlet filters: 0
-
-Scriptlet-related distinct filters: 98
-Scriptlet-related injectable files: 10
-	chn-0.set-constant.js, chn-0.no-settimeout-if.js, chn-0.abort-current-script.js, chn-0.no-fetch-if.js, chn-0.no-addeventlistener-if.js, chn-0.no-setinterval-if.js, chn-0.abort-on-property-read.js, chn-0.abort-on-property-write.js, chn-0.json-prune.js, chn-0.no-windowopen-if.js
-Rejected scriptlet filters: 0
-
-Scriptlet-related entity-based injectable files: 2
-	chn-0.set-constant.js, chn-0.abort-current-script.js
 ============================
 Listset for 'cze-0':
 	Fetching remote https://raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt
@@ -996,6 +498,7 @@ Input filter count: 225
 	Rejected filter count: 0
 Output rule count: 118
 	Plain good: 113
+
 	Maybe good (regexes): 0
 	redirect=: 4
 	removeparams= (accepted/discarded): 0/0
@@ -1009,28 +512,17 @@ CSS-specific entity-based: 0 distinct filters
 	Combined into 0 distinct entries
 CSS-specific injectable files: 1
 	1gme8ro
-Declarative-related distinct filters: 7 distinct combined selectors
+Declarative-related distinct filters: 8 distinct combined selectors
 Procedural-related distinct filters: 6 distinct combined selectors
-Discarded unsupported scriptlet filter: +js(nofab)
-Discarded unsupported scriptlet filter: +js(nobab)
-Discarded unsupported scriptlet filter: +js(nano-sib, ntmt_retest_btn_countdown_do, 1000)
-Discarded unsupported scriptlet filter: +js(nano-stb, vendor-load, 3000)
-Discarded unsupported scriptlet filter: +js(ra, style, body)
-Discarded unsupported scriptlet filter: +js(aost, $.cookie, inlineScript)
-Discarded unsupported scriptlet filter: +js(cookie-remover, /^_?adb/)
-Rejected scriptlet filters: 0
-
-Scriptlet-related distinct filters: 27
-Scriptlet-related injectable files: 6
-	cze-0.abort-on-property-read.js, cze-0.abort-current-script.js, cze-0.set-constant.js, cze-0.abort-on-property-write.js, cze-0.no-addeventlistener-if.js, cze-0.no-setinterval-if.js
 ============================
 Listset for 'deu-0':
 	Fetching remote https://easylist.to/easylistgermany/easylistgermany.txt
-Input filter count: 2295
-	Accepted filter count: 2295
+Input filter count: 2300
+	Accepted filter count: 2300
 	Rejected filter count: 0
-Output rule count: 1755
-	Plain good: 1749
+Output rule count: 1757
+	Plain good: 1751
+
 	Maybe good (regexes): 4
 	redirect=: 0
 	removeparams= (accepted/discarded): 0/0
@@ -1039,13 +531,13 @@ Output rule count: 1755
 		Unpatchable redirect filter: abp-resource:blank-mp4
 		Invalid network filter in deu-0: @@||gofeminin.de^$genericblock
 CSS-generic: 355 plain CSS selectors
-CSS-specific domain-based: 2309 distinct filters
-	Combined into 1299 distinct entries
+CSS-specific domain-based: 2321 distinct filters
+	Combined into 1304 distinct entries
 CSS-specific entity-based: 0 distinct filters
 	Combined into 0 distinct entries
 CSS-specific injectable files: 6
-	0qer8do, 1fppu1o, 1egt1gk, 0sdtdp8, 0683tnk, 11p8vhs
-Procedural-related distinct filters: 57 distinct combined selectors
+	0v6bgvg, 1kkk2to, 1o9qbj4, 0rgc9ko, 0bnr914, 14t6ch8
+Procedural-related distinct filters: 58 distinct combined selectors
 ============================
 Listset for 'fin-0':
 	Fetching remote https://raw.githubusercontent.com/finnish-easylist-addition/finnish-easylist-addition/gh-pages/Finland_adb.txt
@@ -1055,6 +547,7 @@ Input filter count: 182
 	Rejected filter count: 0
 Output rule count: 162
 	Plain good: 150
+
 	Maybe good (regexes): 5
 	redirect=: 3
 	removeparams= (accepted/discarded): 1/0
@@ -1064,64 +557,46 @@ Output rule count: 162
 		regexFilter is not RE2-compatible: telsu\.fi\/(?![^>].*\.(jpg|png|svg|ico)$).+
 		regexFilter is not RE2-compatible: telsu\.fi\/img\/(?!cloudcity|mindmax|navibg|prg|tvohjelmat)
 CSS-generic: 52 plain CSS selectors
-CSS-specific domain-based: 1017 distinct filters
-	Combined into 441 distinct entries
+CSS-specific domain-based: 1023 distinct filters
+	Combined into 444 distinct entries
 CSS-specific entity-based: 0 distinct filters
 	Combined into 0 distinct entries
 CSS-specific injectable files: 2
-	1c0fqdo, 16ivcoc
+	0kd77c8, 04ti3us
 Declarative-related distinct filters: 16 distinct combined selectors
 Procedural-related distinct filters: 92 distinct combined selectors
-Discarded unsupported scriptlet filter: +js(rc, st__hidden, #gamewrapper)
-Discarded unsupported scriptlet filter: +js(rc, Profile__TopCard--advertisement, , stay)
-Discarded unsupported scriptlet filter: +js(rc, SearchResultList--advertisement, , stay)
-Discarded unsupported scriptlet filter: +js(rc, SearchResultList__Row--advertisement, , stay)
-Rejected scriptlet filters: 0
-
-Scriptlet-related distinct filters: 4
-Scriptlet-related injectable files: 3
-	fin-0.no-settimeout-if.js, fin-0.abort-current-script.js, fin-0.abort-on-property-read.js
 ============================
 Listset for 'fra-0':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/16.txt
-Input filter count: 19303
-	Accepted filter count: 19239
+Input filter count: 19407
+	Accepted filter count: 19343
 	Rejected filter count: 51
-Output rule count: 6563
-	Plain good: 6510
+Output rule count: 6559
+	Plain good: 6507
+		Salvaged rule by ignoring 2 entity-based domain= option: gentside.*|ohmymag.*|maxisciences.com
+		Salvaged rule by ignoring 2 entity-based domain= option: gentside.*|ohmymag.*|maxisciences.com
 	Maybe good (regexes): 7
 	redirect=: 31
 	removeparams= (accepted/discarded): 0/0
 	csp=: 6
-	Unsupported: 9
+	Unsupported: 8
 		regexFilter is not RE2-compatible: ^https?:\/\/vitamiiin\.com\/(?!wp-content|uploads|plugins|themes)(.*)
-		regexFilter is not RE2-compatible: ^(?!.*(bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|cdn.staticfile.org|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fastlylb.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|vk.com|yandex.|yastatic.net|ytimg.com|zencdn.net|player|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com)).*$
-		Could not salvage rule with only entity-based domain= option: downdetector.*
-		Could not salvage rule with only entity-based domain= option: vidembed.*
-		Could not salvage rule with only entity-based domain= option: vidembed.*
-		Could not salvage rule with only entity-based domain= option: fmovies.*
-		Could not salvage rule with only entity-based domain= option: fmovies.*
+		Can't salvage rule with only entity-based domain= option: downdetector.*
+		Can't salvage rule with only entity-based domain= option: vidembed.*
+		Can't salvage rule with only entity-based domain= option: vidembed.*
+		Can't salvage rule with only entity-based domain= option: fmovies.*
+		Can't salvage rule with only entity-based domain= option: fmovies.*
 		Unsupported modifier exception
 		Unsupported modifier exception
-CSS-generic: 2426 plain CSS selectors
-CSS-specific domain-based: 2172 distinct filters
-	Combined into 1207 distinct entries
+CSS-generic: 2415 plain CSS selectors
+CSS-specific domain-based: 2191 distinct filters
+	Combined into 1215 distinct entries
 CSS-specific entity-based: 3 distinct filters
 	Combined into 2 distinct entries
 CSS-specific injectable files: 6
-	1616jqc, 0kg5bmk, 1rqblg0, 00bmbq4, 1h03l70, fra-0
+	0i9rsdc, 00ihu1k, 1em6fqg, 0h3c6fs, 0ru1tno, fra-0
 Declarative-related distinct filters: 36 distinct combined selectors
 Procedural-related distinct filters: 70 distinct combined selectors
-Discarded unsupported scriptlet filter: +js(abort-on-stack-trace, document.createEvent, Object.trigger)
-Discarded unsupported scriptlet filter: +js(remove-attr, href, a[href]#clickfakeplayer)
-Discarded unsupported scriptlet filter: +js(remove-class, with-ad, div)
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, #regarder, 7000, 0.02)
-Discarded unsupported scriptlet filter: +js(remove-attr, href|target, a[href]#clickfakeplayer)
-Rejected scriptlet filters: 0
-
-Scriptlet-related distinct filters: 82
-Scriptlet-related injectable files: 11
-	fra-0.abort-on-property-read.js, fra-0.no-xhr-if.js, fra-0.abort-current-script.js, fra-0.no-settimeout-if.js, fra-0.no-fetch-if.js, fra-0.set-constant.js, fra-0.abort-on-property-write.js, fra-0.no-setinterval-if.js, fra-0.no-addeventlistener-if.js, fra-0.json-prune.js, fra-0.no-windowopen-if.js
 ============================
 Listset for 'grc-0':
 	Fetching remote https://www.void.gr/kargig/void-gr-filters.txt
@@ -1130,6 +605,7 @@ Input filter count: 446
 	Rejected filter count: 0
 Output rule count: 412
 	Plain good: 412
+
 	Maybe good (regexes): 0
 	redirect=: 0
 	removeparams= (accepted/discarded): 0/0
@@ -1153,6 +629,7 @@ Input filter count: 52
 	Rejected filter count: 0
 Output rule count: 43
 	Plain good: 43
+
 	Maybe good (regexes): 0
 	redirect=: 0
 	removeparams= (accepted/discarded): 0/0
@@ -1160,12 +637,12 @@ Output rule count: 43
 	Unsupported: 0
 
 CSS-generic: 11 plain CSS selectors
-CSS-specific domain-based: 229 distinct filters
-	Combined into 125 distinct entries
+CSS-specific domain-based: 230 distinct filters
+	Combined into 126 distinct entries
 CSS-specific entity-based: 0 distinct filters
 	Combined into 0 distinct entries
 CSS-specific injectable files: 1
-	0g4la8c
+	0l7r50k
 Declarative-related distinct filters: 1 distinct combined selectors
 Procedural-related distinct filters: 2 distinct combined selectors
 ============================
@@ -1176,6 +653,7 @@ Input filter count: 329
 	Rejected filter count: 0
 Output rule count: 203
 	Plain good: 200
+
 	Maybe good (regexes): 1
 	redirect=: 2
 	removeparams= (accepted/discarded): 0/0
@@ -1191,31 +669,15 @@ CSS-specific injectable files: 2
 	0jss1b0, 0pao68k
 Declarative-related distinct filters: 15 distinct combined selectors
 Procedural-related distinct filters: 20 distinct combined selectors
-Discarded unsupported scriptlet filter: +js(ra, style, body, stay)
-Discarded unsupported scriptlet filter: +js(rc, modal-open, body)
-Discarded unsupported scriptlet filter: +js(window.open-defuser.js)
-Discarded unsupported scriptlet filter: +js(ra, class, section[class="life-section l-section-main article-section l-section-article"])
-Discarded unsupported scriptlet filter: +js(ra, oncontextmenu)
-Discarded unsupported scriptlet filter: +js(rc, bottom-l, body, stay)
-Discarded unsupported scriptlet filter: +js(rc, bottom-s, body, stay)
-Discarded unsupported scriptlet filter: +js(rc, modal-open, body, stay)
-Discarded unsupported scriptlet filter: +js(rc, have-ad, body)
-Discarded unsupported scriptlet filter: +js(ra, style, body)
-Discarded unsupported scriptlet filter: +js(rc, darken, body)
-Discarded unsupported scriptlet filter: +js(rc, blurry, body > :not(.m-fbPopup), stay)
-Rejected scriptlet filters: 0
-
-Scriptlet-related distinct filters: 20
-Scriptlet-related injectable files: 6
-	hun-0.abort-current-script.js, hun-0.set-constant.js, hun-0.no-settimeout-if.js, hun-0.abort-on-property-read.js, hun-0.abort-on-property-write.js, hun-0.no-addeventlistener-if.js
 ============================
 Listset for 'idn-0':
 	Fetching remote https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/subscriptions/abpindo.txt
-Input filter count: 4291
-	Accepted filter count: 4291
+Input filter count: 4294
+	Accepted filter count: 4292
 	Rejected filter count: 0
-Output rule count: 3022
-	Plain good: 3022
+Output rule count: 3023
+	Plain good: 3023
+
 	Maybe good (regexes): 0
 	redirect=: 0
 	removeparams= (accepted/discarded): 0/0
@@ -1223,45 +685,47 @@ Output rule count: 3022
 	Unsupported: 0
 
 CSS-generic: 239 plain CSS selectors
-CSS-specific domain-based: 787 distinct filters
+CSS-specific domain-based: 788 distinct filters
 	Combined into 447 distinct entries
-CSS-specific entity-based: 17 distinct filters
-	Combined into 9 distinct entries
+CSS-specific entity-based: 21 distinct filters
+	Combined into 10 distinct entries
 CSS-specific injectable files: 3
-	1ilsrjo, 1239b3g, idn-0
+	1ecahfg, 1m91va4, idn-0
 Declarative-related distinct filters: 2 distinct combined selectors
 ============================
 Listset for 'ind-0':
 	Fetching remote https://easylist-downloads.adblockplus.org/indianlist.txt
-Input filter count: 5370
-	Accepted filter count: 5370
+Input filter count: 5360
+	Accepted filter count: 5360
 	Rejected filter count: 0
-Output rule count: 5324
-	Plain good: 5324
+Output rule count: 5315
+	Plain good: 5315
+
 	Maybe good (regexes): 0
 	redirect=: 0
 	removeparams= (accepted/discarded): 0/0
 	csp=: 0
 	Unsupported: 0
 
-CSS-specific domain-based: 3604 distinct filters
-	Combined into 2515 distinct entries
+CSS-specific domain-based: 3616 distinct filters
+	Combined into 2528 distinct entries
 CSS-specific entity-based: 0 distinct filters
 	Combined into 0 distinct entries
 CSS-specific injectable files: 10
-	00fqjrk, 0mgkdtc, 06m596g, 198p1j0, 08u6l1c, 05dc0dg, 065nv54, 1mblq14, 1g02uhc, 1ihg100
+	06kobpc, 060m9io, 19uaa08, 1h47p9s, 0qidr5k, 1ksn3c8, 0r3oe0o, 061rde8, 0unnpic, 1lvimcs
 Procedural-related distinct filters: 71 distinct combined selectors
 ============================
 Listset for 'irn-0':
 	Fetching remote https://raw.githubusercontent.com/MasterKia/PersianBlocker/main/PersianBlocker.txt
-Input filter count: 1500
-	Accepted filter count: 1500
+Input filter count: 1508
+	Accepted filter count: 1508
 	Rejected filter count: 0
-Output rule count: 577
-	Plain good: 536
+Output rule count: 575
+	Plain good: 535
+
 	Maybe good (regexes): 2
 	redirect=: 0
-	removeparams= (accepted/discarded): 11/26
+	removeparams= (accepted/discarded): 10/26
 	csp=: 0
 	Unsupported: 28
 		FilterStrictParty: Strict partyness strict3p not supported
@@ -1291,32 +755,20 @@ Output rule count: 577
 		Unsupported regex-based removeParam: /^utm_/
 		Unsupported regex-based removeParam: /^utm_/
 		Unsupported regex-based removeParam: /^utm_/
-		Unsupported regex-based removeParam: /^utm_/
+		Unsupported regex-based removeParam: /^utm_|tatoken/
+Rejected cosmetic filters: 3
+	Entity-based filter not supported: section#left-side > aside > h4:has-text(تبلیغات):upward(aside)
+	Entity-based filter not supported: a#btnDownload:style(display: block !important;)
+	Entity-based filter not supported: a#btnDownload:others()
 CSS-generic: 16 plain CSS selectors
-CSS-specific domain-based: 729 distinct filters
+CSS-specific domain-based: 728 distinct filters
 	Combined into 387 distinct entries
 CSS-specific entity-based: 0 distinct filters
 	Combined into 0 distinct entries
 CSS-specific injectable files: 2
-	0tfos70, 0pvtebg
+	0ncbprg, 07vqklk
 Declarative-related distinct filters: 44 distinct combined selectors
-Procedural-related distinct filters: 110 distinct combined selectors
-Discarded unsupported scriptlet filter: +js(nano-sib)
-Discarded unsupported scriptlet filter: +js(nano-stb)
-Discarded unsupported scriptlet filter: +js(ra, onselectstart|oncopy|oncontextmenu, body)
-Discarded unsupported scriptlet filter: +js(nano-stb, document.getElementById, *, 0.01)
-Discarded unsupported scriptlet filter: +js(window-close-if, /[Ss][Mm][Oo][Ss][Tt][Aa][Ff][Aa][Mm][Oo][Oo][Ss][Aa][Vv][Ii]/)
-Discarded unsupported scriptlet filter: +js(cookie-remover, tracker_visitor_id)
-Discarded unsupported scriptlet filter: +js(ra, draggable, , stay)
-Discarded unsupported scriptlet filter: +js(nano-stb, , , 0)
-Discarded unsupported scriptlet filter: +js(ra, disabled, , stay)
-Discarded unsupported scriptlet filter: +js(nano-sib, , , 0)
-Discarded unsupported scriptlet filter: +js(cookie-remover, captcha_key)
-Rejected scriptlet filters: 0
-
-Scriptlet-related distinct filters: 60
-Scriptlet-related injectable files: 8
-	irn-0.set-constant.js, irn-0.abort-current-script.js, irn-0.no-windowopen-if.js, irn-0.no-xhr-if.js, irn-0.abort-on-property-read.js, irn-0.json-prune.js, irn-0.no-addeventlistener-if.js, irn-0.no-settimeout-if.js
+Procedural-related distinct filters: 109 distinct combined selectors
 ============================
 Listset for 'isl-0':
 	Fetching remote https://adblock.gardar.net/is.abp.txt
@@ -1325,6 +777,7 @@ Input filter count: 68
 	Rejected filter count: 0
 Output rule count: 68
 	Plain good: 68
+
 	Maybe good (regexes): 0
 	redirect=: 0
 	removeparams= (accepted/discarded): 0/0
@@ -1346,6 +799,7 @@ Input filter count: 701
 	Rejected filter count: 1
 Output rule count: 273
 	Plain good: 248
+
 	Maybe good (regexes): 4
 	redirect=: 10
 	removeparams= (accepted/discarded): 0/0
@@ -1372,96 +826,56 @@ CSS-specific injectable files: 2
 	05blr48, isr-0
 Declarative-related distinct filters: 3 distinct combined selectors
 Procedural-related distinct filters: 3 distinct combined selectors
-Discarded unsupported scriptlet filter: +js(nowebrtc)
-Discarded unsupported scriptlet filter: +js(aost, Math, injectedScript)
-Discarded unsupported scriptlet filter: +js(cookie-remover, /r13_maavron/)
-Rejected scriptlet filters: 0
-
-Scriptlet-related distinct filters: 13
-Scriptlet-related injectable files: 7
-	isr-0.abort-on-property-read.js, isr-0.no-settimeout-if.js, isr-0.abort-on-property-write.js, isr-0.no-windowopen-if.js, isr-0.no-addeventlistener-if.js, isr-0.set-constant.js, isr-0.abort-current-script.js
 ============================
 Listset for 'ita-0':
 	Fetching remote https://easylist-downloads.adblockplus.org/easylistitaly.txt
-Input filter count: 5308
-	Accepted filter count: 5308
+Input filter count: 4797
+	Accepted filter count: 4797
 	Rejected filter count: 0
-Output rule count: 5039
-	Plain good: 5035
+Output rule count: 4527
+	Plain good: 4523
+
 	Maybe good (regexes): 4
 	redirect=: 0
 	removeparams= (accepted/discarded): 0/0
 	csp=: 0
 	Unsupported: 0
 
-CSS-generic: 361 plain CSS selectors
-CSS-specific domain-based: 3377 distinct filters
-	Combined into 2120 distinct entries
+CSS-generic: 356 plain CSS selectors
+CSS-specific domain-based: 3270 distinct filters
+	Combined into 2101 distinct entries
 CSS-specific entity-based: 0 distinct filters
 	Combined into 0 distinct entries
 CSS-specific injectable files: 9
-	1q6ga64, 1b81pgg, 0kenjk0, 1tjqiu4, 1pbrqak, 17jeum8, 12jdcjc, 19udbpc, 1tps55o
+	1tr8c74, 1b37704, 1vh0noo, 0m3tv3g, 1n4mvt0, 0g3c34k, 12sf5eg, 1cvejl0, 1njuu5g
 Procedural-related distinct filters: 22 distinct combined selectors
 ============================
 Listset for 'jpn-1':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/7.txt
-Input filter count: 1707
-	Accepted filter count: 1706
+Input filter count: 1711
+	Accepted filter count: 1710
 	Rejected filter count: 0
-Output rule count: 1153
-	Plain good: 1112
+Output rule count: 1155
+	Plain good: 1115
+
 	Maybe good (regexes): 14
 	redirect=: 22
 	removeparams= (accepted/discarded): 0/1
 	csp=: 0
-	Unsupported: 5
+	Unsupported: 4
 		regexFilter is not RE2-compatible: \/kyodopress_cms\/wp-content\/(themes\/kyodopress\/img_banner\/(?!bn_newspaper\.gif)|banners).*
 		regexFilter is not RE2-compatible: ^https:\/\/(?!www)[a-z]{3,}\.[a-z]{8,}\.com\/index\.php\?main_page=product_info&(?:cPath|products_id)=
 		regexFilter is not RE2-compatible: ^https?:\/\/(?!www)[a-z]{3,5}\.[0-9a-z]{5,10}\.[a-z]{2,6}\/[a-z]{3,15}\/(?=[a-z]{0,9}[0-9A-Z])[0-9A-z]{10}\.html$
-		regexFilter is not RE2-compatible: ^(?!.*(bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|cdn.staticfile.org|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fastlylb.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|vk.com|yandex.|yastatic.net|ytimg.com|zencdn.net|player|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com)).*$
 		Unsupported regex-based removeParam: /^(cookie|ga_|u_)/
 CSS-generic: 99 plain CSS selectors
-CSS-specific domain-based: 5290 distinct filters
-	Combined into 2793 distinct entries
+CSS-specific domain-based: 5346 distinct filters
+	Combined into 2814 distinct entries
 CSS-specific entity-based: 13 distinct filters
 	Combined into 7 distinct entries
 CSS-specific injectable files: 12
-	1s1naus, 1pjprog, 1qt1r20, 08rk3fs, 1h4dl78, 0qf4s24, 053ha14, 0fm1dv0, 0h0gbcs, 1uboids, 0ot1mr4, jpn-1
-Declarative-related distinct filters: 114 distinct combined selectors
-Procedural-related distinct filters: 525 distinct combined selectors
-Discarded unsupported scriptlet filter: +js(remove-attr, hidden, html[hidden])
-Discarded unsupported scriptlet filter: +js(remove-class, visited, #oRslt li a.visited, stay)
-Discarded unsupported scriptlet filter: +js(remove-attr, id, #div-gpt-ad-sidebottom)
-Discarded unsupported scriptlet filter: +js(remove-attr, id, #div-gpt-ad-footer)
-Discarded unsupported scriptlet filter: +js(remove-attr, id, #div-gpt-ad-pagebottom)
-Discarded unsupported scriptlet filter: +js(remove-attr, id, #div-gpt-ad-relatedbottom-1)
-Discarded unsupported scriptlet filter: +js(remove-attr, onclick, div[data-js][style*="background"], stay)
-Discarded unsupported scriptlet filter: +js(remove-attr, class, [id][role] > [id] > [class] > section)
-Discarded unsupported scriptlet filter: +js(remove-class, with-ad, section.main)
-Discarded unsupported scriptlet filter: +js(remove-attr, href, .game_amazon > a[href*=".amazon."])
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, .run()}, 1000)
-Discarded unsupported scriptlet filter: +js(remove-class, has-topbanner, body > header.has-topbanner)
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, simplegameAdCountDown, 1000, 0.02)
-Discarded unsupported scriptlet filter: +js(noeval-if, hoihoi)
-Discarded unsupported scriptlet filter: +js(remove-attr, data-popup-url)
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, aeriaGamesAdCountDown, , 0.02)
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, u(!0), 5000)
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, [native code], 15000)
-Discarded unsupported scriptlet filter: +js(remove-attr, onclick, span > a[onclick])
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, visibility, 4000)
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, [native code], 2000, 0.3)
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, [native code], 3000, 0.25)
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, [native code], 4000, 0.2)
-Rejected scriptlet filters: 0
-
-Scriptlet-related distinct filters: 61
-Scriptlet-related injectable files: 9
-	jpn-1.no-xhr-if.js, jpn-1.set-constant.js, jpn-1.no-fetch-if.js, jpn-1.abort-current-script.js, jpn-1.no-settimeout-if.js, jpn-1.no-addeventlistener-if.js, jpn-1.abort-on-property-read.js, jpn-1.no-windowopen-if.js, jpn-1.json-prune.js
-Discarded unsupported scriptlet filter: +js(no-fetch-if, cdn.adschill.com)
-Rejected scriptlet filters: 0
-
-Scriptlet-related entity-based injectable files: 2
-	jpn-1.no-settimeout-if.js, jpn-1.abort-current-script.js
+	1skva94, 1d91bh4, 1rovghg, 0ektj50, 1ef3cko, 1avmvg4, 13ajfu8, 1a4kcn8, 1doutrg, 0eopecc, 0ilfvac, jpn-1
+Declarative-related distinct filters: 117 distinct combined selectors
+Procedural-related distinct filters: 535 distinct combined selectors
 ============================
 Listset for 'kor-1':
 	Fetching remote https://cdn.jsdelivr.net/gh/List-KR/List-KR@master/filter-uBlockOrigin.txt
@@ -1488,21 +902,21 @@ Listset for 'kor-1':
 	Fetching remote https://cdn.jsdelivr.net/gh/List-KR/List-KR@master/filters-uBO/allowlist.txt
 	Fetching remote https://cdn.jsdelivr.net/gh/List-KR/List-KR@master/filters-share/specific_CSS.txt
 	Fetching remote https://cdn.jsdelivr.net/gh/List-KR/List-KR@master/filters-uBO/specific_CSS.txt
-Input filter count: 1188
-	Accepted filter count: 1182
+Input filter count: 1196
+	Accepted filter count: 1190
 	Rejected filter count: 0
-Output rule count: 849
-	Plain good: 675
+Output rule count: 856
+	Plain good: 683
+
 	Maybe good (regexes): 142
 	redirect=: 20
 	removeparams= (accepted/discarded): 1/0
 	csp=: 0
-	Unsupported: 11
+	Unsupported: 10
 		regexFilter is not RE2-compatible: ^https:\/\/nstatic\.dcinside\.com\/dc\/event\/nft_gaejugi\/(?!nftcon)
 		regexFilter is not RE2-compatible: ^https?:\/\/img\.kidkids\.net\/banner\/upimage\/[A-Z]+(_|-)[A-Z0-9]+(_|-)(?!LOGO)
 		regexFilter is not RE2-compatible: ^https:\/\/image\.aladin\.co\.kr\/img\/banner\/flash\/welcome\/nav\/(?!181010)[0-9]+_tab
 		regexFilter is not RE2-compatible: ^https:\/\/static\.wixstatic\.com\/media\/[0-9a-z]{6}_[a-z0-9]{32}~(?!.+doc).+
-		regexFilter is not RE2-compatible: ^https:\/\/(www\.)?kookje\.co\.kr\/(mobile\/)?design\/(?!(bn_what300|.*naver|popup|series\/)).*
 		regexFilter is not RE2-compatible: ^https:\/\/thumb\.toomics\.com\/upload\/banner\/(?!main|cut)
 		regexFilter is not RE2-compatible: ^https:\/\/(www\.)?filetender\.com\/images\/(?!logo).+\.(jpg|png)$
 		regexFilter is not RE2-compatible: ^https:\/\/(www\.)?ruru\.tv\/uploads\/[0-9]+\/((?!16682220461360)[0-9]+)
@@ -1510,28 +924,14 @@ Output rule count: 849
 		regexFilter is not RE2-compatible: ^https:\/\/s[0-9]+\.sonagitv\.live\/sonagi_me\/sites\/[0-9]\/[0-9]{4}\/[0-9]{2}\/((?!sonagitvlogonew)[0-9A-z]+)\.
 		Unpatchable redirect filter: google-ima3.js
 CSS-generic: 5 plain CSS selectors
-CSS-specific domain-based: 1134 distinct filters
-	Combined into 610 distinct entries
+CSS-specific domain-based: 1146 distinct filters
+	Combined into 616 distinct entries
 CSS-specific entity-based: 0 distinct filters
 	Combined into 0 distinct entries
 CSS-specific injectable files: 3
-	055ah8g, 0ec3d74, 0k12ulo
-Declarative-related distinct filters: 102 distinct combined selectors
-Procedural-related distinct filters: 49 distinct combined selectors
-Discarded unsupported scriptlet filter: +js(ra, placeholder, input#searchMainKeyword)
-Discarded unsupported scriptlet filter: +js(ra, placeholder, input#searchKeyword)
-Discarded unsupported scriptlet filter: +js(ra, placeholder, input.search_input, asap stay)
-Discarded unsupported scriptlet filter: +js(nano-stb, count, , 0.001)
-Discarded unsupported scriptlet filter: +js(nobab)
-Discarded unsupported scriptlet filter: +js(nobab2)
-Discarded unsupported scriptlet filter: +js(nofab)
-Discarded unsupported scriptlet filter: +js(aost, alert, chk_adBlock)
-Discarded unsupported scriptlet filter: +js(aost, CSS2Properties.prototype.getPropertyValue, setTimeout)
-Rejected scriptlet filters: 0
-
-Scriptlet-related distinct filters: 56
-Scriptlet-related injectable files: 7
-	kor-1.abort-current-script.js, kor-1.json-prune.js, kor-1.abort-on-property-read.js, kor-1.set-constant.js, kor-1.no-settimeout-if.js, kor-1.no-xhr-if.js, kor-1.no-fetch-if.js
+	1lpkhvs, 031580s, 1s20aa4
+Declarative-related distinct filters: 106 distinct combined selectors
+Procedural-related distinct filters: 50 distinct combined selectors
 ============================
 Listset for 'ltu-0':
 	Fetching remote https://raw.githubusercontent.com/EasyList-Lithuania/easylist_lithuania/master/easylistlithuania.txt
@@ -1540,6 +940,7 @@ Input filter count: 567
 	Rejected filter count: 0
 Output rule count: 522
 	Plain good: 518
+
 	Maybe good (regexes): 1
 	redirect=: 3
 	removeparams= (accepted/discarded): 0/0
@@ -1555,11 +956,6 @@ CSS-specific injectable files: 2
 	1rlcllk, 0hl3cvc
 Declarative-related distinct filters: 6 distinct combined selectors
 Procedural-related distinct filters: 7 distinct combined selectors
-Rejected scriptlet filters: 0
-
-Scriptlet-related distinct filters: 7
-Scriptlet-related injectable files: 4
-	ltu-0.abort-current-script.js, ltu-0.no-settimeout-if.js, ltu-0.abort-on-property-read.js, ltu-0.no-windowopen-if.js
 ============================
 Listset for 'lva-0':
 	Fetching remote https://raw.githubusercontent.com/Latvian-List/adblock-latvian/master/lists/latvian-list.txt
@@ -1568,6 +964,7 @@ Input filter count: 185
 	Rejected filter count: 0
 Output rule count: 144
 	Plain good: 144
+
 	Maybe good (regexes): 0
 	redirect=: 0
 	removeparams= (accepted/discarded): 0/0
@@ -1588,6 +985,7 @@ Input filter count: 291
 	Rejected filter count: 0
 Output rule count: 159
 	Plain good: 158
+
 	Maybe good (regexes): 0
 	redirect=: 0
 	removeparams= (accepted/discarded): 0/0
@@ -1609,17 +1007,18 @@ Listset for 'nld-0':
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/main/EasyDutch/Block_first_party_Server.txt
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/main/EasyDutch/Block_third_party_Server.txt
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/main/EasyDutch/Block_Resources.txt
-	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/main/EasyDutch/Hide_General.txt
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/main/EasyDutch/Block_Whitelist.txt
+	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/main/EasyDutch/Hide_General.txt
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/main/EasyDutch/Hide_Specific.txt
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/main/EasyDutch/Hide_Whitelist.txt
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/main/EasyDutch/Anti-Adblock.txt
 	Fetching remote https://raw.githubusercontent.com/EasyDutch-uBO/EasyDutch/main/EasyDutch/No_uBlock_Filters.txt
-Input filter count: 716
-	Accepted filter count: 713
+Input filter count: 725
+	Accepted filter count: 722
 	Rejected filter count: 0
-Output rule count: 606
-	Plain good: 595
+Output rule count: 615
+	Plain good: 604
+
 	Maybe good (regexes): 6
 	redirect=: 2
 	removeparams= (accepted/discarded): 0/0
@@ -1627,48 +1026,40 @@ Output rule count: 606
 	Unsupported: 3
 		FilterStrictParty: Strict partyness strict3p not supported
 		regexFilter is not RE2-compatible: https\:\/\/nieuwsfiets\.nu\/wp-content\/uploads\/.*\/.*(?:banner-(?!mis|tip).*|\.gif)
-		Could not salvage rule with only entity-based domain= option: allestoringen.*
+		Can't salvage rule with only entity-based domain= option: allestoringen.*
 CSS-generic: 15 plain CSS selectors
-CSS-specific domain-based: 969 distinct filters
-	Combined into 662 distinct entries
+CSS-specific domain-based: 977 distinct filters
+	Combined into 668 distinct entries
 CSS-specific entity-based: 1 distinct filters
 	Combined into 1 distinct entries
 CSS-specific injectable files: 4
-	0mluia0, 0m7s9ks, 0vc3aeg, nld-0
+	0vi1f40, 01l3160, 0nc6qdo, nld-0
 Declarative-related distinct filters: 8 distinct combined selectors
-Procedural-related distinct filters: 189 distinct combined selectors
-Discarded unsupported scriptlet filter: +js(rc, pui__root--no-seekbar, .pui__root--no-seekbar, stay)
-Discarded unsupported scriptlet filter: +js(xml-prune, Period[id*="-roll-"][id*="-ad-"], , pubads.g.doubleclick.net/ondemand)
-Discarded unsupported scriptlet filter: +js(aost, document.querySelectorAll, /(?=.*inlineScript)(?=^(?!.*(https)))/)
-Discarded unsupported scriptlet filter: +js(setTimeout-defuser, AdBlockerCheck)
-Rejected scriptlet filters: 0
-
-Scriptlet-related distinct filters: 18
-Scriptlet-related injectable files: 10
-	nld-0.no-settimeout-if.js, nld-0.json-prune.js, nld-0.no-fetch-if.js, nld-0.no-addeventlistener-if.js, nld-0.set-constant.js, nld-0.abort-current-script.js, nld-0.abort-on-property-write.js, nld-0.abort-on-property-read.js, nld-0.no-windowopen-if.js, nld-0.no-setinterval-if.js
+Procedural-related distinct filters: 195 distinct combined selectors
 ============================
 Listset for 'nor-0':
 	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianList.txt
 	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/AntiAdblockEntries.txt
 	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/NordicFilters-NotFirefox.txt
 	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/NordicFilters-NotBrave.txt
-Input filter count: 1147
-	Accepted filter count: 1147
+Input filter count: 1148
+	Accepted filter count: 1148
 	Rejected filter count: 0
-Output rule count: 494
-	Plain good: 448
+Output rule count: 495
+	Plain good: 449
+
 	Maybe good (regexes): 4
 	redirect=: 5
 	removeparams= (accepted/discarded): 25/4
 	csp=: 1
 	Unsupported: 11
-		Could not salvage rule with only entity-based domain= option: eniro.*
-		Could not salvage rule with only entity-based domain= option: eniro.*|proff.*
-		Could not salvage rule with only entity-based domain= option: eurosport.*
-		Could not salvage rule with only entity-based domain= option: discoveryplus.*
-		Could not salvage rule with only entity-based domain= option: discoveryplus.*
-		Could not salvage rule with only entity-based domain= option: discoveryplus.*
-		Could not salvage rule with only entity-based domain= option: discoveryplus.*
+		Can't salvage rule with only entity-based domain= option: eniro.*
+		Can't salvage rule with only entity-based domain= option: eniro.*|proff.*
+		Can't salvage rule with only entity-based domain= option: eurosport.*
+		Can't salvage rule with only entity-based domain= option: discoveryplus.*
+		Can't salvage rule with only entity-based domain= option: discoveryplus.*
+		Can't salvage rule with only entity-based domain= option: discoveryplus.*
+		Can't salvage rule with only entity-based domain= option: discoveryplus.*
 		Unsupported regex-based removeParam: /^rs\d/
 		Unsupported regex-based removeParam: /^source=partnerads$/
 		Unsupported regex-based removeParam: /^source=tradedoubler$/
@@ -1680,28 +1071,14 @@ Rejected cosmetic filters: 5
 	Entity-based filter not supported: #grtvbelt_Sponsored:upward(1)
 	Entity-based filter not supported: .ad_interscroller:upward(.wrapper)
 CSS-generic: 132 plain CSS selectors
-CSS-specific domain-based: 1052 distinct filters
-	Combined into 534 distinct entries
+CSS-specific domain-based: 1060 distinct filters
+	Combined into 538 distinct entries
 CSS-specific entity-based: 48 distinct filters
 	Combined into 13 distinct entries
 CSS-specific injectable files: 4
-	0hlgg18, 0o38j2s, 0ukd508, nor-0
+	1qs8rgg, 00pdm6k, 1kfer10, nor-0
 Declarative-related distinct filters: 34 distinct combined selectors
 Procedural-related distinct filters: 65 distinct combined selectors
-Discarded unsupported scriptlet filter: +js(ra, data-track)
-Discarded unsupported scriptlet filter: +js(golem.de.js)
-Discarded unsupported scriptlet filter: +js(std, (), 2500)
-Discarded unsupported scriptlet filter: +js(ra, class, .dfp-loaded)
-Discarded unsupported scriptlet filter: +js(nofab)
-Rejected scriptlet filters: 0
-
-Scriptlet-related distinct filters: 16
-Scriptlet-related injectable files: 8
-	nor-0.set-constant.js, nor-0.abort-current-script.js, nor-0.abort-on-property-read.js, nor-0.json-prune.js, nor-0.abort-on-property-write.js, nor-0.no-fetch-if.js, nor-0.no-addeventlistener-if.js, nor-0.no-settimeout-if.js
-Rejected scriptlet filters: 0
-
-Scriptlet-related entity-based injectable files: 3
-	nor-0.no-addeventlistener-if.js, nor-0.set-constant.js, nor-0.abort-current-script.js
 ============================
 Listset for 'pol-0':
 	Fetching remote https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt
@@ -1713,6 +1090,7 @@ Input filter count: 1408
 	Rejected filter count: 1
 Output rule count: 1045
 	Plain good: 966
+
 	Maybe good (regexes): 43
 	redirect=: 27
 	removeparams= (accepted/discarded): 0/0
@@ -1726,7 +1104,7 @@ Output rule count: 1045
 		regexFilter is not RE2-compatible: ^http:\/\/((?!192\.168)(?!10\.)(?!172\.16)(?!172\.17)(?!172\.18)(?!172\.19)(?!172\.2)(?!172\.30)(?!172\.31)([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\/[a-zA-Z0-9]{30,}
 		regexFilter is not RE2-compatible: ^(http|https):\/\/www\.portel\.pl\/(?!pasaz)[-a-z0-9A-Z_%$&+=[\].]{1,200}\/[-a-z0-9A-Z_%$&+=[\]/.]{2,200}.(html|htm)
 		regexFilter is not RE2-compatible: ^(http|https):\/\/(?!www.speedvid)(?!streamcherry.com)(?!vshare)(?!vidoza)(?!www.youtube)[a-zA-Z0-9\W]{5,10}.[a-z]{2,20}\/(?!anime)[\w\W\d]{5,20}\/[a-z]{5,20}\/
-		Could not salvage rule with only entity-based domain= option: trojmiasto.*
+		Can't salvage rule with only entity-based domain= option: trojmiasto.*
 CSS-generic: 61 plain CSS selectors
 CSS-specific domain-based: 4187 distinct filters
 	Combined into 2718 distinct entries
@@ -1736,67 +1114,17 @@ CSS-specific injectable files: 11
 	0dc11m8, 0mai18k, 0148h8s, 177mkqo, 02ugbho, 08ii71g, 079a2fg, 0elabco, 0pteui8, 0atlqm8, 0075pqs
 Declarative-related distinct filters: 100 distinct combined selectors
 Procedural-related distinct filters: 75 distinct combined selectors
-Discarded unsupported scriptlet filter: +js(noeval)
-Discarded unsupported scriptlet filter: +js(nano-remove-elements-onready.js, #skyBanner)
-Discarded unsupported scriptlet filter: +js(aost, WP, r https)
-Discarded unsupported scriptlet filter: +js(aost, WP.prebid, onLoad)
-Discarded unsupported scriptlet filter: +js(noeval-if, RTCPeerConnection)
-Discarded unsupported scriptlet filter: +js(ra, scrolling, iframe#sg-iframe[scrolling="no"], stay)
-Discarded unsupported scriptlet filter: +js(nano-stb)
-Discarded unsupported scriptlet filter: +js(nano-stb, function, 1000, 0.02)
-Discarded unsupported scriptlet filter: +js(nano-remove-elements-onready.js, .screening)
-Discarded unsupported scriptlet filter: +js(nano-sib)
-Discarded unsupported scriptlet filter: +js(nano-sib, redirectId)
-Discarded unsupported scriptlet filter: +js(nano-stb, TheLink)
-Discarded unsupported scriptlet filter: +js(insert-iframe, 1, honeypot, https://www.napiprojekt.pl/napisy-42731-Ostatni-U-Boot-(1993), width: 1px !important; height: 1px !important; position: absolute !important; left: -3000px !important)
-Discarded unsupported scriptlet filter: +js(ac, active, #m_hot_1)
-Discarded unsupported scriptlet filter: +js(ac, box_active, #hot_1)
-Discarded unsupported scriptlet filter: +js(set-constant.js, showAds, true)
-Discarded unsupported scriptlet filter: +js(abort-on-property-read.js, checkAds)
-Discarded unsupported scriptlet filter: +js(setTimeout-defuser.js, hasAdblock)
-Discarded unsupported scriptlet filter: +js(abort-on-property-write.js, fuckAdBlock)
-Discarded unsupported scriptlet filter: +js(addEventListener-defuser.js, load, onload)
-Discarded unsupported scriptlet filter: +js(setTimeout-defuser.js, notDetected)
-Discarded unsupported scriptlet filter: +js(set-constant.js, pp_adblock_is_off, trueFunc)
-Discarded unsupported scriptlet filter: +js(nofab)
-Discarded unsupported scriptlet filter: +js(noeval.js)
-Discarded unsupported scriptlet filter: +js(setInterval-defuser.js, muted, 8000)
-Discarded unsupported scriptlet filter: +js(setTimeout-defuser.js, Math.round, 5000)
-Discarded unsupported scriptlet filter: +js(abort-current-inline-script.js, $, alert)
-Discarded unsupported scriptlet filter: +js(abort-current-inline-script.js, document.addEventListener, adblocka)
-Discarded unsupported scriptlet filter: +js(abort-current-inline-script.js, atob, decodeURIComponent)
-Discarded unsupported scriptlet filter: +js(abort-on-property-write.js, addBlocking)
-Discarded unsupported scriptlet filter: +js(abort-current-inline-script.js,document.getElementById, block)
-Discarded unsupported scriptlet filter: +js(setTimeout-defuser.js, AdBlock)
-Discarded unsupported scriptlet filter: +js(abort-on-property-write.js, czy_wlaczony_adblock)
-Discarded unsupported scriptlet filter: +js(abort-current-inline-script.js, parseInt, adblock)
-Discarded unsupported scriptlet filter: +js(abort-on-property-write.js, Vublock)
-Discarded unsupported scriptlet filter: +js(set-constant.js, window.google_jobrunner, noopFunc)
-Discarded unsupported scriptlet filter: +js(noeval-if.js, Criteo)
-Discarded unsupported scriptlet filter: +js(abort-on-property-write.js, adcashMacros)
-Discarded unsupported scriptlet filter: +js(set-constant.js, adsBlocked, noopFunc)
-Discarded unsupported scriptlet filter: +js(abort-current-inline-script.js, String.fromCharCode, /(?:Math|btoa)/)
-Discarded unsupported scriptlet filter: +js(nobab)
-Discarded unsupported scriptlet filter: +js(no-setTimeout-if.js, adBlockTest, 100)
-Discarded unsupported scriptlet filter: +js(set-constant.js, loadElementBlock, noopFunc)
-Discarded unsupported scriptlet filter: +js(abort-on-property-write.js, adquestoConfig)
-Discarded unsupported scriptlet filter: +js(setInterval-defuser.js, seead)
-Discarded unsupported scriptlet filter: +js(abort-current-inline-script.js, IRI, Adblock)
-Rejected scriptlet filters: 0
-
-Scriptlet-related distinct filters: 59
-Scriptlet-related injectable files: 8
-	pol-0.no-windowopen-if.js, pol-0.abort-on-property-write.js, pol-0.no-settimeout-if.js, pol-0.abort-current-script.js, pol-0.abort-on-property-read.js, pol-0.set-constant.js, pol-0.no-addeventlistener-if.js, pol-0.no-setinterval-if.js
 ============================
 Listset for 'rou-1':
 	Fetching remote https://road.adblock.ro/lista.txt
 	Fetching remote https://road.adblock.ro/road-ubo.txt
 No valid content for undefined
-Input filter count: 549
-	Accepted filter count: 548
+Input filter count: 554
+	Accepted filter count: 553
 	Rejected filter count: 0
-Output rule count: 442
-	Plain good: 439
+Output rule count: 446
+	Plain good: 443
+
 	Maybe good (regexes): 3
 	redirect=: 0
 	removeparams= (accepted/discarded): 0/0
@@ -1804,12 +1132,12 @@ Output rule count: 442
 	Unsupported: 0
 
 CSS-generic: 9 plain CSS selectors
-CSS-specific domain-based: 632 distinct filters
-	Combined into 323 distinct entries
+CSS-specific domain-based: 645 distinct filters
+	Combined into 332 distinct entries
 CSS-specific entity-based: 0 distinct filters
 	Combined into 0 distinct entries
 CSS-specific injectable files: 2
-	0hfauqc, 093uet4
+	1qe482s, 12qp0bc
 Procedural-related distinct filters: 48 distinct combined selectors
 ============================
 Listset for 'rus-0':
@@ -1828,84 +1156,32 @@ Listset for 'rus-0':
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/css-fixes-experimental.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/js-fixes-experimental.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/AWRL-non-sync.txt
-Input filter count: 17292
-	Accepted filter count: 17281
+Input filter count: 17230
+	Accepted filter count: 17219
 	Rejected filter count: 8
-Output rule count: 5869
-	Plain good: 5781
+Output rule count: 5837
+	Plain good: 5748
+
 	Maybe good (regexes): 22
 	redirect=: 16
 	removeparams= (accepted/discarded): 15/2
-	csp=: 29
+	csp=: 30
 	Unsupported: 6
-		regexFilter is not RE2-compatible: ^(?!.*(24liveblog.com|24liveplus.com|acint.net|addthis.com|addthisedge.com|akamai.net|akamaiedge.net|alloha.tv|ampproject.org|anycomment.io|apester.com|api-ssl.bitly.com|api.corr.life|api.here.com|api.sypexgeo.net|app.hoversignal.com|appsmail.ru|bam.nr-data.net|blogger.com|bootstrapcdn.com|cackle.me|cdn.ampproject.org|cdn.iframe.ly|cdn.rawgit.com|cdnstats.ru|cdnvideo.ru|chartbeat.com|chatango.com|chatbro.com|chimpstatic.com|cloudflare.com|cloudflare.net|cloudfront.net|cloudfunctions.net|code.createjs.com|columbus.te.ua|cultserv.ru|disqus.com|disquscdn.com|dmca.com|documentcloud.org|each.im|ebacdn.com|edgecastcdn.net|edgecdn.ru|ellinagraypel.com|embed.ex.co|embed.widgetpack.com|embedstorage.net|eurosolidarity.org|facebook.com|facebook.net|fastly.net|fastlylb.net|fbcdn.net|fbvkcdn.com|feonet.net|fluidplayer.com|fontawesome.com|fonts.w.tools|freecurrencyrates.com|fwcdn1.com|fwdcdn.com|gcdn.co|getsitecontrol.com|gismeteo.ru|gismeteo.ua|github.io|gitlab.io|google-analytics.com|google.com|googleadservices.com|googleapis.com|googleoptimize.com|googletagmanager.com|googletagservices.com|gravatar.com|gravitec.media|gravitec.net|gstatic.com|hcaptcha.com|hupso.com|hwcdn.net|hypercomments.com|ibytedtos.com|imgsmail.ru|imgur.com|informers.ukr.net|instagram.com|intensedebate.com|intercom.io|intercomcdn.com|intravideo.net|issuu.com|ivideon.com|jivosite.com|jquery.com|js-agent.newrelic.com|jsdelivr.net|jsonip.com|jwpcdn.com|jwplatform.com|keycaptcha.com|kin-x.com|kinogram.best|kinohod.ru|kinoplayer.co|kinotreiler.com|kitbit.net|kodik-add.com|kodikapi.com|libria.fun|licdn.com|likebtn.com|linkedin.com|lp4.io|luxnet.ua|mail.ru|mailchimp.com|mapbox.com|media-imdb.com|media.reformal.ru|mediator.media|meteobar.com|meteonova.ru|mirtesen.ru|netdna-cdn.com|ngenix.net|nuipogoda.ru|odnaknopka.ru|odnoklassniki.ru|ok.ru|oneall.com|onesignal.com|onthe.io|phnx.click|piktochart.com|pinterest.com|pixars.org|platformcraft.ru|playbuzz.com|player|player.panda.video|pljs.ru|plrjs.com|pluso.ru|plyr.io|polldaddy.com|polyfill.io|pv.pjtsu.com|quiz.ink|raincaptcha.com|readymag.com|recaptcha.net|relap.io|ren.tv|renteres.ru|rumer.club|s5o.ru|securedtouch.com|selcdn.net|sendpulse.com|shareaholic.com|shareaholic.net|sharethis.com|shrink.pe|sinoptik.ua|source.mmi.bemobile.ua|sporcle.com|sportradar.com|sportrecs.com|sports.ru|stackpathcdn.com|static.addtoany.com|statically.io|streamvid.club|telegram.im|telegram.org|tenews.org.ua|tenews.te.ua|tiktok.com|tilda.ws|tildacdn.com|tns-counter.ru|tolstoycomments.com|traq.li|trbcdn.net|trbna.com|ttrace.ru|ttwstatic.com|tumblr.com|tvget.ru|tvsok.ru|twimg.com|twitter.com|typekit.net|uanews.org.ua|ui.ill.in.ua|unpkg.com|uptolike.com|userapi.com|usocial.pro|uweb.ru|vicomi.com|vidazoo.com|videocdn.tv|videoplayers.club|viglink.com|viqeo.tv|vk.com|vkontakte.ru|vuukle.com|weblium.com|weblium.site|widget.speechki.org|widget.vp.ru|widgets.getpocket.com|world-weather.ru|wp.com|yabber.cloud|yandex.ru|yandex.st|yastatic.net|yohoho.cc|yohoho.online|yoomoney.ru|yourwebsite.life|youtube-nocookie.com|youtube.com|ytimg.com|zencdn.net)).*$
-		regexFilter is not RE2-compatible: ^(?!.*(24liveblog.com|24liveplus.com|acint.net|addthis.com|addthisedge.com|akamai.net|akamaiedge.net|alloha.tv|ampproject.org|anycomment.io|apester.com|api-ssl.bitly.com|api.corr.life|api.here.com|api.sypexgeo.net|app.hoversignal.com|appsmail.ru|bam.nr-data.net|blogger.com|bootstrapcdn.com|cackle.me|cdn.ampproject.org|cdn.iframe.ly|cdn.rawgit.com|cdnstats.ru|cdnvideo.ru|chartbeat.com|chatango.com|chatbro.com|chimpstatic.com|cloudflare.com|cloudflare.net|cloudfront.net|cloudfunctions.net|code.createjs.com|columbus.te.ua|cultserv.ru|disqus.com|disquscdn.com|dmca.com|documentcloud.org|each.im|ebacdn.com|edgecastcdn.net|edgecdn.ru|ellinagraypel.com|embed.ex.co|embed.widgetpack.com|embedstorage.net|eurosolidarity.org|facebook.com|facebook.net|fastly.net|fastlylb.net|fbcdn.net|fbvkcdn.com|feonet.net|fluidplayer.com|fontawesome.com|fonts.w.tools|freecurrencyrates.com|fwcdn1.com|fwdcdn.com|gcdn.co|getsitecontrol.com|gismeteo.ru|gismeteo.ua|github.io|gitlab.io|google-analytics.com|google.com|googleadservices.com|googleapis.com|googleoptimize.com|googletagmanager.com|googletagservices.com|gravatar.com|gravitec.media|gravitec.net|gstatic.com|hcaptcha.com|hupso.com|hwcdn.net|hypercomments.com|ibytedtos.com|imgsmail.ru|imgur.com|informers.ukr.net|instagram.com|intensedebate.com|intercom.io|intercomcdn.com|intravideo.net|issuu.com|ivideon.com|jivosite.com|jquery.com|js-agent.newrelic.com|jsdelivr.net|jsonip.com|jwpcdn.com|jwplatform.com|keycaptcha.com|kin-x.com|kinogram.best|kinohod.ru|kinoplayer.co|kinotreiler.com|kitbit.net|kodik-add.com|kodikapi.com|libria.fun|licdn.com|likebtn.com|linkedin.com|lp4.io|luxnet.ua|mail.ru|mailchimp.com|mapbox.com|media-imdb.com|media.reformal.ru|mediator.media|meteobar.com|meteonova.ru|mirtesen.ru|netdna-cdn.com|ngenix.net|nuipogoda.ru|odnaknopka.ru|odnoklassniki.ru|ok.ru|oneall.com|onesignal.com|onthe.io|phnx.click|piktochart.com|pinterest.com|pixars.org|platformcraft.ru|playbuzz.com|player|player.panda.video|pljs.ru|plrjs.com|pluso.ru|plyr.io|polldaddy.com|polyfill.io|pv.pjtsu.com|quiz.ink|raincaptcha.com|readymag.com|recaptcha.net|relap.io|ren.tv|renteres.ru|rumer.club|s5o.ru|securedtouch.com|selcdn.net|sendpulse.com|shareaholic.com|shareaholic.net|sharethis.com|shrink.pe|sinoptik.ua|source.mmi.bemobile.ua|sporcle.com|sportradar.com|sportrecs.com|sports.ru|stackpathcdn.com|static.addtoany.com|statically.io|streamvid.club|telegram.im|telegram.org|tenews.org.ua|tenews.te.ua|tiktok.com|tilda.ws|tildacdn.com|tns-counter.ru|tolstoycomments.com|traq.li|trbcdn.net|trbna.com|ttrace.ru|ttwstatic.com|tumblr.com|tvget.ru|tvsok.ru|twimg.com|twitter.com|typekit.net|uanews.org.ua|ui.ill.in.ua|unpkg.com|uptolike.com|userapi.com|usocial.pro|uweb.ru|vicomi.com|vidazoo.com|videocdn.tv|videoplayers.club|viglink.com|viqeo.tv|vk.com|vkontakte.ru|vuukle.com|weblium.com|weblium.site|widget.speechki.org|widget.vp.ru|widgets.getpocket.com|world-weather.ru|wp.com|yabber.cloud|yandex.ru|yandex.st|yastatic.net|yohoho.cc|yohoho.online|yoomoney.ru|yourwebsite.life|youtube-nocookie.com|youtube.com|ytimg.com|zencdn.net)).*$
+		regexFilter is not RE2-compatible: ^(?!.*(24liveblog.com|24liveplus.com|acint.net|addthis.com|addthisedge.com|akamai.net|akamaiedge.net|alloha.tv|ampproject.org|anycomment.io|apester.com|api-ssl.bitly.com|api.corr.life|api.here.com|api.sypexgeo.net|app.hoversignal.com|appsmail.ru|bam.nr-data.net|blogger.com|bootstrapcdn.com|cackle.me|cdn.ampproject.org|cdn.iframe.ly|cdn.rawgit.com|cdnstats.ru|cdnvideo.ru|chartbeat.com|chatango.com|chatbro.com|chimpstatic.com|cloudflare.com|cloudflare.net|cloudfront.net|cloudfunctions.net|code.createjs.com|columbus.te.ua|cultserv.ru|disqus.com|disquscdn.com|dmca.com|documentcloud.org|each.im|ebacdn.com|edgecastcdn.net|edgecdn.ru|ellinagraypel.com|embed.ex.co|embed.widgetpack.com|embedstorage.net|eurosolidarity.org|facebook.com|facebook.net|fastly.net|fastlylb.net|fbcdn.net|fbvkcdn.com|feonet.net|fluidplayer.com|fontawesome.com|fonts.w.tools|freecurrencyrates.com|fwcdn1.com|fwdcdn.com|gcdn.co|getsitecontrol.com|gismeteo.ru|gismeteo.ua|github.io|gitlab.io|google-analytics.com|google.com|googleadservices.com|googleapis.com|googleoptimize.com|googletagmanager.com|googletagservices.com|gravatar.com|gravitec.media|gravitec.net|gstatic.com|hcaptcha.com|hupso.com|hwcdn.net|hypercomments.com|ibytedtos.com|imgsmail.ru|imgur.com|informers.ukr.net|instagram.com|intensedebate.com|intercom.io|intercomcdn.com|intravideo.net|issuu.com|ivideon.com|jivosite.com|jquery.com|js-agent.newrelic.com|jsdelivr.net|jsonip.com|jwpcdn.com|jwplatform.com|keycaptcha.com|kin-x.com|kinogram.best|kinohod.ru|kinoplayer.co|kinotreiler.com|kitbit.net|kodik-add.com|kodikapi.com|libria.fun|licdn.com|likebtn.com|linkedin.com|lp4.io|mail.ru|mailchimp.com|mapbox.com|media-imdb.com|media.reformal.ru|mediator.media|meteobar.com|meteonova.ru|mirtesen.ru|netdna-cdn.com|ngenix.net|nuipogoda.ru|odnaknopka.ru|odnoklassniki.ru|ok.ru|oneall.com|onesignal.com|onthe.io|parastorage.com|phnx.click|piktochart.com|pinterest.com|pixars.org|platformcraft.ru|playbuzz.com|player|player.panda.video|pljs.ru|plrjs.com|pluso.ru|plyr.io|polldaddy.com|polyfill.io|pv.pjtsu.com|quiz.ink|raincaptcha.com|readymag.com|recaptcha.net|relap.io|ren.tv|renteres.ru|rumer.club|s5o.ru|securedtouch.com|selcdn.net|sendpulse.com|sentry-cdn.com|shareaholic.com|shareaholic.net|sharethis.com|shrink.pe|sinoptik.ua|source.mmi.bemobile.ua|sporcle.com|sportradar.com|sportrecs.com|sports.ru|stackpathcdn.com|static.addtoany.com|statically.io|streamvid.club|telegram.im|telegram.org|tenews.org.ua|tenews.te.ua|tiktok.com|tilda.ws|tildacdn.com|tns-counter.ru|tolstoycomments.com|traq.li|trbcdn.net|trbna.com|ttrace.ru|ttwstatic.com|tumblr.com|tvget.ru|tvsok.ru|twimg.com|twitter.com|typekit.net|uanews.org.ua|unpkg.com|uptolike.com|userapi.com|usocial.pro|uweb.ru|vicomi.com|vidazoo.com|videocdn.tv|videoplayers.club|viglink.com|viqeo.tv|vk.com|vkontakte.ru|vuukle.com|weblium.com|weblium.site|widget.speechki.org|widget.vp.ru|widgets.getpocket.com|world-weather.ru|wp.com|yabber.cloud|yandex.ru|yandex.st|yastatic.net|yohoho.cc|yohoho.online|yoomoney.ru|yourwebsite.life|youtube-nocookie.com|youtube.com|ytimg.com|zencdn.net)).*$
+		regexFilter is not RE2-compatible: ^(?!.*(24liveblog.com|24liveplus.com|acint.net|addthis.com|addthisedge.com|akamai.net|akamaiedge.net|alloha.tv|ampproject.org|anycomment.io|apester.com|api-ssl.bitly.com|api.corr.life|api.here.com|api.sypexgeo.net|app.hoversignal.com|appsmail.ru|bam.nr-data.net|blogger.com|bootstrapcdn.com|cackle.me|cdn.ampproject.org|cdn.iframe.ly|cdn.rawgit.com|cdnstats.ru|cdnvideo.ru|chartbeat.com|chatango.com|chatbro.com|chimpstatic.com|cloudflare.com|cloudflare.net|cloudfront.net|cloudfunctions.net|code.createjs.com|columbus.te.ua|cultserv.ru|disqus.com|disquscdn.com|dmca.com|documentcloud.org|each.im|ebacdn.com|edgecastcdn.net|edgecdn.ru|ellinagraypel.com|embed.ex.co|embed.widgetpack.com|embedstorage.net|eurosolidarity.org|facebook.com|facebook.net|fastly.net|fastlylb.net|fbcdn.net|fbvkcdn.com|feonet.net|fluidplayer.com|fontawesome.com|fonts.w.tools|freecurrencyrates.com|fwcdn1.com|fwdcdn.com|gcdn.co|getsitecontrol.com|gismeteo.ru|gismeteo.ua|github.io|gitlab.io|google-analytics.com|google.com|googleadservices.com|googleapis.com|googleoptimize.com|googletagmanager.com|googletagservices.com|gravatar.com|gravitec.media|gravitec.net|gstatic.com|hcaptcha.com|hupso.com|hwcdn.net|hypercomments.com|ibytedtos.com|imgsmail.ru|imgur.com|informers.ukr.net|instagram.com|intensedebate.com|intercom.io|intercomcdn.com|intravideo.net|issuu.com|ivideon.com|jivosite.com|jquery.com|js-agent.newrelic.com|jsdelivr.net|jsonip.com|jwpcdn.com|jwplatform.com|keycaptcha.com|kin-x.com|kinogram.best|kinohod.ru|kinoplayer.co|kinotreiler.com|kitbit.net|kodik-add.com|kodikapi.com|libria.fun|licdn.com|likebtn.com|linkedin.com|lp4.io|mail.ru|mailchimp.com|mapbox.com|media-imdb.com|media.reformal.ru|mediator.media|meteobar.com|meteonova.ru|mirtesen.ru|netdna-cdn.com|ngenix.net|nuipogoda.ru|odnaknopka.ru|odnoklassniki.ru|ok.ru|oneall.com|onesignal.com|onthe.io|parastorage.com|phnx.click|piktochart.com|pinterest.com|pixars.org|platformcraft.ru|playbuzz.com|player|player.panda.video|pljs.ru|plrjs.com|pluso.ru|plyr.io|polldaddy.com|polyfill.io|pv.pjtsu.com|quiz.ink|raincaptcha.com|readymag.com|recaptcha.net|relap.io|ren.tv|renteres.ru|rumer.club|s5o.ru|securedtouch.com|selcdn.net|sendpulse.com|sentry-cdn.com|shareaholic.com|shareaholic.net|sharethis.com|shrink.pe|sinoptik.ua|source.mmi.bemobile.ua|sporcle.com|sportradar.com|sportrecs.com|sports.ru|stackpathcdn.com|static.addtoany.com|statically.io|streamvid.club|telegram.im|telegram.org|tenews.org.ua|tenews.te.ua|tiktok.com|tilda.ws|tildacdn.com|tns-counter.ru|tolstoycomments.com|traq.li|trbcdn.net|trbna.com|ttrace.ru|ttwstatic.com|tumblr.com|tvget.ru|tvsok.ru|twimg.com|twitter.com|typekit.net|uanews.org.ua|unpkg.com|uptolike.com|userapi.com|usocial.pro|uweb.ru|vicomi.com|vidazoo.com|videocdn.tv|videoplayers.club|viglink.com|viqeo.tv|vk.com|vkontakte.ru|vuukle.com|weblium.com|weblium.site|widget.speechki.org|widget.vp.ru|widgets.getpocket.com|world-weather.ru|wp.com|yabber.cloud|yandex.ru|yandex.st|yastatic.net|yohoho.cc|yohoho.online|yoomoney.ru|yourwebsite.life|youtube-nocookie.com|youtube.com|ytimg.com|zencdn.net)).*$
 		regexFilter is not RE2-compatible: ^(?!.*(spac.me)).*$
-		regexFilter is not RE2-compatible: ^(?!.*(24liveblog.com|24liveplus.com|acint.net|addthis.com|addthisedge.com|akamai.net|akamaiedge.net|alloha.tv|ampproject.org|anycomment.io|apester.com|api-ssl.bitly.com|api.corr.life|api.here.com|api.sypexgeo.net|app.hoversignal.com|appsmail.ru|bam.nr-data.net|blogger.com|bootstrapcdn.com|cackle.me|cdn.ampproject.org|cdn.iframe.ly|cdn.rawgit.com|cdnstats.ru|cdnvideo.ru|chartbeat.com|chatango.com|chatbro.com|chimpstatic.com|cloudflare.com|cloudflare.net|cloudfront.net|cloudfunctions.net|code.createjs.com|columbus.te.ua|cultserv.ru|disqus.com|disquscdn.com|dmca.com|documentcloud.org|each.im|ebacdn.com|edgecastcdn.net|edgecdn.ru|ellinagraypel.com|embed.ex.co|embed.widgetpack.com|embedstorage.net|eurosolidarity.org|facebook.com|facebook.net|fastly.net|fastlylb.net|fbcdn.net|fbvkcdn.com|feonet.net|fluidplayer.com|fontawesome.com|fonts.w.tools|freecurrencyrates.com|fwcdn1.com|fwdcdn.com|gcdn.co|getsitecontrol.com|gismeteo.ru|gismeteo.ua|github.io|gitlab.io|google-analytics.com|google.com|googleadservices.com|googleapis.com|googleoptimize.com|googletagmanager.com|googletagservices.com|gravatar.com|gravitec.media|gravitec.net|gstatic.com|hcaptcha.com|hupso.com|hwcdn.net|hypercomments.com|ibytedtos.com|imgsmail.ru|imgur.com|informers.ukr.net|instagram.com|intensedebate.com|intercom.io|intercomcdn.com|intravideo.net|issuu.com|ivideon.com|jivosite.com|jquery.com|js-agent.newrelic.com|jsdelivr.net|jsonip.com|jwpcdn.com|jwplatform.com|keycaptcha.com|kin-x.com|kinogram.best|kinohod.ru|kinoplayer.co|kinotreiler.com|kitbit.net|kodik-add.com|kodikapi.com|libria.fun|licdn.com|likebtn.com|linkedin.com|lp4.io|luxnet.ua|mail.ru|mailchimp.com|mapbox.com|media-imdb.com|media.reformal.ru|mediator.media|meteobar.com|meteonova.ru|mirtesen.ru|netdna-cdn.com|ngenix.net|nuipogoda.ru|odnaknopka.ru|odnoklassniki.ru|ok.ru|oneall.com|onesignal.com|onthe.io|phnx.click|piktochart.com|pinterest.com|pixars.org|platformcraft.ru|playbuzz.com|player|player.panda.video|pljs.ru|plrjs.com|pluso.ru|plyr.io|polldaddy.com|polyfill.io|pv.pjtsu.com|quiz.ink|raincaptcha.com|readymag.com|recaptcha.net|relap.io|ren.tv|renteres.ru|rumer.club|s5o.ru|securedtouch.com|selcdn.net|sendpulse.com|shareaholic.com|shareaholic.net|sharethis.com|shrink.pe|sinoptik.ua|source.mmi.bemobile.ua|sporcle.com|sportradar.com|sportrecs.com|sports.ru|stackpathcdn.com|static.addtoany.com|statically.io|streamvid.club|telegram.im|telegram.org|tenews.org.ua|tenews.te.ua|tiktok.com|tilda.ws|tildacdn.com|tns-counter.ru|tolstoycomments.com|traq.li|trbcdn.net|trbna.com|ttrace.ru|ttwstatic.com|tumblr.com|tvget.ru|tvsok.ru|twimg.com|twitter.com|typekit.net|uanews.org.ua|ui.ill.in.ua|unpkg.com|uptolike.com|userapi.com|usocial.pro|uweb.ru|vicomi.com|vidazoo.com|videocdn.tv|videoplayers.club|viglink.com|viqeo.tv|vk.com|vkontakte.ru|vuukle.com|weblium.com|weblium.site|widget.speechki.org|widget.vp.ru|widgets.getpocket.com|world-weather.ru|wp.com|yabber.cloud|yandex.ru|yandex.st|yastatic.net|yohoho.cc|yohoho.online|yoomoney.ru|yourwebsite.life|youtube-nocookie.com|youtube.com|ytimg.com|zencdn.net)).*$
+		regexFilter is not RE2-compatible: ^(?!.*(24liveblog.com|24liveplus.com|acint.net|addthis.com|addthisedge.com|akamai.net|akamaiedge.net|alloha.tv|ampproject.org|anycomment.io|apester.com|api-ssl.bitly.com|api.corr.life|api.here.com|api.sypexgeo.net|app.hoversignal.com|appsmail.ru|bam.nr-data.net|blogger.com|bootstrapcdn.com|cackle.me|cdn.ampproject.org|cdn.iframe.ly|cdn.rawgit.com|cdnstats.ru|cdnvideo.ru|chartbeat.com|chatango.com|chatbro.com|chimpstatic.com|cloudflare.com|cloudflare.net|cloudfront.net|cloudfunctions.net|code.createjs.com|columbus.te.ua|cultserv.ru|disqus.com|disquscdn.com|dmca.com|documentcloud.org|each.im|ebacdn.com|edgecastcdn.net|edgecdn.ru|ellinagraypel.com|embed.ex.co|embed.widgetpack.com|embedstorage.net|eurosolidarity.org|facebook.com|facebook.net|fastly.net|fastlylb.net|fbcdn.net|fbvkcdn.com|feonet.net|fluidplayer.com|fontawesome.com|fonts.w.tools|freecurrencyrates.com|fwcdn1.com|fwdcdn.com|gcdn.co|getsitecontrol.com|gismeteo.ru|gismeteo.ua|github.io|gitlab.io|google-analytics.com|google.com|googleadservices.com|googleapis.com|googleoptimize.com|googletagmanager.com|googletagservices.com|gravatar.com|gravitec.media|gravitec.net|gstatic.com|hcaptcha.com|hupso.com|hwcdn.net|hypercomments.com|ibytedtos.com|imgsmail.ru|imgur.com|informers.ukr.net|instagram.com|intensedebate.com|intercom.io|intercomcdn.com|intravideo.net|issuu.com|ivideon.com|jivosite.com|jquery.com|js-agent.newrelic.com|jsdelivr.net|jsonip.com|jwpcdn.com|jwplatform.com|keycaptcha.com|kin-x.com|kinogram.best|kinohod.ru|kinoplayer.co|kinotreiler.com|kitbit.net|kodik-add.com|kodikapi.com|libria.fun|licdn.com|likebtn.com|linkedin.com|lp4.io|mail.ru|mailchimp.com|mapbox.com|media-imdb.com|media.reformal.ru|mediator.media|meteobar.com|meteonova.ru|mirtesen.ru|netdna-cdn.com|ngenix.net|nuipogoda.ru|odnaknopka.ru|odnoklassniki.ru|ok.ru|oneall.com|onesignal.com|onthe.io|parastorage.com|phnx.click|piktochart.com|pinterest.com|pixars.org|platformcraft.ru|playbuzz.com|player|player.panda.video|pljs.ru|plrjs.com|pluso.ru|plyr.io|polldaddy.com|polyfill.io|pv.pjtsu.com|quiz.ink|raincaptcha.com|readymag.com|recaptcha.net|relap.io|ren.tv|renteres.ru|rumer.club|s5o.ru|securedtouch.com|selcdn.net|sendpulse.com|sentry-cdn.com|shareaholic.com|shareaholic.net|sharethis.com|shrink.pe|sinoptik.ua|source.mmi.bemobile.ua|sporcle.com|sportradar.com|sportrecs.com|sports.ru|stackpathcdn.com|static.addtoany.com|statically.io|streamvid.club|telegram.im|telegram.org|tenews.org.ua|tenews.te.ua|tiktok.com|tilda.ws|tildacdn.com|tns-counter.ru|tolstoycomments.com|traq.li|trbcdn.net|trbna.com|ttrace.ru|ttwstatic.com|tumblr.com|tvget.ru|tvsok.ru|twimg.com|twitter.com|typekit.net|uanews.org.ua|unpkg.com|uptolike.com|userapi.com|usocial.pro|uweb.ru|vicomi.com|vidazoo.com|videocdn.tv|videoplayers.club|viglink.com|viqeo.tv|vk.com|vkontakte.ru|vuukle.com|weblium.com|weblium.site|widget.speechki.org|widget.vp.ru|widgets.getpocket.com|world-weather.ru|wp.com|yabber.cloud|yandex.ru|yandex.st|yastatic.net|yohoho.cc|yohoho.online|yoomoney.ru|yourwebsite.life|youtube-nocookie.com|youtube.com|ytimg.com|zencdn.net)).*$
 		Unsupported modifier exception
 		Unsupported modifier exception
 CSS-generic: 313 plain CSS selectors
-CSS-specific domain-based: 9748 distinct filters
-	Combined into 5272 distinct entries
+CSS-specific domain-based: 9709 distinct filters
+	Combined into 5249 distinct entries
 CSS-specific entity-based: 0 distinct filters
 	Combined into 0 distinct entries
 CSS-specific injectable files: 21
-	00ha2b8, 0jq0260, 1kise88, 04mpbtg, 1girjlo, 0tq1g9c, 0qlbk2k, 1rtds3o, 0cb79p8, 02potf0, 10n7vq0, 0n6hruc, 1gueric, 1t9e25g, 02qv4e0, 10rngpk, 1trq3n8, 1v9vtlk, 0enkvk4, 0dhlpvc, 1kfntpo
+	1kjot8o, 0aag86k, 1jp6e7k, 07de1sg, 12gmtqs, 01juu6g, 01a36f0, 1gel6v8, 1fjeptk, 0p8m6h4, 1il4doc, 1hpql6s, 1fkcg0o, 0d36k60, 1sb2ck4, 12qdb10, 1l08bvc, 04ft8pc, 12esg90, 0raoqo8, 07fir74
 Declarative-related distinct filters: 509 distinct combined selectors
-Procedural-related distinct filters: 211 distinct combined selectors
-Discarded unsupported scriptlet filter: +js(cookie-remover, /^bda|^bltsr/)
-Discarded unsupported scriptlet filter: +js(cookie-remover, /^bltsr$|^JPIqApiY$|^specific$|^substantial$/)
-Discarded unsupported scriptlet filter: +js(cookie-remover, /adblock_/)
-Discarded unsupported scriptlet filter: +js(cookie-remover, isab)
-Discarded unsupported scriptlet filter: +js(cookie-remover, jtnews_adblock)
-Discarded unsupported scriptlet filter: +js(cookie-remover, yadb)
-Discarded unsupported scriptlet filter: +js(href-sanitizer, a[href^="//www.ixbt.com/click/?c="], [title])
-Discarded unsupported scriptlet filter: +js(href-sanitizer, a[href^="/away.php?to="]:not([title]))
-Discarded unsupported scriptlet filter: +js(href-sanitizer, a[href^="/away.php?to="][title], [title])
-Discarded unsupported scriptlet filter: +js(href-sanitizer, a[href^="https://disq.us/url?url="], [title])
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster)
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, #timer)
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, .numcard)
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, .time)
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, .track-download__timer)
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, countdown)
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, js-game-loader-block, 1000, 0.0001)
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, ks_counter)
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, p)
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, timer)
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster)
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, , 30000, 0.0001)
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, autoload, *, 0.0001)
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, timer)
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, zat_tick)
-Discarded unsupported scriptlet filter: +js(noeval-if, ShadowRoot)
-Discarded unsupported scriptlet filter: +js(remove-attr, autoplay, [data-video-player="small"], stay)
-Discarded unsupported scriptlet filter: +js(remove-attr, autoplay, video, stay)
-Discarded unsupported scriptlet filter: +js(remove-attr, autoplay|loop, .watch-live__link > video, stay)
-Discarded unsupported scriptlet filter: +js(remove-attr, autoplay|loop, video, stay)
-Discarded unsupported scriptlet filter: +js(remove-attr, class, .js-video-box__container)
-Discarded unsupported scriptlet filter: +js(remove-attr, data-autoplay, video)
-Discarded unsupported scriptlet filter: +js(remove-attr, data-video-play-mode)
-Discarded unsupported scriptlet filter: +js(remove-attr, disabled, .uk-modal-footer > button)
-Discarded unsupported scriptlet filter: +js(remove-attr, oncontextmenu, [class], stay)
-Discarded unsupported scriptlet filter: +js(remove-attr, oncontextmenu|oncopy|onselectstart)
-Discarded unsupported scriptlet filter: +js(remove-attr, target, a[href*="#rcmrclid"], stay)
-Discarded unsupported scriptlet filter: +js(remove-class, b-global-branding, html)
-Discarded unsupported scriptlet filter: +js(remove-class, has-fullscreen-banner|has-right-direct, .public__root, stay)
-Discarded unsupported scriptlet filter: +js(remove-class, noscroll, body)
-Discarded unsupported scriptlet filter: +js(twitch-videoad)
-Discarded unsupported scriptlet filter: +js(window-close-if, /dispatch)
-Discarded unsupported scriptlet filter: +js(abort-on-stack-trace, Object.prototype.crossDomain, ecbrStart)
-Rejected scriptlet filters: 0
-
-Scriptlet-related distinct filters: 299
-Scriptlet-related injectable files: 10
-	rus-0.abort-current-script.js, rus-0.abort-on-property-read.js, rus-0.abort-on-property-write.js, rus-0.no-addeventlistener-if.js, rus-0.json-prune.js, rus-0.no-setinterval-if.js, rus-0.no-settimeout-if.js, rus-0.no-xhr-if.js, rus-0.set-constant.js, rus-0.no-windowopen-if.js
-Discarded unsupported scriptlet filter: +js(abort-on-stack-trace, Object.prototype.parallax, window.onload)
-Rejected scriptlet filters: 0
-
-Scriptlet-related entity-based injectable files: 4
-	rus-0.abort-current-script.js, rus-0.set-constant.js, rus-0.abort-on-property-read.js, rus-0.no-settimeout-if.js
+Procedural-related distinct filters: 212 distinct combined selectors
 ============================
 Listset for 'spa-0':
 	Fetching remote https://easylist-downloads.adblockplus.org/easylistspanish.txt
@@ -1914,6 +1190,7 @@ Input filter count: 1218
 	Rejected filter count: 0
 Output rule count: 707
 	Plain good: 699
+
 	Maybe good (regexes): 8
 	redirect=: 0
 	removeparams= (accepted/discarded): 0/0
@@ -1921,69 +1198,39 @@ Output rule count: 707
 	Unsupported: 0
 
 CSS-generic: 237 plain CSS selectors
-CSS-specific domain-based: 1413 distinct filters
-	Combined into 844 distinct entries
+CSS-specific domain-based: 1414 distinct filters
+	Combined into 845 distinct entries
 CSS-specific entity-based: 0 distinct filters
 	Combined into 0 distinct entries
 CSS-specific injectable files: 4
-	12jt7bs, 12bb3po, 1oots28, 03ttot8
+	1g2tmpg, 12bb3po, 18ptbh8, 1v30c58
 Procedural-related distinct filters: 21 distinct combined selectors
 ============================
 Listset for 'spa-1':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/9.txt
-Input filter count: 1388
-	Accepted filter count: 1382
+Input filter count: 1386
+	Accepted filter count: 1380
 	Rejected filter count: 0
-Output rule count: 957
-	Plain good: 919
+Output rule count: 955
+	Plain good: 918
+		Salvaged rule by ignoring 1 entity-based domain= option: pelisplushd.net|cuevana3.*
 	Maybe good (regexes): 6
 	redirect=: 28
 	removeparams= (accepted/discarded): 0/0
 	csp=: 0
-	Unsupported: 4
-		Could not salvage rule with only entity-based domain= option: netcine.*
-		Could not salvage rule with only entity-based domain= option: netcine.*
-		regexFilter is not RE2-compatible: ^(?!.*(bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|cdn.staticfile.org|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fastlylb.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|vk.com|yandex.|yastatic.net|ytimg.com|zencdn.net|player|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com)).*$
-		Could not salvage rule with only entity-based domain= option: anitube.*
+	Unsupported: 3
+		Can't salvage rule with only entity-based domain= option: netcine.*
+		Can't salvage rule with only entity-based domain= option: netcine.*
+		Can't salvage rule with only entity-based domain= option: anitube.*
 CSS-generic: 83 plain CSS selectors
-CSS-specific domain-based: 2367 distinct filters
-	Combined into 1216 distinct entries
+CSS-specific domain-based: 2384 distinct filters
+	Combined into 1225 distinct entries
 CSS-specific entity-based: 11 distinct filters
 	Combined into 6 distinct entries
 CSS-specific injectable files: 6
-	089ckeo, 1eb5g1o, 062o75k, 11e0n0c, 0r4v26k, spa-1
-Declarative-related distinct filters: 77 distinct combined selectors
+	1082pso, 11maggo, 02v95a8, 11c2a6s, 0dpddb0, spa-1
+Declarative-related distinct filters: 78 distinct combined selectors
 Procedural-related distinct filters: 58 distinct combined selectors
-Discarded unsupported scriptlet filter: +js(cookie-remover, __cf_xt)
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, .style.display, *, 0.02)
-Discarded unsupported scriptlet filter: +js(remove-attr, href, li[onclick^="go_to_player"] > a[target="_blank"][href])
-Discarded unsupported scriptlet filter: +js(remove-class, _theme-banner-upper, html)
-Discarded unsupported scriptlet filter: +js(remove-attr, href, a[href^="https://adalites.site/"])
-Discarded unsupported scriptlet filter: +js(remove-class, bgPartners2019, .videoContainer > div.beachPartners + div)
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, videoliberado, *, 0.02)
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, player, , 0.02)
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, PLAYER, *, 0.02)
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, liberaDownload, *, 0.02)
-Discarded unsupported scriptlet filter: +js(remove-class, hided, #framed > div)
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, Loading player, , 0.02)
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, contador, , 0.02)
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, Loading..., , 0.02)
-Discarded unsupported scriptlet filter: +js(remove-class, hided, div#player)
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, PLAYER LIBERADO, 10000, 0.02)
-Discarded unsupported scriptlet filter: +js(remove-attr, href, a[href]#clickfakeplayer)
-Discarded unsupported scriptlet filter: +js(noeval-if, _impspcabe)
-Discarded unsupported scriptlet filter: +js(remove-attr, href, .leaving-message center > a.btn[onclick^="window.open"][href*="/ads.html"])
-Rejected scriptlet filters: 0
-
-Scriptlet-related distinct filters: 154
-Scriptlet-related injectable files: 11
-	spa-1.abort-on-property-write.js, spa-1.abort-current-script.js, spa-1.set-constant.js, spa-1.no-fetch-if.js, spa-1.no-settimeout-if.js, spa-1.no-addeventlistener-if.js, spa-1.no-xhr-if.js, spa-1.no-setinterval-if.js, spa-1.abort-on-property-read.js, spa-1.no-windowopen-if.js, spa-1.json-prune.js
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, adsHandle_noclick, , 0.02)
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, redirect, *, 0.02)
-Rejected scriptlet filters: 0
-
-Scriptlet-related entity-based injectable files: 4
-	spa-1.set-constant.js, spa-1.no-windowopen-if.js, spa-1.abort-on-property-read.js, spa-1.abort-current-script.js
 ============================
 Listset for 'svn-0':
 	Fetching remote https://raw.githubusercontent.com/betterwebleon/slovenian-list/master/filters.txt
@@ -1992,6 +1239,7 @@ Input filter count: 143
 	Rejected filter count: 0
 Output rule count: 98
 	Plain good: 98
+
 	Maybe good (regexes): 0
 	redirect=: 0
 	removeparams= (accepted/discarded): 0/0
@@ -2012,13 +1260,14 @@ Listset for 'swe-1':
 	Fetching remote https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Swedish/swe-ubo-filters.txt
 	Fetching remote https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Swedish/chromium.txt
 	Fetching remote https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Swedish/not_mobile.txt
-Input filter count: 1625
-	Accepted filter count: 1625
+Input filter count: 1633
+	Accepted filter count: 1633
 	Rejected filter count: 0
-Output rule count: 1215
-	Plain good: 1193
+Output rule count: 1223
+	Plain good: 1200
+
 	Maybe good (regexes): 2
-	redirect=: 10
+	redirect=: 11
 	removeparams= (accepted/discarded): 5/3
 	csp=: 2
 	Unsupported: 3
@@ -2026,24 +1275,14 @@ Output rule count: 1215
 		Unsupported regex-based removeParam: /^browser/
 		Unsupported regex-based removeParam: /^utm_/
 CSS-generic: 143 plain CSS selectors
-CSS-specific domain-based: 646 distinct filters
-	Combined into 610 distinct entries
+CSS-specific domain-based: 648 distinct filters
+	Combined into 612 distinct entries
 CSS-specific entity-based: 0 distinct filters
 	Combined into 0 distinct entries
 CSS-specific injectable files: 3
-	03asc4o, 13oi3vs, 0llms2s
+	0dh0oak, 0oqlcas, 1h2dj5k
 Declarative-related distinct filters: 66 distinct combined selectors
 Procedural-related distinct filters: 237 distinct combined selectors
-Discarded unsupported scriptlet filter: +js(nano-sib, dt_fullpage_ad)
-Discarded unsupported scriptlet filter: +js(cookie-remover, lmt)
-Discarded unsupported scriptlet filter: +js(noeval-if, Math.round)
-Discarded unsupported scriptlet filter: +js(noeval)
-Discarded unsupported scriptlet filter: +js(cookie-remover, /^ev_did|ev_sid/)
-Rejected scriptlet filters: 0
-
-Scriptlet-related distinct filters: 72
-Scriptlet-related injectable files: 8
-	swe-1.no-settimeout-if.js, swe-1.abort-current-script.js, swe-1.json-prune.js, swe-1.no-addeventlistener-if.js, swe-1.set-constant.js, swe-1.abort-on-property-write.js, swe-1.no-setinterval-if.js, swe-1.abort-on-property-read.js
 ============================
 Listset for 'tha-0':
 	Fetching remote https://raw.githubusercontent.com/easylist-thailand/easylist-thailand/master/subscription/easylist-thailand.txt
@@ -2053,6 +1292,7 @@ Input filter count: 760
 	Rejected filter count: 0
 Output rule count: 750
 	Plain good: 746
+
 	Maybe good (regexes): 2
 	redirect=: 2
 	removeparams= (accepted/discarded): 0/0
@@ -2066,41 +1306,39 @@ CSS-specific entity-based: 0 distinct filters
 CSS-specific injectable files: 1
 	01f249s
 Procedural-related distinct filters: 11 distinct combined selectors
-Discarded unsupported scriptlet filter: +js(nano-sib, #close_preload, 1000, 0)
-Discarded unsupported scriptlet filter: +js(ra, style, .viddeo > .video__)
-Rejected scriptlet filters: 0
-
-Scriptlet-related distinct filters: 3
-Scriptlet-related injectable files: 3
-	tha-0.abort-on-property-read.js, tha-0.set-constant.js, tha-0.json-prune.js
 ============================
 Listset for 'tur-0':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/13.txt
-Input filter count: 1741
-	Accepted filter count: 1740
+Input filter count: 1757
+	Accepted filter count: 1756
 	Rejected filter count: 0
-Output rule count: 1314
-	Plain good: 1273
+Output rule count: 1327
+	Plain good: 1287
+		Salvaged rule by ignoring 1 entity-based domain= option: fullhdfilm.pro|fullhdfilmizle5.*
+		Salvaged rule by ignoring 1 entity-based domain= option: turkcealtyazi.org|filmmakinesi.*
+		Salvaged rule by ignoring 1 entity-based domain= option: cdn.diziyou.co|geyvemedya.com|hdfilmcehennemi2.*
+		Salvaged rule by ignoring 1 entity-based domain= option: forum.donanimhaber.com|mp3indirdur.mobi|setfilmizle.*
 	Maybe good (regexes): 14
-	redirect=: 18
+	redirect=: 17
 	removeparams= (accepted/discarded): 0/0
 	csp=: 0
 	Unsupported: 9
-		Could not salvage rule with only entity-based domain= option: filmizletv.*
-		Could not salvage rule with only entity-based domain= option: jetfilmizle.*
-		Could not salvage rule with only entity-based domain= option: siyahfilmizle.*
-		Could not salvage rule with only entity-based domain= option: fullhdfilmizlesene.*
-		Could not salvage rule with only entity-based domain= option: filmmakinesi.*
+		Can't salvage rule with only entity-based domain= option: filmizletv.*
+		Can't salvage rule with only entity-based domain= option: fullhdfilmizle5.*
+		Can't salvage rule with only entity-based domain= option: jetfilmizle.*
+		Can't salvage rule with only entity-based domain= option: siyahfilmizle.*
+		Can't salvage rule with only entity-based domain= option: fullhdfilmizlesene.*
+		Can't salvage rule with only entity-based domain= option: filmmakinesi.*
 		regexFilter is not RE2-compatible: yenihaberden.com\/d\/other\/(?!yeni-haber-youtube)
-		Could not salvage rule with only entity-based domain= option: yabancidizi.*
-		regexFilter is not RE2-compatible: ^(?!.*(bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|cdn.staticfile.org|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fastlylb.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|vk.com|yandex.|yastatic.net|ytimg.com|zencdn.net|player|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com)).*$
-		Could not salvage rule with only entity-based domain= option: filmizletv.*
-Rejected cosmetic filters: 16
+		Can't salvage rule with only entity-based domain= option: yabancidizi.*
+		Can't salvage rule with only entity-based domain= option: filmizletv.*
+Rejected cosmetic filters: 17
 	Entity-based filter not supported: .video-content > div[id^="welcomeDiv"]:remove()
 	Entity-based filter not supported: #sol > #embed:has(iframe) ~ #video-onu2:remove()
 	Entity-based filter not supported: .rek-0:remove()
 	Entity-based filter not supported: body #site:style(margin-top: 0px !important;)
-	Entity-based filter not supported: body:style(margin-top: 0 !important;)
+	Entity-based filter not supported: .container.main:style(margin-top: 0 !important;)
+	Entity-based filter not supported: #iframe-video:style(display: block !important;)
 	Entity-based filter not supported: header.container:style(margin-top: 0 !important;)
 	Entity-based filter not supported: .wrapper:style(margin-top: 0 !important;)
 	Entity-based filter not supported: div.duyuru-izle.duyuru-izle:style(margin-top: 20px !important;)
@@ -2113,51 +1351,23 @@ Rejected cosmetic filters: 16
 	Entity-based filter not supported: #episode:style(height: unset !important; width: unset !important; position: unset !important; overflow: unset !important;)
 	Entity-based filter not supported: html > body:style(background-image: none !important;)
 CSS-generic: 127 plain CSS selectors
-CSS-specific domain-based: 3326 distinct filters
-	Combined into 1679 distinct entries
-CSS-specific entity-based: 102 distinct filters
-	Combined into 43 distinct entries
+CSS-specific domain-based: 3337 distinct filters
+	Combined into 1695 distinct entries
+CSS-specific entity-based: 116 distinct filters
+	Combined into 45 distinct entries
 CSS-specific injectable files: 8
-	1uipifk, 1oop254, 0lq0kp4, 0l2rq78, 1vgimkg, 0rn2u38, 0uam68s, tur-0
-Declarative-related distinct filters: 126 distinct combined selectors
-Procedural-related distinct filters: 117 distinct combined selectors
-Discarded unsupported scriptlet filter: +js(remove-attr, data-money, div[data-money])
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, money--skip, , 0.02)
-Discarded unsupported scriptlet filter: +js(m3u-prune, /daioncdn\.net\/.*\/ad\//, /daioncdn\.net\/.*\.m3u8/)
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, #rekgecyen, *, 0.02)
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, reklam, *, 0.02)
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, timeleft, *, 0.02)
-Discarded unsupported scriptlet filter: +js(remove-attr, href, .watch > a[href])
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, timer)
-Discarded unsupported scriptlet filter: +js(remove-attr, placeholder, input[id="search-textbox"])
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, /HivePlayer|grounderstext/, *, 0.02)
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, ifsrc, 2000, 0.02)
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster)
-Discarded unsupported scriptlet filter: +js(remove-class, is-ad-visible)
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, , 1000)
-Discarded unsupported scriptlet filter: +js(nano-setTimeout-booster, redirectToMain, *, 0.02)
-Rejected scriptlet filters: 0
-
-Scriptlet-related distinct filters: 114
-Scriptlet-related injectable files: 11
-	tur-0.no-settimeout-if.js, tur-0.set-constant.js, tur-0.no-xhr-if.js, tur-0.no-fetch-if.js, tur-0.abort-on-property-read.js, tur-0.abort-current-script.js, tur-0.abort-on-property-write.js, tur-0.no-addeventlistener-if.js, tur-0.no-windowopen-if.js, tur-0.json-prune.js, tur-0.no-setinterval-if.js
-Discarded unsupported scriptlet filter: +js(remove-attr, data-money, div[data-money])
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, money--skip, , 0.02)
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, #rekgecyen, *, 0.02)
-Discarded unsupported scriptlet filter: +js(nano-setInterval-booster, window.money_interval)
-Discarded unsupported scriptlet filter: +js(json-prune, style, maxActive)
-Rejected scriptlet filters: 0
-
-Scriptlet-related entity-based injectable files: 5
-	tur-0.set-constant.js, tur-0.no-addeventlistener-if.js, tur-0.abort-on-property-read.js, tur-0.no-windowopen-if.js, tur-0.no-settimeout-if.js
+	17nn5ok, 1iuat08, 13tj5dk, 0kgmqjo, 1ip53dk, 01f5vls, 1hvmmn0, tur-0
+Declarative-related distinct filters: 127 distinct combined selectors
+Procedural-related distinct filters: 119 distinct combined selectors
 ============================
 Listset for 'vie-1':
 	Fetching remote https://raw.githubusercontent.com/abpvn/abpvn/master/filter/abpvn_ublock.txt
-Input filter count: 583
-	Accepted filter count: 583
+Input filter count: 584
+	Accepted filter count: 584
 	Rejected filter count: 0
-Output rule count: 480
-	Plain good: 472
+Output rule count: 481
+	Plain good: 473
+
 	Maybe good (regexes): 3
 	redirect=: 3
 	removeparams= (accepted/discarded): 0/0
@@ -2165,21 +1375,14 @@ Output rule count: 480
 	Unsupported: 0
 
 CSS-generic: 9 plain CSS selectors
-CSS-specific domain-based: 778 distinct filters
-	Combined into 402 distinct entries
+CSS-specific domain-based: 775 distinct filters
+	Combined into 403 distinct entries
 CSS-specific entity-based: 0 distinct filters
 	Combined into 0 distinct entries
 CSS-specific injectable files: 2
-	1snkul0, 1f0e058
+	0omfvps, 0mu9uto
 Declarative-related distinct filters: 3 distinct combined selectors
 Procedural-related distinct filters: 2 distinct combined selectors
-Discarded unsupported scriptlet filter: +js(m3u-prune, /#EXT-X-DISCONTINUITY.{1\,100}#EXT-X-DISCONTINUITY/gm, mixed.m3u8)
-Discarded unsupported scriptlet filter: +js(ra, target|onclick, a[href^="/video/"])
-Rejected scriptlet filters: 0
-
-Scriptlet-related distinct filters: 57
-Scriptlet-related injectable files: 9
-	vie-1.abort-current-script.js, vie-1.abort-on-property-read.js, vie-1.no-addeventlistener-if.js, vie-1.abort-on-property-write.js, vie-1.set-constant.js, vie-1.no-fetch-if.js, vie-1.no-settimeout-if.js, vie-1.json-prune.js, vie-1.no-xhr-if.js
 ============================
 Listset for 'block-lan':
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/lan-block.txt
@@ -2188,6 +1391,7 @@ Input filter count: 47
 	Rejected filter count: 0
 Output rule count: 11
 	Plain good: 4
+
 	Maybe good (regexes): 7
 	redirect=: 0
 	removeparams= (accepted/discarded): 0/0
@@ -2197,11 +1401,12 @@ Output rule count: 11
 ============================
 Listset for 'dpollock-0':
 	Fetching remote https://someonewhocares.org/hosts/hosts
-Input filter count: 11357
-	Accepted filter count: 11357
+Input filter count: 11517
+	Accepted filter count: 11517
 	Rejected filter count: 0
 Output rule count: 1
 	Plain good: 1
+
 	Maybe good (regexes): 0
 	redirect=: 0
 	removeparams= (accepted/discarded): 0/0
@@ -2211,14 +1416,15 @@ Output rule count: 1
 ============================
 Listset for 'adguard-spyware-url':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/17.txt
-Input filter count: 1033
-	Accepted filter count: 1030
+Input filter count: 1048
+	Accepted filter count: 1045
 	Rejected filter count: 0
-Output rule count: 385
+Output rule count: 390
 	Plain good: 0
+
 	Maybe good (regexes): 0
 	redirect=: 0
-	removeparams= (accepted/discarded): 309/76
+	removeparams= (accepted/discarded): 314/76
 	csp=: 0
 	Unsupported: 76
 		Unsupported regex-based removeParam: /^__s=[A-Za-z0-9]{6\,}/
@@ -2306,11 +1512,12 @@ CSS-specific injectable files: 1
 ============================
 Listset for 'stevenblack-hosts':
 	Fetching remote https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
-Input filter count: 183821
-	Accepted filter count: 183821
+Input filter count: 186360
+	Accepted filter count: 186360
 	Rejected filter count: 0
 Output rule count: 1
 	Plain good: 1
+
 	Maybe good (regexes): 0
 	redirect=: 0
 	removeparams= (accepted/discarded): 0/0
