@@ -307,9 +307,14 @@ async function init() {
             ruleCount += rules.removeparam + rules.redirect + rules.csp;
         }
         let specificCount = 0;
-        if ( css.specific instanceof Object ) {
-            specificCount += css.specific.domainBased;
-            specificCount += css.specific.entityBased;
+        if ( typeof css.specific === 'number' ) {
+            specificCount += css.specific;
+        }
+        if ( typeof css.declarative === 'number' ) {
+            specificCount += css.declarative;
+        }
+        if ( typeof css.procedural === 'number' ) {
+            specificCount += css.procedural;
         }
         dom.text(
             qs$(div, 'p'),

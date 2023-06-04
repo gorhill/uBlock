@@ -38,40 +38,6 @@ const isGecko = browser.runtime.getURL('').startsWith('moz-extension://');
 
 const resourceDetailPromises = new Map();
 
-function getSpecificDetails() {
-    let promise = resourceDetailPromises.get('specific');
-    if ( promise !== undefined ) { return promise; }
-    promise = fetchJSON('/rulesets/specific-details').then(entries => {
-        const out = new Map();
-        for ( const entry of entries ) {
-            out.set(entry[0], new Map(entry[1]));
-        }
-        return out;
-    });
-    resourceDetailPromises.set('specific', promise);
-    return promise;
-}
-
-function getDeclarativeDetails() {
-    let promise = resourceDetailPromises.get('declarative');
-    if ( promise !== undefined ) { return promise; }
-    promise = fetchJSON('/rulesets/declarative-details').then(
-        entries => new Map(entries)
-    );
-    resourceDetailPromises.set('declarative', promise);
-    return promise;
-}
-
-function getProceduralDetails() {
-    let promise = resourceDetailPromises.get('procedural');
-    if ( promise !== undefined ) { return promise; }
-    promise = fetchJSON('/rulesets/procedural-details').then(
-        entries => new Map(entries)
-    );
-    resourceDetailPromises.set('procedural', promise);
-    return promise;
-}
-
 function getScriptletDetails() {
     let promise = resourceDetailPromises.get('scriptlet');
     if ( promise !== undefined ) { return promise; }
@@ -135,8 +101,8 @@ function registerGeneric(context, genericDetails) {
         if ( hostnames !== undefined ) {
             excludeHostnames.push(...hostnames);
         }
-        if ( details.css.generic instanceof Object === false ) { continue; }
-        if ( details.css.generic.count === 0 ) { continue; }
+        const count = details.css?.generic || 0;
+        if ( count === 0 ) { continue; }
         js.push(`/rulesets/scripting/generic/${details.id}.js`);
     }
 
@@ -144,19 +110,20 @@ function registerGeneric(context, genericDetails) {
 
     js.push('/js/scripting/css-generic.js');
 
+    const { none, network, extendedSpecific, extendedGeneric } = filteringModeDetails;
     const matches = [];
     const excludeMatches = [];
-    if ( filteringModeDetails.extendedGeneric.has('all-urls') ) {
-        excludeMatches.push(...ut.matchesFromHostnames(filteringModeDetails.none));
-        excludeMatches.push(...ut.matchesFromHostnames(filteringModeDetails.network));
-        excludeMatches.push(...ut.matchesFromHostnames(filteringModeDetails.extendedSpecific));
+    if ( extendedGeneric.has('all-urls') ) {
+        excludeMatches.push(...ut.matchesFromHostnames(none));
+        excludeMatches.push(...ut.matchesFromHostnames(network));
+        excludeMatches.push(...ut.matchesFromHostnames(extendedSpecific));
         excludeMatches.push(...ut.matchesFromHostnames(excludeHostnames));
         matches.push('<all_urls>');
     } else {
         matches.push(
             ...ut.matchesFromHostnames(
                 ut.subtractHostnameIters(
-                    Array.from(filteringModeDetails.extendedGeneric),
+                    Array.from(extendedGeneric),
                     excludeHostnames
                 )
             )
@@ -198,50 +165,33 @@ function registerGeneric(context, genericDetails) {
 
 /******************************************************************************/
 
-function registerProcedural(context, proceduralDetails) {
+function registerProcedural(context) {
     const { before, filteringModeDetails, rulesetsDetails } = context;
 
     const js = [];
-    const hostnameMatches = new Set();
-    for ( const details of rulesetsDetails ) {
-        if ( details.css.procedural === 0 ) { continue; }
-        js.push(`/rulesets/scripting/procedural/${details.id}.js`);
-        if ( proceduralDetails.has(details.id) ) {
-            for ( const hn of proceduralDetails.get(details.id) ) {
-                hostnameMatches.add(hn);
-            }
-        }
+    for ( const rulesetDetails of rulesetsDetails ) {
+        const count = rulesetDetails.css?.procedural || 0;
+        if ( count === 0 ) { continue; }
+        js.push(`/rulesets/scripting/procedural/${rulesetDetails.id}.js`);
     }
-
     if ( js.length === 0 ) { return; }
+
+    const { none, network, extendedSpecific, extendedGeneric } = filteringModeDetails;
+    const matches = [
+        ...ut.matchesFromHostnames(extendedSpecific),
+        ...ut.matchesFromHostnames(extendedGeneric),
+    ];
+    if ( matches.length === 0 ) { return; }
 
     js.push('/js/scripting/css-procedural.js');
 
-    const {
-        none,
-        network,
-        extendedSpecific,
-        extendedGeneric,
-    } = filteringModeDetails;
-
-    const matches = [];
     const excludeMatches = [];
-    if ( extendedSpecific.has('all-urls') || extendedGeneric.has('all-urls') ) {
+    if ( none.has('all-urls') === false ) {
         excludeMatches.push(...ut.matchesFromHostnames(none));
-        excludeMatches.push(...ut.matchesFromHostnames(network));
-        matches.push(...ut.matchesFromHostnames(hostnameMatches));
-    } else if ( extendedSpecific.size !== 0 || extendedGeneric.size !== 0 ) {
-        matches.push(
-            ...ut.matchesFromHostnames(
-                ut.intersectHostnameIters(
-                    [ ...extendedSpecific, ...extendedGeneric ],
-                    hostnameMatches
-                )
-            )
-        );
     }
-
-    if ( matches.length === 0 ) { return; }
+    if ( network.has('all-urls') === false ) {
+        excludeMatches.push(...ut.matchesFromHostnames(network));
+    }
 
     const registered = before.get('css-procedural');
     before.delete('css-procedural'); // Important!
@@ -277,48 +227,33 @@ function registerProcedural(context, proceduralDetails) {
 
 /******************************************************************************/
 
-function registerDeclarative(context, declarativeDetails) {
+function registerDeclarative(context) {
     const { before, filteringModeDetails, rulesetsDetails } = context;
 
     const js = [];
-    const hostnameMatches = [];
-    for ( const details of rulesetsDetails ) {
-        if ( details.css.declarative === 0 ) { continue; }
-        js.push(`/rulesets/scripting/declarative/${details.id}.js`);
-        if ( declarativeDetails.has(details.id) ) {
-            hostnameMatches.push(...declarativeDetails.get(details.id));
-        }
+    for ( const rulesetDetails of rulesetsDetails ) {
+        const count = rulesetDetails.css?.declarative || 0;
+        if ( count === 0 ) { continue; }
+        js.push(`/rulesets/scripting/declarative/${rulesetDetails.id}.js`);
     }
-
     if ( js.length === 0 ) { return; }
+
+    const { none, network, extendedSpecific, extendedGeneric } = filteringModeDetails;
+    const matches = [
+        ...ut.matchesFromHostnames(extendedSpecific),
+        ...ut.matchesFromHostnames(extendedGeneric),
+    ];
+    if ( matches.length === 0 ) { return; }
 
     js.push('/js/scripting/css-declarative.js');
 
-    const {
-        none,
-        network,
-        extendedSpecific,
-        extendedGeneric,
-    } = filteringModeDetails;
-
-    const matches = [];
     const excludeMatches = [];
-    if ( extendedSpecific.has('all-urls') || extendedGeneric.has('all-urls') ) {
+    if ( none.has('all-urls') === false ) {
         excludeMatches.push(...ut.matchesFromHostnames(none));
-        excludeMatches.push(...ut.matchesFromHostnames(network));
-        matches.push(...ut.matchesFromHostnames(hostnameMatches));
-    } else if ( extendedSpecific.size !== 0 || extendedGeneric.size !== 0 ) {
-        matches.push(
-            ...ut.matchesFromHostnames(
-                ut.intersectHostnameIters(
-                    [ ...extendedSpecific, ...extendedGeneric ],
-                    hostnameMatches
-                )
-            )
-        );
     }
-
-    if ( matches.length === 0 ) { return; }
+    if ( network.has('all-urls') === false ) {
+        excludeMatches.push(...ut.matchesFromHostnames(network));
+    }
 
     const registered = before.get('css-declarative');
     before.delete('css-declarative'); // Important!
@@ -338,6 +273,68 @@ function registerDeclarative(context, declarativeDetails) {
 
     // update
     const directive = { id: 'css-declarative' };
+    if ( arrayEq(registered.js, js, false) === false ) {
+        directive.js = js;
+    }
+    if ( arrayEq(registered.matches, matches) === false ) {
+        directive.matches = matches;
+    }
+    if ( arrayEq(registered.excludeMatches, excludeMatches) === false ) {
+        directive.excludeMatches = excludeMatches;
+    }
+    if ( directive.js || directive.matches || directive.excludeMatches ) {
+        context.toUpdate.push(directive);
+    }
+}
+
+/******************************************************************************/
+
+function registerSpecific(context) {
+    const { before, filteringModeDetails, rulesetsDetails } = context;
+
+    const js = [];
+    for ( const rulesetDetails of rulesetsDetails ) {
+        const count = rulesetDetails.css?.specific || 0;
+        if ( count === 0 ) { continue; }
+        js.push(`/rulesets/scripting/specific/${rulesetDetails.id}.js`);
+    }
+    if ( js.length === 0 ) { return; }
+
+    const { none, network, extendedSpecific, extendedGeneric } = filteringModeDetails;
+    const matches = [
+        ...ut.matchesFromHostnames(extendedSpecific),
+        ...ut.matchesFromHostnames(extendedGeneric),
+    ];
+    if ( matches.length === 0 ) { return; }
+
+    js.push('/js/scripting/css-specific.js');
+
+    const excludeMatches = [];
+    if ( none.has('all-urls') === false ) {
+        excludeMatches.push(...ut.matchesFromHostnames(none));
+    }
+    if ( network.has('all-urls') === false ) {
+        excludeMatches.push(...ut.matchesFromHostnames(network));
+    }
+
+    const registered = before.get('css-specific');
+    before.delete('css-specific'); // Important!
+
+    // register
+    if ( registered === undefined ) {
+        context.toAdd.push({
+            id: 'css-specific',
+            js,
+            allFrames: true,
+            matches,
+            excludeMatches,
+            runAt: 'document_start',
+        });
+        return;
+    }
+
+    // update
+    const directive = { id: 'css-specific' };
     if ( arrayEq(registered.js, js, false) === false ) {
         directive.js = js;
     }
@@ -432,210 +429,6 @@ function registerScriptlet(context, scriptletDetails) {
 
 /******************************************************************************/
 
-function registerSpecific(context, specificDetails) {
-    const { filteringModeDetails } = context;
-
-    let toRegisterMap;
-    if (
-        filteringModeDetails.extendedSpecific.has('all-urls') ||
-        filteringModeDetails.extendedGeneric.has('all-urls')
-    ) {
-        toRegisterMap = registerSpecificAll(context, specificDetails);
-    } else {
-        toRegisterMap = registerSpecificSome(context, specificDetails);
-    }
-
-    for ( const [ fname, hostnames ] of toRegisterMap ) {
-        toRegisterableScript(context, fname, hostnames);
-    }
-}
-
-function registerSpecificSome(context, specificDetails) {
-    const { filteringModeDetails, rulesetsDetails } = context;
-    const toRegisterMap = new Map();
-
-    const targetHostnames = [
-        ...filteringModeDetails.extendedSpecific,
-        ...filteringModeDetails.extendedGeneric,
-    ];
-
-    const checkMatches = (hostnamesToFidsMap, hn) => {
-        let fids = hostnamesToFidsMap.get(hn);
-        if ( fids === undefined ) { return; }
-        if ( typeof fids === 'number' ) { fids = [ fids ]; }
-        for ( const fid of fids ) {
-            const fname = ut.fnameFromFileId(fid);
-            let existing = toRegisterMap.get(fname);
-            if ( existing ) {
-                if ( existing[0] === '*' ) { continue; }
-                existing.push(hn);
-            } else {
-                toRegisterMap.set(fname, existing = [ hn ]);
-            }
-            if ( hn !== '*' ) { continue; }
-            existing.length = 0;
-            existing.push('*');
-            break;
-        }
-    };
-
-    for ( const rulesetDetails of rulesetsDetails ) {
-        const hostnamesToFidsMap = specificDetails.get(rulesetDetails.id);
-        if ( hostnamesToFidsMap === undefined ) { continue; }
-        for ( let hn of targetHostnames ) {
-            while ( hn ) {
-                checkMatches(hostnamesToFidsMap, hn);
-                hn = ut.toBroaderHostname(hn);
-            }
-        }
-    }
-
-    return toRegisterMap;
-}
-
-function registerSpecificAll(context, specificDetails) {
-    const { filteringModeDetails, rulesetsDetails } = context;
-    const toRegisterMap = new Map();
-
-    const excludeSet = new Set([
-        ...filteringModeDetails.network,
-        ...filteringModeDetails.none,
-    ]);
-
-    for ( const rulesetDetails of rulesetsDetails ) {
-        const hostnamesToFidsMap = specificDetails.get(rulesetDetails.id);
-        if ( hostnamesToFidsMap === undefined ) { continue; }
-        for ( let [ hn, fids ] of hostnamesToFidsMap ) {
-            if ( excludeSet.has(hn) ) { continue; }
-            if ( ut.isDescendantHostnameOfIter(hn, excludeSet) ) { continue; }
-            if ( typeof fids === 'number' ) { fids = [ fids ]; }
-            for ( const fid of fids ) {
-                const fname = ut.fnameFromFileId(fid);
-                let existing = toRegisterMap.get(fname);
-                if ( existing ) {
-                    if ( existing[0] === '*' ) { continue; }
-                    existing.push(hn);
-                } else {
-                    toRegisterMap.set(fname, existing = [ hn ]);
-                }
-                if ( hn !== '*' ) { continue; }
-                existing.length = 0;
-                existing.push('*');
-                break;
-            }
-        }
-    }
-
-    return toRegisterMap;
-}
-
-const toRegisterableScript = (context, fname, hostnames) => {
-    if ( context.before.has(fname) ) {
-        return toUpdatableScript(context, fname, hostnames);
-    }
-    const matches = hostnames
-        ? ut.matchesFromHostnames(hostnames)
-        : [ '<all_urls>' ];
-    const excludeMatches = matches.length === 1 && matches[0] === '<all_urls>'
-        ? ut.matchesFromHostnames(context.filteringModeDetails.none)
-        : [];
-    const directive = {
-        id: fname,
-        allFrames: true,
-        matches,
-        excludeMatches,
-        js: [ `/rulesets/scripting/specific/${fname.slice(-1)}/${fname.slice(0,-1)}.js` ],
-        runAt: 'document_start',
-    };
-    context.toAdd.push(directive);
-};
-
-const toUpdatableScript = (context, fname, hostnames) => {
-    const registered = context.before.get(fname);
-    context.before.delete(fname); // Important!
-    const directive = { id: fname };
-    const matches = hostnames
-        ? ut.matchesFromHostnames(hostnames)
-        : [ '<all_urls>' ];
-    if ( arrayEq(registered.matches, matches) === false ) {
-        directive.matches = matches;
-    }
-    const excludeMatches = matches.length === 1 && matches[0] === '<all_urls>'
-        ? ut.matchesFromHostnames(context.filteringModeDetails.none)
-        : [];
-    if ( arrayEq(registered.excludeMatches, excludeMatches) === false ) {
-        directive.excludeMatches = excludeMatches;
-    }
-    if ( directive.matches || directive.excludeMatches ) {
-        context.toUpdate.push(directive);
-    }
-};
-
-/******************************************************************************/
-
-function registerSpecificEntity(context) {
-    const { before, filteringModeDetails, rulesetsDetails } = context;
-
-    const js = [];
-    for ( const details of rulesetsDetails ) {
-        if ( details.css.specific instanceof Object === false ) { continue; }
-        if ( details.css.specific.entityBased === 0 ) { continue; }
-        js.push(`/rulesets/scripting/specific-entity/${details.id}.js`);
-    }
-
-    if ( js.length === 0 ) { return; }
-
-    const matches = [];
-    const excludeMatches = [];
-    if ( filteringModeDetails.extendedGeneric.has('all-urls') ) {
-        excludeMatches.push(...ut.matchesFromHostnames(filteringModeDetails.none));
-        excludeMatches.push(...ut.matchesFromHostnames(filteringModeDetails.network));
-        excludeMatches.push(...ut.matchesFromHostnames(filteringModeDetails.extendedSpecific));
-        matches.push('<all_urls>');
-    } else {
-        matches.push(
-            ...ut.matchesFromHostnames(filteringModeDetails.extendedGeneric)
-        );
-    }
-
-    if ( matches.length === 0 ) { return; }
-
-    js.push('/js/scripting/css-specific.entity.js');
-
-    const registered = before.get('css-specific.entity');
-    before.delete('css-specific.entity'); // Important!
-
-    // register
-    if ( registered === undefined ) {
-        context.toAdd.push({
-            id: 'css-specific.entity',
-            js,
-            allFrames: true,
-            matches,
-            excludeMatches,
-            runAt: 'document_start',
-        });
-        return;
-    }
-
-    // update
-    const directive = { id: 'css-specific.entity' };
-    if ( arrayEq(registered.js, js, false) === false ) {
-        directive.js = js;
-    }
-    if ( arrayEq(registered.matches, matches) === false ) {
-        directive.matches = matches;
-    }
-    if ( arrayEq(registered.excludeMatches, excludeMatches) === false ) {
-        directive.excludeMatches = excludeMatches;
-    }
-    if ( directive.js || directive.matches || directive.excludeMatches ) {
-        context.toUpdate.push(directive);
-    }
-}
-
-/******************************************************************************/
-
 async function registerInjectables(origins) {
     void origins;
 
@@ -644,19 +437,13 @@ async function registerInjectables(origins) {
     const [
         filteringModeDetails,
         rulesetsDetails,
-        declarativeDetails,
-        proceduralDetails,
         scriptletDetails,
-        specificDetails,
         genericDetails,
         registered,
     ] = await Promise.all([
         getFilteringModeDetails(),
         getEnabledRulesetsDetails(),
-        getDeclarativeDetails(),
-        getProceduralDetails(),
         getScriptletDetails(),
-        getSpecificDetails(),
         getGenericDetails(),
         browser.scripting.getRegisteredContentScripts(),
     ]);
@@ -676,11 +463,10 @@ async function registerInjectables(origins) {
         toRemove,
     };
 
-    registerDeclarative(context, declarativeDetails);
-    registerProcedural(context, proceduralDetails);
+    registerDeclarative(context);
+    registerProcedural(context);
     registerScriptlet(context, scriptletDetails);
-    registerSpecific(context, specificDetails);
-    registerSpecificEntity(context);
+    registerSpecific(context);
     registerGeneric(context, genericDetails);
 
     toRemove.push(...Array.from(before.keys()));

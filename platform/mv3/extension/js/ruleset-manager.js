@@ -394,10 +394,10 @@ async function updateCspRules() {
     if ( addRules.length === 0 && removeRuleIds.length === 0 ) { return; }
 
     if ( removeRuleIds.length !== 0 ) {
-        console.info(`Remove ${removeRuleIds.length} DNR redirect rules`);
+        console.info(`Remove ${removeRuleIds.length} DNR csp rules`);
     }
     if ( addRules.length !== 0 ) {
-        console.info(`Add ${addRules.length} DNR redirect rules`);
+        console.info(`Add ${addRules.length} DNR csp rules`);
     }
 
     return dnr.updateDynamicRules({ addRules, removeRuleIds });

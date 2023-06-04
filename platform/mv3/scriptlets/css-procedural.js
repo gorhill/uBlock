@@ -23,6 +23,8 @@
 
 'use strict';
 
+// ruleset: $rulesetId$
+
 /******************************************************************************/
 
 /// name css-procedural
@@ -35,14 +37,16 @@
 
 /******************************************************************************/
 
-// $rulesetId$
-
 const argsList = self.$argsList$;
 
 const hostnamesMap = new Map(self.$hostnamesMap$);
 
+const entitiesMap = new Map(self.$entitiesMap$);
+
+const exceptionsMap = new Map(self.$exceptionsMap$);
+
 self.proceduralImports = self.proceduralImports || [];
-self.proceduralImports.push({ argsList, hostnamesMap });
+self.proceduralImports.push({ argsList, hostnamesMap, entitiesMap, exceptionsMap });
 
 /******************************************************************************/
 

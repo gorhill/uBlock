@@ -23,6 +23,8 @@
 
 'use strict';
 
+// ruleset: $rulesetId$
+
 /******************************************************************************/
 
 /// name css-specific
@@ -31,54 +33,20 @@
 
 // Important!
 // Isolate from global scope
-(function uBOL_cssSpecific() {
+(function uBOL_cssSpecificImports() {
 
 /******************************************************************************/
-
-// $rulesetId$
 
 const argsList = self.$argsList$;
 
 const hostnamesMap = new Map(self.$hostnamesMap$);
 
-/******************************************************************************/
+const entitiesMap = new Map(self.$entitiesMap$);
 
-let hn;
-try { hn = document.location.hostname; } catch(ex) { }
-const styles = [];
-while ( hn ) {
-    if ( hostnamesMap.has(hn) ) {
-        let argsIndices = hostnamesMap.get(hn);
-        if ( typeof argsIndices === 'number' ) { argsIndices = [ argsIndices ]; }
-        for ( const argsIndex of argsIndices ) {
-            const details = argsList[argsIndex];
-            if ( details.n && details.n.includes(hn) ) { continue; }
-            styles.push(details.a);
-        }
-    }
-    if ( hn === '*' ) { break; }
-    const pos = hn.indexOf('.');
-    if ( pos !== -1 ) {
-        hn = hn.slice(pos + 1);
-    } else {
-        hn = '*';
-    }
-}
+const exceptionsMap = new Map(self.$exceptionsMap$);
 
-argsList.length = 0;
-hostnamesMap.clear();
-
-if ( styles.length === 0 ) { return; }
-
-try {
-    const sheet = new CSSStyleSheet();
-    sheet.replace(`@layer{${styles.join(',')}{display:none!important;}}`);
-    document.adoptedStyleSheets = [
-        ...document.adoptedStyleSheets,
-        sheet
-    ];
-} catch(ex) {
-}
+self.specificImports = self.specificImports || [];
+self.specificImports.push({ argsList, hostnamesMap, entitiesMap, exceptionsMap });
 
 /******************************************************************************/
 

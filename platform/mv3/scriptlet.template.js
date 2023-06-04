@@ -99,7 +99,7 @@ if ( entitiesMap.size !== 0 ) {
             if ( argsIndices === undefined ) { continue; }
             if ( typeof argsIndices === 'number' ) { argsIndices = [ argsIndices ]; }
             for ( const argsIndex of argsIndices ) {
-                if ( tonotdoIndices(argsIndex) ) { continue; }
+                if ( tonotdoIndices.includes(argsIndex) ) { continue; }
                 todoIndices.add(argsIndex);
             }
         }

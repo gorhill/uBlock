@@ -119,14 +119,6 @@ const hostnamesFromMatches = origins => {
 
 /******************************************************************************/
 
-const fnameFromFileId = fid =>
-    fid.toString(32).padStart(7, '0');
-
-const fidFromFileName = fname =>
-    parseInt(fname, 32);
-
-/******************************************************************************/
-
 export {
     parsedURLromOrigin,
     toBroaderHostname,
@@ -136,6 +128,4 @@ export {
     subtractHostnameIters,
     matchesFromHostnames,
     hostnamesFromMatches,
-    fnameFromFileId,
-    fidFromFileName,
 };

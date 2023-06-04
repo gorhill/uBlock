@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-present Raymond Hill
+    Copyright (C) 2019-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -27,13 +27,13 @@
 
 // Important!
 // Isolate from global scope
-(function uBOL_cssDeclarative() {
+(function uBOL_cssSpecific() {
 
 /******************************************************************************/
 
-const declarativeImports = self.declarativeImports || [];
-self.declarativeImports = undefined;
-delete self.declarativeImports;
+const specificImports = self.specificImports || [];
+self.specificImports = undefined;
+delete self.specificImports;
 
 /******************************************************************************/
 
@@ -45,7 +45,7 @@ if ( hnpartslen === 0 ) { return; }
 
 const selectors = [];
 
-for ( const { argsList, exceptionsMap, hostnamesMap, entitiesMap } of declarativeImports ) {
+for ( const { argsList, exceptionsMap, hostnamesMap, entitiesMap } of specificImports ) {
     const todoIndices = new Set();
     const tonotdoIndices = [];
     // Exceptions
@@ -93,51 +93,19 @@ for ( const { argsList, exceptionsMap, hostnamesMap, entitiesMap } of declarativ
         entitiesMap.clear();
     }
     for ( const i of todoIndices ) {
-        selectors.push(...argsList[i].map(json => JSON.parse(json)));
+        selectors.push(argsList[i]);
     }
     argsList.length = 0;
 }
-declarativeImports.length = 0;
+specificImports.length = 0;
 
 if ( selectors.length === 0 ) { return; }
 
 /******************************************************************************/
 
-const cssRuleFromProcedural = details => {
-    const { tasks, action } = details;
-    let mq;
-    if ( tasks !== undefined ) {
-        if ( tasks.length > 1 ) { return; }
-        if ( tasks[0][0] !== 'matches-media' ) { return; }
-        mq = tasks[0][1];
-    }
-    let style;
-    if ( Array.isArray(action) ) {
-        if ( action[0] !== 'style' ) { return; }
-        style = action[1];
-    }
-    if ( mq === undefined && style === undefined ) { return; }
-    if ( mq === undefined ) {
-        return `${details.selector}\n{${style}}`;
-    }
-    if ( style === undefined ) {
-        return `@media ${mq} {\n${details.selector}\n{display:none!important;}\n}`;
-    }
-    return `@media ${mq} {\n${details.selector}\n{${style}}\n}`;
-};
-
-const sheetText = [];
-for ( const selector of selectors ) {
-    const ruleText = cssRuleFromProcedural(selector);
-    if ( ruleText === undefined ) { continue; }
-    sheetText.push(ruleText);
-}
-
-if ( sheetText.length === 0 ) { return; }
-
 try {
     const sheet = new CSSStyleSheet();
-    sheet.replace(`@layer{${sheetText.join('\n')}}`);
+    sheet.replace(`@layer{${selectors.join(',')}{display:none!important;}}`);
     document.adoptedStyleSheets = [
         ...document.adoptedStyleSheets,
         sheet

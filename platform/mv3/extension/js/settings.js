@@ -163,7 +163,7 @@ function renderFilterLists(soft = false) {
     // DOM list entries.
     dom.cl.add('#lists .listEntries .listEntry[data-listkey]', 'discard');
 
-    // Visually split the filter lists in three groups
+    // Visually split the filter lists in groups
     const ulLists = qs$('#lists');
     const groups = new Map([
         [
@@ -173,9 +173,17 @@ function renderFilterLists(soft = false) {
             ),
         ],
         [
+            'annoyances',
+            rulesetDetails.filter(ruleset =>
+                ruleset.group === 'annoyances'
+            ),
+        ],
+        [
             'misc',
             rulesetDetails.filter(ruleset =>
-                ruleset.id !== 'default' && typeof ruleset.lang !== 'string' 
+                ruleset.id !== 'default' &&
+                ruleset.group === undefined &&
+                typeof ruleset.lang !== 'string' 
             ),
         ],
         [

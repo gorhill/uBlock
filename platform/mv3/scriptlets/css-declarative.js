@@ -23,6 +23,8 @@
 
 'use strict';
 
+// ruleset: $rulesetId$
+
 /******************************************************************************/
 
 /// name css-declarative
@@ -35,14 +37,16 @@
 
 /******************************************************************************/
 
-// $rulesetId$
-
 const argsList = self.$argsList$;
 
 const hostnamesMap = new Map(self.$hostnamesMap$);
 
+const entitiesMap = new Map(self.$entitiesMap$);
+
+const exceptionsMap = new Map(self.$exceptionsMap$);
+
 self.declarativeImports = self.declarativeImports || [];
-self.declarativeImports.push({ argsList, hostnamesMap });
+self.declarativeImports.push({ argsList, hostnamesMap, entitiesMap, exceptionsMap });
 
 /******************************************************************************/
 
