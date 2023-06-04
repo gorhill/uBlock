@@ -25,6 +25,10 @@
 
 /******************************************************************************/
 
+import { browser } from './ext.js';
+
+/******************************************************************************/
+
 function parsedURLromOrigin(origin) {
     try {
         return new URL(origin);
@@ -119,6 +123,14 @@ const hostnamesFromMatches = origins => {
 
 /******************************************************************************/
 
+const ubolLog = (...args) => {
+    // Do not pollute dev console in stable release.
+    if ( browser.runtime.id === 'ddkjiahejlhfcafbddmgiahcphecmpfh' ) { return; }
+    console.info(...args);
+};
+
+/******************************************************************************/
+
 export {
     parsedURLromOrigin,
     toBroaderHostname,
@@ -128,4 +140,5 @@ export {
     subtractHostnameIters,
     matchesFromHostnames,
     hostnamesFromMatches,
+    ubolLog,
 };

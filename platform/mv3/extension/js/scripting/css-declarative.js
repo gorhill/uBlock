@@ -135,15 +135,13 @@ for ( const selector of selectors ) {
 
 if ( sheetText.length === 0 ) { return; }
 
-try {
-    const sheet = new CSSStyleSheet();
-    sheet.replace(`@layer{${sheetText.join('\n')}}`);
-    document.adoptedStyleSheets = [
-        ...document.adoptedStyleSheets,
-        sheet
-    ];
-} catch(ex) {
-}
+(function uBOL_injectCSS(css, count = 10) {
+    chrome.runtime.sendMessage({ what: 'insertCSS', css }).catch(( ) => {
+        count -= 1;
+        if ( count === 0 ) { return; }
+        uBOL_injectCSS(css, count - 1);
+    });
+})(sheetText.join('\n'));
 
 /******************************************************************************/
 

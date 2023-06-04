@@ -358,7 +358,6 @@ async function processNetworkFilters(assetDetails, network) {
 // Load all available scriptlets into a key-val map, where the key is the
 // scriptlet token, and val is the whole content of the file.
 
-const scriptletDealiasingMap = new Map(); 
 let scriptletsMapPromise;
 
 function loadAllSourceScriptlets() {
@@ -367,28 +366,20 @@ function loadAllSourceScriptlets() {
     }
 
     scriptletsMapPromise = fs.readdir('./scriptlets').then(files => {
-        const reScriptletNameOrAlias = /^\/\/\/\s+(?:name|alias)\s+(\S+)/gm;
+        const readTemplateFile = file =>
+            fs.readFile(`./scriptlets/${file}`, { encoding: 'utf8' })
+              .then(text => ({ file, text }));
         const readPromises = [];
         for ( const file of files ) {
-            readPromises.push(
-                fs.readFile(`./scriptlets/${file}`, { encoding: 'utf8' })
-            );
+            readPromises.push(readTemplateFile(file));
         }
         return Promise.all(readPromises).then(results => {
             const originalScriptletMap = new Map();
-            for ( const text of results ) {
-                const aliasSet = new Set();
-                for (;;) {
-                    const match = reScriptletNameOrAlias.exec(text);
-                    if ( match === null ) { break; }
-                    aliasSet.add(match[1]);
-                }
-                if ( aliasSet.size === 0 ) { continue; }
-                const aliases = Array.from(aliasSet);
-                originalScriptletMap.set(aliases[0], text);
-                for ( let i = 0; i < aliases.length; i++ ) {
-                    scriptletDealiasingMap.set(aliases[i], aliases[0]);
-                }
+            for ( const details of results ) {
+                originalScriptletMap.set(
+                    details.file.replace('.template.js', ''),
+                    details.text
+                );
             }
             return originalScriptletMap;
         });
@@ -490,7 +481,7 @@ function groupHostnamesBySelectors(arrayin) {
     const out = Array.from(contentMap).map(a => [
         a[0], {
             a: a[1].a,
-            y: a[1].y ? Array.from(a[1].y).sort(hnSort) : undefined,
+            y: a[1].y ? Array.from(a[1].y).sort(hnSort) : '*',
             n: a[1].n ? Array.from(a[1].n) : undefined,
         }
     ]).sort((a, b) => {
@@ -564,7 +555,6 @@ async function processCosmeticFilters(assetDetails, mapin) {
     // The cosmetic filters will be injected programmatically as content
     // script and the decisions to activate the cosmetic filters will be
     // done at injection time according to the document's hostname.
-    const originalScriptletMap = await loadAllSourceScriptlets();
     const generatedFiles = [];
 
     const argsMap = domainBasedEntries.map(entry => [
@@ -602,6 +592,7 @@ async function processCosmeticFilters(assetDetails, mapin) {
         argsList[i] = details.a;
     }
 
+    const originalScriptletMap = await loadAllSourceScriptlets();
     const patchedScriptlet = originalScriptletMap.get('css-specific')
         .replace(
             '$rulesetId$',

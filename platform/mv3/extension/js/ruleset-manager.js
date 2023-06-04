@@ -27,6 +27,7 @@
 
 import { browser, dnr, i18n } from './ext.js';
 import { fetchJSON } from './fetch.js';
+import { ubolLog } from './utils.js';
 
 /******************************************************************************/
 
@@ -72,8 +73,8 @@ function getDynamicRules() {
         const map = new Map(
             rules.map(rule => [ rule.id, rule ])
         );
-        console.info(`Dynamic rule count: ${map.size}`);
-        console.info(`Available dynamic rule count: ${dnr.MAX_NUMBER_OF_DYNAMIC_AND_SESSION_RULES - map.size}`);
+        ubolLog(`Dynamic rule count: ${map.size}`);
+        ubolLog(`Available dynamic rule count: ${dnr.MAX_NUMBER_OF_DYNAMIC_AND_SESSION_RULES - map.size}`);
         return map;
     });
     return dynamicRuleMapPromise;
@@ -142,7 +143,7 @@ async function updateRegexRules() {
         }
     }
     if ( rejectedRegexRules.length !== 0 ) {
-        console.info(
+        ubolLog(
             'Rejected regexes:',
             rejectedRegexRules.map(rule => rule.condition.regexFilter)
         );
@@ -178,10 +179,10 @@ async function updateRegexRules() {
     if ( addRules.length === 0 && removeRuleIds.length === 0 ) { return; }
 
     if ( removeRuleIds.length !== 0 ) {
-        console.info(`Remove ${removeRuleIds.length} DNR regex rules`);
+        ubolLog(`Remove ${removeRuleIds.length} DNR regex rules`);
     }
     if ( addRules.length !== 0 ) {
-        console.info(`Add ${addRules.length} DNR regex rules`);
+        ubolLog(`Add ${addRules.length} DNR regex rules`);
     }
 
     return dnr.updateDynamicRules({ addRules, removeRuleIds });
@@ -250,10 +251,10 @@ async function updateRemoveparamRules() {
     if ( addRules.length === 0 && removeRuleIds.length === 0 ) { return; }
 
     if ( removeRuleIds.length !== 0 ) {
-        console.info(`Remove ${removeRuleIds.length} DNR removeparam rules`);
+        ubolLog(`Remove ${removeRuleIds.length} DNR removeparam rules`);
     }
     if ( addRules.length !== 0 ) {
-        console.info(`Add ${addRules.length} DNR removeparam rules`);
+        ubolLog(`Add ${addRules.length} DNR removeparam rules`);
     }
 
     return dnr.updateDynamicRules({ addRules, removeRuleIds });
@@ -322,10 +323,10 @@ async function updateRedirectRules() {
     if ( addRules.length === 0 && removeRuleIds.length === 0 ) { return; }
 
     if ( removeRuleIds.length !== 0 ) {
-        console.info(`Remove ${removeRuleIds.length} DNR redirect rules`);
+        ubolLog(`Remove ${removeRuleIds.length} DNR redirect rules`);
     }
     if ( addRules.length !== 0 ) {
-        console.info(`Add ${addRules.length} DNR redirect rules`);
+        ubolLog(`Add ${addRules.length} DNR redirect rules`);
     }
 
     return dnr.updateDynamicRules({ addRules, removeRuleIds });
@@ -394,10 +395,10 @@ async function updateCspRules() {
     if ( addRules.length === 0 && removeRuleIds.length === 0 ) { return; }
 
     if ( removeRuleIds.length !== 0 ) {
-        console.info(`Remove ${removeRuleIds.length} DNR csp rules`);
+        ubolLog(`Remove ${removeRuleIds.length} DNR csp rules`);
     }
     if ( addRules.length !== 0 ) {
-        console.info(`Add ${addRules.length} DNR csp rules`);
+        ubolLog(`Add ${addRules.length} DNR csp rules`);
     }
 
     return dnr.updateDynamicRules({ addRules, removeRuleIds });
@@ -482,10 +483,10 @@ async function enableRulesets(ids) {
     const disableRulesetIds = Array.from(disableRulesetSet);
 
     if ( enableRulesetIds.length !== 0 ) {
-        console.info(`Enable rulesets: ${enableRulesetIds}`);
+        ubolLog(`Enable rulesets: ${enableRulesetIds}`);
     }
     if ( disableRulesetIds.length !== 0 ) {
-        console.info(`Disable ruleset: ${disableRulesetIds}`);
+        ubolLog(`Disable ruleset: ${disableRulesetIds}`);
     }
     await dnr.updateEnabledRulesets({ enableRulesetIds, disableRulesetIds });
     

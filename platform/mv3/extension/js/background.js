@@ -53,6 +53,10 @@ import {
     syncWithBrowserPermissions,
 } from './mode-manager.js';
 
+import {
+    ubolLog,
+} from './utils.js';
+
 /******************************************************************************/
 
 const rulesetConfig = {
@@ -169,6 +173,28 @@ async function onPermissionsRemoved() {
 
 function onMessage(request, sender, callback) {
 
+    // Does not require trusted origin.
+
+    switch ( request.what ) {
+
+    case 'insertCSS': {
+        const tabId = sender?.tab?.id ?? false;
+        const frameId = sender?.frameId ?? false;
+        if ( tabId === false || frameId === false ) { return; }
+        browser.scripting.insertCSS({
+            css: request.css,
+            origin: 'USER',
+            target: { tabId, frameIds: [ frameId ] },
+        });
+        return;
+    }
+
+    default:
+        break;
+    }
+
+    // Does requires trusted origin.
+
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/MessageSender
     //   Firefox API does not set `sender.origin`
     if ( sender.origin !== undefined && sender.origin !== UBOL_ORIGIN ) { return; }
@@ -284,7 +310,7 @@ async function start() {
     // We need to update the regex rules only when ruleset version changes.
     const currentVersion = getCurrentVersion();
     if ( currentVersion !== rulesetConfig.version ) {
-        console.log(`Version change: ${rulesetConfig.version} => ${currentVersion}`);
+        ubolLog(`Version change: ${rulesetConfig.version} => ${currentVersion}`);
         updateDynamicRules().then(( ) => {
             rulesetConfig.version = currentVersion;
             saveRulesetConfig();
@@ -300,10 +326,10 @@ async function start() {
     registerInjectables();
 
     const enabledRulesets = await dnr.getEnabledRulesets();
-    console.log(`Enabled rulesets: ${enabledRulesets}`);
+    ubolLog(`Enabled rulesets: ${enabledRulesets}`);
 
     dnr.getAvailableStaticRuleCount().then(count => {
-        console.log(`Available static rule count: ${count}`);
+        ubolLog(`Available static rule count: ${count}`);
     });
 
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/declarativeNetRequest

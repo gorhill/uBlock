@@ -27,13 +27,9 @@
 
 /******************************************************************************/
 
-/// name css-declarative
-
-/******************************************************************************/
-
 // Important!
 // Isolate from global scope
-(function uBOL_cssDeclarativeImport() {
+(function uBOL_cssProceduralImport() {
 
 /******************************************************************************/
 
@@ -45,8 +41,8 @@ const entitiesMap = new Map(self.$entitiesMap$);
 
 const exceptionsMap = new Map(self.$exceptionsMap$);
 
-self.declarativeImports = self.declarativeImports || [];
-self.declarativeImports.push({ argsList, hostnamesMap, entitiesMap, exceptionsMap });
+self.proceduralImports = self.proceduralImports || [];
+self.proceduralImports.push({ argsList, hostnamesMap, entitiesMap, exceptionsMap });
 
 /******************************************************************************/
 

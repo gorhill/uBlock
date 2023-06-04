@@ -103,15 +103,13 @@ if ( selectors.length === 0 ) { return; }
 
 /******************************************************************************/
 
-try {
-    const sheet = new CSSStyleSheet();
-    sheet.replace(`@layer{${selectors.join(',')}{display:none!important;}}`);
-    document.adoptedStyleSheets = [
-        ...document.adoptedStyleSheets,
-        sheet
-    ];
-} catch(ex) {
-}
+(function uBOL_injectCSS(css, count = 10) {
+    chrome.runtime.sendMessage({ what: 'insertCSS', css }).catch(( ) => {
+        count -= 1;
+        if ( count === 0 ) { return; }
+        uBOL_injectCSS(css, count - 1);
+    });
+})(`${selectors.join(',')}{display:none!important;}`);
 
 /******************************************************************************/
 

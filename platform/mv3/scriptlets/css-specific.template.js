@@ -23,26 +23,26 @@
 
 'use strict';
 
-/******************************************************************************/
-
-/// name css-specific.entity
+// ruleset: $rulesetId$
 
 /******************************************************************************/
 
 // Important!
 // Isolate from global scope
-(function uBOL_cssSpecificEntityImport() {
+(function uBOL_cssSpecificImports() {
 
 /******************************************************************************/
 
-// $rulesetId$
-
 const argsList = self.$argsList$;
+
+const hostnamesMap = new Map(self.$hostnamesMap$);
 
 const entitiesMap = new Map(self.$entitiesMap$);
 
-self.specificEntityImports = self.specificEntityImports || [];
-self.specificEntityImports.push({ argsList, entitiesMap });
+const exceptionsMap = new Map(self.$exceptionsMap$);
+
+self.specificImports = self.specificImports || [];
+self.specificImports.push({ argsList, hostnamesMap, entitiesMap, exceptionsMap });
 
 /******************************************************************************/
 

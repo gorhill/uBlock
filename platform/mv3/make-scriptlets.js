@@ -164,7 +164,7 @@ export function compile(details, isTrusted) {
 
 export async function commit(rulesetId, path, writeFn) {
     const scriptletTemplate = await fs.readFile(
-        './scriptlet.template.js',
+        './scriptlets/scriptlet.template.js',
         { encoding: 'utf8' }
     );
     const patchHnMap = hnmap => {

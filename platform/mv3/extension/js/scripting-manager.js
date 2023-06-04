@@ -472,21 +472,21 @@ async function registerInjectables(origins) {
     toRemove.push(...Array.from(before.keys()));
 
     if ( toRemove.length !== 0 ) {
-        console.info(`Unregistered ${toRemove} content (css/js)`);
+        ut.ubolLog(`Unregistered ${toRemove} content (css/js)`);
         promises.push(
             browser.scripting.unregisterContentScripts({ ids: toRemove })
                 .catch(reason => { console.info(reason); })
         );
     }
     if ( toAdd.length !== 0 ) {
-        console.info(`Registered ${toAdd.map(v => v.id)} content (css/js)`);
+        ut.ubolLog(`Registered ${toAdd.map(v => v.id)} content (css/js)`);
         promises.push(
             browser.scripting.registerContentScripts(toAdd)
                 .catch(reason => { console.info(reason); })
         );
     }
     if ( toUpdate.length !== 0 ) {
-        console.info(`Updated ${toUpdate.map(v => v.id)} content (css/js)`);
+        ut.ubolLog(`Updated ${toUpdate.map(v => v.id)} content (css/js)`);
         promises.push(
             browser.scripting.updateContentScripts(toUpdate)
                 .catch(reason => { console.info(reason); })

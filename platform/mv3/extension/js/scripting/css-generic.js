@@ -60,7 +60,7 @@ const hashFromStr = (type, s) => {
     for ( let i = 0; i < len; i += step ) {
         hash = (hash << 5) + hash ^ s.charCodeAt(i);
     }
-    return hash & 0xFF_FFFF;
+    return hash & 0xFFFFFF;
 };
 
 /******************************************************************************/
@@ -162,7 +162,8 @@ const uBOL_processNodes = ( ) => {
     if ( styleSheetTimer !== undefined ) { return; }
     styleSheetTimer = self.requestAnimationFrame(( ) => {
         styleSheetTimer = undefined;
-        uBOL_injectStyleSheet();
+        uBOL_injectCSS(`${styleSheetSelectors.join(',')}{display:none!important;}`);
+        styleSheetSelectors.length = 0;
     });
 };
 
@@ -187,17 +188,12 @@ const uBOL_processChanges = mutations => {
 
 /******************************************************************************/
 
-const uBOL_injectStyleSheet = ( ) => {
-    try {
-        const sheet = new CSSStyleSheet();
-        sheet.replace(`@layer{${styleSheetSelectors.join(',')}{display:none!important;}}`);
-        document.adoptedStyleSheets = [
-            ...document.adoptedStyleSheets,
-            sheet
-        ];
-    } catch(ex) {
-    }
-    styleSheetSelectors.length = 0;
+const uBOL_injectCSS = (css, count = 10) => {
+    chrome.runtime.sendMessage({ what: 'insertCSS', css }).catch(( ) => {
+        count -= 1;
+        if ( count === 0 ) { return; }
+        uBOL_injectCSS(css, count - 1);
+    });
 };
 
 /******************************************************************************/

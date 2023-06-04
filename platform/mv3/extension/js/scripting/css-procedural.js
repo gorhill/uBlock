@@ -103,16 +103,12 @@ if ( selectors.length === 0 ) { return; }
 
 /******************************************************************************/
 
-const addStylesheet = text => {
-    try {
-        const sheet = new CSSStyleSheet();
-        sheet.replace(`@layer{${text}}`);
-        document.adoptedStyleSheets = [
-            ...document.adoptedStyleSheets,
-            sheet
-        ];
-    } catch(ex) {
-    }
+const uBOL_injectCSS = (css, count = 10) => {
+    chrome.runtime.sendMessage({ what: 'insertCSS', css }).catch(( ) => {
+        count -= 1;
+        if ( count === 0 ) { return; }
+        uBOL_injectCSS(css, count - 1);
+    });
 };
 
 const nonVisualElements = {
@@ -641,9 +637,7 @@ class ProceduralFilterer {
         if ( styleToken !== undefined ) { return styleToken; }
         styleToken = this.randomToken();
         this.styleTokenMap.set(style, styleToken);
-        addStylesheet(
-            `[${this.masterToken}][${styleToken}]\n{${style}}\n`,
-        );
+        uBOL_injectCSS(`[${this.masterToken}][${styleToken}]\n{${style}}\n`);
         return styleToken;
     }
 

@@ -23,30 +23,36 @@
 
 'use strict';
 
-// ruleset: $rulesetId$
-
-/******************************************************************************/
-
-/// name css-procedural
-
 /******************************************************************************/
 
 // Important!
 // Isolate from global scope
-(function uBOL_cssProceduralImport() {
+(function uBOL_cssGenericImport() {
 
 /******************************************************************************/
 
-const argsList = self.$argsList$;
+// $rulesetId$
 
-const hostnamesMap = new Map(self.$hostnamesMap$);
+const toImport = self.$genericSelectorMap$;
 
-const entitiesMap = new Map(self.$entitiesMap$);
+const genericSelectorMap = self.genericSelectorMap || new Map();
 
-const exceptionsMap = new Map(self.$exceptionsMap$);
+if ( genericSelectorMap.size === 0 ) {
+    self.genericSelectorMap = new Map(toImport);
+    return;
+}
 
-self.proceduralImports = self.proceduralImports || [];
-self.proceduralImports.push({ argsList, hostnamesMap, entitiesMap, exceptionsMap });
+for ( const toImportEntry of toImport ) {
+    const existing = genericSelectorMap.get(toImportEntry[0]);
+    genericSelectorMap.set(
+        toImportEntry[0],
+        existing === undefined
+            ? toImportEntry[1]
+            : `${existing},${toImportEntry[1]}`
+    );
+}
+
+self.genericSelectorMap = genericSelectorMap;
 
 /******************************************************************************/
 

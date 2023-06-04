@@ -23,40 +23,26 @@
 
 'use strict';
 
-/******************************************************************************/
-
-/// name css-generic
+// ruleset: $rulesetId$
 
 /******************************************************************************/
 
 // Important!
 // Isolate from global scope
-(function uBOL_cssGenericImport() {
+(function uBOL_cssDeclarativeImport() {
 
 /******************************************************************************/
 
-// $rulesetId$
+const argsList = self.$argsList$;
 
-const toImport = self.$genericSelectorMap$;
+const hostnamesMap = new Map(self.$hostnamesMap$);
 
-const genericSelectorMap = self.genericSelectorMap || new Map();
+const entitiesMap = new Map(self.$entitiesMap$);
 
-if ( genericSelectorMap.size === 0 ) {
-    self.genericSelectorMap = new Map(toImport);
-    return;
-}
+const exceptionsMap = new Map(self.$exceptionsMap$);
 
-for ( const toImportEntry of toImport ) {
-    const existing = genericSelectorMap.get(toImportEntry[0]);
-    genericSelectorMap.set(
-        toImportEntry[0],
-        existing === undefined
-            ? toImportEntry[1]
-            : `${existing},${toImportEntry[1]}`
-    );
-}
-
-self.genericSelectorMap = genericSelectorMap;
+self.declarativeImports = self.declarativeImports || [];
+self.declarativeImports.push({ argsList, hostnamesMap, entitiesMap, exceptionsMap });
 
 /******************************************************************************/
 
