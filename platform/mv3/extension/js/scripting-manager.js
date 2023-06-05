@@ -369,20 +369,26 @@ function registerScriptlet(context, scriptletDetails) {
 
             const matches = [];
             const excludeMatches = [];
+            let targetHostnames = [];
             if ( hasBroadHostPermission ) {
                 excludeMatches.push(...permissionRevokedMatches);
-                matches.push(...ut.matchesFromHostnames(scriptletHostnames));
+                if ( scriptletHostnames.length > 100 ) {
+                    targetHostnames = [ '*' ];
+                } else {
+                    targetHostnames = scriptletHostnames;
+                }
             } else if ( permissionGrantedHostnames.length !== 0 ) {
-                matches.push(
-                    ...ut.matchesFromHostnames(
-                        ut.intersectHostnameIters(
-                            permissionGrantedHostnames,
-                            scriptletHostnames
-                        )
-                    )
-                );
+                if ( scriptletHostnames.includes('*') ) {
+                    targetHostnames = permissionGrantedHostnames;
+                } else {
+                    targetHostnames = ut.intersectHostnameIters(
+                        permissionGrantedHostnames,
+                        scriptletHostnames
+                    );
+                }
             }
-            if ( matches.length === 0 ) { continue; }
+            if ( targetHostnames.length === 0 ) { continue; }
+            matches.push(...ut.matchesFromHostnames(targetHostnames));
 
             before.delete(id); // Important!
 
