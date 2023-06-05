@@ -61,4 +61,50 @@ function sendMessage(msg) {
 
 /******************************************************************************/
 
-export { browser, dnr, i18n, runtime, sendMessage };
+async function localRead(key) {
+    if ( browser.storage instanceof Object === false ) { return; }
+    if ( browser.storage.local instanceof Object === false ) { return; }
+    try {
+        const bin = await browser.storage.local.get(key);
+        if ( bin instanceof Object === false ) { return; }
+        return bin[key];
+    } catch(ex) {
+    }
+}
+
+async function localWrite(key, value) {
+    if ( browser.storage instanceof Object === false ) { return; }
+    if ( browser.storage.local instanceof Object === false ) { return; }
+    return browser.storage.local.set({ [key]: value });
+}
+
+/******************************************************************************/
+
+async function sessionRead(key) {
+    if ( browser.storage instanceof Object === false ) { return; }
+    if ( browser.storage.session instanceof Object === false ) { return; }
+    try {
+        const bin = await browser.storage.session.get(key);
+        if ( bin instanceof Object === false ) { return; }
+        return bin[key];
+    } catch(ex) {
+    }
+}
+
+async function sessionWrite(key, value) {
+    if ( browser.storage instanceof Object === false ) { return; }
+    if ( browser.storage.session instanceof Object === false ) { return; }
+    return browser.storage.session.set({ [key]: value });
+}
+
+/******************************************************************************/
+
+export {
+    browser,
+    dnr,
+    i18n,
+    runtime,
+    sendMessage,
+    localRead, localWrite,
+    sessionRead, sessionWrite,
+};

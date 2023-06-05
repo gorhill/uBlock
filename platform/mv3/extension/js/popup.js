@@ -25,10 +25,15 @@
 
 /******************************************************************************/
 
-import { browser, runtime, sendMessage } from './ext.js';
+import {
+    browser,
+    runtime,
+    sendMessage,
+    localRead, localWrite,
+} from './ext.js';
+
 import { dom, qs$ } from './dom.js';
 import { i18n$ } from './i18n.js';
-import { simpleStorage } from './storage.js';
 
 /******************************************************************************/
 
@@ -242,11 +247,11 @@ async function toggleSections(more) {
     }
     if ( newBits === currentBits ) { return; }
     sectionBitsToAttribute(newBits);
-    simpleStorage.setItem('popupPanelSections', newBits);
+    localWrite('popupPanelSections', newBits);
 }
 
-simpleStorage.getItem('popupPanelSections').then(s => {
-    sectionBitsToAttribute(parseInt(s, 10) || 0);
+localRead('popupPanelSections').then(bits => {
+    sectionBitsToAttribute(bits || 0);
 });
 
 dom.on('#moreButton', 'click', ( ) => {

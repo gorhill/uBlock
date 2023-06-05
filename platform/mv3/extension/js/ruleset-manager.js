@@ -63,13 +63,11 @@ function getRulesetDetails() {
 
 /******************************************************************************/
 
-let dynamicRuleMapPromise;
-
 function getDynamicRules() {
-    if ( dynamicRuleMapPromise !== undefined ) {
-        return dynamicRuleMapPromise;
+    if ( getDynamicRules.dynamicRuleMapPromise !== undefined ) {
+        return getDynamicRules.dynamicRuleMapPromise;
     }
-    dynamicRuleMapPromise = dnr.getDynamicRules().then(rules => {
+    getDynamicRules.dynamicRuleMapPromise = dnr.getDynamicRules().then(rules => {
         const map = new Map(
             rules.map(rule => [ rule.id, rule ])
         );
@@ -77,7 +75,7 @@ function getDynamicRules() {
         ubolLog(`Available dynamic rule count: ${dnr.MAX_NUMBER_OF_DYNAMIC_AND_SESSION_RULES - map.size}`);
         return map;
     });
-    return dynamicRuleMapPromise;
+    return getDynamicRules.dynamicRuleMapPromise;
 }
 
 /******************************************************************************/

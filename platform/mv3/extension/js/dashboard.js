@@ -21,7 +21,6 @@
 
 'use strict';
 
-import { simpleStorage } from './storage.js';
 import { dom, qs$ } from './dom.js';
 
 /******************************************************************************/
@@ -82,9 +81,6 @@ const loadDashboardPanel = function(pane, first) {
         dom.cl.add(tabButton, 'selected');
         tabButton.scrollIntoView();
         document.querySelector('#iframe').contentWindow.location.replace(pane);
-        if ( pane !== 'no-dashboard.html' ) {
-            simpleStorage.setItem('dashboardLastVisitedPane', pane);
-        }
     };
     if ( first ) {
         return loadPane();

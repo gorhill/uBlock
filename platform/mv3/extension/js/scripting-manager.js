@@ -135,31 +135,28 @@ function registerGeneric(context, genericDetails) {
     const registered = before.get('css-generic');
     before.delete('css-generic'); // Important!
 
+    const directive = {
+        id: 'css-generic',
+        js,
+        matches,
+        excludeMatches,
+        runAt: 'document_idle',
+    };
+
     // register
     if ( registered === undefined ) {
-        context.toAdd.push({
-            id: 'css-generic',
-            js,
-            matches,
-            excludeMatches,
-            runAt: 'document_idle',
-        });
+        context.toAdd.push(directive);
         return;
     }
 
     // update
-    const directive = { id: 'css-generic' };
-    if ( arrayEq(registered.js, js, false) === false ) {
-        directive.js = js;
-    }
-    if ( arrayEq(registered.matches, matches) === false ) {
-        directive.matches = matches;
-    }
-    if ( arrayEq(registered.excludeMatches, excludeMatches) === false ) {
-        directive.excludeMatches = excludeMatches;
-    }
-    if ( directive.js || directive.matches || directive.excludeMatches ) {
-        context.toUpdate.push(directive);
+    if (
+        arrayEq(registered.js, js, false) === false ||
+        arrayEq(registered.matches, matches) === false ||
+        arrayEq(registered.excludeMatches, excludeMatches) === false
+    ) {
+        context.toRemove.push('css-generic');
+        context.toAdd.push(directive);
     }
 }
 
@@ -196,32 +193,29 @@ function registerProcedural(context) {
     const registered = before.get('css-procedural');
     before.delete('css-procedural'); // Important!
 
+    const directive = {
+        id: 'css-procedural',
+        js,
+        allFrames: true,
+        matches,
+        excludeMatches,
+        runAt: 'document_end',
+    };
+
     // register
     if ( registered === undefined ) {
-        context.toAdd.push({
-            id: 'css-procedural',
-            js,
-            allFrames: true,
-            matches,
-            excludeMatches,
-            runAt: 'document_end',
-        });
+        context.toAdd.push(directive);
         return;
     }
 
     // update
-    const directive = { id: 'css-procedural' };
-    if ( arrayEq(registered.js, js, false) === false ) {
-        directive.js = js;
-    }
-    if ( arrayEq(registered.matches, matches) === false ) {
-        directive.matches = matches;
-    }
-    if ( arrayEq(registered.excludeMatches, excludeMatches) === false ) {
-        directive.excludeMatches = excludeMatches;
-    }
-    if ( directive.js || directive.matches || directive.excludeMatches ) {
-        context.toUpdate.push(directive);
+    if (
+        arrayEq(registered.js, js, false) === false ||
+        arrayEq(registered.matches, matches) === false ||
+        arrayEq(registered.excludeMatches, excludeMatches) === false
+    ) {
+        context.toRemove.push('css-procedural');
+        context.toAdd.push(directive);
     }
 }
 
@@ -258,32 +252,29 @@ function registerDeclarative(context) {
     const registered = before.get('css-declarative');
     before.delete('css-declarative'); // Important!
 
+    const directive = {
+        id: 'css-declarative',
+        js,
+        allFrames: true,
+        matches,
+        excludeMatches,
+        runAt: 'document_start',
+    };
+
     // register
     if ( registered === undefined ) {
-        context.toAdd.push({
-            id: 'css-declarative',
-            js,
-            allFrames: true,
-            matches,
-            excludeMatches,
-            runAt: 'document_start',
-        });
+        context.toAdd.push(directive);
         return;
     }
 
     // update
-    const directive = { id: 'css-declarative' };
-    if ( arrayEq(registered.js, js, false) === false ) {
-        directive.js = js;
-    }
-    if ( arrayEq(registered.matches, matches) === false ) {
-        directive.matches = matches;
-    }
-    if ( arrayEq(registered.excludeMatches, excludeMatches) === false ) {
-        directive.excludeMatches = excludeMatches;
-    }
-    if ( directive.js || directive.matches || directive.excludeMatches ) {
-        context.toUpdate.push(directive);
+    if (
+        arrayEq(registered.js, js, false) === false ||
+        arrayEq(registered.matches, matches) === false ||
+        arrayEq(registered.excludeMatches, excludeMatches) === false
+    ) {
+        context.toRemove.push('css-declarative');
+        context.toAdd.push(directive);
     }
 }
 
@@ -320,32 +311,29 @@ function registerSpecific(context) {
     const registered = before.get('css-specific');
     before.delete('css-specific'); // Important!
 
+    const directive = {
+        id: 'css-specific',
+        js,
+        allFrames: true,
+        matches,
+        excludeMatches,
+        runAt: 'document_start',
+    };
+
     // register
     if ( registered === undefined ) {
-        context.toAdd.push({
-            id: 'css-specific',
-            js,
-            allFrames: true,
-            matches,
-            excludeMatches,
-            runAt: 'document_start',
-        });
+        context.toAdd.push(directive);
         return;
     }
 
     // update
-    const directive = { id: 'css-specific' };
-    if ( arrayEq(registered.js, js, false) === false ) {
-        directive.js = js;
-    }
-    if ( arrayEq(registered.matches, matches) === false ) {
-        directive.matches = matches;
-    }
-    if ( arrayEq(registered.excludeMatches, excludeMatches) === false ) {
-        directive.excludeMatches = excludeMatches;
-    }
-    if ( directive.js || directive.matches || directive.excludeMatches ) {
-        context.toUpdate.push(directive);
+    if (
+        arrayEq(registered.js, js, false) === false ||
+        arrayEq(registered.matches, matches) === false ||
+        arrayEq(registered.excludeMatches, excludeMatches) === false
+    ) {
+        context.toRemove.push('css-specific');
+        context.toAdd.push(directive);
     }
 }
 
@@ -398,30 +386,29 @@ function registerScriptlet(context, scriptletDetails) {
 
             before.delete(id); // Important!
 
+            const directive = {
+                id,
+                js: [ `/rulesets/scripting/scriptlet/${id}.js` ],
+                allFrames: true,
+                matches,
+                excludeMatches,
+                runAt: 'document_start',
+                world: 'MAIN',
+            };
+
             // register
             if ( registered === undefined ) {
-                context.toAdd.push({
-                    id,
-                    js: [ `/rulesets/scripting/scriptlet/${id}.js` ],
-                    allFrames: true,
-                    matches,
-                    excludeMatches,
-                    runAt: 'document_start',
-                    world: 'MAIN',
-                });
+                context.toAdd.push(directive);
                 continue;
             }
 
             // update
-            const directive = { id };
-            if ( arrayEq(registered.matches, matches) === false ) {
-                directive.matches = matches;
-            }
-            if ( arrayEq(registered.excludeMatches, excludeMatches) === false ) {
-                directive.excludeMatches = excludeMatches;
-            }
-            if ( directive.matches || directive.excludeMatches ) {
-                context.toUpdate.push(directive);
+            if (
+                arrayEq(registered.matches, matches) === false ||
+                arrayEq(registered.excludeMatches, excludeMatches) === false
+            ) {
+                context.toRemove.push(id);
+                context.toAdd.push(directive);
             }
         }
     }
@@ -452,14 +439,12 @@ async function registerInjectables(origins) {
             entry => [ entry.id, entry ]
         )
     );
-    const toAdd = [], toUpdate = [], toRemove = [];
-    const promises = [];
+    const toAdd = [], toRemove = [];
     const context = {
         filteringModeDetails,
         rulesetsDetails,
         before,
         toAdd,
-        toUpdate,
         toRemove,
     };
 
@@ -473,28 +458,17 @@ async function registerInjectables(origins) {
 
     if ( toRemove.length !== 0 ) {
         ut.ubolLog(`Unregistered ${toRemove} content (css/js)`);
-        promises.push(
-            browser.scripting.unregisterContentScripts({ ids: toRemove })
-                .catch(reason => { console.info(reason); })
-        );
+        await browser.scripting.unregisterContentScripts({ ids: toRemove })
+            .catch(reason => { console.info(reason); });
     }
+
     if ( toAdd.length !== 0 ) {
         ut.ubolLog(`Registered ${toAdd.map(v => v.id)} content (css/js)`);
-        promises.push(
-            browser.scripting.registerContentScripts(toAdd)
-                .catch(reason => { console.info(reason); })
-        );
+        await browser.scripting.registerContentScripts(toAdd)
+            .catch(reason => { console.info(reason); });
     }
-    if ( toUpdate.length !== 0 ) {
-        ut.ubolLog(`Updated ${toUpdate.map(v => v.id)} content (css/js)`);
-        promises.push(
-            browser.scripting.updateContentScripts(toUpdate)
-                .catch(reason => { console.info(reason); })
-        );
-    }
-    if ( promises.length === 0 ) { return; }
 
-    return Promise.all(promises);
+    return true;
 }
 
 /******************************************************************************/

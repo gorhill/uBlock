@@ -21,10 +21,9 @@
 
 'use strict';
 
-import { browser, sendMessage } from './ext.js';
+import { browser, sendMessage, localRead, localWrite } from './ext.js';
 import { i18n$ } from './i18n.js';
 import { dom, qs$, qsa$ } from './dom.js';
-import { simpleStorage } from './storage.js';
 
 /******************************************************************************/
 
@@ -352,10 +351,7 @@ function toggleHideUnusedLists(which) {
         );
     }
 
-    simpleStorage.setItem(
-        'hideUnusedFilterLists',
-        Array.from(hideUnusedSet)
-    );
+    localWrite('hideUnusedFilterLists', Array.from(hideUnusedSet));
 }
 
 dom.on('#lists', 'click', '.groupEntry[data-groupkey] > .geDetails', ev => {
@@ -365,10 +361,9 @@ dom.on('#lists', 'click', '.groupEntry[data-groupkey] > .geDetails', ev => {
 });
 
 // Initialize from saved state.
-simpleStorage.getItem('hideUnusedFilterLists').then(value => {
-    if ( Array.isArray(value) ) {
-        hideUnusedSet = new Set(value);
-    }
+localRead('hideUnusedFilterLists').then(value => {
+    if ( Array.isArray(value) === false ) { return; }
+    hideUnusedSet = new Set(value);
 });
 
 /******************************************************************************/
