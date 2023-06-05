@@ -2087,7 +2087,6 @@ function xmlPrune(
         const out = [];
         for ( let i = 0; i < xpr.snapshotLength; i++ ) {
             const node = xpr.snapshotItem(i);
-            if ( node.nodeType !== 1 ) { continue; }
             out.push(node);
         }
         return out;
@@ -2097,12 +2096,18 @@ function xmlPrune(
             if ( selectorCheck !== '' && xmlDoc.querySelector(selectorCheck) === null ) {
                 return xmlDoc;
             }
-            const elems = queryAll(xmlDoc, selector);
-            if ( elems.length !== 0 ) {
-                if ( log ) { safeSelf().uboLog(`xmlPrune: removing ${elems.length} nodes`); }
-                for ( const elem of elems ) {
-                    elem.remove();
-                    if ( log ) { safeSelf().uboLog(`xmlPrune: ${elem.nodeName} removed`); }
+            const items = queryAll(xmlDoc, selector);
+            if ( items.length !== 0 ) {
+                if ( log ) { safeSelf().uboLog(`xmlPrune: removing ${items.length} items`); }
+                for ( const item of items ) {
+                    if ( item.nodeType === 1 ) {
+                        item.remove();
+                    } else if ( item.nodeType === 2 ) {
+                        item.ownerElement.removeAttribute(item.nodeName);
+                    }
+                    if ( log ) {
+                        safeSelf().uboLog(`xmlPrune: ${item.constructor.name}.${item.nodeName} removed`);
+                    }
                 }
             }
         } catch(ex) {
