@@ -100,6 +100,9 @@ async function getActualFilteringModeDetails() {
                 };
             }
         }
+        if ( details ) {
+            sessionWrite('filteringModeDetails', details);
+        }
     }
     const out = {
         none: new Set(details.none),

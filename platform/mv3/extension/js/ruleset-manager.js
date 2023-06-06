@@ -46,19 +46,17 @@ const CURRENT_CONFIG_BASE_RULE_ID = 9000000;
 
 /******************************************************************************/
 
-let rulesetDetailsPromise;
-
 function getRulesetDetails() {
-    if ( rulesetDetailsPromise !== undefined ) {
-        return rulesetDetailsPromise;
+    if ( getRulesetDetails.rulesetDetailsPromise !== undefined ) {
+        return getRulesetDetails.rulesetDetailsPromise;
     }
-    rulesetDetailsPromise = fetchJSON('/rulesets/ruleset-details').then(entries => {
-        const map = new Map(
+    getRulesetDetails.rulesetDetailsPromise = fetchJSON('/rulesets/ruleset-details').then(entries => {
+        const rulesMap = new Map(
             entries.map(entry => [ entry.id, entry ])
         );
-        return map;
+        return rulesMap;
     });
-    return rulesetDetailsPromise;
+    return getRulesetDetails.rulesetDetailsPromise;
 }
 
 /******************************************************************************/
@@ -68,12 +66,10 @@ function getDynamicRules() {
         return getDynamicRules.dynamicRuleMapPromise;
     }
     getDynamicRules.dynamicRuleMapPromise = dnr.getDynamicRules().then(rules => {
-        const map = new Map(
-            rules.map(rule => [ rule.id, rule ])
-        );
-        ubolLog(`Dynamic rule count: ${map.size}`);
-        ubolLog(`Available dynamic rule count: ${dnr.MAX_NUMBER_OF_DYNAMIC_AND_SESSION_RULES - map.size}`);
-        return map;
+        const rulesMap = new Map(rules.map(rule => [ rule.id, rule ]));
+        ubolLog(`Dynamic rule count: ${rulesMap.size}`);
+        ubolLog(`Available dynamic rule count: ${dnr.MAX_NUMBER_OF_DYNAMIC_AND_SESSION_RULES - rulesMap.size}`);
+        return rulesMap;
     });
     return getDynamicRules.dynamicRuleMapPromise;
 }

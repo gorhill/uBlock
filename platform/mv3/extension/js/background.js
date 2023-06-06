@@ -65,10 +65,11 @@ const rulesetConfig = {
     version: '',
     enabledRulesets: [ 'default' ],
     autoReload: 1,
-    firstRun: false,
 };
 
 const UBOL_ORIGIN = runtime.getURL('').replace(/\/$/, '');
+
+let firstRun = false;
 
 /******************************************************************************/
 
@@ -82,26 +83,26 @@ async function loadRulesetConfig() {
         rulesetConfig.version = data.version;
         rulesetConfig.enabledRulesets = data.enabledRulesets;
         rulesetConfig.autoReload = data.autoReload;
-        return;
+        return false;
     }
     data = await localRead('rulesetConfig');
     if ( data ) {
         rulesetConfig.version = data.version;
         rulesetConfig.enabledRulesets = data.enabledRulesets;
         rulesetConfig.autoReload = data.autoReload;
-        return;
+        return false;
     }
     data = await loadRulesetConfig.convertLegacyStorage();
     if ( data ) {
         rulesetConfig.version = data.version;
         rulesetConfig.enabledRulesets = data.enabledRulesets;
         rulesetConfig.autoReload = data.autoReload;
-        return;
+        return false;
     }
     rulesetConfig.enabledRulesets = await defaultRulesetsFromLanguage();
-    rulesetConfig.firstRun = true;
     sessionWrite('rulesetConfig', rulesetConfig);
     localWrite('rulesetConfig', rulesetConfig);
+    return true;
 }
 
 // TODO: To remove after next stable release is widespread (2023-06-04)
@@ -221,9 +222,9 @@ function onMessage(request, sender, callback) {
                 enabledRulesets,
                 rulesetDetails: Array.from(rulesetDetails.values()),
                 autoReload: rulesetConfig.autoReload === 1,
-                firstRun: rulesetConfig.firstRun,
+                firstRun,
             });
-            rulesetConfig.firstRun = false;
+            firstRun = false;
         });
         return true;
     }
@@ -297,7 +298,7 @@ function onMessage(request, sender, callback) {
 /******************************************************************************/
 
 async function start() {
-    await loadRulesetConfig();
+    firstRun = await loadRulesetConfig();
     await enableRulesets(rulesetConfig.enabledRulesets);
 
     // We need to update the regex rules only when ruleset version changes.
@@ -330,10 +331,6 @@ async function start() {
     if ( dnr.setExtensionActionOptions ) {
         dnr.setExtensionActionOptions({ displayActionCountAsBadgeText: true });
     }
-}
-
-(async ( ) => {
-    await start();
 
     runtime.onMessage.addListener(onMessage);
 
@@ -341,7 +338,9 @@ async function start() {
         ( ) => { onPermissionsRemoved(); }
     );
 
-    if ( rulesetConfig.firstRun ) {
+    if ( firstRun ) {
         runtime.openOptionsPage();
     }
-})();
+}
+
+start();
