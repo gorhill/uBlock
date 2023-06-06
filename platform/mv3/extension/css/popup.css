@@ -34,6 +34,8 @@ a {
 
 #main {
     align-self: flex-start;
+    display: flex;
+    flex-direction: column;
     max-width: 340px;
     min-width: var(--popup-main-min-width);
     }
@@ -47,12 +49,32 @@ hr {
     padding: 0;
     }
 
-#filteringModeText {
-    background-color: var(--surface-2);
-    color: var(--ink-3);
+#hostname {
+    align-items: center;
+    background-color: var(--popup-toolbar-surface);
     display: flex;
-    padding: var(--default-gap-xsmall);
+    justify-content: center;
+    min-height: calc(var(--font-size) * 3);
+    padding: 0 var(--popup-gap-extra-thin);
+    text-align: center;
+    word-break: break-all;
+    }
+#hostname > span {
+    word-break: break-all;
+    }
+#hostname > span + span {
+    font-weight: 600;
+    }
+
+#filteringModeText {
+    color: var(--ink-3);
+    margin: var(--default-gap-small);
+    margin-top: 0;
+    text-align: center;
     text-transform: lowercase;
+    }
+#filteringModeText > span {
+    color: var(--accent-surface-1);
     }
 #filteringModeText > span:nth-of-type(2) {
     display: none;
@@ -68,9 +90,9 @@ hr {
     }
 
 .filteringModeSlider {
-    height: 32px;
-    margin: 8px;
-    width: 128px;
+    align-self: center;
+    margin: var(--popup-gap);
+    width: calc(var(--popup-main-min-width) - 1em);
     }
 
 .rulesetTools {
@@ -101,17 +123,6 @@ hr {
 body.needReload #refresh {
     visibility: visible;
     }
-#hostname {
-    font-size: var(--font-size-larger);
-    margin: var(--popup-gap) var(--popup-gap-thin);
-    text-align: center;
-    }
-#hostname > span {
-    word-break: break-all;
-    }
-#hostname > span + span {
-    font-weight: 600;
-    }
 
 #rulesetStats {
     padding: 0 var(--popup-gap-thin);
@@ -141,7 +152,7 @@ body.needReload #refresh {
     }
 
 .toolRibbon {
-    align-items: start;
+    align-items: center;
     background-color: var(--popup-toolbar-surface);
     display: grid;
     grid-auto-columns: 1fr;

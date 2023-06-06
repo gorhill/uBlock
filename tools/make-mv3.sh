@@ -55,6 +55,7 @@ cp src/css/fa-icons.css $DES/css/
 cp src/js/dom.js $DES/js/
 cp src/js/fa-icons.js $DES/js/
 cp src/js/i18n.js $DES/js/
+cp src/lib/punycode.js $DES/js/
 
 cp LICENSE.txt $DES/
 

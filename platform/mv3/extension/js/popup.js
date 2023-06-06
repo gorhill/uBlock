@@ -34,6 +34,7 @@ import {
 
 import { dom, qs$ } from './dom.js';
 import { i18n$ } from './i18n.js';
+import punycode from './punycode.js';
 
 /******************************************************************************/
 
@@ -300,7 +301,7 @@ async function init() {
 
     setFilteringMode(popupPanelData.level);
 
-    dom.text('#hostname', tabHostname);
+    dom.text('#hostname', punycode.toUnicode(tabHostname));
 
     const parent = qs$('#rulesetStats');
     for ( const details of popupPanelData.rulesetDetails || [] ) {
