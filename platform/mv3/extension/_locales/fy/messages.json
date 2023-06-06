@@ -51,9 +51,9 @@
     "message": "Privacybelied",
     "description": "Link to privacy policy on GitHub (English)"
   },
-  "popupPowerSwitchInfo": {
-    "message": "uBO Lite yn-/útskeakelje foar dizze website",
-    "description": "Tooltip for the main power button in the popup panel"
+  "popupFilteringModeLabel": {
+    "message": "filtermodus",
+    "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {
     "message": "Dashboerd iepenje",

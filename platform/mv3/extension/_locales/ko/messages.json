@@ -51,9 +51,9 @@
     "message": "개인정보취급방침",
     "description": "Link to privacy policy on GitHub (English)"
   },
-  "popupPowerSwitchInfo": {
-    "message": "이 사이트에 대해 uBO Lite를 켜거나 끄기",
-    "description": "Tooltip for the main power button in the popup panel"
+  "popupFilteringModeLabel": {
+    "message": "filtering mode",
+    "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {
     "message": "대시보드 열기",

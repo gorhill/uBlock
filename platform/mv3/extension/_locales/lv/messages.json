@@ -51,9 +51,9 @@
     "message": "Privātuma nosacījumi",
     "description": "Link to privacy policy on GitHub (English)"
   },
-  "popupPowerSwitchInfo": {
-    "message": "Atspējot/iespējot uBO Lite šajā vietnē",
-    "description": "Tooltip for the main power button in the popup panel"
+  "popupFilteringModeLabel": {
+    "message": "aizturēšanas veids",
+    "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {
     "message": "Atvērt vadības paneli",

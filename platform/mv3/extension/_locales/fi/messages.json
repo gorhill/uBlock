@@ -51,9 +51,9 @@
     "message": "Tietosuojakäytäntö",
     "description": "Link to privacy policy on GitHub (English)"
   },
-  "popupPowerSwitchInfo": {
-    "message": "Poista uBO Lite käytöstä/ota se käyttöön tällä sivustolla",
-    "description": "Tooltip for the main power button in the popup panel"
+  "popupFilteringModeLabel": {
+    "message": "suodatustila",
+    "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {
     "message": "Avaa hallintapaneeli",
@@ -216,7 +216,7 @@
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Käytä muutoksia",
+    "message": "Vahvista muutokset",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {

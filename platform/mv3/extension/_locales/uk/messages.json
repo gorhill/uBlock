@@ -51,9 +51,9 @@
     "message": "Політика конфіденційності",
     "description": "Link to privacy policy on GitHub (English)"
   },
-  "popupPowerSwitchInfo": {
-    "message": "Вимкнути/увімкнути uBO Lite для цього сайту",
-    "description": "Tooltip for the main power button in the popup panel"
+  "popupFilteringModeLabel": {
+    "message": "режим фільтрації",
+    "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {
     "message": "Відкрити панель керування",

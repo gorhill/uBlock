@@ -51,9 +51,9 @@
     "message": "Adatvédelmi Irányelvek",
     "description": "Link to privacy policy on GitHub (English)"
   },
-  "popupPowerSwitchInfo": {
-    "message": "Az uBO Lite letiltása/engedélyezése ezen a webhelyen",
-    "description": "Tooltip for the main power button in the popup panel"
+  "popupFilteringModeLabel": {
+    "message": "filtering mode",
+    "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {
     "message": "Vezérlőpult megnyitása",

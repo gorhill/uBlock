@@ -51,9 +51,9 @@
     "message": "Zásady ochrany osobných údajov",
     "description": "Link to privacy policy on GitHub (English)"
   },
-  "popupPowerSwitchInfo": {
-    "message": "Zakázať/povoliť uBO Lite pre túto stránku",
-    "description": "Tooltip for the main power button in the popup panel"
+  "popupFilteringModeLabel": {
+    "message": "Režim filtrovania",
+    "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {
     "message": "Otvoriť ovládací panel",

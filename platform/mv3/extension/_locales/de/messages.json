@@ -51,9 +51,9 @@
     "message": "Datenschutzhinweise",
     "description": "Link to privacy policy on GitHub (English)"
   },
-  "popupPowerSwitchInfo": {
-    "message": "uBO Lite für diese Website ein-/ausschalten",
-    "description": "Tooltip for the main power button in the popup panel"
+  "popupFilteringModeLabel": {
+    "message": "Filtermodus",
+    "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {
     "message": "Dashboard öffnen",

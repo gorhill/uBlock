@@ -51,9 +51,9 @@
     "message": "Πολιτική απορρήτου",
     "description": "Link to privacy policy on GitHub (English)"
   },
-  "popupPowerSwitchInfo": {
-    "message": "Απενεργοποίηση/ενεργοποίηση uBO Lite για αυτόν τον ιστότοπο",
-    "description": "Tooltip for the main power button in the popup panel"
+  "popupFilteringModeLabel": {
+    "message": "λειτουργία φιλτραρίσματος",
+    "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {
     "message": "Ανοίξτε τον πίνακα ελέγχου",

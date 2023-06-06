@@ -51,9 +51,9 @@
     "message": "Politika privatnosti",
     "description": "Link to privacy policy on GitHub (English)"
   },
-  "popupPowerSwitchInfo": {
-    "message": "Uključite/isključite uBO Lite za ovu stranicu",
-    "description": "Tooltip for the main power button in the popup panel"
+  "popupFilteringModeLabel": {
+    "message": "filtering mode",
+    "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {
     "message": "Otvorite nadzornu ploču",

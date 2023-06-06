@@ -464,7 +464,7 @@
     "description": "English: Lists of blocked hosts"
   },
   "3pApplyChanges": {
-    "message": "Käytä muutoksia",
+    "message": "Vahvista muutokset",
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Haittaohjelmia jakelevat verkkotunnukset",
+    "message": "Haittaohjelmasuojaus, tietoturva",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
@@ -544,7 +544,7 @@
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges": {
-    "message": "Käytä muutoksia",
+    "message": "Vahvista muutokset",
     "description": "English: Apply changes"
   },
   "rulesPermanentHeader": {
@@ -628,7 +628,7 @@
     "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
-    "message": "Käytä muutoksia",
+    "message": "Vahvista muutokset",
     "description": "English: Apply changes"
   },
   "logRequestsHeaderType": {
@@ -952,11 +952,11 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "message": "Suodatinlistoja päivitetään päivittäin. Varmista, ettei ongelmaasi ole jo korjattu listojen uusissa versioissa.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "message": "Vahvista ongelman edelleen esiintyvän kyseisellä verkkosivulla.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -1044,7 +1044,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "Suodatinlistat päivitetään käyttäen satunnaista sisällönjakeluverkkoa",
+    "message": "Suodatinlistat päivitetään satunnaisesti valitusta sisällönjakeluverkosta (CDN).",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
@@ -1200,7 +1200,7 @@
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Käytä muutoksia",
+    "message": "Vahvista muutokset",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
@@ -1276,7 +1276,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Suodatus ei onnistunut selaimen käynnistyessä kunnolla.\nLataa sivu uudelleen varmistaaksesi kunnollisen suodatuksen.",
+    "message": "Suodatus ei onnistunut kunnolla selaimen käynnistyessä. Päivitä sivu varmistaaksesi kunnollisen suodatuksen.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {
