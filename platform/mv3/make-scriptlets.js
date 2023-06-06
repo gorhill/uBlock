@@ -25,6 +25,7 @@
 
 import fs from 'fs/promises';
 import { builtinScriptlets } from './scriptlets.js';
+import { safeReplace } from './safe-replace.js';
 
 /******************************************************************************/
 
@@ -48,25 +49,6 @@ function createScriptletCoreCode(scriptletToken) {
         dependencies.push(...details.dependencies);
     }
     return Array.from(components.values()).join('\n\n');
-}
-
-/******************************************************************************/
-
-function safeReplace(text, pattern, replacement, count = 1) {
-    const rePattern = typeof pattern === 'string'
-        ? new RegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
-        : pattern;
-    let out = text;
-    for (;;) {
-        const match = rePattern.exec(out);
-        if ( match === null ) { break; }
-        out = out.slice(0, match.index) +
-        replacement +
-        out.slice(match.index + match[0].length);
-        count -= 1;
-        if ( count === 0 ) { break; }
-    }
-    return out;
 }
 
 /******************************************************************************/

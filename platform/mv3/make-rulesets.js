@@ -32,6 +32,7 @@ import redirectResourcesMap from './js/redirect-resources.js';
 import { dnrRulesetFromRawLists } from './js/static-dnr-filtering.js';
 import * as sfp from './js/static-filtering-parser.js';
 import * as makeScriptlet from './make-scriptlets.js';
+import { safeReplace } from './safe-replace.js';
 
 /******************************************************************************/
 
@@ -400,14 +401,14 @@ async function processGenericCosmeticFilters(assetDetails, bucketsMap, exclusion
     const selectorLists = bucketsList.map(v => [ v[0], v[1].join(',') ]);
     const originalScriptletMap = await loadAllSourceScriptlets();
 
-    const patchedScriptlet = originalScriptletMap.get('css-generic')
-        .replace(
-            '$rulesetId$',
-            assetDetails.id
-        ).replace(
-            /\bself\.\$genericSelectorMap\$/m,
-            `${JSON.stringify(selectorLists, scriptletJsonReplacer)}`
-        );
+    let patchedScriptlet = originalScriptletMap.get('css-generic').replace(
+        '$rulesetId$',
+        assetDetails.id
+    );
+    patchedScriptlet = safeReplace(patchedScriptlet,
+        /\bself\.\$genericSelectorMap\$/,
+        `${JSON.stringify(selectorLists, scriptletJsonReplacer)}`
+    );
 
     writeFile(
         `${scriptletDir}/generic/${assetDetails.id}.js`,
@@ -593,23 +594,26 @@ async function processCosmeticFilters(assetDetails, mapin) {
     }
 
     const originalScriptletMap = await loadAllSourceScriptlets();
-    const patchedScriptlet = originalScriptletMap.get('css-specific')
-        .replace(
-            '$rulesetId$',
-            assetDetails.id
-        ).replace(
-            /\bself\.\$argsList\$/m,
-            `${JSON.stringify(argsList, scriptletJsonReplacer)}`
-        ).replace(
-            /\bself\.\$hostnamesMap\$/m,
-            `${JSON.stringify(hostnamesMap, scriptletJsonReplacer)}`
-        ).replace(
-            /\bself\.\$entitiesMap\$/m,
-            `${JSON.stringify(entitiesMap, scriptletJsonReplacer)}`
-        ).replace(
-            /\bself\.\$exceptionsMap\$/m,
-            `${JSON.stringify(exceptionsMap, scriptletJsonReplacer)}`
-        );
+    let patchedScriptlet = originalScriptletMap.get('css-specific').replace(
+        '$rulesetId$',
+        assetDetails.id
+    );
+    patchedScriptlet = safeReplace(patchedScriptlet,
+        /\bself\.\$argsList\$/,
+        `${JSON.stringify(argsList, scriptletJsonReplacer)}`
+    );
+    patchedScriptlet = safeReplace(patchedScriptlet,
+        /\bself\.\$hostnamesMap\$/,
+        `${JSON.stringify(hostnamesMap, scriptletJsonReplacer)}`
+    );
+    patchedScriptlet = safeReplace(patchedScriptlet,
+        /\bself\.\$entitiesMap\$/,
+        `${JSON.stringify(entitiesMap, scriptletJsonReplacer)}`
+    );
+    patchedScriptlet = safeReplace(patchedScriptlet,
+        /\bself\.\$exceptionsMap\$/,
+        `${JSON.stringify(exceptionsMap, scriptletJsonReplacer)}`
+    );
     writeFile(`${scriptletDir}/specific/${assetDetails.id}.js`, patchedScriptlet);
     generatedFiles.push(`${assetDetails.id}`);
 
@@ -677,23 +681,26 @@ async function processDeclarativeCosmeticFilters(assetDetails, mapin) {
     }
 
     const originalScriptletMap = await loadAllSourceScriptlets();
-    const patchedScriptlet = originalScriptletMap.get('css-declarative')
-        .replace(
-            '$rulesetId$',
-            assetDetails.id
-        ).replace(
-            /\bself\.\$argsList\$/m,
-            `${JSON.stringify(argsList, scriptletJsonReplacer)}`
-        ).replace(
-            /\bself\.\$hostnamesMap\$/m,
-            `${JSON.stringify(hostnamesMap, scriptletJsonReplacer)}`
-        ).replace(
-            /\bself\.\$entitiesMap\$/m,
-            `${JSON.stringify(entitiesMap, scriptletJsonReplacer)}`
-        ).replace(
-            /\bself\.\$exceptionsMap\$/m,
-            `${JSON.stringify(exceptionsMap, scriptletJsonReplacer)}`
-        );
+    let patchedScriptlet = originalScriptletMap.get('css-declarative').replace(
+        '$rulesetId$',
+        assetDetails.id
+    );
+    patchedScriptlet = safeReplace(patchedScriptlet,
+        /\bself\.\$argsList\$/,
+        `${JSON.stringify(argsList, scriptletJsonReplacer)}`
+    );
+    patchedScriptlet = safeReplace(patchedScriptlet,
+        /\bself\.\$hostnamesMap\$/,
+        `${JSON.stringify(hostnamesMap, scriptletJsonReplacer)}`
+    );
+    patchedScriptlet = safeReplace(patchedScriptlet,
+        /\bself\.\$entitiesMap\$/,
+        `${JSON.stringify(entitiesMap, scriptletJsonReplacer)}`
+    );
+    patchedScriptlet = safeReplace(patchedScriptlet,
+        /\bself\.\$exceptionsMap\$/,
+        `${JSON.stringify(exceptionsMap, scriptletJsonReplacer)}`
+    );
     writeFile(`${scriptletDir}/declarative/${assetDetails.id}.js`, patchedScriptlet);
 
     if ( contentArray.length !== 0 ) {
@@ -760,23 +767,26 @@ async function processProceduralCosmeticFilters(assetDetails, mapin) {
     }
 
     const originalScriptletMap = await loadAllSourceScriptlets();
-    const patchedScriptlet = originalScriptletMap.get('css-procedural')
-        .replace(
-            '$rulesetId$',
-            assetDetails.id
-        ).replace(
-            /\bself\.\$argsList\$/m,
-            `${JSON.stringify(argsList, scriptletJsonReplacer)}`
-        ).replace(
-            /\bself\.\$hostnamesMap\$/m,
-            `${JSON.stringify(hostnamesMap, scriptletJsonReplacer)}`
-        ).replace(
-            /\bself\.\$entitiesMap\$/m,
-            `${JSON.stringify(entitiesMap, scriptletJsonReplacer)}`
-        ).replace(
-            /\bself\.\$exceptionsMap\$/m,
-            `${JSON.stringify(exceptionsMap, scriptletJsonReplacer)}`
-        );
+    let patchedScriptlet = originalScriptletMap.get('css-procedural').replace(
+        '$rulesetId$',
+        assetDetails.id
+    );
+    patchedScriptlet = safeReplace(patchedScriptlet,
+        /\bself\.\$argsList\$/,
+        `${JSON.stringify(argsList, scriptletJsonReplacer)}`
+    );
+    patchedScriptlet = safeReplace(patchedScriptlet,
+        /\bself\.\$hostnamesMap\$/,
+        `${JSON.stringify(hostnamesMap, scriptletJsonReplacer)}`
+    );
+    patchedScriptlet = safeReplace(patchedScriptlet,
+        /\bself\.\$entitiesMap\$/,
+        `${JSON.stringify(entitiesMap, scriptletJsonReplacer)}`
+    );
+    patchedScriptlet = safeReplace(patchedScriptlet,
+        /\bself\.\$exceptionsMap\$/,
+        `${JSON.stringify(exceptionsMap, scriptletJsonReplacer)}`
+    );
     writeFile(`${scriptletDir}/procedural/${assetDetails.id}.js`, patchedScriptlet);
 
     if ( contentArray.length !== 0 ) {
