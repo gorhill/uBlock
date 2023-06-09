@@ -632,12 +632,12 @@
 		"contentURL": [
 			"https://raw.githubusercontent.com/MasterKia/PersianBlocker/main/PersianBlocker.txt",
 			"https://cdn.statically.io/gh/MasterKia/PersianBlocker/main/PersianBlocker.txt",
-            "https://raw.githubusercontent.com/MasterKia/PersianBlocker/main/PersianBlocker.txt"
+			"https://raw.githubusercontent.com/MasterKia/PersianBlocker/main/PersianBlocker.txt"
 		],
-        "cdnURLs": [
+			"cdnURLs": [
 			"https://cdn.jsdelivr.net/gh/MasterKia/PersianBlocker@main/PersianBlocker.txt",
 			"https://cdn.statically.io/gh/MasterKia/PersianBlocker/main/PersianBlocker.txt"
-        ],
+		],
 		"supportURL": "https://github.com/MasterKia/PersianBlocker"
 	},
 	"ISL-0": {
