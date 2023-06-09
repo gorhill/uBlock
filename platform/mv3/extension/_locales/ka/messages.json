@@ -52,7 +52,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupFilteringModeLabel": {
-    "message": "filtering mode",
+    "message": "გაფილტვრის რეჟიმი",
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {
@@ -232,7 +232,7 @@
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
-    "message": "ფილტრაციის ნაგულისხმევი რეჟიმი",
+    "message": "გაფილტვრის ნაგულისხმევი რეჟიმი",
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {

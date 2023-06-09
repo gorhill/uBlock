@@ -600,7 +600,7 @@
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
-    "message": "الإشتراطات",
+    "message": "نوع القاعدة",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortBySource": {
@@ -652,7 +652,7 @@
     "description": "Appears in the logger's tab selector"
   },
   "logBehindTheScene": {
-    "message": "خلف الكواليس",
+    "message": "بلا تبويب",
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
@@ -680,15 +680,15 @@
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
-    "message": "ألبِث حافظ السجلات (تجاهل كل البيانات الواردة)",
+    "message": "ايقاف التسجيل مؤقتا (استبعاد كل البيانات الواردة) ",
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {
-    "message": "استعد حافظ السجلات",
+    "message": "استىئناف حافظ السجلات",
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "بدّل حالة ترشيح حافظ السجلات",
+    "message": "تبديل ترشيح بيانات التسجيل ",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
@@ -712,7 +712,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinAllowed": {
-    "message": "السماح",
+    "message": "مسموح",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinModified": {
@@ -720,15 +720,15 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
-    "message": "الطرف الأول",
+    "message": "أول طرف ",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin3p": {
-    "message": "الطرف الثالث",
+    "message": "ثالث-طرف ",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerEntryDetailsHeader": {
-    "message": "التفاصيل",
+    "message": "تفاصيل",
     "description": "Small header to identify the 'Details' pane for a specific logger entry"
   },
   "loggerEntryDetailsFilter": {
@@ -740,7 +740,7 @@
     "description": "Label to identify a filter list field"
   },
   "loggerEntryDetailsRule": {
-    "message": "القاعدة",
+    "message": "قاعدة",
     "description": "Label to identify a rule field"
   },
   "loggerEntryDetailsContext": {
@@ -748,11 +748,11 @@
     "description": "Label to identify a context field (typically a hostname)"
   },
   "loggerEntryDetailsRootContext": {
-    "message": "السياق الأساس",
+    "message": "سياق الجدر",
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
-    "message": "الجهة",
+    "message": "عديمة الطرف",
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
@@ -760,11 +760,11 @@
     "description": "Label to identify the type of an entry"
   },
   "loggerEntryDetailsURL": {
-    "message": "الرابط",
+    "message": "URL",
     "description": "Label to identify the URL of an entry"
   },
   "loggerURLFilteringHeader": {
-    "message": "قاعدة الرابط",
+    "message": "قاعدة URL",
     "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {

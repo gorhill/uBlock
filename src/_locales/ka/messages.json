@@ -132,7 +132,7 @@
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "ამ საიტზე ყველა ამომხტომი ფანჯრის შეზღუდვის ჩართვა/გამორთვა",
+    "message": "ამ საიტზე ყველა ამომხტომის შეზღუდვის ჩამრთველი",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
@@ -144,7 +144,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "დიდი მედიაფაილების შეზღუდვის ჩართვა/გამორთვა ამ საიტზე",
+    "message": "ამ საიტზე დიდი მედიაფაილების შეზღუდვის ჩამრთველი",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
@@ -156,11 +156,11 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "გარეგნული ნაწილების ფილტრაციის ჩართვა/გამორთვა ამ საიტზე",
+    "message": "გარეგნული ნაწილების ფილტრის ჩამრთველი",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "დააწკაპეთ გარეგნული ნაწილების ფილტრაციის გასაუქმებლად ამ საიტზე",
+    "message": "დაწკაპეთ გარეგნული ნაწილების ფილტრის გასათიშად ამ საიტზე",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
@@ -376,7 +376,7 @@
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "გარეგნული ნაწილების ფილტრაციის გამორთვა",
+    "message": "გარეგნული ნაწილების ფილტრის გათიშვა",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
@@ -664,11 +664,11 @@
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
-    "message": "DOM-დამკვირვებლის ჩართვა/გამორთვა",
+    "message": "DOM-დამკვირვებლის ჩამრთველი",
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "ამომხტომი არეს ჩართვა/გამორთვა",
+    "message": "ამომხტომი არეს ჩამრთველი",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
@@ -688,7 +688,7 @@
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "აღრიცხულის გამორჩევის ჩართვა/გამორთვა",
+    "message": "აღმრიცხავის გამორჩევის ჩამრთველი",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
@@ -1232,7 +1232,7 @@
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "ჩაკეტილი გადაადგილების ჩართვა/გამორთვა",
+    "message": "ჩაკეტილად გადაადგილების ჩამრთველი",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
@@ -1244,7 +1244,7 @@
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleCosmeticFiltering": {
-    "message": "გარეგნული ფილტრების გადამრთველი",
+    "message": "გარეგნული ფილტრის ჩამრთველი",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "relaxBlockingMode": {
