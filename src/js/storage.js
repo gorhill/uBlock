@@ -834,6 +834,12 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
         vAPI.storage.set({ 'availableFilterLists': µb.availableFilterLists });
 
+        logger.writeOne({
+            realm: 'message',
+            type: 'info',
+            text: 'Reloading all filter lists: done'
+        });
+
         vAPI.messaging.broadcast({
             what: 'staticFilteringDataChanged',
             parseCosmeticFilters: µb.userSettings.parseAllABPHideFilters,
@@ -865,6 +871,12 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     };
 
     const onFilterListsReady = lists => {
+        logger.writeOne({
+            realm: 'message',
+            type: 'info',
+            text: 'Reloading all filter lists: start'
+        });
+
         µb.availableFilterLists = lists;
 
         if ( vAPI.Net.canSuspend() ) {
