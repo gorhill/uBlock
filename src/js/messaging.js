@@ -1496,8 +1496,6 @@ const getSupportData = async function() {
         removedListset = undefined;
     }
 
-    const { versionUpdateTime = 0 } = await vAPI.storage.get('versionUpdateTime');
-
     let browserFamily = (( ) => {
         if ( vAPI.webextFlavor.soup.has('firefox') ) { return 'Firefox'; }
         if ( vAPI.webextFlavor.soup.has('chromium') ) { return 'Chromium'; }
@@ -1508,9 +1506,7 @@ const getSupportData = async function() {
     }
 
     return {
-        [`${vAPI.app.name} ${vAPI.app.version}`]: {
-            since: formatDelayFromNow(versionUpdateTime),
-        },
+        [`${vAPI.app.name}`]: `${vAPI.app.version}`,
         [`${browserFamily}`]: `${vAPI.webextFlavor.major}`,
         'filterset (summary)': {
             network: staticNetFilteringEngine.getFilterCount(),
