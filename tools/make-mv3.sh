@@ -57,6 +57,8 @@ cp src/js/fa-icons.js $DES/js/
 cp src/js/i18n.js $DES/js/
 cp src/lib/punycode.js $DES/js/
 
+cp -R src/img/flags-of-the-world $DES/img
+
 cp LICENSE.txt $DES/
 
 echo "*** uBOLite.mv3: Copying mv3-specific files"

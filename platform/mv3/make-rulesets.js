@@ -1058,29 +1058,56 @@ async function main() {
 
     // Handpicked annoyance rulesets from assets.json
     await rulesetFromURLs({
-        id: 'easylist-cookies',
-        name: 'EasyList – Cookies Notices' ,
+        id: 'annoyances-cookies',
+        name: 'AdGuard – Cookies Notices',
         group: 'annoyances',
         enabled: false,
         urls: [
-            'https://ublockorigin.github.io/uAssets/thirdparties/easylist-cookies.txt',
+            'https://filters.adtidy.org/extension/ublock/filters/18.txt',
+            'https://ublockorigin.github.io/uAssets/filters/annoyances-cookies.txt',
         ],
-        homeURL: 'https://github.com/uBlockOrigin/uAssets',
+        homeURL: 'https://github.com/AdguardTeam/AdguardFilters#adguard-filters',
     });
     await rulesetFromURLs({
-        id: 'easylist-annoyances',
-        name: 'EasyList – Annoyances' ,
+        id: 'annoyances-overlays',
+        name: 'AdGuard/uBO – Overlays',
         group: 'annoyances',
         enabled: false,
         urls: [
-            'https://ublockorigin.github.io/uAssets/thirdparties/easylist-annoyances.txt',
-            'https://ublockorigin.github.io/uAssets/thirdparties/easylist-chat.txt',
-            'https://ublockorigin.github.io/uAssets/thirdparties/easylist-newsletters.txt',
-            'https://ublockorigin.github.io/uAssets/thirdparties/easylist-notifications.txt',
-            'https://ublockorigin.github.io/uAssets/thirdparties/easylist-social.txt',
-            'https://ublockorigin.github.io/uAssets/filters/annoyances.txt',
+            'https://filters.adtidy.org/extension/ublock/filters/19.txt',
+            'https://ublockorigin.github.io/uAssets/filters/annoyances-others.txt',
         ],
-        homeURL: 'https://github.com/uBlockOrigin/uAssets',
+        homeURL: 'https://github.com/AdguardTeam/AdguardFilters#adguard-filters',
+    });
+    await rulesetFromURLs({
+        id: 'annoyances-social',
+        name: 'AdGuard – Social Media',
+        group: 'annoyances',
+        enabled: false,
+        urls: [
+            'https://filters.adtidy.org/extension/ublock/filters/4.txt',
+        ],
+        homeURL: 'https://github.com/AdguardTeam/AdguardFilters#adguard-filters',
+    });
+    await rulesetFromURLs({
+        id: 'annoyances-widgets',
+        name: 'AdGuard – Widgets',
+        group: 'annoyances',
+        enabled: false,
+        urls: [
+            'https://filters.adtidy.org/extension/ublock/filters/22.txt',
+        ],
+        homeURL: 'https://github.com/AdguardTeam/AdguardFilters#adguard-filters',
+    });
+    await rulesetFromURLs({
+        id: 'annoyances-others',
+        name: 'AdGuard – Other Annoyances',
+        group: 'annoyances',
+        enabled: false,
+        urls: [
+            'https://filters.adtidy.org/extension/ublock/filters/21.txt',
+        ],
+        homeURL: 'https://github.com/AdguardTeam/AdguardFilters#adguard-filters',
     });
 
     // Handpicked rulesets from abroad

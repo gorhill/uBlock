@@ -22,7 +22,7 @@
 'use strict';
 
 import { browser, sendMessage, localRead, localWrite } from './ext.js';
-import { i18n$ } from './i18n.js';
+import { i18n$, i18n } from './i18n.js';
 import { dom, qs$, qsa$ } from './dom.js';
 
 /******************************************************************************/
@@ -70,7 +70,7 @@ function renderFilterLists(soft = false) {
         if ( dom.attr(li, 'data-listkey') !== ruleset.id ) {
             dom.attr(li, 'data-listkey', ruleset.id);
             qs$(li, 'input[type="checkbox"]').checked = on;
-            dom.text(qs$(li, '.listname'), ruleset.name || ruleset.id);
+            qs$(li, '.listname').append(i18n.patchUnicodeFlags(ruleset.name));
             dom.cl.remove(li, 'toRemove');
             if ( ruleset.homeURL ) {
                 dom.cl.add(li, 'support');
