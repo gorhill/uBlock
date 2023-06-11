@@ -1,4 +1,4 @@
-uBlock Origin Lite (uBOL) é um bloqueador de conteúdo baseado em MV3 experimental *sem permissão*.
+uBO Lite (uBOL) is a *permission-less* MV3-based content blocker.
 
 O conjunto de regras padrão corresponde ao conjunto de filtros padrão do uBlock Origin:
 

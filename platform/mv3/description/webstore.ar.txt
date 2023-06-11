@@ -1,4 +1,4 @@
-نسخة مبسطة  (uBOL) مانع محتوى من نوع MV3 تجريبي *أقل طلبا للتصاريح* MV3-قاعدة الحظر الأساسية
+uBO Lite (uBOL) is a *permission-less* MV3-based content blocker.
 
 تتوافق مجموعة القواعد الافتراضية مع مجموعة عوامل التصفية الافتراضية لـ uBlock Origin:
 
