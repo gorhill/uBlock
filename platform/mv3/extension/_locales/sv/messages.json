@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "En experimentell blockerare.  Blockerar annonser, spårare, miners och mer omedelbart efter installationen.",
+    "message": "En behörighetslös innehållsblockerare.  Blockerar annonser, spårare, miners och mer omedelbart efter installationen.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {

@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Një bllokues eksperimental që bllokon në mënyrë të pavarur reklamat, gjurmuesit, kriptominatorët etj. menjëherë pas instalimit.",
+    "message": "Një bllokues që bllokon në mënyrë të pavarur reklamat, gjurmuesit, kriptominatorët etj. menjëherë pas instalimit.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {

@@ -1,4 +1,4 @@
-uBO Lite (uBOL) is a *permission-less* MV3-based content blocker.
+uBO Lite (uBOL) 是一个基于最新浏览器扩展接口（Manifest Version 3）打造的“无需权限”的内容屏蔽工具。
 
 该扩展预设的规则列表对应 uBlock Origin 的预设过滤规则列表：
 

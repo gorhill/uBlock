@@ -1,4 +1,4 @@
-uBO Lite (uBOL) is a *permission-less* MV3-based content blocker.
+uBO Lite (uBOL) ir *bezatļauju* uz MV3 balstīts satura aizturētājs.
 
 Noklusējuma nosacījumu kopa atbilst uBokc Origin noklusējuma aizturēšanas kopai:
 

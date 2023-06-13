@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Un bloqueur allégé, expérimental et sans permission requise. Bloque les publicités, pisteurs, mineurs et plus dès l'installation.",
+    "message": "Un bloqueur de contenu sans permission requise. Bloque les publicités, pisteurs, mineurs et plus dès l'installation.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {

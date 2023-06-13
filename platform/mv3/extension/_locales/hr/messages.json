@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Eksperimentalni bloker sadržaja bez dopuštenja. Blokira oglase, oglasne pratitelje, kripto \"rudare\" i ostalo nakon instalacije.",
+    "message": "Bloker sadržaja bez dopuštenja. Blokira oglase, oglasne pratitelje, kripto \"rudare\" i ostalo odmah nakon instalacije.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {

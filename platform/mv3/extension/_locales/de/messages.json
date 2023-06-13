@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Experimenteller Inhaltsblocker, der ohne Berechtigungen auskommt. Blockiert Werbung, Tracker und mehr sofort nach der Installation.",
+    "message": "Ein Inhaltsblocker, der ohne Berechtigungen auskommt. Blockiert Werbung, Tracker und mehr sofort nach der Installation.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
