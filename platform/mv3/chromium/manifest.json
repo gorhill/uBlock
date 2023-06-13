@@ -38,6 +38,9 @@
     "storage"
   ],
   "short_name": "uBO Lite",
+  "storage": {
+    "managed_schema": "managed_storage.json"
+  },
   "version": "1.0",
   "web_accessible_resources": []
 }

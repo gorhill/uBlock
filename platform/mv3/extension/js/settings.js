@@ -241,31 +241,31 @@ const renderWidgets = function() {
 async function onFilteringModeChange(ev) {
     const input = ev.target;
     const newLevel = parseInt(input.value, 10);
-    let granted = false;
 
     switch ( newLevel ) {
     case 1: { // Revoke broad permissions
-        granted = await browser.permissions.remove({
+        await browser.permissions.remove({
             origins: [ '<all_urls>' ]
         });
+        cachedRulesetData.defaultFilteringMode = 1;
         break;
     }
     case 2:
     case 3: { // Request broad permissions
-        granted = await browser.permissions.request({
+        const granted = await browser.permissions.request({
             origins: [ '<all_urls>' ]
         });
+        if ( granted ) {
+            const actualLevel = await sendMessage({
+                what: 'setDefaultFilteringMode',
+                level: newLevel,
+            });
+            cachedRulesetData.defaultFilteringMode = actualLevel;
+        }
         break;
     }
     default:
         break;
-    }
-    if ( granted ) {
-        const actualLevel = await sendMessage({
-            what: 'setDefaultFilteringMode',
-            level: newLevel,
-        });
-        cachedRulesetData.defaultFilteringMode = actualLevel;
     }
     renderFilterLists(true);
     renderWidgets();

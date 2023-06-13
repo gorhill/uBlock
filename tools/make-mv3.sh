@@ -66,6 +66,7 @@ if [ "$PLATFORM" = "firefox" ]; then
     cp platform/mv3/firefox/background.html $DES/
 fi
 cp platform/mv3/extension/*.html $DES/
+cp platform/mv3/extension/*.json $DES/
 cp platform/mv3/extension/css/* $DES/css/
 cp -R platform/mv3/extension/js/* $DES/js/
 cp platform/mv3/extension/img/* $DES/img/

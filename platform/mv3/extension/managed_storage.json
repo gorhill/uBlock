@@ -1,0 +1,11 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema#",
+  "type": "object",
+  "properties": {
+    "noFiltering": {
+      "title": "List of domains for which no filtering should occur",
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

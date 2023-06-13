@@ -41,8 +41,6 @@ const REDIRECT_REALM_END = REDIRECT_REALM_START + RULE_REALM_SIZE;
 const CSP_REALM_START = REDIRECT_REALM_END;
 const CSP_REALM_END = CSP_REALM_START + RULE_REALM_SIZE;
 const TRUSTED_DIRECTIVE_BASE_RULE_ID = 8000000;
-const BLOCKING_MODES_RULE_ID = TRUSTED_DIRECTIVE_BASE_RULE_ID + 1;
-const CURRENT_CONFIG_BASE_RULE_ID = 9000000;
 
 /******************************************************************************/
 
@@ -509,8 +507,6 @@ async function getEnabledRulesetsDetails() {
 /******************************************************************************/
 
 export {
-    BLOCKING_MODES_RULE_ID,
-    CURRENT_CONFIG_BASE_RULE_ID,
     TRUSTED_DIRECTIVE_BASE_RULE_ID,
     getRulesetDetails,
     getDynamicRules,
