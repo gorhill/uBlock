@@ -53,16 +53,21 @@ const hashFromStr = (type, s) => {
 // dependencies
 
 const rePlainSelector = /^[#.][\w\\-]+/;
+const rePlainSelectorEx = /^[^#.\[(]+([#.][\w-]+)|([#.][\w-]+)$/;
 const rePlainSelectorEscaped = /^[#.](?:\\[0-9A-Fa-f]+ |\\.|\w|-)+/;
 const reEscapeSequence = /\\([0-9A-Fa-f]+ |.)/g;
 
 const keyFromSelector = selector => {
+    let key = '';
     let matches = rePlainSelector.exec(selector);
-    if ( matches === null ) { return; }
-    let key = matches[0];
-    if ( key.indexOf('\\') === -1 ) {
-        return key;
+    if ( matches ) {
+        key = matches[0];
+    } else {
+        matches = rePlainSelectorEx.exec(selector);
+        if ( matches === null ) { return; }
+        key = matches[1] || matches[2];
     }
+    if ( key.indexOf('\\') === -1 ) { return key; }
     matches = rePlainSelectorEscaped.exec(selector);
     if ( matches === null ) { return; }
     key = '';
