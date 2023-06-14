@@ -131,7 +131,6 @@ body.needReload #refresh {
     font-size: 1em;
     font-weight: normal;
     margin: 0.5em 0 0.25em 0;
-    text-transform: capitalize;
     }
 #rulesetStats .rulesetDetails p {
     color: var(--ink-2);
