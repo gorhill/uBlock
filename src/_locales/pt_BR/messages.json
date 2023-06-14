@@ -1276,7 +1276,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Não foi possível filtrar corretamente na inicialização do navegador.\nRecarregue a página para garantir a filtragem adequada",
+    "message": "Não foi possível filtrar corretamente na inicialização do navegador.\nRecarregue a página para garantir a filtragem adequada.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {

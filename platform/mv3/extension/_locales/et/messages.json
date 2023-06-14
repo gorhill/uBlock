@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Katsetamisel õigustevaba sisublokeerija. Tõkesta koheselt reklaame, jälgijaid, kaevandajaid ja muud.",
+    "message": "Õigustevaba sisublokeerija. Blokeerib reklaamid, jälitajad, kaevandajad ja teised kohe pärast paigaldust.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
