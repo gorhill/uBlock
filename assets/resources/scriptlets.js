@@ -1258,6 +1258,10 @@ function noFetchIf(
 builtinScriptlets.push({
     name: 'refresh-defuser.js',
     fn: refreshDefuser,
+    world: 'ISOLATED',
+    dependencies: [
+        'run-at.fn',
+    ],
 });
 // https://www.reddit.com/r/uBlockOrigin/comments/q0frv0/while_reading_a_sports_article_i_was_redirected/hf7wo9v/
 function refreshDefuser(
@@ -1273,11 +1277,9 @@ function refreshDefuser(
         const ms = Math.max(parseFloat(s) || 0, 0) * 1000;
         setTimeout(( ) => { window.stop(); }, ms);
     };
-    if ( document.readyState === 'loading' ) {
-        document.addEventListener('DOMContentLoaded', defuse, { once: true });
-    } else {
+    runAt(( ) => {
         defuse();
-    }
+    }, 'interactive');
 }
 
 /******************************************************************************/
@@ -1286,6 +1288,9 @@ builtinScriptlets.push({
     name: 'remove-attr.js',
     aliases: [ 'ra.js' ],
     fn: removeAttr,
+    dependencies: [
+        'run-at.fn',
+    ],
 });
 function removeAttr(
     token = '',
@@ -1338,13 +1343,9 @@ function removeAttr(
             subtree: true,
         });
     };
-    if ( document.readyState !== 'complete' && /\bcomplete\b/.test(behavior) ) {
-        self.addEventListener('load', start, { once: true });
-    } else if ( document.readyState !== 'loading' || /\basap\b/.test(behavior) ) {
+    runAt(( ) => {
         start();
-    } else {
-        self.addEventListener('DOMContentLoaded', start, { once: true });
-    }
+    }, /\bcomplete\b/.test(behavior) ? 'idle' : 'interactive');
 }
 
 /******************************************************************************/
@@ -1353,6 +1354,9 @@ builtinScriptlets.push({
     name: 'remove-class.js',
     aliases: [ 'rc.js' ],
     fn: removeClass,
+    dependencies: [
+        'run-at.fn',
+    ],
 });
 function removeClass(
     token = '',
@@ -1403,13 +1407,9 @@ function removeClass(
             subtree: true,
         });
     };
-    if ( document.readyState !== 'complete' && /\bcomplete\b/.test(behavior) ) {
-        self.addEventListener('load', start, { once: true });
-    } else if ( document.readyState === 'loading' ) {
-        self.addEventListener('DOMContentLoaded', start, { once: true });
-    } else {
+    runAt(( ) => {
         start();
-    }
+    }, /\bcomplete\b/.test(behavior) ? 'idle' : 'interactive');
 }
 
 /******************************************************************************/
@@ -2552,6 +2552,52 @@ function removeNodeText(
 
 /*******************************************************************************
  * 
+ * set-cookie.js
+ * 
+ * Set specified cookie to a specific value.
+ * 
+ * Reference:
+ * https://github.com/AdguardTeam/Scriptlets/blob/master/src/scriptlets/set-cookie.js
+ * 
+ **/
+
+builtinScriptlets.push({
+    name: 'set-cookie.js',
+    fn: setCookie,
+    world: 'ISOLATED',
+});
+function setCookie(
+    name = '',
+    value = '',
+    path = '/'
+) {
+    if ( name === '' ) { return; }
+    const validValues = new Set([
+        'true', 'True',
+        'false', 'False',
+        'yes', 'Yes', 'y', 'Y',
+        'no', 'No', 'n', 'N',
+        'ok', 'OK',
+    ]);
+    if ( validValues.has(value) === false ) {
+        if ( /^\d+$/.test(value) === false ) { return; }
+        const n = parseInt(value, 10);
+        if ( n > 15 ) { return; }
+    }
+    const validPaths = [ '/', 'none' ];
+    if ( validPaths.includes(path) === false ) { return; }
+    const cookieParts = [
+        encodeURIComponent(name), '=',
+        encodeURIComponent(value),
+    ];
+    if ( path !== 'none' ) {
+        cookieParts.push('; path=/');
+    }
+    document.cookie = cookieParts.join('');
+}
+
+/*******************************************************************************
+ * 
  * Scriplets below this section are only available for filter lists from
  * trusted sources. They all have the property `requiresTrust` set to `true`.
  * 
@@ -2631,48 +2677,51 @@ function trustedSetConstant(
 
 /*******************************************************************************
  * 
- * set-cookie.js
+ * trusted-set-cookie.js
  * 
- * Set specified cookie to a specific value.
+ * Set specified cookie to an arbitrary value.
  * 
  * Reference:
- * https://github.com/AdguardTeam/Scriptlets/blob/master/src/scriptlets/set-cookie.js
+ * https://github.com/AdguardTeam/Scriptlets/blob/master/src/scriptlets/trusted-set-cookie.js#L23
  * 
  **/
 
 builtinScriptlets.push({
-    name: 'set-cookie.js',
+    name: 'trusted-set-cookie.js',
     requiresTrust: true,
-    fn: setCookie,
+    fn: trustedSetCookie,
     world: 'ISOLATED',
 });
-function setCookie(
+function trustedSetCookie(
     name = '',
     value = '',
+    offsetExpiresSec = '',
     path = '/'
 ) {
     if ( name === '' ) { return; }
-    const validValues = new Set([
-        'true', 'True',
-        'false', 'False',
-        'yes', 'Yes', 'y', 'Y',
-        'no', 'No', 'n', 'N',
-        'ok', 'OK',
-    ]);
-    if ( validValues.has(value) === false ) {
-        if ( /^\d+$/.test(value) === false ) { return; }
-        const n = parseInt(value, 10);
-        if ( n < 0 || n > 15 ) { return; }
+    const time = new Date();
+    if ( value === '$now$' ) {
+        value = Date.now();
+    } else if ( value === '$currentDate$' ) {
+        value = time.toUTCString();
     }
-    const validPaths = new Set([ '/', 'none' ]);
-    if ( validPaths.has(path) === false ) { return; }
-    const cookieParts = [
-        encodeURIComponent(name), '=',
-        encodeURIComponent(value),
-    ];
+    const validPaths = [ '/', 'none' ];
+    if ( validPaths.includes(path) === false ) { return; }
+    const cookieParts = [ name, '=', value ];
+    if ( offsetExpiresSec !== '' ) {
+        if ( offsetExpiresSec === '1day' ) {
+            time.setDate(time.getDate() + 1);
+        } else if ( offsetExpiresSec === '1year' ) {
+            time.setFullYear(time.getFullYear() + 1);
+        } else {
+            if ( /^\d+$/.test(offsetExpiresSec) === false ) { return; }
+            time.setSeconds(time.getSeconds() + parseInt(offsetExpiresSec, 10));
+        }
+        cookieParts.push('; expires=', time.toUTCString());
+    }
     if ( path !== 'none' ) {
         cookieParts.push('; path=/');
-    }
+    }   
     document.cookie = cookieParts.join('');
 }
 
