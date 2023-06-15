@@ -2629,4 +2629,51 @@ function trustedSetConstant(
     setConstantCore(true, ...args);
 }
 
+/*******************************************************************************
+ * 
+ * set-cookie.js
+ * 
+ * Set specified cookie to a specific value.
+ * 
+ * Reference:
+ * https://github.com/AdguardTeam/Scriptlets/blob/master/src/scriptlets/set-cookie.js
+ * 
+ **/
+
+builtinScriptlets.push({
+    name: 'set-cookie.js',
+    requiresTrust: true,
+    fn: setCookie,
+    world: 'ISOLATED',
+});
+function setCookie(
+    name = '',
+    value = '',
+    path = '/'
+) {
+    if ( name === '' ) { return; }
+    const validValues = new Set([
+        'true', 'True',
+        'false', 'False',
+        'yes', 'Yes', 'y', 'Y',
+        'no', 'No', 'n', 'N',
+        'ok', 'OK',
+    ]);
+    if ( validValues.has(value) === false ) {
+        if ( /^\d+$/.test(value) === false ) { return; }
+        const n = parseInt(value, 10);
+        if ( n < 0 || n > 15 ) { return; }
+    }
+    const validPaths = new Set([ '/', 'none' ]);
+    if ( validPaths.has(path) === false ) { return; }
+    const cookieParts = [
+        encodeURIComponent(name), '=',
+        encodeURIComponent(value),
+    ];
+    if ( path !== 'none' ) {
+        cookieParts.push('; path=/');
+    }
+    document.cookie = cookieParts.join('');
+}
+
 /******************************************************************************/
