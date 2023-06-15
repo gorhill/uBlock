@@ -1638,12 +1638,14 @@ export class AstFilterParser {
             pattern = pattern.slice(0, -ignoreLen);
         }
 
+        const patternHasWhitespace = this.hasWhitespace &&
+            this.reHasWhitespaceChar.test(pattern);
         const needNormalization = this.needPatternNormalization(pattern);
         const normal = needNormalization
             ? this.normalizePattern(pattern)
             : pattern;
         next = this.allocTypedNode(NODE_TYPE_NET_PATTERN, patternBeg, patternEnd);
-        if ( normal === undefined ) {
+        if ( patternHasWhitespace || normal === undefined ) {
             this.astTypeFlavor = AST_TYPE_NETWORK_PATTERN_BAD;
             this.addFlags(AST_FLAG_HAS_ERROR);
             this.astError = AST_ERROR_PATTERN;
