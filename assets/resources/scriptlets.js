@@ -709,6 +709,45 @@ function objectPrune(
     return obj;
 }
 
+/******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'set-cookie-helper.fn',
+    fn: setCookieHelper,
+});
+function setCookieHelper(
+    name = '',
+    value = '',
+    expires = '',
+    path = '',
+    options = {},
+) {
+    const cookieExists = (name, value) => {
+        return document.cookie.split(/\s*;\s*/).some(s => {
+            const pos = s.indexOf('=');
+            if ( pos === -1 ) { return false; }
+            if ( s.slice(0, pos) !== name ) { return false; }
+            if ( s.slice(pos+1) !== value ) { return false; }
+            return true;
+        });
+    };
+
+    if ( options.reload && cookieExists(name, value) ) { return; }
+
+    const cookieParts = [ name, '=', value ];
+    if ( expires !== '' ) {
+        cookieParts.push('; expires=', expires);
+    }
+    if ( path !== '' ) {
+        cookieParts.push('; path=/');
+    }
+    document.cookie = cookieParts.join('');
+
+    if ( options.reload && cookieExists(name, value) ) {
+        window.location.reload();
+    }
+}
+
 /*******************************************************************************
 
     Injectable scriptlets
@@ -2565,13 +2604,19 @@ builtinScriptlets.push({
     name: 'set-cookie.js',
     fn: setCookie,
     world: 'ISOLATED',
+    dependencies: [
+        'get-extra-args.fn',
+        'set-cookie-helper.fn',
+    ],
 });
 function setCookie(
     name = '',
     value = '',
-    path = '/'
+    path = ''
 ) {
     if ( name === '' ) { return; }
+    name = encodeURIComponent(name);
+
     const validValues = new Set([
         'true', 'True',
         'false', 'False',
@@ -2584,16 +2629,19 @@ function setCookie(
         const n = parseInt(value, 10);
         if ( n > 15 ) { return; }
     }
-    const validPaths = [ '/', 'none' ];
+    value = encodeURIComponent(value);
+
+    const validPaths = [ '', '/', 'none' ];
     if ( validPaths.includes(path) === false ) { return; }
-    const cookieParts = [
-        encodeURIComponent(name), '=',
-        encodeURIComponent(value),
-    ];
-    if ( path !== 'none' ) {
-        cookieParts.push('; path=/');
-    }
-    document.cookie = cookieParts.join('');
+    if ( path === 'none' ) { path = ''; }
+
+    setCookieHelper(
+        name,
+        value,
+        '',
+        path,
+        getExtraArgs(Array.from(arguments), 3)
+    );
 }
 
 /*******************************************************************************
@@ -2691,23 +2739,28 @@ builtinScriptlets.push({
     requiresTrust: true,
     fn: trustedSetCookie,
     world: 'ISOLATED',
+    dependencies: [
+        'get-extra-args.fn',
+        'set-cookie-helper.fn',
+    ],
 });
 function trustedSetCookie(
     name = '',
     value = '',
     offsetExpiresSec = '',
-    path = '/'
+    path = ''
 ) {
     if ( name === '' ) { return; }
+
     const time = new Date();
+
     if ( value === '$now$' ) {
         value = Date.now();
     } else if ( value === '$currentDate$' ) {
         value = time.toUTCString();
     }
-    const validPaths = [ '/', 'none' ];
-    if ( validPaths.includes(path) === false ) { return; }
-    const cookieParts = [ name, '=', value ];
+
+    let expires = '';
     if ( offsetExpiresSec !== '' ) {
         if ( offsetExpiresSec === '1day' ) {
             time.setDate(time.getDate() + 1);
@@ -2717,12 +2770,20 @@ function trustedSetCookie(
             if ( /^\d+$/.test(offsetExpiresSec) === false ) { return; }
             time.setSeconds(time.getSeconds() + parseInt(offsetExpiresSec, 10));
         }
-        cookieParts.push('; expires=', time.toUTCString());
+        expires = time.toUTCString();
     }
-    if ( path !== 'none' ) {
-        cookieParts.push('; path=/');
-    }
-    document.cookie = cookieParts.join('');
+
+    const validPaths = [ '', '/', 'none' ];
+    if ( validPaths.includes(path) === false ) { return; }
+    if ( path === 'none' ) { path = ''; }
+
+    setCookieHelper(
+        name,
+        value,
+        expires,
+        path,
+        getExtraArgs(Array.from(arguments), 4)
+    );
 }
 
 /******************************************************************************/
