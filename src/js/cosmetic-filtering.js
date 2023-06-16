@@ -671,25 +671,30 @@ FilterContainer.prototype.disableSurveyor = function(details) {
 FilterContainer.prototype.cssRuleFromProcedural = function(pfilter) {
     if ( pfilter.cssable !== true ) { return; }
     const { tasks, action } = pfilter;
-    let mq;
-    if ( tasks !== undefined ) {
-        if ( tasks.length > 1 ) { return; }
+    let mq, selector;
+    if ( Array.isArray(tasks) ) {
         if ( tasks[0][0] !== 'matches-media' ) { return; }
         mq = tasks[0][1];
+        if ( tasks.length > 2 ) { return; }
+        if ( tasks.length === 2 ) {
+            if ( tasks[1][0] !== 'spath' ) { return; }
+            selector = tasks[1][1];
+        }
     }
     let style;
     if ( Array.isArray(action) ) {
         if ( action[0] !== 'style' ) { return; }
+        selector = selector || pfilter.selector;
         style = action[1];
     }
-    if ( mq === undefined && style === undefined ) { return; }
+    if ( mq === undefined && style === undefined && selector === undefined ) { return; }
     if ( mq === undefined ) {
-        return `${pfilter.selector}\n{${style}}`;
+        return `${selector}\n{${style}}`;
     }
     if ( style === undefined ) {
-        return `@media ${mq} {\n${pfilter.selector}\n{display:none!important;}\n}`;
+        return `@media ${mq} {\n${selector}\n{display:none!important;}\n}`;
     }
-    return `@media ${mq} {\n${pfilter.selector}\n{${style}}\n}`;
+    return `@media ${mq} {\n${selector}\n{${style}}\n}`;
 };
 
 /******************************************************************************/
