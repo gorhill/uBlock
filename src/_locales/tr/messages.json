@@ -952,11 +952,11 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Filtre listeleri günlük olarak güncellenmektedir. Sorununuzun en son filtre listelerinde çözülmediğinden emin olun.",
+    "message": "Filtre listeleri günlük olarak güncellenir. Sorununuzun en son filtre listelerinde zaten ele alınıp alınmadığından emin olun.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Sorunlu web sayfasını yeniden yükleyerek sorunun devam ettiğini doğrulayın.",
+    "message": "Sorunlu web sayfasını yeniden yükledikten sonra sorunun hala var olup olmadığını doğrulayın.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -1044,7 +1044,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "Bir filtre listesinin güncellenmesi gerektiğinde rastgele seçilen bir CDN kullanılır",
+    "message": "Bir filtre listesi güncellenmesi gerektiğinde rastgele seçilen bir CDN kullanılır.",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {

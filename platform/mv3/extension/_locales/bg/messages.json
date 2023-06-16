@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Експериментален блокер за съдържание без разрешения. Блокира реклами, тракери, миньори и други веднага след инсталирането.",
+    "message": "Блокиране на съдържание без разрешение. Блокира реклами, тракери, миньори и други веднага след инсталирането.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {

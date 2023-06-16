@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "En eksperimentell, tillatelsesbegrenset innholdsblokkerer. Blokkerer reklame, sporere, minere og mer umiddelbart etter installering.",
+    "message": "En tillatelsesbegrenset innholdsblokkerer. Blokkerer reklame, sporere, minere og mer umiddelbart etter installering.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
