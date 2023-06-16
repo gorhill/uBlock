@@ -3115,7 +3115,10 @@ class ExtSelectorCompiler {
         if ( Array.isArray(r.tasks) === false ) { return true; }
         if ( r.tasks[0][0] === 'matches-media' ) {
             if ( r.tasks.length === 1 ) { return true; }
-            if ( r.tasks.length === 2 && r.tasks[1][0] === 'spath' ) { return true; }
+            if ( r.tasks.length === 2 ) {
+                if ( r.selector !== '' ) { return false; }
+                if ( r.tasks[1][0] === 'spath' ) { return true; }
+            }
         }
         return false;
     }
