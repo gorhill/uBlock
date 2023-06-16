@@ -2721,7 +2721,7 @@ function trustedSetCookie(
     }
     if ( path !== 'none' ) {
         cookieParts.push('; path=/');
-    }   
+    }
     document.cookie = cookieParts.join('');
 }
 
