@@ -46,6 +46,7 @@ function safeSelf() {
         return scriptletGlobals.get('safeSelf');
     }
     const safe = {
+        'Object_defineProperty': Object.defineProperty.bind(Object),
         'RegExp': self.RegExp,
         'RegExp_test': self.RegExp.prototype.test,
         'RegExp_exec': self.RegExp.prototype.exec,
@@ -355,6 +356,7 @@ function setConstantCore(
     if ( typeof chain !== 'string' ) { return; }
     if ( chain === '' ) { return; }
     const options = details.options || [];
+    const safe = safeSelf();
     function setConstant(chain, cValue) {
         const trappedProp = (( ) => {
             const pos = chain.lastIndexOf('.');
@@ -363,13 +365,12 @@ function setConstantCore(
         })();
         if ( trappedProp === '' ) { return; }
         const thisScript = document.currentScript;
-        const objectDefineProperty = Object.defineProperty.bind(Object);
         const cloakFunc = fn => {
-            objectDefineProperty(fn, 'name', { value: trappedProp });
+            safe.Object_defineProperty(fn, 'name', { value: trappedProp });
             const proxy = new Proxy(fn, {
                 defineProperty(target, prop) {
                     if ( prop !== 'toString' ) {
-                        return Reflect.deleteProperty(...arguments);
+                        return Reflect.defineProperty(...arguments);
                     }
                     return true;
                 },
@@ -456,7 +457,7 @@ function setConstantCore(
                 }
             }
             try {
-                objectDefineProperty(owner, prop, {
+                safe.Object_defineProperty(owner, prop, {
                     configurable,
                     get() {
                         if ( prevGetter !== undefined ) {
@@ -1759,6 +1760,94 @@ function noXhrIf(
 /******************************************************************************/
 
 builtinScriptlets.push({
+    name: 'no-window-open-if.js',
+    aliases: [ 'nowoif.js' ],
+    fn: noWindowOpenIf,
+    dependencies: [
+        'get-extra-args.fn',
+        'pattern-to-regex.fn',
+        'safe-self.fn',
+        'should-log.fn',
+    ],
+});
+function noWindowOpenIf(
+    pattern = '',
+    delay = '',
+    decoy = ''
+) {
+    const targetMatchResult = pattern.startsWith('!') === false;
+    if ( targetMatchResult === false ) {
+        pattern = pattern.slice(1);
+    }
+    const rePattern = patternToRegex(pattern);
+    let autoRemoveAfter = parseInt(delay);
+    if ( isNaN(autoRemoveAfter) ) {
+        autoRemoveAfter = -1;
+    }
+    const extraArgs = getExtraArgs(Array.from(arguments), 3);
+    const safe = safeSelf();
+    const logLevel = shouldLog(extraArgs);
+    const createDecoy = function(tag, urlProp, url) {
+        const decoyElem = document.createElement(tag);
+        decoyElem[urlProp] = url;
+        decoyElem.style.setProperty('height','1px', 'important');
+        decoyElem.style.setProperty('position','fixed', 'important');
+        decoyElem.style.setProperty('top','-1px', 'important');
+        decoyElem.style.setProperty('width','1px', 'important');
+        document.body.appendChild(decoyElem);
+        setTimeout(( ) => { decoyElem.remove(); }, autoRemoveAfter * 1000);
+        return decoyElem;
+    };
+    window.open = new Proxy(window.open, {
+        apply: function(target, thisArg, args) {
+            const haystack = args.join(' ');
+            if ( logLevel ) {
+                safe.uboLog('window.open:', haystack);
+            }
+            if ( rePattern.test(haystack) !== targetMatchResult ) {
+                return Reflect.apply(target, thisArg, args);
+            }
+            if ( autoRemoveAfter < 0 ) { return null; }
+            const decoyElem = decoy === 'obj'
+                ? createDecoy('object', 'data', ...args)
+                : createDecoy('iframe', 'src', ...args);
+            let popup = decoyElem.contentWindow;
+            if ( typeof popup === 'object' && popup !== null ) {
+                Object.defineProperty(popup, 'closed', { value: false });
+            } else {
+                const noopFunc = (function(){}).bind(self);
+                popup = new Proxy(self, {
+                    get: function(target, prop) {
+                        if ( prop === 'closed' ) { return false; }
+                        const r = Reflect.get(...arguments);
+                        if ( typeof r === 'function' ) { return noopFunc; }
+                        return target[prop];
+                    },
+                    set: function() {
+                        return Reflect.set(...arguments);
+                    },
+                });
+            }
+            if ( logLevel ) {
+                popup = new Proxy(popup, {
+                    get: function(target, prop) {
+                        safe.uboLog('window.open / get', prop, '===', target[prop]);
+                        return Reflect.get(...arguments);
+                    },
+                    set: function(target, prop, value) {
+                        safe.uboLog('window.open / set', prop, '=', value);
+                        return Reflect.set(...arguments);
+                    },
+                });
+            }
+            return popup;
+        }
+    });
+}
+
+/******************************************************************************/
+
+builtinScriptlets.push({
     name: 'window-close-if.js',
     fn: windowCloseIf,
     dependencies: [
@@ -2040,6 +2129,7 @@ function disableNewtabLinks() {
 builtinScriptlets.push({
     name: 'cookie-remover.js',
     fn: cookieRemover,
+    world: 'ISOLATED',
     dependencies: [
         'pattern-to-regex.fn',
     ],
