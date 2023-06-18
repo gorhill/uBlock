@@ -2311,6 +2311,11 @@ function xmlPrune(
 builtinScriptlets.push({
     name: 'm3u-prune.js',
     fn: m3uPrune,
+    dependencies: [
+        'get-extra-args.fn',
+        'safe-self.fn',
+        'should-log.fn',
+    ],
 });
 // https://en.wikipedia.org/wiki/M3U
 function m3uPrune(
@@ -2318,6 +2323,9 @@ function m3uPrune(
     urlPattern = ''
 ) {
     if ( typeof m3uPattern !== 'string' ) { return; }
+    const options = getExtraArgs(Array.from(arguments), 2);
+    const logLevel = shouldLog(options);
+    const safe = safeSelf();
     const regexFromArg = arg => {
         if ( arg === '' ) { return /^/; }
         const match = /^\/(.+)\/([gms]*)$/.exec(arg);
@@ -2367,16 +2375,39 @@ function m3uPrune(
             for (;;) {
                 const match = reM3u.exec(text);
                 if ( match === null ) { break; }
-                const before = text.slice(0, match.index);
-                if ( before.length === 0 || /[\n\r]+\s*$/.test(before) ) {
-                    const after = text.slice(match.index + match[0].length);
-                    if ( after.length === 0 || /^\s*[\n\r]+/.test(after) ) {
-                        text = before.trim() + '\n' + after.trim();
-                        reM3u.lastIndex = before.length + 1;
+                let discard = match[0];
+                let before = text.slice(0, match.index);
+                if (
+                    /^[\n\r]+/.test(discard) === false &&
+                    /[\n\r]+$/.test(before) === false
+                ) {
+                    const startOfLine = /[^\n\r]+$/.exec(before);
+                    if ( startOfLine !== null ) {
+                        before = before.slice(0, startOfLine.index);
+                        discard = startOfLine[0] + discard;
                     }
+                }
+                let after = text.slice(match.index + match[0].length);
+                if (
+                    /[\n\r]+$/.test(discard) === false &&
+                    /^[\n\r]+/.test(after) === false
+                ) {
+                    const endOfLine = /^[^\n\r]+/.exec(after);
+                    if ( endOfLine !== null ) {
+                        after = after.slice(endOfLine.index);
+                        discard += discard + endOfLine[0];
+                    }
+                }
+                text = before.trim() + '\n' + after.trim();
+                reM3u.lastIndex = before.length + 1;
+                if ( logLevel ) {
+                    safe.uboLog('m3u-prune: discarding\n',
+                        discard.split(/\n+/).map(s => `\t${s}`).join('\n')
+                    );
                 }
                 if ( reM3u.global === false ) { break; }
             }
+            return text;
         }
         const lines = text.split(/\n\r|\n|\r/);
         for ( let i = 0; i < lines.length; i++ ) {
