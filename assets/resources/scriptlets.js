@@ -739,7 +739,11 @@ function setCookieHelper(
     if ( expires !== '' ) {
         cookieParts.push('; expires=', expires);
     }
-    if ( path !== '' ) {
+
+    if ( path === '' ) { path = '/'; }
+    else if ( path === 'none' ) { path = ''; }
+    if ( path !== '' && path !== '/' ) { return; }
+    if ( path === '/' ) {
         cookieParts.push('; path=/');
     }
     document.cookie = cookieParts.join('');
@@ -2752,10 +2756,6 @@ function setCookie(
     }
     value = encodeURIComponent(value);
 
-    const validPaths = [ '', '/', 'none' ];
-    if ( validPaths.includes(path) === false ) { return; }
-    if ( path === 'none' ) { path = ''; }
-
     setCookieHelper(
         name,
         value,
@@ -2893,10 +2893,6 @@ function trustedSetCookie(
         }
         expires = time.toUTCString();
     }
-
-    const validPaths = [ '', '/', 'none' ];
-    if ( validPaths.includes(path) === false ) { return; }
-    if ( path === 'none' ) { path = ''; }
 
     setCookieHelper(
         name,
