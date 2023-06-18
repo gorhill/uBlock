@@ -637,7 +637,8 @@ async function processDeclarativeCosmeticFilters(assetDetails, mapin) {
     mapin.forEach((details, jsonSelector) => {
         const selector = JSON.parse(jsonSelector);
         if ( selector.cssable !== true ) { return; }
-        declaratives.set(jsonSelector, details);
+        selector.cssable = undefined;
+        declaratives.set(JSON.stringify(selector), details);
     });
     if ( declaratives.size === 0 ) { return 0; }
 
