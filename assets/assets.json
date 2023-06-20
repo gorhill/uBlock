@@ -370,16 +370,18 @@
 		"group": "annoyances",
 		"parent": "EasyList – Annoyances",
 		"off": true,
-		"title": "EasyList/uBO – Cookie Notices",
+		"title": "EasyList – Cookie Notices",
 		"tags": "annoyances cookies",
 		"contentURL": [
-			"https://ublockorigin.github.io/uAssets/thirdparties/easylist-cookies.txt"
+			"https://ublockorigin.github.io/uAssets/thirdparties/easylist-cookies.txt",
+			"https://secure.fanboy.co.nz/fanboy-cookiemonster_ubo.txt"
 		],
 		"cdnURLs": [
 			"https://ublockorigin.github.io/uAssetsCDN/thirdparties/easylist-cookies.txt",
 			"https://ublockorigin.pages.dev/thirdparties/easylist-cookies.txt",
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/thirdparties/easylist-cookies.txt",
-			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/thirdparties/easylist-cookies.txt"
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/thirdparties/easylist-cookies.txt",
+			"https://secure.fanboy.co.nz/fanboy-cookiemonster_ubo.txt"
 		],
 		"supportURL": "https://github.com/easylist/easylist#fanboy-lists"
 	},
