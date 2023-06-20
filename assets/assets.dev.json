@@ -368,7 +368,7 @@
 	"fanboy-cookiemonster": {
 		"content": "filters",
 		"group": "annoyances",
-		"parent": "EasyList – Annoyances",
+		"parent": "EasyList/uBO – Cookie Notices",
 		"off": true,
 		"title": "EasyList – Cookie Notices",
 		"tags": "annoyances cookies",
@@ -440,6 +440,22 @@
 			"https://secure.fanboy.co.nz/fanboy-social_ubo.txt"
 		],
 		"supportURL": "https://easylist.to/"
+	},
+	"ublock-cookies": {
+		"content": "filters",
+		"group": "annoyances",
+        "parent": "EasyList/uBO – Cookie Notices",
+		"off": true,
+		"title": "uBlock filters – Cookie Notices",
+		"tags": "annoyances cookies",
+		"contentURL": "https://ublockorigin.github.io/uAssets/filters/annoyances-cookies.txt",
+		"cdnURLs": [
+			"https://ublockorigin.github.io/uAssetsCDN/filters/annoyances-cookies.txt",
+			"https://ublockorigin.pages.dev/filters/annoyances-cookies.txt",
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/filters/annoyances-cookies.txt",
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/annoyances-cookies.txt"
+		],
+		"supportURL": "https://github.com/uBlockOrigin/uAssets"
 	},
 	"ublock-annoyances": {
 		"content": "filters",
