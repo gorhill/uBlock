@@ -2767,6 +2767,61 @@ function setCookie(
 
 /*******************************************************************************
  * 
+ * set-local-storage-item.js
+ * 
+ * Set a local storage entry to a specific, allowed value.
+ * 
+ * Reference:
+ * https://github.com/AdguardTeam/Scriptlets/blob/master/src/scriptlets/set-local-storage-item.js
+ * 
+ **/
+
+builtinScriptlets.push({
+    name: 'set-local-storage-item.js',
+    fn: setLocalStorageItem,
+    world: 'ISOLATED',
+});
+function setLocalStorageItem(
+    key = '',
+    value = ''
+) {
+    if ( key === '' ) { return; }
+    if ( value === '' ) { return; }
+
+    let actualValue;
+    if ( value === 'undefined' ) {
+        actualValue = undefined;
+    } else if ( value === 'false' ) {
+        actualValue = false;
+    } else if ( value === 'true' ) {
+        actualValue = true;
+    } else if ( value === 'null' ) {
+        actualValue = null;
+    } else if ( value === '{}' ) {
+        actualValue = '{}';
+    } else if ( value === '[]' ) {
+        actualValue = '[]';
+    } else if ( value === "''" ) {
+        actualValue = '';
+    } else if ( value === 'yes' ) {
+        actualValue = 'yes';
+    } else if ( value === 'no' ) {
+        actualValue = 'no';
+    } else if ( /^\d+$/.test(value) ) {
+        actualValue = parseInt(value, 10);
+        if ( actualValue > 32767 ) { return; }
+    } else {
+        return;
+    }
+
+    try {
+        self.localStorage.setItem(key, `${actualValue}`);
+    } catch(ex) {
+    }
+}
+
+/*******************************************************************************
+ * 
  * Scriplets below this section are only available for filter lists from
  * trusted sources. They all have the property `requiresTrust` set to `true`.
  * 
@@ -2901,6 +2956,43 @@ function trustedSetCookie(
         path,
         getExtraArgs(Array.from(arguments), 4)
     );
+}
+
+/*******************************************************************************
+ * 
+ * trusted-set-local-storage-item.js
+ * 
+ * Set a local storage entry to an arbitrary value.
+ * 
+ * Reference:
+ * https://github.com/AdguardTeam/Scriptlets/blob/master/src/scriptlets/trusted-set-local-storage-item.js
+ * 
+ **/
+
+builtinScriptlets.push({
+    name: 'trusted-set-local-storage-item.js',
+    requiresTrust: true,
+    fn: trustedSetLocalStorageItem,
+    world: 'ISOLATED',
+});
+function trustedSetLocalStorageItem(
+    key = '',
+    value = ''
+) {
+    if ( key === '' ) { return; }
+    if ( value === '' ) { return; }
+
+    let actualValue = value;
+    if ( value === '$now$' ) {
+        actualValue = Date.now();
+    } else if ( value === '$currentDate$' ) {
+        actualValue = `${Date()}`;
+    }
+
+    try {
+        self.localStorage.setItem(key, `${actualValue}`);
+    } catch(ex) {
+    }
 }
 
 /******************************************************************************/
