@@ -236,13 +236,14 @@ const renderFilterLists = ( ) => {
             }
             const groupDetails = listTree[groupKey];
             if ( listDetails.parent !== undefined ) {
-                if ( groupDetails.lists[listDetails.parent] === undefined ) {
-                    groupDetails.lists[listDetails.parent] = {
-                        title: listDetails.parent,
-                        lists: {},
-                    };
+                let lists = groupDetails.lists;
+                for ( const parent of listDetails.parent.split('|') ) {
+                    if ( lists[parent] === undefined ) {
+                        lists[parent] = { title: parent, lists: {} };
+                    }
+                    lists = lists[parent].lists;
                 }
-                groupDetails.lists[listDetails.parent].lists[listkey] = listDetails;
+                lists[listkey] = listDetails;
             } else {
                 listDetails.title = listNameFromListKey(listkey);
                 groupDetails.lists[listkey] = listDetails;
