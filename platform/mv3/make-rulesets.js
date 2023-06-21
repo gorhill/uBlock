@@ -1060,14 +1060,14 @@ async function main() {
     // Handpicked annoyance rulesets from assets.json
     await rulesetFromURLs({
         id: 'annoyances-cookies',
-        name: 'AdGuard – Cookies Notices',
+        name: 'EasyList/uBO – Cookie Notices',
         group: 'annoyances',
         enabled: false,
         urls: [
-            'https://filters.adtidy.org/extension/ublock/filters/18.txt',
+            'https://ublockorigin.github.io/uAssets/thirdparties/easylist-cookies.txt',
             'https://ublockorigin.github.io/uAssets/filters/annoyances-cookies.txt',
         ],
-        homeURL: 'https://github.com/AdguardTeam/AdguardFilters#adguard-filters',
+        homeURL: 'https://github.com/easylist/easylist#fanboy-lists',
     });
     await rulesetFromURLs({
         id: 'annoyances-overlays',
