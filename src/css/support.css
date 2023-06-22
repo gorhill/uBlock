@@ -54,6 +54,11 @@ body.filterIssue #moreButton {
     display: none;
 }
 
+body.shouldUpdate:not(.updated) .e .createEntry {
+    opacity: 0.25;
+    pointer-events: none;
+}
+
 body:not(.shouldUpdate) .shouldUpdate {
     display: none;
     }
