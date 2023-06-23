@@ -2788,25 +2788,15 @@ function setLocalStorageItem(
     if ( key === '' ) { return; }
     if ( value === '' ) { return; }
 
+    const validValues = [
+        'undefined', 'null',
+        'false', 'true',
+        'yes', 'no',
+        '{}', '[]', "''",
+    ];
     let actualValue;
-    if ( value === 'undefined' ) {
-        actualValue = undefined;
-    } else if ( value === 'false' ) {
-        actualValue = false;
-    } else if ( value === 'true' ) {
-        actualValue = true;
-    } else if ( value === 'null' ) {
-        actualValue = null;
-    } else if ( value === '{}' ) {
-        actualValue = '{}';
-    } else if ( value === '[]' ) {
-        actualValue = '[]';
-    } else if ( value === "''" ) {
-        actualValue = '';
-    } else if ( value === 'yes' ) {
-        actualValue = 'yes';
-    } else if ( value === 'no' ) {
-        actualValue = 'no';
+    if ( validValues.includes(value) ) {
+        actualValue = value;
     } else if ( /^\d+$/.test(value) ) {
         actualValue = parseInt(value, 10);
         if ( actualValue > 32767 ) { return; }
