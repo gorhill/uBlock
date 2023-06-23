@@ -27,7 +27,7 @@ import fs from 'fs/promises';
 import https from 'https';
 import path from 'path';
 import process from 'process';
-import { createHash } from 'crypto';
+import { createHash, randomBytes } from 'crypto';
 import redirectResourcesMap from './js/redirect-resources.js';
 import { dnrRulesetFromRawLists } from './js/static-dnr-filtering.js';
 import * as sfp from './js/static-filtering-parser.js';
@@ -182,6 +182,9 @@ async function fetchAsset(assetDetails) {
                 continue;
             }
             fetchedURLs.add(part.url);
+            if ( part.url.startsWith('https://ublockorigin.github.io/uAssets/filters/') ) {
+                newParts.push(`!#trusted on ${assetDetails.secret}`);
+            }
             newParts.push(
                 fetchList(part.url, cacheDir).then(details => {
                     const { url } = details;
@@ -198,6 +201,7 @@ async function fetchAsset(assetDetails) {
                     return { url, content: '' };
                 })
             );
+            newParts.push(`!#trusted off ${assetDetails.secret}`);
         }
         parts = await Promise.all(newParts);
         parts = sfp.utils.preparser.expandIncludes(parts, env);
@@ -808,7 +812,7 @@ async function processScriptletFilters(assetDetails, mapin) {
     makeScriptlet.init();
 
     for ( const details of mapin.values() ) {
-        makeScriptlet.compile(details, assetDetails.isTrusted);
+        makeScriptlet.compile(details);
     }
     const stats = await makeScriptlet.commit(
         assetDetails.id,
@@ -851,7 +855,7 @@ async function rulesetFromURLs(assetDetails) {
 
     const results = await dnrRulesetFromRawLists(
         [ { name: assetDetails.id, text: assetDetails.text } ],
-        { env, extensionPaths }
+        { env, extensionPaths, secret: assetDetails.secret }
     );
 
     const netStats = await processNetworkFilters(
@@ -975,6 +979,10 @@ async function main() {
         JSON.parse(text)
     );
 
+    // This will be used to sign our inserted `!#trusted on` directives
+    const secret = createHash('sha256').update(randomBytes(16)).digest('hex').slice(0,16);
+    log(`Secret: ${secret}`);
+
     // Assemble all default lists as the default ruleset
     const contentURLs = [
         'https://ublockorigin.github.io/uAssets/filters/filters.min.txt',
@@ -991,9 +999,9 @@ async function main() {
         id: 'default',
         name: 'Ads, trackers, miners, and more' ,
         enabled: true,
+        secret,
         urls: contentURLs,
         homeURL: 'https://github.com/uBlockOrigin/uAssets',
-        isTrusted: true,
     });
 
     // Regional rulesets
@@ -1063,6 +1071,7 @@ async function main() {
         name: 'EasyList/uBO – Cookie Notices',
         group: 'annoyances',
         enabled: false,
+        secret,
         urls: [
             'https://ublockorigin.github.io/uAssets/thirdparties/easylist-cookies.txt',
             'https://ublockorigin.github.io/uAssets/filters/annoyances-cookies.txt',
@@ -1074,6 +1083,7 @@ async function main() {
         name: 'AdGuard/uBO – Overlays',
         group: 'annoyances',
         enabled: false,
+        secret,
         urls: [
             'https://filters.adtidy.org/extension/ublock/filters/19.txt',
             'https://ublockorigin.github.io/uAssets/filters/annoyances-others.txt',
