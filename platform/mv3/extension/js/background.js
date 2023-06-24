@@ -320,4 +320,8 @@ async function start() {
     }
 }
 
-start();
+try {
+    start();
+} catch(reason) {
+    console.trace(reason);
+}
