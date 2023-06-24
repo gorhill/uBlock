@@ -73,7 +73,7 @@
         enableVideoAds: noopfn,
         get: noopnullfn,
         getAttributeKeys: nooparrayfn,
-        getTargeting: noopfn,
+        getTargeting: nooparrayfn,
         getTargetingKeys: nooparrayfn,
         getSlots: nooparrayfn,
         refresh: noopfn,
