@@ -27,7 +27,6 @@ import µb from './background.js';
 import { redirectEngine as reng } from './redirect-engine.js';
 import { sessionFirewall } from './filtering-engines.js';
 import { StaticExtFilteringHostnameDB } from './static-ext-filtering-db.js';
-import * as sfp from './static-filtering-parser.js';
 
 import {
     domainFromHostname,
@@ -37,11 +36,13 @@ import {
 
 /******************************************************************************/
 
+// Increment when internal representation changes
+const VERSION = 1;
+
 const duplicates = new Set();
 const scriptletCache = new µb.MRUCache(32);
-const reEscapeScriptArg = /[\\'"]/g;
 
-const scriptletDB = new StaticExtFilteringHostnameDB(1);
+const scriptletDB = new StaticExtFilteringHostnameDB(1, VERSION);
 
 let acceptedCount = 0;
 let discardedCount = 0;
@@ -156,24 +157,8 @@ const isolatedWorldInjector = (( ) => {
     };
 })();
 
-// TODO: Probably should move this into StaticFilteringParser
-// https://github.com/uBlockOrigin/uBlock-issues/issues/1031
-//   Normalize scriptlet name to its canonical, unaliased name.
 const normalizeRawFilter = function(parser, sourceIsTrusted = false) {
-    const root = parser.getBranchFromType(sfp.NODE_TYPE_EXT_PATTERN_SCRIPTLET);
-    const walker = parser.getWalker(root);
-    const args = [];
-    for ( let node = walker.next(); node !== 0; node = walker.next() ) {
-        switch ( parser.getNodeType(node) ) {
-            case sfp.NODE_TYPE_EXT_PATTERN_SCRIPTLET_TOKEN:
-            case sfp.NODE_TYPE_EXT_PATTERN_SCRIPTLET_ARG:
-                args.push(parser.getNodeString(node));
-                break;
-            default:
-                break;
-        }
-    }
-    walker.dispose();
+    const args = parser.getScripletArgs();
     if ( args.length !== 0 ) {
         let token = `${args[0]}.js`;
         if ( reng.aliases.has(token) ) {
@@ -184,28 +169,17 @@ const normalizeRawFilter = function(parser, sourceIsTrusted = false) {
         }
         args[0] = token.slice(0, -3);
     }
-    return `+js(${args.join(', ')})`;
+    return JSON.stringify(args);
 };
 
 const lookupScriptlet = function(rawToken, mainMap, isolatedMap) {
     if ( mainMap.has(rawToken) || isolatedMap.has(rawToken) ) { return; }
-    const pos = rawToken.indexOf(',');
-    let token, args = '';
-    if ( pos === -1 ) {
-        token = rawToken;
-    } else {
-        token = rawToken.slice(0, pos).trim();
-        args = rawToken.slice(pos + 1).trim();
-    }
-    if ( reng.aliases.has(token) ) {
-        token = reng.aliases.get(token);
-    } else {
-        token = `${token}.js`;
-    }
+    const args = JSON.parse(rawToken);
+    const token = `${args[0]}.js`;
     const details = reng.contentFromName(token, 'text/javascript');
     if ( details === undefined ) { return; }
     const targetWorldMap = details.world !== 'ISOLATED' ? mainMap : isolatedMap;
-    const content = patchScriptlet(details.js, args);
+    const content = patchScriptlet(details.js, args.slice(1));
     const dependencies = details.dependencies || [];
     while ( dependencies.length !== 0 ) {
         const token = dependencies.shift();
@@ -227,42 +201,33 @@ const lookupScriptlet = function(rawToken, mainMap, isolatedMap) {
 };
 
 // Fill-in scriptlet argument placeholders.
-const patchScriptlet = function(content, args) {
+const patchScriptlet = function(content, arglist) {
     if ( content.startsWith('function') && content.endsWith('}') ) {
         content = `(${content})({{args}});`;
     }
-    if ( args.startsWith('{') && args.endsWith('}') ) {
-        return content.replace('{{args}}', args);
-    }
-    if ( args === '' ) {
+    if ( arglist.length === 0 ) {
         return content.replace('{{args}}', '');
     }
-    const arglist = [];
-    let s = args;
-    let len = s.length;
-    let beg = 0, pos = 0;
-    let i = 1;
-    while ( beg < len ) {
-        pos = s.indexOf(',', pos);
-        // Escaped comma? If so, skip.
-        if ( pos > 0 && s.charCodeAt(pos - 1) === 0x5C /* '\\' */ ) {
-            s = s.slice(0, pos - 1) + s.slice(pos);
-            len -= 1;
-            continue;
+    if ( arglist.length === 1 ) {
+        if ( arglist[0].startsWith('{') && arglist[0].endsWith('}') ) {
+            return content.replace('{{args}}', arglist[0]);
         }
-        if ( pos === -1 ) { pos = len; }
-        arglist.push(s.slice(beg, pos).trim().replace(reEscapeScriptArg, '\\$&'));
-        beg = pos = pos + 1;
-        i++;
     }
     for ( let i = 0; i < arglist.length; i++ ) {
         content = content.replace(`{{${i+1}}}`, arglist[i]);
     }
-    return content.replace(
-        '{{args}}',
+    return content.replace('{{args}}',
         arglist.map(a => `'${a}'`).join(', ').replace(/\$/g, '$$$')
     );
 };
+
+const decompile = function(json) {
+    const args = JSON.parse(json).map(s => s.replace(/,/g, '\\,'));
+    if ( args.length === 0 ) { return '+js()'; }
+    return `+js(${args.join(', ')})`;
+};
+
+/******************************************************************************/
 
 scriptletFilteringEngine.logFilters = function(tabId, url, filters) {
     if ( typeof filters !== 'string' ) { return; }
@@ -303,7 +268,7 @@ scriptletFilteringEngine.compile = function(parser, writer) {
     if ( normalized === undefined ) { return; }
 
     // Tokenless is meaningful only for exception filters.
-    if ( normalized === '+js()' && isException === false ) { return; }
+    if ( normalized === '[]' && isException === false ) { return; }
 
     if ( parser.hasOptions() === false ) {
         if ( isException ) {
@@ -329,11 +294,6 @@ scriptletFilteringEngine.compile = function(parser, writer) {
     }
 };
 
-// 01234567890123456789
-// +js(token[, arg[, ...]])
-//     ^                  ^
-//     4                 -1
-
 scriptletFilteringEngine.fromCompiledContent = function(reader) {
     reader.select('SCRIPTLET_FILTERS');
 
@@ -347,7 +307,7 @@ scriptletFilteringEngine.fromCompiledContent = function(reader) {
         duplicates.add(fingerprint);
         const args = reader.args();
         if ( args.length < 4 ) { continue; }
-        scriptletDB.store(args[1], args[2], args[3].slice(4, -1));
+        scriptletDB.store(args[1], args[2], args[3]);
     }
 };
 
@@ -387,7 +347,7 @@ scriptletFilteringEngine.retrieve = function(request) {
         if ( $scriptlets.size === 0 ) { return; }
 
         // Wholly disable scriptlet injection?
-        if ( $exceptions.has('') ) {
+        if ( $exceptions.has('[]') ) {
             return {
                 filters: [
                     { tabId: request.tabId, url: request.url, filter: '#@#+js()' }
@@ -417,8 +377,8 @@ scriptletFilteringEngine.retrieve = function(request) {
             mainWorld: mainWorldCode.join('\n\n'),
             isolatedWorld: isolatedWorldCode.join('\n\n'),
             filters: [
-                ...Array.from($scriptlets).map(s => `##+js(${s})`),
-                ...Array.from($exceptions).map(s => `#@#+js(${s})`),
+                ...Array.from($scriptlets).map(s => `##${decompile(s)}`),
+                ...Array.from($exceptions).map(s => `#@#${decompile(s)}`),
             ].join('\n'),
         };
         scriptletCache.add(hostname, cacheDetails);
@@ -519,7 +479,10 @@ scriptletFilteringEngine.toSelfie = function() {
 };
 
 scriptletFilteringEngine.fromSelfie = function(selfie) {
+    if ( selfie instanceof Object === false ) { return false; }
+    if ( selfie.version !== VERSION ) { return false; }
     scriptletDB.fromSelfie(selfie);
+    return true;
 };
 
 /******************************************************************************/

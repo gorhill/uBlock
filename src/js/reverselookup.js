@@ -167,6 +167,16 @@ const fromExtendedFilter = async function(details) {
     const id = messageId++;
     const hostname = hostnameFromURI(details.url);
 
+    const parser = new sfp.AstFilterParser({
+        expertMode: true,
+        nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
+    });
+    parser.parse(details.rawFilter);
+    let compiled;
+    if ( parser.isScriptletFilter() ) {
+        compiled = JSON.stringify(parser.getScripletArgs());
+    }
+
     worker.postMessage({
         what: 'fromExtendedFilter',
         id,
@@ -182,7 +192,8 @@ const fromExtendedFilter = async function(details) {
                 'specifichide',
                 details.url
             ) === 2,
-        rawFilter: details.rawFilter
+        rawFilter: details.rawFilter,
+        compiled,
     });
 
     return new Promise(resolve => {

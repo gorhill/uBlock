@@ -168,9 +168,11 @@ staticExtFilteringEngine.fromSelfie = function(path) {
         }
         if ( selfie instanceof Object === false ) { return false; }
         cosmeticFilteringEngine.fromSelfie(selfie.cosmetic);
-        scriptletFilteringEngine.fromSelfie(selfie.scriptlets);
         httpheaderFilteringEngine.fromSelfie(selfie.httpHeaders);
         htmlFilteringEngine.fromSelfie(selfie.html);
+        if ( scriptletFilteringEngine.fromSelfie(selfie.scriptlets) === false ) {
+            return false;
+        }
         return true;
     });
 };

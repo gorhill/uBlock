@@ -763,7 +763,11 @@ function setCookieHelper(
 
 builtinScriptlets.push({
     name: 'abort-current-script.js',
-    aliases: [ 'acs.js', 'abort-current-inline-script.js', 'acis.js' ],
+    aliases: [
+        'acs.js',
+        'abort-current-inline-script.js',
+        'acis.js',
+    ],
     fn: abortCurrentScript,
     dependencies: [
         'abort-current-script-core.fn',
@@ -786,7 +790,9 @@ function abortCurrentScript(
 
 builtinScriptlets.push({
     name: 'abort-on-property-read.js',
-    aliases: [ 'aopr.js' ],
+    aliases: [
+        'aopr.js',
+    ],
     fn: abortOnPropertyRead,
     dependencies: [
         'get-exception-token.fn',
@@ -840,7 +846,9 @@ function abortOnPropertyRead(
 
 builtinScriptlets.push({
     name: 'abort-on-property-write.js',
-    aliases: [ 'aopw.js' ],
+    aliases: [
+        'aopw.js',
+    ],
     fn: abortOnPropertyWrite,
     dependencies: [
         'get-exception-token.fn',
@@ -872,7 +880,9 @@ function abortOnPropertyWrite(
 
 builtinScriptlets.push({
     name: 'abort-on-stack-trace.js',
-    aliases: [ 'aost.js' ],
+    aliases: [
+        'aost.js',
+    ],
     fn: abortOnStackTrace,
     dependencies: [
         'get-exception-token.fn',
@@ -978,7 +988,10 @@ function abortOnStackTrace(
 
 builtinScriptlets.push({
     name: 'addEventListener-defuser.js',
-    aliases: [ 'aeld.js' ],
+    aliases: [
+        'aeld.js',
+        'prevent-addEventListener.js',
+    ],
     fn: addEventListenerDefuser,
     dependencies: [
         'get-extra-args.fn',
@@ -1106,7 +1119,9 @@ function evaldataPrune(
 
 builtinScriptlets.push({
     name: 'nano-setInterval-booster.js',
-    aliases: [ 'nano-sib.js' ],
+    aliases: [
+        'nano-sib.js',
+    ],
     fn: nanoSetIntervalBooster,
     dependencies: [
         'pattern-to-regex.fn',
@@ -1155,7 +1170,9 @@ function nanoSetIntervalBooster(
 
 builtinScriptlets.push({
     name: 'nano-setTimeout-booster.js',
-    aliases: [ 'nano-stb.js' ],
+    aliases: [
+        'nano-stb.js',
+    ],
     fn: nanoSetTimeoutBooster,
     dependencies: [
         'pattern-to-regex.fn',
@@ -1205,6 +1222,9 @@ function nanoSetTimeoutBooster(
 
 builtinScriptlets.push({
     name: 'noeval-if.js',
+    aliases: [
+        'prevent-eval-if.js',
+    ],
     fn: noEvalIf,
     dependencies: [
         'pattern-to-regex.fn',
@@ -1228,6 +1248,9 @@ function noEvalIf(
 
 builtinScriptlets.push({
     name: 'no-fetch-if.js',
+    aliases: [
+        'prevent-fetch.js',
+    ],
     fn: noFetchIf,
     dependencies: [
         'pattern-to-regex.fn',
@@ -1330,7 +1353,9 @@ function refreshDefuser(
 
 builtinScriptlets.push({
     name: 'remove-attr.js',
-    aliases: [ 'ra.js' ],
+    aliases: [
+        'ra.js',
+    ],
     fn: removeAttr,
     dependencies: [
         'run-at.fn',
@@ -1396,7 +1421,9 @@ function removeAttr(
 
 builtinScriptlets.push({
     name: 'remove-class.js',
-    aliases: [ 'rc.js' ],
+    aliases: [
+        'rc.js',
+    ],
     fn: removeClass,
     dependencies: [
         'run-at.fn',
@@ -1460,7 +1487,10 @@ function removeClass(
 
 builtinScriptlets.push({
     name: 'no-requestAnimationFrame-if.js',
-    aliases: [ 'norafif.js' ],
+    aliases: [
+        'norafif.js',
+        'prevent-requestAnimationFrame.js',
+    ],
     fn: noRequestAnimationFrameIf,
     dependencies: [
         'pattern-to-regex.fn',
@@ -1495,7 +1525,9 @@ function noRequestAnimationFrameIf(
 
 builtinScriptlets.push({
     name: 'set-constant.js',
-    aliases: [ 'set.js' ],
+    aliases: [
+        'set.js',
+    ],
     fn: setConstant,
     dependencies: [
         'set-constant-core.fn'
@@ -1511,7 +1543,10 @@ function setConstant(
 
 builtinScriptlets.push({
     name: 'no-setInterval-if.js',
-    aliases: [ 'nosiif.js' ],
+    aliases: [
+        'nosiif.js',
+        'prevent-setInterval.js',
+    ],
     fn: noSetIntervalIf,
     dependencies: [
         'pattern-to-regex.fn',
@@ -1568,7 +1603,11 @@ function noSetIntervalIf(
 
 builtinScriptlets.push({
     name: 'no-setTimeout-if.js',
-    aliases: [ 'nostif.js', 'setTimeout-defuser.js' ],
+    aliases: [
+        'nostif.js',
+        'prevent-setTimeout.js',
+        'setTimeout-defuser.js',
+    ],
     fn: noSetTimeoutIf,
     dependencies: [
         'pattern-to-regex.fn',
@@ -1692,6 +1731,9 @@ function webrtcIf(
 
 builtinScriptlets.push({
     name: 'no-xhr-if.js',
+    aliases: [
+        'prevent-xhr.js',
+    ],
     fn: noXhrIf,
     dependencies: [
         'pattern-to-regex.fn',
@@ -1765,7 +1807,9 @@ function noXhrIf(
 
 builtinScriptlets.push({
     name: 'no-window-open-if.js',
-    aliases: [ 'nowoif.js' ],
+    aliases: [
+        'nowoif.js',
+    ],
     fn: noWindowOpenIf,
     dependencies: [
         'get-extra-args.fn',
@@ -2699,7 +2743,9 @@ function spoofCSS(
 
 builtinScriptlets.push({
     name: 'remove-node-text.js',
-    aliases: [ 'rmnt.js' ],
+    aliases: [
+        'rmnt.js',
+    ],
     fn: removeNodeText,
     world: 'ISOLATED',
     dependencies: [
@@ -2786,9 +2832,9 @@ function setLocalStorageItem(
     value = ''
 ) {
     if ( key === '' ) { return; }
-    if ( value === '' ) { return; }
 
     const validValues = [
+        '',
         'undefined', 'null',
         'false', 'true',
         'yes', 'no',
@@ -2805,7 +2851,11 @@ function setLocalStorageItem(
     }
 
     try {
-        self.localStorage.setItem(key, `${actualValue}`);
+        if ( actualValue !== undefined ) {
+            self.localStorage.setItem(key, `${actualValue}`);
+        } else {
+            self.localStorage.removeItem(key);
+        }
     } catch(ex) {
     }
 }
@@ -2849,7 +2899,9 @@ function setLocalStorageItem(
 builtinScriptlets.push({
     name: 'replace-node-text.js',
     requiresTrust: true,
-    aliases: [ 'rpnt.js', 'sed.js' /* to be removed */ ],
+    aliases: [
+        'rpnt.js',
+    ],
     fn: replaceNodeText,
     world: 'ISOLATED',
     dependencies: [
@@ -2877,7 +2929,9 @@ function replaceNodeText(
 builtinScriptlets.push({
     name: 'trusted-set-constant.js',
     requiresTrust: true,
-    aliases: [ 'trusted-set.js' ],
+    aliases: [
+        'trusted-set.js',
+    ],
     fn: trustedSetConstant,
     dependencies: [
         'set-constant-core.fn'

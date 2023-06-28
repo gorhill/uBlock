@@ -24,7 +24,8 @@
 /******************************************************************************/
 
 const StaticExtFilteringHostnameDB = class {
-    constructor(nBits, selfie = undefined) {
+    constructor(nBits, version = 0) {
+        this.version = version;
         this.nBits = nBits;
         this.strToIdMap = new Map();
         this.hostnameToSlotIdMap = new Map();
@@ -35,9 +36,6 @@ const StaticExtFilteringHostnameDB = class {
         // Array of strings (selectors and pseudo-selectors)
         this.strSlots = [];
         this.size = 0;
-        if ( selfie !== undefined ) {
-            this.fromSelfie(selfie);
-        }
         this.cleanupTimer = vAPI.defer.create(( ) => {
             this.strToIdMap.clear();
         });
@@ -142,6 +140,7 @@ const StaticExtFilteringHostnameDB = class {
 
     toSelfie() {
         return {
+            version: this.version,
             hostnameToSlotIdMap: Array.from(this.hostnameToSlotIdMap),
             regexToSlotIdMap: Array.from(this.regexToSlotIdMap),
             hostnameSlots: this.hostnameSlots,

@@ -237,7 +237,7 @@ const fromExtendedFilter = function(details) {
             // Scriptlet injection
             case 32:
                 if ( exception !== ((fargs[2] & 0b001) !== 0) ) { break; }
-                if ( fargs[3] !== selector ) { break; }
+                if ( fargs[3] !== details.compiled ) { break; }
                 if ( hostnameMatches(fargs[1]) ) {
                     found = fargs[1] + prefix + selector;
                 }
