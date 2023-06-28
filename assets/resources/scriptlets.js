@@ -295,7 +295,7 @@ function abortCurrentScriptCore(
         const e = document.currentScript;
         if ( e instanceof HTMLScriptElement === false ) { return; }
         if ( e === thisScript ) { return; }
-        if ( reContext.test(e.src) === false ) { return; }
+        if ( context !== '' && reContext.test(e.src) === false ) { return; }
         if ( log && e.src !== '' ) { safe.uboLog(`matched src: ${e.src}`); }
         const scriptText = getScriptText(e);
         if ( reNeedle.test(scriptText) === false ) { return; }
