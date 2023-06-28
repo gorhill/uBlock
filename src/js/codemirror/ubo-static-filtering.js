@@ -59,16 +59,20 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
     let lastNetOptionType = 0;
 
     const redirectTokenStyle = node => {
-        const rawToken = astParser.getNodeString(node);
+        const rawToken = astParser.getNodeString(node || currentWalkerNode);
         const { token } = sfp.parseRedirectValue(rawToken);
         return redirectNames.has(token) ? 'value' : 'value warning';
     };
 
+    const nodeHasError = node => {
+        return astParser.getNodeFlags(
+            node || currentWalkerNode, sfp.NODE_FLAG_ERROR
+        ) !== 0;
+    };
+
     const colorFromAstNode = function() {
         if ( astParser.nodeIsEmptyString(currentWalkerNode) ) { return '+'; }
-        if ( astParser.getNodeFlags(currentWalkerNode, sfp.NODE_FLAG_ERROR) !== 0 ) {
-            return 'error';
-        }
+        if ( nodeHasError() ) { return 'error'; }
         const nodeType = astParser.getNodeType(currentWalkerNode);
         switch ( nodeType ) {
             case sfp.NODE_TYPE_WHITESPACE:
@@ -199,7 +203,7 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
                 switch ( lastNetOptionType ) {
                     case sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECT:
                     case sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE:
-                        return redirectTokenStyle(currentWalkerNode);
+                        return redirectTokenStyle();
                     default:
                         break;
                 }
@@ -234,6 +238,8 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
                     return 'comment';
                 }
                 currentWalkerNode = astWalker.reset();
+            } else if ( nodeHasError() ) {
+                currentWalkerNode = astWalker.right();
             } else {
                 currentWalkerNode = astWalker.next();
             }
