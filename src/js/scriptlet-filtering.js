@@ -41,6 +41,7 @@ const VERSION = 1;
 
 const duplicates = new Set();
 const scriptletCache = new µb.MRUCache(32);
+const reEscapeScriptArg = /[\\'"]/g;
 
 const scriptletDB = new StaticExtFilteringHostnameDB(1, VERSION);
 
@@ -217,7 +218,9 @@ const patchScriptlet = function(content, arglist) {
         content = content.replace(`{{${i+1}}}`, arglist[i]);
     }
     return content.replace('{{args}}',
-        arglist.map(a => `'${a}'`).join(', ').replace(/\$/g, '$$$')
+        arglist.map(a => `'${a.replace(reEscapeScriptArg, '\\$&')}'`)
+               .join(', ')
+               .replace(/\$/g, '$$$')
     );
 };
 
