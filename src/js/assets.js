@@ -705,11 +705,6 @@ const readUserAsset = async function(assetKey) {
         bin instanceof Object && typeof bin[assetKey] === 'string'
             ? bin[assetKey]
             : '';
-
-    // Remove obsolete entry
-    // TODO: remove once everybody is well beyond 1.18.6
-    vAPI.storage.remove('assets/user/filters.txt');
-
     return { assetKey, content };
 };
 
