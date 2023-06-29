@@ -780,7 +780,7 @@ export class AstFilterParser {
         this.reBadHostnameChars = /[\x00-\x24\x26-\x29\x2b\x2c\x2f\x3b-\x40\x5c\x5e\x60\x7b-\x7f]/;
         this.reIsEntity = /^[^*]+\.\*$/;
         this.rePreparseDirectiveIf = /^!#if /;
-        this.rePreparseDirectiveAny = /^!#(?:endif|if |include )/;
+        this.rePreparseDirectiveAny = /^!#(?:else|endif|if |include )/;
         this.reURL = /\bhttps?:\/\/\S+/;
         this.reHasPatternSpecialChars = /[\*\^]/;
         this.rePatternAllSpecialChars = /[\*\^]+|[^\x00-\x7f]+/g;
@@ -1122,10 +1122,7 @@ export class AstFilterParser {
             this.linkRight(head, next);
             if ( type === NODE_TYPE_PREPARSE_DIRECTIVE_IF_VALUE ) {
                 const rawToken = this.getNodeString(next).trim();
-                const token = rawToken.charCodeAt(0) === 0x21 /* ! */
-                    ? rawToken.slice(1)
-                    : rawToken;
-                if ( preparserIfTokens.has(token) === false ) {
+                if ( utils.preparser.evaluateExpr(rawToken) === undefined ) {
                     this.addNodeFlags(next, NODE_FLAG_ERROR);
                     this.addFlags(AST_FLAG_HAS_ERROR);
                     this.astError = AST_ERROR_IF_TOKEN_UNKNOWN;
@@ -4137,15 +4134,68 @@ export const utils = (( ) => {
         }
     };
 
+    // Useful reference:
+    // https://adguard.com/kb/general/ad-filtering/create-own-filters/#conditions-directive
+
     class preparser {
+        static evaluateExprToken(token, env = []) {
+            const not = token.charCodeAt(0) === 0x21 /* ! */;
+            if ( not ) { token = token.slice(1); }
+            const state = preparserTokens.get(token);
+            if ( state === undefined ) { return; }
+            return state === 'false' && not || env.includes(state) !== not;
+        }
+
+        static evaluateExpr(expr, env = []) {
+            if ( expr.startsWith('(') && expr.endsWith(')') ) {
+                expr = expr.slice(1, -1);
+            }
+            const matches = Array.from(expr.matchAll(/(?:(?:&&|\|\|)\s+)?\S+/g));
+            if ( matches.length === 0 ) { return; }
+            if ( matches[0][0].startsWith('|') || matches[0][0].startsWith('&') ) { return; }
+            let result = this.evaluateExprToken(matches[0][0], env);
+            for ( let i = 1; i < matches.length; i++ ) {
+                const parts = matches[i][0].split(/ +/);
+                if ( parts.length !== 2 ) { return; }
+                const state = this.evaluateExprToken(parts[1], env);
+                if ( state === undefined ) { return; }
+                if ( parts[0] === '||' ) {
+                    result = result || state;
+                } else if ( parts[0] === '&&' ) {
+                    result = result && state;
+                } else {
+                    return;
+                }
+            }
+            return result;
+        }
+
         // This method returns an array of indices, corresponding to position in
         // the content string which should alternatively be parsed and discarded.
         static splitter(content, env = []) {
-            const reIf = /^!#(if|endif)\b([^\n]*)(?:[\n\r]+|$)/gm;
+            const reIf = /^!#(if|else|endif)\b([^\n]*)(?:[\n\r]+|$)/gm;
             const stack = [];
-            const shouldDiscard = ( ) => stack.some(v => v);
             const parts = [ 0 ];
             let discard = false;
+
+            const shouldDiscard = ( ) => stack.some(v => v);
+
+            const begif = (startDiscard, match) => {
+                if ( discard === false && startDiscard ) {
+                    parts.push(match.index);
+                    discard = true;
+                }
+                stack.push(startDiscard);
+            };
+
+            const endif = match => {
+                stack.pop();
+                const stopDiscard = shouldDiscard() === false;
+                if ( discard && stopDiscard ) {
+                    parts.push(match.index + match[0].length);
+                    discard = false;
+                }
+            };
 
             for (;;) {
                 const match = reIf.exec(content);
@@ -4153,27 +4203,19 @@ export const utils = (( ) => {
 
                 switch ( match[1] ) {
                 case 'if': {
-                    let expr = match[2].trim();
-                    const target = expr.charCodeAt(0) === 0x21 /* '!' */;
-                    if ( target ) { expr = expr.slice(1); }
-                    const token = preparserTokens.get(expr);
-                    const startDiscard =
-                        token === 'false' && target === false ||
-                        token !== undefined && env.includes(token) === target;
-                    if ( discard === false && startDiscard ) {
-                        parts.push(match.index);
-                        discard = true;
-                    }
-                    stack.push(startDiscard);
+                    const startDiscard = this.evaluateExpr(match[2].trim(), env) === false;
+                    begif(startDiscard, match);
+                    break;
+                }
+                case 'else': {
+                    if ( stack.length === 0 ) { break; }
+                    const startDiscard = stack[stack.length-1] === false;
+                    endif(match);
+                    begif(startDiscard, match);
                     break;
                 }
                 case 'endif': {
-                    stack.pop();
-                    const stopDiscard = shouldDiscard() === false;
-                    if ( discard && stopDiscard ) {
-                        parts.push(match.index + match[0].length);
-                        discard = false;
-                    }
+                    endif(match);
                     break;
                 }
                 default:

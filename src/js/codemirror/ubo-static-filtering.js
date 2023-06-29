@@ -32,7 +32,7 @@ import { dom, qs$ } from '../dom.js';
 
 const redirectNames = new Map();
 const scriptletNames = new Map();
-const preparseDirectiveTokens = new Map();
+const preparseDirectiveEnv = [];
 const preparseDirectiveHints = [];
 const originHints = [];
 let hintHelperRegistered = false;
@@ -88,15 +88,9 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
             case sfp.NODE_TYPE_PREPARSE_DIRECTIVE_VALUE:
                 return 'directive';
             case sfp.NODE_TYPE_PREPARSE_DIRECTIVE_IF_VALUE: {
-                if ( preparseDirectiveTokens.size === 0 ) {
-                    return 'positive strong';
-                }
                 const raw = astParser.getNodeString(currentWalkerNode);
-                const not = raw.startsWith('!');
-                const token = not ? raw.slice(1) : raw;
-                return not === preparseDirectiveTokens.get(token)
-                    ? 'negative strong'
-                    : 'positive strong';
+                const state = sfp.utils.preparser.evaluateExpr(raw, preparseDirectiveEnv);
+                return state ? 'positive strong' : 'negative strong';
             }
             case sfp.NODE_TYPE_EXT_OPTIONS_ANCHOR:
                 return astParser.getFlags(sfp.AST_FLAG_IS_EXCEPTION)
@@ -287,10 +281,9 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
                     }
                 }
             }
-            if ( Array.isArray(details.preparseDirectiveTokens)) {
-                details.preparseDirectiveTokens.forEach(([ a, b ]) => {
-                    preparseDirectiveTokens.set(a, b);
-                });
+            if ( Array.isArray(details.preparseDirectiveEnv)) {
+                preparseDirectiveEnv.length = 0;
+                preparseDirectiveEnv.push(...details.preparseDirectiveEnv);
             }
             if ( Array.isArray(details.preparseDirectiveHints)) {
                 preparseDirectiveHints.push(...details.preparseDirectiveHints);
