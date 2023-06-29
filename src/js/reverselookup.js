@@ -174,7 +174,7 @@ const fromExtendedFilter = async function(details) {
     parser.parse(details.rawFilter);
     let compiled;
     if ( parser.isScriptletFilter() ) {
-        compiled = JSON.stringify(parser.getScripletArgs());
+        compiled = JSON.stringify(parser.getScriptletArgs());
     }
 
     worker.postMessage({

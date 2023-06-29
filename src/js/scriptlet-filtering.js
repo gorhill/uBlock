@@ -158,7 +158,7 @@ const isolatedWorldInjector = (( ) => {
 })();
 
 const normalizeRawFilter = function(parser, sourceIsTrusted = false) {
-    const args = parser.getScripletArgs();
+    const args = parser.getScriptletArgs();
     if ( args.length !== 0 ) {
         let token = `${args[0]}.js`;
         if ( reng.aliases.has(token) ) {

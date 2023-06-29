@@ -2374,7 +2374,7 @@ export class AstFilterParser {
         return arg.replace(this.reUnescapeCommas, '$1,');
     }
 
-    getScripletArgs() {
+    getScriptletArgs() {
         const args = [];
         if ( this.isScriptletFilter() === false ) { return args; }
         const root = this.getBranchFromType(NODE_TYPE_EXT_PATTERN_SCRIPTLET);
