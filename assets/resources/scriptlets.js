@@ -2838,7 +2838,8 @@ function setLocalStorageItem(
         'undefined', 'null',
         'false', 'true',
         'yes', 'no',
-        '{}', '[]', "''",
+        '{}', '[]', '""',
+        '$remove$',
     ];
     let actualValue;
     if ( validValues.includes(value) ) {
@@ -2851,10 +2852,10 @@ function setLocalStorageItem(
     }
 
     try {
-        if ( actualValue !== undefined ) {
-            self.localStorage.setItem(key, `${actualValue}`);
-        } else {
+        if ( actualValue === '$remove$' ) {
             self.localStorage.removeItem(key);
+        } else {
+            self.localStorage.setItem(key, `${actualValue}`);
         }
     } catch(ex) {
     }
@@ -3024,7 +3025,6 @@ function trustedSetLocalStorageItem(
     value = ''
 ) {
     if ( key === '' ) { return; }
-    if ( value === '' ) { return; }
 
     let actualValue = value;
     if ( value === '$now$' ) {
@@ -3034,7 +3034,11 @@ function trustedSetLocalStorageItem(
     }
 
     try {
-        self.localStorage.setItem(key, `${actualValue}`);
+        if ( actualValue === '$remove$' ) {
+            self.localStorage.removeItem(key);
+        } else {
+            self.localStorage.setItem(key, `${actualValue}`);
+        }
     } catch(ex) {
     }
 }
