@@ -798,6 +798,7 @@ export class AstFilterParser {
         this.reUnescapeCommas = /((?:^|[^\\])(?:\\\\)*)\\,/g;
         this.reUnescapeSingleQuotes = /((?:^|[^\\])(?:\\\\)*)\\'/g;
         this.reUnescapeDoubleQuotes = /((?:^|[^\\])(?:\\\\)*)\\"/g;
+        this.reNoopOption = /^_+$/;
     }
 
     parse(raw) {
@@ -1854,13 +1855,21 @@ export class AstFilterParser {
         const equalPos = s.indexOf('=');
         const nameEnd = equalPos !== -1 ? equalPos : s.length;
         const name = s.slice(nameBeg, nameEnd);
-        const nodeOptionType = nodeTypeFromOptionName.get(name) || NODE_TYPE_NET_OPTION_NAME_UNKNOWN;
+        let nodeOptionType = nodeTypeFromOptionName.get(name);
+        if ( nodeOptionType === undefined ) {
+            nodeOptionType = this.reNoopOption.test(name)
+                ? NODE_TYPE_NET_OPTION_NAME_NOOP
+                : NODE_TYPE_NET_OPTION_NAME_UNKNOWN;
+        }
         next = this.allocTypedNode(
             nodeOptionType,
             parentBeg + nameBeg,
             parentBeg + nameEnd
         );
-        if ( this.getBranchFromType(nodeOptionType) !== 0 ) {
+        if (
+            nodeOptionType !== NODE_TYPE_NET_OPTION_NAME_NOOP &&
+            this.getBranchFromType(nodeOptionType) !== 0
+        ) {
             this.addNodeFlags(parent, NODE_FLAG_ERROR);
             this.addFlags(AST_FLAG_HAS_ERROR);
             this.astError = AST_ERROR_OPTION_DUPLICATE;
