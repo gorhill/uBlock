@@ -2044,10 +2044,13 @@ dom.on(document, 'keydown', ev => {
         if ( typeof response !== 'string' ) { return; }
         const settings = JSON.parse(response);
         const widget = qs$('#netInspector .entryTools');
-        widget.style.bottom = settings.bottom || '';
+        widget.style.bottom = '';
         widget.style.left = settings.left || '';
         widget.style.right = settings.right || '';
         widget.style.top = settings.top || '';
+        if ( /^-/.test(widget.style.top) ) {
+            widget.style.top = '0';
+        }
     });
 
     dom.on(
