@@ -52,7 +52,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupFilteringModeLabel": {
-    "message": "filtering mode",
+    "message": "وضع الفلتره",
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {

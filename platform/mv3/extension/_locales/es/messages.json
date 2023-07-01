@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Un bloqueador de contenido experimental con menos permisos. Bloquea anuncios, rastreadores, criptomineros y aún más inmediatamente después de la instalación.",
+    "message": "Un bloqueador de contenido con menos permisos. Bloquea anuncios, rastreadores, criptomineros y aún más.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {

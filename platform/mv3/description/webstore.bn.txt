@@ -7,13 +7,13 @@ The default ruleset corresponds to uBlock Origin's default filterset:
 - EasyPrivacy
 - Peter Lowe’s Ad and tracking server list
 
-You can add more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+আপনি অপশন পেজে গিয়ে আরও নিয়ম সেট যোগ করতে পারেন -- পপআপ প্যানেলে _Cogs_ আইকনে ক্লিক করুন।
 
-uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
+uBOL সম্পূর্ণরূপে ঘোষণামূলক, অর্থাৎ ফিল্টারিং করতে একটি স্থায়ী uBOL প্রক্রিয়ার প্রয়োজন নেই, এবং CSS/JS ইনজেকশন-ভিত্তিক বিষয়বস্তু ফিল্টারিং এক্সটেনশনের পরিবর্তে ব্রাউজার নিজেই নির্ভরযোগ্যভাবে এই কাজ করে থাকে। এর মানে হল যে কন্টেন্ট ব্লকিং চলমান থাকা অবস্থায় uBOL নিজেই CPU/মেমরি রিসোর্স ব্যবহার করে না -- uBOL-এর পরিষেবার প্রক্রিয়ার প্রয়োজন শুধুমাত্র_ যখন আপনি পপআপ প্যানেল বা অপশন পেজগুলির সাথে ইন্টারঅ্যাক্ট করেন।
 
-uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read and modify data" permissions at install time.
+uBOL-এর ইন্সটল করার সময় বিস্তৃত "পড়ার ও ডেটা পরিবর্তন করার" অনুমতির প্রয়োজন হয় না, তাই ইউব্লক অরিজিন বা অন্যান্য কনটেন্ট ব্লকের তুলনায় এটির সীমিত ক্ষমতা বাক্সের বাইরে রয়েছে যার জন্য ইন্সটল করার সময় বিস্তৃত "ডেটা পড়ুন এবং পরিবর্তন করুন" অনুমতি প্রয়োজন।
 
-However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
+যাইহোক, uBOL আপনাকে আপনার পছন্দের নির্দিষ্ট সাইটে *স্পষ্টভাবে* বর্ধিত অনুমতি প্রদান করে যাতে এটি কসমেটিক ফিল্টারিং এবং স্ক্রিপ্টলেট ইনজেকশন ব্যবহার করে সেই সাইটগুলিতে আরও ভাল ফিল্টার করতে পারে।
 
 To grant extended permissions on a given site, open the popup panel and pick a higher filtering mode such as Optimal or Complete.
 

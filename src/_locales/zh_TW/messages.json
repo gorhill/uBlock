@@ -180,11 +180,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "點擊以禁用此網站的所有腳本",
+    "message": "點擊以停用此網站的 JavaScript",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "點擊以停止禁用此網站的所有腳本",
+    "message": "點擊以使此網站的 JavaScript 不再停用",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
@@ -356,7 +356,7 @@
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "關閉預讀功能（避免連線至被阻擋的網域）",
+    "message": "停用預先載入模式（避免連線至已阻擋的網路要求）",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
@@ -388,7 +388,7 @@
     "description": ""
   },
   "settingsNoScriptingPrompt": {
-    "message": "禁用網頁腳本",
+    "message": "停用 JavaScript",
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "惡意軟體防護、安全",
+    "message": "惡意軟體防護及安全性",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
