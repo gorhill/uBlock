@@ -2795,6 +2795,7 @@ function setCookie(
         'yes', 'Yes', 'y', 'Y',
         'no', 'No', 'n', 'N',
         'ok', 'OK',
+        'Accept', 'Reject',
     ]);
     if ( validValues.has(value) === false ) {
         if ( /^\d+$/.test(value) === false ) { return; }
