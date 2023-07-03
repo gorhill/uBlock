@@ -218,6 +218,11 @@ label:hover .checkbox:not([disabled]) {
 .checkbox[disabled] ~ span {
     filter: var(--checkbox-disabled-filter);
     }
+.checkbox.partial > input[type="checkbox"]:checked + svg {
+    background-color: var(--surface-1);
+    border-color: var(--checkbox-checked-ink);
+    stroke: var(--checkbox-checked-ink);
+    }
 
 .radio {
     --margin-end: calc(var(--font-size) * 0.75);
