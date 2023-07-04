@@ -753,6 +753,54 @@ function setCookieHelper(
     }
 }
 
+/******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'set-local-storage-item-core.fn',
+    fn: setLocalStorageItemCore,
+});
+function setLocalStorageItemCore(
+    which = 'local',
+    trusted = false,
+    key = '',
+    value = '',
+) {
+    if ( key === '' ) { return; }
+
+    const trustedValues = [
+        '',
+        'undefined', 'null',
+        'false', 'true',
+        'yes', 'no',
+        '{}', '[]', '""',
+        '$remove$',
+    ];
+
+    if ( trusted ) {
+        if ( value === '$now$' ) {
+            value = Date.now();
+        } else if ( value === '$currentDate$' ) {
+            value = `${Date()}`;
+        }
+    } else {
+        if ( trustedValues.includes(value) === false ) {
+            if ( /^\d+$/.test(value) === false ) { return; }
+            value = parseInt(value, 10);
+            if ( value > 32767 ) { return; }
+        }
+    }
+
+    try {
+        const storage = `${which}Storage`;
+        if ( value === '$remove$' ) {
+            self[storage].removeItem(key);
+        } else {
+            self[storage].setItem(key, `${value}`);
+        }
+    } catch(ex) {
+    }
+}
+
 /*******************************************************************************
 
     Injectable scriptlets
@@ -2816,11 +2864,13 @@ function setCookie(
 /*******************************************************************************
  * 
  * set-local-storage-item.js
+ * set-session-storage-item.js
  * 
- * Set a local storage entry to a specific, allowed value.
+ * Set a local/session storage entry to a specific, allowed value.
  * 
  * Reference:
  * https://github.com/AdguardTeam/Scriptlets/blob/master/src/scriptlets/set-local-storage-item.js
+ * https://github.com/AdguardTeam/Scriptlets/blob/master/src/scriptlets/set-session-storage-item.js
  * 
  **/
 
@@ -2828,40 +2878,26 @@ builtinScriptlets.push({
     name: 'set-local-storage-item.js',
     fn: setLocalStorageItem,
     world: 'ISOLATED',
+    dependencies: [
+        'set-local-storage-item-core.fn',
+    ],
 });
-function setLocalStorageItem(
-    key = '',
-    value = ''
-) {
-    if ( key === '' ) { return; }
-
-    const validValues = [
-        '',
-        'undefined', 'null',
-        'false', 'true',
-        'yes', 'no',
-        '{}', '[]', '""',
-        '$remove$',
-    ];
-    let actualValue;
-    if ( validValues.includes(value) ) {
-        actualValue = value;
-    } else if ( /^\d+$/.test(value) ) {
-        actualValue = parseInt(value, 10);
-        if ( actualValue > 32767 ) { return; }
-    } else {
-        return;
-    }
-
-    try {
-        if ( actualValue === '$remove$' ) {
-            self.localStorage.removeItem(key);
-        } else {
-            self.localStorage.setItem(key, `${actualValue}`);
-        }
-    } catch(ex) {
-    }
+function setLocalStorageItem(key = '', value = '') {
+    setLocalStorageItemCore('local', false, key, value);
 }
+
+builtinScriptlets.push({
+    name: 'set-session-storage-item.js',
+    fn: setSessionStorageItem,
+    world: 'ISOLATED',
+    dependencies: [
+        'set-local-storage-item-core.fn',
+    ],
+});
+function setSessionStorageItem(key = '', value = '') {
+    setLocalStorageItemCore('session', false, key, value);
+}
+
 
 /*******************************************************************************
  * 
@@ -3021,28 +3057,12 @@ builtinScriptlets.push({
     requiresTrust: true,
     fn: trustedSetLocalStorageItem,
     world: 'ISOLATED',
+    dependencies: [
+        'set-local-storage-item-core.fn',
+    ],
 });
-function trustedSetLocalStorageItem(
-    key = '',
-    value = ''
-) {
-    if ( key === '' ) { return; }
-
-    let actualValue = value;
-    if ( value === '$now$' ) {
-        actualValue = Date.now();
-    } else if ( value === '$currentDate$' ) {
-        actualValue = `${Date()}`;
-    }
-
-    try {
-        if ( actualValue === '$remove$' ) {
-            self.localStorage.removeItem(key);
-        } else {
-            self.localStorage.setItem(key, `${actualValue}`);
-        }
-    } catch(ex) {
-    }
+function trustedSetLocalStorageItem(key = '', value = '') {
+    setLocalStorageItemCore('local', true, key, value);
 }
 
 /******************************************************************************/
