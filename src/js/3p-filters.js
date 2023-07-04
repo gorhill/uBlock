@@ -836,14 +836,14 @@ self.cloud.onPull = function fromCloudData(data, append) {
         selectedSet.delete(listkey);
     }
     if ( selectedSet.size !== 0 ) {
-        const textarea = qs$('#lists .liEntry[data-role="import"] textarea');
+        const textarea = qs$('#lists .listEntry[data-role="import"] textarea');
         const lines = append
             ? textarea.value.split(/[\n\r]+/)
             : [];
         lines.push(...selectedSet);
         if ( lines.length !== 0 ) { lines.push(''); }
         textarea.value = lines.join('\n');
-        dom.cl.toggle('#lists .liEntry[data-role="import"]', 'expanded', textarea.value !== '');
+        dom.cl.toggle('#lists .listEntry[data-role="import"]', 'expanded', textarea.value !== '');
     }
 
     renderWidgets();
