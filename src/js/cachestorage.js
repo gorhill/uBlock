@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global IDBDatabase, indexedDB */
+/* global browser, IDBDatabase, indexedDB */
 
 'use strict';
 
@@ -179,6 +179,15 @@ const selectIDB = async function() {
                 return resolve(null);
             }
             req.onupgradeneeded = function(ev) {
+                // https://github.com/uBlockOrigin/uBlock-issues/issues/2725
+                //   If context Firefox + incognito mode, fall back to
+                //   browser.storage.local for cache storage purpose.
+                if (
+                    vAPI.webextFlavor.soup.has('firefox') &&
+                    browser.extension.inIncognitoContext === true
+                ) {
+                    return req.onerror();
+                }
                 if ( ev.oldVersion === 1 ) { return; }
                 try {
                     const db = ev.target.result;
