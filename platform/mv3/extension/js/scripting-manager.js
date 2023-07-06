@@ -79,7 +79,12 @@ const arrayEq = (a = [], b = [], sort = true) => {
 
 const normalizeRegisteredContentScripts = registered => {
     for ( const entry of registered ) {
-        const { js } = entry;
+        const { css = [], js = [] } = entry;
+        for ( let i = 0; i < css.length; i++ ) {
+            const path = css[i];
+            if ( path.startsWith('/') ) { continue; }
+            css[i] = `/${path}`;
+        }
         for ( let i = 0; i < js.length; i++ ) {
             const path = js[i];
             if ( path.startsWith('/') ) { continue; }
@@ -88,6 +93,78 @@ const normalizeRegisteredContentScripts = registered => {
     }
     return registered;
 };
+
+/******************************************************************************/
+
+function registerHighGeneric(context, genericDetails) {
+    const { before, filteringModeDetails, rulesetsDetails } = context;
+
+    const excludeHostnames = [];
+    const css = [];
+    for ( const details of rulesetsDetails ) {
+        const hostnames = genericDetails.get(details.id);
+        if ( hostnames !== undefined ) {
+            excludeHostnames.push(...hostnames);
+        }
+        const count = details.css?.generichigh || 0;
+        if ( count === 0 ) { continue; }
+        css.push(`/rulesets/scripting/generichigh/${details.id}.css`);
+    }
+
+    if ( css.length === 0 ) { return; }
+
+    const { none, basic, optimal, complete } = filteringModeDetails;
+    const matches = [];
+    const excludeMatches = [];
+    if ( complete.has('all-urls') ) {
+        excludeMatches.push(...ut.matchesFromHostnames(none));
+        excludeMatches.push(...ut.matchesFromHostnames(basic));
+        excludeMatches.push(...ut.matchesFromHostnames(optimal));
+        excludeMatches.push(...ut.matchesFromHostnames(excludeHostnames));
+        matches.push('<all_urls>');
+    } else {
+        matches.push(
+            ...ut.matchesFromHostnames(
+                ut.subtractHostnameIters(
+                    Array.from(complete),
+                    excludeHostnames
+                )
+            )
+        );
+    }
+
+    if ( matches.length === 0 ) { return; }
+
+    const registered = before.get('css-generichigh');
+    before.delete('css-generichigh'); // Important!
+
+    // https://github.com/w3c/webextensions/issues/414#issuecomment-1623992885
+    // Once supported, add:
+    // cssOrigin: 'USER',
+    const directive = {
+        id: 'css-generichigh',
+        css,
+        matches,
+        excludeMatches,
+        runAt: 'document_end',
+    };
+
+    // register
+    if ( registered === undefined ) {
+        context.toAdd.push(directive);
+        return;
+    }
+
+    // update
+    if (
+        arrayEq(registered.css, css, false) === false ||
+        arrayEq(registered.matches, matches) === false ||
+        arrayEq(registered.excludeMatches, excludeMatches) === false
+    ) {
+        context.toRemove.push('css-generichigh');
+        context.toAdd.push(directive);
+    }
+}
 
 /******************************************************************************/
 
@@ -459,6 +536,7 @@ async function registerInjectables(origins) {
     registerScriptlet(context, scriptletDetails);
     registerSpecific(context);
     registerGeneric(context, genericDetails);
+    registerHighGeneric(context, genericDetails);
 
     toRemove.push(...Array.from(before.keys()));
 

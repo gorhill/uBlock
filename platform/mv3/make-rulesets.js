@@ -382,7 +382,8 @@ function loadAllSourceScriptlets() {
             const originalScriptletMap = new Map();
             for ( const details of results ) {
                 originalScriptletMap.set(
-                    details.file.replace('.template.js', ''),
+                    details.file.replace('.template.js', '')
+                                .replace('.template.css', ''),
                     details.text
                 );
             }
@@ -395,7 +396,7 @@ function loadAllSourceScriptlets() {
 
 /******************************************************************************/
 
-async function processGenericCosmeticFilters(assetDetails, bucketsMap, exclusions) {
+async function processGenericCosmeticFilters(assetDetails, bucketsMap) {
     if ( bucketsMap === undefined ) { return 0; }
     if ( bucketsMap.size === 0 ) { return 0; }
     const bucketsList = Array.from(bucketsMap);
@@ -419,11 +420,36 @@ async function processGenericCosmeticFilters(assetDetails, bucketsMap, exclusion
         patchedScriptlet
     );
 
-    genericDetails.set(assetDetails.id, exclusions.sort());
-
     log(`CSS-generic: ${count} plain CSS selectors`);
 
     return count;
+}
+
+/******************************************************************************/
+
+async function processGenericHighCosmeticFilters(assetDetails, selectorSet) {
+    if ( selectorSet === undefined ) { return 0; }
+    if ( selectorSet.size === 0 ) { return 0; }
+    const selectorLists = Array.from(selectorSet).sort().join(',\n');
+    const originalScriptletMap = await loadAllSourceScriptlets();
+
+    let patchedScriptlet = originalScriptletMap.get('css-generichigh').replace(
+        '$rulesetId$',
+        assetDetails.id
+    );
+    patchedScriptlet = safeReplace(patchedScriptlet,
+        /\$selectorList\$/,
+        selectorLists
+    );
+
+    writeFile(
+        `${scriptletDir}/generichigh/${assetDetails.id}.css`,
+        patchedScriptlet
+    );
+
+    log(`CSS-generic-high: ${selectorSet.size} plain CSS selectors`);
+
+    return selectorSet.size;
 }
 
 /******************************************************************************/
@@ -887,10 +913,23 @@ async function rulesetFromURLs(assetDetails) {
         log(rejectedCosmetic.map(line => `\t${line}`).join('\n'), true);
     }
 
+    if (
+        Array.isArray(results.network.generichideExclusions) &&
+        results.network.generichideExclusions.length !== 0
+    ) {
+        genericDetails.set(
+            assetDetails.id,
+            results.network.generichideExclusions.filter(hn => hn.endsWith('.*') === false).sort()
+        );
+    }
+
     const genericCosmeticStats = await processGenericCosmeticFilters(
         assetDetails,
-        results.genericCosmetic,
-        results.network.generichideExclusions.filter(hn => hn.endsWith('.*') === false)
+        results.genericCosmetic
+    );
+    const genericHighCosmeticStats = await processGenericHighCosmeticFilters(
+        assetDetails,
+        results.genericHighCosmetic
     );
     const specificCosmeticStats = await processCosmeticFilters(
         assetDetails,
@@ -933,6 +972,7 @@ async function rulesetFromURLs(assetDetails) {
         },
         css: {
             generic: genericCosmeticStats,
+            generichigh: genericHighCosmeticStats,
             specific: specificCosmeticStats,
             declarative: declarativeStats,
             procedural: proceduralStats,

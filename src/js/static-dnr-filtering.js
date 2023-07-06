@@ -147,17 +147,23 @@ function addExtendedToDNR(context, parser) {
 
     // Generic cosmetic filtering
     if ( parser.hasOptions() === false ) {
-        if ( context.genericCosmeticFilters === undefined ) {
-            context.genericCosmeticFilters = new Map();
-        }
         const { compiled } = parser.result;
         if ( compiled === undefined ) { return; }
         if ( compiled.length <= 1 ) { return; }
         if ( compiled.charCodeAt(0) === 0x7B /* '{' */ ) { return; }
         const key = keyFromSelector(compiled);
-        if ( key === undefined ) { return; }
+        if ( key === undefined ) {
+            if ( context.genericHighCosmeticFilters === undefined ) {
+                context.genericHighCosmeticFilters = new Set();
+            }
+            context.genericHighCosmeticFilters.add(compiled);
+            return;
+        }
         const type = key.charCodeAt(0);
         const hash = hashFromStr(type, key.slice(1));
+        if ( context.genericCosmeticFilters === undefined ) {
+            context.genericCosmeticFilters = new Map();
+        }
         let bucket = context.genericCosmeticFilters.get(hash);
         if ( bucket === undefined ) {
             context.genericCosmeticFilters.set(hash, bucket = []);
@@ -291,6 +297,7 @@ async function dnrRulesetFromRawLists(lists, options = {}) {
     return {
         network: staticNetFilteringEngine.dnrFromCompiled('end', context),
         genericCosmetic: context.genericCosmeticFilters,
+        genericHighCosmetic: context.genericHighCosmeticFilters,
         specificCosmetic: context.specificCosmeticFilters,
         scriptlet: context.scriptletFilters,
     };
