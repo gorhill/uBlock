@@ -2557,11 +2557,46 @@ function m3uPrune(
     });
 }
 
-/******************************************************************************/
+/*******************************************************************************
+ * 
+ * @scriptlet href-sanitizer
+ * 
+ * @description
+ * Set the `href` attribute to a value found in the DOM at, or below the
+ * targeted `a` element.
+ * 
+ * ### Syntax
+ * 
+ * ```text
+ * example.org##+js(href-sanitizer, selector [, source])
+ * ```
+ * 
+ * - `selector`: required, CSS selector, specifies `a` elements for which the
+ *   `href` attribute must be overriden.
+ * - `source`: optional, default to `text`, specifies from where to get the
+ *   value which will override the `href` attribute.
+ *     - `text`: the value will be the first valid URL found in the text
+ *       content of the targeted `a` element.
+ *     - `[attr]`: the value will be the attribute _attr_ of the targeted `a`
+ *       element.
+ *     - `?param`: the value will be the query parameter _param_ of the URL
+ *       found in the `href` attribute of the targeted `a` element.
+ * 
+ * ### Examples
+ * 
+ * example.org##+js(href-sanitizer, a)
+ * example.org##+js(href-sanitizer, a[title], [title])
+ * example.org##+js(href-sanitizer, a[href*="/away.php?to="], ?to)
+ * 
+ * */
 
 builtinScriptlets.push({
     name: 'href-sanitizer.js',
     fn: hrefSanitizer,
+    world: 'ISOLATED',
+    dependencies: [
+        'run-at.fn',
+    ],
 });
 function hrefSanitizer(
     selector = '',
@@ -2659,14 +2694,32 @@ function hrefSanitizer(
             childList: true,
         });
     };
-    if ( document.readyState === 'loading' ) {
-        document.addEventListener('DOMContentLoaded', start, { once: true });
-    } else {
-        start();
-    }
+    runAt(( ) => { start(); }, 'interactive');
 }
 
-/******************************************************************************/
+/*******************************************************************************
+ * 
+ * @scriptlet call-nothrow
+ * 
+ * @description
+ * Prevent a function call from throwing. The function will be called, however
+ * should it throw, the scriptlet will silently process the exception and
+ * returns as if no exception has occurred.
+ * 
+ * ### Syntax
+ * 
+ * ```text
+ * example.org##+js(call-nothrow, propertyChain)
+ * ```
+ * 
+ * - `propertyChain`: a chain of dot-separated properties which leads to the
+ * function to be trapped.
+ * 
+ * ### Examples
+ * 
+ * example.org##+js(call-nothrow, Object.defineProperty)
+ * 
+ * */
 
 builtinScriptlets.push({
     name: 'call-nothrow.js',
@@ -2897,6 +2950,118 @@ builtinScriptlets.push({
 });
 function setSessionStorageItem(key = '', value = '') {
     setLocalStorageItemCore('session', false, key, value);
+}
+
+/*******************************************************************************
+ * 
+ * @scriptlet set-attr
+ * 
+ * @description
+ * Sets the specified attribute on the specified elements. This scriptlet runs
+ * once when the page loads then afterward on DOM mutations.
+
+ * Reference: https://github.com/AdguardTeam/Scriptlets/blob/master/src/scriptlets/set-attr.js
+ * 
+ * ### Syntax
+ * 
+ * ```text
+ * example.org##+js(set-attr, selector, attr [, value])
+ * ```
+ * 
+ * - `selector`: CSS selector of DOM elements for which the attribute `attr`
+ *   must be modified.
+ * - `attr`: the name of the attribute to modify
+ * - `value`: the value to assign to the target attribute. Possible values:
+ *     - `''`: empty string (default)
+ *     - `true`
+ *     - `false`
+ *     - positive decimal integer 0 <= value < 32768
+ *     - `[other]`: copy the value from attribute `other` on the same element
+ * */
+
+builtinScriptlets.push({
+    name: 'set-attr.js',
+    fn: setAttr,
+    world: 'ISOLATED',
+    dependencies: [
+        'run-at.fn',
+    ],
+});
+function setAttr(
+    selector = '',
+    attr = '',
+    value = ''
+) {
+    if ( typeof selector !== 'string' ) { return; }
+    if ( selector === '' ) { return; }
+    if ( value === '' ) { return; }
+
+    const validValues = [ '', 'false', 'true' ];
+    let copyFrom = '';
+
+    if ( validValues.includes(value) === false ) {
+        if ( /^\d+$/.test(value) ) {
+            const n = parseInt(value, 10);
+            if ( n >= 32768 ) { return; }
+            value = `${n}`;
+        } else if ( /^\[.+\]$/.test(value) ) {
+            copyFrom = value.slice(1, -1);
+        } else {
+            return;
+        }
+    }
+
+    const extractValue = elem => {
+        if ( copyFrom !== '' ) {
+            return elem.getAttribute(copyFrom) || '';
+        }
+        return value;
+    };
+
+    const applySetAttr = ( ) => {
+        const elems = [];
+        try {
+            elems.push(...document.querySelectorAll(selector));
+        }
+        catch(ex) {
+            return false;
+        }
+        for ( const elem of elems ) {
+            const before = elem.getAttribute(attr);
+            const after = extractValue(elem);
+            if ( after === before ) { continue; }
+            elem.setAttribute(attr, after);
+        }
+        return true;
+    };
+    let observer, timer;
+    const onDomChanged = mutations => {
+        if ( timer !== undefined ) { return; }
+        let shouldWork = false;
+        for ( const mutation of mutations ) {
+            if ( mutation.addedNodes.length === 0 ) { continue; }
+            for ( const node of mutation.addedNodes ) {
+                if ( node.nodeType !== 1 ) { continue; }
+                shouldWork = true;
+                break;
+            }
+            if ( shouldWork ) { break; }
+        }
+        if ( shouldWork === false ) { return; }
+        timer = self.requestAnimationFrame(( ) => {
+            timer = undefined;
+            applySetAttr();
+        });
+    };
+    const start = ( ) => {
+        if ( applySetAttr() === false ) { return; }
+        observer = new MutationObserver(onDomChanged);
+        observer.observe(document.body, {
+            subtree: true,
+            childList: true,
+        });
+    };
+    runAt(( ) => { start(); }, 'idle');
 }
 
 
