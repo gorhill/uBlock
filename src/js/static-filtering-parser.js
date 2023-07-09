@@ -178,6 +178,7 @@ export const NODE_TYPE_NET_OPTION_NAME_MP4          = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_NOOP         = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_OBJECT       = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_OTHER        = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_PERMISSIONS  = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_PING         = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_POPUNDER     = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_POPUP        = iota++;
@@ -252,6 +253,7 @@ export const nodeTypeFromOptionName = new Map([
     [ 'object', NODE_TYPE_NET_OPTION_NAME_OBJECT ],
     /* synonym */ [ 'object-subrequest', NODE_TYPE_NET_OPTION_NAME_OBJECT ],
     [ 'other', NODE_TYPE_NET_OPTION_NAME_OTHER ],
+    [ 'permissions', NODE_TYPE_NET_OPTION_NAME_PERMISSIONS ],
     [ 'ping', NODE_TYPE_NET_OPTION_NAME_PING ],
     /* synonym */ [ 'beacon', NODE_TYPE_NET_OPTION_NAME_PING ],
     [ 'popunder', NODE_TYPE_NET_OPTION_NAME_POPUNDER ],
@@ -1293,6 +1295,11 @@ export class AstFilterParser {
                 case NODE_TYPE_NET_OPTION_NAME_MATCHCASE:
                     realBad = this.isRegexPattern() === false;
                     break;
+                case NODE_TYPE_NET_OPTION_NAME_PERMISSIONS:
+                    realBad = modifierType !== 0 || (hasValue || isException) === false;
+                    if ( realBad ) { break; }
+                    modifierType = type;
+                    break;
                 case NODE_TYPE_NET_OPTION_NAME_PING:
                 case NODE_TYPE_NET_OPTION_NAME_WEBSOCKET:
                     realBad = hasValue;
@@ -1349,6 +1356,7 @@ export class AstFilterParser {
                 realBad = abstractTypeCount || behaviorTypeCount || requestTypeCount;
                 break;
             case NODE_TYPE_NET_OPTION_NAME_CSP:
+            case NODE_TYPE_NET_OPTION_NAME_PERMISSIONS:
                 realBad = abstractTypeCount || behaviorTypeCount || requestTypeCount;
                 break;
             case NODE_TYPE_NET_OPTION_NAME_INLINEFONT:

@@ -182,12 +182,14 @@ const MODIFIER_TYPE_REDIRECT = 1;
 const MODIFIER_TYPE_REDIRECTRULE = 2;
 const MODIFIER_TYPE_REMOVEPARAM = 3;
 const MODIFIER_TYPE_CSP = 4;
+const MODIFIER_TYPE_PERMISSIONS = 5;
 
 const modifierTypeFromName = new Map([
     [ 'redirect', MODIFIER_TYPE_REDIRECT ],
     [ 'redirect-rule', MODIFIER_TYPE_REDIRECTRULE ],
     [ 'removeparam', MODIFIER_TYPE_REMOVEPARAM ],
     [ 'csp', MODIFIER_TYPE_CSP ],
+    [ 'permissions', MODIFIER_TYPE_PERMISSIONS ],
 ]);
 
 const modifierNameFromType = new Map([
@@ -195,6 +197,7 @@ const modifierNameFromType = new Map([
     [ MODIFIER_TYPE_REDIRECTRULE, 'redirect-rule' ],
     [ MODIFIER_TYPE_REMOVEPARAM, 'removeparam' ],
     [ MODIFIER_TYPE_CSP, 'csp' ],
+    [ MODIFIER_TYPE_PERMISSIONS, 'permissions' ],
 ]);
 
 //const typeValueFromCatBits = catBits => (catBits >>> TypeBitsOffset) & 0b11111;
@@ -3169,6 +3172,7 @@ class FilterCompiler {
         ]);
         this.modifierIdToNormalizedId = new Map([
             [ sfp.NODE_TYPE_NET_OPTION_NAME_CSP, MODIFIER_TYPE_CSP ],
+            [ sfp.NODE_TYPE_NET_OPTION_NAME_PERMISSIONS, MODIFIER_TYPE_PERMISSIONS ],
             [ sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECT, MODIFIER_TYPE_REDIRECT ],
             [ sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE, MODIFIER_TYPE_REDIRECTRULE ],
             [ sfp.NODE_TYPE_NET_OPTION_NAME_REMOVEPARAM, MODIFIER_TYPE_REMOVEPARAM ],
@@ -3438,6 +3442,12 @@ class FilterCompiler {
                 this.processMethodOption(parser.getNetOptionValue(id));
                 this.optionUnitBits |= this.METHOD_BIT;
                 break;
+            case sfp.NODE_TYPE_NET_OPTION_NAME_PERMISSIONS:
+                if ( this.processModifierOption(id, parser.getNetOptionValue(id)) === false ) {
+                    return false;
+                }
+                this.optionUnitBits |= this.PERMISSIONS_BIT;
+                break;
             case sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECT: {
                 const actualId = this.action === AllowAction
                     ? sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE
@@ -3554,6 +3564,7 @@ class FilterCompiler {
             case sfp.NODE_TYPE_NET_OPTION_NAME_FROM:
             case sfp.NODE_TYPE_NET_OPTION_NAME_HEADER:
             case sfp.NODE_TYPE_NET_OPTION_NAME_METHOD:
+            case sfp.NODE_TYPE_NET_OPTION_NAME_PERMISSIONS:
             case sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECT:
             case sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE:
             case sfp.NODE_TYPE_NET_OPTION_NAME_REMOVEPARAM:
@@ -3622,8 +3633,12 @@ class FilterCompiler {
             this.optionUnitBits |= this.NOT_TYPE_BIT;
         }
 
-        // CSP directives implicitly apply only to document/subdocument.
-        if ( this.modifyType === MODIFIER_TYPE_CSP ) {
+        // CSP/permissions options implicitly apply only to
+        // document/subdocument.
+        if (
+            this.modifyType === MODIFIER_TYPE_CSP ||
+            this.modifyType === MODIFIER_TYPE_PERMISSIONS
+        ) {
             if ( this.typeBits === 0 ) {
                 this.processTypeOption(sfp.NODE_TYPE_NET_OPTION_NAME_DOC, false);
                 this.processTypeOption(sfp.NODE_TYPE_NET_OPTION_NAME_FRAME, false);
@@ -4013,17 +4028,18 @@ class FilterCompiler {
     }
 }
 
-FilterCompiler.prototype.FROM_BIT         = 0b00000000001;
-FilterCompiler.prototype.TO_BIT           = 0b00000000010;
-FilterCompiler.prototype.DENYALLOW_BIT    = 0b00000000100;
-FilterCompiler.prototype.HEADER_BIT       = 0b00000001000;
-FilterCompiler.prototype.STRICT_PARTY_BIT = 0b00000010000;
-FilterCompiler.prototype.CSP_BIT          = 0b00000100000;
-FilterCompiler.prototype.REMOVEPARAM_BIT  = 0b00001000000;
-FilterCompiler.prototype.REDIRECT_BIT     = 0b00010000000;
-FilterCompiler.prototype.NOT_TYPE_BIT     = 0b00100000000;
-FilterCompiler.prototype.IMPORTANT_BIT    = 0b01000000000;
-FilterCompiler.prototype.METHOD_BIT       = 0b10000000000;
+FilterCompiler.prototype.FROM_BIT         = 0b000000000001;
+FilterCompiler.prototype.TO_BIT           = 0b000000000010;
+FilterCompiler.prototype.DENYALLOW_BIT    = 0b000000000100;
+FilterCompiler.prototype.HEADER_BIT       = 0b000000001000;
+FilterCompiler.prototype.STRICT_PARTY_BIT = 0b000000010000;
+FilterCompiler.prototype.CSP_BIT          = 0b000000100000;
+FilterCompiler.prototype.REMOVEPARAM_BIT  = 0b000001000000;
+FilterCompiler.prototype.REDIRECT_BIT     = 0b000010000000;
+FilterCompiler.prototype.NOT_TYPE_BIT     = 0b000100000000;
+FilterCompiler.prototype.IMPORTANT_BIT    = 0b001000000000;
+FilterCompiler.prototype.METHOD_BIT       = 0b010000000000;
+FilterCompiler.prototype.PERMISSIONS_BIT  = 0b100000000000;
 
 FilterCompiler.prototype.FILTER_OK          = 0;
 FilterCompiler.prototype.FILTER_INVALID     = 1;

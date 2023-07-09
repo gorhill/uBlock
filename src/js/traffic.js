@@ -557,6 +557,10 @@ const onHeadersReceived = function(details) {
         modifiedHeaders = true;
     }
 
+    if ( injectPP(fctxt, pageStore, responseHeaders) === true ) {
+        modifiedHeaders = true;
+    }
+
     // https://bugzilla.mozilla.org/show_bug.cgi?id=1376932
     //   Prevent document from being cached by the browser if we modified it,
     //   either through HTML filtering and/or modified response headers.
@@ -997,6 +1001,36 @@ const injectCSP = function(fctxt, pageStore, responseHeaders) {
     responseHeaders.push({
         name: 'Content-Security-Policy',
         value: cspSubsets.join(', ')
+    });
+
+    return true;
+};
+
+/******************************************************************************/
+
+const injectPP = function(fctxt, pageStore, responseHeaders) {
+    const permissions = [];
+    const directives = staticNetFilteringEngine.matchAndFetchModifiers(fctxt, 'permissions');
+    if ( directives !== undefined ) {
+        for ( const directive of directives ) {
+            if ( directive.result !== 1 ) { continue; }
+            permissions.push(directive.value.replace('|', ', '));
+        }
+    }
+
+    if ( logger.enabled && directives !== undefined ) {
+        fctxt.setRealm('network')
+             .pushFilters(directives.map(a => a.logData()))
+             .toLogger();
+    }
+
+    if ( permissions.length === 0 ) { return; }
+
+    µb.updateToolbarIcon(fctxt.tabId, 0x02);
+
+    responseHeaders.push({
+        name: 'permissions-policy',
+        value: permissions.join(', ')
     });
 
     return true;
