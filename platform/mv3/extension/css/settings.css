@@ -144,6 +144,11 @@ p {
     display: none;
 }
 
+body.noMoreRuleset .listEntry:not(.checked) {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 /* touch-screen devices */
 :root.mobile .listEntry .fa-icon {
     font-size: 120%;

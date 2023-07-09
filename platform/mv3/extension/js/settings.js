@@ -221,10 +221,12 @@ const renderWidgets = function() {
     qs$('#autoReload input[type="checkbox"').checked = cachedRulesetData.autoReload;
 
     // Compute total counts
+    let rulesetCount = 0;
     let filterCount = 0;
     let ruleCount = 0;
     for ( const liEntry of qsa$('#lists .listEntry[data-listkey]') ) {
-        if ( qs$(liEntry, 'input[type="checkbox"]:checked')  === null ) { continue; }
+        if ( qs$(liEntry, 'input[type="checkbox"]:checked') === null ) { continue; }
+        rulesetCount += 1;
         const stats = rulesetStats(liEntry.dataset.listkey);
         if ( stats === undefined ) { continue; }
         ruleCount += stats.ruleCount;
@@ -233,6 +235,10 @@ const renderWidgets = function() {
     dom.text('#listsOfBlockedHostsPrompt', i18n$('perRulesetStats')
         .replace('{{ruleCount}}', ruleCount.toLocaleString())
         .replace('{{filterCount}}', filterCount.toLocaleString())
+    );
+
+    dom.cl.toggle(dom.body, 'noMoreRuleset',
+        rulesetCount === cachedRulesetData.maxNumberOfEnabledRulesets
     );
 };
 
@@ -292,7 +298,9 @@ dom.on('#autoReload input[type="checkbox"', 'change', ev => {
 async function applyEnabledRulesets() {
     const enabledRulesets = [];
     for ( const liEntry of qsa$('#lists .listEntry[data-listkey]') ) {
-        if ( qs$(liEntry, 'input[type="checkbox"]:checked') === null ) { continue; }
+        const checked = qs$(liEntry, 'input[type="checkbox"]:checked') !== null;
+        dom.cl.toggle(liEntry, 'checked', checked);
+        if ( checked === false ) { continue; }
         enabledRulesets.push(liEntry.dataset.listkey);
     }
 

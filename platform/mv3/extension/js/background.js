@@ -191,6 +191,7 @@ function onMessage(request, sender, callback) {
             callback({
                 defaultFilteringMode,
                 enabledRulesets,
+                maxNumberOfEnabledRulesets: dnr.MAX_NUMBER_OF_ENABLED_STATIC_RULESETS,
                 rulesetDetails: Array.from(rulesetDetails.values()),
                 autoReload: rulesetConfig.autoReload === 1,
                 firstRun,
