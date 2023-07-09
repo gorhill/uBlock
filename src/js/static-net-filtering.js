@@ -4505,6 +4505,7 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
             }
             break;
         default:
+            dnrAddRuleError(rule, `Unsupported modifier ${rule.__modifierType}`);
             break;
         }
     }
