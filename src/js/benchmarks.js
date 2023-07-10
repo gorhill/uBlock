@@ -186,8 +186,9 @@ const loadBenchmarkDataset = (( ) => {
             }
             if ( fctxt.type === 'main_frame' || fctxt.type === 'sub_frame' ) {
                 staticNetFilteringEngine.matchAndFetchModifiers(fctxt, 'csp');
+                staticNetFilteringEngine.matchAndFetchModifiers(fctxt, 'permissions');
             }
-            staticNetFilteringEngine.matchHeaders(fctxt, []);
+            //staticNetFilteringEngine.matchHeaders(fctxt, []);
         } else if ( redirectEngine !== undefined ) {
             staticNetFilteringEngine.redirectRequest(redirectEngine, fctxt);
         }
