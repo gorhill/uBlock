@@ -4618,6 +4618,7 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
     mergeRules(rulesetMap, 'initiatorDomains');
     mergeRules(rulesetMap, 'requestDomains');
     mergeRules(rulesetMap, 'removeParams');
+    mergeRules(rulesetMap, 'responseHeaders');
 
     // Patch case-sensitiveness
     for ( const rule of rulesetMap.values() ) {
