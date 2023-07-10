@@ -46,7 +46,7 @@ function rulesetStats(rulesetId) {
     const { rules, filters } = rulesetDetails;
     let ruleCount = rules.plain + rules.regex;
     if ( hasOmnipotence ) {
-        ruleCount += rules.removeparam + rules.redirect + rules.csp;
+        ruleCount += rules.removeparam + rules.redirect + rules.modifyHeaders;
     }
     const filterCount = filters.accepted;
     return { ruleCount, filterCount };

@@ -38,8 +38,8 @@ const REMOVEPARAMS_REALM_START = REGEXES_REALM_END;
 const REMOVEPARAMS_REALM_END = REMOVEPARAMS_REALM_START + RULE_REALM_SIZE;
 const REDIRECT_REALM_START = REMOVEPARAMS_REALM_END;
 const REDIRECT_REALM_END = REDIRECT_REALM_START + RULE_REALM_SIZE;
-const CSP_REALM_START = REDIRECT_REALM_END;
-const CSP_REALM_END = CSP_REALM_START + RULE_REALM_SIZE;
+const MODIFYHEADERS_REALM_START = REDIRECT_REALM_END;
+const MODIFYHEADERS_REALM_END = MODIFYHEADERS_REALM_START + RULE_REALM_SIZE;
 const TRUSTED_DIRECTIVE_BASE_RULE_ID = 8000000;
 
 /******************************************************************************/
@@ -326,7 +326,7 @@ async function updateRedirectRules() {
 
 /******************************************************************************/
 
-async function updateCspRules() {
+async function updateModifyHeadersRules() {
     const [
         hasOmnipotence,
         rulesetDetails,
@@ -337,36 +337,36 @@ async function updateCspRules() {
         getDynamicRules(),
     ]);
 
-    // Fetch csp rules for all enabled rulesets
+    // Fetch modifyHeaders rules for all enabled rulesets
     const toFetch = [];
     for ( const details of rulesetDetails ) {
-        if ( details.rules.csp === 0 ) { continue; }
-        toFetch.push(fetchJSON(`/rulesets/csp/${details.id}`));
+        if ( details.rules.modifyHeaders === 0 ) { continue; }
+        toFetch.push(fetchJSON(`/rulesets/modify-headers/${details.id}`));
     }
-    const cspRulesets = await Promise.all(toFetch);
+    const rulesets = await Promise.all(toFetch);
 
     // Redirect rules can only be enforced with omnipotence
     const newRules = [];
     if ( hasOmnipotence ) {
-        let cspRuleId = CSP_REALM_START;
-        for ( const rules of cspRulesets ) {
+        let ruleId = MODIFYHEADERS_REALM_START;
+        for ( const rules of rulesets ) {
             if ( Array.isArray(rules) === false ) { continue; }
             for ( const rule of rules ) {
-                rule.id = cspRuleId++;
+                rule.id = ruleId++;
                 newRules.push(rule);
             }
         }
     }
 
-    // Add csp rules to dynamic ruleset without affecting rules
-    // outside csp rules realm.
+    // Add modifyHeaders rules to dynamic ruleset without affecting rules
+    // outside modifyHeaders realm.
     const newRuleMap = new Map(newRules.map(rule => [ rule.id, rule ]));
     const addRules = [];
     const removeRuleIds = [];
 
     for ( const oldRule of dynamicRuleMap.values() ) {
-        if ( oldRule.id < CSP_REALM_START ) { continue; }
-        if ( oldRule.id >= CSP_REALM_END ) { continue; }
+        if ( oldRule.id < MODIFYHEADERS_REALM_START ) { continue; }
+        if ( oldRule.id >= MODIFYHEADERS_REALM_END ) { continue; }
         const newRule = newRuleMap.get(oldRule.id);
         if ( newRule === undefined ) {
             removeRuleIds.push(oldRule.id);
@@ -387,10 +387,10 @@ async function updateCspRules() {
     if ( addRules.length === 0 && removeRuleIds.length === 0 ) { return; }
 
     if ( removeRuleIds.length !== 0 ) {
-        ubolLog(`Remove ${removeRuleIds.length} DNR csp rules`);
+        ubolLog(`Remove ${removeRuleIds.length} DNR modifyHeaders rules`);
     }
     if ( addRules.length !== 0 ) {
-        ubolLog(`Add ${addRules.length} DNR csp rules`);
+        ubolLog(`Add ${addRules.length} DNR modifyHeaders rules`);
     }
 
     return dnr.updateDynamicRules({ addRules, removeRuleIds });
@@ -405,7 +405,7 @@ async function updateDynamicRules() {
         updateRegexRules(),
         updateRemoveparamRules(),
         updateRedirectRules(),
-        updateCspRules(),
+        updateModifyHeadersRules(),
     ]);
 }
 

@@ -310,7 +310,7 @@ async function init() {
         const { rules, filters, css } = details;
         let ruleCount = rules.plain + rules.regex;
         if ( popupPanelData.hasOmnipotence ) {
-            ruleCount += rules.removeparam + rules.redirect + rules.csp;
+            ruleCount += rules.removeparam + rules.redirect + rules.modifyHeaders;
         }
         let specificCount = 0;
         if ( typeof css.specific === 'number' ) {

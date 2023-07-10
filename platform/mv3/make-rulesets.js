@@ -228,7 +228,7 @@ const isRedirect = rule =>
     rule.action.type === 'redirect' &&
     rule.action.redirect.extensionPath !== undefined;
 
-const isCsp = rule =>
+const isModifyHeaders = rule =>
     rule.action !== undefined &&
     rule.action.type === 'modifyHeaders';
 
@@ -240,7 +240,7 @@ const isRemoveparam = rule =>
 const isGood = rule =>
     isUnsupported(rule) === false &&
     isRedirect(rule) === false &&
-    isCsp(rule) === false &&
+    isModifyHeaders(rule) === false &&
     isRemoveparam(rule) === false;
 
 /******************************************************************************/
@@ -298,11 +298,11 @@ async function processNetworkFilters(assetDetails, network) {
     );
     log(`\tremoveparams= (accepted/discarded): ${removeparamsGood.length}/${removeparamsBad.length}`);
 
-    const csps = rules.filter(rule =>
+    const modifyHeaders = rules.filter(rule =>
         isUnsupported(rule) === false &&
-        isCsp(rule)
+        isModifyHeaders(rule)
     );
-    log(`\tcsp=: ${csps.length}`);
+    log(`\tmodifyHeaders=: ${modifyHeaders.length}`);
 
     const bad = rules.filter(rule =>
         isUnsupported(rule)
@@ -336,10 +336,10 @@ async function processNetworkFilters(assetDetails, network) {
         );
     }
 
-    if ( csps.length !== 0 ) {
+    if ( modifyHeaders.length !== 0 ) {
         writeFile(
-            `${rulesetDir}/csp/${assetDetails.id}.json`,
-            `${JSON.stringify(csps, replacer, 1)}\n`
+            `${rulesetDir}/modify-headers/${assetDetails.id}.json`,
+            `${JSON.stringify(modifyHeaders, replacer, 1)}\n`
         );
     }
 
@@ -351,7 +351,7 @@ async function processNetworkFilters(assetDetails, network) {
         regex: regexes.length,
         removeparam: removeparamsGood.length,
         redirect: redirects.length,
-        csp: csps.length,
+        modifyHeaders: modifyHeaders.length,
     };
 }
 
@@ -966,7 +966,7 @@ async function rulesetFromURLs(assetDetails) {
             regex: netStats.regex,
             removeparam: netStats.removeparam,
             redirect: netStats.redirect,
-            csp: netStats.csp,
+            modifyHeaders: netStats.modifyHeaders,
             discarded: netStats.discarded,
             rejected: netStats.rejected,
         },

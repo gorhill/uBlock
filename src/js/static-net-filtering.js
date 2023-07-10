@@ -4441,6 +4441,17 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
                 dnrAddRuleError(rule, 'Unsupported modifier exception');
             }
             break;
+        case 'permissions':
+            rule.action.type = 'modifyHeaders';
+            rule.action.responseHeaders = [{
+                header: 'permissions-policy',
+                operation: 'append',
+                value: rule.__modifierValue.split('|').join(', '),
+            }];
+            if ( rule.__modifierAction === AllowAction ) {
+                dnrAddRuleError(rule, 'Unsupported modifier exception');
+            }
+            break;
         case 'redirect-rule': {
             let priority = rule.priority || 1;
             let token = rule.__modifierValue;
