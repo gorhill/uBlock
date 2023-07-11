@@ -174,7 +174,7 @@ export default new Map([
         alias: 'widgets.outbrain.com/outbrain.js',
     } ],
     [ 'popads.js', {
-        alias: 'popads.net.js',
+        alias: [ 'popads.net.js', 'prevent-popads-net.js' ],
         data: 'text',
     } ],
     [ 'popads-dummy.js', {

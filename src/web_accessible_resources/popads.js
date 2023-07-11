@@ -30,7 +30,7 @@
             return oe(msg, src, line, col, error);
         }
     }.bind();
-    const throwMagic = function() { throw magic; };
+    const throwMagic = function() { throw new ReferenceError(magic); };
     delete window.PopAds;
     delete window.popns;
     Object.defineProperties(window, {

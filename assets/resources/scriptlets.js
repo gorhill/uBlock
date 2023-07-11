@@ -1595,6 +1595,7 @@ builtinScriptlets.push({
     aliases: [
         'nosiif.js',
         'prevent-setInterval.js',
+        'setInterval-defuser.js',
     ],
     fn: noSetIntervalIf,
     dependencies: [
@@ -1619,7 +1620,7 @@ function noSetIntervalIf(
         ? console.log
         : undefined;
     const reNeedle = patternToRegex(needle);
-    window.setInterval = new Proxy(window.setInterval, {
+    self.setInterval = new Proxy(self.setInterval, {
         apply: function(target, thisArg, args) {
             const a = String(args[0]);
             const b = args[1];
@@ -1637,7 +1638,7 @@ function noSetIntervalIf(
                     args[0] = function(){};
                 }
             }
-            return target.apply(thisArg, args);
+            return Reflect.apply(target, thisArg, args);
         },
         get(target, prop, receiver) {
             if ( prop === 'toString' ) {
@@ -1680,7 +1681,7 @@ function noSetTimeoutIf(
         ? console.log
         : undefined;
     const reNeedle = patternToRegex(needle);
-    window.setTimeout = new Proxy(window.setTimeout, {
+    self.setTimeout = new Proxy(self.setTimeout, {
         apply: function(target, thisArg, args) {
             const a = String(args[0]);
             const b = args[1];
@@ -1698,7 +1699,7 @@ function noSetTimeoutIf(
                     args[0] = function(){};
                 }
             }
-            return target.apply(thisArg, args);
+            return Reflect.apply(target, thisArg, args);
         },
         get(target, prop, receiver) {
             if ( prop === 'toString' ) {
@@ -2226,6 +2227,9 @@ function disableNewtabLinks() {
 
 builtinScriptlets.push({
     name: 'cookie-remover.js',
+    aliases: [
+        'remove-cookie.js',
+    ],
     fn: cookieRemover,
     world: 'ISOLATED',
     dependencies: [
