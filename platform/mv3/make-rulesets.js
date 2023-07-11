@@ -396,13 +396,26 @@ function loadAllSourceScriptlets() {
 
 /******************************************************************************/
 
-async function processGenericCosmeticFilters(assetDetails, bucketsMap) {
+async function processGenericCosmeticFilters(assetDetails, bucketsMap, exceptionSet) {
     if ( bucketsMap === undefined ) { return 0; }
+    if ( exceptionSet ) {
+        for ( const [ hash, selectors ] of bucketsMap ) {
+            let i = selectors.length;
+            while ( i-- ) {
+                const selector = selectors[i];
+                if ( exceptionSet.has(selector) === false ) { continue; }
+                selectors.splice(i, 1);
+                //log(`\tRemoving excepted generic filter ##${selector}`);
+            }
+            if ( selectors.length === 0 ) {
+                bucketsMap.delete(hash);
+            }
+        }
+    }
     if ( bucketsMap.size === 0 ) { return 0; }
     const bucketsList = Array.from(bucketsMap);
     const count = bucketsList.reduce((a, v) => a += v[1].length, 0);
     if ( count === 0 ) { return 0; }
-
     const selectorLists = bucketsList.map(v => [ v[0], v[1].join(',') ]);
     const originalScriptletMap = await loadAllSourceScriptlets();
 
@@ -427,8 +440,15 @@ async function processGenericCosmeticFilters(assetDetails, bucketsMap) {
 
 /******************************************************************************/
 
-async function processGenericHighCosmeticFilters(assetDetails, selectorSet) {
+async function processGenericHighCosmeticFilters(assetDetails, selectorSet, exceptionSet) {
     if ( selectorSet === undefined ) { return 0; }
+    if ( exceptionSet ) {
+        for ( const selector of selectorSet ) {
+            if ( exceptionSet.has(selector) === false ) { continue; }
+            selectorSet.delete(selector);
+            //log(`\tRemoving excepted generic filter ##${selector}`);
+        }
+    }
     if ( selectorSet.size === 0 ) { return 0; }
     const selectorLists = Array.from(selectorSet).sort().join(',\n');
     const originalScriptletMap = await loadAllSourceScriptlets();
@@ -925,11 +945,13 @@ async function rulesetFromURLs(assetDetails) {
 
     const genericCosmeticStats = await processGenericCosmeticFilters(
         assetDetails,
-        results.genericCosmetic
+        results.genericCosmetic,
+        results.genericCosmeticExceptions
     );
     const genericHighCosmeticStats = await processGenericHighCosmeticFilters(
         assetDetails,
-        results.genericHighCosmetic
+        results.genericHighCosmetic,
+        results.genericCosmeticExceptions
     );
     const specificCosmeticStats = await processCosmeticFilters(
         assetDetails,

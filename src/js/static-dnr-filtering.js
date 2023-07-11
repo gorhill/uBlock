@@ -150,6 +150,13 @@ function addExtendedToDNR(context, parser) {
         const { compiled } = parser.result;
         if ( compiled === undefined ) { return; }
         if ( compiled.length <= 1 ) { return; }
+        if ( parser.isException() ) {
+            if ( context.genericCosmeticExceptions === undefined ) {
+                context.genericCosmeticExceptions = new Set();
+            }
+            context.genericCosmeticExceptions.add(compiled);
+            return;
+        }
         if ( compiled.charCodeAt(0) === 0x7B /* '{' */ ) { return; }
         const key = keyFromSelector(compiled);
         if ( key === undefined ) {
@@ -298,6 +305,7 @@ async function dnrRulesetFromRawLists(lists, options = {}) {
         network: staticNetFilteringEngine.dnrFromCompiled('end', context),
         genericCosmetic: context.genericCosmeticFilters,
         genericHighCosmetic: context.genericHighCosmeticFilters,
+        genericCosmeticExceptions: context.genericCosmeticExceptions,
         specificCosmetic: context.specificCosmeticFilters,
         scriptlet: context.scriptletFilters,
     };
