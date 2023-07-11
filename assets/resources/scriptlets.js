@@ -400,7 +400,7 @@ function setConstantCore(
             cValue = true;
         } else if ( cValue === 'null' ) {
             cValue = null;
-        } else if ( cValue === "''" ) {
+        } else if ( cValue === "''" || cValue === '' ) {
             cValue = '';
         } else if ( cValue === '[]' ) {
             cValue = [];
@@ -2994,12 +2994,11 @@ function setAttr(
 ) {
     if ( typeof selector !== 'string' ) { return; }
     if ( selector === '' ) { return; }
-    if ( value === '' ) { return; }
 
     const validValues = [ '', 'false', 'true' ];
     let copyFrom = '';
 
-    if ( validValues.includes(value) === false ) {
+    if ( validValues.includes(value.toLowerCase()) === false ) {
         if ( /^\d+$/.test(value) ) {
             const n = parseInt(value, 10);
             if ( n >= 32768 ) { return; }
