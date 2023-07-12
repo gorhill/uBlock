@@ -125,7 +125,7 @@ export default new Map([
         alias: 'd3pkae9owd2lcf.cloudfront.net/mb105.js',
     } ],
     [ 'nobab.js', {
-        alias: 'bab-defuser.js',
+        alias: [ 'bab-defuser.js', 'prevent-bab.js' ],
         data: 'text',
     } ],
     [ 'nobab2.js', {
