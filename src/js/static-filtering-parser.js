@@ -793,7 +793,6 @@ export class AstFilterParser {
         this.reHostnameLabel = /[^.]+/g;
         this.reResponseheaderPattern = /^\^responseheader\(.*\)$/;
         this.rePatternScriptletJsonArgs = /^\{.*\}$/;
-        // TODO: mind maxTokenLength
         this.reGoodRegexToken = /[^\x01%0-9A-Za-z][%0-9A-Za-z]{7,}|[^\x01%0-9A-Za-z][%0-9A-Za-z]{1,6}[^\x01%0-9A-Za-z]/;
         this.reBadCSP = /(?:=|;)\s*report-(?:to|uri)\b/;
         this.reOddTrailingEscape = /(?:^|[^\\])(?:\\\\)*\\$/;
@@ -3028,7 +3027,7 @@ class ExtSelectorCompiler {
             `${cssClassOrId}(?:${cssClassOrId})*(?:${cssAttribute})*` + '|' +
             `${cssAttribute}(?:${cssAttribute})*` +
             ')';
-        const cssCombinator = '(?:\\s+|\\s*[+>~]\\s*)';
+        const cssCombinator = '(?: | [+>~] )';
         this.reCommonSelector = new RegExp(
             `^${cssSimple}(?:${cssCombinator}${cssSimple})*$`
         );
