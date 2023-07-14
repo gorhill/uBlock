@@ -21,7 +21,7 @@
 
 // https://github.com/gorhill/uBlock/issues/533#issuecomment-164292868
 // If WebRTC is supported, there won't be an exception if we
-// try to instanciate a peer connection object.
+// try to instantiate a peer connection object.
 
 // https://github.com/gorhill/uBlock/issues/533#issuecomment-168097594
 // Because Chromium leaks WebRTC connections after they have been closed

@@ -95,7 +95,7 @@
 ;;
 ;; The implementation below is modified from the reference one.
 ;; 
-;; - There is no skip adjustement for repeated failure to find a match.
+;; - There is no skip adjustment for repeated failure to find a match.
 ;; 
 ;; - All configurable values are hard-coded to match the generic version
 ;;   of the compressor.
@@ -462,7 +462,7 @@
                 i32.eq
                 br_if 0
             end end
-            local.get $outPtr           ;; copy literals to ouput buffer
+            local.get $outPtr           ;; copy literals to output buffer
             local.get $inPtr
             local.get $clen
             call $copy
@@ -523,7 +523,7 @@
             i32.eq
             br_if 0
         end end
-        local.get $outPtr               ;; copy match to ouput buffer
+        local.get $outPtr               ;; copy match to output buffer
         local.get $matchPtr
         local.get $clen
         call $copy

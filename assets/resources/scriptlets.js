@@ -2585,7 +2585,7 @@ function m3uPrune(
  * ```
  * 
  * - `selector`: required, CSS selector, specifies `a` elements for which the
- *   `href` attribute must be overriden.
+ *   `href` attribute must be overridden.
  * - `source`: optional, default to `text`, specifies from where to get the
  *   value which will override the `href` attribute.
  *     - `text`: the value will be the first valid URL found in the text

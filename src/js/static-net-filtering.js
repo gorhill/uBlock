@@ -103,9 +103,9 @@ const typeNameToTypeValue = {
             'beacon': 10 << TypeBitsOffset,
               'ping': 10 << TypeBitsOffset,
              'other': 11 << TypeBitsOffset,
-             'popup': 12 << TypeBitsOffset, // start of behavorial filtering
+             'popup': 12 << TypeBitsOffset, // start of behavioral filtering
           'popunder': 13 << TypeBitsOffset,
-        'main_frame': 14 << TypeBitsOffset, // start of 1p behavorial filtering
+        'main_frame': 14 << TypeBitsOffset, // start of 1p behavioral filtering
        'generichide': 15 << TypeBitsOffset,
       'specifichide': 16 << TypeBitsOffset,
        'inline-font': 17 << TypeBitsOffset,
@@ -2715,20 +2715,20 @@ class FilterBucket extends FilterCollection {
         const isrccollection = filterData[idata+1];
         const candidates = [];
         this.forEach(idata, iunit => {
-            if ( fc.canCoallesce(iunit) === false ) { return; }
+            if ( fc.canCoalesce(iunit) === false ) { return; }
             candidates.push(iunit);
         });
         if ( candidates.length < min ) { return 0; }
         const idesbucket = FilterBucket.create();
         const idescollection = filterData[idesbucket+1];
-        let coallesced;
+        let coalesced;
         let isrcseq = filterData[isrccollection+1];
         let iprev = 0;
         for (;;) {
             const iunit = filterData[isrcseq+0];
             const inext = filterData[isrcseq+1];
             if ( candidates.includes(iunit) ) {
-                coallesced = fc.coallesce(iunit, coallesced);
+                coalesced = fc.coalesce(iunit, coalesced);
                 // move the sequence slot to new bucket
                 filterData[isrcseq+1] = filterData[idescollection+1];
                 filterData[idescollection+1] = isrcseq;
@@ -2745,7 +2745,7 @@ class FilterBucket extends FilterCollection {
             if ( inext === 0 ) { break; }
             isrcseq = inext;
         }
-        return fc.create(coallesced, idesbucket);
+        return fc.create(coalesced, idesbucket);
     }
 
     static dumpInfo(idata) {
@@ -2802,28 +2802,28 @@ class FilterBucketIfOriginHits extends FilterBucketIf {
         return filterMatch(filterData[idata+2]);
     }
 
-    static canCoallesce(iunit) {
+    static canCoalesce(iunit) {
         return filterHasOriginHit(iunit);
     }
 
-    static coallesce(iunit, coallesced) {
-        if ( coallesced === undefined ) {
-            coallesced = new Set();
+    static coalesce(iunit, coalesced) {
+        if ( coalesced === undefined ) {
+            coalesced = new Set();
         }
         const domainOpt = filterGetDomainOpt(iunit);
         if ( domainOpt.includes('|') ) {
             for ( const hn of domainOptIterator.reset(domainOpt) ) {
-                coallesced.add(hn);
+                coalesced.add(hn);
             }
         } else {
-            coallesced.add(domainOpt);
+            coalesced.add(domainOpt);
         }
-        return coallesced;
+        return coalesced;
     }
 
-    static create(coallesced, ibucket) {
+    static create(coalesced, ibucket) {
         const units = [];
-        compileFromDomainOpt(coallesced, false, units);
+        compileFromDomainOpt(coalesced, false, units);
         const ihittest = filterFromCompiled(units[0]);
         const ipretest = super.create(
             FilterBucketIfOriginHits.fid,
@@ -2843,23 +2843,23 @@ class FilterBucketIfRegexHits extends FilterBucketIf {
         return filterRefs[filterData[idata+2]].test($requestURLRaw);
     }
 
-    static canCoallesce(iunit) {
+    static canCoalesce(iunit) {
         const fc = filterGetClass(iunit);
         if ( fc.hasRegexPattern === undefined ) { return false; }
         if ( fc.hasRegexPattern(iunit) !== true ) { return false; }
         return true;
     }
 
-    static coallesce(iunit, coallesced) {
-        if ( coallesced === undefined ) {
-            coallesced = new Set();
+    static coalesce(iunit, coalesced) {
+        if ( coalesced === undefined ) {
+            coalesced = new Set();
         }
-        coallesced.add(filterGetRegexPattern(iunit));
-        return coallesced;
+        coalesced.add(filterGetRegexPattern(iunit));
+        return coalesced;
     }
 
-    static create(coallesced, ibucket) {
-        const reString = Array.from(coallesced).join('|');
+    static create(coalesced, ibucket) {
+        const reString = Array.from(coalesced).join('|');
         return super.create(
             FilterBucketIfRegexHits.fid,
             ibucket,
@@ -2877,7 +2877,7 @@ registerFilterClass(FilterBucketIfRegexHits);
 /******************************************************************************/
 
 class FilterStrictParty {
-    // TODO: diregard `www.`?
+    // TODO: disregard `www.`?
     static match(idata) {
         return ($requestHostname === $docHostname) === (filterData[idata+1] === 0);
     }
@@ -5026,7 +5026,7 @@ FilterContainer.prototype.matchAndFetchModifiers = function(
     }
     if ( toAddImportant.size === 0 && toAdd.size === 0 ) { return; }
 
-    // Remove entries overriden by important block filters.
+    // Remove entries overridden by important block filters.
     if ( toAddImportant.size !== 0 ) {
         for ( const key of toAddImportant.keys() ) {
             toAdd.delete(key);
@@ -5260,7 +5260,7 @@ FilterContainer.prototype.matchRequestReverse = function(type, url) {
  *   Bit 1: lookup allow realm regardless of whether there was a match in
  *          block realm.
  *
- * @returns {integer} 0=no match, 1=block, 2=allow (exeption)
+ * @returns {integer} 0=no match, 1=block, 2=allow (exception)
  */
 FilterContainer.prototype.matchRequest = function(fctxt, modifiers = 0) {
     let typeBits = typeNameToTypeValue[fctxt.type];

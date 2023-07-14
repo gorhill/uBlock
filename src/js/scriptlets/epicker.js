@@ -877,7 +877,7 @@ const filterToDOMInterface = (( ) => {
 
 /******************************************************************************/
 
-const onOptmizeCandidates = function(details) {
+const onOptimizeCandidates = function(details) {
     const { candidates } = details;
     const results = [];
     for ( const paths of candidates ) {
@@ -1165,7 +1165,7 @@ const onDialogMessage = function(msg) {
             }
             break;
         case 'optimizeCandidates':
-            onOptmizeCandidates(msg);
+            onOptimizeCandidates(msg);
             break;
         case 'dialogCreate':
             filterToDOMInterface.queryAll(msg);

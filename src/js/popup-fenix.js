@@ -1152,7 +1152,7 @@ const setFirewallRuleHandler = function(ev) {
 /******************************************************************************/
 
 const reloadTab = function(bypassCache = false) {
-    // Premptively clear the unprocessed-requests status since we know for sure
+    // Preemptively clear the unprocessed-requests status since we know for sure
     // the page is being reloaded in this code path.
     if ( popupData.hasUnprocessedRequest === true )  {
         messaging.send('popupPanel', {

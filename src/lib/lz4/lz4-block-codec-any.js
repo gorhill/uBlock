@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     lz4-block-codec-any.js
-        A wrapper to instanciate a wasm- and/or js-based LZ4 block
+        A wrapper to instantiate a wasm- and/or js-based LZ4 block
         encoder/decoder.
     Copyright (C) 2018 Raymond Hill
 

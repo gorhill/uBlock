@@ -25,7 +25,7 @@
 // to "should inject content scripts?"
 //
 // https://github.com/uBlockOrigin/uBlock-issues/issues/403
-//   If the content script was not boostrapped, give it another try.
+//   If the content script was not bootstrapped, give it another try.
 
 (( ) => {
     try {

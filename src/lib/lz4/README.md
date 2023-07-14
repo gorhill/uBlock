@@ -13,7 +13,7 @@ https://github.com/gorhill/lz4-wasm
 
 ### `lz4-block-codec-any.js`
 
-The purpose is to instanciate a WebAssembly- or pure javascript-based
+The purpose is to instantiate a WebAssembly- or pure javascript-based
 LZ4 block codec.
 
 If the chosen implementation is not specified, there will be an attempt to
@@ -26,13 +26,13 @@ used.
  
 ### `lz4-block-codec-wasm.js`
 
-This contains the code to instanciate WebAssembly-based LZ4 block codec. Note
+This contains the code to instantiate WebAssembly-based LZ4 block codec. Note
 that the WebAssembly module is loaded using a `same-origin` fetch, hence
 ensuring that no code outside the package is loaded.
 
 ### `lz4-block-codec-js.js`
 
-This contains the code to instanciate pure javascript-based LZ4 block codec.
+This contains the code to instantiate pure javascript-based LZ4 block codec.
 
 This is used as a fallback implementation should WebAssembly not be available
 for whatever reason.

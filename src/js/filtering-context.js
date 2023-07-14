@@ -296,7 +296,7 @@ const FilteringContext = class {
         return this;
     }
 
-    // The idea is to minimize the amout of work done to figure out whether
+    // The idea is to minimize the amount of work done to figure out whether
     // the resource is 3rd-party to the document.
     is3rdPartyToDoc() {
         let docDomain = this.getDocDomain();
@@ -359,7 +359,7 @@ const FilteringContext = class {
         return this;
     }
 
-    // The idea is to minimize the amout of work done to figure out whether
+    // The idea is to minimize the amount of work done to figure out whether
     // the resource is 3rd-party to the top document.
     is3rdPartyToTab() {
         let tabDomain = this.getTabDomain();

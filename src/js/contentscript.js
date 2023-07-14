@@ -707,7 +707,7 @@ vAPI.DOMFilterer = class {
         object: 'object',
         video: 'media',
     };
-    let resquestIdGenerator = 1,
+    let requestIdGenerator = 1,
         processTimer,
         cachedBlockedSet,
         cachedBlockedSetHash,
@@ -801,10 +801,10 @@ vAPI.DOMFilterer = class {
 
     const send = function() {
         processTimer = undefined;
-        toCollapse.set(resquestIdGenerator, toProcess);
+        toCollapse.set(requestIdGenerator, toProcess);
         messaging.send('contentscript', {
             what: 'getCollapsibleBlockedRequests',
-            id: resquestIdGenerator,
+            id: requestIdGenerator,
             frameURL: window.location.href,
             resources: toFilter,
             hash: cachedBlockedSetHash,
@@ -813,7 +813,7 @@ vAPI.DOMFilterer = class {
         });
         toProcess = [];
         toFilter = [];
-        resquestIdGenerator += 1;
+        requestIdGenerator += 1;
     };
 
     const process = function(delay) {
