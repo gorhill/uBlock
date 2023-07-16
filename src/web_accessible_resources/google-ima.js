@@ -300,6 +300,12 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
     setSessionId(/*s*/) {}
     setVpaidAllowed(/*a*/) {}
     setVpaidMode(/*m*/) {}
+
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/2265#issuecomment-1637094149
+    getDisableFlashAds() {
+    }
+    setDisableFlashAds() {
+    }
   }
   ImaSdkSettings.CompanionBackfillMode = {
     ALWAYS: "always",
