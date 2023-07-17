@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Um bloqueador de conteúdo experimental e de livre uso. Bloqueia instantaneamente propagandas, rastreadores, mineradores e mais, assim que instalado.",
+    "message": "Um bloqueador de conteúdo com menos permissões - Bloqueie anúncios, rastreadores, mineradores e mais imediatamente após a instalação.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -16,7 +16,7 @@
     "description": "English: uBO Lite — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Aviso! Você não salvou as mudanças",
+    "message": "Aviso! Você tem mudanças não salvas",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -60,23 +60,23 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Entrar no modo fulminar elemento",
+    "message": "Entrar no modo de elemento zapper",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Entrar no modo seleção de elemento",
+    "message": "Entrar no modo de seleção dos elementos",
     "description": "English: Enter element picker mode"
   },
   "popupTipReport": {
-    "message": "Reportar um problema com este website",
+    "message": "Reportar um problema neste site da web",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipSaveRules": {
-    "message": "Clique para tornar suas alterações permanentes.",
+    "message": "Clique pra tornar suas mudanças permanentes.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Clique para reverter suas alterações.",
+    "message": "Clique pra reverter suas mudanças.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {
@@ -84,7 +84,7 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupGrantGreatPowers": {
-    "message": "Clique para garantir que uBO Lite tenha permissões estendidas para este site.\nPermissões estendidas permitem maior efetividade ao bloqueio de conteúdo.",
+    "message": "Clique pra garantir que o uBO Lite tenha permissões estendidas neste site.\nPermissões estendidas permitem bloqueio de conteúdo mais efetivo.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupRevokeGreatPowers": {
@@ -96,7 +96,7 @@
     "description": "Label to be used to hide popup panel sections"
   },
   "settingsIconBadgePrompt": {
-    "message": "Mostrar o número de solicitações bloqueadas no ícone",
+    "message": "Mostrar o número de requisições bloqueadas no ícone",
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsAppearance": {
@@ -112,15 +112,15 @@
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsNoCSPReportsPrompt": {
-    "message": "Bloquear relatórios CSP",
+    "message": "Bloquear relatórios do CSP",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "omnipotenceLabel": {
-    "message": "Habilitar filtragem estendida em todos os websites",
+    "message": "Ativar filtragem estendida em todos os sites da web",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "omnipotenceLegend": {
-    "message": "O uBO Lite pode aplicar filtragem estendida em um determinado site somente após você, explicitamente, conceder as permissões de extensão para modificar dados nesse site. Essa configuração permite que você conceda permissões para filtragem estendida a todos os sites de uma só vez.",
+    "message": "O uBO Lite pode aplicar filtragem estendida num dado site da web só após você garantir explicitamente as permissões de extensão pra modificar os dados neste site da web. Esta configuração permite que você garanta permissões pra filtragem estendida a todos os sites da web de uma vez só.",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
@@ -140,11 +140,11 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
-    "message": "Irritantes",
+    "message": "Aborrecimentos",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMisc": {
-    "message": "Diversos",
+    "message": "Miscelãnea",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupRegions": {
@@ -152,11 +152,11 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "1pFormatHint": {
-    "message": "Um filtro por linha. O filtro pode ser um simples nome de servidor ou um filtro compatível com o EasyList. Linhas com prefixo <code>!</code> serão ignoradas.",
+    "message": "Um filtro por linha. O filtro pode ser um simples nome de hospedeiro ou um filtro compatível com o EasyList. As linhas prefixadas com o <code>!</code> serão ignoradas.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
-    "message": "Importar e adicionar",
+    "message": "Importar e anexar",
     "description": "English: Import and append"
   },
   "1pExport": {
@@ -172,7 +172,7 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Importar e adicionar",
+    "message": "Importar e anexar",
     "description": "English: Import and append"
   },
   "whitelistExport": {
@@ -184,11 +184,11 @@
     "description": "The default filename to use for import/export purpose"
   },
   "aboutChangelog": {
-    "message": "Registro de alterações",
+    "message": "Changelog",
     "description": ""
   },
   "aboutCode": {
-    "message": "Código-fonte (GPLv3)",
+    "message": "Código fonte (GPLv3)",
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
@@ -196,7 +196,7 @@
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Código-fonte",
+    "message": "Código fonte",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
@@ -212,7 +212,7 @@
     "description": "Shown in the About pane"
   },
   "genericSubmit": {
-    "message": "Enviar",
+    "message": "Submeter",
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
@@ -224,11 +224,11 @@
     "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
-    "message": "Bem-vinde",
+    "message": "Bem-vindo",
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "Você acabou de instalar o uBO Lite. Escolha o modo de filtragem padrão para usar em todos os sites aqui.\n\nPor padrão, o modo <em>Básico</em> está selecionado porque não requer permissão para ler e alterar dados. Se você confia no uBO Lite, pode conceder ampla permissão para ler e alterar dados em todos os sites, habilitando recursos de filtragem mais avançados para todos os sites por padrão.",
+    "message": "Você instalou o uBO Lite. Aqui você pode escolher o modo de filtragem padrão pra usar em todos os sites da web.\n\nPor padrão o modo <em>Básico</em> está selecionado porque não requer permissão pra ler e modificar os dados. Se você confia no uBO Lite você pode dar ampla permissão pra ler e modificar os dados em todos os sites da web de modo a ativar as capacidades de filtragem mais avançadas pra todos os sites da web por padrão.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
@@ -236,7 +236,7 @@
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "O modo de filtragem padrão será substituído pelos modos de filtragem por site. Você pode ajustar o modo de filtragem em qualquer site pelo modo que funcionar melhor nele. Cada modo tem suas vantagens e desvantagens.",
+    "message": "O modo de filtragem padrão será substituído pelos modos de filtragem por site. Você pode ajustar o modo de filtragem em qualquer site dado da web de acordo com qualquer modo que funcionar melhor nesse site da web. Cada modo tem suas vantagens e desvantagens.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
@@ -256,15 +256,15 @@
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Filtragem de rede básica de listas de filtros selecionadas.\n\nNão requer permissão para ler e alterar dados em sites.",
+    "message": "Filtragem básica da rede de listas de filtros selecionadas.\n\nNão requer permissão pra ler e modificar os dados nos sites da web.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Filtragem de rede avançada mais filtragem estendida específica das listas de filtros selecionadas.\n\nRequer ampla permissão para ler e alterar dados em todos os sites.",
+    "message": "Filtragem avançada da rede mais filtragem estendida específica das listas de filtros selecionadas.\n\nRequer ampla permissão pra ler e modificar os dados em todos os sites da web.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Filtragem de rede avançada mais filtragem estendida específica e genérica das listas de filtros selecionadas.\n\nRequer ampla permissão para ler e alterar dados em todos os sites.\n\nA filtragem estendida genérica pode causar maior uso de recursos da página da Web.",
+    "message": "Filtragem avançada da rede mais filtragem estendida específica e genérica das listas de filtros selecionadas.\n\nRequer ampla permissão pra ler e modificar os dados em todos os sites da web.\n\nA filtragem estendida genérica pode causar maior uso de recursos da página da web.",
     "description": "This describes the 'complete' filtering mode"
   },
   "behaviorSectionLabel": {
@@ -272,7 +272,7 @@
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Recarregue a página automaticamente ao alterar o modo de filtragem",
+    "message": "Recarregar a página automaticamente quando mudar o modo de filtragem",
     "description": "Label for a checkbox in the options page"
   }
 }

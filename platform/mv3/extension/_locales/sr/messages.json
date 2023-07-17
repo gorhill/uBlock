@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Експериментални блокатор садржаја који не захтева дозволе. Блокира рекламе, праћења, рударе криптовалута и друго.",
+    "message": "Блокатор садржаја који не захтева дозволе. Блокира рекламе, праћења, рударе криптовалута и друго.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
