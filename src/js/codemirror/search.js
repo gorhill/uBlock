@@ -473,7 +473,9 @@ import { i18n$ } from '../i18n.js';
                   '<span class="cm-linter-widget-up cm-search-widget-button fa-icon">angle-up</span>&nbsp;' +
                   '<span class="cm-linter-widget-down cm-search-widget-button fa-icon fa-icon-vflipped">angle-up</span>&emsp;' +
                 '</span>' +
-                '<a class="fa-icon sourceURL" href>external-link</a>' +
+                '<span>' +
+                    '<a class="fa-icon sourceURL" href>external-link</a>' +
+                '</span>' +
               '</div>' +
             '</div>';
         const domParser = new DOMParser();

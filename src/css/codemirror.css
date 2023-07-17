@@ -173,7 +173,7 @@
     flex-grow: 1;
     }
 .cm-search-widget > :last-child {
-    justify-content: flex-end;
+    text-align: end;
     }
 
 .cm-search-widget-input {
