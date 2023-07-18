@@ -1860,6 +1860,7 @@ builtinScriptlets.push({
     aliases: [
         'nowoif.js',
         'prevent-window-open.js',
+        'window.open-defuser.js',
     ],
     fn: noWindowOpenIf,
     dependencies: [
