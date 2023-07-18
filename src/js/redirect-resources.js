@@ -186,7 +186,4 @@ export default new Map([
     [ 'scorecardresearch_beacon.js', {
         alias: 'scorecardresearch.com/beacon.js',
     } ],
-    [ 'window.open-defuser.js', {
-        data: 'text',
-    } ],
 ]);
