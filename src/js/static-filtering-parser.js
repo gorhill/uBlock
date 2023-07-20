@@ -3478,7 +3478,7 @@ class ExtSelectorCompiler {
                 out.push(this.astSerializePart(part));
                 break;
             case 'Selector':
-                if ( out.length !== 0 ) { out.push(','); }
+                if ( out.length !== 0 ) { out.push(', '); }
                 break;
             case 'SelectorList':
                 break;
