@@ -784,7 +784,7 @@ function setLocalStorageItemCore(
             value = `${Date()}`;
         }
     } else {
-        if ( trustedValues.includes(value) === false ) {
+        if ( trustedValues.includes(value.toLowerCase()) === false ) {
             if ( /^\d+$/.test(value) === false ) { return; }
             value = parseInt(value, 10);
             if ( value > 32767 ) { return; }
@@ -2896,15 +2896,14 @@ function setCookie(
     if ( name === '' ) { return; }
     name = encodeURIComponent(name);
 
-    const validValues = new Set([
-        'true', 'True',
-        'false', 'False',
-        'yes', 'Yes', 'y', 'Y',
-        'no', 'No', 'n', 'N',
-        'ok', 'OK',
-        'Accept', 'Reject',
-    ]);
-    if ( validValues.has(value) === false ) {
+    const validValues = [
+        'true', 'false',
+        'yes', 'y', 'no', 'n',
+        'ok',
+        'accept', 'reject',
+        'allow',
+    ];
+    if ( validValues.includes(value.toLowerCase()) === false ) {
         if ( /^\d+$/.test(value) === false ) { return; }
         const n = parseInt(value, 10);
         if ( n > 15 ) { return; }
