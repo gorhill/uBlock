@@ -2901,7 +2901,7 @@ function setCookie(
         'yes', 'y', 'no', 'n',
         'ok',
         'accept', 'reject',
-        'allow',
+        'allow', 'deny',
     ];
     if ( validValues.includes(value.toLowerCase()) === false ) {
         if ( /^\d+$/.test(value) === false ) { return; }
