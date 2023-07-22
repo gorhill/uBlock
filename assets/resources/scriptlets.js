@@ -782,6 +782,8 @@ function setLocalStorageItemCore(
             value = Date.now();
         } else if ( value === '$currentDate$' ) {
             value = `${Date()}`;
+        } else if ( value === '$currentISODate$' ) {
+            value = (new Date()).toISOString();
         }
     } else {
         if ( trustedValues.includes(value.toLowerCase()) === false ) {
@@ -2429,6 +2431,7 @@ function m3uPrune(
     const options = getExtraArgs(Array.from(arguments), 2);
     const logLevel = shouldLog(options);
     const safe = safeSelf();
+    const uboLog = logLevel ? ((...args) => safe.uboLog(...args)) : (( ) => { });
     const regexFromArg = arg => {
         if ( arg === '' ) { return /^/; }
         const match = /^\/(.+)\/([gms]*)$/.exec(arg);
@@ -2447,17 +2450,22 @@ function m3uPrune(
         if ( lines[i].startsWith('#EXT-X-CUE:TYPE="SpliceOut"') === false ) {
             return false;
         }
+        uboLog('m3u-prune: discarding', `\n\t${lines[i]}`);
         lines[i] = undefined; i += 1;
         if ( lines[i].startsWith('#EXT-X-ASSET:CAID') ) {
+            uboLog(`\t${lines[i]}`);
             lines[i] = undefined; i += 1;
         }
         if ( lines[i].startsWith('#EXT-X-SCTE35:') ) {
+            uboLog(`\t${lines[i]}`);
             lines[i] = undefined; i += 1;
         }
         if ( lines[i].startsWith('#EXT-X-CUE-IN') ) {
+            uboLog(`\t${lines[i]}`);
             lines[i] = undefined; i += 1;
         }
         if ( lines[i].startsWith('#EXT-X-SCTE35:') ) {
+            uboLog(`\t${lines[i]}`);
             lines[i] = undefined; i += 1;
         }
         return true;
@@ -2465,8 +2473,10 @@ function m3uPrune(
     const pruneInfBlock = (lines, i) => {
         if ( lines[i].startsWith('#EXTINF') === false ) { return false; }
         if ( reM3u.test(lines[i+1]) === false ) { return false; }
+        uboLog('m3u-prune: discarding', `\n\t${lines[i]}, \n\t${lines[i+1]}`);
         lines[i] = lines[i+1] = undefined; i += 2;
         if ( lines[i].startsWith('#EXT-X-DISCONTINUITY') ) {
+            uboLog(`\t${lines[i]}`);
             lines[i] = undefined; i += 1;
         }
         return true;
@@ -2503,11 +2513,9 @@ function m3uPrune(
                 }
                 text = before.trim() + '\n' + after.trim();
                 reM3u.lastIndex = before.length + 1;
-                if ( logLevel ) {
-                    safe.uboLog('m3u-prune: discarding\n',
-                        discard.split(/\n+/).map(s => `\t${s}`).join('\n')
-                    );
-                }
+                uboLog('m3u-prune: discarding\n',
+                    discard.split(/\n+/).map(s => `\t${s}`).join('\n')
+                );
                 if ( reM3u.global === false ) { break; }
             }
             return text;
