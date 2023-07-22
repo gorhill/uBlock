@@ -430,7 +430,11 @@ body.needSave #revertRules {
 #firewall.hideBlocked > div:not([data-des="*"]).is3p.blocked,
 #firewall.hideAllowed > div:not([data-des="*"]).is3p.totalAllowed,
 #firewall.hideAllowed > div:not([data-des="*"]).is3p.allowed {
-    display: none;
+    color: transparent;
+    max-height: 4px;
+    overflow-y: hidden;
+    pointer-events: none;
+    user-select: none;
     }
 #firewall > div.isCname > span:first-of-type {
     color: var(--popup-cell-cname-ink);
@@ -467,8 +471,8 @@ body.needSave #revertRules {
     pointer-events: auto;
     }
 #firewall > div.isDomain.hasSubdomains > span:first-of-type > span::before {
-    color: var(--ink-3);
     content: '\2026\A0';
+    opacity: 0.6;
     }
 #firewall > div[data-des="*"] > span:nth-of-type(3),
 #firewall > div.isSubdomain > span:nth-of-type(3),
