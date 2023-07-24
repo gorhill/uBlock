@@ -1476,6 +1476,7 @@ builtinScriptlets.push({
         'rc.js',
     ],
     fn: removeClass,
+    world: 'ISOLATED',
     dependencies: [
         'run-at.fn',
     ],
@@ -1487,20 +1488,24 @@ function removeClass(
 ) {
     if ( typeof token !== 'string' ) { return; }
     if ( token === '' ) { return; }
-    const tokens = token.split(/\s*\|\s*/);
+    const classTokens = token.split(/\s*\|\s*/);
     if ( selector === '' ) {
-        selector = '.' + tokens.map(a => CSS.escape(a)).join(',.');
+        selector = '.' + classTokens.map(a => CSS.escape(a)).join(',.');
     }
+    const mustStay = /\bstay\b/.test(behavior);
     let timer;
     const rmclass = function() {
         timer = undefined;
         try {
             const nodes = document.querySelectorAll(selector);
             for ( const node of nodes ) {
-                node.classList.remove(...tokens);
+                node.classList.remove(...classTokens);
             }
         } catch(ex) {
         }
+        if ( mustStay ) { return; }
+        if ( document.readyState !== 'complete' ) { return; }
+        observer.disconnect();
     };
     const mutationHandler = mutations => {
         if ( timer !== undefined ) { return; }
@@ -1518,10 +1523,9 @@ function removeClass(
         if ( skip ) { return; }
         timer = self.requestIdleCallback(rmclass, { timeout: 67 });
     };
+    const observer = new MutationObserver(mutationHandler);
     const start = ( ) => {
         rmclass();
-        if ( /\bstay\b/.test(behavior) === false ) { return; }
-        const observer = new MutationObserver(mutationHandler);
         observer.observe(document, {
             attributes: true,
             attributeFilter: [ 'class' ],
@@ -1531,7 +1535,7 @@ function removeClass(
     };
     runAt(( ) => {
         start();
-    }, /\bcomplete\b/.test(behavior) ? 'idle' : 'interactive');
+    }, /\bcomplete\b/.test(behavior) ? 'idle' : 'loading');
 }
 
 /******************************************************************************/
