@@ -430,11 +430,23 @@ body.needSave #revertRules {
 #firewall.hideBlocked > div:not([data-des="*"]).is3p.blocked,
 #firewall.hideAllowed > div:not([data-des="*"]).is3p.totalAllowed,
 #firewall.hideAllowed > div:not([data-des="*"]).is3p.allowed {
-    color: transparent;
     max-height: 4px;
     overflow-y: hidden;
     pointer-events: none;
     user-select: none;
+    }
+#firewall.show3pScript:not(.show3pFrame) > div:not([data-des="*"]).is3p:not(.hasScript) *,
+#firewall.show3pFrame:not(.show3pScript) > div:not([data-des="*"]).is3p:not(.hasFrame) *,
+#firewall.show3pScript.show3pFrame > div:not([data-des="*"]).is3p:not(.hasScript):not(.hasFrame) *,
+#firewall.hide3pScript > div:not([data-des="*"]).is3p.hasScript *,
+#firewall.hide3pFrame > div:not([data-des="*"]).is3p.hasFrame *,
+#firewall.showBlocked > div:not([data-des="*"]).is3p:not(.totalBlocked):not(.blocked) *,
+#firewall.showAllowed > div:not([data-des="*"]).is3p:not(.totalAllowed):not(.allowed) *,
+#firewall.hideBlocked > div:not([data-des="*"]).is3p.totalBlocked *,
+#firewall.hideBlocked > div:not([data-des="*"]).is3p.blocked *,
+#firewall.hideAllowed > div:not([data-des="*"]).is3p.totalAllowed *,
+#firewall.hideAllowed > div:not([data-des="*"]).is3p.allowed * {
+    color: transparent !important;
     }
 #firewall > div.isCname > span:first-of-type {
     color: var(--popup-cell-cname-ink);
