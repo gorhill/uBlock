@@ -225,6 +225,7 @@ builtinScriptlets.push({
     dependencies: [
         'pattern-to-regex.fn',
         'get-exception-token.fn',
+        'get-extra-args.fn',
         'safe-self.fn',
         'should-debug.fn',
         'should-log.fn',
@@ -233,19 +234,16 @@ builtinScriptlets.push({
 // Issues to mind before changing anything:
 //  https://github.com/uBlockOrigin/uBlock-issues/issues/2154
 function abortCurrentScriptCore(
-    arg1 = '',
-    arg2 = '',
-    arg3 = ''
+    target = '',
+    needle = '',
+    context = ''
 ) {
-    const details = typeof arg1 !== 'object'
-        ? { target: arg1, needle: arg2, context: arg3 }
-        : arg1;
-    const { target = '', needle = '', context = '' } = details;
     if ( typeof target !== 'string' ) { return; }
     if ( target === '' ) { return; }
     const safe = safeSelf();
     const reNeedle = patternToRegex(needle);
     const reContext = patternToRegex(context);
+    const extraArgs = getExtraArgs(Array.from(arguments), 3);
     const thisScript = document.currentScript;
     const chain = target.split('.');
     let owner = window;
@@ -266,8 +264,8 @@ function abortCurrentScriptCore(
         value = owner[prop];
         desc = undefined;
     }
-    const log = shouldLog(details);
-    const debug = shouldDebug(details);
+    const log = shouldLog(extraArgs);
+    const debug = shouldDebug(extraArgs);
     const exceptionToken = getExceptionToken();
     const scriptTexts = new WeakMap();
     const getScriptText = elem => {
@@ -827,13 +825,9 @@ builtinScriptlets.push({
 });
 // Issues to mind before changing anything:
 //  https://github.com/uBlockOrigin/uBlock-issues/issues/2154
-function abortCurrentScript(
-    arg1,
-    arg2,
-    arg3
-) {
+function abortCurrentScript(...args) {
     runAtHtmlElement(( ) => {
-        abortCurrentScriptCore(arg1, arg2, arg3);
+        abortCurrentScriptCore(...args);
     });
 }
 
