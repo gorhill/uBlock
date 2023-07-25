@@ -2397,16 +2397,16 @@ function xmlPrune(
             thisArg.addEventListener('readystatechange', function() {
                 if ( thisArg.readyState !== 4 ) { return; }
                 const type = thisArg.responseType;
-                if ( type === 'text' ) {
+                if ( type === 'document' || thisArg.responseXML instanceof XMLDocument ) {
+                    pruneFromDoc(thisArg.responseXML);
+                    return;
+                }
+                if ( type === 'text' || typeof thisArg.responseText === 'string' ) {
                     const textin = thisArg.responseText;
                     const textout = pruneFromText(textin);
                     if ( textout === textin ) { return; }
                     Object.defineProperty(thisArg, 'response', { value: textout });
                     Object.defineProperty(thisArg, 'responseText', { value: textout });
-                    return;
-                }
-                if ( type === 'document' ) {
-                    pruneFromDoc(thisArg.response);
                     return;
                 }
             });
