@@ -2303,7 +2303,8 @@ function xmlPrune(
     if ( selector === '' ) { return; }
     const reUrl = patternToRegex(urlPattern);
     const extraArgs = getExtraArgs(Array.from(arguments), 3);
-    const log = shouldLog(extraArgs);
+    const safe = safeSelf();
+    const log = shouldLog(extraArgs) ? ((...args) => { safe.uboLog(...args); }) : (( ) => { });
     const queryAll = (xmlDoc, selector) => {
         const isXpath = /^xpath\(.+\)$/.test(selector);
         if ( isXpath === false ) {
@@ -2328,19 +2329,20 @@ function xmlPrune(
             if ( selectorCheck !== '' && xmlDoc.querySelector(selectorCheck) === null ) {
                 return xmlDoc;
             }
+            if ( extraArgs.logdoc ) {
+                const serializer = new XMLSerializer();
+                log(`xmlPrune: document is\n\t${serializer.serializeToString(xmlDoc)}`);
+            }
             const items = queryAll(xmlDoc, selector);
-            if ( items.length !== 0 ) {
-                if ( log ) { safeSelf().uboLog(`xmlPrune: removing ${items.length} items`); }
-                for ( const item of items ) {
-                    if ( item.nodeType === 1 ) {
-                        item.remove();
-                    } else if ( item.nodeType === 2 ) {
-                        item.ownerElement.removeAttribute(item.nodeName);
-                    }
-                    if ( log ) {
-                        safeSelf().uboLog(`xmlPrune: ${item.constructor.name}.${item.nodeName} removed`);
-                    }
+            if ( items.length === 0 ) { return xmlDoc; }
+            log(`xmlPrune: removing ${items.length} items`);
+            for ( const item of items ) {
+                if ( item.nodeType === 1 ) {
+                    item.remove();
+                } else if ( item.nodeType === 2 ) {
+                    item.ownerElement.removeAttribute(item.nodeName);
                 }
+                log(`xmlPrune: ${item.constructor.name}.${item.nodeName} removed`);
             }
         } catch(ex) {
             if ( log ) { safeSelf().uboLog(ex); }
@@ -2391,11 +2393,17 @@ function xmlPrune(
             thisArg.addEventListener('readystatechange', function() {
                 if ( thisArg.readyState !== 4 ) { return; }
                 const type = thisArg.responseType;
-                if ( type === 'document' || thisArg.responseXML instanceof XMLDocument ) {
+                if (
+                    type === 'document' ||
+                    type === '' && thisArg.responseXML instanceof XMLDocument
+                ) {
                     pruneFromDoc(thisArg.responseXML);
                     return;
                 }
-                if ( type === 'text' || typeof thisArg.responseText === 'string' ) {
+                if (
+                    type === 'text' ||
+                    type === '' && typeof thisArg.responseText === 'string'
+                ) {
                     const textin = thisArg.responseText;
                     const textout = pruneFromText(textin);
                     if ( textout === textin ) { return; }
