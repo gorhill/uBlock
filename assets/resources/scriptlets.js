@@ -46,6 +46,7 @@ function safeSelf() {
         return scriptletGlobals.get('safeSelf');
     }
     const safe = {
+        'Error': self.Error,
         'Object_defineProperty': Object.defineProperty.bind(Object),
         'RegExp': self.RegExp,
         'RegExp_test': self.RegExp.prototype.test,
@@ -620,6 +621,7 @@ builtinScriptlets.push({
     name: 'object-prune.fn',
     fn: objectPrune,
     dependencies: [
+        'matches-stack-trace.fn',
         'pattern-to-regex.fn',
     ],
 });
@@ -632,9 +634,10 @@ builtinScriptlets.push({
 function objectPrune(
     obj,
     rawPrunePaths,
-    rawNeedlePaths
+    rawNeedlePaths,
+    stackNeedle = ''
 ) {
-    if ( typeof rawPrunePaths !== 'string' ) { return; }
+    if ( typeof rawPrunePaths !== 'string' ) { return obj; }
     const prunePaths = rawPrunePaths !== ''
         ? rawPrunePaths.split(/ +/)
         : [];
@@ -647,6 +650,11 @@ function objectPrune(
     } else {
         log = console.log.bind(console);
         reLogNeedle = patternToRegex(rawNeedlePaths);
+    }
+    if ( stackNeedle !== '' ) {
+        if ( matchesStackTrace(patternToRegex(stackNeedle), log ? '1' : 0) === false ) {
+            return obj;
+        }
     }
     const findOwner = function(root, path, prune = false) {
         let owner = root;
@@ -802,6 +810,60 @@ function setLocalStorageItemCore(
     }
 }
 
+/******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'matches-stack-trace.fn',
+    fn: matchesStackTrace,
+    dependencies: [
+        'safe-self.fn',
+    ],
+});
+function matchesStackTrace(
+    reNeedle,
+    logLevel = 0
+) {
+    if ( reNeedle === undefined ) { return false; }
+    const safe = safeSelf();
+    const exceptionToken = getExceptionToken();
+    const error = new safe.Error(exceptionToken);
+    const docURL = new URL(self.location.href);
+    docURL.hash = '';
+    // Normalize stack trace
+    const reLine = /(.*?@)?(\S+)(:\d+):\d+\)?$/;
+    const lines = [];
+    for ( let line of error.stack.split(/[\n\r]+/) ) {
+        if ( line.includes(exceptionToken) ) { continue; }
+        line = line.trim();
+        const match = safe.RegExp_exec.call(reLine, line);
+        if ( match === null ) { continue; }
+        let url = match[2];
+        if ( url.startsWith('(') ) { url = url.slice(1); }
+        if ( url === docURL.href ) {
+            url = 'inlineScript';
+        } else if ( url.startsWith('<anonymous>') ) {
+            url = 'injectedScript';
+        }
+        let fn = match[1] !== undefined
+            ? match[1].slice(0, -1)
+            : line.slice(0, match.index).trim();
+        if ( fn.startsWith('at') ) { fn = fn.slice(2).trim(); }
+        let rowcol = match[3];
+        lines.push(' ' + `${fn} ${url}${rowcol}:1`.trim());
+    }
+    lines[0] = `stackDepth:${lines.length-1}`;
+    const stack = lines.join('\t');
+    const r = safe.RegExp_test.call(reNeedle, stack);
+    if (
+        logLevel === '1' ||
+        logLevel === '2' && r ||
+        logLevel === '3' && !r
+    ) {
+        safe.uboLog(stack.replace(/\t/g, '\n'));
+    }
+    return r;
+}
+
 /*******************************************************************************
 
     Injectable scriptlets
@@ -931,8 +993,8 @@ builtinScriptlets.push({
     fn: abortOnStackTrace,
     dependencies: [
         'get-exception-token.fn',
+        'matches-stack-trace.fn',
         'pattern-to-regex.fn',
-        'safe-self.fn',
     ],
 });
 // Status is currently experimental
@@ -942,64 +1004,21 @@ function abortOnStackTrace(
     logLevel = ''
 ) {
     if ( typeof chain !== 'string' ) { return; }
-    const safe = safeSelf();
     const reNeedle = patternToRegex(needle);
-    const exceptionToken = getExceptionToken();
-    const ErrorCtor = self.Error;
-    const mustAbort = function(err) {
-        let docURL = self.location.href;
-        const pos = docURL.indexOf('#');
-        if ( pos !== -1 ) {
-            docURL = docURL.slice(0, pos);
-        }
-        // Normalize stack trace
-        const reLine = /(.*?@)?(\S+)(:\d+):\d+\)?$/;
-        const lines = [];
-        for ( let line of err.stack.split(/[\n\r]+/) ) {
-            if ( line.includes(exceptionToken) ) { continue; }
-            line = line.trim();
-            const match = safe.RegExp_exec.call(reLine, line);
-            if ( match === null ) { continue; }
-            let url = match[2];
-            if ( url.startsWith('(') ) { url = url.slice(1); }
-            if ( url === docURL ) {
-                url = 'inlineScript';
-            } else if ( url.startsWith('<anonymous>') ) {
-                url = 'injectedScript';
-            }
-            let fn = match[1] !== undefined
-                ? match[1].slice(0, -1)
-                : line.slice(0, match.index).trim();
-            if ( fn.startsWith('at') ) { fn = fn.slice(2).trim(); }
-            let rowcol = match[3];
-            lines.push(' ' + `${fn} ${url}${rowcol}:1`.trim());
-        }
-        lines[0] = `stackDepth:${lines.length-1}`;
-        const stack = lines.join('\t');
-        const r = safe.RegExp_test.call(reNeedle, stack);
-        if (
-            logLevel === '1' ||
-            logLevel === '2' && r ||
-            logLevel === '3' && !r
-        ) {
-            safe.uboLog(stack.replace(/\t/g, '\n'));
-        }
-        return r;
-    };
     const makeProxy = function(owner, chain) {
         const pos = chain.indexOf('.');
         if ( pos === -1 ) {
             let v = owner[chain];
             Object.defineProperty(owner, chain, {
                 get: function() {
-                    if ( mustAbort(new ErrorCtor(exceptionToken)) ) {
-                        throw new ReferenceError(exceptionToken);
+                    if ( matchesStackTrace(reNeedle, logLevel) ) {
+                        throw new ReferenceError(getExceptionToken());
                     }
                     return v;
                 },
                 set: function(a) {
-                    if ( mustAbort(new ErrorCtor(exceptionToken)) ) {
-                        throw new ReferenceError(exceptionToken);
+                    if ( matchesStackTrace(reNeedle, logLevel) ) {
+                        throw new ReferenceError(getExceptionToken());
                     }
                     v = a;
                 },
@@ -1114,21 +1133,23 @@ builtinScriptlets.push({
 //  - Add support for "remove everything if needle matches" case
 function jsonPrune(
     rawPrunePaths = '',
-    rawNeedlePaths = ''
+    rawNeedlePaths = '',
+    stackNeedle = ''
 ) {
     JSON.parse = new Proxy(JSON.parse, {
         apply: function(target, thisArg, args) {
             return objectPrune(
                 Reflect.apply(target, thisArg, args),
                 rawPrunePaths,
-                rawNeedlePaths
+                rawNeedlePaths,
+                stackNeedle
             );
         },
     });
     Response.prototype.json = new Proxy(Response.prototype.json, {
         apply: function(target, thisArg, args) {
             return Reflect.apply(target, thisArg, args).then(o => 
-                objectPrune(o, rawPrunePaths, rawNeedlePaths)
+                objectPrune(o, rawPrunePaths, rawNeedlePaths, stackNeedle)
             );
         },
     });
