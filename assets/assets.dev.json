@@ -764,7 +764,7 @@
 		"title": "🇳🇱nl: EasyDutch",
 		"tags": "ads afrikaans frisian dutch flemish",
 		"lang": "af fy nl",
-		"contentURL": "https://easydutch-ubo.github.io/EasyDutchCDN/EasyDutch.txt",
+		"contentURL": "https://easydutch-ubo.github.io/EasyDutch/EasyDutch.txt",
 		"cdnURLs": [
 			"https://cdn.statically.io/gh/EasyDutch-uBO/EasyDutch/gh-pages/EasyDutch.txt",
 			"https://cdn.jsdelivr.net/gh/EasyDutch-uBO/EasyDutch@gh-pages/EasyDutch.txt",

@@ -272,13 +272,29 @@
 	"adguard-cookies": {
 		"content": "filters",
 		"group": "annoyances",
-		"parent": "AdGuard – Annoyances",
+		"parent": "AdGuard – Annoyances|AdGuard/uBO – Cookie Notices",
 		"off": true,
 		"title": "AdGuard – Cookie Notices",
 		"tags": "annoyances cookies",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/18.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
 		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
+	},
+	"ublock-cookies-adguard": {
+		"content": "filters",
+		"group": "annoyances",
+        "parent": "AdGuard – Annoyances|AdGuard/uBO – Cookie Notices",
+		"off": true,
+		"title": "uBlock filters – Cookie Notices",
+		"tags": "annoyances cookies",
+		"contentURL": "https://ublockorigin.github.io/uAssets/filters/annoyances-cookies.txt",
+		"cdnURLs": [
+			"https://ublockorigin.github.io/uAssetsCDN/filters/annoyances-cookies.txt",
+			"https://ublockorigin.pages.dev/filters/annoyances-cookies.txt",
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/filters/annoyances-cookies.txt",
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/annoyances-cookies.txt"
+		],
+		"supportURL": "https://github.com/uBlockOrigin/uAssets"
 	},
 	"adguard-popup-overlays": {
 		"content": "filters",
@@ -368,7 +384,7 @@
 	"fanboy-cookiemonster": {
 		"content": "filters",
 		"group": "annoyances",
-		"parent": "EasyList – Annoyances",
+		"parent": "EasyList – Annoyances|EasyList/uBO – Cookie Notices",
 		"off": true,
 		"title": "EasyList – Cookie Notices",
 		"tags": "annoyances cookies",
@@ -384,6 +400,22 @@
 			"https://secure.fanboy.co.nz/fanboy-cookiemonster_ubo.txt"
 		],
 		"supportURL": "https://github.com/easylist/easylist#fanboy-lists"
+	},
+	"ublock-cookies-easylist": {
+		"content": "filters",
+		"group": "annoyances",
+        "parent": "EasyList – Annoyances|EasyList/uBO – Cookie Notices",
+		"off": true,
+		"title": "uBlock filters – Cookie Notices",
+		"tags": "annoyances cookies",
+		"contentURL": "https://ublockorigin.github.io/uAssets/filters/annoyances-cookies.txt",
+		"cdnURLs": [
+			"https://ublockorigin.github.io/uAssetsCDN/filters/annoyances-cookies.txt",
+			"https://ublockorigin.pages.dev/filters/annoyances-cookies.txt",
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/filters/annoyances-cookies.txt",
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/annoyances-cookies.txt"
+		],
+		"supportURL": "https://github.com/uBlockOrigin/uAssets"
 	},
 	"easylist-newsletters": {
 		"content": "filters",
