@@ -6,6 +6,10 @@
       "title": "List of domains for which no filtering should occur",
       "type": "array",
       "items": { "type": "string" }
+    },
+    "disableFirstRunPage": {
+      "title": "Disable first run page",
+      "type": "boolean"
     }
   }
 }

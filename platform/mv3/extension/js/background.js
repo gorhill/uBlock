@@ -31,6 +31,7 @@ import {
     runtime,
     localRead, localWrite,
     sessionRead, sessionWrite,
+    adminRead,
 } from './ext.js';
 
 import {
@@ -317,7 +318,10 @@ async function start() {
     );
 
     if ( firstRun ) {
-        runtime.openOptionsPage();
+        const disableFirstRunPage = await adminRead('disableFirstRunPage');
+        if ( disableFirstRunPage !== true ) {
+            runtime.openOptionsPage();
+        }
     }
 }
 
