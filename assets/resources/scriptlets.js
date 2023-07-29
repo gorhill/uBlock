@@ -621,6 +621,7 @@ builtinScriptlets.push({
     name: 'object-prune.fn',
     fn: objectPrune,
     dependencies: [
+        'get-extra-args.fn',
         'matches-stack-trace.fn',
         'pattern-to-regex.fn',
     ],
@@ -641,18 +642,24 @@ function objectPrune(
     const prunePaths = rawPrunePaths !== ''
         ? rawPrunePaths.split(/ +/)
         : [];
+    const extraArgs = getExtraArgs(Array.from(arguments), 4);
     let needlePaths;
     let log, reLogNeedle;
     if ( prunePaths.length !== 0 ) {
         needlePaths = prunePaths.length !== 0 && rawNeedlePaths !== ''
             ? rawNeedlePaths.split(/ +/)
             : [];
+        if ( extraArgs.log !== undefined ) {
+            log = console.log.bind(console);
+            reLogNeedle = patternToRegex(extraArgs.log);
+        }
     } else {
         log = console.log.bind(console);
         reLogNeedle = patternToRegex(rawNeedlePaths);
     }
     if ( stackNeedle !== '' ) {
-        if ( matchesStackTrace(patternToRegex(stackNeedle), log ? '1' : 0) === false ) {
+        const reStackNeedle = patternToRegex(stackNeedle);
+        if ( matchesStackTrace(reStackNeedle, extraArgs.logstack) === false ) {
             return obj;
         }
     }
@@ -816,6 +823,7 @@ builtinScriptlets.push({
     name: 'matches-stack-trace.fn',
     fn: matchesStackTrace,
     dependencies: [
+        'get-exception-token.fn',
         'safe-self.fn',
     ],
 });
@@ -855,9 +863,9 @@ function matchesStackTrace(
     const stack = lines.join('\t');
     const r = safe.RegExp_test.call(reNeedle, stack);
     if (
-        logLevel === '1' ||
-        logLevel === '2' && r ||
-        logLevel === '3' && !r
+        logLevel === 1 ||
+        logLevel === 2 && r ||
+        logLevel === 3 && !r
     ) {
         safe.uboLog(stack.replace(/\t/g, '\n'));
     }
@@ -993,6 +1001,7 @@ builtinScriptlets.push({
     fn: abortOnStackTrace,
     dependencies: [
         'get-exception-token.fn',
+        'get-extra-args.fn',
         'matches-stack-trace.fn',
         'pattern-to-regex.fn',
     ],
@@ -1000,24 +1009,24 @@ builtinScriptlets.push({
 // Status is currently experimental
 function abortOnStackTrace(
     chain = '',
-    needle = '',
-    logLevel = ''
+    needle = ''
 ) {
     if ( typeof chain !== 'string' ) { return; }
     const reNeedle = patternToRegex(needle);
+    const extraArgs = getExtraArgs(Array.from(arguments), 2);
     const makeProxy = function(owner, chain) {
         const pos = chain.indexOf('.');
         if ( pos === -1 ) {
             let v = owner[chain];
             Object.defineProperty(owner, chain, {
                 get: function() {
-                    if ( matchesStackTrace(reNeedle, logLevel) ) {
+                    if ( matchesStackTrace(reNeedle, extraArgs.log) ) {
                         throw new ReferenceError(getExceptionToken());
                     }
                     return v;
                 },
                 set: function(a) {
-                    if ( matchesStackTrace(reNeedle, logLevel) ) {
+                    if ( matchesStackTrace(reNeedle, extraArgs.log) ) {
                         throw new ReferenceError(getExceptionToken());
                     }
                     v = a;
@@ -1136,20 +1145,28 @@ function jsonPrune(
     rawNeedlePaths = '',
     stackNeedle = ''
 ) {
+    const extraArgs = Array.from(arguments).slice(3);
     JSON.parse = new Proxy(JSON.parse, {
         apply: function(target, thisArg, args) {
             return objectPrune(
                 Reflect.apply(target, thisArg, args),
                 rawPrunePaths,
                 rawNeedlePaths,
-                stackNeedle
+                stackNeedle,
+                ...extraArgs
             );
         },
     });
     Response.prototype.json = new Proxy(Response.prototype.json, {
         apply: function(target, thisArg, args) {
             return Reflect.apply(target, thisArg, args).then(o => 
-                objectPrune(o, rawPrunePaths, rawNeedlePaths, stackNeedle)
+                objectPrune(
+                    o,
+                    rawPrunePaths,
+                    rawNeedlePaths,
+                    stackNeedle,
+                    ...extraArgs
+                )
             );
         },
     });
