@@ -284,7 +284,25 @@ async function start() {
     });
 
     dom.on('#content', 'click', '.cm-href', ev => {
-        setURL(ev.target.textContent);
+        const target = ev.target;
+        const urlParts = [ target.textContent ];
+        let previous = target;
+        for (;;) {
+            previous = previous.previousSibling;
+            if ( previous === null ) { break; }
+            if ( previous.nodeType !== 1 ) { break; }
+            if ( previous.classList.contains('cm-href') === false ) { break; }
+            urlParts.unshift(previous.textContent);
+        }
+        let next = target;
+        for (;;) {
+            next = next.nextSibling;
+            if ( next === null ) { break; }
+            if ( next.nodeType !== 1 ) { break; }
+            if ( next.classList.contains('cm-href') === false ) { break; }
+            urlParts.push(next.textContent);
+        }
+        setURL(urlParts.join(''));
     });
 }
 
