@@ -59,6 +59,36 @@ function safeSelf() {
             if ( `${args[0]}` === '' ) { return; }
             this.log('[uBO]', ...args);
         },
+        'initPattern': function(pattern, options = {}) {
+            if ( pattern === '' ) {
+                return { matchAll: true };
+            }
+            const expect = (options.canNegate && pattern.startsWith('!') === false);
+            if ( expect === false ) {
+                pattern = pattern.slice(1);
+            }
+            const match = /^\/(.+)\/([gimsu]*)$/.exec(pattern);
+            if ( match !== null ) {
+                return {
+                    re: new this.RegExp(
+                        match[1],
+                        match[2] || options.flags
+                    ),
+                    expect,
+                };
+            }
+            return {
+                re: new this.RegExp(pattern.replace(
+                    /[.*+?^${}()|[\]\\]/g, '\\$&'),
+                    options.flags
+                ),
+                expect,
+            };
+        },
+        'testPattern': function(details, haystack) {
+            if ( details.matchAll ) { return true; }
+            return this.RegExp_test.call(details.re, haystack) === details.expect;
+        },
     };
     scriptletGlobals.set('safeSelf', safe);
     return safe;
@@ -636,7 +666,7 @@ function objectPrune(
     obj,
     rawPrunePaths,
     rawNeedlePaths,
-    stackNeedle = ''
+    stackNeedleDetails = { matchAll: true }
 ) {
     if ( typeof rawPrunePaths !== 'string' ) { return obj; }
     const prunePaths = rawPrunePaths !== ''
@@ -657,9 +687,8 @@ function objectPrune(
         log = console.log.bind(console);
         reLogNeedle = patternToRegex(rawNeedlePaths);
     }
-    if ( stackNeedle !== '' ) {
-        const reStackNeedle = patternToRegex(stackNeedle);
-        if ( matchesStackTrace(reStackNeedle, extraArgs.logstack) === false ) {
+    if ( stackNeedleDetails.matchAll !== true ) {
+        if ( matchesStackTrace(stackNeedleDetails, extraArgs.logstack) === false ) {
             return obj;
         }
     }
@@ -828,10 +857,9 @@ builtinScriptlets.push({
     ],
 });
 function matchesStackTrace(
-    reNeedle,
+    needleDetails,
     logLevel = 0
 ) {
-    if ( reNeedle === undefined ) { return false; }
     const safe = safeSelf();
     const exceptionToken = getExceptionToken();
     const error = new safe.Error(exceptionToken);
@@ -861,7 +889,7 @@ function matchesStackTrace(
     }
     lines[0] = `stackDepth:${lines.length-1}`;
     const stack = lines.join('\t');
-    const r = safe.RegExp_test.call(reNeedle, stack);
+    const r = safe.testPattern(needleDetails, stack);
     if (
         logLevel === 1 ||
         logLevel === 2 && r ||
@@ -1004,15 +1032,16 @@ builtinScriptlets.push({
         'get-extra-args.fn',
         'matches-stack-trace.fn',
         'pattern-to-regex.fn',
+        'safe-self.fn',
     ],
 });
-// Status is currently experimental
 function abortOnStackTrace(
     chain = '',
     needle = ''
 ) {
     if ( typeof chain !== 'string' ) { return; }
-    const reNeedle = patternToRegex(needle);
+    const safe = safeSelf();
+    const needleDetails = safe.initPattern(needle, { canNegate: true });
     const extraArgs = getExtraArgs(Array.from(arguments), 2);
     const makeProxy = function(owner, chain) {
         const pos = chain.indexOf('.');
@@ -1020,13 +1049,13 @@ function abortOnStackTrace(
             let v = owner[chain];
             Object.defineProperty(owner, chain, {
                 get: function() {
-                    if ( matchesStackTrace(reNeedle, extraArgs.log) ) {
+                    if ( matchesStackTrace(needleDetails, extraArgs.log) ) {
                         throw new ReferenceError(getExceptionToken());
                     }
                     return v;
                 },
                 set: function(a) {
-                    if ( matchesStackTrace(reNeedle, extraArgs.log) ) {
+                    if ( matchesStackTrace(needleDetails, extraArgs.log) ) {
                         throw new ReferenceError(getExceptionToken());
                     }
                     v = a;
@@ -1132,6 +1161,7 @@ builtinScriptlets.push({
     fn: jsonPrune,
     dependencies: [
         'object-prune.fn',
+        'safe-self.fn',
     ],
 });
 //  When no "prune paths" argument is provided, the scriptlet is
@@ -1145,6 +1175,8 @@ function jsonPrune(
     rawNeedlePaths = '',
     stackNeedle = ''
 ) {
+    const safe = safeSelf();
+    const stackNeedleDetails = safe.initPattern(stackNeedle, { canNegate: true });
     const extraArgs = Array.from(arguments).slice(3);
     JSON.parse = new Proxy(JSON.parse, {
         apply: function(target, thisArg, args) {
@@ -1152,7 +1184,7 @@ function jsonPrune(
                 Reflect.apply(target, thisArg, args),
                 rawPrunePaths,
                 rawNeedlePaths,
-                stackNeedle,
+                stackNeedleDetails,
                 ...extraArgs
             );
         },
@@ -1164,7 +1196,7 @@ function jsonPrune(
                     o,
                     rawPrunePaths,
                     rawNeedlePaths,
-                    stackNeedle,
+                    stackNeedleDetails,
                     ...extraArgs
                 )
             );

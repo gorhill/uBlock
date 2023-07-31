@@ -2266,27 +2266,9 @@ export class AstFilterParser {
         const parentEnd = this.nodes[parent+NODE_END_INDEX];
         if ( parentEnd === parentBeg ) { return 0; }
         const s = this.getNodeString(parent);
-        let next = 0;
-        // json-based arg?
-        const match = this.rePatternScriptletJsonArgs.exec(s);
-        if ( match !== null ) {
-            next = this.allocTypedNode(
-                NODE_TYPE_EXT_PATTERN_SCRIPTLET_ARG,
-                parentBeg,
-                parentEnd
-            );
-            try {
-                void JSON.parse(s);
-            } catch(ex) {
-                this.addNodeFlags(next, NODE_FLAG_ERROR);
-                this.addFlags(AST_FLAG_HAS_ERROR);
-            }
-            return next;
-        }
-        // positional args
-        const head = this.allocHeadNode();
         const argsEnd = s.length;
-        let prev = head;
+        const head = this.allocHeadNode();
+        let prev = head, next = 0;
         let decorationBeg = 0;
         let i = 0;
         for (;;) {
