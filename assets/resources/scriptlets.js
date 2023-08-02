@@ -2897,6 +2897,17 @@ function spoofCSS(
                     }
                     return spoofStyle(prop, Reflect.get(target, prop, receiver));
                 },
+                getOwnPropertyDescriptor(target, prop) {
+                    if ( propToValueMap.has(prop) ) {
+                        return {
+                            configurable: true,
+                            enumerable: true,
+                            value: propToValueMap.get(prop),
+                            writable: true,
+                        };
+                    }
+                    return Reflect.getOwnPropertyDescriptor(target, prop);
+                },
             });
             return proxiedStyle;
         },
