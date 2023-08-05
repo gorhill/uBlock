@@ -237,7 +237,7 @@
 		"group": "malware",
 		"off": true,
 		"title": "Phishing URL Blocklist",
-		"contentURL": "https://malware-filter.gitlab.io/malware-filter/phishing-filter.txt",
+		"contentURL": "https://malware-filter.gitlab.io/phishing-filter/phishing-filter.txt",
 		"cdnURLs": [
 			"https://curbengh.github.io/phishing-filter/phishing-filter.txt",
 			"https://malware-filter.gitlab.io/phishing-filter/phishing-filter.txt",
