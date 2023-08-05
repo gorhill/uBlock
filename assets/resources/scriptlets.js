@@ -53,6 +53,9 @@ function safeSelf() {
         'RegExp_exec': self.RegExp.prototype.exec,
         'addEventListener': self.EventTarget.prototype.addEventListener,
         'removeEventListener': self.EventTarget.prototype.removeEventListener,
+        'fetch': self.fetch,
+        'jsonParse': self.JSON.parse.bind(self.JSON),
+        'jsonStringify': self.JSON.stringify.bind(self.JSON),
         'log': console.log.bind(console),
         'uboLog': function(...args) {
             if ( args.length === 0 ) { return; }
@@ -103,10 +106,15 @@ builtinScriptlets.push({
 function patternToRegex(pattern, flags = undefined) {
     if ( pattern === '' ) { return /^/; }
     const match = /^\/(.+)\/([gimsu]*)$/.exec(pattern);
-    if ( match !== null ) {
+    if ( match === null ) {
+        return new RegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), flags);
+    }
+    try {
         return new RegExp(match[1], match[2] || flags);
     }
-    return new RegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), flags);
+    catch(ex) {
+    }
+    return /^/;
 }
 
 /******************************************************************************/
@@ -210,11 +218,14 @@ function runAtHtmlElement(fn) {
 /******************************************************************************/
 
 builtinScriptlets.push({
-    name: 'get-extra-args-entries.fn',
-    fn: getExtraArgsEntries,
+    name: 'get-extra-args.fn',
+    fn: getExtraArgs,
+    dependencies: [
+        'get-extra-args-entries.fn',
+    ],
 });
-function getExtraArgsEntries(args, offset) {
-    return args.slice(offset).reduce((out, v, i, a) => {
+function getExtraArgs(args, offset = 0) {
+    const entries = args.slice(offset).reduce((out, v, i, a) => {
         if ( (i & 1) === 0 ) {
             const rawValue = a[i+1];
             const value = /^\d+$/.test(rawValue)
@@ -224,28 +235,7 @@ function getExtraArgsEntries(args, offset) {
         }
         return out;
     }, []);
-}
-
-builtinScriptlets.push({
-    name: 'get-extra-args-map.fn',
-    fn: getExtraArgsMap,
-    dependencies: [
-        'get-extra-args-entries.fn',
-    ],
-});
-function getExtraArgsMap(args, offset = 0) {
-    return new Map(getExtraArgsEntries(args, offset));
-}
-
-builtinScriptlets.push({
-    name: 'get-extra-args.fn',
-    fn: getExtraArgs,
-    dependencies: [
-        'get-extra-args-entries.fn',
-    ],
-});
-function getExtraArgs(args, offset = 0) {
-    return Object.fromEntries(getExtraArgsEntries(args, offset));
+    return Object.fromEntries(entries);
 }
 
 /******************************************************************************/
@@ -447,7 +437,7 @@ function setConstantCore(
             if ( Math.abs(cValue) > 0x7FFF ) { return; }
         } else if ( trusted ) {
             if ( cValue.startsWith('{') && cValue.endsWith('}') ) {
-                try { cValue = JSON.parse(cValue).value; } catch(ex) { return; }
+                try { cValue = safe.jsonParse(cValue).value; } catch(ex) { return; }
             }
         } else {
             return;
@@ -2415,7 +2405,7 @@ function xmlPrune(
                 log(`xmlPrune: ${item.constructor.name}.${item.nodeName} removed`);
             }
         } catch(ex) {
-            if ( log ) { safeSelf().uboLog(ex); }
+            log(ex);
         }
         return xmlDoc;
     };
@@ -2438,13 +2428,12 @@ function xmlPrune(
         if ( arg instanceof Request ) { return arg.url; }
         return String(arg);
     };
-    const realFetch = self.fetch;
     self.fetch = new Proxy(self.fetch, {
         apply: function(target, thisArg, args) {
             if ( reUrl.test(urlFromArg(args[0])) === false ) {
                 return Reflect.apply(target, thisArg, args);
             }
-            return realFetch(...args).then(realResponse =>
+            return safe.fetch(...args).then(realResponse =>
                 realResponse.text().then(text =>
                     new Response(pruneFromText(text), {
                         status: realResponse.status,
@@ -3327,6 +3316,105 @@ builtinScriptlets.push({
 });
 function trustedSetLocalStorageItem(key = '', value = '') {
     setLocalStorageItemCore('local', true, key, value);
+}
+
+/*******************************************************************************
+ * 
+ * trusted-replace-fetch-response.js
+ * 
+ * Replaces response text content of fetch requests if all given parameters
+ * match.
+ * 
+ * Reference:
+ * https://github.com/AdguardTeam/Scriptlets/blob/master/src/scriptlets/trusted-replace-fetch-response.js
+ * 
+ **/
+
+builtinScriptlets.push({
+    name: 'trusted-replace-fetch-response.js',
+    requiresTrust: true,
+    fn: trustedReplaceFetchResponse,
+    dependencies: [
+        'get-extra-args.fn',
+        'pattern-to-regex.fn',
+        'safe-self.fn',
+        'should-log.fn',
+    ],
+});
+function trustedReplaceFetchResponse(
+    pattern = '',
+    replacement = '',
+    propsToMatch = ''
+) {
+    const safe = safeSelf();
+    const extraArgs = getExtraArgs(Array.from(arguments), 3);
+    const logLevel = shouldLog({
+        log: pattern === '' || extraArgs.log,
+    });
+    const log = logLevel ? ((...args) => { safe.uboLog(...args); }) : (( ) => { }); 
+    if ( pattern === '*' ) { pattern = '.*'; }
+    const rePattern = patternToRegex(pattern);
+    const propNeedles = new Map();
+    for ( const needle of propsToMatch.split(/\s+/) ) {
+        const [ prop, value ] = needle.split(':');
+        if ( prop === '' ) { continue; }
+        propNeedles.set(prop, patternToRegex(value));
+    }
+    self.fetch = new Proxy(self.fetch, {
+        apply: function(target, thisArg, args) {
+            if ( logLevel === true ) {
+                log('trusted-replace-fetch-response:', JSON.stringify(Array.from(args)).slice(1,-1));
+            }
+            const fetchPromise = Reflect.apply(target, thisArg, args);
+            if ( pattern === '' ) { return fetchPromise; }
+            let skip = false;
+            if ( propNeedles.size !== 0 ) {
+                const fetchDetails = {};
+                if ( args[0] instanceof self.Request ) {
+                    Object.assign(fetchDetails, args[0]);
+                } else {
+                    Object.assign(fetchDetails, { url: args[0] });
+                }
+                if ( args[1] instanceof Object ) {
+                    Object.assign(fetchDetails, args[1]);
+                }
+                for ( const prop of Object.keys(fetchDetails) ) {
+                    let value = fetchDetails[prop];
+                    if ( typeof value !== 'string' ) {
+                        try { value = JSON.stringify(value); }
+                        catch(ex) { }
+                    }
+                    if ( typeof value !== 'string' ) { continue; }
+                    const needle = propNeedles.get(prop);
+                    if ( needle === undefined ) { continue; }
+                    if ( needle.test(value) ) { continue; }
+                    skip = true;
+                    break;
+                }
+            }
+            if ( skip ) { return fetchPromise; }
+            return fetchPromise.then(responseBefore => {
+                return responseBefore.text().then(textBefore => {
+                    const textAfter = textBefore.replace(rePattern, replacement);
+                    const responseAfter = new Response(textAfter, {
+                        status: responseBefore.status,
+                        statusText: responseBefore.statusText,
+                        headers: responseBefore.headers,
+                    });
+                    Object.defineProperties(responseAfter, {
+                        ok: { value: responseBefore.ok },
+                        redirected: { value: responseBefore.redirected },
+                        type: { value: responseBefore.type },
+                        url: { value: responseBefore.url },
+                    });
+                    return responseAfter;
+                }).catch(reason => {
+                    log('trusted-replace-fetch-response:', reason);
+                    return responseBefore;
+                });
+            });
+        }
+    });
 }
 
 /******************************************************************************/
