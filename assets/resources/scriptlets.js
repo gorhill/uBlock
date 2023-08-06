@@ -3358,7 +3358,11 @@ function trustedReplaceFetchResponse(
     for ( const needle of propsToMatch.split(/\s+/) ) {
         const [ prop, value ] = needle.split(':');
         if ( prop === '' ) { continue; }
-        propNeedles.set(prop, patternToRegex(value));
+        if ( value === undefined ) {
+            propNeedles.set('url', prop);
+        } else {
+            propNeedles.set(prop, value);
+        }
     }
     self.fetch = new Proxy(self.fetch, {
         apply: function(target, thisArg, args) {
@@ -3367,19 +3371,17 @@ function trustedReplaceFetchResponse(
             }
             const fetchPromise = Reflect.apply(target, thisArg, args);
             if ( pattern === '' ) { return fetchPromise; }
-            let skip = false;
+            let outcome = 'match';
             if ( propNeedles.size !== 0 ) {
-                const fetchDetails = {};
-                if ( args[0] instanceof self.Request ) {
-                    Object.assign(fetchDetails, args[0]);
-                } else {
-                    Object.assign(fetchDetails, { url: args[0] });
-                }
-                if ( args[1] instanceof Object ) {
-                    Object.assign(fetchDetails, args[1]);
-                }
-                for ( const prop of Object.keys(fetchDetails) ) {
-                    let value = fetchDetails[prop];
+                const props = [
+                    'cache', 'credentials', 'destination', 'method',
+                    'redirect', 'referrer', 'referrer-policy', 'url',
+                ];
+                const normalArgs = args[0] instanceof Object
+                    ? props.reduce((p, a) => { a[p] = args[0][p]; }, {})
+                    : { url: args[0] };
+                for ( const prop of props ) {
+                    let value = normalArgs[prop];
                     if ( typeof value !== 'string' ) {
                         try { value = JSON.stringify(value); }
                         catch(ex) { }
@@ -3387,15 +3389,31 @@ function trustedReplaceFetchResponse(
                     if ( typeof value !== 'string' ) { continue; }
                     const needle = propNeedles.get(prop);
                     if ( needle === undefined ) { continue; }
-                    if ( needle.test(value) ) { continue; }
-                    skip = true;
+                    if ( patternToRegex(needle).test(value) ) { continue; }
+                    outcome = 'nomatch';
                     break;
                 }
+                if ( outcome === logLevel || logLevel === 'all' ) {
+                    log(
+                        `trusted-replace-fetch-response (${outcome})`,
+                        `\n\tpropsToMatch: ${JSON.stringify(Array.from(propNeedles)).slice(1,-1)}`,
+                        `\n\tprops: ${JSON.stringify(normalArgs).slice(1,-1)}`,
+                    );
+                }
             }
-            if ( skip ) { return fetchPromise; }
+            if ( outcome === 'nomatch' ) { return fetchPromise; }
             return fetchPromise.then(responseBefore => {
                 return responseBefore.text().then(textBefore => {
                     const textAfter = textBefore.replace(rePattern, replacement);
+                    const outcome = textAfter !== textBefore ? 'match' : 'nomatch';
+                    if ( outcome === logLevel || logLevel === 'all' ) {
+                        log(
+                            `trusted-replace-fetch-response (${outcome})`,
+                            `\n\tpattern: ${rePattern.source}`, 
+                            `\n\treplacement: ${replacement}`,
+                        );
+                    }
+                    if ( textAfter === textBefore ) { return responseBefore; }
                     const responseAfter = new Response(textAfter, {
                         status: responseBefore.status,
                         statusText: responseBefore.statusText,
