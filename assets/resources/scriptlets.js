@@ -3364,6 +3364,12 @@ function trustedReplaceFetchResponse(
             propNeedles.set(prop, value);
         }
     }
+    const propReducer = (src, des, prop) => {
+        if ( src[prop] !== undefined ) {
+            des[prop] = src[prop];
+        }
+        return des;
+    };
     self.fetch = new Proxy(self.fetch, {
         apply: function(target, thisArg, args) {
             if ( logLevel === true ) {
@@ -3375,13 +3381,18 @@ function trustedReplaceFetchResponse(
             if ( propNeedles.size !== 0 ) {
                 const props = [
                     'cache', 'credentials', 'destination', 'method',
-                    'redirect', 'referrer', 'referrer-policy', 'url',
+                    'mode', 'redirect', 'referrer', 'referrer-policy',
+                    'url',
                 ];
                 const normalArgs = args[0] instanceof Object
-                    ? props.reduce((p, a) => { a[p] = args[0][p]; }, {})
+                    ? props.reduce((a, p) => propReducer(args[0], a, p), {})
                     : { url: args[0] };
+                if ( args[1] instanceof Object ) {
+                    props.reduce((a, p) => propReducer(args[0], a, p), normalArgs);
+                }
                 for ( const prop of props ) {
                     let value = normalArgs[prop];
+                    if ( value === undefined ) { continue; }
                     if ( typeof value !== 'string' ) {
                         try { value = JSON.stringify(value); }
                         catch(ex) { }
@@ -3430,6 +3441,9 @@ function trustedReplaceFetchResponse(
                     log('trusted-replace-fetch-response:', reason);
                     return responseBefore;
                 });
+            }).catch(reason => {
+                log('trusted-replace-fetch-response:', reason);
+                return fetchPromise;
             });
         }
     });
