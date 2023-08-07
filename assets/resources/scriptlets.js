@@ -3424,7 +3424,6 @@ function trustedReplaceFetchResponse(
                             `\n\treplacement: ${replacement}`,
                         );
                     }
-                    if ( textAfter === textBefore ) { return responseBefore; }
                     const responseAfter = new Response(textAfter, {
                         status: responseBefore.status,
                         statusText: responseBefore.statusText,
