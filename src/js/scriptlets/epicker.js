@@ -44,7 +44,7 @@ if ( pickerRoot !== null ) { return; }
 
 let pickerBootArgs;
 
-const reCosmeticAnchor = /^#[$?]?#/;
+const reCosmeticAnchor = /^#(\$|\?|\$\?)?#/;
 
 const netFilterCandidates = [];
 const cosmeticFilterCandidates = [];
