@@ -57,12 +57,12 @@ function safeSelf() {
         'jsonParse': self.JSON.parse.bind(self.JSON),
         'jsonStringify': self.JSON.stringify.bind(self.JSON),
         'log': console.log.bind(console),
-        'uboLog': function(...args) {
+        uboLog(...args) {
             if ( args.length === 0 ) { return; }
             if ( `${args[0]}` === '' ) { return; }
             this.log('[uBO]', ...args);
         },
-        'initPattern': function(pattern, options = {}) {
+        initPattern(pattern, options = {}) {
             if ( pattern === '' ) {
                 return { matchAll: true };
             }
@@ -88,33 +88,39 @@ function safeSelf() {
                 expect,
             };
         },
-        'testPattern': function(details, haystack) {
+        testPattern(details, haystack) {
             if ( details.matchAll ) { return true; }
             return this.RegExp_test.call(details.re, haystack) === details.expect;
+        },
+        patternToRegex(pattern, flags = undefined) {
+            if ( pattern === '' ) { return /^/; }
+            const match = /^\/(.+)\/([gimsu]*)$/.exec(pattern);
+            if ( match === null ) {
+                return new RegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), flags);
+            }
+            try {
+                return new RegExp(match[1], match[2] || flags);
+            }
+            catch(ex) {
+            }
+            return /^/;
+        },
+        getExtraArgs(args, offset = 0) {
+            const entries = args.slice(offset).reduce((out, v, i, a) => {
+                if ( (i & 1) === 0 ) {
+                    const rawValue = a[i+1];
+                    const value = /^\d+$/.test(rawValue)
+                        ? parseInt(rawValue, 10)
+                        : rawValue;
+                    out.push([ a[i], value ]);
+                }
+                return out;
+            }, []);
+            return Object.fromEntries(entries);
         },
     };
     scriptletGlobals.set('safeSelf', safe);
     return safe;
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'pattern-to-regex.fn',
-    fn: patternToRegex,
-});
-function patternToRegex(pattern, flags = undefined) {
-    if ( pattern === '' ) { return /^/; }
-    const match = /^\/(.+)\/([gimsu]*)$/.exec(pattern);
-    if ( match === null ) {
-        return new RegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), flags);
-    }
-    try {
-        return new RegExp(match[1], match[2] || flags);
-    }
-    catch(ex) {
-    }
-    return /^/;
 }
 
 /******************************************************************************/
@@ -218,35 +224,10 @@ function runAtHtmlElement(fn) {
 /******************************************************************************/
 
 builtinScriptlets.push({
-    name: 'get-extra-args.fn',
-    fn: getExtraArgs,
-    dependencies: [
-        'get-extra-args-entries.fn',
-    ],
-});
-function getExtraArgs(args, offset = 0) {
-    const entries = args.slice(offset).reduce((out, v, i, a) => {
-        if ( (i & 1) === 0 ) {
-            const rawValue = a[i+1];
-            const value = /^\d+$/.test(rawValue)
-                ? parseInt(rawValue, 10)
-                : rawValue;
-            out.push([ a[i], value ]);
-        }
-        return out;
-    }, []);
-    return Object.fromEntries(entries);
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
     name: 'abort-current-script-core.fn',
     fn: abortCurrentScriptCore,
     dependencies: [
-        'pattern-to-regex.fn',
         'get-exception-token.fn',
-        'get-extra-args.fn',
         'safe-self.fn',
         'should-debug.fn',
         'should-log.fn',
@@ -262,9 +243,9 @@ function abortCurrentScriptCore(
     if ( typeof target !== 'string' ) { return; }
     if ( target === '' ) { return; }
     const safe = safeSelf();
-    const reNeedle = patternToRegex(needle);
-    const reContext = patternToRegex(context);
-    const extraArgs = getExtraArgs(Array.from(arguments), 3);
+    const reNeedle = safe.patternToRegex(needle);
+    const reContext = safe.patternToRegex(context);
+    const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
     const thisScript = document.currentScript;
     const chain = target.split('.');
     let owner = window;
@@ -554,8 +535,6 @@ builtinScriptlets.push({
     name: 'replace-node-text-core.fn',
     fn: replaceNodeTextCore,
     dependencies: [
-        'get-extra-args.fn',
-        'pattern-to-regex.fn',
         'run-at.fn',
         'safe-self.fn',
     ],
@@ -565,12 +544,12 @@ function replaceNodeTextCore(
     pattern = '',
     replacement = ''
 ) {
-    const reNodeName = patternToRegex(nodeName, 'i');
-    const rePattern = patternToRegex(pattern, 'gms');
-    const extraArgs = getExtraArgs(Array.from(arguments), 3);
-    const shouldLog = scriptletGlobals.has('canDebug') && extraArgs.log || 0;
-    const reCondition = patternToRegex(extraArgs.condition || '', 'gms');
     const safe = safeSelf();
+    const reNodeName = safe.patternToRegex(nodeName, 'i');
+    const rePattern = safe.patternToRegex(pattern, 'gms');
+    const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
+    const shouldLog = scriptletGlobals.has('canDebug') && extraArgs.log || 0;
+    const reCondition = safe.patternToRegex(extraArgs.condition || '', 'gms');
     const stop = (takeRecord = true) => {
         if ( takeRecord ) {
             handleMutations(observer.takeRecords());
@@ -641,9 +620,8 @@ builtinScriptlets.push({
     name: 'object-prune.fn',
     fn: objectPrune,
     dependencies: [
-        'get-extra-args.fn',
         'matches-stack-trace.fn',
-        'pattern-to-regex.fn',
+        'safe-self.fn',
     ],
 });
 //  When no "prune paths" argument is provided, the scriptlet is
@@ -662,7 +640,8 @@ function objectPrune(
     const prunePaths = rawPrunePaths !== ''
         ? rawPrunePaths.split(/ +/)
         : [];
-    const extraArgs = getExtraArgs(Array.from(arguments), 4);
+    const safe = safeSelf();
+    const extraArgs = safe.getExtraArgs(Array.from(arguments), 4);
     let needlePaths;
     let log, reLogNeedle;
     if ( prunePaths.length !== 0 ) {
@@ -671,11 +650,11 @@ function objectPrune(
             : [];
         if ( extraArgs.log !== undefined ) {
             log = console.log.bind(console);
-            reLogNeedle = patternToRegex(extraArgs.log);
+            reLogNeedle = safe.patternToRegex(extraArgs.log);
         }
     } else {
         log = console.log.bind(console);
-        reLogNeedle = patternToRegex(rawNeedlePaths);
+        reLogNeedle = safe.patternToRegex(rawNeedlePaths);
     }
     if ( stackNeedleDetails.matchAll !== true ) {
         if ( matchesStackTrace(stackNeedleDetails, extraArgs.logstack) === false ) {
@@ -1019,9 +998,7 @@ builtinScriptlets.push({
     fn: abortOnStackTrace,
     dependencies: [
         'get-exception-token.fn',
-        'get-extra-args.fn',
         'matches-stack-trace.fn',
-        'pattern-to-regex.fn',
         'safe-self.fn',
     ],
 });
@@ -1032,7 +1009,7 @@ function abortOnStackTrace(
     if ( typeof chain !== 'string' ) { return; }
     const safe = safeSelf();
     const needleDetails = safe.initPattern(needle, { canNegate: true });
-    const extraArgs = getExtraArgs(Array.from(arguments), 2);
+    const extraArgs = safe.getExtraArgs(Array.from(arguments), 2);
     const makeProxy = function(owner, chain) {
         const pos = chain.indexOf('.');
         if ( pos === -1 ) {
@@ -1086,8 +1063,6 @@ builtinScriptlets.push({
     ],
     fn: addEventListenerDefuser,
     dependencies: [
-        'get-extra-args.fn',
-        'pattern-to-regex.fn',
         'run-at.fn',
         'safe-self.fn',
         'should-debug.fn',
@@ -1099,10 +1074,10 @@ function addEventListenerDefuser(
     type = '',
     pattern = ''
 ) {
-    const extraArgs = getExtraArgs(Array.from(arguments), 2);
     const safe = safeSelf();
-    const reType = patternToRegex(type);
-    const rePattern = patternToRegex(pattern);
+    const extraArgs = safe.getExtraArgs(Array.from(arguments), 2);
+    const reType = safe.patternToRegex(type);
+    const rePattern = safe.patternToRegex(pattern);
     const log = shouldLog(extraArgs);
     const debug = shouldDebug(extraArgs);
     const trapEddEventListeners = ( ) => {
@@ -1229,7 +1204,7 @@ builtinScriptlets.push({
     ],
     fn: nanoSetIntervalBooster,
     dependencies: [
-        'pattern-to-regex.fn',
+        'safe-self.fn',
     ],
 });
 // Imported from:
@@ -1250,7 +1225,8 @@ function nanoSetIntervalBooster(
     boostArg = ''
 ) {
     if ( typeof needleArg !== 'string' ) { return; }
-    const reNeedle = patternToRegex(needleArg);
+    const safe = safeSelf();
+    const reNeedle = safe.patternToRegex(needleArg);
     let delay = delayArg !== '*' ? parseInt(delayArg, 10) : -1;
     if ( isNaN(delay) || isFinite(delay) === false ) { delay = 1000; }
     let boost = parseFloat(boostArg);
@@ -1280,7 +1256,7 @@ builtinScriptlets.push({
     ],
     fn: nanoSetTimeoutBooster,
     dependencies: [
-        'pattern-to-regex.fn',
+        'safe-self.fn',
     ],
 });
 // Imported from:
@@ -1302,7 +1278,8 @@ function nanoSetTimeoutBooster(
     boostArg = ''
 ) {
     if ( typeof needleArg !== 'string' ) { return; }
-    const reNeedle = patternToRegex(needleArg);
+    const safe = safeSelf();
+    const reNeedle = safe.patternToRegex(needleArg);
     let delay = delayArg !== '*' ? parseInt(delayArg, 10) : -1;
     if ( isNaN(delay) || isFinite(delay) === false ) { delay = 1000; }
     let boost = parseFloat(boostArg);
@@ -1332,14 +1309,15 @@ builtinScriptlets.push({
     ],
     fn: noEvalIf,
     dependencies: [
-        'pattern-to-regex.fn',
+        'safe-self.fn',
     ],
 });
 function noEvalIf(
     needle = ''
 ) {
     if ( typeof needle !== 'string' ) { return; }
-    const reNeedle = patternToRegex(needle);
+    const safe = safeSelf();
+    const reNeedle = safe.patternToRegex(needle);
     window.eval = new Proxy(window.eval, {  // jshint ignore: line
         apply: function(target, thisArg, args) {
             const a = args[0];
@@ -1358,13 +1336,14 @@ builtinScriptlets.push({
     ],
     fn: noFetchIf,
     dependencies: [
-        'pattern-to-regex.fn',
+        'safe-self.fn',
     ],
 });
 function noFetchIf(
     arg1 = '',
 ) {
     if ( typeof arg1 !== 'string' ) { return; }
+    const safe = safeSelf();
     const needles = [];
     for ( const condition of arg1.split(/\s+/) ) {
         if ( condition === '' ) { continue; }
@@ -1377,7 +1356,7 @@ function noFetchIf(
             key = 'url';
             value = condition;
         }
-        needles.push({ key, re: patternToRegex(value) });
+        needles.push({ key, re: safe.patternToRegex(value) });
     }
     const log = needles.length === 0 ? console.log.bind(console) : undefined;
     self.fetch = new Proxy(self.fetch, {
@@ -1602,17 +1581,18 @@ builtinScriptlets.push({
     ],
     fn: noRequestAnimationFrameIf,
     dependencies: [
-        'pattern-to-regex.fn',
+        'safe-self.fn',
     ],
 });
 function noRequestAnimationFrameIf(
     needle = ''
 ) {
     if ( typeof needle !== 'string' ) { return; }
+    const safe = safeSelf();
     const needleNot = needle.charAt(0) === '!';
     if ( needleNot ) { needle = needle.slice(1); }
     const log = needleNot === false && needle === '' ? console.log : undefined;
-    const reNeedle = patternToRegex(needle);
+    const reNeedle = safe.patternToRegex(needle);
     window.requestAnimationFrame = new Proxy(window.requestAnimationFrame, {
         apply: function(target, thisArg, args) {
             const a = String(args[0]);
@@ -1659,7 +1639,7 @@ builtinScriptlets.push({
     ],
     fn: noSetIntervalIf,
     dependencies: [
-        'pattern-to-regex.fn',
+        'safe-self.fn',
     ],
 });
 function noSetIntervalIf(
@@ -1667,6 +1647,7 @@ function noSetIntervalIf(
     delay = ''
 ) {
     if ( typeof needle !== 'string' ) { return; }
+    const safe = safeSelf();
     const needleNot = needle.charAt(0) === '!';
     if ( needleNot ) { needle = needle.slice(1); }
     if ( delay === '' ) { delay = undefined; }
@@ -1679,7 +1660,7 @@ function noSetIntervalIf(
     const log = needleNot === false && needle === '' && delay === undefined
         ? console.log
         : undefined;
-    const reNeedle = patternToRegex(needle);
+    const reNeedle = safe.patternToRegex(needle);
     self.setInterval = new Proxy(self.setInterval, {
         apply: function(target, thisArg, args) {
             const a = String(args[0]);
@@ -1720,7 +1701,7 @@ builtinScriptlets.push({
     ],
     fn: noSetTimeoutIf,
     dependencies: [
-        'pattern-to-regex.fn',
+        'safe-self.fn',
     ],
 });
 function noSetTimeoutIf(
@@ -1728,6 +1709,7 @@ function noSetTimeoutIf(
     delay = ''
 ) {
     if ( typeof needle !== 'string' ) { return; }
+    const safe = safeSelf();
     const needleNot = needle.charAt(0) === '!';
     if ( needleNot ) { needle = needle.slice(1); }
     if ( delay === '' ) { delay = undefined; }
@@ -1740,7 +1722,7 @@ function noSetTimeoutIf(
     const log = needleNot === false && needle === '' && delay === undefined
         ? console.log
         : undefined;
-    const reNeedle = patternToRegex(needle);
+    const reNeedle = safe.patternToRegex(needle);
     self.setTimeout = new Proxy(self.setTimeout, {
         apply: function(target, thisArg, args) {
             const a = String(args[0]);
@@ -1776,14 +1758,15 @@ builtinScriptlets.push({
     name: 'webrtc-if.js',
     fn: webrtcIf,
     dependencies: [
-        'pattern-to-regex.fn',
+        'safe-self.fn',
     ],
 });
 function webrtcIf(
     good = ''
 ) {
     if ( typeof good !== 'string' ) { return; }
-    const reGood = patternToRegex(good);
+    const safe = safeSelf();
+    const reGood = safe.patternToRegex(good);
     const rtcName = window.RTCPeerConnection
         ? 'RTCPeerConnection'
         : (window.webkitRTCPeerConnection ? 'webkitRTCPeerConnection' : '');
@@ -1846,13 +1829,14 @@ builtinScriptlets.push({
     ],
     fn: noXhrIf,
     dependencies: [
-        'pattern-to-regex.fn',
+        'safe-self.fn',
     ],
 });
 function noXhrIf(
     arg1 = ''
 ) {
     if ( typeof arg1 !== 'string' ) { return; }
+    const safe = safeSelf();
     const xhrInstances = new WeakMap();
     const needles = [];
     for ( const condition of arg1.split(/\s+/) ) {
@@ -1866,7 +1850,7 @@ function noXhrIf(
             key = 'url';
             value = condition;
         }
-        needles.push({ key, re: patternToRegex(value) });
+        needles.push({ key, re: safe.patternToRegex(value) });
     }
     const log = needles.length === 0 ? console.log.bind(console) : undefined;
     self.XMLHttpRequest = class extends self.XMLHttpRequest {
@@ -1924,8 +1908,6 @@ builtinScriptlets.push({
     ],
     fn: noWindowOpenIf,
     dependencies: [
-        'get-extra-args.fn',
-        'pattern-to-regex.fn',
         'safe-self.fn',
         'should-log.fn',
     ],
@@ -1935,17 +1917,17 @@ function noWindowOpenIf(
     delay = '',
     decoy = ''
 ) {
+    const safe = safeSelf();
     const targetMatchResult = pattern.startsWith('!') === false;
     if ( targetMatchResult === false ) {
         pattern = pattern.slice(1);
     }
-    const rePattern = patternToRegex(pattern);
+    const rePattern = safe.patternToRegex(pattern);
     let autoRemoveAfter = parseInt(delay);
     if ( isNaN(autoRemoveAfter) ) {
         autoRemoveAfter = -1;
     }
-    const extraArgs = getExtraArgs(Array.from(arguments), 3);
-    const safe = safeSelf();
+    const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
     const logLevel = shouldLog(extraArgs);
     const createDecoy = function(tag, urlProp, url) {
         const decoyElem = document.createElement(tag);
@@ -2011,7 +1993,7 @@ builtinScriptlets.push({
     name: 'window-close-if.js',
     fn: windowCloseIf,
     dependencies: [
-        'pattern-to-regex.fn',
+        'safe-self.fn',
     ],
 });
 // https://github.com/uBlockOrigin/uAssets/issues/10323#issuecomment-992312847
@@ -2021,6 +2003,7 @@ function windowCloseIf(
     arg1 = ''
 ) {
     if ( typeof arg1 !== 'string' ) { return; }
+    const safe = safeSelf();
     let subject = '';
     if ( /^\/.*\/$/.test(arg1) ) {
         subject = window.location.href;
@@ -2028,7 +2011,7 @@ function windowCloseIf(
         subject = `${window.location.pathname}${window.location.search}`;
     }
     try {
-        const re = patternToRegex(arg1);
+        const re = safe.patternToRegex(arg1);
         if ( re.test(subject) ) {
             window.close();
         }
@@ -2294,7 +2277,7 @@ builtinScriptlets.push({
     fn: cookieRemover,
     world: 'ISOLATED',
     dependencies: [
-        'pattern-to-regex.fn',
+        'safe-self.fn',
     ],
 });
 // https://github.com/NanoAdblocker/NanoFilters/issues/149
@@ -2302,7 +2285,8 @@ function cookieRemover(
     needle = ''
 ) {
     if ( typeof needle !== 'string' ) { return; }
-    const reName = patternToRegex(needle);
+    const safe = safeSelf();
+    const reName = safe.patternToRegex(needle);
     const removeCookie = function() {
         document.cookie.split(';').forEach(cookieStr => {
             let pos = cookieStr.indexOf('=');
@@ -2348,8 +2332,6 @@ builtinScriptlets.push({
     name: 'xml-prune.js',
     fn: xmlPrune,
     dependencies: [
-        'get-extra-args.fn',
-        'pattern-to-regex.fn',
         'safe-self.fn',
         'should-log.fn',
     ],
@@ -2361,9 +2343,9 @@ function xmlPrune(
 ) {
     if ( typeof selector !== 'string' ) { return; }
     if ( selector === '' ) { return; }
-    const reUrl = patternToRegex(urlPattern);
-    const extraArgs = getExtraArgs(Array.from(arguments), 3);
     const safe = safeSelf();
+    const reUrl = safe.patternToRegex(urlPattern);
+    const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
     const log = shouldLog(extraArgs) ? ((...args) => { safe.uboLog(...args); }) : (( ) => { });
     const queryAll = (xmlDoc, selector) => {
         const isXpath = /^xpath\(.+\)$/.test(selector);
@@ -2482,7 +2464,6 @@ builtinScriptlets.push({
     name: 'm3u-prune.js',
     fn: m3uPrune,
     dependencies: [
-        'get-extra-args.fn',
         'safe-self.fn',
         'should-log.fn',
     ],
@@ -2493,9 +2474,9 @@ function m3uPrune(
     urlPattern = ''
 ) {
     if ( typeof m3uPattern !== 'string' ) { return; }
-    const options = getExtraArgs(Array.from(arguments), 2);
-    const logLevel = shouldLog(options);
     const safe = safeSelf();
+    const options = safe.getExtraArgs(Array.from(arguments), 2);
+    const logLevel = shouldLog(options);
     const uboLog = logLevel ? ((...args) => safe.uboLog(...args)) : (( ) => { });
     const regexFromArg = arg => {
         if ( arg === '' ) { return /^/; }
@@ -2968,7 +2949,7 @@ builtinScriptlets.push({
     fn: setCookie,
     world: 'ISOLATED',
     dependencies: [
-        'get-extra-args.fn',
+        'safe-self.fn',
         'set-cookie-helper.fn',
     ],
 });
@@ -2999,7 +2980,7 @@ function setCookie(
         value,
         '',
         path,
-        getExtraArgs(Array.from(arguments), 3)
+        safeSelf().getExtraArgs(Array.from(arguments), 3)
     );
 }
 
@@ -3252,7 +3233,7 @@ builtinScriptlets.push({
     fn: trustedSetCookie,
     world: 'ISOLATED',
     dependencies: [
-        'get-extra-args.fn',
+        'safe-self.fn',
         'set-cookie-helper.fn',
     ],
 });
@@ -3290,7 +3271,7 @@ function trustedSetCookie(
         value,
         expires,
         path,
-        getExtraArgs(Array.from(arguments), 4)
+        safeSelf().getExtraArgs(Array.from(arguments), 4)
     );
 }
 
@@ -3335,8 +3316,6 @@ builtinScriptlets.push({
     requiresTrust: true,
     fn: trustedReplaceFetchResponse,
     dependencies: [
-        'get-extra-args.fn',
-        'pattern-to-regex.fn',
         'safe-self.fn',
         'should-log.fn',
     ],
@@ -3347,13 +3326,13 @@ function trustedReplaceFetchResponse(
     propsToMatch = ''
 ) {
     const safe = safeSelf();
-    const extraArgs = getExtraArgs(Array.from(arguments), 3);
+    const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
     const logLevel = shouldLog({
         log: pattern === '' || extraArgs.log,
     });
     const log = logLevel ? ((...args) => { safe.uboLog(...args); }) : (( ) => { }); 
     if ( pattern === '*' ) { pattern = '.*'; }
-    const rePattern = patternToRegex(pattern);
+    const rePattern = safe.patternToRegex(pattern);
     const propNeedles = new Map();
     for ( const needle of propsToMatch.split(/\s+/) ) {
         const [ prop, value ] = needle.split(':');
@@ -3400,7 +3379,7 @@ function trustedReplaceFetchResponse(
                     if ( typeof value !== 'string' ) { continue; }
                     const needle = propNeedles.get(prop);
                     if ( needle === undefined ) { continue; }
-                    if ( patternToRegex(needle).test(value) ) { continue; }
+                    if ( safe.patternToRegex(needle).test(value) ) { continue; }
                     outcome = 'nomatch';
                     break;
                 }
