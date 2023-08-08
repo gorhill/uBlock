@@ -634,14 +634,14 @@ function objectPrune(
     obj,
     rawPrunePaths,
     rawNeedlePaths,
-    stackNeedleDetails = { matchAll: true }
+    stackNeedleDetails = { matchAll: true },
+    extraArgs = {}
 ) {
     if ( typeof rawPrunePaths !== 'string' ) { return obj; }
     const prunePaths = rawPrunePaths !== ''
         ? rawPrunePaths.split(/ +/)
         : [];
     const safe = safeSelf();
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 4);
     let needlePaths;
     let log, reLogNeedle;
     if ( prunePaths.length !== 0 ) {
@@ -867,6 +867,67 @@ function matchesStackTrace(
         safe.uboLog(stack.replace(/\t/g, '\n'));
     }
     return r;
+}
+
+/******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'parse-properties-to-match.fn',
+    fn: parsePropertiesToMatch,
+    dependencies: [
+        'safe-self.fn',
+    ],
+});
+function parsePropertiesToMatch(propsToMatch, implicit = '') {
+    const safe = safeSelf();
+    const needles = new Map();
+    if ( propsToMatch === undefined || propsToMatch === '' ) { return needles; }
+    for ( const needle of propsToMatch.split(/\s+/) ) {
+        const [ prop, pattern ] = needle.split(':');
+        if ( prop === '' ) { continue; }
+        if ( pattern !== undefined ) {
+            needles.set(prop, { pattern, re: safe.patternToRegex(pattern) });
+        } else if ( implicit !== '' ) {
+            needles.set(implicit, { pattern: prop, re: safe.patternToRegex(prop) });
+        }
+    }
+    return needles;
+}
+
+/******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'match-object-properties.fn',
+    fn: matchObjectProperties,
+});
+function matchObjectProperties(propNeedles, ...objs) {
+    if ( matchObjectProperties.extractProperties === undefined ) {
+        matchObjectProperties.extractProperties = (src, des, props) => {
+            for ( const p of props ) {
+                const v = src[p];
+                if ( v === undefined ) { continue; }
+                des[p] = src[p];
+            }
+        };
+    }
+    const haystack = {};
+    const props = Array.from(propNeedles.keys());
+    for ( const obj of objs ) {
+        if ( obj instanceof Object === false ) { continue; }
+        matchObjectProperties.extractProperties(obj, haystack, props);
+    }
+    for ( const [ prop, details ] of propNeedles ) {
+        let value = haystack[prop];
+        if ( value === undefined ) { continue; }
+        if ( typeof value !== 'string' ) {
+            try { value = JSON.stringify(value); }
+            catch(ex) { }
+        }
+        if ( typeof value !== 'string' ) { continue; }
+        if ( details.re.test(value) ) { continue; }
+        return false;
+    }
+    return true;
 }
 
 /*******************************************************************************
@@ -1125,8 +1186,11 @@ builtinScriptlets.push({
     name: 'json-prune.js',
     fn: jsonPrune,
     dependencies: [
+        'match-object-properties.fn',
         'object-prune.fn',
+        'parse-properties-to-match.fn',
         'safe-self.fn',
+        'should-log.fn',
     ],
 });
 //  When no "prune paths" argument is provided, the scriptlet is
@@ -1142,29 +1206,45 @@ function jsonPrune(
 ) {
     const safe = safeSelf();
     const stackNeedleDetails = safe.initPattern(stackNeedle, { canNegate: true });
-    const extraArgs = Array.from(arguments).slice(3);
-    JSON.parse = new Proxy(JSON.parse, {
-        apply: function(target, thisArg, args) {
-            return objectPrune(
-                Reflect.apply(target, thisArg, args),
-                rawPrunePaths,
-                rawNeedlePaths,
-                stackNeedleDetails,
-                ...extraArgs
-            );
-        },
-    });
-    Response.prototype.json = new Proxy(Response.prototype.json, {
-        apply: function(target, thisArg, args) {
-            return Reflect.apply(target, thisArg, args).then(o => 
-                objectPrune(
-                    o,
+    const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
+    const logLevel = shouldLog(extraArgs);
+    const fetchPropNeedles = parsePropertiesToMatch(extraArgs.fetchPropsToMatch, 'url');
+    if ( fetchPropNeedles.size === 0 ) {
+        JSON.parse = new Proxy(JSON.parse, {
+            apply: function(target, thisArg, args) {
+                return objectPrune(
+                    Reflect.apply(target, thisArg, args),
                     rawPrunePaths,
                     rawNeedlePaths,
                     stackNeedleDetails,
-                    ...extraArgs
-                )
-            );
+                    extraArgs
+                );
+            },
+        });
+    }
+    Response.prototype.json = new Proxy(Response.prototype.json, {
+        apply: function(target, thisArg, args) {
+            const dataPromise = Reflect.apply(target, thisArg, args);
+            if ( fetchPropNeedles.size !== 0 ) {
+                const outcome = matchObjectProperties(fetchPropNeedles, thisArg)
+                    ? 'match'
+                    : 'nomatch';
+                if ( outcome === logLevel || logLevel === 'all' ) {
+                    safe.uboLog(
+                        `json-prune (${outcome})`,
+                        `\n\tpropsToMatch: ${JSON.stringify(Array.from(fetchPropNeedles)).slice(1,-1)}`,
+                        '\n\tprops:', thisArg,
+                    );
+                }
+                if ( outcome === 'nomatch' ) { return dataPromise; }
+            }
+            return dataPromise.then(data => objectPrune(
+                data,
+                rawPrunePaths,
+                rawNeedlePaths,
+                stackNeedleDetails,
+                extraArgs
+            ));
         },
     });
 }
@@ -3316,6 +3396,8 @@ builtinScriptlets.push({
     requiresTrust: true,
     fn: trustedReplaceFetchResponse,
     dependencies: [
+        'match-object-properties.fn',
+        'parse-properties-to-match.fn',
         'safe-self.fn',
         'should-log.fn',
     ],
@@ -3333,22 +3415,7 @@ function trustedReplaceFetchResponse(
     const log = logLevel ? ((...args) => { safe.uboLog(...args); }) : (( ) => { }); 
     if ( pattern === '*' ) { pattern = '.*'; }
     const rePattern = safe.patternToRegex(pattern);
-    const propNeedles = new Map();
-    for ( const needle of propsToMatch.split(/\s+/) ) {
-        const [ prop, value ] = needle.split(':');
-        if ( prop === '' ) { continue; }
-        if ( value === undefined ) {
-            propNeedles.set('url', prop);
-        } else {
-            propNeedles.set(prop, value);
-        }
-    }
-    const propReducer = (src, des, prop) => {
-        if ( src[prop] !== undefined ) {
-            des[prop] = src[prop];
-        }
-        return des;
-    };
+    const propNeedles = parsePropertiesToMatch(propsToMatch, 'url');
     self.fetch = new Proxy(self.fetch, {
         apply: function(target, thisArg, args) {
             if ( logLevel === true ) {
@@ -3358,51 +3425,35 @@ function trustedReplaceFetchResponse(
             if ( pattern === '' ) { return fetchPromise; }
             let outcome = 'match';
             if ( propNeedles.size !== 0 ) {
-                const props = [
-                    'cache', 'credentials', 'destination', 'method',
-                    'mode', 'redirect', 'referrer', 'referrer-policy',
-                    'url',
-                ];
-                const normalArgs = args[0] instanceof Object
-                    ? props.reduce((a, p) => propReducer(args[0], a, p), {})
-                    : { url: args[0] };
+                const objs = [ args[0] instanceof Object ? args[0] : { url: args[0] } ];
                 if ( args[1] instanceof Object ) {
-                    props.reduce((a, p) => propReducer(args[0], a, p), normalArgs);
+                    objs.push(args[1]);
                 }
-                for ( const prop of props ) {
-                    let value = normalArgs[prop];
-                    if ( value === undefined ) { continue; }
-                    if ( typeof value !== 'string' ) {
-                        try { value = JSON.stringify(value); }
-                        catch(ex) { }
-                    }
-                    if ( typeof value !== 'string' ) { continue; }
-                    const needle = propNeedles.get(prop);
-                    if ( needle === undefined ) { continue; }
-                    if ( safe.patternToRegex(needle).test(value) ) { continue; }
+                if ( matchObjectProperties(propNeedles, ...objs) === false ) {
                     outcome = 'nomatch';
-                    break;
                 }
                 if ( outcome === logLevel || logLevel === 'all' ) {
                     log(
                         `trusted-replace-fetch-response (${outcome})`,
                         `\n\tpropsToMatch: ${JSON.stringify(Array.from(propNeedles)).slice(1,-1)}`,
-                        `\n\tprops: ${JSON.stringify(normalArgs).slice(1,-1)}`,
+                        '\n\tprops:', ...args,
                     );
                 }
             }
             if ( outcome === 'nomatch' ) { return fetchPromise; }
             return fetchPromise.then(responseBefore => {
-                return responseBefore.text().then(textBefore => {
+                const response = responseBefore.clone();
+                return response.text().then(textBefore => {
                     const textAfter = textBefore.replace(rePattern, replacement);
                     const outcome = textAfter !== textBefore ? 'match' : 'nomatch';
                     if ( outcome === logLevel || logLevel === 'all' ) {
                         log(
                             `trusted-replace-fetch-response (${outcome})`,
-                            `\n\tpattern: ${rePattern.source}`, 
+                            `\n\tpattern: ${pattern}`, 
                             `\n\treplacement: ${replacement}`,
                         );
                     }
+                    if ( outcome === 'nomatch' ) { return responseBefore; }
                     const responseAfter = new Response(textAfter, {
                         status: responseBefore.status,
                         statusText: responseBefore.statusText,
