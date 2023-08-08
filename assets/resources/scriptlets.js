@@ -66,13 +66,14 @@ function safeSelf() {
             if ( pattern === '' ) {
                 return { matchAll: true };
             }
-            const expect = (options.canNegate && pattern.startsWith('!') === false);
+            const expect = (options.canNegate === true && pattern.startsWith('!') === false);
             if ( expect === false ) {
                 pattern = pattern.slice(1);
             }
             const match = /^\/(.+)\/([gimsu]*)$/.exec(pattern);
             if ( match !== null ) {
                 return {
+                    pattern,
                     re: new this.RegExp(
                         match[1],
                         match[2] || options.flags
@@ -81,6 +82,7 @@ function safeSelf() {
                 };
             }
             return {
+                pattern,
                 re: new this.RegExp(pattern.replace(
                     /[.*+?^${}()|[\]\\]/g, '\\$&'),
                     options.flags
@@ -882,13 +884,14 @@ function parsePropertiesToMatch(propsToMatch, implicit = '') {
     const safe = safeSelf();
     const needles = new Map();
     if ( propsToMatch === undefined || propsToMatch === '' ) { return needles; }
+    const options = { canNegate: true };
     for ( const needle of propsToMatch.split(/\s+/) ) {
         const [ prop, pattern ] = needle.split(':');
         if ( prop === '' ) { continue; }
         if ( pattern !== undefined ) {
-            needles.set(prop, { pattern, re: safe.patternToRegex(pattern) });
+            needles.set(prop, safe.initPattern(pattern, options));
         } else if ( implicit !== '' ) {
-            needles.set(implicit, { pattern: prop, re: safe.patternToRegex(prop) });
+            needles.set(implicit, safe.initPattern(prop, options));
         }
     }
     return needles;
@@ -899,6 +902,9 @@ function parsePropertiesToMatch(propsToMatch, implicit = '') {
 builtinScriptlets.push({
     name: 'match-object-properties.fn',
     fn: matchObjectProperties,
+    dependencies: [
+        'safe-self.fn',
+    ],
 });
 function matchObjectProperties(propNeedles, ...objs) {
     if ( matchObjectProperties.extractProperties === undefined ) {
@@ -910,6 +916,7 @@ function matchObjectProperties(propNeedles, ...objs) {
             }
         };
     }
+    const safe = safeSelf();
     const haystack = {};
     const props = Array.from(propNeedles.keys());
     for ( const obj of objs ) {
@@ -922,9 +929,9 @@ function matchObjectProperties(propNeedles, ...objs) {
         if ( typeof value !== 'string' ) {
             try { value = JSON.stringify(value); }
             catch(ex) { }
+            if ( typeof value !== 'string' ) { continue; }
         }
-        if ( typeof value !== 'string' ) { continue; }
-        if ( details.re.test(value) ) { continue; }
+        if ( safe.testPattern(details, value) ) { continue; }
         return false;
     }
     return true;
