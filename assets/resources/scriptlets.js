@@ -1216,7 +1216,10 @@ function jsonPrune(
     const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
     const logLevel = shouldLog(extraArgs);
     const fetchPropNeedles = parsePropertiesToMatch(extraArgs.fetchPropsToMatch, 'url');
-    if ( fetchPropNeedles.size === 0 ) {
+    if (
+        fetchPropNeedles.size === 0 ||
+        matchObjectProperties(fetchPropNeedles, { url: 'undefined' })
+    ) {
         JSON.parse = new Proxy(JSON.parse, {
             apply: function(target, thisArg, args) {
                 return objectPrune(
