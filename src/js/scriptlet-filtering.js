@@ -192,10 +192,11 @@ const lookupScriptlet = function(rawToken, mainMap, isolatedMap) {
     }
     targetWorldMap.set(rawToken, [
         'try {',
-        '// >>>> scriptlet start',
-        content,
-        '// <<<< scriptlet end',
+            '// >>>> scriptlet start',
+            content,
+            '// <<<< scriptlet end',
         '} catch (e) {',
+            isDevBuild ? 'console.error(e);' : '',
         '}',
     ].join('\n'));
 };
