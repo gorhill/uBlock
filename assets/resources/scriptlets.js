@@ -639,7 +639,7 @@ function objectPrune(
     stackNeedleDetails = { matchAll: true },
     extraArgs = {}
 ) {
-    if ( typeof rawPrunePaths !== 'string' ) { return obj; }
+    if ( typeof rawPrunePaths !== 'string' ) { return; }
     const safe = safeSelf();
     const prunePaths = rawPrunePaths !== ''
         ? rawPrunePaths.split(/ +/)
@@ -648,11 +648,10 @@ function objectPrune(
         ? rawNeedlePaths.split(/ +/)
         : [];
     const logLevel = shouldLog({ log: rawPrunePaths === '' || extraArgs.log });
-    const log = logLevel ? ((...args) => { safe.uboLog(...args); }) : (( ) => { }); 
     const reLogNeedle = safe.patternToRegex(logLevel === true ? rawNeedlePaths : '');
     if ( stackNeedleDetails.matchAll !== true ) {
         if ( matchesStackTrace(stackNeedleDetails, extraArgs.logstack) === false ) {
-            return obj;
+            return;
         }
     }
     if ( objectPrune.findOwner === undefined ) {
@@ -666,15 +665,18 @@ function objectPrune(
                     if ( prune === false ) {
                         return owner.hasOwnProperty(chain);
                     }
+                    let modified = false;
                     if ( chain === '*' ) {
                         for ( const key in owner ) {
                             if ( owner.hasOwnProperty(key) === false ) { continue; }
                             delete owner[key];
+                            modified = true;
                         }
                     } else if ( owner.hasOwnProperty(chain) ) {
                         delete owner[chain];
+                        modified = true;
                     }
-                    return true;
+                    return modified;
                 }
                 const prop = chain.slice(0, pos);
                 if (
@@ -701,19 +703,28 @@ function objectPrune(
             }
             return true;
         };
+        objectPrune.logJson = (json, logLevel, reNeedle) => {
+            if ( reNeedle.test(json) === false ) { return; }
+            safeSelf().uboLog(`objectPrune() log:${logLevel}`, location.hostname, json);
+        };
     }
+    const jsonBefore = logLevel ? JSON.stringify(obj, null, 2) : '';
     if ( logLevel === true || logLevel === 'all' ) {
-        const json = JSON.stringify(obj, null, 2);
-        if ( reLogNeedle.test(json) ) {
-            log(location.hostname, json);
+        objectPrune.logJson(jsonBefore, logLevel, reLogNeedle);
+    }
+    if ( prunePaths.length === 0 ) { return; }
+    let outcome = 'nomatch';
+    if ( objectPrune.mustProcess(obj, needlePaths) ) {
+        for ( const path of prunePaths ) {
+            if ( objectPrune.findOwner(obj, path, true) ) {
+                outcome = 'match';
+            }
         }
     }
-    if ( prunePaths.length === 0 ) { return obj; }
-    if ( objectPrune.mustProcess(obj, needlePaths) === false ) { return obj; }
-    for ( const path of prunePaths ) {
-        objectPrune.findOwner(obj, path, true);
+    if ( logLevel === outcome ) {
+        objectPrune.logJson(jsonBefore, logLevel, reLogNeedle);
     }
-    return obj;
+    if ( outcome === 'match' ) { return obj; }
 }
 
 /******************************************************************************/
@@ -1214,16 +1225,15 @@ function jsonPrune(
     ) {
         JSON.parse = new Proxy(JSON.parse, {
             apply: function(target, thisArg, args) {
-                if ( logLevel ) {
-                    safe.uboLog('json-prune / JSON.parse()');
-                }
-                return objectPrune(
-                    Reflect.apply(target, thisArg, args),
+                const objBefore = Reflect.apply(target, thisArg, args);
+                const objAfter = objectPrune(
+                    objBefore,
                     rawPrunePaths,
                     rawNeedlePaths,
                     stackNeedleDetails,
                     extraArgs
-                );
+               );
+               return objAfter || objBefore;
             },
         });
     }
@@ -1244,13 +1254,16 @@ function jsonPrune(
                 );
             }
             if ( outcome === 'nomatch' ) { return dataPromise; }
-            return dataPromise.then(data => objectPrune(
-                data,
-                rawPrunePaths,
-                rawNeedlePaths,
-                stackNeedleDetails,
-                extraArgs
-            ));
+            return dataPromise.then(objBefore => {
+                const objAfter = objectPrune(
+                    objBefore,
+                    rawPrunePaths,
+                    rawNeedlePaths,
+                    stackNeedleDetails,
+                    extraArgs
+                );
+               return objAfter || objBefore;
+            });
         },
     });
 }
@@ -1272,11 +1285,12 @@ function evaldataPrune(
 ) {
     self.eval = new Proxy(self.eval, {
         apply(target, thisArg, args) {
-            let data = Reflect.apply(target, thisArg, args);
-            if ( typeof data === 'object' ) {
-                data = objectPrune(data, rawPrunePaths, rawNeedlePaths);
+            const before = Reflect.apply(target, thisArg, args);
+            if ( typeof before === 'object' ) {
+                const after = objectPrune(before, rawPrunePaths, rawNeedlePaths);
+                return after || before;
             }
-            return data;
+            return before;
         }
     });
 }
