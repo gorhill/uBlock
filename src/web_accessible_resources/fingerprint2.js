@@ -19,19 +19,37 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+// Reference:
+// https://github.com/fingerprintjs/fingerprintjs/tree/v2
+
 (function() {
     'use strict';
-    let browserId = '';
-    for ( let i = 0; i < 8; i++ ) {
-        browserId += (Math.random() * 0x10000 + 0x1000 | 0).toString(16).slice(-4);
-    }
+    const hex32 = len => {
+        return Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)
+            .toString(16)
+            .slice(-len)
+            .padStart(len, '0');
+    };
+    const browserId = `${hex32(8)}${hex32(8)}${hex32(8)}${hex32(8)}`;
     const fp2 = function(){};
     fp2.get = function(opts, cb) {
         if ( !cb  ) { cb = opts; }
-        setTimeout(( ) => { cb(browserId, []); }, 1);
+        setTimeout(( ) => { cb([]); }, 1);
+    };
+    fp2.getPromise = function() {
+        return Promise.resolve([]);
+    };
+    fp2.getV18 = function() {
+        return browserId;
+    };
+    fp2.x64hash128 = function() {
+        return browserId;
     };
     fp2.prototype = {
-        get: fp2.get
+        get: function(opts, cb) {
+            if ( !cb  ) { cb = opts; }
+            setTimeout(( ) => { cb(browserId, []); }, 1);
+        },
     };
-    window.Fingerprint2 = fp2;
+    self.Fingerprint2 = fp2;
 })();
