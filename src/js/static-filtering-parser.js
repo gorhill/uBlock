@@ -3479,11 +3479,11 @@ class ExtSelectorCompiler {
         const prelude = [];
         const tasks = [];
         for ( const part of parts ) {
+            if ( out.action !== undefined ) { return; }
             const { data } = part;
             switch ( data.type ) {
             case 'ActionSelector': {
                 if ( details.noaction ) { return; }
-                if ( out.action !== undefined ) { return; }
                 if ( prelude.length !== 0 ) {
                     if ( tasks.length === 0 ) {
                         out.selector = prelude.join('');
