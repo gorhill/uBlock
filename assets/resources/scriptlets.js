@@ -640,86 +640,78 @@ function objectPrune(
     extraArgs = {}
 ) {
     if ( typeof rawPrunePaths !== 'string' ) { return obj; }
+    const safe = safeSelf();
     const prunePaths = rawPrunePaths !== ''
         ? rawPrunePaths.split(/ +/)
         : [];
-    const safe = safeSelf();
-    let needlePaths;
-    let log, reLogNeedle;
-    if ( prunePaths.length !== 0 ) {
-        needlePaths = prunePaths.length !== 0 && rawNeedlePaths !== ''
-            ? rawNeedlePaths.split(/ +/)
-            : [];
-        if ( extraArgs.log !== undefined ) {
-            log = console.log.bind(console);
-            reLogNeedle = safe.patternToRegex(extraArgs.log);
-        }
-    } else {
-        log = console.log.bind(console);
-        reLogNeedle = safe.patternToRegex(rawNeedlePaths);
-    }
+    const needlePaths = prunePaths.length !== 0 && rawNeedlePaths !== ''
+        ? rawNeedlePaths.split(/ +/)
+        : [];
+    const logLevel = shouldLog({ log: rawPrunePaths === '' || extraArgs.log });
+    const log = logLevel ? ((...args) => { safe.uboLog(...args); }) : (( ) => { }); 
+    const reLogNeedle = safe.patternToRegex(logLevel === true ? rawNeedlePaths : '');
     if ( stackNeedleDetails.matchAll !== true ) {
         if ( matchesStackTrace(stackNeedleDetails, extraArgs.logstack) === false ) {
             return obj;
         }
     }
-    const findOwner = function(root, path, prune = false) {
-        let owner = root;
-        let chain = path;
-        for (;;) {
-            if ( typeof owner !== 'object' || owner === null  ) {
-                return false;
-            }
-            const pos = chain.indexOf('.');
-            if ( pos === -1 ) {
-                if ( prune === false ) {
-                    return owner.hasOwnProperty(chain);
-                }
-                if ( chain === '*' ) {
-                    for ( const key in owner ) {
-                        if ( owner.hasOwnProperty(key) === false ) { continue; }
-                        delete owner[key];
+    if ( objectPrune.findOwner === undefined ) {
+        objectPrune.findOwner = (root, path, prune = false) => {
+            let owner = root;
+            let chain = path;
+            for (;;) {
+                if ( typeof owner !== 'object' || owner === null  ) { return false; }
+                const pos = chain.indexOf('.');
+                if ( pos === -1 ) {
+                    if ( prune === false ) {
+                        return owner.hasOwnProperty(chain);
                     }
-                } else if ( owner.hasOwnProperty(chain) ) {
-                    delete owner[chain];
+                    if ( chain === '*' ) {
+                        for ( const key in owner ) {
+                            if ( owner.hasOwnProperty(key) === false ) { continue; }
+                            delete owner[key];
+                        }
+                    } else if ( owner.hasOwnProperty(chain) ) {
+                        delete owner[chain];
+                    }
+                    return true;
                 }
-                return true;
-            }
-            const prop = chain.slice(0, pos);
-            if (
-                prop === '[]' && Array.isArray(owner) ||
-                prop === '*' && owner instanceof Object
-            ) {
-                const next = chain.slice(pos + 1);
-                let found = false;
-                for ( const key of Object.keys(owner) ) {
-                    found = findOwner(owner[key], next, prune) || found;
+                const prop = chain.slice(0, pos);
+                if (
+                    prop === '[]' && Array.isArray(owner) ||
+                    prop === '*' && owner instanceof Object
+                ) {
+                    const next = chain.slice(pos + 1);
+                    let found = false;
+                    for ( const key of Object.keys(owner) ) {
+                        found = objectPrune.findOwner(owner[key], next, prune) || found;
+                    }
+                    return found;
                 }
-                return found;
+                if ( owner.hasOwnProperty(prop) === false ) { return false; }
+                owner = owner[prop];
+                chain = chain.slice(pos + 1);
             }
-            if ( owner.hasOwnProperty(prop) === false ) { return false; }
-            owner = owner[prop];
-            chain = chain.slice(pos + 1);
-        }
-    };
-    const mustProcess = function(root) {
-        for ( const needlePath of needlePaths ) {
-            if ( findOwner(root, needlePath) === false ) {
-                return false;
+        };
+        objectPrune.mustProcess = (root, needlePaths) => {
+            for ( const needlePath of needlePaths ) {
+                if ( objectPrune.findOwner(root, needlePath) === false ) {
+                    return false;
+                }
             }
-        }
-        return true;
-    };
-    if ( log !== undefined ) {
+            return true;
+        };
+    }
+    if ( logLevel === true || logLevel === 'all' ) {
         const json = JSON.stringify(obj, null, 2);
         if ( reLogNeedle.test(json) ) {
-            log('uBO:', location.hostname, json);
+            log(location.hostname, json);
         }
-        return obj;
     }
-    if ( mustProcess(obj) === false ) { return obj; }
+    if ( prunePaths.length === 0 ) { return obj; }
+    if ( objectPrune.mustProcess(obj, needlePaths) === false ) { return obj; }
     for ( const path of prunePaths ) {
-        findOwner(obj, path, true);
+        objectPrune.findOwner(obj, path, true);
     }
     return obj;
 }
@@ -1222,6 +1214,9 @@ function jsonPrune(
     ) {
         JSON.parse = new Proxy(JSON.parse, {
             apply: function(target, thisArg, args) {
+                if ( logLevel ) {
+                    safe.uboLog('json-prune / JSON.parse()');
+                }
                 return objectPrune(
                     Reflect.apply(target, thisArg, args),
                     rawPrunePaths,
@@ -1235,19 +1230,20 @@ function jsonPrune(
     Response.prototype.json = new Proxy(Response.prototype.json, {
         apply: function(target, thisArg, args) {
             const dataPromise = Reflect.apply(target, thisArg, args);
+            let outcome = 'match';
             if ( fetchPropNeedles.size !== 0 ) {
-                const outcome = matchObjectProperties(fetchPropNeedles, thisArg)
-                    ? 'match'
-                    : 'nomatch';
-                if ( outcome === logLevel || logLevel === 'all' ) {
-                    safe.uboLog(
-                        `json-prune (${outcome})`,
-                        `\n\tpropsToMatch: ${JSON.stringify(Array.from(fetchPropNeedles)).slice(1,-1)}`,
-                        '\n\tprops:', thisArg,
-                    );
+                if ( matchObjectProperties(fetchPropNeedles, thisArg) === false ) {
+                    outcome = 'nomatch';
                 }
-                if ( outcome === 'nomatch' ) { return dataPromise; }
             }
+            if ( outcome === logLevel || logLevel === 'all' ) {
+                safe.uboLog(
+                    `json-prune / Response.json() (${outcome})`,
+                    `\n\tfetchPropsToMatch: ${JSON.stringify(Array.from(fetchPropNeedles)).slice(1,-1)}`,
+                    '\n\tprops:', thisArg,
+                );
+            }
+            if ( outcome === 'nomatch' ) { return dataPromise; }
             return dataPromise.then(data => objectPrune(
                 data,
                 rawPrunePaths,
