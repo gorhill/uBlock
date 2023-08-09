@@ -703,14 +703,14 @@ function objectPrune(
             }
             return true;
         };
-        objectPrune.logJson = (json, logLevel, reNeedle) => {
+        objectPrune.logJson = (json, msg, reNeedle) => {
             if ( reNeedle.test(json) === false ) { return; }
-            safeSelf().uboLog(`objectPrune() log:${logLevel}`, location.hostname, json);
+            safeSelf().uboLog(`objectPrune()`, msg, location.hostname, json);
         };
     }
     const jsonBefore = logLevel ? JSON.stringify(obj, null, 2) : '';
     if ( logLevel === true || logLevel === 'all' ) {
-        objectPrune.logJson(jsonBefore, logLevel, reLogNeedle);
+        objectPrune.logJson(jsonBefore, `prune:"${rawPrunePaths}" log:"${logLevel}"`, reLogNeedle);
     }
     if ( prunePaths.length === 0 ) { return; }
     let outcome = 'nomatch';
@@ -722,7 +722,7 @@ function objectPrune(
         }
     }
     if ( logLevel === outcome ) {
-        objectPrune.logJson(jsonBefore, logLevel, reLogNeedle);
+        objectPrune.logJson(jsonBefore, `prune:"${rawPrunePaths}" log:"${logLevel}"`, reLogNeedle);
     }
     if ( outcome === 'match' ) { return obj; }
 }
