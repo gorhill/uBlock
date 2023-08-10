@@ -944,7 +944,7 @@ const gotoReport = function() {
     messaging.send('popupPanel', {
         what: 'launchReporter',
         tabId: popupData.tabId,
-        pageURL: popupData.pageURL,
+        pageURL: popupData.rawURL,
         popupPanel,
     });
 
@@ -1167,7 +1167,7 @@ const reloadTab = function(bypassCache = false) {
     messaging.send('popupPanel', {
         what: 'reloadTab',
         tabId: popupData.tabId,
-        url: popupData.pageURL,
+        url: popupData.rawURL,
         select: vAPI.webextFlavor.soup.has('mobile'),
         bypassCache,
     });
