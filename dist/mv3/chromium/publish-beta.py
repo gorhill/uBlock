@@ -12,7 +12,6 @@ import tempfile
 import time
 import zipfile
 
-from distutils.version import StrictVersion
 from string import Template
 
 # - Download target (raw) uBOLite_*.chromium.mv3.zip from GitHub
