@@ -45,19 +45,25 @@ mkdir -p $DES/css/fonts
 mkdir -p $DES/js
 mkdir -p $DES/img
 
+UBO_DIR=$(mktemp -d)
+UBO_REPO="https://github.com/gorhill/uBlock.git"
+UBO_VERSION=$(cat platform/mv3/ubo-version)
+echo "*** uBOLite.mv3: Fetching uBO $UBO_VERSION from $UBO_REPO into $UBO_DIR"
+git clone -q --depth 1 --branch "$UBO_VERSION" "$UBO_REPO" "$UBO_DIR"
+
 echo "*** uBOLite.mv3: Copying common files"
-cp -R src/css/fonts/* $DES/css/fonts/
-cp src/css/themes/default.css $DES/css/
-cp src/css/common.css $DES/css/
-cp src/css/dashboard-common.css $DES/css/
-cp src/css/fa-icons.css $DES/css/
+cp -R $UBO_DIR/src/css/fonts/* $DES/css/fonts/
+cp $UBO_DIR/src/css/themes/default.css $DES/css/
+cp $UBO_DIR/src/css/common.css $DES/css/
+cp $UBO_DIR/src/css/dashboard-common.css $DES/css/
+cp $UBO_DIR/src/css/fa-icons.css $DES/css/
 
-cp src/js/dom.js $DES/js/
-cp src/js/fa-icons.js $DES/js/
-cp src/js/i18n.js $DES/js/
-cp src/lib/punycode.js $DES/js/
+cp $UBO_DIR/src/js/dom.js $DES/js/
+cp $UBO_DIR/src/js/fa-icons.js $DES/js/
+cp $UBO_DIR/src/js/i18n.js $DES/js/
+cp $UBO_DIR/src/lib/punycode.js $DES/js/
 
-cp -R src/img/flags-of-the-world $DES/img
+cp -R $UBO_DIR/src/img/flags-of-the-world $DES/img
 
 cp LICENSE.txt $DES/
 
@@ -89,7 +95,7 @@ if [ "$QUICK" != "yes" ]; then
     cp assets/resources/scriptlets.js $TMPDIR/
     cp -R platform/mv3/scriptlets $TMPDIR/
     mkdir -p $TMPDIR/web_accessible_resources
-    cp src/web_accessible_resources/* $TMPDIR/web_accessible_resources/
+    cp $UBO_DIR/src/web_accessible_resources/* $TMPDIR/web_accessible_resources/
     cd $TMPDIR
     node --no-warnings make-rulesets.js output=$DES platform="$PLATFORM"
     cd - > /dev/null
