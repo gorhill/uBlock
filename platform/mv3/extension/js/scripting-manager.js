@@ -417,10 +417,6 @@ function registerSpecific(context) {
 /******************************************************************************/
 
 function registerScriptlet(context, scriptletDetails) {
-    // https://bugzilla.mozilla.org/show_bug.cgi?id=1736575
-    //   `MAIN` world not yet supported in Firefox
-    if ( isGecko ) { return; }
-
     const { before, filteringModeDetails, rulesetsDetails } = context;
 
     const hasBroadHostPermission =
@@ -476,8 +472,13 @@ function registerScriptlet(context, scriptletDetails) {
                 matches,
                 excludeMatches,
                 runAt: 'document_start',
-                world: 'MAIN',
             };
+
+            // https://bugzilla.mozilla.org/show_bug.cgi?id=1736575
+            //   `MAIN` world not yet supported in Firefox
+            if ( isGecko === false ) {
+                directive.world = 'MAIN';
+            }
 
             // register
             if ( registered === undefined ) {

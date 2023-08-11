@@ -35,7 +35,6 @@ if [ "$QUICK" != "yes" ]; then
     rm -rf $DES
 fi
 
-
 mkdir -p $DES
 cd $DES
 DES=$(pwd)
@@ -45,11 +44,15 @@ mkdir -p $DES/css/fonts
 mkdir -p $DES/js
 mkdir -p $DES/img
 
-UBO_DIR=$(mktemp -d)
-UBO_REPO="https://github.com/gorhill/uBlock.git"
-UBO_VERSION=$(cat platform/mv3/ubo-version)
-echo "*** uBOLite.mv3: Fetching uBO $UBO_VERSION from $UBO_REPO into $UBO_DIR"
-git clone -q --depth 1 --branch "$UBO_VERSION" "$UBO_REPO" "$UBO_DIR"
+if [ "$UBO_VERSION" != "local" ]; then
+    UBO_VERSION=$(cat platform/mv3/ubo-version)
+    UBO_REPO="https://github.com/gorhill/uBlock.git"
+    UBO_DIR=$(mktemp -d)
+    echo "*** uBOLite.mv3: Fetching uBO $UBO_VERSION from $UBO_REPO into $UBO_DIR"
+    git clone -q --depth 1 --branch "$UBO_VERSION" "$UBO_REPO" "$UBO_DIR"
+else
+    UBO_DIR=.
+fi
 
 echo "*** uBOLite.mv3: Copying common files"
 cp -R $UBO_DIR/src/css/fonts/* $DES/css/fonts/

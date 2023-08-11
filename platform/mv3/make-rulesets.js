@@ -53,18 +53,22 @@ const commandLineArgs = (( ) => {
     return args;
 })();
 
+const platform = commandLineArgs.get('platform') || 'chromium';
 const outputDir = commandLineArgs.get('output') || '.';
 const cacheDir = `${outputDir}/../mv3-data`;
 const rulesetDir = `${outputDir}/rulesets`;
 const scriptletDir = `${rulesetDir}/scripting`;
 const env = [
-    'chromium',
+    platform,
     'mv3',
-    'native_css_has',
     'ublock',
     'ubol',
     'user_stylesheet',
 ];
+
+if ( platform !== 'firefox' ) {
+    env.push('native_css_has');
+}
 
 /******************************************************************************/
 
@@ -1222,7 +1226,7 @@ async function main() {
         resources: Array.from(requiredRedirectResources).map(path => `/${path}`),
         matches: [ '<all_urls>' ],
     };
-    if ( commandLineArgs.get('platform') === 'chromium' ) {
+    if ( platform === 'chromium' ) {
         web_accessible_resources.use_dynamic_url = true;
     }
     manifest.web_accessible_resources = [ web_accessible_resources ];

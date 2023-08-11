@@ -378,8 +378,13 @@ class PSelector {
     prime(input) {
         const root = input || document;
         if ( this.selector === '' ) { return [ root ]; }
-        if ( input !== document && /^ ?[>+~]/.test(this.selector) ) {
-            return Array.from(PSelectorSpathTask.qsa(input, this.selector));
+        if ( input !== document ) {
+            const c0 = this.selector.charCodeAt(0);
+            if ( c0 === 0x2B /* + */ || c0 === 0x7E /* ~ */ ) {
+                return Array.from(PSelectorSpathTask.qsa(input, this.selector));
+            } else if ( c0 === 0x3E /* > */ ) {
+                return Array.from(input.querySelectorAll(`:scope ${this.selector}`));
+            }
         }
         return Array.from(root.querySelectorAll(this.selector));
     }

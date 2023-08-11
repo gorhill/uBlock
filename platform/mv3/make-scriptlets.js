@@ -167,7 +167,7 @@ export async function commit(rulesetId, path, writeFn) {
         content = safeReplace(content, /\$scriptletName\$/, details.name, 0);
         content = safeReplace(content,
             'self.$argsList$',
-            JSON.stringify(Array.from(details.args.keys()))
+            JSON.stringify(Array.from(details.args.keys()).map(a => JSON.parse(a)))
         );
         content = safeReplace(content,
             'self.$hostnamesMap$',
