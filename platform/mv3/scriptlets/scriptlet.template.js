@@ -37,7 +37,7 @@
 
 /******************************************************************************/
 
-// Start of injected code
+// Start of code to inject
 const uBOL_$scriptletName$ = function() {
 
 const scriptletGlobals = new Map(); // jshint ignore: line
@@ -122,7 +122,7 @@ argsList.length = 0;
 /******************************************************************************/
 
 };
-// End of injected code
+// End of code to inject
 
 /******************************************************************************/
 
