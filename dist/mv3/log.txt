@@ -1,5 +1,5 @@
 Version: 1.0.23.8118
-Secret: 742a9ca357804401
+Secret: 033250bca7ab3a98
 ============================
 Listset for 'default':
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/filters.min.txt
@@ -958,8 +958,8 @@ Procedural-related distinct filters: 244 distinct combined selectors
 Listset for 'nor-0':
 	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianList.txt
 	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/AntiAdblockEntries.txt
-	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/NordicFilters-NotBrave.txt
 	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/NordicFilters-NotFirefox.txt
+	Fetching remote https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/NordicFilters-NotBrave.txt
 Input filter count: 1400
 	Accepted filter count: 1400
 	Rejected filter count: 0
@@ -1049,8 +1049,8 @@ Output rule count: 0
 ============================
 Listset for 'rus-0':
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/RuAdList-uBO.txt
-	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/first_level.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/adservers.txt
+	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/first_level.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/general_block.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/general_hide.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/popup.txt
