@@ -1,5 +1,5 @@
-Version: 1.0.23.8124
-Secret: 2e7f6a68aee32972
+Version: 1.0.23.8125
+Secret: 21c2305f8d93cb32
 ============================
 Listset for 'default':
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/filters.min.txt
@@ -372,11 +372,11 @@ CSS-specific: 350 distinct filters
 ============================
 Listset for 'chn-0':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/224.txt
-Input filter count: 15187
-	Accepted filter count: 15122
+Input filter count: 15188
+	Accepted filter count: 15123
 	Rejected filter count: 1
 Output rule count: 6476
-	Pruning requestDomains: from 6186 to 6178
+	Pruning requestDomains: from 6187 to 6179
 	Pruning requestDomains: from 521 to 519
 	Plain good: 6411
 
@@ -449,7 +449,7 @@ CSS-generic-high: 34 plain CSS selectors
 CSS-specific: 2395 distinct filters
 	Combined into 1770 distinct hostnames
 	Combined into 0 distinct entities
-Procedural-related distinct filters: 83 distinct combined selectors
+Procedural-related distinct filters: 84 distinct combined selectors
 	Combined into 60 distinct hostnames
 	Combined into 0 distinct entities
 ============================
@@ -1067,8 +1067,8 @@ Listset for 'rus-0':
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/specific_antisocial.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/specific_block.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/specific_hide.txt
-	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/thirdparty.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/specific_special.txt
+	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/thirdparty.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/whitelist.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/css-fixes-experimental.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/js-fixes-experimental.txt
