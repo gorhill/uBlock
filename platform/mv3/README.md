@@ -21,7 +21,7 @@ The file `dist/build/mv3-data/log.txt` will contain information about what happe
 
 The entry in the `Makefile` which implement the build process is `tools/make-mv3.sh [platform]`.[1] This Bash script copy various files from uBlock Origin branch and MV3-specific branch into a single folder which will be the final extension package.
 
-Notably, `tools/make-mv3.sh [platform]` calls a Nodejs script which purpose is to convert the filter lists into various rulesets to be used in a declarative way.[2] The Nodejs version required is 17.5.0 or above.
+Notably, `tools/make-mv3.sh [platform]` calls a Nodejs script which purpose is to convert the filter lists into various rulesets to be used in a declarative way. The Nodejs version required is 17.5.0 or above.
 
 All the final rulesets are present in the `dist/build/uBOLite.[platform]/rulesets` in the final extension package.
 
