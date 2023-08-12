@@ -3,9 +3,9 @@
   "uBOLite@raymondhill.net": {
    "updates": [
     {
-     "version": "0.1.23.4076",
-     "browser_specific_settings": { "gecko": { "strict_min_version": "113a1" } },
-     "update_link": "https://github.com/gorhill/uBlock/releases/download/1.48.5b5/uBlock0_1.48.5b5.firefox.signed.xpi"
+     "version": "1.0.23.8121",
+     "browser_specific_settings": { "gecko": { "strict_min_version": "114.0" } },
+     "update_link": "https://github.com/gorhill/uBlock/releases/download/uBOLite_1.0.23.8121/uBOLite_uBOLite_1.0.23.8121.firefox.signed.mv3.xpi"
     }
    ]
   }
