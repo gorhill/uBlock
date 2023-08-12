@@ -80,6 +80,7 @@ cp platform/mv3/extension/css/* $DES/css/
 cp -R platform/mv3/extension/js/* $DES/js/
 cp platform/mv3/extension/img/* $DES/img/
 cp -R platform/mv3/extension/_locales $DES/
+cp platform/mv3/README.md $DES/
 
 if [ "$QUICK" != "yes" ]; then
     echo "*** uBOLite.mv3: Generating rulesets"
@@ -119,7 +120,6 @@ if [ "$FULL" = "yes" ]; then
     mkdir -p $TMPDIR
     cp -R $DES/* $TMPDIR/
     cd $TMPDIR > /dev/null
-    rm log.txt
     zip $PACKAGENAME -qr ./*
     cd - > /dev/null
     cp $TMPDIR/$PACKAGENAME dist/build/

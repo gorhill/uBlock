@@ -1327,7 +1327,6 @@ async function main() {
 
     // Log results
     const logContent = stdOutput.join('\n') + '\n';
-    await fs.writeFile(`${outputDir}/log.txt`, logContent);
     await fs.writeFile(`${cacheDir}/log.txt`, logContent);
 }
 
