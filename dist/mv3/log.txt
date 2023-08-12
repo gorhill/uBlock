@@ -1,5 +1,5 @@
-Version: 1.0.23.8121
-Secret: 3ea71cb68426a7de
+Version: 1.0.23.8124
+Secret: 2e7f6a68aee32972
 ============================
 Listset for 'default':
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/filters.min.txt
@@ -11,14 +11,14 @@ Listset for 'default':
 	Fetching remote https://ublockorigin.github.io/uAssets/thirdparties/easylist.txt
 	Fetching remote https://ublockorigin.github.io/uAssets/thirdparties/easyprivacy.txt
 	Fetching remote https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
-Input filter count: 92491
-	Accepted filter count: 90918
-	Rejected filter count: 146
-Output rule count: 17712
-	Pruning requestDomains: from 53605 to 53453
+Input filter count: 92483
+	Accepted filter count: 90908
+	Rejected filter count: 148
+Output rule count: 17673
+	Pruning requestDomains: from 53623 to 53470
 	Pruning requestDomains: from 2672 to 2666
-	Pruning requestDomains: from 5921 to 5917
-	Plain good: 16896
+	Pruning requestDomains: from 5923 to 5919
+	Plain good: 16857
 		Salvaged rule by ignoring 1 entity-based domain= option: erotic-beauties.com|hardsex.cc|rule34.top|sex-movies.biz|tube18.sexy|xvideos.name|booru.*
 		Salvaged rule by ignoring 19 entity-based domain= option: fullxh.com|hamsterix.*|megaxh.com|unlockxh4.com|xhadult2.com|xhadult3.com|xhadult4.com|xhadult5.com|xhamster.*|xhamster10.*|xhamster11.*|xhamster12.*|xhamster13.*|xhamster14.*|xhamster15.*|xhamster16.*|xhamster17.*|xhamster18.*|xhamster19.*|xhamster2.*|xhamster20.*|xhamster3.*|xhamster4.*|xhamster46.com|xhamster5.*|xhamster7.*|xhamster8.*|xhday.com|xhday1.com|xhmoon5.com|xhplanet1.com|xhplanet2.com|xhreal2.com|xhreal3.com|xhtab2.com|xhvictory.com|xhwebsite.com|xhwebsite2.com|xhwide1.com|xhwide8.com
 		Salvaged rule by ignoring 19 entity-based domain= option: fullxh.com|hamsterix.*|megaxh.com|unlockxh4.com|xhadult2.com|xhadult3.com|xhadult4.com|xhadult5.com|xhamster.*|xhamster10.*|xhamster11.*|xhamster12.*|xhamster13.*|xhamster14.*|xhamster15.*|xhamster16.*|xhamster17.*|xhamster18.*|xhamster19.*|xhamster2.*|xhamster20.*|xhamster3.*|xhamster4.*|xhamster46.com|xhamster5.*|xhamster7.*|xhamster8.*|xhday.com|xhday1.com|xhmoon5.com|xhplanet1.com|xhplanet2.com|xhreal2.com|xhreal3.com|xhtab2.com|xhvictory.com|xhwebsite.com|xhwebsite2.com|xhwide1.com|xhwide8.com
@@ -314,8 +314,8 @@ Output rule count: 17712
 		regexFilter is not RE2-compatible: ^https?:\/\/(?:[a-z]{2}\.)?[0-9a-z]{5,16}\.[a-z]{3,7}\/[a-z](?=[a-z]{0,25}[0-9A-Z])[0-9a-zA-Z]{3,26}\/\d{4,5}(?:\?[_v]=\d+)?$
 CSS-generic: 16060 plain CSS selectors
 CSS-generic-high: 555 plain CSS selectors
-CSS-specific: 9599 distinct filters
-	Combined into 9032 distinct hostnames
+CSS-specific: 9603 distinct filters
+	Combined into 9033 distinct hostnames
 	Combined into 490 distinct entities
 CSS-declarative: 418 distinct filters
 	Combined into 620 distinct hostnames
@@ -372,11 +372,11 @@ CSS-specific: 350 distinct filters
 ============================
 Listset for 'chn-0':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/224.txt
-Input filter count: 15183
-	Accepted filter count: 15118
+Input filter count: 15187
+	Accepted filter count: 15122
 	Rejected filter count: 1
 Output rule count: 6476
-	Pruning requestDomains: from 6183 to 6175
+	Pruning requestDomains: from 6186 to 6178
 	Pruning requestDomains: from 521 to 519
 	Plain good: 6411
 
@@ -392,9 +392,9 @@ Output rule count: 6476
 		Invalid network filter in chn-0: @@||cmechina.net^$genericblock
 CSS-generic: 757 plain CSS selectors
 CSS-generic-high: 403 plain CSS selectors
-CSS-specific: 6498 distinct filters
+CSS-specific: 6501 distinct filters
 	Combined into 2788 distinct hostnames
-	Combined into 2 distinct entities
+	Combined into 1 distinct entities
 CSS-declarative: 77 distinct filters
 	Combined into 70 distinct hostnames
 	Combined into 0 distinct entities
@@ -824,23 +824,25 @@ Listset for 'kor-1':
 	Fetching remote https://cdn.jsdelivr.net/gh/List-KR/List-KR@master/filters-uBO/allowlist.txt
 	Fetching remote https://cdn.jsdelivr.net/gh/List-KR/List-KR@master/filters-share/specific_CSS.txt
 	Fetching remote https://cdn.jsdelivr.net/gh/List-KR/List-KR@master/filters-uBO/specific_CSS.txt
-Input filter count: 1249
-	Accepted filter count: 1243
+Input filter count: 1252
+	Accepted filter count: 1246
 	Rejected filter count: 0
-Output rule count: 896
+Output rule count: 899
 	Pruning requestDomains: from 294 to 289
-	Plain good: 724
+	Plain good: 725
 
 	Maybe good (regexes): 139
 	redirect=: 22
 	removeparams= (accepted/discarded): 1/0
 	modifyHeaders=: 0
-	Unsupported: 10
+	Unsupported: 12
 		regexFilter is not RE2-compatible: ^https:\/\/nstatic\.dcinside\.com\/dc\/event\/nft_gaejugi\/(?!nftcon)
 		regexFilter is not RE2-compatible: ^https?:\/\/img\.kidkids\.net\/banner\/upimage\/[A-Z]+(_|-)[A-Z0-9]+(_|-)(?!LOGO)
 		regexFilter is not RE2-compatible: ^https:\/\/image\.aladin\.co\.kr\/img\/banner\/flash\/welcome\/nav\/(?!181010)[0-9]+_tab
 		regexFilter is not RE2-compatible: ^https:\/\/static\.wixstatic\.com\/media\/[0-9a-z]{6}_[a-z0-9]{32}~(?!.+doc).+
 		regexFilter is not RE2-compatible: ^https:\/\/thumb\.toomics\.com\/upload\/banner\/(?!main|cut)
+		Can't salvage rule with only entity-based domain= option: xn--h10b90b998c.*
+		Can't salvage rule with only entity-based domain= option: newtoki.*
 		regexFilter is not RE2-compatible: ^https:\/\/(www\.)?filetender\.com\/images\/(?!logo).+\.(jpg|png)$
 		regexFilter is not RE2-compatible: ^https:\/\/(www\.)?ruru\.tv\/uploads\/[0-9]+\/((?!16682220461360)[0-9]+)
 		regexFilter is not RE2-compatible: ^https:\/\/today-sports\.io\/img\/.*(?=(evolution|banner|\.gif))
@@ -848,11 +850,11 @@ Output rule count: 896
 		Unpatchable redirect filter: google-ima3.js
 CSS-generic: 12 plain CSS selectors
 CSS-generic-high: 67 plain CSS selectors
-CSS-specific: 1191 distinct filters
-	Combined into 1374 distinct hostnames
-	Combined into 1 distinct entities
+CSS-specific: 1197 distinct filters
+	Combined into 1392 distinct hostnames
+	Combined into 2 distinct entities
 CSS-declarative: 174 distinct filters
-	Combined into 150 distinct hostnames
+	Combined into 151 distinct hostnames
 	Combined into 0 distinct entities
 Procedural-related distinct filters: 103 distinct combined selectors
 	Combined into 151 distinct hostnames
@@ -1065,8 +1067,8 @@ Listset for 'rus-0':
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/specific_antisocial.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/specific_block.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/specific_hide.txt
-	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/specific_special.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/thirdparty.txt
+	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/specific_special.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/advblock/whitelist.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/css-fixes-experimental.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/js-fixes-experimental.txt
@@ -1436,13 +1438,13 @@ Output rule count: 1685
 	modifyHeaders=: 0
 	Unsupported: 0
 
-CSS-generic: 16938 plain CSS selectors
+CSS-generic: 16939 plain CSS selectors
 CSS-generic-high: 350 plain CSS selectors
-CSS-specific: 5356 distinct filters
-	Combined into 16323 distinct hostnames
+CSS-specific: 5365 distinct filters
+	Combined into 16336 distinct hostnames
 	Combined into 1 distinct entities
 CSS-declarative: 66 distinct filters
-	Combined into 5455 distinct hostnames
+	Combined into 5461 distinct hostnames
 	Combined into 0 distinct entities
 Procedural-related distinct filters: 7 distinct combined selectors
 	Combined into 17 distinct hostnames
