@@ -1,5 +1,5 @@
-Version: 1.0.23.8125
-Secret: 21c2305f8d93cb32
+Version: 1.0.23.8128
+Secret: 1f5bc28b894266b1
 ============================
 Listset for 'default':
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/filters.min.txt
@@ -11,14 +11,14 @@ Listset for 'default':
 	Fetching remote https://ublockorigin.github.io/uAssets/thirdparties/easylist.txt
 	Fetching remote https://ublockorigin.github.io/uAssets/thirdparties/easyprivacy.txt
 	Fetching remote https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
-Input filter count: 92483
-	Accepted filter count: 90908
-	Rejected filter count: 148
-Output rule count: 17673
-	Pruning requestDomains: from 53623 to 53470
-	Pruning requestDomains: from 2672 to 2666
-	Pruning requestDomains: from 5923 to 5919
-	Plain good: 16857
+Input filter count: 92514
+	Accepted filter count: 90941
+	Rejected filter count: 146
+Output rule count: 17619
+	Pruning requestDomains: from 53708 to 53555
+	Pruning requestDomains: from 2674 to 2668
+	Pruning requestDomains: from 5922 to 5918
+	Plain good: 16803
 		Salvaged rule by ignoring 1 entity-based domain= option: erotic-beauties.com|hardsex.cc|rule34.top|sex-movies.biz|tube18.sexy|xvideos.name|booru.*
 		Salvaged rule by ignoring 19 entity-based domain= option: fullxh.com|hamsterix.*|megaxh.com|unlockxh4.com|xhadult2.com|xhadult3.com|xhadult4.com|xhadult5.com|xhamster.*|xhamster10.*|xhamster11.*|xhamster12.*|xhamster13.*|xhamster14.*|xhamster15.*|xhamster16.*|xhamster17.*|xhamster18.*|xhamster19.*|xhamster2.*|xhamster20.*|xhamster3.*|xhamster4.*|xhamster46.com|xhamster5.*|xhamster7.*|xhamster8.*|xhday.com|xhday1.com|xhmoon5.com|xhplanet1.com|xhplanet2.com|xhreal2.com|xhreal3.com|xhtab2.com|xhvictory.com|xhwebsite.com|xhwebsite2.com|xhwide1.com|xhwide8.com
 		Salvaged rule by ignoring 19 entity-based domain= option: fullxh.com|hamsterix.*|megaxh.com|unlockxh4.com|xhadult2.com|xhadult3.com|xhadult4.com|xhadult5.com|xhamster.*|xhamster10.*|xhamster11.*|xhamster12.*|xhamster13.*|xhamster14.*|xhamster15.*|xhamster16.*|xhamster17.*|xhamster18.*|xhamster19.*|xhamster2.*|xhamster20.*|xhamster3.*|xhamster4.*|xhamster46.com|xhamster5.*|xhamster7.*|xhamster8.*|xhday.com|xhday1.com|xhmoon5.com|xhplanet1.com|xhplanet2.com|xhreal2.com|xhreal3.com|xhtab2.com|xhvictory.com|xhwebsite.com|xhwebsite2.com|xhwide1.com|xhwide8.com
@@ -35,8 +35,9 @@ Output rule count: 17673
 		Salvaged rule by ignoring 11 entity-based domain= option: clik.pw|1ink.cc|pornfay.*|picbaron.com|bit-url.com|upbam.org|sexvid.*|sexrura.pl|isohuntz.*|isohunt.*|isohunts.*|isohuntx.*|isohunthydra.*|isohunters.*|isohunting.*|myisohunt.*|torrentproject2.*
 		Salvaged rule by ignoring 19 entity-based domain= option: fullxh.com|hamsterix.*|megaxh.com|unlockxh4.com|xhadult2.com|xhadult3.com|xhadult4.com|xhadult5.com|xhamster.*|xhamster10.*|xhamster11.*|xhamster12.*|xhamster13.*|xhamster14.*|xhamster15.*|xhamster16.*|xhamster17.*|xhamster18.*|xhamster19.*|xhamster20.*|xhamster2.*|xhamster3.*|xhamster4.*|xhamster46.com|xhamster5.*|xhamster7.*|xhamster8.*|xhday.com|xhday1.com|xhmoon5.com|xhplanet1.com|xhplanet2.com|xhreal2.com|xhreal3.com|xhtab2.com|xhvictory.com|xhwebsite.com|xhwebsite2.com|xhwide1.com|xhwide8.com|webnovel.com
 		Salvaged rule by ignoring 1 entity-based domain= option: torrentproject2.*|click.allkeyshop.com
-		Salvaged rule by ignoring 3 entity-based domain= option: 0gomovies.*|cdn1.fastvid.co|cdnqq.net|gorockmovies.top|gotoons.org|kokostream.net|movi.pk|ncdn22.xyz|netu.ac|player.msmini.*|ply.mp4cage.com|vapley.*
+		Salvaged rule by ignoring 3 entity-based domain= option: 0gomovies.*|cdn1.fastvid.co|cdnqq.net|gorockmovies.top|kokostream.net|movi.pk|ncdn22.xyz|netu.ac|player.msmini.*|vapley.*
 		Salvaged rule by ignoring 1 entity-based domain= option: isaidub1.com|isaidubhd.*
+		Salvaged rule by ignoring 1 entity-based domain= option: d3ward.github.io|direct-cloud.*
 		Salvaged rule by ignoring 1 entity-based domain= option: povvldeo.lol|povvldeo.*
 		Salvaged rule by ignoring 1 entity-based domain= option: pngit.live|pingit.*
 		Salvaged rule by ignoring 1 entity-based domain= option: enrt.eu|seulink.*
@@ -44,7 +45,7 @@ Output rule count: 17673
 		Salvaged rule by ignoring 1 entity-based domain= option: javthe.com|javfree.*
 		Salvaged rule by ignoring 1 entity-based domain= option: dropcoins.xyz|fastcoin.ga|faucetbr.tk|is2btc.com|swift4claim.com|quickclaims.*
 		Salvaged rule by ignoring 1 entity-based domain= option: olympicstreams.me|vipboxtv.*
-		Salvaged rule by ignoring 8 entity-based domain= option: adbull.org|zdnet.fr|imgsen.com|titsbox.com|senmanga.com|hitomi.la|mangovideo.*|bolly4umovies.*|gaybeeg.info|lovelynudez.com|classicpornbest.com|skymovieshd.*|topwwnews.com|elsfile.org|javdoe.to|javtc.*|webmusic.*|moviezcrush.com|pics4you.net|kiwiexploits.com|pornxp.com|silverpic.com|suicidepics.com|tanix.net|freeuseporn.com|ukrainesmodels.com|freeadultcomix.com|xxxwebdlxxx.top|uproxy2.biz|crownimg.com|masaporn.xyz|dvdplay.*|mangaraw.org|imgstar.eu|imgsto.*|picdollar.com|pics4upload.com|amateurblog.tv|fashionblog.tv|latinblog.tv|silverblog.tv|tokyoblog.tv|xblog.tv|maxsport.one|sportz.football|streamgo.to|streamgoto.*|amazingstream.net|imwatchingmovies.com|zinchanmanga.com|weaksports.xyz|vidoza.co|vidoza.net|govid.co|up-4ever.net|abcvideo.cc|ouo.io|ouo.press|imgbox.com|pirateproxy.live|thehiddenbay.com|thepiratebay.org|thepiratebay10.org
+		Salvaged rule by ignoring 8 entity-based domain= option: adbull.org|zdnet.fr|imgsen.com|titsbox.com|senmanga.com|hitomi.la|mangovideo.*|bolly4umovies.*|gaybeeg.info|lovelynudez.com|classicpornbest.com|skymovieshd.*|topwwnews.com|elsfile.org|javdoe.to|javtc.*|webmusic.*|pics4you.net|kiwiexploits.com|pornxp.com|silverpic.com|suicidepics.com|tanix.net|freeuseporn.com|ukrainesmodels.com|freeadultcomix.com|xxxwebdlxxx.top|uproxy2.biz|crownimg.com|masaporn.xyz|dvdplay.*|mangaraw.org|imgstar.eu|imgsto.*|picdollar.com|pics4upload.com|amateurblog.tv|fashionblog.tv|latinblog.tv|silverblog.tv|tokyoblog.tv|xblog.tv|maxsport.one|sportz.football|streamgo.to|streamgoto.*|amazingstream.net|imwatchingmovies.com|zinchanmanga.com|weaksports.xyz|vidoza.co|vidoza.net|govid.co|up-4ever.net|abcvideo.cc|ouo.io|ouo.press|imgbox.com|pirateproxy.live|thehiddenbay.com|thepiratebay.org|thepiratebay10.org
 		Salvaged rule by ignoring 1 entity-based domain= option: ceesty.com|corneey.com|destyy.com|festyy.com|gestyy.com|hd-easyporn.com|bolly4umovies.*|pcgamez-download.com|torrentvhd.biz|lovelynudez.com|gayforit.eu|movieston.com|kiwiexploits.com|nsfwyoutube.com|pomvideo.cc|steampiay.cc|vidoza.co|vidoza.net|mixdrop.co|govid.co|up-4ever.net|abcvideo.cc|ouo.io|ouo.press|pirateproxy.live|thehiddenbay.com|thepiratebay10.org|opensubtitles.org
 		Salvaged rule by ignoring 19 entity-based domain= option: fullxh.com|hamsterix.*|megaxh.com|unlockxh4.com|xhadult2.com|xhadult3.com|xhadult4.com|xhadult5.com|xhamster.*|xhamster10.*|xhamster11.*|xhamster12.*|xhamster13.*|xhamster14.*|xhamster15.*|xhamster16.*|xhamster17.*|xhamster18.*|xhamster19.*|xhamster2.*|xhamster20.*|xhamster3.*|xhamster4.*|xhamster46.com|xhamster5.*|xhamster7.*|xhamster8.*|xhday.com|xhday1.com|xhmoon5.com|xhplanet1.com|xhplanet2.com|xhreal2.com|xhreal3.com|xhtab2.com|xhvictory.com|xhwebsite.com|xhwebsite2.com|xhwide1.com|xhwide8.com
 		Salvaged rule by ignoring 1 entity-based domain= option: cpmlink.net|mwpaste.com|lusthero.com|22pixx.xyz|goto.com.np|imgtorrnt.in|shrinkearn.com|9ig.de|pingit.im|pngit.live|elil.cc|vev.red|vidop.icu|vidup.io|tubepornclassic.com|ironysub.net|bolly4umovies.*|pcgamez-download.com|curto.win|freeadultcomix.com|xxxwebdlxxx.top|crownimg.com|pomvideo.cc|steampiay.cc|bc.vc|vidoza.co|vidoza.net|pirateproxy.live|thehiddenbay.com|thepiratebay.org|thepiratebay10.org
@@ -70,11 +71,11 @@ Output rule count: 17673
 		Salvaged rule by ignoring 2 entity-based domain= option: acortalo.*|acortar.*|megadescarga.net
 		Salvaged rule by ignoring 2 entity-based domain= option: gentside.*|ohmymag.*|maxisciences.com
 		Salvaged rule by ignoring 5 entity-based domain= option: mylink.*|my1ink.*|myl1nk.*|myli3k.*|audiotools.pro|magesy.blog|magesypro.pro|audioztools.com|solvetube.*|promo-visits.site|satoshi-win.xyz|healdad.com|mobitaak.com|gamalk-sehetk.com|allcryptoz.net|crewbase.net|crewus.net|shinbhu.net|shinchu.net|thumb8.net|thumb9.net|topcryptoz.net|uniqueten.net|ultraten.net
-	Maybe good (regexes): 144
+	Maybe good (regexes): 145
 	redirect=: 340
 	removeparams= (accepted/discarded): 33/11
 	modifyHeaders=: 62
-	Unsupported: 237
+	Unsupported: 236
 		Can't salvage rule with only entity-based domain= option: vidmoly.*
 		Can't salvage rule with only entity-based domain= option: megalink.*
 		Can't salvage rule with only entity-based domain= option: bg-gledai.*
@@ -130,7 +131,6 @@ Output rule count: 17673
 		Can't salvage rule with only entity-based domain= option: dloader.*
 		Can't salvage rule with only entity-based domain= option: isaidub.*
 		Can't salvage rule with only entity-based domain= option: zone-telechargement.*
-		Can't salvage rule with only entity-based domain= option: direct-cloud.*
 		Can't salvage rule with only entity-based domain= option: earnload.*
 		regexFilter is not RE2-compatible: ^https?:\/\/[a-z]{7,16}\.com?\/(?=[+\/0-9a-zA-Z]*\+)(?=[+\/a-zA-Z]*\d)(?=[+\/0-9a-z]*[A-Z])[+\/0-9a-zA-Z]{140,}$
 		regexFilter is not RE2-compatible: ^https?:\/\/[a-z]{7,16}\.org\/(?=[+\/0-9a-zA-Z]*\+)(?=[+\/a-zA-Z]*\d)(?=[+\/0-9a-z]*[A-Z])[+\/0-9a-zA-Z]{140,}$
@@ -312,16 +312,16 @@ Output rule count: 17673
 		Can't salvage rule with only entity-based domain= option: empire-stream.*|empire-streaming.*
 		Unsupported modifier exception
 		regexFilter is not RE2-compatible: ^https?:\/\/(?:[a-z]{2}\.)?[0-9a-z]{5,16}\.[a-z]{3,7}\/[a-z](?=[a-z]{0,25}[0-9A-Z])[0-9a-zA-Z]{3,26}\/\d{4,5}(?:\?[_v]=\d+)?$
-CSS-generic: 16060 plain CSS selectors
-CSS-generic-high: 555 plain CSS selectors
-CSS-specific: 9603 distinct filters
-	Combined into 9033 distinct hostnames
+CSS-generic: 16061 plain CSS selectors
+CSS-generic-high: 554 plain CSS selectors
+CSS-specific: 9607 distinct filters
+	Combined into 9032 distinct hostnames
 	Combined into 490 distinct entities
 CSS-declarative: 418 distinct filters
 	Combined into 620 distinct hostnames
 	Combined into 51 distinct entities
 Procedural-related distinct filters: 852 distinct combined selectors
-	Combined into 1380 distinct hostnames
+	Combined into 1379 distinct hostnames
 	Combined into 202 distinct entities
 ============================
 Listset for 'alb-0':
@@ -372,11 +372,11 @@ CSS-specific: 350 distinct filters
 ============================
 Listset for 'chn-0':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/224.txt
-Input filter count: 15188
-	Accepted filter count: 15123
+Input filter count: 15195
+	Accepted filter count: 15130
 	Rejected filter count: 1
 Output rule count: 6476
-	Pruning requestDomains: from 6187 to 6179
+	Pruning requestDomains: from 6193 to 6185
 	Pruning requestDomains: from 521 to 519
 	Plain good: 6411
 
@@ -446,11 +446,11 @@ Output rule count: 1784
 		Invalid network filter in deu-0: @@||gofeminin.de^$genericblock
 CSS-generic: 356 plain CSS selectors
 CSS-generic-high: 34 plain CSS selectors
-CSS-specific: 2395 distinct filters
+CSS-specific: 2397 distinct filters
 	Combined into 1770 distinct hostnames
 	Combined into 0 distinct entities
-Procedural-related distinct filters: 84 distinct combined selectors
-	Combined into 60 distinct hostnames
+Procedural-related distinct filters: 85 distinct combined selectors
+	Combined into 61 distinct hostnames
 	Combined into 0 distinct entities
 ============================
 Listset for 'fin-0':
@@ -482,12 +482,12 @@ Procedural-related distinct filters: 149 distinct combined selectors
 ============================
 Listset for 'fra-0':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/16.txt
-Input filter count: 18885
-	Accepted filter count: 18812
+Input filter count: 18886
+	Accepted filter count: 18813
 	Rejected filter count: 58
-Output rule count: 6566
+Output rule count: 6567
 	Pruning requestDomains: from 7820 to 7809
-	Plain good: 6513
+	Plain good: 6514
 		Salvaged rule by ignoring 2 entity-based domain= option: gentside.*|ohmymag.*|maxisciences.com
 		Salvaged rule by ignoring 2 entity-based domain= option: gentside.*|ohmymag.*|maxisciences.com
 	Maybe good (regexes): 7
@@ -772,11 +772,11 @@ Procedural-related distinct filters: 26 distinct combined selectors
 ============================
 Listset for 'jpn-1':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/7.txt
-Input filter count: 1873
-	Accepted filter count: 1873
+Input filter count: 1875
+	Accepted filter count: 1875
 	Rejected filter count: 0
-Output rule count: 1297
-	Plain good: 1253
+Output rule count: 1298
+	Plain good: 1254
 
 	Maybe good (regexes): 16
 	redirect=: 23
@@ -790,14 +790,14 @@ Output rule count: 1297
 		Unsupported regex-based removeParam: /^(cookie|ga_|u_)/
 CSS-generic: 110 plain CSS selectors
 CSS-generic-high: 10 plain CSS selectors
-CSS-specific: 5921 distinct filters
-	Combined into 4020 distinct hostnames
+CSS-specific: 5929 distinct filters
+	Combined into 4024 distinct hostnames
 	Combined into 7 distinct entities
-CSS-declarative: 166 distinct filters
-	Combined into 146 distinct hostnames
+CSS-declarative: 168 distinct filters
+	Combined into 147 distinct hostnames
 	Combined into 0 distinct entities
-Procedural-related distinct filters: 869 distinct combined selectors
-	Combined into 835 distinct hostnames
+Procedural-related distinct filters: 870 distinct combined selectors
+	Combined into 836 distinct hostnames
 	Combined into 0 distinct entities
 ============================
 Listset for 'kor-1':
@@ -851,7 +851,7 @@ Output rule count: 899
 CSS-generic: 12 plain CSS selectors
 CSS-generic-high: 67 plain CSS selectors
 CSS-specific: 1197 distinct filters
-	Combined into 1392 distinct hostnames
+	Combined into 1393 distinct hostnames
 	Combined into 2 distinct entities
 CSS-declarative: 174 distinct filters
 	Combined into 151 distinct hostnames
@@ -1076,9 +1076,9 @@ Listset for 'rus-0':
 Input filter count: 17302
 	Accepted filter count: 17292
 	Rejected filter count: 8
-Output rule count: 5841
-	Pruning requestDomains: from 6628 to 6627
-	Plain good: 5754
+Output rule count: 5840
+	Pruning requestDomains: from 6629 to 6628
+	Plain good: 5753
 
 	Maybe good (regexes): 21
 	redirect=: 16
@@ -1093,14 +1093,14 @@ Output rule count: 5841
 		Unsupported modifier exception
 CSS-generic: 318 plain CSS selectors
 CSS-generic-high: 461 plain CSS selectors
-CSS-specific: 9770 distinct filters
-	Combined into 7071 distinct hostnames
+CSS-specific: 9765 distinct filters
+	Combined into 7073 distinct hostnames
 	Combined into 0 distinct entities
-CSS-declarative: 902 distinct filters
-	Combined into 873 distinct hostnames
+CSS-declarative: 903 distinct filters
+	Combined into 874 distinct hostnames
 	Combined into 0 distinct entities
 Procedural-related distinct filters: 269 distinct combined selectors
-	Combined into 334 distinct hostnames
+	Combined into 336 distinct hostnames
 	Combined into 0 distinct entities
 ============================
 Listset for 'spa-0':
@@ -1311,11 +1311,11 @@ Output rule count: 12
 ============================
 Listset for 'dpollock-0':
 	Fetching remote https://someonewhocares.org/hosts/hosts
-Input filter count: 11541
-	Accepted filter count: 11541
+Input filter count: 11542
+	Accepted filter count: 11542
 	Rejected filter count: 0
 Output rule count: 1
-	Pruning requestDomains: from 11541 to 9295
+	Pruning requestDomains: from 11542 to 9296
 	Plain good: 1
 
 	Maybe good (regexes): 0
@@ -1440,11 +1440,11 @@ Output rule count: 1685
 
 CSS-generic: 16939 plain CSS selectors
 CSS-generic-high: 350 plain CSS selectors
-CSS-specific: 5365 distinct filters
-	Combined into 16336 distinct hostnames
+CSS-specific: 5366 distinct filters
+	Combined into 16340 distinct hostnames
 	Combined into 1 distinct entities
 CSS-declarative: 66 distinct filters
-	Combined into 5461 distinct hostnames
+	Combined into 5462 distinct hostnames
 	Combined into 0 distinct entities
 Procedural-related distinct filters: 7 distinct combined selectors
 	Combined into 17 distinct hostnames
@@ -1471,8 +1471,8 @@ Output rule count: 1515
 		regexFilter is not RE2-compatible: ^https:\/\/[0-9a-z]{7,25}\.com\/v2(?:\/0\/)?(?=[0-9a-z_-]{0,84}[A-Z])(?=[a-zA-Z_-]{0,84}[0-9])[0-9a-zA-Z_-]{54,85}(#\?v=[0-9a-f]{32})?$
 CSS-generic: 35 plain CSS selectors
 CSS-generic-high: 3 plain CSS selectors
-CSS-specific: 10654 distinct filters
-	Combined into 10480 distinct hostnames
+CSS-specific: 10655 distinct filters
+	Combined into 10481 distinct hostnames
 	Combined into 68 distinct entities
 CSS-declarative: 604 distinct filters
 	Combined into 2223 distinct hostnames
@@ -1524,8 +1524,8 @@ Output rule count: 428
 
 CSS-generic: 25 plain CSS selectors
 CSS-generic-high: 7 plain CSS selectors
-CSS-specific: 1011 distinct filters
-	Combined into 976 distinct hostnames
+CSS-specific: 1012 distinct filters
+	Combined into 977 distinct hostnames
 	Combined into 2 distinct entities
 CSS-declarative: 15 distinct filters
 	Combined into 14 distinct hostnames
