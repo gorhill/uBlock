@@ -1,5 +1,5 @@
-Version: 1.0.23.8118
-Secret: 033250bca7ab3a98
+Version: 1.0.23.8121
+Secret: 3ea71cb68426a7de
 ============================
 Listset for 'default':
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/filters.min.txt
@@ -15,6 +15,9 @@ Input filter count: 92491
 	Accepted filter count: 90918
 	Rejected filter count: 146
 Output rule count: 17712
+	Pruning requestDomains: from 53605 to 53453
+	Pruning requestDomains: from 2672 to 2666
+	Pruning requestDomains: from 5921 to 5917
 	Plain good: 16896
 		Salvaged rule by ignoring 1 entity-based domain= option: erotic-beauties.com|hardsex.cc|rule34.top|sex-movies.biz|tube18.sexy|xvideos.name|booru.*
 		Salvaged rule by ignoring 19 entity-based domain= option: fullxh.com|hamsterix.*|megaxh.com|unlockxh4.com|xhadult2.com|xhadult3.com|xhadult4.com|xhadult5.com|xhamster.*|xhamster10.*|xhamster11.*|xhamster12.*|xhamster13.*|xhamster14.*|xhamster15.*|xhamster16.*|xhamster17.*|xhamster18.*|xhamster19.*|xhamster2.*|xhamster20.*|xhamster3.*|xhamster4.*|xhamster46.com|xhamster5.*|xhamster7.*|xhamster8.*|xhday.com|xhday1.com|xhmoon5.com|xhplanet1.com|xhplanet2.com|xhreal2.com|xhreal3.com|xhtab2.com|xhvictory.com|xhwebsite.com|xhwebsite2.com|xhwide1.com|xhwide8.com
@@ -369,10 +372,12 @@ CSS-specific: 350 distinct filters
 ============================
 Listset for 'chn-0':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/224.txt
-Input filter count: 15177
-	Accepted filter count: 15112
+Input filter count: 15183
+	Accepted filter count: 15118
 	Rejected filter count: 1
 Output rule count: 6476
+	Pruning requestDomains: from 6183 to 6175
+	Pruning requestDomains: from 521 to 519
 	Plain good: 6411
 
 	Maybe good (regexes): 11
@@ -481,6 +486,7 @@ Input filter count: 18885
 	Accepted filter count: 18812
 	Rejected filter count: 58
 Output rule count: 6566
+	Pruning requestDomains: from 7820 to 7809
 	Plain good: 6513
 		Salvaged rule by ignoring 2 entity-based domain= option: gentside.*|ohmymag.*|maxisciences.com
 		Salvaged rule by ignoring 2 entity-based domain= option: gentside.*|ohmymag.*|maxisciences.com
@@ -640,6 +646,7 @@ Input filter count: 865
 	Accepted filter count: 865
 	Rejected filter count: 0
 Output rule count: 592
+	Pruning requestDomains: from 167 to 162
 	Plain good: 553
 
 	Maybe good (regexes): 0
@@ -821,6 +828,7 @@ Input filter count: 1249
 	Accepted filter count: 1243
 	Rejected filter count: 0
 Output rule count: 896
+	Pruning requestDomains: from 294 to 289
 	Plain good: 724
 
 	Maybe good (regexes): 139
@@ -1067,6 +1075,7 @@ Input filter count: 17302
 	Accepted filter count: 17292
 	Rejected filter count: 8
 Output rule count: 5841
+	Pruning requestDomains: from 6628 to 6627
 	Plain good: 5754
 
 	Maybe good (regexes): 21
@@ -1304,6 +1313,7 @@ Input filter count: 11541
 	Accepted filter count: 11541
 	Rejected filter count: 0
 Output rule count: 1
+	Pruning requestDomains: from 11541 to 9295
 	Plain good: 1
 
 	Maybe good (regexes): 0
@@ -1445,6 +1455,7 @@ Input filter count: 2475
 	Accepted filter count: 2473
 	Rejected filter count: 0
 Output rule count: 1515
+	Pruning requestDomains: from 527 to 526
 	Plain good: 1449
 
 	Maybe good (regexes): 3
@@ -1552,6 +1563,7 @@ Input filter count: 207979
 	Accepted filter count: 207979
 	Rejected filter count: 0
 Output rule count: 1
+	Pruning requestDomains: from 207979 to 107249
 	Plain good: 1
 
 	Maybe good (regexes): 0
