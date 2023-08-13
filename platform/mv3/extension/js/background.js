@@ -159,7 +159,7 @@ function onMessage(request, sender, callback) {
         break;
     }
 
-    // Does requires trusted origin.
+    // Does require trusted origin.
 
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/MessageSender
     //   Firefox API does not set `sender.origin`
