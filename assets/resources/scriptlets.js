@@ -1929,52 +1929,29 @@ builtinScriptlets.push({
     ],
     fn: noXhrIf,
     dependencies: [
-        'safe-self.fn',
+        'match-object-properties.fn',
+        'parse-properties-to-match.fn',
     ],
 });
 function noXhrIf(
-    arg1 = ''
+    propsToMatch = '',
+    randomize = ''
 ) {
-    if ( typeof arg1 !== 'string' ) { return; }
-    const safe = safeSelf();
+    if ( typeof propsToMatch !== 'string' ) { return; }
     const xhrInstances = new WeakMap();
-    const needles = [];
-    for ( const condition of arg1.split(/\s+/) ) {
-        if ( condition === '' ) { continue; }
-        const pos = condition.indexOf(':');
-        let key, value;
-        if ( pos !== -1 ) {
-            key = condition.slice(0, pos);
-            value = condition.slice(pos + 1);
-        } else {
-            key = 'url';
-            value = condition;
-        }
-        needles.push({ key, re: safe.patternToRegex(value) });
-    }
-    const log = needles.length === 0 ? console.log.bind(console) : undefined;
+    const propNeedles = parsePropertiesToMatch(propsToMatch, 'url');
+    const log = propNeedles.size === 0 ? console.log.bind(console) : undefined;
     self.XMLHttpRequest = class extends self.XMLHttpRequest {
-        open(...args) {
+        open(method, url, ...args) {
             if ( log !== undefined ) {
-                log(`uBO: xhr.open(${args.join(', ')})`);
+                log(`uBO: xhr.open(${method}, ${url}, ${args.join(', ')})`);
             } else {
-                const argNames = [ 'method', 'url' ];
-                const haystack = new Map();
-                for ( let i = 0; i < args.length && i < argNames.length; i++  ) {
-                    haystack.set(argNames[i], args[i]);
-                }
-                if ( haystack.size !== 0 ) {
-                    let matches = true;
-                    for ( const { key, re } of needles ) {
-                        matches = re.test(haystack.get(key) || '');
-                        if ( matches === false ) { break; }
-                    }
-                    if ( matches ) {
-                        xhrInstances.set(this, haystack);
-                    }
+                const haystack = { method, url };
+                if ( matchObjectProperties(propNeedles, haystack) ) {
+                    xhrInstances.set(this, haystack);
                 }
             }
-            return super.open(...args);
+            return super.open(method, url, ...args);
         }
         send(...args) {
             const haystack = xhrInstances.get(this);
@@ -1982,13 +1959,45 @@ function noXhrIf(
                 return super.send(...args);
             }
             Object.defineProperties(this, {
-                readyState: { value: 4, writable: false },
-                response: { value: '', writable: false },
-                responseText: { value: '', writable: false },
-                responseURL: { value: haystack.get('url'), writable: false },
-                responseXML: { value: '', writable: false },
-                status: { value: 200, writable: false },
-                statusText: { value: 'OK', writable: false },
+                readyState: { value: 4 },
+                responseURL: { value: haystack.url },
+                status: { value: 200 },
+                statusText: { value: 'OK' },
+            });
+            let response = '';
+            let responseText = '';
+            let responseXML = null;
+            switch ( this.responseType ) {
+                case 'arraybuffer':
+                    response = new ArrayBuffer(0);
+                    break;
+                case 'blob':
+                    response = new Blob([]);
+                    break;
+                case 'document': {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString('', 'text/html');
+                    response = doc;
+                    responseXML = doc;
+                    break;
+                }
+                case 'json':
+                    response = {};
+                    responseText = '{}';
+                    break;
+                default:
+                    if ( randomize !== 'true' ) { break; }
+                    do {
+                        response += Math.random().toString(36).slice(-2);
+                    } while ( response.length < 10 );
+                    response = response.slice(-10);
+                    responseText = response;
+                    break;
+            }
+            Object.defineProperties(this, {
+                response: { value: response },
+                responseText: { value: responseText },
+                responseXML: { value: responseXML },
             });
             this.dispatchEvent(new Event('readystatechange'));
             this.dispatchEvent(new Event('load'));
