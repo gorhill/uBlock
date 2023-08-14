@@ -1167,24 +1167,32 @@ vAPI.messaging = {
 // https://github.com/uBlockOrigin/uBlock-issues/issues/550
 //   Support using a new secret for every network request.
 
-vAPI.warSecret = (( ) => {
-    const generateSecret = ( ) => {
-        return Math.floor(Math.random() * 982451653 + 982451653).toString(36);
-    };
+{
+    // Generate a 6-character alphanumeric string, thus one random value out
+    // of 36^6 = over 2x10^9 values.
+    const generateSecret = ( ) =>
+        (Math.floor(Math.random() * 2176782336) + 2176782336).toString(36).slice(1);
 
     const root = vAPI.getURL('/');
-    const secrets = [];
-    let lastSecretTime = 0;
+    const reSecret = /\?secret=(\w+)/;
+    const shortSecrets = [];
+    let lastShortSecretTime = 0;
 
-    const guard = function(details) {
-        const url = details.url;
-        const pos = secrets.findIndex(secret =>
-            url.lastIndexOf(`?secret=${secret}`) !== -1
-        );
+    // Long secrets are meant to be used multiple times, but for at most a few
+    // minutes. The realm is one value out of 36^18 = over 10^28 values.
+    const longSecrets = [ '', '' ];
+    let lastLongSecretTimeSlice = 0;
+
+    const guard = details => {
+        const match = reSecret.exec(details.url);
+        if ( match === null ) { return; }
+        const secret = match[1];
+        if ( longSecrets.includes(secret) ) { return; }
+        const pos = shortSecrets.indexOf(secret);
         if ( pos === -1 ) {
             return { cancel: true };
         }
-        secrets.splice(pos, 1);
+        shortSecrets.splice(pos, 1);
     };
 
     browser.webRequest.onBeforeRequest.addListener(
@@ -1195,20 +1203,31 @@ vAPI.warSecret = (( ) => {
         [ 'blocking' ]
     );
 
-    return ( ) => {
-        if ( secrets.length !== 0 ) {
-            if ( (Date.now() - lastSecretTime) > 5000 ) {
-                secrets.splice(0);
-            } else if ( secrets.length > 256 ) {
-                secrets.splice(0, secrets.length - 192);
+    vAPI.warSecret = {
+        short: ( ) => {
+            if ( shortSecrets.length !== 0 ) {
+                if ( (Date.now() - lastShortSecretTime) > 5000 ) {
+                    shortSecrets.splice(0);
+                } else if ( shortSecrets.length > 256 ) {
+                    shortSecrets.splice(0, shortSecrets.length - 192);
+                }
             }
-        }
-        lastSecretTime = Date.now();
-        const secret = generateSecret();
-        secrets.push(secret);
-        return secret;
+            lastShortSecretTime = Date.now();
+            const secret = generateSecret();
+            shortSecrets.push(secret);
+            return secret;
+        },
+        long: ( ) => {
+            const timeSlice = Date.now() >>> 19; // Changes every ~9 minutes
+            if ( timeSlice !== lastLongSecretTimeSlice ) {
+                longSecrets[1] = longSecrets[0];
+                longSecrets[0] = `${generateSecret()}${generateSecret()}${generateSecret()}`;
+                lastLongSecretTimeSlice = timeSlice;
+            }
+            return longSecrets[0];
+        },
     };
-})();
+}
 
 /******************************************************************************/
 

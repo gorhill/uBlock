@@ -383,7 +383,10 @@ scriptletFilteringEngine.retrieve = function(request) {
         return { filters: cacheDetails.filters };
     }
 
-    const scriptletGlobals = [];
+    const scriptletGlobals = [
+        [ 'warOrigin', vAPI.getURL('/web_accessible_resources') ],
+        [ 'warSecret', vAPI.warSecret.long() ],
+    ];
 
     if ( isDevBuild === undefined ) {
         isDevBuild = vAPI.webextFlavor.soup.has('devbuild');

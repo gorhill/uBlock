@@ -1135,7 +1135,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
         const fetcher = (path, options = undefined) => {
             if ( path.startsWith('/web_accessible_resources/') ) {
-                path += `?secret=${vAPI.warSecret()}`;
+                path += `?secret=${vAPI.warSecret.short()}`;
                 return io.fetch(path, options);
             }
             return io.fetchText(path);

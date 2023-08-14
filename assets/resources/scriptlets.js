@@ -1935,21 +1935,55 @@ builtinScriptlets.push({
 });
 function noXhrIf(
     propsToMatch = '',
-    randomize = ''
+    directive = ''
 ) {
     if ( typeof propsToMatch !== 'string' ) { return; }
     const xhrInstances = new WeakMap();
     const propNeedles = parsePropertiesToMatch(propsToMatch, 'url');
     const log = propNeedles.size === 0 ? console.log.bind(console) : undefined;
+    const warOrigin = scriptletGlobals.get('warOrigin');
+    const generateRandomString = len => {
+            let s = '';
+            do { s += Math.random().toString(36).slice(2); }
+            while ( s.length < 10 );
+            return s.slice(0, len);
+    };
+    const generateContent = async directive => {
+        if ( directive === 'true' ) {
+            return generateRandomString(10);
+        }
+        if ( directive.startsWith('war:') ) {
+            if ( warOrigin === undefined ) { return ''; }
+            const warName = directive.slice(4);
+            const fullpath = [ warOrigin, '/', warName ];
+            const warSecret = scriptletGlobals.get('warSecret') || '';
+            if ( warSecret !== '' ) {
+                fullpath.push('?secret=', warSecret);
+            }
+            return new Promise(resolve => {
+                const warXHR = new XMLHttpRequest();
+                warXHR.responseType = 'text';
+                warXHR.onloadend = ev => {
+                    resolve(ev.target.responseText || '');
+                };
+                warXHR.open('GET', fullpath.join(''));
+                warXHR.send();
+            });
+        }
+        return '';
+    };
     self.XMLHttpRequest = class extends self.XMLHttpRequest {
         open(method, url, ...args) {
             if ( log !== undefined ) {
                 log(`uBO: xhr.open(${method}, ${url}, ${args.join(', ')})`);
-            } else {
-                const haystack = { method, url };
-                if ( matchObjectProperties(propNeedles, haystack) ) {
-                    xhrInstances.set(this, haystack);
-                }
+                return super.open(method, url, ...args);
+            }
+            if ( warOrigin !== undefined && url.startsWith(warOrigin) ) {
+                return super.open(method, url, ...args);
+            }
+            const haystack = { method, url };
+            if ( matchObjectProperties(propNeedles, haystack) ) {
+                xhrInstances.set(this, haystack);
             }
             return super.open(method, url, ...args);
         }
@@ -1958,50 +1992,66 @@ function noXhrIf(
             if ( haystack === undefined ) {
                 return super.send(...args);
             }
-            Object.defineProperties(this, {
-                readyState: { value: 4 },
-                responseURL: { value: haystack.url },
-                status: { value: 200 },
-                statusText: { value: 'OK' },
+            let promise = Promise.resolve({
+                xhr: this,
+                directive,
+                props: {
+                    readyState: { value: 4 },
+                    response: { value: '' },
+                    responseText: { value: '' },
+                    responseXML: { value: null },
+                    responseURL: { value: haystack.url },
+                    status: { value: 200 },
+                    statusText: { value: 'OK' },
+                },
             });
-            let response = '';
-            let responseText = '';
-            let responseXML = null;
             switch ( this.responseType ) {
                 case 'arraybuffer':
-                    response = new ArrayBuffer(0);
+                    promise = promise.then(details => {
+                        details.props.response.value = new ArrayBuffer(0);
+                        return details;
+                    });
                     break;
                 case 'blob':
-                    response = new Blob([]);
+                    promise = promise.then(details => {
+                        details.props.response.value = new Blob([]);
+                        return details;
+                    });
                     break;
                 case 'document': {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString('', 'text/html');
-                    response = doc;
-                    responseXML = doc;
+                    promise = promise.then(details => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString('', 'text/html');
+                        details.props.response.value = doc;
+                        details.props.responseXML.value = doc;
+                        return details;
+                    });
                     break;
                 }
                 case 'json':
-                    response = {};
-                    responseText = '{}';
+                    promise = promise.then(details => {
+                        details.props.response.value = {};
+                        details.props.responseText.value = '{}';
+                        return details;
+                    });
                     break;
                 default:
-                    if ( randomize !== 'true' ) { break; }
-                    do {
-                        response += Math.random().toString(36).slice(-2);
-                    } while ( response.length < 10 );
-                    response = response.slice(-10);
-                    responseText = response;
+                    if ( directive === '' ) { break; }
+                    promise = promise.then(details => {
+                        return generateContent(details.directive).then(text => {
+                            details.props.response.value = text;
+                            details.props.responseText.value = text;
+                            return details;
+                        });
+                    });
                     break;
             }
-            Object.defineProperties(this, {
-                response: { value: response },
-                responseText: { value: responseText },
-                responseXML: { value: responseXML },
+            promise.then(details => {
+                Object.defineProperties(details.xhr, details.props);
+                details.xhr.dispatchEvent(new Event('readystatechange'));
+                details.xhr.dispatchEvent(new Event('load'));
+                details.xhr.dispatchEvent(new Event('loadend'));
             });
-            this.dispatchEvent(new Event('readystatechange'));
-            this.dispatchEvent(new Event('load'));
-            this.dispatchEvent(new Event('loadend'));
         }
     };
 }

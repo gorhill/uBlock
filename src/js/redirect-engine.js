@@ -66,12 +66,12 @@ const removeTopCommentBlock = text => {
     return text.replace(/^\/\*[\S\s]+?\n\*\/\s*/, '');
 };
 
-// vAPI.warSecret() is optional, it could be absent in some environments,
+// vAPI.warSecret is optional, it could be absent in some environments,
 // i.e. nodejs for example. Probably the best approach is to have the
 // "web_accessible_resources secret" added outside by the client of this
 // module, but for now I just want to remove an obstacle to modularization.
 const warSecret = typeof vAPI === 'object' && vAPI !== null
-    ? vAPI.warSecret
+    ? vAPI.warSecret.short
     : ( ) => '';
 
 const RESOURCES_SELFIE_VERSION = 7;
@@ -153,15 +153,7 @@ class RedirectEntry {
 
     static fromDetails(details) {
         const r = new RedirectEntry();
-        r.mime = details.mime;
-        r.data = details.data;
-        r.requiresTrust = details.requiresTrust === true;
-        r.warURL = details.warURL !== undefined && details.warURL || undefined;
-        r.params = details.params !== undefined && details.params || undefined;
-        r.world = details.world || 'MAIN';
-        if ( Array.isArray(details.dependencies) ) {
-            r.dependencies.push(...details.dependencies);
-        }
+        Object.assign(r, details);
         return r;
     }
 }
@@ -331,17 +323,17 @@ class RedirectEngine {
         const fetches = [
             import('/assets/resources/scriptlets.js').then(module => {
                 for ( const scriptlet of module.builtinScriptlets ) {
-                    const { name, aliases, fn } = scriptlet;
-                    const entry = RedirectEntry.fromDetails({
-                        mime: mimeFromName(name),
-                        data: fn.toString(),
-                        dependencies: scriptlet.dependencies,
-                        requiresTrust: scriptlet.requiresTrust === true,
-                        world: scriptlet.world || 'MAIN',
-                    });
-                    this.resources.set(name, entry);
-                    if ( Array.isArray(aliases) === false ) { continue; }
-                    for ( const alias of aliases ) {
+                    const details = {};
+                    details.mime = mimeFromName(scriptlet.name);
+                    details.data = scriptlet.fn.toString();
+                    for ( const [ k, v ] of Object.entries(scriptlet) ) {
+                        if ( k === 'fn' ) { continue; }
+                        details[k] = v;
+                    }
+                    const entry = RedirectEntry.fromDetails(details);
+                    this.resources.set(details.name, entry);
+                    if ( Array.isArray(details.aliases) === false ) { continue; }
+                    for ( const alias of details.aliases ) {
                         this.aliases.set(alias, name);
                     }
                 }

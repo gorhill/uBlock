@@ -984,7 +984,7 @@ const onMessage = function(request, sender, callback) {
                 zap: µb.epickerArgs.zap,
                 eprom: µb.epickerArgs.eprom,
                 pickerURL: vAPI.getURL(
-                    `/web_accessible_resources/epicker-ui.html?secret=${vAPI.warSecret()}`
+                    `/web_accessible_resources/epicker-ui.html?secret=${vAPI.warSecret.short()}`
                 ),
             });
             µb.epickerArgs.target = '';

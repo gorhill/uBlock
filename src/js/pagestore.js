@@ -152,7 +152,7 @@ const NetFilteringResultCache = class {
             entry.redirectURL.startsWith(this.extensionOriginURL)
         ) {
             const redirectURL = new URL(entry.redirectURL);
-            redirectURL.searchParams.set('secret', vAPI.warSecret());
+            redirectURL.searchParams.set('secret', vAPI.warSecret.short());
             entry.redirectURL = redirectURL.href;
         }
         return entry;
