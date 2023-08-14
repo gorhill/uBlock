@@ -1954,13 +1954,13 @@ function noXhrIf(
         }
         if ( directive.startsWith('war:') ) {
             if ( warOrigin === undefined ) { return ''; }
-            const warName = directive.slice(4);
-            const fullpath = [ warOrigin, '/', warName ];
-            const warSecret = scriptletGlobals.get('warSecret') || '';
-            if ( warSecret !== '' ) {
-                fullpath.push('?secret=', warSecret);
-            }
             return new Promise(resolve => {
+                const warName = directive.slice(4);
+                const fullpath = [ warOrigin, '/', warName ];
+                const warSecret = scriptletGlobals.get('warSecret');
+                if ( warSecret !== undefined ) {
+                    fullpath.push('?secret=', warSecret);
+                }
                 const warXHR = new XMLHttpRequest();
                 warXHR.responseType = 'text';
                 warXHR.onloadend = ev => {

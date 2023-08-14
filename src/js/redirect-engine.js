@@ -334,7 +334,7 @@ class RedirectEngine {
                     this.resources.set(details.name, entry);
                     if ( Array.isArray(details.aliases) === false ) { continue; }
                     for ( const alias of details.aliases ) {
-                        this.aliases.set(alias, name);
+                        this.aliases.set(alias, details.name);
                     }
                 }
                 this.modifyTime = Date.now();
