@@ -1185,13 +1185,11 @@ vAPI.messaging = {
 
     const guard = details => {
         const match = reSecret.exec(details.url);
-        if ( match === null ) { return; }
+        if ( match === null ) { return { cancel: true }; }
         const secret = match[1];
         if ( longSecrets.includes(secret) ) { return; }
         const pos = shortSecrets.indexOf(secret);
-        if ( pos === -1 ) {
-            return { cancel: true };
-        }
+        if ( pos === -1 ) { return { cancel: true }; }
         shortSecrets.splice(pos, 1);
     };
 
