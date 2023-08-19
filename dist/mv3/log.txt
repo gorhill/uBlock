@@ -1,5 +1,5 @@
-Version: 2023.8.19.888
-Secret: 47b0daebaeb3e714
+Version: 2023.8.19.897
+Secret: ae551277bd68a341
 ============================
 Listset for 'default':
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/filters.min.txt
@@ -649,12 +649,12 @@ Procedural-related distinct filters: 93 distinct combined selectors
 ============================
 Listset for 'irn-0':
 	Fetching remote https://raw.githubusercontent.com/MasterKia/PersianBlocker/main/PersianBlocker.txt
-Input filter count: 1102
-	Accepted filter count: 1102
+Input filter count: 1103
+	Accepted filter count: 1103
 	Rejected filter count: 0
-Output rule count: 604
+Output rule count: 605
 	Pruning requestDomains: from 215 to 210
-	Plain good: 563
+	Plain good: 564
 
 	Maybe good (regexes): 0
 	redirect=: 0
