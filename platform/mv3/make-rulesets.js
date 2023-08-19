@@ -320,18 +320,19 @@ async function processNetworkFilters(assetDetails, network) {
     log(`Output rule count: ${rules.length}`);
 
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/declarativeNetRequest/RuleCondition#browser_compatibility
-    // isUrlFilterCaseSensitive is false by default in Firefox. It will be
+    // isUrlFilterCaseSensitive is true by default in Chromium. It will be
     // false by default in Chromium 118+.
-    if ( platform === 'firefox' ) {
+    if ( platform !== 'firefox' ) {
         for ( const rule of rules ) {
-            if ( rule.condition === undefined ) { continue; }
-            if ( rule.condition.urlFilter === undefined ) {
-                if ( rule.condition.regexFilter === undefined ) { continue; }
+            const { condition } = rule;
+            if ( condition === undefined ) { continue; }
+            if ( condition.urlFilter === undefined ) {
+                if ( condition.regexFilter === undefined ) { continue; }
             }
-            if ( rule.condition.isUrlFilterCaseSensitive === undefined ) {
-                rule.condition.isUrlFilterCaseSensitive = true;
-            } else if ( rule.condition.isUrlFilterCaseSensitive === false ) {
-                rule.condition.isUrlFilterCaseSensitive = undefined;
+            if ( condition.isUrlFilterCaseSensitive === undefined ) {
+                condition.isUrlFilterCaseSensitive = false;
+            } else if ( condition.isUrlFilterCaseSensitive === true ) {
+                condition.isUrlFilterCaseSensitive = undefined;
             }
         }
     }
@@ -1098,23 +1099,15 @@ async function rulesetFromURLs(assetDetails) {
 
 async function main() {
 
-    // Get manifest content
-    const manifest = await fs.readFile(
-        `${outputDir}/manifest.json`,
-        { encoding: 'utf8' }
-    ).then(text =>
-        JSON.parse(text)
-    );
-
-    // Create unique version number according to build time
-    let version = manifest.version;
+    let version = '';
     {
         const now = new Date();
-        const yearPart = now.getUTCFullYear() - 2000;
-        const monthPart = (now.getUTCMonth() + 1) * 1000;
-        const dayPart = now.getUTCDate() * 10;
-        const hourPart = Math.floor(now.getUTCHours() / 3) + 1;
-        version += `.${yearPart}.${monthPart + dayPart + hourPart}`;
+        const yearPart = now.getUTCFullYear();
+        const monthPart = now.getUTCMonth() + 1;
+        const dayPart = now.getUTCDate();
+        const hourPart = Math.floor(now.getUTCHours());
+        const minutePart = Math.floor(now.getUTCMinutes());
+        version = `${yearPart}.${monthPart}.${dayPart}.${hourPart * 60 + minutePart}`;
     }
     log(`Version: ${version}`);
 
@@ -1300,6 +1293,13 @@ async function main() {
     await Promise.all(writeOps);
 
     // Patch manifest
+    // Get manifest content
+    const manifest = await fs.readFile(
+        `${outputDir}/manifest.json`,
+        { encoding: 'utf8' }
+    ).then(text =>
+        JSON.parse(text)
+    );
     // Patch declarative_net_request key
     manifest.declarative_net_request = { rule_resources: ruleResources };
     // Patch web_accessible_resources key
@@ -1312,13 +1312,8 @@ async function main() {
     }
     manifest.web_accessible_resources = [ web_accessible_resources ];
 
-    // Patch version key
-    const now = new Date();
-    const yearPart = now.getUTCFullYear() - 2000;
-    const monthPart = (now.getUTCMonth() + 1) * 1000;
-    const dayPart = now.getUTCDate() * 10;
-    const hourPart = Math.floor(now.getUTCHours() / 3) + 1;
-    manifest.version = manifest.version + `.${yearPart}.${monthPart + dayPart + hourPart}`;
+    // Patch manifest version property
+    manifest.version = version;
     // Commit changes
     await fs.writeFile(
         `${outputDir}/manifest.json`,

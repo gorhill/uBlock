@@ -1274,7 +1274,9 @@ class FilterRegex {
             dnrAddRuleError(rule, `regexFilter is not RE2-compatible: ${args[1]}`);
         }
         rule.condition.regexFilter = args[1];
-        rule.condition.isUrlFilterCaseSensitive = args[2] === 1;
+        if ( args[2] === 1 ) {
+            rule.condition.isUrlFilterCaseSensitive = true;
+        }
     }
 
     static keyFromArgs(args) {
@@ -4349,7 +4351,7 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
         'ping',
         'other',
     ]);
-    let ruleset = [];
+    const ruleset = [];
     for ( const [ realmBits, realmName ] of realms ) {
         for ( const [ partyBits, partyName ] of partyness ) {
             for ( const typeName in typeNameToTypeValue ) {
@@ -4521,141 +4523,8 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
         }
     }
 
-    // Assign rule ids
-    const rulesetMap = new Map();
-    {
-        let ruleId = 1;
-        for ( const rule of ruleset ) {
-            rulesetMap.set(ruleId++, rule);
-        }
-    }
-
-    // Merge rules where possible by merging arrays of a specific property.
-    //
-    // https://github.com/uBlockOrigin/uBOL-issues/issues/10#issuecomment-1304822579
-    //   Do not merge rules which have errors.
-    const mergeRules = (rulesetMap, mergeTarget) => {
-        const mergeMap = new Map();
-        const sorter = (_, v) => {
-            if ( Array.isArray(v) ) {
-                return typeof v[0] === 'string' ? v.sort() : v;
-            }
-            if ( v instanceof Object ) {
-                const sorted = {};
-                for ( const kk of Object.keys(v).sort() ) {
-                    sorted[kk] = v[kk];
-                }
-                return sorted;
-            }
-            return v;
-        };
-        const ruleHasher = (rule, target) => {
-            return JSON.stringify(rule, (k, v) => {
-                if ( k.startsWith('_') ) { return; }
-                if ( k === target ) { return; }
-                return sorter(k, v);
-            });
-        };
-        const extractTargetValue = (obj, target) => {
-            for ( const [ k, v ] of Object.entries(obj) ) {
-                if ( Array.isArray(v) && k === target ) { return v; }
-                if ( v instanceof Object ) {
-                    const r = extractTargetValue(v, target);
-                    if ( r !== undefined ) { return r; }
-                }
-            }
-        };
-        const extractTargetOwner = (obj, target) => {
-            for ( const [ k, v ] of Object.entries(obj) ) {
-                if ( Array.isArray(v) && k === target ) { return obj; }
-                if ( v instanceof Object ) {
-                    const r = extractTargetOwner(v, target);
-                    if ( r !== undefined ) { return r; }
-                }
-            }
-        };
-        for ( const [ id, rule ] of rulesetMap ) {
-            if ( rule._error !== undefined ) { continue; }
-            const hash = ruleHasher(rule, mergeTarget);
-            if ( mergeMap.has(hash) === false ) {
-                mergeMap.set(hash, []);
-            }
-            mergeMap.get(hash).push(id);
-        }
-        for ( const ids of mergeMap.values() ) {
-            if ( ids.length === 1 ) { continue; }
-            const leftHand = rulesetMap.get(ids[0]);
-            const leftHandSet = new Set(
-                extractTargetValue(leftHand, mergeTarget) || []
-            );
-            for ( let i = 1; i < ids.length; i++ ) {
-                const rightHandId = ids[i];
-                const rightHand = rulesetMap.get(rightHandId);
-                const rightHandArray =  extractTargetValue(rightHand, mergeTarget);
-                if ( rightHandArray !== undefined ) {
-                    if ( leftHandSet.size !== 0 ) {
-                        for ( const item of rightHandArray ) {
-                            leftHandSet.add(item);
-                        }
-                    }
-                } else {
-                    leftHandSet.clear();
-                }
-                rulesetMap.delete(rightHandId);
-            }
-            const leftHandOwner = extractTargetOwner(leftHand, mergeTarget);
-            if ( leftHandSet.size > 1 ) {
-                //if ( leftHandOwner === undefined ) { debugger; }
-                leftHandOwner[mergeTarget] = Array.from(leftHandSet).sort();
-            } else if ( leftHandSet.size === 0 ) {
-                if ( leftHandOwner !== undefined ) {
-                    leftHandOwner[mergeTarget] = undefined;
-                }
-            }
-        }
-    };
-    mergeRules(rulesetMap, 'resourceTypes');
-    mergeRules(rulesetMap, 'initiatorDomains');
-    mergeRules(rulesetMap, 'requestDomains');
-    mergeRules(rulesetMap, 'removeParams');
-    mergeRules(rulesetMap, 'responseHeaders');
-
-    // Patch case-sensitiveness
-    for ( const rule of rulesetMap.values() ) {
-        const { condition } = rule;
-        if (
-            condition === undefined ||
-            condition.urlFilter === undefined &&
-            condition.regexFilter === undefined
-        ) {
-            continue;
-        }
-        if ( condition.isUrlFilterCaseSensitive === undefined ) {
-            condition.isUrlFilterCaseSensitive = false;
-        } else if ( condition.isUrlFilterCaseSensitive === true ) {
-            condition.isUrlFilterCaseSensitive = undefined;
-        }
-    }
-
-    // Patch id
-    const rulesetFinal = [];
-    {
-        let ruleId = 1;
-        for ( const rule of rulesetMap.values() ) {
-            if ( rule._error === undefined ) {
-                rule.id = ruleId++;
-            } else {
-                rule.id = 0;
-            }
-            rulesetFinal.push(rule);
-        }
-        for ( const invalid of context.invalid ) {
-            rulesetFinal.push({ _error: [ invalid ] });
-        }
-    }
-
     return {
-        ruleset: rulesetFinal,
+        ruleset,
         filterCount: context.filterCount,
         acceptedFilterCount: context.acceptedFilterCount,
         rejectedFilterCount: context.rejectedFilterCount,
