@@ -1,5 +1,5 @@
-Version: 2023.8.19.798
-Secret: 5890fd8cdbc2b7f7
+Version: 2023.8.19.888
+Secret: 47b0daebaeb3e714
 ============================
 Listset for 'default':
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/filters.min.txt
@@ -779,11 +779,11 @@ Procedural-related distinct filters: 26 distinct combined selectors
 ============================
 Listset for 'jpn-1':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/7.txt
-Input filter count: 1889
-	Accepted filter count: 1889
+Input filter count: 1891
+	Accepted filter count: 1891
 	Rejected filter count: 0
-Output rule count: 1310
-	Plain good: 1266
+Output rule count: 1311
+	Plain good: 1267
 
 	Maybe good (regexes): 16
 	redirect=: 23
@@ -797,13 +797,13 @@ Output rule count: 1310
 		Unsupported regex-based removeParam: /^(cookie|ga_|u_)/
 CSS-generic: 110 plain CSS selectors
 CSS-generic-high: 10 plain CSS selectors
-CSS-specific: 5985 distinct filters
-	Combined into 4043 distinct hostnames
+CSS-specific: 5991 distinct filters
+	Combined into 4055 distinct hostnames
 	Combined into 7 distinct entities
-CSS-declarative: 173 distinct filters
-	Combined into 150 distinct hostnames
+CSS-declarative: 174 distinct filters
+	Combined into 151 distinct hostnames
 	Combined into 0 distinct entities
-Procedural-related distinct filters: 874 distinct combined selectors
+Procedural-related distinct filters: 875 distinct combined selectors
 	Combined into 840 distinct hostnames
 	Combined into 0 distinct entities
 ============================
@@ -1479,10 +1479,10 @@ Output rule count: 1520
 		regexFilter is not RE2-compatible: ^https:\/\/[0-9a-z]{7,25}\.com\/v2(?:\/0\/)?(?=[0-9a-z_-]{0,84}[A-Z])(?=[a-zA-Z_-]{0,84}[0-9])[0-9a-zA-Z_-]{54,85}(#\?v=[0-9a-f]{32})?$
 CSS-generic: 35 plain CSS selectors
 CSS-generic-high: 3 plain CSS selectors
-CSS-specific: 10699 distinct filters
-	Combined into 10525 distinct hostnames
+CSS-specific: 10701 distinct filters
+	Combined into 10527 distinct hostnames
 	Combined into 68 distinct entities
-CSS-declarative: 609 distinct filters
+CSS-declarative: 610 distinct filters
 	Combined into 2227 distinct hostnames
 	Combined into 25 distinct entities
 Procedural-related distinct filters: 377 distinct combined selectors
@@ -1544,11 +1544,11 @@ Procedural-related distinct filters: 73 distinct combined selectors
 ============================
 Listset for 'annoyances-others':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/21.txt
-Input filter count: 426
-	Accepted filter count: 426
+Input filter count: 427
+	Accepted filter count: 427
 	Rejected filter count: 0
-Output rule count: 397
-	Plain good: 392
+Output rule count: 398
+	Plain good: 393
 
 	Maybe good (regexes): 2
 	redirect=: 1
@@ -1557,7 +1557,7 @@ Output rule count: 397
 	Unsupported: 0
 
 CSS-generic: 6 plain CSS selectors
-CSS-specific: 3596 distinct filters
+CSS-specific: 3598 distinct filters
 	Combined into 3352 distinct hostnames
 	Combined into 33 distinct entities
 CSS-declarative: 391 distinct filters
