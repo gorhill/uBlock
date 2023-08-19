@@ -56,6 +56,7 @@ if [ "$UBO_VERSION" != "HEAD" ]; then
     git remote add origin "https://github.com/gorhill/uBlock.git"
     git fetch --depth 1 origin "$UBO_VERSION"
     git checkout -q FETCH_HEAD
+    cd - > /dev/null
 else
     UBO_DIR=.
 fi
