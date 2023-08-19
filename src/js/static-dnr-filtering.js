@@ -346,7 +346,7 @@ function finalizeRuleset(context, network) {
     }
     // Merge rules where possible by merging arrays of a specific property.
     //
-    // https://github.com/uBlockOrigin/uBOL-issues/issues/10#issuecomment-1304822579
+    // https://github.com/uBlockOrigin/uBOL-home/issues/10#issuecomment-1304822579
     //   Do not merge rules which have errors.
     const mergeRules = (rulesetMap, mergeTarget) => {
         const mergeMap = new Map();

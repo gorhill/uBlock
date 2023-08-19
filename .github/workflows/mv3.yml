@@ -42,7 +42,7 @@ jobs:
           tag: ${{ env.TAGNAME }}
           owner: uBlockOrigin
           prerelease: true
-          repo: uBOL-issues
+          repo: uBOL-home
           token: ${{ secrets.PAT }}
       - name: Upload Chromium uBOLite MV3 package
         uses: actions/upload-release-asset@v1
