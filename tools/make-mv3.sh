@@ -44,12 +44,19 @@ mkdir -p $DES/css/fonts
 mkdir -p $DES/js
 mkdir -p $DES/img
 
-if [ "$UBO_VERSION" != "local" ]; then
-    UBO_VERSION=$(cat platform/mv3/ubo-version)
+if [ "$UBO_VERSION" != "HEAD" ]; then
+    cp platform/mv3/ubo-version $DES/
+    UBO_VERSION_URL=$(cat platform/mv3/ubo-version)
+    UBO_VERSION="${UBO_VERSION_URL: -40}"
     UBO_REPO="https://github.com/gorhill/uBlock.git"
     UBO_DIR=$(mktemp -d)
     echo "*** uBOLite.mv3: Fetching uBO $UBO_VERSION from $UBO_REPO into $UBO_DIR"
-    git clone -q --depth 1 --branch "$UBO_VERSION" "$UBO_REPO" "$UBO_DIR"
+    cd "$UBO_DIR"
+    git init -q
+    git remote add origin "https://github.com/gorhill/uBlock.git"
+    git fetch --depth 1 origin "$UBO_VERSION"
+    git checkout -q FETCH_HEAD
+    cd ..
 else
     UBO_DIR=.
 fi
