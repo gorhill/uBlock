@@ -147,7 +147,7 @@ print('Downloaded raw package saved as {0}'.format(raw_xpi_filepath))
 #
 # Convert the package to a self-hosted one: add `update_url` to the manifest
 #
-min_browser_version = '113a1';
+min_browser_version = '114.0';
 
 print('Converting raw xpi package into self-hosted xpi package...')
 with zipfile.ZipFile(raw_xpi_filepath, 'r') as zipin:
