@@ -51,6 +51,7 @@ function safeSelf() {
         'RegExp': self.RegExp,
         'RegExp_test': self.RegExp.prototype.test,
         'RegExp_exec': self.RegExp.prototype.exec,
+        'XMLHttpRequest': self.XMLHttpRequest,
         'addEventListener': self.EventTarget.prototype.addEventListener,
         'removeEventListener': self.EventTarget.prototype.removeEventListener,
         'fetch': self.fetch,
@@ -294,18 +295,24 @@ function abortCurrentScriptCore(
         return text;
     };
     const validate = ( ) => {
-        if ( debug ) { debugger; }  // jshint ignore: line
         const e = document.currentScript;
         if ( e instanceof HTMLScriptElement === false ) { return; }
         if ( e === thisScript ) { return; }
-        if ( context !== '' && reContext.test(e.src) === false ) { return; }
+        if ( context !== '' && reContext.test(e.src) === false ) {
+            if ( debug === 'nomatch' || debug === 'all' ) { debugger; }  // jshint ignore: line
+            return;
+        }
         if ( log && e.src !== '' ) { safe.uboLog(`matched src: ${e.src}`); }
         const scriptText = getScriptText(e);
-        if ( reNeedle.test(scriptText) === false ) { return; }
+        if ( reNeedle.test(scriptText) === false ) {
+            if ( debug === 'nomatch' || debug === 'all' ) { debugger; }  // jshint ignore: line
+            return;
+        }
         if ( log ) { safe.uboLog(`matched script text: ${scriptText}`); }
+        if ( debug === 'match' || debug === 'all' ) { debugger; }  // jshint ignore: line
         throw new ReferenceError(exceptionToken);
     };
-    if ( debug ) { debugger; }  // jshint ignore: line
+    if ( debug === 'install' ) { debugger; }  // jshint ignore: line
     try {
         Object.defineProperty(owner, prop, {
             get: function() {
@@ -1931,6 +1938,7 @@ builtinScriptlets.push({
     dependencies: [
         'match-object-properties.fn',
         'parse-properties-to-match.fn',
+        'safe-self.fn',
     ],
 });
 function noXhrIf(
@@ -1938,6 +1946,7 @@ function noXhrIf(
     directive = ''
 ) {
     if ( typeof propsToMatch !== 'string' ) { return; }
+    const safe = safeSelf();
     const xhrInstances = new WeakMap();
     const propNeedles = parsePropertiesToMatch(propsToMatch, 'url');
     const log = propNeedles.size === 0 ? console.log.bind(console) : undefined;
@@ -1961,7 +1970,7 @@ function noXhrIf(
                 if ( warSecret !== undefined ) {
                     fullpath.push('?secret=', warSecret);
                 }
-                const warXHR = new XMLHttpRequest();
+                const warXHR = new safe.XMLHttpRequest();
                 warXHR.responseType = 'text';
                 warXHR.onloadend = ev => {
                     resolve(ev.target.responseText || '');
