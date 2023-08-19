@@ -1,5 +1,5 @@
-Version: 2023.8.19.897
-Secret: ae551277bd68a341
+Version: 2023.8.19.910
+Secret: 72d7360bdd9117ff
 ============================
 Listset for 'default':
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/filters.min.txt
