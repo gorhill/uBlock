@@ -129,8 +129,8 @@ argsList.length = 0;
 // Inject code
 
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1736575
-//   `MAIN` world not yet supported in Firefox, so we inject the code into
-//   'MAIN' ourself when enviroment in Firefox.
+//   'MAIN' world not yet supported in Firefox, so we inject the code into
+//   'MAIN' ourself when environment in Firefox.
 
 // Not Firefox
 if ( typeof wrappedJSObject !== 'object' ) {
