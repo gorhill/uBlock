@@ -42,7 +42,9 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           tag: ${{ env.TAGNAME }}
+          owner: uBlockOrigin
           prerelease: true
+          repo: uBOL-issues
       - name: Upload Chromium uBOLite MV3 package
         uses: actions/upload-release-asset@v1
         env:
