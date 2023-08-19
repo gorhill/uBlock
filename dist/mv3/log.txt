@@ -1,5 +1,5 @@
-Version: 1.0.23.8155
-Secret: 94a2ae148823df0e
+Version: 2023.8.19.798
+Secret: 5890fd8cdbc2b7f7
 ============================
 Listset for 'default':
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/filters.min.txt
@@ -11,14 +11,14 @@ Listset for 'default':
 	Fetching remote https://ublockorigin.github.io/uAssets/thirdparties/easylist.txt
 	Fetching remote https://ublockorigin.github.io/uAssets/thirdparties/easyprivacy.txt
 	Fetching remote https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext
-Input filter count: 92644
-	Accepted filter count: 91074
-	Rejected filter count: 145
-Output rule count: 17543
-	Pruning requestDomains: from 53891 to 53738
-	Pruning requestDomains: from 2674 to 2668
-	Pruning requestDomains: from 5922 to 5918
-	Plain good: 16723
+Input filter count: 92855
+	Accepted filter count: 91275
+	Rejected filter count: 146
+Output rule count: 17561
+	Pruning requestDomains: from 54014 to 53859
+	Pruning requestDomains: from 2681 to 2675
+	Pruning requestDomains: from 5929 to 5925
+	Plain good: 16732
 		Salvaged rule by ignoring 1 entity-based domain= option: erotic-beauties.com|hardsex.cc|rule34.top|sex-movies.biz|tube18.sexy|xvideos.name|booru.*
 		Salvaged rule by ignoring 19 entity-based domain= option: fullxh.com|hamsterix.*|megaxh.com|unlockxh4.com|xhadult2.com|xhadult3.com|xhadult4.com|xhadult5.com|xhamster.*|xhamster10.*|xhamster11.*|xhamster12.*|xhamster13.*|xhamster14.*|xhamster15.*|xhamster16.*|xhamster17.*|xhamster18.*|xhamster19.*|xhamster2.*|xhamster20.*|xhamster3.*|xhamster4.*|xhamster46.com|xhamster5.*|xhamster7.*|xhamster8.*|xhday.com|xhday1.com|xhmoon5.com|xhplanet1.com|xhplanet2.com|xhreal2.com|xhreal3.com|xhtab2.com|xhvictory.com|xhwebsite.com|xhwebsite2.com|xhwide1.com|xhwide8.com
 		Salvaged rule by ignoring 19 entity-based domain= option: fullxh.com|hamsterix.*|megaxh.com|unlockxh4.com|xhadult2.com|xhadult3.com|xhadult4.com|xhadult5.com|xhamster.*|xhamster10.*|xhamster11.*|xhamster12.*|xhamster13.*|xhamster14.*|xhamster15.*|xhamster16.*|xhamster17.*|xhamster18.*|xhamster19.*|xhamster2.*|xhamster20.*|xhamster3.*|xhamster4.*|xhamster46.com|xhamster5.*|xhamster7.*|xhamster8.*|xhday.com|xhday1.com|xhmoon5.com|xhplanet1.com|xhplanet2.com|xhreal2.com|xhreal3.com|xhtab2.com|xhvictory.com|xhwebsite.com|xhwebsite2.com|xhwide1.com|xhwide8.com
@@ -46,7 +46,7 @@ Output rule count: 17543
 		Salvaged rule by ignoring 1 entity-based domain= option: dropcoins.xyz|fastcoin.ga|faucetbr.tk|is2btc.com|swift4claim.com|quickclaims.*
 		Salvaged rule by ignoring 1 entity-based domain= option: olympicstreams.me|vipboxtv.*
 		Salvaged rule by ignoring 8 entity-based domain= option: adbull.org|zdnet.fr|imgsen.com|titsbox.com|senmanga.com|hitomi.la|mangovideo.*|bolly4umovies.*|gaybeeg.info|lovelynudez.com|classicpornbest.com|skymovieshd.*|topwwnews.com|elsfile.org|javdoe.to|javtc.*|webmusic.*|pics4you.net|kiwiexploits.com|pornxp.com|silverpic.com|suicidepics.com|tanix.net|freeuseporn.com|ukrainesmodels.com|freeadultcomix.com|xxxwebdlxxx.top|uproxy2.biz|crownimg.com|masaporn.xyz|dvdplay.*|mangaraw.org|imgstar.eu|imgsto.*|picdollar.com|pics4upload.com|amateurblog.tv|fashionblog.tv|latinblog.tv|silverblog.tv|tokyoblog.tv|xblog.tv|maxsport.one|sportz.football|streamgo.to|streamgoto.*|amazingstream.net|imwatchingmovies.com|zinchanmanga.com|weaksports.xyz|vidoza.co|vidoza.net|govid.co|up-4ever.net|abcvideo.cc|ouo.io|ouo.press|imgbox.com|pirateproxy.live|thehiddenbay.com|thepiratebay.org|thepiratebay10.org
-		Salvaged rule by ignoring 1 entity-based domain= option: ceesty.com|corneey.com|destyy.com|festyy.com|gestyy.com|hd-easyporn.com|bolly4umovies.*|pcgamez-download.com|torrentvhd.biz|lovelynudez.com|gayforit.eu|movieston.com|kiwiexploits.com|nsfwyoutube.com|pomvideo.cc|steampiay.cc|vidoza.co|vidoza.net|mixdrop.co|govid.co|up-4ever.net|abcvideo.cc|ouo.io|ouo.press|pirateproxy.live|thehiddenbay.com|thepiratebay10.org|opensubtitles.org
+		Salvaged rule by ignoring 1 entity-based domain= option: ceesty.com|corneey.com|destyy.com|festyy.com|gestyy.com|hd-easyporn.com|bolly4umovies.*|pcgamez-download.com|torrentvhd.biz|lovelynudez.com|gayforit.eu|movieston.com|kiwiexploits.com|dropload.io|nsfwyoutube.com|pomvideo.cc|steampiay.cc|vidoza.co|vidoza.net|mixdrop.co|govid.co|up-4ever.net|abcvideo.cc|ouo.io|ouo.press|pirateproxy.live|thehiddenbay.com|thepiratebay10.org|opensubtitles.org
 		Salvaged rule by ignoring 19 entity-based domain= option: fullxh.com|hamsterix.*|megaxh.com|unlockxh4.com|xhadult2.com|xhadult3.com|xhadult4.com|xhadult5.com|xhamster.*|xhamster10.*|xhamster11.*|xhamster12.*|xhamster13.*|xhamster14.*|xhamster15.*|xhamster16.*|xhamster17.*|xhamster18.*|xhamster19.*|xhamster2.*|xhamster20.*|xhamster3.*|xhamster4.*|xhamster46.com|xhamster5.*|xhamster7.*|xhamster8.*|xhday.com|xhday1.com|xhmoon5.com|xhplanet1.com|xhplanet2.com|xhreal2.com|xhreal3.com|xhtab2.com|xhvictory.com|xhwebsite.com|xhwebsite2.com|xhwide1.com|xhwide8.com
 		Salvaged rule by ignoring 1 entity-based domain= option: cpmlink.net|mwpaste.com|lusthero.com|22pixx.xyz|goto.com.np|imgtorrnt.in|shrinkearn.com|9ig.de|pingit.im|pngit.live|elil.cc|vev.red|vidop.icu|vidup.io|tubepornclassic.com|ironysub.net|bolly4umovies.*|pcgamez-download.com|curto.win|freeadultcomix.com|xxxwebdlxxx.top|crownimg.com|pomvideo.cc|steampiay.cc|bc.vc|vidoza.co|vidoza.net|pirateproxy.live|thehiddenbay.com|thepiratebay.org|thepiratebay10.org
 		Salvaged rule by ignoring 1 entity-based domain= option: financemonk.net|dropgalaxy.*
@@ -71,11 +71,11 @@ Output rule count: 17543
 		Salvaged rule by ignoring 2 entity-based domain= option: acortalo.*|acortar.*|megadescarga.net
 		Salvaged rule by ignoring 2 entity-based domain= option: gentside.*|ohmymag.*|maxisciences.com
 		Salvaged rule by ignoring 5 entity-based domain= option: mylink.*|my1ink.*|myl1nk.*|myli3k.*|audiotools.pro|magesy.blog|magesypro.pro|audioztools.com|solvetube.*|promo-visits.site|satoshi-win.xyz|healdad.com|mobitaak.com|gamalk-sehetk.com|allcryptoz.net|crewbase.net|crewus.net|shinbhu.net|shinchu.net|thumb8.net|thumb9.net|topcryptoz.net|uniqueten.net|ultraten.net
-	Maybe good (regexes): 145
-	redirect=: 343
-	removeparams= (accepted/discarded): 34/11
-	modifyHeaders=: 62
-	Unsupported: 236
+	Maybe good (regexes): 146
+	redirect=: 342
+	removeparams= (accepted/discarded): 34/12
+	modifyHeaders=: 64
+	Unsupported: 243
 		Can't salvage rule with only entity-based domain= option: vidmoly.*
 		Can't salvage rule with only entity-based domain= option: megalink.*
 		Can't salvage rule with only entity-based domain= option: bg-gledai.*
@@ -269,6 +269,12 @@ Output rule count: 17543
 		Can't salvage rule with only entity-based domain= option: bloomberg.*
 		Can't salvage rule with only entity-based domain= option: soap2day.*
 		Can't salvage rule with only entity-based domain= option: soap2day.*
+		Can't salvage rule with only entity-based domain= option: pussyspace.*
+		Can't salvage rule with only entity-based domain= option: pussyspace.*
+		Can't salvage rule with only entity-based domain= option: pussyspace.*
+		Can't salvage rule with only entity-based domain= option: pussyspace.*
+		Can't salvage rule with only entity-based domain= option: pussyspace.*
+		Can't salvage rule with only entity-based domain= option: pussyspace.*
 		Can't salvage rule with only entity-based domain= option: slreamplay.*
 		Can't salvage rule with only entity-based domain= option: pouvideo.*|povvideo.*|povw1deo.*|povwideo.*|powv1deo.*|powvibeo.*|powvideo.*|powvldeo.*
 		Unsupported regex-based removeParam: /utm_source|utm_campaign|utm_content/
@@ -305,6 +311,7 @@ Output rule count: 17543
 		Unsupported modifier exception
 		Unsupported modifier exception
 		Unsupported modifier exception
+		Unsupported regex-based removeParam: /^(?!offer_id=).*/
 		Unsupported modifier exception
 		Can't salvage rule with only entity-based domain= option: empire-stream.*|empire-streaming.*
 		Unsupported modifier exception
@@ -312,17 +319,17 @@ Output rule count: 17543
 		Can't salvage rule with only entity-based domain= option: empire-stream.*|empire-streaming.*
 		Unsupported modifier exception
 		regexFilter is not RE2-compatible: ^https?:\/\/(?:[a-z]{2}\.)?[0-9a-z]{5,16}\.[a-z]{3,7}\/[a-z](?=[a-z]{0,25}[0-9A-Z])[0-9a-zA-Z]{3,26}\/\d{4,5}(?:\?[_v]=\d+)?$
-CSS-generic: 15863 plain CSS selectors
+CSS-generic: 15682 plain CSS selectors
 CSS-generic-high: 553 plain CSS selectors
-CSS-specific: 9608 distinct filters
-	Combined into 9041 distinct hostnames
+CSS-specific: 9630 distinct filters
+	Combined into 9055 distinct hostnames
 	Combined into 491 distinct entities
-CSS-declarative: 419 distinct filters
+CSS-declarative: 421 distinct filters
 	Combined into 622 distinct hostnames
 	Combined into 51 distinct entities
-Procedural-related distinct filters: 864 distinct combined selectors
-	Combined into 1382 distinct hostnames
-	Combined into 202 distinct entities
+Procedural-related distinct filters: 866 distinct combined selectors
+	Combined into 1381 distinct hostnames
+	Combined into 201 distinct entities
 ============================
 Listset for 'alb-0':
 	Fetching remote https://raw.githubusercontent.com/AnXh3L0/blocklist/master/albanian-easylist-addition/Albania.txt
@@ -372,13 +379,13 @@ CSS-specific: 350 distinct filters
 ============================
 Listset for 'chn-0':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/224.txt
-Input filter count: 15221
-	Accepted filter count: 15156
+Input filter count: 15280
+	Accepted filter count: 15215
 	Rejected filter count: 1
-Output rule count: 6476
-	Pruning requestDomains: from 6218 to 6210
-	Pruning requestDomains: from 521 to 519
-	Plain good: 6411
+Output rule count: 6478
+	Pruning requestDomains: from 6276 to 6268
+	Pruning requestDomains: from 520 to 518
+	Plain good: 6413
 
 	Maybe good (regexes): 11
 	redirect=: 41
@@ -390,16 +397,16 @@ Output rule count: 6476
 		Unsupported modifier exception
 		Invalid network filter in chn-0: @@||ad.alimama.com^$genericblock
 		Invalid network filter in chn-0: @@||cmechina.net^$genericblock
-CSS-generic: 757 plain CSS selectors
+CSS-generic: 754 plain CSS selectors
 CSS-generic-high: 403 plain CSS selectors
-CSS-specific: 6503 distinct filters
-	Combined into 2788 distinct hostnames
+CSS-specific: 6507 distinct filters
+	Combined into 2795 distinct hostnames
 	Combined into 1 distinct entities
 CSS-declarative: 77 distinct filters
 	Combined into 70 distinct hostnames
 	Combined into 0 distinct entities
-Procedural-related distinct filters: 89 distinct combined selectors
-	Combined into 64 distinct hostnames
+Procedural-related distinct filters: 92 distinct combined selectors
+	Combined into 65 distinct hostnames
 	Combined into 0 distinct entities
 ============================
 Listset for 'cze-0':
@@ -431,11 +438,11 @@ Procedural-related distinct filters: 7 distinct combined selectors
 ============================
 Listset for 'deu-0':
 	Fetching remote https://easylist.to/easylistgermany/easylistgermany.txt
-Input filter count: 2339
-	Accepted filter count: 2339
+Input filter count: 2340
+	Accepted filter count: 2340
 	Rejected filter count: 0
-Output rule count: 1784
-	Plain good: 1778
+Output rule count: 1783
+	Plain good: 1777
 
 	Maybe good (regexes): 4
 	redirect=: 0
@@ -447,7 +454,7 @@ Output rule count: 1784
 CSS-generic: 356 plain CSS selectors
 CSS-generic-high: 34 plain CSS selectors
 CSS-specific: 2398 distinct filters
-	Combined into 1771 distinct hostnames
+	Combined into 1772 distinct hostnames
 	Combined into 0 distinct entities
 Procedural-related distinct filters: 84 distinct combined selectors
 	Combined into 60 distinct hostnames
@@ -506,14 +513,14 @@ Output rule count: 6567
 		Unsupported modifier exception
 CSS-generic: 2419 plain CSS selectors
 CSS-generic-high: 522 plain CSS selectors
-CSS-specific: 2217 distinct filters
-	Combined into 1692 distinct hostnames
+CSS-specific: 2218 distinct filters
+	Combined into 1693 distinct hostnames
 	Combined into 3 distinct entities
 CSS-declarative: 42 distinct filters
 	Combined into 43 distinct hostnames
 	Combined into 1 distinct entities
-Procedural-related distinct filters: 95 distinct combined selectors
-	Combined into 115 distinct hostnames
+Procedural-related distinct filters: 97 distinct combined selectors
+	Combined into 117 distinct hostnames
 	Combined into 0 distinct entities
 ============================
 Listset for 'grc-0':
@@ -595,8 +602,8 @@ Procedural-related distinct filters: 21 distinct combined selectors
 ============================
 Listset for 'idn-0':
 	Fetching remote https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/subscriptions/abpindo.txt
-Input filter count: 4288
-	Accepted filter count: 4285
+Input filter count: 4286
+	Accepted filter count: 4283
 	Rejected filter count: 0
 Output rule count: 3017
 	Plain good: 3017
@@ -608,9 +615,9 @@ Output rule count: 3017
 	Unsupported: 0
 
 CSS-generic: 239 plain CSS selectors
-CSS-generic-high: 3608 plain CSS selectors
-CSS-specific: 845 distinct filters
-	Combined into 688 distinct hostnames
+CSS-generic-high: 3609 plain CSS selectors
+CSS-specific: 847 distinct filters
+	Combined into 690 distinct hostnames
 	Combined into 12 distinct entities
 CSS-declarative: 2 distinct filters
 	Combined into 2 distinct hostnames
@@ -621,11 +628,11 @@ Procedural-related distinct filters: 1 distinct combined selectors
 ============================
 Listset for 'ind-0':
 	Fetching remote https://easylist-downloads.adblockplus.org/indianlist.txt
-Input filter count: 4876
-	Accepted filter count: 4876
+Input filter count: 4882
+	Accepted filter count: 4882
 	Rejected filter count: 0
-Output rule count: 4830
-	Plain good: 4830
+Output rule count: 4836
+	Plain good: 4836
 
 	Maybe good (regexes): 0
 	redirect=: 0
@@ -633,8 +640,8 @@ Output rule count: 4830
 	modifyHeaders=: 0
 	Unsupported: 0
 
-CSS-specific: 3723 distinct filters
-	Combined into 4080 distinct hostnames
+CSS-specific: 3728 distinct filters
+	Combined into 4088 distinct hostnames
 	Combined into 0 distinct entities
 Procedural-related distinct filters: 93 distinct combined selectors
 	Combined into 89 distinct hostnames
@@ -642,17 +649,17 @@ Procedural-related distinct filters: 93 distinct combined selectors
 ============================
 Listset for 'irn-0':
 	Fetching remote https://raw.githubusercontent.com/MasterKia/PersianBlocker/main/PersianBlocker.txt
-Input filter count: 866
-	Accepted filter count: 866
+Input filter count: 1102
+	Accepted filter count: 1102
 	Rejected filter count: 0
-Output rule count: 592
-	Pruning requestDomains: from 167 to 162
-	Plain good: 553
+Output rule count: 604
+	Pruning requestDomains: from 215 to 210
+	Plain good: 563
 
 	Maybe good (regexes): 0
 	redirect=: 0
-	removeparams= (accepted/discarded): 11/26
-	modifyHeaders=: 0
+	removeparams= (accepted/discarded): 12/26
+	modifyHeaders=: 1
 	Unsupported: 28
 		FilterStrictParty: Strict partyness strict3p not supported
 		FilterStrictParty: Strict partyness strict3p not supported
@@ -689,8 +696,8 @@ CSS-specific: 742 distinct filters
 CSS-declarative: 226 distinct filters
 	Combined into 53 distinct hostnames
 	Combined into 1 distinct entities
-Procedural-related distinct filters: 162 distinct combined selectors
-	Combined into 120 distinct hostnames
+Procedural-related distinct filters: 163 distinct combined selectors
+	Combined into 119 distinct hostnames
 	Combined into 1 distinct entities
 ============================
 Listset for 'isl-0':
@@ -732,8 +739,8 @@ Output rule count: 274
 		regexFilter is not RE2-compatible: ^(?![a-zA-Z0-9\-]+\:\/+([^\/\:\.]+\.)*((gov|idf|muni|ac|k12|net)\.il|(google|blogspot|phpbb|minifier|enable|nagich|nagishplus|nagishly|livedns|user-a|emap|23tv|glz|icast|ecast|mediacast|live1|siz|gif|meduzot|telesport|teleline|livegames|2net|weather2day|mekorotapp|e-vrit|fav|slash|rabbi|kaplanopensource|systematics|israelcoronamap|icdn|wcdn|wallanews|wallashops|wallatours|wallaart|wallaprint|hamal|sheee|globes|madlan|yad2|mipo|b144|bezeq|yes|fxp|nick|d|maariv|iol|dominos|magazineitsuv|doctors|mishpati|lawguide|arcdb|zebarur|wlcdn|linicom|erate)\.co\.il|(kan|kankids|makan|iba|oref|iaf|parks|imj|nli|bh|isoc|hebrew-academy|kineret|teva|zavit|ip6|profile)\.org\.il)\.?([\/\:]|$))^[a-zA-Z0-9\-]+\:\/+[^\/\:]+\.il\.?([\/\:]|$)
 		regexFilter is not RE2-compatible: ^(?![a-zA-Z0-9\-]+\:\/+([^\/\:\.]+\.)*(facebook|fbcdn|threads|dmcdn|slideshare|cloudfront|cloudflare|fastly|fastlylb|gammacdn|edgecastcdn|footprint|incapdns|cloudapp|brightcove|jsdelivr|akamai|akamaihd|akamaized|akamaiedge|akahost|ctedgecdn|2mdn|edgesuite|azurewebsites|azureedge|windows|hwcdn|zencdn|llnwd|llnwi|boltdns|msecnd|bitsngo|nocookie|datatables|docdroid|iframely|algolia|anvato|maphub|dwcdn|typekit|edgefonts|recaptcha|ampproject|viafoura|yastatic|yahoodns|behance|darksky|google|twitchcdn|ttvnw|jtvnw|dailyuploads|deviantart|8ch|b-cdn|vodgc|hlsplayer|streamlock|web-view|streamgates|cdnwz|playgorithm|vidiom|radwarecloud|f-static|chartbeat|doubleclick|advsnx|sc-static|artipbox)\.net\.?([\/\:]|$))^[a-zA-Z0-9\-]+\:\/+[^\/\:]+\.net\.?([\/\:]|$)
 		regexFilter is not RE2-compatible: ^(?![a-zA-Z0-9\-]+\:\/+([^\/\:\.]+\.)*(flowplayer|amara|h5p|d3js|ampproject|promisejs|backbonejs|angularjs|dojotoolkit|telegram|telegram-cdn|openstreetmap|wmflabs|wikimapia|wikimedia|wikipedia|w3|schema|archive|mozilla|documentcloud|w|mathjax|userway|pannellum|tmdb|muses|openweathermap|uploadimage|postimages|postimage|imgsafe|4chan|4channel|4cdn|olympic|pbs|pbskids|npr|ntp|gnu|creativecommons|eff|icann|iana|ietf|wikileaks|ourworldindata|cookielaw|google|cdn77|browser-update|consensu|wp-accessibility|covid19maps|coronaisrael)\.org\.?([\/\:]|$))^[a-zA-Z0-9\-]+\:\/+[^\/\:]+\.org\.?([\/\:]|$)
-		regexFilter is not RE2-compatible: ^(?![a-zA-Z0-9\-]+\:\/+([^\/\:\.]+\.)*(google|gstatic|googleapis|jquery|youtube|youtubekids|youtube-nocookie|ytimg|facebook|fbsbx|twitter|twimg|instagram|cdninstagram|pinterest|pinimg|tumblr|giphy|vimeo|vimeocdn|dailymotion|flickr|staticflickr|soundcloud|sndcdn|scribd|scribdassets|tiktok|tiktokcdn|ttwstatic|muscdn|ibytedtos|sharethis|addthis|addthisedge|addthiscdn|reddit|redditmedia|redditstatic|redditgifts|linkedin|licdn|fontawesome|image-maps|cloudflare|bootstrapcdn|unpkg|cdnjs|stackpathdns|stackpathcdn|maxcdn|maxcdn-edge|netdna-ssl|netdna-cdn|kxcdn|ssl-cdn|muicss|tinymce|createjs|github|githubusercontent|aspnetcdn|azure|amazonaws|awswaf|elasticbeanstalk|rackcdn|netlify|jwplayer|jwpcdn|jwpltx|jwpsrv|jwplatform|brightcove|brightcovecdn|flowplayer|foliovision|streamable|kaltura|streamtheworld|mixcloud|bandcamp|bcbits|spotify|omnystudio|omnycontent|iheart|spreaker|podbean|buzzsprout|simplecast|podtail|apple|nobexpartners|vocaroo|embedly|iframely|snapwidget|thinglink|infogram|highcharts|airtable|printfriendly|algolianet|gravatar|svgur|svgshare|imgur|imgflip|gifer|gfycat|tenor|disqus|disquscdn|disqusservice|oneall|oneallcdn|tapatalk|tapatalk-cdn|mapbox|maptiler|mapquest|arcgis|arcgisonline|esri|here|ted|tedcdn|kickstarter|riddle|strawpoll|9gag|9cache|unsplash|freepik|imageshack|tinypic|photobox|photobucket|imgbox|imagebam|gifyu|makeagif|reactiongifs|gifbin|gif-finder|pastebin|rawgit|rawgithub|knockoutjs|gridstackjs|ravenjs|liveleak|metacafe|mcstatic|ign|ignimgs|365scores|buzzfeed|digg|stumbleupon|mix|getpocket|blogspot|wordpress|wp|videopress|wptavern|livejournal|withgoogle|googlegroups|googleusercontent|googlevideo|ggpht|noembed|appspot|firebaseio|firebaseapp|libring|hcaptcha|paypal|paypalobjects|amazon|media-amazon|media-imdb|ebay|microsoft|live|bing|msn|yahoo|yimg|yahooapis|duckduckgo|yandex|webflow|rtlcss|dropbox|dropboxusercontent|dropboxstatic|dropbox-dns|timeanddate|momentjs|weather|accuweather|theweathernetwork|windy|sat24|rainviewer|uvlens|statcounter|adobe|onesignal|livefyre|pushwoosh|tinypass|addtoany|addthisevent|addevent|addtocalendar|sumo|sumome|chatango|bitly|tinyurl|ipcamlive|steamstatic|playstation|discord|discordapp|mixer|odysee|rumble|bitchute|parler|gab|slideplayer|kym-cdn|gyazo|icons8|iconfinder|iconarchive|iconscout|flaticon|kindpng|pngitem|prntscr|deviantart|firefoxusercontent|box|feedly|feedburner|phpbb|vk|userapi|whatsapp|vroptimal-3dx-assets|bbc|cnn|go|nytimes|nyt|today|gofundme|fifa|uefa|nba|turner|xkcd|mtvnservices|cc|tmz|bugsnag|zoro|hebcal|fontsproject|kayma|kayma-dashboards|kayma-insights|kampyle|vicomi|openweb|cincopa|avplayer|vidnt|peer5|h-cdn|bynetcdn|cdnwiz|best-tv|viewbix|streamrail|smv-cdn|cloudvideoplatform|dxmcdn|dxmdp|waze|hunchbots|jeeng|cloudinary|sphereup|poloriz|applicaster|cloudwm|cloudwm-waf|negishim|accessibe|accessibeapp|acsbap|vollotech|mk-sense|allyable|shortaudition|spaceil|clear-map|segmanta|opinionstage|playbuzz|apester|qmerce|outbrain|taboola|taboolasyndication|googleoptimize|google-analytics|googletagservices|googletagmanager|googleadservices|googlesyndication|cloudflareinsights|chartbeat|scorecardresearch|serving-sys|exposebox|dynamicyield|coralogix|browsiprod|ip-api|petametrics|cooladata|hotjar|pusher|carto|fortvision|fortcdn|getsentry|trackjs|gamezhero|nick|nickjr|teennick|travelriskmap|sinclairstoryline|fresnobee|nbcchicago|magazina-il|raxcdn|pagewiz|pas-rahav|aniview|adnxs|sekindo)\.com\.?([\/\:]|$))^[a-zA-Z0-9\-]+\:\/+[^\/\:]+\.com\.?([\/\:]|$)
-		regexFilter is not RE2-compatible: ^(?![a-zA-Z0-9\-]+\:\/+([^\/\:]+\.(il|com|net|org|gov|mil|edu|int|(ac|gov|nhs)\.uk|(google)|(google)\.(com?\.)?[a-zA-Z]{2,3})|[0-9\.]+|([^\/\:\.]+\.)*(omny\.fm|anchor\.fm|simplecast\.fm|castbox\.fm|github\.io|socket\.io|codepen\.io|polyfill\.io|embed\.ly|iframe\.ly|infogr\.am|t\.me|flourish\.studio|flourish\.rocks|uri\.sh|po\.st|plyr\.io|piano\.io|periscope\.tv|pscp\.tv|vine\.co|popkey\.co|tenor\.co|redd\.it|ibb\.co|vgy\.me|postimg\.cc|imageshack\.us|prnt\.sc|imagesup\.co|weserv\.nl|telesco\.pe|powr\.io|pippa\.io|last\.fm|scdn\.co|tg\.dev|adobe\.io|viafoura\.co|lmao\.ninja|disease\.sh|web\.app|twitch\.tv|rmbl\.ws|stories\.sc|vid\.me|spot\.im|spots\.im|inthegame\.io|cybercdn\.live|h-cdn\.co|minute\.ly|vttp\.co|tldw\.me|feeder\.co|del\.icio\.us|telegram\.me|yandex\.ru|dailymail\.co\.uk|dailystar\.co\.uk|bbc\.net\.uk|bbc\.co\.uk|cnn\.io|bit\.ly|goo\.gl|g\.co|youtu\.be|t\.co|fb\.me|m\.me|instagr\.am|wa\.me|amzn\.to|wp\.me|git\.io|docdro\.id|arcg\.is|ow\.ly|disq\.us|discord\.gg|tiny\.cc|ex\.co|jogo\.studio|nagishly\.co|user1st\.info|knesset\.tv|knesset\.live|walla\.cloud|103\.fm|nickjr\.tv|amagi\.tv|logidea\.info|zoomanalytics\.co|firstimpression\.io|rtk\.io|trb\.tv|ren\.tv|atom-data\.io|sentry\.io|outbid\.io))\.?([\/\:]|$))^[^\/\:\.]+\:\/+[^\/\:\.]
+		regexFilter is not RE2-compatible: ^(?![a-zA-Z0-9\-]+\:\/+([^\/\:\.]+\.)*(google|gstatic|googleapis|jquery|youtube|youtubekids|youtube-nocookie|ytimg|facebook|fbsbx|twitter|twimg|x|instagram|cdninstagram|pinterest|pinimg|tumblr|giphy|vimeo|vimeocdn|dailymotion|flickr|staticflickr|soundcloud|sndcdn|scribd|scribdassets|tiktok|tiktokcdn|ttwstatic|muscdn|ibytedtos|sharethis|addthis|addthisedge|addthiscdn|reddit|redditmedia|redditstatic|redditgifts|linkedin|licdn|fontawesome|image-maps|cloudflare|bootstrapcdn|unpkg|cdnjs|stackpathdns|stackpathcdn|maxcdn|maxcdn-edge|netdna-ssl|netdna-cdn|kxcdn|ssl-cdn|muicss|tinymce|createjs|github|githubusercontent|aspnetcdn|azure|amazonaws|awswaf|elasticbeanstalk|rackcdn|netlify|jwplayer|jwpcdn|jwpltx|jwpsrv|jwplatform|brightcove|brightcovecdn|flowplayer|foliovision|streamable|kaltura|streamtheworld|mixcloud|bandcamp|bcbits|spotify|omnystudio|omnycontent|iheart|spreaker|podbean|buzzsprout|simplecast|podtail|apple|nobexpartners|vocaroo|embedly|iframely|snapwidget|thinglink|infogram|highcharts|airtable|printfriendly|algolianet|gravatar|svgur|svgshare|imgur|imgflip|gifer|gfycat|tenor|disqus|disquscdn|disqusservice|oneall|oneallcdn|tapatalk|tapatalk-cdn|mapbox|maptiler|mapquest|arcgis|arcgisonline|esri|here|ted|tedcdn|kickstarter|riddle|strawpoll|9gag|9cache|unsplash|freepik|imageshack|tinypic|photobox|photobucket|imgbox|imagebam|gifyu|makeagif|reactiongifs|gifbin|gif-finder|pastebin|rawgit|rawgithub|knockoutjs|gridstackjs|ravenjs|liveleak|metacafe|mcstatic|ign|ignimgs|365scores|buzzfeed|digg|stumbleupon|mix|getpocket|blogspot|wordpress|wp|videopress|wptavern|livejournal|withgoogle|googlegroups|googleusercontent|googlevideo|ggpht|noembed|appspot|firebaseio|firebaseapp|libring|hcaptcha|paypal|paypalobjects|amazon|media-amazon|media-imdb|ebay|microsoft|live|bing|msn|yahoo|yimg|yahooapis|duckduckgo|yandex|webflow|rtlcss|dropbox|dropboxusercontent|dropboxstatic|dropbox-dns|timeanddate|momentjs|weather|accuweather|theweathernetwork|windy|sat24|rainviewer|uvlens|statcounter|adobe|onesignal|livefyre|pushwoosh|tinypass|addtoany|addthisevent|addevent|addtocalendar|sumo|sumome|chatango|bitly|tinyurl|ipcamlive|steamstatic|playstation|discord|discordapp|mixer|odysee|rumble|bitchute|parler|gab|slideplayer|kym-cdn|gyazo|icons8|iconfinder|iconarchive|iconscout|flaticon|kindpng|pngitem|prntscr|deviantart|firefoxusercontent|box|feedly|feedburner|phpbb|vk|userapi|whatsapp|vroptimal-3dx-assets|bbc|cnn|go|nytimes|nyt|today|gofundme|fifa|uefa|nba|turner|xkcd|mtvnservices|cc|tmz|bugsnag|zoro|hebcal|fontsproject|kayma|kayma-dashboards|kayma-insights|kampyle|vicomi|openweb|cincopa|avplayer|vidnt|peer5|h-cdn|bynetcdn|cdnwiz|best-tv|viewbix|streamrail|smv-cdn|cloudvideoplatform|dxmcdn|dxmdp|waze|hunchbots|jeeng|cloudinary|sphereup|poloriz|applicaster|cloudwm|cloudwm-waf|negishim|accessibe|accessibeapp|acsbap|vollotech|mk-sense|allyable|shortaudition|spaceil|clear-map|segmanta|opinionstage|playbuzz|apester|qmerce|outbrain|taboola|taboolasyndication|googleoptimize|google-analytics|googletagservices|googletagmanager|googleadservices|googlesyndication|cloudflareinsights|chartbeat|scorecardresearch|serving-sys|exposebox|dynamicyield|coralogix|browsiprod|ip-api|petametrics|cooladata|hotjar|pusher|carto|fortvision|fortcdn|getsentry|trackjs|gamezhero|nick|nickjr|teennick|travelriskmap|sinclairstoryline|fresnobee|nbcchicago|magazina-il|raxcdn|pagewiz|pas-rahav|aniview|adnxs|sekindo)\.com\.?([\/\:]|$))^[a-zA-Z0-9\-]+\:\/+[^\/\:]+\.com\.?([\/\:]|$)
+		regexFilter is not RE2-compatible: ^(?![a-zA-Z0-9\-]+\:\/+([^\/\:]+\.(il|com|net|org|gov|mil|edu|int|(ac|gov|nhs)\.uk|(google)|(google)\.(com?\.)?[a-zA-Z]{2,3})|[0-9\.]+|([^\/\:\.]+\.)*(omny\.fm|anchor\.fm|simplecast\.fm|castbox\.fm|github\.io|socket\.io|codepen\.io|polyfill\.io|embed\.ly|iframe\.ly|infogr\.am|t\.me|flourish\.studio|flourish\.rocks|uri\.sh|po\.st|plyr\.io|piano\.io|tg\.dev|periscope\.tv|pscp\.tv|vine\.co|popkey\.co|tenor\.co|redd\.it|ibb\.co|vgy\.me|postimg\.cc|imageshack\.us|prnt\.sc|imagesup\.co|weserv\.nl|telesco\.pe|powr\.io|pippa\.io|last\.fm|scdn\.co|adobe\.io|viafoura\.co|lmao\.ninja|disease\.sh|web\.app|twitch\.tv|rmbl\.ws|stories\.sc|vid\.me|spot\.im|spots\.im|inthegame\.io|cybercdn\.live|h-cdn\.co|minute\.ly|vttp\.co|tldw\.me|feeder\.co|del\.icio\.us|telegram\.me|yandex\.ru|dailymail\.co\.uk|dailystar\.co\.uk|bbc\.net\.uk|bbc\.co\.uk|cnn\.io|bit\.ly|goo\.gl|g\.co|youtu\.be|t\.co|fb\.me|m\.me|instagr\.am|wa\.me|amzn\.to|wp\.me|git\.io|docdro\.id|arcg\.is|ow\.ly|disq\.us|discord\.gg|tiny\.cc|ex\.co|jogo\.studio|nagishly\.co|user1st\.info|knesset\.tv|knesset\.live|walla\.cloud|103\.fm|nickjr\.tv|amagi\.tv|logidea\.info|zoomanalytics\.co|firstimpression\.io|rtk\.io|trb\.tv|ren\.tv|atom-data\.io|sentry\.io|outbid\.io))\.?([\/\:]|$))^[^\/\:\.]+\:\/+[^\/\:\.]
 		regexFilter is not RE2-compatible: ^(?![a-zA-Z0-9\-]+:\/+www\.(walla(news|shops|tours|art|print)|hamal|sheee)\.co\.il\.?(\/|:|$))^[a-zA-Z0-9\-]+:\/+([a-zA-Z0-9\-]+\.)+(walla(news|shops|tours|art|print)|hamal|sheee)\.co\.il\.?(\/|:|$)
 		regexFilter is not RE2-compatible: ^(?![a-zA-Z0-9\-]+:\/+(www\.(walla(news|shops|tours|art|print)|hamal)|(api-mail|dal|dcx|isc|iscwne|www)\.walla)\.co\.il\.?(\/|:|$))^[a-zA-Z0-9\-]+:\/+([a-zA-Z0-9\-]+\.)+(walla(news|shops|tours|art|print)?|hamal)\.co\.il\.?(\/|:|$)
 CSS-generic: 5 plain CSS selectors
@@ -772,11 +779,11 @@ Procedural-related distinct filters: 26 distinct combined selectors
 ============================
 Listset for 'jpn-1':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/7.txt
-Input filter count: 1879
-	Accepted filter count: 1879
+Input filter count: 1889
+	Accepted filter count: 1889
 	Rejected filter count: 0
-Output rule count: 1302
-	Plain good: 1258
+Output rule count: 1310
+	Plain good: 1266
 
 	Maybe good (regexes): 16
 	redirect=: 23
@@ -790,14 +797,14 @@ Output rule count: 1302
 		Unsupported regex-based removeParam: /^(cookie|ga_|u_)/
 CSS-generic: 110 plain CSS selectors
 CSS-generic-high: 10 plain CSS selectors
-CSS-specific: 5940 distinct filters
-	Combined into 4027 distinct hostnames
+CSS-specific: 5985 distinct filters
+	Combined into 4043 distinct hostnames
 	Combined into 7 distinct entities
-CSS-declarative: 168 distinct filters
-	Combined into 147 distinct hostnames
+CSS-declarative: 173 distinct filters
+	Combined into 150 distinct hostnames
 	Combined into 0 distinct entities
-Procedural-related distinct filters: 872 distinct combined selectors
-	Combined into 838 distinct hostnames
+Procedural-related distinct filters: 874 distinct combined selectors
+	Combined into 840 distinct hostnames
 	Combined into 0 distinct entities
 ============================
 Listset for 'kor-1':
@@ -824,15 +831,15 @@ Listset for 'kor-1':
 	Fetching remote https://cdn.jsdelivr.net/gh/List-KR/List-KR@master/filters-uBO/allowlist.txt
 	Fetching remote https://cdn.jsdelivr.net/gh/List-KR/List-KR@master/filters-share/specific_CSS.txt
 	Fetching remote https://cdn.jsdelivr.net/gh/List-KR/List-KR@master/filters-uBO/specific_CSS.txt
-Input filter count: 1254
-	Accepted filter count: 1248
+Input filter count: 1253
+	Accepted filter count: 1247
 	Rejected filter count: 0
-Output rule count: 899
-	Pruning requestDomains: from 294 to 289
-	Plain good: 725
+Output rule count: 896
+	Pruning requestDomains: from 297 to 292
+	Plain good: 728
 
-	Maybe good (regexes): 139
-	redirect=: 22
+	Maybe good (regexes): 134
+	redirect=: 21
 	removeparams= (accepted/discarded): 1/0
 	modifyHeaders=: 0
 	Unsupported: 12
@@ -850,14 +857,14 @@ Output rule count: 899
 		Unpatchable redirect filter: google-ima3.js
 CSS-generic: 12 plain CSS selectors
 CSS-generic-high: 67 plain CSS selectors
-CSS-specific: 1199 distinct filters
-	Combined into 1395 distinct hostnames
+CSS-specific: 1194 distinct filters
+	Combined into 1308 distinct hostnames
 	Combined into 2 distinct entities
-CSS-declarative: 175 distinct filters
-	Combined into 152 distinct hostnames
+CSS-declarative: 170 distinct filters
+	Combined into 153 distinct hostnames
 	Combined into 0 distinct entities
-Procedural-related distinct filters: 103 distinct combined selectors
-	Combined into 151 distinct hostnames
+Procedural-related distinct filters: 102 distinct combined selectors
+	Combined into 150 distinct hostnames
 	Combined into 0 distinct entities
 ============================
 Listset for 'ltu-0':
@@ -1009,11 +1016,11 @@ Listset for 'pol-0':
 	Fetching remote https://raw.githubusercontent.com/olegwukr/polish-privacy-filters/master/anti-adblock.txt
 	Fetching remote https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock_ublock.txt
 	Fetching remote https://raw.githubusercontent.com/olegwukr/polish-privacy-filters/master/anti-adblock-suplement.txt
-Input filter count: 1408
-	Accepted filter count: 1407
+Input filter count: 1409
+	Accepted filter count: 1408
 	Rejected filter count: 1
-Output rule count: 1045
-	Plain good: 966
+Output rule count: 1046
+	Plain good: 967
 
 	Maybe good (regexes): 43
 	redirect=: 27
@@ -1031,8 +1038,8 @@ Output rule count: 1045
 		Can't salvage rule with only entity-based domain= option: trojmiasto.*
 CSS-generic: 63 plain CSS selectors
 CSS-generic-high: 48 plain CSS selectors
-CSS-specific: 4209 distinct filters
-	Combined into 3230 distinct hostnames
+CSS-specific: 4214 distinct filters
+	Combined into 3231 distinct hostnames
 	Combined into 0 distinct entities
 CSS-declarative: 131 distinct filters
 	Combined into 182 distinct hostnames
@@ -1073,33 +1080,33 @@ Listset for 'rus-0':
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/css-fixes-experimental.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/js-fixes-experimental.txt
 	Fetching remote https://raw.githubusercontent.com/easylist/ruadlist/master/AWRL-non-sync.txt
-Input filter count: 17303
-	Accepted filter count: 17293
+Input filter count: 17309
+	Accepted filter count: 17299
 	Rejected filter count: 8
-Output rule count: 5837
-	Pruning requestDomains: from 6630 to 6629
-	Plain good: 5750
+Output rule count: 5832
+	Pruning requestDomains: from 6634 to 6633
+	Plain good: 5745
 
 	Maybe good (regexes): 21
 	redirect=: 16
 	removeparams= (accepted/discarded): 15/2
 	modifyHeaders=: 29
 	Unsupported: 6
-		regexFilter is not RE2-compatible: ^(?!.*(24liveblog.com|24liveplus.com|acint.net|addthis.com|addthisedge.com|akamai.net|akamaiedge.net|alloha.tv|ampproject.org|anycomment.io|apester.com|api-ssl.bitly.com|api.corr.life|api.here.com|api.sypexgeo.net|app.hoversignal.com|appsmail.ru|bam.nr-data.net|blogger.com|bootstrapcdn.com|cackle.me|cdn.ampproject.org|cdn.iframe.ly|cdn.rawgit.com|cdnstats.ru|cdnvideo.ru|chartbeat.com|chatango.com|chatbro.com|chimpstatic.com|cloudflare.com|cloudflare.net|cloudfront.net|cloudfunctions.net|code.createjs.com|columbus.te.ua|cultserv.ru|disqus.com|disquscdn.com|dmca.com|documentcloud.org|each.im|ebacdn.com|edgecastcdn.net|edgecdn.ru|ellinagraypel.com|embed.ex.co|embed.widgetpack.com|embedstorage.net|eurosolidarity.org|facebook.com|facebook.net|fastly.net|fastlylb.net|fbcdn.net|fbvkcdn.com|feonet.net|fluidplayer.com|fontawesome.com|fonts.w.tools|freecurrencyrates.com|fwcdn1.com|fwdcdn.com|gcdn.co|getsitecontrol.com|gismeteo.ru|gismeteo.ua|github.io|gitlab.io|google-analytics.com|google.com|googleadservices.com|googleapis.com|googleoptimize.com|googletagmanager.com|googletagservices.com|gravatar.com|gravitec.media|gravitec.net|gstatic.com|hcaptcha.com|hupso.com|hwcdn.net|hypercomments.com|ibytedtos.com|imgsmail.ru|imgur.com|informers.ukr.net|instagram.com|intensedebate.com|intercom.io|intercomcdn.com|intravideo.net|issuu.com|ivideon.com|jivosite.com|jquery.com|js-agent.newrelic.com|jsdelivr.net|jsonip.com|jwpcdn.com|jwplatform.com|keycaptcha.com|kin-x.com|kinogram.best|kinohod.ru|kinoplayer.co|kinotreiler.com|kitbit.net|kodik-add.com|kodikapi.com|libria.fun|licdn.com|likebtn.com|linkedin.com|lp4.io|mail.ru|mailchimp.com|mapbox.com|media-imdb.com|media.reformal.ru|mediator.media|meteobar.com|meteonova.ru|mirtesen.ru|netdna-cdn.com|ngenix.net|nuipogoda.ru|odnaknopka.ru|odnoklassniki.ru|ok.ru|oneall.com|onesignal.com|onthe.io|parastorage.com|phnx.click|piktochart.com|pinterest.com|pixars.org|platformcraft.ru|playbuzz.com|player|player.panda.video|pljs.ru|plrjs.com|pluso.ru|plyr.io|polldaddy.com|polyfill.io|pv.pjtsu.com|quiz.ink|raincaptcha.com|readymag.com|recaptcha.net|relap.io|ren.tv|renteres.ru|rumer.club|s5o.ru|securedtouch.com|selcdn.net|sendpulse.com|sentry-cdn.com|shareaholic.com|shareaholic.net|sharethis.com|shrink.pe|sinoptik.ua|source.mmi.bemobile.ua|sporcle.com|sportradar.com|sportrecs.com|sports.ru|stackpathcdn.com|static.addtoany.com|statically.io|streamvid.club|telegram.im|telegram.org|tenews.org.ua|tenews.te.ua|tiktok.com|tilda.ws|tildacdn.com|tns-counter.ru|tolstoycomments.com|traq.li|trbcdn.net|trbna.com|ttrace.ru|ttwstatic.com|tumblr.com|tvget.ru|tvsok.ru|twimg.com|twitter.com|typekit.net|uanews.org.ua|unpkg.com|uptolike.com|userapi.com|usocial.pro|uweb.ru|vicomi.com|vidazoo.com|videocdn.tv|videoplayers.club|viglink.com|viqeo.tv|vk.com|vkontakte.ru|vuukle.com|webflow.com|weblium.com|weblium.site|widget.speechki.org|widget.vp.ru|widgets.getpocket.com|world-weather.ru|wp.com|yabber.cloud|yandex.ru|yandex.st|yastatic.net|yohoho.cc|yohoho.online|yoomoney.ru|yourwebsite.life|youtube-nocookie.com|youtube.com|ytimg.com|zencdn.net)).*$
-		regexFilter is not RE2-compatible: ^(?!.*(24liveblog.com|24liveplus.com|acint.net|addthis.com|addthisedge.com|akamai.net|akamaiedge.net|alloha.tv|ampproject.org|anycomment.io|apester.com|api-ssl.bitly.com|api.corr.life|api.here.com|api.sypexgeo.net|app.hoversignal.com|appsmail.ru|bam.nr-data.net|blogger.com|bootstrapcdn.com|cackle.me|cdn.ampproject.org|cdn.iframe.ly|cdn.rawgit.com|cdnstats.ru|cdnvideo.ru|chartbeat.com|chatango.com|chatbro.com|chimpstatic.com|cloudflare.com|cloudflare.net|cloudfront.net|cloudfunctions.net|code.createjs.com|columbus.te.ua|cultserv.ru|disqus.com|disquscdn.com|dmca.com|documentcloud.org|each.im|ebacdn.com|edgecastcdn.net|edgecdn.ru|ellinagraypel.com|embed.ex.co|embed.widgetpack.com|embedstorage.net|eurosolidarity.org|facebook.com|facebook.net|fastly.net|fastlylb.net|fbcdn.net|fbvkcdn.com|feonet.net|fluidplayer.com|fontawesome.com|fonts.w.tools|freecurrencyrates.com|fwcdn1.com|fwdcdn.com|gcdn.co|getsitecontrol.com|gismeteo.ru|gismeteo.ua|github.io|gitlab.io|google-analytics.com|google.com|googleadservices.com|googleapis.com|googleoptimize.com|googletagmanager.com|googletagservices.com|gravatar.com|gravitec.media|gravitec.net|gstatic.com|hcaptcha.com|hupso.com|hwcdn.net|hypercomments.com|ibytedtos.com|imgsmail.ru|imgur.com|informers.ukr.net|instagram.com|intensedebate.com|intercom.io|intercomcdn.com|intravideo.net|issuu.com|ivideon.com|jivosite.com|jquery.com|js-agent.newrelic.com|jsdelivr.net|jsonip.com|jwpcdn.com|jwplatform.com|keycaptcha.com|kin-x.com|kinogram.best|kinohod.ru|kinoplayer.co|kinotreiler.com|kitbit.net|kodik-add.com|kodikapi.com|libria.fun|licdn.com|likebtn.com|linkedin.com|lp4.io|mail.ru|mailchimp.com|mapbox.com|media-imdb.com|media.reformal.ru|mediator.media|meteobar.com|meteonova.ru|mirtesen.ru|netdna-cdn.com|ngenix.net|nuipogoda.ru|odnaknopka.ru|odnoklassniki.ru|ok.ru|oneall.com|onesignal.com|onthe.io|parastorage.com|phnx.click|piktochart.com|pinterest.com|pixars.org|platformcraft.ru|playbuzz.com|player|player.panda.video|pljs.ru|plrjs.com|pluso.ru|plyr.io|polldaddy.com|polyfill.io|pv.pjtsu.com|quiz.ink|raincaptcha.com|readymag.com|recaptcha.net|relap.io|ren.tv|renteres.ru|rumer.club|s5o.ru|securedtouch.com|selcdn.net|sendpulse.com|sentry-cdn.com|shareaholic.com|shareaholic.net|sharethis.com|shrink.pe|sinoptik.ua|source.mmi.bemobile.ua|sporcle.com|sportradar.com|sportrecs.com|sports.ru|stackpathcdn.com|static.addtoany.com|statically.io|streamvid.club|telegram.im|telegram.org|tenews.org.ua|tenews.te.ua|tiktok.com|tilda.ws|tildacdn.com|tns-counter.ru|tolstoycomments.com|traq.li|trbcdn.net|trbna.com|ttrace.ru|ttwstatic.com|tumblr.com|tvget.ru|tvsok.ru|twimg.com|twitter.com|typekit.net|uanews.org.ua|unpkg.com|uptolike.com|userapi.com|usocial.pro|uweb.ru|vicomi.com|vidazoo.com|videocdn.tv|videoplayers.club|viglink.com|viqeo.tv|vk.com|vkontakte.ru|vuukle.com|webflow.com|weblium.com|weblium.site|widget.speechki.org|widget.vp.ru|widgets.getpocket.com|world-weather.ru|wp.com|yabber.cloud|yandex.ru|yandex.st|yastatic.net|yohoho.cc|yohoho.online|yoomoney.ru|yourwebsite.life|youtube-nocookie.com|youtube.com|ytimg.com|zencdn.net)).*$
+		regexFilter is not RE2-compatible: ^(?!.*(24liveblog.com|24liveplus.com|acint.net|addthis.com|addthisedge.com|akamai.net|akamaiedge.net|alloha.tv|ampproject.org|anycomment.io|apester.com|api-ssl.bitly.com|api.corr.life|api.here.com|api.sypexgeo.net|app.hoversignal.com|appsmail.ru|bam.nr-data.net|blogger.com|bootstrapcdn.com|cackle.me|cdn.ampproject.org|cdn.iframe.ly|cdn.rawgit.com|cdnstats.ru|cdnvideo.ru|chartbeat.com|chatango.com|chatbro.com|chimpstatic.com|cloudflare.com|cloudflare.net|cloudfront.net|cloudfunctions.net|code.createjs.com|columbus.te.ua|cultserv.ru|disqus.com|disquscdn.com|dmca.com|documentcloud.org|each.im|ebacdn.com|edgecastcdn.net|edgecdn.ru|ellinagraypel.com|embed.ex.co|embed.widgetpack.com|embedstorage.net|eurosolidarity.org|facebook.com|facebook.net|fastly.net|fastlylb.net|fbcdn.net|fbvkcdn.com|feonet.net|fluidplayer.com|fontawesome.com|fonts.w.tools|freecurrencyrates.com|fwcdn1.com|fwdcdn.com|gcdn.co|getsitecontrol.com|gismeteo.ru|github.io|gitlab.io|google-analytics.com|google.com|googleadservices.com|googleapis.com|googleoptimize.com|googletagmanager.com|googletagservices.com|gravatar.com|gravitec.media|gravitec.net|gstatic.com|hcaptcha.com|hupso.com|hwcdn.net|hypercomments.com|ibytedtos.com|imgsmail.ru|imgur.com|informers.ukr.net|instagram.com|intensedebate.com|intercom.io|intercomcdn.com|intravideo.net|issuu.com|ivideon.com|jivosite.com|jquery.com|js-agent.newrelic.com|jsdelivr.net|jsonip.com|jwpcdn.com|jwplatform.com|keycaptcha.com|kin-x.com|kinogram.best|kinohod.ru|kinoplayer.co|kinotreiler.com|kitbit.net|kodik-add.com|kodikapi.com|libria.fun|licdn.com|likebtn.com|linkedin.com|lp4.io|mail.ru|mailchimp.com|mapbox.com|media-imdb.com|media.reformal.ru|mediator.media|meteobar.com|meteonova.ru|mirtesen.ru|netdna-cdn.com|ngenix.net|nuipogoda.ru|odnaknopka.ru|odnoklassniki.ru|ok.ru|oneall.com|onesignal.com|onthe.io|parastorage.com|phnx.click|piktochart.com|pinterest.com|pixars.org|platformcraft.ru|playbuzz.com|player|player.panda.video|pljs.ru|plrjs.com|pluso.ru|plyr.io|polldaddy.com|polyfill.io|pv.pjtsu.com|quiz.ink|raincaptcha.com|readymag.com|recaptcha.net|relap.io|ren.tv|renteres.ru|rumer.club|s5o.ru|securedtouch.com|selcdn.net|sendpulse.com|sentry-cdn.com|shareaholic.com|shareaholic.net|sharethis.com|shrink.pe|sinoptik.ua|source.mmi.bemobile.ua|sporcle.com|sportradar.com|sportrecs.com|sports.ru|stackpathcdn.com|static.addtoany.com|statically.io|streamvid.club|telegram.im|telegram.org|tenews.org.ua|tenews.te.ua|tiktok.com|tilda.ws|tildacdn.com|tns-counter.ru|tolstoycomments.com|traq.li|trbcdn.net|trbna.com|ttrace.ru|ttwstatic.com|tumblr.com|tvget.ru|tvsok.ru|twimg.com|twitter.com|typekit.net|uanews.org.ua|unpkg.com|uptolike.com|userapi.com|usocial.pro|uweb.ru|vicomi.com|vidazoo.com|videocdn.tv|videoplayers.club|viglink.com|viqeo.tv|vk.com|vkontakte.ru|vuukle.com|webflow.com|weblium.com|weblium.site|widget.speechki.org|widget.vp.ru|widgets.getpocket.com|world-weather.ru|wp.com|yabber.cloud|yandex.ru|yandex.st|yastatic.net|yohoho.cc|yohoho.online|yoomoney.ru|yourwebsite.life|youtube-nocookie.com|youtube.com|ytimg.com|zencdn.net)).*$
+		regexFilter is not RE2-compatible: ^(?!.*(24liveblog.com|24liveplus.com|acint.net|addthis.com|addthisedge.com|akamai.net|akamaiedge.net|alloha.tv|ampproject.org|anycomment.io|apester.com|api-ssl.bitly.com|api.corr.life|api.here.com|api.sypexgeo.net|app.hoversignal.com|appsmail.ru|bam.nr-data.net|blogger.com|bootstrapcdn.com|cackle.me|cdn.ampproject.org|cdn.iframe.ly|cdn.rawgit.com|cdnstats.ru|cdnvideo.ru|chartbeat.com|chatango.com|chatbro.com|chimpstatic.com|cloudflare.com|cloudflare.net|cloudfront.net|cloudfunctions.net|code.createjs.com|columbus.te.ua|cultserv.ru|disqus.com|disquscdn.com|dmca.com|documentcloud.org|each.im|ebacdn.com|edgecastcdn.net|edgecdn.ru|ellinagraypel.com|embed.ex.co|embed.widgetpack.com|embedstorage.net|eurosolidarity.org|facebook.com|facebook.net|fastly.net|fastlylb.net|fbcdn.net|fbvkcdn.com|feonet.net|fluidplayer.com|fontawesome.com|fonts.w.tools|freecurrencyrates.com|fwcdn1.com|fwdcdn.com|gcdn.co|getsitecontrol.com|gismeteo.ru|github.io|gitlab.io|google-analytics.com|google.com|googleadservices.com|googleapis.com|googleoptimize.com|googletagmanager.com|googletagservices.com|gravatar.com|gravitec.media|gravitec.net|gstatic.com|hcaptcha.com|hupso.com|hwcdn.net|hypercomments.com|ibytedtos.com|imgsmail.ru|imgur.com|informers.ukr.net|instagram.com|intensedebate.com|intercom.io|intercomcdn.com|intravideo.net|issuu.com|ivideon.com|jivosite.com|jquery.com|js-agent.newrelic.com|jsdelivr.net|jsonip.com|jwpcdn.com|jwplatform.com|keycaptcha.com|kin-x.com|kinogram.best|kinohod.ru|kinoplayer.co|kinotreiler.com|kitbit.net|kodik-add.com|kodikapi.com|libria.fun|licdn.com|likebtn.com|linkedin.com|lp4.io|mail.ru|mailchimp.com|mapbox.com|media-imdb.com|media.reformal.ru|mediator.media|meteobar.com|meteonova.ru|mirtesen.ru|netdna-cdn.com|ngenix.net|nuipogoda.ru|odnaknopka.ru|odnoklassniki.ru|ok.ru|oneall.com|onesignal.com|onthe.io|parastorage.com|phnx.click|piktochart.com|pinterest.com|pixars.org|platformcraft.ru|playbuzz.com|player|player.panda.video|pljs.ru|plrjs.com|pluso.ru|plyr.io|polldaddy.com|polyfill.io|pv.pjtsu.com|quiz.ink|raincaptcha.com|readymag.com|recaptcha.net|relap.io|ren.tv|renteres.ru|rumer.club|s5o.ru|securedtouch.com|selcdn.net|sendpulse.com|sentry-cdn.com|shareaholic.com|shareaholic.net|sharethis.com|shrink.pe|sinoptik.ua|source.mmi.bemobile.ua|sporcle.com|sportradar.com|sportrecs.com|sports.ru|stackpathcdn.com|static.addtoany.com|statically.io|streamvid.club|telegram.im|telegram.org|tenews.org.ua|tenews.te.ua|tiktok.com|tilda.ws|tildacdn.com|tns-counter.ru|tolstoycomments.com|traq.li|trbcdn.net|trbna.com|ttrace.ru|ttwstatic.com|tumblr.com|tvget.ru|tvsok.ru|twimg.com|twitter.com|typekit.net|uanews.org.ua|unpkg.com|uptolike.com|userapi.com|usocial.pro|uweb.ru|vicomi.com|vidazoo.com|videocdn.tv|videoplayers.club|viglink.com|viqeo.tv|vk.com|vkontakte.ru|vuukle.com|webflow.com|weblium.com|weblium.site|widget.speechki.org|widget.vp.ru|widgets.getpocket.com|world-weather.ru|wp.com|yabber.cloud|yandex.ru|yandex.st|yastatic.net|yohoho.cc|yohoho.online|yoomoney.ru|yourwebsite.life|youtube-nocookie.com|youtube.com|ytimg.com|zencdn.net)).*$
 		regexFilter is not RE2-compatible: ^(?!.*(spac.me)).*$
-		regexFilter is not RE2-compatible: ^(?!.*(24liveblog.com|24liveplus.com|acint.net|addthis.com|addthisedge.com|akamai.net|akamaiedge.net|alloha.tv|ampproject.org|anycomment.io|apester.com|api-ssl.bitly.com|api.corr.life|api.here.com|api.sypexgeo.net|app.hoversignal.com|appsmail.ru|bam.nr-data.net|blogger.com|bootstrapcdn.com|cackle.me|cdn.ampproject.org|cdn.iframe.ly|cdn.rawgit.com|cdnstats.ru|cdnvideo.ru|chartbeat.com|chatango.com|chatbro.com|chimpstatic.com|cloudflare.com|cloudflare.net|cloudfront.net|cloudfunctions.net|code.createjs.com|columbus.te.ua|cultserv.ru|disqus.com|disquscdn.com|dmca.com|documentcloud.org|each.im|ebacdn.com|edgecastcdn.net|edgecdn.ru|ellinagraypel.com|embed.ex.co|embed.widgetpack.com|embedstorage.net|eurosolidarity.org|facebook.com|facebook.net|fastly.net|fastlylb.net|fbcdn.net|fbvkcdn.com|feonet.net|fluidplayer.com|fontawesome.com|fonts.w.tools|freecurrencyrates.com|fwcdn1.com|fwdcdn.com|gcdn.co|getsitecontrol.com|gismeteo.ru|gismeteo.ua|github.io|gitlab.io|google-analytics.com|google.com|googleadservices.com|googleapis.com|googleoptimize.com|googletagmanager.com|googletagservices.com|gravatar.com|gravitec.media|gravitec.net|gstatic.com|hcaptcha.com|hupso.com|hwcdn.net|hypercomments.com|ibytedtos.com|imgsmail.ru|imgur.com|informers.ukr.net|instagram.com|intensedebate.com|intercom.io|intercomcdn.com|intravideo.net|issuu.com|ivideon.com|jivosite.com|jquery.com|js-agent.newrelic.com|jsdelivr.net|jsonip.com|jwpcdn.com|jwplatform.com|keycaptcha.com|kin-x.com|kinogram.best|kinohod.ru|kinoplayer.co|kinotreiler.com|kitbit.net|kodik-add.com|kodikapi.com|libria.fun|licdn.com|likebtn.com|linkedin.com|lp4.io|mail.ru|mailchimp.com|mapbox.com|media-imdb.com|media.reformal.ru|mediator.media|meteobar.com|meteonova.ru|mirtesen.ru|netdna-cdn.com|ngenix.net|nuipogoda.ru|odnaknopka.ru|odnoklassniki.ru|ok.ru|oneall.com|onesignal.com|onthe.io|parastorage.com|phnx.click|piktochart.com|pinterest.com|pixars.org|platformcraft.ru|playbuzz.com|player|player.panda.video|pljs.ru|plrjs.com|pluso.ru|plyr.io|polldaddy.com|polyfill.io|pv.pjtsu.com|quiz.ink|raincaptcha.com|readymag.com|recaptcha.net|relap.io|ren.tv|renteres.ru|rumer.club|s5o.ru|securedtouch.com|selcdn.net|sendpulse.com|sentry-cdn.com|shareaholic.com|shareaholic.net|sharethis.com|shrink.pe|sinoptik.ua|source.mmi.bemobile.ua|sporcle.com|sportradar.com|sportrecs.com|sports.ru|stackpathcdn.com|static.addtoany.com|statically.io|streamvid.club|telegram.im|telegram.org|tenews.org.ua|tenews.te.ua|tiktok.com|tilda.ws|tildacdn.com|tns-counter.ru|tolstoycomments.com|traq.li|trbcdn.net|trbna.com|ttrace.ru|ttwstatic.com|tumblr.com|tvget.ru|tvsok.ru|twimg.com|twitter.com|typekit.net|uanews.org.ua|unpkg.com|uptolike.com|userapi.com|usocial.pro|uweb.ru|vicomi.com|vidazoo.com|videocdn.tv|videoplayers.club|viglink.com|viqeo.tv|vk.com|vkontakte.ru|vuukle.com|webflow.com|weblium.com|weblium.site|widget.speechki.org|widget.vp.ru|widgets.getpocket.com|world-weather.ru|wp.com|yabber.cloud|yandex.ru|yandex.st|yastatic.net|yohoho.cc|yohoho.online|yoomoney.ru|yourwebsite.life|youtube-nocookie.com|youtube.com|ytimg.com|zencdn.net)).*$
+		regexFilter is not RE2-compatible: ^(?!.*(24liveblog.com|24liveplus.com|acint.net|addthis.com|addthisedge.com|akamai.net|akamaiedge.net|alloha.tv|ampproject.org|anycomment.io|apester.com|api-ssl.bitly.com|api.corr.life|api.here.com|api.sypexgeo.net|app.hoversignal.com|appsmail.ru|bam.nr-data.net|blogger.com|bootstrapcdn.com|cackle.me|cdn.ampproject.org|cdn.iframe.ly|cdn.rawgit.com|cdnstats.ru|cdnvideo.ru|chartbeat.com|chatango.com|chatbro.com|chimpstatic.com|cloudflare.com|cloudflare.net|cloudfront.net|cloudfunctions.net|code.createjs.com|columbus.te.ua|cultserv.ru|disqus.com|disquscdn.com|dmca.com|documentcloud.org|each.im|ebacdn.com|edgecastcdn.net|edgecdn.ru|ellinagraypel.com|embed.ex.co|embed.widgetpack.com|embedstorage.net|eurosolidarity.org|facebook.com|facebook.net|fastly.net|fastlylb.net|fbcdn.net|fbvkcdn.com|feonet.net|fluidplayer.com|fontawesome.com|fonts.w.tools|freecurrencyrates.com|fwcdn1.com|fwdcdn.com|gcdn.co|getsitecontrol.com|gismeteo.ru|github.io|gitlab.io|google-analytics.com|google.com|googleadservices.com|googleapis.com|googleoptimize.com|googletagmanager.com|googletagservices.com|gravatar.com|gravitec.media|gravitec.net|gstatic.com|hcaptcha.com|hupso.com|hwcdn.net|hypercomments.com|ibytedtos.com|imgsmail.ru|imgur.com|informers.ukr.net|instagram.com|intensedebate.com|intercom.io|intercomcdn.com|intravideo.net|issuu.com|ivideon.com|jivosite.com|jquery.com|js-agent.newrelic.com|jsdelivr.net|jsonip.com|jwpcdn.com|jwplatform.com|keycaptcha.com|kin-x.com|kinogram.best|kinohod.ru|kinoplayer.co|kinotreiler.com|kitbit.net|kodik-add.com|kodikapi.com|libria.fun|licdn.com|likebtn.com|linkedin.com|lp4.io|mail.ru|mailchimp.com|mapbox.com|media-imdb.com|media.reformal.ru|mediator.media|meteobar.com|meteonova.ru|mirtesen.ru|netdna-cdn.com|ngenix.net|nuipogoda.ru|odnaknopka.ru|odnoklassniki.ru|ok.ru|oneall.com|onesignal.com|onthe.io|parastorage.com|phnx.click|piktochart.com|pinterest.com|pixars.org|platformcraft.ru|playbuzz.com|player|player.panda.video|pljs.ru|plrjs.com|pluso.ru|plyr.io|polldaddy.com|polyfill.io|pv.pjtsu.com|quiz.ink|raincaptcha.com|readymag.com|recaptcha.net|relap.io|ren.tv|renteres.ru|rumer.club|s5o.ru|securedtouch.com|selcdn.net|sendpulse.com|sentry-cdn.com|shareaholic.com|shareaholic.net|sharethis.com|shrink.pe|sinoptik.ua|source.mmi.bemobile.ua|sporcle.com|sportradar.com|sportrecs.com|sports.ru|stackpathcdn.com|static.addtoany.com|statically.io|streamvid.club|telegram.im|telegram.org|tenews.org.ua|tenews.te.ua|tiktok.com|tilda.ws|tildacdn.com|tns-counter.ru|tolstoycomments.com|traq.li|trbcdn.net|trbna.com|ttrace.ru|ttwstatic.com|tumblr.com|tvget.ru|tvsok.ru|twimg.com|twitter.com|typekit.net|uanews.org.ua|unpkg.com|uptolike.com|userapi.com|usocial.pro|uweb.ru|vicomi.com|vidazoo.com|videocdn.tv|videoplayers.club|viglink.com|viqeo.tv|vk.com|vkontakte.ru|vuukle.com|webflow.com|weblium.com|weblium.site|widget.speechki.org|widget.vp.ru|widgets.getpocket.com|world-weather.ru|wp.com|yabber.cloud|yandex.ru|yandex.st|yastatic.net|yohoho.cc|yohoho.online|yoomoney.ru|yourwebsite.life|youtube-nocookie.com|youtube.com|ytimg.com|zencdn.net)).*$
 		Unsupported modifier exception
 		Unsupported modifier exception
 CSS-generic: 318 plain CSS selectors
 CSS-generic-high: 461 plain CSS selectors
-CSS-specific: 9774 distinct filters
+CSS-specific: 9772 distinct filters
 	Combined into 7075 distinct hostnames
 	Combined into 0 distinct entities
 CSS-declarative: 904 distinct filters
-	Combined into 875 distinct hostnames
+	Combined into 876 distinct hostnames
 	Combined into 0 distinct entities
-Procedural-related distinct filters: 269 distinct combined selectors
+Procedural-related distinct filters: 271 distinct combined selectors
 	Combined into 336 distinct hostnames
 	Combined into 0 distinct entities
 ============================
@@ -1128,11 +1135,11 @@ Procedural-related distinct filters: 26 distinct combined selectors
 ============================
 Listset for 'spa-1':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/9.txt
-Input filter count: 1391
-	Accepted filter count: 1385
+Input filter count: 1393
+	Accepted filter count: 1387
 	Rejected filter count: 0
-Output rule count: 956
-	Plain good: 919
+Output rule count: 958
+	Plain good: 921
 		Salvaged rule by ignoring 1 entity-based domain= option: pelisplushd.net|cuevana3.*
 	Maybe good (regexes): 6
 	redirect=: 27
@@ -1144,11 +1151,11 @@ Output rule count: 956
 		regexFilter is not RE2-compatible: ^(?!.*(sharecast.ws|bunnycdn.ru|bootstrapcdn.com|cdn.ampproject.org|cloudflare.com|cdn.staticfile.org|disqus.com|disquscdn.com|dmca.com|ebacdn.com|facebook.net|fastlylb.net|fbcdn.net|fluidplayer.com|fontawesome.com|github.io|google.com|googleapis.com|googletagmanager.com|gstatic.com|jquery.com|jsdelivr.net|jwpcdn.com|jwplatform.com|polyfill.io|recaptcha.net|shrink.pe|twitter.com|ulogin.ru|unpkg.com|userapi.com|vidazoo.com|vk.com|yandex.|yastatic.net|ytimg.com|zencdn.net|player|youtube.com|cackle.me|googleoptimize.com|vuukle.com|chatango.com|twimg.com|google-analytics.com|hcaptcha.com|raincaptcha.com|media-imdb.com|blogger.com|hwcdn.net|instagram.com|wp.com|imgsmail.ru)).*$
 		Can't salvage rule with only entity-based domain= option: anitube.*
 CSS-generic: 84 plain CSS selectors
-CSS-specific: 2515 distinct filters
-	Combined into 1459 distinct hostnames
+CSS-specific: 2526 distinct filters
+	Combined into 1464 distinct hostnames
 	Combined into 6 distinct entities
-CSS-declarative: 98 distinct filters
-	Combined into 148 distinct hostnames
+CSS-declarative: 99 distinct filters
+	Combined into 149 distinct hostnames
 	Combined into 0 distinct entities
 Procedural-related distinct filters: 70 distinct combined selectors
 	Combined into 65 distinct hostnames
@@ -1181,11 +1188,11 @@ Listset for 'swe-1':
 	Fetching remote https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Swedish/swe-ubo-filters.txt
 	Fetching remote https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Swedish/chromium.txt
 	Fetching remote https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Swedish/not_mobile.txt
-Input filter count: 1660
-	Accepted filter count: 1660
+Input filter count: 1663
+	Accepted filter count: 1663
 	Rejected filter count: 0
-Output rule count: 1239
-	Plain good: 1217
+Output rule count: 1241
+	Plain good: 1219
 
 	Maybe good (regexes): 2
 	redirect=: 10
@@ -1195,17 +1202,17 @@ Output rule count: 1239
 		Unsupported regex-based removeParam: /^ap/
 		Unsupported regex-based removeParam: /^browser/
 		Unsupported regex-based removeParam: /^utm_/
-CSS-generic: 270 plain CSS selectors
+CSS-generic: 271 plain CSS selectors
 CSS-generic-high: 44 plain CSS selectors
-CSS-specific: 659 distinct filters
-	Combined into 1128 distinct hostnames
-	Combined into 0 distinct entities
+CSS-specific: 661 distinct filters
+	Combined into 1130 distinct hostnames
+	Combined into 1 distinct entities
 CSS-declarative: 79 distinct filters
 	Combined into 211 distinct hostnames
 	Combined into 0 distinct entities
-Procedural-related distinct filters: 368 distinct combined selectors
-	Combined into 321 distinct hostnames
-	Combined into 0 distinct entities
+Procedural-related distinct filters: 374 distinct combined selectors
+	Combined into 324 distinct hostnames
+	Combined into 1 distinct entities
 ============================
 Listset for 'tha-0':
 	Fetching remote https://raw.githubusercontent.com/easylist-thailand/easylist-thailand/master/subscription/easylist-thailand.txt
@@ -1232,11 +1239,11 @@ Procedural-related distinct filters: 14 distinct combined selectors
 ============================
 Listset for 'tur-0':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/13.txt
-Input filter count: 1782
-	Accepted filter count: 1781
+Input filter count: 1779
+	Accepted filter count: 1778
 	Rejected filter count: 0
-Output rule count: 1341
-	Plain good: 1300
+Output rule count: 1338
+	Plain good: 1297
 		Salvaged rule by ignoring 1 entity-based domain= option: ajans32.com|asyadiziizle.com|balfilmizle1.com|birasyadizi.com|buyuktorbali.com|dizilost.com|duzcetv.com|erotikfilmtube.com|erotikizlefilm.com|ertehaber.com|filmjr1.com|filmsezonu.com|haber32.com.tr|haberant.com|jokerfilmizle.com|kozfilm.com|malatyamegahaber.com|medya32.com|sexfilmleriizle.com|sinemangoo.org|technopat.net|unyenethaber.com|zerotikk.com|dizicaps.*
 		Salvaged rule by ignoring 1 entity-based domain= option: fullhdfilm.pro|fullhdfilmizle5.*
 		Salvaged rule by ignoring 1 entity-based domain= option: turkcealtyazi.org|filmmakinesi.*
@@ -1259,23 +1266,23 @@ Output rule count: 1341
 		Can't salvage rule with only entity-based domain= option: filmizletv.*
 CSS-generic: 146 plain CSS selectors
 CSS-generic-high: 60 plain CSS selectors
-CSS-specific: 3414 distinct filters
-	Combined into 2734 distinct hostnames
-	Combined into 39 distinct entities
-CSS-declarative: 168 distinct filters
-	Combined into 547 distinct hostnames
+CSS-specific: 3395 distinct filters
+	Combined into 2763 distinct hostnames
+	Combined into 40 distinct entities
+CSS-declarative: 169 distinct filters
+	Combined into 558 distinct hostnames
 	Combined into 22 distinct entities
-Procedural-related distinct filters: 157 distinct combined selectors
-	Combined into 127 distinct hostnames
+Procedural-related distinct filters: 159 distinct combined selectors
+	Combined into 128 distinct hostnames
 	Combined into 3 distinct entities
 ============================
 Listset for 'vie-1':
 	Fetching remote https://raw.githubusercontent.com/abpvn/abpvn/master/filter/abpvn_ublock.txt
-Input filter count: 570
-	Accepted filter count: 570
+Input filter count: 567
+	Accepted filter count: 567
 	Rejected filter count: 0
-Output rule count: 469
-	Plain good: 457
+Output rule count: 467
+	Plain good: 455
 
 	Maybe good (regexes): 4
 	redirect=: 5
@@ -1284,9 +1291,9 @@ Output rule count: 469
 	Unsupported: 0
 
 CSS-generic: 10 plain CSS selectors
-CSS-generic-high: 5 plain CSS selectors
-CSS-specific: 779 distinct filters
-	Combined into 443 distinct hostnames
+CSS-generic-high: 4 plain CSS selectors
+CSS-specific: 769 distinct filters
+	Combined into 439 distinct hostnames
 	Combined into 0 distinct entities
 CSS-declarative: 4 distinct filters
 	Combined into 14 distinct hostnames
@@ -1312,7 +1319,7 @@ Output rule count: 12
 ============================
 Listset for 'dpollock-0':
 	Fetching remote https://someonewhocares.org/hosts/hosts
-Input filter count: 11542
+Input filter count: 11543
 	Accepted filter count: 11542
 	Rejected filter count: 0
 Output rule count: 1
@@ -1427,11 +1434,11 @@ CSS-specific: 1 distinct filters
 Listset for 'annoyances-cookies':
 	Fetching remote https://ublockorigin.github.io/uAssets/thirdparties/easylist-cookies.txt
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/annoyances-cookies.txt
-Input filter count: 1999
-	Accepted filter count: 1996
+Input filter count: 2000
+	Accepted filter count: 1997
 	Rejected filter count: 0
-Output rule count: 1690
-	Plain good: 1689
+Output rule count: 1691
+	Plain good: 1690
 
 	Maybe good (regexes): 1
 	redirect=: 0
@@ -1440,12 +1447,12 @@ Output rule count: 1690
 	Unsupported: 0
 
 CSS-generic: 16939 plain CSS selectors
-CSS-generic-high: 350 plain CSS selectors
-CSS-specific: 5371 distinct filters
-	Combined into 16355 distinct hostnames
+CSS-generic-high: 351 plain CSS selectors
+CSS-specific: 5385 distinct filters
+	Combined into 16378 distinct hostnames
 	Combined into 1 distinct entities
 CSS-declarative: 66 distinct filters
-	Combined into 5467 distinct hostnames
+	Combined into 5469 distinct hostnames
 	Combined into 0 distinct entities
 Procedural-related distinct filters: 7 distinct combined selectors
 	Combined into 17 distinct hostnames
@@ -1454,12 +1461,12 @@ Procedural-related distinct filters: 7 distinct combined selectors
 Listset for 'annoyances-overlays':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/19.txt
 	Fetching remote https://ublockorigin.github.io/uAssets/filters/annoyances-others.txt
-Input filter count: 2478
-	Accepted filter count: 2476
+Input filter count: 2483
+	Accepted filter count: 2481
 	Rejected filter count: 0
-Output rule count: 1517
-	Pruning requestDomains: from 528 to 527
-	Plain good: 1451
+Output rule count: 1520
+	Pruning requestDomains: from 530 to 529
+	Plain good: 1454
 
 	Maybe good (regexes): 3
 	redirect=: 52
@@ -1472,14 +1479,14 @@ Output rule count: 1517
 		regexFilter is not RE2-compatible: ^https:\/\/[0-9a-z]{7,25}\.com\/v2(?:\/0\/)?(?=[0-9a-z_-]{0,84}[A-Z])(?=[a-zA-Z_-]{0,84}[0-9])[0-9a-zA-Z_-]{54,85}(#\?v=[0-9a-f]{32})?$
 CSS-generic: 35 plain CSS selectors
 CSS-generic-high: 3 plain CSS selectors
-CSS-specific: 10673 distinct filters
-	Combined into 10493 distinct hostnames
+CSS-specific: 10699 distinct filters
+	Combined into 10525 distinct hostnames
 	Combined into 68 distinct entities
-CSS-declarative: 608 distinct filters
-	Combined into 2226 distinct hostnames
+CSS-declarative: 609 distinct filters
+	Combined into 2227 distinct hostnames
 	Combined into 25 distinct entities
-Procedural-related distinct filters: 375 distinct combined selectors
-	Combined into 756 distinct hostnames
+Procedural-related distinct filters: 377 distinct combined selectors
+	Combined into 758 distinct hostnames
 	Combined into 7 distinct entities
 ============================
 Listset for 'annoyances-social':
@@ -1487,8 +1494,8 @@ Listset for 'annoyances-social':
 Input filter count: 643
 	Accepted filter count: 643
 	Rejected filter count: 0
-Output rule count: 545
-	Plain good: 542
+Output rule count: 544
+	Plain good: 541
 
 	Maybe good (regexes): 0
 	redirect=: 1
@@ -1497,10 +1504,10 @@ Output rule count: 545
 	Unsupported: 2
 		regexFilter is not RE2-compatible: \/icons_addtoany\/(?!a2a|bookmark|print)[a-z]+
 		Can't salvage rule with only entity-based domain= option: freelancer.*
-CSS-generic: 752 plain CSS selectors
+CSS-generic: 753 plain CSS selectors
 CSS-generic-high: 86 plain CSS selectors
-CSS-specific: 10793 distinct filters
-	Combined into 11944 distinct hostnames
+CSS-specific: 10807 distinct filters
+	Combined into 11984 distinct hostnames
 	Combined into 63 distinct entities
 CSS-declarative: 115 distinct filters
 	Combined into 204 distinct hostnames
@@ -1511,11 +1518,11 @@ Procedural-related distinct filters: 514 distinct combined selectors
 ============================
 Listset for 'annoyances-widgets':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/22.txt
-Input filter count: 660
-	Accepted filter count: 660
+Input filter count: 665
+	Accepted filter count: 665
 	Rejected filter count: 0
-Output rule count: 428
-	Plain good: 428
+Output rule count: 432
+	Plain good: 432
 
 	Maybe good (regexes): 0
 	redirect=: 0
@@ -1537,11 +1544,11 @@ Procedural-related distinct filters: 73 distinct combined selectors
 ============================
 Listset for 'annoyances-others':
 	Fetching remote https://filters.adtidy.org/extension/ublock/filters/21.txt
-Input filter count: 421
-	Accepted filter count: 421
+Input filter count: 426
+	Accepted filter count: 426
 	Rejected filter count: 0
-Output rule count: 393
-	Plain good: 388
+Output rule count: 397
+	Plain good: 392
 
 	Maybe good (regexes): 2
 	redirect=: 1
@@ -1550,23 +1557,23 @@ Output rule count: 393
 	Unsupported: 0
 
 CSS-generic: 6 plain CSS selectors
-CSS-specific: 3582 distinct filters
-	Combined into 3341 distinct hostnames
+CSS-specific: 3596 distinct filters
+	Combined into 3352 distinct hostnames
 	Combined into 33 distinct entities
 CSS-declarative: 391 distinct filters
 	Combined into 937 distinct hostnames
 	Combined into 5 distinct entities
-Procedural-related distinct filters: 167 distinct combined selectors
-	Combined into 142 distinct hostnames
+Procedural-related distinct filters: 169 distinct combined selectors
+	Combined into 144 distinct hostnames
 	Combined into 3 distinct entities
 ============================
 Listset for 'stevenblack-hosts':
 	Fetching remote https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
-Input filter count: 209627
-	Accepted filter count: 209627
+Input filter count: 210426
+	Accepted filter count: 210426
 	Rejected filter count: 0
 Output rule count: 1
-	Pruning requestDomains: from 209627 to 108049
+	Pruning requestDomains: from 210426 to 108459
 	Plain good: 1
 
 	Maybe good (regexes): 0
