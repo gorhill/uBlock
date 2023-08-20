@@ -1,5 +1,6 @@
 {
   "action": {
+    "default_area": "navbar",
     "default_icon": {
       "16": "img/icon_16.png",
       "32": "img/icon_32.png",
