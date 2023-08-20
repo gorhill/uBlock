@@ -2580,18 +2580,29 @@ function xmlPrune(
     };
     self.fetch = new Proxy(self.fetch, {
         apply: function(target, thisArg, args) {
+            const fetchPromise = Reflect.apply(target, thisArg, args);
             if ( reUrl.test(urlFromArg(args[0])) === false ) {
-                return Reflect.apply(target, thisArg, args);
+                return fetchPromise;
             }
-            return safe.fetch(...args).then(realResponse =>
-                realResponse.text().then(text =>
-                    new Response(pruneFromText(text), {
-                        status: realResponse.status,
-                        statusText: realResponse.statusText,
-                        headers: realResponse.headers,
-                    })
-                )
-            );
+            return fetchPromise.then(responseBefore => {
+                const response = responseBefore.clone();
+                return response.text().then(text => {
+                    const responseAfter = new Response(pruneFromText(text), {
+                        status: responseBefore.status,
+                        statusText: responseBefore.statusText,
+                        headers: responseBefore.headers,
+                    });
+                    Object.defineProperties(responseAfter, {
+                        ok: { value: responseBefore.ok },
+                        redirected: { value: responseBefore.redirected },
+                        type: { value: responseBefore.type },
+                        url: { value: responseBefore.url },
+                    });
+                    return responseAfter;
+                }).catch(( ) =>
+                    responseBefore
+                );
+            });
         }
     });
     self.XMLHttpRequest.prototype.open = new Proxy(self.XMLHttpRequest.prototype.open, {
