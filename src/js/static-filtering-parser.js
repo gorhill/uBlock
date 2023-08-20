@@ -3459,7 +3459,7 @@ class ExtSelectorCompiler {
                     const before = out[out.length-1];
                     if ( before.endsWith(' ') === false ) { return false; }
                 }
-                out.push('*');
+                out.push(s);
                 break;
         }
         return true;
