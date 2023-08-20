@@ -26,6 +26,7 @@
 import './codemirror/ubo-static-filtering.js';
 
 import { hostnameFromURI } from './uri-utils.js';
+import punycode from '../lib/punycode.js';
 import * as sfp from './static-filtering-parser.js';
 
 /******************************************************************************/
@@ -147,7 +148,10 @@ const renderRange = function(id, value, invert = false) {
 const userFilterFromCandidate = function(filter) {
     if ( filter === '' || filter === '!' ) { return; }
 
-    const hn = hostnameFromURI(docURL.href);
+    let hn = hostnameFromURI(docURL.href);
+    if ( hn.startsWith('xn--') ) {
+        hn = punycode.toUnicode(hn);
+    }
 
     // Cosmetic filter?
     if ( reCosmeticAnchor.test(filter) ) {
