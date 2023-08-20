@@ -3437,11 +3437,11 @@ class ExtSelectorCompiler {
     }
 
     astAppendPart(part, out) {
+        const s = this.astSerializePart(part);
+        if ( s === undefined ) { return false; }
         const { data } = part;
         switch ( data.type ) {
-            case 'Combinator': {
-                const s = this.astSerializePart(part);
-                if ( s === undefined ) { return false; }
+            case 'Combinator':
                 if ( out.length === 0 ) {
                     if ( s !== ' ' ) {
                         out.push(s, ' ');
@@ -3453,7 +3453,14 @@ class ExtSelectorCompiler {
                     }
                 }
                 break;
-            }
+            // csstree parses `.promoted*` as valid
+            case 'TypeSelector':
+                if ( s === '*' && out.length !== 0 ) {
+                    const before = out[out.length-1];
+                    if ( before.endsWith(' ') === false ) { return false; }
+                }
+                out.push('*');
+                break;
         }
         return true;
     }
@@ -3469,14 +3476,14 @@ class ExtSelectorCompiler {
             case 'IdSelector':
             case 'Nth':
             case 'PseudoClassSelector':
-            case 'PseudoElementSelector':
-            case 'TypeSelector': {
+            case 'PseudoElementSelector': {
                 const s = this.astSerializePart(part);
-                if ( typeof s !== 'string' ) { return; }
+                if ( s === undefined ) { return; }
                 out.push(s);
                 break;
             }
             case 'Combinator':
+            case 'TypeSelector':
                 if ( this.astAppendPart(part, out) === false ) { return; }
                 break;
             case 'Raw':
