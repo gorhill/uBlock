@@ -578,9 +578,10 @@ body[dir="rtl"] .closeButton {
     }
 
 .netFilteringDialog > .headers {
+    align-items: center;
     border-bottom: 1px solid var(--border-4);
+    display: flex;
     line-height: 2;
-    position: relative;
     }
 .netFilteringDialog > .headers > .header {
     border: 1px solid var(--border-2);
@@ -590,9 +591,9 @@ body[dir="rtl"] .closeButton {
     color: var(--border-2);
     cursor: pointer;
     display: inline-block;
+    margin-inline-end: 4px;
     padding: 0 1em;
     position: relative;
-    text-align: center;
     top: 1px;
     }
 .netFilteringDialog[data-pane="details"] > .headers > [data-pane="details"],
@@ -607,13 +608,7 @@ body[dir="rtl"] .closeButton {
     bottom: 0;
     display: flex;
     height: 100%;
-    position: absolute;
-    }
-body[dir="ltr"] .netFilteringDialog > .headers > .tools {
-    right: 0;
-    }
-body[dir="rtl"] .netFilteringDialog > .headers > .tools {
-    left: 0;
+    margin-inline-start: 2rem;
     }
 .netFilteringDialog > .headers > .tools > span {
     color: var(--ink-3);
