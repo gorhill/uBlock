@@ -348,25 +348,12 @@ builtinScriptlets.push({
 
 function setConstantCore(
     trusted = false,
-    arg1 = '',
-    arg2 = '',
-    arg3 = ''
+    chain = '',
+    cValue = ''
 ) {
-    const details = typeof arg1 !== 'object'
-        ? { prop: arg1, value: arg2 }
-        : arg1;
-    if ( arg3 !== '' ) {
-        if ( /^\d$/.test(arg3) ) {
-            details.options = [ arg3 ];
-        } else {
-            details.options = Array.from(arguments).slice(3);
-        }
-    }
-    const { prop: chain = '', value: cValue = '' } = details;
-    if ( typeof chain !== 'string' ) { return; }
     if ( chain === '' ) { return; }
-    const options = details.options || [];
     const safe = safeSelf();
+    const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
     function setConstant(chain, cValue) {
         const trappedProp = (( ) => {
             const pos = chain.lastIndexOf('.');
@@ -432,14 +419,16 @@ function setConstantCore(
         } else {
             return;
         }
-        if ( options.includes('asFunction') ) {
-            cValue = ( ) => cValue;
-        } else if ( options.includes('asCallback') ) {
-            cValue = ( ) => (( ) => cValue);
-        } else if ( options.includes('asResolved') ) {
-            cValue = Promise.resolve(cValue);
-        } else if ( options.includes('asRejected') ) {
-            cValue = Promise.reject(cValue);
+        if ( extraArgs.as !== undefined ) {
+            if ( extraArgs.as === 'function' ) {
+                cValue = ( ) => cValue;
+            } else if ( extraArgs.as === 'callback' ) {
+                cValue = ( ) => (( ) => cValue);
+            } else if ( extraArgs.as === 'resolved' ) {
+                cValue = Promise.resolve(cValue);
+            } else if ( extraArgs.as === 'rejected' ) {
+                cValue = Promise.reject(cValue);
+            }
         }
         let aborted = false;
         const mustAbort = function(v) {
@@ -535,7 +524,7 @@ function setConstantCore(
     }
     runAt(( ) => {
         setConstant(chain, cValue);
-    }, options);
+    }, extraArgs.runAt);
 }
 
 /******************************************************************************/
