@@ -316,7 +316,7 @@
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
-    "message": "Ocultar espaços reservados dos elementos bloqueados",
+    "message": "Ocultar os espaços reservados dos elementos bloqueados",
     "description": "English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt": {
@@ -424,7 +424,7 @@
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
-    "message": "{{used}} usado(s) de {{total}}",
+    "message": "{{used}} usados de {{total}}",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
@@ -468,7 +468,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Embutido",
+    "message": "Embutidos",
     "description": "Filter lists section name"
   },
   "3pGroupAds": {
