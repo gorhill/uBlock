@@ -1213,54 +1213,108 @@ function jsonPrune(
     const safe = safeSelf();
     const stackNeedleDetails = safe.initPattern(stackNeedle, { canNegate: true });
     const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
-    const logLevel = shouldLog(extraArgs);
-    const fetchPropNeedles = parsePropertiesToMatch(extraArgs.fetchPropsToMatch, 'url');
-    if (
-        fetchPropNeedles.size === 0 ||
-        matchObjectProperties(fetchPropNeedles, { url: 'undefined' })
-    ) {
-        JSON.parse = new Proxy(JSON.parse, {
-            apply: function(target, thisArg, args) {
-                const objBefore = Reflect.apply(target, thisArg, args);
-                const objAfter = objectPrune(
-                    objBefore,
-                    rawPrunePaths,
-                    rawNeedlePaths,
-                    stackNeedleDetails,
-                    extraArgs
-               );
-               return objAfter || objBefore;
-            },
-        });
-    }
-    Response.prototype.json = new Proxy(Response.prototype.json, {
+    JSON.parse = new Proxy(JSON.parse, {
         apply: function(target, thisArg, args) {
-            const dataPromise = Reflect.apply(target, thisArg, args);
-            let outcome = 'match';
-            if ( fetchPropNeedles.size !== 0 ) {
-                if ( matchObjectProperties(fetchPropNeedles, thisArg) === false ) {
-                    outcome = 'nomatch';
-                }
+            const objBefore = Reflect.apply(target, thisArg, args);
+            const objAfter = objectPrune(
+                objBefore,
+                rawPrunePaths,
+                rawNeedlePaths,
+                stackNeedleDetails,
+                extraArgs
+           );
+           return objAfter || objBefore;
+        },
+    });
+}
+
+/*******************************************************************************
+ * 
+ * json-prune-fetch-response.js
+ * 
+ * Prune JSON response of fetch requests.
+ * 
+ **/
+
+builtinScriptlets.push({
+    name: 'json-prune-fetch-response.js',
+    fn: jsonPruneFetchResponse,
+    dependencies: [
+        'match-object-properties.fn',
+        'object-prune.fn',
+        'parse-properties-to-match.fn',
+        'safe-self.fn',
+        'should-log.fn',
+    ],
+});
+function jsonPruneFetchResponse(
+    rawPrunePaths = '',
+    rawNeedlePaths = ''
+) {
+    const safe = safeSelf();
+    const extraArgs = safe.getExtraArgs(Array.from(arguments), 2);
+    const logLevel = shouldLog({ log: rawPrunePaths === '' || extraArgs.log, });
+    const log = logLevel ? ((...args) => { safe.uboLog(...args); }) : (( ) => { }); 
+    const propNeedles = parsePropertiesToMatch(extraArgs.propsToMatch, 'url');
+    const applyHandler = function(target, thisArg, args) {
+        const fetchPromise = Reflect.apply(target, thisArg, args);
+        if ( logLevel === true ) {
+            log('json-prune-fetch-response:', JSON.stringify(Array.from(args)).slice(1,-1));
+        }
+        if ( rawNeedlePaths === '' ) { return fetchPromise; }
+        let outcome = 'match';
+        if ( propNeedles.size !== 0 ) {
+            const objs = [ args[0] instanceof Object ? args[0] : { url: args[0] } ];
+            if ( args[1] instanceof Object ) {
+                objs.push(args[1]);
+            }
+            if ( matchObjectProperties(propNeedles, ...objs) === false ) {
+                outcome = 'nomatch';
             }
             if ( outcome === logLevel || logLevel === 'all' ) {
-                safe.uboLog(
-                    `json-prune / Response.json() (${outcome})`,
-                    `\n\tfetchPropsToMatch: ${JSON.stringify(Array.from(fetchPropNeedles)).slice(1,-1)}`,
-                    '\n\tprops:', thisArg,
+                log(
+                    `json-prune-fetch-response (${outcome})`,
+                    `\n\tfetchPropsToMatch: ${JSON.stringify(Array.from(propNeedles)).slice(1,-1)}`,
+                    '\n\tprops:', ...args,
                 );
             }
-            if ( outcome === 'nomatch' ) { return dataPromise; }
-            return dataPromise.then(objBefore => {
+        }
+        if ( outcome === 'nomatch' ) { return fetchPromise; }
+        return fetchPromise.then(responseBefore => {
+            const response = responseBefore.clone();
+            return response.json().then(objBefore => {
+                if ( typeof objBefore !== 'object' ) { return responseBefore; }
                 const objAfter = objectPrune(
                     objBefore,
                     rawPrunePaths,
                     rawNeedlePaths,
-                    stackNeedleDetails,
+                    { matchAll: true },
                     extraArgs
-                );
-               return objAfter || objBefore;
+               );
+               if ( typeof objAfter !== 'object' ) { return responseBefore; }
+                const responseAfter = Response.json(objAfter, {
+                    status: responseBefore.status,
+                    statusText: responseBefore.statusText,
+                    headers: responseBefore.headers,
+                });
+                Object.defineProperties(responseAfter, {
+                    ok: { value: responseBefore.ok },
+                    redirected: { value: responseBefore.redirected },
+                    type: { value: responseBefore.type },
+                    url: { value: responseBefore.url },
+                });
+                return responseAfter;
+            }).catch(reason => {
+                log('json-prune-fetch-response:', reason);
+                return responseBefore;
             });
-        },
+        }).catch(reason => {
+            log('json-prune-fetch-response:', reason);
+            return fetchPromise;
+        });
+    };
+    self.fetch = new Proxy(self.fetch, {
+        apply: applyHandler
     });
 }
 
