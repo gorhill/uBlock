@@ -1261,7 +1261,7 @@ function jsonPruneFetchResponse(
         if ( logLevel === true ) {
             log('json-prune-fetch-response:', JSON.stringify(Array.from(args)).slice(1,-1));
         }
-        if ( rawNeedlePaths === '' ) { return fetchPromise; }
+        if ( rawPrunePaths === '' ) { return fetchPromise; }
         let outcome = 'match';
         if ( propNeedles.size !== 0 ) {
             const objs = [ args[0] instanceof Object ? args[0] : { url: args[0] } ];
