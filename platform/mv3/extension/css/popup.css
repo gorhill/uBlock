@@ -256,7 +256,6 @@ body:not([data-section~="b"]) [data-section="b"] {
 /* mouse-driven devices */
 :root.desktop {
     display: flex;
-    justify-content: flex-end;
     }
 :root.desktop body {
     --popup-gap: calc(var(--font-size) * 0.875);
@@ -278,3 +277,10 @@ body:not([data-section~="b"]) [data-section="b"] {
 #templates {
     display: none;
     }
+
+@media (max-width: 480px) {
+    #main {
+        max-width: 100vw;
+        width: 100vw;
+    }
+}

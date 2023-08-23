@@ -177,3 +177,12 @@ body.noMoreRuleset .listEntry:not(.checked) {
 #templates {
     display: none;
     }
+
+@media (max-width: 480px) {
+    #defaultFilteringMode {
+        grid: 1fr 1fr 1fr / auto-flow dense;
+    }
+    .filteringModeCard > div:nth-of-type(2) {
+        justify-content: flex-start;
+    }
+}
