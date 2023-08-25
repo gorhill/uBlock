@@ -45,6 +45,7 @@ function safeSelf() {
     if ( scriptletGlobals.has('safeSelf') ) {
         return scriptletGlobals.get('safeSelf');
     }
+    const self = globalThis;
     const safe = {
         'Error': self.Error,
         'Object_defineProperty': Object.defineProperty.bind(Object),
