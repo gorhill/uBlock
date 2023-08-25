@@ -44,10 +44,7 @@ mkdir -p $DES/css/fonts
 mkdir -p $DES/js
 mkdir -p $DES/img
 
-if [ "$UBO_VERSION" != "HEAD" ]; then
-    cp platform/mv3/ubo-version $DES/
-    UBO_VERSION_URL=$(cat platform/mv3/ubo-version)
-    UBO_VERSION="${UBO_VERSION_URL: -40}"
+if [ -n "$UBO_VERSION" ]; then
     UBO_REPO="https://github.com/gorhill/uBlock.git"
     UBO_DIR=$(mktemp -d)
     echo "*** uBOLite.mv3: Fetching uBO $UBO_VERSION from $UBO_REPO into $UBO_DIR"
