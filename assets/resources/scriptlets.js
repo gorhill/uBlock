@@ -1291,8 +1291,8 @@ function jsonPruneFetchResponse(
                     rawNeedlePaths,
                     { matchAll: true },
                     extraArgs
-               );
-               if ( typeof objAfter !== 'object' ) { return responseBefore; }
+                );
+                if ( typeof objAfter !== 'object' ) { return responseBefore; }
                 const responseAfter = Response.json(objAfter, {
                     status: responseBefore.status,
                     statusText: responseBefore.statusText,
@@ -1317,6 +1317,113 @@ function jsonPruneFetchResponse(
     self.fetch = new Proxy(self.fetch, {
         apply: applyHandler
     });
+}
+
+/******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'json-prune-xhr-response.js',
+    fn: jsonPruneXhrResponse,
+    dependencies: [
+        'match-object-properties.fn',
+        'object-prune.fn',
+        'parse-properties-to-match.fn',
+        'safe-self.fn',
+        'should-log.fn',
+    ],
+});
+function jsonPruneXhrResponse(
+    rawPrunePaths = '',
+    rawNeedlePaths = ''
+) {
+    const safe = safeSelf();
+    const xhrInstances = new WeakMap();
+    const extraArgs = safe.getExtraArgs(Array.from(arguments), 2);
+    const logLevel = shouldLog({ log: rawPrunePaths === '' || extraArgs.log, });
+    const log = logLevel ? ((...args) => { safe.uboLog(...args); }) : (( ) => { }); 
+    const propNeedles = parsePropertiesToMatch(extraArgs.propsToMatch, 'url');
+    self.XMLHttpRequest = class extends self.XMLHttpRequest {
+        open(method, url, ...args) {
+            const outerXhr = this;
+            const xhrDetails = { method, url, args: [ ...args ] };
+            let outcome = 'match';
+            if ( propNeedles.size !== 0 ) {
+                if ( matchObjectProperties(propNeedles, { method, url }) === false ) {
+                    outcome = 'nomatch';
+                }
+            }
+            if ( outcome === logLevel || outcome === 'all' ) {
+                log(`xhr.open(${method}, ${url}, ${args.join(', ')})`);
+            }
+            if ( outcome === 'match' ) {
+                xhrInstances.set(outerXhr, xhrDetails);
+            }
+            return super.open(method, url, ...args);
+        }
+        send(...args) {
+            const outerXhr = this;
+            const xhrDetails = xhrInstances.get(outerXhr);
+            if ( xhrDetails === undefined ) {
+                return super.send(...args);
+            }
+            switch ( outerXhr.responseType ) {
+                case '':
+                case 'json':
+                case 'text':
+                    break;
+                default:
+                    return super.send(...args);
+            }
+            const innerXhr = new safe.XMLHttpRequest();
+            innerXhr.open(xhrDetails.method, xhrDetails.url, ...xhrDetails.args);
+            innerXhr.responseType = outerXhr.responseType;
+            innerXhr.onloadend = function() {
+                let objBefore;
+                switch ( outerXhr.responseType ) {
+                    case '':
+                    case 'text':
+                        try {
+                            objBefore = safe.jsonParse(innerXhr.responseText);
+                        } catch(ex) {
+                        }
+                        break;
+                    case 'json':
+                        objBefore = innerXhr.response;
+                        break;
+                    default:
+                        break;
+                }
+                let objAfter;
+                if ( typeof objBefore === 'object' ) {
+                    objAfter = objectPrune(
+                        objBefore,
+                        rawPrunePaths,
+                        rawNeedlePaths,
+                        { matchAll: true },
+                        extraArgs
+                    );
+                }
+                let response = objAfter || objBefore;
+                let responseText = '';
+                if ( typeof response === 'object' && outerXhr.responseType !== 'json' ) {
+                    response = responseText = safe.jsonStringify(response);
+                }
+                Object.defineProperties(outerXhr, {
+                    readyState: { value: 4 },
+                    response: { value: response },
+                    responseText: { value: responseText },
+                    responseXML: { value: null },
+                    responseURL: { value: innerXhr.url },
+                    status: { value: innerXhr.status },
+                    statusText: { value: innerXhr.statusText },
+                });
+                outerXhr.dispatchEvent(new Event('readystatechange'));
+                outerXhr.dispatchEvent(new Event('load'));
+                outerXhr.dispatchEvent(new Event('loadend'));
+            };
+            innerXhr.send(...args);
+        }
+    };
 }
 
 /******************************************************************************/
@@ -3619,6 +3726,105 @@ function trustedReplaceFetchResponse(
             });
         }
     });
+}
+
+/******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'trusted-replace-xhr-response.js',
+    fn: trustedReplaceXhrResponse,
+    dependencies: [
+        'match-object-properties.fn',
+        'parse-properties-to-match.fn',
+        'safe-self.fn',
+        'should-log.fn',
+    ],
+});
+function trustedReplaceXhrResponse(
+    pattern = '',
+    replacement = '',
+    propsToMatch = ''
+) {
+    const safe = safeSelf();
+    const xhrInstances = new WeakMap();
+    const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
+    const logLevel = shouldLog({
+        log: pattern === '' && 'all' || extraArgs.log,
+    });
+    const log = logLevel ? ((...args) => { safe.uboLog(...args); }) : (( ) => { }); 
+    if ( pattern === '*' ) { pattern = '.*'; }
+    const rePattern = safe.patternToRegex(pattern);
+    const propNeedles = parsePropertiesToMatch(propsToMatch, 'url');
+    self.XMLHttpRequest = class extends self.XMLHttpRequest {
+        open(method, url, ...args) {
+            const outerXhr = this;
+            const xhrDetails = { method, url, args: [ ...args ] };
+            let outcome = 'match';
+            if ( propNeedles.size !== 0 ) {
+                if ( matchObjectProperties(propNeedles, { method, url }) === false ) {
+                    outcome = 'nomatch';
+                }
+            }
+            if ( outcome === logLevel || outcome === 'all' ) {
+                log(`xhr.open(${method}, ${url}, ${args.join(', ')})`);
+            }
+            if ( outcome === 'match' ) {
+                xhrInstances.set(outerXhr, xhrDetails);
+            }
+            return super.open(method, url, ...args);
+        }
+        send(...args) {
+            const outerXhr = this;
+            const xhrDetails = xhrInstances.get(outerXhr);
+            if ( xhrDetails === undefined ) {
+                return super.send(...args);
+            }
+            switch ( outerXhr.responseType ) {
+                case '':
+                case 'json':
+                case 'text':
+                    break;
+                default:
+                    return super.send(...args);
+            }
+            const innerXhr = new safe.XMLHttpRequest();
+            innerXhr.open(xhrDetails.method, xhrDetails.url, ...xhrDetails.args);
+            innerXhr.responseType = outerXhr.responseType;
+            innerXhr.onloadend = function() {
+                const textBefore = innerXhr.responseText;
+                const textAfter = textBefore.replace(rePattern, replacement);
+                const outcome = textAfter !== textBefore ? 'match' : 'nomatch';
+                if ( outcome === logLevel || logLevel === 'all' ) {
+                    log(
+                        `trusted-replace-xhr-response (${outcome})`,
+                        `\n\tpattern: ${pattern}`, 
+                        `\n\treplacement: ${replacement}`,
+                    );
+                }
+                let response = innerXhr.responseText;
+                if ( outerXhr.responseType === 'json' ) {
+                    try {
+                        response = safe.jsonParse(innerXhr.responseText);
+                    } catch(ex) {
+                        response = innerXhr.response;
+                    }
+                }
+                Object.defineProperties(outerXhr, {
+                    readyState: { value: 4 },
+                    response: { value: response },
+                    responseText: { value: textAfter },
+                    responseXML: { value: null },
+                    responseURL: { value: innerXhr.url },
+                    status: { value: innerXhr.status },
+                    statusText: { value: innerXhr.statusText },
+                });
+                outerXhr.dispatchEvent(new Event('readystatechange'));
+                outerXhr.dispatchEvent(new Event('load'));
+                outerXhr.dispatchEvent(new Event('loadend'));
+            };
+            innerXhr.send(...args);
+        }
+    };
 }
 
 /******************************************************************************/
