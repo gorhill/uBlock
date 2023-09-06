@@ -1365,25 +1365,41 @@ function jsonPruneXhrResponse(
             if ( xhrDetails === undefined ) {
                 return innerResponse;
             }
-            if ( typeof innerResponse !== 'object' ) {
-                xhrDetails.response = innerResponse;
+            if ( xhrDetails.response !== undefined ) {
+                return xhrDetails.response;
             }
-            let outerResponse = xhrDetails.response;
-            if ( outerResponse !== undefined ) {
-                return outerResponse;
+            let objBefore;
+            if ( typeof innerResponse === 'object' ) {
+                objBefore = innerResponse;
+            } else if ( typeof innerResponse === 'string' ) {
+                try { objBefore = safe.jsonParse(innerResponse); }
+                catch(ex) { }
             }
-            outerResponse = objectPrune(
-                innerResponse,
+            if ( typeof objBefore !== 'object' ) {
+                return (xhrDetails.response = innerResponse);
+            }
+            const objAfter = objectPrune(
+                objBefore,
                 rawPrunePaths,
                 rawNeedlePaths,
                 { matchAll: true },
                 extraArgs
             );
-            if ( typeof outerResponse !== 'object' ) {
+            let outerResponse;
+            if ( typeof objAfter === 'object' ) {
+                outerResponse = typeof innerResponse === 'string'
+                    ? safe.jsonStringify(objAfter)
+                    : objAfter;
+            } else {
                 outerResponse = innerResponse;
             }
-            xhrDetails.response = outerResponse;
-            return outerResponse;
+            return (xhrDetails.response = outerResponse);
+        }
+        get responseText() {
+            const response = this.response;
+            return typeof response !== 'string'
+                ? super.responseText
+                : response;
         }
     };
 }
