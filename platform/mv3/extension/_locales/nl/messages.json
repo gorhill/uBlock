@@ -88,7 +88,7 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupRevokeGreatPowers": {
-    "message": "Klik om uitgebreide toestemmingen op deze website in te trekken.",
+    "message": "Klik om uitgebreide toestemmingen op deze website in te trekken",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
@@ -156,11 +156,11 @@
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
-    "message": "Importeren en toevoegen…",
+    "message": "Importeren en toevoegen",
     "description": "English: Import and append"
   },
   "1pExport": {
-    "message": "Exporteren…",
+    "message": "Exporteren",
     "description": "English: Export"
   },
   "1pExportFilename": {
@@ -172,11 +172,11 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Importeren en toevoegen…",
+    "message": "Importeren en toevoegen",
     "description": "English: Import and append"
   },
   "whitelistExport": {
-    "message": "Exporteren…",
+    "message": "Exporteren",
     "description": "English: Export"
   },
   "whitelistExportFilename": {

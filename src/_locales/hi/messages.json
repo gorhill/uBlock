@@ -952,11 +952,11 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "message": "फ़िल्टर सूचियों को रोजाना अपडेट किया जाता है। सुनिश्चित करें कि आपकी समस्या का समाधान पहले से ही नवीनतम फ़िल्टर सूचियों में नहीं किया गया है।",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "message": "सत्यापित करें कि समस्यात्मक वेबपेज को रीलोड करने के बाद समस्या अभी भी बनी हुई है।",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -1276,7 +1276,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Could not filter properly at browser launch. Reload the page to ensure proper filtering.",
+    "message": "ब्राउज़र खोलने पर ठीक से फ़िल्टर नहीं कर सका। उचित फ़िल्टरिंग सुनिश्चित करने के लिए वेबपेज को रीलोड करें।",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {
