@@ -3,6 +3,7 @@
 # This script assumes a linux environment
 
 set -e
+shopt -s extglob
 
 echo "*** uBOLite.mv3: Creating extension"
 
@@ -24,6 +25,11 @@ for i in "$@"; do
       ;;
     chromium)
       PLATFORM="chromium"
+      shift # past argument=value
+      ;;
+    (uBOLite_+([0-9]).+([0-9]).+([0-9]).+([0-9]))
+      TAGNAME="$i"
+      FULL="yes"
       shift # past argument=value
       ;;
   esac
@@ -119,7 +125,14 @@ if [ "$FULL" = "yes" ]; then
         EXTENSION="xpi"
     fi
     echo "*** uBOLite.mv3: Creating publishable package..."
-    PACKAGENAME="uBOLite_$(jq -r .version $DES/manifest.json).$PLATFORM.mv3.$EXTENSION"
+    if [ -z "$TAGNAME" ]; then
+        TAGNAME="uBOLite_$(jq -r .version $DES/manifest.json)"
+    else
+        tmp=$(mktemp)
+        jq --arg tagname "$TAGNAME" '.version = $tagname' "$DES/manifest.json"  > "$tmp" \
+            && mv "$tmp" "$DES/manifest.json"
+    fi
+    PACKAGENAME="$TAGNAME.$PLATFORM.mv3.$EXTENSION"
     TMPDIR=$(mktemp -d)
     mkdir -p $TMPDIR
     cp -R $DES/* $TMPDIR/
