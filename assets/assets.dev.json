@@ -818,7 +818,6 @@
 		"tags": "ads romanian română moldavian moldovenească молдовеняскэ",
 		"lang": "ro",
 		"contentURL": [
-			"https://road.adblock.ro/lista.txt",
 			"https://raw.githubusercontent.com/tcptomato/ROad-Block/master/road-block-filters-light.txt"
 		],
 		"supportURL": "https://github.com/tcptomato/ROad-Block"
