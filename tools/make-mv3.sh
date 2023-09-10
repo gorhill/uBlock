@@ -129,7 +129,7 @@ if [ "$FULL" = "yes" ]; then
         TAGNAME="uBOLite_$(jq -r .version $DES/manifest.json)"
     else
         tmp=$(mktemp)
-        jq --arg tagname "$TAGNAME" '.version = $tagname' "$DES/manifest.json"  > "$tmp" \
+        jq --arg version "${TAGNAME:8}" '.version = $version' "$DES/manifest.json"  > "$tmp" \
             && mv "$tmp" "$DES/manifest.json"
     fi
     PACKAGENAME="$TAGNAME.$PLATFORM.mv3.$EXTENSION"
