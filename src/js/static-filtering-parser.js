@@ -3687,7 +3687,7 @@ class ExtSelectorCompiler {
         case 'has': {
             let r = this.astCompile(parts, { noaction: true });
             if ( typeof r === 'string' ) {
-                r = { selector: r.replace(/^\s*:scope\s*/, ' ') };
+                r = { selector: r.replace(/^\s*:scope\s*/, '') };
             }
             return r;
         }
