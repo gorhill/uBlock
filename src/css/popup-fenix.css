@@ -720,7 +720,7 @@ body:not([data-more*="e"]) [data-more="e"] {
     }
 
 /* horizontally-constrained viewport */
-:root.portrait body {
+:root.portrait:not(.desktop) body {
     overflow-y: auto;
     width: 100%;
     }
