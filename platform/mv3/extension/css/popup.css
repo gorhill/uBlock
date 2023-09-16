@@ -4,10 +4,6 @@
     top: -20%;
     }
 
-/* Internal CSS values */
-:root body {
-    overflow: hidden;
-    }
 :root body,
 :root.mobile body {
     --font-size: 14px;
@@ -19,6 +15,7 @@
     --popup-rule-cell-width: 5em;
     font-size: var(--font-size);
     line-height: 20px;
+    min-width: 100%;
     }
 :root body.loading {
     opacity: 0;
@@ -37,7 +34,7 @@ a {
     display: flex;
     flex-direction: column;
     max-width: 340px;
-    min-width: var(--popup-main-min-width);
+    min-width: 100%;
     }
 :root.portrait #main {
     align-self: inherit;
@@ -277,10 +274,3 @@ body:not([data-section~="b"]) [data-section="b"] {
 #templates {
     display: none;
     }
-
-@media (max-width: 480px) {
-    #main {
-        max-width: 100vw;
-        width: 100vw;
-    }
-}
