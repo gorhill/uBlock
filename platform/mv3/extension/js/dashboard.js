@@ -21,104 +21,20 @@
 
 'use strict';
 
-import { dom, qs$ } from './dom.js';
+import { runtime } from './ext.js';
+import { dom } from './dom.js';
 
 /******************************************************************************/
 
-const discardUnsavedData = function(synchronous = false) {
-    const paneFrame = qs$('#iframe');
-    const paneWindow = paneFrame.contentWindow;
-    if (
-        typeof paneWindow.hasUnsavedData !== 'function' ||
-        paneWindow.hasUnsavedData() === false
-    ) {
-        return true;
-    }
-
-    if ( synchronous ) {
-        return false;
-    }
-
-    return new Promise(resolve => {
-        const modal = document.querySelector('#unsavedWarning');
-        dom.cl.add(modal, 'on');
-        modal.focus();
-
-        const onDone = status => {
-            dom.cl.remove(modal, 'on');
-            document.removeEventListener('click', onClick, true);
-            resolve(status);
-        };
-
-        const onClick = ev => {
-            const target = ev.target;
-            if ( target.matches('[data-i18n="dashboardUnsavedWarningStay"]') ) {
-                return onDone(false);
-            }
-            if ( target.matches('[data-i18n="dashboardUnsavedWarningIgnore"]') ) {
-                return onDone(true);
-            }
-            if ( modal.querySelector('[data-i18n="dashboardUnsavedWarning"]').contains(target) ) {
-                return;
-            }
-            onDone(false);
-        };
-
-        document.addEventListener('click', onClick, true);
-    });
-};
-
-const loadDashboardPanel = function(pane, first) {
-    const tabButton = document.querySelector(`[data-pane="${pane}"]`);
-    if ( tabButton === null || dom.cl.has(tabButton, 'selected') ) {
-        return;
-    }
-    const loadPane = ( ) => {
-        self.location.replace(`#${pane}`);
-        for ( const node of document.querySelectorAll('.tabButton.selected') ) {
-            dom.cl.remove(node, 'selected');
-        }
-        dom.cl.add(tabButton, 'selected');
-        tabButton.scrollIntoView();
-        document.querySelector('#iframe').contentWindow.location.replace(pane);
-    };
-    if ( first ) {
-        return loadPane();
-    }
-    const r = discardUnsavedData();
-    if ( r === false ) { return; }
-    if ( r === true ) {
-        return loadPane();
-    }
-    r.then(status => {
-        if ( status === false ) { return; }
-        loadPane();
-    });
-};
-
-const onTabClickHandler = function(ev) {
-    loadDashboardPanel(dom.attr(ev.target, 'data-pane'));
-};
-
-if ( self.location.hash.slice(1) === 'no-dashboard.html' ) {
-    dom.cl.add(dom.body, 'noDashboard');
+{
+    const manifest = runtime.getManifest();
+    dom.text('#aboutNameVer', `${manifest.name} ${manifest.version}`);
 }
 
-(async ( ) => {
-    let pane = null;
-    if ( self.location.hash !== '' ) {
-        pane = self.location.hash.slice(1) || null;
-    }
-    loadDashboardPanel(pane !== null ? pane : 'settings.html', true);
+dom.attr('a', 'target', '_blank');
 
-    dom.on('#dashboard-nav', 'click', '.tabButton', onTabClickHandler);
-
-    // https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
-    window.addEventListener('beforeunload', ( ) => {
-        if ( discardUnsavedData(true) ) { return; }
-        event.preventDefault();
-        event.returnValue = '';
-    });
-})();
+dom.on('#dashboard-nav', 'click', '.tabButton', ev => {
+    dom.body.dataset.pane = ev.target.dataset.pane;
+});
 
 /******************************************************************************/

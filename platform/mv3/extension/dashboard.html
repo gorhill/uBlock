@@ -8,31 +8,142 @@
 <link rel="stylesheet" href="css/common.css">
 <link rel="stylesheet" href="css/fa-icons.css">
 <link rel="stylesheet" href="css/dashboard.css">
+
+<link rel="stylesheet" href="css/dashboard-common.css">
+<link rel="stylesheet" href="css/filtering-mode.css">
+<link rel="stylesheet" href="css/settings.css">
+<link rel="stylesheet" href="css/about.css">
+
 <link rel="shortcut icon" type="image/png" href="img/icon_64.png"/>
 </head>
 
-<body>
+<body data-pane="settings">
     <!-- -------- -->
     <div id="dashboard-nav">
         <span class="logo"><img data-i18n-title="extName" src="img/ublock.svg"></span><!--
-     --><button class="tabButton" type="button" data-pane="settings.html" data-i18n="settingsPageName" tabindex="0"></button><!--
-     --><button class="tabButton" type="button" data-pane="about.html" data-i18n="aboutPageName" tabindex="0"></button>
+     --><button class="tabButton" type="button" data-pane="settings" data-i18n="settingsPageName" tabindex="0"></button><!--
+     --><button class="tabButton" type="button" data-pane="about" data-i18n="aboutPageName" tabindex="0"></button>
     </div>
     <!-- -------- -->
-    <section id="unsavedWarning" class="notice">
-        <div>
-            <span data-i18n="dashboardUnsavedWarning"></span>&emsp;
-            <button type="button" data-i18n="dashboardUnsavedWarningStay">_<span class="hover"></span></button>&ensp;
-            <button type="button" data-i18n="dashboardUnsavedWarningIgnore">_<span class="hover"></span></button>
+    <section data-pane="settings">
+        <div class="firstRun">
+            <h3 data-i18n="firstRunSectionLabel"></h3>
+            <p data-i18n="firstRunDescription"></p>
         </div>
-        <div></div>
+
+        <div>
+            <h3 data-i18n="defaultFilteringModeSectionLabel"></h3>
+            <p data-i18n="defaultFilteringModeDescription"></p>
+            <div id="defaultFilteringMode">
+                <label class="filteringModeCard">
+                    <div>
+                        <span><span class="input radio"><input type="radio" name="filteringMode" value="1"><svg viewBox="0 0 24 24"><path d="M 12 0 A 12 12 0 0 0 0 12 A 12 12 0 0 0 12 24 A 12 12 0 0 0 24 12 A 12 12 0 0 0 12 0 z M 12 2.5 A 9.5 9.5 0 0 1 21.5 12 A 9.5 9.5 0 0 1 12 21.5 A 9.5 9.5 0 0 1 2.5 12 A 9.5 9.5 0 0 1 12 2.5 z"/><circle cx="12" cy="12" r="7"/></svg></span><span data-i18n="filteringMode1Name">_</span></span>
+                    </div>
+                    <div>
+                        <div class="filteringModeSlider" data-level="1">
+                            <div class="filteringModeButton"><div></div></div>
+                            <span data-level="0"></span>
+                            <span data-level="1"></span>
+                            <span data-level="2"></span>
+                            <span data-level="3"></span>
+                        </div>
+                    </div>
+                    <div data-i18n="basicFilteringModeDescription"></div>
+                </label>
+                <label class="filteringModeCard">
+                    <div>
+                        <span><span class="input radio"><input type="radio" name="filteringMode" value="2"><svg viewBox="0 0 24 24"><path d="M 12 0 A 12 12 0 0 0 0 12 A 12 12 0 0 0 12 24 A 12 12 0 0 0 24 12 A 12 12 0 0 0 12 0 z M 12 2.5 A 9.5 9.5 0 0 1 21.5 12 A 9.5 9.5 0 0 1 12 21.5 A 9.5 9.5 0 0 1 2.5 12 A 9.5 9.5 0 0 1 12 2.5 z"/><circle cx="12" cy="12" r="7"/></svg></span><span data-i18n="filteringMode2Name">_</span></span>
+                    </div>
+                    <div>
+                        <div class="filteringModeSlider" data-level="2">
+                            <div class="filteringModeButton"><div></div></div>
+                            <span data-level="0"></span>
+                            <span data-level="1"></span>
+                            <span data-level="2"></span>
+                            <span data-level="3"></span>
+                        </div>
+                    </div>
+                    <div data-i18n="optimalFilteringModeDescription"></div>
+                </label>
+                <label class="filteringModeCard">
+                    <div>
+                        <span><span class="input radio"><input type="radio" name="filteringMode" value="3"><svg viewBox="0 0 24 24"><path d="M 12 0 A 12 12 0 0 0 0 12 A 12 12 0 0 0 12 24 A 12 12 0 0 0 24 12 A 12 12 0 0 0 12 0 z M 12 2.5 A 9.5 9.5 0 0 1 21.5 12 A 9.5 9.5 0 0 1 12 21.5 A 9.5 9.5 0 0 1 2.5 12 A 9.5 9.5 0 0 1 12 2.5 z"/><circle cx="12" cy="12" r="7"/></svg></span><span data-i18n="filteringMode3Name">_</span></span>
+                    </div>
+                    <div>
+                        <div class="filteringModeSlider" data-level="3">
+                            <div class="filteringModeButton"><div></div></div>
+                            <span data-level="0"></span>
+                            <span data-level="1"></span>
+                            <span data-level="2"></span>
+                            <span data-level="3"></span>
+                        </div>
+                    </div>
+                    <div data-i18n="completeFilteringModeDescription"></div>
+                </label>
+            </div>
+        </div>
+
+        <div>
+            <h3 data-i18n="behaviorSectionLabel"></h3>
+            <p><label id="autoReload" data-i18n="autoReloadLabel"><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span>_</label>
+            </p>
+        </div>
+
+        <div>
+            <h3>Filter lists</h3>
+            <div>
+                <p id="listsOfBlockedHostsPrompt"></p>
+            </div>
+            <div>
+                <div id="lists"></div>
+            </div>
+        </div>
+
+        <div id="templates">
+            <div class="groupEntry">
+                <div class="geDetails"><span class="geName"></span> <span class="geCount"></span></div>
+                <div class="listEntries"></div>
+            </div>
+            <div class="li listEntry">
+                <label><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span><span><span class="listname forinput"></span> <span class="iconbar"><!--
+             --><a class="fa-icon support" href="#" target="_blank">home</a><!--
+             --><a class="fa-icon mustread" href="#" target="_blank">info-circle</a><!--
+             --></span></span></label>
+            </div>
+        </div>
     </section>
     <!-- -------- -->
-    <iframe id="iframe" src=""></iframe>
+    <section data-pane="about">
+        <div class="body">
+            <div id="aboutNameVer" class="li"></div>
+            <div class="liul">
+                <div class="li">Copyright (c) Raymond Hill 2014-present</div>
+            </div>
+            <div class="li"><a href="https://github.com/gorhill/uBlock/wiki/Privacy-policy" data-i18n="aboutPrivacyPolicy"></a></div>
+            <div class="li"><a href="https://github.com/uBlockOrigin/uBOL-home/releases" data-i18n="aboutChangelog"></a></div>
+            <div class="li"><a href="https://github.com/gorhill/uBlock" data-i18n="aboutCode"></a></div>
+            <div class="li"><span data-i18n="aboutContributors"></span></div>
+            <div class="liul">
+                <div class="li"><a href="https://github.com/gorhill/uBlock/graphs/contributors" data-i18n="aboutSourceCode"></a></div>
+                <div class="li"><a href="https://crowdin.com/project/ublock" data-i18n="aboutTranslations"></a></div>
+                <div class="li"><a href="https://github.com/uBlockOrigin/uAssets/graphs/contributors" data-i18n="aboutFilterLists"></a></div>
+            </div>
+            <div class="li"><span data-i18n="aboutDependencies"></span></div>
+            <div class="liul">
+                <div class="li"><span><a href="https://github.com/chrismsimpson/Metropolis" target="_blank">Metropolis font family</a> by <a href="https://github.com/chrismsimpson">Chris Simpson</a></span></div>
+                <div class="li"><span><a href="https://github.com/rsms/inter" target="_blank">Inter font family</a> by <a href="https://github.com/rsms">Rasmus Andersson</a></span></div>
+                <div class="li"><span><a href="https://fontawesome.com/" target="_blank">FontAwesome font family</a> by <a href="https://github.com/davegandy">Dave Gandy</a></span></div>
+                <div class="li"><span><a href="https://github.com/mathiasbynens/punycode.js" target="_blank">Punycode.js</a> by <a href="https://github.com/mathiasbynens">Mathias Bynens</a></span></div>
+                <div class="li"><span><a href="https://flagpedia.net/" target="_blank">Flags of the World</a> by <a href="https://www.davidkrmela.com/">David Krmela</a></span></div>
+            </div>
+        </div>
+    </section>
     <!-- -------- -->
 <script src="js/theme.js" type="module"></script>
+<script src="js/fa-icons.js" type="module"></script>
 <script src="js/i18n.js" type="module"></script>
 <script src="js/dashboard.js" type="module"></script>
+<script src="js/settings.js" type="module"></script>
 
 </body>
 </html>

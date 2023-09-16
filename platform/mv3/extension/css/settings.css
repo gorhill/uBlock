@@ -2,9 +2,6 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
     }
-body {
-    margin-bottom: 6rem;
-    }
 legend {
     color: var(--ink-3);
     font-size: var(--font-size-smaller);
@@ -18,11 +15,8 @@ body.firstRun .firstRun {
     display: block;
     padding: 8px;
     }
-body > div {
-    margin: 1em 0;
-    }
 h3 {
-    margin: 0;
+    margin: 1em 0;
     }
 p {
     white-space: pre-line;
