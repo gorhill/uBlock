@@ -3436,35 +3436,6 @@ class ExtSelectorCompiler {
         return out.join('');
     }
 
-    astAppendPart(part, out) {
-        const s = this.astSerializePart(part);
-        if ( s === undefined ) { return false; }
-        const { data } = part;
-        switch ( data.type ) {
-            case 'Combinator':
-                if ( out.length === 0 ) {
-                    if ( s !== ' ' ) {
-                        out.push(s, ' ');
-                    }
-                } else {
-                    out.push(' ');
-                    if ( s !== ' ' ) {
-                        out.push(s, ' ');
-                    }
-                }
-                break;
-            // csstree parses `.promoted*` as valid
-            case 'TypeSelector':
-                if ( s === '*' && out.length !== 0 ) {
-                    const before = out[out.length-1];
-                    if ( before.endsWith(' ') === false ) { return false; }
-                }
-                out.push(s);
-                break;
-        }
-        return true;
-    }
-
     astSerialize(parts, plainCSS = true) {
         const out = [];
         for ( const part of parts ) {
@@ -3482,10 +3453,23 @@ class ExtSelectorCompiler {
                 out.push(s);
                 break;
             }
-            case 'Combinator':
-            case 'TypeSelector':
-                if ( this.astAppendPart(part, out) === false ) { return; }
+            case 'Combinator': {
+                const s = this.astSerializePart(part);
+                if ( s === undefined ) { return; }
+                if ( out.length !== 0 ) { out.push(' '); }
+                if ( s !== ' ' ) { out.push(s, ' '); }
                 break;
+            }
+            case 'TypeSelector': {
+                const s = this.astSerializePart(part);
+                if ( s === undefined ) { return; }
+                if ( s === '*' && out.length !== 0 ) {
+                    const before = out[out.length-1];
+                    if ( before.endsWith(' ') === false ) { return; }
+                }
+                out.push(s);
+                break;
+            }
             case 'Raw':
                 if ( plainCSS ) { return; }
                 out.push(this.astSerializePart(part));
@@ -3509,8 +3493,9 @@ class ExtSelectorCompiler {
         const out = { selector: '' };
         const prelude = [];
         const tasks = [];
-        for ( const part of parts ) {
+        for ( let i = 0; i < parts.length; i++ ) {
             if ( out.action !== undefined ) { return; }
+            const part = parts[i];
             const { data } = part;
             switch ( data.type ) {
             case 'ActionSelector': {
@@ -3534,13 +3519,16 @@ class ExtSelectorCompiler {
             case 'PseudoClassSelector':
             case 'PseudoElementSelector':
             case 'TypeSelector': {
-                const component = this.astSerializePart(part);
-                if ( component === undefined ) { return; }
-                prelude.push(component);
+                const s = this.astSerializePart(part);
+                if ( s === undefined ) { return; }
+                prelude.push(s);
                 break;
             }
             case 'Combinator': {
-                if ( this.astAppendPart(part, prelude) === false ) { return; }
+                const s = this.astSerializePart(part);
+                if ( s === undefined ) { return; }
+                if ( i !== 0 || prelude.length !== 0 ) { prelude.push(' '); }
+                if ( s !== ' ' ) { prelude.push(s, ' '); }
                 break;
             }
             case 'ProceduralSelector': {
