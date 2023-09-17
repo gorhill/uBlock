@@ -3493,9 +3493,9 @@ class ExtSelectorCompiler {
         const out = { selector: '' };
         const prelude = [];
         const tasks = [];
-        for ( let i = 0; i < parts.length; i++ ) {
+        let startOfSelector = true;
+        for ( const part of parts ) {
             if ( out.action !== undefined ) { return; }
-            const part = parts[i];
             const { data } = part;
             switch ( data.type ) {
             case 'ActionSelector': {
@@ -3522,13 +3522,17 @@ class ExtSelectorCompiler {
                 const s = this.astSerializePart(part);
                 if ( s === undefined ) { return; }
                 prelude.push(s);
+                startOfSelector = false;
                 break;
             }
             case 'Combinator': {
                 const s = this.astSerializePart(part);
                 if ( s === undefined ) { return; }
-                if ( i !== 0 || prelude.length !== 0 ) { prelude.push(' '); }
+                if ( startOfSelector === false || prelude.length !== 0 ) {
+                    prelude.push(' ');
+                }
                 if ( s !== ' ' ) { prelude.push(s, ' '); }
+                startOfSelector = false;
                 break;
             }
             case 'ProceduralSelector': {
@@ -3545,14 +3549,17 @@ class ExtSelectorCompiler {
                 const args = this.compileArgumentAst(data.name, part.args);
                 if ( args === undefined ) { return; }
                 tasks.push([ data.name, args ]);
+                startOfSelector = false;
                 break;
             }
             case 'Selector':
                 if ( prelude.length !== 0 ) {
                     prelude.push(', ');
                 }
+                startOfSelector = true;
                 break;
             case 'SelectorList':
+                startOfSelector = true;
                 break;
             default:
                 return;
