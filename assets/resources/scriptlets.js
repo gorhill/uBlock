@@ -1365,6 +1365,10 @@ function jsonPruneXhrResponse(
             if ( xhrDetails === undefined ) {
                 return innerResponse;
             }
+            if ( xhrDetails.latestResponseLength != innerResponse.length ) {
+                xhrDetails.response = undefined;
+                xhrDetails.latestResponseLength = innerResponse.length;
+            }
             if ( xhrDetails.response !== undefined ) {
                 return xhrDetails.response;
             }
