@@ -1365,9 +1365,12 @@ function jsonPruneXhrResponse(
             if ( xhrDetails === undefined ) {
                 return innerResponse;
             }
-            if ( xhrDetails.latestResponseLength != innerResponse.length ) {
+            const responseLength = typeof innerResponse === 'string'
+                ? innerResponse.length
+                : undefined;
+            if ( xhrDetails.lastResponseLength !== responseLength ) {
                 xhrDetails.response = undefined;
-                xhrDetails.latestResponseLength = innerResponse.length;
+                xhrDetails.lastResponseLength = responseLength;
             }
             if ( xhrDetails.response !== undefined ) {
                 return xhrDetails.response;
@@ -3694,12 +3697,18 @@ function trustedReplaceXhrResponse(
             if ( xhrDetails === undefined ) {
                 return innerResponse;
             }
-            if ( typeof innerResponse !== 'string' ) {
-                xhrDetails.response = innerResponse;
+            const responseLength = typeof innerResponse === 'string'
+                ? innerResponse.length
+                : undefined;
+            if ( xhrDetails.lastResponseLength !== responseLength ) {
+                xhrDetails.response = undefined;
+                xhrDetails.lastResponseLength = responseLength;
             }
-            let outerResponse = xhrDetails.response;
-            if ( outerResponse !== undefined ) {
-                return outerResponse;
+            if ( xhrDetails.response !== undefined ) {
+                return xhrDetails.response;
+            }
+            if ( typeof innerResponse !== 'string' ) {
+                return (xhrDetails.response = innerResponse);
             }
             const textBefore = innerResponse;
             const textAfter = textBefore.replace(rePattern, replacement);
@@ -3711,8 +3720,7 @@ function trustedReplaceXhrResponse(
                     `\n\treplacement: ${replacement}`,
                 );
             }
-            xhrDetails.response = textAfter;
-            return textAfter;
+            return (xhrDetails.response = textAfter);
         }
         get responseText() {
             const response = this.response;
