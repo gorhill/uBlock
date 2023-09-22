@@ -456,7 +456,7 @@
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
-    "message": "השהיית פעילות רשת עד לסיום טעינת כל רשימות הסינון",
+    "message": "השהה פעילות רשת עד לסיום טעינת כל רשימות הסינון",
     "description": "A checkbox in the 'Filter lists' pane"
   },
   "3pListsOfBlockedHostsHeader": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "תחומי נוזקה",
+    "message": "ביטחון והגנה מפני נוזקה",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
@@ -912,7 +912,7 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "דווח סוגיות יישומון uBlock Origin ל'מעקב הסוגייות' <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>.\n<u>נידרש חשבון גיטהאב (GitHub)</u>",
+    "message": "דווח על בעיות סינון באתרים קונקרטיים <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">בלוח הבעיות <code>uBlockOrigin/uAssets</code></span>. נדרש משתמש GitHub.",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
@@ -928,7 +928,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "דווח סוגיות יישומון uBlock Origin ל'מעקב הסוגייות' <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>.\n<u>נידרש חשבון גיטהאב (GitHub)</u>",
+    "message": "דווח על בעיות ב uBlock Origin עצמו ל <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"> מעקב הסוגייות <code>uBlockOrigin/uBlock-issue</code></span>.\n<u>נידרש חשבון גיטהאב (GitHub)</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
@@ -948,11 +948,11 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "כדי להימנע מהכבדה על מתנדבים בדווחים כפולים, נא לודא שסוגיה דומה טרם דווחה.",
+    "message": "כדי להימנע מהכבדה על מתנדבים בדווחים כפולים, נא לודא שבעיה דומה טרם דווחה.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "רשימות הסינון מתעדכנות מדי יום. וודא שהבעיה שלך כבר לא טופלה ברשימות המסנן האחרונות.",
+    "message": "רשימות הסינון מתעדכנות מדי יום. וודא שהבעיה שלך עדיין לא טופלה ברשימות הסינון המעודכנות.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
@@ -988,7 +988,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "כשל תפעולי בעת איפשור uBlock Origin",
+    "message": "כשל תפעולי כאשר uBlock Origin פעיל",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
@@ -996,7 +996,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "תיוג דף האינטרנט כ־לב\"ל ((<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">'לא בטוח לעבודה'</a>)",
+    "message": "תיוג דף האינטרנט כ- לב\"ל (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">'לא בטוח לעבודה'</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
@@ -1044,7 +1044,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "כאשר רשימת מסננים צריכה להתעדכן, נבחר באקראי לטובת זאת שירות CDN  ",
+    "message": "שרות CDN אקראי נבחר לשם עדכון רשימת מסננים",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
@@ -1276,7 +1276,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "לא יכול היה לסנן כראוי בהשקת הדפדפן. טען מחדש את הדף כדי להבטיח סינון מתאים.",
+    "message": "לא ניתן היה לסנן כראוי בעת הפעלת הדפדפן. טען מחדש את הדף כדי להבטיח סינון מתאים.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {

@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Eksperymentalny, niewymagający uprawnień bloker treści. Natychmiast po instalacji blokuje reklamy, moduły śledzące, koparki i [...]",
+    "message": "Eksperymentalny, niewymagający uprawnień bloker treści. Natychmiast po instalacji blokuje reklamy, moduły śledzące, koparki i nie tylko.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -52,7 +52,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupFilteringModeLabel": {
-    "message": "tryb filtrowania",
+    "message": "Tryb filtrowania",
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {
