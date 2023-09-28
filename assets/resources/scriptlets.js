@@ -1441,11 +1441,12 @@ function evaldataPrune(
 /******************************************************************************/
 
 builtinScriptlets.push({
-    name: 'nano-setInterval-booster.js',
+    name: 'adjust-setInterval.js',
     aliases: [
+        'nano-setInterval-booster.js',
         'nano-sib.js',
     ],
-    fn: nanoSetIntervalBooster,
+    fn: adjustSetInterval,
     dependencies: [
         'safe-self.fn',
     ],
@@ -1462,7 +1463,7 @@ builtinScriptlets.push({
 // boostRatio - The delay multiplier when there is a match, 0.5 speeds up by
 //      2 times and 2 slows down by 2 times, defaults to 0.05 or speed up
 //      20 times. Speed up and down both cap at 50 times.
-function nanoSetIntervalBooster(
+function adjustSetInterval(
     needleArg = '',
     delayArg = '',
     boostArg = ''
@@ -1493,11 +1494,12 @@ function nanoSetIntervalBooster(
 /******************************************************************************/
 
 builtinScriptlets.push({
-    name: 'nano-setTimeout-booster.js',
+    name: 'adjust-setTimeout.js',
     aliases: [
+        'nano-setTimeout-booster.js',
         'nano-stb.js',
     ],
-    fn: nanoSetTimeoutBooster,
+    fn: adjustSetTimeout,
     dependencies: [
         'safe-self.fn',
     ],
@@ -1515,7 +1517,7 @@ builtinScriptlets.push({
 // boostRatio - The delay multiplier when there is a match, 0.5 speeds up by
 //      2 times and 2 slows down by 2 times, defaults to 0.05 or speed up
 //      20 times. Speed up and down both cap at 50 times.
-function nanoSetTimeoutBooster(
+function adjustSetTimeout(
     needleArg = '',
     delayArg = '',
     boostArg = ''
@@ -1650,15 +1652,18 @@ function noFetchIf(
 /******************************************************************************/
 
 builtinScriptlets.push({
-    name: 'refresh-defuser.js',
-    fn: refreshDefuser,
+    name: 'prevent-refresh.js',
+    aliases: [
+        'refresh-defuser.js',
+    ],
+    fn: preventRefresh,
     world: 'ISOLATED',
     dependencies: [
         'run-at.fn',
     ],
 });
 // https://www.reddit.com/r/uBlockOrigin/comments/q0frv0/while_reading_a_sports_article_i_was_redirected/hf7wo9v/
-function refreshDefuser(
+function preventRefresh(
     arg1 = ''
 ) {
     if ( typeof arg1 !== 'string' ) { return; }
@@ -2294,8 +2299,12 @@ function noWindowOpenIf(
 /******************************************************************************/
 
 builtinScriptlets.push({
-    name: 'window-close-if.js',
-    fn: windowCloseIf,
+    name: 'close-window.js',
+    aliases: [
+        'window-close-if.js',
+    ],
+    fn: closeWindow,
+    world: 'ISOLATED',
     dependencies: [
         'safe-self.fn',
     ],
@@ -2303,7 +2312,7 @@ builtinScriptlets.push({
 // https://github.com/uBlockOrigin/uAssets/issues/10323#issuecomment-992312847
 // https://github.com/AdguardTeam/Scriptlets/issues/158
 // https://github.com/uBlockOrigin/uBlock-issues/discussions/2270
-function windowCloseIf(
+function closeWindow(
     arg1 = ''
 ) {
     if ( typeof arg1 !== 'string' ) { return; }
