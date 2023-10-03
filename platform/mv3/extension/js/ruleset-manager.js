@@ -74,16 +74,9 @@ function getDynamicRules() {
 
 /******************************************************************************/
 
-async function updateRegexRules() {
-    const [
-        rulesetDetails,
-        dynamicRules
-    ] = await Promise.all([
-        getEnabledRulesetsDetails(),
-        dnr.getDynamicRules(),
-    ]);
-
+async function pruneInvalidRegexRules(realm, rulesIn) {
     // Avoid testing already tested regexes
+    const dynamicRules = await dnr.getDynamicRules();
     const validRegexSet = new Set(
         dynamicRules.filter(rule =>
             rule.condition?.regexFilter && true || false
@@ -91,8 +84,49 @@ async function updateRegexRules() {
             rule.condition.regexFilter
         )
     );
-    const allRules = [];
+
+    // Validate regex-based rules
     const toCheck = [];
+    const rejectedRegexRules = [];
+    for ( const rule of rulesIn ) {
+        if ( rule.condition?.regexFilter === undefined ) {
+            toCheck.push(true);
+            continue;
+        }
+        const {
+            regexFilter: regex,
+            isUrlFilterCaseSensitive: isCaseSensitive
+        } = rule.condition;
+        if ( validRegexSet.has(regex) ) {
+            toCheck.push(true);
+            continue;
+        }
+        toCheck.push(
+            dnr.isRegexSupported({ regex, isCaseSensitive }).then(result => {
+                if ( result.isSupported ) { return true; }
+                rejectedRegexRules.push(`\t${regex}  ${result.reason}`);
+                return false;
+            })
+        );
+    }
+
+    // Collate results
+    const isValid = await Promise.all(toCheck);
+
+    if ( rejectedRegexRules.length !== 0 ) {
+        ubolLog(
+            `${realm} realm: rejected regexes:\n`,
+            rejectedRegexRules.join('\n')
+        );
+    }
+
+    return rulesIn.filter((v, i) => isValid[i]);
+}
+
+/******************************************************************************/
+
+async function updateRegexRules() {
+    const rulesetDetails = await getEnabledRulesetsDetails();
 
     // Fetch regexes for all enabled rulesets
     const toFetch = [];
@@ -102,49 +136,23 @@ async function updateRegexRules() {
     }
     const regexRulesets = await Promise.all(toFetch);
 
-    // Validate fetched regexes
+    // Collate all regexes rules
+    const allRules = [];
     let regexRuleId = REGEXES_REALM_START;
     for ( const rules of regexRulesets ) {
         if ( Array.isArray(rules) === false ) { continue; }
         for ( const rule of rules ) {
             rule.id = regexRuleId++;
-            const {
-                regexFilter: regex,
-                isUrlFilterCaseSensitive: isCaseSensitive
-            } = rule.condition;
             allRules.push(rule);
-            toCheck.push(
-                validRegexSet.has(regex)
-                    ? { isSupported: true }
-                    : dnr.isRegexSupported({ regex, isCaseSensitive })
-            );
         }
     }
 
-    // Collate results
-    const results = await Promise.all(toCheck);
-    const newRules = [];
-    const rejectedRegexRules = [];
-    for ( let i = 0; i < allRules.length; i++ ) {
-        const rule = allRules[i];
-        const result = results[i];
-        if ( result instanceof Object && result.isSupported ) {
-            newRules.push(rule);
-        } else {
-            rejectedRegexRules.push(rule);
-        }
-    }
-    if ( rejectedRegexRules.length !== 0 ) {
-        ubolLog(
-            'Rejected regexes:',
-            rejectedRegexRules.map(rule => rule.condition.regexFilter)
-        );
-    }
+    const validatedRules = await pruneInvalidRegexRules('regexes', allRules);
 
     // Add validated regex rules to dynamic ruleset without affecting rules
     // outside regex rules realm.
     const dynamicRuleMap = await getDynamicRules();
-    const newRuleMap = new Map(newRules.map(rule => [ rule.id, rule ]));
+    const newRuleMap = new Map(validatedRules.map(rule => [ rule.id, rule ]));
     const addRules = [];
     const removeRuleIds = [];
 
@@ -202,21 +210,23 @@ async function updateRemoveparamRules() {
     const removeparamRulesets = await Promise.all(toFetch);
 
     // Removeparam rules can only be enforced with omnipotence
-    const newRules = [];
+    const allRules = [];
     if ( hasOmnipotence ) {
         let removeparamRuleId = REMOVEPARAMS_REALM_START;
         for ( const rules of removeparamRulesets ) {
             if ( Array.isArray(rules) === false ) { continue; }
             for ( const rule of rules ) {
                 rule.id = removeparamRuleId++;
-                newRules.push(rule);
+                allRules.push(rule);
             }
         }
     }
 
+    const validatedRules = await pruneInvalidRegexRules('removeparam', allRules);
+
     // Add removeparam rules to dynamic ruleset without affecting rules
     // outside removeparam rules realm.
-    const newRuleMap = new Map(newRules.map(rule => [ rule.id, rule ]));
+    const newRuleMap = new Map(validatedRules.map(rule => [ rule.id, rule ]));
     const addRules = [];
     const removeRuleIds = [];
 
@@ -274,21 +284,23 @@ async function updateRedirectRules() {
     const redirectRulesets = await Promise.all(toFetch);
 
     // Redirect rules can only be enforced with omnipotence
-    const newRules = [];
+    const allRules = [];
     if ( hasOmnipotence ) {
         let redirectRuleId = REDIRECT_REALM_START;
         for ( const rules of redirectRulesets ) {
             if ( Array.isArray(rules) === false ) { continue; }
             for ( const rule of rules ) {
                 rule.id = redirectRuleId++;
-                newRules.push(rule);
+                allRules.push(rule);
             }
         }
     }
 
+    const validatedRules = await pruneInvalidRegexRules('redirect', allRules);
+
     // Add redirect rules to dynamic ruleset without affecting rules
     // outside redirect rules realm.
-    const newRuleMap = new Map(newRules.map(rule => [ rule.id, rule ]));
+    const newRuleMap = new Map(validatedRules.map(rule => [ rule.id, rule ]));
     const addRules = [];
     const removeRuleIds = [];
 
@@ -346,21 +358,23 @@ async function updateModifyHeadersRules() {
     const rulesets = await Promise.all(toFetch);
 
     // Redirect rules can only be enforced with omnipotence
-    const newRules = [];
+    const allRules = [];
     if ( hasOmnipotence ) {
         let ruleId = MODIFYHEADERS_REALM_START;
         for ( const rules of rulesets ) {
             if ( Array.isArray(rules) === false ) { continue; }
             for ( const rule of rules ) {
                 rule.id = ruleId++;
-                newRules.push(rule);
+                allRules.push(rule);
             }
         }
     }
 
+    const validatedRules = await pruneInvalidRegexRules('modify-headers', allRules);
+
     // Add modifyHeaders rules to dynamic ruleset without affecting rules
     // outside modifyHeaders realm.
-    const newRuleMap = new Map(newRules.map(rule => [ rule.id, rule ]));
+    const newRuleMap = new Map(validatedRules.map(rule => [ rule.id, rule ]));
     const addRules = [];
     const removeRuleIds = [];
 
