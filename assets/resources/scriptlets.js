@@ -1257,6 +1257,7 @@ function jsonPruneFetchResponse(
     const logLevel = shouldLog({ log: rawPrunePaths === '' || extraArgs.log, });
     const log = logLevel ? ((...args) => { safe.uboLog(...args); }) : (( ) => { }); 
     const propNeedles = parsePropertiesToMatch(extraArgs.propsToMatch, 'url');
+    const stackNeedle = safe.initPattern(extraArgs.stackToMatch || '', { canNegate: true });
     const applyHandler = function(target, thisArg, args) {
         const fetchPromise = Reflect.apply(target, thisArg, args);
         if ( logLevel === true ) {
@@ -1289,7 +1290,7 @@ function jsonPruneFetchResponse(
                     objBefore,
                     rawPrunePaths,
                     rawNeedlePaths,
-                    { matchAll: true },
+                    stackNeedle,
                     extraArgs
                 );
                 if ( typeof objAfter !== 'object' ) { return responseBefore; }
@@ -1342,6 +1343,7 @@ function jsonPruneXhrResponse(
     const logLevel = shouldLog({ log: rawPrunePaths === '' || extraArgs.log, });
     const log = logLevel ? ((...args) => { safe.uboLog(...args); }) : (( ) => { }); 
     const propNeedles = parsePropertiesToMatch(extraArgs.propsToMatch, 'url');
+    const stackNeedle = safe.initPattern(extraArgs.stackToMatch || '', { canNegate: true });
     self.XMLHttpRequest = class extends self.XMLHttpRequest {
         open(method, url, ...args) {
             const xhrDetails = { method, url };
@@ -1389,7 +1391,7 @@ function jsonPruneXhrResponse(
                 objBefore,
                 rawPrunePaths,
                 rawNeedlePaths,
-                { matchAll: true },
+                stackNeedle,
                 extraArgs
             );
             let outerResponse;
