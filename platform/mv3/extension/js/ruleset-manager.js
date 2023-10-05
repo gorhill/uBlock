@@ -185,7 +185,9 @@ async function updateRegexRules() {
         ubolLog(`Add ${addRules.length} DNR regex rules`);
     }
 
-    return dnr.updateDynamicRules({ addRules, removeRuleIds });
+    return dnr.updateDynamicRules({ addRules, removeRuleIds }).catch(reason => {
+        console.error(`updateRegexRules() / ${reason}`);
+    });
 }
 
 /******************************************************************************/
@@ -259,7 +261,9 @@ async function updateRemoveparamRules() {
         ubolLog(`Add ${addRules.length} DNR removeparam rules`);
     }
 
-    return dnr.updateDynamicRules({ addRules, removeRuleIds });
+    return dnr.updateDynamicRules({ addRules, removeRuleIds }).catch(reason => {
+        console.error(`updateRemoveparamRules() / ${reason}`);
+    });
 }
 
 /******************************************************************************/
@@ -333,7 +337,9 @@ async function updateRedirectRules() {
         ubolLog(`Add ${addRules.length} DNR redirect rules`);
     }
 
-    return dnr.updateDynamicRules({ addRules, removeRuleIds });
+    return dnr.updateDynamicRules({ addRules, removeRuleIds }).catch(reason => {
+        console.error(`updateRedirectRules() / ${reason}`);
+    });
 }
 
 /******************************************************************************/
@@ -407,7 +413,9 @@ async function updateModifyHeadersRules() {
         ubolLog(`Add ${addRules.length} DNR modifyHeaders rules`);
     }
 
-    return dnr.updateDynamicRules({ addRules, removeRuleIds });
+    return dnr.updateDynamicRules({ addRules, removeRuleIds }).catch(reason => {
+        console.error(`updateModifyHeadersRules() / ${reason}`);
+    });
 }
 
 /******************************************************************************/
