@@ -52,6 +52,7 @@ function safeSelf() {
         'RegExp': self.RegExp,
         'RegExp_test': self.RegExp.prototype.test,
         'RegExp_exec': self.RegExp.prototype.exec,
+        'Request_clone': self.Request.prototype.clone,
         'XMLHttpRequest': self.XMLHttpRequest,
         'addEventListener': self.EventTarget.prototype.addEventListener,
         'removeEventListener': self.EventTarget.prototype.removeEventListener,
@@ -937,6 +938,188 @@ function matchObjectProperties(propNeedles, ...objs) {
     return true;
 }
 
+/******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'json-prune-fetch-response.fn',
+    fn: jsonPruneFetchResponseFn,
+    dependencies: [
+        'match-object-properties.fn',
+        'object-prune.fn',
+        'parse-properties-to-match.fn',
+        'safe-self.fn',
+        'should-log.fn',
+    ],
+});
+function jsonPruneFetchResponseFn(
+    rawPrunePaths = '',
+    rawNeedlePaths = ''
+) {
+    const safe = safeSelf();
+    const extraArgs = safe.getExtraArgs(Array.from(arguments), 2);
+    const logLevel = shouldLog({ log: rawPrunePaths === '' || extraArgs.log, });
+    const log = logLevel ? ((...args) => { safe.uboLog(...args); }) : (( ) => { }); 
+    const propNeedles = parsePropertiesToMatch(extraArgs.propsToMatch, 'url');
+    const stackNeedle = safe.initPattern(extraArgs.stackToMatch || '', { canNegate: true });
+    const applyHandler = function(target, thisArg, args) {
+        const fetchPromise = Reflect.apply(target, thisArg, args);
+        if ( logLevel === true ) {
+            log('json-prune-fetch-response:', JSON.stringify(Array.from(args)).slice(1,-1));
+        }
+        if ( rawPrunePaths === '' ) { return fetchPromise; }
+        let outcome = 'match';
+        if ( propNeedles.size !== 0 ) {
+            const objs = [ args[0] instanceof Object ? args[0] : { url: args[0] } ];
+            if ( extraArgs.version === 2 && objs[0] instanceof Request ) {
+                try { objs[0] = safe.Request_clone.call(objs[0]); } catch(ex) {}
+            }
+            if ( args[1] instanceof Object ) {
+                objs.push(args[1]);
+            }
+            if ( matchObjectProperties(propNeedles, ...objs) === false ) {
+                outcome = 'nomatch';
+            }
+            if ( outcome === logLevel || logLevel === 'all' ) {
+                log(
+                    `json-prune-fetch-response (${outcome})`,
+                    `\n\tfetchPropsToMatch: ${JSON.stringify(Array.from(propNeedles)).slice(1,-1)}`,
+                    '\n\tprops:', ...args,
+                );
+            }
+        }
+        if ( outcome === 'nomatch' ) { return fetchPromise; }
+        return fetchPromise.then(responseBefore => {
+            const response = responseBefore.clone();
+            return response.json().then(objBefore => {
+                if ( typeof objBefore !== 'object' ) { return responseBefore; }
+                const objAfter = objectPrune(
+                    objBefore,
+                    rawPrunePaths,
+                    rawNeedlePaths,
+                    stackNeedle,
+                    extraArgs
+                );
+                if ( typeof objAfter !== 'object' ) { return responseBefore; }
+                const responseAfter = Response.json(objAfter, {
+                    status: responseBefore.status,
+                    statusText: responseBefore.statusText,
+                    headers: responseBefore.headers,
+                });
+                Object.defineProperties(responseAfter, {
+                    ok: { value: responseBefore.ok },
+                    redirected: { value: responseBefore.redirected },
+                    type: { value: responseBefore.type },
+                    url: { value: responseBefore.url },
+                });
+                return responseAfter;
+            }).catch(reason => {
+                log('json-prune-fetch-response:', reason);
+                return responseBefore;
+            });
+        }).catch(reason => {
+            log('json-prune-fetch-response:', reason);
+            return fetchPromise;
+        });
+    };
+    self.fetch = new Proxy(self.fetch, {
+        apply: applyHandler
+    });
+}
+
+/******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'replace-fetch-response.fn',
+    fn: replaceFetchResponseFn,
+    dependencies: [
+        'match-object-properties.fn',
+        'parse-properties-to-match.fn',
+        'safe-self.fn',
+        'should-log.fn',
+    ],
+});
+function replaceFetchResponseFn(
+    trusted = false,
+    pattern = '',
+    replacement = '',
+    propsToMatch = ''
+) {
+    if ( trusted !== true ) { return; }
+    const safe = safeSelf();
+    const extraArgs = safe.getExtraArgs(Array.from(arguments), 4);
+    const logLevel = shouldLog({
+        log: pattern === '' || extraArgs.log,
+    });
+    const log = logLevel ? ((...args) => { safe.uboLog(...args); }) : (( ) => { }); 
+    if ( pattern === '*' ) { pattern = '.*'; }
+    const rePattern = safe.patternToRegex(pattern);
+    const propNeedles = parsePropertiesToMatch(propsToMatch, 'url');
+    self.fetch = new Proxy(self.fetch, {
+        apply: function(target, thisArg, args) {
+            if ( logLevel === true ) {
+                log('replace-fetch-response:', JSON.stringify(Array.from(args)).slice(1,-1));
+            }
+            const fetchPromise = Reflect.apply(target, thisArg, args);
+            if ( pattern === '' ) { return fetchPromise; }
+            let outcome = 'match';
+            if ( propNeedles.size !== 0 ) {
+                const objs = [ args[0] instanceof Object ? args[0] : { url: args[0] } ];
+                if ( extraArgs.version === 2 && objs[0] instanceof Request ) {
+                    try { objs[0] = safe.Request_clone.call(objs[0]); } catch(ex) {}
+                }
+                if ( args[1] instanceof Object ) {
+                    objs.push(args[1]);
+                }
+                if ( matchObjectProperties(propNeedles, ...objs) === false ) {
+                    outcome = 'nomatch';
+                }
+                if ( outcome === logLevel || logLevel === 'all' ) {
+                    log(
+                        `replace-fetch-response (${outcome})`,
+                        `\n\tpropsToMatch: ${JSON.stringify(Array.from(propNeedles)).slice(1,-1)}`,
+                        '\n\tprops:', ...args,
+                    );
+                }
+            }
+            if ( outcome === 'nomatch' ) { return fetchPromise; }
+            return fetchPromise.then(responseBefore => {
+                const response = responseBefore.clone();
+                return response.text().then(textBefore => {
+                    const textAfter = textBefore.replace(rePattern, replacement);
+                    const outcome = textAfter !== textBefore ? 'match' : 'nomatch';
+                    if ( outcome === logLevel || logLevel === 'all' ) {
+                        log(
+                            `replace-fetch-response (${outcome})`,
+                            `\n\tpattern: ${pattern}`, 
+                            `\n\treplacement: ${replacement}`,
+                        );
+                    }
+                    if ( outcome === 'nomatch' ) { return responseBefore; }
+                    const responseAfter = new Response(textAfter, {
+                        status: responseBefore.status,
+                        statusText: responseBefore.statusText,
+                        headers: responseBefore.headers,
+                    });
+                    Object.defineProperties(responseAfter, {
+                        ok: { value: responseBefore.ok },
+                        redirected: { value: responseBefore.redirected },
+                        type: { value: responseBefore.type },
+                        url: { value: responseBefore.url },
+                    });
+                    return responseAfter;
+                }).catch(reason => {
+                    log('replace-fetch-response:', reason);
+                    return responseBefore;
+                });
+            }).catch(reason => {
+                log('replace-fetch-response:', reason);
+                return fetchPromise;
+            });
+        }
+    });
+}
+
+
 /*******************************************************************************
 
     Injectable scriptlets
@@ -1241,6 +1424,7 @@ builtinScriptlets.push({
     name: 'json-prune-fetch-response.js',
     fn: jsonPruneFetchResponse,
     dependencies: [
+        'json-prune-fetch-response.fn',
         'match-object-properties.fn',
         'object-prune.fn',
         'parse-properties-to-match.fn',
@@ -1248,76 +1432,8 @@ builtinScriptlets.push({
         'should-log.fn',
     ],
 });
-function jsonPruneFetchResponse(
-    rawPrunePaths = '',
-    rawNeedlePaths = ''
-) {
-    const safe = safeSelf();
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 2);
-    const logLevel = shouldLog({ log: rawPrunePaths === '' || extraArgs.log, });
-    const log = logLevel ? ((...args) => { safe.uboLog(...args); }) : (( ) => { }); 
-    const propNeedles = parsePropertiesToMatch(extraArgs.propsToMatch, 'url');
-    const stackNeedle = safe.initPattern(extraArgs.stackToMatch || '', { canNegate: true });
-    const applyHandler = function(target, thisArg, args) {
-        const fetchPromise = Reflect.apply(target, thisArg, args);
-        if ( logLevel === true ) {
-            log('json-prune-fetch-response:', JSON.stringify(Array.from(args)).slice(1,-1));
-        }
-        if ( rawPrunePaths === '' ) { return fetchPromise; }
-        let outcome = 'match';
-        if ( propNeedles.size !== 0 ) {
-            const objs = [ args[0] instanceof Object ? args[0] : { url: args[0] } ];
-            if ( args[1] instanceof Object ) {
-                objs.push(args[1]);
-            }
-            if ( matchObjectProperties(propNeedles, ...objs) === false ) {
-                outcome = 'nomatch';
-            }
-            if ( outcome === logLevel || logLevel === 'all' ) {
-                log(
-                    `json-prune-fetch-response (${outcome})`,
-                    `\n\tfetchPropsToMatch: ${JSON.stringify(Array.from(propNeedles)).slice(1,-1)}`,
-                    '\n\tprops:', ...args,
-                );
-            }
-        }
-        if ( outcome === 'nomatch' ) { return fetchPromise; }
-        return fetchPromise.then(responseBefore => {
-            const response = responseBefore.clone();
-            return response.json().then(objBefore => {
-                if ( typeof objBefore !== 'object' ) { return responseBefore; }
-                const objAfter = objectPrune(
-                    objBefore,
-                    rawPrunePaths,
-                    rawNeedlePaths,
-                    stackNeedle,
-                    extraArgs
-                );
-                if ( typeof objAfter !== 'object' ) { return responseBefore; }
-                const responseAfter = Response.json(objAfter, {
-                    status: responseBefore.status,
-                    statusText: responseBefore.statusText,
-                    headers: responseBefore.headers,
-                });
-                Object.defineProperties(responseAfter, {
-                    ok: { value: responseBefore.ok },
-                    redirected: { value: responseBefore.redirected },
-                    type: { value: responseBefore.type },
-                    url: { value: responseBefore.url },
-                });
-                return responseAfter;
-            }).catch(reason => {
-                log('json-prune-fetch-response:', reason);
-                return responseBefore;
-            });
-        }).catch(reason => {
-            log('json-prune-fetch-response:', reason);
-            return fetchPromise;
-        });
-    };
-    self.fetch = new Proxy(self.fetch, {
-        apply: applyHandler
-    });
+function jsonPruneFetchResponse(...args) {
+    jsonPruneFetchResponseFn(...args);
 }
 
 /******************************************************************************/
@@ -3661,86 +3777,11 @@ builtinScriptlets.push({
     requiresTrust: true,
     fn: trustedReplaceFetchResponse,
     dependencies: [
-        'match-object-properties.fn',
-        'parse-properties-to-match.fn',
-        'safe-self.fn',
-        'should-log.fn',
+        'replace-fetch-response.fn',
     ],
 });
-function trustedReplaceFetchResponse(
-    pattern = '',
-    replacement = '',
-    propsToMatch = ''
-) {
-    const safe = safeSelf();
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
-    const logLevel = shouldLog({
-        log: pattern === '' || extraArgs.log,
-    });
-    const log = logLevel ? ((...args) => { safe.uboLog(...args); }) : (( ) => { }); 
-    if ( pattern === '*' ) { pattern = '.*'; }
-    const rePattern = safe.patternToRegex(pattern);
-    const propNeedles = parsePropertiesToMatch(propsToMatch, 'url');
-    self.fetch = new Proxy(self.fetch, {
-        apply: function(target, thisArg, args) {
-            if ( logLevel === true ) {
-                log('trusted-replace-fetch-response:', JSON.stringify(Array.from(args)).slice(1,-1));
-            }
-            const fetchPromise = Reflect.apply(target, thisArg, args);
-            if ( pattern === '' ) { return fetchPromise; }
-            let outcome = 'match';
-            if ( propNeedles.size !== 0 ) {
-                const objs = [ args[0] instanceof Object ? args[0] : { url: args[0] } ];
-                if ( args[1] instanceof Object ) {
-                    objs.push(args[1]);
-                }
-                if ( matchObjectProperties(propNeedles, ...objs) === false ) {
-                    outcome = 'nomatch';
-                }
-                if ( outcome === logLevel || logLevel === 'all' ) {
-                    log(
-                        `trusted-replace-fetch-response (${outcome})`,
-                        `\n\tpropsToMatch: ${JSON.stringify(Array.from(propNeedles)).slice(1,-1)}`,
-                        '\n\tprops:', ...args,
-                    );
-                }
-            }
-            if ( outcome === 'nomatch' ) { return fetchPromise; }
-            return fetchPromise.then(responseBefore => {
-                const response = responseBefore.clone();
-                return response.text().then(textBefore => {
-                    const textAfter = textBefore.replace(rePattern, replacement);
-                    const outcome = textAfter !== textBefore ? 'match' : 'nomatch';
-                    if ( outcome === logLevel || logLevel === 'all' ) {
-                        log(
-                            `trusted-replace-fetch-response (${outcome})`,
-                            `\n\tpattern: ${pattern}`, 
-                            `\n\treplacement: ${replacement}`,
-                        );
-                    }
-                    if ( outcome === 'nomatch' ) { return responseBefore; }
-                    const responseAfter = new Response(textAfter, {
-                        status: responseBefore.status,
-                        statusText: responseBefore.statusText,
-                        headers: responseBefore.headers,
-                    });
-                    Object.defineProperties(responseAfter, {
-                        ok: { value: responseBefore.ok },
-                        redirected: { value: responseBefore.redirected },
-                        type: { value: responseBefore.type },
-                        url: { value: responseBefore.url },
-                    });
-                    return responseAfter;
-                }).catch(reason => {
-                    log('trusted-replace-fetch-response:', reason);
-                    return responseBefore;
-                });
-            }).catch(reason => {
-                log('trusted-replace-fetch-response:', reason);
-                return fetchPromise;
-            });
-        }
-    });
+function trustedReplaceFetchResponse(...args) {
+    replaceFetchResponseFn(true, ...args);
 }
 
 /******************************************************************************/
