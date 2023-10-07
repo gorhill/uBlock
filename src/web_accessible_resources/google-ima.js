@@ -7,6 +7,8 @@
  * - Avoid JS syntax not supported by older browser versions
  * - Add missing shim event
  * - Modified to avoid jshint warnings as per uBO's config
+ * - Added `OmidVerificationVendor` to `ima`
+ * - Have `AdError.getInnerError()` return `null`
  * 
  * Related issue:
  * - https://github.com/uBlockOrigin/uBlock-issues/issues/2158
@@ -228,7 +230,7 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
     };
   })();
 
-  let ima = {};
+  const ima = {};
 
   class AdDisplayContainer {
     destroy() {}
@@ -613,7 +615,9 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
     getErrorCode() {
       return this.errorCode;
     }
-    getInnerError() {}
+    getInnerError() {
+        return null;
+    }
     getMessage() {
       return this.message;
     }
@@ -789,6 +793,12 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
       FULL: "full",
       LIMITED: "limited",
     },
+    OmidVerificationVendor: new Proxy({}, {
+        get(target, prop) {
+            if ( typeof prop === 'number' ) { return ''; }
+            return 0;
+        }
+    }),
     settings: new ImaSdkSettings(),
     UiElements: {
       AD_ATTRIBUTION: "adAttribution",
