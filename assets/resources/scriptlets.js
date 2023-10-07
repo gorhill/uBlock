@@ -1425,11 +1425,6 @@ builtinScriptlets.push({
     fn: jsonPruneFetchResponse,
     dependencies: [
         'json-prune-fetch-response.fn',
-        'match-object-properties.fn',
-        'object-prune.fn',
-        'parse-properties-to-match.fn',
-        'safe-self.fn',
-        'should-log.fn',
     ],
 });
 function jsonPruneFetchResponse(...args) {
