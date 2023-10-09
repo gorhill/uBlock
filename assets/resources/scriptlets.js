@@ -48,6 +48,8 @@ function safeSelf() {
     const self = globalThis;
     const safe = {
         'Error': self.Error,
+        'Math_floor': Math.floor,
+        'Math_random': Math.random,
         'Object_defineProperty': Object.defineProperty.bind(Object),
         'RegExp': self.RegExp,
         'RegExp_test': self.RegExp.prototype.test,
@@ -133,11 +135,15 @@ function safeSelf() {
 builtinScriptlets.push({
     name: 'get-exception-token.fn',
     fn: getExceptionToken,
+    dependencies: [
+        'safe-self.fn',
+    ],
 });
 function getExceptionToken() {
+    const safe = safeSelf();
     const token =
         String.fromCharCode(Date.now() % 26 + 97) +
-        Math.floor(Math.random() * 982451653 + 982451653).toString(36);
+        safe.Math_floor(safe.Math_random() * 982451653 + 982451653).toString(36);
     const oe = self.onerror;
     self.onerror = function(msg, ...args) {
         if ( typeof msg === 'string' && msg.includes(token) ) { return true; }
@@ -2207,7 +2213,7 @@ function noXhrIf(
     const warOrigin = scriptletGlobals.get('warOrigin');
     const generateRandomString = len => {
             let s = '';
-            do { s += Math.random().toString(36).slice(2); }
+            do { s += safe.Math_random().toString(36).slice(2); }
             while ( s.length < 10 );
             return s.slice(0, len);
     };
