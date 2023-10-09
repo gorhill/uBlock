@@ -240,11 +240,14 @@ const onMessage = function(request, sender, callback) {
             );
             out.push(`+ Unsupported filters (${bad.length}): ${JSON.stringify(bad, replacer, 2)}`);
             out.push(`+ generichide exclusions (${network.generichideExclusions.length}): ${JSON.stringify(network.generichideExclusions, replacer, 2)}`);
-            out.push(`+ Cosmetic filters: ${result.specificCosmetic.size}`);
-            for ( const details of result.specificCosmetic ) {
-                out.push(`    ${JSON.stringify(details)}`);
+            if ( result.specificCosmetic ) {
+                out.push(`+ Cosmetic filters: ${result.specificCosmetic.size}`);
+                for ( const details of result.specificCosmetic ) {
+                    out.push(`    ${JSON.stringify(details)}`);
+                }
+            } else {
+                out.push('  Cosmetic filters: 0');
             }
-
             callback(out.join('\n'));
         });
         return;

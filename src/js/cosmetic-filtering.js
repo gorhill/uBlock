@@ -961,9 +961,8 @@ FilterContainer.prototype.dump = function() {
         lowlyGenerics.push(...selectors.split(',\n'));
     }
     lowlyGenerics.sort();
-    const highlyGenerics = Array.from(this.highlyGeneric.simple.dict);
-    highlyGenerics.push(Array.from(this.highlyGeneric.complex.dict));
-    highlyGenerics.sort();
+    const highlyGenerics = Array.from(this.highlyGeneric.simple.dict).sort();
+    highlyGenerics.push(...Array.from(this.highlyGeneric.complex.dict).sort());
     return [
         'Cosmetic Filtering Engine internals:',
         `specific: ${this.specificFilters.size}`,
