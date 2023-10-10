@@ -2643,39 +2643,43 @@ class FilterBucket extends FilterCollection {
     }
 
     static optimize(idata, optimizeBits = 0b11) {
-        if ( filterData[idata+2] >= 3 && (optimizeBits & 0b01) !== 0 ) {
-            const iplaintrie = this.optimizePatternTests(idata);
-            if ( iplaintrie !== 0 ) {
-                const icollection = filterData[idata+1];
-                const i = filterData[icollection+1];
-                if ( i === 0 ) { return iplaintrie; }
-                this.unshift(idata, iplaintrie);
+        if ( (optimizeBits & 0b01) !== 0 ) {
+            if ( filterData[idata+2] >= 3 ) {
+                const iplaintrie = this.optimizePatternTests(idata);
+                if ( iplaintrie !== 0 ) {
+                    const icollection = filterData[idata+1];
+                    const i = filterData[icollection+1];
+                    if ( i === 0 ) { return iplaintrie; }
+                    this.unshift(idata, iplaintrie);
+                }
             }
         }
-        if ( filterData[idata+2] >= 5 && (optimizeBits & 0b10) !== 0 ) {
-            const ioptimized = this.optimizeMatch(
-                idata,
-                FilterBucketIfOriginHits,
-                5
-            );
-            if ( ioptimized !== 0 ) {
-                const icollection = filterData[idata+1];
-                const i = filterData[icollection+1];
-                if ( i === 0 ) { return ioptimized; }
-                this.unshift(idata, ioptimized);
+        if ( (optimizeBits & 0b10) !== 0 ) {
+            if ( filterData[idata+2] >= 5 ) {
+                const ioptimized = this.optimizeMatch(
+                    idata,
+                    FilterBucketIfOriginHits,
+                    5
+                );
+                if ( ioptimized !== 0 ) {
+                    const icollection = filterData[idata+1];
+                    const i = filterData[icollection+1];
+                    if ( i === 0 ) { return ioptimized; }
+                    this.unshift(idata, ioptimized);
+                }
             }
-        }
-        if ( filterData[idata+2] >= 5 && (optimizeBits & 0b10) !== 0 ) {
-            const ioptimized = this.optimizeMatch(
-                idata,
-                FilterBucketIfRegexHits,
-                5
-            );
-            if ( ioptimized !== 0 ) {
-                const icollection = filterData[idata+1];
-                const i = filterData[icollection+1];
-                if ( i === 0 ) { return ioptimized; }
-                this.unshift(idata, ioptimized);
+            if ( filterData[idata+2] >= 5 ) {
+                const ioptimized = this.optimizeMatch(
+                    idata,
+                    FilterBucketIfRegexHits,
+                    5
+                );
+                if ( ioptimized !== 0 ) {
+                    const icollection = filterData[idata+1];
+                    const i = filterData[icollection+1];
+                    if ( i === 0 ) { return ioptimized; }
+                    this.unshift(idata, ioptimized);
+                }
             }
         }
         return 0;
