@@ -148,7 +148,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupRegions": {
-    "message": "Regions, languages",
+    "message": "Wilayah, bahasa",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "1pFormatHint": {
@@ -184,7 +184,7 @@
     "description": "The default filename to use for import/export purpose"
   },
   "aboutChangelog": {
-    "message": "Changelog",
+    "message": "Log perubahan",
     "description": ""
   },
   "aboutCode": {
@@ -208,7 +208,7 @@
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "External dependencies (GPLv3-compatible):",
+    "message": "Pergantungan luaran (serasi dengan GPLv3):",
     "description": "Shown in the About pane"
   },
   "genericSubmit": {
@@ -216,7 +216,7 @@
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Apply changes",
+    "message": "Terapkan perubahan",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
@@ -244,15 +244,15 @@
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
-    "message": "basic",
+    "message": "asas",
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
-    "message": "optimal",
+    "message": "optima",
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
-    "message": "complete",
+    "message": "selesai",
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {

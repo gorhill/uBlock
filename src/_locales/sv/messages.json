@@ -356,7 +356,7 @@
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Inaktivera förhandshämtning (för att förhindra anslutning av blockerade nätverksförfrågningar)",
+    "message": "Inaktivera förhämtning (för att förhindra anslutning av blockerade nätverksförfrågningar)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {

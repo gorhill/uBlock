@@ -204,7 +204,7 @@
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
-    "message": "Seznam filtrů",
+    "message": "Seznamy filtrů",
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
