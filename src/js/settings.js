@@ -30,11 +30,23 @@ import { setAccentColor, setTheme } from './theme.js';
 const handleImportFilePicker = function() {
     const file = this.files[0];
     if ( file === undefined || file.name === '' ) { return; }
-    if ( file.type.indexOf('text') !== 0 ) { return; }
+
+    const reportError = ( ) => {
+        window.alert(i18n$('aboutRestoreDataError'));
+    };
+
+    const expectedFileTypes = [
+        'text/plain',
+        'application/json',
+    ];
+    if ( expectedFileTypes.includes(file.type) === false ) {
+        return reportError();
+    }
 
     const filename = file.name;
+    const fr = new FileReader();
 
-    const fileReaderOnLoadHandler = function() {
+    fr.onload = function() {
         let userData;
         try {
             userData = JSON.parse(this.result);
@@ -61,8 +73,7 @@ const handleImportFilePicker = function() {
             userData = undefined;
         }
         if ( userData === undefined ) {
-            window.alert(i18n$('aboutRestoreDataError'));
-            return;
+            return reportError();
         }
         const time = new Date(userData.timeStamp);
         const msg = i18n$('aboutRestoreDataConfirm')
@@ -76,8 +87,6 @@ const handleImportFilePicker = function() {
         });
     };
 
-    const fr = new FileReader();
-    fr.onload = fileReaderOnLoadHandler;
     fr.readAsText(file);
 };
 
