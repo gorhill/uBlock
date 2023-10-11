@@ -17,6 +17,9 @@
     "gecko": {
       "id": "uBOLite@raymondhill.net",
       "strict_min_version": "114.0"
+    },
+    "gecko_android": {
+      "strict_min_version": "114.0"
     }
   },
   "declarative_net_request": {
