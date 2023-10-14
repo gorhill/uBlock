@@ -100,11 +100,15 @@ function safeSelf() {
             if ( details.matchAll ) { return true; }
             return this.RegExp_test.call(details.re, haystack) === details.expect;
         },
-        patternToRegex(pattern, flags = undefined) {
+        patternToRegex(pattern, flags = undefined, verbatim = false) {
             if ( pattern === '' ) { return /^/; }
             const match = /^\/(.+)\/([gimsu]*)$/.exec(pattern);
             if ( match === null ) {
-                return new RegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), flags);
+                const reStr = pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                if ( verbatim ) {
+                    return new RegExp(`^${reStr}$`, flags);
+                }
+                return new RegExp(reStr, flags);
             }
             try {
                 return new RegExp(match[1], match[2] || flags);
@@ -552,7 +556,7 @@ function replaceNodeTextCore(
     replacement = ''
 ) {
     const safe = safeSelf();
-    const reNodeName = safe.patternToRegex(nodeName, 'i');
+    const reNodeName = safe.patternToRegex(nodeName, 'i', true);
     const rePattern = safe.patternToRegex(pattern, 'gms');
     const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
     const shouldLog = scriptletGlobals.has('canDebug') && extraArgs.log || 0;
