@@ -63,6 +63,7 @@ function safeSelf() {
         'jsonStringify': self.JSON.stringify.bind(self.JSON),
         'log': console.log.bind(console),
         uboLog(...args) {
+            if ( scriptletGlobals.has('canDebug') === false ) { return; }
             if ( args.length === 0 ) { return; }
             if ( `${args[0]}` === '' ) { return; }
             this.log('[uBO]', ...args);
@@ -925,7 +926,7 @@ function matchObjectProperties(propNeedles, ...objs) {
     }
     const safe = safeSelf();
     const haystack = {};
-    const props = Array.from(propNeedles.keys());
+    const props = [ ...propNeedles.keys() ];
     for ( const obj of objs ) {
         if ( obj instanceof Object === false ) { continue; }
         matchObjectProperties.extractProperties(obj, haystack, props);
@@ -977,7 +978,11 @@ function jsonPruneFetchResponseFn(
         if ( propNeedles.size !== 0 ) {
             const objs = [ args[0] instanceof Object ? args[0] : { url: args[0] } ];
             if ( extraArgs.version === 2 && objs[0] instanceof Request ) {
-                try { objs[0] = safe.Request_clone.call(objs[0]); } catch(ex) {}
+                try {
+                    objs[0] = safe.Request_clone.call(objs[0]);
+                } catch(ex) {
+                    safe.uboLog(ex);
+                }
             }
             if ( args[1] instanceof Object ) {
                 objs.push(args[1]);
@@ -989,7 +994,7 @@ function jsonPruneFetchResponseFn(
                 log(
                     `json-prune-fetch-response (${outcome})`,
                     `\n\tfetchPropsToMatch: ${JSON.stringify(Array.from(propNeedles)).slice(1,-1)}`,
-                    '\n\tprops:', ...args,
+                    '\n\tprops:', ...objs,
                 );
             }
         }
