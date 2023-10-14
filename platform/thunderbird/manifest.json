@@ -49,6 +49,18 @@
       ],
       "run_at": "document_idle",
       "all_frames": false
+    },
+    {
+      "matches": [
+        "https://github.com/uBlockOrigin/*",
+        "https://ublockorigin.github.io/*",
+        "https://*.reddit.com/r/uBlockOrigin/*"
+      ],
+      "js": [
+        "/js/scriptlets/updater.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
     }
   ],
   "default_locale": "en",
