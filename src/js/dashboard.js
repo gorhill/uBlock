@@ -149,10 +149,18 @@ if ( self.location.hash.slice(1) === 'no-dashboard.html' ) {
         dom.on('.tabButton', 'click', onTabClickHandler);
 
         // https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
-        dom.on(window, 'beforeunload', ( ) => {
+        dom.on(self, 'beforeunload', ( ) => {
             if ( discardUnsavedData(true) ) { return; }
             event.preventDefault();
             event.returnValue = '';
         });
+
+        // https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
+        dom.on(self, 'hashchange', ( ) => {
+            const pane = self.location.hash.slice(1);
+            if ( pane === '' ) { return; }
+            loadDashboardPanel(pane);
+        });
+
     }
 })();

@@ -29,6 +29,7 @@ import { dom, qs$, qsa$ } from './dom.js';
 const lastUpdateTemplateString = i18n$('3pLastUpdate');
 const obsoleteTemplateString = i18n$('3pExternalListObsolete');
 const reValidExternalList = /^[a-z-]+:\/\/(?:\S+\/\S*|\/\S+)/m;
+const recentlyUpdated = 1 * 60 * 60 * 1000; // 1 hour
 
 let listsetDetails = {};
 
@@ -154,6 +155,8 @@ const renderFilterLists = ( ) => {
         if ( asset.cached === true ) {
             dom.cl.add(listEntry, 'cached');
             dom.attr(qs$(listEntry, ':scope > .detailbar .status.cache'), 'title', lastUpdateString);
+            const timeSinceLastUpdate = Date.now() - asset.writeTime;
+            dom.cl.toggle(listEntry, 'recent', timeSinceLastUpdate < recentlyUpdated);
         } else {
             dom.cl.remove(listEntry, 'cached');
         }
@@ -308,7 +311,7 @@ const updateAssetStatus = details => {
         dom.attr(qs$(listEntry, '.status.cache'), 'title',
             lastUpdateTemplateString.replace('{{ago}}', i18n.renderElapsedTimeToString(Date.now()))
         );
-        
+        dom.cl.add(listEntry, 'recent');
     }
     updateAncestorListNodes(listEntry, ancestor => {
         updateListNode(ancestor);
@@ -413,7 +416,8 @@ const updateListNode = listNode => {
     let totalFilterCount = 0;
     let isCached = false;
     let isObsolete = false;
-    let writeTime = 0;
+    let latestWriteTime = 0;
+    let oldestWriteTime = Number.MAX_SAFE_INTEGER;
     for ( const listLeaf of checkedListLeaves ) {
         const listkey = listLeaf.dataset.key;
         const listDetails = listsetDetails.available[listkey];
@@ -422,7 +426,8 @@ const updateListNode = listNode => {
         const assetCache = listsetDetails.cache[listkey] || {};
         isCached = isCached || dom.cl.has(listLeaf, 'cached');
         isObsolete = isObsolete || dom.cl.has(listLeaf, 'obsolete');
-        writeTime = Math.max(writeTime, assetCache.writeTime || 0);
+        latestWriteTime = Math.max(latestWriteTime, assetCache.writeTime || 0);
+        oldestWriteTime = Math.min(oldestWriteTime, assetCache.writeTime || Number.MAX_SAFE_INTEGER);
     }
     dom.cl.toggle(listNode, 'checked', checkedListLeaves.length !== 0);
     dom.cl.toggle(qs$(listNode, ':scope > .detailbar .checkbox'),
@@ -449,8 +454,9 @@ const updateListNode = listNode => {
     dom.cl.toggle(listNode, 'obsolete', isObsolete);
     if ( isCached ) {
         dom.attr(qs$(listNode, ':scope > .detailbar .cache'), 'title',
-            lastUpdateTemplateString.replace('{{ago}}', i18n.renderElapsedTimeToString(writeTime))
+            lastUpdateTemplateString.replace('{{ago}}', i18n.renderElapsedTimeToString(latestWriteTime))
         );
+        dom.cl.toggle(listNode, 'recent', (Date.now() - oldestWriteTime) < recentlyUpdated);
     }
     if ( qs$(listNode, '.listEntry.isDefault') !== null ) {
         dom.cl.add(listNode, 'isDefault');

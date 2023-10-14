@@ -62,6 +62,18 @@
       ],
       "run_at": "document_idle",
       "all_frames": false
+    },
+    {
+      "matches": [
+        "https://github.com/uBlockOrigin/*",
+        "https://ublockorigin.github.io/*",
+        "https://*.reddit.com/r/uBlockOrigin/*"
+      ],
+      "js": [
+        "/js/scriptlets/updater.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
     }
   ],
   "content_security_policy": "script-src 'self'; object-src 'self'",

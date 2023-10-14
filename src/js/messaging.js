@@ -2057,6 +2057,21 @@ const onMessage = function(request, sender, callback) {
         });
         break;
 
+    case 'updateLists':
+        const listkeys = request.listkeys.split(',').filter(s => s !== '');
+        if ( listkeys.length === 0 ) { return; }
+        for ( const listkey of listkeys ) {
+            io.purge(listkey);
+            io.remove(`compiled/${listkey}`);
+        }
+        µb.scheduleAssetUpdater(0);
+        µb.openNewTab({
+            url: 'dashboard.html#3p-filters.html',
+            select: true,
+        });
+        io.updateStart({ delay: 100 });
+        break;
+
     default:
         return vAPI.messaging.UNHANDLED;
     }

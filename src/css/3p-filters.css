@@ -204,6 +204,10 @@ body.working #actions button {
 #lists .listEntry.checked.cached:not(.obsolete) > .detailbar .iconbar .cache {
     display: inline-flex;
     }
+#lists .listEntry.cached.recent:not(.obsolete) > .detailbar .iconbar .cache {
+    color: var(--dashboard-happy-green);
+        fill: var(--dashboard-happy-green);
+    }
 #lists .iconbar .obsolete {
     color: var(--info2-ink);
         fill: var(--info2-ink);

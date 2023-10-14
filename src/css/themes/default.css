@@ -35,6 +35,7 @@
     --green-40: 84 255 189;
     --green-50: 63 225 176;
     --green-60: 42 195 162;
+    --green-65: 21 165 149;
     --green-70: 0 135 135;
     --green-80: 0 94 94;
     --ink-10: 57 52 115;
@@ -238,6 +239,8 @@
     --dashboard-tab-active-ink-rgb: var(--primary-40);
     --dashboard-tab-focus-surface-rgb: var(--primary-90);
     --dashboard-highlight-surface-rgb: var(--primary-90);
+
+    --dashboard-happy-green: rgb(var(--green-65));
 
     /* popup panel */
     --popup-cell-cname-ink: #0054d7; /* h260 S:100 Luv:40 */;
