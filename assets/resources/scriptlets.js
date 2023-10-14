@@ -47,6 +47,7 @@ function safeSelf() {
     }
     const self = globalThis;
     const safe = {
+        'Array_from': Array.from,
         'Error': self.Error,
         'Math_floor': Math.floor,
         'Math_random': Math.random,
@@ -930,7 +931,7 @@ function matchObjectProperties(propNeedles, ...objs) {
     }
     const safe = safeSelf();
     const haystack = {};
-    const props = [ ...propNeedles.keys() ];
+    const props = safe.Array_from(propNeedles.keys());
     for ( const obj of objs ) {
         if ( obj instanceof Object === false ) { continue; }
         matchObjectProperties.extractProperties(obj, haystack, props);
