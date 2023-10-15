@@ -3982,7 +3982,7 @@ function trustedClickElement(
             selectorList.unshift(selector);
             return next(true);
         }
-            elem.click();
+        elem.click();
         tnext += clickDelay;
         next();
     };
