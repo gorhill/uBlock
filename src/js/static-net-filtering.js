@@ -5000,25 +5000,25 @@ FilterContainer.prototype.realmMatchString = function(
     let tokenHash = DOT_TOKEN_HASH;
     if (
         (ibucket00 !== 0) &&
-        (iunit = bucket00.get(tokenHash) || 0) !== 0 &&
+        (iunit = bucket00.get(DOT_TOKEN_HASH) || 0) !== 0 &&
         (filterMatch(iunit) === true)
     ) {
         catBits = catBits00;
     } else if (
         (ibucket01 !== 0) &&
-        (iunit = bucket01.get(tokenHash) || 0) !== 0 &&
+        (iunit = bucket01.get(DOT_TOKEN_HASH) || 0) !== 0 &&
         (filterMatch(iunit) === true)
     ) {
         catBits = catBits01;
     } else if (
         (ibucket10 !== 0) &&
-        (iunit = bucket10.get(tokenHash) || 0) !== 0 &&
+        (iunit = bucket10.get(DOT_TOKEN_HASH) || 0) !== 0 &&
         (filterMatch(iunit) === true)
     ) {
         catBits = catBits10;
     } else if (
         (ibucket11 !== 0) &&
-        (iunit = bucket11.get(tokenHash) || 0) !== 0 &&
+        (iunit = bucket11.get(DOT_TOKEN_HASH) || 0) !== 0 &&
         (filterMatch(iunit) === true)
     ) {
         catBits = catBits11;
@@ -5200,12 +5200,16 @@ FilterContainer.prototype.matchHeaders = function(fctxt, headers) {
     $httpHeaders.init(headers);
 
     let r = 0;
-    if ( this.realmMatchString(HEADERS | BlockImportant, typeBits, partyBits) ) {
+    if ( this.realmMatchString(HEADERS | BlockAction, typeBits, partyBits) ) {
         r = 1;
-    } else if ( this.realmMatchString(HEADERS | BlockAction, typeBits, partyBits) ) {
-        r = this.realmMatchString(HEADERS | AllowAction, typeBits, partyBits)
-            ? 2
-            : 1;
+    }
+    if ( r !== 0 && $isBlockImportant !== true ) {
+        if ( this.realmMatchString(HEADERS | AllowAction, typeBits, partyBits) ) {
+            r = 2;
+            if ( this.realmMatchString(HEADERS | BlockImportant, typeBits, partyBits) ) {
+                r = 1;
+            }
+        }
     }
 
     $httpHeaders.reset();

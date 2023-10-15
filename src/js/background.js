@@ -71,7 +71,6 @@ const hiddenSettingsDefault = {
     disableWebAssembly: false,
     extensionUpdateForceReload: false,
     filterAuthorMode: false,
-    filterOnHeaders: false,
     loggerPopupType: 'popup',
     manualUpdateAssetFetchPeriod: 500,
     modifyWebextFlavor: 'unset',

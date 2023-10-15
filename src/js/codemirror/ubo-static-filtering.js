@@ -40,15 +40,6 @@ let hintHelperRegistered = false;
 
 /******************************************************************************/
 
-let filterOnHeaders = false;
-
-CodeMirror.defineOption('filterOnHeaders', false, (cm, state) => {
-    filterOnHeaders = state;
-    self.dispatchEvent(new Event('filterOnHeaders'));
-});
-
-/******************************************************************************/
-
 CodeMirror.defineMode('ubo-static-filtering', function() {
     const astParser = new sfp.AstFilterParser({
         interactive: true,
@@ -213,10 +204,6 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
         }
         return '+';
     };
-
-    self.addEventListener('filterOnHeaders', ( ) => {
-        astParser.options.filterOnHeaders = filterOnHeaders;
-    });
 
     return {
         lineComment: '!',
@@ -989,10 +976,6 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
             return;
         }
     };
-
-    self.addEventListener('filterOnHeaders', ( ) => {
-        astParser.options.filterOnHeaders = filterOnHeaders;
-    });
 
     CodeMirror.defineInitHook(cm => {
         cm.on('changes', onChanges);

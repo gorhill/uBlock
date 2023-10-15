@@ -1600,7 +1600,6 @@ const onMessage = function(request, sender, callback) {
             response.preparseDirectiveHints =
                 sfp.utils.preparser.getHints();
             response.expertMode = µb.hiddenSettings.filterAuthorMode;
-            response.filterOnHeaders = µb.hiddenSettings.filterOnHeaders;
         }
         if ( request.hintUpdateToken !== µb.pageStoresToken ) {
             response.originHints = getOriginHints();

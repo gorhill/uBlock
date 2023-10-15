@@ -1051,7 +1051,6 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         this.hiddenSettings.filterAuthorMode !== false;
     const parser = new sfp.AstFilterParser({
         expertMode,
-        filterOnHeaders: µb.hiddenSettings.filterOnHeaders,
         maxTokenLength: staticNetFilteringEngine.MAX_TOKEN_LENGTH,
         nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
     });

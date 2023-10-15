@@ -188,7 +188,7 @@ const loadBenchmarkDataset = (( ) => {
                 staticNetFilteringEngine.matchAndFetchModifiers(fctxt, 'csp');
                 staticNetFilteringEngine.matchAndFetchModifiers(fctxt, 'permissions');
             }
-            //staticNetFilteringEngine.matchHeaders(fctxt, []);
+            staticNetFilteringEngine.matchHeaders(fctxt, []);
         } else if ( redirectEngine !== undefined ) {
             staticNetFilteringEngine.redirectRequest(redirectEngine, fctxt);
         }
