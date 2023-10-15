@@ -3898,7 +3898,6 @@ builtinScriptlets.push({
     world: 'ISOLATED',
     dependencies: [
         'run-at-html-element.fn',
-        'safe-self.fn',
     ],
 });
 function trustedClickElement(
@@ -3922,7 +3921,7 @@ function trustedClickElement(
     const clickDelay = parseInt(delay, 10) || 1;
     const t0 = Date.now();
     const tbye = t0 + 10000;
-    let tnext = t0;
+    let tnext = selectorList.length !== 1 ? t0 : t0 + clickDelay;
 
     const terminate = ( ) => {
         selectorList.length = 0;
@@ -3983,7 +3982,7 @@ function trustedClickElement(
             selectorList.unshift(selector);
             return next(true);
         }
-        elem.click();
+            elem.click();
         tnext += clickDelay;
         next();
     };
