@@ -26,7 +26,8 @@
 /******************************************************************************/
 
 // Injected into specific webpages, those which have been pre-selected
-// because they are known to contain `https://ublockorigin.github.io/update-lists?` links.
+// because they are known to contain:
+// https://ublockorigin.github.io/uAssets/update-lists?listkeys=[...]
 
 /******************************************************************************/
 
