@@ -982,12 +982,9 @@ function jsonPruneFetchResponseFn(
         let outcome = 'match';
         if ( propNeedles.size !== 0 ) {
             const objs = [ args[0] instanceof Object ? args[0] : { url: args[0] } ];
-            if ( extraArgs.version === 2 && objs[0] instanceof Request ) {
-                try {
-                    objs[0] = safe.Request_clone.call(objs[0]);
-                } catch(ex) {
-                    safe.uboLog(ex);
-                }
+            if ( objs[0] instanceof Request ) {
+                try { objs[0] = safe.Request_clone.call(objs[0]); }
+                catch(ex) { log(ex); }
             }
             if ( args[1] instanceof Object ) {
                 objs.push(args[1]);
@@ -1080,8 +1077,9 @@ function replaceFetchResponseFn(
             let outcome = 'match';
             if ( propNeedles.size !== 0 ) {
                 const objs = [ args[0] instanceof Object ? args[0] : { url: args[0] } ];
-                if ( extraArgs.version === 2 && objs[0] instanceof Request ) {
-                    try { objs[0] = safe.Request_clone.call(objs[0]); } catch(ex) {}
+                if ( objs[0] instanceof Request ) {
+                    try { objs[0] = safe.Request_clone.call(objs[0]); }
+                    catch(ex) { log(ex); }
                 }
                 if ( args[1] instanceof Object ) {
                     objs.push(args[1]);
