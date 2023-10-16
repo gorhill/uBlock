@@ -5270,6 +5270,7 @@ FilterContainer.prototype.transformRequest = function(fctxt) {
     const directive = directives[directives.length-1];
     if ( (directive.bits & AllowAction) !== 0 ) { return directives; }
     const redirectURL = new URL(fctxt.url);
+    if ( directive.value === redirectURL.pathname ) { return; }
     redirectURL.pathname = directive.value;
     fctxt.redirectURL = redirectURL.href;
     return directives;
