@@ -605,7 +605,8 @@ class argListParser {
         this.argBeg = 0;
         this.argEnd = 0;
         this.quoteEnd = 0;
-        this.actualSeparatorCode = 0;
+        this.actualSeparatorCode = 0x2C /* , */;
+        this.actualSeparatorChar = ',';
         this.separatorBeg = 0;
         this.separatorEnd = 0;
         this.transform = false;
@@ -624,10 +625,7 @@ class argListParser {
         this.failed = false;
         const qc = pattern.charCodeAt(this.quoteBeg);
         if ( qc === 0x22 /* " */ || qc === 0x27 /* ' */ || qc === 0x60 /* ` */ ) {
-            this.actualSeparatorCode = qc;
-            this.argBeg = this.argEnd = this.quoteBeg + 1;
-            this.transform = false;
-            this.indexOfNextScriptletArgSeparator(pattern);
+            this.indexOfNextArgSeparator(pattern, qc);
             if ( this.argEnd !== len ) {
                 this.quoteEnd = this.argEnd + 1;
                 this.separatorBeg = this.separatorEnd = this.quoteEnd;
@@ -639,10 +637,7 @@ class argListParser {
                 }
             }
         }
-        this.actualSeparatorCode = this.separatorCode;
-        this.argBeg = this.argEnd = this.quoteBeg;
-        this.transform = false;
-        this.indexOfNextScriptletArgSeparator(pattern);
+        this.indexOfNextArgSeparator(pattern, this.separatorCode);
         this.separatorBeg = this.separatorEnd = this.argEnd;
         if ( this.separatorBeg < len ) {
             this.separatorEnd += 1;
@@ -664,7 +659,7 @@ class argListParser {
             return s.replace(this.reUnescapeSingleQuotes, "$1'");
         case 0x60 /* ` */:
             if ( s.includes('`') === false ) { return; }
-            return s.replace(this.reUnescapeBackticks, "$1`");
+            return s.replace(this.reUnescapeBackticks, '$1`');
         default:
             break;
         }
@@ -679,10 +674,17 @@ class argListParser {
         const match = this.reWhitespaceEnd.exec(s);
         return match === null ? 0 : match[0].length;
     }
-    indexOfNextScriptletArgSeparator(pattern) {
-        const separatorChar = String.fromCharCode(this.actualSeparatorCode);
+    indexOfNextArgSeparator(pattern, separatorCode) {
+        this.argBeg = this.argEnd = separatorCode !== this.separatorCode
+            ? this.quoteBeg + 1
+            : this.quoteBeg;
+        this.transform = false;
+        if ( separatorCode !== this.actualSeparatorCode ) {
+            this.actualSeparatorCode = separatorCode;
+            this.actualSeparatorChar = String.fromCharCode(separatorCode);
+        }
         while ( this.argEnd < pattern.length ) {
-            const pos = pattern.indexOf(separatorChar, this.argEnd);
+            const pos = pattern.indexOf(this.actualSeparatorChar, this.argEnd);
             if ( pos === -1 ) {
                 return (this.argEnd = pattern.length);
             }
