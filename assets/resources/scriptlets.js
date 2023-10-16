@@ -3896,6 +3896,7 @@ builtinScriptlets.push({
     world: 'ISOLATED',
     dependencies: [
         'run-at-html-element.fn',
+        'safe-self.fn',
     ],
 });
 function trustedClickElement(
@@ -3904,6 +3905,12 @@ function trustedClickElement(
     delay = ''
 ) {
     if ( extraMatch !== '' ) { return; }
+
+    const safe = safeSelf();
+    const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
+    const uboLog = extraArgs.log !== undefined
+        ? ((...args) => { safe.uboLog(...args); })
+        : (( ) => { });
 
     const selectorList = selectors.split(/\s*,\s*/)
         .filter(s => {
@@ -3928,15 +3935,22 @@ function trustedClickElement(
     };
 
     const next = notFound => {
-        if ( selectorList.length === 0 ) { return terminate(); }
+        if ( selectorList.length === 0 ) {
+            uboLog(`trusted-click-element: Completed`);
+            return terminate();
+        }
         const tnow = Date.now();
-        if ( tnow >= tbye ) { return terminate(); }
+        if ( tnow >= tbye ) {
+            uboLog(`trusted-click-element: Timed out`);
+            return terminate();
+        }
         if ( notFound ) { observe(); }
         const delay = Math.max(notFound ? tbye - tnow : tnext - tnow, 1);
         next.timer = setTimeout(( ) => {
             next.timer = undefined;
             process();
         }, delay);
+        uboLog(`trusted-click-element: Waiting for ${selectorList[0]}...`);
     };
     next.stop = ( ) => {
         if ( next.timer === undefined ) { return; }
@@ -3980,6 +3994,7 @@ function trustedClickElement(
             selectorList.unshift(selector);
             return next(true);
         }
+        uboLog(`trusted-click-element: Clicked ${selector}`);
         elem.click();
         tnext += clickDelay;
         next();
