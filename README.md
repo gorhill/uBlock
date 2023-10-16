@@ -93,6 +93,8 @@ uBO [works best][Works Best] on Firefox and is available for desktop and Android
 
 [Thunderbird Add-ons][Thunderbird]
 
+In Thunderbird, uBlock Origin does not affect emails, just feeds.
+
 #### Chromium
 
 [Chrome Web Store][Chrome]
