@@ -602,11 +602,10 @@ const launchReporter = async function(request) {
     const entries = await io.getUpdateAges({
         filters: µb.selectedFilterLists.slice()
     });
-    let shouldUpdateLists = false;
+    const shouldUpdateLists = [];
     for ( const entry of entries ) {
         if ( entry.age < (2 * 60 * 60 * 1000) ) { continue; }
-        io.purge(entry.assetKey);
-        shouldUpdateLists = true;
+        shouldUpdateLists.push(entry.assetKey);
     }
 
     // https://github.com/gorhill/uBlock/commit/6efd8eb#commitcomment-107523558
@@ -634,8 +633,8 @@ const launchReporter = async function(request) {
     const supportURL = new URL(vAPI.getURL('support.html'));
     supportURL.searchParams.set('pageURL', request.pageURL);
     supportURL.searchParams.set('popupPanel', JSON.stringify(request.popupPanel));
-    if ( shouldUpdateLists ) {
-        supportURL.searchParams.set('shouldUpdate', 1);
+    if ( shouldUpdateLists.length ) {
+        supportURL.searchParams.set('shouldUpdateLists', JSON.stringify(shouldUpdateLists));
     }
     return supportURL.href;
 };

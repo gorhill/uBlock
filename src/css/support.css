@@ -54,12 +54,12 @@ body.filterIssue #moreButton {
     display: none;
 }
 
-body.shouldUpdate:not(.updated) .e .createEntry {
+body[data-should-update-lists]:not(.updated) .e .createEntry {
     opacity: 0.25;
     pointer-events: none;
 }
 
-body:not(.shouldUpdate) .shouldUpdate {
+body:not([data-should-update-lists]) .shouldUpdate {
     display: none;
     }
 body.updating {
