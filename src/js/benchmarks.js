@@ -181,7 +181,8 @@ const loadBenchmarkDataset = (( ) => {
         if ( r === 1 ) { blockCount += 1; }
         else if ( r === 2 ) { allowCount += 1; }
         if ( r !== 1 ) {
-            if ( staticNetFilteringEngine.hasQuery(fctxt) ) {
+            staticNetFilteringEngine.transformRequest(fctxt);
+            if ( fctxt.redirectURL !== undefined && staticNetFilteringEngine.hasQuery(fctxt) ) {
                 staticNetFilteringEngine.filterQuery(fctxt, 'removeparam');
             }
             if ( fctxt.type === 'main_frame' || fctxt.type === 'sub_frame' ) {

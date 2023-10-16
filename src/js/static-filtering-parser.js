@@ -188,6 +188,7 @@ export const NODE_TYPE_NET_OPTION_NAME_REMOVEPARAM  = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_SCRIPT       = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_SHIDE        = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_TO           = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_URLTRANSFORM = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_XHR          = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_WEBRTC       = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_WEBSOCKET    = iota++;
@@ -267,6 +268,7 @@ export const nodeTypeFromOptionName = new Map([
     [ 'shide', NODE_TYPE_NET_OPTION_NAME_SHIDE ],
     /* synonym */ [ 'specifichide', NODE_TYPE_NET_OPTION_NAME_SHIDE ],
     [ 'to', NODE_TYPE_NET_OPTION_NAME_TO ],
+    [ 'urltransform', NODE_TYPE_NET_OPTION_NAME_URLTRANSFORM ],
     [ 'xhr', NODE_TYPE_NET_OPTION_NAME_XHR ],
     /* synonym */ [ 'xmlhttprequest', NODE_TYPE_NET_OPTION_NAME_XHR ],
     [ 'webrtc', NODE_TYPE_NET_OPTION_NAME_WEBRTC ],
@@ -1315,6 +1317,7 @@ export class AstFilterParser {
                     break;
                 case NODE_TYPE_NET_OPTION_NAME_REDIRECT:
                 case NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE:
+                case NODE_TYPE_NET_OPTION_NAME_URLTRANSFORM:
                     realBad = isNegated || (isException || hasValue) === false ||
                         modifierType !== 0;
                     if ( realBad ) { break; }
@@ -1374,6 +1377,14 @@ export class AstFilterParser {
                 realBad = abstractTypeCount || behaviorTypeCount || unredirectableTypeCount;
                 break;
             }
+            case NODE_TYPE_NET_OPTION_NAME_URLTRANSFORM:
+                realBad = abstractTypeCount || behaviorTypeCount || unredirectableTypeCount ||
+                    this.options.trustedSource !== true;
+                if ( realBad !== true ) {
+                    const path = this.getNetOptionValue(NODE_TYPE_NET_OPTION_NAME_URLTRANSFORM);
+                    realBad = path.charCodeAt(0) !== 0x2F /* / */;
+                }
+                break;
             case NODE_TYPE_NET_OPTION_NAME_REMOVEPARAM:
                 realBad = abstractTypeCount || behaviorTypeCount;
                 break;
@@ -2973,6 +2984,7 @@ export const netOptionTokenDescriptors = new Map([
     [ 'shide', { } ],
     /* synonym */ [ 'specifichide', { } ],
     [ 'to', { mustAssign: true } ],
+    [ 'urltransform', { mustAssign: true } ],
     [ 'xhr', { canNegate: true } ],
     /* synonym */ [ 'xmlhttprequest', { canNegate: true } ],
     [ 'webrtc', { } ],

@@ -37,12 +37,21 @@ const preparseDirectiveHints = [];
 const originHints = [];
 let hintHelperRegistered = false;
 
+/******************************************************************************/
+
+let trustedSource = false;
+
+CodeMirror.defineOption('trustedSource', false, (cm, state) => {
+    trustedSource = state;
+    self.dispatchEvent(new Event('trustedSource'));
+});
 
 /******************************************************************************/
 
 CodeMirror.defineMode('ubo-static-filtering', function() {
     const astParser = new sfp.AstFilterParser({
         interactive: true,
+        trustedSource,
         nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
     });
     const astWalker = astParser.getWalker();
@@ -205,7 +214,11 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
         return '+';
     };
 
-    return {
+    self.addEventListener('trustedSource', ( ) => {
+        astParser.options.trustedSource = trustedSource;
+    });
+
+   return {
         lineComment: '!',
         token: function(stream) {
             if ( stream.sol() ) {
@@ -976,6 +989,10 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
             return;
         }
     };
+
+    self.addEventListener('trustedSource', ( ) => {
+        astParser.options.trustedSource = trustedSource;
+    });
 
     CodeMirror.defineInitHook(cm => {
         cm.on('changes', onChanges);

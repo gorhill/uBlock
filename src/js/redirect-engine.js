@@ -167,7 +167,6 @@ class RedirectEngine {
         this.resources = new Map();
         this.reset();
         this.modifyTime = Date.now();
-        this.resourceNameRegister = '';
     }
 
     reset() {
@@ -183,7 +182,6 @@ class RedirectEngine {
     ) {
         const entry = this.resources.get(this.aliases.get(token) || token);
         if ( entry === undefined ) { return; }
-        this.resourceNameRegister = token;
         return entry.toURL(fctxt, asDataURI);
     }
 

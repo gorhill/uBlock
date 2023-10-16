@@ -109,8 +109,8 @@ function addExtendedToDNR(context, parser) {
             let details = context.scriptletFilters.get(argsToken);
             if ( details === undefined ) {
                 context.scriptletFilters.set(argsToken, details = { args });
-                if ( context.isTrusted ) {
-                    details.isTrusted = true;
+                if ( context.trustedSource ) {
+                    details.trustedSource = true;
                 }
             }
             if ( not ) {
@@ -299,9 +299,11 @@ function addToDNR(context, list) {
 
         if ( parser.isComment() ) {
             if ( line === `!#trusted on ${context.secret}` ) {
-                context.isTrusted = true;
+                parser.trustedSource = true;
+                context.trustedSource = true;
             } else if ( line === `!#trusted off ${context.secret}` ) {
-                context.isTrusted = false;
+                parser.trustedSource = false;
+                context.trustedSource = false;
             }
             continue;
         }

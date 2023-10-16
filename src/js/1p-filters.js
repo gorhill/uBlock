@@ -48,6 +48,7 @@ const cmEditor = new CodeMirror(qs$('#userFilters'), {
     styleActiveLine: {
         nonEmpty: true,
     },
+    trustedSource: true,
 });
 
 uBlockDashboard.patchCodeMirrorEditor(cmEditor);

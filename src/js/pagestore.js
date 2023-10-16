@@ -860,7 +860,7 @@ const PageStore = class {
         if ( (fctxt.itype & fctxt.INLINE_ANY) === 0 ) {
             if ( result === 1 ) {
                 this.redirectBlockedRequest(fctxt);
-            } else if ( snfe.hasQuery(fctxt) ) {
+            } else {
                 this.redirectNonBlockedRequest(fctxt);
             }
         }
@@ -922,25 +922,31 @@ const PageStore = class {
     }
 
     redirectBlockedRequest(fctxt) {
-        const directives = staticNetFilteringEngine.redirectRequest(
-            redirectEngine,
-            fctxt
-        );
+        const directives = staticNetFilteringEngine.redirectRequest(redirectEngine, fctxt);
         if ( directives === undefined ) { return; }
         if ( logger.enabled !== true ) { return; }
         fctxt.pushFilters(directives.map(a => a.logData()));
         if ( fctxt.redirectURL === undefined ) { return; }
         fctxt.pushFilter({
             source: 'redirect',
-            raw: redirectEngine.resourceNameRegister
+            raw: directives[directives.length-1].value
         });
     }
 
     redirectNonBlockedRequest(fctxt) {
-        const directives = staticNetFilteringEngine.filterQuery(fctxt);
-        if ( directives === undefined ) { return; }
+        const transformDirectives = staticNetFilteringEngine.transformRequest(fctxt);
+        const pruneDirectives = fctxt.redirectURL === undefined &&
+            staticNetFilteringEngine.hasQuery(fctxt) &&
+            staticNetFilteringEngine.filterQuery(fctxt) ||
+            undefined;
+        if ( transformDirectives === undefined && pruneDirectives === undefined ) { return; }
         if ( logger.enabled !== true ) { return; }
-        fctxt.pushFilters(directives.map(a => a.logData()));
+        if ( transformDirectives !== undefined ) {
+            fctxt.pushFilters(transformDirectives.map(a => a.logData()));
+        }
+        if ( pruneDirectives !== undefined ) {
+            fctxt.pushFilters(pruneDirectives.map(a => a.logData()));
+        }
         if ( fctxt.redirectURL === undefined ) { return; }
         fctxt.pushFilter({
             source: 'redirect',

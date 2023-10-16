@@ -306,7 +306,7 @@ scriptletFilteringEngine.compile = function(parser, writer) {
 
     // Only exception filters are allowed to be global.
     const isException = parser.isException();
-    const normalized = normalizeRawFilter(parser, writer.properties.get('isTrusted'));
+    const normalized = normalizeRawFilter(parser, writer.properties.get('trustedSource'));
 
     // Can fail if there is a mismatch with trust requirement
     if ( normalized === undefined ) { return; }

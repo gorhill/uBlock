@@ -88,7 +88,7 @@ export function compile(details) {
     const scriptletToken = details.args[0];
     const resourceEntry = resourceDetails.get(scriptletToken);
     if ( resourceEntry === undefined ) { return; }
-    if ( resourceEntry.requiresTrust && details.isTrusted !== true ) {
+    if ( resourceEntry.requiresTrust && details.trustedSource !== true ) {
         console.log(`Rejecting ${scriptletToken}: source is not trusted`);
         return;
     }

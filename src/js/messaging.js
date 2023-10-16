@@ -108,6 +108,7 @@ const onMessage = function(request, sender, callback) {
             dontCache: true,
             needSourceURL: true,
         }).then(result => {
+            result.trustedSource = µb.isTrustedList(result.assetKey);
             callback(result);
         });
         return;

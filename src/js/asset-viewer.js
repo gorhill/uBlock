@@ -82,6 +82,7 @@ import './codemirror/ubo-static-filtering.js';
         what : 'getAssetContent',
         url: assetKey,
     });
+    cmEditor.setOption('trustedSource', details.trustedSource === true);
     cmEditor.setValue(details && details.content || '');
 
     if ( subscribeElem !== null ) {

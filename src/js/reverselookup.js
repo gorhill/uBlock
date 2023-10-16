@@ -131,6 +131,7 @@ const fromNetFilter = async function(rawFilter) {
     const writer = new CompiledListWriter();
     const parser = new sfp.AstFilterParser({
         expertMode: true,
+        trustedSource: true,
         maxTokenLength: staticNetFilteringEngine.MAX_TOKEN_LENGTH,
         nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
     });
@@ -169,6 +170,7 @@ const fromExtendedFilter = async function(details) {
 
     const parser = new sfp.AstFilterParser({
         expertMode: true,
+        trustedSource: true,
         nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
     });
     parser.parse(details.rawFilter);
