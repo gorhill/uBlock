@@ -82,7 +82,6 @@ const resourceIsStale = (networkDetails, cacheDetails) => {
     if ( networkDetails.resourceTime === 0 ) { return false; }
     if ( typeof cacheDetails.resourceTime !== 'number' ) { return false; }
     if ( cacheDetails.resourceTime === 0 ) { return false; }
-    if ( networkDetails.resourceTime === cacheDetails.resourceTime ) { return true; }
     if ( networkDetails.resourceTime < cacheDetails.resourceTime ) {
         ubolog(`Skip ${networkDetails.url}\n\tolder than ${cacheDetails.remoteURL}`);
         return true;

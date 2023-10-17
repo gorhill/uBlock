@@ -598,17 +598,13 @@ const exCharCodeAt = (s, i) => {
 /******************************************************************************/
 
 class argListParser {
-    constructor(separator = 0x2C /* , */, mustQuote = false) {
-        this.separatorCode = separator.charCodeAt(0);
+    constructor(separatorChar = ',', mustQuote = false) {
+        this.separatorChar = this.actualSeparatorChar = separatorChar;
+        this.separatorCode = this.actualSeparatorCode = separatorChar.charCodeAt(0);
         this.mustQuote = mustQuote;
-        this.quoteBeg = 0;
-        this.argBeg = 0;
-        this.argEnd = 0;
-        this.quoteEnd = 0;
-        this.actualSeparatorCode = 0x2C /* , */;
-        this.actualSeparatorChar = ',';
-        this.separatorBeg = 0;
-        this.separatorEnd = 0;
+        this.quoteBeg = 0; this.quoteEnd = 0;
+        this.argBeg = 0; this.argEnd = 0;
+        this.separatorBeg = 0; this.separatorEnd = 0;
         this.transform = false;
         this.failed = false;
         this.reWhitespaceStart = /^\s+/;
@@ -617,7 +613,7 @@ class argListParser {
         this.reUnescapeDoubleQuotes = /((?:^|[^\\])(?:\\\\)*)\\"/g;
         this.reUnescapeSingleQuotes = /((?:^|[^\\])(?:\\\\)*)\\'/g;
         this.reUnescapeBackticks = /((?:^|[^\\])(?:\\\\)*)\\`/g;
-        this.reUnescapeCommas = /((?:^|[^\\])(?:\\\\)*)\\,/g;
+        this.reUnescapeSeparator = new RegExp(`((?:^|[^\\\\])(?:\\\\\\\\)*)\\\\${this.separatorChar}`, 'g');
     }
     nextArg(pattern, beg = 0) {
         const len = pattern.length;
@@ -663,8 +659,8 @@ class argListParser {
         default:
             break;
         }
-        if ( s.includes(',') === false ) { return; }
-        return s.replace(this.reUnescapeCommas, '$1,');
+        if ( s.includes(this.separatorChar) === false ) { return; }
+        return s.replace(this.reUnescapeSeparator, `$1${this.separatorChar}`);
     }
     leftWhitespaceCount(s) {
         const match = this.reWhitespaceStart.exec(s);
