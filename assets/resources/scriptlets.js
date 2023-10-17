@@ -60,8 +60,8 @@ function safeSelf() {
         'addEventListener': self.EventTarget.prototype.addEventListener,
         'removeEventListener': self.EventTarget.prototype.removeEventListener,
         'fetch': self.fetch,
-        'jsonParse': self.JSON.parse.bind(self.JSON),
-        'jsonStringify': self.JSON.stringify.bind(self.JSON),
+        'JSON_parse': self.JSON.parse.bind(self.JSON),
+        'JSON_stringify': self.JSON.stringify.bind(self.JSON),
         'log': console.log.bind(console),
         uboLog(...args) {
             if ( scriptletGlobals.has('canDebug') === false ) { return; }
@@ -428,7 +428,7 @@ function setConstantCore(
             if ( Math.abs(cValue) > 0x7FFF ) { return; }
         } else if ( trusted ) {
             if ( cValue.startsWith('{') && cValue.endsWith('}') ) {
-                try { cValue = safe.jsonParse(cValue).value; } catch(ex) { return; }
+                try { cValue = safe.JSON_parse(cValue).value; } catch(ex) { return; }
             }
         } else {
             return;
@@ -544,14 +544,14 @@ function setConstantCore(
 /******************************************************************************/
 
 builtinScriptlets.push({
-    name: 'replace-node-text-core.fn',
-    fn: replaceNodeTextCore,
+    name: 'replace-node-text.fn',
+    fn: replaceNodeTextFn,
     dependencies: [
         'run-at.fn',
         'safe-self.fn',
     ],
 });
-function replaceNodeTextCore(
+function replaceNodeTextFn(
     nodeName = '',
     pattern = '',
     replacement = ''
@@ -581,8 +581,8 @@ function replaceNodeTextCore(
             : replacement;
         node.textContent = after;
         if ( shouldLog !== 0 ) {
-            safe.uboLog('replace-node-text-core.fn before:\n', before);
-            safe.uboLog('replace-node-text-core.fn after:\n', after);
+            safe.uboLog('replace-node-text.fn before:\n', before);
+            safe.uboLog('replace-node-text.fn after:\n', after);
         }
         return sedCount === 0 || (sedCount -= 1) !== 0;
     };
@@ -630,10 +630,11 @@ function replaceNodeTextCore(
 
 builtinScriptlets.push({
     name: 'object-prune.fn',
-    fn: objectPrune,
+    fn: objectPruneFn,
     dependencies: [
         'matches-stack-trace.fn',
         'safe-self.fn',
+        'should-log.fn',
     ],
 });
 //  When no "prune paths" argument is provided, the scriptlet is
@@ -642,7 +643,7 @@ builtinScriptlets.push({
 //
 //  https://github.com/uBlockOrigin/uBlock-issues/issues/1545
 //  - Add support for "remove everything if needle matches" case
-function objectPrune(
+function objectPruneFn(
     obj,
     rawPrunePaths,
     rawNeedlePaths,
@@ -664,8 +665,8 @@ function objectPrune(
             return;
         }
     }
-    if ( objectPrune.findOwner === undefined ) {
-        objectPrune.findOwner = (root, path, prune = false) => {
+    if ( objectPruneFn.findOwner === undefined ) {
+        objectPruneFn.findOwner = (root, path, prune = false) => {
             let owner = root;
             let chain = path;
             for (;;) {
@@ -696,7 +697,7 @@ function objectPrune(
                     const next = chain.slice(pos + 1);
                     let found = false;
                     for ( const key of Object.keys(owner) ) {
-                        found = objectPrune.findOwner(owner[key], next, prune) || found;
+                        found = objectPruneFn.findOwner(owner[key], next, prune) || found;
                     }
                     return found;
                 }
@@ -705,34 +706,34 @@ function objectPrune(
                 chain = chain.slice(pos + 1);
             }
         };
-        objectPrune.mustProcess = (root, needlePaths) => {
+        objectPruneFn.mustProcess = (root, needlePaths) => {
             for ( const needlePath of needlePaths ) {
-                if ( objectPrune.findOwner(root, needlePath) === false ) {
+                if ( objectPruneFn.findOwner(root, needlePath) === false ) {
                     return false;
                 }
             }
             return true;
         };
-        objectPrune.logJson = (json, msg, reNeedle) => {
+        objectPruneFn.logJson = (json, msg, reNeedle) => {
             if ( reNeedle.test(json) === false ) { return; }
             safeSelf().uboLog(`objectPrune()`, msg, location.hostname, json);
         };
     }
-    const jsonBefore = logLevel ? JSON.stringify(obj, null, 2) : '';
+    const jsonBefore = logLevel ? safe.JSON_stringify(obj, null, 2) : '';
     if ( logLevel === true || logLevel === 'all' ) {
-        objectPrune.logJson(jsonBefore, `prune:"${rawPrunePaths}" log:"${logLevel}"`, reLogNeedle);
+        objectPruneFn.logJson(jsonBefore, `prune:"${rawPrunePaths}" log:"${logLevel}"`, reLogNeedle);
     }
     if ( prunePaths.length === 0 ) { return; }
     let outcome = 'nomatch';
-    if ( objectPrune.mustProcess(obj, needlePaths) ) {
+    if ( objectPruneFn.mustProcess(obj, needlePaths) ) {
         for ( const path of prunePaths ) {
-            if ( objectPrune.findOwner(obj, path, true) ) {
+            if ( objectPruneFn.findOwner(obj, path, true) ) {
                 outcome = 'match';
             }
         }
     }
     if ( logLevel === outcome ) {
-        objectPrune.logJson(jsonBefore, `prune:"${rawPrunePaths}" log:"${logLevel}"`, reLogNeedle);
+        objectPruneFn.logJson(jsonBefore, `prune:"${rawPrunePaths}" log:"${logLevel}"`, reLogNeedle);
     }
     if ( outcome === 'match' ) { return obj; }
 }
@@ -1005,7 +1006,7 @@ function jsonPruneFetchResponseFn(
             const response = responseBefore.clone();
             return response.json().then(objBefore => {
                 if ( typeof objBefore !== 'object' ) { return responseBefore; }
-                const objAfter = objectPrune(
+                const objAfter = objectPruneFn(
                     objBefore,
                     rawPrunePaths,
                     rawNeedlePaths,
@@ -1390,19 +1391,10 @@ builtinScriptlets.push({
     name: 'json-prune.js',
     fn: jsonPrune,
     dependencies: [
-        'match-object-properties.fn',
         'object-prune.fn',
-        'parse-properties-to-match.fn',
         'safe-self.fn',
-        'should-log.fn',
     ],
 });
-//  When no "prune paths" argument is provided, the scriptlet is
-//  used for logging purpose and the "needle paths" argument is
-//  used to filter logging output.
-//
-//  https://github.com/uBlockOrigin/uBlock-issues/issues/1545
-//  - Add support for "remove everything if needle matches" case
 function jsonPrune(
     rawPrunePaths = '',
     rawNeedlePaths = '',
@@ -1414,7 +1406,7 @@ function jsonPrune(
     JSON.parse = new Proxy(JSON.parse, {
         apply: function(target, thisArg, args) {
             const objBefore = Reflect.apply(target, thisArg, args);
-            const objAfter = objectPrune(
+            const objAfter = objectPruneFn(
                 objBefore,
                 rawPrunePaths,
                 rawNeedlePaths,
@@ -1422,6 +1414,42 @@ function jsonPrune(
                 extraArgs
            );
            return objAfter || objBefore;
+        },
+    });
+}
+
+/******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'json-prune-stringify.js',
+    fn: jsonPruneStringify,
+    dependencies: [
+        'object-prune.fn',
+        'safe-self.fn',
+    ],
+});
+function jsonPruneStringify(
+    rawPrunePaths = '',
+    rawNeedlePaths = '',
+    stackNeedle = ''
+) {
+    const safe = safeSelf();
+    const stackNeedleDetails = safe.initPattern(stackNeedle, { canNegate: true });
+    const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
+    JSON.stringify = new Proxy(JSON.stringify, {
+        apply: function(target, thisArg, args) {
+            const objBefore = args[0];
+            if ( objBefore instanceof Object ) {
+                const objAfter = objectPruneFn(
+                    objBefore,
+                    rawPrunePaths,
+                    rawNeedlePaths,
+                    stackNeedleDetails,
+                    extraArgs
+               );
+               args[0] = objAfter || objBefore;
+            }
+           return Reflect.apply(target, thisArg, args);
         },
     });
 }
@@ -1506,13 +1534,13 @@ function jsonPruneXhrResponse(
             if ( typeof innerResponse === 'object' ) {
                 objBefore = innerResponse;
             } else if ( typeof innerResponse === 'string' ) {
-                try { objBefore = safe.jsonParse(innerResponse); }
+                try { objBefore = safe.JSON_parse(innerResponse); }
                 catch(ex) { }
             }
             if ( typeof objBefore !== 'object' ) {
                 return (xhrDetails.response = innerResponse);
             }
-            const objAfter = objectPrune(
+            const objAfter = objectPruneFn(
                 objBefore,
                 rawPrunePaths,
                 rawNeedlePaths,
@@ -1522,7 +1550,7 @@ function jsonPruneXhrResponse(
             let outerResponse;
             if ( typeof objAfter === 'object' ) {
                 outerResponse = typeof innerResponse === 'string'
-                    ? safe.jsonStringify(objAfter)
+                    ? safe.JSON_stringify(objAfter)
                     : objAfter;
             } else {
                 outerResponse = innerResponse;
@@ -1557,7 +1585,7 @@ function evaldataPrune(
         apply(target, thisArg, args) {
             const before = Reflect.apply(target, thisArg, args);
             if ( typeof before === 'object' ) {
-                const after = objectPrune(before, rawPrunePaths, rawNeedlePaths);
+                const after = objectPruneFn(before, rawPrunePaths, rawNeedlePaths);
                 return after || before;
             }
             return before;
@@ -3305,7 +3333,7 @@ builtinScriptlets.push({
     fn: removeNodeText,
     world: 'ISOLATED',
     dependencies: [
-        'replace-node-text-core.fn',
+        'replace-node-text.fn',
     ],
 });
 function removeNodeText(
@@ -3313,7 +3341,7 @@ function removeNodeText(
     condition,
     ...extraArgs
 ) {
-    replaceNodeTextCore(nodeName, '', '', 'condition', condition || '', ...extraArgs);
+    replaceNodeTextFn(nodeName, '', '', 'condition', condition || '', ...extraArgs);
 }
 
 /*******************************************************************************
@@ -3648,7 +3676,7 @@ builtinScriptlets.push({
     fn: replaceNodeText,
     world: 'ISOLATED',
     dependencies: [
-        'replace-node-text-core.fn',
+        'replace-node-text.fn',
     ],
 });
 function replaceNodeText(
@@ -3657,7 +3685,7 @@ function replaceNodeText(
     replacement,
     ...extraArgs
 ) {
-    replaceNodeTextCore(nodeName, pattern, replacement, ...extraArgs);
+    replaceNodeTextFn(nodeName, pattern, replacement, ...extraArgs);
 }
 
 /*******************************************************************************
