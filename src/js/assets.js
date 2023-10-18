@@ -967,7 +967,7 @@ async function getRemote(assetKey) {
 
         error = undefined;
 
-        // If fetched resource is same older than cached one, ignore
+        // If fetched resource is older than cached one, ignore
         stale = resourceIsStale(result, cacheDetails);
         if ( stale ) { continue; }
 
