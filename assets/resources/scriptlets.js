@@ -3395,6 +3395,19 @@ function setCookie(
     );
 }
 
+// For compatiblity with AdGuard
+builtinScriptlets.push({
+    name: 'set-cookie-reload.js',
+    fn: setCookieReload,
+    world: 'ISOLATED',
+    dependencies: [
+        'set-cookie.js',
+    ],
+});
+function setCookieReload(name, value, path, ...args) {
+    setCookie(name, value, path, 'reload', '1', ...args);
+}
+
 /*******************************************************************************
  * 
  * set-local-storage-item.js
@@ -3771,6 +3784,20 @@ function trustedSetCookie(
         path,
         safeSelf().getExtraArgs(Array.from(arguments), 4)
     );
+}
+
+// For compatiblity with AdGuard
+builtinScriptlets.push({
+    name: 'trusted-set-cookie-reload.js',
+    requiresTrust: true,
+    fn: trustedSetCookieReload,
+    world: 'ISOLATED',
+    dependencies: [
+        'trusted-set-cookie.js',
+    ],
+});
+function trustedSetCookieReload(name, value, offsetExpiresSec, path, ...args) {
+    trustedSetCookie(name, value, offsetExpiresSec, path, 'reload', '1', ...args);
 }
 
 /*******************************************************************************

@@ -234,7 +234,8 @@ const lookupScriptlet = function(rawToken, mainMap, isolatedMap) {
     while ( dependencies.length !== 0 ) {
         const token = dependencies.shift();
         if ( targetWorldMap.has(token) ) { continue; }
-        const details = reng.contentFromName(token, 'fn/javascript');
+        const details = reng.contentFromName(token, 'fn/javascript') ||
+            reng.contentFromName(token, 'text/javascript');
         if ( details === undefined ) { continue; }
         targetWorldMap.set(token, details.js);
         if ( Array.isArray(details.dependencies) === false ) { continue; }
