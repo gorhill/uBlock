@@ -200,12 +200,7 @@ const onBeforeRootFrameRequest = function(fctxt) {
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/760
     //   Redirect non-blocked request?
-    if (
-        result !== 1 &&
-        trusted === false &&
-        pageStore !== null &&
-        staticNetFilteringEngine.hasQuery(fctxt)
-    ) {
+    if ( result !== 1 && trusted === false && pageStore !== null ) {
         pageStore.redirectNonBlockedRequest(fctxt);
     }
 
