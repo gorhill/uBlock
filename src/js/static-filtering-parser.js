@@ -610,10 +610,11 @@ class argListParser {
         this.reWhitespaceStart = /^\s+/;
         this.reWhitespaceEnd = /\s+$/;
         this.reOddTrailingEscape = /(?:^|[^\\])(?:\\\\)*\\$/;
-        this.reUnescapeDoubleQuotes = /((?:^|[^\\])(?:\\\\)*)\\"/g;
-        this.reUnescapeSingleQuotes = /((?:^|[^\\])(?:\\\\)*)\\'/g;
-        this.reUnescapeBackticks = /((?:^|[^\\])(?:\\\\)*)\\`/g;
-        this.reUnescapeSeparator = new RegExp(`((?:^|[^\\\\])(?:\\\\\\\\)*)\\\\${this.separatorChar}`, 'g');
+        this.reEscapedDoubleQuote = /((?:^|[^\\])(?:\\\\)*)\\"/g;
+        this.reEscapedSingleQuote = /((?:^|[^\\])(?:\\\\)*)\\'/g;
+        this.reEscapedBacktick = /((?:^|[^\\])(?:\\\\)*)\\`/g;
+        this.reEscapedSeparator = new RegExp(`((?:^|[^\\\\])(?:\\\\\\\\)*)\\\\${this.separatorChar}`, 'g');
+        this.unescapedSeparator = `$1${this.separatorChar}`;
     }
     nextArg(pattern, beg = 0) {
         const len = pattern.length;
@@ -649,18 +650,18 @@ class argListParser {
         switch ( this.actualSeparatorCode ) {
         case 0x22 /* " */:
             if ( s.includes('"') === false ) { return; }
-            return s.replace(this.reUnescapeDoubleQuotes, '$1"');
+            return s.replace(this.reEscapedDoubleQuote, '$1"');
         case 0x27 /* ' */:
             if ( s.includes("'") === false ) { return; }
-            return s.replace(this.reUnescapeSingleQuotes, "$1'");
+            return s.replace(this.reEscapedSingleQuote, "$1'");
         case 0x60 /* ` */:
             if ( s.includes('`') === false ) { return; }
-            return s.replace(this.reUnescapeBackticks, '$1`');
+            return s.replace(this.reEscapedBacktick, '$1`');
         default:
             break;
         }
         if ( s.includes(this.separatorChar) === false ) { return; }
-        return s.replace(this.reUnescapeSeparator, `$1${this.separatorChar}`);
+        return s.replace(this.reEscapedSeparator, this.unescapedSeparator);
     }
     leftWhitespaceCount(s) {
         const match = this.reWhitespaceStart.exec(s);
