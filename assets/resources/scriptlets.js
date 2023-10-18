@@ -3395,7 +3395,7 @@ function setCookie(
     );
 }
 
-// For compatiblity with AdGuard
+// For compatibility with AdGuard
 builtinScriptlets.push({
     name: 'set-cookie-reload.js',
     fn: setCookieReload,
@@ -3786,7 +3786,7 @@ function trustedSetCookie(
     );
 }
 
-// For compatiblity with AdGuard
+// For compatibility with AdGuard
 builtinScriptlets.push({
     name: 'trusted-set-cookie-reload.js',
     requiresTrust: true,
