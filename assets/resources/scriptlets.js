@@ -3981,7 +3981,7 @@ function trustedClickElement(
     const clickDelay = parseInt(delay, 10) || 1;
     const t0 = Date.now();
     const tbye = t0 + 10000;
-    let tnext = clickDelay;
+    let tnext = selectorList.length !== 1 ? t0 : t0 + clickDelay;
 
     const terminate = ( ) => {
         selectorList.length = 0;
@@ -4000,7 +4000,7 @@ function trustedClickElement(
             return terminate();
         }
         if ( notFound ) { observe(); }
-        const delay = Math.max(notFound ? tbye - tnow : tnext - tnow, 17);
+        const delay = Math.max(notFound ? tbye - tnow : tnext - tnow, 1);
         next.timer = setTimeout(( ) => {
             next.timer = undefined;
             process();
