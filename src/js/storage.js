@@ -370,10 +370,31 @@ import {
 /******************************************************************************/
 
 µb.isTrustedList = function(assetKey) {
-    if ( assetKey.startsWith('ublock-') ) { return true; }
-    if ( assetKey === this.userFiltersPath ) { return true; }
+    if ( this.parsedTrustedListPrefixes.length === 0 ) {
+        this.parsedTrustedListPrefixes =
+            µb.hiddenSettings.trustedListPrefixes.split(/ +/).map(prefix => {
+                if ( prefix === '' ) { return; }
+                if ( prefix.startsWith('http://') ) { return; }
+                if ( prefix.startsWith('file:///') ) { return prefix; }
+                if ( prefix.startsWith('https://') === false ) {
+                    return prefix.includes('://') ? undefined : prefix;
+                }
+                try {
+                    const url = new URL(prefix);
+                    if ( url.hostname.length > 0 ) { return url.href; }
+                } catch(_) {
+                }
+            }).filter(prefix => prefix !== undefined);
+    }
+    for ( const prefix of this.parsedTrustedListPrefixes ) {
+        if ( assetKey.startsWith(prefix) ) { return true; }
+    }
     return false;
 };
+
+µb.onEvent('hiddenSettingsChanged', ( ) => {
+    µb.parsedTrustedListPrefixes = [];
+});
 
 /******************************************************************************/
 

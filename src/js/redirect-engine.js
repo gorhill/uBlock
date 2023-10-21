@@ -426,6 +426,26 @@ class RedirectEngine {
         });
     }
 
+    getTrustedScriptletTokens() {
+        const out = [];
+        const isTrustedScriptlet = entry => {
+            if ( entry.requiresTrust !== true ) { return false; }
+            if ( entry.warURL !== undefined ) { return false; }
+            if ( typeof entry.data !== 'string' ) { return false; }
+            if ( entry.name.endsWith('.js') === false ) { return false; }
+            return true;
+        };
+        for ( const [ name, entry ] of this.resources ) {
+            if ( isTrustedScriptlet(entry) === false ) { continue; }
+            out.push(name.slice(0, -3));
+        }
+        for ( const [ alias, name ] of this.aliases ) {
+            if ( out.includes(name.slice(0, -3)) === false ) { continue; }
+            out.push(alias.slice(0, -3));
+        }
+        return out;
+    }
+
     selfieFromResources(storage) {
         storage.put(
             RESOURCES_SELFIE_NAME,

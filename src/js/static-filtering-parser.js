@@ -100,6 +100,7 @@ export const AST_ERROR_DOMAIN_NAME                  = 1 << iota++;
 export const AST_ERROR_OPTION_DUPLICATE             = 1 << iota++;
 export const AST_ERROR_OPTION_UNKNOWN               = 1 << iota++;
 export const AST_ERROR_IF_TOKEN_UNKNOWN             = 1 << iota++;
+export const AST_ERROR_UNTRUSTED_SOURCE             = 1 << iota++;
 
 iota = 0;
 const NODE_RIGHT_INDEX                              = iota++;
@@ -2244,12 +2245,25 @@ export class AstFilterParser {
             if ( (flags & NODE_FLAG_ERROR) !== 0 ) { continue; }
             realBad = false;
             switch ( type ) {
-                case NODE_TYPE_EXT_PATTERN_RESPONSEHEADER:
+                case NODE_TYPE_EXT_PATTERN_RESPONSEHEADER: {
                     const pattern = this.getNodeString(targetNode);
                     realBad =
                         pattern !== '' && removableHTTPHeaders.has(pattern) === false ||
                         pattern === '' && isException === false;
                     break;
+                }
+                case NODE_TYPE_EXT_PATTERN_SCRIPTLET_TOKEN: {
+                    if ( this.interactive !== true ) { break; }
+                    if ( isException ) { break; }
+                    const { trustedSource, trustedScriptletTokens } = this.options;
+                    if ( trustedScriptletTokens instanceof Set === false ) { break; }
+                    const token = this.getNodeString(targetNode);
+                    if ( trustedScriptletTokens.has(token) && trustedSource !== true ) {
+                        this.astError = AST_ERROR_UNTRUSTED_SOURCE;
+                        realBad = true;
+                    }
+                    break;
+                }
                 default:
                     break;
             }
@@ -2338,6 +2352,7 @@ export class AstFilterParser {
             parentBeg + details.argBeg,
             parentBeg + tokenEnd
         );
+        this.addNodeToRegister(NODE_TYPE_EXT_PATTERN_SCRIPTLET_TOKEN, next);
         if ( details.failed ) {
             this.addNodeFlags(next, NODE_FLAG_ERROR);
             this.addFlags(AST_FLAG_HAS_ERROR);

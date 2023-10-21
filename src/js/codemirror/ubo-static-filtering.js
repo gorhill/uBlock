@@ -39,11 +39,22 @@ let hintHelperRegistered = false;
 
 /******************************************************************************/
 
+const trustedScriptletTokens = new Set();
 let trustedSource = false;
 
-CodeMirror.defineOption('trustedSource', false, (cm, state) => {
-    trustedSource = state;
+CodeMirror.defineOption('trustedSource', false, (cm, value) => {
+    trustedSource = value;
     self.dispatchEvent(new Event('trustedSource'));
+});
+
+CodeMirror.defineOption('trustedScriptletTokens', trustedScriptletTokens, (cm, tokens) => {
+    if ( tokens === undefined || tokens === null ) { return; }
+    if ( typeof tokens[Symbol.iterator] !== 'function' ) { return; }
+    trustedScriptletTokens.clear();
+    for ( const token of tokens ) {
+        trustedScriptletTokens.add(token);
+    }
+    self.dispatchEvent(new Event('trustedScriptletTokens'));
 });
 
 /******************************************************************************/
@@ -51,8 +62,9 @@ CodeMirror.defineOption('trustedSource', false, (cm, state) => {
 CodeMirror.defineMode('ubo-static-filtering', function() {
     const astParser = new sfp.AstFilterParser({
         interactive: true,
-        trustedSource,
         nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
+        trustedSource,
+        trustedScriptletTokens,
     });
     const astWalker = astParser.getWalker();
     let currentWalkerNode = 0;
@@ -216,6 +228,10 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
 
     self.addEventListener('trustedSource', ( ) => {
         astParser.options.trustedSource = trustedSource;
+    });
+
+    self.addEventListener('trustedScriptletTokens', ( ) => {
+        astParser.options.trustedScriptletTokens = trustedScriptletTokens;
     });
 
    return {
@@ -679,6 +695,8 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
     const astParser = new sfp.AstFilterParser({
         interactive: true,
         nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
+        trustedSource,
+        trustedScriptletTokens,
     });
 
     const changeset = [];
@@ -714,6 +732,9 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
                     break;
                 case sfp.AST_ERROR_IF_TOKEN_UNKNOWN:
                     msg = `${msg}: Unknown preparsing token`;
+                    break;
+                case sfp.AST_ERROR_UNTRUSTED_SOURCE:
+                    msg = `${msg}: Filter requires trusted source`;
                     break;
                 default:
                     if ( astParser.isCosmeticFilter() && astParser.result.error ) {
@@ -992,6 +1013,10 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
 
     self.addEventListener('trustedSource', ( ) => {
         astParser.options.trustedSource = trustedSource;
+    });
+
+    self.addEventListener('trustedScriptletTokens', ( ) => {
+        astParser.options.trustedScriptletTokens = trustedScriptletTokens;
     });
 
     CodeMirror.defineInitHook(cm => {

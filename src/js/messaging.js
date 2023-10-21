@@ -293,6 +293,10 @@ const onMessage = function(request, sender, callback) {
         response = getDomainNames(request.targets);
         break;
 
+    case 'getTrustedScriptletTokens':
+        response = redirectEngine.getTrustedScriptletTokens();
+        break;
+
     case 'getWhitelist':
         response = {
             whitelist: µb.arrayFromWhitelist(µb.netWhitelist),
@@ -1570,6 +1574,7 @@ const onMessage = function(request, sender, callback) {
 
     case 'readUserFilters':
         return µb.loadUserFilters().then(result => {
+            result.trustedSource = µb.isTrustedList(µb.userFiltersPath);
             callback(result);
         });
 

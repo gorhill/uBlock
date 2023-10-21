@@ -48,7 +48,6 @@ const cmEditor = new CodeMirror(qs$('#userFilters'), {
     styleActiveLine: {
         nonEmpty: true,
     },
-    trustedSource: true,
 });
 
 uBlockDashboard.patchCodeMirrorEditor(cmEditor);
@@ -88,6 +87,12 @@ let cachedUserFilters = '';
 
     getHints();
 }
+
+vAPI.messaging.send('dashboard', {
+    what: 'getTrustedScriptletTokens',
+}).then(tokens => {
+    cmEditor.setOption('trustedScriptletTokens', tokens);
+});
 
 /******************************************************************************/
 
@@ -166,6 +171,8 @@ async function renderUserFilters(merge = false) {
         what: 'readUserFilters',
     });
     if ( details instanceof Object === false || details.error ) { return; }
+
+    cmEditor.setOption('trustedSource', details.trustedSource === true);
 
     const newContent = details.content.trim();
 
