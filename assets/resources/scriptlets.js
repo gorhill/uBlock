@@ -748,17 +748,18 @@ function setCookieHelper(
     path = '',
     options = {},
 ) {
-    const cookieExists = (name, value) => {
-        return document.cookie.split(/\s*;\s*/).some(s => {
+    const getCookieValue = name => {
+        for ( const s of document.cookie.split(/\s*;\s*/) ) {
             const pos = s.indexOf('=');
-            if ( pos === -1 ) { return false; }
-            if ( s.slice(0, pos) !== name ) { return false; }
-            if ( s.slice(pos+1) !== value ) { return false; }
-            return true;
-        });
+            if ( pos === -1 ) { continue; }
+            if ( s.slice(0, pos) !== name ) { continue; }
+            return s.slice(pos+1);
+        }
     };
 
-    if ( options.reload && cookieExists(name, value) ) { return; }
+    const cookieBefore = getCookieValue(name);
+    if ( cookieBefore !== undefined && options.dontOverwrite ) { return; }
+    if ( cookieBefore === value && options.reload ) { return; }
 
     const cookieParts = [ name, '=', value ];
     if ( expires !== '' ) {
@@ -773,7 +774,7 @@ function setCookieHelper(
     }
     document.cookie = cookieParts.join('');
 
-    if ( options.reload && cookieExists(name, value) ) {
+    if ( options.reload && getCookieValue(name) === value ) {
         window.location.reload();
     }
 }
