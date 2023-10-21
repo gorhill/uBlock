@@ -104,7 +104,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "Заблоковано від часу інсталяцій",
+    "message": "Заблоковано з моменту встановлення",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
@@ -280,7 +280,7 @@
     "description": "Appears as an option to filter out firewall rows"
   },
   "popup3pFrameFilter": {
-    "message": "фрейм",
+    "message": "рамка",
     "description": "Appears as an option to filter out firewall rows"
   },
   "pickerCreate": {

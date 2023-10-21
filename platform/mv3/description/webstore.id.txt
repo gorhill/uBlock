@@ -2,29 +2,29 @@ uBO Lite (uBOL) adalah pemblokir konten berbasis MV3 yang membutuhkan lebih sedi
 
 Kumpulan aturan bawaan sesuai dengan kumpulan penyaringan bawaan uBlock Origin:
 
-- Daftar filter asli uBlock Origin
+- Daftar filter bawaan uBlock Origin
 - EasyList
 - EasyPrivacy
 - Daftar server iklan dan pelacak Peter Lowe
 
 kamu dapat menambahkan rulesets di halaman opsi -- klik ikon _Cogs_ di panel popup.
 
-uBOL sepenuhnya deklaratif, yang mana tidak membutuhkan proses permanen uBOL untuk penyaringan terjadi, dan penyaringan konten berbasis injeksi CSS/JS dilakukan sepenuhnya oleh perambaan itu sendiri ketimbang oleh ekstensi. Ini berarti uBOL sendiri tidak mengkonsumsi CPU/sumber daya memori selama melakukan pemblokiran konten -- proses pekerja layanan uBOL dibutuhkan _hanya_ ketika anda berinteraksi dengan panel popup atau opsi halaman.
+uBOL sepenuhnya deklaratif, yang mana tidak membutuhkan proses permanen uBOL agar penyaringan dapat terjadi, dan penyaringan konten berbasis injeksi CSS/JS dilakukan sepenuhnya oleh peramban itu sendiri ketimbang oleh ekstensi. Ini berarti bahwa uBOL sendiri tidak mengkonsumsi sumber daya CPU/memori selama melakukan pemblokiran konten -- proses pekerja layanan uBOL dibutuhkan _hanya_ ketika Anda berinteraksi dengan panel popup atau opsi halaman.
 
-uBOL tidak memerlukan izin "baca dan modifikasi data" yang luas pada waktu penginstalan, oleh karena itu kemampuannya yang terbatas di luar kotak dibandingkan dengan uBlock Origin atau pemblokir konten lain yang memerlukan izin "baca dan modifikasi data" yang luas pada waktu penginstalan.
+uBOL tidak membutuhkan izin "baca dan modifikasi data" pada waktu penginstalan, maka kemampuannya lebih terbatas jika dibandingkan dengan uBlock Origin atau pemblokir konten lain yang memerlukan izin "baca dan modifikasi data" pada waktu penginstalan.
 
-Namun, uBOL memungkinkan Anda untuk *secara eksplisit* memberikan izin yang tambahan pada situs tertentu pilihan Anda sehingga dapat memfilter situs tersebut dengan lebih baik menggunakan pemfilteran tampilan dan injeksi scriptlet.
+Namun, uBOL memberi anda opsi untuk *secara eksplisit* memberikan izin tambahan pada situs pilihan Anda, sehingga dapat memfilter situs tersebut dengan lebih baik menggunakan pemfilteran kosmetik dan injeksi scriptlet.
 
 Untuk memberikan izin tambahan pada situs tertentu, buka panel popup dan pilih mode pemfilteran yang lebih tinggi seperti Optimal atau Complete.
 
 Perambaan kemudian akan memperingatkan anda tentang efek memberikan izin tambahan yang diminta oleh ekstensi pada situs saat ini, dan Anda harus memberitahu perambaan apakah anda menyetujui atau menolak permintaan.
 
-Jika Anda menyetujui permintaan uBOL untuk izin tambahan pada situs saat ini, itu akan dapat menyaring konten dengan lebih baik pada situs saat ini.
+Jika Anda menyetujui permintaan uBOL untuk izin tambahan pada situs terkini, uBOL akan dapat menyaring konten dengan lebih baik untuk situs terkini.
 
-Kamu bisa mengatur Filter default dari halaman pengaturan UBOL's  Jika Anda memilih mode Optimal atau Komplit sebagai bawaan, Anda perlu memberikan uBOL izin untuk membaca dan mengubah data pada semua situs web.
+Anda dapat menentukan mode penyaringan bawaan dari halaman pengaturan uBOL Jika Anda memilih mode Optimal atau Complete sebagai mode bawaan, Anda perlu memberikan uBOL izin untuk membaca dan mengubah data pada semua situs web.
 
-Harap diingat bahwa ini masih dalam proses pengerjaan, dengan tujuan akhir ini:
+Mohon diingat bahwa ini msaih dalam tahap proses pengerjaan, dengan tujuan akhir sebagai berikut:
 
-- Tidak ada izin host yang luas saat penginstalan -- izin yang diperpanjang secara eksplisit diberikan pengguna berdasarkan per-situs.
+- Tidak ada izin pengguna yang luas saat penginstalan -- izin tambahan diberikan secara eksplisit oleh pengguna berdasarkan tiap situs.
 
 - Sepenuhnya delkaratif untuk reliabilitas dan CPU/efisiensi memori.

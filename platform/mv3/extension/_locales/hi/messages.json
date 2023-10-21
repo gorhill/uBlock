@@ -24,7 +24,7 @@
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "अनदेखा करें",
+    "message": "नज़रअंदाज़ करें ",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
@@ -32,7 +32,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "फिल्टर सूची",
+    "message": "फ़िल्टर सूचियाँ",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -60,7 +60,7 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "चीजें मिटाने के मोड में जाएं",
+    "message": "एलिमेंट जैपर मोड दर्ज करें",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
@@ -152,7 +152,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "1pFormatHint": {
-    "message": "प्रति पंक्ति एक फ़िल्टर. कोई फ़िल्टर एक सादा होस्टनाम, या एक EasyList-संगत फ़िल्टर हो सकता है। <code>!</code> से पहले लगी पंक्तियों को अनदेखा कर दिया जाएगा.",
+    "message": "प्रति पंक्ति एक फ़िल्टर. कोई फ़िल्टर एक सादा होस्टनाम या एक EasyList-संगत फ़िल्टर हो सकता है। <code>!</code> से पहले लगी पंक्तियों को अनदेखा कर दिया जाएगा.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -164,7 +164,7 @@
     "description": "English: Export"
   },
   "1pExportFilename": {
-    "message": "my-ublock-static-filters_{{datetime}}.txt",
+    "message": "मेरे-ublock-स्‍थिर-फिल्टेरें_{{datetime}}.txt",
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "whitelistPrompt": {

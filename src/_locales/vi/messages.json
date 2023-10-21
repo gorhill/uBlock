@@ -276,7 +276,7 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilter": {
-    "message": "script",
+    "message": "tập lệnh",
     "description": "Appears as an option to filter out firewall rows"
   },
   "popup3pFrameFilter": {
@@ -404,7 +404,7 @@
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Những tính năng chỉ phù hợp với dân kĩ thuật",
+    "message": "Những tính năng dành cho người dùng nâng cao",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
@@ -956,7 +956,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Xác minh rằng sự cố vẫn tồn tại sau khi tải lại trang web có vấn đề.",
+    "message": "Xác nhận rằng sự cố vẫn tồn tại kể cả sau khi đã tải lại trong web có vấn đề.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -976,7 +976,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Xuất hiện \"lớp phủ\" hoặc các phần tử phiền toái khác",
+    "message": "Xuất hiện lớp phủ hoặc các phần tử phiền toái khác",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {

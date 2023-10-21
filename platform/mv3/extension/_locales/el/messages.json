@@ -272,7 +272,7 @@
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Αυτόματη επαναφόρτωση της σελίδας κατά την αλλαγή της λειτουργίας φιλτραρίσματος",
+    "message": "Αυτόματη επαναφόρτωση σελίδας κατά την αλλαγή λειτουργίας φιλτραρίσματος",
     "description": "Label for a checkbox in the options page"
   }
 }
