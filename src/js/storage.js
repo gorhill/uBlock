@@ -243,7 +243,7 @@ import {
         if ( typeof hs[key] !== typeof hsDefault[key] ) { continue; }
         this.hiddenSettings[key] = hs[key];
     }
-    this.fireDOMEvent('hiddenSettingsChanged');
+    this.fireEvent('hiddenSettingsChanged');
 };
 
 // Note: Save only the settings which values differ from the default ones.
@@ -259,7 +259,7 @@ import {
     });
 };
 
-self.addEventListener('hiddenSettingsChanged', ( ) => {
+µb.onEvent('hiddenSettingsChanged', ( ) => {
     const µbhs = µb.hiddenSettings;
     ubologSet(µbhs.consoleLogLevel === 'info');
     vAPI.net.setOptions({
@@ -364,6 +364,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         netWhitelist: this.arrayFromWhitelist(this.netWhitelist)
     });
     this.netWhitelistModifyTime = Date.now();
+    µb.filteringBehaviorChanged();
 };
 
 /******************************************************************************/
@@ -593,7 +594,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
     // https://www.reddit.com/r/uBlockOrigin/comments/cj7g7m/
     // https://www.reddit.com/r/uBlockOrigin/comments/cnq0bi/
-    vAPI.net.handlerBehaviorChanged();
+    µb.filteringBehaviorChanged();
 
     vAPI.messaging.broadcast({ what: 'userFiltersUpdated' });
 };
@@ -830,7 +831,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         staticExtFilteringEngine.freeze();
         redirectEngine.freeze();
         vAPI.net.unsuspend();
-        vAPI.net.handlerBehaviorChanged();
+        µb.filteringBehaviorChanged();
 
         vAPI.storage.set({ 'availableFilterLists': µb.availableFilterLists });
 

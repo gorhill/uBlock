@@ -453,7 +453,7 @@ if ( selfieIsValid !== true ) {
 
 // Flush memory cache -- unsure whether the browser does this internally
 // when loading a new extension.
-vAPI.net.handlerBehaviorChanged();
+µb.filteringBehaviorChanged();
 
 // Final initialization steps after all needed assets are in memory.
 

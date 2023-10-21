@@ -66,6 +66,10 @@ const scriptletFilteringEngine = {
 const contentScriptRegisterer = new (class {
     constructor() {
         this.hostnameToDetails = new Map();
+        if ( browser.contentScripts === undefined ) { return; }
+        µb.onEvent('filteringBehaviorChanged', ( ) => {
+            this.reset();
+        });
     }
     register(hostname, code) {
         if ( browser.contentScripts === undefined ) { return false; }
