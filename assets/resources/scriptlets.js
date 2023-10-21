@@ -1429,42 +1429,6 @@ function jsonPrune(
     });
 }
 
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'json-prune-stringify.js',
-    fn: jsonPruneStringify,
-    dependencies: [
-        'object-prune.fn',
-        'safe-self.fn',
-    ],
-});
-function jsonPruneStringify(
-    rawPrunePaths = '',
-    rawNeedlePaths = '',
-    stackNeedle = ''
-) {
-    const safe = safeSelf();
-    const stackNeedleDetails = safe.initPattern(stackNeedle, { canNegate: true });
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
-    JSON.stringify = new Proxy(JSON.stringify, {
-        apply: function(target, thisArg, args) {
-            const objBefore = args[0];
-            if ( objBefore instanceof Object ) {
-                const objAfter = objectPruneFn(
-                    objBefore,
-                    rawPrunePaths,
-                    rawNeedlePaths,
-                    stackNeedleDetails,
-                    extraArgs
-               );
-               args[0] = objAfter || objBefore;
-            }
-           return Reflect.apply(target, thisArg, args);
-        },
-    });
-}
-
 /*******************************************************************************
  * 
  * json-prune-fetch-response.js
@@ -4068,6 +4032,62 @@ function trustedClickElement(
     };
 
     runAtHtmlElementFn(process);
+}
+
+/******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'trusted-prune-inbound-object.js',
+    requiresTrust: true,
+    fn: trustedPruneInboundObject,
+    dependencies: [
+        'object-prune.fn',
+        'safe-self.fn',
+    ],
+});
+function trustedPruneInboundObject(
+    entryPoint = '',
+    argPos = '',
+    rawPrunePaths = '',
+    rawNeedlePaths = ''
+) {
+    if ( entryPoint === '' ) { return; }
+    let context = globalThis;
+    let prop = entryPoint;
+    for (;;) {
+        const pos = prop.indexOf('.');
+        if ( pos === -1 ) { break; }
+        context = context[prop.slice(0, pos)];
+        if ( context instanceof Object === false ) { return; }
+        prop = prop.slice(pos+1);
+    }
+    if ( typeof context[prop] !== 'function' ) { return; }
+    const argIndex = parseInt(argPos);
+    if ( isNaN(argIndex) ) { return; }
+    if ( argIndex < 1 ) { return; }
+    const safe = safeSelf();
+    const extraArgs = safe.getExtraArgs(Array.from(arguments), 4);
+    context[prop] = new Proxy(context[prop], {
+        apply: function(target, thisArg, args) {
+            const targetArg = argIndex <= args.length
+                ? args[argIndex-1]
+                : undefined;
+            if ( targetArg instanceof Object ) {
+                const objBefore = extraArgs.dontOverwrite
+                    ? safe.JSON_parse(safe.JSON_stringify(targetArg))
+                    : targetArg;
+                const objAfter = objectPruneFn(
+                    objBefore,
+                    rawPrunePaths,
+                    rawNeedlePaths,
+                    { matchAll: true },
+                    extraArgs
+                );
+                args[argIndex-1] = objAfter || objBefore;
+            }
+            return Reflect.apply(target, thisArg, args);
+        },
+    });
 }
 
 /******************************************************************************/
