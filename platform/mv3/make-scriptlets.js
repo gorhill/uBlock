@@ -59,6 +59,7 @@ export function init() {
         const entry = {
             name: fn.name,
             code: fn.toString(),
+            world: scriptlet.world || 'MAIN',
             dependencies: scriptlet.dependencies,
             requiresTrust: scriptlet.requiresTrust === true,
         };
@@ -96,6 +97,7 @@ export function compile(details) {
         scriptletFiles.set(scriptletToken, {
             name: resourceEntry.name,
             code: createScriptletCoreCode(scriptletToken),
+            world: resourceEntry.world,
             args: new Map(),
             hostnames: new Map(),
             entities: new Map(),
@@ -165,6 +167,7 @@ export async function commit(rulesetId, path, writeFn) {
         );
         content = safeReplace(content, /\$rulesetId\$/, rulesetId, 0);
         content = safeReplace(content, /\$scriptletName\$/, details.name, 0);
+        content = safeReplace(content, '$world$', details.world);
         content = safeReplace(content,
             'self.$argsList$',
             JSON.stringify(Array.from(details.args.keys()).map(a => JSON.parse(a)))
