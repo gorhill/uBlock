@@ -532,7 +532,7 @@
     "description": "Short information about how to create custom filters"
   },
   "1pTrustWarning": {
-    "message": "Do not add filters from untrusted sources.",
+    "message": "Nemojte dodavati filtere iz nepouzdanih izvora.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {
