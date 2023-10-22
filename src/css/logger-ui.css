@@ -169,7 +169,7 @@ body[dir="rtl"] #netInspector #filterExprPicker {
     cursor: pointer;
     display: inline-flex;
     margin: 0 0.5em 0 0;
-    padding: 0.5em;
+    padding: 0.25em;
     white-space: nowrap;
     }
 #netInspector #filterExprPicker span[data-filtex]:last-of-type {
