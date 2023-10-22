@@ -14,6 +14,9 @@ body {
 .body {
     flex-shrink: 0;
     }
+[data-i18n="1pTrustWarning"] {
+    font-weight: bold;
+    }
 .codeMirrorContainer {
     flex-grow: 1;
     }
