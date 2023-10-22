@@ -179,8 +179,11 @@ body[dir="rtl"] #netInspector #filterExprPicker {
     background-color: rgb(var(--primary-70) / 25%);
     border: 1px solid rgb(var(--primary-70));
     }
-#netInspector #filterExprPicker span.on[data-filtex] {
+#netInspector #filterExprPicker span.on[data-filtex],
+#filterExprButton.active {
     background-color: rgb(var(--primary-70) / 40%);
+    }
+#netInspector #filterExprPicker span.on[data-filtex] {
     border: 1px solid rgb(var(--primary-70));
     }
 

@@ -2213,16 +2213,14 @@ const rowFilterer = (( ) => {
         dom.cl.toggle(ev.target, 'expanded');
     };
 
-    const onToggleBuiltinExpression = function(ev) {
+    const builtinFilterExpression = function() {
         builtinFilters.length = 0;
-
-        dom.cl.toggle(ev.target, 'on');
-        const filtexElems = qsa$(ev.currentTarget, '[data-filtex]');
+        const filtexElems = qsa$('#filterExprPicker [data-filtex]');
         const orExprs = [];
         let not = false;
         for ( const filtexElem of filtexElems ) {
-            let filtex = dom.attr(filtexElem, 'data-filtex');
-            let active = dom.cl.has(filtexElem, 'on');
+            const filtex = filtexElem.dataset.filtex;
+            const active = dom.cl.has(filtexElem, 'on');
             if ( filtex === '!' ) {
                 if ( orExprs.length !== 0 ) {
                     builtinFilters.push({
@@ -2250,11 +2248,15 @@ const rowFilterer = (( ) => {
     dom.on('#filterButton', 'click', onFilterButton);
     dom.on('#filterInput > input', 'input', onFilterChangedAsync);
     dom.on('#filterExprButton', 'click', onToggleExtras);
-    dom.on('#filterExprPicker', 'click', '[data-filtex]', onToggleBuiltinExpression);
+    dom.on('#filterExprPicker', 'click', '[data-filtex]', ev => {
+        dom.cl.toggle(ev.target, 'on');
+        builtinFilterExpression();
+    });
 
     // https://github.com/gorhill/uBlock/issues/404
     //   Ensure page state is in sync with the state of its various widgets.
     parseInput();
+    builtinFilterExpression();
     filterAll();
 
     return { filterOne, filterAll };
