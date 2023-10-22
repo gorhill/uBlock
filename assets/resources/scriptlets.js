@@ -738,10 +738,11 @@ function objectPruneFn(
 /******************************************************************************/
 
 builtinScriptlets.push({
-    name: 'set-cookie-helper.fn',
-    fn: setCookieHelper,
+    name: 'set-cookie.fn',
+    fn: setCookieFn,
 });
-function setCookieHelper(
+function setCookieFn(
+    trusted = false,
     name = '',
     value = '',
     expires = '',
@@ -772,7 +773,18 @@ function setCookieHelper(
     if ( path === '/' ) {
         cookieParts.push('; path=/');
     }
-    document.cookie = cookieParts.join('');
+
+    if ( trusted ) {
+        if ( options.domain ) {
+            cookieParts.push(`; domain=${options.domain}`);
+        }
+        cookieParts.push('; Secure');
+    }
+
+    try {
+        document.cookie = cookieParts.join('');
+    } catch(_) {
+    }
 
     if ( options.reload && getCookieValue(name) === value ) {
         window.location.reload();
@@ -3336,7 +3348,7 @@ builtinScriptlets.push({
     world: 'ISOLATED',
     dependencies: [
         'safe-self.fn',
-        'set-cookie-helper.fn',
+        'set-cookie.fn',
     ],
 });
 function setCookie(
@@ -3362,7 +3374,8 @@ function setCookie(
     }
     value = encodeURIComponent(value);
 
-    setCookieHelper(
+    setCookieFn(
+        false,
         name,
         value,
         '',
@@ -3721,7 +3734,7 @@ builtinScriptlets.push({
     world: 'ISOLATED',
     dependencies: [
         'safe-self.fn',
-        'set-cookie-helper.fn',
+        'set-cookie.fn',
     ],
 });
 function trustedSetCookie(
@@ -3753,7 +3766,8 @@ function trustedSetCookie(
         expires = time.toUTCString();
     }
 
-    setCookieHelper(
+    setCookieFn(
+        true,
         name,
         value,
         expires,
