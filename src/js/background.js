@@ -90,6 +90,7 @@ const hiddenSettingsDefault = {
 };
 
 if ( vAPI.webextFlavor.soup.has('devbuild') ) {
+    hiddenSettingsDefault.consoleLogLevel = 'info';
     hiddenSettingsDefault.trustedListPrefixes += ' user-';
 }
 
