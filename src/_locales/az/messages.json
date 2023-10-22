@@ -531,6 +531,10 @@
     "message": "Hər sətirdə yalnız bir filtr. Bu, ya domen adı, ya da Adblock Plus formatında yazılmış filtr ola bilər. Əvvəli <code>!</code> ilə başlayan sətirlər nəzərə alınmayacaqdır.",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "İdxal və əlavə et",
     "description": "English: Import and append"

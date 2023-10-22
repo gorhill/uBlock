@@ -531,6 +531,10 @@
     "message": "Մեկ տողում մեկ զտիչ։ Որպես զտիչ կարող է լինել կայքի անուն կամ EasyList-համաեղելի զտիչ։ <code>! </code>-ով սկսվող տողերը կանտեսվեն։",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "Ներմուծել և հավելել",
     "description": "English: Import and append"

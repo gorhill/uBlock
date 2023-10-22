@@ -531,6 +531,10 @@
     "message": "מסנן אחד לכל שורה. המסנן יכול להיות דומיין פשוט, או מסנן התואם ל- EasyList. שורות עם קידומת <code>!</code> לא יפורשו.",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "ייבא וצרף",
     "description": "English: Import and append"

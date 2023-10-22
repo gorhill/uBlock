@@ -531,6 +531,10 @@
     "message": "ஒரு வரிக்கு ஒரு வடிகட்டி. வடிகட்டி என்பது வெறும் வழங்கிப்பெயராக இருக்கலாம், அல்லது Adblock Plus-க்குப் பொருந்தும் வடிகட்டியாக இருக்கலாம். &lsquo;!&rsquo; எனும் எழுத்தில் தொடங்கும் வரிகள் புறக்கணிக்கப்படும்.",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "இறக்குமதி செய் மற்றும் இணை",
     "description": "English: Import and append"

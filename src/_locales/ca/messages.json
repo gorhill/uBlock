@@ -531,6 +531,10 @@
     "message": "Un filtre per línia. Un filtre pot ser un domini, o un filtre compatible amb l'Adblock Plus. S'ignoraran les línies amb el símbol &lsquo;!&rsquo;.",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "Importar i annexar",
     "description": "English: Import and append"

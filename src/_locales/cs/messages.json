@@ -531,6 +531,10 @@
     "message": "Jeden filtr na řádek. Filtr může být prostý název hostitele nebo filtr kompatibilní s EasyList. Řádky začínající vykřičníkem <code>!</code> budou ignorovány.",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "Importovat a připojit",
     "description": "English: Import and append"

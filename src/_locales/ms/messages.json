@@ -531,6 +531,10 @@
     "message": "Satu penapis setiap baris. Penapis boleh menjadi nama hos biasa, atau penapis yang sesuai dengan Daftar Mudah. Garis yang diawali dengan <code>! </code> akan diabaikan.",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "Import dan melampirkan",
     "description": "English: Import and append"

@@ -531,6 +531,10 @@
     "message": "ഒരു വരിയില്‍ ഒരു ഫില്‍റ്റര്‍ എന്ന രീതിയില്‍. ഒരു ഫില്‍റ്റര്‍ എന്നത്, ഹോസ്റ്റ് നെയിം, അല്ലെങ്കില്‍ ആഡ് ബ്ലോക്ക് പ്ലസ്‌-നോട്‌ കംപാറ്റബിള്‍ ആയ ഫില്‍റ്റര്‍ എന്നിവ ആകാം. &lsquo;!&rsquo; എന്നിവയില്‍ ആരംഭിക്കുന്ന വരികള്‍ ഇഗ്നോര്‍ ചെയ്യപ്പെടും.",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "ഇമ്പോര്‍ട്ടും കൂട്ടിചേര്‍ക്കലും ചെയ്യുക",
     "description": "English: Import and append"

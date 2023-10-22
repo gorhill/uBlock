@@ -531,6 +531,10 @@
     "message": "Unu filtrilo por ĉiu linio. Filtrilo povas esti ordinara gastignomo aŭ Adblock Plus-kongrua filtrilo. Prefiksitaj linioj kun &lsquo;!&rsquo; estos ignorataj.",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "Importi kaj postaldoni",
     "description": "English: Import and append"

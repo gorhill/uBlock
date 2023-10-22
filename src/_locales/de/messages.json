@@ -531,6 +531,10 @@
     "message": "Ein Filter pro Zeile. Ein Filter kann ein einfacher Hostname oder ein EasyList-kompatibler Filter sein. Zeilen mit vorangestelltem <code>!</code> werden ignoriert.",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "Importieren und anfügen …",
     "description": "English: Import and append"

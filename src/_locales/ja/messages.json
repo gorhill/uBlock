@@ -531,6 +531,10 @@
     "message": "1 行につき 1 つのフィルターです。フィルターはただのホスト名でも EasyList と同じ形式でも構いません。<code>!</code> を先頭に付けた行は無視されます。",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "インポートして追加",
     "description": "English: Import and append"

@@ -531,6 +531,10 @@
     "message": "Isang filter kada linya. Pwedeng simpleng hostname o EasyList-compatible ang filter. Hindi papansinin ang mga linyang nagsisimula sa <code>!</code>.",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "I-import at idagdag",
     "description": "English: Import and append"

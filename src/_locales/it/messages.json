@@ -531,6 +531,10 @@
     "message": "Un filtro per riga. Un filtro può essere un semplice hostname, o un filtro compatibile con EasyList. Ogni riga che comincia con <code>!</code> verrà ignorata.",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "Importa e aggiungi",
     "description": "English: Import and append"

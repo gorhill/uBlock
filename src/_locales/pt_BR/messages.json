@@ -531,6 +531,10 @@
     "message": "Um filtro por linha. Um filtro pode ser um simples nome de hospedeiro ou um filtro compatível com o EasyList. As linhas prefixadas com o <code>!</code> serão ignoradas.",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "Importar e anexar",
     "description": "English: Import and append"

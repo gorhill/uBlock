@@ -531,6 +531,10 @@
     "message": "Një filtër për rresht. Filtri mund të jetë thjesht emri i një hosti ose si ata që përdor EasyList. Nuk do të merren parasysh rreshtat që fillojnë me <code>!</code>.",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "Importoj dhe shtoj",
     "description": "English: Import and append"

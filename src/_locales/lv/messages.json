@@ -531,6 +531,10 @@
     "message": "Vienu filtru katrā rindā. Filtrs var būt vienkārši resursa adrese, vai ar Adblock Plus saderīgs filtrs. Rindiņas, kuras sākas ar &lsquo;!&rsquo; tiks ignorētas.",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "Importēt un pievienot",
     "description": "English: Import and append"

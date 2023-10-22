@@ -531,6 +531,10 @@
     "message": "লাইন প্রতি একটি ফিল্টার। একটি ফিল্টার শুধু হোস্টনেম বা অ্যাডব্লক প্লাস-এর সাথে সামঞ্জস্যপূর্ণ ফিল্টার হতে পারে। <code>!</code> দিয়ে শুরু হওয়া লাইন উপেক্ষা করা হবে।",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "আমদানি করে পরিশেষে যোগ করুন",
     "description": "English: Import and append"

@@ -531,6 +531,10 @@
     "message": "หนึ่งตัวกรองต่อบรรทัด ตัวกรองอาจเป็น hostname หรือตัวกรองที่เข้ากันได้กับ EasyList, บรรทัดที่ขึ้นต้นด้วย <code>!</code> จะถูกละเว้น\n",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "Import and append",
     "description": "English: Import and append"

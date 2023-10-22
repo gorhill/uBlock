@@ -531,6 +531,10 @@
     "message": "ఒక్కో పంక్తిలో ఒక ఫిల్టర్ నమోదు. పేర్కొనబడే ఫిల్టర్, కేవలం హోస్టుపేరు లేదా Adblock Plusకి అనువైన ఫిల్టర్ కావొచ్చు. పంక్తిలో మొదట &lsquo;!&rsquo; ఉన్నచో ఆ పంక్తి పరిగణలోకి తీసుకొబడదు.",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "దిగుమతిచేసి పోడిగించుము",
     "description": "English: Import and append"

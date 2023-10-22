@@ -531,6 +531,10 @@
     "message": "Ένα φίλτρο ανά γραμμή. Φίλτρο μπορεί να είναι ένα απλό όνομα κεντρικού υπολογιστή (hostname) ή ένα, συμβατό με το Adblock Plus, φίλτρο. Γραμμές με το πρόθεμα &lsquo;!&rsquo; θα παραβλέπονται.",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "Εισαγωγή και προσάρτηση",
     "description": "English: Import and append"

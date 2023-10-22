@@ -531,6 +531,10 @@
     "message": "Chujia moja kila laini. Chujio inaweza kuwa kuwa jina pangishi (hostname), au chujio linalotumika na Adblock Plus. Laini zilizo na viambishi awali za <code>!</code> zitapuuzwa.",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "Leta na ambatisha",
     "description": "English: Import and append"

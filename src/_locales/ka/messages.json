@@ -531,6 +531,10 @@
     "message": "თითოეული ფილტრი ცალკეულ ხაზზე. ფილტრი შეიძლება იყოს საიტის უბრალო დასახელება ან Adblock Plus-სთან თავსებადი მითითებები. ხაზები &lsquo;!&rsquo; თავსართით უგულებელყოფილი იქნება.",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "შემოტანა და დამატება",
     "description": "English: Import and append"

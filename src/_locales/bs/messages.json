@@ -531,6 +531,10 @@
     "message": "Jedan filter po redu. Filter može biti običan naziv domaćina/hosta ili filter kompatibilan sa EasyList-om. Redovi sa prefiksom <code>!</code> će biti ignorisani.",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "Uvezi i dodaj",
     "description": "English: Import and append"

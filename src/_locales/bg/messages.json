@@ -531,6 +531,10 @@
     "message": "Един филтър на ред. Това може да бъде обикновен адрес или филтър, съвместим с EasyList. Редовете с представка <code>!</code> ще бъдат игнорирани.",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "Внасяне от файл...",
     "description": "English: Import and append"

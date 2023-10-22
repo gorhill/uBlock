@@ -531,6 +531,10 @@
     "message": "Ien filter per rigel. In filter kin in gewoane hostnamme of in Adblock Plus-kompatibel filter wêze. Rigels begjinnend mei <code>!</code> wurde negearre.",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "Ymportearje en tafoegje",
     "description": "English: Import and append"

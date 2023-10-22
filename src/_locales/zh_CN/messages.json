@@ -531,6 +531,10 @@
     "message": "一行一条过滤规则。每条规则可以是一个普通的主机名或者是一条与 EasyList 兼容的过滤规则。以 <code>!</code> 开头的行将被忽略。",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "导入并添加",
     "description": "English: Import and append"

@@ -531,6 +531,10 @@
     "message": "Her satırda bir filtre. Bir filtre yalın bir alan adı veya EasyList-uyumlu bir filtre olabilir. <code>!</code> ile başlayan satırlar yok sayılacaktır.",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "İçe aktar ve ekle",
     "description": "English: Import and append"

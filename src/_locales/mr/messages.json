@@ -531,6 +531,10 @@
     "message": "प्रति ओळ एक फिल्टर. फिल्टर एक साधे होस्ट नावाचा असू शकतो, किंवा एक अद्ब्लोक प्लस सुसंगत फिल्टर असू शकतो. ओळी सह प्रिफिक्स &lsquo;!&rsquo; कढे दुर्लक्ष केले जाईल.",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "आयात आणि समावेश करा",
     "description": "English: Import and append"

@@ -531,6 +531,10 @@
     "message": "每行一個過濾規則。規則可以單純是主機名稱，或是與 EasyList 相容的過濾規則。以 <code>!</code> 開頭的行將被忽略。",
     "description": "Short information about how to create custom filters"
   },
+  "1pTrustWarning": {
+    "message": "Do not add filters from untrusted sources.",
+    "description": "Warning against copy-pasting filters from random sources"
+  },
   "1pImport": {
     "message": "匯入並加入",
     "description": "English: Import and append"
