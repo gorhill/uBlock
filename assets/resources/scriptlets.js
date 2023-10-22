@@ -4091,3 +4091,48 @@ function trustedPruneInboundObject(
 }
 
 /******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'trusted-prune-outbound-object.js',
+    requiresTrust: true,
+    fn: trustedPruneOutboundObject,
+    dependencies: [
+        'object-prune.fn',
+        'safe-self.fn',
+    ],
+});
+function trustedPruneOutboundObject(
+    entryPoint = '',
+    rawPrunePaths = '',
+    rawNeedlePaths = ''
+) {
+    if ( entryPoint === '' ) { return; }
+    let context = globalThis;
+    let prop = entryPoint;
+    for (;;) {
+        const pos = prop.indexOf('.');
+        if ( pos === -1 ) { break; }
+        context = context[prop.slice(0, pos)];
+        if ( context instanceof Object === false ) { return; }
+        prop = prop.slice(pos+1);
+    }
+    if ( typeof context[prop] !== 'function' ) { return; }
+    const safe = safeSelf();
+    const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
+    context[prop] = new Proxy(context[prop], {
+        apply: function(target, thisArg, args) {
+            const objBefore = Reflect.apply(target, thisArg, args);
+            if ( objBefore instanceof Object === false ) { return objBefore; }
+            const objAfter = objectPruneFn(
+                objBefore,
+                rawPrunePaths,
+                rawNeedlePaths,
+                { matchAll: true },
+                extraArgs
+            );
+            return objAfter || objBefore;
+        },
+    });
+}
+
+/******************************************************************************/
