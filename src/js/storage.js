@@ -364,7 +364,6 @@ import {
         netWhitelist: this.arrayFromWhitelist(this.netWhitelist)
     });
     this.netWhitelistModifyTime = Date.now();
-    µb.filteringBehaviorChanged();
 };
 
 /******************************************************************************/

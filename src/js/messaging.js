@@ -345,6 +345,7 @@ const onMessage = function(request, sender, callback) {
     case 'setWhitelist':
         µb.netWhitelist = µb.whitelistFromString(request.whitelist);
         µb.saveWhitelist();
+        µb.filteringBehaviorChanged();
         break;
 
     case 'toggleHostnameSwitch':

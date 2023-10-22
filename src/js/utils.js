@@ -134,13 +134,13 @@ import µb from './background.js';
 
 /******************************************************************************/
 
-µb.fireEvent = function(name) {
+µb.fireEvent = function(name, details = undefined) {
     if (
         self instanceof Object &&
         self.dispatchEvent instanceof Function &&
         self.CustomEvent instanceof Function
     ) {
-        self.dispatchEvent(new CustomEvent(name));
+        self.dispatchEvent(new CustomEvent(name, { detail: details }));
     }
 };
 
@@ -155,9 +155,11 @@ import µb from './background.js';
 
 /******************************************************************************/
 
-µb.filteringBehaviorChanged = function() {
-    vAPI.net.handlerBehaviorChanged();
-    this.fireEvent('filteringBehaviorChanged');
+µb.filteringBehaviorChanged = function(details = {}) {
+    if ( typeof details.direction !== 'number' || details.direction >= 0 ) {
+        vAPI.net.handlerBehaviorChanged();
+    }
+    this.fireEvent('filteringBehaviorChanged', details);
 };
 
 /******************************************************************************/
