@@ -344,7 +344,7 @@
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "Benutzerdefinierte Akzentfarbe",
+    "message": "Personalisierte Akzentfarbe",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsCloudStorageEnabledPrompt": {
@@ -496,7 +496,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupCustom": {
-    "message": "Benutzerdefiniert",
+    "message": "Eigene Filterlisten",
     "description": "Filter lists section name"
   },
   "3pImport": {
@@ -532,7 +532,7 @@
     "description": "Short information about how to create custom filters"
   },
   "1pTrustWarning": {
-    "message": "Do not add filters from untrusted sources.",
+    "message": "Bitte keine Filter aus unseriösen Quellen hinzufügen.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {
@@ -944,7 +944,7 @@
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Wichtig:</b> Potenziell private oder sensible Informationen werden standardmäßig geschwärzt. Ungeschwärzte Informationen können die Lösung eines Problems erschweren.",
+    "message": "<b>Wichtig:</b> Potenziell private oder sensible Informationen werden standardmäßig unkenntlich gemacht. Unkenntlich gemachte Informationen können das Lösen eines Problems erschweren.",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
@@ -1004,11 +1004,11 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
-    "message": "Überarbeiten",
+    "message": "Unkenntlich machen",
     "description": "Text for 'Redact' button"
   },
   "supportUnredact": {
-    "message": "Überarbeitung widerrufen",
+    "message": "Kenntlich machen",
     "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
@@ -1084,7 +1084,7 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "Folgende URL zu Ihren benutzerdefinierten Filterlisten hinzufügen?\n\nTitel: »{{title}}«\nURL: {{url}}",
+    "message": "Folgende URL zu den eigenen Filterlisten hinzufügen?\n\nTitel: »{{title}}«\nURL: {{url}}",
     "description": "No longer used"
   },
   "subscribeButton": {

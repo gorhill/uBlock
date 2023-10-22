@@ -532,7 +532,7 @@
     "description": "Short information about how to create custom filters"
   },
   "1pTrustWarning": {
-    "message": "Do not add filters from untrusted sources.",
+    "message": "Foegje gjin filters fan ûnbekende boarnen ta.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {
