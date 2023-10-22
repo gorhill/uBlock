@@ -72,9 +72,7 @@ import './codemirror/ubo-static-filtering.js';
         what: 'getAutoCompleteDetails'
     }).then(hints => {
         if ( hints instanceof Object === false ) { return; }
-        const mode = cmEditor.getMode();
-        if ( mode.setHints instanceof Function === false ) { return; }
-        mode.setHints(hints);
+        cmEditor.setOption('uboHints', hints);
     });
 
     vAPI.messaging.send('dashboard', {

@@ -89,6 +89,10 @@ const hiddenSettingsDefault = {
     userResourcesLocation: 'unset',
 };
 
+if ( vAPI.webextFlavor.soup.has('devbuild') ) {
+    hiddenSettingsDefault.trustedListPrefixes += ' user-';
+}
+
 const userSettingsDefault = {
     advancedUserEnabled: false,
     alwaysDetachLogger: true,

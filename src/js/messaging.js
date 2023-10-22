@@ -1602,9 +1602,7 @@ const onMessage = function(request, sender, callback) {
         if ( (request.hintUpdateToken || 0) === 0 ) {
             response.redirectResources = redirectEngine.getResourceDetails();
             response.preparseDirectiveEnv = vAPI.webextFlavor.env.slice();
-            response.preparseDirectiveHints =
-                sfp.utils.preparser.getHints();
-            response.expertMode = µb.hiddenSettings.filterAuthorMode;
+            response.preparseDirectiveHints = sfp.utils.preparser.getHints();
         }
         if ( request.hintUpdateToken !== µb.pageStoresToken ) {
             response.originHints = getOriginHints();

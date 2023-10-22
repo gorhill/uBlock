@@ -99,6 +99,7 @@ export const AST_ERROR_PATTERN                      = 1 << iota++;
 export const AST_ERROR_DOMAIN_NAME                  = 1 << iota++;
 export const AST_ERROR_OPTION_DUPLICATE             = 1 << iota++;
 export const AST_ERROR_OPTION_UNKNOWN               = 1 << iota++;
+export const AST_ERROR_OPTION_BADVALUE              = 1 << iota++;
 export const AST_ERROR_IF_TOKEN_UNKNOWN             = 1 << iota++;
 export const AST_ERROR_UNTRUSTED_SOURCE             = 1 << iota++;
 
@@ -845,7 +846,6 @@ export class AstFilterParser {
         // Options
         this.options = options;
         this.interactive = options.interactive || false;
-        this.expertMode = options.expertMode || false;
         this.badTypes = new Set(options.badTypes || []);
         this.maxTokenLength = options.maxTokenLength || 7;
         // TODO: rethink this
@@ -1475,11 +1475,17 @@ export class AstFilterParser {
                 break;
             }
             case NODE_TYPE_NET_OPTION_NAME_URLTRANSFORM:
-                realBad = abstractTypeCount || behaviorTypeCount || unredirectableTypeCount ||
-                    this.options.trustedSource !== true;
-                if ( realBad !== true ) {
-                    const path = this.getNetOptionValue(NODE_TYPE_NET_OPTION_NAME_URLTRANSFORM);
-                    realBad = path.charCodeAt(0) !== 0x2F /* / */;
+                realBad = abstractTypeCount || behaviorTypeCount || unredirectableTypeCount;
+                if ( realBad ) { break; }
+                if ( this.options.trustedSource !== true ) {
+                    this.astError = AST_ERROR_UNTRUSTED_SOURCE;
+                    realBad = true;
+                    break;
+                }
+                const path = this.getNetOptionValue(NODE_TYPE_NET_OPTION_NAME_URLTRANSFORM);
+                if ( path.charCodeAt(0) !== 0x2F /* / */ ) {
+                    this.astError = AST_ERROR_OPTION_BADVALUE;
+                    realBad = true;
                 }
                 break;
             case NODE_TYPE_NET_OPTION_NAME_REMOVEPARAM:
