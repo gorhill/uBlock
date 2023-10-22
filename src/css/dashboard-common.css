@@ -25,7 +25,7 @@ a {
     color: var(--info2-ink);
         fill: var(--info2-ink);
     }
-.fa-icon.info.very-important {
+.info.very-important {
     color: var(--info3-ink);
         fill: var(--info3-ink);
     }
