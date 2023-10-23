@@ -23,7 +23,7 @@ If you accept uBOL's request for additional permissions on the current site, it 
 
 You can set the default filtering mode from uBOL's options page. If you pick the Optimal or Complete mode as the default one, you will need to grant uBOL the permission to read and modify data on all websites.
 
-Keep in mind this is still a work in progress, with these end goals:
+Dalc'hit soñj ez eo uBOL ur raktres war ober c'hoazh hag a zo e bal:
 
 - No broad host permissions at install time -- extended permissions are granted explicitly by the user on a per-site basis.
 

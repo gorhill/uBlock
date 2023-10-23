@@ -580,7 +580,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Εισαγωγή από αρχείο...",
+    "message": "Εισαγωγή από αρχείο…",
     "description": ""
   },
   "rulesExport": {

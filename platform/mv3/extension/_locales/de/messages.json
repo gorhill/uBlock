@@ -108,7 +108,7 @@
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "Benutzerdefinierte Akzentfarbe",
+    "message": "Personalisierte Akzentfarbe",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsNoCSPReportsPrompt": {

@@ -532,7 +532,7 @@
     "description": "Short information about how to create custom filters"
   },
   "1pTrustWarning": {
-    "message": "Do not add filters from untrusted sources.",
+    "message": "信頼できないソースからフィルターを追加しないでください。",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {

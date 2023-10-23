@@ -4,275 +4,275 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Trình chặn nội dung thử nghiệm, không cần quyền. Chặn quảng cáo, trình theo dõi, công cụ khai thác tiền số và hơn thế nữa ngay sau khi cài đặt.",
+    "message": "Ur stanker saotradurioù hep aotre ebet rekis. Stankañ a ra bruderezh, heulierien, minerien ha kalz muioc'h kerkent ha m'eo staliet.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
-    "message": "{{ruleCount}} quy tắc, được chuyển đổi từ {{filterCount}} bộ lọc mạng",
+    "message": "{{ruleCount}} reolenn, amdroet diwar {{filterCount}} sil rouedad",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
-    "message": "uBO Lite — Bảng điều khiển",
+    "message": "uBO Lite — Taolenn-vourzh",
     "description": "English: uBO Lite — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Cảnh báo! Bạn có các thay đổi chưa được lưu",
+    "message": "Diwallit! Kemmoù zo ha n'ho peus enrollet anezho",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Ở lại",
+    "message": "Chom",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Bỏ qua",
+    "message": "Tremen e-bioù",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
-    "message": "Cài đặt",
+    "message": "Arventennoù",
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Danh sách bộ lọc",
+    "message": "Rolloù siloù",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
-    "message": "Bộ lọc của tôi",
+    "message": "Ma siloù",
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Trang tin cậy",
+    "message": "Lec'hiennoù sur",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
-    "message": "Giới thiệu",
+    "message": "Diwar-benn",
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
-    "message": "Chính sách bảo mật",
+    "message": "Politikerezh prevezded",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupFilteringModeLabel": {
-    "message": "chế độ lọc",
+    "message": "mod silañ",
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {
-    "message": "Mở bảng điều khiển",
+    "message": "Digeriñ an daolenn-vourzh",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Chuyển sang chế độ chặn phần tử tạm thời",
+    "message": "Mont e mod lemel elfennoù",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Chuyển sang chế độ chọn phần tử",
+    "message": "Mont e mod diuzer elfennoù",
     "description": "English: Enter element picker mode"
   },
   "popupTipReport": {
-    "message": "Báo cáo lỗi trên trang này",
+    "message": "Danevelliñ ur gudenn el lec'hienn-mañ",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipSaveRules": {
-    "message": "Nhấn để làm các thay đổi của bạn thường trực.",
+    "message": "Klikit evit lakaat ho kemmoù e pleustr da vat.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Nhấn để hoàn tác các thay đổi của bạn.",
+    "message": "Klikit evit nullañ ar c'hemmoù ho peus graet.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {
-    "message": "Mở rộng",
+    "message": "Muioc'h",
     "description": "Label to be used to show popup panel sections"
   },
   "popupGrantGreatPowers": {
-    "message": "Nhấp để cấp cho uBO Lite những quyền mở rộng trên trang này.\nCác quyền mở rộng cho phép việc chặn nội dung hiệu quả hơn.",
+    "message": "Klikit evit reiñ aotreoù ouzhpenn da uBO Lite el lec'hienn-mañ.\nAn aotreoù ouzhpenn-se a greñvay efedusted ar stankañ saotradurioù.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupRevokeGreatPowers": {
-    "message": "Nhấp để thu hồi các quyền mở rộng trên trang này",
+    "message": "Klikit evit terriñ an aotreoù ouzhpenn bet roet el lec'hienn-mañ",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Ít hơn",
+    "message": "Nebeutoc'h",
     "description": "Label to be used to hide popup panel sections"
   },
   "settingsIconBadgePrompt": {
-    "message": "Hiển thị số lượng yêu cầu bị chặn trên biểu tượng",
+    "message": "Diskouez an niver a rekedoù stanket war an arouez",
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsAppearance": {
-    "message": "Diện mạo",
+    "message": "Neuz",
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
-    "message": "Giao diện",
+    "message": "Tem",
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "Tùy chọn màu nền",
+    "message": "Liv splannañ personelaet",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsNoCSPReportsPrompt": {
-    "message": "Chặn các báo cáo CSP",
+    "message": "Stankañ an danevelloù CSP",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "omnipotenceLabel": {
-    "message": "Bật tính năng lọc mở rộng trên tất cả các trang web",
+    "message": "Enaouiñ ar silañ amplaet en holl lec'hiennoù",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "omnipotenceLegend": {
-    "message": "uBO Lite có thể áp dụng tính năng lọc mở rộng trên một trang web nhất định chỉ sau khi bạn chủ động cấp quyền cho tiện ích để sửa đổi dữ liệu trên trang web đó. Cài đặt này cho phép bạn cấp quyền cho lọc mở rộng tới tất cả các trang web cùng một lúc.",
+    "message": "uBO Lite can apply extended filtering on a given website only after you explicitly grant the extension permissions to modify data on that website. This setting allows you to grant permissions for extended filtering to all websites at once.",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
-    "message": "Mặc định",
+    "message": "Dre ziouer",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAds": {
-    "message": "Quảng cáo",
+    "message": "Bruderezh",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupPrivacy": {
-    "message": "Riêng tư",
+    "message": "Prevezded",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Các tên miền nguy hiểm",
+    "message": "Malware domains",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
-    "message": "Phiền toái",
+    "message": "Saotradurioù",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMisc": {
-    "message": "Linh tinh",
+    "message": "A bep seurt",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupRegions": {
-    "message": "Khu vực, ngôn ngữ",
+    "message": "Rannvroioù, broioù",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "1pFormatHint": {
-    "message": "Một bộ lọc trên mỗi dòng. Một bộ lọc có thể là một tên máy chủ đơn giản, hoặc một bộ lọc tương thích EasyList. Những dòng bắt đầu với <code>!</code> sẽ bị bỏ qua.",
+    "message": "One filter per line. A filter can be a plain hostname, or an EasyList-compatible filter. Lines prefixed with <code>!</code> will be ignored.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
-    "message": "Nhập và thêm vào",
+    "message": "Enporzhiañ hag ouzhpennañ",
     "description": "English: Import and append"
   },
   "1pExport": {
-    "message": "Xuất",
+    "message": "Ezporzhiañ",
     "description": "English: Export"
   },
   "1pExportFilename": {
-    "message": "bộ-lọc-tĩnh-ublock-của-tôi_{{datetime}}.txt",
+    "message": "ma-siloù-statek-ublock_{{datetime}}.txt",
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "whitelistPrompt": {
-    "message": "Các chỉ thị trang tin cậy chỉ định các trang web nào uBO Lite nên bị tắt. Một mục trên mỗi dòng.",
+    "message": "The trusted site directives dictate on which web pages uBO Lite should be disabled. One entry per line.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Nhập và thêm vào",
+    "message": "Enporzhiañ hag ouzhpennañ",
     "description": "English: Import and append"
   },
   "whitelistExport": {
-    "message": "Xuất",
+    "message": "Ezporzhiañ",
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "các-trang-tin-cậy-ublock-của-tôi_{{datetime}}.txt",
+    "message": "ma-lec'hiennoù-fizius-ublock_{{datetime}}.txt",
     "description": "The default filename to use for import/export purpose"
   },
   "aboutChangelog": {
-    "message": "Nhật ký thay đổi",
+    "message": "Deizlevr ar cheñchamantoù",
     "description": ""
   },
   "aboutCode": {
-    "message": "Mã nguồn (GPLv3)",
+    "message": "Kod mammenn (GPLv3)",
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Những người đóng góp",
+    "message": "Kenlabourerien",
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Mã nguồn",
+    "message": "Kod mammenn",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
-    "message": "Bản dịch",
+    "message": "Troidigezhioù",
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
-    "message": "Danh sách bộ lọc",
+    "message": "Rolloù ar siloù",
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "Các phụ thuộc bên ngoài (tương thích GPLv3):",
+    "message": "External dependencies (GPLv3-compatible):",
     "description": "Shown in the About pane"
   },
   "genericSubmit": {
-    "message": "Xác nhận",
+    "message": "Kas",
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Áp dụng các thay đổi",
+    "message": "Lakaat e pleustr",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
-    "message": "Phục hồi",
+    "message": "Nullañ",
     "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
-    "message": "Chào mừng",
+    "message": "Donemat",
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "Bạn vừa cài đặt uBO Lite. Bạn có thể chọn chế độ của bộ lọc mặc định để sử dụng trên tất cả các trang web. Theo mặc định, chế độ <em>Cơ bản</em> được chọn vì chế độ này không yêu cầu quyền đọc và thay đổi dữ liệu. Nếu bạn tin tưởng uBO Lite, bạn có thể cấp cho bộ lọc với quyền rộng rãi để đọc và thay đổi dữ liệu trên tất cả các trang web để kích hoạt khả năng lọc nâng cao hơn cho tất cả các trang web theo mặc định.",
+    "message": "You have just installed uBO Lite. Here you can choose the default filtering mode to use on all websites.\n\nBy default, <em>Basic</em> mode is selected because it does not require the permission to read and modify data. If you trust uBO Lite, you can give it broad permission to read and modify data on all websites in order to enable more advanced filtering capabilities for all websites by default.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
-    "message": "Chế độ bộ lọc mặc định",
+    "message": "Mod silañ dre ziouer",
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "Chế độ lọc mặc định sẽ ghi đè các chế độ bộ lọc trên mỗi trang web. Bạn có thể điều chỉnh chế độ lọc trên bất kỳ trang web nào và theo bất kỳ chế độ nào hoạt động tốt nhất trên trang web đó. Mỗi chế độ đều có ưu điểm và nhược điểm riêng.",
+    "message": "The default filtering mode will be overridden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
-    "message": "Không có bộ lọc",
+    "message": "Tamm silañ ebet",
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
-    "message": "Cơ bản",
+    "message": "diazez",
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
-    "message": "tối ưu",
+    "message": "ar gwellañ",
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
-    "message": "Hoàn toàn",
+    "message": "klok",
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Chế độ lọc mạng cơ bản từ các danh sách bộ lọc đã chọn.\n\nKhông yêu cầu quyền về đọc và thay đổi dữ liệu trên các trang web.\n",
+    "message": "Basic network filtering from selected filter lists.\n\nDoes not require permission to read and modify data on websites.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Lọc mạng với mức nâng cao cộng với lọc mở rộng cụ thể từ danh sách bộ lọc đã chọn.\n\nYêu cầu cấp quyền để đọc và thay đổi dữ liệu trên tất cả các trang web.",
+    "message": "Advanced network filtering plus specific extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Lọc mạng với chế độ nâng cao cộng với lọc mở rộng cụ thể và chung chung từ danh sách bộ lọc đã chọn.\n\nYêu cầu cấp quyền để đọc và thay đổi dữ liệu trên tất cả các trang web.\n\nVới chế độ lọc chung có thể gây ra tốn tài nguyên trang web cao hơn.",
+    "message": "Advanced network filtering plus specific and generic extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.\n\nGeneric extended filtering may cause higher webpage resources usage.",
     "description": "This describes the 'complete' filtering mode"
   },
   "behaviorSectionLabel": {
-    "message": "Hành vi",
+    "message": "Emzalc'h",
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Tự động tải lại trang khi thay đổi chế độ bộ lọc",
+    "message": "Adkargañ ar bajenn ent-emgefreek pa vez cheñchet an doare silañ",
     "description": "Label for a checkbox in the options page"
   }
 }
