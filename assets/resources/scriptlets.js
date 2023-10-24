@@ -1365,7 +1365,7 @@ function addEventListenerDefuser(
 ) {
     const safe = safeSelf();
     const extraArgs = safe.getExtraArgs(Array.from(arguments), 2);
-    const reType = safe.patternToRegex(type);
+    const reType = safe.patternToRegex(type, undefined, true);
     const rePattern = safe.patternToRegex(pattern);
     const log = shouldLog(extraArgs);
     const debug = shouldDebug(extraArgs);
