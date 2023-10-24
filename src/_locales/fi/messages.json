@@ -532,7 +532,7 @@
     "description": "Short information about how to create custom filters"
   },
   "1pTrustWarning": {
-    "message": "Älä lisää suodattimia lähteistä, joihin ei ole luotettu.",
+    "message": "Älä lisää suodattimia lähteistä, joihin et luota.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {
