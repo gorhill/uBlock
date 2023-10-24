@@ -233,6 +233,12 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
   const ima = {};
 
   class AdDisplayContainer {
+    constructor(containerElement) {
+      const divElement = document.createElement("div");
+      divElement.style.setProperty("display", "none", "important");
+      divElement.style.setProperty("visibility", "collapse", "important");
+      containerElement.appendChild(divElement);
+    }
     destroy() {}
     initialize() {}
   }
@@ -335,17 +341,30 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
       }
     }
 
-    addEventListener(t, c) {
-      if (!this.listeners.has(t)) {
-        this.listeners.set(t, new Set());
+    addEventListener(types, c) {
+      if (!Array.isArray(types)) {
+        types = [types];
       }
-      this.listeners.get(t).add(c);
+
+      for (const t of types) {
+        if (!this.listeners.has(t)) {
+          this.listeners.set(t, new Set());
+        }
+        this.listeners.get(t).add(c);
+      }
     }
 
-    removeEventListener(t, c) {
-      const typeSet = this.listeners.get(t);
-      if (!typeSet) { return; }
-      typeSet.delete(c);
+    removeEventListener(types, c) {
+      if (!Array.isArray(types)) {
+        types = [types];
+      }
+
+      for (const t of types) {
+        const typeSet = this.listeners.get(t);
+        if (typeSet) {
+          typeSet.delete(c);
+        }
+      }
     }
   }
 
@@ -553,7 +572,7 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
       return "unknown";
     }
     getUniversalAdIds() {
-      return [""];
+      return [new UniversalAdIdInfo()];
     }
     getUniversalAdIdValue() {
       return "unknown";
@@ -765,7 +784,7 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
     getAdIdRegistry() {
       return "";
     }
-    getAdIsValue() {
+    getAdIdValue() {
       return "";
     }
   }
@@ -793,12 +812,12 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
       FULL: "full",
       LIMITED: "limited",
     },
-    OmidVerificationVendor: new Proxy({}, {
-        get(target, prop) {
-            if ( typeof prop === 'number' ) { return ''; }
-            return 0;
-        }
-    }),
+    OmidVerificationVendor: {
+      1: "OTHER",
+      2: "GOOGLE",
+      GOOGLE: 2,
+      OTHER: 1
+    },
     settings: new ImaSdkSettings(),
     UiElements: {
       AD_ATTRIBUTION: "adAttribution",
