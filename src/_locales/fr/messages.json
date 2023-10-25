@@ -537,11 +537,11 @@
   },
   "1pImport": {
     "message": "Importer",
-    "description": "English: Import and append"
+    "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
     "message": "Exporter",
-    "description": "English: Export"
+    "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
     "message": "mes-filtres-statiques-ublock_{{datetime}}.txt",
@@ -585,7 +585,7 @@
   },
   "rulesExport": {
     "message": "Exporter vers un fichier",
-    "description": ""
+    "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
     "message": "mes-regles-de-filtrage-dynamique-ublock_{{datetime}}.txt",
@@ -621,11 +621,11 @@
   },
   "whitelistImport": {
     "message": "Importer",
-    "description": "English: Import and append"
+    "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
     "message": "Exporter",
-    "description": "English: Export"
+    "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
     "message": "mes-sites-fiables-ublock-{{datetime}}.txt",

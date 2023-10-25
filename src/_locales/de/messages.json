@@ -536,12 +536,12 @@
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {
-    "message": "Importieren und anfügen …",
-    "description": "English: Import and append"
+    "message": "Importieren und anfügen",
+    "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "Exportieren …",
-    "description": "English: Export"
+    "message": "Exportieren",
+    "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
     "message": "ublock-statische-filter_{{datetime}}.txt",
@@ -584,8 +584,8 @@
     "description": ""
   },
   "rulesExport": {
-    "message": "In Datei exportieren …",
-    "description": ""
+    "message": "In eine Datei exportieren ...",
+    "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
     "message": "ublock-dynamische-regeln_{{datetime}}.txt",
@@ -620,12 +620,12 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Importieren und anfügen …",
-    "description": "English: Import and append"
+    "message": "Importieren und anfügen",
+    "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
-    "message": "Exportieren …",
-    "description": "English: Export"
+    "message": "Exportieren",
+    "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
     "message": "ublock-ausnahmeregeln_{{datetime}}.txt",

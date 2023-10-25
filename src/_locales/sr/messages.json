@@ -537,11 +537,11 @@
   },
   "1pImport": {
     "message": "Увези и додај",
-    "description": "English: Import and append"
+    "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
     "message": "Извези",
-    "description": "English: Export"
+    "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
     "message": "моји-ublock-филтери_{{datetime}}.txt",
@@ -585,7 +585,7 @@
   },
   "rulesExport": {
     "message": "Извези у датотеку...",
-    "description": ""
+    "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
     "message": "моја-ublock-динамичка-правила_{{datetime}}.txt",
@@ -621,11 +621,11 @@
   },
   "whitelistImport": {
     "message": "Увези и додај",
-    "description": "English: Import and append"
+    "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
     "message": "Извези",
-    "description": "English: Export"
+    "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
     "message": "моји-ublock-поуздани-сајтови_{{datetime}}.txt",

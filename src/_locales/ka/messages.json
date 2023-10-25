@@ -537,11 +537,11 @@
   },
   "1pImport": {
     "message": "შემოტანა და დამატება",
-    "description": "English: Import and append"
+    "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
     "message": "შენახვა",
-    "description": "English: Export"
+    "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
     "message": "ჩემი-ublock-მუდმივი-ფილტრები_{{datetime}}.txt",
@@ -585,7 +585,7 @@
   },
   "rulesExport": {
     "message": "ფაილში შენახვა",
-    "description": ""
+    "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
     "message": "ჩემი-ublock-ცვალებადი-წესები_{{datetime}}.txt",
@@ -621,11 +621,11 @@
   },
   "whitelistImport": {
     "message": "შემოტანა და დამატება",
-    "description": "English: Import and append"
+    "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
     "message": "შენახვა",
-    "description": "English: Export"
+    "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
     "message": "ჩემი-ublock-გამონაკლისები_{{datetime}}.txt",

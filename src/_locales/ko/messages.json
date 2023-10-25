@@ -537,11 +537,11 @@
   },
   "1pImport": {
     "message": "가져오기 및 추가하기",
-    "description": "English: Import and append"
+    "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
     "message": "내보내기",
-    "description": "English: Export"
+    "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
     "message": "ublock-고정필터_{{datetime}}.txt",
@@ -585,7 +585,7 @@
   },
   "rulesExport": {
     "message": "파일로 내보내기...",
-    "description": ""
+    "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
     "message": "ublock-동적규칙_{{datetime}}.txt",
@@ -621,11 +621,11 @@
   },
   "whitelistImport": {
     "message": "가져오기 및 추가하기",
-    "description": "English: Import and append"
+    "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
     "message": "내보내기",
-    "description": "English: Export"
+    "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
     "message": "ublock-제외목록_{{datetime}}.txt",

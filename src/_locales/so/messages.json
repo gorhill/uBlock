@@ -537,11 +537,11 @@
   },
   "1pImport": {
     "message": "Hal URL laynkiiba. URL-yada aan ansax ahayn waa la iska indho-tiraa aamusnaan.",
-    "description": "English: Import and append"
+    "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
     "message": "Waqtigii dhacay",
-    "description": "English: Export"
+    "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
     "message": "fiiri nuxurka",
@@ -585,7 +585,7 @@
   },
   "rulesExport": {
     "message": "Xeerarka joogtada ah",
-    "description": ""
+    "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
     "message": "Xeerarka ku meel gaadhka ah",
@@ -621,11 +621,11 @@
   },
   "whitelistImport": {
     "message": "my-ublock-dynamic-rules_{{datetime}}.txt",
-    "description": "English: Import and append"
+    "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
     "message": "Liiska xeerarka shaandhaynta firfircoon.",
-    "description": "English: Export"
+    "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
     "message": "Xeerka syntax: <code> nooca goobta loo socdo</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>full documents</a> ).",

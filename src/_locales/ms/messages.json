@@ -537,11 +537,11 @@
   },
   "1pImport": {
     "message": "Import dan melampirkan",
-    "description": "English: Import and append"
+    "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
     "message": "Eksport",
-    "description": "English: Export"
+    "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
     "message": "my-ublock-static-filter _ {{datetime}}. txt",
@@ -585,7 +585,7 @@
   },
   "rulesExport": {
     "message": "Eksport ke fail",
-    "description": ""
+    "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
     "message": "my-ublock-dynamic-rules_{{datetime}}.txt\n",
@@ -621,11 +621,11 @@
   },
   "whitelistImport": {
     "message": "Import dan melampirkan",
-    "description": "English: Import and append"
+    "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
     "message": "Eksport",
-    "description": "English: Export"
+    "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
     "message": "my-ublock-trusted-sites_{{datetime}}.txt\n",

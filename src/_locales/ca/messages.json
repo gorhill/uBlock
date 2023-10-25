@@ -536,12 +536,12 @@
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {
-    "message": "Importar i annexar",
-    "description": "English: Import and append"
+    "message": "Importa i annexa",
+    "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "Exportar",
-    "description": "English: Export"
+    "message": "Exporta",
+    "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
     "message": "ublock-custom-filters_{{datetime}}.txt",
@@ -585,7 +585,7 @@
   },
   "rulesExport": {
     "message": "Exporta a...",
-    "description": ""
+    "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
     "message": "my-ublock-dynamic-rules.txt",
@@ -620,12 +620,12 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Imporar i annexar",
-    "description": "English: Import and append"
+    "message": "Importa i annexa",
+    "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
-    "message": "Exportar",
-    "description": "English: Export"
+    "message": "Exporta",
+    "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
     "message": "Llista-blanca-de-l'ublock_{{datetime}}.txt",

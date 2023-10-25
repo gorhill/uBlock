@@ -537,11 +537,11 @@
   },
   "1pImport": {
     "message": "I-import at idagdag",
-    "description": "English: Import and append"
+    "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
     "message": "I-export",
-    "description": "English: Export"
+    "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
     "message": "mga-static-filter-ko-sa-ublock_{{datetime}}.txt",
@@ -585,7 +585,7 @@
   },
   "rulesExport": {
     "message": "I-export sa file",
-    "description": ""
+    "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
     "message": "mga-dynamikong-patakaran-ko-sa-ublock_{{datetime}}.txt",
@@ -621,11 +621,11 @@
   },
   "whitelistImport": {
     "message": "I-import at idagdag",
-    "description": "English: Import and append"
+    "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
     "message": "I-export",
-    "description": "English: Export"
+    "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
     "message": "mga-pinagkakatiwalaan-kong-site-sa-ublock_{{datetime}}.txt",

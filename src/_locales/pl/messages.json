@@ -537,11 +537,11 @@
   },
   "1pImport": {
     "message": "Importuj i dołącz",
-    "description": "English: Import and append"
+    "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
     "message": "Eksportuj",
-    "description": "English: Export"
+    "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
     "message": "ublock-statyczne-filtry_{{datetime}}.txt",
@@ -584,8 +584,8 @@
     "description": ""
   },
   "rulesExport": {
-    "message": "Eksportuj do pliku…",
-    "description": ""
+    "message": "Eksportuj do pliku...",
+    "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
     "message": "ublock-dynamiczne-reguly_{{datetime}}.txt",
@@ -621,11 +621,11 @@
   },
   "whitelistImport": {
     "message": "Importuj i dołącz",
-    "description": "English: Import and append"
+    "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
     "message": "Eksportuj",
-    "description": "English: Export"
+    "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
     "message": "ublock-zaufane-witryny_{{datetime}}.txt",

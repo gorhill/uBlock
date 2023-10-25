@@ -537,11 +537,11 @@
   },
   "1pImport": {
     "message": "Importovať a pripojiť",
-    "description": "English: Import and append"
+    "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
     "message": "Exportovať",
-    "description": "English: Export"
+    "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
     "message": "ublock-moje-statické-filtre_{{datetime}}.txt",
@@ -584,8 +584,8 @@
     "description": ""
   },
   "rulesExport": {
-    "message": "Exportovať zo súboru",
-    "description": ""
+    "message": "Exportovať do súboru",
+    "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
     "message": "ublock-moje-dynamické-pravidlá_{{datetime}}.txt",
@@ -621,11 +621,11 @@
   },
   "whitelistImport": {
     "message": "Importovať a pripojiť",
-    "description": "English: Import and append"
+    "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
     "message": "Exportovať",
-    "description": "English: Export"
+    "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
     "message": "ublock-doveryhodne-stranky_{{datetime}}.txt",

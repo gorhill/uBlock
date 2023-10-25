@@ -537,11 +537,11 @@
   },
   "1pImport": {
     "message": "Tuo ja lisää...",
-    "description": "English: Import and append"
+    "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "Vie tiedostoon...",
-    "description": "English: Export"
+    "message": "Vie",
+    "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
     "message": "omat-staattiset-ublock-suodattimet_{{datetime}}.txt",
@@ -584,8 +584,8 @@
     "description": ""
   },
   "rulesExport": {
-    "message": "Vie tiedostoon...",
-    "description": ""
+    "message": "Vie tiedostoon",
+    "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
     "message": "omat-dynaamiset-ublock-saannot_{{datetime}}.txt",
@@ -620,12 +620,12 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Tuo ja lisää...",
-    "description": "English: Import and append"
+    "message": "Tuo ja lisää",
+    "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
-    "message": "Vie tiedostoon...",
-    "description": "English: Export"
+    "message": "Vie",
+    "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
     "message": "omat-luotetut-ublock-sivustot_{{datetime}}.txt",

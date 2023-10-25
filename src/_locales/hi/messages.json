@@ -537,11 +537,11 @@
   },
   "1pImport": {
     "message": "इम्पोर्ट करें और जोड़ें",
-    "description": "English: Import and append"
+    "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
     "message": "निर्यात करें",
-    "description": "English: Export"
+    "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
     "message": "मेरे-ublock-स्‍थिर-फिल्टेरें_{{datetime}}.txt",
@@ -585,7 +585,7 @@
   },
   "rulesExport": {
     "message": "फाइल में एक्सपोर्ट करें ",
-    "description": ""
+    "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
     "message": "मेरे-ublock-डायनामिक-नियम_{{datetime}}.txt",
@@ -621,11 +621,11 @@
   },
   "whitelistImport": {
     "message": "इम्पोर्ट करें और जोड़ें",
-    "description": "English: Import and append"
+    "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
     "message": "निर्यात करें",
-    "description": "English: Export"
+    "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
     "message": "मेरे-उबलॉक-व्हाइटलिस्ट_{{datetime}}.txt",
