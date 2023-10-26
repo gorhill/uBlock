@@ -62,6 +62,7 @@ function safeSelf() {
         'fetch': self.fetch,
         'JSON_parse': self.JSON.parse.bind(self.JSON),
         'JSON_stringify': self.JSON.stringify.bind(self.JSON),
+        'toString': self.Function.prototype.toString,
         'log': console.log.bind(console),
         uboLog(...args) {
             if ( scriptletGlobals.has('canDebug') === false ) { return; }
@@ -1375,7 +1376,7 @@ function addEventListenerDefuser(
                 let type, handler;
                 try {
                     type = String(args[0]);
-                    handler = String(args[1]);
+                    handler = safe.toString.call(args[1]);
                 } catch(ex) {
                 }
                 const matchesType = safe.RegExp_test.call(reType, type);
@@ -1624,7 +1625,7 @@ function adjustSetInterval(
             const [ a, b ] = args;
             if (
                 (delay === -1 || b === delay) &&
-                reNeedle.test(a.toString())
+                reNeedle.test(safe.toString.call(a))
             ) {
                 args[1] = b * boost;
             }
@@ -1678,7 +1679,7 @@ function adjustSetTimeout(
             const [ a, b ] = args;
             if (
                 (delay === -1 || b === delay) &&
-                reNeedle.test(a.toString())
+                reNeedle.test(safe.toString.call(a))
             ) {
                 args[1] = b * boost;
             }
@@ -1708,7 +1709,7 @@ function noEvalIf(
     window.eval = new Proxy(window.eval, {  // jshint ignore: line
         apply: function(target, thisArg, args) {
             const a = args[0];
-            if ( reNeedle.test(a.toString()) ) { return; }
+            if ( reNeedle.test(safe.toString.call(a)) ) { return; }
             return target.apply(thisArg, args);
         }
     });
@@ -2053,7 +2054,7 @@ function noSetIntervalIf(
     const reNeedle = safe.patternToRegex(needle);
     self.setInterval = new Proxy(self.setInterval, {
         apply: function(target, thisArg, args) {
-            const a = String(args[0]);
+            const a = safe.toString.call(args[0]);
             const b = args[1];
             if ( log !== undefined ) {
                 log('uBO: setInterval("%s", %s)', a, b);
@@ -2115,7 +2116,7 @@ function noSetTimeoutIf(
     const reNeedle = safe.patternToRegex(needle);
     self.setTimeout = new Proxy(self.setTimeout, {
         apply: function(target, thisArg, args) {
-            const a = String(args[0]);
+            const a = safe.toString.call(args[0]);
             const b = args[1];
             if ( log !== undefined ) {
                 log('uBO: setTimeout("%s", %s)', a, b);
