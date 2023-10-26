@@ -99,6 +99,7 @@
 		"title": "uBlock filters – Unbreak",
 		"contentURL": [
 			"https://ublockorigin.github.io/uAssets/filters/unbreak.txt",
+			"assets/ublock/unbreak.min.txt",
 			"assets/ublock/unbreak.txt"
 		],
 		"cdnURLs": [
@@ -116,12 +117,13 @@
 		"title": "uBlock filters – Quick fixes",
 		"contentURL": [
 			"https://ublockorigin.github.io/uAssets/filters/quick-fixes.txt",
+			"assets/ublock/quick-fixes.min.txt",
 			"assets/ublock/quick-fixes.txt"
 		],
 		"cdnURLs": [
-			"https://ublockorigin.github.io/uAssetsCDN/filters/quick-fixes.txt",
-			"https://ublockorigin.pages.dev/filters/quick-fixes.txt",
-			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@latest/filters/quick-fixes.txt"
+			"https://ublockorigin.github.io/uAssetsCDN/filters/quick-fixes.min.txt",
+			"https://ublockorigin.pages.dev/filters/quick-fixes.min.txt",
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@latest/filters/quick-fixes.min.txt"
 		],
 		"supportURL": "https://github.com/uBlockOrigin/uAssets"
 	},
