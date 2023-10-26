@@ -536,11 +536,11 @@
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {
-    "message": "导入并附加规则",
+    "message": "导入并添加…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "导出规则",
+    "message": "导出…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
@@ -584,7 +584,7 @@
     "description": ""
   },
   "rulesExport": {
-    "message": "导出到文件",
+    "message": "导出到文件...",
     "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
@@ -620,11 +620,11 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "导入并添加",
+    "message": "导入并添加…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
-    "message": "导出",
+    "message": "导出…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {

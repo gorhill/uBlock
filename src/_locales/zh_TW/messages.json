@@ -536,11 +536,11 @@
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {
-    "message": "匯入並加入",
+    "message": "匯入並加入…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "匯出",
+    "message": "匯出…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
@@ -620,11 +620,11 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "匯入並加入",
+    "message": "匯入並加入…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
-    "message": "匯出",
+    "message": "匯出…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
@@ -1052,7 +1052,7 @@
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "備份到檔案…",
+    "message": "備份至檔案…",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
