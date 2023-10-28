@@ -56,11 +56,13 @@ const resourceTimeFromXhr = xhr => {
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Age
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Date
         let networkTime = 0;
-        const age = parseInt(xhr.getResponseHeader('Age'), 10);
-        if ( isNaN(age) === false ) {
-            const time = (new Date(xhr.getResponseHeader('Date'))).getTime();
-            if ( isNaN(time) === false ) {
-                networkTime = time - age * 1000;
+        if ( assetTime === 0 ) {
+            const age = parseInt(xhr.getResponseHeader('Age'), 10);
+            if ( isNaN(age) === false ) {
+                const time = (new Date(xhr.getResponseHeader('Date'))).getTime();
+                if ( isNaN(time) === false ) {
+                    networkTime = time - age * 1000;
+                }
             }
         }
         return Math.max(assetTime, networkTime, 0);
