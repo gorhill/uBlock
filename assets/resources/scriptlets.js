@@ -630,6 +630,7 @@ builtinScriptlets.push({
     fn: objectPruneFn,
     dependencies: [
         'matches-stack-trace.fn',
+        'object-find-owner.fn',
         'safe-self.fn',
         'should-log.fn',
     ],
@@ -662,50 +663,10 @@ function objectPruneFn(
             return;
         }
     }
-    if ( objectPruneFn.findOwner === undefined ) {
-        objectPruneFn.findOwner = (root, path, prune = false) => {
-            let owner = root;
-            let chain = path;
-            for (;;) {
-                if ( typeof owner !== 'object' || owner === null  ) { return false; }
-                const pos = chain.indexOf('.');
-                if ( pos === -1 ) {
-                    if ( prune === false ) {
-                        return owner.hasOwnProperty(chain);
-                    }
-                    let modified = false;
-                    if ( chain === '*' ) {
-                        for ( const key in owner ) {
-                            if ( owner.hasOwnProperty(key) === false ) { continue; }
-                            delete owner[key];
-                            modified = true;
-                        }
-                    } else if ( owner.hasOwnProperty(chain) ) {
-                        delete owner[chain];
-                        modified = true;
-                    }
-                    return modified;
-                }
-                const prop = chain.slice(0, pos);
-                if (
-                    prop === '[]' && Array.isArray(owner) ||
-                    prop === '*' && owner instanceof Object
-                ) {
-                    const next = chain.slice(pos + 1);
-                    let found = false;
-                    for ( const key of Object.keys(owner) ) {
-                        found = objectPruneFn.findOwner(owner[key], next, prune) || found;
-                    }
-                    return found;
-                }
-                if ( owner.hasOwnProperty(prop) === false ) { return false; }
-                owner = owner[prop];
-                chain = chain.slice(pos + 1);
-            }
-        };
+    if ( objectPruneFn.mustProcess === undefined ) {
         objectPruneFn.mustProcess = (root, needlePaths) => {
             for ( const needlePath of needlePaths ) {
-                if ( objectPruneFn.findOwner(root, needlePath) === false ) {
+                if ( objectFindOwnerFn(root, needlePath) === false ) {
                     return false;
                 }
             }
@@ -724,7 +685,7 @@ function objectPruneFn(
     let outcome = 'nomatch';
     if ( objectPruneFn.mustProcess(obj, needlePaths) ) {
         for ( const path of prunePaths ) {
-            if ( objectPruneFn.findOwner(obj, path, true) ) {
+            if ( objectFindOwnerFn(obj, path, true) ) {
                 outcome = 'match';
             }
         }
@@ -733,6 +694,58 @@ function objectPruneFn(
         objectPruneFn.logJson(jsonBefore, `prune:"${rawPrunePaths}" log:"${logLevel}"`, reLogNeedle);
     }
     if ( outcome === 'match' ) { return obj; }
+}
+
+/******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'object-find-owner.fn',
+    fn: objectFindOwnerFn,
+});
+function objectFindOwnerFn(
+    root,
+    path,
+    prune = false
+) {
+    let owner = root;
+    let chain = path;
+    for (;;) {
+        if ( typeof owner !== 'object' || owner === null  ) { return false; }
+        const pos = chain.indexOf('.');
+        if ( pos === -1 ) {
+            if ( prune === false ) {
+                return owner.hasOwnProperty(chain);
+            }
+            let modified = false;
+            if ( chain === '*' ) {
+                for ( const key in owner ) {
+                    if ( owner.hasOwnProperty(key) === false ) { continue; }
+                    delete owner[key];
+                    modified = true;
+                }
+            } else if ( owner.hasOwnProperty(chain) ) {
+                delete owner[chain];
+                modified = true;
+            }
+            return modified;
+        }
+        const prop = chain.slice(0, pos);
+        if (
+            prop === '[]' && Array.isArray(owner) ||
+            prop === '*' && owner instanceof Object
+        ) {
+            const next = chain.slice(pos + 1);
+            let found = false;
+            for ( const key of Object.keys(owner) ) {
+                found = objectFindOwnerFn(owner[key], next, prune) || found;
+            }
+            return found;
+        }
+        if ( owner.hasOwnProperty(prop) === false ) { return false; }
+        owner = owner[prop];
+        chain = chain.slice(pos + 1);
+    }
+    return true;
 }
 
 /******************************************************************************/
@@ -4055,6 +4068,7 @@ builtinScriptlets.push({
     requiresTrust: true,
     fn: trustedPruneInboundObject,
     dependencies: [
+        'object-find-owner.fn',
         'object-prune.fn',
         'safe-self.fn',
     ],
@@ -4081,23 +4095,45 @@ function trustedPruneInboundObject(
     if ( argIndex < 1 ) { return; }
     const safe = safeSelf();
     const extraArgs = safe.getExtraArgs(Array.from(arguments), 4);
+    const needlePaths = [];
+    if ( rawPrunePaths !== '' ) {
+        needlePaths.push(...rawPrunePaths.split(/ +/));
+    }
+    if ( rawNeedlePaths !== '' ) {
+        needlePaths.push(...rawNeedlePaths.split(/ +/));
+    }
+    const mustProcess = root => {
+        for ( const needlePath of needlePaths ) {
+            if ( objectFindOwnerFn(root, needlePath) === false ) {
+                return false;
+            }
+        }
+        return true;
+    };
     context[prop] = new Proxy(context[prop], {
         apply: function(target, thisArg, args) {
             const targetArg = argIndex <= args.length
                 ? args[argIndex-1]
                 : undefined;
-            if ( targetArg instanceof Object ) {
-                const objBefore = extraArgs.dontOverwrite
-                    ? safe.JSON_parse(safe.JSON_stringify(targetArg))
-                    : targetArg;
-                const objAfter = objectPruneFn(
-                    objBefore,
-                    rawPrunePaths,
-                    rawNeedlePaths,
-                    { matchAll: true },
-                    extraArgs
-                );
-                args[argIndex-1] = objAfter || objBefore;
+            if ( targetArg instanceof Object && mustProcess(targetArg) ) {
+                let objBefore = targetArg;
+                if ( extraArgs.dontOverwrite ) {
+                    try {
+                        objBefore = safe.JSON_parse(safe.JSON_stringify(targetArg));
+                    } catch(_) {
+                        objBefore = undefined;
+                    }
+                }
+                if ( objBefore !== undefined ) {
+                    const objAfter = objectPruneFn(
+                        objBefore,
+                        rawPrunePaths,
+                        rawNeedlePaths,
+                        { matchAll: true },
+                        extraArgs
+                    );
+                    args[argIndex-1] = objAfter || objBefore;
+                }
             }
             return Reflect.apply(target, thisArg, args);
         },
