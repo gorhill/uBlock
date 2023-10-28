@@ -532,15 +532,15 @@
     "description": "Short information about how to create custom filters"
   },
   "1pTrustWarning": {
-    "message": "Do not add filters from untrusted sources.",
+    "message": "Ikke legg til filtre fra ikke-betrodde kilder.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {
-    "message": "Importer og legg til",
+    "message": "Importer og legg til…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "Eksporter",
+    "message": "Eksporter…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
@@ -580,11 +580,11 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Importer fra fil",
+    "message": "Importer fra fil…",
     "description": ""
   },
   "rulesExport": {
-    "message": "Eksporter til fil",
+    "message": "Eksporter til fil…",
     "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
@@ -620,11 +620,11 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Importer og legg til",
+    "message": "Importer og legg til…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
-    "message": "Eksporter",
+    "message": "Eksporter…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {

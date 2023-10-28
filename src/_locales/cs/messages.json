@@ -444,7 +444,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Tímto povolíte zpracovávání a používání <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">&ldquo;element hiding&rdquo; filtrů kompatibilních s Adblockem Plus</a>. Tyto filtry jsou převážně kosmetické. Skrývají prvky webových stránek, které jsou vizuálně na obtíž a nemohou být zablokovány síťovým požadavkem.</p><p>Povolení této funkce zvětšuje spotřebu paměti uBlocku₀.</p>",
+    "message": "\nKosmetické filtry slouží ke skrytí prvků na webové stránce, které jsou považovány za vizuálně obtěžující a které nemohou být blokovány filtry na základě síťových volání.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -452,7 +452,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Obecné kosmetické filtry jsou kosmetické filtry vytvořené k použití se všemi webovými stránkami.<p>Přestože je uBlock₀ používá velmi efektivně, kosmetické filtry mohou přispět ke zvýšenému využití operační paměti a procesoru na některých webech, zejména těch velkých a složitých.<p>Zapnutím této volby se lze vyhnout nadbytečnému zatížení paměti i procesoru vyvolaném použitím obecných kosmetických filtrů a rovněž snížit využití paměti samotným uBlock₀ rozšířením.<p>Na méně výkonných zařízeních je doporučeno tuto volbu povolit.",
+    "message": "Obecné kosmetické filtry jsou takové kosmetické filtry, které jsou určeny k použití na všech webových stránkách. Povolení této možnosti odstraní nadbytečnou režii paměti a procesoru, přidanou na webové stránky v důsledku manipulace s obecnými kosmetickými filtry.\n\nTuto možnost doporučujeme povolit na méně výkonných zařízeních.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Malware domény",
+    "message": "Ochrana před malwarem, bezpečnost",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
@@ -520,7 +520,7 @@
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Aktualizování",
+    "message": "Aktualizuji…",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -536,11 +536,11 @@
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {
-    "message": "Importovat a připojit",
+    "message": "Importovat a připojit…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "Exportovat",
+    "message": "Exportovat…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
@@ -584,7 +584,7 @@
     "description": ""
   },
   "rulesExport": {
-    "message": "Exportovat do souboru",
+    "message": "Exportovat do souboru…",
     "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
@@ -616,7 +616,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "Pravidla v seznamu povolených domén určují, pro které webové stránky bude uBlock Origin vypnutý. Jedna položka na řádek. Neplatná pravidla budou tiše ignorována a zakomentována.",
+    "message": "Pravidla v seznamu povolených domén určují, pro které webové stránky bude uBlock Origin vypnutý. Jedna položka na řádek.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
@@ -900,11 +900,11 @@
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Čtěte dokumentaci na <code>uBlock/wiki</code>, kde se dozvíte o všech funkcích uBlocku Origin.",
+    "message": "Přečtěte si dokumentaci na <code>uBlock/wiki</code>, kde se dozvíte o všech funkcích uBlock Origin.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
-    "message": "Dotazy a hlášení",
+    "message": "Dotazy a podpora",
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
@@ -1172,7 +1172,7 @@
     "description": "English: Permanently"
   },
   "docblockedDisable": {
-    "message": "Provést",
+    "message": "Pokračovat",
     "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {
@@ -1216,7 +1216,7 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "Block element in frame...",
+    "message": "Zablokovat prvek v rámečku…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
@@ -1228,7 +1228,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "contextMenuViewSource": {
-    "message": "Zobrazit zdroj…",
+    "message": "Zobrazit zdrojový kód…",
     "description": "A context menu entry, to view the source code of the target resource"
   },
   "shortcutCapturePlaceholder": {
@@ -1272,7 +1272,7 @@
     "description": "short for 'gigabytes'"
   },
   "clickToLoad": {
-    "message": "Klik pro načtení",
+    "message": "Klikněte pro načtení",
     "description": "Message used in frame placeholders"
   },
   "linterMainReport": {
@@ -1280,7 +1280,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Nedokáže správně filtrovat při spuštění prohlížeče.\nZnovu načtěte stránku, abyste zajistili správné filtrování.",
+    "message": "Nebylo možné správně filtrovat při spuštění prohlížeče.\nNačtěte stránku znovu, abyste zajistili správné filtrování.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {

@@ -1,8 +1,8 @@
 uBO Lite (uBOL) zo ur stanker noazadurioù *hep aotreoù* diazezet war manifesto MV3.
 
-The default ruleset corresponds to uBlock Origin's default filterset:
+Ar reolennoù dre ziouer a glot gant silañ dre ziouer uBlock Origin:
 
-- uBlock Origin's built-in filter lists
+- Rolloù siloù genidik a uBlock Origin
 - EasyList
 - EasyPrivacy
 - Peter Lowe’s Ad and tracking server list

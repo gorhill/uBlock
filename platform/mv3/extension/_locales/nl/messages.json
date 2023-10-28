@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Een experimentele, toestemmingsloze inhoudsblokkeerder. Blokkeert direct na installatie advertenties, trackers, miners en meer.",
+    "message": "Een toestemmingsloze inhoudsblokkeerder. Blokkeert direct na installatie advertenties, trackers, miners en meer.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {

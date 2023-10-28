@@ -21,7 +21,7 @@ Prohlížeč vás poté upozorní na důsledky udělení dalších oprávnění 
 
 Pokud přijmete žádost uBOL o další oprávnění na aktuálním webu, bude moci lépe filtrovat obsah aktuálního webu.
 
-Výchozí režim filtrování můžete nastavit na stránce nastavení uBOL. Pokud jako výchozí zvolíte režim optimální nebo kompletní, budete muset uBOL udělit oprávnění ke čtení a úpravě dat na všech webových stránkách.
+Výchozí filtrovací režim můžete nastavit na stránce nastavení uBOL. Pokud jako výchozí zvolíte režim optimální nebo kompletní, budete muset uBOL udělit oprávnění ke čtení a úpravě dat na všech webových stránkách.
 
 Mějte na paměti, že toto je stále nedokončená práce s těmito konečnými cíli:
 

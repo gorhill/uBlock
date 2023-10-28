@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Experimentální blokovač obsahu vyžadující méně oprávnění. Blokuje reklamy, sledovače, těžaře a jiné ihned po instalaci.",
+    "message": "Experimentální blokátor obsahu vyžadující méně oprávnění. Blokuje reklamy, sledovače, těžaře a jiné ihned po instalaci.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -32,11 +32,11 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Filtry třetích stran",
+    "message": "Seznamy filtrů",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
-    "message": "Vaše filtry",
+    "message": "Moje filtry",
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
@@ -52,7 +52,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupFilteringModeLabel": {
-    "message": "Režim filtrování",
+    "message": "Filtrovací režim",
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {
@@ -72,11 +72,11 @@
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipSaveRules": {
-    "message": "Kliknutím natrvalo uložíte provedené změny.",
+    "message": "Kliknutím uložíte provedené změny.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Kliknutím zrušíte provedené změny.",
+    "message": "Kliknutím vratíte zpátky provedené změny.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupMoreButton": {
@@ -172,7 +172,7 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Importovat a připojit",
+    "message": "Importovat a přidat",
     "description": "English: Import and append"
   },
   "whitelistExport": {
@@ -192,7 +192,7 @@
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Přispěvatelé",
+    "message": "Přispívající",
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
@@ -232,7 +232,7 @@
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
-    "message": "Výchozí režim filtrování",
+    "message": "Výchozí filtrovací režim",
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
@@ -272,7 +272,7 @@
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Automaticky znovu načíst stránku při změně filtračního režimu",
+    "message": "Automaticky znovu načíst stránku při změně filtrovacího režimu",
     "description": "Label for a checkbox in the options page"
   }
 }
