@@ -3379,9 +3379,11 @@ function setCookie(
         'true', 'false',
         'yes', 'y', 'no', 'n',
         'ok',
-        'accept', 'reject',
-        'allow', 'deny',
+        'accept', 'reject', 'rejected',
+        'allow', 'allowed', 'deny', 'disallow',
         'on', 'off',
+        'accepted', 'notaccepted',
+        'enable', 'enabled', 'disable', 'disabled',
     ];
     if ( validValues.includes(value.toLowerCase()) === false ) {
         if ( /^\d+$/.test(value) === false ) { return; }
