@@ -55,6 +55,7 @@ function updateStockLists(target) {
         vAPI.messaging.send('scriptlets', {
             what: 'updateLists',
             listkeys,
+            softUpdate: updateURL.searchParams.get('soft') && true || false,
         });
         return true;
     } catch (_) {
