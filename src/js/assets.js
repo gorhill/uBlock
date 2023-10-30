@@ -1192,7 +1192,7 @@ const getAssetDiffDetails = assetKey => {
 };
 
 async function diffUpdater() {
-    const toUpdate = await getUpdateCandidates(true);
+    const toUpdate = await getUpdateCandidates();
     const now = Date.now();
     const toHardUpdate = [];
     const toSoftUpdate = [];
