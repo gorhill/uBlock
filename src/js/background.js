@@ -27,6 +27,7 @@
 
 import logger from './logger.js';
 import { FilteringContext } from './filtering-context.js';
+import { ubologSet } from './console.js';
 
 import {
     domainFromHostname,
@@ -92,6 +93,7 @@ const hiddenSettingsDefault = {
 if ( vAPI.webextFlavor.soup.has('devbuild') ) {
     hiddenSettingsDefault.consoleLogLevel = 'info';
     hiddenSettingsDefault.trustedListPrefixes += ' user-';
+    ubologSet(true);
 }
 
 const userSettingsDefault = {

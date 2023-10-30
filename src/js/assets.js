@@ -1260,6 +1260,7 @@ async function diffUpdater() {
                     resourceTime: metadata.lastModified || 0,
                 });
                 assetCacheSetDetails(data.name, metadata);
+                updaterUpdated.push(data.name);
             } else if ( data.error ) {
                 ubolog(`Diff updater: failed to diff-update ${data.name}, reason: ${data.error}`);
             }
@@ -1280,6 +1281,7 @@ async function diffUpdater() {
 }
 
 function updateFirst() {
+    ubolog('Updater: cycle start');
     updaterStatus = 'updating';
     updaterFetched.clear();
     updaterUpdated.length = 0;
@@ -1379,6 +1381,10 @@ function updateDone() {
     updaterUpdated.length = 0;
     updaterStatus = undefined;
     updaterAssetDelay = updaterAssetDelayDefault;
+    ubolog('Updater: cycle end');
+    if ( assetKeys.length ) {
+        ubolog(`Updater: ${assetKeys.join()} were updated`);
+    }
     fireNotification('after-assets-updated', { assetKeys });
 }
 
