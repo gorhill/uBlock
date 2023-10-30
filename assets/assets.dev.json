@@ -163,8 +163,7 @@
 		"cdnURLs": [
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@latest/thirdparties/easylist.txt",
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/thirdparties/easylist.txt",
-			"https://ublockorigin.pages.dev/thirdparties/easylist.txt",
-			"https://easylist.to/easylist/easylist.txt"
+			"https://ublockorigin.pages.dev/thirdparties/easylist.txt"
 		],
 		"supportURL": "https://easylist.to/"
 	},
@@ -215,8 +214,7 @@
 		"cdnURLs": [
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@latest/thirdparties/easyprivacy.txt",
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/thirdparties/easyprivacy.txt",
-			"https://ublockorigin.pages.dev/thirdparties/easyprivacy.txt",
-			"https://easylist.to/easylist/easyprivacy.txt"
+			"https://ublockorigin.pages.dev/thirdparties/easyprivacy.txt"
 		],
 		"supportURL": "https://easylist.to/"
 	},

@@ -35,6 +35,9 @@ import { ubolog } from './console.js';
 const reIsExternalPath = /^(?:[a-z-]+):\/\//;
 const reIsUserAsset = /^user-/;
 const errorCantConnectTo = i18n$('errorCantConnectTo');
+const MS_PER_HOUR = 60 * 60 * 1000;
+const MS_PER_DAY = 24 * MS_PER_HOUR;
+const EXPIRES_DEFAULT = 7;
 
 const assets = {};
 
@@ -42,16 +45,57 @@ const assets = {};
 // bandwidth of remote servers.
 let remoteServerFriendly = false;
 
+/******************************************************************************/
+
+const parseExpires = s => {
+    const matches = s.match(/(\d+)\s*([dh])?/i);
+    if ( matches === null ) { return 0; }
+    let updateAfter = parseInt(matches[1], 10);
+    if ( matches[2] === 'h' ) {
+        updateAfter = Math.ceil(updateAfter / 12) / 2;
+    }
+    return updateAfter;
+};
+
+const extractMetadataFromList = (content, fields) => {
+    const out = {};
+    const head = content.slice(0, 1024);
+    for ( let field of fields ) {
+        field = field.replace(/\s+/g, '-');
+        const re = new RegExp(`^(?:! *|# +)${field.replace(/-/g, '(?: +|-)')}: *(.+)$`, 'im');
+        const match = re.exec(head);
+        let value = match && match[1].trim() || undefined;
+        if ( value !== undefined && /^%.+%$/.test(value) ) {
+            value = undefined;
+        }
+        field = field.toLowerCase().replace(
+            /-[a-z]/g, s => s.charAt(1).toUpperCase()
+        );
+        out[field] = value;
+    }
+    // Pre-process known fields
+    if ( out.lastModified ) {
+        out.lastModified = (new Date(out.lastModified)).getTime() || 0;
+    }
+    if ( out.expires ) {
+        out.expires = Math.max(parseExpires(out.expires), 0.5);
+    }
+    if ( out.diffExpires ) {
+        out.diffExpires = Math.max(parseExpires(out.diffExpires), 0.25);
+    }
+    return out;
+};
+assets.extractMetadataFromList = extractMetadataFromList;
+
 const resourceTimeFromXhr = xhr => {
     try {
         // First lookup timestamp from content
         let assetTime = 0;
         if ( typeof xhr.response === 'string' ) {
-            const head = xhr.response.slice(0, 512);
-            const match = /^! Last modified: (.+)$/m.exec(head);
-            if ( match ) {
-                assetTime = (new Date(match[1])).getTime() || 0;
-            }
+            const metadata = extractMetadataFromList(xhr.response, [
+                'Last-Modified'
+            ]);
+            assetTime = metadata.lastModified || 0;
         }
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Age
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Date
@@ -89,6 +133,40 @@ const resourceIsStale = (networkDetails, cacheDetails) => {
         return true;
     }
     return false;
+};
+
+const getUpdateAfterTime = (assetKey, diff = false) => {
+    const entry = assetCacheRegistry[assetKey];
+    if ( entry ) {
+        if ( diff && typeof entry.diffExpires === 'number' ) {
+            return entry.diffExpires * MS_PER_DAY;
+        }
+        if ( typeof entry.expires === 'number' ) {
+            return entry.expires * MS_PER_DAY;
+        }
+    }
+    if ( assetSourceRegistry ) {
+        const entry = assetSourceRegistry[assetKey];
+        if ( entry && typeof entry.updateAfter === 'number' ) {
+            return entry.updateAfter * MS_PER_DAY;
+        }
+    }
+    return EXPIRES_DEFAULT * MS_PER_DAY; // default to 7-day
+};
+
+const getWriteTime = assetKey => {
+    const entry = assetCacheRegistry[assetKey];
+    if ( entry ) { return entry.writeTime || 0; }
+    return 0;
+};
+
+const isDiffUpdatableAsset = content => {
+    if ( typeof content !== 'string' ) { return false; }
+    const data = extractMetadataFromList(content, [
+        'Diff-Path',
+    ]);
+    return typeof data.diffPath === 'string' &&
+        /^[^%].*[^%]$/.test(data.diffPath);
 };
 
 const stringIsNotEmpty = s => typeof s === 'string' && s !== '';
@@ -252,14 +330,6 @@ assets.fetchText = async function(url) {
             details.content = '';
             details.error = 'assets.fetchText(): Not a text file';
         }
-
-        // Important: Non empty text resource must always end with a newline
-        if (
-            details.content.length !== 0 &&
-            details.content.endsWith('\n') === false
-        ) {
-            details.content += '\n';
-        }
     } catch(ex) {
         details = ex;
     }
@@ -374,6 +444,13 @@ assets.fetchFilterList = async function(mainlistURL) {
             return { url: mainlistURL, content: '', error: part.error };
         }
         resourceTime = resourceTimeFromParts(allParts, resourceTime);
+        // Skip pre-parser directives for diff-updatable assets
+        if ( allParts.length === 1 && allParts[0] instanceof Object ) {
+            if ( isDiffUpdatableAsset(allParts[0].content) ) {
+                allParts[0] = allParts[0].content;
+                break;
+            }
+        }
         allParts = processIncludeDirectives(allParts);
     } while ( allParts.some(part => typeof part !== 'string') );
     // If we reach this point, this means all fetches were successful.
@@ -456,9 +533,6 @@ function registerAssetSource(assetKey, newDict) {
         currentDict.hasRemoteURL = remoteURLCount !== 0;
     } else if ( currentDict.contentURL === undefined ) {
         currentDict.contentURL = [];
-    }
-    if ( typeof currentDict.updateAfter !== 'number' ) {
-        currentDict.updateAfter = 7;
     }
     if ( currentDict.submitter ) {
         currentDict.submitTime = Date.now(); // To detect stale entries
@@ -607,7 +681,7 @@ async function assetCacheRead(assetKey, updateReadTime = false) {
 
     const reportBack = function(content) {
         if ( content instanceof Blob ) { content = ''; }
-        const details = { assetKey: assetKey, content: content };
+        const details = { assetKey, content };
         if ( content === '' ) { details.error = 'ENOTFOUND'; }
         return details;
     };
@@ -979,6 +1053,18 @@ async function getRemote(assetKey) {
             url: contentURL,
             resourceTime: result.resourceTime || 0,
         });
+
+        if ( assetDetails.content === 'filters' ) {
+            const metadata = extractMetadataFromList(result.content, [
+                'Last-Modified',
+                'Expires',
+                'Diff-Name',
+                'Diff-Path',
+                'Diff-Expires',
+            ]);
+            assetCacheSetDetails(assetKey, metadata);
+        }
+
         registerAssetSource(assetKey, { birthtime: undefined, error: undefined });
         return reportBack(result.content);
     }
@@ -1029,8 +1115,7 @@ assets.metadata = async function() {
         if ( cacheEntry ) {
             assetEntry.cached = true;
             assetEntry.writeTime = cacheEntry.writeTime;
-            const obsoleteAfter =
-                cacheEntry.writeTime + assetEntry.updateAfter * 86400000;
+            const obsoleteAfter = cacheEntry.writeTime + getUpdateAfterTime(assetKey);
             assetEntry.obsolete = obsoleteAfter < now;
             assetEntry.remoteURL = cacheEntry.remoteURL;
         } else if (
@@ -1074,7 +1159,7 @@ assets.getUpdateAges = async function(conditions = {}) {
         out.push({
             assetKey,
             age,
-            ageNormalized: age / (asset.updateAfter * 86400000),
+            ageNormalized: age / getUpdateAfterTime(assetKey),
         });
     }
     return out;
@@ -1091,33 +1176,122 @@ let updaterStatus;
 let updaterAssetDelay = updaterAssetDelayDefault;
 let updaterAuto = false;
 
-const updateFirst = function() {
+const getAssetDiffDetails = assetKey => {
+    const out = { name: assetKey };
+    const cacheEntry = assetCacheRegistry[assetKey];
+    if ( cacheEntry === undefined ) { return; }
+    if ( cacheEntry.diffPath === undefined ) { return; }
+    if ( cacheEntry.diffName === undefined ) { return; }
+    out.diffName = cacheEntry.diffName;
+    out.patchPath = cacheEntry.diffPath;
+    const assetEntry = assetSourceRegistry[assetKey];
+    if ( assetEntry === undefined ) { return; }
+    if ( Array.isArray(assetEntry.cdnURLs) === false ) { return; }
+    out.cdnURLs = assetEntry.cdnURLs.slice();
+    return out;
+};
+
+async function diffUpdater() {
+    const toUpdate = await getUpdateCandidates(true);
+    const now = Date.now();
+    const toHardUpdate = [];
+    const toSoftUpdate = [];
+    while ( toUpdate.length !== 0 ) {
+        const assetKey = toUpdate.shift();
+        const assetDetails = getAssetDiffDetails(assetKey);
+        if ( assetDetails === undefined ) { continue; }
+        if ( assetDetails.patchPath === undefined ) { continue; }
+        if ( assetDetails.diffName === undefined ) { continue; }
+        assetDetails.what = 'update';
+        if ( (getWriteTime(assetKey) + getUpdateAfterTime(assetKey, true)) > now ) {
+            toSoftUpdate.push(assetDetails);
+        } else {
+            toHardUpdate.push(assetDetails);
+        }
+    }
+    if ( toHardUpdate.length === 0 ) { return; }
+    ubolog('Diff updater: cycle start');
+    return new Promise(resolve => {
+        let pendingOps = 0;
+        const bc = new globalThis.BroadcastChannel('diffUpdater');
+        bc.onmessage = ev => {
+            const data = ev.data;
+            if ( data.what === 'ready' ) {
+                ubolog('Diff updater: hard updating', toHardUpdate.map(v => v.name).join());
+                while ( toHardUpdate.length !== 0 ) {
+                    const assetDetails = toHardUpdate.shift();
+                    assetDetails.fetch = true;
+                    bc.postMessage(assetDetails);
+                    pendingOps += 1;
+                }
+                return;
+            }
+            if ( data.status === 'needtext' ) {
+                ubolog('Diff updater: need text for', data.name);
+                assetCacheRead(data.name).then(result => {
+                    data.text = result.content;
+                    data.status = undefined;
+                    bc.postMessage(data);
+                });
+                return;
+            }
+            if ( data.status === 'updated' ) {
+                ubolog(`Diff updater: successfully patched ${data.name} using ${data.diffURL}`);
+                const metadata = extractMetadataFromList(data.text, [
+                    'Last-Modified',
+                    'Expires',
+                    'Diff-Name',
+                    'Diff-Path',
+                    'Diff-Expires',
+                ]);
+                assetCacheWrite(data.name, {
+                    content: data.text,
+                    resourceTime: metadata.lastModified || 0,
+                });
+                assetCacheSetDetails(data.name, metadata);
+            } else if ( data.error ) {
+                ubolog(`Diff updater: failed to diff-update ${data.name}, reason: ${data.error}`);
+            }
+            pendingOps -= 1;
+            if ( pendingOps === 0 && toSoftUpdate.length !== 0 ) {
+                ubolog('Diff updater: soft updating', toSoftUpdate.map(v => v.name).join());
+                while ( toSoftUpdate.length !== 0 ) {
+                    bc.postMessage(toSoftUpdate.shift());
+                    pendingOps += 1;
+                }
+            }
+            if ( pendingOps !== 0 ) { return; }
+            ubolog('Diff updater: cycle complete');
+            worker.terminate();
+            bc.close();
+            resolve();
+        };
+        const worker = new Worker('js/diff-updater.js');
+    });
+}
+
+function updateFirst() {
     updaterStatus = 'updating';
     updaterFetched.clear();
     updaterUpdated.length = 0;
-    fireNotification('before-assets-updated');
-    updateNext();
-};
+    diffUpdater().catch(reason => {
+        ubolog(reason);
+    }).finally(( ) => {
+        updateNext();
+    });
+}
 
-const updateNext = async function() {
+async function getUpdateCandidates() {
     const [ assetDict, cacheDict ] = await Promise.all([
         getAssetSourceRegistry(),
         getAssetCacheRegistry(),
     ]);
-
-    const now = Date.now();
     const toUpdate = [];
     for ( const assetKey in assetDict ) {
         const assetEntry = assetDict[assetKey];
         if ( assetEntry.hasRemoteURL !== true ) { continue; }
         if ( updaterFetched.has(assetKey) ) { continue; }
         const cacheEntry = cacheDict[assetKey];
-        if (
-            (cacheEntry instanceof Object) &&
-            (cacheEntry.writeTime + assetEntry.updateAfter * 86400000) > now
-        ) {
-            continue;
-        }
         if (
             fireNotification('before-asset-updated', {
                 assetKey,
@@ -1132,9 +1306,6 @@ const updateNext = async function() {
             assetCacheRemove(assetKey);
         }
     }
-    if ( toUpdate.length === 0 ) {
-        return updateDone();
-    }
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1165
     //   Update most obsolete asset first.
     toUpdate.sort((a, b) => {
@@ -1142,17 +1313,34 @@ const updateNext = async function() {
         const tb = cacheDict[b] !== undefined ? cacheDict[b].writeTime : 0;
         return ta - tb;
     });
-    updaterFetched.add(toUpdate[0]);
+    return toUpdate;
+}
+
+async function updateNext() {
+    const toUpdate = await getUpdateCandidates();
+    const now = Date.now();
+    const toHardUpdate = [];
+
+    while ( toUpdate.length !== 0 ) {
+        const assetKey = toUpdate.shift();
+        const writeTime = getWriteTime(assetKey);
+        const updateDelay = getUpdateAfterTime(assetKey);
+        if ( (writeTime + updateDelay) > now ) { continue; }
+        toHardUpdate.push(assetKey);
+    }
+    if ( toHardUpdate.length === 0 ) {
+        return updateDone();
+    }
+
+    const assetKey = toHardUpdate.pop();
+    updaterFetched.add(assetKey);
 
     // In auto-update context, be gentle on remote servers.
     remoteServerFriendly = updaterAuto;
 
     let result;
-    if (
-        toUpdate[0] !== 'assets.json' ||
-        µb.hiddenSettings.debugAssetsJson !== true
-    ) {
-        result = await getRemote(toUpdate[0]);
+    if ( assetKey !== 'assets.json' || µb.hiddenSettings.debugAssetsJson !== true ) {
+        result = await getRemote(assetKey);
     } else {
         result = await assets.fetchText(µb.assetsJsonPath);
         result.assetKey = 'assets.json';
@@ -1161,8 +1349,10 @@ const updateNext = async function() {
     remoteServerFriendly = false;
 
     if ( result.error ) {
+        ubolog(`Full updater: failed to update ${assetKey}`);
         fireNotification('asset-update-failed', { assetKey: result.assetKey });
     } else {
+        ubolog(`Full updater: successfully updated ${assetKey}`);
         updaterUpdated.push(result.assetKey);
         if ( result.assetKey === 'assets.json' && result.content !== '' ) {
             updateAssetSourceRegistry(result.content);
@@ -1170,18 +1360,18 @@ const updateNext = async function() {
     }
 
     updaterTimer.on(updaterAssetDelay);
-};
+}
 
 const updaterTimer = vAPI.defer.create(updateNext);
 
-const updateDone = function() {
+function updateDone() {
     const assetKeys = updaterUpdated.slice(0);
     updaterFetched.clear();
     updaterUpdated.length = 0;
     updaterStatus = undefined;
     updaterAssetDelay = updaterAssetDelayDefault;
     fireNotification('after-assets-updated', { assetKeys });
-};
+}
 
 assets.updateStart = function(details) {
     const oldUpdateDelay = updaterAssetDelay;

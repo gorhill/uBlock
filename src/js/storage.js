@@ -1009,39 +1009,20 @@ import {
 µb.extractFilterListMetadata = function(assetKey, raw) {
     const listEntry = this.availableFilterLists[assetKey];
     if ( listEntry === undefined ) { return; }
-    // Metadata expected to be found at the top of content.
-    const head = raw.slice(0, 1024);
     // https://github.com/gorhill/uBlock/issues/313
     // Always try to fetch the name if this is an external filter list.
-    if ( listEntry.group === 'custom' ) {
-        let matches = head.match(/(?:^|\n)(?:!|# )[\t ]*Title[\t ]*:([^\n]+)/i);
-        const title = matches && matches[1].trim() || '';
-        if ( title !== '' && title !== listEntry.title ) {
-            listEntry.title = orphanizeString(title);
-            io.registerAssetSource(assetKey, { title });
-        }
-        matches = head.match(/(?:^|\n)(?:!|# )[\t ]*Homepage[\t ]*:[\t ]*(https?:\/\/\S+)\s/i);
-        const supportURL = matches && matches[1] || '';
-        if ( supportURL !== '' && supportURL !== listEntry.supportURL ) {
-            listEntry.supportURL = orphanizeString(supportURL);
-            io.registerAssetSource(assetKey, { supportURL });
+    if ( listEntry.group !== 'custom' ) { return; }
+    const data = io.extractMetadataFromList(raw, [ 'Title', 'Homepage' ]);
+    const props = {};
+    if ( data.title && data.title !== listEntry.title ) {
+        props.title = listEntry.title = orphanizeString(data.title);
+    }
+    if ( data.homepage && /^https?:\/\/\S+/.test(data.homepage) ) {
+        if ( data.homepage !== listEntry.supportURL ) {
+            props.supportURL = listEntry.supportURL = orphanizeString(data.homepage);
         }
     }
-    // Extract update frequency information
-    const matches = head.match(/(?:^|\n)(?:!|# )[\t ]*Expires[\t ]*:[\t ]*(\d+)[\t ]*(h)?/i);
-    if ( matches !== null ) {
-        let updateAfter = parseInt(matches[1], 10);
-        if ( isNaN(updateAfter) === false ) {
-            if ( matches[2] !== undefined ) {
-                updateAfter = Math.ceil(updateAfter / 12) / 2;
-            }
-            updateAfter = Math.max(updateAfter, 0.5);
-            if ( updateAfter !== listEntry.updateAfter ) {
-                listEntry.updateAfter = updateAfter;
-                io.registerAssetSource(assetKey, { updateAfter });
-            }
-        }
-    }
+    io.registerAssetSource(assetKey, props);
 };
 
 /******************************************************************************/
