@@ -173,17 +173,22 @@ async function fetchPatchDetailsFromCDNs(assetDetails) {
     if ( Array.isArray(cdnURLs) === false ) { return null; }
     if ( cdnURLs.length === 0 ) { return null; }
     for ( const cdnURL of suffleArray(cdnURLs) ) {
-        const diffURL = resolveURL(patchPath, cdnURL);
-        if ( diffURL === undefined ) { continue; }
-        const response = await fetch(diffURL).catch(reason => {
+        const patchURL = resolveURL(patchPath, cdnURL);
+        if ( patchURL === undefined ) { continue; }
+        const response = await fetch(patchURL).catch(reason => {
             console.error(reason);
         });
         if ( response === undefined ) { continue; }
         if ( response.ok !== true ) { continue; }
         const patchText = await response.text();
+        if ( patchText.length === 0 ) { continue; }
         const patchDetails = parsePatch(patchText);
         if ( patchDetails === undefined ) { continue; }
-        return { diffURL, patchDetails };
+        return {
+            patchURL,
+            patchSize: `${(patchText.length / 1000).toFixed(1)} KB`,
+            patchDetails,
+        };
     }
     return null;
 }
@@ -202,11 +207,12 @@ async function fetchPatchDetails(assetDetails) {
 }
 
 async function fetchAndApplyAllPatches(assetDetails) {
-    const { diffURL, patchDetails } = await fetchPatchDetails(assetDetails);
-    if ( patchDetails === null ) {
+    const patchData = await fetchPatchDetails(assetDetails);
+    if ( patchData === null ) {
         assetDetails.error = 'nopatch';
         return assetDetails;
     }
+    const { patchDetails } = patchData;
     const diffDetails = patchDetails.get(assetDetails.diffName);
     if ( diffDetails === undefined ) {
         assetDetails.error = 'nodiff';
@@ -219,7 +225,8 @@ async function fetchAndApplyAllPatches(assetDetails) {
     const outcome = await applyPatchAndValidate(assetDetails, diffDetails);
     if ( outcome !== true ) { return assetDetails; }
     assetDetails.status = 'updated';
-    assetDetails.diffURL = diffURL;
+    assetDetails.patchURL = patchData.patchURL;
+    assetDetails.patchSize = patchData.patchSize;
     return assetDetails;
 }
 
@@ -233,6 +240,8 @@ bc.onmessage = ev => {
     case 'update':
         fetchAndApplyAllPatches(message).then(response => {
             bc.postMessage(response);
+        }).catch(error => {
+            bc.postMessage({ what: 'broken', error });
         });
         break;
     }

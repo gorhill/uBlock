@@ -1214,6 +1214,13 @@ async function diffUpdater() {
     return new Promise(resolve => {
         let pendingOps = 0;
         const bc = new globalThis.BroadcastChannel('diffUpdater');
+        const terminate = error => {
+            worker.terminate();
+            bc.close();
+            resolve();
+            if ( typeof error !== 'string' ) { return; }
+            ubolog(`Diff updater: terminate because ${error}`);
+        };
         bc.onmessage = ev => {
             const data = ev.data;
             if ( data.what === 'ready' ) {
@@ -1226,6 +1233,10 @@ async function diffUpdater() {
                 }
                 return;
             }
+            if ( data.what === 'broken' ) {
+                terminate(data.error);
+                return;
+            }
             if ( data.status === 'needtext' ) {
                 ubolog('Diff updater: need text for', data.name);
                 assetCacheRead(data.name).then(result => {
@@ -1236,7 +1247,7 @@ async function diffUpdater() {
                 return;
             }
             if ( data.status === 'updated' ) {
-                ubolog(`Diff updater: successfully patched ${data.name} using ${data.diffURL}`);
+                ubolog(`Diff updater: successfully patched ${data.name} using ${data.patchURL} (${data.patchSize})`);
                 const metadata = extractMetadataFromList(data.text, [
                     'Last-Modified',
                     'Expires',
@@ -1262,9 +1273,7 @@ async function diffUpdater() {
             }
             if ( pendingOps !== 0 ) { return; }
             ubolog('Diff updater: cycle complete');
-            worker.terminate();
-            bc.close();
-            resolve();
+            terminate();
         };
         const worker = new Worker('js/diff-updater.js');
     });
