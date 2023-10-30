@@ -78,6 +78,7 @@ const contentScriptRegisterer = new (class {
     }
     register(hostname, code) {
         if ( browser.contentScripts === undefined ) { return false; }
+        if ( hostname === '' ) { return false; }
         const details = this.hostnameToDetails.get(hostname);
         if ( details !== undefined ) {
             if ( code === details.code ) {
@@ -94,6 +95,8 @@ const contentScriptRegisterer = new (class {
             runAt: 'document_start',
         }).then(handle => {
             this.hostnameToDetails.set(hostname, { handle, code });
+        }).catch(( ) => {
+            this.hostnameToDetails.delete(hostname);
         });
         this.hostnameToDetails.set(hostname, { handle: promise, code });
         return false;
