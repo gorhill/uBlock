@@ -62,13 +62,14 @@
 		"tags": "malware security",
 		"contentURL": [
 			"https://ublockorigin.github.io/uAssets/filters/badware.txt",
+			"assets/ublock/badware.min.txt",
 			"assets/ublock/badware.txt"
 		],
 		"cdnURLs": [
-			"https://ublockorigin.github.io/uAssetsCDN/filters/badware.txt",
-			"https://ublockorigin.pages.dev/filters/badware.txt",
-			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@latest/filters/badware.txt",
-			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/badware.txt"
+			"https://ublockorigin.github.io/uAssetsCDN/filters/badware.min.txt",
+			"https://ublockorigin.pages.dev/filters/badware.min.txt",
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@latest/filters/badware.min.txt",
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/badware.min.txt"
 		],
 		"supportURL": "https://github.com/uBlockOrigin/uAssets",
 		"instructionURL": "https://github.com/gorhill/uBlock/wiki/Badware-risks"
@@ -654,7 +655,7 @@
 			"https://cdn.statically.io/gh/MasterKia/PersianBlocker/main/PersianBlocker.txt",
 			"https://raw.githubusercontent.com/MasterKia/PersianBlocker/main/PersianBlocker.txt"
 		],
-			"cdnURLs": [
+		"cdnURLs": [
 			"https://cdn.jsdelivr.net/gh/MasterKia/PersianBlocker@main/PersianBlocker.txt",
 			"https://cdn.statically.io/gh/MasterKia/PersianBlocker/main/PersianBlocker.txt"
 		],
