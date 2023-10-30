@@ -3376,14 +3376,17 @@ function setCookie(
     name = encodeURIComponent(name);
 
     const validValues = [
-        'true', 'false',
-        'yes', 'y', 'no', 'n',
+        'accept', 'reject',
+        'accepted', 'rejected', 'notaccepted',
+        'allow', 'deny',
+        'allowed', 'disallow',
+        'enable', 'disable',
+        'enabled', 'disabled',
         'ok',
-        'accept', 'reject', 'rejected',
-        'allow', 'allowed', 'deny', 'disallow',
         'on', 'off',
-        'accepted', 'notaccepted',
-        'enable', 'enabled', 'disable', 'disabled',
+        'true', 'false',
+        'y', 'n',
+        'yes', 'no',
     ];
     if ( validValues.includes(value.toLowerCase()) === false ) {
         if ( /^\d+$/.test(value) === false ) { return; }
