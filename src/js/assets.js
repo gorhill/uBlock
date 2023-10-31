@@ -1184,6 +1184,8 @@ const getAssetDiffDetails = assetKey => {
     if ( cacheEntry.diffName === undefined ) { return; }
     out.diffName = cacheEntry.diffName;
     out.patchPath = cacheEntry.diffPath;
+    out.diffExpires = getUpdateAfterTime(assetKey, true);
+    out.lastModified = cacheEntry.lastModified;
     const assetEntry = assetSourceRegistry[assetKey];
     if ( assetEntry === undefined ) { return; }
     if ( Array.isArray(assetEntry.cdnURLs) === false ) { return; }
@@ -1203,7 +1205,8 @@ async function diffUpdater() {
         if ( assetDetails.patchPath === undefined ) { continue; }
         if ( assetDetails.diffName === undefined ) { continue; }
         assetDetails.what = 'update';
-        if ( (getWriteTime(assetKey) + getUpdateAfterTime(assetKey, true)) > now ) {
+        if ( (getWriteTime(assetKey) + assetDetails.diffExpires) > now ) {
+            assetDetails.fetch = false;
             toSoftUpdate.push(assetDetails);
         } else {
             toHardUpdate.push(assetDetails);
@@ -1263,6 +1266,13 @@ async function diffUpdater() {
                 updaterUpdated.push(data.name);
             } else if ( data.error ) {
                 ubolog(`Diff updater: failed to diff-update ${data.name} using ${data.patchPath}, reason: ${data.error}`);
+            } else {
+                ubolog(`Diff updater: Skip diff-updating ${data.name} using ${data.patchPath}, reason: ${data.status}`);
+                if ( data.status === 'nopatch-yet' || data.status === 'nodiff' ) {
+                    assetCacheSetDetails(data.name, {
+                        writeTime: data.lastModified || 0
+                    });
+                }
             }
             pendingOps -= 1;
             if ( pendingOps === 0 && toSoftUpdate.length !== 0 ) {

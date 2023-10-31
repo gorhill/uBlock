@@ -56,6 +56,19 @@ const resolveURL = (path, url) => {
     }
 };
 
+const expectedTimeFromPatch = assetDetails => {
+    const match = /(\d+)\.(\d+)\.(\d+)\.(\d+)/.exec(assetDetails.patchPath);
+    if ( match === null ) { return 0; }
+    const date = new Date();
+    date.setUTCFullYear(
+        parseInt(match[1], 10),
+        parseInt(match[2], 10) - 1,
+        parseInt(match[3], 10)
+    );
+    date.setUTCHours(0, parseInt(match[4], 10), 0, 0);
+    return date.getTime() + assetDetails.diffExpires;
+};
+
 function parsePatch(patch) {
     const patchDetails = new Map();
     const diffLines = patch.split('\n');
@@ -132,6 +145,12 @@ function applyPatch(text, diff) {
     return lines.join('\n');
 }
 
+function hasPatchDetails(assetDetails) {
+    const { patchPath } = assetDetails;
+    const patchFile = basename(patchPath);
+    return patchFile !== '' && patches.has(patchFile);
+}
+
 /******************************************************************************/
 
 // Async
@@ -181,9 +200,7 @@ async function fetchPatchDetailsFromCDNs(assetDetails) {
         if ( response === undefined ) { continue; }
         if ( response.ok !== true ) { continue; }
         const patchText = await response.text();
-        if ( patchText.length === 0 ) { continue; }
         const patchDetails = parsePatch(patchText);
-        if ( patchDetails === undefined ) { continue; }
         return {
             patchURL,
             patchSize: `${(patchText.length / 1000).toFixed(1)} KB`,
@@ -200,22 +217,40 @@ async function fetchPatchDetails(assetDetails) {
     if ( patches.has(patchFile) ) {
         return patches.get(patchFile);
     }
-    if ( assetDetails.fetch === false ) { return null; }
     const patchDetailsPromise = fetchPatchDetailsFromCDNs(assetDetails);
     patches.set(patchFile, patchDetailsPromise);
     return patchDetailsPromise;
 }
 
 async function fetchAndApplyAllPatches(assetDetails) {
+    if ( assetDetails.fetch === false ) {
+        if ( hasPatchDetails(assetDetails) === false ) {
+            assetDetails.status = 'nodiff';
+            return assetDetails;
+        }
+    }
+    // uBO-specific, to avoid pointless fetches which are likely to fail
+    // because the patch has not yet been created
+    const patchTime = expectedTimeFromPatch(assetDetails);
+    if ( patchTime > Date.now() ) {
+        assetDetails.status = 'nopatch-yet';
+        return assetDetails;
+    }
     const patchData = await fetchPatchDetails(assetDetails);
     if ( patchData === null ) {
-        assetDetails.error = 'nopatch';
+        assetDetails.status = (Date.now() - patchTime) < (4 * assetDetails.diffExpires)
+            ? 'nopatch-yet'
+            : 'nopatch';
         return assetDetails;
     }
     const { patchDetails } = patchData;
+    if ( patchDetails instanceof Map === false ) {
+        assetDetails.status = 'nodiff';
+        return assetDetails;
+    }
     const diffDetails = patchDetails.get(assetDetails.diffName);
     if ( diffDetails === undefined ) {
-        assetDetails.error = 'nodiff';
+        assetDetails.status = 'nodiff';
         return assetDetails;
     }
     if ( assetDetails.text === undefined ) {
