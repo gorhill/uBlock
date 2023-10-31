@@ -1209,6 +1209,7 @@ async function diffUpdater() {
             assetDetails.fetch = false;
             toSoftUpdate.push(assetDetails);
         } else {
+            assetDetails.fetch = true;
             toHardUpdate.push(assetDetails);
         }
     }
@@ -1265,14 +1266,19 @@ async function diffUpdater() {
                 assetCacheSetDetails(data.name, metadata);
                 updaterUpdated.push(data.name);
             } else if ( data.error ) {
-                ubolog(`Diff updater: failed to diff-update ${data.name} using ${data.patchPath}, reason: ${data.error}`);
+                ubolog(`Diff updater: failed to update ${data.name} using ${data.patchPath}, reason: ${data.error}`);
+            } else if ( data.status === 'nopatch-yet' || data.status === 'nodiff' ) {
+                ubolog(`Diff updater: Skip update of ${data.name} using ${data.patchPath}, reason: ${data.status}`);
+                assetCacheSetDetails(data.name, {
+                    writeTime: data.lastModified || 0
+                });
+                vAPI.messaging.broadcast({
+                    what: 'assetUpdated',
+                    key: data.name,
+                    cached: true,
+                });
             } else {
-                ubolog(`Diff updater: Skip diff-updating ${data.name} using ${data.patchPath}, reason: ${data.status}`);
-                if ( data.status === 'nopatch-yet' || data.status === 'nodiff' ) {
-                    assetCacheSetDetails(data.name, {
-                        writeTime: data.lastModified || 0
-                    });
-                }
+                ubolog(`Diff updater: ${data.name} / ${data.patchPath} / ${data.status}`);
             }
             pendingOps -= 1;
             if ( pendingOps === 0 && toSoftUpdate.length !== 0 ) {
