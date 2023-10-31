@@ -52,7 +52,7 @@ const parseExpires = s => {
     if ( matches === null ) { return 0; }
     let updateAfter = parseInt(matches[1], 10);
     if ( matches[2] === 'h' ) {
-        updateAfter = Math.ceil(updateAfter / 12) / 2;
+        updateAfter = Math.ceil(updateAfter / 6) / 4;
     }
     return updateAfter;
 };
@@ -1262,7 +1262,7 @@ async function diffUpdater() {
                 assetCacheSetDetails(data.name, metadata);
                 updaterUpdated.push(data.name);
             } else if ( data.error ) {
-                ubolog(`Diff updater: failed to diff-update ${data.name}, reason: ${data.error}`);
+                ubolog(`Diff updater: failed to diff-update ${data.name} using ${data.patchPath}, reason: ${data.error}`);
             }
             pendingOps -= 1;
             if ( pendingOps === 0 && toSoftUpdate.length !== 0 ) {
