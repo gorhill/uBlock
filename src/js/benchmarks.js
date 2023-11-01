@@ -170,6 +170,10 @@ const loadBenchmarkDataset = (( ) => {
     let matchCount = 0;
     let blockCount = 0;
     let allowCount = 0;
+    let redirectCount = 0;
+    let removeparamCount = 0;
+    let cspCount = 0;
+    let permissionsCount = 0;
     for ( let i = 0; i < requests.length; i++ ) {
         const request = requests[i];
         fctxt.setURL(request.url);
@@ -181,17 +185,27 @@ const loadBenchmarkDataset = (( ) => {
         if ( r === 1 ) { blockCount += 1; }
         else if ( r === 2 ) { allowCount += 1; }
         if ( r !== 1 ) {
-            staticNetFilteringEngine.transformRequest(fctxt);
+            if ( staticNetFilteringEngine.transformRequest(fctxt) ) {
+                redirectCount += 1;
+            }
             if ( fctxt.redirectURL !== undefined && staticNetFilteringEngine.hasQuery(fctxt) ) {
-                staticNetFilteringEngine.filterQuery(fctxt, 'removeparam');
+                if ( staticNetFilteringEngine.filterQuery(fctxt, 'removeparam') ) {
+                    removeparamCount += 1;
+                }
             }
             if ( fctxt.type === 'main_frame' || fctxt.type === 'sub_frame' ) {
-                staticNetFilteringEngine.matchAndFetchModifiers(fctxt, 'csp');
-                staticNetFilteringEngine.matchAndFetchModifiers(fctxt, 'permissions');
+                if ( staticNetFilteringEngine.matchAndFetchModifiers(fctxt, 'csp') ) {
+                    cspCount += 1;
+                }
+                if ( staticNetFilteringEngine.matchAndFetchModifiers(fctxt, 'permissions') ) {
+                    permissionsCount += 1;
+                }
             }
             staticNetFilteringEngine.matchHeaders(fctxt, []);
         } else if ( redirectEngine !== undefined ) {
-            staticNetFilteringEngine.redirectRequest(redirectEngine, fctxt);
+            if ( staticNetFilteringEngine.redirectRequest(redirectEngine, fctxt) ) {
+                redirectCount += 1;
+            }
         }
     }
     const t1 = performance.now();
@@ -204,6 +218,10 @@ const loadBenchmarkDataset = (( ) => {
         `\tNot blocked: ${matchCount - blockCount - allowCount}`,
         `\tBlocked: ${blockCount}`,
         `\tUnblocked: ${allowCount}`,
+        `\tredirect=: ${redirectCount}`,
+        `\tremoveparam=: ${removeparamCount}`,
+        `\tcsp=: ${cspCount}`,
+        `\tpermissions=: ${permissionsCount}`,
     ];
     const s = output.join('\n');
     console.info(s);
