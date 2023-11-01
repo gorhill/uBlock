@@ -981,7 +981,10 @@ import {
         return { assetKey, content: '' };
     }
 
-    const rawDetails = await io.get(assetKey, { silent: true });
+    const rawDetails = await io.get(assetKey, {
+        favorLocal: this.readyToFilter !== true,
+        silent: true,
+    });
     // Compiling an empty string results in an empty string.
     if ( rawDetails.content === '' ) {
         rawDetails.assetKey = assetKey;

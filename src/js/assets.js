@@ -26,9 +26,10 @@
 import cacheStorage from './cachestorage.js';
 import logger from './logger.js';
 import µb from './background.js';
+import { ubolog } from './console.js';
 import { i18n$ } from './i18n.js';
 import * as sfp from './static-filtering-parser.js';
-import { ubolog } from './console.js';
+import { orphanizeString, } from './text-utils.js';
 
 /******************************************************************************/
 
@@ -46,6 +47,8 @@ const assets = {};
 let remoteServerFriendly = false;
 
 /******************************************************************************/
+
+const stringIsNotEmpty = s => typeof s === 'string' && s !== '';
 
 const parseExpires = s => {
     const matches = s.match(/(\d+)\s*([dh])?/i);
@@ -71,7 +74,7 @@ const extractMetadataFromList = (content, fields) => {
         field = field.toLowerCase().replace(
             /-[a-z]/g, s => s.charAt(1).toUpperCase()
         );
-        out[field] = value;
+        out[field] = value && orphanizeString(value);
     }
     // Pre-process known fields
     if ( out.lastModified ) {
@@ -169,7 +172,44 @@ const isDiffUpdatableAsset = content => {
         /^[^%].*[^%]$/.test(data.diffPath);
 };
 
-const stringIsNotEmpty = s => typeof s === 'string' && s !== '';
+/******************************************************************************/
+
+// favorLocal: avoid making network requests whenever possible
+// favorOrigin: avoid using CDN URLs whenever possible
+
+const getContentURLs = (assetKey, options = {}) => {
+    const contentURLs = [];
+    const entry = assetSourceRegistry[assetKey];
+    if ( entry instanceof Object === false ) { return contentURLs; }
+    if ( typeof entry.contentURL === 'string' ) {
+        contentURLs.push(entry.contentURL);
+    } else if ( Array.isArray(entry.contentURL) ) {
+        contentURLs.push(...entry.contentURL);
+    } else if ( reIsExternalPath.test(assetKey) ) {
+        contentURLs.push(assetKey);
+    }
+    if ( options.favorLocal ) {
+        contentURLs.sort((a, b) => {
+            if ( reIsExternalPath.test(a) ) { return 1; }
+            if ( reIsExternalPath.test(b) ) { return -1; }
+            return 0;
+        });
+    }
+    if ( Array.isArray(entry.cdnURLs) ) {
+        const cdnURLs = entry.cdnURLs.slice();
+        for ( let i = 0, n = cdnURLs.length; i < n; i++ ) {
+            const j = Math.floor(Math.random() * n);
+            if ( j === i ) { continue; }
+            [ cdnURLs[j], cdnURLs[i] ] = [ cdnURLs[i], cdnURLs[j] ];
+        }
+        if ( options.favorLocal || options.favorOrigin ) {
+            contentURLs.push(...cdnURLs);
+        } else {
+            contentURLs.unshift(...cdnURLs);
+        }
+    }
+    return contentURLs;
+};
 
 /******************************************************************************/
 
@@ -917,28 +957,17 @@ assets.get = async function(assetKey, options = {}) {
     }
 
     const assetRegistry = await getAssetSourceRegistry();
+
     assetDetails = assetRegistry[assetKey] || {};
-    const contentURLs = [];
-    if ( typeof assetDetails.contentURL === 'string' ) {
-        contentURLs.push(assetDetails.contentURL);
-    } else if ( Array.isArray(assetDetails.contentURL) ) {
-        contentURLs.push(...assetDetails.contentURL);
-    } else if ( reIsExternalPath.test(assetKey) ) {
+
+    const contentURLs = getContentURLs(assetKey, options);
+    if ( contentURLs.length === 0 && reIsExternalPath.test(assetKey) ) {
         assetDetails.content = 'filters';
         contentURLs.push(assetKey);
     }
 
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/1566#issuecomment-826473517
-    //   Use CDN URLs as fall back URLs.
-    if ( Array.isArray(assetDetails.cdnURLs) ) {
-        contentURLs.push(...assetDetails.cdnURLs);
-    }
-
     let error = 'ENOTFOUND';
     for ( const contentURL of contentURLs ) {
-        if ( reIsExternalPath.test(contentURL) && assetDetails.hasLocalURL ) {
-            continue;
-        }
         const details = assetDetails.content === 'filters'
             ? await assets.fetchFilterList(contentURL)
             : await assets.fetchText(contentURL);
@@ -966,7 +995,7 @@ assets.get = async function(assetKey, options = {}) {
 
 /******************************************************************************/
 
-async function getRemote(assetKey) {
+async function getRemote(assetKey, options = {}) {
     const [
         assetDetails = {},
         cacheDetails = {},
@@ -978,9 +1007,9 @@ async function getRemote(assetKey) {
     let error;
     let stale = false;
 
-    const reportBack = function(content, err) {
-        const details = { assetKey, content };
-        if ( err ) {
+    const reportBack = function(content, url = '', err = '') {
+        const details = { assetKey, content, url };
+        if ( err !== '') {
             details.error = assetDetails.lastError = err;
         } else {
             assetDetails.lastError = undefined;
@@ -988,45 +1017,8 @@ async function getRemote(assetKey) {
         return details;
     };
 
-    const contentURLs = [];
-    if ( typeof assetDetails.contentURL === 'string' ) {
-        contentURLs.push(assetDetails.contentURL);
-    } else if ( Array.isArray(assetDetails.contentURL) ) {
-        contentURLs.push(...assetDetails.contentURL);
-    }
-
-    // If asked to be gentle on remote servers, favour using dedicated CDN
-    // servers. If more than one CDN server is present, randomly shuffle the
-    // set of servers so as to spread the bandwidth burden.
-    //
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/1566#issuecomment-826473517
-    //   In case of manual update, use CDNs URLs as fall back URLs.
-    if ( Array.isArray(assetDetails.cdnURLs) ) {
-        const cdnURLs = assetDetails.cdnURLs.slice();
-        for ( let i = 0, n = cdnURLs.length; i < n; i++ ) {
-            const j = Math.floor(Math.random() * n);
-            if ( j === i ) { continue; }
-            [ cdnURLs[j], cdnURLs[i] ] = [ cdnURLs[i], cdnURLs[j] ];
-        }
-        if ( remoteServerFriendly ) {
-            contentURLs.unshift(...cdnURLs);
-        } else {
-            contentURLs.push(...cdnURLs);
-        }
-    }
-
-    for ( let contentURL of contentURLs ) {
+    for ( const contentURL of getContentURLs(assetKey, options) ) {
         if ( reIsExternalPath.test(contentURL) === false ) { continue; }
-
-        // This will force uBO to fetch the proper version according to whether
-        // the dev build is being used. This can be removed when execution of
-        // this code path is widespread for dev build revisions of uBO.
-        if ( assetKey === 'assets.json' ) {
-            contentURL = contentURL.replace(
-                /\/assets\/assets\.json$/,
-                µb.assetsJsonPath
-            );
-        }
 
         const result = assetDetails.content === 'filters'
             ? await assets.fetchFilterList(contentURL)
@@ -1066,12 +1058,12 @@ async function getRemote(assetKey) {
         }
 
         registerAssetSource(assetKey, { birthtime: undefined, error: undefined });
-        return reportBack(result.content);
+        return reportBack(result.content, contentURL);
     }
 
     if ( error !== undefined ) {
         registerAssetSource(assetKey, { error: { time: Date.now(), error } });
-        return reportBack('', 'ENOTFOUND');
+        return reportBack('', '', 'ENOTFOUND');
     }
 
     if ( stale ) {
@@ -1194,6 +1186,8 @@ const getAssetDiffDetails = assetKey => {
 };
 
 async function diffUpdater() {
+    if ( updaterAuto === false ) { return; }
+    if ( µb.hiddenSettings.differentialUpdate === false ) { return; }
     const toUpdate = await getUpdateCandidates();
     const now = Date.now();
     const toHardUpdate = [];
@@ -1298,6 +1292,7 @@ async function diffUpdater() {
 
 function updateFirst() {
     ubolog('Updater: cycle start');
+    ubolog('Updater: Fetch from ', updaterAuto ? 'CDNs' : 'origin');
     updaterStatus = 'updating';
     updaterFetched.clear();
     updaterUpdated.length = 0;
@@ -1367,7 +1362,7 @@ async function updateNext() {
 
     let result;
     if ( assetKey !== 'assets.json' || µb.hiddenSettings.debugAssetsJson !== true ) {
-        result = await getRemote(assetKey);
+        result = await getRemote(assetKey, { favorOrigin: updaterAuto === false });
     } else {
         result = await assets.fetchText(µb.assetsJsonPath);
         result.assetKey = 'assets.json';
@@ -1396,6 +1391,7 @@ function updateDone() {
     updaterFetched.clear();
     updaterUpdated.length = 0;
     updaterStatus = undefined;
+    updaterAuto = false;
     updaterAssetDelay = updaterAssetDelayDefault;
     ubolog('Updater: cycle end');
     if ( assetKeys.length ) {
