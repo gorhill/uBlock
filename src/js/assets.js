@@ -1292,7 +1292,7 @@ async function diffUpdater() {
 
 function updateFirst() {
     ubolog('Updater: cycle start');
-    ubolog('Updater: Fetch from ', updaterAuto ? 'CDNs' : 'origin');
+    ubolog('Updater: prefer', updaterAuto ? 'CDNs' : 'origin');
     updaterStatus = 'updating';
     updaterFetched.clear();
     updaterUpdated.length = 0;
