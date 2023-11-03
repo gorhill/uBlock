@@ -532,7 +532,7 @@
     "description": "Short information about how to create custom filters"
   },
   "1pTrustWarning": {
-    "message": "No afegiu filtres de fonts no fiables.",
+    "message": "No afegiu filtres de fonts no confiables.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {

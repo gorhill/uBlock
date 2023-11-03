@@ -244,7 +244,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "harmadik féltől származó css/képek",
+    "message": "külső féltől származó css/képek",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -532,7 +532,7 @@
     "description": "Short information about how to create custom filters"
   },
   "1pTrustWarning": {
-    "message": "Do not add filters from untrusted sources.",
+    "message": "Ne adj hozzá szűrőket megbízhatatlan forrásokból.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {

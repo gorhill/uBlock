@@ -532,7 +532,7 @@
     "description": "Short information about how to create custom filters"
   },
   "1pTrustWarning": {
-    "message": "Do not add filters from untrusted sources.",
+    "message": "Huwag magdagdag ng pangsala mula sa mga hindi katiwa-tiwalang pinagmulan.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {
@@ -956,11 +956,11 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "message": "Ang listahan ng pangsala ng kontent ay araw-araw binabago at dinadag-dagan. Siguruhin na ang iyong isyu ay hindi pa napauukulan sa mga pinakabagong update sa listahan ng pangsala.  ",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "message": "Kumpirmahin na nanatili ang isyu pagkatapos i-reload ang nagkaproblema na pahina ng web.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -1280,7 +1280,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Could not filter properly at browser launch. Reload the page to ensure proper filtering.",
+    "message": "Hindi nakapagsala ng maayos nung binuksan ang browser. I-reload ang pahina upang masiguro ang tamang proseso ng pagsasala.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {

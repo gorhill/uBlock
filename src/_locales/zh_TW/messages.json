@@ -484,7 +484,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
-    "message": "惱人的",
+    "message": "嫌惡元素",
     "description": "Filter lists section name"
   },
   "3pGroupMultipurpose": {
@@ -756,7 +756,7 @@
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
-    "message": "第一方/第三方",
+    "message": "第一方／第三方",
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {

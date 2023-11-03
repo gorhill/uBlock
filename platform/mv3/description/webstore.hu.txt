@@ -1,17 +1,17 @@
-Az uBO Lite (uBOL) egy *engedély nélküli* MV3-alapú tartalomblokkoló.
+Az uBO Lite (uBOL) egy *engedélyt nem igénylő* MV3-alapú tartalomblokkoló.
 
 Az alapértelmezett szabálykészlet megfelel a uBlock Origin alapértelmezett szűrőkészletének:
 
-- uBlock Origin beépített filter listái
+- uBlock Origin beépített szűrőlistái
 - EasyList
 - EasyPrivacy
-- Peter Lowe hirdetés és nyomkövető szerver listája
+- Peter Lowe hirdetési és nyomkövető-kiszolgálókat tartalmazó listája
 
-További szabályokat adhat hozzá a beállítások oldalon - kattintson a _Cogs_ ikonra a felugró panelen.
+További szabályokat adhat hozzá a beállítások oldalon – kattintson a _Fogaskerekek_ ikonra a felugró panelen.
 
-Az uBOL teljes mértékben deklaratív, vagyis nincs szükség állandó uBOL folyamatra a szűréshez, és a CSS/JS injekció alapú tartalomszűrést maga a böngésző végzi megbízhatóan, nem pedig a kiterjesztés. Ez azt jelenti, hogy az uBOL maga nem fogyaszt CPU/memória erőforrásokat, amíg a tartalom blokkolása folyamatban van – az uBOL szervizmunkás folyamatára _csak_ akkor van szükség, amikor az előugró panellel vagy a beállítási oldalakkal lép kapcsolatba.
+Az uBOL teljes mértékben deklaratív, vagyis nincs szükség állandó uBOL folyamatra a szűréshez, és a CSS/JS injektálás-alapú tartalomszűrést maga a böngésző végzi megbízhatóan, nem pedig a kiegészítő. Ez azt jelenti, hogy az uBOL maga nem fogyaszt CPU/memória erőforrásokat, amíg a tartalom blokkolása folyamatban van – az uBOL service worker folyamatára _csak_ akkor van szükség, amikor az felugró panellel vagy a beállítási oldalakkal érintkezik.
 
-Az uBOL nem igényel széles körű „adatok olvasása és módosítása” engedélyt a telepítéskor, ezért korlátozott képességei vannak, mint az uBlock Origin vagy más tartalomblokkolók, amelyek széles körű „adatok olvasása és módosítása” engedélyeket igényelnek a telepítéskor.
+Az uBOL nem igényel széles körű „adatok módosítása és olvasása” engedélyt a telepítéskor, ezért korlátozott képességei vannak az uBlock Originhez vagy más tartalomblokkolókhoz képest, amelyek széles körű „adatok olvasása és módosítása” engedélyeket igényelnek a telepítésükkor.
 
 Az uBOL azonban lehetővé teszi, hogy *kifejezetten* kiterjesztett engedélyeket adjon az Ön által választott bizonyos webhelyekhez, hogy jobban szűrhessen ezeken a webhelyeken kozmetikai szűréssel és szkriptlet-injekciókkal.
 

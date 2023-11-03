@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Domain malware",
+    "message": "Perlindungan malware, keamanan",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
@@ -536,11 +536,11 @@
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {
-    "message": "Impor dan tambahkan",
+    "message": "Impor dan tambahkan…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "Ekspor",
+    "message": "Ekspor…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
@@ -584,7 +584,7 @@
     "description": ""
   },
   "rulesExport": {
-    "message": "Ekspor ke berkas",
+    "message": "Ekspor ke berkas…",
     "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
@@ -616,15 +616,15 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "Arahan situs terpercaya menentukan pada halaman web mana uBlock Origin harus dinonaktifkan. Satu entri per baris.",
+    "message": "Arahan situs tepercaya menentukan halaman web mana yang uBlock Origin harus dinonaktifkan. Satu entri per baris.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Impor dan tambahkan",
+    "message": "Impor dan tambahkan…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
-    "message": "Ekspor",
+    "message": "Ekspor…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
@@ -968,7 +968,7 @@
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "Laman web...",
+    "message": "Laman web…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
@@ -1188,7 +1188,7 @@
     "description": "tooltip"
   },
   "cloudNoData": {
-    "message": "...\n...",
+    "message": "…\n…",
     "description": ""
   },
   "cloudDeviceNamePrompt": {

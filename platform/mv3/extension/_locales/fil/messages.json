@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Eksperimental at permission-less na pangharang ng content. Hinaharang ang mga ad, tracker, miner, at higit pa pagka-install.",
+    "message": "Permission-less na tagaharang ng content. Hinaharang ang mga ad, tracker, miner, at higit pa pagka-install.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -52,7 +52,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupFilteringModeLabel": {
-    "message": "filtering mode",
+    "message": "moda nang pagsasala",
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {
