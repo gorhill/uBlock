@@ -4123,6 +4123,8 @@ FilterContainer.prototype.reset = function() {
         this.optimizeTaskId = undefined;
     }
 
+    this.notReady = false;
+
     // Runtime registers
     this.$catBits = 0;
     this.$tokenHash = 0;
@@ -4214,6 +4216,8 @@ FilterContainer.prototype.freeze = function() {
     this.badFilters.clear();
     this.goodFilters.clear();
     filterArgsToUnit.clear();
+
+    this.notReady = false;
 
     // Optimizing is not critical for the static network filtering engine to
     // work properly, so defer this until later to allow for reduced delay to
@@ -4723,6 +4727,8 @@ FilterContainer.prototype.fromSelfie = async function(storage, path) {
 
     this.reset();
 
+    this.notReady = true;
+
     const results = await Promise.all([
         storage.get(`${path}/main`),
         storage.get(`${path}/destHNTrieContainer`).then(details =>
@@ -4767,6 +4773,14 @@ FilterContainer.prototype.fromSelfie = async function(storage, path) {
     this.bitsToBucketIndices = selfie.bitsToBucketIndices;
     bucketsFromSelfie(selfie.buckets);
     urlTokenizer.fromSelfie(selfie.urlTokenizer);
+
+    // If this point is never reached, it means the internal state is
+    // unreliable, and the caller is then responsible for resetting the
+    // engine and populate properly, in which case the `notReady` barrier
+    // will be properly reset.
+
+    this.notReady = false;
+
     return true;
 };
 
@@ -4811,6 +4825,8 @@ FilterContainer.prototype.matchAndFetchModifiers = function(
     fctxt,
     modifierName
 ) {
+    if ( this.notReady ) { return; }
+
     const typeBits = typeNameToTypeValue[fctxt.type] || otherTypeBitValue;
 
     $requestURL = urlTokenizer.setURL(fctxt.url);
@@ -4988,6 +5004,8 @@ FilterContainer.prototype.realmMatchString = function(
     typeBits,
     partyBits
 ) {
+    if ( this.notReady ) { return false; }
+
     const exactType = typeBits & 0x80000000;
     typeBits &= 0x7FFFFFFF;
 
