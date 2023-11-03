@@ -175,6 +175,7 @@ const FilteringContext = class {
 
     fromFilteringContext(other) {
         this.realm = other.realm;
+        this.id = other.id;
         this.type = other.type;
         this.method = other.method;
         this.url = other.url;

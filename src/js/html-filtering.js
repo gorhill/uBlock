@@ -429,15 +429,15 @@ htmlFilteringEngine.retrieve = function(details) {
     }
 };
 
-htmlFilteringEngine.apply = function(doc, details) {
+htmlFilteringEngine.apply = function(doc, details, selectors) {
     docRegister = doc;
     let modified = false;
-    for ( const selector of details.selectors.plains ) {
+    for ( const selector of selectors.plains ) {
         if ( applyCSSSelector(details, selector) ) {
             modified = true;
         }
     }
-    for ( const selector of details.selectors.procedurals ) {
+    for ( const selector of selectors.procedurals ) {
         if ( applyProceduralSelector(details, selector) ) {
             modified = true;
         }

@@ -187,6 +187,7 @@ export const NODE_TYPE_NET_OPTION_NAME_POPUP        = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_REDIRECT     = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_REMOVEPARAM  = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_REPLACE      = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_SCRIPT       = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_SHIDE        = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_TO           = iota++;
@@ -265,6 +266,7 @@ export const nodeTypeFromOptionName = new Map([
     /* synonym */ [ 'rewrite', NODE_TYPE_NET_OPTION_NAME_REDIRECT ],
     [ 'redirect-rule', NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE ],
     [ 'removeparam', NODE_TYPE_NET_OPTION_NAME_REMOVEPARAM ],
+    [ 'replace', NODE_TYPE_NET_OPTION_NAME_REPLACE ],
     /* synonym */ [ 'queryprune', NODE_TYPE_NET_OPTION_NAME_REMOVEPARAM ],
     [ 'script', NODE_TYPE_NET_OPTION_NAME_SCRIPT ],
     [ 'shide', NODE_TYPE_NET_OPTION_NAME_SHIDE ],
@@ -597,9 +599,14 @@ const exCharCodeAt = (s, i) => {
     return pos >= 0 ? s.charCodeAt(pos) : -1;
 };
 
+const toEscapedCharRegex = c => {
+    const safe = c.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return new RegExp(`((?:^|[^\\\\])(?:\\\\\\\\)*)\\\\${safe}`, 'g');
+};
+
 /******************************************************************************/
 
-class argListParser {
+class ArgListParser {
     constructor(separatorChar = ',', mustQuote = false) {
         this.separatorChar = this.actualSeparatorChar = separatorChar;
         this.separatorCode = this.actualSeparatorCode = separatorChar.charCodeAt(0);
@@ -612,10 +619,10 @@ class argListParser {
         this.reWhitespaceStart = /^\s+/;
         this.reWhitespaceEnd = /\s+$/;
         this.reOddTrailingEscape = /(?:^|[^\\])(?:\\\\)*\\$/;
-        this.reEscapedDoubleQuote = /((?:^|[^\\])(?:\\\\)*)\\"/g;
-        this.reEscapedSingleQuote = /((?:^|[^\\])(?:\\\\)*)\\'/g;
-        this.reEscapedBacktick = /((?:^|[^\\])(?:\\\\)*)\\`/g;
-        this.reEscapedSeparator = new RegExp(`((?:^|[^\\\\])(?:\\\\\\\\)*)\\\\${this.separatorChar}`, 'g');
+        this.reEscapedDoubleQuote = toEscapedCharRegex('"');
+        this.reEscapedSingleQuote = toEscapedCharRegex("'");
+        this.reEscapedBacktick = toEscapedCharRegex('`');
+        this.reEscapedSeparator = toEscapedCharRegex(this.separatorChar);
         this.unescapedSeparator = `$1${this.separatorChar}`;
     }
     nextArg(pattern, beg = 0) {
@@ -871,7 +878,7 @@ export class AstFilterParser {
         this.rePlainEntity = /^(?:[\da-z][\da-z_-]*\.)+\*$/;
         this.reHostsSink = /^[\w%.:\[\]-]+\s+/;
         this.reHostsRedirect = /(?:0\.0\.0\.0|broadcasthost|local|localhost(?:\.localdomain)?|ip6-\w+)(?:[^\w.-]|$)/;
-        this.reNetOptionComma = /,(?!\d*\})/g;
+        this.reNetOptionComma = /,(?:~?[13a-z-]+(?:=.*?)?|_+)(?:,|$)/;
         this.rePointlessLeftAnchor = /^\|\|?\*+/;
         this.reIsTokenChar = /^[%0-9A-Za-z]/;
         this.rePointlessLeadingWildcards = /^(\*+)[^%0-9A-Za-z\u{a0}-\u{10FFFF}]/u;
@@ -898,7 +905,7 @@ export class AstFilterParser {
         this.reGoodRegexToken = /[^\x01%0-9A-Za-z][%0-9A-Za-z]{7,}|[^\x01%0-9A-Za-z][%0-9A-Za-z]{1,6}[^\x01%0-9A-Za-z]/;
         this.reBadCSP = /(?:=|;)\s*report-(?:to|uri)\b/;
         this.reNoopOption = /^_+$/;
-        this.scriptletArgListParser = new argListParser(',');
+        this.scriptletArgListParser = new ArgListParser(',');
     }
 
     parse(raw) {
@@ -1414,6 +1421,7 @@ export class AstFilterParser {
                     break;
                 case NODE_TYPE_NET_OPTION_NAME_REDIRECT:
                 case NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE:
+                case NODE_TYPE_NET_OPTION_NAME_REPLACE:
                 case NODE_TYPE_NET_OPTION_NAME_URLTRANSFORM:
                     realBad = isNegated || (isException || hasValue) === false ||
                         modifierType !== 0;
@@ -1472,6 +1480,20 @@ export class AstFilterParser {
             case NODE_TYPE_NET_OPTION_NAME_REDIRECT:
             case NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE: {
                 realBad = abstractTypeCount || behaviorTypeCount || unredirectableTypeCount;
+                break;
+            }
+            case NODE_TYPE_NET_OPTION_NAME_REPLACE: {
+                realBad = abstractTypeCount || behaviorTypeCount || unredirectableTypeCount;
+                if ( realBad ) { break; }
+                if ( this.options.trustedSource !== true ) {
+                    this.astError = AST_ERROR_UNTRUSTED_SOURCE;
+                    realBad = true;
+                    break;
+                }
+                if ( this.interactive ) {
+                    const value = this.getNetOptionValue(NODE_TYPE_NET_OPTION_NAME_REPLACE);
+                    realBad = parseReplaceValue(value) === undefined;
+                }
                 break;
             }
             case NODE_TYPE_NET_OPTION_NAME_URLTRANSFORM:
@@ -1959,9 +1981,8 @@ export class AstFilterParser {
     }
 
     endOfNetOption(s, beg) {
-        this.reNetOptionComma.lastIndex = beg;
-        const match = this.reNetOptionComma.exec(s);
-        return match !== null ? match.index : s.length;
+        const match = this.reNetOptionComma.exec(s.slice(beg));
+        return match !== null ? beg + match.index : s.length;
     }
 
     parseNetOption(parent) {
@@ -2975,6 +2996,39 @@ export function parseHeaderValue(arg) {
     return out;
 }
 
+
+// https://adguard.com/kb/general/ad-filtering/create-own-filters/#replace-modifier
+
+export function parseReplaceValue(s) {
+    if ( s.charCodeAt(0) !== 0x2F /* / */ ) { return; }
+    const { reEscapedComma, reEscapedDollarSign } = parseReplaceValue;
+    const parser = new ArgListParser('/');
+    parser.nextArg(s, 1);
+    let pattern = s.slice(parser.argBeg, parser.argEnd);
+    if ( parser.transform ) {
+        pattern = parser.normalizeArg(pattern);
+    }
+    pattern = pattern
+        .replace(reEscapedDollarSign, '$1$$$')
+        .replace(reEscapedComma, '$1,');
+    parser.nextArg(s, parser.separatorEnd);
+    let replacement = s.slice(parser.argBeg, parser.argEnd);
+    if ( parser.separatorEnd === parser.separatorBeg ) { return; }
+    if ( parser.transform ) {
+        replacement = parser.normalizeArg(replacement);
+    }
+    replacement = replacement
+        .replace(reEscapedDollarSign, '$1$$')
+        .replace(reEscapedComma, '$1,');
+    const flags = s.slice(parser.separatorEnd);
+    try {
+        return { re: new RegExp(pattern, flags), replacement };
+    } catch(_) {
+    }
+}
+parseReplaceValue.reEscapedDollarSign = toEscapedCharRegex('$');
+parseReplaceValue.reEscapedComma = toEscapedCharRegex(',');
+
 /******************************************************************************/
 
 export const netOptionTokenDescriptors = new Map([
@@ -3025,6 +3079,7 @@ export const netOptionTokenDescriptors = new Map([
     /* synonym */ [ 'rewrite', { mustAssign: true } ],
     [ 'redirect-rule', { mustAssign: true } ],
     [ 'removeparam', { } ],
+    [ 'replace', { mustAssign: true } ],
     /* synonym */ [ 'queryprune', { } ],
     [ 'script', { canNegate: true } ],
     [ 'shide', { } ],

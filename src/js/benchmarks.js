@@ -174,6 +174,7 @@ const loadBenchmarkDataset = (( ) => {
     let removeparamCount = 0;
     let cspCount = 0;
     let permissionsCount = 0;
+    let replaceCount = 0;
     for ( let i = 0; i < requests.length; i++ ) {
         const request = requests[i];
         fctxt.setURL(request.url);
@@ -202,6 +203,9 @@ const loadBenchmarkDataset = (( ) => {
                 }
             }
             staticNetFilteringEngine.matchHeaders(fctxt, []);
+            if ( staticNetFilteringEngine.matchAndFetchModifiers(fctxt, 'replace') ) {
+                replaceCount += 1;
+            }
         } else if ( redirectEngine !== undefined ) {
             if ( staticNetFilteringEngine.redirectRequest(redirectEngine, fctxt) ) {
                 redirectCount += 1;
@@ -222,6 +226,7 @@ const loadBenchmarkDataset = (( ) => {
         `\tremoveparam=: ${removeparamCount}`,
         `\tcsp=: ${cspCount}`,
         `\tpermissions=: ${permissionsCount}`,
+        `\treplace=: ${replaceCount}`,
     ];
     const s = output.join('\n');
     console.info(s);

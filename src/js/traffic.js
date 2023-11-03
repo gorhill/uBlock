@@ -32,6 +32,7 @@ import scriptletFilteringEngine from './scriptlet-filtering.js';
 import staticNetFilteringEngine from './static-net-filtering.js';
 import textEncode from './text-encode.js';
 import µb from './background.js';
+import * as sfp from './static-filtering-parser.js';
 
 import {
     sessionFirewall,
@@ -483,11 +484,10 @@ const onBeforeBehindTheSceneRequest = function(fctxt) {
 const onHeadersReceived = function(details) {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/610
     //   Process behind-the-scene requests in a special way.
-    if (
-        details.tabId < 0 &&
-        normalizeBehindTheSceneResponseHeaders(details) === false
-    ) {
-        return;
+    if ( details.tabId < 0 ) {
+        if ( normalizeBehindTheSceneResponseHeaders(details) === false ) {
+            return;
+        }
     }
 
     const fctxt = µb.filteringContext.fromWebrequestDetails(details);
@@ -524,8 +524,6 @@ const onHeadersReceived = function(details) {
         }
     }
 
-    if ( isRootDoc === false && fctxt.itype !== fctxt.SUB_FRAME ) { return; }
-
     // https://github.com/gorhill/uBlock/issues/2813
     //   Disable the blocking of large media elements if the document is itself
     //   a media element: the resource was not prevented from loading so no
@@ -539,10 +537,29 @@ const onHeadersReceived = function(details) {
         }
     }
 
-    // At this point we have a HTML document.
-
-    const filteredHTML =
-        µb.canFilterResponseData && filterDocument(fctxt, details) === true;
+    const bodyFilterSession = bodyFilterer.canFilter(fctxt, details);
+    if ( bodyFilterSession !== undefined ) {
+        // `replace=` filter option
+        const replaceDirectives =
+            staticNetFilteringEngine.matchAndFetchModifiers(fctxt, 'replace');
+        if ( replaceDirectives ) {
+            bodyFilterSession.addJob({
+                fn: textResponseFilterer,
+                args: [ replaceDirectives ],
+            });
+        }
+        // html filtering
+        if ( isRootDoc || fctxt.itype === fctxt.SUB_FRAME ) {
+            const selectors = htmlFilteringEngine.retrieve(bodyFilterSession);
+            if ( selectors ) {
+                bodyFilterSession.addJob({
+                    fn: htmlResponseFilterer,
+                    args: [ selectors ],
+                });
+            }
+        }
+        bodyFilterSession.launch();
+    }
 
     let modifiedHeaders = false;
     if ( httpheaderFilteringEngine.apply(fctxt, responseHeaders) === true ) {
@@ -551,7 +568,6 @@ const onHeadersReceived = function(details) {
     if ( injectCSP(fctxt, pageStore, responseHeaders) === true ) {
         modifiedHeaders = true;
     }
-
     if ( injectPP(fctxt, pageStore, responseHeaders) === true ) {
         modifiedHeaders = true;
     }
@@ -562,7 +578,7 @@ const onHeadersReceived = function(details) {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/229
     //   Use `no-cache` instead of `no-cache, no-store, must-revalidate`, this
     //   allows Firefox's offline mode to work as expected.
-    if ( (filteredHTML || modifiedHeaders) && dontCacheResponseHeaders ) {
+    if ( modifiedHeaders && dontCacheResponseHeaders ) {
         const cacheControl = µb.hiddenSettings.cacheControlForFirefox1376932;
         if ( cacheControl !== 'unset' ) {
             let i = headerIndexFromName('cache-control', responseHeaders);
@@ -601,272 +617,301 @@ const normalizeBehindTheSceneResponseHeaders = function(details) {
     return true;
 };
 
+/******************************************************************************/
+
+function textResponseFilterer(session, directives) {
+    const applied = [];
+    for ( const directive of directives ) {
+        if ( directive.refs instanceof Object === false ) { continue; }
+        const { refs } = directive;
+        if ( refs.$cache === null ) {
+            refs.$cache = sfp.parseReplaceValue(refs.value);
+        }
+        const cache = refs.$cache;
+        if ( cache === undefined ) { continue; }
+        if ( cache.re.test(session.getString()) !== true ) { continue; }
+        session.setString(session.getString().replace(
+            cache.re,
+            cache.replacement
+        ));
+        applied.push(directive);
+    }
+
+    if ( applied && logger.enabled ) {
+        session.setRealm('network')
+             .pushFilters(applied.map(a => a.logData()))
+             .toLogger();
+    }
+
+    return applied.length !== 0;
+}
+
+/******************************************************************************/
+
+function htmlResponseFilterer(session, selectors) {
+    if ( htmlResponseFilterer.domParser === null ) {
+        htmlResponseFilterer.domParser = new DOMParser();
+        htmlResponseFilterer.xmlSerializer = new XMLSerializer();
+    }
+
+    const doc = htmlResponseFilterer.domParser.parseFromString(
+        session.getString(),
+        session.mime
+    );
+
+    if ( selectors !== undefined ) {
+        if ( htmlFilteringEngine.apply(doc, session, selectors) !== true ) {
+            return false;
+        }
+    }
+
+    // https://stackoverflow.com/questions/6088972/get-doctype-of-an-html-as-string-with-javascript/10162353#10162353
+    const doctypeStr = [
+        doc.doctype instanceof Object ?
+            htmlResponseFilterer.xmlSerializer.serializeToString(doc.doctype) + '\n' :
+            '',
+        doc.documentElement.outerHTML,
+    ].join('\n');
+    session.setString(doctypeStr);
+
+    return true;
+}
+htmlResponseFilterer.domParser = null;
+htmlResponseFilterer.xmlSerializer = null;
+
+
 /*******************************************************************************
 
     The response body filterer is responsible for:
 
+    - Realize static network filter option `replace=`
     - HTML filtering
-
-    In the spirit of efficiency, the response body filterer works this way:
-
-    If:
-        - HTML filtering: no.
-    Then:
-        No response body filtering is initiated.
-
-    If:
-        - HTML filtering: yes.
-    Then:
-        Assemble all response body data into a single buffer. Once all the
-        response data has been received, create a document from it. Then:
-        - Remove all DOM elements matching HTML filters.
-        Then serialize the resulting modified document as the new response
-        body.
 
 **/
 
-const filterDocument = (( ) => {
-    const filterers = new Map();
-    let domParser, xmlSerializer,
-        utf8TextDecoder, textDecoder, textEncoder;
-
-    const textDecode = function(encoding, buffer) {
-        if (
-            textDecoder !== undefined &&
-            textDecoder.encoding !== encoding
-        ) {
-            textDecoder = undefined;
-        }
-        if ( textDecoder === undefined ) {
-            textDecoder = new TextDecoder(encoding);
-        }
-        return textDecoder.decode(buffer);
-    };
-
+const bodyFilterer = (( ) => {
+    const sessions = new Map();
     const reContentTypeDocument = /^(?:text\/html|application\/xhtml\+xml)/i;
     const reContentTypeCharset = /charset=['"]?([^'" ]+)/i;
+    const otherValidMimes = new Set([
+        'application/javascript',
+        'application/json',
+        'application/xml',
+        'application/xhtml+xml',
+    ]);
+    let textDecoder, textEncoder;
 
-    const mimeFromContentType = function(contentType) {
+    const mimeFromContentType = contentType => {
         const match = reContentTypeDocument.exec(contentType);
-        if ( match !== null ) {
-            return match[0].toLowerCase();
-        }
+        if ( match === null ) { return; }
+        return match[0].toLowerCase();
     };
 
-    const charsetFromContentType = function(contentType) {
+    const charsetFromContentType = contentType => {
         const match = reContentTypeCharset.exec(contentType);
-        if ( match !== null ) {
-            return match[1].toLowerCase();
-        }
+        if ( match === null ) { return; }
+        return match[1].toLowerCase();
     };
 
-    const charsetFromDoc = function(doc) {
-        let meta = doc.querySelector('meta[charset]');
-        if ( meta !== null ) {
-            return meta.getAttribute('charset').toLowerCase();
+    const charsetFromStream = bytes => {
+        if ( bytes.length < 3 ) { return; }
+        if ( bytes[0] === 0xEF && bytes[1] === 0xBB && bytes[2] === 0xBF ) {
+            return 'utf-8';
         }
-        meta = doc.querySelector(
-            'meta[http-equiv="content-type" i][content]'
-        );
-        if ( meta !== null ) {
-            return charsetFromContentType(meta.getAttribute('content'));
+        let i = -1;
+        while ( i < 65536 ) {
+            i += 1;
+            /* c */ if ( bytes[i+0] !== 0x63 ) { continue; }
+            /* h */ if ( bytes[i+1] !== 0x68 ) { continue; }
+            /* a */ if ( bytes[i+2] !== 0x61 ) { continue; }
+            /* r */ if ( bytes[i+3] !== 0x72 ) { continue; }
+            /* s */ if ( bytes[i+4] !== 0x73 ) { continue; }
+            /* e */ if ( bytes[i+5] !== 0x65 ) { continue; }
+            /* t */ if ( bytes[i+6] !== 0x74 ) { continue; }
+            break;
         }
+        if ( (i - 40) >= 65536 ) { return; }
+        i += 8;
+        // find first alpha character
+        let j = 0;
+        while ( j < 8 ) {
+            j += 1;
+            const c = bytes[i+j];
+            if ( c >= 0x41 && c <= 0x5A ) { break; }
+            if ( c >= 0x61 && c <= 0x7A ) { break; }
+            j += 1;
+        }
+        if ( j === 8 ) { return; }
+        i += j;
+        // Collect characters until first non charset-name-character
+        const chars = [];
+        j = 0;
+        while ( j < 24 ) {
+            const c = bytes[i+j];
+            if ( c < 0x2D ) { break; }
+            if ( c > 0x2D && c < 0x30 ) { break; }
+            if ( c > 0x39 && c < 0x41 ) { break; }
+            if ( c > 0x5A && c < 0x61 ) { break; }
+            if ( c > 0x7A ) { break; }
+            chars.push(c);
+            j += 1;
+        }
+        if ( j === 20 ) { return; }
+        return String.fromCharCode(...chars).toLowerCase();
     };
 
-    const streamClose = function(filterer, buffer) {
+    const streamClose = (session, buffer) => {
         if ( buffer !== undefined ) {
-            filterer.stream.write(buffer);
-        } else if ( filterer.buffer !== undefined ) {
-            filterer.stream.write(filterer.buffer);
+            session.stream.write(buffer);
+        } else if ( session.buffer !== undefined ) {
+            session.stream.write(session.buffer);
         }
-        filterer.stream.close();
+        session.stream.close();
     };
 
     const onStreamData = function(ev) {
-        const filterer = filterers.get(this);
-        if ( filterer === undefined ) {
+        const session = sessions.get(this);
+        if ( session === undefined ) {
             this.write(ev.data);
             this.disconnect();
             return;
         }
-        if (
-            this.status !== 'transferringdata' &&
-            this.status !== 'finishedtransferringdata'
-        ) {
-            filterers.delete(this);
-            this.disconnect();
-            return;
+        if ( this.status !== 'transferringdata' ) {
+            if ( this.status !== 'finishedtransferringdata' ) {
+                sessions.delete(this);
+                this.disconnect();
+                return;
+            }
         }
-        // TODO:
-        // - Possibly improve buffer growth, if benchmarking shows it's worth
-        //   it.
-        // - Also evaluate whether keeping a list of buffers and then decoding
-        //   them in sequence using TextDecoder's "stream" option is more
-        //   efficient. Can the data buffers be safely kept around for later
-        //   use?
-        // - Informal, quick benchmarks seem to show most of the overhead is
-        //   from calling TextDecoder.decode() and TextEncoder.encode(), and if
-        //   confirmed, there is nothing which can be done uBO-side to reduce
-        //   overhead.
-        if ( filterer.buffer === null ) {
-            filterer.buffer = new Uint8Array(ev.data);
+        if ( session.buffer === null ) {
+            session.buffer = new Uint8Array(ev.data);
             return;
         }
         const buffer = new Uint8Array(
-            filterer.buffer.byteLength +
-            ev.data.byteLength
+            session.buffer.byteLength + ev.data.byteLength
         );
-        buffer.set(filterer.buffer);
-        buffer.set(new Uint8Array(ev.data), filterer.buffer.byteLength);
-        filterer.buffer = buffer;
+        buffer.set(session.buffer);
+        buffer.set(new Uint8Array(ev.data), session.buffer.byteLength);
+        session.buffer = buffer;
     };
 
     const onStreamStop = function() {
-        const filterer = filterers.get(this);
-        filterers.delete(this);
-        if ( filterer === undefined || filterer.buffer === null ) {
+        const session = sessions.get(this);
+        sessions.delete(this);
+        if ( session === undefined || session.buffer === null ) {
             this.close();
             return;
         }
         if ( this.status !== 'finishedtransferringdata' ) { return; }
 
-        if ( domParser === undefined ) {
-            domParser = new DOMParser();
-            xmlSerializer = new XMLSerializer();
-        }
-        if ( textEncoder === undefined ) {
-            textEncoder = new TextEncoder();
-        }
-
-        let doc;
-
-        // If stream encoding is still unknnown, try to extract from document.
-        let charsetFound = filterer.charset,
-            charsetUsed = charsetFound;
-        if ( charsetFound === undefined ) {
-            if ( utf8TextDecoder === undefined ) {
-                utf8TextDecoder = new TextDecoder();
-            }
-            doc = domParser.parseFromString(
-                utf8TextDecoder.decode(filterer.buffer.slice(0, 1024)),
-                filterer.mime
-            );
-            charsetFound = charsetFromDoc(doc);
-            charsetUsed = textEncode.normalizeCharset(charsetFound);
-            if ( charsetUsed === undefined ) {
-                return streamClose(filterer);
-            }
-        }
-
-        doc = domParser.parseFromString(
-            textDecode(charsetUsed, filterer.buffer),
-            filterer.mime
-        );
-
-        // https://github.com/gorhill/uBlock/issues/3507
-        //   In case of no explicit charset found, try to find one again, but
-        //   this time with the whole document parsed.
-        if ( charsetFound === undefined ) {
-            charsetFound = textEncode.normalizeCharset(charsetFromDoc(doc));
-            if ( charsetFound !== charsetUsed ) {
-                if ( charsetFound === undefined ) {
-                    return streamClose(filterer);
-                }
-                charsetUsed = charsetFound;
-                doc = domParser.parseFromString(
-                    textDecode(charsetFound, filterer.buffer),
-                    filterer.mime
-                );
-            }
+        // If encoding is still unknown, try to extract from stream data
+        if ( session.charset === undefined ) {
+            const charsetFound = charsetFromStream(session.buffer);
+            if ( charsetFound === undefined ) { return streamClose(session); }
+            const charsetUsed = textEncode.normalizeCharset(charsetFound);
+            if ( charsetUsed === undefined ) { return streamClose(session); }
+            session.charset = charsetUsed;
         }
 
         let modified = false;
-        if ( filterer.selectors !== undefined ) {
-            if ( htmlFilteringEngine.apply(doc, filterer) ) {
-                modified = true;
-            }
+        while ( session.jobs.length !== 0 ) {
+            const job = session.jobs.shift();
+            modified = job.fn(session, ...job.args) || modified;
+        }
+        if ( modified !== true ) { return streamClose(session); }
+
+        if ( textEncoder === undefined ) {
+            textEncoder = new TextEncoder();
+        }
+        let encodedStream = textEncoder.encode(session.str);
+
+        if ( session.charset !== 'utf-8' ) {
+            encodedStream = textEncode.encode(session.charset, encodedStream);
         }
 
-        if ( modified === false ) {
-            return streamClose(filterer);
-        }
-
-        // https://stackoverflow.com/questions/6088972/get-doctype-of-an-html-as-string-with-javascript/10162353#10162353
-        const doctypeStr = doc.doctype instanceof Object ?
-                xmlSerializer.serializeToString(doc.doctype) + '\n' :
-                '';
-
-        // https://github.com/gorhill/uBlock/issues/3391
-        let encodedStream = textEncoder.encode(
-            doctypeStr +
-            doc.documentElement.outerHTML
-        );
-        if ( charsetUsed !== 'utf-8' ) {
-            encodedStream = textEncode.encode(
-                charsetUsed,
-                encodedStream
-            );
-        }
-
-        streamClose(filterer, encodedStream);
+        streamClose(session, encodedStream);
     };
 
     const onStreamError = function() {
-        filterers.delete(this);
+        sessions.delete(this);
     };
 
-    return function(fctxt, extras) {
-        // https://github.com/gorhill/uBlock/issues/3478
-        const statusCode = extras.statusCode || 0;
-        if ( statusCode !== 0 && (statusCode < 200 || statusCode >= 300) ) {
-            return;
+    return class Session extends µb.FilteringContext {
+        constructor(fctxt, details, mime, charset) {
+            super(fctxt);
+            this.entity = entityFromDomain(this.getDomain());
+            this.stream = null;
+            this.buffer = null;
+            this.mime = mime;
+            this.charset = charset;
+            this.str = null;
+            this.jobs = [];
         }
-
-        const hostname = fctxt.getHostname();
-        if ( hostname === '' ) { return; }
-
-        const domain = fctxt.getDomain();
-
-        const request = {
-            stream: undefined,
-            tabId: fctxt.tabId,
-            url: fctxt.url,
-            hostname: hostname,
-            domain: domain,
-            entity: entityFromDomain(domain),
-            selectors: undefined,
-            buffer: null,
-            mime: 'text/html',
-            charset: undefined
-        };
-
-        request.selectors = htmlFilteringEngine.retrieve(request);
-        if ( request.selectors === undefined ) { return; }
-
-        const headers = extras.responseHeaders;
-        const contentType = headerValueFromName('content-type', headers);
-        if ( contentType !== '' ) {
-            request.mime = mimeFromContentType(contentType);
-            if ( request.mime === undefined ) { return; }
-            let charset = charsetFromContentType(contentType);
-            if ( charset !== undefined ) {
-                charset = textEncode.normalizeCharset(charset);
-                if ( charset === undefined ) { return; }
-                request.charset = charset;
+        getString() {
+            if ( this.str !== null ) { return this.str; }
+            if ( textDecoder !== undefined ) {
+                if ( textDecoder.encoding !== this.charset ) {
+                    textDecoder = undefined;
+                }
             }
+            if ( textDecoder === undefined ) {
+                textDecoder = new TextDecoder(this.charset);
+            }
+            this.str = textDecoder.decode(this.buffer);
+            return this.str;
         }
-        // https://bugzilla.mozilla.org/show_bug.cgi?id=1426789
-        const disposition = headerValueFromName('content-disposition', headers);
-        if ( disposition !== '' && disposition.startsWith('inline') === false ) { return; }
+        setString(s) {
+            this.str = s;
+        }
+        addJob(job) {
+            this.jobs.push(job);
+        }
+        launch() {
+            if ( this.jobs.length === 0 ) { return; }
+            this.stream = browser.webRequest.filterResponseData(this.id);
+            this.stream.ondata = onStreamData;
+            this.stream.onstop = onStreamStop;
+            this.stream.onerror = onStreamError;
+            sessions.set(this.stream, this);
+            return true;
+        }
+        static canFilter(fctxt, details) {
+            if ( µb.canFilterResponseData !== true ) { return; }
 
-        const stream = request.stream =
-            browser.webRequest.filterResponseData(extras.requestId);
-        stream.ondata = onStreamData;
-        stream.onstop = onStreamStop;
-        stream.onerror = onStreamError;
-        filterers.set(stream, request);
+            // https://github.com/gorhill/uBlock/issues/3478
+            const statusCode = details.statusCode || 0;
+            if ( statusCode !== 0 && (statusCode < 200 || statusCode >= 300) ) {
+                return;
+            }
 
-        return true;
+            const hostname = fctxt.getHostname();
+            if ( hostname === '' ) { return; }
+
+            // https://bugzilla.mozilla.org/show_bug.cgi?id=1426789
+            const headers = details.responseHeaders;
+            const disposition = headerValueFromName('content-disposition', headers);
+            if ( disposition !== '' && disposition.startsWith('inline') === false ) {
+                return;
+            }
+
+            const contentType = headerValueFromName('content-type', headers);
+            let mime, charset;
+            if ( contentType !== '' ) {
+                mime = mimeFromContentType(contentType);
+                if ( mime === undefined ) { return; }
+                charset = charsetFromContentType(contentType);
+                if ( charset !== undefined ) {
+                    charset = textEncode.normalizeCharset(charset);
+                    if ( charset === undefined ) { return; }
+                }
+            }
+
+            if ( mime.startsWith('text/') === false ) {
+                if ( otherValidMimes.has(mime) === false ) { return; }
+            }
+
+            return new Session(fctxt, details, mime, charset);
+        }
     };
 })();
 
