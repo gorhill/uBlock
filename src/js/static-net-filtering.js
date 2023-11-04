@@ -4352,7 +4352,11 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
     const realms = new Map([
         [ BLOCK_REALM, 'block' ],
         [ ALLOW_REALM, 'allow' ],
-        [ MODIFY_REALMS, 'modify' ],
+        [ REDIRECT_REALM, 'redirect' ],
+        [ REMOVEPARAM_REALM, 'removeparam' ],
+        [ CSP_REALM, 'csp' ],
+        [ PERMISSIONS_REALM, 'permissions' ],
+        [ URLTRANSFORM_REALM, 'urltransform' ],
     ]);
     const partyness = new Map([
         [ ANYPARTY_REALM, '' ],
