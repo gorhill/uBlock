@@ -33,6 +33,7 @@ import staticNetFilteringEngine from './static-net-filtering.js';
 import textEncode from './text-encode.js';
 import µb from './background.js';
 import * as sfp from './static-filtering-parser.js';
+import * as fc from  './filtering-context.js';
 
 import {
     sessionFirewall,
@@ -699,6 +700,8 @@ const bodyFilterer = (( ) => {
         'application/xml',
         'application/xhtml+xml',
     ]);
+    const NOT_TEXT_TYPES = fc.FONT | fc.IMAGE | fc.MEDIA | fc.WEBSOCKET;
+
     let textDecoder, textEncoder;
 
     const mimeFromContentType = contentType => {
@@ -878,6 +881,14 @@ const bodyFilterer = (( ) => {
         static canFilter(fctxt, details) {
             if ( µb.canFilterResponseData !== true ) { return; }
 
+            if ( (fctxt.itype & NOT_TEXT_TYPES) !== 0 ) { return; }
+
+            if ( fctxt.method !== fc.METHOD_GET ) {
+                if ( fctxt.method !== fc.METHOD_POST ) {
+                    return;
+                }
+            }
+
             // https://github.com/gorhill/uBlock/issues/3478
             const statusCode = details.statusCode || 0;
             if ( statusCode !== 0 && (statusCode < 200 || statusCode >= 300) ) {
@@ -890,12 +901,14 @@ const bodyFilterer = (( ) => {
             // https://bugzilla.mozilla.org/show_bug.cgi?id=1426789
             const headers = details.responseHeaders;
             const disposition = headerValueFromName('content-disposition', headers);
-            if ( disposition !== '' && disposition.startsWith('inline') === false ) {
-                return;
+            if ( disposition !== '' ) {
+                if ( disposition.startsWith('inline') === false ) {
+                    return;
+                }
             }
 
             const contentType = headerValueFromName('content-type', headers);
-            let mime, charset;
+            let mime = 'text/plain', charset;
             if ( contentType !== '' ) {
                 mime = mimeFromContentType(contentType);
                 if ( mime === undefined ) { return; }

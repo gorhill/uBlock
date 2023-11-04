@@ -37,30 +37,30 @@ import {
 // values -- the assumption being that integer operations are faster than
 // string operations.
 
-const           NO_TYPE = 0;
-const            BEACON = 1 <<  0;
-const        CSP_REPORT = 1 <<  1;
-const              FONT = 1 <<  2;
-const             IMAGE = 1 <<  4;
-const          IMAGESET = 1 <<  4;
-const        MAIN_FRAME = 1 <<  5;
-const             MEDIA = 1 <<  6;
-const            OBJECT = 1 <<  7;
-const OBJECT_SUBREQUEST = 1 <<  7;
-const              PING = 1 <<  8;
-const            SCRIPT = 1 <<  9;
-const        STYLESHEET = 1 << 10;
-const         SUB_FRAME = 1 << 11;
-const         WEBSOCKET = 1 << 12;
-const    XMLHTTPREQUEST = 1 << 13;
-const       INLINE_FONT = 1 << 14;
-const     INLINE_SCRIPT = 1 << 15;
-const             OTHER = 1 << 16;
-const         FRAME_ANY = MAIN_FRAME | SUB_FRAME;
-const          FONT_ANY = FONT | INLINE_FONT;
-const        INLINE_ANY = INLINE_FONT | INLINE_SCRIPT;
-const          PING_ANY = BEACON | CSP_REPORT | PING;
-const        SCRIPT_ANY = SCRIPT | INLINE_SCRIPT;
+export const           NO_TYPE = 0;
+export const            BEACON = 1 <<  0;
+export const        CSP_REPORT = 1 <<  1;
+export const              FONT = 1 <<  2;
+export const             IMAGE = 1 <<  4;
+export const          IMAGESET = 1 <<  4;
+export const        MAIN_FRAME = 1 <<  5;
+export const             MEDIA = 1 <<  6;
+export const            OBJECT = 1 <<  7;
+export const OBJECT_SUBREQUEST = 1 <<  7;
+export const              PING = 1 <<  8;
+export const            SCRIPT = 1 <<  9;
+export const        STYLESHEET = 1 << 10;
+export const         SUB_FRAME = 1 << 11;
+export const         WEBSOCKET = 1 << 12;
+export const    XMLHTTPREQUEST = 1 << 13;
+export const       INLINE_FONT = 1 << 14;
+export const     INLINE_SCRIPT = 1 << 15;
+export const             OTHER = 1 << 16;
+export const         FRAME_ANY = MAIN_FRAME | SUB_FRAME;
+export const          FONT_ANY = FONT | INLINE_FONT;
+export const        INLINE_ANY = INLINE_FONT | INLINE_SCRIPT;
+export const          PING_ANY = BEACON | CSP_REPORT | PING;
+export const        SCRIPT_ANY = SCRIPT | INLINE_SCRIPT;
 
 const typeStrToIntMap = {
            'no_type': NO_TYPE,
@@ -84,15 +84,15 @@ const typeStrToIntMap = {
              'other': OTHER,
 };
 
-const    METHOD_NONE = 0;
-const METHOD_CONNECT = 1 << 1;
-const  METHOD_DELETE = 1 << 2;
-const     METHOD_GET = 1 << 3;
-const    METHOD_HEAD = 1 << 4;
-const METHOD_OPTIONS = 1 << 5;
-const   METHOD_PATCH = 1 << 6;
-const    METHOD_POST = 1 << 7;
-const     METHOD_PUT = 1 << 8;
+export const    METHOD_NONE = 0;
+export const METHOD_CONNECT = 1 << 1;
+export const  METHOD_DELETE = 1 << 2;
+export const     METHOD_GET = 1 << 3;
+export const    METHOD_HEAD = 1 << 4;
+export const METHOD_OPTIONS = 1 << 5;
+export const   METHOD_PATCH = 1 << 6;
+export const    METHOD_POST = 1 << 7;
+export const     METHOD_PUT = 1 << 8;
 
 const methodStrToBitMap = {
            '': METHOD_NONE,
@@ -128,7 +128,7 @@ const methodBitToStrMap = new Map([
 
 /******************************************************************************/
 
-const FilteringContext = class {
+export const FilteringContext = class {
     constructor(other) {
         if ( other instanceof FilteringContext ) {
             return this.fromFilteringContext(other);
@@ -459,5 +459,3 @@ FilteringContext.prototype.METHOD_POST = FilteringContext.METHOD_POST = METHOD_P
 FilteringContext.prototype.METHOD_PUT = FilteringContext.METHOD_PUT = METHOD_PUT;
 
 /******************************************************************************/
-
-export { FilteringContext };
