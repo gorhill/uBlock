@@ -736,7 +736,7 @@ const bodyFilterer = (( ) => {
         if ( (i - 40) >= 65536 ) { return; }
         i += 8;
         // find first alpha character
-        let j = 0;
+        let j = -1;
         while ( j < 8 ) {
             j += 1;
             const c = bytes[i+j];
