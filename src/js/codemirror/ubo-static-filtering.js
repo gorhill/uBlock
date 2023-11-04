@@ -512,7 +512,7 @@ function initHints() {
                 matchRight[0]
             );
         }
-        if ( matchLeft[0].startsWith('domain=') ) {
+        if ( /^(domain|from)=/.test(matchLeft[0]) ) {
             return getOriginHints(cursor, line);
         }
     };
