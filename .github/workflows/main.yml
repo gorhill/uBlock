@@ -30,6 +30,10 @@ jobs:
         id: release_info
         run: |
           echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+      - name: Assemble release notes
+        run: |
+          sed -e 's/%version%/${{ steps.release_info.outputs.VERSION }}/' RELEASE.HEAD.md > release.body.txt
+          grep -m1 -B10000  "==========" CHANGELOG.md | sed -e '/==========/d' >> release.body.txt
       - name: Create GitHub release
         id: create_release
         uses: actions/create-release@v1
@@ -39,6 +43,7 @@ jobs:
           tag_name: ${{ steps.release_info.outputs.VERSION }}
           release_name: ${{ steps.release_info.outputs.VERSION }}
           prerelease: true
+          body_path: release.body.txt
       - name: Build MV2 packages
         run: |
           tools/make-chromium.sh ${{ steps.release_info.outputs.VERSION }}
