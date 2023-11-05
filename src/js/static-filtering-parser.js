@@ -1490,9 +1490,10 @@ export class AstFilterParser {
                     realBad = true;
                     break;
                 }
-                if ( this.interactive ) {
-                    const value = this.getNetOptionValue(NODE_TYPE_NET_OPTION_NAME_REPLACE);
-                    realBad = parseReplaceValue(value) === undefined;
+                const value = this.getNetOptionValue(NODE_TYPE_NET_OPTION_NAME_REPLACE);
+                if ( parseReplaceValue(value) === undefined ) {
+                    this.astError = AST_ERROR_OPTION_BADVALUE;
+                    realBad = true;
                 }
                 break;
             }
@@ -1504,8 +1505,8 @@ export class AstFilterParser {
                     realBad = true;
                     break;
                 }
-                const path = this.getNetOptionValue(NODE_TYPE_NET_OPTION_NAME_URLTRANSFORM);
-                if ( path.charCodeAt(0) !== 0x2F /* / */ ) {
+                const value = this.getNetOptionValue(NODE_TYPE_NET_OPTION_NAME_URLTRANSFORM);
+                if ( parseReplaceValue(value) === undefined ) {
                     this.astError = AST_ERROR_OPTION_BADVALUE;
                     realBad = true;
                 }
@@ -3008,6 +3009,7 @@ export function parseReplaceValue(s) {
     if ( parser.transform ) {
         pattern = parser.normalizeArg(pattern);
     }
+    if ( pattern === '' ) { return; }
     pattern = pattern
         .replace(reEscapedDollarSign, '$1$$$')
         .replace(reEscapedComma, '$1,');

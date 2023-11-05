@@ -5275,9 +5275,21 @@ FilterContainer.prototype.transformRequest = function(fctxt) {
     if ( directives === undefined ) { return; }
     const directive = directives[directives.length-1];
     if ( (directive.bits & ALLOW_REALM) !== 0 ) { return directives; }
+    if ( directive.refs instanceof Object === false ) { return; }
+    const { refs } = directive;
+    if ( refs.$cache === null ) {
+        refs.$cache = sfp.parseReplaceValue(refs.value);
+    }
+    const cache = refs.$cache;
+    if ( cache === undefined ) { return; }
     const redirectURL = new URL(fctxt.url);
-    if ( directive.value === redirectURL.pathname ) { return; }
-    redirectURL.pathname = directive.value;
+    const before = redirectURL.pathname + redirectURL.search;
+    if ( cache.re.test(before) !== true ) { return; }
+    const after = before.replace(cache.re, cache.replacement);
+    if ( after === before ) { return; }
+    const searchPos = after.includes('?') && after.indexOf('?') || after.length;
+    redirectURL.pathname = after.slice(0, searchPos);
+    redirectURL.search = after.slice(searchPos);
     fctxt.redirectURL = redirectURL.href;
     return directives;
 };
