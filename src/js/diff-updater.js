@@ -27,7 +27,7 @@
 
 const patches = new Map();
 const encoder = new TextEncoder();
-const reFileName = /[^\/]+$/;
+const reFileName = /([^\/]+?)(?:#.+)?$/;
 const EMPTYLINE = '';
 
 /******************************************************************************/
@@ -44,7 +44,7 @@ const suffleArray = arr => {
 
 const basename = url => {
     const match = reFileName.exec(url);
-    return match && match[0] || '';
+    return match && match[1] || '';
 };
 
 const resolveURL = (path, url) => {
