@@ -3384,7 +3384,7 @@ function setCookie(
         'enabled', 'disabled',
         'ok',
         'on', 'off',
-        'true', 'false',
+        'true', 't', 'false', 'f',
         'y', 'n',
         'yes', 'no',
     ];
