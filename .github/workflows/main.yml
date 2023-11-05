@@ -34,7 +34,7 @@ jobs:
         run: |
           > release.body.txt
           grep -m1 -B10000  "----------" CHANGELOG.md >> release.body.txt
-          sed -e 's/%version%/${{ steps.release_info.outputs.VERSION }}/' RELEASE.HEAD.md >> release.body.txt
+          sed -e 's/%version%/${{ steps.release_info.outputs.VERSION }}/g' RELEASE.HEAD.md >> release.body.txt
       - name: Create GitHub release
         id: create_release
         uses: actions/create-release@v1
