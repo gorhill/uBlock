@@ -49,7 +49,7 @@
 		"cdnURLs": [
 			"https://ublockorigin.github.io/uAssetsCDN/filters/filters.min.txt",
 			"https://ublockorigin.pages.dev/filters/filters.min.txt",
-			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDNmain/filters/filters.min.txt",
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/filters/filters.min.txt",
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/filters.min.txt"
 		],
 		"supportURL": "https://github.com/uBlockOrigin/uAssets"
