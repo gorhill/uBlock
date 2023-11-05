@@ -34,6 +34,7 @@ import textEncode from './text-encode.js';
 import µb from './background.js';
 import * as sfp from './static-filtering-parser.js';
 import * as fc from  './filtering-context.js';
+import { isNetworkURI } from './uri-utils.js';
 
 import {
     sessionFirewall,
@@ -41,10 +42,6 @@ import {
     sessionURLFiltering,
 } from './filtering-engines.js';
 
-import {
-    entityFromDomain,
-    isNetworkURI,
-} from './uri-utils.js';
 
 /******************************************************************************/
 
@@ -538,28 +535,30 @@ const onHeadersReceived = function(details) {
         }
     }
 
-    const bodyFilterSession = bodyFilterer.canFilter(fctxt, details);
-    if ( bodyFilterSession !== undefined ) {
+    if ( bodyFilterer.canFilter(fctxt, details) ) {
+        const jobs = [];
         // `replace=` filter option
         const replaceDirectives =
             staticNetFilteringEngine.matchAndFetchModifiers(fctxt, 'replace');
         if ( replaceDirectives ) {
-            bodyFilterSession.addJob({
+            jobs.push({
                 fn: textResponseFilterer,
                 args: [ replaceDirectives ],
             });
         }
         // html filtering
         if ( isRootDoc || fctxt.itype === fctxt.SUB_FRAME ) {
-            const selectors = htmlFilteringEngine.retrieve(bodyFilterSession);
+            const selectors = htmlFilteringEngine.retrieve(fctxt);
             if ( selectors ) {
-                bodyFilterSession.addJob({
+                jobs.push({
                     fn: htmlResponseFilterer,
                     args: [ selectors ],
                 });
             }
         }
-        bodyFilterSession.launch();
+        if ( jobs.length !== 0 ) {
+            bodyFilterer.doFilter(fctxt, jobs);
+        }
     }
 
     let modifiedHeaders = false;
@@ -698,6 +697,8 @@ const bodyFilterer = (( ) => {
     const MAX_BUFFER_LENGTH = 3 * 1024 * 1024;
 
     let textDecoder, textEncoder;
+    let mime = '';
+    let charset = '';
 
     const contentTypeFromDetails = details => {
         switch ( details.type ) {
@@ -863,16 +864,15 @@ const bodyFilterer = (( ) => {
     };
 
     return class Session extends µb.FilteringContext {
-        constructor(fctxt, mime, charset) {
+        constructor(fctxt, mime, charset, jobs) {
             super(fctxt);
-            this.entity = entityFromDomain(this.getDomain());
             this.stream = null;
             this.buffer = null;
             this.mime = mime;
             this.charset = charset;
             this.str = null;
             this.modified = false;
-            this.jobs = [];
+            this.jobs = jobs;
         }
         getString() {
             if ( this.str !== null ) { return this.str; }
@@ -891,17 +891,14 @@ const bodyFilterer = (( ) => {
             this.str = s;
             this.modified = true;
         }
-        addJob(job) {
-            this.jobs.push(job);
-        }
-        launch() {
-            if ( this.jobs.length === 0 ) { return; }
-            this.stream = browser.webRequest.filterResponseData(this.id);
-            this.stream.ondata = onStreamData;
-            this.stream.onstop = onStreamStop;
-            this.stream.onerror = onStreamError;
-            sessions.set(this.stream, this);
-            return true;
+        static doFilter(fctxt, jobs) {
+            if ( jobs.length === 0 ) { return; }
+            const session = new Session(fctxt, mime, charset, jobs);
+            session.stream = browser.webRequest.filterResponseData(session.id);
+            session.stream.ondata = onStreamData;
+            session.stream.onstop = onStreamStop;
+            session.stream.onerror = onStreamError;
+            sessions.set(session.stream, session);
         }
         static canFilter(fctxt, details) {
             if ( µb.canFilterResponseData !== true ) { return; }
@@ -925,12 +922,11 @@ const bodyFilterer = (( ) => {
             const headers = details.responseHeaders;
             const disposition = headerValueFromName('content-disposition', headers);
             if ( disposition !== '' ) {
-                if ( disposition.startsWith('inline') === false ) {
-                    return;
-                }
+                if ( disposition.startsWith('inline') === false ) { return; }
             }
 
-            let mime = 'text/plain', charset = 'utf-8';
+            mime = 'text/plain';
+            charset = 'utf-8';
             const contentType = headerValueFromName('content-type', headers) ||
                 contentTypeFromDetails(details);
             if ( contentType !== '' ) {
@@ -949,7 +945,7 @@ const bodyFilterer = (( ) => {
                 if ( otherValidMimes.has(mime) === false ) { return; }
             }
 
-            return new Session(fctxt, mime, charset);
+            return true;
         }
     };
 })();

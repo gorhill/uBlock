@@ -27,6 +27,7 @@ import logger from './logger.js';
 import µb from './background.js';
 import { sessionFirewall } from './filtering-engines.js';
 import { StaticExtFilteringHostnameDB } from './static-ext-filtering-db.js';
+import { entityFromDomain } from './uri-utils.js';
 
 /******************************************************************************/
 
@@ -380,19 +381,21 @@ htmlFilteringEngine.fromCompiledContent = function(reader) {
     }
 };
 
-htmlFilteringEngine.retrieve = function(details) {
-    const hostname = details.hostname;
-
+htmlFilteringEngine.retrieve = function(fctxt) {
     const plains = new Set();
     const procedurals = new Set();
     const exceptions = new Set();
     const retrieveSets = [ plains, exceptions, procedurals, exceptions ];
 
+    const hostname = fctxt.getHostname();
     filterDB.retrieve(hostname, retrieveSets);
-    const entity = details.entity !== ''
-        ? `${hostname.slice(0, -details.domain.length)}${details.entity}`
+
+    const domain = fctxt.getDomain();
+    const entity = entityFromDomain(domain);
+    const hostnameEntity = entity !== ''
+        ? `${hostname.slice(0, -domain.length)}${entity}`
         : '*';
-    filterDB.retrieve(entity, retrieveSets, 1);
+    filterDB.retrieve(hostnameEntity, retrieveSets, 1);
 
     if ( plains.size === 0 && procedurals.size === 0 ) { return; }
 
@@ -414,12 +417,12 @@ htmlFilteringEngine.retrieve = function(details) {
     for ( const selector of exceptions ) {
         if ( plains.has(selector) ) {
             plains.delete(selector);
-            logOne(details, 1, selector);
+            logOne(fctxt, 1, selector);
             continue;
         }
         if ( procedurals.has(selector) ) {
             procedurals.delete(selector);
-            logOne(details, 1, JSON.parse(selector).raw);
+            logOne(fctxt, 1, JSON.parse(selector).raw);
             continue;
         }
     }
