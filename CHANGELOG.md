@@ -19,6 +19,6 @@ To benefit the much shorter update period enabled by differential updates, you m
 - [Prevent evaluating the SNFE until fully loaded](https://github.com/gorhill/uBlock/commit/89b272775a)
 - [Add support for differential update of filter lists](https://github.com/gorhill/uBlock/commit/d05ff8ffeb)
 
-==========
+----------
 
 Older release notes go here.

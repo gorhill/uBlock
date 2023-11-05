@@ -32,8 +32,9 @@ jobs:
           echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       - name: Assemble release notes
         run: |
-          sed -e 's/%version%/${{ steps.release_info.outputs.VERSION }}/' RELEASE.HEAD.md > release.body.txt
-          grep -m1 -B10000  "==========" CHANGELOG.md | sed -e '/==========/d' >> release.body.txt
+          > release.body.txt
+          grep -m1 -B10000  "----------" CHANGELOG.md >> release.body.txt
+          sed -e 's/%version%/${{ steps.release_info.outputs.VERSION }}/' RELEASE.HEAD.md >> release.body.txt
       - name: Create GitHub release
         id: create_release
         uses: actions/create-release@v1
