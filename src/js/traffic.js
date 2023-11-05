@@ -762,7 +762,6 @@ const bodyFilterer = (( ) => {
             const c = bytes[i+j];
             if ( c >= 0x41 && c <= 0x5A ) { break; }
             if ( c >= 0x61 && c <= 0x7A ) { break; }
-            j += 1;
         }
         if ( j === 8 ) { return; }
         i += j;
