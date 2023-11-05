@@ -689,6 +689,8 @@ const bodyFilterer = (( ) => {
     const otherValidMimes = new Set([
         'application/javascript',
         'application/json',
+        'application/vnd.apple.mpegurl',
+        'application/vnd.api+json',
         'application/xml',
         'application/xhtml+xml',
     ]);
