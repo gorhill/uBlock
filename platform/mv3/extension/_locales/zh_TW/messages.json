@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "一個不需要權限的內容阻擋工具。安裝即可阻擋廣告、追蹤程式、挖礦程式等網頁內容。",
+    "message": "一個不需要任何權限的內容阻擋插件。安裝即可阻擋廣告、追蹤程式、挖礦程式等網頁內容。",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {

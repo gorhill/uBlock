@@ -536,11 +536,11 @@
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {
-    "message": "Importera och lägg till",
+    "message": "Importera och lägg till…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "Exportera",
+    "message": "Exportera…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
@@ -584,7 +584,7 @@
     "description": ""
   },
   "rulesExport": {
-    "message": "Exportera till fil",
+    "message": "Exportera till fil…",
     "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
@@ -620,11 +620,11 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Importera och lägg till",
+    "message": "Importera och lägg till…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
-    "message": "Exportera",
+    "message": "Exportera…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {

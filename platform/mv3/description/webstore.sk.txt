@@ -1,4 +1,4 @@
-uBO Lite (uBOL) je blokátor obsahu založený na MV3 *bez povolenia*.
+uBO Lite (uBOL) je blokovač obsahu založený na MV3 *bez povolenia*.
 
 Predvolený súbor pravidiel zodpovedá predvolenému súboru filtrov uBlock Origin:
 
@@ -11,9 +11,9 @@ Predvolený súbor pravidiel zodpovedá predvolenému súboru filtrov uBlock Ori
 
 uBOL je úplne deklaratívny, čo znamená, že na filtrovanie nie je potrebný trvalý proces uBOL a filtrovanie obsahu založené na injektovaní CSS/JS spoľahlivo vykonáva samotný prehliadač, a nie rozšírenie. To znamená, že samotný uBOL nespotrebúva zdroje CPU/pamäte, kým prebieha blokovanie obsahu -- proces uBOL Service Worker je potrebný _len_ pri interakcii s vyskakovacím panelom alebo stránkami možností.
 
-uBOL pri inštalácii nevyžaduje všeobecné oprávnenie "čítať a upravovať údaje", preto má obmedzené možnosti v porovnaní s uBlock Origin alebo inými blokátormi obsahu, ktoré pri inštalácii vyžadujú všeobecné oprávnenie "čítať a upravovať údaje".
+uBOL pri inštalácii nevyžaduje všeobecné oprávnenie "čítať a upravovať údaje", preto má obmedzené možnosti v porovnaní s uBlock Origin alebo inými blokovačmi obsahu, ktoré pri inštalácii vyžadujú všeobecné oprávnenie "čítať a upravovať údaje".
 
-UBOL vám však umožňuje *výslovne* udeliť všebecné oprávnenia na konkrétne stránky podľa vášho výberu, aby mohol lepšie filtrovať na týchto stránkach pomocou kozmetického filtrovania a injektovaných skriptletov.
+uBOL vám však umožňuje *výslovne* udeliť všebecné oprávnenia na konkrétne stránky podľa vášho výberu, aby mohol lepšie filtrovať na týchto stránkach pomocou kozmetického filtrovania a injektovaných skriptletov.
 
 Ak chcete udeliť všeobecné oprávnenia na danom webe, otvorte vyskakovací panel a vyberte vyšší režim filtrovania, napríklad Optimálny alebo Kompletný.
 
@@ -23,7 +23,7 @@ Ak prijmete žiadosť uBOL o dodatočné povolenia na aktuálnom webe, bude môc
 
 Predvolený režim filtrovania môžete nastaviť na stránke možností uBOL. Ak ako predvolený režim vyberiete Optimálny alebo Kompletný režim, budete musieť uBOL-u udeliť oprávnenie na čítanie a úpravu údajov na všetkých webových stránkach.
 
-Majte na pamäti, že na tomto projekte sa stále pracuje, pričom jeho konečné ciele sú tieto:
+Majte na pamäti, že na tomto projekte sa stále pracuje, pričom jeho konečné ciele sú takéto:
 
 - Žiadne všeobecné oprávnenia hostiteľa v čase inštalácie -- rozšírené oprávnenia udeľuje používateľ explicitne pre jednotlivé stránky.
 

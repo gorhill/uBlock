@@ -27,4 +27,4 @@ Ne feledje, hogy ez még folyamatban van, a következő célokkal:
 
 - Nincsenek széles körű gazdagép-engedélyek a telepítés során – a kiterjesztett engedélyeket a felhasználó kifejezetten webhelyenként adja meg.
 
-- Teljesen deklaratív a megbízhatóság és a CPU/memória hatékonysága szempontjából.
+- Teljesen deklaratív a nagyobb megbízhatóság illetve CPU- és memóriahatékonyság érdekében.

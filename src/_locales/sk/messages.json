@@ -956,7 +956,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Zoznamy filtrov sa aktualizujú denne. Uistite sa, že váš problém už nebol riešený v najnovších zoznamoch filtrov.",
+    "message": "Zoznamy filtrov sa aktualizujú denne. Uistite sa, že váš problém už nebol vyriešený v najnovších zoznamoch filtrov.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
@@ -1228,7 +1228,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "contextMenuViewSource": {
-    "message": "Zobraziť zdrojový kód…",
+    "message": "Zobraziť zdrojový kód",
     "description": "A context menu entry, to view the source code of the target resource"
   },
   "shortcutCapturePlaceholder": {
@@ -1280,7 +1280,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Pri spustení prehliadača sa nepodarilo správne filtrovať.\nZnova načítajte stránku, aby ste zaistili správne filtrovanie",
+    "message": "Pri spustení prehliadača sa nepodarilo správne filtrovať.\nZnova načítajte stránku, aby ste zaistili správne filtrovanie.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {
