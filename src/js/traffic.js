@@ -602,10 +602,10 @@ const mimeFromHeaders = headers => {
 const mimeFromContentType = contentType => {
     const match = reContentTypeMime.exec(contentType);
     if ( match === null ) { return ''; }
-    return match[1].toLowerCase();
+    return match[0].toLowerCase();
 };
 
-const reContentTypeMime = /^([^;]+)(?:;|$)/i;
+const reContentTypeMime = /^[^;]+/i;
 
 /******************************************************************************/
 
@@ -619,7 +619,9 @@ function textResponseFilterer(session, directives) {
         }
         const cache = refs.$cache;
         if ( cache === undefined ) { continue; }
+        cache.re.lastIndex = 0;
         if ( cache.re.test(session.getString()) !== true ) { continue; }
+        cache.re.lastIndex = 0;
         session.setString(session.getString().replace(
             cache.re,
             cache.replacement
