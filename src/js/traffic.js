@@ -480,13 +480,6 @@ const onBeforeBehindTheSceneRequest = function(fctxt) {
 // - CSP injection
 
 const onHeadersReceived = function(details) {
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/610
-    //   Process behind-the-scene requests in a special way.
-    if ( details.tabId < 0 ) {
-        if ( normalizeBehindTheSceneResponseHeaders(details) === false ) {
-            return;
-        }
-    }
 
     const fctxt = µb.filteringContext.fromWebrequestDetails(details);
     const isRootDoc = fctxt.itype === fctxt.MAIN_FRAME;
@@ -522,13 +515,14 @@ const onHeadersReceived = function(details) {
         }
     }
 
+    const mime = mimeFromHeaders(responseHeaders);
+
     // https://github.com/gorhill/uBlock/issues/2813
     //   Disable the blocking of large media elements if the document is itself
     //   a media element: the resource was not prevented from loading so no
     //   point to further block large media elements for the current document.
     if ( isRootDoc ) {
-        const contentType = headerValueFromName('content-type', responseHeaders);
-        if ( reMediaContentTypes.test(contentType) ) {
+        if ( reMediaContentTypes.test(mime) ) {
             pageStore.allowLargeMediaElementsUntil = 0;
             // Fall-through: this could be an SVG document, which supports
             // script tags.
@@ -547,7 +541,7 @@ const onHeadersReceived = function(details) {
             });
         }
         // html filtering
-        if ( isRootDoc || fctxt.itype === fctxt.SUB_FRAME ) {
+        if ( mime === 'text/html' || mime === 'application/xhtml+xml' ) {
             const selectors = htmlFilteringEngine.retrieve(fctxt);
             if ( selectors ) {
                 jobs.push({
@@ -600,22 +594,18 @@ const reMediaContentTypes = /^(?:audio|image|video)\//;
 
 /******************************************************************************/
 
-// https://github.com/uBlockOrigin/uBlock-issues/issues/610
-
-const normalizeBehindTheSceneResponseHeaders = function(details) {
-    if ( details.type !== 'xmlhttprequest' ) { return false; }
-    const headers = details.responseHeaders;
-    if ( Array.isArray(headers) === false ) { return false; }
-    const contentType = headerValueFromName('content-type', headers);
-    if ( contentType === '' ) { return false; }
-    if ( reMediaContentTypes.test(contentType) === false ) { return false; }
-    if ( contentType.startsWith('image') ) {
-        details.type = 'image';
-    } else {
-        details.type = 'media';
-    }
-    return true;
+const mimeFromHeaders = headers => {
+    if ( Array.isArray(headers) === false ) { return ''; }
+    return mimeFromContentType(headerValueFromName('content-type', headers));
 };
+
+const mimeFromContentType = contentType => {
+    const match = reContentTypeMime.exec(contentType);
+    if ( match === null ) { return ''; }
+    return match[1].toLowerCase();
+};
+
+const reContentTypeMime = /^([^;]+)(?:;|$)/i;
 
 /******************************************************************************/
 
@@ -683,7 +673,6 @@ htmlResponseFilterer.xmlSerializer = null;
 
 const bodyFilterer = (( ) => {
     const sessions = new Map();
-    const reContentTypeDocument = /^([^;]+)(?:;|$)/i;
     const reContentTypeCharset = /charset=['"]?([^'" ]+)/i;
     const otherValidMimes = new Set([
         'application/javascript',
@@ -710,12 +699,6 @@ const bodyFilterer = (( ) => {
                 break;
         }
         return '';
-    };
-
-    const mimeFromContentType = contentType => {
-        const match = reContentTypeDocument.exec(contentType);
-        if ( match === null ) { return; }
-        return match[1].toLowerCase();
     };
 
     const charsetFromContentType = contentType => {
@@ -932,6 +915,9 @@ const bodyFilterer = (( ) => {
             if ( contentType !== '' ) {
                 mime = mimeFromContentType(contentType);
                 if ( mime === undefined ) { return; }
+                if ( mime.startsWith('text/') === false ) {
+                    if ( otherValidMimes.has(mime) === false ) { return; }
+                }
                 charset = charsetFromContentType(contentType);
                 if ( charset !== undefined ) {
                     charset = textEncode.normalizeCharset(charset);
@@ -939,10 +925,6 @@ const bodyFilterer = (( ) => {
                 } else {
                     charset = charsetFromMime(mime);
                 }
-            }
-
-            if ( mime.startsWith('text/') === false ) {
-                if ( otherValidMimes.has(mime) === false ) { return; }
             }
 
             return true;
