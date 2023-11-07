@@ -14,6 +14,8 @@ To benefit the much shorter update period enabled by differential updates, you m
 
 ## Fixes / changes
 
+- [Lower maximum Expires value to 4h](https://github.com/gorhill/uBlock/commit/2360bc02f3)
+- [Properly reset needle length in unserialized buffer](https://github.com/gorhill/uBlock/commit/8ed1ad9c9d)
 - [Harden scriptlets which need to serialize function code into string](https://github.com/gorhill/uBlock/commit/7823d98070)
 - [Reset `g` regexes before use in `rmnt`/`rpnt`  scriptlets](https://github.com/gorhill/uBlock/commit/cdc3f66a6b)
 - [Apply response filtering according to mime type](https://github.com/gorhill/uBlock/commit/6417f54299)
