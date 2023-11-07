@@ -6,7 +6,7 @@ Differential update of filter lists, as a result of discussions at <https://gith
 
 The goal is to **NOT** be ranked among the "most popular projects" by bandwidth usage (as per [jsDelivr's public stats](https://www.jsdelivr.com/statistics)):
 
-![jsDelivr stats](https://github.com/gorhill/uBlock/assets/585534/30a0522b-f9ff-4ff7-8902-6c78e0d61dd1)
+![jsDelivr stats](https://github.com/gorhill/uBlock/assets/585534/96c7e0fa-ffcc-4879-a01e-e340b4f0fa9e)
 
 It is expected that differential updates will lower both requests and bandwidth usage.
 
