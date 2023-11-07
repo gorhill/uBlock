@@ -750,8 +750,8 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "🇳🇱nl 🇸🇷sr: EasyDutch",
-		"tags": "ads afrikaans frisian dutch flemish",
+		"title": "🇳🇱nl 🇧🇪be: EasyDutch",
+		"tags": "ads afrikaans belgië frisian dutch flemish nederlands netherlands",
 		"lang": "af fy nl",
 		"contentURL": "https://easydutch-ubo.github.io/EasyDutch/EasyDutch.txt",
 		"cdnURLs": [
