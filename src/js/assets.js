@@ -1262,7 +1262,7 @@ async function diffUpdater() {
             } else if ( data.error ) {
                 ubolog(`Diff updater: failed to update ${data.name} using ${data.patchPath}, reason: ${data.error}`);
             } else if ( data.status === 'nopatch-yet' || data.status === 'nodiff' ) {
-                ubolog(`Diff updater: Skip update of ${data.name} using ${data.patchPath}, reason: ${data.status}`);
+                ubolog(`Diff updater: skip update of ${data.name} using ${data.patchPath}, reason: ${data.status}`);
                 assetCacheSetDetails(data.name, {
                     writeTime: data.lastModified || 0
                 });

@@ -292,7 +292,7 @@ const renderWidgets = ( ) => {
     dom.cl.toggle('#buttonUpdate', 'active', updating);
     dom.cl.toggle('#buttonUpdate', 'disabled',
         updating === false &&
-        qs$('#lists .listEntry.checked.obsolete:not(.toRemove)') === null
+        qs$('#lists .listEntry.checked.obsolete.cached:not(.toRemove)') === null
     );
     dom.cl.toggle('#buttonPurgeAll', 'disabled',
         updating || qs$('#lists .listEntry.cached:not(.obsolete)') === null
@@ -519,7 +519,6 @@ const onPurgeClicked = ev => {
     //   An external filter list must not be marked as obsolete, they will
     //   always be fetched anyways if there is no cached copy.
     dom.cl.add(liEntry, 'obsolete');
-    dom.cl.remove(liEntry, 'cached');
 
     if ( qs$(liEntry, 'input[type="checkbox"]').checked ) {
         renderWidgets();

@@ -1633,7 +1633,6 @@ const onMessage = function(request, sender, callback) {
     case 'purgeCaches':
         for ( const assetKey of request.assetKeys ) {
             io.purge(assetKey);
-            io.remove(`compiled/${assetKey}`);
         }
         break;
 
