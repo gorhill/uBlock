@@ -679,10 +679,15 @@ const bodyFilterer = (( ) => {
     const otherValidMimes = new Set([
         'application/javascript',
         'application/json',
-        'application/vnd.apple.mpegurl',
+        'application/mpegurl',
         'application/vnd.api+json',
-        'application/xml',
+        'application/vnd.apple.mpegurl',
+        'application/vnd.apple.mpegurl.audio',
+        'application/x-mpegurl',
         'application/xhtml+xml',
+        'application/xml',
+        'audio/mpegurl',
+        'audio/x-mpegurl',
     ]);
     const BINARY_TYPES = fc.FONT | fc.IMAGE | fc.MEDIA | fc.WEBSOCKET;
     const MAX_BUFFER_LENGTH = 3 * 1024 * 1024;
