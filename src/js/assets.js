@@ -68,7 +68,7 @@ const extractMetadataFromList = (content, fields) => {
         const re = new RegExp(`^(?:! *|# +)${field.replace(/-/g, '(?: +|-)')}: *(.+)$`, 'im');
         const match = re.exec(head);
         let value = match && match[1].trim() || undefined;
-        if ( value !== undefined && /^%.+%$/.test(value) ) {
+        if ( value !== undefined && value.startsWith('%') ) {
             value = undefined;
         }
         field = field.toLowerCase().replace(
@@ -169,7 +169,7 @@ const isDiffUpdatableAsset = content => {
         'Diff-Path',
     ]);
     return typeof data.diffPath === 'string' &&
-        /^[^%].*[^%]$/.test(data.diffPath);
+        data.diffPath.startsWith('%') === false;
 };
 
 /******************************************************************************/
