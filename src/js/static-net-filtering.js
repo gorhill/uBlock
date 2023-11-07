@@ -57,17 +57,24 @@ const keyvalStore = typeof vAPI !== 'undefined'
 
 /******************************************************************************/
 
-// fedcba9876543210
-//     ||    | || |
-//     ||    | || |
-//     ||    | || |
-//     ||    | || |
-//     ||    | || +---- bit  0- 1: block=0, allow=1, block important=2
-//     ||    | |+------ bit     2: modifier
-//     ||    | +------- bit  3- 4: party [0-3]
-//     ||    +--------- bit  5- 9: type [0-31]
-//     |+-------------- bit    10: headers-based filters
-//     +--------------- bit 11-15: unused
+// 0fedcba9876543210
+// |||||||    | || |
+// |||||||    | || |
+// |||||||    | || |
+// |||||||    | || |
+// |||||||    | || +---- bit 0- 1: block=0, allow=1, block important=2
+// |||||||    | |+------ bit    2: unused
+// |||||||    | +------- bit 3- 4: party [0-3]
+// |||||||    +--------- bit 5- 9: type [0-31]
+// ||||||+-------------- bit   10: headers-based filters
+// |||||+--------------- bit   11: redirect filters
+// ||||+---------------- bit   12: removeparam filters
+// |||+----------------- bit   13: csp filters
+// ||+------------------ bit   14: permissions filters
+// |+------------------- bit   15: urltransform filters
+// +-------------------- bit   16: replace filters
+// TODO: bit 11-16 can be combined into 3-bit value, as these are not to be
+//       combined.
 
 const RealmBitsMask  = 0b00000000111;
 const ActionBitsMask = 0b00000000011;
