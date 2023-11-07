@@ -486,6 +486,8 @@ class HNTrieContainer {
         } else {
             this.buf32.set(selfie);
         }
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/2925
+        this.buf[255] = 0;
         return true;
     }
 
