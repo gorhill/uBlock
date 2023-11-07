@@ -55,7 +55,7 @@ const parseExpires = s => {
     if ( matches === null ) { return 0; }
     let updateAfter = parseInt(matches[1], 10);
     if ( matches[2] === 'h' ) {
-        updateAfter = Math.ceil(updateAfter / 6) / 4;
+        updateAfter = Math.max(updateAfter, 4) / 24;
     }
     return updateAfter;
 };
@@ -81,10 +81,10 @@ const extractMetadataFromList = (content, fields) => {
         out.lastModified = (new Date(out.lastModified)).getTime() || 0;
     }
     if ( out.expires ) {
-        out.expires = Math.max(parseExpires(out.expires), 0.5);
+        out.expires = parseExpires(out.expires);
     }
     if ( out.diffExpires ) {
-        out.diffExpires = Math.max(parseExpires(out.diffExpires), 0.25);
+        out.diffExpires = parseExpires(out.diffExpires);
     }
     return out;
 };
