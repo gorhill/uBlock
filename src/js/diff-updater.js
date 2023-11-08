@@ -202,6 +202,7 @@ async function fetchPatchDetailsFromCDNs(assetDetails) {
         const patchDetails = parsePatch(patchText);
         if ( patchURL.hash.length > 1 ) {
             assetDetails.diffName = patchURL.hash.slice(1);
+            patchURL.hash = '';
         }
         return {
             patchURL: patchURL.href,
