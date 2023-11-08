@@ -73,8 +73,8 @@ const keyvalStore = typeof vAPI !== 'undefined'
 // ||+------------------ bit   14: permissions filters
 // |+------------------- bit   15: urltransform filters
 // +-------------------- bit   16: replace filters
-// TODO: bit 11-16 can be combined into 3-bit value, as these are not to be
-//       combined.
+// TODO: bit 11-16 can be converted into 3-bit value, as these options are not
+//       meant to be combined.
 
 const RealmBitsMask  = 0b00000000111;
 const ActionBitsMask = 0b00000000011;
