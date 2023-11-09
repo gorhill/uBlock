@@ -16,7 +16,7 @@
     "description": "English: uBO Lite — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Waarschuwing! Niet opgeslagen wijzigingen",
+    "message": "Waarschuwing! Niet-opgeslagen wijzigingen.",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -32,7 +32,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Filter lijsten",
+    "message": "Filterlijsten",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -60,11 +60,11 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Element ­wisser ­modus openen",
+    "message": "Element­wisser­modus openen",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Element­ kiezer ­modus openen",
+    "message": "Element­kiezer­modus openen",
     "description": "English: Enter element picker mode"
   },
   "popupTipReport": {
@@ -88,7 +88,7 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupRevokeGreatPowers": {
-    "message": "Klik om uitgebreide toestemmingen op deze website in te trekken",
+    "message": "Klik om uitgebreide toestemmingen op deze website in te trekken.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
@@ -120,7 +120,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "omnipotenceLegend": {
-    "message": "uBO Lite kan alleen uitgebreide filtering op een bepaalde website toepassen nadat u de extensie expliciet toestemmingen hebt verleend om gegevens op die website aan te passen. Via deze instelling kunt u toestemmingen voor uitgebreide filtering op alle websites tegelijk verlenen.",
+    "message": "uBO Lite kan alleen uitgebreide filtering op een bepaalde website toepassen nadat u de extensie expliciet toestemmingen hebt verleend om gegevens op die website aan te passen. Via deze instelling kunt u toestemmingen voor uitgebreide filtering aan alle websites tegelijk verlenen.",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
@@ -156,11 +156,11 @@
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
-    "message": "Importeren en toevoegen",
+    "message": "Importeren en toevoegen…",
     "description": "English: Import and append"
   },
   "1pExport": {
-    "message": "Exporteren",
+    "message": "Exporteren…",
     "description": "English: Export"
   },
   "1pExportFilename": {
@@ -172,11 +172,11 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Importeren en toevoegen",
+    "message": "Importeren en toevoegen…",
     "description": "English: Import and append"
   },
   "whitelistExport": {
-    "message": "Exporteren",
+    "message": "Exporteren…",
     "description": "English: Export"
   },
   "whitelistExportFilename": {
@@ -228,7 +228,7 @@
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "U hebt zojuist uBO Lite geïnstalleerd. Hier kunt u de standaard filtermodus voor het gebruik op alle websites kiezen.\n\nStandaard wordt de modus <em>Basis</em> geselecteerd, omdat hiervoor geen toestemming voor het lezen en aanpassen van gegevens is vereist. Als u uBO Lite vertrouwt, kunt u het uitgebreide toestemming voor het lezen en aanpassen van gegevens op alle websites verlenen, zodat standaard meer geavanceerde filtermogelijkheden voor alle websites beschikbaar zijn.",
+    "message": "U hebt zojuist uBO Lite geïnstalleerd. Hier kunt u de standaard filtermodus voor het gebruik op alle websites kiezen.\n\nStandaard wordt de modus <em>Basis</em> geselecteerd, omdat hiervoor geen toestemming voor het lezen en aanpassen van gegevens is vereist. Als u uBO Lite vertrouwt, kunt u het brede toestemming voor het lezen en aanpassen van gegevens op alle websites verlenen, zodat standaard meer geavanceerde filtermogelijkheden voor alle websites beschikbaar zijn.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {

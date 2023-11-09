@@ -208,7 +208,7 @@
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "External dependencies (GPLv3-compatible):",
+    "message": "Dalc'hioù diavaez (a glot gant GPLv3)",
     "description": "Shown in the About pane"
   },
   "genericSubmit": {
@@ -256,7 +256,7 @@
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Basic network filtering from selected filter lists.\n\nDoes not require permission to read and modify data on websites.",
+    "message": "Silañ diazez ar rouedad diouzh ar rolloù siloù diuzet.\n\nN'eus ket ezhomm a aotre evit lenn hag aozañ roadennoù el lec'hiennoù.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {

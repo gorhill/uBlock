@@ -20,7 +20,7 @@
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Αγνόηση",
+    "message": "Παράβλεψη",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
@@ -72,7 +72,7 @@
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Κάντε κλικ για απενεργοποίηση του uBlock₀ για αυτή την ιστοσελίδα.\n\nCtrl+κλικ για απενεργοποίηση του uBlock₀ μόνο σε αυτή τη σελίδα.",
+    "message": "Κάντε κλικ για απενεργοποίηση του uBlock₀ για αυτήν την ιστοσελίδα.\n\nCtrl+κλικ για απενεργοποίηση του uBlock₀ μόνο σε αυτήν τη σελίδα.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
@@ -176,7 +176,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Κάντε κλικ για αναίρεση φραγής απομακρυσμένων γραμματοσειρών σε αυτή την ιστοσελίδα",
+    "message": "Κάντε κλικ για να μην μπλοκάρετε πλέον απομακρυσμένες γραμματοσειρές σε αυτήν την ιστοσελίδα",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
@@ -516,7 +516,7 @@
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "Τελευταία ενημέρωση: {{ago}}",
+    "message": "Τελευταία ενημέρωση: {{ago}}.\nΚάντε κλικ για επιβολή ενημέρωσης.",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
@@ -528,11 +528,11 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Ένα φίλτρο ανά γραμμή. Φίλτρο μπορεί να είναι ένα απλό όνομα κεντρικού υπολογιστή (hostname) ή ένα, συμβατό με το Adblock Plus, φίλτρο. Γραμμές με το πρόθεμα &lsquo;!&rsquo; θα παραβλέπονται.",
+    "message": "Ένα φίλτρο ανά γραμμή. Ένα φίλτρο μπορεί να είναι ένα απλό όνομα κεντρικού υπολογιστή ή ένα φίλτρο συμβατό με την EasyList. Οι γραμμές με πρόθεμα <code>!</code> θα παραβλέπονται.",
     "description": "Short information about how to create custom filters"
   },
   "1pTrustWarning": {
-    "message": "Μην προσθέτετε φίλτρα από μη αξιόπιστες πηγές.",
+    "message": "Να μην προστίθενται φίλτρα από μη αξιόπιστες πηγές.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {
@@ -584,7 +584,7 @@
     "description": ""
   },
   "rulesExport": {
-    "message": "Εξαγωγή σε αρχείο",
+    "message": "Εξαγωγή σε αρχείο…",
     "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
@@ -608,7 +608,7 @@
     "description": "English: a sort option for list of rules."
   },
   "rulesSortBySource": {
-    "message": "Πηγή",
+    "message": "Προέλευση",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortByDestination": {
@@ -1012,7 +1012,7 @@
     "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
-    "message": "Πολιτική Απορρήτου",
+    "message": "Πολιτική απορρήτου",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {
@@ -1060,11 +1060,11 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Επαναφορά από αρχείο...",
+    "message": "Επαναφορά από αρχείο…",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Επαναφορά στις προεπιλεγμένες ρυθμίσεις...",
+    "message": "Επαναφορά στις προεπιλεγμένες ρυθμίσεις…",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
@@ -1084,7 +1084,7 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: Προσθήκη του παρακάτω URL στις προσαρμοσμένες λίστες φίλτρων σας;\n\nΤίτλος: \"{{title}}\"\nURL: {{url}}",
+    "message": "Προσθήκη της ακόλουθης διεύθυνσης URL στις λίστες προσαρμοσμένων φίλτρων σας;\n\nΤίτλος: \"{{title}}\"\nURL: {{url}}",
     "description": "No longer used"
   },
   "subscribeButton": {

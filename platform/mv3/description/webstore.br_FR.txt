@@ -13,7 +13,7 @@ uBOL is entirely declarative, meaning there is no need for a permanent uBOL proc
 
 uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read and modify data" permissions at install time.
 
-Neoazh ez eus tu deoc'h reiñ *sklaer* aotreoù ouzhpenn da uBOL el lec'hiennoù ma fell deoc'h, mod-se e vint silet gwelloc'h en ur implij siloù kened hag ensinkladurioù scriplet.
+Koulskoude ez eus tu deoc'h reiñ *sklaer* aotreoù ouzhpenn da uBOL el lec'hiennoù ma fell deoc'h, mod-se e vint silet gwelloc'h en ur implij siloù kened hag ensinkladurioù scriplet.
 
 Evit reiñ aotreoù ouzhpenn da uBOL en ul lec'hienn bennak, n'ho peus nemet digeriñ ar prenestr pop-up ha diuzañ ul live silañ uheloc'h evel ar mod Gwellañ pe ar mod Klok
 
