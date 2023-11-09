@@ -3235,7 +3235,7 @@ class ExtSelectorCompiler {
 
     // CSSTree library holds onto last string parsed, and this is problematic
     // when the string is a slice of a huge parent string (typically a whole
-    // filter lists), it causes the huge parent string to stay in memory.
+    // filter list), it causes the huge parent string to stay in memory.
     // Asking CSSTree to parse an empty string resolves this issue.
     finish() {
         cssTree.parse('');
