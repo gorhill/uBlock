@@ -908,6 +908,10 @@ export class AstFilterParser {
         this.scriptletArgListParser = new ArgListParser(',');
     }
 
+    finish() {
+        this.selectorCompiler.finish();
+    }
+
     parse(raw) {
         this.raw = raw;
         this.rawEnd = raw.length;
@@ -3227,6 +3231,14 @@ class ExtSelectorCompiler {
         // https://www.w3.org/TR/css-syntax-3/#typedef-ident-token
         this.reInvalidIdentifier = /^\d/;
         this.error = undefined;
+    }
+
+    // CSSTree library holds onto last string parsed, and this is problematic
+    // when the string is a slice of a huge parent string (typically a whole
+    // filter lists), it causes the huge parent string to stay in memory.
+    // Asking CSSTree to parse an empty string resolves this issue.
+    finish() {
+        cssTree.parse('');
     }
 
     compile(raw, out, compileOptions = {}) {

@@ -1102,6 +1102,7 @@ import {
     }
 
     compiler.finish(writer);
+    parser.finish();
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1365
     //   Embed version into compiled list itself: it is encoded in as the
