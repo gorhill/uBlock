@@ -2,7 +2,7 @@
 
 Differential update of filter lists, as a result of discussions at <https://github.com/AdguardTeam/FiltersCompiler/issues/192>. Resulting spec is [here](https://github.com/ameshkov/diffupdates).
 
-![inkscape](https://github.com/gorhill/uBlock/assets/585534/bf7f3da7-99cd-4477-a78f-573b3137ef21)
+![inkscape](https://github.com/gorhill/uBlock/assets/585534/3ee3567b-e24f-4d39-90e2-915b39a114fb)
 
 The goal is to **NOT** be ranked among the "most popular projects" by bandwidth usage (as per [jsDelivr's public stats](https://www.jsdelivr.com/statistics)):
 
