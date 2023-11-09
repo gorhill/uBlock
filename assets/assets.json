@@ -647,8 +647,8 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "🇮🇷ir 🇹🇯tj: PersianBlocker",
-		"tags": "ads persian pashto tajik",
+		"title": "🇮🇷ir: PersianBlocker",
+		"tags": "ads af ir persian pashto tajik tj",
 		"lang": "fa ps tg",
 		"contentURL": [
 			"https://raw.githubusercontent.com/MasterKia/PersianBlocker/main/PersianBlocker.txt",
@@ -751,7 +751,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "🇳🇱nl 🇧🇪be: EasyDutch",
-		"tags": "ads afrikaans belgië frisian dutch flemish nederlands netherlands",
+		"tags": "ads afrikaans be belgië frisian dutch flemish nederlands netherlands nl sr suriname za",
 		"lang": "af fy nl",
 		"contentURL": "https://easydutch-ubo.github.io/EasyDutch/EasyDutch.txt",
 		"cdnURLs": [
