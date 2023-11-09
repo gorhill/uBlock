@@ -292,7 +292,7 @@ const renderWidgets = ( ) => {
     dom.cl.toggle('#buttonUpdate', 'active', updating);
     dom.cl.toggle('#buttonUpdate', 'disabled',
         updating === false &&
-        qs$('#lists .listEntry.checked.obsolete.cached:not(.toRemove)') === null
+        qs$('#lists .listEntry.checked.obsolete:not(.toRemove)') === null
     );
     dom.cl.toggle('#buttonPurgeAll', 'disabled',
         updating || qs$('#lists .listEntry.cached:not(.obsolete)') === null
