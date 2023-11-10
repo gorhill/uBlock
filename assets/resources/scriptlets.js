@@ -4123,6 +4123,7 @@ function trustedPruneInboundObject(
     if ( rawNeedlePaths !== '' ) {
         needlePaths.push(...rawNeedlePaths.split(/ +/));
     }
+    const stackNeedle = safe.initPattern(extraArgs.stackToMatch || '', { canNegate: true });
     const mustProcess = root => {
         for ( const needlePath of needlePaths ) {
             if ( objectFindOwnerFn(root, needlePath) === false ) {
@@ -4150,7 +4151,7 @@ function trustedPruneInboundObject(
                         objBefore,
                         rawPrunePaths,
                         rawNeedlePaths,
-                        { matchAll: true },
+                        stackNeedle,
                         extraArgs
                     );
                     args[argIndex-1] = objAfter || objBefore;
