@@ -271,7 +271,7 @@
 	"ublock-cookies-adguard": {
 		"content": "filters",
 		"group": "annoyances",
-        "parent": "AdGuard – Annoyances|AdGuard/uBO – Cookie Notices",
+		"parent": "AdGuard – Annoyances|AdGuard/uBO – Cookie Notices",
 		"off": true,
 		"title": "uBlock filters – Cookie Notices",
 		"tags": "annoyances cookies",
@@ -392,7 +392,7 @@
 	"ublock-cookies-easylist": {
 		"content": "filters",
 		"group": "annoyances",
-        "parent": "EasyList – Annoyances|EasyList/uBO – Cookie Notices",
+		"parent": "EasyList – Annoyances|EasyList/uBO – Cookie Notices",
 		"off": true,
 		"title": "uBlock filters – Cookie Notices",
 		"tags": "annoyances cookies",
@@ -820,8 +820,9 @@
 		"lang": "be kk tt ru uk uz",
 		"contentURL": "https://raw.githubusercontent.com/easylist/ruadlist/master/RuAdList-uBO.txt",
 		"cdnURLs": [
-			"https://cdn.jsdelivr.net/gh/easylist/ruadlist@master/RuAdList-uBO.txt",
-			"https://cdn.statically.io/gh/easylist/ruadlist/master/RuAdList-uBO.txt"
+			"https://cdn.jsdelivr.net/gh/dimisa-RUAdList/RUAdListCDN@main/lists/ruadlist.ubo.min.txt",
+			"https://cdn.statically.io/gh/dimisa-RUAdList/RUAdListCDN/main/lists/ruadlist.ubo.min.txt",
+			"https://raw.githubusercontent.com/dimisa-RUAdList/RUAdListCDN/main/lists/ruadlist.ubo.min.txt"
 		],
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=102",
 		"instructionURL": "https://forums.lanik.us/viewtopic.php?f=102&t=22512"

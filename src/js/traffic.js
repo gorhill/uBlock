@@ -613,6 +613,10 @@ function textResponseFilterer(session, directives) {
     const applied = [];
     for ( const directive of directives ) {
         if ( directive.refs instanceof Object === false ) { continue; }
+        if ( directive.result !== 1 ) {
+            applied.push(directive);
+            continue;
+        }
         const { refs } = directive;
         if ( refs.$cache === null ) {
             refs.$cache = sfp.parseReplaceValue(refs.value);
