@@ -1242,6 +1242,16 @@ async function diffUpdater() {
             if ( typeof error !== 'string' ) { return; }
             ubolog(`Diff updater: terminate because ${error}`);
         };
+        const checkAndCorrectDiffPath = data => {
+            if ( typeof data.text !== 'string' ) { return; }
+            if ( data.text === '' ) { return; }
+            const assetKey = assetKeyFromDiffName(data.name);
+            if ( assetKey === '' ) { return; }
+            const metadata = extractMetadataFromList(data.text, [ 'Diff-Path' ]);
+            if ( metadata instanceof Object === false ) { return; }
+            if ( metadata.diffPath === data.patchPath ) { return; }
+            assetCacheSetDetails(assetKey, metadata.diffPath);
+        };
         bc.onmessage = ev => {
             const data = ev.data;
             if ( data.what === 'ready' ) {
@@ -1285,9 +1295,10 @@ async function diffUpdater() {
                 assetCacheSetDetails(assetKey, metadata);
                 updaterUpdated.push(assetKey);
             } else if ( data.error ) {
-                ubolog(`Diff updater: failed to update ${data.name} using ${data.patchPath}, reason: ${data.error}`);
+                ubolog(`Diff updater: failed to update ${data.name} using ${data.patchPath}\n\treason: ${data.error}`);
+                checkAndCorrectDiffPath(data);
             } else if ( data.status === 'nopatch-yet' || data.status === 'nodiff' ) {
-                ubolog(`Diff updater: skip update of ${data.name} using ${data.patchPath}, reason: ${data.status}`);
+                ubolog(`Diff updater: skip update of ${data.name} using ${data.patchPath}\n\treason: ${data.status}`);
                 const assetKey = assetKeyFromDiffName(data.name);
                 assetCacheSetDetails(assetKey, {
                     writeTime: data.lastModified || 0
