@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Deneysel, izin gerektirmeyen içerik engelleyicisi. Kurulumdan hemen sonra reklamları, izleyicileri, kripto madencilerini, ve daha fazlasını engeller.",
+    "message": "İzin gerektirmeyen içerik engelleyicisi. Kurulumdan hemen sonra reklamları, izleyicileri, kripto madencilerini, ve daha fazlasını engeller.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -228,7 +228,7 @@
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "Az önce uBO Lite'ı indirdiniz. Buradan tüm siteler için varsayılan filtreleme modlarını seçebilirsiniz.\n\nVarsayılan olarak, <em>Basit</em> mod seçilidir çünkü verileri okuma ve yazma izni gerektirmez. Eğer uBO Lite'a güveniyorsanız, tüm sitelerde verileri okuma ve yazma izni verebilirsiniz ve daha gelişmiş filtreleme yeteneklerine tüm sitelerde sahip olabilirsiniz.",
+    "message": "Az önce uBO Lite'ı indirdiniz. Buradan tüm siteler için varsayılan filtreleme modlarını seçebilirsiniz.\n\nVarsayılan olarak, <em>Basit</em> mod seçilidir çünkü verileri okuma ve yazma izni gerektirmez. uBO Lite'a güveniyorsanız, tüm sitelerde verileri okuma ve yazma izni verebilirsiniz ve daha gelişmiş filtreleme yeteneklerine tüm sitelerde sahip olabilirsiniz.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {

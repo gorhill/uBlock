@@ -304,7 +304,7 @@
     "description": "English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters": {
-    "message": "Siloù kened",
+    "message": "Siloù kenedel",
     "description": "English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint": {
@@ -348,7 +348,7 @@
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsCloudStorageEnabledPrompt": {
-    "message": "Enable cloud storage support",
+    "message": "Gweredekaat ar stokañ e-barzh ar goumoulenn (cloud)",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
@@ -420,11 +420,11 @@
     "description": "English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt": {
-    "message": "{{netFilterCount}} sil rouedad + {{cosmeticFilterCount}} sil kened diouzh:",
+    "message": "{{netFilterCount}} sil rouedad + {{cosmeticFilterCount}} sil kenedel diouzh:",
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
-    "message": "{{used}} diouto implijet diwar {{total}}",
+    "message": "{{used}} anezho implijet diwar {{total}}",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
@@ -448,7 +448,7 @@
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
-    "message": "Ober fae ouzh ar siloù kened hollek",
+    "message": "Ober fae ouzh ar siloù kenedel hollek",
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
@@ -464,7 +464,7 @@
     "description": "English: Lists of blocked hosts"
   },
   "3pApplyChanges": {
-    "message": "Lakaat e pleustr",
+    "message": "Lakaat da dalvezout",
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
@@ -548,7 +548,7 @@
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges": {
-    "message": "Lakaat e pleustr",
+    "message": "Lakaat da dalvezout",
     "description": "English: Apply changes"
   },
   "rulesPermanentHeader": {
@@ -632,7 +632,7 @@
     "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
-    "message": "Lakaat e pleustr",
+    "message": "Lakaat da dalvezout",
     "description": "English: Apply changes"
   },
   "logRequestsHeaderType": {
@@ -932,7 +932,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Report issues with uBlock Origin itself to the <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "Danevellit kudennoù gant uBlock Origin e-unan e-barzh <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\">roll evezhiañ kudennoù<code>uBlockOrigin/uBlock-issue</code></span>. <u>Ur c'hont GitHub zo rekis.</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
@@ -944,7 +944,7 @@
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Important:</b> Potentially private or sensitive information is redacted by default. Redacted information may make it more difficult to solve a problem.",
+    "message": "<b>Talvoudus:</b> An titouroù a c'hallfe bezañ prevez pe kizidik a zo skarzhet ent-emgefreek. Pa vez skarzhet an titouroù mod-se e c'hall bezañ diaesoc'h da ziskoulmañ ur gudenn.",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
@@ -952,7 +952,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported.",
+    "message": "Evit nompas sammañ ar genlabourerien a-youl vat gant meur a zanevell heñvel, gwiriit ma n'eo ket bet danevellet ho kudenn c'hoazh mar plij.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
@@ -960,7 +960,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "message": "Gwiriit ma chom ar gudenn goude bezañ adloc'het ar bajenn gudennek.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -1000,7 +1000,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "Merkañ ar bejenn evel \"NSFW\" (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>) hag a dalv ez eus danvez noazus pe kizidik enni",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
@@ -1204,7 +1204,7 @@
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Lakaat e pleustr",
+    "message": "Lakaat da dalvezout",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {

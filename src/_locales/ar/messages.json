@@ -532,7 +532,7 @@
     "description": "Short information about how to create custom filters"
   },
   "1pTrustWarning": {
-    "message": "Do not add filters from untrusted sources.",
+    "message": "لا تضف مرشحات من مصادر غير موثوقة.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {
@@ -820,7 +820,7 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "فلتر ثابت <code>{{filter}}</code> موجود على:",
+    "message": "فلتر ثابت <code>{{filter}}</code> موجود في:",
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {

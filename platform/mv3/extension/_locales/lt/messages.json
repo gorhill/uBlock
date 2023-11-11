@@ -12,7 +12,7 @@
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
-    "message": "uBO Lite — Dashboard",
+    "message": "uBO Lite — Skydelis",
     "description": "English: uBO Lite — Dashboard"
   },
   "dashboardUnsavedWarning": {
@@ -272,7 +272,7 @@
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Automatically reload page when changing filtering mode",
+    "message": "Automatiškai perkrauti sveitane keičiant filtro rėžimą",
     "description": "Label for a checkbox in the options page"
   }
 }
