@@ -1193,10 +1193,14 @@ const getAssetDiffDetails = assetKey => {
     const out = { name: assetKey };
     const cacheEntry = assetCacheRegistry[assetKey];
     if ( cacheEntry === undefined ) { return; }
-    if ( cacheEntry.diffPath === undefined ) { return; }
-    if ( cacheEntry.diffName === undefined ) { return; }
-    out.diffName = cacheEntry.diffName;
     out.patchPath = cacheEntry.diffPath;
+    if ( out.patchPath === undefined ) { return; }
+    out.diffName = cacheEntry.diffName;
+    if ( out.diffName === undefined ) {
+        const match = /#.+$/.exec(out.patchPath);
+        if ( match === null ) { return; }
+        out.diffName = match[0].slice(1);
+    }
     out.diffExpires = getUpdateAfterTime(assetKey, true);
     out.lastModified = cacheEntry.lastModified;
     const assetEntry = assetSourceRegistry[assetKey];
@@ -1217,8 +1221,6 @@ async function diffUpdater() {
         const assetKey = toUpdate.shift();
         const assetDetails = getAssetDiffDetails(assetKey);
         if ( assetDetails === undefined ) { continue; }
-        if ( assetDetails.patchPath === undefined ) { continue; }
-        if ( assetDetails.diffName === undefined ) { continue; }
         assetDetails.what = 'update';
         if ( (getWriteTime(assetKey) + assetDetails.diffExpires) > now ) {
             assetDetails.fetch = false;
