@@ -174,7 +174,7 @@ async function applyPatchAndValidate(assetDetails, diffDetails) {
         i.toString(16).padStart(2, '0')
     ).join('');
     if ( sha1Full.startsWith(checksum) === false ) {
-        assetDetails.error = 'badchecksum';
+        assetDetails.error = `badchecksum: expected ${checksum}, computed ${sha1Full.slice(0, checksum.length)}`;
         return false;
     }
     assetDetails.text = textAfter;
