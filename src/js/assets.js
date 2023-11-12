@@ -1274,6 +1274,7 @@ async function diffUpdater() {
                 assetCacheRead(assetKey).then(result => {
                     data.text = result.content;
                     data.status = undefined;
+                    checkAndCorrectDiffPath(data);
                     bc.postMessage(data);
                 });
                 return;
@@ -1296,7 +1297,6 @@ async function diffUpdater() {
                 updaterUpdated.push(assetKey);
             } else if ( data.error ) {
                 ubolog(`Diff updater: failed to update ${data.name} using ${data.patchPath}\n\treason: ${data.error}`);
-                checkAndCorrectDiffPath(data);
             } else if ( data.status === 'nopatch-yet' || data.status === 'nodiff' ) {
                 ubolog(`Diff updater: skip update of ${data.name} using ${data.patchPath}\n\treason: ${data.status}`);
                 const assetKey = assetKeyFromDiffName(data.name);
