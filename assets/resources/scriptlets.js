@@ -2704,7 +2704,7 @@ function cookieRemover(
     const safe = safeSelf();
     const reName = safe.patternToRegex(needle);
     const extraArgs = safe.getExtraArgs(Array.from(arguments), 1);
-    const throttle = (fn, ms = 1000) => {
+    const throttle = (fn, ms = 500) => {
         if ( throttle.timer !== undefined ) { return; }
         throttle.timer = setTimeout(( ) => {
             throttle.timer = undefined;
@@ -2746,13 +2746,17 @@ function cookieRemover(
             }
         });
     };
-    if ( extraArgs.when === 'scroll' ) {
-        document.addEventListener('scroll', ( ) => {
+    removeCookie();
+    window.addEventListener('beforeunload', removeCookie);
+    if ( typeof extraArgs.when !== 'string' ) { return; }
+    const supportedEventTypes = [ 'scroll', 'keydown' ];
+    const eventTypes = extraArgs.when.split(/\s/);
+    for ( const type of eventTypes ) {
+        if ( supportedEventTypes.includes(type) === false ) { continue; }
+        document.addEventListener(type, ( ) => {
             throttle(removeCookie);
         }, { passive: true });
     }
-    removeCookie();
-    window.addEventListener('beforeunload', removeCookie);
 }
 
 /******************************************************************************/
