@@ -12,15 +12,15 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "警告！變更尚未儲存",
+    "message": "警告！您有尚未儲存的更改",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "留在此頁面",
+    "message": "留下",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "忽略變更",
+    "message": "忽略",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
@@ -44,7 +44,7 @@
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "快捷鍵",
+    "message": "快速鍵",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -108,7 +108,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
-    "message": "已連結的網域",
+    "message": "已連接的網域",
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
@@ -136,11 +136,11 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "點擊以封鎖此網站的所有彈出型視窗",
+    "message": "點擊以阻擋此網站的所有彈出式視窗",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "點擊以停止封鎖此網站的所有彈出型視窗",
+    "message": "點擊以停止阻擋此網站的所有彈出式視窗",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -164,7 +164,7 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "點擊以啟用此網站的元素隱藏過濾",
+    "message": "點擊以啟用此網站的網頁元素過濾",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -184,11 +184,11 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "點擊以使此網站的 JavaScript 不再停用",
+    "message": "點擊以使重新啟用此網站的 JavaScript ",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
-    "message": "彈出視窗",
+    "message": "彈出式視窗",
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
@@ -196,7 +196,7 @@
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
-    "message": "元素隱藏過濾",
+    "message": "網頁元素過濾",
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
