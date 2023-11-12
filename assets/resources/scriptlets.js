@@ -2686,9 +2686,9 @@ function disableNewtabLinks() {
 /******************************************************************************/
 
 builtinScriptlets.push({
-    name: 'cookie-remover.js',
+    name: 'remove-cookie.js',
     aliases: [
-        'remove-cookie.js',
+        'cookie-remover.js',
     ],
     fn: cookieRemover,
     world: 'ISOLATED',
