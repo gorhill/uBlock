@@ -15,32 +15,8 @@
     "message": "uBO Lite — Taolenn-vourzh",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Diwallit! Kemmoù zo ha n'ho peus enrollet anezho",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Chom",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Tremen e-bioù",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Arventennoù",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Rolloù siloù",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Ma siloù",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Lec'hiennoù sur",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Digeriñ an daolenn-vourzh",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Mont e mod lemel elfennoù",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Mont e mod diuzer elfennoù",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Danevelliñ ur gudenn el lec'hienn-mañ",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Klikit evit lakaat ho kemmoù e pleustr da vat.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Klikit evit nullañ ar c'hemmoù ho peus graet.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Muioc'h",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Klikit evit reiñ aotreoù ouzhpenn da uBO Lite el lec'hienn-mañ.\nAn aotreoù ouzhpenn-se a greñvay efedusted ar stankañ saotradurioù.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Klikit evit terriñ an aotreoù ouzhpenn bet roet el lec'hienn-mañ",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Nebeutoc'h",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Diskouez an niver a rekedoù stanket war an arouez",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Neuz",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Tem",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Liv splannañ personelaet",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "Stankañ an danevelloù CSP",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Enaouiñ ar silañ amplaet en holl lec'hiennoù",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite can apply extended filtering on a given website only after you explicitly grant the extension permissions to modify data on that website. This setting allows you to grant permissions for extended filtering to all websites at once.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Dre ziouer",
@@ -151,38 +71,6 @@
     "message": "Rannvroioù, broioù",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "One filter per line. A filter can be a plain hostname, or an EasyList-compatible filter. Lines prefixed with <code>!</code> will be ignored.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "Enporzhiañ hag ouzhpennañ",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Ezporzhiañ",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "ma-siloù-statek-ublock_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "The trusted site directives dictate on which web pages uBO Lite should be disabled. One entry per line.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "Enporzhiañ hag ouzhpennañ",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Ezporzhiañ",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "ma-lec'hiennoù-fizius-ublock_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Deizlevr ar cheñchamantoù",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Dalc'hioù diavaez (a glot gant GPLv3)",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Kas",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Lakaat e pleustr",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Nullañ",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Donemat",

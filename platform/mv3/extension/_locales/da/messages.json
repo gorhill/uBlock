@@ -15,32 +15,8 @@
     "message": "uBO Lite — Kontrolpanel",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Advarsel! Der er ikke-gemte ændringer",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Bliv",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Ignorér",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Indstillinger",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Filterlister",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Egne filtre",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Betroede websteder",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Åbn kontrolpanelet",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Gå til tilstanden elementdræber­",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Gå til tilstanden elementvælger",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Anmeld et problem med dette websted",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Klik for at gøre ændringerne permanente.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Klik for at fortryde ændringerne.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Flere",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Klik for at give uBO Lite udvidede tilladelser på dette websted.\nUdvidede tilladelser tillader mere effektiv blokering af indhold.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Klik for at tilbagekalde udvidede tilladelser på dette websted",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Færre",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Vis på ikonet antallet af blokerede forespørgsler",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Udseende",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Tema",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Tilpasset fremhævningsfarve",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "Blokér CSP-anmldelser",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Aktivér udvidet filtrering på alle websteder",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite kan kun anvende udvidet filtrering på et givent websted, efter at du udtrykkeligt har givet udvidelsen tilladelse til at ændre data på webstedet. Denne indstilling giver dig mulighed for at give tilladelse til udvidet filtrering for alle websteder på én gang.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Standard",
@@ -151,38 +71,6 @@
     "message": "Regioner, sprog",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "Ét filter pr. linje. Et filter kan være et alm. værtsnavn eller et EasyList-kompatibelt filter. Linjer startende med <code>!</code> ignoreres.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "Importér og tilføj",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Eksport",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "egne-ublock-statiske-filtre_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "De betroede webstedsdirektiver dikterer, på hvilke websider uBO Lite skal deaktiveres. Én post pr. linje.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "Importér og tilføj",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Eksport",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "egne-ublock-betroede-websteder_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Ændringslog",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Eksterne afhængigheder (GPLv3-kompatible):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Indsend",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Anvend ændringer",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Tilbagefør",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Velkommen",

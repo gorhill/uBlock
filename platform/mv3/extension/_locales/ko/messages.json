@@ -15,32 +15,8 @@
     "message": "uBO Lite — 대시보드",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "경고! 저장되지 않은 변경 사항이 있습니다",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "유지",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "무시",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "설정",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "필터 목록",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "내 필터",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "신뢰하는 사이트",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "대시보드 열기",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "구성 요소 제거 모드로 진입",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "구성 요소 선택기 모드로 진입",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "이 사이트의 이슈를 신고하기",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "클릭하여 변경 사항을 영구적으로 만듭니다.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "클릭하여 변경 사항을 되돌립니다.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "자세히",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "클릭하여 이 사이트에 대해 uBO Lite에게 확장된 권한을 부여합니다.\n확장된 권한은 더 효과적인 콘텐츠 차단을 허용합니다.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "클릭하여 이 사이트에 대한 확장된 권한을 철회합니다.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "간단히",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "차단된 요청 개수를 아이콘에 표시",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "표시",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "테마",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "사용자 지정 강조 색상",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "CSP 보고를 차단하기",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "모든 웹사이트에 대해 확장된 필터링 켜기",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite에서 특정 사이트에서 필터링을 수행하기 위해서는 해당 사이트의 데이터 수정 권한을 일일이 부여해야 합니다. 이 설정을 이용하면 모든 웹사이트에 대해 확장된 필터링 권한을 한 번에 부여할 수 있습니다.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "기본값",
@@ -151,38 +71,6 @@
     "message": "지역, 언어",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "한 줄에 한 개의 필터를 입력하세요. 필터는 순수 호스트이름, 혹은 EasyList-호환 필터가 될 수 있습니다. 시작 부분이 <code>!</code> 로 시작되면 무시됩니다.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "가져오기 및 추가하기",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "내보내기",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "my-ublock-static-filters_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "신뢰된 사이트는 어느 웹 사이트에 uBO Lite가 비활성화되여하는 지를 말합니다. 한 줄에 한 항목씩 적으세요.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "가져오기 및 추가하기",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "내보내기",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "my-ublock-trusted-sites_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "변경 로그",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "외부 의존성 (GPLv3 호환):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "제출",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "변경사항 적용",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "되돌리기",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "환영합니다",

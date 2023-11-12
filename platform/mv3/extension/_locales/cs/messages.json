@@ -15,32 +15,8 @@
     "message": "uBO Lite — Ovládací panel",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Varování! Máte neuložené změny",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Zůstat",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Ignorovat",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Nastavení",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Seznamy filtrů",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Moje filtry",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Povolené domény",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Otevřít ovládací panel",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Zapnout režim likvidace prvků",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Zapnout režim výběru prvků",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Nahlásit problém na této webové stránce",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Kliknutím uložíte provedené změny.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Kliknutím vratíte zpátky provedené změny.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Více",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Kliknutím udělíte rozšířená oprávnění uBO Lite na tomto webu.\nRozšířená oprávnění umožňují efektivnější blokování obsahu.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Kliknutím odeberete rozšířená oprávnění na tomto webu",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Méně",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Zobrazit počet blokovaných požadavků u ikony",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Vzhled",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Motiv",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Vlastní barva motivu",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "Blokovat CSP reporty",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Zapnout rozšířené filtrování na všech webových stránkách",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite může použít rozšířené filtrování na dané webové stránce pouze poté, co výslovně udělíte oprávnění k úpravě dat na této webové stránce. Toto nastavení umožňuje udělit oprávnění pro rozšířené filtrování všem webům najednou.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Výchozí",
@@ -151,38 +71,6 @@
     "message": "Regionální, jazykové",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "Jeden filtr na řádek. Filtr může být prostý název hostitele nebo filtr kompatibilní s Adblock Plus. Řádky začínající vykřičníkem <code>!</code> budou ignorovány.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "Importovat a připojit",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Exportovat",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "ublock-me-vlastni-filtry_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "Pravidla v seznamu povolených domén určují, pro které webové stránky bude uBO Lite vypnutý. Jedna položka na řádek. Neplatná pravidla budou tiše ignorována a zakomentována.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "Importovat a přidat",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Exportovat",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "ublock-muj-whitelist_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Přehled změn",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Externí závislosti (kompatibilní s GPLv3):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Odeslat",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Použít změny",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Vrátit",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Vítejte",

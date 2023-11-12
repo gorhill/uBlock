@@ -15,32 +15,8 @@
     "message": "uBO Lite — Контролна табла",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Упозорење! Имате несачуване промене",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Остани",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Занемари",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Подешавања",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Листе филтера",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Моји филтери",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Поуздани сајтови",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Отвори контролну таблу",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Уђи у режим уклањања елемената",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Уђи у режим избора елемената",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Пријавите проблем на овом веб сајту",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Кликните да бисте своје промене учинили трајним.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Кликните да бисте вратили промене.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Више",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Кликните да бисте uBO Lite доделили проширене дозволе на овом сајту.\nПроширене дозволе омогућују ефикасније блокирање садржаја.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Кликните да бисте опозвали проширене дозволе на овом сајту.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Мање",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Прикажи број блокираних захтева на иконици",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Изглед",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Тема",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Прилагођена наглашена боја",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "Блокирај CSP  извештаје",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Омогући проширено филтрирање на свим веб сајтовима",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite може да примени проширено филтрирање на датом веб сајту само након што изричито доделите дозволе проширењу за измену података на том веб сајту. Ово подешавање вам омогућује да доделите дозволе за проширено филтрирање на свим веб сајтовима одједном.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Подразумевано",
@@ -151,38 +71,6 @@
     "message": "Регионални, језички",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "Један филтер по реду. Филтер може бити обично име хоста или филтер компатибилан са EasyList-ом. Редови са префиксом <code>!</code> ће бити занемарени.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "Увези и додај",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Извези",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "моји-ublock-статични-филтери_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "Смернице поузданих сајтова диктирају на којим веб страницама uBO Lite треба да буде онемогућен. Један унос по реду.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "Увези и додај",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Извези",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "моји-ublock-поуздани-сајтови{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Списак измена",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Спољне зависности (компатибилно са GPLv3):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Проследи",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Примени промене",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Врати",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Добродошли",

@@ -15,32 +15,8 @@
     "message": "uBO Lite — nadzorna ploča",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Upozorenje! Niste spremili promjene",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Ostani",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Ignoriraj",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Postavke",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Liste filtera",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Moji filteri",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Pouzdane stranice",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Otvori nadzornu ploču",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Uđite u način rada uklanjanja elementa",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Uđite u način rada odabiranja elementa",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Prijavite problem na ovoj web stranici",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Kliknite kako bi vaše promjene postale trajne.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Kliknite za poništavanje promjena.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Više",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Kliknite da biste dodijelili uBO Lite proširena dopuštenja na ovoj stranici.\nProširene dozvole omogućuju učinkovitije blokiranje sadržaja.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Kliknite za opoziv proširenih dopuštenja na ovoj stranici",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Manje",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Pokaži broj blokiranih zahtjeva na ikoni",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Izgled",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Tema",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Prilagođena glavna boja",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "Blokiraj CSP izvješća",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Omogući prošireno filtriranje na svim web stranicama",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite može primijeniti prošireno filtriranje na određenoj web stranici samo nakon što izričito dodijelite dopuštenja proširenju za izmjenu podataka na toj web stranici. Ova vam postavka omogućuje dodjeljivanje dopuštenja za prošireno filtriranje svim web stranicama odjednom.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Zadano",
@@ -151,38 +71,6 @@
     "message": "Regije, jezici",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "Jedan filtar po retku. Filtar može biti običan hostname ili filter kompatibilan sa EasyList-om. Linije sa prefiksom <code>!</code> zanemarit će se.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "Uvesti i dodati",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Izvoz",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "my-ublock-static-filters_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "Smjernice pouzdanih stranica određuju na kojim web stranicama uBO Lite treba biti onemogućen. Jedan unos po retku.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "Uvesti i dodati",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Izvoz",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "my-ublock-trusted-sites_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Popis promjena",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Vanjski korišteni programi (GPLv3-kompatiblini):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Pošalji",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Primijeni promjene",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Poništi",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Dobrodošli",

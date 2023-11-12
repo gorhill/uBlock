@@ -15,32 +15,8 @@
     "message": "uBO Lite — डैशबोर्ड",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "चेतावनी! आपके कुछ परिवर्तनों को सहेजना अभी बाकी है",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "रुकें",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "नज़रअंदाज़ करें ",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "सेटिंग्स",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "फ़िल्टर सूचियाँ",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "मेरे फ़िल्टर्स",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "विश्वस्त साइटें",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "डैशबोर्ड खोलें",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "एलिमेंट जैपर मोड दर्ज करें",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "चीजें चुनने के मोड में जाएं",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "इस वेबसाइट पर किसी समस्या को रिपोर्ट करें",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "अपने परिवर्तनों को स्थायी बनाने के लिए क्लिक करें.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "आपके परिवर्तनों को पूर्ववत के लिए क्लिक करें",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "अधिक",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "इस साइट पर uBO Lite को विस्तारित अनुमति देने के लिए क्लिक करें.\nविस्तारित अनुमतियाँ अधिक प्रभावी सामग्री अवरोधन की अनुमति देती हैं.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "इस साइट पर विस्तारित अनुमतियों को निरस्त करने के लिए क्लिक करें",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "कम",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "ब्लॉक कि गयी चीज़ों की गिनती आइकॉन पर दिखाएं",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "रंगरूप",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "थीम",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "निर्मित रंग शैली",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": " CSP रिपोर्टों को ब्लॉक करें",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "सभी वेबसाइटों पर विस्तारित फ़िल्टरिंग सक्षम करें",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite किसी वेबसाइट पर विस्तारित फ़िल्टरिंग तभी लागू कर सकता है जब आप उस वेबसाइट पर डेटा को संशोधित करने के लिए स्पष्ट रूप से विस्तारित अनुमतियाँ प्रदान करते हैं. यह सेटिंग आपको सभी वेबसाइटों को एक साथ विस्तारित फ़िल्टरिंग की अनुमति देने की अनुमति देती है.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "डिफॉल्ट",
@@ -151,38 +71,6 @@
     "message": "क्षेत्र, भाषाएँ",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "प्रति पंक्ति एक फ़िल्टर. कोई फ़िल्टर एक सादा होस्टनाम या एक EasyList-संगत फ़िल्टर हो सकता है। <code>!</code> से पहले लगी पंक्तियों को अनदेखा कर दिया जाएगा.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "आयात करके जोड़ें",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "निर्यात",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "मेरे-ublock-स्‍थिर-फिल्टेरें_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "विश्वसनीय साइट निर्देश तय करते हैं कि कौन से वेब पेज पर uBO Lite को अक्षम किया जाना चाहिए. प्रति पंक्ति एक प्रविष्टि.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "आयात करके जोड़ें",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "निर्यात",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "my-ublock-trusted-sites_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "परिवर्तन लॉग",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "बाहरी निर्भरता (GPLv3-compatible):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "सबमिट करें",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "परिवर्तन लागू करें",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "पूर्ववत",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "स्वागत",

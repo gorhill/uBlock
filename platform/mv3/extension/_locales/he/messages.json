@@ -15,32 +15,8 @@
     "message": "לוח־מחוונים – uBO Lite",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "אזהרה! קיימים שינויים שטרם נשמרו",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "להישאר",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "התעלמות",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "הגדרות",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "רשימות סינון",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "מסננים שלי",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "אתרים מהימנים",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "פתיחת לוח־המחוונים",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "כניסה למצב שלטת רכיב",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "כניסה למצב דגימת רכיב",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "דווח על בעיה באתר אינטרנט זה",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "לחץ על מנת להפוך את השינויים שלך לקבועים.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "הקשה להסגת השינויים שנעשו.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "עוד",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "הקשה על מנת להעניק ל־uBO Lite הרשאות מורחבות באתר זה. הרשאות מורחבות מאפשרות חסימת תוכן יעילה יותר.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "הקשה על מנת לבטל הרשאות מורחבות באתר זה",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "פחות",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "הצגת מספר הבקשות החסומות על הסמל",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "מראה",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "ערכת נושא",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "צבע הדגשה מותאם אישית",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "חסימת דוחות CSP",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "הפיכת סינון מורחב לזמין בכל אתרי האינטרנט",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": " ניתן להחיל ב־uBO Lite סינון מורחב לאתר נתון, רק לאחר הענקת הרשאות מפורשות שיאפשרו להרחבה לשנות נתונים באתר זה. הגדרה זו מאפשרת הענקת הרשאות לסינון מורחב לכל האתרים בבת אחת.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "ברירת מחדל",
@@ -151,38 +71,6 @@
     "message": "אזורים, שפות",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "מסנן אחד לכל שורה. המסנן יכול להיות פשוט שם מארח , או מסנן תואם EasyList. המסנן יעלים שורות שמתחילות בתו <code>!</code>.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "ייבוא וצרוף",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "ייצוא",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "my-ublock-static-filters_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "הנחיות אתר מהימנות, מכתיבות באילו עמודי מרשתת יש להשבית את uBO Lite. רשומה אחת לכול שורה.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "ייבוא וצרוף",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "ייצוא",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "my-ublock-static-filters_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "יומן שינויים",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "תלויות חיצוניות (תואם GPLv3):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "שיגור",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "החלת שינויים",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "החזרה לאחור",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "ברוך בואך",

@@ -15,32 +15,8 @@
     "message": "uBO Lite — Dasbor",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Peringatan! Anda memiliki ubahan yang belum disimpan",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Tinggal",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Abaikan",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Pengaturan",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Daftar Filter",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Filter Saya",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Situs Tepercaya",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Buka dasbor",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Memasuki mode penghapus elemen",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Memasuki mode pemilihan elemen",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Laporkan masalah situs web ini",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Klik untuk membuat ubahan Anda permanen.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Klik untuk membatalkan ubahan Anda.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Lainnya",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Klik untuk memberi uBO Lite izin tambahan pada situs ini.\nIzin tambahan memungkinkan pemblokiran konten yang lebih efektif.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Klik untuk membatalkan izin tambahan pada situs ini",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Lebih sedikit",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Tampilkan jumlah permintaan yang diblokir pada ikon",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Tampilan",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Tema",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Warna aksen khusus",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "Blokir laporan CSP",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Aktifkan filter yang diperluas pada semua situs web",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite dapat menerapkan filter yang diperluas pada situs web tertentu hanya setelah Anda secara eksplisit memberi izin ekstensi untuk memodifikasi data pada situs tersebut. Pengaturan ini memungkinkan Anda memberi izin filter yang diperluas ke semua situs web sekaligus.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Bawaan",
@@ -151,38 +71,6 @@
     "message": "Wilayah, bahasa",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "Satu filter per baris. Filter dapat berupa nama hos, atau filter yang kompatibel dengan EasyList. Baris yang diawali dengan <code>!</code> akan diabaikan.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "Impor dan tambahkan",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Ekspor",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "my-ublock-static-filters_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "Arahan situs terpercaya menentukan pada halaman web mana uBO Lite harus dinonaktifkan. Satu entri per baris.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "Impor dan tambahkan",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Ekspor",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "my-ublock-trusted-sites_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Catatan perubahan",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Dependensi eksternal (kompatibel GPLv3):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Kirim",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Terapkan perubahan",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Urungkan",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Selamat datang",

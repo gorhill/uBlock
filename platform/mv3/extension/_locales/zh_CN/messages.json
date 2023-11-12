@@ -15,32 +15,8 @@
     "message": "uBO Lite — 控制面板",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "警告！您有未保存的更改",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "留在当前页面",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "忽略",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "设置",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "过滤规则列表",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "静态过滤规则",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "白名单",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "打开控制面板",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "进入临时元素移除模式",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "进入元素选择器模式",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "报告此网站上的问题",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "点击以使更改永久生效。",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "点击以撒销当前修改。",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "更多",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "点击以授予 uBO Lite 在此网站额外权限。\n额外权限可让内容过滤更加高效。",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "点击以撤回 uBO Lite 在此网站的额外权限",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "更少",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "在图标上显示拦截请求数",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "外观",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "主题",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "自定义强调色",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "屏蔽 CSP 报告",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "在所有网站启用额外过滤功能",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite 只有在被明确授予修改网页数据的权限后才可以应用额外过滤功能。通过此项设置可一次性授予其在所有网站启用额外过滤所需的权限。",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "预设",
@@ -151,38 +71,6 @@
     "message": "区域、语言",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "一行一条过滤规则。每条规则可以是一个简单域名或者是一条 EasyList 兼容的过滤规则。以 <code>!</code> 开头的行将被忽略。",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "导入并添加",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "导出",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "my-ublock-static-filters_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "适用于白名单任一规则的页面不会启用 uBO Lite。一行一条规则。",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "导入并添加",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "导出",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "my-ublock-trusted-sites_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "更新日志",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "外部依赖（与 GPLv3 协议兼容）：",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "提交",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "应用更改",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "还原",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "欢迎使用",

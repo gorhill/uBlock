@@ -15,32 +15,8 @@
     "message": "uBO Lite — Панель керування",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Увага! Є незбережені зміни",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Залишитись",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Ігнорувати",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Налаштування",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Списки фільтрів",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Мої фільтри",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Довірені сайти",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Відкрити панель керування",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Перейти в режим блокування елементів",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Перейти в режим вибору елементів",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Повідомити про помилку на цьому вебсайті",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Клацніть, щоб зробити зміни постійними.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Клацніть, щоб скасувати зміни.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Більше",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Клацніть, щоб надати uBO Lite розширені дозволи на цьому сайті.\nРозширені дозволи дозволяють ефективніше блокувати вміст.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Клацніть, щоб відкликати розширені дозволи на цьому сайті",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Менше",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Показувати кількість заблокованих запитів на піктограмі",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Вигляд",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Тема",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Акцент кольору користувача",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "Блокувати CSP-звіти",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Увімкнути розширену фільтрацію на всіх сайтах",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite може застосувати розширену фільтрацію на певному вебсайті лише після того, як ви явно надасте розширеній фільтрації дозволи на зміну даних на цьому вебсайті. Цей параметр дозволяє надати дозволи на розширену фільтрацію для всіх вебсайтів одночасно.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Типово",
@@ -151,38 +71,6 @@
     "message": "Регіони, мови",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "Один фільтр на рядок. Фільтром може бути адреса сайту або фільтр в сумісному з EasyList записі. Рядки, що починаються з <code>!</code> ігноруватимуться.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "Імпортувати та додати",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Експортувати",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "мої-статичні-фільтри-ublock_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "Директиви довіреного сайту диктують, на яких вебсторінках uBO Lite повинен бути вимкнений. Один запис на рядок.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "Імпортувати та додати",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Експортувати",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "мої-довірені-сайти-ublock_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Журнал змін",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Зовнішні залежності (Сумісні з GPLv3)",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Відправити",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Застосувати зміни",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Повернути",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Ласкаво просимо",

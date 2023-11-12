@@ -15,32 +15,8 @@
     "message": "uBO Lite — Табло",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Внимание! Има незапазени промени",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Оставане",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Игнориране",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Настройки",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Списъци с филтри",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Мои филтри",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Доверени сайтове",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Табло с настройки",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Временно блокиране на отделен елемент",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Блокиране на отделен елемент",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Докладване на проблем с този уебсайт",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Щракнете, за да направите промените постоянни.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Щракнете, за да отмените направените промени.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Още",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Щракнете, за да предоставите на uBO Lite разширени разрешения за този сайт.\nРазширените разрешения позволяват по-ефективно блокиране на съдържанието.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Щракнете, за да отмените разширените разрешения за този сайт",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "По-малко",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Показване на брояч в иконката за блокираните заявки",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Външен вид",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Тема",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Потребителски цвят на акцента",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "Блокиране на CSP отчетите",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Активиране на разширеното филтриране на всички уебсайтове",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite може да приложи разширено филтриране на даден уебсайт само след като изрично предоставите разрешения на разширението за промяна на данни на този уебсайт. Тази настройка ви позволява да предоставите разрешения за разширено филтриране на всички уебсайтове наведнъж.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Стандартни",
@@ -151,38 +71,6 @@
     "message": "Региони, езици",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "Един филтър на ред. Това може да бъде обикновен адрес или филтър, съвместим с EasyList. Редовете с представка <code>!</code> ще бъдат игнорирани.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "Внасяне от файл",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Изнасяне във файл",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "ublock-мои-филтри_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "Указанията за доверени сайтове определят кои уеб страници трябва да бъдат изключени от uBO Lite. По един запис на ред.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "Внасяне от файл",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Изнасяне във файл",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "ublock-доверени_сайтове_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Списък с промени",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Външни зависимости (съвместими с GPLv3):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Изпращане",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Прилагане на промените",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Връщане",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Добре дошли",

@@ -15,32 +15,8 @@
     "message": "uBO Lite — Πίνακας ελέγχου",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Προειδοποίηση! Έχετε μη αποθηκευμένες αλλαγές",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Παραμονή",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Παράβλεψη",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Ρυθμίσεις",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Λίστες φίλτρων",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Τα φίλτρα μου",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Έμπιστοι ιστότοποι",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Ανοίξτε τον πίνακα ελέγχου",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Είσοδος σε λειτουργία διαγραφής στοιχείων",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Είσοδος σε λειτουργία επιλογής στοιχείων",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Αναφέρετε ένα ζήτημα σε αυτόν τον ιστότοπο",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Κάντε κλικ για να γίνουν οριστικές οι αλλαγές σας.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Κάντε κλικ για να επαναφέρετε τις αλλαγές σας.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Περισσότερα",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Κάντε κλικ για να παραχωρήσετε εκτεταμένα δικαιώματα στο uBO Lite για αυτόν τον ιστότοπο.\nΤα εκτεταμένα δικαιώματα επιτρέπουν πιο αποτελεσματικό αποκλεισμό περιεχομένου.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Κάντε κλικ για να ανακαλέσετε τα εκτεταμένα δικαιώματα για αυτόν τον ιστότοπο",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Λιγότερα",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Εμφάνιση αριθμού αποκλεισμένων αιτημάτων στο εικονίδιο",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Εμφάνιση",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Θέμα",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Προσαρμοσμένο χρώμα έμφασης",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "Φραγή αναφορών CSP",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Ενεργοποιήστε το εκτεταμένο φιλτράρισμα σε όλους τους ιστότοπους",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "Το uBO Lite μπορεί να εφαρμόσει εκτεταμένο φιλτράρισμα σε έναν συγκεκριμένο ιστότοπο μόνο αφού εκχωρήσετε ρητά στην επέκταση δικαιώματα τροποποίησης δεδομένων σε αυτόν τον ιστότοπο. Αυτή η ρύθμιση σάς επιτρέπει να εκχωρήσετε δικαιώματα για εκτεταμένο φιλτράρισμα σε όλους τους ιστότοπους ταυτόχρονα.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Προεπιλογή",
@@ -151,38 +71,6 @@
     "message": "Περιοχές, γλώσσες",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "Ένα φίλτρο ανά γραμμή. Ένα φίλτρο μπορεί να είναι ένα απλό όνομα κεντρικού υπολογιστή (hostname) ή ένα φίλτρο, συμβατό με το EasyList. Οι γραμμές με το πρόθεμα <code>!</code> θα παραβλέπονται.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "Εισαγωγή και προσάρτηση",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Εξαγωγή",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "statika-filtra-ublock_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "Οι οδηγίες έμπιστων ιστοτόπων υποδεικνύουν σε ποιες ιστοσελίδες θα πρέπει να απενεργοποιείται το uBO Lite. Μία καταχώρηση ανά γραμμή.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "Εισαγωγή και προσάρτηση",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Εξαγωγή",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "empistoi-istotopoi-ublock_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Αρχείο αλλαγών",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Εξωτερικές εξαρτήσεις (συμβατές με GPLv3):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Υποβολή",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Εφαρμογή αλλαγών",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Επαναφορά",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Καλώς ήρθατε",

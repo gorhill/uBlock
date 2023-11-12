@@ -15,32 +15,8 @@
     "message": "uBO Lite — Töölaud",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Hoiatus! Sul on salvestamata muudatusi",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Jää lehele",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Eira",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Sätted",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Filtriloendid",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Minu filtrid",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Usaldatud saidid",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Ava töölaud",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Sisene elemendi hävitusrežiimi",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Sisene elemendi valikurežiimi",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Teavita selle veebilehe probleemist",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Klõpsa, et teha oma muudatused püsivaks.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Klõpsa, et võtta muudatused tagasi.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Rohkem",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Klõpsa, et anda uBO Lite'il selle saidi jaoks laiendatud õigused.\nLaiendatud õigused võimaldavad efektiivsemat sisublokeerimist.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Klõpsa, et eemaldada selle saidi laiendatud õigused",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Vähem",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Kuva ikoonil blokeeritud elementide arv",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Välimus",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Teema",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Kohandatud rõhuvärv",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "Keela lehe turvareeglite (CSP-de) aruanded",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Luba põhjalik filtreerimine kõikidel veebilehtedel",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite filtreerib teatud veebilehte põhjalikult vaid juhul, kui lubate selgesõnaliselt laiendi lubades muuta selle veebilehe andmeid. Selle sättega lubate filtreerida kõiki veebilehti põhjalikult ja samal ajal.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Vaikimisi",
@@ -151,38 +71,6 @@
     "message": "Regioonid, keeled",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "Üks filter rea kohta. Filtriks võib olla tavaline hostinimi või EasyListiga ühilduv filter. Eesliitega <code>!</code> algavaid ridu eiratakse.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "Impordi ja lisa",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Ekspordi",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "minu-ublocki-staatilised-filtrid_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "Usaldatud saitide direktiivid määravad, millistel veebilehtedel peaks uBlock Origin keelatud olema. Üks kirje rea kohta.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "Impordi ja lisa",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Ekspordi",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "minu-ublocki-usaldatud-saidid_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Muudatuste logi",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Välised sõltuvused (ühilduvad GPLv3-ga):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Saada",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Kinnita muudatused",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Ennista",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Tere tulemast",

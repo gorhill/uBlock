@@ -15,32 +15,8 @@
     "message": "uBO Lite — Kontrollpanel",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Varning! Du har inte sparat dina ändringar",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Stanna kvar",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Ignorera",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Inställningar",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Filterlistor",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Mina filter",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Betrodda webbplatser",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Öppna kontrollpanelen",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Gå till elementzapperläge",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Gå till elementväljarläge",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Rapportera ett problem på denna webbplats",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Klicka för att göra dina ändringar permanenta.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Klicka för att ångra dina ändringar.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Mer",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Klicka för att ge uBO Lite utökade behörigheter på den här webbplatsen.\nMed utökade behörigheter blir innehållsblockering mer effektiv.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Klicka för att återkalla utökade behörigheter på den här webbplatsen",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Mindre",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Visa antalet blockerade förfrågningar på ikonen",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Utseende",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Tema",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Anpassad accentfärg",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "Blockera CSP-rapporter",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Aktivera utökad filtrering på alla webbplatser",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite kan endast använda utökad filtrering på en given webbplats efter att du uttryckligen har gett tilläggsbehörighet att ändra data på den webbplatsen. Med den här inställningen kan du ge behörigheter för utökad filtrering till alla webbplatser samtidigt.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Standard",
@@ -151,38 +71,6 @@
     "message": "Regioner, språk",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "Ett filter per rad. Ett filter kan vara ett vanligt värdnamn eller ett EasyList-kompatibelt filter. Rader med prefixet <code>!</code> ignoreras.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "Importera och lägg till",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Exportera",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "mina-ublock-statiska-filter_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "Direktiven för betrodda webbplatser anger vilka webbsidor som uBlock Origin ska inaktiveras på. En post per rad.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "Importera och lägg till",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Exportera",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "mina-ublock-betrodda-webbplatser_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Ändringslogg",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Externa beroenden (GPLv3-kompatibla):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Skicka",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Verkställ ändringar",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Ångra",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Välkommen",

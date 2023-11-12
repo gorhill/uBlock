@@ -15,32 +15,8 @@
     "message": "uBO Lite — Dashboard",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Warning! You have unsaved changes",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Kekal",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Abai",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Tetapan",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Senarai penapis",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Penapis saya",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Halaman dipercayai",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Open the dashboard",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Enter element zapper mode",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Enter element picker mode",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Report an issue on this website",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Click to make your changes permanent.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Click to revert your changes.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Lagi",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Click to grant uBO Lite extended permissions on this site.\nExtended permissions allow more effective content blocking.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Click to revoke extended permissions on this site",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Kurangkan",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Show the number of blocked requests on the icon",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Penampilan",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Tema",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Custom accent color",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "Sekat laporan CSP",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Enable extended filtering on all websites",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite can apply extended filtering on a given website only after you explicitly grant the extension permissions to modify data on that website. This setting allows you to grant permissions for extended filtering to all websites at once.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Lalai",
@@ -151,38 +71,6 @@
     "message": "Wilayah, bahasa",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "One filter per line. A filter can be a plain hostname, or an EasyList-compatible filter. Lines prefixed with <code>!</code> will be ignored.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "Import and append",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Eksport",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "my-ublock-static-filters_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "The trusted site directives dictate on which web pages uBO Lite should be disabled. One entry per line.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "Import and append",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Eksport",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "my-ublock-trusted-sites_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Log perubahan",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Pergantungan luaran (serasi dengan GPLv3):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Hantar",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Terapkan perubahan",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Revert",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Selamat datang",

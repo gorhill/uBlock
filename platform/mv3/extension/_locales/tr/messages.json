@@ -15,32 +15,8 @@
     "message": "uBO Lite — Kontrol Paneli",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Uyarı! Kaydedilmemiş değişiklikleriniz var",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Burada kal",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Yok say",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Ayarlar",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Filtre listeleri",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Filtrelerim",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Güvenilen siteler",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Kontrol panelini aç",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Öge silme moduna gir",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Öge seçme moduna gir",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Bu sitedeki bir sorunu bildir",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Değişikliklerinizi kalıcı hale getirmek için tıklayın.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Değişikliklerinizi geri almak için tıklayın.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Daha Fazla",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Bu sitede uBO Lite'a daha kapsamlı izinler vermek için tıklayın.\nİzinlerin kapsamını artırmak, daha etkili içerik engelleme sağlar.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Bu sitedeki kapsamı artırılan izinleri iptal etmek için tıklayın.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Daha Az",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Simge üzerinde engellenen isteklerin sayısını göster",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Görünüm",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Tema",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Özel vurgu rengi",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "CSP raporlarını engelle",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Genişletilmiş filtrelemeyi tüm sitelerde etkinleştir.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite, belirli bir web sitesinde, yalnızca o web sitesindeki verileri değiştirmek için uzantı izinlerini açıkça verdikten sonra genişletilmiş filtreleme uygulayabilir. Bu ayar, tüm web sitelerine bir kerede genişletilmiş filtreleme için izinler vermenizi sağlar.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Varsayılan",
@@ -151,38 +71,6 @@
     "message": "Bölgeler, diller",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "Satır başına bir filtre. Filtre yalın bir alan adı veya EasyList uyumlu bir filtre olabilir. <code>!</code> ile başlayan satırlar yok sayılacaktır.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "İçe aktar ve ekle",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Dışa aktar",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "ublock-statik-filtrelerim_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "Güvenilen site yönergeleri, uBO Lite'ın devre dışı bırakılması gerektiği web sayfalarını belirler. Her satırda bir girdi.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "İçe aktar ve sonuna ekle",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Dışa aktar",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "ublock-guvenilen-siteler_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Değişiklik günlüğü",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Dış bağlılıklar (GPLv3-uyumlu):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Gönder",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Değişiklikleri uygula",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Geri al",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Hoş geldiniz",

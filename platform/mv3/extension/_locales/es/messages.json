@@ -15,32 +15,8 @@
     "message": "uBO Lite — Panel de control",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "¡Atención! Tienes cambios sin guardar",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Conservar",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Ignorar",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Configuración",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Listas de filtros",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Mis filtros",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Sitios de confianza",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Abrir panel de control",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Entrar al modo eliminación de elementos",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Entrar al modo selección de elementos",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Reportar un problema en este sitio web",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Haz clic para hacer tus cambios permanentes.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Haz clic para revertir tus cambios.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Más",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Clic para otorgar permisos extendidos a uBO Lite en este sitio.\nLos permisos extendidos permiten un bloqueo de contenido más efectivo.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Clic para revocar permisos extendidos en este sitio",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Menos",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Mostrar el número de peticiones bloqueadas en el icono",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Apariencia",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Tema",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Tono de color personalizado",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "Bloquear reportes CSP",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Habilitar filtrado extendido en todos los sitios web",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite puede aplicar el filtrado extendido en un sitio web determinado solo después de que explícitamente hayas otorgado a la extensión permisos para modificar los datos de ese sitio web. Esta configuración te permite otorgar permisos para el filtrado extendido a todos los sitios web a la vez.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Predeterminado",
@@ -151,38 +71,6 @@
     "message": "Regiones, idiomas",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "Un filtro por línea. El filtro puede ser un nombre de dominio, o un filtro compatible con EasyList. Las líneas que comiencen con <code>!</code> serán ignoradas.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "Importar y anexar",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Exportar",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "ublock-mis-filtros-estaticos_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "Sitios de confianza para los cuales se deshabilitará uBO Lite. Una entrada por línea.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "Importar y anexar",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Exportar",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "ublock-mis-sitios-de-confianza_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Registro de cambios",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Dependencias externas (compatibles con GPLv3):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Enviar",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Aplicar cambios",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Revertir",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Bienvenida",

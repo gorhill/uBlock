@@ -15,32 +15,8 @@
     "message": "uBO Lite — Bảng điều khiển",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Cảnh báo! Bạn có các thay đổi chưa được lưu",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Ở lại",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Bỏ qua",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Cài đặt",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Danh sách bộ lọc",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Bộ lọc của tôi",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Trang tin cậy",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Mở bảng điều khiển",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Chuyển sang chế độ chặn phần tử tạm thời",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Chuyển sang chế độ chọn phần tử",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Báo cáo lỗi trên trang này",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Nhấn để làm các thay đổi của bạn thường trực.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Nhấn để hoàn tác các thay đổi của bạn.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Mở rộng",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Nhấp để cấp cho uBO Lite những quyền mở rộng trên trang này.\nCác quyền mở rộng cho phép việc chặn nội dung hiệu quả hơn.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Nhấp để thu hồi các quyền mở rộng trên trang này",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Ít hơn",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Hiển thị số lượng yêu cầu bị chặn trên biểu tượng",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Diện mạo",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Giao diện",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Tùy chọn màu nền",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "Chặn các báo cáo CSP",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Bật tính năng lọc mở rộng trên tất cả các trang web",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite có thể áp dụng tính năng lọc mở rộng trên một trang web nhất định chỉ sau khi bạn chủ động cấp quyền cho tiện ích để sửa đổi dữ liệu trên trang web đó. Cài đặt này cho phép bạn cấp quyền cho lọc mở rộng tới tất cả các trang web cùng một lúc.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Mặc định",
@@ -151,38 +71,6 @@
     "message": "Khu vực, ngôn ngữ",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "Một bộ lọc trên mỗi dòng. Một bộ lọc có thể là một tên máy chủ đơn giản, hoặc một bộ lọc tương thích EasyList. Những dòng bắt đầu với <code>!</code> sẽ bị bỏ qua.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "Nhập và thêm vào",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Xuất",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "bộ-lọc-tĩnh-ublock-của-tôi_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "Các chỉ thị trang tin cậy chỉ định các trang web nào uBO Lite nên bị tắt. Một mục trên mỗi dòng.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "Nhập và thêm vào",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Xuất",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "các-trang-tin-cậy-ublock-của-tôi_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Nhật ký thay đổi",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Các phụ thuộc bên ngoài (tương thích GPLv3):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Xác nhận",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Áp dụng các thay đổi",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Phục hồi",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Chào mừng",

@@ -15,32 +15,8 @@
     "message": "uBO Lite — Hallintapaneeli",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Varoitus! Et ole tallentanut tekemiäsi muutoksia",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Älä poistu",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Ohita",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Asetukset",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Suodatinlistat",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Omat suodattimet",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Luotetut sivustot",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Avaa hallintapaneeli",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Avaa elementtien piilotustila",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Avaa elementtien valintatila",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Ilmoita ongelmasta tällä verkkosivustolla",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Tee muutoksistasi pysyviä painamalla tästä.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Kumoa muutoksesi painamalla tästä.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Enemmän",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Myönnä uBO Litelle laajemmat käyttöoikeudet tämän sivuston sisällön käsittelyyn painamalla tästä.\nLaajemmat oikeudet mahdollistavat tehokkaamman sisällöneston.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Peru tämän sivuston sisällön käsittelyyn myönnetyt laajemmat käyttöoikeudet painamalla tästä.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Vähemmän",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Näytä estettyjen pyyntöjen määrä",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Ulkoasu",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Teema",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Oma korostusväri",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "Estä CSP-raportit",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Käytä laajennettua suodatusta kaikilla verkkosivustoilla",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Liten laajennettu suodatus voi toimia sivustolla vasta, kun sille erikseen myönnetään sivustokohtainen tietojen muokkausoikeus. Asetuksen avulla nämä käyttöoikeudet voidaan myöntää kattamaan kaikki verkkosivustot.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Oletus",
@@ -151,38 +71,6 @@
     "message": "Alueet, kielet",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "Yksi suodatin riviä kohden. Suodatin voi olla pelkkä osoite tai EasyList-yhteensopiva suodatin. Rivit, joiden alussa on <code>!</code>, ohitetaan.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "Tuo ja lisää...",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Vie tiedostoon...",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "omat-staattiset-ublock-suodattimet_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "Luotettu sivusto -luokitukset määrittelevät millä sivuilla uBO Litea ei käytetä. Yksi osoite riviä kohden.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "Tuo ja lisää...",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Vie tiedostoon...",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "omat-luotetut-ublock-sivustot_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Muutoshistoria",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Ulkopuoliset riippuvuudet (GPLv3-yhteensopiva):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Lähetä",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Vahvista muutokset",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Palauta",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Tervetuloa",

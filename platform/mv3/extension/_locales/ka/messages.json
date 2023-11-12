@@ -15,32 +15,8 @@
     "message": "uBO Lite — მაჩვენებლები",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "ყურადღება! ცვლილებები შეუნახავია",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "დარჩენა",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "აცილება",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "პარამეტრები",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "ფილტრების სიები",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "ჩემი ფილტრები",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "სანდო საიტები",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "სამართავის გახსნა",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "ნაწილების ამოჭრა",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "ნაწილების შერჩევა",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "ამ საიტზე ხარვეზის მოხსენება",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "დაწკაპეთ ცვლილებების მუდმივად შენახვისთვის.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "დაწკაპეთ შეტანილი ცვლილებების გაუქმებისთვის.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "ვრცლად",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "დაწკაპეთ და uBO Lite მიიღებს დამატებით ნებართვებს ამ საიტზე.\nდამატებითი ნებართვებით მეტად შედეგიანად შეზღუდვას შეძლებს.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "დაწკაპეთ დამატებითი ნებართვის გასაუქმებლად ამ საიტზე",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "მოკლედ",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "შეზღუდული მოთხოვნების რაოდენობის ჩვენება ხატულაზე",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "იერსახე",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "თემა",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "სასურველი შეფერილობა",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "CSP-მოხსენებების აკრძალვა",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "გაფართოებული ფილტრაციის ჩართვა ყველა საიტზე",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite შეძლებს გაფართოებული ფილტრაციის გამოყენებას მითითებულ საიტზე მას შემდეგ, რაც დართავთ მას ამ საიტზე მონაცემების შეცვლის ნებას. ამ პარამეტრით კი შეძლებთ ერთბაშად  დართოთ გაფართოებული ფილტრაციის გამოყენების ნება ყველა საიტზე.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "ნაგულისხმევი",
@@ -151,38 +71,6 @@
     "message": "მხარეები, ენები",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "თითოეული ფილტრი ცალკეულ ხაზზე. ფილტრი შეიძლება იყოს საიტის უბრალო დასახელება ან Adblock Plus-სთან თავსებადი მითითებები. ხაზები <code>!</code> თავსართით უგულებელყოფილი იქნება.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "შემოტანა და დამატება",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "შენახვა",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "ჩემი-ublock-მუდმივი-ფილტრები_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "გამონაკლისებში მითითებულ ვებგვერდებზე uBO Lite გამოირთვება. თითო ჩანაწერი ცალკეულ ხაზზე.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "შემოტანა და დამატება",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "შენახვა",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "ჩემი-ublock-სანდო-საიტები_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "ცვლილებები",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "ცალკეული დაქვემდებარებული პროექტები (GPLv3-თან თავსებადი):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "წარდგენა",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "ცვლილებების ასახვა",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "დაბრუნება",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "მოგესალმებით",

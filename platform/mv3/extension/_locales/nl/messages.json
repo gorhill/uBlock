@@ -15,32 +15,8 @@
     "message": "uBO Lite – Dashboard",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Waarschuwing! Niet-opgeslagen wijzigingen.",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Blijven",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Negeren",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Instellingen",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Filterlijsten",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Mijn filters",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Vertrouwde websites",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Dashboard openen",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Element­wisser­modus openen",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Element­kiezer­modus openen",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Een probleem op deze website melden",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Klik om uw wijzigingen permanent te maken.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Klik om uw wijzigingen ongedaan te maken.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Meer",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Klik om uBO Lite uitgebreide toestemmingen te verlenen op deze website.\nUitgebreide toestemmingen zorgen voor effectievere inhoudsblokkering.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Klik om uitgebreide toestemmingen op deze website in te trekken.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Minder",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Het aantal geblokkeerde aanvragen op het pictogram tonen",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Vormgeving",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Thema",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Aangepaste accentkleur",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "CSP-rapporten blokkeren",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Uitgebreide filtering op alle websites inschakelen",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite kan alleen uitgebreide filtering op een bepaalde website toepassen nadat u de extensie expliciet toestemmingen hebt verleend om gegevens op die website aan te passen. Via deze instelling kunt u toestemmingen voor uitgebreide filtering aan alle websites tegelijk verlenen.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Standaard",
@@ -151,38 +71,6 @@
     "message": "Gebieden, talen",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "Eén filter per regel. Een filter kan een gewone hostnaam of een EasyList-compatibel filter zijn. Regels beginnend met <code>!</code> worden genegeerd.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "Importeren en toevoegen…",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Exporteren…",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "mijn-ublock-statische-filters_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "De vertrouwde-website-instructies schrijven voor op welke webpagina’s uBO Lite dient te worden uitgeschakeld. Eén vermelding per regel.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "Importeren en toevoegen…",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Exporteren…",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "mijn-ublock-vertrouwde-websites_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Wijzigingenlogboek",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Externe afhankelijkheden (GPLv3-compatibel):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Verzenden",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Wijzigingen toepassen",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Ongedaan maken",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Welkom",

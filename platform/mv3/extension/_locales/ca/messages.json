@@ -15,32 +15,8 @@
     "message": "uBO Lite — Tauler",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Atenció! Hi ha canvis sense desar",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Roman",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Ignora",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Configuració",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Llistat de filtres",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Els meus filtres",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Llocs de confiança",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Obre el tauler",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Accedeix al mode d'eliminació d'elements",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Accedeix al mode de selecció d'elements",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Informa d'un problema en aquest lloc web",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Feu clic per fer que els vostres canvis siguin permanents.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Feu clic per revertir els canvis.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Més",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Feu clic per concedir permisos ampliats a l'uBO Lite en aquest web.\nEls permisos ampliats permeten un bloqueig de contingut més efectiu.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Feu clic per revocar els permisos ampliats en aquest web",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Menys",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Mostra el nombre de sol·licituds blocades a la icona",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Aparença",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Tema",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Color d'accent personalitzat",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "Bloca els informes CSP",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Habilita el filtratge addicional a tots els llocs web",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "L'uBO Lite pot aplicar el filtratge estès a un lloc web determinat, només després que concediu permisos al complement per modificar les dades de forma explícita. Aquesta configuració us permet concedir permisos de filtratge estès a tots els llocs web alhora.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Per defecte",
@@ -151,38 +71,6 @@
     "message": "Regions, llengües",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "Un filtre per línia. Un filtre pot ser un nom d'amfitrió simple o un filtre compatible amb EasyList. Les línies amb el prefix <code>!</code> seran ignorades.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "Importa i annexa",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Exporta",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "my-ublock-static-filters_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "Les directives del lloc de confiança dicten en quines pàgines web s'ha de desactivar l'uBO Lite. Una entrada per línia.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "Importa i annexa",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Exporta",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "my-ublock-trusted-sites_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Registre de canvis",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Dependències externes (compatibles amb GPLv3):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Envia",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Aplica els canvis",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Desfés",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Us donem la benvinguda",

@@ -15,32 +15,8 @@
     "message": "uBO Lite — Cruscotto",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Avviso! Ci sono alcune modifiche non salvate",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Resta",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Ignora",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Opzioni",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Elenco dei filtri",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Filtri personalizzati",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Siti affidabili",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Accedi al cruscotto",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Accedi alla modalità blocco rapido",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Accedi alla modalità di selezione",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Segnala un problema con questo sito",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Clicca per rendere definitive le modifiche.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Clicca per annullare i cambiamenti.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Altro",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Clicca per estendere le autorizzazioni di uBO Lite su questo sito.\nLe autorizzazioni estese permettono un controllo migliore sui contenuti da bloccare.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Clicca per revocare i permessi estesi su questo sito",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Nascondi",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Mostra sull'icona il numero di elementi bloccati",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Aspetto",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Tema",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Colore elementi evidenziati",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "Blocca i rapporti CSP",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Attiva il filtro esteso ovunque",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite applica il filtro esteso su uno determinato sito web dopo che hai concesso le autorizzazioni ad operare su di esso. Questa impostazione ti permette di concedere le autorizzazioni al filtro esteso su tutti i siti in una sola volta.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Predefinite",
@@ -151,38 +71,6 @@
     "message": "Lingue e regioni",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "Solo un filtro per rigo. Un filtro può indicare un nome host o una stringa compatibile con EasyList. Ogni rigo che inizia con <code>!</code> sarà ignorato.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "Importa e aggiungi",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Esporta",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "{{datetime}}-ublock-filtri-personalizzati.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "Disattiva uBO Lite nell'elenco dei siti web considerati affidabili. Un solo sito per ogni rigo.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "Importa e aggiungi",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Esporta",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "ublock-whitelist_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Registro delle modifiche",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Dipendenze esterne (in linea con la GPL v3):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Invia",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Salva modifiche",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Ripristina",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Ciao",

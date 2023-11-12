@@ -15,32 +15,8 @@
     "message": "uBO Lite — infopanelis",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Uzmanību! Ir nesaglabātas izmaiņas",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Palikt",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Neņemt vērā",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Iestatījumi",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Aizturēšanas saraksti",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Mani aizturētāji",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Uzticamas vietnes",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Atvērt vadības paneli",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Pārslēgties uz elementu dzēšanu",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Pārslēgties uz elementu atlasīšanu",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Ziņot par nepilnību šajā vietnē",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Noklikšķināt, lai saglabātu izmaiņas.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Klikšķināt, lai atceltu izmaiņas.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Vairāk",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Klikšķināt, lai piešķirtu uBO Lite paplašinātas tiesības šajā vietnē.\nPaplašinātas tiesības nodrošina daudz iedarbīgāku satura aizturēšanu.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Klikšķināt, lai atsauktu paplašinātās tiesības šajā vietnē.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Mazāk",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Attēlot aizturēto pieprasījumu skaitu uz ikonas",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Izskats",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Izskats",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Pielāgota izcēluma krāsa",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "Aizturēt CSP atskaites",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Iespējot paplašināto aizturēšanu visās tīmekļa vietnēs",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite var pielietot paplašināto aizturēšanu noteiktā vietnē tikai pēc atļauju nodrošināšanas paplašinājumam datu pārveidošanai tīmekļa vietnē. Šis iestatījums ļauj uzreiz nodrošināt atļaujas paplašinātajai aizturēšanai visās tīmekļa vietnēs.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Noklusējums",
@@ -151,38 +71,6 @@
     "message": "Apgabali, valodas",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "Vienā rindā viens ieraksts. Filtrs var būt vai nu vienkāršs saimniekdatora nosaukums, vai arī EasyList saderīgs aizturētājs. Rindas, kas sākas ar <code>!</code> netiks ņemtas vērā.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "Ievietot un pievienot",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Izdot",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "my-ublock-static-filters_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "Uzticamo vietņu norādes nosaka, kurās tīmekļa vietnēs uBO Lite vajadzētu būt atspējotam. Vienā rindā viens ieraksts.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "Ievietot un pievienot",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Izdot",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "my-ublock-trusted-sites_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Izmaiņu žurnāls",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Ārējās atkarības (GPLv3 saderīgas):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Iesniegt",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Pielietot izmaiņas",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Atgriezt",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Sveicināti!",

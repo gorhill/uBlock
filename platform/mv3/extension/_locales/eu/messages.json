@@ -15,32 +15,8 @@
     "message": "uBO Lite - Lan-lekua",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Oharra! Gorde gabeko aldaketak dituzu",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Bertan geratu",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Ezikusi",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Ezarpenak",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Iragazki-zerrendak",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Nire iragazkiak",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Konfidantzazko webguneak",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Ireki lan-lekua",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Sartu elementuak hiltzeko moduan",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Sartu elementuak aukeratzeko moduan",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Webgune honetan arazo baten berri eman",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Klik egin zure aldaketak gordetzeko.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Klik egin zure aldaketak atzera botatzeko.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Gehiago",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Egin klik webgune honetan uBO Literi baimen gehigarriak emateko.\nBaimen gehigarriek edukia era eraginkorragoan blokeatzea ahalbidetzen dute.\n",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Egin klik webgune honen baimen gehigarriak atzera botatzeko",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Gutxiago",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Bistaratu blokeatutako eskari kopurua ikonoan",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Itxura",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Gaia",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Azentu-kolore pertsonalizatua",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "Blokeatu CSP txostenak",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Web gune guztietan filtroak zabaldu daitezke",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite webgune jakin batean hedatutako iragazkia aplika dezakezu, webgune horretan datuak aldatzeko luzapenari baimenak esplizituki eman ondoren. Konfigurazio horri esker, webgune guztietara aldi berean hedatutako iragazketarako baimenak eman ditzakezu.\n",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Defektuzkoa",
@@ -151,38 +71,6 @@
     "message": "Eskualdeak, hizkuntzak",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "Iragazki bat lerroko. Iragazkia hostalari izen soila izan daiteke, edo EasyList-ekin bateragarria den irgazkia. <code>!</code>-rekin hasten diren lerroak ez dira kontuan hartuko.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "Inportatu eta gehitu",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Esportatu",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "my-ublock-static-filters_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "Konfidantzazko webguneen ezarkepan, uBO Lite zein webgunean desaktibatu behar den zehazten du. Sarrera bat lerro bakoitzean.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "Inportatu eta gehitu",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Esportatu",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "my-ublock-trusted-sites_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Aldaketen erregistroa",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Kanpo menpekotasunak (GPLv3 lizentziarekin bateragarriak):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Bidali",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Aplikatu aldaketak",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Desegin",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Ongi etorri",

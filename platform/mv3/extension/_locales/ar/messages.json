@@ -15,32 +15,8 @@
     "message": "لوحة التحكم",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "تنبيه! لديك تغييرات لم تقم بحفظها",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "إبقى",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "تجاهل",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "الإعدادات",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "قوائم المصفيّات",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "الفلاتر الخاصة بي",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "المواقع الموثوقة",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "افتح لوحة التحكم",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "فعّل طور حذف العناصر",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "فعّل طور اختيار العناصر",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "بلّغ عن مشكلة في هذه الصفحة",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "اضغط لتجعل تغييراتك دائمة.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "إضغط للتراجع عن تغييراتك.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "المزيد",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "اضغط لتمنح uBO Lite أذونات إضافية في هذه الصفحة.\nتتيح الأذونات الإضافية حجب محتوى أكثر فاعلية.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "اضغط لتتراجع عن منح الأذونات الإضافية في هذه الصفحة",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "أقل",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "أظهر عدد الطلبات المحجوبة على الأيقونة",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "المظهر",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "المظهر",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "لون التمييز المخصص",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "احجب تقارير CSP",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "مكّن التصفية الإضافية لكل المواقع",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "يمكن لـ uBO Lite تطبيق تصفية موسعة على موقع ويب معين فقط بعد منح أذونات الامتداد صراحة لتعديل البيانات الموجودة على هذا الموقع. يسمح لك هذا الإعداد بمنح أذونات للتصفية الموسعة لجميع مواقع الويب مرة واحدة.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "افتراضي",
@@ -151,38 +71,6 @@
     "message": "المناطق واللغات",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "كل مرشح في سطر وَحْدَهُ. يمكن ان يكون المرشح رابط موقع او مرشح متعارف مع نظام EasyList. السطور التي تحتوي على <code>!</code> سوف يتم تجاهلها.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "استيراد وإلحاق",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "تصدير",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "my-ublock-static-filters_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "تحدد توجيهات الموقع الموثوق به صفحات الويب uBO Lite التي يجب تعطيلها. إدخال واحد في كل سطر.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "استيراد واضافة",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "تصدير",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "my-ublock-trusted-sites_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "سجل التغييرات",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "التبعيات الخارجية (متوافقة مع GPLv3):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "تأكيد",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "حفظ التغييرات",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "تراجع",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "مرحبا",

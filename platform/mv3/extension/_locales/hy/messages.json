@@ -15,32 +15,8 @@
     "message": "uBO Lite — Կառավահան",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Ուշադրությո՛ւն։ Դուք չպահպանված փոփոխություններ ունեք։",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Մնալ",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Անտեսել",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Կարգավորումներ",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Զտիչների ցանկեր",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Իմ զտիչները",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Վստահված կայքեր",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Բացել կառավահանը",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Տարրի ակնթարթային ժամանակավոր թաքցման ռեժիմ",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Գործարկել տարրերի ընտրության ռեժիմը",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Հաղորդել կայքում առաջացած խնդրի մասին",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Կտտացրեք՝ փոփոխությունները պահպանելու համար։",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Կտտացրեք՝ փոփոխությունները հետարկելու համար։",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Ավելին",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Կտտացրեք՝ uBO Lite-ին այս կայքում լրացուցիչ թույլտվություններ տրամադրելու համար։\nԴրանք թույլ են տալիս էլ ավելի արդյունավետ արգելափակել բովանդակությունը։",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Կտտացրեք՝ այս կայքում լրացուցիչ թույլտվությունները հետ կանչելու համար",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Պակաս",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Ցուցադրել արգելափակված հայտերի քանակը պատկերակի վրա",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Արտաքին տեսք",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Թեմա",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Ընտրովի շեշտային գույն",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "Արգելափակել CSP հաշվետվությունները",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Միացնել ընդլայնված զտումը բոլոր կայքերում",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite-ը կարող է կիրառել ընդլայնված զտումն այս կայքում միայն այն բանից հետո, երբ Դուք բացահայտորեն թույլտվություն կհաք ընդլայնմանը՝ այս կայքում տվյալները փոխելու համար։ Այս տարբերակը թույլ է տալիս զտման ընդլայնված թույլտվություններ տրամադրել միանգամից բոլոր կայքերին։",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Լռելյայն",
@@ -151,38 +71,6 @@
     "message": "Տարածաշրջաններ, լեզուներ",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "Մեկ կանոն մեկ տողում։ Կանոնը կարող է լինել կայքի անվանումը կամ EasyList-համատեղելի զտիչը։ <code>!</code>-ով սկսվող տողերը կանտեսվեն։",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "Ներմուծել և հավելել",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Արտահանել",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "my-ublock-static-filters_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "Վստահելի կայքերի գրառումները թելադրում են, թե որ վեբ էջերում պետք է անջատվի uBO Lite-ը։ Մեկ գրառում մեկ տողում։",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "Ներմուծել և հավելել",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Արտահանել",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "my-ublock-trusted-sites_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Փոփոխությունների մատյան",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Արտաքին կախվածություններ (GPLv3-համատեղելի)՝",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Հաստատել",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Կիրառել փոփոխությունները",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Հետադարձել",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Բարի գալուստ",

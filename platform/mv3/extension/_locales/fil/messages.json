@@ -15,32 +15,8 @@
     "message": "uBO Lite — Dashboard",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Babala! Hindi pa na-save ang ilan mong mga pagbabago.",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Manatili",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Balewalain",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Mga Setting",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Listahan ng mga filter",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Mga filter ko",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Mga pinagkakatiwalaang site",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Buksan ang dashboard",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Buksan ang pantanggal sa mga elemento",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Buksan ang tagapili sa mga elemento",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Mag-ulat ng isyu sa website na ito",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Pindutin upang gawing permanente ang mga pagbabago mo.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Pindutin upang kanselahin ang mga pagbabago mo.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Higit pa",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Pindutin upang magkaroon ng karagdagang pahintulot ang uBO Lite sa site na ito.\nMas epektibo ang pagharang sa content kung may mga karagdagang pahintulot.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Pindutin upang matanggal ang karagdagang pahintulot ng uBO Lite sa site na ito.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Mas konti",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Ipakita ang bilang ng mga hinarang na hiling sa icon",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Hitsura",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Tema",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Pinasadyang kulay ng accent",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "Harangin ang mga ulat ng CSP",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Paandarin ang karagdagang pagfi-filter sa lahat ng mga website",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "Mapapaandar lang ang karagdagang pagfi-filter sa isang website pagkatapos mong pahintulutan ang uBO Lite na baguhin ang datos ng nasabing website. Sa setting na ito, maaari mong bigyan ng pahintulot ang uBO Lite para sa karagdagang pagfi-filter sa lahat ng mga website sa isang pindutan lang.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Default",
@@ -151,38 +71,6 @@
     "message": "Mga rehiyon o wika",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "Isang filter kada linya. Pwedeng simpleng hostname o EasyList-compatible ang filter. Hindi papansinin ang mga linyang nagsisimula sa <code>!</code>.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "I-import at idagdag",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "I-export",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "mga-static-filter-ko-sa-ublock_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "Idinidikta nito kung sa aling mga webpage papatayin ang uBO Lite. Isang entry kada linya.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "I-import at idagdag",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "I-export",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "mga-pinagkakatiwalaan-kong-site-sa-ublock_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Talaan ng mga pagbabago",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Mga panlabas na dependency (angkop sa GPLv3)",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Ipadala",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Ilapat ang mga pagbabago",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Kanselahin",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Mabuhay",

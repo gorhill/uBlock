@@ -15,32 +15,8 @@
     "message": "uBO Lite — Dashboard",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Warnung! Nicht gespeicherte Änderungen",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Bleiben",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Ignorieren",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Einstellungen",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Filterlisten",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Meine Filter",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Ausnahmeregeln",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Dashboard öffnen",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Element temporär entfernen",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Element dauerhaft entfernen",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Ein Problem mit dieser Website melden",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Hier klicken, um die Änderungen dauerhaft zu übernehmen.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Hier klicken, um die Änderungen rückgängig zu machen.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Mehr",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Klicken Sie hier, um uBO Lite erweiterte Berechtigungen für diese Website zu erteilen.\nErweiterte Berechtigungen ermöglichen ein effektiveres Blockieren von Inhalten.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Hier klicken, um erweiterte Berechtigungen für diese Website zu widerrufen.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Weniger",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Anzahl der blockierten Anfragen auf dem Symbol anzeigen",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Erscheinungsbild",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Farbschema",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Personalisierte Akzentfarbe",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "CSP-Berichte blockieren",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Erweitertes Filtern auf allen Websites aktivieren",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite kann das erweiterte Filtern nur dann auf eine bestimmte Website anwenden, wenn Sie der Erweiterung ausdrücklich die Berechtigung erteilen, Daten auf dieser Website zu ändern. Mit dieser Einstellung können Sie Berechtigungen für das erweiterte Filtern für alle Websites auf einmal erteilen.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Standard",
@@ -151,38 +71,6 @@
     "message": "Regionen, Sprachen",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "Ein Filter pro Zeile. Ein Filter kann ein einfacher Hostname oder ein EasyList-kompatibler Filter sein. Zeilen mit vorangestelltem <code>!</code> werden ignoriert.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "Importieren und anfügen …",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Exportieren …",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "ublock-statische-filter_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "Ausnahmeregeln bestimmen, auf welchen Webseiten uBO Lite deaktiviert werden soll. Ein Eintrag pro Zeile.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "Importieren und anfügen …",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Exportieren …",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "ublock-ausnahmeregeln_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Änderungsprotokoll",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Externe Abhängigkeiten (GPLv3-kompatibel):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Absenden",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Änderungen übernehmen",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Rückgängig machen",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Willkommen",

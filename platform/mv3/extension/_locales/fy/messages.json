@@ -15,32 +15,8 @@
     "message": "uBO Lite – Dashboerd",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Warskôging! Net bewarre wizigingen",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Bliuwe",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Negearje",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Ynstellingen",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Filterlisten",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Myn filters",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Fertroude websites",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Dashboerd iepenje",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Elemint­wisker­modus iepenje",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Elemint­kiezer­modus iepenje",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "In probleem op dizze website melde",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Klik om jo wizigingen permanint te meitsjen.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Klik om jo wizigingen ûngedien te meitsjen.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Mear",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Klik om uBO Lite wiidweidige machtigingen te ferlienen op dizze website.\nWiidweidige machtigingen soargje foar effektivere ynhâldsblokkearring.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Klik om wiidweidige machtigingen op dizze website yn te lûken.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Minder",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "It tal blokkearre oanfragen op it piktogram toane",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Foarmjouwing",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Tema",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Oanpaste aksintkleur",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "CSP-rapporten blokkearje",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Wiidweidich filterjen op alle websites ynskeakelje",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite kin allinnich wiidweidich filterjen op in bepaalde website tapasse, neidat jo de útwreiding eksplisyt tastimmingen ferliend hawwe om gegevens op dy website oan te passen. Fia dizze ynstelling kinne jo tastimmingen foar wiidweidich filterjen oan alle websites tagelyk ferliene.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Standert",
@@ -151,38 +71,6 @@
     "message": "Gebieden, talen",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "Ien filter per rigel. In filter kin in gewoane hostnamme, of in EasyList-kompatibel filter wêze. Rigels begjinnend mei <code>!</code> wurde negearre.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "Ymportearje en tafoegje…",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Eksportearje…",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "myn-ublock-statyske-filters_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "De fertroude-website-ynstruksjes skriuwe foar op hokker websiden uBO Lite útskeakele wurde moat. Ien fermelding per rigel.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "Ymportearje en tafoegje…",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Eksportearje…",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "myn-ublock-fertroude-websites_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Wizigingslochboek",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Eksterne ôfhinklikheden (GPLv3-kompatibel):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Ferstjoere",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Wizigingen tapasse",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Ungedien meitsje",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Wolkom",

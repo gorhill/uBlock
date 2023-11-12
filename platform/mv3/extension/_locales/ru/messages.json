@@ -15,32 +15,8 @@
     "message": "uBO Lite — Панель управления",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Внимание! У вас есть несохранённые изменения",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Остаться",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Игнорировать",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Настройки",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Списки фильтров",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Мои фильтры",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Доверенные сайты",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Открыть панель управления",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Режим мгновенного временного скрытия элемента",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Войти в режим выбора элементов",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Сообщить о проблеме на данном сайте",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Нажмите, чтобы сохранить изменения.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Нажмите, чтобы отменить изменения.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Больше",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Нажмите, чтобы предоставить uBO Lite дополнительные разрешения на этом сайте.\nДополнительные разрешения позволяют эффективнее блокировать контент.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Нажмите, чтобы отозвать дополнительные разрешения на этом сайте",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Меньше",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Показывать количество заблокированных запросов на иконке",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Внешний вид",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Тема",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Пользовательский цветовой акцент",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "Блокировать CSP отчеты",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Включить расширенную фильтрацию на всех веб-сайтах",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite может применять расширенную фильтрацию на данном веб-сайте только после того, как вы явно предоставите расширению разрешения на изменение данных на этом веб-сайте. Этот параметр позволяет вам предоставлять разрешения на расширенную фильтрацию сразу всем веб-сайтам.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "По умолчанию",
@@ -151,38 +71,6 @@
     "message": "Регионы, языки",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "Одно правило на строку. Правилом может быть имя сайта, или EasyList-совместимый фильтр. Строки, начинающиеся с <code>!</code>, будут проигнорированы.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "Импортировать и добавить",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Экспортировать",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "my-ublock-static-filters_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "Записи доверенных сайтов указывают на каких веб-страницах uBO Lite должен быть отключён. Одна запись на строку.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "Импортировать и добавить",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Экспортировать",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "my-ublock-trusted-sites_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Список изменений",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Внешние зависимости (совместимые с GPLv3):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Подтвердить",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Применить изменения",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Вернуть",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Добро пожаловать",

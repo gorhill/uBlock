@@ -15,32 +15,8 @@
     "message": "uBO Lite — Vezérlőpult",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Figyelem! Mentetlen változtatások vannak.",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Maradás",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Figyelmen kívül hagyás",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Beállítások",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Szűrőlisták",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Saját szűrők",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Megbízható oldalak",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Vezérlőpult megnyitása",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Belépés az elemblokkoló módba",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Belépés az elemválasztó módba",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Az oldalon lévő probléma bejelentése",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Kattintson a változtatások véglegessé tételéhez.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Kattintson a módosítások visszaállításához.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Több",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Kattintson az uBO Lite kiterjesztett engedélyeinek megadásához ezen az oldalon.\nA kiterjesztett engedélyekkel a szűrés hatékonysága növekszik.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Kattintson a kiterjesztett engedélyek visszavonásához ezen az oldalon.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Kevesebb",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Blokkolt kérések számának megjelenítése az ikonon",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Megjelenés",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Téma",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Egyéni kiemelőszín",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "CSP jelentések blokkolása",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Kiterjesztett szűrés engedélíezése az összes webhelyen",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "Az uBO Lite csak akkor tud kiterjesztett szűrést alkalmazni egy adott webhelyen, ha Ön kifejezetten megadja a bővítménynek az adott webhely adatainak módosítására vonatkozó engedélyeket. Ez a beállítás lehetővé teszi, hogy engedélyeket adjon a kiterjesztett szűréshez az összes webhelynek egyszerre.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Alapértelmezett",
@@ -151,38 +71,6 @@
     "message": "Régiók, nyelvek",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "Soronként egy szűrő. A szűrő lehet egyszerű gazdagépnév vagy EasyList-kompatibilis szűrő. A rendszer figyelmen kívül hagyja a <code>!</code> előtaggal ellátott sorokat.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "Importálás és hozzáadás",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Exportálás",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "my-ublock-static-filters_{{dátumidő}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "A megbízható webhelyek direktívái határozzák meg, hogy mely weboldalakon kell letiltani az uBO Lite-ot. Soronként egy bejegyzés.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "Importálás és hozzáadás",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Exportálás",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "my-ublock-static-filters_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Változások listája",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Külső függőségek (GPLv3-kompatibilis):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Küldés",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Módosítások alkalmazása",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Visszaállítás",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Üdvözlünk",

@@ -15,32 +15,8 @@
     "message": "uBO Lite — Panou de control",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "Atenție! Ai modificări nesalvate",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "Așteaptă",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "Ignoră",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "Opțiuni",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "Liste de filtre",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "Filtrele mele",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "Situri de încredere",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "Deschide panoul de control",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "Elimină un element",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "Alege un element",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "Raportează o eroare cu acest sit web",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "Apasă pentru a face modificările permanente.",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "Apasă pentru a renunța la modificări.",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "Mai mult",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "Apasă pentru a acorda uBO Lite permisiuni extinse pentru acest sit.\nAcestea sunt mai eficiente pentru blocarea conținutului.",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "Apasă pentru a revoca permisiunile extinse pentru acest sit.",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "Mai puțin",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "Arată numărul cererilor blocate pe simbolul extensiei",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "Aspect",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "Aspect",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "Culoare de accentuare personalizată",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "Blochează rapoartele CSP",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "Activează filtrarea extinsă pe toate site-urile web",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Lite poate aplica filtrarea extinsă pentru un anumit sit web numai după ce s-au acordat în mod explicit extensiei permisiunile de modificare a datelor de pe acel sit web.  Această reglare permite acordarea de permisiuni pentru filtrarea extinsă a tuturor siturilor web simultan.",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "Implicit",
@@ -151,38 +71,6 @@
     "message": "Regiuni, limbi",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "Un filtru pe linie. Un filtru poate fi un simplu nume de gazdă sau un filtru compatibil EasyList. Liniile precedate de <code>!</code> vor fi ignorate.",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "Importă și adaugă",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "Exportă",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "filtrele-mele-statice-ublock_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "Directivele privind siturile de încredere stabilesc pe ce pagini web trebuie dezactivat uBO Lite. O intrare pe linie.",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "Importă și adaugă",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "Exportă",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "situri-de-încredere-ublock_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "Jurnal de modificări",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "Dependențe externe (compatibile GPLv3):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "Trimite",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "Aplică modificările",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "Înlătură",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "Bun venit",

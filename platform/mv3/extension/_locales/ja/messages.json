@@ -15,32 +15,8 @@
     "message": "uBO Lite — ダッシュボード",
     "description": "English: uBO Lite — Dashboard"
   },
-  "dashboardUnsavedWarning": {
-    "message": "警告！ 保存していない変更があります",
-    "description": "A warning in the dashboard when navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningStay": {
-    "message": "留まる",
-    "description": "Label for button to prevent navigating away from unsaved changes"
-  },
-  "dashboardUnsavedWarningIgnore": {
-    "message": "無視",
-    "description": "Label for button to ignore unsaved changes"
-  },
   "settingsPageName": {
     "message": "設定",
-    "description": "appears as tab name in dashboard"
-  },
-  "3pPageName": {
-    "message": "フィルターリスト",
-    "description": "appears as tab name in dashboard"
-  },
-  "1pPageName": {
-    "message": "マイフィルター",
-    "description": "appears as tab name in dashboard"
-  },
-  "whitelistPageName": {
-    "message": "信頼するサイト",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
@@ -59,69 +35,13 @@
     "message": "ダッシュボードを開く",
     "description": "English: Click to open the dashboard"
   },
-  "popupTipZapper": {
-    "message": "要素抹消モードに入る",
-    "description": "Tooltip for the element-zapper icon in the popup panel"
-  },
-  "popupTipPicker": {
-    "message": "要素選択モードに入る",
-    "description": "English: Enter element picker mode"
-  },
-  "popupTipReport": {
-    "message": "このサイト上での問題を報告",
-    "description": "Tooltip used for the 'chat' icon in the panel"
-  },
-  "popupTipSaveRules": {
-    "message": "クリックすると変更を確定します。",
-    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
-  },
-  "popupTipRevertRules": {
-    "message": "クリックすると変更を元に戻します。",
-    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
-  },
   "popupMoreButton": {
     "message": "さらに表示",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupGrantGreatPowers": {
-    "message": "クリックすると、このサイトに対して uBO Lite の拡張権限を許可します。\nより効果的なコンテンツブロックを可能にします。",
-    "description": "Label to be used to show popup panel sections"
-  },
-  "popupRevokeGreatPowers": {
-    "message": "クリックしてこのサイトに対する uBO Lite の拡張権限許可を取り消し",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
     "message": "折りたたむ",
     "description": "Label to be used to hide popup panel sections"
-  },
-  "settingsIconBadgePrompt": {
-    "message": "ブロックしたリクエストの数をアイコンに表示する",
-    "description": "English: Show the number of blocked requests on the icon"
-  },
-  "settingsAppearance": {
-    "message": "外観",
-    "description": "Section for controlling user interface appearance"
-  },
-  "settingsThemeLabel": {
-    "message": "テーマ",
-    "description": "Label for checkbox to enable a custom dark theme"
-  },
-  "settingsThemeAccent0Label": {
-    "message": "カスタムアクセントカラー",
-    "description": "Label for checkbox to pick an accent color"
-  },
-  "settingsNoCSPReportsPrompt": {
-    "message": "CSP レポートをブロックする",
-    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "omnipotenceLabel": {
-    "message": "すべてのウェブサイトで拡張フィルタリングを有効化",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
-  },
-  "omnipotenceLegend": {
-    "message": "uBO Liteはウェブサイトに対して、そのウェブサイトのデータを変更する権限を拡張機能に明示的に付与した場合にのみ、拡張フィルタリングを適用できます。この設定を有効化すると、すべてのウェブサイトに対して一括で拡張フィルタリングの許可を与えられます。",
-    "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupDefault": {
     "message": "既定",
@@ -151,38 +71,6 @@
     "message": "地域・言語",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
-  "1pFormatHint": {
-    "message": "1 行につき 1 つのフィルターです。フィルターはただのホスト名でも EasyList と同じ形式でも構いません。<code>!</code> を先頭に付けた行は無視されます。",
-    "description": "Short information about how to create custom filters"
-  },
-  "1pImport": {
-    "message": "インポートして追加",
-    "description": "English: Import and append"
-  },
-  "1pExport": {
-    "message": "エクスポート",
-    "description": "English: Export"
-  },
-  "1pExportFilename": {
-    "message": "my-ublock-static-filters_{{datetime}}.txt",
-    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
-  },
-  "whitelistPrompt": {
-    "message": "[信頼するサイト] では uBO Lite を無効にするウェブページを指定します。1 行に つき 1 つです。",
-    "description": "A concise description of the 'Trusted sites' pane."
-  },
-  "whitelistImport": {
-    "message": "インポートして追加",
-    "description": "English: Import and append"
-  },
-  "whitelistExport": {
-    "message": "エクスポート",
-    "description": "English: Export"
-  },
-  "whitelistExportFilename": {
-    "message": "my-ublock-trusted-sites_{{datetime}}.txt",
-    "description": "The default filename to use for import/export purpose"
-  },
   "aboutChangelog": {
     "message": "更新履歴",
     "description": ""
@@ -210,18 +98,6 @@
   "aboutDependencies": {
     "message": "外部依存関係 (GPLv3 と両立):",
     "description": "Shown in the About pane"
-  },
-  "genericSubmit": {
-    "message": "送信",
-    "description": "for generic 'Submit' buttons"
-  },
-  "genericApplyChanges": {
-    "message": "変更を適用",
-    "description": "for generic 'Apply changes' buttons"
-  },
-  "genericRevert": {
-    "message": "元に戻す",
-    "description": "for generic 'Revert' buttons"
   },
   "firstRunSectionLabel": {
     "message": "ようこそ",
