@@ -117,7 +117,9 @@ function applyPatch(text, diff) {
     let iAdjust = 0;
     let iDiff = 0, nDiff = diffLines.length;
     while ( iDiff < nDiff ) {
-        const diffParsed = /^([ad])(\d+) (\d+)$/.exec(diffLines[iDiff++]);
+        const diffLine = diffLines[iDiff++];
+        if ( diffLine === '' ) { break; }
+        const diffParsed = /^([ad])(\d+) (\d+)$/.exec(diffLine);
         if ( diffParsed === null ) { return; }
         const op = diffParsed[1];
         const iOp = parseInt(diffParsed[2], 10);

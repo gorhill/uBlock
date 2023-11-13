@@ -1203,6 +1203,7 @@ const getAssetDiffDetails = assetKey => {
     }
     out.diffExpires = getUpdateAfterTime(assetKey, true);
     out.lastModified = cacheEntry.lastModified;
+    out.writeTime = cacheEntry.writeTime;
     const assetEntry = assetSourceRegistry[assetKey];
     if ( assetEntry === undefined ) { return; }
     if ( Array.isArray(assetEntry.cdnURLs) === false ) { return; }
@@ -1300,9 +1301,7 @@ async function diffUpdater() {
             } else if ( data.status === 'nopatch-yet' || data.status === 'nodiff' ) {
                 ubolog(`Diff updater: skip update of ${data.name} using ${data.patchPath}\n\treason: ${data.status}`);
                 const assetKey = assetKeyFromDiffName(data.name);
-                assetCacheSetDetails(assetKey, {
-                    writeTime: data.lastModified || 0
-                });
+                assetCacheSetDetails(assetKey, { writeTime: data.writeTime });
                 vAPI.messaging.broadcast({
                     what: 'assetUpdated',
                     key: assetKey,
