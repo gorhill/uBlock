@@ -848,10 +848,13 @@ function setLocalStorageItemFn(
             value = (new Date()).toISOString();
         }
     } else {
-        if ( trustedValues.includes(value.toLowerCase()) === false ) {
-            if ( /^\d+$/.test(value) === false ) { return; }
-            value = parseInt(value, 10);
-            if ( value > 32767 ) { return; }
+        const normalized = value.toLowerCase();
+        const match = /^("?)(.+)\1$/.exec(normalized);
+        const unquoted = match && match[2] || normalized;
+        if ( trustedValues.includes(unquoted) === false ) {
+            if ( /^\d+$/.test(unquoted) === false ) { return; }
+            const integer = parseInt(unquoted, 10);
+            if ( integer > 32767 ) { return; }
         }
     }
 
