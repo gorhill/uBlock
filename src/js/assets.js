@@ -172,27 +172,6 @@ const isDiffUpdatableAsset = content => {
         data.diffPath.startsWith('%') === false;
 };
 
-const assetKeyFromDiffName = diffName => {
-    const entry = assetCacheRegistry[diffName];
-    if ( entry instanceof Object ) {
-        if ( typeof entry.diffPath === 'string' ) {
-            if ( entry.diffPath.endsWith(`#${diffName}`) ) { return diffName; }
-        }
-        if ( typeof entry.diffName === 'string' ) {
-            if ( entry.diffName === diffName ) { return diffName; }
-        }
-    }
-    for ( const [ assetKey, entry ] of Object.entries(assetCacheRegistry) ) {
-        if ( typeof entry.diffPath === 'string' ) {
-            if ( entry.diffPath.endsWith(`#${diffName}`) ) { return assetKey; }
-        }
-        if ( typeof entry.diffName === 'string' ) {
-            if ( entry.diffName === diffName ) { return assetKey; }
-        }
-    }
-    return '';
-};
-
 /******************************************************************************/
 
 // favorLocal: avoid making network requests whenever possible
@@ -1190,17 +1169,18 @@ let updaterAssetDelay = updaterAssetDelayDefault;
 let updaterAuto = false;
 
 const getAssetDiffDetails = assetKey => {
-    const out = { name: assetKey };
+    const out = { assetKey };
     const cacheEntry = assetCacheRegistry[assetKey];
     if ( cacheEntry === undefined ) { return; }
     out.patchPath = cacheEntry.diffPath;
     if ( out.patchPath === undefined ) { return; }
-    out.diffName = cacheEntry.diffName;
-    if ( out.diffName === undefined ) {
-        const match = /#.+$/.exec(out.patchPath);
-        if ( match === null ) { return; }
+    const match = /#.+$/.exec(out.patchPath);
+    if ( match !== null ) {
         out.diffName = match[0].slice(1);
+    } else {
+        out.diffName = cacheEntry.diffName;
     }
+    if ( out.diffName === undefined ) { return; }
     out.diffExpires = getUpdateAfterTime(assetKey, true);
     out.lastModified = cacheEntry.lastModified;
     out.writeTime = cacheEntry.writeTime;
@@ -1246,17 +1226,15 @@ async function diffUpdater() {
         const checkAndCorrectDiffPath = data => {
             if ( typeof data.text !== 'string' ) { return; }
             if ( data.text === '' ) { return; }
-            const assetKey = assetKeyFromDiffName(data.name);
-            if ( assetKey === '' ) { return; }
             const metadata = extractMetadataFromList(data.text, [ 'Diff-Path' ]);
             if ( metadata instanceof Object === false ) { return; }
             if ( metadata.diffPath === data.patchPath ) { return; }
-            assetCacheSetDetails(assetKey, metadata.diffPath);
+            assetCacheSetDetails(data.assetKey, metadata.diffPath);
         };
         bc.onmessage = ev => {
             const data = ev.data;
             if ( data.what === 'ready' ) {
-                ubolog('Diff updater: hard updating', toHardUpdate.map(v => v.name).join());
+                ubolog('Diff updater: hard updating', toHardUpdate.map(v => v.assetKey).join());
                 while ( toHardUpdate.length !== 0 ) {
                     const assetDetails = toHardUpdate.shift();
                     assetDetails.fetch = true;
@@ -1270,9 +1248,8 @@ async function diffUpdater() {
                 return;
             }
             if ( data.status === 'needtext' ) {
-                ubolog('Diff updater: need text for', data.name);
-                const assetKey = assetKeyFromDiffName(data.name);
-                assetCacheRead(assetKey).then(result => {
+                ubolog('Diff updater: need text for', data.assetKey);
+                assetCacheRead(data.assetKey).then(result => {
                     data.text = result.content;
                     data.status = undefined;
                     checkAndCorrectDiffPath(data);
@@ -1281,7 +1258,7 @@ async function diffUpdater() {
                 return;
             }
             if ( data.status === 'updated' ) {
-                ubolog(`Diff updater: successfully patched ${data.name} using ${data.patchURL} (${data.patchSize})`);
+                ubolog(`Diff updater: successfully patched ${data.assetKey} using ${data.patchURL} (${data.patchSize})`);
                 const metadata = extractMetadataFromList(data.text, [
                     'Last-Modified',
                     'Expires',
@@ -1289,30 +1266,28 @@ async function diffUpdater() {
                     'Diff-Path',
                     'Diff-Expires',
                 ]);
-                const assetKey = assetKeyFromDiffName(data.name);
-                assetCacheWrite(assetKey, {
+                assetCacheWrite(data.assetKey, {
                     content: data.text,
                     resourceTime: metadata.lastModified || 0,
                 });
-                assetCacheSetDetails(assetKey, metadata);
-                updaterUpdated.push(assetKey);
+                assetCacheSetDetails(data.assetKey, metadata);
+                updaterUpdated.push(data.assetKey);
             } else if ( data.error ) {
-                ubolog(`Diff updater: failed to update ${data.name} using ${data.patchPath}\n\treason: ${data.error}`);
+                ubolog(`Diff updater: failed to update ${data.assetKey} using ${data.patchPath}\n\treason: ${data.error}`);
             } else if ( data.status === 'nopatch-yet' || data.status === 'nodiff' ) {
-                ubolog(`Diff updater: skip update of ${data.name} using ${data.patchPath}\n\treason: ${data.status}`);
-                const assetKey = assetKeyFromDiffName(data.name);
-                assetCacheSetDetails(assetKey, { writeTime: data.writeTime });
+                ubolog(`Diff updater: skip update of ${data.assetKey} using ${data.patchPath}\n\treason: ${data.status}`);
+                assetCacheSetDetails(data.assetKey, { writeTime: data.writeTime });
                 vAPI.messaging.broadcast({
                     what: 'assetUpdated',
-                    key: assetKey,
+                    key: data.assetKey,
                     cached: true,
                 });
             } else {
-                ubolog(`Diff updater: ${data.name} / ${data.patchPath} / ${data.status}`);
+                ubolog(`Diff updater: ${data.assetKey} / ${data.patchPath} / ${data.status}`);
             }
             pendingOps -= 1;
             if ( pendingOps === 0 && toSoftUpdate.length !== 0 ) {
-                ubolog('Diff updater: soft updating', toSoftUpdate.map(v => v.name).join());
+                ubolog('Diff updater: soft updating', toSoftUpdate.map(v => v.assetKey).join());
                 while ( toSoftUpdate.length !== 0 ) {
                     bc.postMessage(toSoftUpdate.shift());
                     pendingOps += 1;

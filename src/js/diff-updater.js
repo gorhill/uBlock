@@ -180,11 +180,6 @@ async function applyPatchAndValidate(assetDetails, diffDetails) {
         return false;
     }
     assetDetails.text = textAfter;
-    const head = textAfter.slice(0, 1024);
-    let match = /^! Diff-Path: (\S+)/m.exec(head);
-    assetDetails.patchPath = match ? match[1] : undefined;
-    match = /^! Diff-Name: (\S+)/m.exec(head);
-    assetDetails.diffName = match ? match[1] : undefined;
     return true;
 }
 
