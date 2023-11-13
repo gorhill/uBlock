@@ -912,15 +912,15 @@
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "Filter issues/website is broken",
+    "message": "Kudennoù silañ/lec'hienn sac'het",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Report filter issues with specific websites to the <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "Danevellit kudennoù silañ e lec'hiennoù resis zo e-barzh <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">roll evezhiañ kudennoù <code>uBlockOrigin/uAssets</code></span>. <u>Ur c'hont GitHub zo rekis.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Important:</b> Avoid using other similarly-purposed blockers along with uBlock Origin, as this may cause filter issues on specific websites.",
+    "message": "<b>A-bouez:</b> Chomit hep ober gant meur a stanker a zo heñvel ouzh uBlock Origin war un dro rak kement-se a c'hallfe degas kudennoù e lod lec'hiennoù zo.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
@@ -932,7 +932,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Danevellit kudennoù gant uBlock Origin e-unan e-barzh <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\">roll evezhiañ kudennoù<code>uBlockOrigin/uBlock-issue</code></span>. <u>Ur c'hont GitHub zo rekis.</u>",
+    "message": "Danevellit kudennoù gant uBlock Origin e-unan e-barzh <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\">roll evezhiañ kudennoù <code>uBlockOrigin/uBlock-issue</code></span>. <u>Ur c'hont GitHub zo rekis.</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {

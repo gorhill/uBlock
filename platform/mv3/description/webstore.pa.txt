@@ -1,6 +1,6 @@
 uBO Lite (uBOL) ਇੱਕ *ਬਿਨਾਂ ਇਜਾਜ਼ਤਾਂ* ਵਾਲਾ MV3-ਅਧਾਰਿਤ ਸਮੱਗਰੀ ਬਲਾਕਰ ਹੈ।
 
-The default ruleset corresponds to uBlock Origin's default filterset:
+ਮੂਲ ਨਿਯਮ-ਸਮੂਹ uBlock Origin ਦੇ ਮੂਲ ਫਿਲਟਰ-ਸਮੂਹ ਨਾਲ ਸੰਬੰਧਿਤ ਹੈ:
 
 - uBlock Origin ਦੀਆਂ ਬਿਲਟ-ਇਨ ਫਿਲਟਰ ਸੂਚੀਆਂ
 -ਸੌਖੀ-ਸੂਚੀ

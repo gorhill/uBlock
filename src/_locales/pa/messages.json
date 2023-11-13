@@ -156,15 +156,15 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Toggle cosmetic filtering for this site",
+    "message": "ਇਸ ਸਾਈਟ ਲਈ ਦਿੱਖ ਫਿਲਟਰ ਕਰਨ ਨੂੰ ਬਦਲੋ",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Click to disable cosmetic filtering on this site",
+    "message": "ਇਸ ਸਾਈਟ ਉੱਤੇ ਦਿੱਖ ਫਿਲਟਰ ਕਰਨ ਨੂੰ ਅਸਮਰੱਥ ਕਰਨ ਲਈ ਕਲਿੱਕ ਕਰੋ",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Click to enable cosmetic filtering on this site",
+    "message": "ਇਸ ਸਾਈਟ ਉੱਤੇ ਦਿੱਖ ਫਿਲਟਰ ਕਰਨ ਨੂੰ ਸਮਰੱਥ ਕਰਨ ਲਈ ਕਲਿੱਕ ਕਰੋ",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -196,7 +196,7 @@
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
-    "message": "Cosmetic filtering",
+    "message": "ਦਿੱਖ ਫਿਲਟਰ ਕਰਨਾ",
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Local rules: this column is for rules which apply to the current site only.\nLocal rules override global rules.",
+    "message": "ਲੋਕਲ ਨਿਯਮ: ਇਹ ਕਾਲਮ ਨਿਯਮਾਂ ਲਈ ਹੈ, ਜੋ ਕਿ ਸਿਰਫ਼ ਲੋਕਲ ਸਾਈਟਾਂ ਉੱਤੇ ਹੀ ਲਾਗੂ ਹੁੰਦੇ ਹਨ।\nਲੋਕਲ ਨਿਯਮ ਗਲੋਬਲ ਨਿਯਮਾਂ ਨੂੰ ਅਣਡਿੱਠਾ ਕਰਦੇ ਹਨ।",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -304,7 +304,7 @@
     "description": "English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters": {
-    "message": "Cosmetic filters",
+    "message": "ਦਿੱਖ ਫਿਲਟਰ ਕਰਨਾ",
     "description": "English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint": {
@@ -316,11 +316,11 @@
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
-    "message": "Hide placeholders of blocked elements",
+    "message": "ਪਾਬੰਦੀ ਲਾਏ ਭਾਗਾਂ ਲਈ ਸਥਾਨ ਨੂੰ ਓਹਲੇ ਕਰੋ",
     "description": "English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt": {
-    "message": "Show the number of blocked requests on the icon",
+    "message": "ਆਈਕਾਨ ਉੱਤੇ ਪਾਬੰਦੀ ਲਾਈਆਂ ਬੇਨਤੀਆਂ ਦੀ ਗਿਣਤੀ ਦਿਖਾਓ",
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
@@ -328,7 +328,7 @@
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
-    "message": "Make use of context menu where appropriate",
+    "message": "ਜਦੋਂ ਵੀ ਵਾਜਬ ਹੋਵੇ ਤਾਂ ਪ੍ਰਸੰਗ ਮੇਨੂ ਨੂੰ ਵਰਤੋਂ",
     "description": "English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt": {
@@ -356,11 +356,11 @@
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "message": "ਪਹਿਲਾਂ-ਪ੍ਰਾਪਤ ਕਰਨਾ ਅਸਮਰੱਥ (ਪਾਬੰਦੀ ਲਾਈਆਂ ਨੈੱਟਵਰਕ ਬੇਨਤੀਆਂ ਲਈ ਕਿਸੇ ਵੀ ਕਨੈਕਸ਼ਨ ਨੂੰ ਰੋਕਣ ਲਈ)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
-    "message": "Disable hyperlink auditing",
+    "message": "ਹਾਈਪਰ-ਲਿੰਕ ਪੜਤਾਲ ਨੂੰ ਅਸਮਰੱਥ ਕਰੋ",
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
@@ -372,11 +372,11 @@
     "description": ""
   },
   "settingPerSiteSwitchGroupSynopsis": {
-    "message": "These default behaviors can be overridden on a per-site basis",
+    "message": "ਇਹ ਮੂਲ ਰਵੱਈਏ ਨੂੰ ਹਰ-ਸਟਾਈ ਮੁਤਾਬਕ ਅਣਡਿੱਠਾ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ",
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "Disable cosmetic filtering",
+    "message": "ਦਿੱਖ ਫਿਲਟਰ ਕਰਨ ਨੂੰ ਅਸਮਰੱਥ ਕਰੋ",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
@@ -420,7 +420,7 @@
     "description": "English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt": {
-    "message": "{{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:",
+    "message": "{{netFilterCount}} ਨੈੱਟਵਰਕ ਫਿਲਟਰ ＋ {{cosmeticFilterCount}} ਦਿੱਖ ਫਿਲਟਰ, ਇੱਥੋਂ:",
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
@@ -440,15 +440,15 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
-    "message": "Parse and enforce cosmetic filters",
+    "message": "ਦਿੱਖ ਫਿਲਟਰ ਨੂੰ ਪਾਰਸ ਅਤੇ ਲਾਗੂ ਕਰੋ",
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "Cosmetic filters serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the network request-based filtering engines.",
+    "message": "ਦਿੱਖ (cosmetic) ਫਿਲਟਰ ਵੈੱਬ ਸਫ਼ੇ ਉੱਤੇ ਅਜਿਹਾ ਭਾਗਾਂ ਨੂੰ ਲੁਕਾਉਂਦੇ ਹਨ, ਜੋ ਕਿ ਦਿੱਖ ਵਿੱਚ ਰੁਕਾਵਟ ਬਣਦੇ ਹਨ ਅਤੇ ਜਿਹਨਾਂ ਉੱਤੇ ਨੈੱਟਵਰਕ ਅਧਾਰਿਤ ਫਿਲਟਰ ਇੰਜਣਾਂ ਰਾਹੀਂ ਪਾਬੰਦੀ ਨਹੀਂ ਲਾਈ ਜਾ ਸਕਦੀ ਹੈ।",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
-    "message": "Ignore generic cosmetic filters",
+    "message": "ਆਮ ਦਿੱਖ ਆਧਾਰਿਤ ਫਿਲਟਰ ਅਣਡਿੱਠੇ ਕਰੋ",
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
@@ -484,7 +484,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
-    "message": "Annoyances",
+    "message": "ਅਣਚਾਹੇ",
     "description": "Filter lists section name"
   },
   "3pGroupMultipurpose": {
@@ -532,7 +532,7 @@
     "description": "Short information about how to create custom filters"
   },
   "1pTrustWarning": {
-    "message": "Do not add filters from untrusted sources.",
+    "message": "ਗ਼ੈਰ-ਭਰੋਸੇਯੋਗ ਸਰੋਤਾਂ ਤੋਂ ਫਿਲਟਰ ਨਾ ਜੋੜੋ।",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {
@@ -684,23 +684,23 @@
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
-    "message": "Pause logger (discard all incoming data)",
+    "message": "ਲੌਗਰ ਨੂੰ ਰੋਕੋ (ਸਭ ਆਉਣ ਵਾਲੇ ਡਾਟੇ ਨੂੰ ਅਣਡਿੱਠਾ ਕਰੋ)",
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {
-    "message": "Unpause logger",
+    "message": "ਲੌਗਰ ਨੂੰ ਚਾਲੂ ਕਰੋ",
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "Toggle logger filtering",
+    "message": "ਲੌਗਰ ਫਿਲਟਰਾਂ ਨੂੰ ਬਦਲੋ",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
-    "message": "filter logger content",
+    "message": "ਲੌਗਰ ਸਮੱਗਰੀ ਨੂੰ ਫਿਲਟਰ ਕਰੋ",
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
-    "message": "Logger filtering options",
+    "message": "ਲੌਗਰ ਫਿਲਟਰ ਕਰਨ ਲਈ ਚੋਣਾਂ",
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {
@@ -820,7 +820,7 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Static filter <code>{{filter}}</code> found in:",
+    "message": "ਸਥਿਰ ਫਿਲਟਰ <code>{{filter}}</code> ਇਸ ਵਿੱਚ ਮੌਜੂਦ ਹੈ:",
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
@@ -900,7 +900,7 @@
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Read the documentation at <code>uBlock/wiki</code> to learn about all of uBlock Origin's features.",
+    "message": "uBlock Origin ਦੇ ਸਾਰੇ ਫੀਚਰਾਂ ਬਾਰੇ ਜਾਣਕਾਰੀ ਲੈਣ ਲਈ <code>uBlock/wiki</code> ਤੋਂ ਦਸਤਾਵੇਜ਼ ਪੜ੍ਹੋ।",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
@@ -940,11 +940,11 @@
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "Below is technical information that might be useful when volunteers are trying to help you solve a problem.",
+    "message": "ਹੇਠਾਂ ਤਕਨੀਕੀ ਜਾਣਕਾਰੀ ਦਿੱਤੀ ਹੈ, ਜੋ ਕਿ ਵਲੰਟੀਅਰਾਂ ਲਈ ਮਦਦਗਾਰ ਹੋ ਸਕਦੀ ਹੈ, ਜੋ ਤੁਹਾਡੀ ਸਮੱਸਿਆ ਹੱਲ ਕਰਨ ਦੀ ਕੋਸ਼ਿਸ ਕਰਦੇ ਹਨ।",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Important:</b> Potentially private or sensitive information is redacted by default. Redacted information may make it more difficult to solve a problem.",
+    "message": "<b>ਖਾਸ:</b> ਸੰਭਾਵਿਤ ਤੌਰ ਉੱਤੇ ਪ੍ਰਾਈਵੇਟ ਜਾਂ ਸੰਵੇਦਨਸ਼ੀਲ ਜਾਣਕਾਰੀ ਨੂੰ ਮੂਲ ਰੂਪ ਵਿੱਚ ਛਾਂਟ ਦਿੱਤਾ ਗਿਆ ਹੈ। ਛਾਂਂਟੀ ਕੀਤੀ ਜਾਣਕਾਰੀ ਸਮੱਸਿਆ ਨੂੰ ਹੱਲ ਕਰਨਾ ਵੱਧ ਔਖਾ ਬਣਾ ਸਕਦੀ ਹੈ।",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
@@ -952,15 +952,15 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported.",
+    "message": "ਵਲੰਟੀਅਰਾਂ ਕੋਲ ਡੁਪਲੀਕੇਟ ਰਿਪੋਰਟਾਂ ਦਾ ਕੰਮ ਵਧਾਉਣ ਤੋਂ ਬਚਣ ਲਈ ਕਿਰਪਾ ਕਰਕੇ ਯਕੀਨੀ ਬਣਾਓ ਕਿ ਮਸਲਾ ਕਿਤੇ ਪਹਿਲਾਂ ਰਿਪੋਰਟ ਤਾਂ ਨਹੀ ਕੀਤਾ ਹੋਇਆ ਹੈ।",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "message": "ਫਿਲਟਰ ਸੂਚੀਆਂ ਰੋਜ਼ ਅੱਪਡੇਟ ਕੀਤੀਆਂ ਜਾਂਦੀਆਂ ਹਨ। ਯਕੀਨੀ ਬਣਾਓ ਕਿ ਕਿਤੇ ਤੁਹਾਡਾ ਮਸਲਾ ਪਹਿਲਾਂ ਹੀ ਸਭ ਤੋਂ ਤਾਜ਼ਾ ਫਿਲਟਰ ਸੂਚੀਆਂ ਰਾਹੀਂ ਹੱਲ ਤਾਂ ਨਹੀਂ ਹੋ ਚੁੱਕਿਆ ਹੈ।",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "message": "ਸਮੱਸਿਆ ਵਾਲੇ ਵੈੱਬ-ਸਫ਼ੇ ਨੂੰ ਮੁੜ-ਲੋਡ ਕਰਨ ਦੇ ਬਾਅਦ ਜਾਂਚ ਕਰੋ ਕਿ ਕੀ ਮਸਲਾ ਹਾਲੇ ਵੀ ਮੌਜੂਦ ਹੈ।",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -992,7 +992,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Malfunctions when uBlock Origin is enabled",
+    "message": "uBlock Origin ਸਮਰੱਥ ਕਰਨ ਦੇ ਬਾਅਦ ਗੜਬੜ ਹੁੰਦੀ ਹੈ",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
@@ -1040,7 +1040,7 @@
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "External dependencies (GPLv3-compatible):",
+    "message": "ਬਾਹਰੀ ਨਿਰਭਰਤਾਵਾਂ (GPLv3-ਅਨੁਕੂਲ):",
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
@@ -1072,7 +1072,7 @@
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {
-    "message": "The data could not be read or is invalid",
+    "message": "ਡਾਟਾ ਪੜ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ ਜਾਂ ਗ਼ੈਰ-ਵਾਜਬ ਹੈ",
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
