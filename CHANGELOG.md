@@ -14,6 +14,7 @@ To benefit the much shorter update period enabled by differential updates, you m
 
 ## Fixes / changes
 
+- [Allow the use of quotes in set-(local|session)-storage-item](https://github.com/gorhill/uBlock/commit/decafc5cbf)
 - [Add ability to trigger cookie removal on specific events](https://github.com/gorhill/uBlock/commit/ef311ddbec)
 - [Ensure CSSTree does not hold a reference onto last parsed string](https://github.com/gorhill/uBlock/commit/1dba557c9a)
 - [Lower minimum Expires value to 4h](https://github.com/gorhill/uBlock/commit/2360bc02f3)
