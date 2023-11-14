@@ -194,6 +194,7 @@ async function fetchPatchDetailsFromCDNs(assetDetails) {
             console.error(reason);
         });
         if ( response === undefined ) { continue; }
+        if ( response.status === 404 ) { break; }
         if ( response.ok !== true ) { continue; }
         const patchText = await response.text();
         const patchDetails = parsePatch(patchText);
