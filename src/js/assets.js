@@ -1231,7 +1231,7 @@ async function diffUpdater() {
             const metadata = extractMetadataFromList(data.text, [ 'Diff-Path' ]);
             if ( metadata instanceof Object === false ) { return; }
             if ( metadata.diffPath === data.patchPath ) { return; }
-            assetCacheSetDetails(data.assetKey, metadata.diffPath);
+            assetCacheSetDetails(data.assetKey, metadata);
         };
         bc.onmessage = ev => {
             const data = ev.data;
