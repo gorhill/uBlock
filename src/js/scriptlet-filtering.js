@@ -235,8 +235,10 @@ const normalizeRawFilter = function(parser, sourceIsTrusted = false) {
         if ( reng.aliases.has(token) ) {
             token = reng.aliases.get(token);
         }
-        if ( sourceIsTrusted !== true && reng.tokenRequiresTrust(token) ) {
-            return;
+        if ( parser.isException() !== true ) {
+            if ( sourceIsTrusted !== true ) {
+                if ( reng.tokenRequiresTrust(token) ) { return; }
+            }
         }
         args[0] = token.slice(0, -3);
     }
