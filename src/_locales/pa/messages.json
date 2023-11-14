@@ -456,7 +456,7 @@
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
-    "message": "Suspend network activity until all filter lists are loaded",
+    "message": "ਸਭ ਫਿਲਟਰ ਸੂਚੀਆਂ ਲੋਡ ਹੋਣ ਤੱਕ ਨੈੱਟਵਰਕ ਸਰਗਰਮੀ ਨੂੰ ਸਸਪੈਂਡ ਰੱਖੋ",
     "description": "A checkbox in the 'Filter lists' pane"
   },
   "3pListsOfBlockedHostsHeader": {
@@ -676,7 +676,7 @@
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
-    "message": "uBlock Origin wiki: The logger",
+    "message": "uBlock Origin ਵਿਕੀ: ਲੌਗਰ",
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
@@ -832,7 +832,7 @@
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
-    "message": "Preserve entries from the last {{input}} minutes",
+    "message": "ਪਿਛਲੇ {{input}} ਮਿੰਟਾਂ ਤੋਂ ਐਂਟਰੀਆਂ ਰੱਖੋ",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
