@@ -159,14 +159,11 @@ const mainWorldInjector = (( ) => {
     const parts = [
         '(',
         function(injector, details) {
+            if ( typeof self.uBO_scriptletsInjected === 'string' ) { return; }
             const doc = document;
-            if (
-                doc.location === null ||
-                details.hostname !== doc.location.hostname ||
-                typeof self.uBO_scriptletsInjected === 'string'
-            ) {
-                return;
-            }
+            if ( doc.location === null ) { return; }
+            const hostname = doc.location.hostname;
+            if ( hostname !== '' && details.hostname !== hostname ) { return; }
             injector(doc, details);
             return 0;
         }.toString(),
@@ -193,14 +190,11 @@ const isolatedWorldInjector = (( ) => {
     const parts = [
         '(',
         function(details) {
+            if ( self.uBO_isolatedScriptlets === 'done' ) { return; }
             const doc = document;
-            if (
-                doc.location === null ||
-                details.hostname !== doc.location.hostname ||
-                self.uBO_isolatedScriptlets === 'done'
-            ) {
-                return;
-            }
+            if ( doc.location === null ) { return; }
+            const hostname = doc.location.hostname;
+            if ( hostname !== '' && details.hostname !== hostname ) { return; }
             const isolatedScriptlets = function(){};
             isolatedScriptlets();
             self.uBO_isolatedScriptlets = 'done';
