@@ -13,6 +13,8 @@
  * - Added missing event dispatcher functionality
  * - Corrected return type of `Ad.getUniversalAdIds()`
  * - Corrected typo in `UniversalAdIdInfo.getAdIdValue()` method name
+ * - Corrected dispatch of LOAD event when preloading is enabled
+ * - Corrected dispatch of CONTENT_PAUSE/RESUME_REQUESTED events
  * 
  * Related issue:
  * - https://github.com/uBlockOrigin/uBlock-issues/issues/2158
@@ -412,6 +414,7 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
     constructor() {
       super();
       this.volume = 1;
+      this._enablePreloading = false;
     }
     collapse() {}
     configureAdsManager() {}
@@ -437,7 +440,11 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
     getVolume() {
       return this.volume;
     }
-    init(/*w, h, m, e*/) {}
+    init(/*w, h, m, e*/) {
+      if (this._enablePreloading) {
+        this._dispatch(new ima.AdEvent(AdEvent.Type.LOADED));
+      }
+    }
     isCustomClickTrackingUsed() {
       return false;
     }
@@ -457,13 +464,14 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
         for (const type of [
           AdEvent.Type.LOADED,
           AdEvent.Type.STARTED,
-          AdEvent.Type.CONTENT_RESUME_REQUESTED,
+          AdEvent.Type.CONTENT_PAUSE_REQUESTED,
           AdEvent.Type.AD_BUFFERING,
           AdEvent.Type.FIRST_QUARTILE,
           AdEvent.Type.MIDPOINT,
           AdEvent.Type.THIRD_QUARTILE,
           AdEvent.Type.COMPLETE,
           AdEvent.Type.ALL_ADS_COMPLETED,
+          AdEvent.Type.CONTENT_RESUME_REQUESTED,
         ]) {
           try {
             this._dispatch(new ima.AdEvent(type));
@@ -743,7 +751,10 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
     constructor(type) {
       this.type = type;
     }
-    getAdsManager() {
+    getAdsManager(c, settings) {
+      if (settings && settings.enablePreloading) {
+        manager._enablePreloading = true;
+      }
       return manager;
     }
     getUserRequestContext() {
