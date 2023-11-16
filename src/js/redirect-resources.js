@@ -162,6 +162,10 @@ export default new Map([
         alias: [ 'noopjs', 'abp-resource:blank-js' ],
         data: 'text',
     } ],
+    [ 'noop.json', {
+        alias: [ 'noopjson' ],
+        data: 'text',
+    } ],
     [ 'noop.txt', {
         alias: 'nooptext',
         data: 'text',

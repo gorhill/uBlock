@@ -38,6 +38,7 @@ const extToMimeMap = new Map([
     [  'gif', 'image/gif' ],
     [ 'html', 'text/html' ],
     [   'js', 'text/javascript' ],
+    [ 'json', 'application/json' ],
     [  'mp3', 'audio/mp3' ],
     [  'mp4', 'video/mp4' ],
     [  'png', 'image/png' ],
