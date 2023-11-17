@@ -1492,7 +1492,7 @@ const getSupportData = async function() {
         addedListset = undefined;
     } else {
         const added = Object.keys(addedListset);
-        const truncated = added.slice(12);
+        const truncated = added.slice(25);
         for ( const key of truncated ) {
             delete addedListset[key];
         }
