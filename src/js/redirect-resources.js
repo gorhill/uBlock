@@ -149,7 +149,7 @@ export default new Map([
     [ 'noop-0.5s.mp3', {
     } ],
     [ 'noop-1s.mp4', {
-        alias: 'noopmp4-1s',
+        alias: [ 'noopmp4-1s', 'abp-resource:blank-mp4' ],
         data: 'blob',
     } ],
     [ 'noop.css', {
