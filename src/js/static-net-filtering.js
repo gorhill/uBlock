@@ -878,8 +878,7 @@ class FilterPatternPlain {
         if ( rule.condition === undefined ) {
             rule.condition = {};
         } else if ( rule.condition.urlFilter !== undefined ) {
-            rule._error = rule._error || [];
-            rule._error.push(`urlFilter already defined: ${rule.condition.urlFilter}`);
+            dnrAddRuleError(rule, `urlFilter already defined: ${rule.condition.urlFilter}`);
         }
         rule.condition.urlFilter = args[1];
     }
@@ -4474,7 +4473,7 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
                 value: rule.__modifierValue,
             }];
             if ( rule.__modifierAction === ALLOW_REALM ) {
-                dnrAddRuleError(rule, 'Unsupported modifier exception');
+                dnrAddRuleError(rule, `Unsupported csp exception: ${rule.__modifierValue}`);
             }
             break;
         case 'permissions':
@@ -4485,7 +4484,7 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
                 value: rule.__modifierValue.split('|').join(', '),
             }];
             if ( rule.__modifierAction === ALLOW_REALM ) {
-                dnrAddRuleError(rule, 'Unsupported modifier exception');
+                dnrAddRuleError(rule, `Unsupported permissions exception: ${rule.__modifierValue}`);
             }
             break;
         case 'redirect-rule': {
@@ -4548,7 +4547,7 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
                 ];
             }
             if ( rule.__modifierAction === ALLOW_REALM ) {
-                dnrAddRuleError(rule, 'Unsupported modifier exception');
+                dnrAddRuleError(rule, `Unsupported removeparam exception: ${rule.__modifierValue}`);
             }
             break;
         case 'urltransform': {

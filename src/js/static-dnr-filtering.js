@@ -309,7 +309,12 @@ function addToDNR(context, list) {
         }
 
         if ( parser.isFilter() === false ) { continue; }
-        if ( parser.hasError() ) { continue; }
+        if ( parser.hasError() ) {
+            if ( parser.astError === sfp.AST_ERROR_OPTION_EXCLUDED ) {
+                context.invalid.add(`Incompatible with DNR: ${line}`);
+            }
+            continue;
+        }
 
         if ( parser.isExtendedFilter() ) {
             addExtendedToDNR(context, parser);

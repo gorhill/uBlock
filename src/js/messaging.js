@@ -197,14 +197,6 @@ const onMessage = function(request, sender, callback) {
                 rule.action.redirect.transform !== undefined;
             const runtime = Date.now() - t0;
             const { ruleset } = network;
-            const out = [
-                `dnrRulesetFromRawLists(${JSON.stringify(listNames, null, 2)})`,
-                `Run time: ${runtime} ms`,
-                `Filters count: ${network.filterCount}`,
-                `Accepted filter count: ${network.acceptedFilterCount}`,
-                `Rejected filter count: ${network.rejectedFilterCount}`,
-                `Resulting DNR rule count: ${ruleset.length}`,
-            ];
             const good = ruleset.filter(rule =>
                 isUnsupported(rule) === false &&
                 isRegex(rule) === false &&
@@ -212,7 +204,9 @@ const onMessage = function(request, sender, callback) {
                 isCsp(rule) === false &&
                 isRemoveparam(rule) === false
             );
-            out.push(`+ Good filters (${good.length}): ${JSON.stringify(good, replacer, 2)}`);
+            const unsupported = ruleset.filter(rule =>
+                isUnsupported(rule)
+            );
             const regexes = ruleset.filter(rule =>
                 isUnsupported(rule) === false &&
                 isRegex(rule) &&
@@ -220,26 +214,33 @@ const onMessage = function(request, sender, callback) {
                 isCsp(rule) === false &&
                 isRemoveparam(rule) === false
             );
-            out.push(`+ Regex-based filters (${regexes.length}): ${JSON.stringify(regexes, replacer, 2)}`);
             const redirects = ruleset.filter(rule =>
                 isUnsupported(rule) === false &&
                 isRedirect(rule)
             );
-            out.push(`+ 'redirect=' filters (${redirects.length}): ${JSON.stringify(redirects, replacer, 2)}`);
             const headers = ruleset.filter(rule =>
                 isUnsupported(rule) === false &&
                 isCsp(rule)
             );
-            out.push(`+ 'csp=' filters (${headers.length}): ${JSON.stringify(headers, replacer, 2)}`);
             const removeparams = ruleset.filter(rule =>
                 isUnsupported(rule) === false &&
                 isRemoveparam(rule)
             );
+            const out = [
+                `dnrRulesetFromRawLists(${JSON.stringify(listNames, null, 2)})`,
+                `Run time: ${runtime} ms`,
+                `Filters count: ${network.filterCount}`,
+                `Accepted filter count: ${network.acceptedFilterCount}`,
+                `Rejected filter count: ${network.rejectedFilterCount}`,
+                `Un-DNR-able filter count: ${unsupported.length}`,
+                `Resulting DNR rule count: ${ruleset.length}`,
+            ];
+            out.push(`+ Good filters (${good.length}): ${JSON.stringify(good, replacer, 2)}`);
+            out.push(`+ Regex-based filters (${regexes.length}): ${JSON.stringify(regexes, replacer, 2)}`);
+            out.push(`+ 'redirect=' filters (${redirects.length}): ${JSON.stringify(redirects, replacer, 2)}`);
+            out.push(`+ 'csp=' filters (${headers.length}): ${JSON.stringify(headers, replacer, 2)}`);
             out.push(`+ 'removeparam=' filters (${removeparams.length}): ${JSON.stringify(removeparams, replacer, 2)}`);
-            const bad = ruleset.filter(rule =>
-                isUnsupported(rule)
-            );
-            out.push(`+ Unsupported filters (${bad.length}): ${JSON.stringify(bad, replacer, 2)}`);
+            out.push(`+ Unsupported filters (${unsupported.length}): ${JSON.stringify(unsupported, replacer, 2)}`);
             out.push(`+ generichide exclusions (${network.generichideExclusions.length}): ${JSON.stringify(network.generichideExclusions, replacer, 2)}`);
             if ( result.specificCosmetic ) {
                 out.push(`+ Cosmetic filters: ${result.specificCosmetic.size}`);

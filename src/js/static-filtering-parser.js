@@ -100,6 +100,7 @@ export const AST_ERROR_DOMAIN_NAME                  = 1 << iota++;
 export const AST_ERROR_OPTION_DUPLICATE             = 1 << iota++;
 export const AST_ERROR_OPTION_UNKNOWN               = 1 << iota++;
 export const AST_ERROR_OPTION_BADVALUE              = 1 << iota++;
+export const AST_ERROR_OPTION_EXCLUDED              = 1 << iota++;
 export const AST_ERROR_IF_TOKEN_UNKNOWN             = 1 << iota++;
 export const AST_ERROR_UNTRUSTED_SOURCE             = 1 << iota++;
 
@@ -1303,6 +1304,7 @@ export class AstFilterParser {
             if ( this.badTypes.has(type) ) {
                 this.addNodeFlags(NODE_FLAG_ERROR);
                 this.addFlags(AST_FLAG_HAS_ERROR);
+                this.astError = AST_ERROR_OPTION_EXCLUDED;
             }
             const flags = this.getNodeFlags(targetNode);
             if ( (flags & NODE_FLAG_ERROR) !== 0 ) { continue; }
