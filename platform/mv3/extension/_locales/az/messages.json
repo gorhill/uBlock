@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "A permission-less content blocker. Blocks ads, trackers, miners, and more immediately upon installation.",
+    "message": "İcazəyə ehtiyac duymayan məzmun əngəlləyicisi. Reklamları, izləyiciləri, maynerləri və daha çoxunu quraşdırmadan dərhal sonra əngəlləyir.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -12,19 +12,19 @@
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
-    "message": "uBO Lite — Dashboard",
+    "message": "uBO Lite — İdarəetmə paneli",
     "description": "English: uBO Lite — Dashboard"
   },
   "settingsPageName": {
-    "message": "Settings",
+    "message": "Tənzimləmələr",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
-    "message": "About",
+    "message": "Haqqında",
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
-    "message": "Privacy policy",
+    "message": "Məxfilik siyasəti",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupFilteringModeLabel": {
@@ -32,27 +32,27 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {
-    "message": "Open the dashboard",
+    "message": "İdarəetmə panelini aç",
     "description": "English: Click to open the dashboard"
   },
   "popupMoreButton": {
-    "message": "More",
+    "message": "Daha çox",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Less",
+    "message": "Daha az",
     "description": "Label to be used to hide popup panel sections"
   },
   "3pGroupDefault": {
-    "message": "Default",
+    "message": "Standart",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAds": {
-    "message": "Ads",
+    "message": "Reklamlar",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupPrivacy": {
-    "message": "Privacy",
+    "message": "Məxfilik",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
@@ -60,39 +60,39 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
-    "message": "Annoyances",
+    "message": "Zəhlətökən elementlər",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMisc": {
-    "message": "Miscellaneous",
+    "message": "Müxtəlif",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupRegions": {
-    "message": "Regions, languages",
+    "message": "Bölgələr, dillər",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "aboutChangelog": {
-    "message": "Changelog",
+    "message": "Dəyişikliklər siyahısı",
     "description": ""
   },
   "aboutCode": {
-    "message": "Source code (GPLv3)",
+    "message": "Mənbə kodu (GPLv3)",
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Contributors",
+    "message": "Töhfə verənlər",
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Source code",
+    "message": "Mənbə kodu",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
-    "message": "Translations",
+    "message": "Tərcümələr",
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
-    "message": "Filter lists",
+    "message": "Filtr siyahıları",
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
@@ -100,7 +100,7 @@
     "description": "Shown in the About pane"
   },
   "firstRunSectionLabel": {
-    "message": "Welcome",
+    "message": "Xoş gəldiniz",
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {

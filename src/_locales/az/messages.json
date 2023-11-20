@@ -276,11 +276,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilter": {
-    "message": "script",
+    "message": "skript",
     "description": "Appears as an option to filter out firewall rows"
   },
   "popup3pFrameFilter": {
-    "message": "frame",
+    "message": "çərçivə",
     "description": "Appears as an option to filter out firewall rows"
   },
   "pickerCreate": {
@@ -532,7 +532,7 @@
     "description": "Short information about how to create custom filters"
   },
   "1pTrustWarning": {
-    "message": "Do not add filters from untrusted sources.",
+    "message": "Etibarsız mənbələrdən filtrlər əlavə etməyin.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {
@@ -956,11 +956,11 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "message": "Filtr siyahıları hər gün yenilənir. Probleminizin ən son filtr siyahılarında həll edilmədiyinə əmin olun.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "message": "Problemli veb-səhifəni yenidən yüklədikdən sonra problemin hələ də qaldığından əmin olun.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -1128,7 +1128,7 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedTitle": {
-    "message": "Page blocked",
+    "message": "Səhifə əngəlləndi",
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {
@@ -1156,7 +1156,7 @@
     "description": "English: Close this window"
   },
   "docblockedDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "Bu sayt barədə məni xəbərdar etmə",
     "description": "Label for checkbox in document-blocked page"
   },
   "docblockedProceed": {
@@ -1172,7 +1172,7 @@
     "description": "English: Permanently"
   },
   "docblockedDisable": {
-    "message": "Proceed",
+    "message": "Davam et",
     "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {
@@ -1228,7 +1228,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "contextMenuViewSource": {
-    "message": "View source code…",
+    "message": "Mənbə kodunu nəzərdən keçir...",
     "description": "A context menu entry, to view the source code of the target resource"
   },
   "shortcutCapturePlaceholder": {
@@ -1276,11 +1276,11 @@
     "description": "Message used in frame placeholders"
   },
   "linterMainReport": {
-    "message": "Errors: {{count}}",
+    "message": "Xətalar: {{count}}",
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Could not filter properly at browser launch. Reload the page to ensure proper filtering.",
+    "message": "Brauzer açılışında filtrləmə düzgün alınmadı. Düzgün filtrləməni təmin etmək üçün səhifəni yenidən yükləyin.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {

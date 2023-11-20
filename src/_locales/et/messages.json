@@ -536,11 +536,11 @@
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {
-    "message": "Impordi ja lisa",
+    "message": "Impordi ja lisa…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "Ekspordi",
+    "message": "Ekspordi…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
@@ -584,7 +584,7 @@
     "description": ""
   },
   "rulesExport": {
-    "message": "Ekspordi faili",
+    "message": "Ekspordi faili…",
     "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
@@ -620,11 +620,11 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Impordi ja lisa",
+    "message": "Impordi ja lisa…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
-    "message": "Ekspordi",
+    "message": "Ekspordi…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
@@ -1280,7 +1280,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Veebilehitseja avamisel nurjus filtreerimine.\nÕige filtreerimise tagab veebilehe uuesti laadimine.",
+    "message": "Brauseri avamisel korralikult filtreerimine ebaõnnestus. Selle parandamiseks laadi leht uuesti.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {

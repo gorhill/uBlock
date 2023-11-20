@@ -19,9 +19,9 @@ Evit reiñ aotreoù ouzhpenn da uBOL en ul lec'hienn bennak, n'ho peus nemet dig
 
 The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request.
 
-If you accept uBOL's request for additional permissions on the current site, it will be able to better filter content for the current site.
+Ma asantit da reiñ muioc'h a aotreoù da uBOL war ar bajenn-mañ e vo silet gwelloc'h.
 
-You can set the default filtering mode from uBOL's options page. If you pick the Optimal or Complete mode as the default one, you will need to grant uBOL the permission to read and modify data on all websites.
+Gallout a rit termeniñ ar mod silañ dre ziouer e pajenn arventennoù uBOL. Ma tibabit ar mod Gwellañ pe an hini Klok evel ar mod dre ziouer e vo ret deoc'h aotren uBOL da lenn ha kemmañ roadennoù en holl lec'hiennoù.
 
 Dalc'hit soñj ez eo uBOL ur raktres war ober c'hoazh hag a zo e bal:
 

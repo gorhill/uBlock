@@ -16,7 +16,7 @@
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Chom",
+    "message": "Chom amañ",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -68,15 +68,15 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Klikit: lazhañ/enaouiñ uBlock₀ el lec'hienn-mañ.\n\nReol+klik: lazhañ uBlock₀ el lec'hienn-mañ nemetken.",
+    "message": "Klik: lazhañ/enaouiñ uBlock₀ war al lec'hienn-mañ.\n\nReol+klik: lazhañ uBlock₀ war al lec'hienn-mañ nemetken.",
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Klikit evit lazhañ uBlock₀ el lec'hienn-mañ.\n\nReol+klik evit lazhañ uBlock₀ el lec'hienn-mañ.",
+    "message": "Klikit evit lazhañ uBlock₀ war al lec'hienn-mañ.\n\nReol+klik evit lazhañ uBlock₀ war al lec'hienn-mañ.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Klikit evit enaouiñ uBlock₀ el lec'hienn-mañ.",
+    "message": "Klikit evit enaouiñ uBlock₀ war al lec'hienn-mañ.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -116,11 +116,11 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Mont e mod lemel elfennoù",
+    "message": "Lemel elfennoù",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Mont e mod diuzer elfennoù",
+    "message": "Diuzañ elfennoù",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
@@ -128,63 +128,63 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Danevelliñ ur gudenn el lec'hienn-mañ",
+    "message": "Danevelliñ ur gudenn war al lec'hienn-mañ",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Lazhañ/enaouiñ evit stankañ an holl brenestroù pop-up el lec'hienn-mañ",
+    "message": "Lazhañ/enaouiñ evit stankañ an holl brenestroù pop-up war al lec'hienn-mañ",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Klikit evit stankañ an holl brenestroù pop-up el lec'hienn-mañ",
+    "message": "Klikit evit stankañ an holl brenestroù pop-up war al lec'hienn-mañ",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Klikit evit aotren an holl brenestroù pop-up el lec'hienn-mañ",
+    "message": "Klikit evit aotren an holl brenestroù pop-up war al lec'hienn-mañ",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Stankañ/aotren kargadur an elfennoù media pounner el lec'hienn-mañ",
+    "message": "Stankañ/aotren kargadur an elfennoù media pounner war al lec'hienn-mañ",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Klikit evit stankañ an elfennoù media pounner el lec'hienn-mañ",
+    "message": "Klikit evit stankañ an elfennoù media pounner war al lec'hienn-mañ",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Klikit evit aotren an elfennoù media pounner en-dro el lec'hienn-mañ",
+    "message": "Klikit evit aotren an elfennoù media pounner en-dro war al lec'hienn-mañ",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Lazhañ/enaouiñ ar silañ kenedel el lec'hienn-mañ",
+    "message": "Lazhañ/enaouiñ ar silañ kenedel war al lec'hienn-mañ",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Klikit evit lazhañ ar silañ kenedel el lec'hienn-mañ",
+    "message": "Klikit evit lazhañ ar silañ kenedel war al lec'hienn-mañ",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Klikit evit enaouiñ ar silañ kenedel el lec'hienn-mañ",
+    "message": "Klikit evit enaouiñ ar silañ kenedel war al lec'hienn-mañ",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Lazhañ/enaouiñ evit stankañ an nodrezhioù diavaez el lec'hienn-mañ",
+    "message": "Lazhañ/enaouiñ evit stankañ an nodrezhioù diavaez war al lec'hienn-mañ",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Klikit evit stankañ an nodrezhioù diavaez el lec'hienn-mañ",
+    "message": "Klikit evit stankañ an nodrezhioù diavaez war al lec'hienn-mañ",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Klikit evit aotren an nodrezhioù diavaez el lec'hienn-mañ",
+    "message": "Klikit evit aotren an nodrezhioù diavaez war al lec'hienn-mañ",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Klikit evit diweredekaat JavaScript el lec'hienn-mañ",
+    "message": "Klikit evit diweredekaat JavaScript war al lec'hienn-mañ",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Klikit evit gweredekaat JavaScript el lec'hienn-mañ en-dro",
+    "message": "Klikit evit gweredekaat JavaScript war al lec'hienn-mañ en-dro",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
@@ -224,7 +224,7 @@
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
-    "message": "Klikit evit lakaat ho kemmoù da badout.",
+    "message": "Klikit evit lakaat ho kemmoù da dalvezout.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
@@ -312,7 +312,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Stankañ an elfenn…",
+    "message": "Stankañ an elfenn-mañ…",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -360,11 +360,11 @@
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
-    "message": "Disable hyperlink auditing",
+    "message": "Diweredekaat evezhiañ ar gourliammoù",
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
-    "message": "Prevent WebRTC from leaking local IP addresses",
+    "message": "Mirout ouzh WebRTC da ziskuilhañ chomlec'hioù IP lec'hel",
     "description": "English: "
   },
   "settingPerSiteSwitchGroup": {
@@ -380,7 +380,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Block media elements larger than {{input}} KB",
+    "message": "Stankañ an elfennoù media a zo pounneroc'h evit {{input}} KB ",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -404,7 +404,7 @@
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Features suitable only for technical users",
+    "message": "Fonksionelezhioù azasaet d'an implijerien araokaet hepken",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
@@ -440,7 +440,7 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
-    "message": "Parse and enforce cosmetic filters",
+    "message": "Dielfennañ ha lakaat ar siloù kenedel da dalvezout",
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
@@ -456,7 +456,7 @@
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
-    "message": "Suspend network activity until all filter lists are loaded",
+    "message": "Ehan oberoù ar rouedad betek ma kargo an holl rolloù siloù",
     "description": "A checkbox in the 'Filter lists' pane"
   },
   "3pListsOfBlockedHostsHeader": {
@@ -592,7 +592,7 @@
     "description": "default file name to use"
   },
   "rulesHint": {
-    "message": "List of your dynamic filtering rules.",
+    "message": "Roll eus ho reolennoù silañ dinamek.",
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
@@ -616,7 +616,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "The trusted site directives dictate on which web pages uBlock Origin should be disabled. One entry per line.",
+    "message": "En ur dermeniñ peseurt lec'hiennoù a zo sur e lavarit da uBlock Origin e peseurt lec'hiennoù e rank bezañ diweredekaet. Un enmont dre linenn.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
@@ -836,11 +836,11 @@
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "Preserve at most {{input}} page loads per tab",
+    "message": "Mirout {{input}} g/kargadenn pajenn dre ivinell d'ar muiañ",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
-    "message": "Preserve at most {{input}} entries per tab",
+    "message": "Mirout {{input}} enmont dre ivinell d'ar muiañ",
     "description": "A logger setting"
   },
   "loggerSettingPerEntryLineCount": {
@@ -900,7 +900,7 @@
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Lennit an teuliadur en <code>uBlock/wiki</code> evit gouzout hiroc'h diwar-benn pep tra a c'hall uBlock Origin ober.",
+    "message": "Lennit an teuliadur en <code>uBlock/wiki</code> evit gouzout hiroc'h diwar-benn uBlock Origin ha pep tra a c'hall ober.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
@@ -924,7 +924,7 @@
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Tips:</b> Be sure your filter lists are up to date. <span data-url=\"logger-ui.html#_\">The logger</span> is the primary tool to diagnose filter-related issues.",
+    "message": "<b>Tro-bleg:</b> Gwiriit ma'z eo bet hizivaet ho rolloù siloù. <span data-url=\"logger-ui.html#_\">An deizlevr</span> eo an ostilh pennañ evit diagnostikañ kudennoù e-keñver ar silañ.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
@@ -936,11 +936,11 @@
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting Information",
+    "message": "Titouroù diagnostikañ kudennoù",
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "Below is technical information that might be useful when volunteers are trying to help you solve a problem.",
+    "message": "Amañ dindan ez eus titouroù teknikel a c'hallfe sikour an dud a-youl vat a zo o klask diskoulmañ ur gudenn.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
@@ -956,7 +956,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "message": "Bemdez e vez hizivaet ar rolloù siloù. Gwiriit ma n'eo ket bet diskoulmet ho kudenn c'hoazh er rolloù siloù nevesañ.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
@@ -1184,7 +1184,7 @@
     "description": "tooltip"
   },
   "cloudPullAndMerge": {
-    "message": "Import from cloud storage and merge with current settings",
+    "message": "Enporzhiañ adalek ar goumoulenn ha kendeuziñ gant an arventennoù a-vremañ",
     "description": "tooltip"
   },
   "cloudNoData": {
@@ -1236,7 +1236,7 @@
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "Toggle locked scrolling",
+    "message": "Prennañ/dibrennañ an dibunañ",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {

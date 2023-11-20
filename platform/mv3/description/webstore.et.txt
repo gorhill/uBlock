@@ -11,11 +11,11 @@ Reeglitekogumeid saate lisada valikute lehelt ehk avanenud paneelis klõpsake _C
 
 uBOL on läbinisti deklaratiivne ehk filtreerimiseks pole vaja kogu aeg töötavat uBOLi protsessi ja CSS/JS süstipõhist sisu filtreerib tegelikult brauser, mitte laiendus. Teisisõnu, uBOL ei kasuta sisu tõkestamisel protsessori/mälu ressursse. uBOLi teenuse toimimise protsessi on vaja _vaid_ juhul, kui kasutate hüpikpaneeli või valikute lehekülgi.
 
-uBOL ei nõua paigaldamise ajal teadatuntud andmete lugemise ja muutmise luba, seega võrreldes seda nõudva äpiga uBlock Origin või muu sisutõkestiga on uBOL-i piiratus üks selle funktsioonidest.
+uBOL ei nõua paigaldamise ajal teadatuntud andmete lugemise ja muutmise luba, seega võrreldes seda nõudva laiendusega uBlock Origin või muu sisutõkestiga on uBOL-i piiratus üks selle funktsioonidest.
 
 Kuid uBOL võimaldab *selgesõnaliselt* anda täpsemaid lubasid teie valitud veebilehtedele, et neid saaks paremini filtreerida ilufiltrite ja skriptisüstidega.
 
-Veebilehele täpsustatud lubade andmiseks ava hüpikpaneel ja valige põhjalikum filtreerimisrežiim, nagu Optimaalne või Põhjalik.
+Veebilehele täpsustatud lubade andmiseks ava hüpikpaneel ja vali põhjalikum filtreerimisrežiim, näiteks Optimaalne või Põhjalik.
 
 The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request.
 

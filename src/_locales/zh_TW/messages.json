@@ -12,7 +12,7 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "警告！您有尚未儲存的更改",
+    "message": "警告！您有尚未儲存的變更",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "信任名單",
+    "message": "受信任網站",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -72,7 +72,7 @@
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "點擊：對此網站停用 uBlock₀ 。\n\nCtrl + 點擊：僅在此頁面停用 uBlock₀ 。",
+    "message": "點擊：在此網站停用 uBlock₀ 。\n\nCtrl + 點擊：僅在此頁面停用 uBlock₀ 。",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
@@ -244,7 +244,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "第三方 CSS 樣式表/圖片",
+    "message": "第三方 階層式樣式表 / 圖片",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -392,11 +392,11 @@
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
-    "message": "封鎖 CSP 報告",
+    "message": "封鎖內容安全策略報告",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsUncloakCnamePrompt": {
-    "message": "將代理域名映射至真實域名",
+    "message": "揭露網域真實名稱",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsAdvanced": {
@@ -444,7 +444,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "「元素隱藏過濾規則」用於隱藏網頁中礙眼，且不能被以網路請求為基礎之過濾引擎所阻擋的元素。",
+    "message": "元素隱藏過濾規則 用於隱藏網頁中礙眼，且不能被基於網路請求的過濾引擎所阻擋的元素。",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -452,7 +452,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "「一般元素隱藏過濾規則」是會套用在所有網頁的元素隱藏過濾規則。啟用此選項會減少每個網頁，因處理一般元素隱藏過濾規則而增加的記憶體與 CPU 使用量。\n\n建議在效能較差的裝置上啟用此選項。",
+    "message": "通用元素隱藏過濾規則 是會套用在所有網頁的元素隱藏過濾規則。啟用此選項會減少每個網頁，因處理一般元素隱藏過濾規則，而增加的記憶體與 CPU 使用量。\n\n建議在效能較差的裝置上啟用此選項。",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
@@ -756,7 +756,7 @@
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
-    "message": "第一方／第三方",
+    "message": "所屬方",
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
@@ -864,7 +864,7 @@
     "description": "A label for the context column"
   },
   "loggerSettingHideColumnPartyness": {
-    "message": "{{input}} 第一方/第三方",
+    "message": "{{input}} 所屬方",
     "description": "A label for the partyness column"
   },
   "loggerExportFormatList": {
@@ -924,7 +924,7 @@
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>小提示：</b>請確定您的過濾器清單已經更新至最新版本。我們主要用<span data-url=\"logger-ui.html#_\">「記錄器」</span>來分析過濾器相關問題。",
+    "message": "<b>小提示：</b>請確定您的過濾器清單已經更新至最新版本。我們主要用<span data-url=\"logger-ui.html#_\">記錄器</span>來分析過濾器相關問題。",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {

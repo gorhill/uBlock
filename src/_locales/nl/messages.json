@@ -16,7 +16,7 @@
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Blijven",
+    "message": "Hier blijven",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -1132,7 +1132,7 @@
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {
-    "message": "uBlock₀ heeft het laden van de volgende pagina voorkomen:",
+    "message": "uBlock Origin heeft het laden van de volgende pagina voorkomen:",
     "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {

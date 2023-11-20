@@ -12,7 +12,7 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Aviso! tes cambios sen gardar",
+    "message": "Aviso! ten cambios sen gardar",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -312,7 +312,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Bloquear elemento",
+    "message": "Bloquear elemento…",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -380,7 +380,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Bloquear elementos os audiovisuais meirandes de {{input:number}} kB",
+    "message": "Bloquear elementos audiovisuais maiores de {{input}} KB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -536,11 +536,11 @@
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {
-    "message": "Importar e anexar",
+    "message": "Importar e engadir…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "Exportar",
+    "message": "Exportar…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
@@ -584,7 +584,7 @@
     "description": ""
   },
   "rulesExport": {
-    "message": "Exportar a un arquivo",
+    "message": "Exportar a un arquivo…",
     "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {

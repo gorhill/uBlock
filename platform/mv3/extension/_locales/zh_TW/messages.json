@@ -4,11 +4,11 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "一個不需要任何權限的內容阻擋插件。安裝即可阻擋廣告、追蹤程式、挖礦程式等網頁內容。",
+    "message": "一個無須任何權限的內容阻擋器。安裝即可阻擋廣告、追蹤器、挖礦程式等網頁內容。",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
-    "message": "{{ruleCount}} 條規則，轉換自 {{filterCount}} 個網路過濾規則",
+    "message": "{{ruleCount}} 條規則，轉換自 {{filterCount}} 條網路過濾規則",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
@@ -24,7 +24,7 @@
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
-    "message": "隱私權條款",
+    "message": "隱私權政策",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupFilteringModeLabel": {
@@ -72,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "aboutChangelog": {
-    "message": "更新日誌",
+    "message": "變更日誌",
     "description": ""
   },
   "aboutCode": {
