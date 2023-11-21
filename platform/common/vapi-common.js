@@ -155,6 +155,9 @@ vAPI.webextFlavor = {
     }
 };
 
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1858743
+//   Add support for native `:has()` for Firefox 121+
+
 (( ) => {
     const ua = navigator.userAgent;
     const flavor = vAPI.webextFlavor;
@@ -184,13 +187,16 @@ vAPI.webextFlavor = {
             flavor.major = parseInt(info.version, 10) || flavor.major;
             soup.add(info.vendor.toLowerCase())
                 .add(info.name.toLowerCase());
+            if ( flavor.major >= 121 && soup.has('mobile') === false ) {
+                soup.add('native_css_has');
+            }
             dispatch();
         });
         if ( browser.runtime.getURL('').startsWith('moz-extension://') ) {
             soup.add('firefox')
                 .add('user_stylesheet')
                 .add('html_filtering');
-            flavor.major = 91;
+            flavor.major = 115;
         }
         return;
     }
