@@ -43,6 +43,7 @@ jobs:
         with:
           tag_name: ${{ steps.release_info.outputs.VERSION }}
           release_name: ${{ steps.release_info.outputs.VERSION }}
+          draft: true,
           prerelease: true
           body_path: release.body.txt
       - name: Build MV2 packages
