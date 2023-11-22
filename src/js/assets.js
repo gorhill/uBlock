@@ -52,7 +52,7 @@ const stringIsNotEmpty = s => typeof s === 'string' && s !== '';
 
 const parseExpires = s => {
     const matches = s.match(/(\d+)\s*([dhm]?)/i);
-    if ( matches === null ) { return 0; }
+    if ( matches === null ) { return; }
     let updateAfter = parseInt(matches[1], 10);
     if ( matches[2] === 'h' ) {
         updateAfter = Math.max(updateAfter, 4) / 24;
