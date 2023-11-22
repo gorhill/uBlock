@@ -1,3 +1,11 @@
+## Fixes / changes
+
+- [Catch cases of `! Expires:` field with no value](https://github.com/gorhill/uBlock/commit/9ce958432d)
+
+----------
+
+# 1.54.0
+
 ## New
 
 Differential update of filter lists, as a result of discussions at <https://github.com/AdguardTeam/FiltersCompiler/issues/192>. Resulting spec is [here](https://github.com/ameshkov/diffupdates).
@@ -38,5 +46,3 @@ To benefit the much shorter update period enabled by differential updates, you m
 - [Add support for differential update of filter lists](https://github.com/gorhill/uBlock/commit/d05ff8ffeb)
 
 ----------
-
-Older release notes go here.
