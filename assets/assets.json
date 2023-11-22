@@ -709,7 +709,7 @@
 		"title": "🇰🇷kr: List-KR",
 		"tags": "ads korean 한국어",
 		"lang": "ko",
-		"contentURL": "https://cdn.jsdelivr.net/gh/List-KR/List-KR@master/filter-uBlockOrigin.txt",
+		"contentURL": "https://cdn.jsdelivr.net/gh/List-KR/List-KR@latest/filter-uBlockOrigin.txt",
 		"supportURL": "https://github.com/List-KR/List-KR#readme"
 	},
 	"LTU-0": {
