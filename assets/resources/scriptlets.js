@@ -52,6 +52,8 @@ function safeSelf() {
         'Function_toStringFn': self.Function.prototype.toString,
         'Function_toString': thisArg => safe.Function_toStringFn.call(thisArg),
         'Math_floor': Math.floor,
+        'Math_max': Math.max,
+        'Math_min': Math.min,
         'Math_random': Math.random,
         'Object_defineProperty': Object.defineProperty.bind(Object),
         'RegExp': self.RegExp,
@@ -238,6 +240,64 @@ function runAtHtmlElementFn(fn) {
         fn();
     });
     observer.observe(document, { childList: true });
+}
+
+/******************************************************************************/
+
+// Reference:
+// https://github.com/AdguardTeam/Scriptlets/blob/master/wiki/about-scriptlets.md#prevent-xhr
+
+builtinScriptlets.push({
+    name: 'generate-content.fn',
+    fn: generateContentFn,
+    dependencies: [
+        'safe-self.fn',
+    ],
+});
+function generateContentFn(directive) {
+    const safe = safeSelf();
+    const randomize = len => {
+        const chunks = [];
+        let textSize = 0;
+        do {
+            const s = safe.Math_random().toString(36).slice(2);
+            chunks.push(s);
+            textSize += s.length;
+        }
+        while ( textSize < len );
+        return chunks.join(' ').slice(0, len);
+    };
+    if ( directive === 'true' ) {
+        return Promise.resolve(randomize(10));
+    }
+    if ( directive.startsWith('length:') ) {
+        const match = /^length:(\d+)(?:-(\d+))?$/.exec(directive);
+        if ( match ) {
+            const min = parseInt(match[1], 10);
+            const extent = safe.Math_max(parseInt(match[2], 10) || 0, min) - min;
+            const len = safe.Math_min(min + extent * safe.Math_random(), 500000);
+            return Promise.resolve(randomize(len | 0));
+        }
+    }
+    if ( directive.startsWith('war:') && scriptletGlobals.has('warOrigin') ) {
+        return new Promise(resolve => {
+            const warOrigin = scriptletGlobals.get('warOrigin');
+            const warName = directive.slice(4);
+            const fullpath = [ warOrigin, '/', warName ];
+            const warSecret = scriptletGlobals.get('warSecret');
+            if ( warSecret !== undefined ) {
+                fullpath.push('?secret=', warSecret);
+            }
+            const warXHR = new safe.XMLHttpRequest();
+            warXHR.responseType = 'text';
+            warXHR.onloadend = ev => {
+                resolve(ev.target.responseText || '');
+            };
+            warXHR.open('GET', fullpath.join(''));
+            warXHR.send();
+        });
+    }
+    return Promise.resolve('');
 }
 
 /******************************************************************************/
@@ -1757,16 +1817,18 @@ builtinScriptlets.push({
     ],
     fn: noFetchIf,
     dependencies: [
+        'generate-content.fn',
         'safe-self.fn',
     ],
 });
 function noFetchIf(
-    arg1 = '',
+    propsToMatch = '',
+    directive = ''
 ) {
-    if ( typeof arg1 !== 'string' ) { return; }
+    if ( typeof propsToMatch !== 'string' ) { return; }
     const safe = safeSelf();
     const needles = [];
-    for ( const condition of arg1.split(/\s+/) ) {
+    for ( const condition of propsToMatch.split(/\s+/) ) {
         if ( condition === '' ) { continue; }
         const pos = condition.indexOf(':');
         let key, value;
@@ -1782,14 +1844,11 @@ function noFetchIf(
     const log = needles.length === 0 ? console.log.bind(console) : undefined;
     self.fetch = new Proxy(self.fetch, {
         apply: function(target, thisArg, args) {
+            const details = args[0] instanceof self.Request
+                ? args[0]
+                : Object.assign({ url: args[0] }, args[1]);
             let proceed = true;
             try {
-                let details;
-                if ( args[0] instanceof self.Request ) {
-                    details = args[0];
-                } else {
-                    details = Object.assign({ url: args[0] }, args[1]);
-                }
                 const props = new Map();
                 for ( const prop in details ) {
                     let v = details[prop];
@@ -1818,9 +1877,21 @@ function noFetchIf(
                 }
             } catch(ex) {
             }
-            return proceed
-                ? Reflect.apply(target, thisArg, args)
-                : Promise.resolve(new Response());
+            if ( proceed ) {
+                return Reflect.apply(target, thisArg, args);
+            }
+            return generateContentFn(directive).then(text => {
+                const response = new Response(text, {
+                    statusText: 'OK',
+                    headers: {
+                        'Content-Length': text.length,
+                    }
+                });
+                Object.defineProperty(response, 'url', {
+                    value: details.url
+                });
+                return response;
+            });
         }
     });
 }
@@ -2259,6 +2330,7 @@ builtinScriptlets.push({
     ],
     fn: noXhrIf,
     dependencies: [
+        'generate-content.fn',
         'match-object-properties.fn',
         'parse-properties-to-match.fn',
         'safe-self.fn',
@@ -2269,41 +2341,10 @@ function noXhrIf(
     directive = ''
 ) {
     if ( typeof propsToMatch !== 'string' ) { return; }
-    const safe = safeSelf();
     const xhrInstances = new WeakMap();
     const propNeedles = parsePropertiesToMatch(propsToMatch, 'url');
     const log = propNeedles.size === 0 ? console.log.bind(console) : undefined;
     const warOrigin = scriptletGlobals.get('warOrigin');
-    const generateRandomString = len => {
-            let s = '';
-            do { s += safe.Math_random().toString(36).slice(2); }
-            while ( s.length < 10 );
-            return s.slice(0, len);
-    };
-    const generateContent = async directive => {
-        if ( directive === 'true' ) {
-            return generateRandomString(10);
-        }
-        if ( directive.startsWith('war:') ) {
-            if ( warOrigin === undefined ) { return ''; }
-            return new Promise(resolve => {
-                const warName = directive.slice(4);
-                const fullpath = [ warOrigin, '/', warName ];
-                const warSecret = scriptletGlobals.get('warSecret');
-                if ( warSecret !== undefined ) {
-                    fullpath.push('?secret=', warSecret);
-                }
-                const warXHR = new safe.XMLHttpRequest();
-                warXHR.responseType = 'text';
-                warXHR.onloadend = ev => {
-                    resolve(ev.target.responseText || '');
-                };
-                warXHR.open('GET', fullpath.join(''));
-                warXHR.send();
-            });
-        }
-        return '';
-    };
     self.XMLHttpRequest = class extends self.XMLHttpRequest {
         open(method, url, ...args) {
             if ( log !== undefined ) {
@@ -2370,7 +2411,7 @@ function noXhrIf(
                 default:
                     if ( directive === '' ) { break; }
                     promise = promise.then(details => {
-                        return generateContent(details.directive).then(text => {
+                        return generateContentFn(details.directive).then(text => {
                             details.props.response.value = text;
                             details.props.responseText.value = text;
                             return details;
