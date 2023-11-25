@@ -1,5 +1,6 @@
 ## Fixes / changes
 
+- [Improve `prevent-fetch` scriptlet](https://github.com/gorhill/uBlock/commit/6aeab2adbc)
 - [Catch cases of `! Expires:` field with no value](https://github.com/gorhill/uBlock/commit/9ce958432d)
 
 ----------
