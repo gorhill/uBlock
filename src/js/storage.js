@@ -109,9 +109,9 @@ import {
     };
 
     const saveTimer = vAPI.defer.create(shouldSave);
-    const saveDelay = { min: 4 };
+    const saveDelay = { sec: 23 };
 
-    saveTimer.on(saveDelay);
+    saveTimer.onidle(saveDelay);
 
     µb.saveLocalSettings = function() {
         localSettingsLastSaved = Date.now();
