@@ -444,7 +444,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "Cosmetic filters serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the network request-based filtering engines.",
+    "message": "Ar siloù kenedel a servij da guzhat elfennoù ur bajenn web a c'hallfe bezañ noazadurioù d'ar gwelet ha ne c'hallont ket bezañ stanket gant silañ ar rouedad diazezet war ar rekedoù.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
