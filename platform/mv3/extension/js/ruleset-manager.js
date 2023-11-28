@@ -434,7 +434,7 @@ async function updateDynamicRules() {
 /******************************************************************************/
 
 async function defaultRulesetsFromLanguage() {
-    const out = [ 'default', 'cname-trackers' ];
+    const out = [ 'default' ];
 
     const dropCountry = lang => {
         const pos = lang.indexOf('-');
