@@ -140,7 +140,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "點擊以停止阻擋此網站的所有彈出式視窗",
+    "message": "點擊後將不再封鎖此網站的所有彈出式廣告",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {

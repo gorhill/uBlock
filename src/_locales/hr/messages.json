@@ -536,11 +536,11 @@
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {
-    "message": "Uvesti i dodati",
+    "message": "Uvesti i dodati...",
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "Izvoz",
+    "message": "Izvoz...",
     "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
@@ -620,11 +620,11 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Uvesti i dodati",
+    "message": "Uvesti i dodati...",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
-    "message": "Izvoz",
+    "message": "Izvoz...",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {

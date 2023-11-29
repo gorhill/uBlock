@@ -276,7 +276,7 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilter": {
-    "message": "guió",
+    "message": "script",
     "description": "Appears as an option to filter out firewall rows"
   },
   "popup3pFrameFilter": {

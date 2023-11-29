@@ -1004,7 +1004,7 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
-    "message": "Upravovať",
+    "message": "Upraviť",
     "description": "Text for 'Redact' button"
   },
   "supportUnredact": {

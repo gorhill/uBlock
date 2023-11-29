@@ -372,7 +372,7 @@
     "description": ""
   },
   "settingPerSiteSwitchGroupSynopsis": {
-    "message": "These default behaviors can be overridden on a per-site basis",
+    "message": "Gallout a reer erlec'hiañ an emzalc'hioù-se dre ziouer e lec'hiennoù resis",
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
@@ -396,7 +396,7 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsUncloakCnamePrompt": {
-    "message": "Uncloak canonical names",
+    "message": "Diskouez an anvioù gwir (CNAME)",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsAdvanced": {
@@ -908,7 +908,7 @@
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
-    "message": "Er subreddit <code>/r/uBlockOrigin</code> e c'hallit kavout respontoù d'ho koulennoù hag a bep seurt skoazell all.",
+    "message": "Er subreddit <code>/r/uBlockOrigin</code> e c'hallit kavout respontoù d'ho koulennoù hag a bep seurt skoazelloù all.",
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {

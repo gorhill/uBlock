@@ -144,7 +144,7 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "List of hostnames for which no filtering will take place",
+    "message": "Список імен хостів, для яких буде відбуватись фільтрування",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "behaviorSectionLabel": {
