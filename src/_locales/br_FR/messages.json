@@ -488,7 +488,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMultipurpose": {
-    "message": "Implijoù a bep seurt",
+    "message": "Siloù lies-implij",
     "description": "Filter lists section name"
   },
   "3pGroupRegions": {
@@ -504,7 +504,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "Un URL dre linenn. Didrouz e reor fae ouzh an URLoù direizh.",
+    "message": "Un URL dre linenn. Graet e vo fae ouzh an URLoù direizh.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -512,7 +512,7 @@
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pViewContent": {
-    "message": "gwelet an danvezioù",
+    "message": "gwelet an endalc'had",
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
@@ -696,7 +696,7 @@
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
-    "message": "Silañ danvez an deizlevr",
+    "message": "Silañ endalc'had an deizlevr",
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
