@@ -34,6 +34,7 @@ import {
 } from './ext.js';
 
 import {
+    broadcastMessage,
     hostnamesFromMatches,
     isDescendantHostnameOfIter,
     toBroaderHostname,
@@ -271,6 +272,16 @@ async function writeFilteringModeDetails(afterDetails) {
     localWrite('filteringModeDetails', data);
     sessionWrite('filteringModeDetails', data);
     readFilteringModeDetails.cache = unserializeModeDetails(data);
+
+    Promise.all([
+        getDefaultFilteringMode(),
+        getTrustedSites(),
+    ]).then(results => {
+        broadcastMessage({
+            defaultFilteringMode: results[0],
+            trustedSites: Array.from(results[1]),
+        });
+    });
 }
 
 /******************************************************************************/

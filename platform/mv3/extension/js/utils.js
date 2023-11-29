@@ -123,6 +123,13 @@ const hostnamesFromMatches = origins => {
 
 /******************************************************************************/
 
+export const broadcastMessage = message => {
+    const bc = new self.BroadcastChannel('uBOL');
+    bc.postMessage(message);
+};
+
+/******************************************************************************/
+
 const ubolLog = (...args) => {
     // Do not pollute dev console in stable release.
     if ( browser.runtime.id === 'ddkjiahejlhfcafbddmgiahcphecmpfh' ) { return; }

@@ -38,6 +38,10 @@ function renderNumber(value) {
     return value.toLocaleString();
 }
 
+function hashFromIterable(iter) {
+    return Array.from(iter).sort().join('\n');
+}
+
 /******************************************************************************/
 
 function rulesetStats(rulesetId) {
@@ -55,7 +59,7 @@ function rulesetStats(rulesetId) {
 
 /******************************************************************************/
 
-function renderFilterLists(soft = false) {
+function renderFilterLists() {
     const { enabledRulesets, rulesetDetails } = cachedRulesetData;
     const listGroupTemplate = qs$('#templates .groupEntry');
     const listEntryTemplate = qs$('#templates .listEntry');
@@ -68,9 +72,10 @@ function renderFilterLists(soft = false) {
         }
         const on = enabledRulesets.includes(ruleset.id);
         dom.cl.toggle(li, 'checked', on);
+        dom.cl.toggle(li, 'unused', hideUnused && !on);
+        qs$(li, 'input[type="checkbox"]').checked = on;
         if ( dom.attr(li, 'data-listkey') !== ruleset.id ) {
             dom.attr(li, 'data-listkey', ruleset.id);
-            qs$(li, 'input[type="checkbox"]').checked = on;
             qs$(li, '.listname').append(i18n.patchUnicodeFlags(ruleset.name));
             dom.cl.remove(li, 'toRemove');
             if ( ruleset.homeURL ) {
@@ -85,12 +90,7 @@ function renderFilterLists(soft = false) {
             } else {
                 dom.cl.remove(li, 'mustread');
             }
-            dom.cl.toggle(li, 'isDefault', ruleset.isDefault === true);
-            dom.cl.toggle(li, 'unused', hideUnused && !on);
-        }
-        // https://github.com/gorhill/uBlock/issues/1429
-        if ( soft !== true ) {
-            qs$(li, 'input[type="checkbox"]').checked = on;
+            dom.cl.toggle(li, 'isDefault', ruleset.id === 'default');
         }
         const stats = rulesetStats(ruleset.id);
         li.title = listStatsTemplate
@@ -159,10 +159,6 @@ function renderFilterLists(soft = false) {
         return liGroup;
     };
 
-    // Incremental rendering: this will allow us to easily discard unused
-    // DOM list entries.
-    dom.cl.add('#lists .listEntries .listEntry[data-listkey]', 'discard');
-
     // Visually split the filter lists in groups
     const ulLists = qs$('#lists');
     const groups = new Map([
@@ -203,25 +199,17 @@ function renderFilterLists(soft = false) {
             ulLists.appendChild(liGroup);
         }
     }
-
-    dom.remove('#lists .listEntries .listEntry.discard');
 }
 
 /******************************************************************************/
 
-const renderWidgets = function() {
+function renderWidgets() {
     if ( cachedRulesetData.firstRun ) {
         dom.cl.add(dom.body, 'firstRun');
     }
 
-    const defaultLevel = cachedRulesetData.defaultFilteringMode;
-    if ( defaultLevel !== 0 ) {
-        qs$(`.filteringModeCard input[type="radio"][value="${defaultLevel}"]`).checked = true;
-    } else {
-        dom.prop('.filteringModeCard input[type="radio"]', 'checked', false);
-    }
-
-    renderTrustedSites(cachedRulesetData.trustedSites);
+    renderDefaultMode();
+    renderTrustedSites();
 
     qs$('#autoReload input[type="checkbox"').checked = cachedRulesetData.autoReload;
 
@@ -245,7 +233,18 @@ const renderWidgets = function() {
     dom.cl.toggle(dom.body, 'noMoreRuleset',
         rulesetCount === cachedRulesetData.maxNumberOfEnabledRulesets
     );
-};
+}
+
+/******************************************************************************/
+
+function renderDefaultMode() {
+    const defaultLevel = cachedRulesetData.defaultFilteringMode;
+    if ( defaultLevel !== 0 ) {
+        qs$(`.filteringModeCard input[type="radio"][value="${defaultLevel}"]`).checked = true;
+    } else {
+        dom.prop('.filteringModeCard input[type="radio"]', 'checked', false);
+    }
+}
 
 /******************************************************************************/
 
@@ -278,7 +277,7 @@ async function onFilteringModeChange(ev) {
     default:
         break;
     }
-    renderFilterLists(true);
+    renderFilterLists();
     renderWidgets();
 }
 
@@ -300,11 +299,9 @@ dom.on('#autoReload input[type="checkbox"', 'change', ev => {
 
 /******************************************************************************/
 
-let trustedSitesHash = '';
-
-function renderTrustedSites(hostnames) {
+function renderTrustedSites() {
     const textarea = qs$('#trustedSites');
-    trustedSitesHash = hostnames.sort().join('\n');
+    const hostnames = cachedRulesetData.trustedSites;
     textarea.value = hostnames.map(hn => punycode.toUnicode(hn)).join('\n');
     if ( textarea.value !== '' ) {
         textarea.value += '\n';
@@ -312,8 +309,18 @@ function renderTrustedSites(hostnames) {
 }
 
 function changeTrustedSites() {
+    const hostnames = getStagedTrustedSites();
+    const hash = hashFromIterable(cachedRulesetData.trustedSites);
+    if ( hashFromIterable(hostnames) === hash ) { return; }
+    sendMessage({
+        what: 'setTrustedSites',
+        hostnames,
+    });
+}
+
+function getStagedTrustedSites() {
     const textarea = qs$('#trustedSites');
-    const hostnames = textarea.value.split(/\s/).map(hn => {
+    return textarea.value.split(/\s/).map(hn => {
         try {
             return punycode.toASCII(
                 (new URL(`https://${hn}/`)).hostname
@@ -321,16 +328,7 @@ function changeTrustedSites() {
         } catch(_) {
         }
         return '';
-    }).filter(hn => hn !== '').sort();
-    if ( hostnames.join('\n') === trustedSitesHash ) { return; }
-    sendMessage({
-        what: 'setTrustedSites',
-        hostnames,
-    }).then(response => {
-        cachedRulesetData.defaultFilteringMode = response.defaultFilteringMode;
-        cachedRulesetData.trustedSites = response.trustedSites;
-        renderWidgets();
-    });
+    }).filter(hn => hn !== '');
 }
 
 dom.on('#trustedSites', 'blur', changeTrustedSites);
@@ -417,6 +415,57 @@ localRead('hideUnusedFilterLists').then(value => {
     if ( Array.isArray(value) === false ) { return; }
     hideUnusedSet = new Set(value);
 });
+
+/******************************************************************************/
+
+const bc = new self.BroadcastChannel('uBOL');
+
+bc.onmessage = ev => {
+    const message = ev.data;
+    if ( message instanceof Object === false ) { return; }
+    const local = cachedRulesetData;
+    let render = false;
+
+    // Keep added sites which have not yet been committed
+    if ( message.trustedSites !== undefined ) {
+        if ( hashFromIterable(message.trustedSites) !== hashFromIterable(local.trustedSites) ) {
+            const current = new Set(local.trustedSites);
+            const staged = new Set(getStagedTrustedSites());
+            for ( const hn of staged ) {
+                if ( current.has(hn) === false ) { continue; }
+                staged.delete(hn);
+            }
+            const combined = Array.from(new Set([ ...message.trustedSites, ...staged ]));
+            local.trustedSites = combined;
+            render = true;
+        }
+    }
+
+    if ( message.defaultFilteringMode !== undefined ) {
+        if ( message.defaultFilteringMode !== local.defaultFilteringMode ) {
+            local.defaultFilteringMode = message.defaultFilteringMode;
+            render = true;
+        }
+    }
+
+    if ( message.autoReload !== undefined ) {
+        if ( message.autoReload !== local.autoReload ) {
+            local.autoReload = message.autoReload;
+            render = true;
+        }
+    }
+
+    if ( message.enabledRulesets !== undefined ) {
+        if ( hashFromIterable(message.enabledRulesets) !== hashFromIterable(local.enabledRulesets) ) {
+            local.enabledRulesets = message.enabledRulesets;
+            render = true;
+        }
+    }
+
+    if ( render === false ) { return; }
+    renderFilterLists();
+    renderWidgets();
+};
 
 /******************************************************************************/
 
