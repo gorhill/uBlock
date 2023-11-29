@@ -143,6 +143,10 @@
     "message": "Filtratge de xarxa avançat més un filtratge estès específic i genèric de les llistes de filtres seleccionades.\n\nRequereix un ampli permís per llegir i canviar dades a tots els llocs web.\n\nEl filtratge estès genèric pot provocar un ús més elevat dels recursos de la pàgina web.",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "Comportament",
     "description": "The header text for the 'Behavior' section"

@@ -143,6 +143,10 @@
     "message": "Speciális hálózati szűrés, valamint speciális és általános kiterjesztett szűrés a kiválasztott szűrőlistákból.\n\nSzéles körű engedély szükséges az adatok olvasásához és módosításához az összes webhelyen.\n\nAz általános kiterjesztett szűrés nagyobb weboldal-erőforrás-felhasználást eredményezhet.",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "Viselkedés",
     "description": "The header text for the 'Behavior' section"

@@ -143,6 +143,10 @@
     "message": "Розширена мережева фільтрація плюс специфічна та загальна розширена фільтрація з вибраних списків фільтрів.\n\nПотребує широкого дозволу на читання та зміну даних на всіх сайтах.\n\nЗагальна розширена фільтрація може призвести до збільшення використання ресурсів веб-сторінки.",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "Поведінка",
     "description": "The header text for the 'Behavior' section"

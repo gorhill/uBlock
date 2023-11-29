@@ -143,6 +143,10 @@
     "message": "Lọc mạng với chế độ nâng cao cộng với lọc mở rộng cụ thể và chung chung từ danh sách bộ lọc đã chọn.\n\nYêu cầu cấp quyền để đọc và thay đổi dữ liệu trên tất cả các trang web.\n\nVới chế độ lọc chung có thể gây ra tốn tài nguyên trang web cao hơn.",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "Hành vi",
     "description": "The header text for the 'Behavior' section"

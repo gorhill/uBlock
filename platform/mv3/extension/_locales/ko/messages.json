@@ -143,6 +143,10 @@
     "message": "고급 네트워크 필터링과 선택한 필터 목록을 바탕으로 특정한 확장 필터링 및 보편적인 확장 필터링을 수행합니다.\n\n모든 웹사이트에서 데이터를 읽고 쓸 수 있도록 하는 광범위한 권한이 필요합니다.\n\n보편적인 확장 필터링 기능을 이용하는 경우 웹페이지의 리소스 사용량이 증가할 수 있습니다.",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "동작",
     "description": "The header text for the 'Behavior' section"

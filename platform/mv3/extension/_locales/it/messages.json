@@ -143,6 +143,10 @@
     "message": "Filtro avanzato di rete in aggiunta al filtro esteso basato su un elenco selezionato di filtri.\n\nRichiede autorizzazioni estese per leggere e modificare i dati da ogni sito web.\n\nIl filtro esteso richiede più memoria e un maggiore impegno del processore.",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "Comportamento",
     "description": "The header text for the 'Behavior' section"

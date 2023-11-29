@@ -143,6 +143,10 @@
     "message": "Avansert nettverksfiltrering pluss spesifikk og generell utvidet filtrering fra valgte filterlister.\n\nKrever bred tillatelse til å lese og endre data på alle nettsteder.\n\nGenerell utvidet filtrering kan forårsake høyere ressursbruk på nettsider.",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "Virkemåte",
     "description": "The header text for the 'Behavior' section"

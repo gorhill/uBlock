@@ -143,6 +143,10 @@
     "message": "Du filtrage réseau avancé plus du filtrage étendu générique et spécifique issu de listes de filtres choisies.\n\nNécessite des permissions étendues pour lire et modifier les données sur tous les sites Web.\n\nLe filtrage étendu générique peut augmenter l'utilisation des ressources pour la page Web.",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "Comportement",
     "description": "The header text for the 'Behavior' section"

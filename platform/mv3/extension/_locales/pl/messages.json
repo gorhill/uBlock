@@ -143,6 +143,10 @@
     "message": "Zaawansowane filtrowanie sieciowe oraz konkretne i ogólne filtrowanie rozszerzone z wybranych list filtrów.\n\nWymaga szerokich uprawnień do odczytu i zmiany danych na wszystkich witrynach internetowych.\n\nOgólne filtrowanie rozszerzone może powodować większe zużycie zasobów przez witryny internetowe.",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "Zachowanie",
     "description": "The header text for the 'Behavior' section"

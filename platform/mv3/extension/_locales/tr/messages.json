@@ -143,6 +143,10 @@
     "message": "Gelişmiş ağ filtrelemenin yanı sıra seçilen filtre listelerinden özel ve genel genişletilmiş filtreleme.\n\nTüm web sitelerindeki verileri okumak ve değiştirmek için geniş izin gerektirir.\n\nGenel genişletilmiş filtreleme daha yüksek kaynak kullanımına neden olabilir.",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "Davranış",
     "description": "The header text for the 'Behavior' section"

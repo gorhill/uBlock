@@ -143,6 +143,10 @@
     "message": "Pokročilé síťové filtrování plus specificky a obecně rozšířené filtrování z vybraných seznamů filtrů.\n\nVyžaduje rozsáhlé oprávnění ke čtení a změně dat na všech webech.\n\nObecně rozšířené filtrování může způsobit vyšší využití zdrojů webových stránek.",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "Chování",
     "description": "The header text for the 'Behavior' section"

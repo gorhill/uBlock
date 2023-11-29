@@ -143,6 +143,10 @@
     "message": "Avansearre netwurkfiltering plus spesifike en algemiene wiidweidige filtering fan selektearre filterlisten út.\n\nFereasket brede tastimming foar it lêzen en wizigjen fan gegevens op alle websites.\n\nAlgemiene wiidweidige filtering kin in heger gebrûk fan websideboarnen feroarsaakje.",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "Gedrach",
     "description": "The header text for the 'Behavior' section"

@@ -143,6 +143,10 @@
     "message": "用选定的过滤规则列表进行进阶网页过滤，会同时使用有针对性的以及通用的过滤规则。\n\n需要读取或修改网页数据的权限。\n\n通用过滤功能可能会占用更多系统资源。",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "操作设置",
     "description": "The header text for the 'Behavior' section"

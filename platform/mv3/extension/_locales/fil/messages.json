@@ -143,6 +143,10 @@
     "message": "Pinainam na network filtering, partikular at generikong karagdagang pagfi-filter mula sa mga napiling listahan ng mga filter.\n\nKailangan ang pahintulot na basahin at baguhin ang mga data ng lahat ng mga website.\n\nMaaaring mas malaki ang konsyumo sa resource dahil sa generikong karagdagang pagfi-filter.",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "Ugali",
     "description": "The header text for the 'Behavior' section"

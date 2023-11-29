@@ -143,6 +143,10 @@
     "message": "Filtragem avançada da rede mais filtragem estendida específica e genérica das listas de filtros selecionadas.\n\nRequer ampla permissão pra ler e modificar os dados em todos os sites da web.\n\nA filtragem estendida genérica pode causar maior uso de recursos da página da web.",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "Comportamento",
     "description": "The header text for the 'Behavior' section"

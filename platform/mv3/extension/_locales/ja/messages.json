@@ -143,6 +143,10 @@
     "message": "特定のフィルターリストを使ったネットワークフィルタリングと一般的・サイト別の拡張フィルタリングです。\n\nすべてのウェブサイトのデータの読み書き権限を必要とします。\n\n一般的な拡張フィルタリングを使うとリソース消費量が増えるかもしれません。",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "動作",
     "description": "The header text for the 'Behavior' section"

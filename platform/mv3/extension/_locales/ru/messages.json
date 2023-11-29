@@ -143,6 +143,10 @@
     "message": "Расширенная сетевая фильтрация вместе со специальной, и усиленной общей фильтрацией по выбранным спискам фильтров.\n\nТребуется разрешение на чтение и изменение данных на всех веб-сайтах.\n\nУсиленная общая фильтрация может стать причиной повышенного потребления ресурсов веб-страницей.",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "Поведение",
     "description": "The header text for the 'Behavior' section"

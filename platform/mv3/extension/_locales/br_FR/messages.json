@@ -143,6 +143,10 @@
     "message": "Silañ rouedad araokaet ha silañ amplaet resis ha hollek diouzh ar rolloù siloù diuzet.\n\nRet eo reiñ aotreoù ouzhpenn a-benn lenn ha kemmañ roadennoù en holl lec'hiennoù.\n\nGant ar silañ amplaet hollek e c'hallfe ar bajenn web implijout muioc'h a zanvezioù.",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "Emzalc'h",
     "description": "The header text for the 'Behavior' section"

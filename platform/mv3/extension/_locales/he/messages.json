@@ -143,6 +143,10 @@
     "message": "סינון רשת מתקדם וסינון נרחב ייחודי מרשימות סינון נבחרות.\n\n מצריך הרשאות נרחבות לקריאה ושינוי נתונים בכל אתרי הרשת.\n\nסינון כללי מורחב עלול לגרום לצריכת משאבי רשת מוגברת.",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "התנהגות",
     "description": "The header text for the 'Behavior' section"

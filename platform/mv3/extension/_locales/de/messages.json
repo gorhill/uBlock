@@ -143,6 +143,10 @@
     "message": "Erweitertes Netzwerkfiltern plus spezifisches und allgemeines erweitertes Filtern aus gewählten Filterlisten.\n\nErfordert eine weitreichende Berechtigung zum Lesen und Ändern von Daten auf allen Websites.\n\nDas allgemeine erweiterte Filtern kann zu einem höheren Ressourcenverbrauch der Webseite führen.",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "Verhalten",
     "description": "The header text for the 'Behavior' section"

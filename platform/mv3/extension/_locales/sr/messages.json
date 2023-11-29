@@ -143,6 +143,10 @@
     "message": "Напредно мрежно и специфично и генеричко проширено филтрирање са изабраних листа филтера.\n\nЗахтева широку дозволу за читање и мењање података на свим сајтовима.\n\nГенеричко филтрирање може довести до већег коришћења ресурса веб странице.",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "Понашање",
     "description": "The header text for the 'Behavior' section"

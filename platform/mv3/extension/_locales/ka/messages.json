@@ -143,6 +143,10 @@
     "message": "ქსელის გაუმჯობესებულ ფილტრაციასთან ერთად საერთო გაფართოებული ფილტრები შერჩეული სიებიდან.\n\nსაჭიროებს ყველა საიტზე მონაცემთა სრულად წაკითხვისა და შეცვლის ნებართვას.\n\nგაფართოებული ფილტრაცია ზოგჯერ ზედმეტად ზრდის დატვირთვას ვებგვერდის მონახულებისას.",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "მოქმედება",
     "description": "The header text for the 'Behavior' section"

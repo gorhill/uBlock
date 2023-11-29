@@ -143,6 +143,10 @@
     "message": "Ընդլայնված ցանցային զտում, ինչպես նաև հատուկ և առաջադեմ ընդհանուր զտում ընտրված զտիչների ցանկերի համաձայն։\n\nՊահանջում է բոլոր կայքերում տվյալները կարդալու և փոփոխելու թույլտվություն։\n\nԱռաջադեմ ընդհանուր զտումը կարող է առաջացնել վեբ էջի կողմից ռեսուրսների սպառման ավելացում:",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "Վարք",
     "description": "The header text for the 'Behavior' section"

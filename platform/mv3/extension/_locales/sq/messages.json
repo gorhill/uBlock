@@ -143,6 +143,10 @@
     "message": "Filtrat e avancuar të rrjetit plus filtrat e posaçëm jospecifikë nga listat e përzgjedhura.\n\nDuhen leje shtesë për leximin dhe modifikimin e të dhënave në të gjitha uebsajtet.\n\nFiltrat e posaçëm jospecifikë mund ta rëndojnë hapjen e faqeve në internet.",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "Sjellja",
     "description": "The header text for the 'Behavior' section"

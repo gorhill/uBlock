@@ -143,6 +143,10 @@
     "message": "উন্নত নেটওয়ার্ক ফিল্টারিং এবং নির্বাচিত ফিল্টার তালিকা থেকে নির্দিষ্ট এবং জেনেরিকের বর্ধিত ফিল্টারিং।\n\nসকল ওয়েবসাইটে ডেটা পড়তে এবং পরিবর্তন করার জন্য বিস্তৃত অনুমতির প্রয়োজন৷\n\nজেনেরিক বর্ধিত ফিল্টারিং উচ্চতর ওয়েবপেজ সম্পদসমূহের ব্যবহারের কারণ হতে পারে।",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "আচরণ",
     "description": "The header text for the 'Behavior' section"

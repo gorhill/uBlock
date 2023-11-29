@@ -143,6 +143,10 @@
     "message": "Filtrado de red avanzado más filtrado extendido específico y genérico a partir de listas de filtros seleccionadas.\n\nRequiere un amplio permiso para leer y modificar datos en todos los sitios web.\n\nEl filtrado genérico extendido puede causar un mayor uso de recursos de la página web.",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "Comportamiento",
     "description": "The header text for the 'Behavior' section"

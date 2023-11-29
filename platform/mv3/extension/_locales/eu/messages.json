@@ -143,6 +143,10 @@
     "message": "\nSare aurreratuko iragazketa gehi hedapen espezifiko eta generikoa hautatutako iragazkien zerrendetan.\n\nBaimen zabala behar da webgune guztietan datuak irakurri eta aldatzeko.\n\nIragazte hedatu generikoak web-orriaren baliabide gehiago erabiltzea eragin dezake.\n",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "portaera or jokaera",
     "description": "The header text for the 'Behavior' section"

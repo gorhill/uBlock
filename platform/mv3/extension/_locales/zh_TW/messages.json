@@ -143,6 +143,10 @@
     "message": "進階網路過濾以及來自選定過濾條件清單的特定與通用擴展過濾條件。\n\n需要在所有網站上讀取並變更資料的廣泛權限。\n\n通用擴展過濾可能會導致更高的網頁資源使用率。",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "行為",
     "description": "The header text for the 'Behavior' section"

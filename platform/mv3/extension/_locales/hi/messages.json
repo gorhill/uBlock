@@ -143,6 +143,10 @@
     "message": "चयनित फ़िल्टर सूचियों में से उन्नत नेटवर्क फ़िल्टरिंग के साथ  विशिष्ट विस्तारित फ़िल्टरिंग.\n\nसभी वेबसाइटों पर डेटा पढ़ने और बदलने के लिए व्यापक अनुमति की आवश्यकता है.\n\nसामान्य विस्तारित फ़िल्टरिंग के कारण वेबपृष्ठ संसाधनों का अधिक उपयोग हो सकता है.",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "व्यवहार",
     "description": "The header text for the 'Behavior' section"

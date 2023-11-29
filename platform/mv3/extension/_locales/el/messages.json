@@ -143,6 +143,10 @@
     "message": "Προηγμένο φιλτράρισμα δικτύου και ειδικό και γενικό εκτεταμένο φιλτράρισμα από επιλεγμένες λίστες φίλτρων.\n\nΑπαιτεί ευρεία άδεια για την ανάγνωση και την αλλαγή δεδομένων σε όλους τους ιστότοπους.\n\nΤο γενικό εκτεταμένο φιλτράρισμα μπορεί να προκαλέσει μεγαλύτερη χρήση πόρων ιστοσελίδας.",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "Συμπεριφορά",
     "description": "The header text for the 'Behavior' section"

@@ -143,6 +143,10 @@
     "message": "Filter jaringan lanjutan ditambah filter spesifik dan umum yang diperluas dari daftar filter yang dipilih.\n\nMembutuhkan banyak izin untuk membaca dan mengubah data pada semua situs web.\n\nFilter umum yang diperluas dapat menyebabkan penggunan sumber daya situs web menjadi lebih tinggi.",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "Perilaku",
     "description": "The header text for the 'Behavior' section"

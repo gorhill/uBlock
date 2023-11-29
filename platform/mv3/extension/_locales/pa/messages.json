@@ -143,6 +143,10 @@
     "message": "ਤਕਨੀਕੀ ਨੈੱਟਵਰਕ ਫਿਲਟਰ ਕਰਨ ਤੋਂ ਨਾਲ ਨਾਲ ਚੁਣੀਆਂ ਫਿਲਟਰ ਸੂਚੀਆਂ ਤੋਂ ਖਾਸ ਵਾਧਾ ਕੀਤੇ ਫਿਲਟਰ।\n\nਸਾਰੀਆਂ ਵੈੱਬਸਾਈਟਾਂ ਲਈ ਡਾਟਾ ਪੜ੍ਹਨ ਅਤੇ ਸੋਧਣ ਲਈ ਜਿਆਦਾ ਮਨਜ਼ੂਰੀਆਂ ਚਾਹੀਦੀਆਂ ਹਨ।\n\nਆਮ ਵਾਧਾ ਕੀਤੀ ਫਿਲਟਰਿੰਗ ਵੱਧ ਵੈੱਬ-ਸਫ਼ਾ ਸਰੋਤ ਵਰਤੇ ਜਾਣ ਦਾ ਕਾਰਨ ਬਣ ਸਕਦੀ ਹੈ।",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "ਰਵੱਈਆ",
     "description": "The header text for the 'Behavior' section"

@@ -143,6 +143,10 @@
     "message": "Filtrare de rețea avansată plus filtrare extinsă specifică și generică de la liste de filtre selectate.\n\nNecesită permisiune vagă pentru a citi și modifica date pe toate site-urile web.\n\nFiltrarea generică extinsă poate cauza mai multă utilizare de resurse la nivel de pagină web.\n",
     "description": "This describes the 'complete' filtering mode"
   },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
   "behaviorSectionLabel": {
     "message": "Comportament",
     "description": "The header text for the 'Behavior' section"
