@@ -12,7 +12,6 @@
 <link rel="stylesheet" href="css/dashboard-common.css">
 <link rel="stylesheet" href="css/filtering-mode.css">
 <link rel="stylesheet" href="css/settings.css">
-<link rel="stylesheet" href="css/about.css">
 
 <link rel="shortcut icon" type="image/png" href="img/icon_64.png"/>
 </head>
@@ -20,7 +19,7 @@
 <body data-pane="settings">
     <!-- -------- -->
     <div id="dashboard-nav">
-        <span class="logo"><img data-i18n-title="extName" src="img/ublock.svg"></span><!--
+        <span class="logo"><img data-i18n-title="extName" src="img/ublock.svg" alt="uBO Lite"></span><!--
      --><button class="tabButton" type="button" data-pane="settings" data-i18n="settingsPageName" tabindex="0"></button><!--
      --><button class="tabButton" type="button" data-pane="about" data-i18n="aboutPageName" tabindex="0"></button>
     </div>
@@ -81,6 +80,13 @@
                     <div data-i18n="completeFilteringModeDescription"></div>
                 </label>
             </div>
+        </div>
+
+        <div>
+            <h3 data-i18n="filteringMode0Name"></h3>
+            <p data-i18n="noFilteringModeDescription">_</p>
+            <p><textarea id="trustedSites" spellcheck="false"></textarea>
+            </p>
         </div>
 
         <div>

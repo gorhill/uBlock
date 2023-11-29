@@ -24,6 +24,7 @@
 import { browser, sendMessage, localRead, localWrite } from './ext.js';
 import { i18n$, i18n } from './i18n.js';
 import { dom, qs$, qsa$ } from './dom.js';
+import punycode from './punycode.js';
 
 /******************************************************************************/
 
@@ -204,8 +205,6 @@ function renderFilterLists(soft = false) {
     }
 
     dom.remove('#lists .listEntries .listEntry.discard');
-
-    renderWidgets();
 }
 
 /******************************************************************************/
@@ -216,7 +215,13 @@ const renderWidgets = function() {
     }
 
     const defaultLevel = cachedRulesetData.defaultFilteringMode;
-    qs$(`.filteringModeCard input[type="radio"][value="${defaultLevel}"]`).checked = true;
+    if ( defaultLevel !== 0 ) {
+        qs$(`.filteringModeCard input[type="radio"][value="${defaultLevel}"]`).checked = true;
+    } else {
+        dom.prop('.filteringModeCard input[type="radio"]', 'checked', false);
+    }
+
+    renderTrustedSites(cachedRulesetData.trustedSites);
 
     qs$('#autoReload input[type="checkbox"').checked = cachedRulesetData.autoReload;
 
@@ -292,6 +297,45 @@ dom.on('#autoReload input[type="checkbox"', 'change', ev => {
         state: ev.target.checked,
     });
 });
+
+/******************************************************************************/
+
+let trustedSitesHash = '';
+
+function renderTrustedSites(hostnames) {
+    const textarea = qs$('#trustedSites');
+    trustedSitesHash = hostnames.sort().join('\n');
+    textarea.value = hostnames.map(hn => punycode.toUnicode(hn)).join('\n');
+    if ( textarea.value !== '' ) {
+        textarea.value += '\n';
+    }
+}
+
+function changeTrustedSites() {
+    const textarea = qs$('#trustedSites');
+    const hostnames = textarea.value.split(/\s/).map(hn => {
+        try {
+            return punycode.toASCII(
+                (new URL(`https://${hn}/`)).hostname
+            );
+        } catch(_) {
+        }
+        return '';
+    }).filter(hn => hn !== '').sort();
+    if ( hostnames.join('\n') === trustedSitesHash ) { return; }
+    sendMessage({
+        what: 'setTrustedSites',
+        hostnames,
+    }).then(response => {
+        cachedRulesetData.defaultFilteringMode = response.defaultFilteringMode;
+        cachedRulesetData.trustedSites = response.trustedSites;
+        renderWidgets();
+    });
+}
+
+dom.on('#trustedSites', 'blur', changeTrustedSites);
+
+self.addEventListener('beforeunload', changeTrustedSites);
 
 /******************************************************************************/
 
@@ -385,6 +429,7 @@ sendMessage({
     cachedRulesetData.rulesetDetails.forEach(rule => rulesetMap.set(rule.id, rule));
     try {
         renderFilterLists();
+        renderWidgets();
     } catch(ex) {
     }
 }).catch(reason => {

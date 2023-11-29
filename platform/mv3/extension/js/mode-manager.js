@@ -354,6 +354,35 @@ export function setDefaultFilteringMode(afterLevel) {
 
 /******************************************************************************/
 
+export async function getTrustedSites() {
+    const filteringModes = await getFilteringModeDetails();
+    return filteringModes.none;
+}
+
+export async function setTrustedSites(hostnames) {
+    const filteringModes = await getFilteringModeDetails();
+    const { none } = filteringModes;
+    const hnSet = new Set(hostnames);
+    let modified = false;
+    for ( const hn of none ) {
+        if ( hnSet.has(hn) ) {
+            hnSet.delete(hn);
+        } else {
+            none.delete(hn);
+            modified = true;
+        }
+    }
+    for ( const hn of hnSet ) {
+        const level = applyFilteringMode(filteringModes, hn, MODE_NONE);
+        if ( level !== MODE_NONE ) { continue; }
+        modified = true;
+    }
+    if ( modified === false ) { return; }
+    return writeFilteringModeDetails(filteringModes);
+}
+
+/******************************************************************************/
+
 export async function syncWithBrowserPermissions() {
     const [ permissions, beforeMode ] = await Promise.all([
         browser.permissions.getAll(),

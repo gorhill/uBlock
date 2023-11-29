@@ -64,6 +64,16 @@ p {
     width: calc(240px / 2);
     }
 
+h3[data-i18n="filteringMode0Name"]::first-letter {
+    text-transform: capitalize;
+    }
+#trustedSites  {
+    box-sizing: border-box;
+    height: 6rem;
+    resize: vertical;
+    width: 100%;
+    }
+
 #lists {
     margin: 0.5em 0 0 0;
     padding: 0;

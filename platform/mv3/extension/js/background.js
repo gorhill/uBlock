@@ -51,6 +51,8 @@ import {
     setFilteringMode,
     getDefaultFilteringMode,
     setDefaultFilteringMode,
+    getTrustedSites,
+    setTrustedSites,
     syncWithBrowserPermissions,
 } from './mode-manager.js';
 
@@ -151,8 +153,7 @@ function onMessage(request, sender, callback) {
         }).catch(reason => {
             console.log(reason);
         });
-        callback();
-        return;
+        return false;
     }
 
     default:
@@ -181,16 +182,19 @@ function onMessage(request, sender, callback) {
     case 'getOptionsPageData': {
         Promise.all([
             getDefaultFilteringMode(),
+            getTrustedSites(),
             getRulesetDetails(),
             dnr.getEnabledRulesets(),
         ]).then(results => {
             const [
                 defaultFilteringMode,
+                trustedSites,
                 rulesetDetails,
                 enabledRulesets,
             ] = results;
             callback({
                 defaultFilteringMode,
+                trustedSites: Array.from(trustedSites),
                 enabledRulesets,
                 maxNumberOfEnabledRulesets: dnr.MAX_NUMBER_OF_ENABLED_STATIC_RULESETS,
                 rulesetDetails: Array.from(rulesetDetails.values()),
@@ -261,6 +265,21 @@ function onMessage(request, sender, callback) {
         });
         return true;
     }
+
+    case 'setTrustedSites':
+        setTrustedSites(request.hostnames).then(( ) => {
+            registerInjectables();
+            return Promise.all([
+                getDefaultFilteringMode(),
+                getTrustedSites(),
+            ]);
+        }).then(results => {
+            callback({
+                defaultFilteringMode: results[0],
+                trustedSites: Array.from(results[1]),
+            });
+        });
+        return true;
 
     default:
         break;
