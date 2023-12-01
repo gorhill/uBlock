@@ -130,7 +130,9 @@ const renderFilterLists = ( ) => {
             dom.attr(elem, 'href', listDetails.instructionURL || '#');
         }
         dom.cl.toggle(listEntry, 'isDefault',
-            listDetails.isDefault === true || listkey === 'user-filters'
+            listDetails.isDefault === true ||
+            listDetails.isImportant === true ||
+            listkey === 'user-filters'
         );
         elem = qs$(listEntry, '.leafstats');
         dom.text(elem, renderLeafStats(on ? listDetails.entryUsedCount : 0, listDetails.entryCount));
