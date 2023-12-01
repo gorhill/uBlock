@@ -68,6 +68,7 @@
         disableInitialLoad: noopfn,
         display: noopfn,
         enableAsyncRendering: noopfn,
+        enableLazyLoad: noopfn,
         enableSingleRequest: noopfn,
         enableSyncRendering: noopfn,
         enableVideoAds: noopfn,
