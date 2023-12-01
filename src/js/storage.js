@@ -635,6 +635,7 @@ import {
     for ( const key in lists ) {
         if ( lists.hasOwnProperty(key) === false ) { continue; }
         const list = lists[key];
+        if ( list.content !== 'filters' ) { continue; }
         if ( list.off !== true ) {
             selectedListKeys.push(key);
             continue;
