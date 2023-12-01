@@ -23,11 +23,12 @@
 
 /******************************************************************************/
 
-import cacheStorage from './cachestorage.js';
-import logger from './logger.js';
 import µb from './background.js';
+import { broadcast } from './broadcast.js';
+import cacheStorage from './cachestorage.js';
 import { ubolog } from './console.js';
 import { i18n$ } from './i18n.js';
+import logger from './logger.js';
 import * as sfp from './static-filtering-parser.js';
 import { orphanizeString, } from './text-utils.js';
 
@@ -1234,7 +1235,7 @@ async function diffUpdater() {
             assetCacheSetDetails(data.assetKey, metadata);
         };
         bc.onmessage = ev => {
-            const data = ev.data;
+            const data = ev.data || {};
             if ( data.what === 'ready' ) {
                 ubolog('Diff updater: hard updating', toHardUpdate.map(v => v.assetKey).join());
                 while ( toHardUpdate.length !== 0 ) {
@@ -1279,7 +1280,7 @@ async function diffUpdater() {
             } else if ( data.status === 'nopatch-yet' || data.status === 'nodiff' ) {
                 ubolog(`Diff updater: skip update of ${data.assetKey} using ${data.patchPath}\n\treason: ${data.status}`);
                 assetCacheSetDetails(data.assetKey, { writeTime: data.writeTime });
-                vAPI.messaging.broadcast({
+                broadcast({
                     what: 'assetUpdated',
                     key: data.assetKey,
                     cached: true,

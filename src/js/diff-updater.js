@@ -271,7 +271,7 @@ async function fetchAndApplyAllPatches(assetDetails) {
 const bc = new globalThis.BroadcastChannel('diffUpdater');
 
 bc.onmessage = ev => {
-    const message = ev.data;
+    const message = ev.data || {};
     switch ( message.what ) {
     case 'update':
         fetchAndApplyAllPatches(message).then(response => {

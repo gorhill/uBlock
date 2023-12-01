@@ -23,8 +23,9 @@
 
 'use strict';
 
-import { i18n$ } from './i18n.js';
+import { onBroadcast } from './broadcast.js';
 import { dom, qs$ } from './dom.js';
+import { i18n$ } from './i18n.js';
 import './codemirror/ubo-static-filtering.js';
 
 /******************************************************************************/
@@ -310,7 +311,7 @@ dom.on('#userFiltersRevert', 'click', revertChanges);
 
     // https://github.com/gorhill/uBlock/issues/3704
     //   Merge changes to user filters occurring in the background
-    vAPI.broadcastListener.add(msg => {
+    onBroadcast(msg => {
         switch ( msg.what ) {
         case 'userFiltersUpdated': {
             cmEditor.startOperation();

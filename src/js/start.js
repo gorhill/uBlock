@@ -39,17 +39,18 @@ import './tab.js';
 import './ublock.js';
 import './utils.js';
 
-import cacheStorage from './cachestorage.js';
-import contextMenu from './contextmenu.js';
 import io from './assets.js';
-import lz4Codec from './lz4.js';
-import staticExtFilteringEngine from './static-ext-filtering.js';
-import staticFilteringReverseLookup from './reverselookup.js';
-import staticNetFilteringEngine from './static-net-filtering.js';
 import µb from './background.js';
-import webRequest from './traffic.js';
-import { redirectEngine } from './redirect-engine.js';
+import { filteringBehaviorChanged } from './broadcast.js';
+import cacheStorage from './cachestorage.js';
 import { ubolog } from './console.js';
+import contextMenu from './contextmenu.js';
+import lz4Codec from './lz4.js';
+import { redirectEngine } from './redirect-engine.js';
+import staticFilteringReverseLookup from './reverselookup.js';
+import staticExtFilteringEngine from './static-ext-filtering.js';
+import staticNetFilteringEngine from './static-net-filtering.js';
+import webRequest from './traffic.js';
 
 import {
     permanentFirewall,
@@ -453,7 +454,7 @@ if ( selfieIsValid !== true ) {
 
 // Flush memory cache -- unsure whether the browser does this internally
 // when loading a new extension.
-µb.filteringBehaviorChanged();
+filteringBehaviorChanged();
 
 // Final initialization steps after all needed assets are in memory.
 

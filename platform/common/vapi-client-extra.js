@@ -30,13 +30,9 @@
 (( ) => {
 // >>>>>>>> start of private namespace
 
-if (
-    typeof vAPI !== 'object' ||
-    vAPI.messaging instanceof Object === false ||
-    vAPI.MessagingConnection instanceof Function
-) {
-    return;
-}
+if ( typeof vAPI !== 'object' ) { return; }
+if ( vAPI.messaging instanceof Object === false ) { return; }
+if ( vAPI.MessagingConnection instanceof Function ) { return; }
 
 const listeners = new Set();
 const connections = new Map();
@@ -241,50 +237,6 @@ vAPI.MessagingConnection = class {
 };
 
 vAPI.messaging.extensions.push(vAPI.MessagingConnection);
-
-// <<<<<<<< end of private namespace
-})();
-
-/******************************************************************************/
-
-// Broadcast listening ability
-
-(( ) => {
-// >>>>>>>> start of private namespace
-
-if (
-    typeof vAPI !== 'object' ||
-    vAPI.messaging instanceof Object === false ||
-    vAPI.broadcastListener instanceof Object
-) {
-    return;
-}
-
-const listeners = new Set();
-
-vAPI.broadcastListener =  {
-    add: function(listener) {
-        listeners.add(listener);
-        vAPI.messaging.getPort();
-    },
-    remove: function(listener) {
-        listeners.delete(listener);
-    },
-    canDestroyPort() {
-        return listeners.size === 0;
-    },
-    mustDestroyPort() {
-        listeners.clear();
-    },
-    canProcessMessage(details) {
-        if ( details.broadcast === false ) { return; }
-        for ( const listener of listeners ) {
-             listener(details.msg);
-        }
-    },
-};
-
-vAPI.messaging.extensions.push(vAPI.broadcastListener);
 
 // <<<<<<<< end of private namespace
 })();

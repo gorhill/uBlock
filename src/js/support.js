@@ -23,6 +23,7 @@
 
 'use strict';
 
+import { onBroadcast } from './broadcast.js';
 import { dom, qs$ } from './dom.js';
 
 /******************************************************************************/
@@ -316,7 +317,7 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
         });
     }
 
-    vAPI.broadcastListener.add(msg => {
+    onBroadcast(msg => {
         if ( msg.what === 'assetsUpdated' ) {
             dom.cl.remove(dom.body, 'updating');
             dom.cl.add(dom.body, 'updated');

@@ -28,8 +28,9 @@
 import publicSuffixList from '../lib/publicsuffixlist/publicsuffixlist.js';
 import punycode from '../lib/punycode.js';
 
-import cosmeticFilteringEngine from './cosmetic-filtering.js';
 import io from './assets.js';
+import { broadcast, filteringBehaviorChanged, onBroadcast } from './broadcast.js';
+import cosmeticFilteringEngine from './cosmetic-filtering.js';
 import logger from './logger.js';
 import lz4Codec from './lz4.js';
 import staticExtFilteringEngine from './static-ext-filtering.js';
@@ -243,7 +244,7 @@ import {
         if ( typeof hs[key] !== typeof hsDefault[key] ) { continue; }
         this.hiddenSettings[key] = hs[key];
     }
-    this.fireEvent('hiddenSettingsChanged');
+    broadcast({ what: 'hiddenSettingsChanged' });
 };
 
 // Note: Save only the settings which values differ from the default ones.
@@ -259,7 +260,8 @@ import {
     });
 };
 
-µb.onEvent('hiddenSettingsChanged', ( ) => {
+onBroadcast(msg => {
+    if ( msg.what !== 'hiddenSettingsChanged' ) { return; }
     const µbhs = µb.hiddenSettings;
     ubologSet(µbhs.consoleLogLevel === 'info');
     vAPI.net.setOptions({
@@ -391,7 +393,8 @@ import {
     return false;
 };
 
-µb.onEvent('hiddenSettingsChanged', ( ) => {
+onBroadcast(msg => {
+    if ( msg.what !== 'hiddenSettingsChanged' ) { return; }
     µb.parsedTrustedListPrefixes = [];
 });
 
@@ -614,9 +617,8 @@ import {
 
     // https://www.reddit.com/r/uBlockOrigin/comments/cj7g7m/
     // https://www.reddit.com/r/uBlockOrigin/comments/cnq0bi/
-    µb.filteringBehaviorChanged();
-
-    vAPI.messaging.broadcast({ what: 'userFiltersUpdated' });
+    filteringBehaviorChanged();
+    broadcast({ what: 'userFiltersUpdated' });
 };
 
 µb.createUserFilters = function(details) {
@@ -852,7 +854,7 @@ import {
         staticExtFilteringEngine.freeze();
         redirectEngine.freeze();
         vAPI.net.unsuspend();
-        µb.filteringBehaviorChanged();
+        filteringBehaviorChanged();
 
         vAPI.storage.set({ 'availableFilterLists': µb.availableFilterLists });
 
@@ -862,7 +864,7 @@ import {
             text: 'Reloading all filter lists: done'
         });
 
-        vAPI.messaging.broadcast({
+        broadcast({
             what: 'staticFilteringDataChanged',
             parseCosmeticFilters: µb.userSettings.parseAllABPHideFilters,
             ignoreGenericCosmeticFilters: µb.userSettings.ignoreGenericCosmeticFilters,
@@ -1584,10 +1586,10 @@ import {
         } else if ( details.assetKey === 'ublock-badlists' ) {
             this.badLists = new Map();
         }
-        vAPI.messaging.broadcast({
+        broadcast({
             what: 'assetUpdated',
             key: details.assetKey,
-            cached: cached
+            cached,
         });
         // https://github.com/gorhill/uBlock/issues/2585
         //   Whenever an asset is overwritten, the current selfie is quite
@@ -1598,10 +1600,10 @@ import {
 
     // Update failed.
     if ( topic === 'asset-update-failed' ) {
-        vAPI.messaging.broadcast({
+        broadcast({
             what: 'assetUpdated',
             key: details.assetKey,
-            failed: true
+            failed: true,
         });
         return;
     }
@@ -1625,7 +1627,7 @@ import {
         } else {
             this.scheduleAssetUpdater(0);
         }
-        vAPI.messaging.broadcast({
+        broadcast({
             what: 'assetsUpdated',
             assetKeys: details.assetKeys
         });

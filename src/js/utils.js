@@ -134,36 +134,6 @@ import µb from './background.js';
 
 /******************************************************************************/
 
-µb.fireEvent = function(name, details = undefined) {
-    if (
-        self instanceof Object &&
-        self.dispatchEvent instanceof Function &&
-        self.CustomEvent instanceof Function
-    ) {
-        self.dispatchEvent(new CustomEvent(name, { detail: details }));
-    }
-};
-
-µb.onEvent = function(name, fn) {
-    if (
-        self instanceof Object &&
-        self.addEventListener instanceof Function
-    ) {
-        self.addEventListener(name, fn);
-    }
-};
-
-/******************************************************************************/
-
-µb.filteringBehaviorChanged = function(details = {}) {
-    if ( typeof details.direction !== 'number' || details.direction >= 0 ) {
-        vAPI.net.handlerBehaviorChanged();
-    }
-    this.fireEvent('filteringBehaviorChanged', details);
-};
-
-/******************************************************************************/
-
 // TODO: properly compare arrays
 
 µb.getModifiedSettings = function(edit, orig = {}) {

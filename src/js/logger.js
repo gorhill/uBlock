@@ -23,6 +23,10 @@
 
 /******************************************************************************/
 
+import { broadcastToAll } from './broadcast.js';
+
+/******************************************************************************/
+
 let buffer = null;
 let lastReadTime = 0;
 let writePtr = 0;
@@ -40,7 +44,7 @@ const janitorTimer = vAPI.defer.create(( ) => {
     buffer = null;
     writePtr = 0;
     logger.ownerId = undefined;
-    vAPI.messaging.broadcast({ what: 'loggerDisabled' });
+    broadcastToAll({ what: 'loggerDisabled' });
 });
 
 const boxEntry = function(details) {

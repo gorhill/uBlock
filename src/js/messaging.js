@@ -28,6 +28,7 @@
 import publicSuffixList from '../lib/publicsuffixlist/publicsuffixlist.js';
 import punycode from '../lib/punycode.js';
 
+import { filteringBehaviorChanged } from './broadcast.js';
 import cacheStorage from './cachestorage.js';
 import cosmeticFilteringEngine from './cosmetic-filtering.js';
 import htmlFilteringEngine from './html-filtering.js';
@@ -346,7 +347,7 @@ const onMessage = function(request, sender, callback) {
     case 'setWhitelist':
         µb.netWhitelist = µb.whitelistFromString(request.whitelist);
         µb.saveWhitelist();
-        µb.filteringBehaviorChanged();
+        filteringBehaviorChanged();
         break;
 
     case 'toggleHostnameSwitch':

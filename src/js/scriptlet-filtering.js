@@ -26,6 +26,7 @@
 /******************************************************************************/
 
 import µb from './background.js';
+import { onBroadcast } from './broadcast.js';
 import { redirectEngine as reng } from './redirect-engine.js';
 import { sessionFirewall } from './filtering-engines.js';
 import { StaticExtFilteringHostnameDB } from './static-ext-filtering-db.js';
@@ -67,12 +68,10 @@ const contentScriptRegisterer = new (class {
     constructor() {
         this.hostnameToDetails = new Map();
         if ( browser.contentScripts === undefined ) { return; }
-        µb.onEvent('filteringBehaviorChanged', ev => {
-            const details = ev.detail;
-            if ( details instanceof Object ) {
-                if ( details.direction > 0 ) { return; }
-                if ( details.hostname ) { return this.flush(details.hostname); }
-            }
+        onBroadcast(msg => {
+            if ( msg.what !== 'filteringBehaviorChanged' ) { return; }
+            if ( msg.direction > 0 ) { return; }
+            if ( msg.hostname ) { return this.flush(msg.hostname); }
             this.reset();
         });
     }
