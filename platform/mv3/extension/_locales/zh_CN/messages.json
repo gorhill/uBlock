@@ -32,7 +32,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {
-    "message": "打开控制面板",
+    "message": "在仪表板中",
     "description": "English: Click to open the dashboard"
   },
   "popupMoreButton": {

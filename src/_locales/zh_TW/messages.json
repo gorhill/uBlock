@@ -44,7 +44,7 @@
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "快速鍵",
+    "message": "快捷鍵",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -184,7 +184,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "點擊以使重新啟用此網站的 JavaScript ",
+    "message": "點擊以重新啟用此網站的 JavaScript ",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
@@ -244,7 +244,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "第三方 階層式樣式表 / 圖片",
+    "message": "第三方 CSS / 圖片",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -384,7 +384,7 @@
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
-    "message": "封鎖遠端字體",
+    "message": "封鎖遠端字型",
     "description": ""
   },
   "settingsNoScriptingPrompt": {
@@ -404,7 +404,7 @@
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "僅適合技術使用者使用的相關功能。",
+    "message": "僅適合技術使用者的功能",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
@@ -468,7 +468,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "內建",
+    "message": "內置",
     "description": "Filter lists section name"
   },
   "3pGroupAds": {
@@ -516,7 +516,7 @@
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "最後更新：{{ago}}。\n點擊此處以要求更新。",
+    "message": "上次更新：{{ago}}。\n點擊此處以要求更新。",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
@@ -924,7 +924,7 @@
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>小提示：</b>請確定您的過濾器清單已經更新至最新版本。我們主要用<span data-url=\"logger-ui.html#_\">記錄器</span>來分析過濾器相關問題。",
+    "message": "<b>小提示：</b>請確定您的過濾器清單已經更新至最新版本。我們主要用 <span data-url=\"logger-ui.html#_\">記錄器</span> 來分析過濾器相關問題。",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
@@ -952,7 +952,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "為了避免太多人發出重複的報告拖垮志工，請先確認是否已經有人回報過您打算報告的問題。",
+    "message": "請先確認是否已經有人回報過此問題，以免重複回報造成維護者的而外負擔。",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
@@ -968,7 +968,7 @@
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "這張網頁…",
+    "message": "這個網頁…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
@@ -1020,7 +1020,7 @@
     "description": ""
   },
   "aboutCode": {
-    "message": "程式原始碼（GPLv3）",
+    "message": "原始碼（GPLv3）",
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {

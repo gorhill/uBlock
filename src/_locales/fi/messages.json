@@ -592,7 +592,7 @@
     "description": "default file name to use"
   },
   "rulesHint": {
-    "message": "Lista dynaamisista suodatussäännöistäsi.",
+    "message": "Listaus dynaamisista suodatussäännöistä.",
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {

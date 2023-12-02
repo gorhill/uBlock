@@ -280,7 +280,7 @@
     "description": "Appears as an option to filter out firewall rows"
   },
   "popup3pFrameFilter": {
-    "message": "frame",
+    "message": "چارچوب",
     "description": "Appears as an option to filter out firewall rows"
   },
   "pickerCreate": {

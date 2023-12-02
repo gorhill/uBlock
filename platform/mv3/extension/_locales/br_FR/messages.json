@@ -112,7 +112,7 @@
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "The default filtering mode will be overridden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
+    "message": "Ar mod silañ dre ziouer a vo erlec'hiet gant modoù silañ zo evit lec'hiennoù resis. Gallout a rit aozañ ar mod silañ war bep seurt lec'hienn evit ma vo diouzh al lec'hiennoù-se. Pep mod en deus e duioù fall ha mat.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {

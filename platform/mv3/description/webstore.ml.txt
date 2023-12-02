@@ -1,30 +1,30 @@
-uBO Lite (uBOL) is a *permission-less* MV3-based content blocker.
+uBO Lite (uBOL) ഒരു *അനുമതി-കുറവ്* MV3 അടിസ്ഥാനമാക്കിയുള്ള ഉള്ളടക്ക ബ്ലോക്കറാണ്.
 
-The default ruleset corresponds to uBlock Origin's default filterset:
+ഡിഫോൾട്ട് റൂൾസെറ്റ് uBlock Origin-ന്റെ ഡിഫോൾട്ട് ഫിൽട്ടർസെറ്റുമായി യോജിക്കുന്നു:
 
-- uBlock Origin's built-in filter lists
-- EasyList
-- EasyPrivacy
-- Peter Lowe’s Ad and tracking server list
+- uBlock ഒറിജിനിന്റെ ബിൽറ്റ്-ഇൻ ഫിൽട്ടർ ലിസ്റ്റുകൾ
+- ഈസി ലിസ്റ്റ്
+- ഈസി സ്വകാര്യത
+- പീറ്റർ ലോവിന്റെ പരസ്യവും ട്രാക്കിംഗ് സെർവർ ലിസ്റ്റും
 
-You can add more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+ഓപ്ഷനുകൾ പേജ് സന്ദർശിച്ച് നിങ്ങൾക്ക് കൂടുതൽ നിയമങ്ങൾ ചേർക്കാൻ കഴിയും -- പോപ്പ്അപ്പ് പാനലിലെ _Cogs_ ഐക്കണിൽ ക്ലിക്കുചെയ്യുക.
 
-uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
+uBOL പൂർണ്ണമായും ഡിക്ലറേറ്റീവ് ആണ്, അതായത് ഫിൽട്ടറിംഗ് സംഭവിക്കുന്നതിന് ഒരു സ്ഥിരമായ uBOL പ്രക്രിയയുടെ ആവശ്യമില്ല, കൂടാതെ CSS/JS ഇഞ്ചക്ഷൻ അടിസ്ഥാനമാക്കിയുള്ള ഉള്ളടക്ക ഫിൽട്ടറിംഗ്, എക്സ്റ്റൻഷനേക്കാൾ വിശ്വസനീയമായി ബ്രൗസർ തന്നെ നിർവഹിക്കുന്നു. ഉള്ളടക്കം തടയൽ നടന്നുകൊണ്ടിരിക്കുമ്പോൾ uBOL തന്നെ CPU/മെമ്മറി ഉറവിടങ്ങൾ ഉപയോഗിക്കില്ല എന്നാണ് ഇതിനർത്ഥം -- നിങ്ങൾ പോപ്പ്അപ്പ് പാനലുമായോ ഓപ്‌ഷൻ പേജുകളുമായോ സംവദിക്കുമ്പോൾ _only_ uBOL-ന്റെ സേവന വർക്കർ പ്രോസസ്സ് ആവശ്യമാണ്.
 
-uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read and modify data" permissions at install time.
+ഇൻസ്റ്റാളേഷൻ സമയത്ത് uBOL ന് വിശാലമായ "ഡാറ്റ വായിക്കാനും പരിഷ്‌ക്കരിക്കാനും" അനുമതി ആവശ്യമില്ല, അതിനാൽ uBlock ഒറിജിൻ അല്ലെങ്കിൽ മറ്റ് ഉള്ളടക്ക ബ്ലോക്കറുകൾ എന്നിവയുമായി താരതമ്യപ്പെടുത്തുമ്പോൾ അതിന്റെ പരിമിതമായ കഴിവുകൾ ഇൻസ്റ്റാളേഷൻ സമയത്ത് വിശാലമായ "ഡാറ്റ വായിക്കാനും പരിഷ്‌ക്കരിക്കാനും" അനുമതികൾ ആവശ്യമാണ്.
 
-However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
+എന്നിരുന്നാലും, നിങ്ങൾ തിരഞ്ഞെടുക്കുന്ന നിർദ്ദിഷ്ട സൈറ്റുകളിൽ വിപുലീകൃത അനുമതികൾ *വ്യക്തമായി* നൽകാൻ uBOL നിങ്ങളെ അനുവദിക്കുന്നു, അതുവഴി കോസ്മെറ്റിക് ഫിൽട്ടറിംഗും സ്ക്രിപ്റ്റ്ലെറ്റ് കുത്തിവയ്പ്പുകളും ഉപയോഗിച്ച് ആ സൈറ്റുകളിൽ മികച്ച രീതിയിൽ ഫിൽട്ടർ ചെയ്യാൻ കഴിയും.
 
-To grant extended permissions on a given site, open the popup panel and pick a higher filtering mode such as Optimal or Complete.
+തന്നിരിക്കുന്ന സൈറ്റിൽ വിപുലമായ അനുമതികൾ നൽകുന്നതിന്, പോപ്പ്അപ്പ് പാനൽ തുറന്ന് ഒപ്റ്റിമൽ അല്ലെങ്കിൽ കംപ്ലീറ്റ് പോലുള്ള ഉയർന്ന ഫിൽട്ടറിംഗ് മോഡ് തിരഞ്ഞെടുക്കുക.
 
-The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request.
+നിലവിലെ സൈറ്റിൽ വിപുലീകരണം അഭ്യർത്ഥിച്ച അധിക അനുമതികൾ നൽകുന്നതിന്റെ ഫലങ്ങളെക്കുറിച്ച് ബ്രൗസർ നിങ്ങൾക്ക് മുന്നറിയിപ്പ് നൽകും, നിങ്ങൾ അഭ്യർത്ഥന സ്വീകരിക്കുകയോ നിരസിക്കുകയോ ചെയ്യണോ എന്ന് നിങ്ങൾ ബ്രൗസറിനോട് പറയേണ്ടിവരും.
 
-If you accept uBOL's request for additional permissions on the current site, it will be able to better filter content for the current site.
+നിലവിലെ സൈറ്റിൽ കൂടുതൽ അനുമതികൾക്കായുള്ള uBOL-ന്റെ അഭ്യർത്ഥന നിങ്ങൾ അംഗീകരിക്കുകയാണെങ്കിൽ, നിലവിലെ സൈറ്റിനായി മികച്ച ഉള്ളടക്കം ഫിൽട്ടർ ചെയ്യാൻ അതിന് കഴിയും.
 
-You can set the default filtering mode from uBOL's options page. If you pick the Optimal or Complete mode as the default one, you will need to grant uBOL the permission to read and modify data on all websites.
+uBOL-ന്റെ ഓപ്‌ഷൻ പേജിൽ നിന്ന് നിങ്ങൾക്ക് ഡിഫോൾട്ട് ഫിൽട്ടറിംഗ് മോഡ് സജ്ജമാക്കാൻ കഴിയും. ഒപ്റ്റിമൽ അല്ലെങ്കിൽ കംപ്ലീറ്റ് മോഡ് ഡിഫോൾട്ടായി നിങ്ങൾ തിരഞ്ഞെടുക്കുകയാണെങ്കിൽ, എല്ലാ വെബ്‌സൈറ്റുകളിലെയും ഡാറ്റ വായിക്കാനും പരിഷ്‌ക്കരിക്കാനും നിങ്ങൾ uBOL-ന് അനുമതി നൽകേണ്ടതുണ്ട്.
 
-Keep in mind this is still a work in progress, with these end goals:
+ഈ അന്തിമ ലക്ഷ്യങ്ങളോടെ ഇത് ഇപ്പോഴും പുരോഗമിക്കുന്ന ഒരു ജോലിയാണെന്ന് ഓർമ്മിക്കുക:
 
-- No broad host permissions at install time -- extended permissions are granted explicitly by the user on a per-site basis.
+- ഇൻസ്റ്റാളേഷൻ സമയത്ത് ബ്രോഡ് ഹോസ്റ്റ് അനുമതികളൊന്നുമില്ല -- ഓരോ സൈറ്റിന്റെ അടിസ്ഥാനത്തിൽ വിപുലീകൃത അനുമതികൾ ഉപയോക്താവ് വ്യക്തമായി നൽകുന്നു.
 
-- Entirely declarative for reliability and CPU/memory efficiency.
+- വിശ്വാസ്യതയ്ക്കും സിപിയു/മെമ്മറി കാര്യക്ഷമതയ്ക്കും പൂർണ്ണമായും പ്രഖ്യാപനം.

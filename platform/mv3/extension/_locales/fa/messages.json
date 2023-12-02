@@ -16,11 +16,11 @@
     "description": "English: uBO Lite — Dashboard"
   },
   "settingsPageName": {
-    "message": "Settings",
+    "message": "تنظیمات",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
-    "message": "About",
+    "message": "درباره",
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
@@ -36,23 +36,23 @@
     "description": "English: Click to open the dashboard"
   },
   "popupMoreButton": {
-    "message": "More",
+    "message": "بیشتر",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Less",
+    "message": "کمتر",
     "description": "Label to be used to hide popup panel sections"
   },
   "3pGroupDefault": {
-    "message": "Default",
+    "message": "پیش فرض",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAds": {
-    "message": "Ads",
+    "message": "تبلیغات",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupPrivacy": {
-    "message": "Privacy",
+    "message": "حریم خصوصی",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
@@ -64,7 +64,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMisc": {
-    "message": "Miscellaneous",
+    "message": "سایر",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupRegions": {
