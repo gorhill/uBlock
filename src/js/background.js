@@ -144,10 +144,10 @@ if ( vAPI.webextFlavor.soup.has('firefox') ) {
 }
 
 const µBlock = {  // jshint ignore:line
-    userSettingsDefault: userSettingsDefault,
+    userSettingsDefault,
     userSettings: Object.assign({}, userSettingsDefault),
 
-    hiddenSettingsDefault: hiddenSettingsDefault,
+    hiddenSettingsDefault,
     hiddenSettingsAdmin: {},
     hiddenSettings: Object.assign({}, hiddenSettingsDefault),
 
