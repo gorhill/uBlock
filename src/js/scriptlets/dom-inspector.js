@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2015-2018 Raymond Hill
+    Copyright (C) 2015-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,30 +24,21 @@
 /******************************************************************************/
 /******************************************************************************/
 
-(( ) => {
+(async ( ) => {
 
 /******************************************************************************/
 
-if ( typeof vAPI !== 'object' || !vAPI.domFilterer ) { return; }
-
-/******************************************************************************/
-
-var sessionId = vAPI.sessionId;
-
-if ( document.querySelector('iframe.dom-inspector.' + sessionId) !== null ) {
-    return;
-}
+if ( typeof vAPI !== 'object' ) { return; }
+if ( vAPI.domFilterer instanceof Object === false ) { return; }
+if ( document.querySelector(`iframe[${vAPI.sessionId}]`) !== null ) { return; }
 
 /******************************************************************************/
 /******************************************************************************/
-
-let loggerConnectionId;
 
 // Highlighter-related
-let svgRoot = null;
-let pickerRoot = null;
+let inspectorRoot = null;
 
-let nodeToIdMap = new WeakMap(); // No need to iterate
+const nodeToIdMap = new WeakMap(); // No need to iterate
 
 let blueNodes = [];
 const roRedNodes = new Map();    // node => current cosmetic filter
@@ -59,7 +50,11 @@ const reHasCSSCombinators = /[ >+~]/;
 
 /******************************************************************************/
 
-const domLayout = (function() {
+//const getNodeId = node => nodeToIdMap.get(node) || 0;
+
+/******************************************************************************/
+
+const domLayout = (( ) => {
     const skipTagNames = new Set([
         'br', 'head', 'link', 'meta', 'script', 'style', 'title'
     ]);
@@ -70,87 +65,81 @@ const domLayout = (function() {
         [ 'object', 'data' ]
     ]);
 
-    var idGenerator = 0;
+    let idGenerator = 1;
 
     // This will be used to uniquely identify nodes across process.
 
-    const newNodeId = function(node) {
-        var nid = 'n' + (idGenerator++).toString(36);
+    const newNodeId = node => {
+        const nid = `n${(idGenerator++).toString(36)}`;
         nodeToIdMap.set(node, nid);
         return nid;
     };
 
-    const selectorFromNode = function(node) {
-        var str, attr, pos, sw, i;
-        var tag = node.localName;
-        var selector = CSS.escape(tag);
+    const selectorFromNode = node => {
+        const tag = node.localName;
+        let selector = CSS.escape(tag);
         // Id
         if ( typeof node.id === 'string' ) {
-            str = node.id.trim();
+            let str = node.id.trim();
             if ( str !== '' ) {
-                selector += '#' + CSS.escape(str);
+                selector += `#${CSS.escape(str)}`;
             }
         }
         // Class
-        var cl = node.classList;
+        const cl = node.classList;
         if ( cl ) {
-            for ( i = 0; i < cl.length; i++ ) {
-                selector += '.' + CSS.escape(cl[i]);
+            for ( let i = 0; i < cl.length; i++ ) {
+                selector += `.${CSS.escape(cl[i])}`;
             }
         }
         // Tag-specific attributes
-        attr = resourceAttrNames.get(tag);
+        const attr = resourceAttrNames.get(tag);
         if ( attr !== undefined ) {
-            str = node.getAttribute(attr) || '';
+            let str = node.getAttribute(attr) || '';
             str = str.trim();
-            if ( str.startsWith('data:') ) {
-                pos = 5;
-            } else {
-                pos = str.search(/[#?]/);
-            }
+            const pos = str.startsWith('data:') ? 5 : str.search(/[#?]/);
+            let sw = '';
             if ( pos !== -1 ) {
                 str = str.slice(0, pos);
                 sw = '^';
-            } else {
-                sw = '';
             }
             if ( str !== '' ) {
-                selector += '[' + attr + sw + '="' + CSS.escape(str, true) + '"]';
+                selector += `[${attr}${sw}="${CSS.escape(str, true)}"]`;
             }
         }
         return selector;
     };
 
-    const DomRoot = function() {
+    function DomRoot() {
         this.nid = newNodeId(document.body);
         this.lvl = 0;
         this.sel = 'body';
         this.cnt = 0;
         this.filter = roRedNodes.get(document.body);
-    };
+    }
 
-    const DomNode = function(node, level) {
+    function DomNode(node, level) {
         this.nid = newNodeId(node);
         this.lvl = level;
         this.sel = selectorFromNode(node);
         this.cnt = 0;
         this.filter = roRedNodes.get(node);
-    };
+    }
 
-    const domNodeFactory = function(level, node) {
+    const domNodeFactory = (level, node) => {
         const localName = node.localName;
         if ( skipTagNames.has(localName) ) { return null; }
         // skip uBlock's own nodes
-        if ( node.classList.contains(sessionId) ) { return null; }
+        if ( node === inspectorRoot ) { return null; }
         if ( level === 0 && localName === 'body' ) {
             return new DomRoot();
         }
         return new DomNode(node, level);
     };
 
-    // Collect layout data.
+    // Collect layout data
 
-    const getLayoutData = function() {
+    const getLayoutData = ( ) => {
         const layout = [];
         const stack = [];
         let lvl = 0;
@@ -188,14 +177,14 @@ const domLayout = (function() {
 
     // Descendant count for each node.
 
-    const patchLayoutData = function(layout) {
-        var stack = [], ptr;
-        var lvl = 0;
-        var domNode, cnt;
-        var i = layout.length;
+    const patchLayoutData = layout => {
+        const stack = [];
+        let ptr;
+        let lvl = 0;
+        let i = layout.length;
 
         while ( i-- ) {
-            domNode = layout[i];
+            const domNode = layout[i];
             if ( domNode.lvl === lvl ) {
                 stack[ptr] += 1;
                 continue;
@@ -210,7 +199,7 @@ const domLayout = (function() {
                 continue;
             }
             // domNode.lvl < lvl
-            cnt = stack.pop();
+            const cnt = stack.pop();
             domNode.cnt = cnt;
             lvl -= 1;
             ptr = lvl - 1;
@@ -221,13 +210,13 @@ const domLayout = (function() {
 
     // Track and report mutations of the DOM
 
-    var mutationObserver = null;
-    var mutationTimer;
-    var addedNodelists = [];
-    var removedNodelist = [];
+    let mutationObserver = null;
+    let mutationTimer;
+    let addedNodelists = [];
+    let removedNodelist = [];
 
-    const previousElementSiblingId = function(node) {
-        var sibling = node;
+    const previousElementSiblingId = node => {
+        let sibling = node;
         for (;;) {
             sibling = sibling.previousElementSibling;
             if ( sibling === null ) { return null; }
@@ -236,11 +225,10 @@ const domLayout = (function() {
         }
     };
 
-    const journalFromBranch = function(root, newNodes, newNodeToIdMap) {
-        var domNode;
-        var node = root.firstElementChild;
+    const journalFromBranch = (root, newNodes, newNodeToIdMap) => {
+        let node = root.firstElementChild;
         while ( node !== null ) {
-            domNode = domNodeFactory(undefined, node);
+            const domNode = domNodeFactory(undefined, node);
             if ( domNode !== null ) {
                 newNodeToIdMap.set(domNode.nid, domNode);
                 newNodes.push(node);
@@ -267,22 +255,21 @@ const domLayout = (function() {
         }
     };
 
-    const journalFromMutations = function() {
-        var nodelist, node, domNode, nid;
+    const journalFromMutations = ( ) => {
         mutationTimer = undefined;
 
         // This is used to temporarily hold all added nodes, before resolving
         // their node id and relative position.
-        var newNodes = [];
-        var journalEntries = [];
-        var newNodeToIdMap = new Map();
+        const newNodes = [];
+        const journalEntries = [];
+        const newNodeToIdMap = new Map();
 
-        for ( nodelist of addedNodelists ) {
-            for ( node of nodelist ) {
+        for ( const nodelist of addedNodelists ) {
+            for ( const node of nodelist ) {
                 if ( node.nodeType !== 1 ) { continue; }
                 if ( node.parentElement === null ) { continue; }
                 cosmeticFilterMapper.incremental(node);
-                domNode = domNodeFactory(undefined, node);
+                const domNode = domNodeFactory(undefined, node);
                 if ( domNode !== null ) {
                     newNodeToIdMap.set(domNode.nid, domNode);
                     newNodes.push(node);
@@ -291,19 +278,16 @@ const domLayout = (function() {
             }
         }
         addedNodelists = [];
-        for ( nodelist of removedNodelist ) {
-            for ( node of nodelist ) {
+        for ( const nodelist of removedNodelist ) {
+            for ( const node of nodelist ) {
                 if ( node.nodeType !== 1 ) { continue; }
-                nid = nodeToIdMap.get(node);
+                const nid = nodeToIdMap.get(node);
                 if ( nid === undefined ) { continue; }
-                journalEntries.push({
-                    what: -1,
-                    nid: nid
-                });
+                journalEntries.push({ what: -1, nid });
             }
         }
         removedNodelist = [];
-        for ( node of newNodes ) {
+        for ( const node of newNodes ) {
             journalEntries.push({
                 what: 1,
                 nid: nodeToIdMap.get(node),
@@ -314,7 +298,7 @@ const domLayout = (function() {
 
         if ( journalEntries.length === 0 ) { return; }
 
-        vAPI.MessagingConnection.sendTo(loggerConnectionId, {
+        inspectorFramePort.postMessage({
             what: 'domLayoutIncremental',
             url: window.location.href,
             hostname: window.location.hostname,
@@ -323,8 +307,8 @@ const domLayout = (function() {
         });
     };
 
-    const onMutationObserved = function(mutationRecords) {
-        for ( var record of mutationRecords ) {
+    const onMutationObserved = mutationRecords => {
+        for ( const record of mutationRecords ) {
             if ( record.addedNodes.length !== 0 ) {
                 addedNodelists.push(record.addedNodes);
             }
@@ -339,7 +323,7 @@ const domLayout = (function() {
 
     // API
 
-    const getLayout = function() {
+    const getLayout = ( ) => {
         cosmeticFilterMapper.reset();
         mutationObserver = new MutationObserver(onMutationObserved);
         mutationObserver.observe(document.body, {
@@ -355,11 +339,11 @@ const domLayout = (function() {
         };
     };
 
-    const reset = function() {
+    const reset = ( ) => {
         shutdown();
     };
 
-    const shutdown = function() {
+    const shutdown = ( ) => {
         if ( mutationTimer !== undefined ) {
             clearTimeout(mutationTimer);
             mutationTimer = undefined;
@@ -370,35 +354,20 @@ const domLayout = (function() {
         }
         addedNodelists = [];
         removedNodelist = [];
-        nodeToIdMap = new WeakMap();
     };
 
     return {
         get: getLayout,
-        reset: reset,
-        shutdown: shutdown
+        reset,
+        shutdown,
     };
 })();
 
-// https://www.youtube.com/watch?v=qo8zKhd4Cf0
-
 /******************************************************************************/
 /******************************************************************************/
 
-// For browsers not supporting `:scope`, it's not the end of the world: the
-// suggested CSS selectors may just end up being more verbose.
-
-let cssScope = ':scope > ';
-try {
-    document.querySelector(':scope *');
-} catch (e) {
-    cssScope = '';
-}
-
-/******************************************************************************/
-
-const cosmeticFilterMapper = (function() {
-    const nodesFromStyleTag = function(rootNode) {
+const cosmeticFilterMapper = (( ) => {
+    const nodesFromStyleTag = rootNode => {
         const filterMap = roRedNodes;
         const details = vAPI.domFilterer.getAllSelectors();
 
@@ -434,25 +403,25 @@ const cosmeticFilterMapper = (function() {
         }
     };
 
-    const incremental = function(rootNode) {
+    const incremental = rootNode => {
         nodesFromStyleTag(rootNode);
     };
 
-    const reset = function() {
+    const reset = ( ) => {
         roRedNodes.clear();
         if ( document.documentElement !== null ) {
             incremental(document.documentElement);
         }
     };
 
-    const shutdown = function() {
+    const shutdown = ( ) => {
         vAPI.domFilterer.toggle(true);
     };
 
     return {
-        incremental: incremental,
-        reset: reset,
-        shutdown: shutdown
+        incremental,
+        reset,
+        shutdown,
     };
 })();
 
@@ -475,21 +444,18 @@ const elementsFromSelector = function(selector, context) {
 };
 
 const elementsFromSpecialSelector = function(selector) {
-    var out = [], i;
-    var matches = /^(.+?):has\((.+?)\)$/.exec(selector);
+    const out = [];
+    let matches = /^(.+?):has\((.+?)\)$/.exec(selector);
     if ( matches !== null ) {
-        var nodes;
+        let nodes;
         try {
             nodes = document.querySelectorAll(matches[1]);
         } catch(ex) {
             nodes = [];
         }
-        i = nodes.length;
-        while ( i-- ) {
-            var node = nodes[i];
-            if ( node.querySelector(matches[2]) !== null ) {
-                out.push(node);
-            }
+        for ( const node of nodes ) {
+            if ( node.querySelector(matches[2]) === null ) { continue; }
+            out.push(node);
         }
         return out;
     }
@@ -503,7 +469,7 @@ const elementsFromSpecialSelector = function(selector) {
         XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
         null
     );
-    i = xpr.snapshotLength;
+    let i = xpr.snapshotLength;
     while ( i-- ) {
         out.push(xpr.snapshotItem(i));
     }
@@ -512,128 +478,114 @@ const elementsFromSpecialSelector = function(selector) {
 
 /******************************************************************************/
 
-const getSvgRootChildren = function() {
-    if ( svgRoot.children ) {
-        return svgRoot.children;
-    } else {
-        const childNodes = Array.prototype.slice.apply(svgRoot.childNodes);
-        return childNodes.filter(function(node) {
-            return node.nodeType === Node.ELEMENT_NODE;
-        });
-    }
-};
+const highlightElements = ( ) => {
+    const paths = [];
 
-const highlightElements = function() {
-    var islands;
-    var elem, rect, poly;
-    var xl, xr, yt, yb, w, h, ws;
-    var svgRootChildren = getSvgRootChildren();
-
-    islands = [];
-    for ( elem of rwRedNodes.keys() ) {
-        if ( elem === pickerRoot ) { continue; }
+    const path = [];
+    for ( const elem of rwRedNodes.keys() ) {
+        if ( elem === inspectorRoot ) { continue; }
         if ( rwGreenNodes.has(elem) ) { continue; }
         if ( typeof elem.getBoundingClientRect !== 'function' ) { continue; }
-        rect = elem.getBoundingClientRect();
-        xl = rect.left;
-        xr = rect.right;
-        w = rect.width;
-        yt = rect.top;
-        yb = rect.bottom;
-        h = rect.height;
-        ws = w.toFixed(1);
-        poly = 'M' + xl.toFixed(1) + ' ' + yt.toFixed(1) +
+        const rect = elem.getBoundingClientRect();
+        const xl = rect.left;
+        const w = rect.width;
+        const yt = rect.top;
+        const h = rect.height;
+        const ws = w.toFixed(1);
+        const poly = 'M' + xl.toFixed(1) + ' ' + yt.toFixed(1) +
                'h' + ws +
                'v' + h.toFixed(1) +
                'h-' + ws +
                'z';
-        islands.push(poly);
+        path.push(poly);
     }
-    svgRootChildren[0].setAttribute('d', islands.join('') || 'M0 0');
+    paths.push(path.join('') || 'M0 0');
 
-    islands = [];
-    for ( elem of rwGreenNodes ) {
+    path.length = 0;
+    for ( const elem of rwGreenNodes ) {
         if ( typeof elem.getBoundingClientRect !== 'function' ) { continue; }
-        rect = elem.getBoundingClientRect();
-        xl = rect.left;
-        xr = rect.right;
-        w = rect.width;
-        yt = rect.top;
-        yb = rect.bottom;
-        h = rect.height;
-        ws = w.toFixed(1);
-        poly = 'M' + xl.toFixed(1) + ' ' + yt.toFixed(1) +
+        const rect = elem.getBoundingClientRect();
+        const xl = rect.left;
+        const w = rect.width;
+        const yt = rect.top;
+        const h = rect.height;
+        const ws = w.toFixed(1);
+        const poly = 'M' + xl.toFixed(1) + ' ' + yt.toFixed(1) +
                'h' + ws +
                'v' + h.toFixed(1) +
                'h-' + ws +
                'z';
-        islands.push(poly);
+        path.push(poly);
     }
-    svgRootChildren[1].setAttribute('d', islands.join('') || 'M0 0');
+    paths.push(path.join('') || 'M0 0');
 
-    islands = [];
-    for ( elem of roRedNodes.keys() ) {
-        if ( elem === pickerRoot ) { continue; }
+    path.length = 0;
+    for ( const elem of roRedNodes.keys() ) {
+        if ( elem === inspectorRoot ) { continue; }
         if ( rwGreenNodes.has(elem) ) { continue; }
         if ( typeof elem.getBoundingClientRect !== 'function' ) { continue; }
-        rect = elem.getBoundingClientRect();
-        xl = rect.left;
-        xr = rect.right;
-        w = rect.width;
-        yt = rect.top;
-        yb = rect.bottom;
-        h = rect.height;
-        ws = w.toFixed(1);
-        poly = 'M' + xl.toFixed(1) + ' ' + yt.toFixed(1) +
+        const rect = elem.getBoundingClientRect();
+        const xl = rect.left;
+        const w = rect.width;
+        const yt = rect.top;
+        const h = rect.height;
+        const ws = w.toFixed(1);
+        const poly = 'M' + xl.toFixed(1) + ' ' + yt.toFixed(1) +
                'h' + ws +
                'v' + h.toFixed(1) +
                'h-' + ws +
                'z';
-        islands.push(poly);
+        path.push(poly);
     }
-    svgRootChildren[2].setAttribute('d', islands.join('') || 'M0 0');
+    paths.push(path.join('') || 'M0 0');
 
-    islands = [];
-    for ( elem of blueNodes ) {
-        if ( elem === pickerRoot ) { continue; }
+    path.length = 0;
+    for ( const elem of blueNodes ) {
+        if ( elem === inspectorRoot ) { continue; }
         if ( typeof elem.getBoundingClientRect !== 'function' ) { continue; }
-        rect = elem.getBoundingClientRect();
-        xl = rect.left;
-        xr = rect.right;
-        w = rect.width;
-        yt = rect.top;
-        yb = rect.bottom;
-        h = rect.height;
-        ws = w.toFixed(1);
-        poly = 'M' + xl.toFixed(1) + ' ' + yt.toFixed(1) +
+        const rect = elem.getBoundingClientRect();
+        const xl = rect.left;
+        const w = rect.width;
+        const yt = rect.top;
+        const h = rect.height;
+        const ws = w.toFixed(1);
+        const poly = 'M' + xl.toFixed(1) + ' ' + yt.toFixed(1) +
                'h' + ws +
                'v' + h.toFixed(1) +
                'h-' + ws +
                'z';
-        islands.push(poly);
+        path.push(poly);
     }
-    svgRootChildren[3].setAttribute('d', islands.join('') || 'M0 0');
+    paths.push(path.join('') || 'M0 0');
+
+    inspectorFramePort.postMessage({
+        what: 'svgPaths',
+        paths,
+    });
 };
 
 /******************************************************************************/
 
-const onScrolled = (function() {
-    let buffered = false;
-    const timerHandler = function() {
-        buffered = false;
-        highlightElements();
-    };
-    return function() {
-        if ( buffered === false ) {
-            window.requestAnimationFrame(timerHandler);
-            buffered = true;
-        }
+const onScrolled = (( ) => {
+    let timer;
+    return ( ) => {
+        if ( timer ) { return; }
+        timer = window.requestAnimationFrame(( ) => {
+            timer = undefined;
+            highlightElements();
+        });
     };
 })();
 
+const onMouseOver = ( ) => {
+    if ( blueNodes.length === 0 ) { return; }
+    blueNodes = [];
+    highlightElements();
+};
+
 /******************************************************************************/
 
-const selectNodes = function(selector, nid) {
+const selectNodes = (selector, nid) => {
     const nodes = elementsFromSelector(selector);
     if ( nid === '' ) { return nodes; }
     for ( const node of nodes ) {
@@ -646,7 +598,7 @@ const selectNodes = function(selector, nid) {
 
 /******************************************************************************/
 
-const nodesFromFilter = function(selector) {
+const nodesFromFilter = selector => {
     const out = [];
     for ( const entry of roRedNodes ) {
         if ( entry[1] === selector ) {
@@ -658,7 +610,7 @@ const nodesFromFilter = function(selector) {
 
 /******************************************************************************/
 
-const toggleExceptions = function(nodes, targetState) {
+const toggleExceptions = (nodes, targetState) => {
     for ( const node of nodes ) {
         if ( targetState ) {
             rwGreenNodes.add(node);
@@ -668,7 +620,7 @@ const toggleExceptions = function(nodes, targetState) {
     }
 };
 
-const toggleFilter = function(nodes, targetState) {
+const toggleFilter = (nodes, targetState) => {
     for ( const node of nodes ) {
         if ( targetState ) {
             rwRedNodes.delete(node);
@@ -678,23 +630,28 @@ const toggleFilter = function(nodes, targetState) {
     }
 };
 
-const resetToggledNodes = function() {
+const resetToggledNodes = ( ) => {
     rwGreenNodes.clear();
     rwRedNodes.clear();
 };
 
 /******************************************************************************/
 
-const start = function() {
-    const onReady = function(ev) {
-        if ( ev ) {
-            document.removeEventListener(ev.type, onReady);
-        }
-        vAPI.MessagingConnection.sendTo(loggerConnectionId, domLayout.get());
+const start = ( ) => {
+    const onReady = ( ) => {
+        window.addEventListener('scroll', onScrolled, {
+            capture: true,
+            passive: true,
+        });
+        window.addEventListener('mouseover', onMouseOver, {
+            capture: true,
+            passive: true,
+        });
+        inspectorFramePort.postMessage(domLayout.get());
         vAPI.domFilterer.toggle(false, highlightElements);
     };
     if ( document.readyState === 'loading' ) {
-        document.addEventListener('DOMContentLoaded', onReady);
+        document.addEventListener('DOMContentLoaded', onReady, { once: true });
     } else {
         onReady();
     }
@@ -702,34 +659,49 @@ const start = function() {
 
 /******************************************************************************/
 
-const shutdown = function() {
+const shutdown = ( ) => {
     cosmeticFilterMapper.shutdown();
     domLayout.shutdown();
-    vAPI.MessagingConnection.disconnectFrom(loggerConnectionId);
-    window.removeEventListener('scroll', onScrolled, true);
-    pickerRoot.remove();
-    pickerRoot = svgRoot = null;
+    window.removeEventListener('scroll', onScrolled, {
+        capture: true,
+        passive: true,
+    });
+    window.removeEventListener('mouseover', onMouseOver, {
+        capture: true,
+        passive: true,
+    });
+    inspectorFramePort.close();
+    inspectorFramePort = undefined;
+    vAPI.userStylesheet.remove(inspectorCSS);
+    vAPI.userStylesheet.apply();
+    if ( inspectorRoot === null ) { return; }
+    inspectorRoot.remove();
+    inspectorRoot = null;
 };
 
 /******************************************************************************/
 /******************************************************************************/
 
-const onMessage = function(request) {
-    var response,
-        nodes;
-
+const onMessage = request => {
     switch ( request.what ) {
+    case 'startInspector':
+        start();
+        break;
+
+    case 'quitInspector':
+        shutdown();
+        break;
+
     case 'commitFilters':
         highlightElements();
         break;
 
     case 'domLayout':
-        response = domLayout.get();
+        domLayout.get();
         highlightElements();
         break;
 
     case 'highlightMode':
-        //svgRoot.classList.toggle('invert', request.invert);
         break;
 
     case 'highlightOne':
@@ -753,110 +725,47 @@ const onMessage = function(request) {
         highlightElements();
         break;
 
-    case 'toggleFilter':
-        nodes = selectNodes(request.selector, request.nid);
-        if ( nodes.length !== 0 ) { nodes[0].scrollIntoView(); }
+    case 'toggleFilter': {
+        const nodes = selectNodes(request.selector, request.nid);
+        if ( nodes.length !== 0 ) {
+            nodes[0].scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+                inline: 'center',
+            });
+        }
         toggleExceptions(nodesFromFilter(request.filter), request.target);
         highlightElements();
         break;
-
-    case 'toggleNodes':
-        nodes = selectNodes(request.selector, request.nid);
-        if ( nodes.length !== 0 ) { nodes[0].scrollIntoView(); }
+    }
+    case 'toggleNodes': {
+        const nodes = selectNodes(request.selector, request.nid);
+        if ( nodes.length !== 0 ) {
+            nodes[0].scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+                inline: 'center',
+            });
+        }
         toggleFilter(nodes, request.target);
         highlightElements();
         break;
-
+    }
     default:
         break;
     }
-
-    return response;
 };
 
 /******************************************************************************/
 
 // Install DOM inspector widget
+let inspectorArgs = await vAPI.messaging.send('domInspectorContent', {
+    what: 'getInspectorArgs',
+});
+if ( typeof inspectorArgs !== 'object' ) { return; }
+if ( inspectorArgs === null ) { return; }
 
-const bootstrap = function(ev) {
-    if ( ev ) {
-        pickerRoot.removeEventListener(ev.type, bootstrap);
-    }
-    const pickerDoc = ev.target.contentDocument;
-
-    pickerDoc.documentElement.style.setProperty(
-        'color-scheme',
-        'dark light',
-        'important'
-    );
-
-    const style = pickerDoc.createElement('style');
-    style.textContent = [
-        'body {',
-            'background-color: transparent;',
-        '}',
-        'svg {',
-            'height: 100%;',
-            'left: 0;',
-            'position: fixed;',
-            'top: 0;',
-            'width: 100%;',
-        '}',
-        'svg > path:nth-of-type(1) {',
-            'fill: rgba(255,0,0,0.2);',
-            'stroke: #F00;',
-        '}',
-        'svg > path:nth-of-type(2) {',
-            'fill: rgba(0,255,0,0.2);',
-            'stroke: #0F0;',
-        '}',
-        'svg > path:nth-of-type(3) {',
-            'fill: rgba(255,0,0,0.2);',
-            'stroke: #F00;',
-        '}',
-        'svg > path:nth-of-type(4) {',
-            'fill: rgba(0,0,255,0.1);',
-            'stroke: #FFF;',
-            'stroke-width: 0.5px;',
-        '}',
-        ''
-    ].join('\n');
-    pickerDoc.body.appendChild(style);
-
-    svgRoot = pickerDoc.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svgRoot.appendChild(pickerDoc.createElementNS('http://www.w3.org/2000/svg', 'path'));
-    svgRoot.appendChild(pickerDoc.createElementNS('http://www.w3.org/2000/svg', 'path'));
-    svgRoot.appendChild(pickerDoc.createElementNS('http://www.w3.org/2000/svg', 'path'));
-    svgRoot.appendChild(pickerDoc.createElementNS('http://www.w3.org/2000/svg', 'path'));
-    pickerDoc.body.appendChild(svgRoot);
-
-    window.addEventListener('scroll', onScrolled, true);
-
-    // Dynamically add direct connection abilities so that we can establish
-    // a direct, fast messaging connection to the logger.
-    vAPI.messaging.extend().then(extended => {
-        if ( extended !== true ) { return; }
-        vAPI.MessagingConnection.connectTo('domInspector', 'loggerUI', msg => {
-            switch ( msg.what ) {
-            case 'connectionAccepted':
-                loggerConnectionId = msg.id;
-                start();
-                break;
-            case 'connectionBroken':
-                shutdown();
-                break;
-            case 'connectionMessage':
-                onMessage(msg.payload);
-                break;
-            }
-        });
-    });
-};
-
-pickerRoot = document.createElement('iframe');
-pickerRoot.classList.add(sessionId);
-pickerRoot.classList.add('dom-inspector');
-pickerRoot.style.cssText = [
+const inspectorCSSStyle = [
     'background: transparent',
     'border: 0',
     'border-radius: 0',
@@ -878,8 +787,43 @@ pickerRoot.style.cssText = [
     ''
 ].join(' !important;\n');
 
-pickerRoot.addEventListener('load', ev => { bootstrap(ev); });
-(document.documentElement || document).appendChild(pickerRoot);
+const inspectorCSS = `
+:root > [${vAPI.sessionId}] {
+    ${inspectorCSSStyle}
+}
+:root > [${vAPI.sessionId}-loaded] {
+    visibility: visible !important;
+}
+`;
+
+vAPI.userStylesheet.add(inspectorCSS);
+vAPI.userStylesheet.apply();
+
+inspectorRoot = document.createElement('iframe');
+inspectorRoot.setAttribute(vAPI.sessionId, '');
+document.documentElement.append(inspectorRoot);
+
+let inspectorFramePort;
+
+inspectorRoot.addEventListener('load', ( ) => {
+    const channel = new MessageChannel();
+    inspectorFramePort = channel.port1;
+    inspectorFramePort.onmessage = ev => {
+        const msg = ev.data || {};
+        onMessage(msg);
+    };
+    inspectorFramePort.onmessageerror = ( ) => {
+        shutdown();
+    };
+    inspectorRoot.setAttribute(`${vAPI.sessionId}-loaded`, '');
+    inspectorRoot.contentWindow.postMessage(
+        { what: 'startInspector' },
+        inspectorArgs.inspectorURL,
+        [ channel.port2 ]
+    );
+}, { once: true });
+
+inspectorRoot.contentWindow.location = inspectorArgs.inspectorURL;
 
 /******************************************************************************/
 

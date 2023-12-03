@@ -1847,6 +1847,48 @@ vAPI.messaging.listen({
 /******************************************************************************/
 
 // Channel:
+//      domInspectorContent
+//      unprivileged
+
+{
+// >>>>> start of local scope
+
+const onMessage = (request, sender, callback) => {
+    // Async
+    switch ( request.what ) {
+    default:
+        break;
+    }
+    // Sync
+    let response;
+    switch ( request.what ) {
+    case 'getInspectorArgs':
+        response = {
+            inspectorURL: vAPI.getURL(
+                `/web_accessible_resources/dom-inspector.html?secret=${vAPI.warSecret.short()}`
+            ),
+        };
+        break;
+    default:
+        return vAPI.messaging.UNHANDLED;
+    }
+
+    callback(response);
+};
+
+vAPI.messaging.listen({
+    name: 'domInspectorContent',
+    listener: onMessage,
+    privileged: false,
+});
+
+// <<<<< end of local scope
+}
+
+/******************************************************************************/
+/******************************************************************************/
+
+// Channel:
 //      documentBlocked
 //      privileged
 

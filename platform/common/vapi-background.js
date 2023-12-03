@@ -967,71 +967,11 @@ vAPI.messaging = {
         }
     },
 
-    broadcast: function(message) {
-        const messageWrapper = { broadcast: true, msg: message };
-        for ( const { port } of this.ports.values() ) {
-            try {
-                port.postMessage(messageWrapper);
-            } catch(ex) {
-                this.onPortDisconnect(port);
-            }
-        }
-        if ( this.defaultHandler ) {
-            this.defaultHandler(message, null, ( ) => { });
-        }
-    },
-
     onFrameworkMessage: function(request, port, callback) {
         const portDetails = this.ports.get(port.name) || {};
         const tabId = portDetails.tabId;
         const msg = request.msg;
         switch ( msg.what ) {
-        case 'connectionAccepted':
-        case 'connectionRefused': {
-            const toPort = this.ports.get(msg.fromToken);
-            if ( toPort !== undefined ) {
-                msg.tabId = tabId;
-                toPort.port.postMessage(request);
-            } else {
-                msg.what = 'connectionBroken';
-                port.postMessage(request);
-            }
-            break;
-        }
-        case 'connectionRequested':
-            msg.tabId = tabId;
-            for ( const { port: toPort } of this.ports.values() ) {
-                if ( toPort === port ) { continue; }
-                try {
-                    toPort.postMessage(request);
-                } catch (ex) {
-                    this.onPortDisconnect(toPort);
-                }
-            }
-            break;
-        case 'connectionBroken':
-        case 'connectionCheck':
-        case 'connectionMessage': {
-            const toPort = this.ports.get(
-                port.name === msg.fromToken ? msg.toToken : msg.fromToken
-            );
-            if ( toPort !== undefined ) {
-                msg.tabId = tabId;
-                toPort.port.postMessage(request);
-            } else {
-                msg.what = 'connectionBroken';
-                port.postMessage(request);
-            }
-            break;
-        }
-        case 'extendClient':
-            vAPI.tabs.executeScript(tabId, {
-                file: '/js/vapi-client-extra.js',
-                frameId: portDetails.frameId,
-            }).then(( ) => {
-                callback();
-            });
-            break;
         case 'localStorage': {
             if ( portDetails.privileged !== true ) { break; }
             const args = msg.args || [];

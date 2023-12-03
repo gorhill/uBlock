@@ -53,18 +53,15 @@ const NoPaths = 'M0 0';
 
 const reCosmeticAnchor = /^#(\$|\?|\$\?)?#/;
 
-const epickerId = (( ) => {
+{
     const url = new URL(self.location.href);
     if ( url.searchParams.has('zap') ) {
         pickerRoot.classList.add('zap');
     }
-    return url.searchParams.get('epid');
-})();
-if ( epickerId === null ) { return; }
+}
 
 const docURL = new URL(vAPI.getURL(''));
 
-let epickerConnectionId;
 let resultsetOpt;
 
 let netFilterCandidates = [];
@@ -305,7 +302,7 @@ const cosmeticCandidatesFromFilterChoice = function(filterChoice) {
         candidates.push(paths);
     }
 
-    vAPI.MessagingConnection.sendTo(epickerConnectionId, {
+    pickerContentPort.postMessage({
         what: 'optimizeCandidates',
         candidates,
         slot,
@@ -333,7 +330,7 @@ const onSvgClicked = function(ev) {
     // If zap mode, highlight element under mouse, this makes the zapper usable
     // on touch screens.
     if ( pickerRoot.classList.contains('zap') ) {
-        vAPI.MessagingConnection.sendTo(epickerConnectionId, {
+        pickerContentPort.postMessage({
             what: 'zapElementAtPoint',
             mx: ev.clientX,
             my: ev.clientY,
@@ -358,7 +355,7 @@ const onSvgClicked = function(ev) {
     if ( ev.type === 'touch' ) {
         pickerRoot.classList.add('show');
     }
-    vAPI.MessagingConnection.sendTo(epickerConnectionId, {
+    pickerContentPort.postMessage({
         what: 'filterElementAtPoint',
         mx: ev.clientX,
         my: ev.clientY,
@@ -432,7 +429,7 @@ const onSvgTouch = (( ) => {
             pickerRoot.classList.contains('zap') &&
             svgIslands.getAttribute('d') !== NoPaths
         ) {
-            vAPI.MessagingConnection.sendTo(epickerConnectionId, {
+            pickerContentPort.postMessage({
                 what: 'unhighlight'
             });
             return;
@@ -463,7 +460,7 @@ const onCandidateChanged = function() {
     $id('resultsetModifiers').classList.toggle(
         'hide', text === '' || text !== computedCandidate
     );
-    vAPI.MessagingConnection.sendTo(epickerConnectionId, {
+    pickerContentPort.postMessage({
         what: 'dialogSetFilter',
         filter,
         compiled: reCosmeticAnchor.test(filter)
@@ -476,7 +473,7 @@ const onCandidateChanged = function() {
 
 const onPreviewClicked = function() {
     const state = pickerRoot.classList.toggle('preview');
-    vAPI.MessagingConnection.sendTo(epickerConnectionId, {
+    pickerContentPort.postMessage({
         what: 'togglePreview',
         state,
     });
@@ -496,7 +493,7 @@ const onCreateClicked = function() {
             killCache: reCosmeticAnchor.test(candidate) === false,
         });
     }
-    vAPI.MessagingConnection.sendTo(epickerConnectionId, {
+    pickerContentPort.postMessage({
         what: 'dialogCreate',
         filter: candidate,
         compiled: reCosmeticAnchor.test(candidate)
@@ -578,7 +575,7 @@ const onKeyPressed = function(ev) {
         (ev.key === 'Delete' || ev.key === 'Backspace') &&
         pickerRoot.classList.contains('zap')
     ) {
-        vAPI.MessagingConnection.sendTo(epickerConnectionId, {
+        pickerContentPort.postMessage({
             what: 'zapElementAtPoint',
             options: { stay: true },
         });
@@ -678,7 +675,7 @@ const svgListening = (( ) => {
 
     const onTimer = ( ) => {
         timer = undefined;
-        vAPI.MessagingConnection.sendTo(epickerConnectionId, {
+        pickerContentPort.postMessage({
             what: 'highlightElementAtPoint',
             mx,
             my,
@@ -798,7 +795,7 @@ const pausePicker = function() {
 
 const unpausePicker = function() {
     pickerRoot.classList.remove('paused', 'preview');
-    vAPI.MessagingConnection.sendTo(epickerConnectionId, {
+    pickerContentPort.postMessage({
         what: 'togglePreview',
         state: false,
     });
@@ -838,8 +835,9 @@ const startPicker = function() {
 /******************************************************************************/
 
 const quitPicker = function() {
-    vAPI.MessagingConnection.sendTo(epickerConnectionId, { what: 'quitPicker' });
-    vAPI.MessagingConnection.disconnectFrom(epickerConnectionId);
+    pickerContentPort.postMessage({ what: 'quitPicker' });
+    pickerContentPort.close();
+    pickerContentPort = undefined;
 };
 
 /******************************************************************************/
@@ -876,49 +874,27 @@ const onPickerMessage = function(msg) {
 
 /******************************************************************************/
 
-const onConnectionMessage = function(msg) {
-    switch ( msg.what ) {
-        case 'connectionBroken':
-            break;
-        case 'connectionMessage':
-            onPickerMessage(msg.payload);
-            break;
-        case 'connectionAccepted':
-            epickerConnectionId = msg.id;
-            startPicker();
-            vAPI.MessagingConnection.sendTo(epickerConnectionId, {
-                what: 'start',
-            });
-            break;
-    }
-};
+// Wait for the content script to establish communication
 
-vAPI.MessagingConnection.connectTo(
-    `epickerDialog-${epickerId}`,
-    `epicker-${epickerId}`,
-    onConnectionMessage
-);
+let pickerContentPort;
+
+globalThis.addEventListener('message', ev => {
+    const msg = ev.data || {};
+    if ( msg.what !== 'epickerStart' ) { return; }
+    if ( Array.isArray(ev.ports) === false ) { return; }
+    if ( ev.ports.length === 0 ) { return; }
+    pickerContentPort = ev.ports[0];
+    pickerContentPort.onmessage = ev => {
+        const msg = ev.data || {};
+        onPickerMessage(msg);
+    };
+    pickerContentPort.onmessageerror = ( ) => {
+        quitPicker();
+    };
+    startPicker();
+    pickerContentPort.postMessage({ what: 'start' });
+}, { once: true });
 
 /******************************************************************************/
 
 })();
-
-
-
-
-
-
-
-
-/*******************************************************************************
-
-    DO NOT:
-    - Remove the following code
-    - Add code beyond the following code
-    Reason:
-    - https://github.com/gorhill/uBlock/pull/3721
-    - uBO never uses the return value from injected content scripts
-
-**/
-
-void 0;
