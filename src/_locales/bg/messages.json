@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
@@ -536,11 +536,11 @@
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {
-    "message": "Внасяне от файл...",
+    "message": "Внасяне и добавяне...",
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "Изнасяне във файл",
+    "message": "Изнасяне...",
     "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
@@ -584,7 +584,7 @@
     "description": ""
   },
   "rulesExport": {
-    "message": "Изнасяне във файл",
+    "message": "Изнасяне във файл...",
     "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
@@ -620,11 +620,11 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Внасяне от файл...",
+    "message": "Внасяне и добавяне...",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
-    "message": "Изнасяне във файл",
+    "message": "Изнасяне...",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
