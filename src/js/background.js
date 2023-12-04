@@ -144,6 +144,8 @@ if ( vAPI.webextFlavor.soup.has('firefox') ) {
 }
 
 const µBlock = {  // jshint ignore:line
+    wakeupReason: '',
+
     userSettingsDefault,
     userSettings: Object.assign({}, userSettingsDefault),
 

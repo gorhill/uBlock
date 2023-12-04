@@ -87,26 +87,111 @@ vAPI.app = {
     },
 };
 
-/******************************************************************************/
-/******************************************************************************/
+/*******************************************************************************
+ * 
+ * https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/API/storage/session
+ * 
+ * Session (in-memory) storage is promise-based in all browsers, no need for
+ * a webext polyfill. However, not all browsers supports it in MV2.
+ * 
+ * */
+
+vAPI.sessionStorage = (( ) => {
+    if ( browser.storage.session instanceof Object === false ) {
+        return {
+            get() {
+                return Promise.resolve({});
+            },
+            set() {
+                return Promise.resolve();
+            },
+            remove() {
+                return Promise.resolve();
+            },
+            clear() {
+                return Promise.resolve();
+            },
+            implemented: false,
+        };
+    }
+    return {
+        get(...args) {
+            return browser.storage.session.get(...args).catch(reason => {
+                console.log(reason);
+                return {};
+            });
+        },
+        set(...args) {
+            return browser.storage.session.set(...args).catch(reason => {
+                console.log(reason);
+            });
+        },
+        remove(...args) {
+            return browser.storage.session.remove(...args).catch(reason => {
+                console.log(reason);
+            });
+        },
+        clear(...args) {
+            return browser.storage.session.clear(...args).catch(reason => {
+                console.log(reason);
+            });
+        },
+        implemented: true,
+    };
+})();
+
+/*******************************************************************************
+ * 
+ * Data written to and read from storage.local will be mirrored to in-memory
+ * storage.session.
+ * 
+ * Data read from storage.local will be first fetched from storage.session,
+ * then if not available, read from storage.local.
+ * 
+ * */
 
 vAPI.storage = {
-    get(...args) {
-        return webext.storage.local.get(...args).catch(reason => {
-            console.log(reason);
+    get(key, ...args) {
+        if ( vAPI.sessionStorage.implemented !== true ) {
+            return webext.storage.local.get(key, ...args).catch(reason => {
+                console.log(reason);
+            });
+        }
+        return vAPI.sessionStorage.get(key, ...args).then(bin => {
+            const size = Object.keys(bin).length;
+            if ( size === 1 && typeof key === 'string' && bin[key] === null ) {
+                return {};
+            }
+            if ( size !== 0 ) { return bin; }
+            return webext.storage.local.get(key, ...args).then(bin => {
+                if ( bin instanceof Object === false ) { return bin; }
+                // Mirror empty result as null value in order to prevent
+                // from falling back to storage.local when there is no need.
+                const tomirror = Object.assign({}, bin);
+                if ( typeof key === 'string' && Object.keys(bin).length === 0 ) {
+                    Object.assign(tomirror, { [key]: null });
+                }
+                vAPI.sessionStorage.set(tomirror);
+                return bin;
+            }).catch(reason => {
+                console.log(reason);
+            });
         });
     },
     set(...args) {
+        vAPI.sessionStorage.set(...args);
         return webext.storage.local.set(...args).catch(reason => {
             console.log(reason);
         });
     },
     remove(...args) {
+        vAPI.sessionStorage.remove(...args);
         return webext.storage.local.remove(...args).catch(reason => {
             console.log(reason);
         });
     },
     clear(...args) {
+        vAPI.sessionStorage.clear(...args);
         return webext.storage.local.clear(...args).catch(reason => {
             console.log(reason);
         });
@@ -1422,14 +1507,14 @@ vAPI.adminStorage = (( ) => {
             store = await webext.storage.managed.get();
         } catch(ex) {
         }
-        webext.storage.local.set({ cachedManagedStorage: store || {} });
+        vAPI.storage.set({ cachedManagedStorage: store || {} });
     };
 
     return {
         get: async function(key) {
             let bin;
             try {
-                bin = await webext.storage.local.get('cachedManagedStorage') || {};
+                bin = await vAPI.storage.get('cachedManagedStorage') || {};
                 if ( Object.keys(bin).length === 0 ) {
                     bin = await webext.storage.managed.get() || {};
                 } else {
@@ -1477,7 +1562,7 @@ vAPI.localStorage = {
     start: async function() {
         if ( this.cache instanceof Promise ) { return this.cache; }
         if ( this.cache instanceof Object ) { return this.cache; }
-        this.cache = webext.storage.local.get('localStorage').then(bin => {
+        this.cache = vAPI.storage.get('localStorage').then(bin => {
             this.cache = bin instanceof Object &&
                 bin.localStorage instanceof Object
                     ? bin.localStorage
@@ -1487,7 +1572,7 @@ vAPI.localStorage = {
     },
     clear: function() {
         this.cache = {};
-        return webext.storage.local.set({ localStorage: this.cache });
+        return vAPI.storage.set({ localStorage: this.cache });
     },
     getItem: function(key) {
         if ( this.cache instanceof Object === false ) {
@@ -1509,7 +1594,7 @@ vAPI.localStorage = {
         await this.start();
         if ( value === this.cache[key] ) { return; }
         this.cache[key] = value;
-        return webext.storage.local.set({ localStorage: this.cache });
+        return vAPI.storage.set({ localStorage: this.cache });
     },
     cache: undefined,
 };
@@ -1738,5 +1823,19 @@ vAPI.cloud = (( ) => {
 
     return { push, pull, used, getOptions, setOptions };
 })();
+
+/******************************************************************************/
+/******************************************************************************/
+
+vAPI.alarms = browser.alarms || {
+    create() {
+    },
+    clear() {
+    },
+    onAlarm: {
+        addListener() {
+        }
+    }
+};
 
 /******************************************************************************/

@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* globals WebAssembly */
-
 'use strict';
 
 /******************************************************************************/
@@ -1243,6 +1241,8 @@ onBroadcast(msg => {
     //   memory usage at selfie-load time. For some reasons.
 
     const create = async function() {
+        vAPI.alarms.clear('createSelfie');
+        createTimer.off();
         if ( µb.inMemoryFilters.length !== 0 ) { return; }
         if ( Object.keys(µb.availableFilterLists).length === 0 ) { return; }
         await Promise.all([
@@ -1316,10 +1316,22 @@ onBroadcast(msg => {
             io.remove(/^selfie\//);
             µb.selfieIsInvalid = true;
         }
+        if ( µb.wakeupReason === 'createSelfie' ) {
+            µb.wakeupReason = '';
+            return createTimer.offon({ sec: 27 });
+        }
+        vAPI.alarms.create('createSelfie', {
+            delayInMinutes: µb.hiddenSettings.selfieAfter
+        });
         createTimer.offon({ min: µb.hiddenSettings.selfieAfter });
     };
 
     const createTimer = vAPI.defer.create(create);
+
+    vAPI.alarms.onAlarm.addListener(alarm => {
+        if ( alarm.name !== 'createSelfie') { return; }
+        µb.wakeupReason = 'createSelfie';
+    });
 
     µb.selfieManager = { load, destroy };
 }
