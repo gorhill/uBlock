@@ -4077,10 +4077,21 @@ function trustedClickElement(
         ? ((...args) => { safe.uboLog(...args); })
         : (( ) => { });
 
+    const querySelectorEx = (selector, context = document) => {
+        const pos = selector.indexOf(' >>> ');
+        if ( pos === -1 ) { return context.querySelector(selector); }
+        const outside = selector.slice(0, pos).trim();
+        const inside = selector.slice(pos + 5).trim();
+        const elem = context.querySelector(outside);
+        if ( elem === null ) { return null; }
+        const shadowRoot = elem.shadowRoot;
+        return shadowRoot && querySelectorEx(inside, shadowRoot);
+    };
+
     const selectorList = selectors.split(/\s*,\s*/)
         .filter(s => {
             try {
-                void document.querySelector(s);
+                void querySelectorEx(s);
             } catch(_) {
                 return false;
             }
@@ -4154,7 +4165,7 @@ function trustedClickElement(
         if ( Date.now() < tnext ) { return next(); }
         const selector = selectorList.shift();
         if ( selector === undefined ) { return terminate(); }
-        const elem = document.querySelector(selector);
+        const elem = querySelectorEx(selector);
         if ( elem === null ) {
             selectorList.unshift(selector);
             return next(true);
