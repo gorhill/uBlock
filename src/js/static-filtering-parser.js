@@ -3066,6 +3066,7 @@ export const netOptionTokenDescriptors = new Map([
     [ 'object', { canNegate: true } ],
     /* synonym */ [ 'object-subrequest', { canNegate: true } ],
     [ 'other', { canNegate: true } ],
+    [ 'permissions', { mustAssign: true } ],
     [ 'ping', { canNegate: true } ],
     /* synonym */ [ 'beacon', { canNegate: true } ],
     [ 'popunder', { } ],
