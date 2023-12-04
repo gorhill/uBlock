@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* globals browser */
+
 'use strict';
 
 import { dom, qs$, qsa$ } from './dom.js';
@@ -29,21 +31,8 @@ import { dom, qs$, qsa$ } from './dom.js';
 
 /******************************************************************************/
 
-const showdomButton = qs$('#showdom');
-
-// Don't bother if the browser is not modern enough.
-if (
-    typeof Map === 'undefined' ||
-    Map.polyfill ||
-    typeof WeakMap === 'undefined'
-) {
-    dom.cl.add(showdomButton, 'disabled');
-    return;
-}
-
-/******************************************************************************/
-
 const logger = self.logger;
+const showdomButton = qs$('#showdom');
 const inspector = qs$('#domInspector');
 const domTree = qs$('#domTree');
 const filterToIdMap = new Map();
@@ -71,7 +60,7 @@ inspectorFramePort.onmessageerror = ( ) => {
 
 /******************************************************************************/
 
-const nodeFromDomEntry = function(entry) {
+const nodeFromDomEntry = entry => {
     const li = document.createElement('li');
     dom.attr(li, 'id', entry.nid);
     // expander/collapser
@@ -107,7 +96,7 @@ const nodeFromDomEntry = function(entry) {
 
 /******************************************************************************/
 
-const appendListItem = function(ul, li) {
+const appendListItem = (ul, li) => {
     ul.appendChild(li);
     // Ancestor nodes of a node which is affected by a cosmetic filter will
     // be marked as "containing cosmetic filters", for user convenience.
@@ -121,7 +110,7 @@ const appendListItem = function(ul, li) {
 
 /******************************************************************************/
 
-const renderDOMFull = function(response) {
+const renderDOMFull = response => {
     const domTreeParent = domTree.parentElement;
     let ul = domTreeParent.removeChild(domTree);
     logger.removeAllChildren(domTree);
@@ -165,7 +154,7 @@ const renderDOMFull = function(response) {
 
 /******************************************************************************/
 
-const patchIncremental = function(from, delta) {
+const patchIncremental = (from, delta) => {
     let li = from.parentElement.parentElement;
     const patchCosmeticHide = delta >= 0 &&
         dom.cl.has(from, 'isCosmeticHide') &&
@@ -189,7 +178,7 @@ const patchIncremental = function(from, delta) {
 
 /******************************************************************************/
 
-const renderDOMIncremental = function(response) {
+const renderDOMIncremental = response => {
     // Process each journal entry:
     //  1 = node added
     // -1 = node removed
@@ -248,7 +237,7 @@ const renderDOMIncremental = function(response) {
 
 /******************************************************************************/
 
-const countFromNode = function(li) {
+const countFromNode = li => {
     const span = li.children[2];
     const cnt = parseInt(dom.attr(span, 'data-cnt'), 10);
     return isNaN(cnt) ? 0 : cnt;
@@ -256,7 +245,7 @@ const countFromNode = function(li) {
 
 /******************************************************************************/
 
-const selectorFromNode = function(node) {
+const selectorFromNode = node => {
     let selector = '';
     while ( node !== null ) {
         if ( node.localName === 'li' ) {
@@ -273,7 +262,7 @@ const selectorFromNode = function(node) {
 
 /******************************************************************************/
 
-const selectorFromFilter = function(node) {
+const selectorFromFilter = node => {
     while ( node !== null ) {
         if ( node.localName === 'li' ) {
             const code = qs$(node, 'code:nth-of-type(2)');
@@ -288,7 +277,7 @@ const selectorFromFilter = function(node) {
 
 /******************************************************************************/
 
-const nidFromNode = function(node) {
+const nidFromNode = node => {
     let li = node;
     while ( li !== null ) {
         if ( li.localName === 'li' ) {
@@ -301,7 +290,7 @@ const nidFromNode = function(node) {
 
 /******************************************************************************/
 
-const startDialog = (function() {
+const startDialog = (( ) => {
     let dialog;
     let textarea;
     let hideSelectors = [];
@@ -414,7 +403,7 @@ const startDialog = (function() {
 
 /******************************************************************************/
 
-const onClicked = function(ev) {
+const onClicked = ev => {
     ev.stopPropagation();
 
     if ( inspectedTabId === 0 ) { return; }
@@ -475,21 +464,19 @@ const onClicked = function(ev) {
 
 /******************************************************************************/
 
-const onMouseOver = (function() {
+const onMouseOver = (( ) => {
     let mouseoverTarget = null;
 
-    const timerHandler = ( ) => {
+    const mouseoverTimer = vAPI.defer.create(( ) => {
         inspectorFramePort.postMessage({
             what: 'highlightOne',
             selector: selectorFromNode(mouseoverTarget),
             nid: nidFromNode(mouseoverTarget),
             scrollTo: true
         });
-    };
+    });
 
-    const mouseoverTimer = vAPI.defer.create(timerHandler);
-
-    return function(ev) {
+    return ev => {
         if ( inspectedTabId === 0 ) { return; }
         // Convenience: skip real-time highlighting if shift key is pressed.
         if ( ev.shiftKey ) { return; }
@@ -503,30 +490,34 @@ const onMouseOver = (function() {
 
 /******************************************************************************/
 
-const currentTabId = function() {
+const currentTabId = ( ) => {
     if ( dom.cl.has(showdomButton, 'active') === false ) { return 0; }
     return logger.tabIdFromPageSelector();
 };
 
 /******************************************************************************/
 
-const injectInspector = function() {
-    const tabId = currentTabId();
-    if ( tabId <= 0 ) { return; }
-    inspectedTabId = tabId;
-    vAPI.messaging.send('loggerUI', {
-        what: 'scriptlet',
-        tabId,
-        scriptlet: 'dom-inspector',
+const injectInspector = (( ) => {
+    const timer = vAPI.defer.create(( ) => {
+        const tabId = currentTabId();
+        if ( tabId <= 0 ) { return; }
+        inspectedTabId = tabId;
+        vAPI.messaging.send('loggerUI', {
+            what: 'scriptlet',
+            tabId,
+            scriptlet: 'dom-inspector',
+        });
     });
-};
+    return ( ) => {
+        shutdownInspector();
+        timer.offon(353);
+    };
+})();
 
 /******************************************************************************/
 
-const shutdownInspector = function() {
-    if ( inspectorFramePort !== undefined ) {
-        inspectorFramePort.postMessage({ what: 'quitInspector' });
-    }
+const shutdownInspector = ( ) => {
+    inspectorFramePort.postMessage({ what: 'quitInspector' });
     logger.removeAllChildren(domTree);
     dom.cl.remove(inspector, 'vExpanded');
     inspectedTabId = 0;
@@ -534,20 +525,27 @@ const shutdownInspector = function() {
 
 /******************************************************************************/
 
-const onTabIdChanged = function() {
+const onTabIdChanged = ( ) => {
     const tabId = currentTabId();
     if ( tabId <= 0 ) {
         return toggleOff();
     }
     if ( inspectedTabId !== tabId ) {
-        shutdownInspector();
         injectInspector();
     }
 };
 
 /******************************************************************************/
 
-const toggleVCompactView = function() {
+const onDOMContentLoaded = details => {
+    if ( details.tabId !== inspectedTabId ) { return; }
+    if ( details.frameId !== 0 ) { return; }
+    injectInspector();
+};
+
+/******************************************************************************/
+
+const toggleVCompactView = ( ) => {
     const state = dom.cl.toggle(inspector, 'vExpanded');
     const branches = qsa$('#domInspector li.branch');
     for ( const branch of branches ) {
@@ -555,13 +553,13 @@ const toggleVCompactView = function() {
     }
 };
 
-const toggleHCompactView = function() {
+const toggleHCompactView = ( ) => {
     dom.cl.toggle(inspector, 'hCompact');
 };
 
 /******************************************************************************/
 
-const revert = function() {
+const revert = ( ) => {
     dom.cl.remove('#domTree .off', 'off');
     inspectorFramePort.postMessage({ what: 'resetToggledNodes' });
     dom.cl.add(qs$(inspector, '.permatoolbar .revert'), 'disabled');
@@ -570,7 +568,7 @@ const revert = function() {
 
 /******************************************************************************/
 
-const toggleOn = function() {
+const toggleOn = ( ) => {
     dom.cl.add('#inspectors', 'dom');
     window.addEventListener('beforeunload', toggleOff);
     document.addEventListener('tabIdChanged', onTabIdChanged);
@@ -580,12 +578,13 @@ const toggleOn = function() {
     dom.on('#domInspector .hCompactToggler', 'click', toggleHCompactView);
     dom.on('#domInspector .permatoolbar .revert', 'click', revert);
     dom.on('#domInspector .permatoolbar .commit', 'click', startDialog);
+    browser.webNavigation.onDOMContentLoaded.addListener(onDOMContentLoaded);
     injectInspector();
 };
 
 /******************************************************************************/
 
-const toggleOff = function() {
+const toggleOff = ( ) => {
     dom.cl.remove(showdomButton, 'active');
     dom.cl.remove('#inspectors', 'dom');
     shutdownInspector();
@@ -597,12 +596,13 @@ const toggleOff = function() {
     dom.off('#domInspector .hCompactToggler', 'click', toggleHCompactView);
     dom.off('#domInspector .permatoolbar .revert', 'click', revert);
     dom.off('#domInspector .permatoolbar .commit', 'click', startDialog);
+    browser.webNavigation.onDOMContentLoaded.removeListener(onDOMContentLoaded);
     inspectedTabId = 0;
 };
 
 /******************************************************************************/
 
-const toggle = function() {
+const toggle = ( ) => {
     if ( dom.cl.toggle(showdomButton, 'active') ) {
         toggleOn();
     } else {

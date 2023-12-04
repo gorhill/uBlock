@@ -1696,17 +1696,14 @@ const getLoggerData = async function(details, activeTabId, callback) {
         tooltips: µb.userSettings.tooltipsDisabled === false
     };
     if ( µb.pageStoresToken !== details.tabIdsToken ) {
-        const tabIds = new Map();
+        response.tabIds = [];
         for ( const [ tabId, pageStore ] of µb.pageStores ) {
-            const { rawURL } = pageStore;
-            if (
-                rawURL.startsWith(extensionOriginURL) === false ||
-                rawURL.startsWith(documentBlockedURL)
-            ) {
-                tabIds.set(tabId, pageStore.title);
+            const { rawURL, title } = pageStore;
+            if ( rawURL.startsWith(extensionOriginURL) ) {
+                if ( rawURL.startsWith(documentBlockedURL) === false ) { continue; }
             }
+            response.tabIds.push([ tabId, title ]);
         }
-        response.tabIds = Array.from(tabIds);
     }
     if ( activeTabId ) {
         const pageStore = µb.pageStoreFromTabId(activeTabId);

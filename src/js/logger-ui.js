@@ -972,7 +972,7 @@ const viewPort = (( ) => {
 const updateCurrentTabTitle = (( ) => {
     const i18nCurrentTab = i18n$('loggerCurrentTab');
 
-    return function() {
+    return ( ) => {
         const select = qs$('#pageSelector');
         if ( select.value !== '_' || activeTabId === 0 ) { return; }
         const opt0 = qs$(select, '[value="_"]');
@@ -1033,8 +1033,7 @@ const synchronizeTabIds = function(newTabIds) {
         return newTabIds.get(a).localeCompare(newTabIds.get(b));
     });
     let j = 3;
-    for ( let i = 0; i < tabIds.length; i++ ) {
-        const tabId = tabIds[i];
+    for ( const tabId of tabIds ) {
         if ( tabId <= 0 ) { continue; }
         if ( j === select.options.length ) {
             select.appendChild(document.createElement('option'));
