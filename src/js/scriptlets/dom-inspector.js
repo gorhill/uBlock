@@ -778,7 +778,7 @@ const inspectorCSSStyle = [
     'opacity: 1',
     'outline: 0',
     'padding: 0',
-    'pointer-events:none;',
+    'pointer-events: none',
     'position: fixed',
     'top: 0',
     'visibility: visible',
