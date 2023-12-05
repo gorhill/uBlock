@@ -30,6 +30,7 @@ rm -r $DES/_locales/hi
 rm -r $DES/_locales/hy
 rm -r $DES/_locales/ka
 rm -r $DES/_locales/kk
+rm -r $DES/_locales/ku
 rm -r $DES/_locales/mr
 rm -r $DES/_locales/si
 rm -r $DES/_locales/so
