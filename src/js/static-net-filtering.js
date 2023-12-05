@@ -1925,18 +1925,22 @@ class FilterFromDomainMissSet extends FilterFromDomainHitSet {
         return super.match(idata) === false;
     }
 
-    static logData(idata, details) {
-        details.fromDomains.push('~' + this.getDomainOpt(idata).replace(/\|/g, '|~'));
-    }
-
     static get dnrConditionName() {
         return 'excludedInitiatorDomains';
+    }
+
+    static logData(idata, details) {
+        details.fromDomains.push('~' + this.getDomainOpt(idata).replace(/\|/g, '|~'));
     }
 }
 
 class FilterFromRegexHit extends FilterDomainRegexHit {
     static getMatchTarget() {
         return $docHostname;
+    }
+
+    static get dnrConditionName() {
+        return 'initiatorDomains';
     }
 
     static logData(idata, details) {
@@ -1947,6 +1951,10 @@ class FilterFromRegexHit extends FilterDomainRegexHit {
 class FilterFromRegexMiss extends FilterFromRegexHit {
     static match(idata) {
         return super.match(idata) === false;
+    }
+
+    static get dnrConditionName() {
+        return 'excludedInitiatorDomains';
     }
 
     static logData(idata, details) {
@@ -2064,6 +2072,10 @@ class FilterToRegexHit extends FilterDomainRegexHit {
         return $requestHostname;
     }
 
+    static get dnrConditionName() {
+        return 'requestDomains';
+    }
+
     static logData(idata, details) {
         details.toDomains.push(`${this.getDomainOpt(idata)}`);
     }
@@ -2072,6 +2084,10 @@ class FilterToRegexHit extends FilterDomainRegexHit {
 class FilterToRegexMiss extends FilterToRegexHit {
     static match(idata) {
         return super.match(idata) === false;
+    }
+
+    static get dnrConditionName() {
+        return 'excludedRequestDomains';
     }
 
     static logData(idata, details) {
@@ -4430,34 +4446,38 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
         }
     }
 
-    // Detect and attempt salvage of rules with entity-based hostnames.
+    // Detect and attempt salvage of rules with entity-based hostnames and/or
+    // regex-based domains.
+    const isUnsupportedDomain = hn => hn.endsWith('.*') || hn.startsWith('/');
     for ( const rule of ruleset ) {
         if ( rule.condition === undefined ) { continue; }
-        if (
-            Array.isArray(rule.condition.initiatorDomains) &&
-            rule.condition.initiatorDomains.some(hn => hn.endsWith('.*'))
-        ) {
-            const domains = rule.condition.initiatorDomains.filter(
-                hn => hn.endsWith('.*') === false
-            );
-            if ( domains.length === 0 ) {
-                dnrAddRuleError(rule, `Can't salvage rule with only entity-based domain= option: ${rule.condition.initiatorDomains.join('|')}`);
-            } else {
-                dnrAddRuleWarning(rule, `Salvaged rule by ignoring ${rule.condition.initiatorDomains.length - domains.length} entity-based domain= option: ${rule.condition.initiatorDomains.join('|')}`);
-                rule.condition.initiatorDomains = domains;
+        for ( const prop of [ 'Initiator', 'Request' ] ) {
+            const hitProp = `${prop.toLowerCase()}Domains`;
+            if ( Array.isArray(rule.condition[hitProp]) ) {
+                if ( rule.condition[hitProp].some(hn => isUnsupportedDomain(hn)) ) {
+                    const domains = rule.condition[hitProp].filter(
+                        hn => isUnsupportedDomain(hn) === false 
+                    );
+                    if ( domains.length === 0 ) {
+                        dnrAddRuleError(rule, `Can't salvage rule with unsupported domain= option: ${rule.condition[hitProp].join('|')}`);
+                    } else {
+                        dnrAddRuleWarning(rule, `Salvaged rule by ignoring ${rule.condition[hitProp].length - domains.length} unsupported domain= option: ${rule.condition[hitProp].join('|')}`);
+                        rule.condition[hitProp] = domains;
+                    }
+                }
             }
-        }
-        if (
-            Array.isArray(rule.condition.excludedInitiatorDomains) &&
-            rule.condition.excludedInitiatorDomains.some(hn => hn.endsWith('.*'))
-        ) {
-            const domains = rule.condition.excludedInitiatorDomains.filter(
-                hn => hn.endsWith('.*') === false
-            );
-            rule.condition.excludedInitiatorDomains =
-                domains.length !== 0
-                    ? domains
-                    : undefined;
+            const missProp = `excluded${prop}Domains`;
+            if ( Array.isArray(rule.condition[missProp]) ) {
+                if ( rule.condition[missProp].some(hn => isUnsupportedDomain(hn)) ) {
+                    const domains = rule.condition[missProp].filter(
+                        hn => isUnsupportedDomain(hn) === false
+                    );
+                    rule.condition[missProp] =
+                        domains.length !== 0
+                            ? domains
+                            : undefined;
+                }
+            }
         }
     }
 
