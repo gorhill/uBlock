@@ -96,49 +96,21 @@ vAPI.app = {
  * 
  * */
 
-vAPI.sessionStorage = (( ) => {
-    if ( browser.storage.session instanceof Object === false ) {
-        return {
-            get() {
-                return Promise.resolve({});
-            },
-            set() {
-                return Promise.resolve();
-            },
-            remove() {
-                return Promise.resolve();
-            },
-            clear() {
-                return Promise.resolve();
-            },
-            implemented: false,
-        };
-    }
-    return {
-        get(...args) {
-            return browser.storage.session.get(...args).catch(reason => {
-                console.log(reason);
-                return {};
-            });
-        },
-        set(...args) {
-            return browser.storage.session.set(...args).catch(reason => {
-                console.log(reason);
-            });
-        },
-        remove(...args) {
-            return browser.storage.session.remove(...args).catch(reason => {
-                console.log(reason);
-            });
-        },
-        clear(...args) {
-            return browser.storage.session.clear(...args).catch(reason => {
-                console.log(reason);
-            });
-        },
-        implemented: true,
-    };
-})();
+vAPI.sessionStorage = {
+    get() {
+        return Promise.resolve({});
+    },
+    set() {
+        return Promise.resolve();
+    },
+    remove() {
+        return Promise.resolve();
+    },
+    clear() {
+        return Promise.resolve();
+    },
+    implemented: false,
+};
 
 /*******************************************************************************
  * 
