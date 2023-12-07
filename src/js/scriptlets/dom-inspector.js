@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* globals browser */
+
 'use strict';
 
 /******************************************************************************/
@@ -34,9 +36,6 @@ if ( document.querySelector(`iframe[${vAPI.sessionId}]`) !== null ) { return; }
 
 /******************************************************************************/
 /******************************************************************************/
-
-// Highlighter-related
-let inspectorRoot = null;
 
 const nodeToIdMap = new WeakMap(); // No need to iterate
 
@@ -130,7 +129,7 @@ const domLayout = (( ) => {
         const localName = node.localName;
         if ( skipTagNames.has(localName) ) { return null; }
         // skip uBlock's own nodes
-        if ( node === inspectorRoot ) { return null; }
+        if ( node === inspectorFrame ) { return null; }
         if ( level === 0 && localName === 'body' ) {
             return new DomRoot();
         }
@@ -298,7 +297,7 @@ const domLayout = (( ) => {
 
         if ( journalEntries.length === 0 ) { return; }
 
-        inspectorFramePort.postMessage({
+        contentInspectorChannel.toLogger({
             what: 'domLayoutIncremental',
             url: window.location.href,
             hostname: window.location.hostname,
@@ -483,7 +482,7 @@ const highlightElements = ( ) => {
 
     const path = [];
     for ( const elem of rwRedNodes.keys() ) {
-        if ( elem === inspectorRoot ) { continue; }
+        if ( elem === inspectorFrame ) { continue; }
         if ( rwGreenNodes.has(elem) ) { continue; }
         if ( typeof elem.getBoundingClientRect !== 'function' ) { continue; }
         const rect = elem.getBoundingClientRect();
@@ -521,7 +520,7 @@ const highlightElements = ( ) => {
 
     path.length = 0;
     for ( const elem of roRedNodes.keys() ) {
-        if ( elem === inspectorRoot ) { continue; }
+        if ( elem === inspectorFrame ) { continue; }
         if ( rwGreenNodes.has(elem) ) { continue; }
         if ( typeof elem.getBoundingClientRect !== 'function' ) { continue; }
         const rect = elem.getBoundingClientRect();
@@ -541,7 +540,7 @@ const highlightElements = ( ) => {
 
     path.length = 0;
     for ( const elem of blueNodes ) {
-        if ( elem === inspectorRoot ) { continue; }
+        if ( elem === inspectorFrame ) { continue; }
         if ( typeof elem.getBoundingClientRect !== 'function' ) { continue; }
         const rect = elem.getBoundingClientRect();
         const xl = rect.left;
@@ -558,7 +557,7 @@ const highlightElements = ( ) => {
     }
     paths.push(path.join('') || 'M0 0');
 
-    inspectorFramePort.postMessage({
+    contentInspectorChannel.toFrame({
         what: 'svgPaths',
         paths,
     });
@@ -637,7 +636,7 @@ const resetToggledNodes = ( ) => {
 
 /******************************************************************************/
 
-const start = ( ) => {
+const startInspector = ( ) => {
     const onReady = ( ) => {
         window.addEventListener('scroll', onScrolled, {
             capture: true,
@@ -647,7 +646,7 @@ const start = ( ) => {
             capture: true,
             passive: true,
         });
-        inspectorFramePort.postMessage(domLayout.get());
+        contentInspectorChannel.toLogger(domLayout.get());
         vAPI.domFilterer.toggle(false, highlightElements);
     };
     if ( document.readyState === 'loading' ) {
@@ -659,7 +658,7 @@ const start = ( ) => {
 
 /******************************************************************************/
 
-const shutdown = ( ) => {
+const shutdownInspector = ( ) => {
     cosmeticFilterMapper.shutdown();
     domLayout.shutdown();
     window.removeEventListener('scroll', onScrolled, {
@@ -670,13 +669,12 @@ const shutdown = ( ) => {
         capture: true,
         passive: true,
     });
-    inspectorFramePort.close();
-    inspectorFramePort = undefined;
+    contentInspectorChannel.shutdown();
     vAPI.userStylesheet.remove(inspectorCSS);
     vAPI.userStylesheet.apply();
-    if ( inspectorRoot === null ) { return; }
-    inspectorRoot.remove();
-    inspectorRoot = null;
+    if ( inspectorFrame === null ) { return; }
+    inspectorFrame.remove();
+    inspectorFrame = null;
 };
 
 /******************************************************************************/
@@ -685,11 +683,11 @@ const shutdown = ( ) => {
 const onMessage = request => {
     switch ( request.what ) {
     case 'startInspector':
-        start();
+        startInspector();
         break;
 
     case 'quitInspector':
-        shutdown();
+        shutdownInspector();
         break;
 
     case 'commitFilters':
@@ -756,15 +754,97 @@ const onMessage = request => {
     }
 };
 
-/******************************************************************************/
+/*******************************************************************************
+ * 
+ * Establish two-way communication with logger/inspector window and
+ * inspector frame
+ * 
+ * */
+
+const contentInspectorChannel = (( ) => {
+    let toLoggerPort;
+    let toFramePort;
+
+    const toLogger = msg => {
+        if ( toLoggerPort === undefined ) { return; }
+        try {
+            toLoggerPort.postMessage(msg);
+        } catch(_) {
+            shutdownInspector();
+        }
+    };
+
+    const onLoggerMessage = msg => {
+        onMessage(msg);
+    };
+
+    const onLoggerDisconnect = ( ) => {
+        shutdownInspector();
+    };
+
+    const onLoggerConnect = port => {
+        browser.runtime.onConnect.removeListener(onLoggerConnect);
+        toLoggerPort = port;
+        port.onMessage.addListener(onLoggerMessage);
+        port.onDisconnect.addListener(onLoggerDisconnect);
+    };
+
+    const toFrame = msg => {
+        if ( toFramePort === undefined ) { return; }
+        toFramePort.postMessage(msg);
+    };
+
+    const shutdown = ( ) => {
+        if ( toFramePort !== undefined ) {
+            toFrame({ what: 'quitInspector' });
+            toFramePort.onmessage = null;
+            toFramePort.close();
+            toFramePort = undefined;
+        }
+        if ( toLoggerPort !== undefined ) {
+            toLoggerPort.onMessage.removeListener(onLoggerMessage);
+            toLoggerPort.onDisconnect.removeListener(onLoggerDisconnect);
+            toLoggerPort.disconnect();
+            toLoggerPort = undefined;
+        }
+        browser.runtime.onConnect.removeListener(onLoggerConnect);
+    };
+
+    const start = async ( ) => {
+        browser.runtime.onConnect.addListener(onLoggerConnect);
+        const inspectorArgs = await vAPI.messaging.send('domInspectorContent', {
+            what: 'getInspectorArgs',
+        });
+        if ( typeof inspectorArgs !== 'object' ) { return; }
+        if ( inspectorArgs === null ) { return; }
+        return new Promise(resolve => {
+            const iframe = document.createElement('iframe');
+            iframe.setAttribute(vAPI.sessionId, '');
+            document.documentElement.append(iframe);
+            iframe.addEventListener('load', ( ) => {
+                iframe.setAttribute(`${vAPI.sessionId}-loaded`, '');
+                const channel = new MessageChannel();
+                toFramePort = channel.port1;
+                toFramePort.onmessage = ev => {
+                    const msg = ev.data || {};
+                    if ( msg.what !== 'startInspector' ) { return; }
+                    resolve(iframe);
+                };
+                iframe.contentWindow.postMessage(
+                    { what: 'startInspector' },
+                    inspectorArgs.inspectorURL,
+                    [ channel.port2 ]
+                );
+            }, { once: true });
+            iframe.contentWindow.location = inspectorArgs.inspectorURL;
+        });
+    };
+
+    return { start, toLogger, toFrame, shutdown };
+})();
+
 
 // Install DOM inspector widget
-let inspectorArgs = await vAPI.messaging.send('domInspectorContent', {
-    what: 'getInspectorArgs',
-});
-if ( typeof inspectorArgs !== 'object' ) { return; }
-if ( inspectorArgs === null ) { return; }
-
 const inspectorCSSStyle = [
     'background: transparent',
     'border: 0',
@@ -799,31 +879,12 @@ const inspectorCSS = `
 vAPI.userStylesheet.add(inspectorCSS);
 vAPI.userStylesheet.apply();
 
-inspectorRoot = document.createElement('iframe');
-inspectorRoot.setAttribute(vAPI.sessionId, '');
-document.documentElement.append(inspectorRoot);
+let inspectorFrame = await contentInspectorChannel.start();
+if ( inspectorFrame instanceof HTMLIFrameElement === false ) {
+    return shutdownInspector();
+}
 
-let inspectorFramePort;
-
-inspectorRoot.addEventListener('load', ( ) => {
-    const channel = new MessageChannel();
-    inspectorFramePort = channel.port1;
-    inspectorFramePort.onmessage = ev => {
-        const msg = ev.data || {};
-        onMessage(msg);
-    };
-    inspectorFramePort.onmessageerror = ( ) => {
-        shutdown();
-    };
-    inspectorRoot.setAttribute(`${vAPI.sessionId}-loaded`, '');
-    inspectorRoot.contentWindow.postMessage(
-        { what: 'startInspector' },
-        inspectorArgs.inspectorURL,
-        [ channel.port2 ]
-    );
-}, { once: true });
-
-inspectorRoot.contentWindow.location = inspectorArgs.inspectorURL;
+startInspector();
 
 /******************************************************************************/
 

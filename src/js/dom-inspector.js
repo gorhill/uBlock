@@ -25,22 +25,19 @@
 /******************************************************************************/
 
 const svgRoot = document.querySelector('svg');
+let inspectorContentPort;
 
-const quit = ( ) => {
-    inspectorContentPort.postMessage({ what: 'quitInspector' });
+const shutdown = ( ) => {
     inspectorContentPort.close();
     inspectorContentPort.onmessage = inspectorContentPort.onmessageerror = null;
     inspectorContentPort = undefined;
-    loggerPort.postMessage({ what: 'quitInspector' });
-    loggerPort.close();
-    loggerPort.onmessage = loggerPort.onmessageerror = null;
-    loggerPort = undefined;
 };
 
-const onMessage = (msg, fromLogger) => {
+const contentInspectorChannel = ev => {
+    const msg = ev.data || {};
     switch ( msg.what ) {
         case 'quitInspector': {
-            quit();
+            shutdown();
             break;
         }
         case 'svgPaths': {
@@ -52,41 +49,20 @@ const onMessage = (msg, fromLogger) => {
             break;
         }
         default:
-            if ( typeof fromLogger !== 'boolean' ) { return; }
-            if ( fromLogger ) {
-                inspectorContentPort.postMessage(msg);
-            } else {
-                loggerPort.postMessage(msg);
-            }
             break;
     }
 };
 
 // Wait for the content script to establish communication
-
-let inspectorContentPort;
-
-let loggerPort = new globalThis.BroadcastChannel('loggerInspector');
-loggerPort.onmessage = ev => {
-    const msg = ev.data || {};
-    onMessage(msg, true);
-};
-loggerPort.onmessageerror = ( ) => {
-    quit();
-};
-
 globalThis.addEventListener('message', ev => {
     const msg = ev.data || {};
     if ( msg.what !== 'startInspector' ) { return; }
     if ( Array.isArray(ev.ports) === false ) { return; }
     if ( ev.ports.length === 0 ) { return; }
     inspectorContentPort = ev.ports[0];
-    inspectorContentPort.onmessage = ev => {
-        const msg = ev.data || {};
-        onMessage(msg, false);
-    };
-    inspectorContentPort.onmessageerror = ( ) => {
-        quit();
-    };
+    inspectorContentPort.onmessage = contentInspectorChannel;
+    inspectorContentPort.onmessageerror = shutdown;
     inspectorContentPort.postMessage({ what: 'startInspector' });
 }, { once: true });
+
+/******************************************************************************/

@@ -1860,6 +1860,12 @@ const onMessage = (request, sender, callback) => {
     let response;
     switch ( request.what ) {
     case 'getInspectorArgs':
+        const bc = new globalThis.BroadcastChannel('contentInspectorChannel');
+        bc.postMessage({
+            what: 'contentInspectorChannel',
+            tabId: sender.tabId || 0,
+            frameId: sender.frameId || 0,
+        });
         response = {
             inspectorURL: vAPI.getURL(
                 `/web_accessible_resources/dom-inspector.html?secret=${vAPI.warSecret.short()}`

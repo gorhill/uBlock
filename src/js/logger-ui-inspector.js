@@ -42,21 +42,97 @@ let inspectedURL = '';
 let inspectedHostname = '';
 let uidGenerator = 1;
 
-/******************************************************************************/
+/*******************************************************************************
+ * 
+ * How it works:
+ * 
+ * 1. The logger/inspector is enabled from the logger window
+ * 
+ * 2. The inspector content script is injected in the root frame of the tab
+ * currently selected in the logger
+ * 
+ * 3. The inspector content script asks the logger/inspector to establish
+ * a two-way communication channel
+ * 
+ * 3. The inspector content script embed an inspector frame in the document
+ * being inspected and waits for the inspector frame to be fully loaded
+ * 
+ * 4. The inspector content script sends a messaging port object to the
+ * embedded inspector frame for a two-way communication channel between
+ * the inspector frame and the inspector content script
+ * 
+ * 5. The inspector content script sends dom information to the
+ * logger/inspector
+ * 
+ * */
 
-const inspectorFramePort = new globalThis.BroadcastChannel('loggerInspector');
-inspectorFramePort.onmessage = ev => {
-    const msg = ev.data || {};
-    if ( msg.what === 'domLayoutFull' ) {
-        inspectedURL = msg.url;
-        inspectedHostname = msg.hostname;
-        renderDOMFull(msg);
-    } else if ( msg.what === 'domLayoutIncremental' ) {
-        renderDOMIncremental(msg);
-    }
-};
-inspectorFramePort.onmessageerror = ( ) => {
-};
+const contentInspectorChannel = (( ) => {
+    let bcChannel;
+    let toContentPort;
+
+    const start = ( ) => {
+        bcChannel = new globalThis.BroadcastChannel('contentInspectorChannel');
+        bcChannel.onmessage = ev => {
+            const msg = ev.data || {};
+            connect(msg.tabId, msg.frameId);
+        };
+        browser.webNavigation.onDOMContentLoaded.addListener(onContentLoaded);
+    };
+
+    const shutdown = ( ) => {
+        browser.webNavigation.onDOMContentLoaded.removeListener(onContentLoaded);
+        disconnect();
+        bcChannel.close();
+        bcChannel.onmessage = null;
+        bcChannel = undefined;
+    };
+
+    const connect = (tabId, frameId) => {
+        disconnect();
+        try {
+            toContentPort = browser.tabs.connect(tabId, { frameId });
+            toContentPort.onMessage.addListener(onContentMessage);
+            toContentPort.onDisconnect.addListener(onContentDisconnect);
+        } catch(_) {
+        }
+    };
+
+    const disconnect = ( ) => {
+        if ( toContentPort === undefined ) { return; }
+        toContentPort.onMessage.removeListener(onContentMessage);
+        toContentPort.onDisconnect.removeListener(onContentDisconnect);
+        toContentPort.disconnect();
+        toContentPort = undefined;
+    };
+
+    const send = msg => {
+        if ( toContentPort === undefined ) { return; }
+        toContentPort.postMessage(msg);
+    };
+
+    const onContentMessage = msg => {
+        if ( msg.what === 'domLayoutFull' ) {
+            inspectedURL = msg.url;
+            inspectedHostname = msg.hostname;
+            renderDOMFull(msg);
+        } else if ( msg.what === 'domLayoutIncremental' ) {
+            renderDOMIncremental(msg);
+        }
+    };
+
+    const onContentDisconnect = ( ) => {
+        disconnect();
+    };
+
+    const onContentLoaded = details => {
+        if ( details.tabId !== inspectedTabId ) { return; }
+        if ( details.frameId !== 0 ) { return; }
+        disconnect();
+        injectInspector();
+    };
+
+    return { start, disconnect, send, shutdown };
+})();
 
 /******************************************************************************/
 
@@ -345,7 +421,7 @@ const startDialog = (( ) => {
     };
 
     const showCommitted = function() {
-        inspectorFramePort.postMessage({
+        contentInspectorChannel.send({
             what: 'showCommitted',
             hide: hideSelectors.join(',\n'),
             unhide: unhideSelectors.join(',\n')
@@ -353,7 +429,7 @@ const startDialog = (( ) => {
     };
 
     const showInteractive = function() {
-        inspectorFramePort.postMessage({
+        contentInspectorChannel.send({
             what: 'showInteractive',
             hide: hideSelectors.join(',\n'),
             unhide: unhideSelectors.join(',\n')
@@ -432,7 +508,7 @@ const onClicked = ev => {
 
     // Toggle cosmetic filter
     if ( dom.cl.has(target, 'filter') ) {
-        inspectorFramePort.postMessage({
+        contentInspectorChannel.send({
             what: 'toggleFilter',
             original: false,
             target: dom.cl.toggle(target, 'off'),
@@ -448,7 +524,7 @@ const onClicked = ev => {
     }
     // Toggle node
     else {
-        inspectorFramePort.postMessage({
+        contentInspectorChannel.send({
             what: 'toggleNodes',
             original: true,
             target: dom.cl.toggle(target, 'off') === false,
@@ -468,7 +544,7 @@ const onMouseOver = (( ) => {
     let mouseoverTarget = null;
 
     const mouseoverTimer = vAPI.defer.create(( ) => {
-        inspectorFramePort.postMessage({
+        contentInspectorChannel.send({
             what: 'highlightOne',
             selector: selectorFromNode(mouseoverTarget),
             nid: nidFromNode(mouseoverTarget),
@@ -517,7 +593,7 @@ const injectInspector = (( ) => {
 /******************************************************************************/
 
 const shutdownInspector = ( ) => {
-    inspectorFramePort.postMessage({ what: 'quitInspector' });
+    contentInspectorChannel.disconnect();
     logger.removeAllChildren(domTree);
     dom.cl.remove(inspector, 'vExpanded');
     inspectedTabId = 0;
@@ -533,14 +609,6 @@ const onTabIdChanged = ( ) => {
     if ( inspectedTabId !== tabId ) {
         injectInspector();
     }
-};
-
-/******************************************************************************/
-
-const onDOMContentLoaded = details => {
-    if ( details.tabId !== inspectedTabId ) { return; }
-    if ( details.frameId !== 0 ) { return; }
-    injectInspector();
 };
 
 /******************************************************************************/
@@ -561,7 +629,7 @@ const toggleHCompactView = ( ) => {
 
 const revert = ( ) => {
     dom.cl.remove('#domTree .off', 'off');
-    inspectorFramePort.postMessage({ what: 'resetToggledNodes' });
+    contentInspectorChannel.send({ what: 'resetToggledNodes' });
     dom.cl.add(qs$(inspector, '.permatoolbar .revert'), 'disabled');
     dom.cl.add(qs$(inspector, '.permatoolbar .commit'), 'disabled');
 };
@@ -578,7 +646,7 @@ const toggleOn = ( ) => {
     dom.on('#domInspector .hCompactToggler', 'click', toggleHCompactView);
     dom.on('#domInspector .permatoolbar .revert', 'click', revert);
     dom.on('#domInspector .permatoolbar .commit', 'click', startDialog);
-    browser.webNavigation.onDOMContentLoaded.addListener(onDOMContentLoaded);
+    contentInspectorChannel.start();
     injectInspector();
 };
 
@@ -596,7 +664,7 @@ const toggleOff = ( ) => {
     dom.off('#domInspector .hCompactToggler', 'click', toggleHCompactView);
     dom.off('#domInspector .permatoolbar .revert', 'click', revert);
     dom.off('#domInspector .permatoolbar .commit', 'click', startDialog);
-    browser.webNavigation.onDOMContentLoaded.removeListener(onDOMContentLoaded);
+    contentInspectorChannel.shutdown();
     inspectedTabId = 0;
 };
 
