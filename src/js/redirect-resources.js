@@ -48,9 +48,6 @@ export default new Map([
         alias: '32x32-transparent.png',
         data: 'blob',
     } ],
-    [ 'addthis_widget.js', {
-        alias: 'addthis.com/addthis_widget.js',
-    } ],
     [ 'amazon_ads.js', {
         alias: 'amazon-adsystem.com/aax2/amzn_ads.js',
         data: 'text',
@@ -115,14 +112,6 @@ export default new Map([
         data: 'text',
     } ],
     [ 'hd-main.js', {
-    } ],
-    [ 'ligatus_angular-tag.js', {
-        alias: 'ligatus.com/*/angular-tag.js',
-    } ],
-    [ 'mxpnl_mixpanel.js', {
-    } ],
-    [ 'monkeybroker.js', {
-        alias: 'd3pkae9owd2lcf.cloudfront.net/mb105.js',
     } ],
     [ 'nobab.js', {
         alias: [ 'bab-defuser.js', 'prevent-bab.js' ],
