@@ -151,7 +151,7 @@ const domLayout = (( ) => {
                 layout.push(domNode);
             }
             // children
-            if ( node.firstElementChild !== null ) {
+            if ( domNode !== null && node.firstElementChild !== null ) {
                 stack.push(node);
                 lvl += 1;
                 node = node.firstElementChild;
@@ -704,6 +704,13 @@ const onMessage = request => {
 
     case 'highlightOne':
         blueNodes = selectNodes(request.selector, request.nid);
+        if ( blueNodes.length !== 0 ) {
+            blueNodes[0].scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest',
+                inline: 'nearest',
+            });
+        }
         highlightElements();
         break;
 
@@ -728,8 +735,8 @@ const onMessage = request => {
         if ( nodes.length !== 0 ) {
             nodes[0].scrollIntoView({
                 behavior: 'smooth',
-                block: 'center',
-                inline: 'center',
+                block: 'nearest',
+                inline: 'nearest',
             });
         }
         toggleExceptions(nodesFromFilter(request.filter), request.target);
@@ -741,8 +748,8 @@ const onMessage = request => {
         if ( nodes.length !== 0 ) {
             nodes[0].scrollIntoView({
                 behavior: 'smooth',
-                block: 'center',
-                inline: 'center',
+                block: 'nearest',
+                inline: 'nearest',
             });
         }
         toggleFilter(nodes, request.target);

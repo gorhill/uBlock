@@ -7,6 +7,12 @@
 #domInspector .permatoolbar .highlightMode.invert {
     transform: rotate(180deg);
     }
+#domInspector button.vExpandToggler > .fa-icon {
+    transform: scaleY(-1)
+    }
+#domInspector button.vCompactToggler > .fa-icon {
+    transform: scaleY(1)
+    }
 #domInspector .vscrollable {
     overflow-x: auto;
     }
@@ -84,7 +90,7 @@
     display: none;
     }
 
-#domInspector:not(.vExpanded) li:not(.hasCosmeticHide):not(.isCosmeticHide) {
+#domInspector li:not(.hasCosmeticHide):not(.isCosmeticHide):not(.show) {
     display: none;
     }
 #domInspector #domTree > li {

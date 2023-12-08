@@ -8,7 +8,8 @@ body {
 textarea {
     box-sizing: border-box;
     direction: ltr;
-    resize: none;
+    min-height: 6rem;
+    resize: vertical;
     width: 100%;
     }
 .permatoolbar {
@@ -78,6 +79,9 @@ textarea {
     overflow-y: auto;
 }
 
+#domInspector button.vExpandToggler > .fa-icon {
+    transform: scaleY(1)
+    }
 .inspector:not(.vExpanded) button.vCompactToggler > .fa-icon {
     transform: scaleY(-1)
     }

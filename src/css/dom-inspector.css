@@ -19,6 +19,9 @@ html#ublock0-inspector,
     top: 0;
     width: 100%;
 }
+#ublock0-inspector svg > path {
+    stroke-width: 1px;
+    }
 #ublock0-inspector svg > path:nth-of-type(1) {
     fill: rgba(255,0,0,0.2);
     stroke: #F00;
@@ -33,6 +36,5 @@ html#ublock0-inspector,
 }
 #ublock0-inspector svg > path:nth-of-type(4) {
     fill: rgba(0,0,255,0.1);
-    stroke: #FFF;
-    stroke-width: 0.5px;
+    stroke: #00F;
 }

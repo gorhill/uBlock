@@ -613,11 +613,33 @@ const onTabIdChanged = ( ) => {
 
 /******************************************************************************/
 
-const toggleVCompactView = ( ) => {
-    const state = dom.cl.toggle(inspector, 'vExpanded');
-    const branches = qsa$('#domInspector li.branch');
+const toggleVExpandView = ( ) => {
+    const branches = qsa$('#domTree li.branch.show > ul > li.branch:not(.show)');
     for ( const branch of branches ) {
-        dom.cl.toggle(branch, 'show', state);
+        dom.cl.add(branch, 'show');
+    }
+};
+
+const toggleVCompactView = ( ) => {
+    const branches = qsa$('#domTree li.branch.show > ul > li:not(.show)');
+    const tohideSet = new Set();
+    for ( const branch of branches ) {
+        const node = branch.closest('li.branch.show');
+        if ( node.id === 'n1' ) { continue; }
+        tohideSet.add(node);
+    }
+    const tohideList = Array.from(tohideSet);
+    let i = tohideList.length - 1;
+    while ( i > 0 ) {
+        if ( tohideList[i-1].contains(tohideList[i]) ) {
+            tohideList.splice(i-1, 1);
+        } else if ( tohideList[i].contains(tohideList[i-1]) ) {
+            tohideList.splice(i, 1);
+        }
+        i -= 1;
+    }
+    for ( const node of tohideList ) {
+        dom.cl.remove(node, 'show');
     }
 };
 
@@ -642,6 +664,7 @@ const toggleOn = ( ) => {
     document.addEventListener('tabIdChanged', onTabIdChanged);
     domTree.addEventListener('click', onClicked, true);
     domTree.addEventListener('mouseover', onMouseOver, true);
+    dom.on('#domInspector .vExpandToggler', 'click', toggleVExpandView);
     dom.on('#domInspector .vCompactToggler', 'click', toggleVCompactView);
     dom.on('#domInspector .hCompactToggler', 'click', toggleHCompactView);
     dom.on('#domInspector .permatoolbar .revert', 'click', revert);
@@ -660,6 +683,7 @@ const toggleOff = ( ) => {
     document.removeEventListener('tabIdChanged', onTabIdChanged);
     domTree.removeEventListener('click', onClicked, true);
     domTree.removeEventListener('mouseover', onMouseOver, true);
+    dom.off('#domInspector .vExpandToggler', 'click', toggleVExpandView);
     dom.off('#domInspector .vCompactToggler', 'click', toggleVCompactView);
     dom.off('#domInspector .hCompactToggler', 'click', toggleHCompactView);
     dom.off('#domInspector .permatoolbar .revert', 'click', revert);
