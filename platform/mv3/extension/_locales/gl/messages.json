@@ -20,7 +20,7 @@
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
-    "message": "About",
+    "message": "Acerca de",
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
@@ -32,7 +32,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {
-    "message": "Open the dashboard",
+    "message": "Abrir o panel",
     "description": "English: Click to open the dashboard"
   },
   "popupMoreButton": {
@@ -44,7 +44,7 @@
     "description": "Label to be used to hide popup panel sections"
   },
   "3pGroupDefault": {
-    "message": "Default",
+    "message": "Por defecto",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -60,7 +60,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
-    "message": "Annoyances",
+    "message": "Molestias",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMisc": {
@@ -80,7 +80,7 @@
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Contributors",
+    "message": "Contribúen",
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
@@ -88,59 +88,59 @@
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
-    "message": "Translations",
+    "message": "Traducións",
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
-    "message": "Filter lists",
+    "message": "Listas de filtrado",
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "External dependencies (GPLv3-compatible):",
+    "message": "Dependencias externas (GPLv3-compatible):",
     "description": "Shown in the About pane"
   },
   "firstRunSectionLabel": {
-    "message": "Welcome",
+    "message": "Benvida",
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "You have just installed uBO Lite. Here you can choose the default filtering mode to use on all websites.\n\nBy default, <em>Basic</em> mode is selected because it does not require the permission to read and modify data. If you trust uBO Lite, you can give it broad permission to read and modify data on all websites in order to enable more advanced filtering capabilities for all websites by default.",
+    "message": "Acabas de instalar uBO Lite. Aquí podes escoller o modo de filtrado para usar en todas as páxinas web.\n\nPor defecto, o modo <em>Básico</em> está seleccionado porque non require o permiso de lectura ou modificar datos. Se confías en uBO Lite, podes darlle máis permisos para ler e modificar os datos de todos os sitios web para poder realizar por defecto un filtrado máis preciso en todas as páxinas web.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
-    "message": "Default filtering mode",
+    "message": "Modo de filtrado por defecto",
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "The default filtering mode will be overridden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
+    "message": "O modo de filtrado por defecto vaise sobrescribir usando os filtros propios para cada web. Podes axustar o modo de filtrado para calquera web acorde ás túas preferencias para esa web. Cada modo ten as súas vantaxes e inconvintes.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
-    "message": "no filtering",
+    "message": "sen filtrar",
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
-    "message": "basic",
+    "message": "básico",
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
-    "message": "optimal",
+    "message": "óptimo",
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
-    "message": "complete",
+    "message": "completo",
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Basic network filtering from selected filter lists.\n\nDoes not require permission to read and modify data on websites.",
+    "message": "Filtrado básico na rede usando listas de filtrado seleccionadas.\n\nNon require permiso de lectura ou modificar datos do sitio web.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.",
+    "message": "Filtrado avanzado da rede e filtrado extendido específico usando listas de filtrado seleccionadas.\n\nRequire permisos máis amplos para ler e modificar datos en todas as webs.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific and generic extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.\n\nGeneric extended filtering may cause higher webpage resources usage.",
+    "message": "Filtro avanzado na rede e filtrado extenso usando listas xenéricas e específicas para as webs.\n\nRequire permisos máis amplos para ler e modificar datos en todas as webs.\n\nO filtrado extendido xenérico podería facer que aumentasen os recursos que usa a páxina web.",
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
@@ -148,11 +148,11 @@
     "description": "A short description for the editable field which lists trusted sites"
   },
   "behaviorSectionLabel": {
-    "message": "Behavior",
+    "message": "Comportamento",
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Automatically reload page when changing filtering mode",
+    "message": "Recargar automáticamente a páxina a cambiar o modo de filtrado",
     "description": "Label for a checkbox in the options page"
   }
 }

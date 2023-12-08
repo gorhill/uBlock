@@ -528,7 +528,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Одно правило на строку. Правилом может быть имя сайта, или EasyList-совместимый фильтр. Строки, начинающиеся с <code>!</code>, будут проигнорированы.",
+    "message": "Одно правило на строку. Правилом может быть имя сайта или EasyList-совместимый фильтр. Строки, начинающиеся с <code>!</code>, будут проигнорированы.",
     "description": "Short information about how to create custom filters"
   },
   "1pTrustWarning": {

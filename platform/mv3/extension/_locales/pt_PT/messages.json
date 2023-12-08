@@ -144,7 +144,7 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "Lista de nomes de host para os quais não ocorrerá nenhuma filtragem",
+    "message": "Lista de nomes de anfitriões para os quais não será efetuada qualquer filtragem",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "behaviorSectionLabel": {

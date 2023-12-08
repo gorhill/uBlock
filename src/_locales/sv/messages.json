@@ -468,7 +468,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Inbyggd",
+    "message": "Inbyggda",
     "description": "Filter lists section name"
   },
   "3pGroupAds": {
@@ -496,7 +496,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupCustom": {
-    "message": "Anpassad",
+    "message": "Anpassade",
     "description": "Filter lists section name"
   },
   "3pImport": {
