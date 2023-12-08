@@ -160,7 +160,11 @@ const onMessage = function(request, sender, callback) {
             );
         }
         const options = {
-            extensionPaths: redirectEngine.getResourceDetails(),
+            extensionPaths: redirectEngine.getResourceDetails().filter(e =>
+                typeof e[1].extensionPath === 'string' && e[1].extensionPath !== ''
+            ).map(e =>
+                [ e[0], e[1].extensionPath ]
+            ),
             env: vAPI.webextFlavor.env,
         };
         const t0 = Date.now();
