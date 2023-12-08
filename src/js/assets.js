@@ -985,6 +985,17 @@ assets.get = async function(assetKey, options = {}) {
                 silent: options.silent === true,
             });
             registerAssetSource(assetKey, { error: undefined });
+            if ( assetDetails.content === 'filters' ) {
+                const metadata = extractMetadataFromList(details.content, [
+                    'Last-Modified',
+                    'Expires',
+                    'Diff-Name',
+                    'Diff-Path',
+                    'Diff-Expires',
+                ]);
+                metadata.diffUpdated = undefined;
+                assetCacheSetDetails(assetKey, metadata);
+            }
         }
         return reportBack(details.content, contentURL);
     }
@@ -1057,6 +1068,7 @@ async function getRemote(assetKey, options = {}) {
                 'Diff-Path',
                 'Diff-Expires',
             ]);
+            metadata.diffUpdated = undefined;
             assetCacheSetDetails(assetKey, metadata);
         }
 
@@ -1113,6 +1125,9 @@ assets.metadata = async function() {
             const obsoleteAfter = cacheEntry.writeTime + getUpdateAfterTime(assetKey);
             assetEntry.obsolete = obsoleteAfter < now;
             assetEntry.remoteURL = cacheEntry.remoteURL;
+            if ( cacheEntry.diffUpdated ) {
+                assetEntry.diffUpdated = cacheEntry.diffUpdated;
+            }
         } else if (
             assetEntry.contentURL &&
             assetEntry.contentURL.length !== 0
@@ -1273,6 +1288,7 @@ async function diffUpdater() {
                     content: data.text,
                     resourceTime: metadata.lastModified || 0,
                 });
+                metadata.diffUpdated = true;
                 assetCacheSetDetails(data.assetKey, metadata);
                 updaterUpdated.push(data.assetKey);
             } else if ( data.error ) {
