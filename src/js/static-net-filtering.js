@@ -71,7 +71,7 @@ const keyvalStore = typeof vAPI !== 'undefined'
 // ||||+---------------- bit   12: removeparam filters
 // |||+----------------- bit   13: csp filters
 // ||+------------------ bit   14: permissions filters
-// |+------------------- bit   15: urltransform filters
+// |+------------------- bit   15: uritransform filters
 // +-------------------- bit   16: replace filters
 // TODO: bit 11-16 can be converted into 3-bit value, as these options are not
 //       meant to be combined.
@@ -217,7 +217,7 @@ const modifierTypeFromName = new Map([
     [ 'removeparam', MODIFIER_TYPE_REMOVEPARAM ],
     [ 'csp', MODIFIER_TYPE_CSP ],
     [ 'permissions', MODIFIER_TYPE_PERMISSIONS ],
-    [ 'urltransform', MODIFIER_TYPE_URLTRANSFORM ],
+    [ 'uritransform', MODIFIER_TYPE_URLTRANSFORM ],
     [ 'replace', MODIFIER_TYPE_REPLACE ],
 ]);
 
@@ -227,7 +227,7 @@ const modifierNameFromType = new Map([
     [ MODIFIER_TYPE_REMOVEPARAM, 'removeparam' ],
     [ MODIFIER_TYPE_CSP, 'csp' ],
     [ MODIFIER_TYPE_PERMISSIONS, 'permissions' ],
-    [ MODIFIER_TYPE_URLTRANSFORM, 'urltransform' ],
+    [ MODIFIER_TYPE_URLTRANSFORM, 'uritransform' ],
     [ MODIFIER_TYPE_REPLACE, 'replace' ],
 ]);
 
@@ -4378,7 +4378,7 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
         [ REMOVEPARAM_REALM, 'removeparam' ],
         [ CSP_REALM, 'csp' ],
         [ PERMISSIONS_REALM, 'permissions' ],
-        [ URLTRANSFORM_REALM, 'urltransform' ],
+        [ URLTRANSFORM_REALM, 'uritransform' ],
     ]);
     const partyness = new Map([
         [ ANYPARTY_REALM, '' ],
@@ -4570,7 +4570,7 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
                 dnrAddRuleError(rule, `Unsupported removeparam exception: ${rule.__modifierValue}`);
             }
             break;
-        case 'urltransform': {
+        case 'uritransform': {
             const path = rule.__modifierValue;
             let priority = rule.priority || 1;
             if ( rule.__modifierAction !== ALLOW_REALM ) {
@@ -5297,7 +5297,7 @@ FilterContainer.prototype.redirectRequest = function(redirectEngine, fctxt) {
 };
 
 FilterContainer.prototype.transformRequest = function(fctxt) {
-    const directives = this.matchAndFetchModifiers(fctxt, 'urltransform');
+    const directives = this.matchAndFetchModifiers(fctxt, 'uritransform');
     if ( directives === undefined ) { return; }
     const directive = directives[directives.length-1];
     if ( (directive.bits & ALLOW_REALM) !== 0 ) { return directives; }
@@ -5584,7 +5584,7 @@ FilterContainer.prototype.dump = function() {
         [ REMOVEPARAM_REALM, 'removeparam' ],
         [ CSP_REALM, 'csp' ],
         [ PERMISSIONS_REALM, 'permissions' ],
-        [ URLTRANSFORM_REALM, 'urltransform' ],
+        [ URLTRANSFORM_REALM, 'uritransform' ],
         [ REPLACE_REALM, 'replace' ],
     ]);
     const partyness = new Map([
