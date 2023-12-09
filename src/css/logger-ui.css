@@ -488,7 +488,7 @@ body[dir="rtl"] .closeButton {
     border: 1px solid gray;
     bottom: 0;
     display: none;
-    max-height: 70vh;
+    max-height: min(800px, calc(100vh - 2rem));
     min-width: 360px;
     overflow: hidden;
     position: fixed;

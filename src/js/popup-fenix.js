@@ -1479,6 +1479,7 @@ const getPopupData = async function(tabId, first = false) {
             selfURL.searchParams.get('portrait')
         ) {
             dom.cl.add(dom.root, 'portrait');
+            dom.cl.remove(dom.root, 'desktop');
         } else if ( dom.cl.has(dom.root, 'desktop') ) {
             await nextFrames(8);
             const main = qs$('#main');
