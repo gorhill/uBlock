@@ -295,9 +295,15 @@ function pruneHostnameArray(hostnames) {
     return assemble(rootMap, '', []);
 }
 
-/******************************************************************************/
+/*******************************************************************************
+ * 
+ * One rule per line for compromise between size and readability. This also
+ * means that the number of lines in resulting file representative of the
+ * number of rules in the ruleset.
+ * 
+ * */
 
-async function processNetworkFilters(assetDetails, network) {
+function toJSONRuleset(ruleset) {
     const replacer = (k, v) => {
         if ( k.startsWith('_') ) { return; }
         if ( Array.isArray(v) ) {
@@ -312,7 +318,16 @@ async function processNetworkFilters(assetDetails, network) {
         }
         return v;
     };
+    const out = [];
+    for ( const rule of ruleset ) {
+        out.push(JSON.stringify(rule, replacer));
+    }
+    return `[\n${out.join(',\n')}\n]\n`;
+}
 
+/******************************************************************************/
+
+async function processNetworkFilters(assetDetails, network) {
     const { ruleset: rules } = network;
     log(`Input filter count: ${network.filterCount}`);
     log(`\tAccepted filter count: ${network.acceptedFilterCount}`);
@@ -394,38 +409,36 @@ async function processNetworkFilters(assetDetails, network) {
     log(`\tUnsupported: ${bad.length}`);
     log(bad.map(rule => rule._error.map(v => `\t\t${v}`)).join('\n'), true);
 
-    const jsonIndent = platform !== 'firefox' ? 1 : undefined;
-
     writeFile(
         `${rulesetDir}/main/${assetDetails.id}.json`,
-        `${JSON.stringify(plainGood, replacer, jsonIndent)}\n`
+        toJSONRuleset(plainGood)
     );
 
     if ( regexes.length !== 0 ) {
         writeFile(
             `${rulesetDir}/regex/${assetDetails.id}.json`,
-            `${JSON.stringify(regexes, replacer, 1)}\n`
+            toJSONRuleset(regexes)
         );
     }
 
     if ( removeparamsGood.length !== 0 ) {
         writeFile(
             `${rulesetDir}/removeparam/${assetDetails.id}.json`,
-            `${JSON.stringify(removeparamsGood, replacer, 1)}\n`
+            toJSONRuleset(removeparamsGood)
         );
     }
 
     if ( redirects.length !== 0 ) {
         writeFile(
             `${rulesetDir}/redirect/${assetDetails.id}.json`,
-            `${JSON.stringify(redirects, replacer, 1)}\n`
+            toJSONRuleset(redirects)
         );
     }
 
     if ( modifyHeaders.length !== 0 ) {
         writeFile(
             `${rulesetDir}/modify-headers/${assetDetails.id}.json`,
-            `${JSON.stringify(modifyHeaders, replacer, 1)}\n`
+            toJSONRuleset(modifyHeaders)
         );
     }
 
