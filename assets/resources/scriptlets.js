@@ -2351,12 +2351,18 @@ function noXhrIf(
     const propNeedles = parsePropertiesToMatch(propsToMatch, 'url');
     const log = propNeedles.size === 0 ? console.log.bind(console) : undefined;
     const warOrigin = scriptletGlobals.get('warOrigin');
+    const headers = {
+        'date': '',
+        'content-type': '',
+        'content-length': '',
+    };
     self.XMLHttpRequest = class extends self.XMLHttpRequest {
         open(method, url, ...args) {
             if ( log !== undefined ) {
                 log(`uBO: xhr.open(${method}, ${url}, ${args.join(', ')})`);
                 return super.open(method, url, ...args);
             }
+            xhrInstances.delete(this);
             if ( warOrigin !== undefined && url.startsWith(warOrigin) ) {
                 return super.open(method, url, ...args);
             }
@@ -2364,6 +2370,7 @@ function noXhrIf(
             if ( matchObjectProperties(propNeedles, haystack) ) {
                 xhrInstances.set(this, haystack);
             }
+            haystack.headers = Object.assign({}, headers);
             return super.open(method, url, ...args);
         }
         send(...args) {
@@ -2371,6 +2378,7 @@ function noXhrIf(
             if ( haystack === undefined ) {
                 return super.send(...args);
             }
+            haystack.headers['date'] = (new Date()).toUTCString();
             let promise = Promise.resolve({
                 xhr: this,
                 directive,
@@ -2385,52 +2393,80 @@ function noXhrIf(
                 },
             });
             switch ( this.responseType ) {
-                case 'arraybuffer':
-                    promise = promise.then(details => {
-                        details.props.response.value = new ArrayBuffer(0);
+            case 'arraybuffer':
+                promise = promise.then(details => {
+                    details.props.response.value = new ArrayBuffer(0);
+                    return details;
+                });
+                haystack.headers['content-type'] = 'application/octet-stream';
+                break;
+            case 'blob':
+                promise = promise.then(details => {
+                    details.props.response.value = new Blob([]);
+                    return details;
+                });
+                haystack.headers['content-type'] = 'application/octet-stream';
+                break;
+            case 'document': {
+                promise = promise.then(details => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString('', 'text/html');
+                    details.props.response.value = doc;
+                    details.props.responseXML.value = doc;
+                    return details;
+                });
+                haystack.headers['content-type'] = 'text/html';
+                break;
+            }
+            case 'json':
+                promise = promise.then(details => {
+                    details.props.response.value = {};
+                    details.props.responseText.value = '{}';
+                    return details;
+                });
+                haystack.headers['content-type'] = 'application/json';
+                break;
+            default:
+                if ( directive === '' ) { break; }
+                promise = promise.then(details => {
+                    return generateContentFn(details.directive).then(text => {
+                        details.props.response.value = text;
+                        details.props.responseText.value = text;
                         return details;
                     });
-                    break;
-                case 'blob':
-                    promise = promise.then(details => {
-                        details.props.response.value = new Blob([]);
-                        return details;
-                    });
-                    break;
-                case 'document': {
-                    promise = promise.then(details => {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString('', 'text/html');
-                        details.props.response.value = doc;
-                        details.props.responseXML.value = doc;
-                        return details;
-                    });
-                    break;
-                }
-                case 'json':
-                    promise = promise.then(details => {
-                        details.props.response.value = {};
-                        details.props.responseText.value = '{}';
-                        return details;
-                    });
-                    break;
-                default:
-                    if ( directive === '' ) { break; }
-                    promise = promise.then(details => {
-                        return generateContentFn(details.directive).then(text => {
-                            details.props.response.value = text;
-                            details.props.responseText.value = text;
-                            return details;
-                        });
-                    });
-                    break;
+                });
+                haystack.headers['content-type'] = 'text/plain';
+                break;
             }
             promise.then(details => {
+                haystack.headers['content-length'] = `${details.props.response.value}`.length;
                 Object.defineProperties(details.xhr, details.props);
                 details.xhr.dispatchEvent(new Event('readystatechange'));
                 details.xhr.dispatchEvent(new Event('load'));
                 details.xhr.dispatchEvent(new Event('loadend'));
             });
+        }
+        getResponseHeader(headerName) {
+            const haystack = xhrInstances.get(this);
+            if ( haystack === undefined || this.readyState < this.HEADERS_RECEIVED ) {
+                return super.getResponseHeader(headerName);
+            }
+            const value = haystack.headers[headerName.toLowerCase()];
+            if ( value !== undefined && value !== '' ) { return value; }
+            return null;
+        }
+        getAllResponseHeaders() {
+            const haystack = xhrInstances.get(this);
+            if ( haystack === undefined || this.readyState < this.HEADERS_RECEIVED ) {
+                return super.getAllResponseHeaders();
+            }
+            const out = [];
+            for ( const [ name, value ] of Object.entries(haystack.headers) ) {
+                if ( !value ) { continue; }
+                out.push(`${name}: ${value}`);
+            }
+            if ( out.length !== 0 ) { out.push(''); }
+            return out.join('\r\n');
         }
     };
 }
