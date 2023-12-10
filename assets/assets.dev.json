@@ -754,9 +754,9 @@
 		"lang": "af fy nl",
 		"contentURL": "https://easydutch-ubo.github.io/EasyDutch/EasyDutch.txt",
 		"cdnURLs": [
-			"https://easydutchcdn.pages.dev/EasyDutch.all.txt",
-			"https://cdn.jsdelivr.net/gh/EasyDutch-uBO/EasyDutchCDN@main/EasyDutch.all.txt",
-			"https://cdn.statically.io/gh/EasyDutch-uBO/EasyDutchCDN/main/EasyDutch.all.txt"
+			"https://easydutch-ubo.github.io/EasyDutch/EasyDutch.all.txt",
+			"https://cdn.jsdelivr.net/gh/EasyDutch-uBO/EasyDutch@gh-pages/EasyDutch.all.txt",
+			"https://cdn.statically.io/gh/EasyDutch-uBO/EasyDutch/gh-pages/EasyDutch.all.txt"
 		],
 		"supportURL": "https://github.com/EasyDutch-uBO/EasyDutch/"
 	},
