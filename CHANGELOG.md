@@ -1,5 +1,6 @@
 ## Fixes / changes
 
+- [Improve `no-xhr-if` scriptlet](https://github.com/gorhill/uBlock/commit/d01ad24291)
 - [Ensure cache storage backend is selected before access](https://github.com/gorhill/uBlock/commit/bfa28b960e)
 - [Fix popup panel rendering when embedded in logger](https://github.com/gorhill/uBlock/commit/4183ce477a)
 - [Add visual hint in support information re. differential update](https://github.com/gorhill/uBlock/commit/7e44db763e)
