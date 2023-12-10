@@ -1565,7 +1565,9 @@ const onMessage = function(request, sender, callback) {
         });
 
     case 'getLists':
-        return getLists(callback);
+        return µb.isReadyPromise.then(( ) => {
+            getLists(callback);
+        });
 
     case 'getLocalData':
         return getLocalData().then(localData => {

@@ -63,13 +63,6 @@ import {
 
 /******************************************************************************/
 
-// Load all: executed once.
-
-(async ( ) => {
-// >>>>> start of private scope
-
-/******************************************************************************/
-
 vAPI.app.onShutdown = ( ) => {
     staticFilteringReverseLookup.shutdown();
     io.updateStop();
@@ -312,10 +305,10 @@ const onHiddenSettingsReady = async ( ) => {
     }
 
     // Maybe override default cache storage
-    const cacheBackend = await cacheStorage.select(
+    µb.supportStats.cacheBackend = await cacheStorage.select(
         µb.hiddenSettings.cacheStorageAPI
     );
-    ubolog(`Backend storage for cache will be ${cacheBackend}`);
+    ubolog(`Backend storage for cache will be ${µb.supportStats.cacheBackend}`);
 };
 
 /******************************************************************************/
@@ -379,6 +372,9 @@ const createDefaultProps = ( ) => {
 
 /******************************************************************************/
 
+(async ( ) => {
+// >>>>> start of async/await scope
+    
 try {
     ubolog(`Start sequence of loading storage-based data ${Date.now()-vAPI.T0} ms after launch`);
 
@@ -506,5 +502,7 @@ if ( selfieIsValid ) {
 }
 ubolog(`All ready ${µb.supportStats.allReadyAfter} after launch`);
 
-// <<<<< end of private scope
+µb.isReadyResolve();
+
+// <<<<< end of async/await scope
 })();
