@@ -61,27 +61,40 @@ const STORAGE_NAME = 'uBlock0CacheStorage';
 // Default to webext storage.
 const storageLocal = webext.storage.local;
 
+let storageReadyResolve;
+const storageReadyPromise = new Promise(resolve => {
+    storageReadyResolve = resolve;
+});
+
 const cacheStorage = {
     name: 'browser.storage.local',
     get(...args) {
-        return storageLocal.get(...args).catch(reason => {
-            console.log(reason);
-        });
+        return storageReadyPromise.then(( ) =>
+            storageLocal.get(...args).catch(reason => {
+                console.log(reason);
+            })
+        );
     },
     set(...args) {
-        return storageLocal.set(...args).catch(reason => {
-            console.log(reason);
-        });
+        return storageReadyPromise.then(( ) =>
+            storageLocal.set(...args).catch(reason => {
+                console.log(reason);
+            })
+        );
     },
     remove(...args) {
-        return storageLocal.remove(...args).catch(reason => {
-            console.log(reason);
-        });
+        return storageReadyPromise.then(( ) =>
+            storageLocal.remove(...args).catch(reason => {
+                console.log(reason);
+            })
+        );
     },
     clear(...args) {
-        return storageLocal.clear(...args).catch(reason => {
-            console.log(reason);
-        });
+        return storageReadyPromise.then(( ) =>
+            storageLocal.clear(...args).catch(reason => {
+                console.log(reason);
+            })
+        );
     },
     select: function(selectedBackend) {
         let actualBackend = selectedBackend;
@@ -94,15 +107,18 @@ const cacheStorage = {
             return selectIDB().then(success => {
                 if ( success || selectedBackend === 'indexedDB' ) {
                     clearWebext();
+                    storageReadyResolve();
                     return 'indexedDB';
                 }
                 clearIDB();
+                storageReadyResolve();
                 return 'browser.storage.local';
             });
         }
         if ( actualBackend === 'browser.storage.local' ) {
             clearIDB();
         }
+        storageReadyResolve();
         return Promise.resolve('browser.storage.local');
         
     },
@@ -435,36 +451,44 @@ const selectIDB = async function() {
 
     cacheStorage.name = 'indexedDB';
     cacheStorage.get = function get(keys) {
-        return new Promise(resolve => {
-            if ( keys === null ) {
-                return getAllFromDb(bin => resolve(bin));
-            }
-            let toRead, output = {};
-            if ( typeof keys === 'string' ) {
-                toRead = [ keys ];
-            } else if ( Array.isArray(keys) ) {
-                toRead = keys;
-            } else /* if ( typeof keys === 'object' ) */ {
-                toRead = Object.keys(keys);
-                output = keys;
-            }
-            getFromDb(toRead, output, bin => resolve(bin));
-        });
+        return storageReadyPromise.then(( ) =>
+            new Promise(resolve => {
+                if ( keys === null ) {
+                    return getAllFromDb(bin => resolve(bin));
+                }
+                let toRead, output = {};
+                if ( typeof keys === 'string' ) {
+                    toRead = [ keys ];
+                } else if ( Array.isArray(keys) ) {
+                    toRead = keys;
+                } else /* if ( typeof keys === 'object' ) */ {
+                    toRead = Object.keys(keys);
+                    output = keys;
+                }
+                getFromDb(toRead, output, bin => resolve(bin));
+            })
+        );
     };
     cacheStorage.set = function set(keys) {
-        return new Promise(resolve => {
-            putToDb(keys, details => resolve(details));
-        });
+        return storageReadyPromise.then(( ) =>
+            new Promise(resolve => {
+                putToDb(keys, details => resolve(details));
+            })
+        );
     };
     cacheStorage.remove = function remove(keys) {
-        return new Promise(resolve => {
-            deleteFromDb(keys, ( ) => resolve());
-        });
+        return storageReadyPromise.then(( ) =>
+            new Promise(resolve => {
+                deleteFromDb(keys, ( ) => resolve());
+            })
+        );
     };
     cacheStorage.clear = function clear() {
-        return new Promise(resolve => {
-            clearDb(( ) => resolve());
-        });
+        return storageReadyPromise.then(( ) =>
+            new Promise(resolve => {
+                clearDb(( ) => resolve());
+            })
+        );
     };
     cacheStorage.getBytesInUse = function getBytesInUse() {
         return Promise.resolve(0);
@@ -475,18 +499,17 @@ const selectIDB = async function() {
 // https://github.com/uBlockOrigin/uBlock-issues/issues/328
 //   Delete cache-related entries from webext storage.
 const clearWebext = async function() {
-    const bin = await webext.storage.local.get('assetCacheRegistry');
-    if (
-        bin instanceof Object === false ||
-        bin.assetCacheRegistry instanceof Object === false
-    ) {
-        return;
+    let bin;
+    try {
+        bin = await webext.storage.local.get('assetCacheRegistry');
+    } catch(ex) {
+        console.error(ex);
     }
+    if ( bin instanceof Object === false ) { return; }
+    if ( bin.assetCacheRegistry instanceof Object === false ) { return; }
     const toRemove = [
         'assetCacheRegistry',
         'assetSourceRegistry',
-        'resourcesSelfie',
-        'selfie'
     ];
     for ( const key in bin.assetCacheRegistry ) {
         if ( bin.assetCacheRegistry.hasOwnProperty(key) ) {
