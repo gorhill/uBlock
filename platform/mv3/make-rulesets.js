@@ -297,9 +297,9 @@ function pruneHostnameArray(hostnames) {
 
 /*******************************************************************************
  * 
- * One rule per line for compromise between size and readability. This also
- * means that the number of lines in resulting file representative of the
- * number of rules in the ruleset.
+ * For large rulesets, one rule per line for compromise between size and
+ * readability. This also means that the number of lines in resulting file
+ * representative of the number of rules in the ruleset.
  * 
  * */
 
@@ -318,9 +318,10 @@ function toJSONRuleset(ruleset) {
         }
         return v;
     };
+    const indent = ruleset.length > 10 ? undefined : 1;
     const out = [];
     for ( const rule of ruleset ) {
-        out.push(JSON.stringify(rule, replacer));
+        out.push(JSON.stringify(rule, replacer, indent));
     }
     return `[\n${out.join(',\n')}\n]\n`;
 }
