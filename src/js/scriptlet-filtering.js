@@ -409,11 +409,7 @@ scriptletFilteringEngine.retrieve = function(request) {
 
         // Wholly disable scriptlet injection?
         if ( $exceptions.has('[]') ) {
-            return {
-                filters: [
-                    { tabId: request.tabId, url: request.url, filter: '#@#+js()' }
-                ]
-            };
+            return { filters: '#@#+js()' };
         }
 
         for ( const token of $exceptions ) {
