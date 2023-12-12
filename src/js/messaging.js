@@ -2115,9 +2115,12 @@ const onMessage = function(request, sender, callback) {
     case 'updateLists':
         const listkeys = request.listkeys.split(',').filter(s => s !== '');
         if ( listkeys.length === 0 ) { return; }
-        for ( const listkey of listkeys ) {
-            io.purge(listkey);
-            io.remove(`compiled/${listkey}`);
+        if ( listkeys.includes('all') ) {
+            io.purge(/./, 'public_suffix_list.dat');
+        } else {
+            for ( const listkey of listkeys ) {
+                io.purge(listkey);
+            }
         }
         µb.scheduleAssetUpdater(0);
         µb.openNewTab({
