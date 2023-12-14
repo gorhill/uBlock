@@ -1497,16 +1497,27 @@ onBroadcast(msg => {
 
     const launchTimer = vAPI.defer.create(fetchDelay => {
         next = 0;
-        io.updateStart({ delay: fetchDelay, auto: true });
+        io.updateStart({ fetchDelay, auto: true });
     });
 
-    µb.scheduleAssetUpdater = async function(updateDelay) {
+    µb.scheduleAssetUpdater = async function(details = {}) {
         launchTimer.off();
 
-        if ( updateDelay === 0 ) {
+        if ( details.now ) {
             next = 0;
+            io.updateStart(details);
             return;
         }
+
+        if ( µb.userSettings.autoUpdate === false ) {
+            if ( details.updateDelay === undefined ) {
+                next = 0;
+                return;
+            }
+        }
+
+        let updateDelay = details.updateDelay ||
+            this.hiddenSettings.autoUpdatePeriod * 3600000;
 
         const now = Date.now();
         let needEmergencyUpdate = false;
@@ -1632,13 +1643,7 @@ onBroadcast(msg => {
             }
             this.loadFilterLists();
         }
-        if ( this.userSettings.autoUpdate ) {
-            this.scheduleAssetUpdater(
-                this.hiddenSettings.autoUpdatePeriod * 3600000 || 25200000
-            );
-        } else {
-            this.scheduleAssetUpdater(0);
-        }
+        this.scheduleAssetUpdater();
         broadcast({
             what: 'assetsUpdated',
             assetKeys: details.assetKeys

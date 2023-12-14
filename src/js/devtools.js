@@ -134,7 +134,7 @@ dom.on('#console-unfold', 'click', ( ) => {
 dom.on('#snfe-dump', 'click', ev => {
     const button = ev.target;
     dom.attr(button, 'disabled', '');
-    vAPI.messaging.send('dashboard', {
+    vAPI.messaging.send('devTools', {
         what: 'snfeDump',
     }).then(result => {
         log(result);
@@ -145,11 +145,30 @@ dom.on('#snfe-dump', 'click', ev => {
 dom.on('#snfe-todnr', 'click', ev => {
     const button = ev.target;
     dom.attr(button, 'disabled', '');
-    vAPI.messaging.send('dashboard', {
+    vAPI.messaging.send('devTools', {
         what: 'snfeToDNR',
     }).then(result => {
         log(result);
         dom.attr(button, 'disabled', null);
+    });
+});
+
+dom.on('#cfe-dump', 'click', ev => {
+    const button = ev.target;
+    dom.attr(button, 'disabled', '');
+    vAPI.messaging.send('devTools', {
+        what: 'cfeDump',
+    }).then(result => {
+        log(result);
+        dom.attr(button, 'disabled', null);
+    });
+});
+
+dom.on('#purge-all-caches', 'click', ( ) => {
+    vAPI.messaging.send('devTools', {
+        what: 'purgeAllCaches'
+    }).then(result => {
+        log(result);
     });
 });
 
@@ -161,23 +180,12 @@ vAPI.messaging.send('dashboard', {
     dom.on('#snfe-benchmark', 'click', ev => {
         const button = ev.target;
         dom.attr(button, 'disabled', '');
-        vAPI.messaging.send('dashboard', {
+        vAPI.messaging.send('devTools', {
             what: 'snfeBenchmark',
         }).then(result => {
             log(result);
             dom.attr(button, 'disabled', null);
         });
-    });
-});
-
-dom.on('#cfe-dump', 'click', ev => {
-    const button = ev.target;
-    dom.attr(button, 'disabled', '');
-    vAPI.messaging.send('dashboard', {
-        what: 'cfeDump',
-    }).then(result => {
-        log(result);
-        dom.attr(button, 'disabled', null);
     });
 });
 

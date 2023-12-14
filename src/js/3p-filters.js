@@ -276,7 +276,7 @@ const renderFilterLists = ( ) => {
         renderWidgets();
     };
 
-    vAPI.messaging.send('dashboard', {
+    return vAPI.messaging.send('dashboard', {
         what: 'getLists',
     }).then(response => {
         onListsReceived(response);
@@ -294,9 +294,6 @@ const renderWidgets = ( ) => {
     dom.cl.toggle('#buttonUpdate', 'disabled',
         updating === false &&
         qs$('#lists .listEntry.checked.obsolete:not(.toRemove)') === null
-    );
-    dom.cl.toggle('#buttonPurgeAll', 'disabled',
-        updating || qs$('#lists .listEntry.cached:not(.obsolete)') === null
     );
 };
 
@@ -510,8 +507,9 @@ const onPurgeClicked = ev => {
     }
 
     vAPI.messaging.send('dashboard', {
-        what: 'purgeCaches',
+        what: 'listsUpdateNow',
         assetKeys,
+        preferOrigin: ev.shiftKey,
     });
 
     // If the cached version is purged, the installed version must be assumed
@@ -519,6 +517,7 @@ const onPurgeClicked = ev => {
     // https://github.com/gorhill/uBlock/issues/1733
     //   An external filter list must not be marked as obsolete, they will
     //   always be fetched anyways if there is no cached copy.
+    dom.cl.add(dom.body, 'updating');
     dom.cl.add(liEntry, 'obsolete');
 
     if ( qs$(liEntry, 'input[type="checkbox"]').checked ) {
@@ -608,22 +607,10 @@ const buttonUpdateHandler = async ( ) => {
     await selectFilterLists();
     dom.cl.add(dom.body, 'updating');
     renderWidgets();
-    vAPI.messaging.send('dashboard', { what: 'forceUpdateAssets' });
+    vAPI.messaging.send('dashboard', { what: 'updateNow' });
 };
 
 dom.on('#buttonUpdate', 'click', ( ) => { buttonUpdateHandler(); });
-
-/******************************************************************************/
-
-const buttonPurgeAllHandler = async hard => {
-    await vAPI.messaging.send('dashboard', {
-        what: 'purgeAllCaches',
-        hard,
-    });
-    renderFilterLists(true);
-};
-
-dom.on('#buttonPurgeAll', 'click', ev => { buttonPurgeAllHandler(ev.shiftKey); });
 
 /******************************************************************************/
 
@@ -863,6 +850,12 @@ self.hasUnsavedData = function() {
 
 /******************************************************************************/
 
-renderFilterLists();
+renderFilterLists().then(( ) => {
+    const buttonUpdate = qs$('#buttonUpdate');
+    if ( dom.cl.has(buttonUpdate, 'active') ) { return; }
+    if ( dom.cl.has(buttonUpdate, 'disabled') ) { return; }
+    if ( listsetDetails.autoUpdate !== true ) { return; }
+    buttonUpdateHandler();
+});
 
 /******************************************************************************/

@@ -44,7 +44,7 @@ let ttlCount = 0;
 let ttlDelay = 60000;
 
 const init = function() {
-    ttlDelay = µb.hiddenSettings.autoUpdateAssetFetchPeriod * 1000 + 15000;
+    ttlDelay = µb.hiddenSettings.autoUpdateAssetFetchPeriod * 2 * 1000;
     if ( promisedInstance === undefined ) {
         let flavor;
         if ( µb.hiddenSettings.disableWebAssembly === true ) {

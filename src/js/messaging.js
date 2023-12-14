@@ -142,124 +142,6 @@ const onMessage = function(request, sender, callback) {
         });
         return;
 
-    case 'snfeBenchmark':
-        µb.benchmarkStaticNetFiltering({ redirectEngine }).then(result => {
-            callback(result);
-        });
-        return;
-
-    case 'snfeToDNR': {
-        const listPromises = [];
-        const listNames = [];
-        for ( const assetKey of µb.selectedFilterLists ) {
-            listPromises.push(
-                io.get(assetKey, { dontCache: true }).then(details => {
-                    listNames.push(assetKey);
-                    return { name: assetKey, text: details.content };
-                })
-            );
-        }
-        const options = {
-            extensionPaths: redirectEngine.getResourceDetails().filter(e =>
-                typeof e[1].extensionPath === 'string' && e[1].extensionPath !== ''
-            ).map(e =>
-                [ e[0], e[1].extensionPath ]
-            ),
-            env: vAPI.webextFlavor.env,
-        };
-        const t0 = Date.now();
-        dnrRulesetFromRawLists(listPromises, options).then(result => {
-            const { network } = result;
-            const replacer = (k, v) => {
-                if ( k.startsWith('__') ) { return; }
-                if ( Array.isArray(v) ) {
-                    return v.sort();
-                }
-                if ( v instanceof Object ) {
-                    const sorted = {};
-                    for ( const kk of Object.keys(v).sort() ) {
-                        sorted[kk] = v[kk];
-                    }
-                    return sorted;
-                }
-                return v;
-            };
-            const isUnsupported = rule =>
-                rule._error !== undefined;
-            const isRegex = rule =>
-                rule.condition !== undefined &&
-                rule.condition.regexFilter !== undefined;
-            const isRedirect = rule =>
-                rule.action !== undefined &&
-                rule.action.type === 'redirect' &&
-                rule.action.redirect.extensionPath !== undefined;
-            const isCsp = rule =>
-                rule.action !== undefined &&
-                rule.action.type === 'modifyHeaders';
-            const isRemoveparam = rule =>
-                rule.action !== undefined &&
-                rule.action.type === 'redirect' &&
-                rule.action.redirect.transform !== undefined;
-            const runtime = Date.now() - t0;
-            const { ruleset } = network;
-            const good = ruleset.filter(rule =>
-                isUnsupported(rule) === false &&
-                isRegex(rule) === false &&
-                isRedirect(rule) === false &&
-                isCsp(rule) === false &&
-                isRemoveparam(rule) === false
-            );
-            const unsupported = ruleset.filter(rule =>
-                isUnsupported(rule)
-            );
-            const regexes = ruleset.filter(rule =>
-                isUnsupported(rule) === false &&
-                isRegex(rule) &&
-                isRedirect(rule) === false &&
-                isCsp(rule) === false &&
-                isRemoveparam(rule) === false
-            );
-            const redirects = ruleset.filter(rule =>
-                isUnsupported(rule) === false &&
-                isRedirect(rule)
-            );
-            const headers = ruleset.filter(rule =>
-                isUnsupported(rule) === false &&
-                isCsp(rule)
-            );
-            const removeparams = ruleset.filter(rule =>
-                isUnsupported(rule) === false &&
-                isRemoveparam(rule)
-            );
-            const out = [
-                `dnrRulesetFromRawLists(${JSON.stringify(listNames, null, 2)})`,
-                `Run time: ${runtime} ms`,
-                `Filters count: ${network.filterCount}`,
-                `Accepted filter count: ${network.acceptedFilterCount}`,
-                `Rejected filter count: ${network.rejectedFilterCount}`,
-                `Un-DNR-able filter count: ${unsupported.length}`,
-                `Resulting DNR rule count: ${ruleset.length}`,
-            ];
-            out.push(`+ Good filters (${good.length}): ${JSON.stringify(good, replacer, 2)}`);
-            out.push(`+ Regex-based filters (${regexes.length}): ${JSON.stringify(regexes, replacer, 2)}`);
-            out.push(`+ 'redirect=' filters (${redirects.length}): ${JSON.stringify(redirects, replacer, 2)}`);
-            out.push(`+ 'csp=' filters (${headers.length}): ${JSON.stringify(headers, replacer, 2)}`);
-            out.push(`+ 'removeparam=' filters (${removeparams.length}): ${JSON.stringify(removeparams, replacer, 2)}`);
-            out.push(`+ Unsupported filters (${unsupported.length}): ${JSON.stringify(unsupported, replacer, 2)}`);
-            out.push(`+ generichide exclusions (${network.generichideExclusions.length}): ${JSON.stringify(network.generichideExclusions, replacer, 2)}`);
-            if ( result.specificCosmetic ) {
-                out.push(`+ Cosmetic filters: ${result.specificCosmetic.size}`);
-                for ( const details of result.specificCosmetic ) {
-                    out.push(`    ${JSON.stringify(details)}`);
-                }
-            } else {
-                out.push('  Cosmetic filters: 0');
-            }
-            callback(out.join('\n'));
-        });
-        return;
-    }
-
     default:
         break;
     }
@@ -278,13 +160,6 @@ const onMessage = function(request, sender, callback) {
 
     case 'createUserFilter':
         µb.createUserFilters(request);
-        break;
-
-    case 'forceUpdateAssets':
-        µb.scheduleAssetUpdater(0);
-        io.updateStart({
-            delay: µb.hiddenSettings.manualUpdateAssetFetchPeriod
-        });
         break;
 
     case 'getAppData':
@@ -381,14 +256,6 @@ const onMessage = function(request, sender, callback) {
             response.canLeakLocalIPAddresses =
                 vAPI.browserSettings.canLeakLocalIPAddresses === true;
         }
-        break;
-
-    case 'snfeDump':
-        response = staticNetFilteringEngine.dump();
-        break;
-
-    case 'cfeDump':
-        response = cosmeticFilteringEngine.dump();
         break;
 
     default:
@@ -1630,19 +1497,25 @@ const onMessage = function(request, sender, callback) {
         response = getRules();
         break;
 
-    case 'purgeAllCaches':
-        if ( request.hard ) {
-            io.remove(/./);
-        } else {
-            io.purge(/./, 'public_suffix_list.dat');
-        }
-        break;
-
-    case 'purgeCaches':
-        for ( const assetKey of request.assetKeys ) {
+    case 'supportUpdateNow': {
+        const { assetKeys } = request;
+        if ( assetKeys.length === 0 ) { return; }
+        for ( const assetKey of assetKeys ) {
             io.purge(assetKey);
         }
+        µb.scheduleAssetUpdater({ now: true, fetchDelay: 100 });
         break;
+    }
+
+    case 'listsUpdateNow': {
+        const { assetKeys, preferOrigin = false } = request;
+        if ( assetKeys.length === 0 ) { return; }
+        for ( const assetKey of assetKeys ) {
+            io.purge(assetKey);
+        }
+        µb.scheduleAssetUpdater({ now: true, fetchDelay: 100, auto: preferOrigin !== true });
+        break;
+    }
 
     case 'readHiddenSettings':
         response = {
@@ -1658,6 +1531,10 @@ const onMessage = function(request, sender, callback) {
 
     case 'resetUserData':
         resetUserData();
+        break;
+
+    case 'updateNow':
+        µb.scheduleAssetUpdater({ now: true, fetchDelay: 100, auto: true });
         break;
 
     case 'writeHiddenSettings':
@@ -1945,6 +1822,181 @@ vAPI.messaging.listen({
 /******************************************************************************/
 
 // Channel:
+//      devTools
+//      privileged
+
+{
+// >>>>> start of local scope
+
+const onMessage = function(request, sender, callback) {
+    // Async
+    switch ( request.what ) {
+    case 'purgeAllCaches':
+        µb.getBytesInUse().then(bytesInUseBefore =>
+            io.remove(/./).then(( ) =>
+                µb.getBytesInUse().then(bytesInUseAfter => {
+                    callback([
+                        `Storage used before: ${µb.formatCount(bytesInUseBefore)}B`,
+                        `Storage used after: ${µb.formatCount(bytesInUseAfter)}B`,
+                    ].join('\n'));
+                })
+            )
+        );
+        return;
+
+    case 'snfeBenchmark':
+        µb.benchmarkStaticNetFiltering({ redirectEngine }).then(result => {
+            callback(result);
+        });
+        return;
+
+    case 'snfeToDNR': {
+        const listPromises = [];
+        const listNames = [];
+        for ( const assetKey of µb.selectedFilterLists ) {
+            listPromises.push(
+                io.get(assetKey, { dontCache: true }).then(details => {
+                    listNames.push(assetKey);
+                    return { name: assetKey, text: details.content };
+                })
+            );
+        }
+        const options = {
+            extensionPaths: redirectEngine.getResourceDetails().filter(e =>
+                typeof e[1].extensionPath === 'string' && e[1].extensionPath !== ''
+            ).map(e =>
+                [ e[0], e[1].extensionPath ]
+            ),
+            env: vAPI.webextFlavor.env,
+        };
+        const t0 = Date.now();
+        dnrRulesetFromRawLists(listPromises, options).then(result => {
+            const { network } = result;
+            const replacer = (k, v) => {
+                if ( k.startsWith('__') ) { return; }
+                if ( Array.isArray(v) ) {
+                    return v.sort();
+                }
+                if ( v instanceof Object ) {
+                    const sorted = {};
+                    for ( const kk of Object.keys(v).sort() ) {
+                        sorted[kk] = v[kk];
+                    }
+                    return sorted;
+                }
+                return v;
+            };
+            const isUnsupported = rule =>
+                rule._error !== undefined;
+            const isRegex = rule =>
+                rule.condition !== undefined &&
+                rule.condition.regexFilter !== undefined;
+            const isRedirect = rule =>
+                rule.action !== undefined &&
+                rule.action.type === 'redirect' &&
+                rule.action.redirect.extensionPath !== undefined;
+            const isCsp = rule =>
+                rule.action !== undefined &&
+                rule.action.type === 'modifyHeaders';
+            const isRemoveparam = rule =>
+                rule.action !== undefined &&
+                rule.action.type === 'redirect' &&
+                rule.action.redirect.transform !== undefined;
+            const runtime = Date.now() - t0;
+            const { ruleset } = network;
+            const good = ruleset.filter(rule =>
+                isUnsupported(rule) === false &&
+                isRegex(rule) === false &&
+                isRedirect(rule) === false &&
+                isCsp(rule) === false &&
+                isRemoveparam(rule) === false
+            );
+            const unsupported = ruleset.filter(rule =>
+                isUnsupported(rule)
+            );
+            const regexes = ruleset.filter(rule =>
+                isUnsupported(rule) === false &&
+                isRegex(rule) &&
+                isRedirect(rule) === false &&
+                isCsp(rule) === false &&
+                isRemoveparam(rule) === false
+            );
+            const redirects = ruleset.filter(rule =>
+                isUnsupported(rule) === false &&
+                isRedirect(rule)
+            );
+            const headers = ruleset.filter(rule =>
+                isUnsupported(rule) === false &&
+                isCsp(rule)
+            );
+            const removeparams = ruleset.filter(rule =>
+                isUnsupported(rule) === false &&
+                isRemoveparam(rule)
+            );
+            const out = [
+                `dnrRulesetFromRawLists(${JSON.stringify(listNames, null, 2)})`,
+                `Run time: ${runtime} ms`,
+                `Filters count: ${network.filterCount}`,
+                `Accepted filter count: ${network.acceptedFilterCount}`,
+                `Rejected filter count: ${network.rejectedFilterCount}`,
+                `Un-DNR-able filter count: ${unsupported.length}`,
+                `Resulting DNR rule count: ${ruleset.length}`,
+            ];
+            out.push(`+ Good filters (${good.length}): ${JSON.stringify(good, replacer, 2)}`);
+            out.push(`+ Regex-based filters (${regexes.length}): ${JSON.stringify(regexes, replacer, 2)}`);
+            out.push(`+ 'redirect=' filters (${redirects.length}): ${JSON.stringify(redirects, replacer, 2)}`);
+            out.push(`+ 'csp=' filters (${headers.length}): ${JSON.stringify(headers, replacer, 2)}`);
+            out.push(`+ 'removeparam=' filters (${removeparams.length}): ${JSON.stringify(removeparams, replacer, 2)}`);
+            out.push(`+ Unsupported filters (${unsupported.length}): ${JSON.stringify(unsupported, replacer, 2)}`);
+            out.push(`+ generichide exclusions (${network.generichideExclusions.length}): ${JSON.stringify(network.generichideExclusions, replacer, 2)}`);
+            if ( result.specificCosmetic ) {
+                out.push(`+ Cosmetic filters: ${result.specificCosmetic.size}`);
+                for ( const details of result.specificCosmetic ) {
+                    out.push(`    ${JSON.stringify(details)}`);
+                }
+            } else {
+                out.push('  Cosmetic filters: 0');
+            }
+            callback(out.join('\n'));
+        });
+        return;
+    }
+    default:
+        break;
+    }
+
+    // Sync
+    let response;
+
+    switch ( request.what ) {
+    case 'snfeDump':
+        response = staticNetFilteringEngine.dump();
+        break;
+
+    case 'cfeDump':
+        response = cosmeticFilteringEngine.dump();
+        break;
+
+    default:
+        return vAPI.messaging.UNHANDLED;
+    }
+
+    callback(response);
+};
+
+vAPI.messaging.listen({
+    name: 'devTools',
+    listener: onMessage,
+    privileged: true,
+});
+
+// <<<<< end of local scope
+}
+
+/******************************************************************************/
+/******************************************************************************/
+
+// Channel:
 //      scriptlets
 //      unprivileged
 
@@ -2122,12 +2174,11 @@ const onMessage = function(request, sender, callback) {
                 io.purge(listkey);
             }
         }
-        µb.scheduleAssetUpdater(0);
         µb.openNewTab({
             url: 'dashboard.html#3p-filters.html',
             select: true,
         });
-        io.updateStart({ delay: 100, auto: request.manual !== true });
+        µb.scheduleAssetUpdater({ now: true, fetchDelay: 100, auto: request.manual !== true });
         break;
 
     default:

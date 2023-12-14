@@ -345,7 +345,7 @@ const matchBucket = function(url, hostname, bucket, start) {
         }
         break;
     case 'autoUpdate':
-        this.scheduleAssetUpdater(value ? 7 * 60 * 1000 : 0);
+        this.scheduleAssetUpdater({ updateDelay: value ? 2000 : 0 });
         break;
     case 'cnameUncloakEnabled':
         if ( vAPI.net.canUncloakCnames === true ) {

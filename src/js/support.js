@@ -255,8 +255,7 @@ async function updateFilterLists() {
     if ( dom.body.dataset.shouldUpdateLists === undefined ) { return false; }
     dom.cl.add(dom.body, 'updating');
     const assetKeys = JSON.parse(dom.body.dataset.shouldUpdateLists);
-    vAPI.messaging.send('dashboard', { what: 'purgeCaches', assetKeys });
-    vAPI.messaging.send('dashboard', { what: 'forceUpdateAssets' });
+    vAPI.messaging.send('dashboard', { what: 'supportUpdateNow', assetKeys });
     return true;
 }
 
