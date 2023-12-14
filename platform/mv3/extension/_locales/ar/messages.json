@@ -144,7 +144,7 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "",
+    "message": "قائمة بأسماء المضيفين التي لن تتم أي تصفية لها",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "behaviorSectionLabel": {
