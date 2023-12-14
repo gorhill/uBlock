@@ -95,31 +95,11 @@ const extractMetadataFromList = (content, fields) => {
 assets.extractMetadataFromList = extractMetadataFromList;
 
 const resourceTimeFromXhr = xhr => {
-    try {
-        // First lookup timestamp from content
-        let assetTime = 0;
-        if ( typeof xhr.response === 'string' ) {
-            const metadata = extractMetadataFromList(xhr.response, [
-                'Last-Modified'
-            ]);
-            assetTime = metadata.lastModified || 0;
-        }
-        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Age
-        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Date
-        let networkTime = 0;
-        if ( assetTime === 0 ) {
-            const age = parseInt(xhr.getResponseHeader('Age'), 10);
-            if ( isNaN(age) === false ) {
-                const time = (new Date(xhr.getResponseHeader('Date'))).getTime();
-                if ( isNaN(time) === false ) {
-                    networkTime = time - age * 1000;
-                }
-            }
-        }
-        return Math.max(assetTime, networkTime, 0);
-    } catch(_) {
-    }
-    return 0;
+    if ( typeof xhr.response !== 'string' ) {  return 0; }
+    const metadata = extractMetadataFromList(xhr.response, [
+        'Last-Modified'
+    ]);
+    return metadata.lastModified || 0;
 };
 
 const resourceTimeFromParts = (parts, time) => {
@@ -216,14 +196,14 @@ const getContentURLs = (assetKey, options = {}) => {
             return 0;
         });
     }
-    if ( Array.isArray(entry.cdnURLs) ) {
+    if ( options.favorOrigin !== true && Array.isArray(entry.cdnURLs) ) {
         const cdnURLs = entry.cdnURLs.slice();
         for ( let i = 0, n = cdnURLs.length; i < n; i++ ) {
             const j = Math.floor(Math.random() * n);
             if ( j === i ) { continue; }
             [ cdnURLs[j], cdnURLs[i] ] = [ cdnURLs[i], cdnURLs[j] ];
         }
-        if ( options.favorLocal || options.favorOrigin ) {
+        if ( options.favorLocal ) {
             contentURLs.push(...cdnURLs);
         } else {
             contentURLs.unshift(...cdnURLs);
@@ -1068,8 +1048,10 @@ async function getRemote(assetKey, options = {}) {
         error = undefined;
 
         // If fetched resource is older than cached one, ignore
-        stale = resourceIsStale(result, cacheDetails);
-        if ( stale ) { continue; }
+        if ( options.favorOrigin !== true ) {
+            stale = resourceIsStale(result, cacheDetails);
+            if ( stale ) { continue; }
+        }
 
         // Success
         assetCacheWrite(assetKey, {
