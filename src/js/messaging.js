@@ -2178,7 +2178,7 @@ const onMessage = function(request, sender, callback) {
             url: 'dashboard.html#3p-filters.html',
             select: true,
         });
-        µb.scheduleAssetUpdater({ now: true, fetchDelay: 100, auto: request.manual !== true });
+        µb.scheduleAssetUpdater({ now: true, fetchDelay: 100, auto: request.auto });
         break;
 
     default:
