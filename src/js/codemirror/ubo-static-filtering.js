@@ -699,9 +699,12 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
     const includeset = new Set();
     let errorCount = 0;
 
+    const ifendifSet = new Set();
+    let ifendifSetChanged = false;
+
     const extractMarkerDetails = (doc, lineHandle) => {
         if ( astParser.isUnsupported() ) {
-            return { value: 'error', msg: 'Unsupported filter syntax' };
+            return { lint: 'error', msg: 'Unsupported filter syntax' };
         }
         if ( astParser.hasError() ) {
             let msg = 'Invalid filter';
@@ -739,7 +742,7 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
                     }
                     break;
             }
-            return { value: 'error', msg };
+            return { lint: 'error', msg };
         }
         if ( astParser.astType !== sfp.AST_TYPE_COMMENT ) { return; }
         if ( astParser.astTypeFlavor !== sfp.AST_TYPE_COMMENT_PREPARSER ) {
@@ -747,15 +750,23 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
             for ( const include of includeset ) {
                 if ( astParser.raw.endsWith(include) === false ) { continue; }
                 includeset.delete(include);
-                return { value: 'include-end' };
+                return { lint: 'include-end' };
             }
             return;
         }
         if ( /^\s*!#if \S+/.test(astParser.raw) ) {
-            return { value: 'if-start' };
+            return {
+                lint: 'if-start',
+                data: {
+                    state: sfp.utils.preparser.evaluateExpr(
+                        astParser.getTypeString(sfp.NODE_TYPE_PREPARSE_DIRECTIVE_IF_VALUE),
+                        preparseDirectiveEnv
+                    ) ? 'y' : 'n'
+                }
+            };
         }
         if ( /^\s*!#endif\b/.test(astParser.raw) ) {
-            return { value: 'if-end' };
+            return { lint: 'if-end' };
         }
         const match = /^\s*!#include\s*(\S+)/.exec(astParser.raw);
         if ( match === null ) { return; }
@@ -765,7 +776,7 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
         const includeToken = `/${match[1]}`;
         if ( nextLineHandle.text.endsWith(includeToken) === false ) { return; }
         includeset.add(includeToken);
-        return { value: 'include-start' };
+        return { lint: 'include-start' };
     };
 
     const extractMarker = lineHandle => {
@@ -779,7 +790,7 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
         'error': {
             node: null,
             html: [
-                '<div class="CodeMirror-lintmarker" data-lint="error">&nbsp;',
+                '<div class="CodeMirror-lintmarker" data-lint="error" data-error="y">&nbsp;',
                   '<span class="msg"></span>',
                 '</div>',
             ],
@@ -787,10 +798,11 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
         'if-start': {
             node: null,
             html: [
-                '<div class="CodeMirror-lintmarker" data-lint="if" data-fold="start">&nbsp;',
+                '<div class="CodeMirror-lintmarker" data-lint="if" data-fold="start" data-state="">&nbsp;',
                   '<svg viewBox="0 0 100 100">',
                     '<polygon points="0,0 100,0 50,100" />',
                   '</svg>',
+                  '<span class="msg">Mismatched if-endif directive</span>',
                 '</div>',
             ],
         },
@@ -801,6 +813,7 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
                   '<svg viewBox="0 0 100 100">',
                     '<polygon points="50,0 100,100 0,100" />',
                   '</svg>',
+                  '<span class="msg">Mismatched if-endif directive</span>',
                 '</div>',
             ],
         },
@@ -826,41 +839,98 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
         },
     };
 
-    const markerFromTemplate = which => {
-        const template = markerTemplates[which];
+    const markerFromTemplate = details => {
+        const template = markerTemplates[details.lint];
         if ( template.node === null ) {
             const domParser = new DOMParser();
             const doc = domParser.parseFromString(template.html.join(''), 'text/html');
             template.node = document.adoptNode(qs$(doc, '.CodeMirror-lintmarker'));
         }
-        return template.node.cloneNode(true);
+        const node = template.node.cloneNode(true);
+        if ( details.data instanceof Object ) {
+            for ( const [ k, v ] of Object.entries(details.data) ) {
+                node.dataset[k] = `${v}`;
+            }
+        }
+        return node;
     };
 
     const addMarker = (doc, lineHandle, marker, details) => {
-        if ( marker !== null && marker.dataset.lint !== details.value ) {
+        if ( marker && marker.dataset.lint !== details.lint ) {
             doc.setGutterMarker(lineHandle, 'CodeMirror-lintgutter', null);
-            if ( marker.dataset.lint === 'error' ) {
+            if ( marker.dataset.error === 'y' ) {
                 errorCount -= 1;
+            }
+            if ( marker.dataset.lint === 'if' ) {
+                ifendifSet.delete(lineHandle);
+                ifendifSetChanged = true;
             }
             marker = null;
         }
         if ( marker === null ) {
-            marker = markerFromTemplate(details.value);
+            marker = markerFromTemplate(details);
             doc.setGutterMarker(lineHandle, 'CodeMirror-lintgutter', marker);
-            if ( details.value === 'error' ) {
+            if ( marker.dataset.error === 'y' ) {
                 errorCount += 1;
             }
+            if ( marker.dataset.lint === 'if' ) {
+                ifendifSet.add(lineHandle);
+                ifendifSetChanged = true;
+            }
         }
+        if ( typeof details.msg !== 'string' || details.msg === '' ) { return; }
         const msgElem = qs$(marker, '.msg');
         if ( msgElem === null ) { return; }
-        msgElem.textContent = details.msg || '';
+        msgElem.textContent = details.msg;
     };
 
     const removeMarker = (doc, lineHandle, marker) => {
         doc.setGutterMarker(lineHandle, 'CodeMirror-lintgutter', null);
-        if ( marker.dataset.lint === 'error' ) {
+        if ( marker.dataset.error === 'y' ) {
             errorCount -= 1;
         }
+        if ( marker.dataset.lint === 'if' ) {
+            ifendifSet.delete(lineHandle);
+            ifendifSetChanged = true;
+        }
+    };
+
+    // Analyze whether all if-endif are properly paired
+    const processIfendifs = ( ) => {
+        if ( ifendifSet.size === 0 ) { return; }
+        if ( ifendifSetChanged !== true ) { return; }
+        const sortFn = (a, b) => a.lineNo() - b.lineNo();
+        const sorted = Array.from(ifendifSet).sort(sortFn);
+        const bad = [];
+        const stack = [];
+        for ( const line of sorted ) {
+            const marker = extractMarker(line);
+            const fold = marker.dataset.fold;
+            if ( fold === 'start' ) {
+                stack.push(line);
+            } else if ( fold === 'end' ) {
+                if ( stack.length !== 0 ) {
+                    if ( marker.dataset.error === 'y' ) {
+                        marker.dataset.error = '';
+                        errorCount -= 1;
+                    }
+                    const ifstart = extractMarker(stack.pop());
+                    if ( ifstart.dataset.error === 'y' ) {
+                        ifstart.dataset.error = '';
+                        errorCount -= 1;
+                    }
+                } else {
+                    bad.push(line);
+                }
+            }
+        }
+        bad.push(...stack);
+        for ( const line of bad ) {
+            const marker = extractMarker(line);
+            marker.dataset.error = 'y';
+            errorCount += 1;
+        }
+        ifendifSetChanged = false;
     };
 
     const processDeletion = (doc, change) => {
@@ -868,10 +938,12 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
         doc.eachLine(from.line, to.line, lineHandle => {
             const marker = extractMarker(lineHandle);
             if ( marker === null ) { return; }
-            if ( marker.dataset.lint === 'error' ) {
+            if ( marker.dataset.error === 'y' ) {
+                marker.dataset.error = '';
                 errorCount -= 1;
-                marker.dataset.lint = 'void';
             }
+            ifendifSet.delete(lineHandle);
+            ifendifSetChanged = true;
         });
     };
 
@@ -881,10 +953,10 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
             astParser.parse(lineHandle.text);
             const markerDetails = extractMarkerDetails(doc, lineHandle);
             const marker = extractMarker(lineHandle);
-            if ( markerDetails === undefined && marker !== null ) {
-                removeMarker(doc, lineHandle, marker);
-            } else if ( markerDetails !== undefined ) {
+            if ( markerDetails !== undefined ) {
                 addMarker(doc, lineHandle, marker, markerDetails);
+            } else if ( marker !== null ) {
+                removeMarker(doc, lineHandle, marker);
             }
             from += 1;
             if ( (from & 0x0F) !== 0 ) { return; }
@@ -910,6 +982,7 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
             return processChangesetAsync(doc);
         }
         includeset.clear();
+        processIfendifs(doc);
         CodeMirror.signal(doc.getEditor(), 'linterDone', { errorCount });
     };
 
@@ -922,13 +995,14 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
     };
 
     const onChanges = (cm, changes) => {
+        if ( changes.length === 0 ) { return; }
         const doc = cm.getDoc();
         for ( const change of changes ) {
             const from = change.from.line;
             const to = from + change.text.length;
             changeset.push({ from, to });
-            processChangesetAsync(doc);
         }
+        processChangesetAsync(doc);
     };
 
     const onBeforeChanges = (cm, change) => {

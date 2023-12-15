@@ -377,7 +377,7 @@ import { i18n$ } from '../i18n.js';
             if ( markers === null ) { return; }
             const marker = markers['CodeMirror-lintgutter'];
             if ( marker === undefined ) { return; }
-            if ( marker.dataset.lint !== 'error' )  { return; }
+            if ( marker.dataset.error !== 'y' ) { return; }
             const line = lineHandle.lineNo();
             if ( dir < 0 ) {
                 found = line;

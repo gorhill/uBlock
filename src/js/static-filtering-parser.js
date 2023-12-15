@@ -1224,6 +1224,7 @@ export class AstFilterParser {
                 ? NODE_TYPE_PREPARSE_DIRECTIVE_IF_VALUE
                 : NODE_TYPE_PREPARSE_DIRECTIVE_VALUE;
             const next = this.allocTypedNode(type, directiveEnd, parentEnd);
+            this.addNodeToRegister(type, next);
             this.linkRight(head, next);
             if ( type === NODE_TYPE_PREPARSE_DIRECTIVE_IF_VALUE ) {
                 const rawToken = this.getNodeString(next).trim();

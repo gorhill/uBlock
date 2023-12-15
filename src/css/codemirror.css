@@ -289,16 +289,14 @@
 .CodeMirror-lintmarker > * {
     position: absolute;
     }
-.CodeMirror-lintmarker[data-lint="error"] {
+.CodeMirror-lintmarker[data-error="y"] {
     background-color: var(--sf-error-ink);
     }
-.CodeMirror-lintmarker[data-lint="error"] .msg {
-    display: none;
-    }
-.CodeMirror-lintmarker[data-lint="error"] .msg {
+.CodeMirror-lintmarker .msg {
     background-color: var(--surface-0);
     border: 1px solid var(--sf-error-ink);
     color: var(--ink-1);
+    display: none;
     filter: drop-shadow(2px 2px 4px #0008);
     left: 100%;
     padding: var(--default-gap-xsmall);
@@ -311,6 +309,9 @@
     top: 15%;
     width: 70%;
     }
+.CodeMirror-lintmarker[data-error="y"] svg {
+    display: none;
+    }
 .CodeMirror-lintmarker[data-fold="start"] {
     fill: var(--cm-foldmarker-ink);
     }
@@ -320,7 +321,7 @@
 .CodeMirror-lintmarker[data-fold="end"] {
     fill: var(--border-2);
     }
-.CodeMirror-lintmarker[data-lint="error"]:hover > span,
-.CodeMirror-lintmarker[data-lint="error"] > span:hover {
+.CodeMirror-lintmarker[data-error="y"]:hover > span,
+.CodeMirror-lintmarker[data-error="y"] > span:hover {
     display: initial;
     }
