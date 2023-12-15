@@ -1,5 +1,6 @@
 ## Fixes / changes
 
+- [Add detection of mismatched `!#if`-`!#endif` in linter](https://github.com/gorhill/uBlock/commit/9f4b31a96f)
 - [Support links to update lists which are differential update-friendly](https://github.com/gorhill/uBlock/commit/5e3f9695b4)
 - [Remove "Purge all caches" button from "Filter lists" pane](https://github.com/gorhill/uBlock/commit/bd7ce41224)
 - [Add support for `all` list token in updater-link feature](https://github.com/gorhill/uBlock/commit/14926913f7)
