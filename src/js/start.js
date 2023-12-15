@@ -474,7 +474,11 @@ lz4Codec.relinquish();
 // https://github.com/chrisaljoudi/uBlock/issues/184
 //   Check for updates not too far in the future.
 io.addObserver(µb.assetObserver.bind(µb));
-µb.scheduleAssetUpdater();
+µb.scheduleAssetUpdater({
+    updateDelay: µb.userSettings.autoUpdate
+        ? µb.hiddenSettings.autoUpdateDelayAfterLaunch * 1000
+        : 0
+});
 
 // Force an update of the context menu according to the currently
 // active tab.
