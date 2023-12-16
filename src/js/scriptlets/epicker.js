@@ -1140,13 +1140,16 @@ const quitPicker = function() {
     self.removeEventListener('resize', onViewportChanged, { passive: true });
     self.removeEventListener('keydown', onKeyPressed, true);
     vAPI.shutdown.remove(quitPicker);
-    pickerFramePort.close();
-    pickerFramePort = undefined;
+    if ( pickerFramePort !== null ) {
+        pickerFramePort.close();
+        pickerFramePort = null;
+    }
+    if ( pickerRoot !== null ) {
+        pickerRoot.remove();
+        pickerRoot = null;
+    }
     vAPI.userStylesheet.remove(pickerCSS);
     vAPI.userStylesheet.apply();
-    if ( pickerRoot === null ) { return; }
-    pickerRoot.remove();
-    pickerRoot = null;
     self.focus();
 };
 
@@ -1156,6 +1159,7 @@ const onDialogMessage = function(msg) {
     switch ( msg.what ) {
         case 'start':
             startPicker();
+            if ( pickerFramePort === null ) { break; }
             if ( targetElements.length === 0 ) {
                 highlightElements([], true);
             }
@@ -1301,7 +1305,7 @@ document.documentElement.append(pickerRoot);
 
 vAPI.shutdown.add(quitPicker);
 
-let pickerFramePort;
+let pickerFramePort = null;
 
 {
     const url = new URL(pickerBootArgs.pickerURL);
