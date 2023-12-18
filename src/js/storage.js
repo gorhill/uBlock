@@ -1510,7 +1510,7 @@ onBroadcast(msg => {
         }
 
         if ( µb.userSettings.autoUpdate === false ) {
-            if ( details.updateDelay === undefined ) {
+            if ( Boolean(details.updateDelay) === false ) {
                 next = 0;
                 return;
             }
