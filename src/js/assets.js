@@ -1204,6 +1204,7 @@ const getAssetDiffDetails = assetKey => {
     out.writeTime = cacheEntry.writeTime;
     const assetEntry = assetSourceRegistry[assetKey];
     if ( assetEntry === undefined ) { return; }
+    if ( assetEntry.content !== 'filters' ) { return; }
     if ( Array.isArray(assetEntry.cdnURLs) ) {
         out.cdnURLs = assetEntry.cdnURLs.slice();
     } else if ( reIsExternalPath.test(assetKey) ) {
