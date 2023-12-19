@@ -1,30 +1,30 @@
-uBO Lite (uBOL) is a *permission-less* MV3-based content blocker.
+uBO Lite (uBOL) é un bloqueador de contido baseado en MV3 *sen permisos.
 
-The default ruleset corresponds to uBlock Origin's default filterset:
+O conxunto de regras predeterminado corresponde ao conxunto de filtros predeterminado de uBlock Origin:
 
-- uBlock Origin's built-in filter lists
+- Listas de filtros integradas de uBlock Origin
 - EasyList
 - EasyPrivacy
-- Peter Lowe’s Ad and tracking server list
+Lista de servidores de seguimento e anuncios de Peter Lowe
 
-You can add more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+Podes engadir máis conxuntos de regras visitando a páxina de opcións: fai clic na icona _Cogs_ no panel emerxente.
 
-uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
+uBOL é totalmente declarativo, o que significa que non é necesario un proceso permanente de uBOL para que se produza o filtrado e o filtrado de contido baseado en inxección de CSS/JS realízao de forma fiable o propio navegador en lugar da extensión. Isto significa que o propio uBOL non consume recursos de CPU/memoria mentres o bloqueo de contido está en curso -- o proceso do traballador do servizo de uBOL é necesario _só_ cando interactúas co panel emerxente ou coas páxinas de opcións.
 
-uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read and modify data" permissions at install time.
+uBOL non require amplos permisos de "ler e modificar datos" no momento da instalación, de aí as súas capacidades limitadas fóra da caixa en comparación con uBlock Origin ou outros bloqueadores de contido que requiren amplos permisos de "ler e modificar datos" no momento da instalación.
 
-However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
+Non obstante, uBOL permítelle *de forma explícita* conceder permisos estendidos en sitios específicos da súa elección para que poida filtrar mellor neses sitios mediante filtrado cosmético e inxeccións de scriptlet.
 
-To grant extended permissions on a given site, open the popup panel and pick a higher filtering mode such as Optimal or Complete.
+Para conceder permisos estendidos nun sitio determinado, abra o panel emerxente e escolle un modo de filtrado superior, como Óptimo ou Completa.
 
-The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request.
+A continuación, o navegador avisará sobre os efectos da concesión dos permisos adicionais solicitados pola extensión no sitio actual, e terá que indicarlle ao navegador se acepta ou rexeita a solicitude.
 
-If you accept uBOL's request for additional permissions on the current site, it will be able to better filter content for the current site.
+Se aceptas a solicitude de uBOL de permisos adicionais no sitio actual, poderá filtrar mellor o contido do sitio actual.
 
-You can set the default filtering mode from uBOL's options page. If you pick the Optimal or Complete mode as the default one, you will need to grant uBOL the permission to read and modify data on all websites.
+Podes establecer o modo de filtrado predeterminado desde a páxina de opcións de uBOL. Se escolle o modo Óptimo ou Completo como o predeterminado, terá que conceder a uBOL o permiso para ler e modificar datos en todos os sitios web.
 
-Keep in mind this is still a work in progress, with these end goals:
+Teña en conta que este aínda é un traballo en curso, cos seguintes obxectivos finais:
 
-- No broad host permissions at install time -- extended permissions are granted explicitly by the user on a per-site basis.
+- Non hai permisos de host amplos no momento da instalación. Os permisos estendidos son concedidos explícitamente polo usuario por cada sitio.
 
-- Entirely declarative for reliability and CPU/memory efficiency.
+- Totalmente declarativo para a fiabilidade e a eficiencia da CPU/memoria.

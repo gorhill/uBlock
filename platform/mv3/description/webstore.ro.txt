@@ -5,7 +5,7 @@ Setul de reguli implicit corespunde setului de filtre implicit al uBlock Origin:
 Listele de filtre încorporate de uBlock Origin
 - EasyList
 - EasyPrivacy
-- Peter Lowe’s Ad and tracking server list
+- Oglas Peter Lowe i lista servera za praćenje
 
 Puteți adăuga mai multe seturi de reguli vizitând pagina de opțiuni -- făcând clic pe pictograma _Cogs_ din panoul pop-up
 

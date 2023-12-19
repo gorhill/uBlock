@@ -16,43 +16,43 @@
     "description": "English: uBO Lite — Dashboard"
   },
   "settingsPageName": {
-    "message": "Settings",
+    "message": "ఐచ్చికాలు",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
-    "message": "About",
+    "message": "మా గురించి",
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
-    "message": "Privacy policy",
+    "message": "గోప్యతా",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupFilteringModeLabel": {
-    "message": "filtering mode",
+    "message": "వడపోత మోడ్",
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {
-    "message": "Open the dashboard",
+    "message": "డాష్‌బోర్డ్‌ను తెరవండి",
     "description": "English: Click to open the dashboard"
   },
   "popupMoreButton": {
-    "message": "More",
+    "message": "మరిన్ని",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Less",
+    "message": "తక్కువ",
     "description": "Label to be used to hide popup panel sections"
   },
   "3pGroupDefault": {
-    "message": "Default",
+    "message": "డిఫాల్ట్",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAds": {
-    "message": "Ads",
+    "message": "ప్రకటనలు",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupPrivacy": {
-    "message": "Privacy",
+    "message": "గోప్యత",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
@@ -132,27 +132,27 @@
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Basic network filtering from selected filter lists.\n\nDoes not require permission to read and modify data on websites.",
+    "message": "ఎంచుకున్న ఫిల్టర్ జాబితాల నుండి ప్రాథమిక నెట్‌వర్క్ ఫిల్టరింగ్.\n\nవెబ్‌సైట్‌లలో డేటాను చదవడానికి మరియు సవరించడానికి అనుమతి అవసరం లేదు.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.",
+    "message": "ఎంచుకున్న ఫిల్టర్ జాబితాల నుండి అధునాతన నెట్‌వర్క్ ఫిల్టరింగ్ మరియు నిర్దిష్ట పొడిగించిన ఫిల్టరింగ్.\n\nఅన్ని వెబ్‌సైట్‌లలోని డేటాను చదవడానికి మరియు సవరించడానికి విస్తృత అనుమతి అవసరం.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific and generic extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.\n\nGeneric extended filtering may cause higher webpage resources usage.",
+    "message": "ఎంచుకున్న ఫిల్టర్ జాబితాల నుండి అధునాతన నెట్‌వర్క్ ఫిల్టరింగ్ మరియు నిర్దిష్ట మరియు సాధారణ పొడిగించిన ఫిల్టరింగ్.\n\nఅన్ని వెబ్‌సైట్‌లలోని డేటాను చదవడానికి మరియు సవరించడానికి విస్తృత అనుమతి అవసరం.\n\nసాధారణ పొడిగించిన వడపోత అధిక వెబ్‌పేజీ వనరుల వినియోగానికి కారణం కావచ్చు.",
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "List of hostnames for which no filtering will take place",
+    "message": "వడపోత జరగని హోస్ట్ పేర్ల జాబితా",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "behaviorSectionLabel": {
-    "message": "Behavior",
+    "message": "ప్రవర్తన",
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Automatically reload page when changing filtering mode",
+    "message": "ఫిల్టరింగ్ మోడ్‌ను మార్చేటప్పుడు పేజీని స్వయంచాలకంగా రీలోడ్ చేయండి",
     "description": "Label for a checkbox in the options page"
   }
 }

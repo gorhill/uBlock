@@ -1,30 +1,30 @@
-uBO Lite (uBOL) is a *permission-less* MV3-based content blocker.
+uBO Lite (uBOL) je blokator sadržaja zasnovan na MV3 *bez dozvole*.
 
-The default ruleset corresponds to uBlock Origin's default filterset:
+Zadani skup pravila odgovara zadanom skupu filtera uBlock Origin:
 
-- uBlock Origin's built-in filter lists
+- UBlock Origin ugrađene liste filtera
 - EasyList
 - EasyPrivacy
-- Peter Lowe’s Ad and tracking server list
+- Oglas Peter Lowe i lista servera za praćenje
 
-You can add more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+Možete dodati još skupova pravila tako što ćete posjetiti stranicu sa opcijama -- kliknite na ikonu _Cogs_ na iskačućoj ploči.
 
-uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
+uBOL je potpuno deklarativno, što znači da nema potrebe za trajnim uBOL procesom da bi se filtriranje dogodilo, a filtriranje sadržaja zasnovano na CSS/JS injekcijama se pouzdano izvodi od strane samog pretraživača, a ne ekstenzije. To znači da sam uBOL ne troši CPU/memorijske resurse dok je blokiranje sadržaja u toku -- proces uBOL-a servisnog radnika je potreban _samo_ kada stupite u interakciju sa iskačućim panelom ili stranicama sa opcijama.
 
-uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read and modify data" permissions at install time.
+uBOL ne zahtijeva široku dozvolu za "čitanje i modificiranje podataka" u vrijeme instalacije, stoga su njegove ograničene mogućnosti izvan kutije u poređenju sa uBlock Origin-om ili drugim blokatorima sadržaja koji zahtijevaju široke dozvole za "čitanje i modificiranje podataka" u vrijeme instalacije.
 
-However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
+Međutim, uBOL vam omogućava da *eksplicitno* dodijelite proširene dozvole na određenim web lokacijama po vašem izboru kako bi mogao bolje filtrirati te stranice koristeći kozmetičko filtriranje i injekcije skriptleta.
 
-To grant extended permissions on a given site, open the popup panel and pick a higher filtering mode such as Optimal or Complete.
+Da biste dali proširene dozvole za datu web lokaciju, otvorite iskačući panel i odaberite viši način filtriranja kao što je Optimal ili Complete.
 
-The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request.
+Pregledač će vas tada upozoriti na efekte odobravanja dodatnih dozvola koje ekstenzija traži na trenutnoj web stranici, a vi ćete morati reći pretraživaču da li prihvatate ili odbijate zahtjev.
 
-If you accept uBOL's request for additional permissions on the current site, it will be able to better filter content for the current site.
+Ako prihvatite uBOL-ov zahtjev za dodatnim dozvolama na trenutnoj stranici, moći će bolje filtrirati sadržaj za trenutnu stranicu.
 
-You can set the default filtering mode from uBOL's options page. If you pick the Optimal or Complete mode as the default one, you will need to grant uBOL the permission to read and modify data on all websites.
+Možete postaviti zadani način filtriranja sa uBOL-ove stranice sa opcijama. Ako odaberete Optimal ili Kompletan način kao zadani, morat ćete dati uBOL-u dozvolu da čita i mijenja podatke na svim web stranicama.
 
-Keep in mind this is still a work in progress, with these end goals:
+Imajte na umu da je ovo još uvijek u toku, sa ovim krajnjim ciljevima:
 
-- No broad host permissions at install time -- extended permissions are granted explicitly by the user on a per-site basis.
+- Nema širokih dozvola za host u vrijeme instalacije - proširene dozvole se eksplicitno dodeljuju od strane korisnika na bazi po lokaciji.
 
-- Entirely declarative for reliability and CPU/memory efficiency.
+- Potpuno deklarativno za pouzdanost i efikasnost CPU/memorije.

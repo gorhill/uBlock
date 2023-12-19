@@ -56,7 +56,7 @@
     "description": "appears as tab name in dashboard"
   },
   "supportPageName": {
-    "message": "Support",
+    "message": "సహాయం",
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "ఈ వెబ్‌సైట్‌లో సమస్యను నివేదించండి",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -276,11 +276,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilter": {
-    "message": "script",
+    "message": "స్క్రిప్ట్",
     "description": "Appears as an option to filter out firewall rows"
   },
   "popup3pFrameFilter": {
-    "message": "frame",
+    "message": "ఫ్రేమ్",
     "description": "Appears as an option to filter out firewall rows"
   },
   "pickerCreate": {
@@ -336,7 +336,7 @@
     "description": "English: Color-blind friendly"
   },
   "settingsAppearance": {
-    "message": "Appearance",
+    "message": "స్వరూపం",
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
@@ -344,7 +344,7 @@
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "Custom accent color",
+    "message": "అనుకూల యాస రంగు",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsCloudStorageEnabledPrompt": {
@@ -404,7 +404,7 @@
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Features suitable only for technical users",
+    "message": "సాంకేతిక వినియోగదారులకు మాత్రమే సరిపోయే ఫీచర్లు",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
@@ -456,7 +456,7 @@
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
-    "message": "Suspend network activity until all filter lists are loaded",
+    "message": "అన్ని ఫిల్టర్ జాబితాలు లోడ్ అయ్యే వరకు నెట్‌వర్క్ కార్యాచరణను నిలిపివేయండి",
     "description": "A checkbox in the 'Filter lists' pane"
   },
   "3pListsOfBlockedHostsHeader": {
@@ -532,7 +532,7 @@
     "description": "Short information about how to create custom filters"
   },
   "1pTrustWarning": {
-    "message": "Do not add filters from untrusted sources.",
+    "message": "అవిశ్వసనీయ మూలాల నుండి ఫిల్టర్‌లను జోడించవద్దు.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {
@@ -888,23 +888,23 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Create new report",
+    "message": "కొత్త నివేదికను సృష్టించండి",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Find similar reports",
+    "message": "సారూప్య నివేదికలను కనుగొనండి",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
-    "message": "Documentation",
+    "message": "డాక్యుమెంటేషన్",
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Read the documentation at <code>uBlock/wiki</code> to learn about all of uBlock Origin's features.",
+    "message": "uBlock ఆరిజిన్ యొక్క అన్ని లక్షణాల గురించి తెలుసుకోవడానికి <code>uBlock/wiki</code> వద్ద డాక్యుమెంటేషన్ చదవండి.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
-    "message": "Questions and support",
+    "message": "ప్రశ్నలు మరియు మద్దతు",
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
@@ -996,11 +996,11 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "అనవసరమైన ట్యాబ్‌లు లేదా విండోలను తెరుస్తుంది",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "వెబ్ పేజీని “NSFW”గా లేబుల్ చేయండి (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“పని కోసం సురక్షితం కాదు”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
@@ -1128,7 +1128,7 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedTitle": {
-    "message": "Page blocked",
+    "message": "పేజీ బ్లాక్ చేయబడింది",
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {

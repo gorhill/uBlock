@@ -44,7 +44,7 @@
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "快捷鍵",
+    "message": "快速鍵",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -172,11 +172,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "點擊以封鎖此網站的遠端字體",
+    "message": "點擊以封鎖此網站的遠端字型",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "點擊以停止封鎖此網站的遠端字體",
+    "message": "點擊以停止封鎖此網站的遠端字型",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
