@@ -1204,8 +1204,19 @@ const getAssetDiffDetails = assetKey => {
     out.writeTime = cacheEntry.writeTime;
     const assetEntry = assetSourceRegistry[assetKey];
     if ( assetEntry === undefined ) { return; }
-    if ( Array.isArray(assetEntry.cdnURLs) === false ) { return; }
-    out.cdnURLs = assetEntry.cdnURLs.slice();
+    if ( Array.isArray(assetEntry.cdnURLs) ) {
+        out.cdnURLs = assetEntry.cdnURLs.slice();
+    } else if ( reIsExternalPath.test(assetKey) ) {
+        out.cdnURLs = [ assetKey ];
+    } else if ( typeof assetEntry.contentURL === 'string' ) {
+        out.cdnURLs = [ assetEntry.contentURL ];
+    } else if ( Array.isArray(assetEntry.contentURL) ) {
+        out.cdnURLs = assetEntry.contentURL.slice(0).filter(url =>
+            reIsExternalPath.test(url)
+        );
+    }
+    if ( Array.isArray(out.cdnURLs) === false ) { return; }
+    if ( out.cdnURLs.length === 0 ) { return; }
     return out;
 };
 
