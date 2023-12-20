@@ -31,25 +31,23 @@
 /******************************************************************************/
 
 if ( typeof vAPI !== 'object' ) { return; }
+if ( typeof vAPI === null ) { return; }
 if ( vAPI.domFilterer instanceof Object === false ) { return; }
-if ( document.querySelector(`iframe[${vAPI.sessionId}]`) !== null ) { return; }
 
-/******************************************************************************/
-/******************************************************************************/
+if ( vAPI.inspectorFrame ) { return; }
+vAPI.inspectorFrame = true;
+
+const inspectorUniqueId = vAPI.randomToken();
 
 const nodeToIdMap = new WeakMap(); // No need to iterate
 
 let blueNodes = [];
 const roRedNodes = new Map();    // node => current cosmetic filter
 const rwRedNodes = new Set();    // node => new cosmetic filter (toggle node)
-//var roGreenNodes = new Map();  // node => current exception cosmetic filter (can't toggle)
 const rwGreenNodes = new Set();  // node => new exception cosmetic filter (toggle filter)
+//const roGreenNodes = new Map();  // node => current exception cosmetic filter (can't toggle)
 
 const reHasCSSCombinators = /[ >+~]/;
-
-/******************************************************************************/
-
-//const getNodeId = node => nodeToIdMap.get(node) || 0;
 
 /******************************************************************************/
 
@@ -670,11 +668,13 @@ const shutdownInspector = ( ) => {
         passive: true,
     });
     contentInspectorChannel.shutdown();
+    if ( inspectorFrame ) {
+        inspectorFrame.remove();
+        inspectorFrame = null;
+    }
     vAPI.userStylesheet.remove(inspectorCSS);
     vAPI.userStylesheet.apply();
-    if ( inspectorFrame === null ) { return; }
-    inspectorFrame.remove();
-    inspectorFrame = null;
+    vAPI.inspectorFrame = false;
 };
 
 /******************************************************************************/
@@ -826,22 +826,22 @@ const contentInspectorChannel = (( ) => {
         if ( inspectorArgs === null ) { return; }
         return new Promise(resolve => {
             const iframe = document.createElement('iframe');
-            iframe.setAttribute(vAPI.sessionId, '');
+            iframe.setAttribute(inspectorUniqueId, '');
             document.documentElement.append(iframe);
             iframe.addEventListener('load', ( ) => {
-                iframe.setAttribute(`${vAPI.sessionId}-loaded`, '');
+                iframe.setAttribute(`${inspectorUniqueId}-loaded`, '');
                 const channel = new MessageChannel();
                 toFramePort = channel.port1;
                 toFramePort.onmessage = ev => {
                     const msg = ev.data || {};
                     if ( msg.what !== 'startInspector' ) { return; }
-                    resolve(iframe);
                 };
                 iframe.contentWindow.postMessage(
                     { what: 'startInspector' },
                     inspectorArgs.inspectorURL,
                     [ channel.port2 ]
                 );
+                resolve(iframe);
             }, { once: true });
             iframe.contentWindow.location = inspectorArgs.inspectorURL;
         });
@@ -859,26 +859,32 @@ const inspectorCSSStyle = [
     'box-shadow: none',
     'color-scheme: light dark',
     'display: block',
+    'filter: none',
     'height: 100%',
     'left: 0',
     'margin: 0',
+    'max-height: none',
+    'max-width: none',
+    'min-height: unset',
+    'min-width: unset',
     'opacity: 1',
     'outline: 0',
     'padding: 0',
     'pointer-events: none',
     'position: fixed',
     'top: 0',
-    'visibility: visible',
+    'transform: none',
+    'visibility: hidden',
     'width: 100%',
     'z-index: 2147483647',
     ''
 ].join(' !important;\n');
 
 const inspectorCSS = `
-:root > [${vAPI.sessionId}] {
+:root > [${inspectorUniqueId}] {
     ${inspectorCSSStyle}
 }
-:root > [${vAPI.sessionId}-loaded] {
+:root > [${inspectorUniqueId}-loaded] {
     visibility: visible !important;
 }
 `;
