@@ -671,7 +671,7 @@ const viewPort = (( ) => {
             `  width: calc(calc(100% - ${reservedWidth}px) * ${cellWidths[COLUMN_FILTER]});`,
             '}',
             `#vwContent .logEntry > div.messageRealm > span:nth-of-type(${COLUMN_MESSAGE+1}) {`,
-            `  width: calc(100% - ${cellWidths[COLUMN_MESSAGE]}px);`,
+            `  width: calc(100% - ${cellWidths[COLUMN_TIMESTAMP]}px);`,
             '}',
             `#vwContent .logEntry > div > span:nth-of-type(${COLUMN_RESULT+1}) {`,
             `  width: ${cellWidths[COLUMN_RESULT]}px;`,

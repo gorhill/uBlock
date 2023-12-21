@@ -309,8 +309,11 @@ body[dir="rtl"] #vwRenderer .logEntry > div > span:first-child {
     }
 #vwRenderer .logEntry > div > span:nth-of-type(2) {
     }
-#vwRenderer #vwContent .logEntry > div > span:nth-of-type(2) {
+#vwRenderer .logEntry > div > span:nth-of-type(2) {
     text-overflow: ellipsis;
+    }
+#vwRenderer .logEntry > div.messageRealm > span:nth-of-type(2) ~ span {
+    display: none;
     }
 .vExpanded #vwRenderer #vwContent .logEntry > div > span:nth-of-type(2) {
     overflow-y: auto;
