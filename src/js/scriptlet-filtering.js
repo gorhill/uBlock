@@ -26,6 +26,7 @@
 /******************************************************************************/
 
 import µb from './background.js';
+import logger from './logger.js';
 import { onBroadcast } from './broadcast.js';
 import { redirectEngine as reng } from './redirect-engine.js';
 import { sessionFirewall } from './filtering-engines.js';
@@ -299,6 +300,22 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
         }
 
         return scriptletDetails;
+    }
+
+    toLogger(request, details) {
+        if ( details === undefined ) { return; }
+        if ( logger.enabled !== true ) { return; }
+        if ( typeof details.filters !== 'string' ) { return; }
+        const fctxt = µb.filteringContext
+            .duplicate()
+            .fromTabId(request.tabId)
+            .setRealm('extended')
+            .setType('scriptlet')
+            .setURL(request.url)
+            .setDocOriginFromURL(request.url);
+        for ( const raw of details.filters.split('\n') ) {
+            fctxt.setFilter({ source: 'extended', raw }).toLogger();
+        }
     }
 }
 
