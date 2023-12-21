@@ -1175,16 +1175,15 @@ vAPI.messaging = {
     const shortSecrets = [];
     let lastShortSecretTime = 0;
 
-    // Long secrets are meant to be used multiple times, but for at most a few
-    // minutes. The realm is one value out of 36^18 = over 10^28 values.
-    const longSecrets = [ '', '' ];
-    let lastLongSecretTimeSlice = 0;
+    // Long secrets are valid until revoked or uBO restarts. The realm is one
+    // value out of 36^18 = over 10^28 values.
+    const longSecrets = new Set();
 
     const guard = details => {
         const match = reSecret.exec(details.url);
         if ( match === null ) { return { cancel: true }; }
         const secret = match[1];
-        if ( longSecrets.includes(secret) ) { return; }
+        if ( longSecrets.has(secret) ) { return; }
         const pos = shortSecrets.indexOf(secret);
         if ( pos === -1 ) { return { cancel: true }; }
         shortSecrets.splice(pos, 1);
@@ -1212,14 +1211,13 @@ vAPI.messaging = {
             shortSecrets.push(secret);
             return secret;
         },
-        long: ( ) => {
-            const timeSlice = Date.now() >>> 19; // Changes every ~9 minutes
-            if ( timeSlice !== lastLongSecretTimeSlice ) {
-                longSecrets[1] = longSecrets[0];
-                longSecrets[0] = `${generateSecret()}${generateSecret()}${generateSecret()}`;
-                lastLongSecretTimeSlice = timeSlice;
+        long: previous => {
+            if ( previous !== undefined ) {
+                longSecrets.delete(previous);
             }
-            return longSecrets[0];
+            const secret = `${generateSecret()}${generateSecret()}${generateSecret()}`;
+            longSecrets.add(secret);
+            return secret;
         },
     };
 }

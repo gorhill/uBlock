@@ -1320,8 +1320,6 @@ vAPI.DOMFilterer = class {
             vAPI.userStylesheet.apply();
         }
 
-        // Library of resources is located at:
-        // https://github.com/gorhill/uBlock/blob/master/assets/ublock/resources.txt
         if ( scriptletDetails && typeof self.uBO_scriptletsInjected !== 'string' ) {
             self.uBO_scriptletsInjected = scriptletDetails.filters;
             if ( scriptletDetails.mainWorld ) {

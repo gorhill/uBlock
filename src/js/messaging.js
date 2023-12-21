@@ -718,12 +718,17 @@ const retrieveContentScriptParameters = async function(sender, request) {
     if ( logger.enabled || request.needScriptlets ) {
         const scriptletDetails = scriptletFilteringEngine.injectNow(request);
         if ( scriptletDetails !== undefined ) {
-            if ( logger.enabled ) {
-                scriptletFilteringEngine.logFilters(
-                    tabId,
-                    request.url,
-                    scriptletDetails.filters
-                );
+            if ( logger.enabled && typeof scriptletDetails.filters === 'string' ) {
+                const fctxt = µb.filteringContext
+                    .duplicate()
+                    .fromTabId(tabId)
+                    .setRealm('extended')
+                    .setType('scriptlet')
+                    .setURL(request.url)
+                    .setDocOriginFromURL(request.url);
+                for ( const raw of scriptletDetails.filters.split('\n') ) {
+                    fctxt.setFilter({ source: 'extended', raw }).toLogger();
+                }
             }
             if ( request.needScriptlets ) {
                 response.scriptletDetails = scriptletDetails;
