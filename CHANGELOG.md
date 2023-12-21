@@ -1,5 +1,6 @@
 ## Fixes / changes
 
+- [Add support for `application/x-javascript` in `replace=` option](https://github.com/gorhill/uBlock/commit/abeadf18eb)
 - [Extend support for differential updates to imported lists](https://github.com/gorhill/uBlock/commit/443c1f81e1)
 - [Add detection of mismatched `!#if`-`!#endif` in linter](https://github.com/gorhill/uBlock/commit/9f4b31a96f)
 - [Support links to update lists which are differential update-friendly](https://github.com/gorhill/uBlock/commit/5e3f9695b4)
