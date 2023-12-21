@@ -687,6 +687,7 @@ const bodyFilterer = (( ) => {
         'application/vnd.api+json',
         'application/vnd.apple.mpegurl',
         'application/vnd.apple.mpegurl.audio',
+        'application/x-javascript',
         'application/x-mpegurl',
         'application/xhtml+xml',
         'application/xml',
