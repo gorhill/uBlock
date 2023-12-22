@@ -2977,6 +2977,9 @@ function xmlPrune(
                     type === '' && thisArg.responseXML instanceof XMLDocument
                 ) {
                     pruneFromDoc(thisArg.responseXML);
+                    const serializer = new XMLSerializer();
+                    const textout = serializer.serializeToString(thisArg.responseXML);
+                    Object.defineProperty(thisArg, 'responseText', { value: textout });
                     return;
                 }
                 if (
