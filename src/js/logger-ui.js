@@ -2251,6 +2251,22 @@ const rowFilterer = (( ) => {
         dom.cl.toggle(ev.target, 'on');
         builtinFilterExpression();
     });
+    dom.on('#filterInput > input', 'drop', ev => {
+        const dropItem = item => {
+            if ( item.kind !== 'string' ) { return false; }
+            item.getAsString(s => {
+                qs$('#filterInput > input').value = s;
+                parseInput();
+                filterAll();
+            });
+            return true;
+        };
+        for ( const item of ev.dataTransfer.items ) {
+            if ( dropItem(item) === false ) { continue; }
+            ev.preventDefault();
+            break;
+        }
+    });
 
     // https://github.com/gorhill/uBlock/issues/404
     //   Ensure page state is in sync with the state of its various widgets.
