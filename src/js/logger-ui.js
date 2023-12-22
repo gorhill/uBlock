@@ -2254,6 +2254,7 @@ const rowFilterer = (( ) => {
     dom.on('#filterInput > input', 'drop', ev => {
         const dropItem = item => {
             if ( item.kind !== 'string' ) { return false; }
+            if ( item.type !== 'text/plain' ) { return false; }
             item.getAsString(s => {
                 qs$('#filterInput > input').value = s;
                 parseInput();
