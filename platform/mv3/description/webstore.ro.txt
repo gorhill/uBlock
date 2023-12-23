@@ -9,15 +9,15 @@ Listele de filtre încorporate de uBlock Origin
 
 Puteți adăuga mai multe seturi de reguli vizitând pagina de opțiuni -- făcând clic pe pictograma _Cogs_ din panoul pop-up
 
-uBOL este în întregime declarativ, ceea ce înseamnă că nu este nevoie de un proces uBOL permanent pentru ca filtrarea să aibă loc, iar filtrarea conținutului pe bază de injecție CSS/JS este realizată în mod fiabil de browser în sine, mai degrabă decât de extensie. Aceasta înseamnă că uBOL în sine nu consumă resurse CPU/memorie în timp ce blocarea conținutului este în desfășurare -- procesul de lucru al serviciului uBOL este necesar _doar_ atunci când interacționați cu panoul pop-up sau cu paginile de opțiuni.
+uBOL este în întregime declarativ, ceea ce înseamnă că nu este nevoie de un proces uBOL permanent pentru ca filtrarea să aibă loc, iar filtrarea conținutului pe bază de injecție CSS/JS este realizată în mod sigur de browser în sine, mai degrabă decât de extensie. Aceasta înseamnă că uBOL în sine nu consumă resurse CPU/memorie în timp ce blocarea conținutului este în desfășurare -- procesul de lucru al serviciului uBOL este necesar _doar_ atunci când interacționați cu panoul pop-up sau cu paginile de opțiuni.
 
-uBOL nu necesită permisiunii extinse de „citire și modificare a datelor” în momentul instalării, prin urmare capacitățile sale limitate din momentul instalării în comparație cu uBlock Origin sau alte blocare de conținut care necesită permisiuni largi de „citire și modificare a datelor” în momentul instalării.
+uBOL nu necesită permisiunii extinse de „citire și modificare a datelor” în momentul instalării, astfel capacitățile sale limitate din momentul instalării în comparație cu uBlock Origin sau alte blocare de conținut necesită permisiuni largi de „citire și modificare a datelor” în momentul instalării.
 
 Cu toate acestea, uBOL vă permite să acordați *explicit* permisiuni extinse pe anumite site-uri alese de dvs., astfel încât să poată filtra mai bine pe acele site-uri folosind filtrarea cosmetică și injecțiile de scriptlet.
 
 Pentru a acorda permisiuni extinse pe un anumit site, deschideți panoul pop-up și alegeți un mod de filtrare mai ridicat, cum ar fi Optimal sau Complet.
 
-Browser-ul vă va avertiza apoi cu privire la efectele acordării permisiunilor suplimentare solicitate de extensie pe site-ul curent și va trebui să spuneți browserului dacă acceptați sau refuzați cererea.
+Browser-ul vă va avertiza apoi cu privire la efectele acordării permisiunilor suplimentare solicitate de extensie pe site-ul curent și va trebui să-i precizați browserului dacă acceptați sau refuzați cererea.
 
 Dacă acceptați solicitarea uBOL pentru permisiuni suplimentare pe site-ul curent, acesta va putea filtra mai bine conținutul pentru site-ul curent.
 

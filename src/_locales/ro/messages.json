@@ -56,7 +56,7 @@
     "description": "appears as tab name in dashboard"
   },
   "supportPageName": {
-    "message": "Sprijini",
+    "message": "Ajută-ne",
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
@@ -404,7 +404,7 @@
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Proprietăți potrivite pentru utilizatorii tehnici",
+    "message": "Proprietăți potrivite pentru utilizatorii avansați",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {

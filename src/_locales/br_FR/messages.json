@@ -356,7 +356,7 @@
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "message": "Diweredekaat ar \"rak-lenn\", pe diougan an oberoù war ar rouedad (evit ma ne gennaskfe ket ar rekedoù rouedad stanket)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
@@ -428,7 +428,7 @@
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
-    "message": "Hizivaat ent-emgefreek rolloù ar siloù",
+    "message": "Hizivaat ar rolloù siloù ent-emgefreek",
     "description": "A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow": {
@@ -452,7 +452,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "Generic cosmetic filters are those cosmetic filters which are meant to apply on all web sites. Enabling this option will eliminate the memory and CPU overhead added to web pages as a result of handling generic cosmetic filters.\n\nIt is recommended to enable this option on less powerful devices.",
+    "message": "Name Mar bez gweredekaet an dibarzh-mañ e vo dilemel an memor ha an CPU ouzhpennet d'ar bajennoù web evel ur c'helc'h ar siloù kosmetik generel.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
@@ -504,7 +504,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "Un URL dre linenn. Graet e vo fae ouzh an URLoù direizh.",
+    "message": "Un URL dre linenn. Graet e vo fae ouzh an URLoù direizh hep kemenn deoc'h.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -784,7 +784,7 @@
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "{{action}} network requests of {{type}} {{br}}which URL address matches {{url}} {{br}}and which originates {{origin}},{{br}}{{importance}} there is a matching exception filter.",
+    "message": "{{action}} ar rekedoù rouedad eus ar seurt {{type}} {{br}}da neuze an URL a glot gant {{url}} {{br}}hag a zeu eus {{origin}},{{br}}{{importance}} bout zo ur sil nemedennoù hag a glot gantañ.",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
@@ -1068,7 +1068,7 @@
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
-    "message": "All your settings will be overwritten using data backed up on {{time}}, and uBlock₀ will restart.\n\nOverwrite all existing settings using backed up data?",
+    "message": "Hoc'h arventennoù a vo erlec'hiet gant ar roadennoù bet gwaredet d'an/ar {{time}}, goude-se ec'h adloc'ho uBlock₀.\n\nKenderc'hel gant an oberiadenn-se?",
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {
