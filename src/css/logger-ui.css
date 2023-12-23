@@ -271,10 +271,10 @@ body[dir="rtl"] #netInspector #filterExprPicker {
     color: white;
     }
 #vwRenderer .logEntry > div[data-type="error"] {
-    color: #800;
+    color: var(--sf-error-ink);
     }
 #vwRenderer .logEntry > div[data-type="info"] {
-    color: #008;
+    color: var(--sf-def-ink);
     }
 #vwRenderer .logEntry > div.voided {
     opacity: 0.5;
