@@ -191,7 +191,7 @@ async function fetchPatchDetailsFromCDNs(assetDetails) {
         const patchURL = resolveURL(patchPath, cdnURL);
         if ( patchURL === undefined ) { continue; }
         const response = await fetch(patchURL).catch(reason => {
-            console.error(reason);
+            console.error(reason, patchURL);
         });
         if ( response === undefined ) { continue; }
         if ( response.status === 404 ) { break; }
