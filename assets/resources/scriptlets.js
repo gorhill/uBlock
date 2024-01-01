@@ -274,6 +274,15 @@ function generateContentFn(directive) {
     if ( directive === 'true' ) {
         return Promise.resolve(randomize(10));
     }
+    if ( directive === 'emptyObj' ) {
+        return Promise.resolve('{}');
+    }
+    if ( directive === 'emptyArr' ) {
+        return Promise.resolve('[]');
+    }
+    if ( directive === 'emptyStr' ) {
+        return Promise.resolve('');
+    }
     if ( directive.startsWith('length:') ) {
         const match = /^length:(\d+)(?:-(\d+))?$/.exec(directive);
         if ( match ) {
@@ -1829,7 +1838,7 @@ builtinScriptlets.push({
 });
 function noFetchIf(
     propsToMatch = '',
-    directive = ''
+    responseBody = ''
 ) {
     if ( typeof propsToMatch !== 'string' ) { return; }
     const safe = safeSelf();
@@ -1886,7 +1895,17 @@ function noFetchIf(
             if ( proceed ) {
                 return Reflect.apply(target, thisArg, args);
             }
-            return generateContentFn(directive).then(text => {
+            let responseType = '';
+            if ( details.mode === undefined || details.mode === 'cors' ) {
+                try {
+                    const desURL = new URL(details.url);
+                    responseType = desURL.origin !== document.location.origin
+                        ? 'cors'
+                        : 'basic';
+                } catch(_) {
+                }
+            }
+            return generateContentFn(responseBody).then(text => {
                 const response = new Response(text, {
                     statusText: 'OK',
                     headers: {
@@ -1896,6 +1915,11 @@ function noFetchIf(
                 Object.defineProperty(response, 'url', {
                     value: details.url
                 });
+                if ( responseType !== '' ) {
+                    Object.defineProperty(response, 'type', {
+                        value: responseType
+                    });
+                }
                 return response;
             });
         }
