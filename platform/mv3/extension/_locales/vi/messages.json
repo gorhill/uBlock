@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Trình chặn nội dung thử nghiệm, không cần quyền. Chặn quảng cáo, trình theo dõi, công cụ khai thác tiền số và hơn thế nữa ngay sau khi cài đặt.",
+    "message": "Trình chặn nội dung không cần quyền. Chặn quảng cáo, trình theo dõi, công cụ khai thác tiền số và hơn thế nữa ngay sau khi cài đặt.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {

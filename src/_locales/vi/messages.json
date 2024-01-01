@@ -136,11 +136,11 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Nhấp để chặn tất cả cửa sổ popup trên trang này",
+    "message": "Nhấp để chặn tất cả cửa sổ bật lên trên trang này",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Nhấp để hủy chặn tất cả cửa sổ popup trên trang này",
+    "message": "Nhấn để bỏ chặn tất cả cửa sổ bật lên trên trang này",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -280,7 +280,7 @@
     "description": "Appears as an option to filter out firewall rows"
   },
   "popup3pFrameFilter": {
-    "message": "frame",
+    "message": "khung",
     "description": "Appears as an option to filter out firewall rows"
   },
   "pickerCreate": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Các tên miền nguy hiểm",
+    "message": "Bảo mật, bảo vệ khỏi phần mềm nguy hiểm",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
@@ -580,7 +580,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Nhập từ tập tin...",
+    "message": "Nhập từ tập tin…",
     "description": ""
   },
   "rulesExport": {
@@ -720,7 +720,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinModified": {
-    "message": "sửa đổi",
+    "message": "đã sửa đổi",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
@@ -820,7 +820,7 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Bộ lọc tĩnh <code>{{filter}}</code> phát hiện trong:",
+    "message": "Đã phát hiện bộ lọc tĩnh <code>{{filter}}</code> trong:",
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
@@ -840,7 +840,7 @@
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
-    "message": "Bảo tồn nhiều nhất {{input}} mục trên mỗi tab",
+    "message": "Giữ lại tối đa {{input}} mục trên mỗi thẻ",
     "description": "A logger setting"
   },
   "loggerSettingPerEntryLineCount": {
@@ -888,7 +888,7 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Tạo báo cáo",
+    "message": "Tạo báo cáo mới",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
@@ -988,7 +988,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Có các cấn đề về riêng tư",
+    "message": "Có các cấn đề về quyền riêng tư",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
@@ -1016,7 +1016,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {
-    "message": "Thay đổi",
+    "message": "Nhật ký thay đổi",
     "description": ""
   },
   "aboutCode": {
@@ -1172,7 +1172,7 @@
     "description": "English: Permanently"
   },
   "docblockedDisable": {
-    "message": "Tiến hành",
+    "message": "Tiếp tục",
     "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {

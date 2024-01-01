@@ -4,11 +4,11 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "حاجب محتوى تجريبي وبلا أذونا. يحجب الإعلانات والمتتبعات والمعدنات والكثير فوراً عند التثبيت.",
+    "message": "حاجب محتوى و بأقل التراخيص المسبقة. يحجب الإعلانات والمتتبعات والمعدنات والكثير فوراً عند التثبيت.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
-    "message": "شروط {{ruleCount}} محولة من مصفيّات الشبكة لـ {{filterCount}}",
+    "message": "{{ruleCount}} شرط محولة من {{filterCount}} مصفيّات الشبكة ",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
@@ -28,7 +28,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupFilteringModeLabel": {
-    "message": "وضع الفلتره",
+    "message": "وضع التصفية",
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {
