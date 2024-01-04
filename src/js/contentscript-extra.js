@@ -30,6 +30,9 @@ if (
 /******************************************************************************/
 
 const nonVisualElements = {
+    head: true,
+    link: true,
+    meta: true,
     script: true,
     style: true,
 };
@@ -196,28 +199,27 @@ class PSelectorOthersTask extends PSelectorTask {
         const toKeep = new Set(this.targets);
         const toDiscard = new Set();
         const body = document.body;
+        const head = document.head;
         let discard = null;
         for ( let keep of this.targets ) {
-            while ( keep !== null && keep !== body ) {
+            while ( keep !== null && keep !== body && keep !== head ) {
                 toKeep.add(keep);
                 toDiscard.delete(keep);
                 discard = keep.previousElementSibling;
                 while ( discard !== null ) {
-                    if (
-                        nonVisualElements[discard.localName] !== true &&
-                        toKeep.has(discard) === false
-                    ) {
-                        toDiscard.add(discard);
+                    if ( nonVisualElements[discard.localName] !== true ) {
+                        if ( toKeep.has(discard) === false ) {
+                            toDiscard.add(discard);
+                        }
                     }
                     discard = discard.previousElementSibling;
                 }
                 discard = keep.nextElementSibling;
                 while ( discard !== null ) {
-                    if (
-                        nonVisualElements[discard.localName] !== true &&
-                        toKeep.has(discard) === false
-                    ) {
-                        toDiscard.add(discard);
+                    if ( nonVisualElements[discard.localName] !== true ) {
+                        if ( toKeep.has(discard) === false ) {
+                            toDiscard.add(discard);
+                        }
                     }
                     discard = discard.nextElementSibling;
                 }
