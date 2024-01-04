@@ -1,5 +1,13 @@
 ## Fixes / changes
 
+- [Prevent `:others()` from hiding `html` tag](https://github.com/gorhill/uBlock/commit/9a104bcbd2)
+
+----------
+
+# 1.55.0
+
+## Fixes / changes
+
 - [Mind drop events in filter expression field of logger](https://github.com/gorhill/uBlock/commit/c8b7d1a526)
 - [Improve `xml-prune` scriptlet](https://github.com/gorhill/uBlock/commit/d7063a052f)
 - [Fix message entries overflowing in logger](https://github.com/gorhill/uBlock/commit/49c8310e22)
