@@ -377,7 +377,7 @@ const createLogSeparator = function(details, text) {
         // cell 1
         text
     );
-    separator.textContent = textContent.join('\t');
+    separator.textContent = textContent.join('\x1F');
 
     if ( details.voided ) {
         separator.voided = true;
@@ -474,7 +474,7 @@ const parseLogEntry = function(details) {
     // Cell 1
     if ( details.realm === 'message' ) {
         textContent.push(details.text);
-        entry.textContent = textContent.join('\t');
+        entry.textContent = textContent.join('\x1F');
         return entry;
     }
 
@@ -545,7 +545,7 @@ const parseLogEntry = function(details) {
         textContent.push(`aliasURL=${details.aliasURL}`);
     }
 
-    entry.textContent = textContent.join('\t');
+    entry.textContent = textContent.join('\x1F');
     return entry;
 };
 
@@ -744,7 +744,7 @@ const viewPort = (( ) => {
 
         vwEntry.logEntry = details;
 
-        const cells = details.textContent.split('\t');
+        const cells = details.textContent.split('\x1F');
         const div = dom.clone(vwLogEntryTemplate);
         const divcl = div.classList;
         let span;
@@ -863,7 +863,7 @@ const viewPort = (( ) => {
 
         // Alias URL (CNAME, etc.)
         if ( cells.length > 8 ) {
-            const pos = details.textContent.lastIndexOf('\taliasURL=');
+            const pos = details.textContent.lastIndexOf('\x1FaliasURL=');
             if ( pos !== -1 ) {
                 dom.attr(div, 'data-aliasid', details.id);
             }
@@ -1621,7 +1621,7 @@ dom.on(document, 'keydown', ev => {
         if ( id === '' ) { return ''; }
         for ( const entry of loggerEntries ) {
             if ( entry.id !== id || entry.aliased ) { continue; }
-            const fields = entry.textContent.split('\t');
+            const fields = entry.textContent.split('\x1F');
             return fields[COLUMN_URL] || '';
         }
         return '';
@@ -2682,7 +2682,7 @@ const loggerStats = (( ) => {
             const text = entry.textContent;
             const fields = [];
             let i = 0;
-            let beg = text.indexOf('\t');
+            let beg = text.indexOf('\x1F');
             if ( beg === 0 ) { continue; }
             let timeField = text.slice(0, beg);
             if ( options.time === 'anonymous' ) {
@@ -2691,7 +2691,7 @@ const loggerStats = (( ) => {
             fields.push(timeField);
             beg += 1;
             while ( beg < text.length ) {
-                let end = text.indexOf('\t', beg);
+                let end = text.indexOf('\x1F', beg);
                 if ( end === -1 ) { end = text.length; }
                 fields.push(text.slice(beg, end));
                 beg = end + 1;
@@ -3019,6 +3019,14 @@ dom.on(window, 'beforeunload', releaseView);
 dom.on('#pageSelector', 'change', pageSelectorChanged);
 dom.on('#netInspector .vCompactToggler', 'click', toggleVCompactView);
 dom.on('#pause', 'click', pauseNetInspector);
+
+dom.on('#netInspector', 'copy', ev => {
+    const selection = document.getSelection();
+    ev.clipboardData.setData('text/plain',
+        selection.toString().replace(/\x1F|\u200B/g, '\t')
+    );
+    ev.preventDefault();
+});
 
 // https://github.com/gorhill/uBlock/issues/507
 //   Ensure tab selector is in sync with URL hash
