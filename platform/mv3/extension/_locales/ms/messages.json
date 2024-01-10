@@ -4,15 +4,15 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "A permission-less content blocker. Blocks ads, trackers, miners, and more immediately upon installation.",
+    "message": "Penyekat kandungan tanpa kebenaran. Menyekat iklan, penjejak, pelombong dan banyak lagi sebaik sahaja pemasangan.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
-    "message": "{{ruleCount}} rules, converted from {{filterCount}} network filters",
+    "message": "Peraturan {{ruleCount}}, ditukar daripada penapis rangkaian {{filterCount}}.",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
-    "message": "uBO Lite — Dashboard",
+    "message": "uBO Lite — Papan pemuka",
     "description": "English: uBO Lite — Dashboard"
   },
   "settingsPageName": {
@@ -28,11 +28,11 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupFilteringModeLabel": {
-    "message": "filtering mode",
+    "message": "mod penapisan",
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {
-    "message": "Open the dashboard",
+    "message": "Buka papan pemuka",
     "description": "English: Click to open the dashboard"
   },
   "popupMoreButton": {
@@ -60,7 +60,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
-    "message": "Annoyances",
+    "message": "Kegusaran",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMisc": {
@@ -104,15 +104,15 @@
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "You have just installed uBO Lite. Here you can choose the default filtering mode to use on all websites.\n\nBy default, <em>Basic</em> mode is selected because it does not require the permission to read and modify data. If you trust uBO Lite, you can give it broad permission to read and modify data on all websites in order to enable more advanced filtering capabilities for all websites by default.",
+    "message": "Anda baru sahaja memasang uBO Lite. Di sini anda boleh memilih mod penapisan lalai untuk digunakan pada semua tapak web.\n\nSecara lalai, mod <em>Asas</em> dipilih kerana ia tidak memerlukan kebenaran untuk membaca dan mengubah suai data. Jika anda mempercayai uBO Lite, anda boleh memberikannya kebenaran untuk membaca dan mengubah suai data pada semua tapak web untuk mendayakan keupayaan penapisan yang lebih maju untuk semua tapak web secara lalai.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
-    "message": "Default filtering mode",
+    "message": "Mod penapisan lalai",
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "The default filtering mode will be overridden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
+    "message": "Mod penapisan lalai akan ditindih oleh mod penapisan setiap tapak web. Anda boleh melaraskan mod penapisan pada mana-mana tapak web tertentu mengikut mana-mana mod yang paling berkesan pada tapak web tersebut. Setiap mod mempunyai kelebihan dan kekurangannya.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
@@ -124,7 +124,7 @@
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
-    "message": "optima",
+    "message": "optimum",
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
@@ -132,19 +132,19 @@
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Basic network filtering from selected filter lists.\n\nDoes not require permission to read and modify data on websites.",
+    "message": "Penapisan rangkaian asas daripada senarai penapis yang dipilih.\n\nTidak memerlukan kebenaran untuk membaca dan mengubah suai data pada tapak web.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.",
+    "message": "Penapisan rangkaian lanjutan ditambah penapisan lanjutan khusus daripada senarai penapis yang dipilih.\n\nMemerlukan kebenaran untuk membaca dan mengubah suai data pada semua tapak web.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific and generic extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.\n\nGeneric extended filtering may cause higher webpage resources usage.",
+    "message": "Penapisan rangkaian lanjutan serta penapisan lanjutan khusus dan generik daripada senarai penapis yang dipilih.\n\nMemerlukan kebenaran untuk membaca dan mengubah suai data pada semua tapak web.\n\nPenapisan lanjutan generik boleh menyebabkan penggunaan sumber halaman web yang lebih tinggi.",
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "List of hostnames for which no filtering will take place",
+    "message": "Senarai nama hos yang tiada penapisan akan berlaku",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "behaviorSectionLabel": {
@@ -152,7 +152,7 @@
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Automatically reload page when changing filtering mode",
+    "message": "Muat semula halaman secara automatik apabila menukar mod penapisan",
     "description": "Label for a checkbox in the options page"
   }
 }

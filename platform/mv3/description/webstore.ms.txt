@@ -1,30 +1,30 @@
-uBO Lite (uBOL) is a *permission-less* MV3-based content blocker.
+uBO Lite (uBOL) ialah penyekat kandungan berasaskan MV3.
 
-The default ruleset corresponds to uBlock Origin's default filterset:
+Set peraturan lalai sepadan dengan set penapis lalai uBlock Origin:
 
-- uBlock Origin's built-in filter lists
+- Senarai penapis terbina dalam uBlock Origin
 - EasyList
 - EasyPrivacy
-- Peter Lowe’s Ad and tracking server list
+- Senarai pelayan iklan dan penjejakan 'Peter Lowe'
 
-You can add more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+Anda boleh menambah lebih banyak set peraturan dengan melawat halaman pilihan -- klik the _Cogs_ icon pada panel timbul.
 
-uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
+uBOL adalah deklaratif sepenuhnya, bermakna tidak ada keperluan untuk proses uBOL kekal untuk penapisan berlaku, dan penapisan kandungan berasaskan suntikan CSS/JS dilakukan sepenuhnya oleh penyemak imbas itu sendiri dan bukannya oleh sambungan. Ini bermakna uBOL sendiri tidak menggunakan sumber CPU/memori semasa penyekatan kandungan sedang berjalan -- proses pekerja perkhidmatan uBOL diperlukan _hanya_ apabila anda berinteraksi dengan panel timbul atau halaman pilihan.
 
-uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read and modify data" permissions at install time.
+uBOL tidak memerlukan kebenaran "baca dan ubah suai data" yang luas pada masa pemasangan, oleh itu keupayaan terhadnya di luar kotak berbanding dengan uBlock Origin atau penyekat kandungan lain yang memerlukan kebenaran "baca dan ubah suai data" yang luas pada masa pemasangan.
 
-However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
+Walau bagaimanapun, uBOL membenarkan anda *dengan jelas* memberikan kebenaran lanjutan pada tapak tertentu pilihan anda supaya ia boleh menapis dengan lebih baik pada tapak tersebut menggunakan penapisan kosmetik dan suntikan skrip.
 
-To grant extended permissions on a given site, open the popup panel and pick a higher filtering mode such as Optimal or Complete.
+Untuk memberikan kebenaran lanjutan pada tapak tertentu, buka panel timbul dan pilih mod penapisan yang lebih tinggi seperti Optimum atau Lengkap.
 
-The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request.
+Penyemak imbas kemudian akan memberi amaran kepada anda tentang kesan pemberian kebenaran tambahan yang diminta oleh sambungan pada tapak semasa dan anda perlu memberitahu penyemak imbas sama ada anda menerima atau menolak permintaan tersebut.
 
-If you accept uBOL's request for additional permissions on the current site, it will be able to better filter content for the current site.
+Jika anda menerima permintaan uBOL untuk mendapatkan kebenaran tambahan pada tapak semasa, ia akan dapat menapis kandungan dengan lebih baik untuk tapak semasa.
 
-You can set the default filtering mode from uBOL's options page. If you pick the Optimal or Complete mode as the default one, you will need to grant uBOL the permission to read and modify data on all websites.
+Anda boleh menetapkan mod penapisan lalai dari halaman pilihan 'uBOL'. Jika anda memilih mod Optimum atau Lengkap sebagai mod lalai, anda perlu memberikan uBOL kebenaran untuk membaca dan mengubah suai data pada semua tapak web.
 
-Keep in mind this is still a work in progress, with these end goals:
+Perlu diingat bahawa ini masih dalam proses, dengan matlamat akhir ini:
 
-- No broad host permissions at install time -- extended permissions are granted explicitly by the user on a per-site basis.
+- Tiada kebenaran hos pada masa pemasangan -- kebenaran lanjutan diberikan secara eksplisit oleh pengguna pada asas setiap tapak.
 
-- Entirely declarative for reliability and CPU/memory efficiency.
+- Deklaratif sepenuhnya untuk kebolehpercayaan dan kecekapan CPU/memori.

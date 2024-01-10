@@ -452,7 +452,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "Name Mar bez gweredekaet an dibarzh-mañ e vo dilemel an memor ha an CPU ouzhpennet d'ar bajennoù web evel ur c'helc'h ar siloù kosmetik generel.",
+    "message": "Ar siloù kenedel hollek a zo siloù kenedel bet savet evit bezañ implijet war an holl lec'hiennoù. Ma'z enaouit an dibarzh-mañ e vo implijer nebeutoc'h a vevor hag ar reizhiad kornoiñ (CPU) war al lec'hiennoù-se.\n\nErbedet eo deoc'h enaouiñ an dibarzh-mañ ma'z emaoc'h oc'h ober gant un ardivink re zic'halloudek.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {

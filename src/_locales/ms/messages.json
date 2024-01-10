@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Senarai putih",
+    "message": "Halaman dipercayai",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -276,11 +276,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilter": {
-    "message": "script",
+    "message": "skrip",
     "description": "Appears as an option to filter out firewall rows"
   },
   "popup3pFrameFilter": {
-    "message": "frame",
+    "message": "kerangka",
     "description": "Appears as an option to filter out firewall rows"
   },
   "pickerCreate": {
@@ -532,7 +532,7 @@
     "description": "Short information about how to create custom filters"
   },
   "1pTrustWarning": {
-    "message": "Do not add filters from untrusted sources.",
+    "message": "Jangan tambah penapis daripada sumber yang tidak dipercayai.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {
@@ -956,11 +956,11 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "message": "Senarai penapis dikemas kini setiap hari. Pastikan isu anda belum ditangani dalam senarai penapis terbaharu.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "message": "Sahkan bahawa isu itu masih wujud selepas memuat semula halaman web yang bermasalah.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -1228,7 +1228,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "contextMenuViewSource": {
-    "message": "View source code…",
+    "message": "Lihat kod sumber…",
     "description": "A context menu entry, to view the source code of the target resource"
   },
   "shortcutCapturePlaceholder": {
@@ -1276,11 +1276,11 @@
     "description": "Message used in frame placeholders"
   },
   "linterMainReport": {
-    "message": "Errors: {{count}}",
+    "message": "Ralat: {{count}}",
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Could not filter properly at browser launch. Reload the page to ensure proper filtering.",
+    "message": "Tidak dapat menapis dengan betul semasa pelancaran pelayar. Muat semula halaman untuk memastikan penapisan yang betul.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {
