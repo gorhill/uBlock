@@ -1476,6 +1476,23 @@ function addEventListenerDefuser(
     const rePattern = safe.patternToRegex(pattern);
     const log = shouldLog(extraArgs);
     const debug = shouldDebug(extraArgs);
+    const targetElements = extraArgs.elements || undefined;
+    const shouldPrevent = (thisArg, type, handler) => {
+        const matchesInstance = targetElements === undefined ||
+            Array.from(document.querySelectorAll(targetElements)).includes(thisArg);
+        if ( matchesInstance === false ) { return false; }
+        const matchesType = safe.RegExp_test.call(reType, type);
+        const matchesHandler = safe.RegExp_test.call(rePattern, handler);
+        const matchesEither = matchesType || matchesHandler;
+        const matchesBoth = matchesType && matchesHandler;
+        if ( log === 1 && matchesBoth || log === 2 && matchesEither || log === 3 ) {
+            safe.uboLog(`addEventListener('${type}', ${handler})`);
+        }
+        if ( debug === 1 && matchesBoth || debug === 2 && matchesEither ) {
+            debugger; // jshint ignore:line
+        }
+        return matchesBoth;
+    };
     const trapEddEventListeners = ( ) => {
         const eventListenerHandler = {
             apply: function(target, thisArg, args) {
@@ -1487,17 +1504,7 @@ function addEventListenerDefuser(
                         : String(args[1]);
                 } catch(ex) {
                 }
-                const matchesType = safe.RegExp_test.call(reType, type);
-                const matchesHandler = safe.RegExp_test.call(rePattern, handler);
-                const matchesEither = matchesType || matchesHandler;
-                const matchesBoth = matchesType && matchesHandler;
-                if ( log === 1 && matchesBoth || log === 2 && matchesEither || log === 3 ) {
-                    safe.uboLog(`addEventListener('${type}', ${handler})`);
-                }
-                if ( debug === 1 && matchesBoth || debug === 2 && matchesEither ) {
-                    debugger; // jshint ignore:line
-                }
-                if ( matchesBoth ) { return; }
+                if ( shouldPrevent(thisArg, type, handler) ) { return; }
                 return Reflect.apply(target, thisArg, args);
             },
             get(target, prop, receiver) {
