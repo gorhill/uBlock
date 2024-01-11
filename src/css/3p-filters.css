@@ -24,7 +24,7 @@ body.updating #actions,
 body.working #actions {
     cursor: progress;
     }
-body.updating #actions button,
+body.updating #actions #buttonUpdate,
 body.working #actions button {
     pointer-events: none;
     }
