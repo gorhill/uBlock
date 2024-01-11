@@ -69,7 +69,19 @@ export function filteringBehaviorChanged(details = {}) {
 }
 
 filteringBehaviorChanged.throttle = vAPI.defer.create(( ) => {
+    const { history, max } = filteringBehaviorChanged;
+    const now = (Date.now() / 1000) | 0;
+    if ( history.length >= max ) {
+        if ( (now - history[0]) <= (10 * 60) ) { return; }
+        history.shift();
+    }
+    history.push(now);
     vAPI.net.handlerBehaviorChanged();
 });
+filteringBehaviorChanged.history = [];
+filteringBehaviorChanged.max = Math.min(
+    browser.webRequest.MAX_HANDLER_BEHAVIOR_CHANGED_CALLS_PER_10_MINUTES - 1,
+    19
+);
 
 /******************************************************************************/
