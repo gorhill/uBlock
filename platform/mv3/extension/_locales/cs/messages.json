@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Experimentální blokátor obsahu vyžadující méně oprávnění. Blokuje reklamy, sledovače, těžaře a jiné ihned po instalaci.",
+    "message": "Blokátor obsahu vyžadující méně oprávnění. Blokuje reklamy, sledovače, těžaře a jiné ihned po instalaci.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -80,7 +80,7 @@
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Přispívající",
+    "message": "Přispěvatelé",
     "description": "English: Contributors"
   },
   "aboutSourceCode": {

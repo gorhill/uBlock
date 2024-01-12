@@ -356,7 +356,7 @@
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "message": "ปิดใช้งานการดึงข้อมูลล่วงหน้า (เพื่อป้องกันการเชื่อมต่อสำหรับคำขอเครือข่ายที่ถูกบล็อก)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
@@ -364,7 +364,7 @@
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
-    "message": "Prevent WebRTC from leaking local IP addresses",
+    "message": "ป้องกันไม่ให้ WebRTC รั่วไหลที่อยู่ IP ภายในเครื่อง",
     "description": "English: "
   },
   "settingPerSiteSwitchGroup": {

@@ -8,11 +8,11 @@
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
-    "message": "{{ruleCount}} regole, convertite da {{filterCount}} filtri di rete",
+    "message": "{{ruleCount}} Regole, convertite da {{filterCount}} filtri di rete",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
-    "message": "uBO Lite — Cruscotto",
+    "message": "uBO Lite — Pannello di controllo",
     "description": "English: uBO Lite — Dashboard"
   },
   "settingsPageName": {
@@ -32,7 +32,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {
-    "message": "Accedi al cruscotto",
+    "message": "Apri il pannello di controllo",
     "description": "English: Click to open the dashboard"
   },
   "popupMoreButton": {
@@ -44,7 +44,7 @@
     "description": "Label to be used to hide popup panel sections"
   },
   "3pGroupDefault": {
-    "message": "Predefinite",
+    "message": "Predefiniti",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -60,7 +60,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
-    "message": "Scocciature",
+    "message": "Disturbi",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMisc": {

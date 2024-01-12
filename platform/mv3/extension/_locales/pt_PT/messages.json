@@ -140,7 +140,7 @@
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Filtragem de rede avançada mais filtragem alargada específica e genérica a partir de listas de filtros selecionadas.\n\nRequer ampla permissão para ler e modificar dados em todos os websites.\n\nA filtragem alargada genérica pode causar uma maior utilização de recursos das páginas web.",
+    "message": "Filtragem de rede avançada acrescida de filtragem alargada específica e genérica a partir de listas de filtros selecionadas.\n\nRequer permissão ampla para ler e modificar dados em todos os websites.\n\nA filtragem alargada genérica pode causar uma maior utilização de recursos das páginas web.",
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
