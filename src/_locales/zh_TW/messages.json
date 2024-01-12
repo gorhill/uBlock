@@ -1251,6 +1251,10 @@
     "message": "切換是否啟用元素隱藏過濾規則",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
+  "toggleJavascript": {
+    "message": "Toggle JavaScript",
+    "description": "Label for keyboard shortcut used to toggle no-scripting switch"
+  },
   "relaxBlockingMode": {
     "message": "放寬封鎖量模式",
     "description": "Label for keyboard shortcut used to relax blocking mode"

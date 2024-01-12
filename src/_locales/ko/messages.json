@@ -1251,6 +1251,10 @@
     "message": "표면 필터 토글",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
+  "toggleJavascript": {
+    "message": "Toggle JavaScript",
+    "description": "Label for keyboard shortcut used to toggle no-scripting switch"
+  },
   "relaxBlockingMode": {
     "message": "차단 모드 완화",
     "description": "Label for keyboard shortcut used to relax blocking mode"

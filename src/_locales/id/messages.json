@@ -1251,6 +1251,10 @@
     "message": "Aktif/Nonaktifkan filter tampilan",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
+  "toggleJavascript": {
+    "message": "Toggle JavaScript",
+    "description": "Label for keyboard shortcut used to toggle no-scripting switch"
+  },
   "relaxBlockingMode": {
     "message": "Perlonggar mode pemblokiran",
     "description": "Label for keyboard shortcut used to relax blocking mode"

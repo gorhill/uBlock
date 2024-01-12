@@ -1251,6 +1251,10 @@
     "message": "整形フィルタリングの有効/無効を切り替える",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
+  "toggleJavascript": {
+    "message": "Toggle JavaScript",
+    "description": "Label for keyboard shortcut used to toggle no-scripting switch"
+  },
   "relaxBlockingMode": {
     "message": "ブロッキングモードを緩和する",
     "description": "Label for keyboard shortcut used to relax blocking mode"

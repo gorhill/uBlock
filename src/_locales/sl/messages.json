@@ -1251,6 +1251,10 @@
     "message": "Preklopi lepotno filtriranje",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
+  "toggleJavascript": {
+    "message": "Toggle JavaScript",
+    "description": "Label for keyboard shortcut used to toggle no-scripting switch"
+  },
   "relaxBlockingMode": {
     "message": "Sprostite način blokiranja.",
     "description": "Label for keyboard shortcut used to relax blocking mode"

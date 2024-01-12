@@ -1251,6 +1251,10 @@
     "message": "Iragazte kosmetikoa txandakatu",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
+  "toggleJavascript": {
+    "message": "Toggle JavaScript",
+    "description": "Label for keyboard shortcut used to toggle no-scripting switch"
+  },
   "relaxBlockingMode": {
     "message": "Baretu blokeatze-modua",
     "description": "Label for keyboard shortcut used to relax blocking mode"

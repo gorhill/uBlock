@@ -1251,6 +1251,10 @@
     "message": "कॉस्मेटिक फ़िल्टरिंग टॉगल करें",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
+  "toggleJavascript": {
+    "message": "Toggle JavaScript",
+    "description": "Label for keyboard shortcut used to toggle no-scripting switch"
+  },
   "relaxBlockingMode": {
     "message": "ब्लैकिंग मोड को ढील दें",
     "description": "Label for keyboard shortcut used to relax blocking mode"

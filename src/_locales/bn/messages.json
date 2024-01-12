@@ -1251,6 +1251,10 @@
     "message": "সৌন্দর্য্যবর্ধক ফিল্টার চালু বা বন্ধ করুন",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
+  "toggleJavascript": {
+    "message": "Toggle JavaScript",
+    "description": "Label for keyboard shortcut used to toggle no-scripting switch"
+  },
   "relaxBlockingMode": {
     "message": "রোধক মোড শিথিল করুন",
     "description": "Label for keyboard shortcut used to relax blocking mode"

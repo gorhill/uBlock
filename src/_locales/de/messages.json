@@ -1251,6 +1251,10 @@
     "message": "Kosmetisches Filtern ein-/ausschalten",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
+  "toggleJavascript": {
+    "message": "Toggle JavaScript",
+    "description": "Label for keyboard shortcut used to toggle no-scripting switch"
+  },
   "relaxBlockingMode": {
     "message": "Blockiermodus lockern",
     "description": "Label for keyboard shortcut used to relax blocking mode"

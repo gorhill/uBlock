@@ -1251,6 +1251,10 @@
     "message": "ஒப்பனை வடிகட்டுதலை மறுநிலைமாற்று",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
+  "toggleJavascript": {
+    "message": "Toggle JavaScript",
+    "description": "Label for keyboard shortcut used to toggle no-scripting switch"
+  },
   "relaxBlockingMode": {
     "message": "தடுப்பு பயன்முறையை தளர்த்தவும்",
     "description": "Label for keyboard shortcut used to relax blocking mode"
