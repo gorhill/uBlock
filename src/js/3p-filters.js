@@ -286,14 +286,14 @@ const renderFilterLists = ( ) => {
 /******************************************************************************/
 
 const renderWidgets = ( ) => {
+    const updating = dom.cl.has(dom.body, 'updating');
+    const hasObsolete = qs$('#lists .listEntry.checked.obsolete:not(.toRemove)') !== null;
     dom.cl.toggle('#buttonApply', 'disabled',
         filteringSettingsHash === hashFromCurrentFromSettings()
     );
-    const updating = dom.cl.has(dom.body, 'updating');
     dom.cl.toggle('#buttonUpdate', 'active', updating);
     dom.cl.toggle('#buttonUpdate', 'disabled',
-        updating === false &&
-        qs$('#lists .listEntry.checked.obsolete:not(.toRemove)') === null
+        updating === false && hasObsolete === false
     );
 };
 

@@ -15,7 +15,8 @@ body {
 #buttonUpdate.active {
     pointer-events: none;
     }
-#buttonUpdate.active .fa-icon svg {
+#buttonUpdate.active .fa-icon svg,
+body.working #buttonUpdate:not(.disabled) .fa-icon svg {
     animation: spin 1s linear infinite;
     transform-origin: 50%;
     }
