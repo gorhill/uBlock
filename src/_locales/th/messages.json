@@ -392,7 +392,7 @@
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
-    "message": "Block CSP reports",
+    "message": "บล็อกรายงาน CSP",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsUncloakCnamePrompt": {
@@ -404,7 +404,7 @@
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Features suitable only for technical users",
+    "message": "เป็นฟีเจอร์ที่เหมาะสำหรับผู้ใช้ที่เชี่ยวชาญเท่านั้น",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
@@ -412,7 +412,7 @@
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsLastRestorePrompt": {
-    "message": "Last restore:",
+    "message": "การคืนค่าครั้งล่าสุด:",
     "description": "English: Last restore:"
   },
   "settingsLastBackupPrompt": {
@@ -440,11 +440,11 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
-    "message": "Parse and enforce cosmetic filters",
+    "message": "แยกวิเคราะห์และบังคับใช้ฟิลเตอร์ตกแต่ง",
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "Cosmetic filters serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the network request-based filtering engines.",
+    "message": "ฟิลเตอร์ตกแต่งทำหน้าที่ซ่อนองค์ประกอบในหน้าเว็บซึ่งถือว่าเป็นภาพที่รบกวนสายตา และไม่สามารถบล็อกได้โดยกลไกการกรองตามคำขอของเครือข่าย",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -456,7 +456,7 @@
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
-    "message": "Suspend network activity until all filter lists are loaded",
+    "message": "ระงับกิจกรรมเครือข่ายจนกว่าจะโหลดรายการตัวกรองทั้งหมด",
     "description": "A checkbox in the 'Filter lists' pane"
   },
   "3pListsOfBlockedHostsHeader": {
