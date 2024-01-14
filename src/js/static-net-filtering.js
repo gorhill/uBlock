@@ -5422,7 +5422,7 @@ FilterContainer.prototype.filterQuery = function(fctxt) {
         fctxt.redirectURL = url.slice(0, qpos);
         if ( params.size !== 0 ) {
             fctxt.redirectURL += '?' + Array.from(params).map(a =>
-                a[1] === '' ? a[0] : `${a[0]}=${a[1]}`
+                a[1] === '' ? `${a[0]}=` : `${a[0]}=${a[1]}`
             ).join('&');
         }
         if ( hpos !== url.length ) {
