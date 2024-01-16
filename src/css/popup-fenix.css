@@ -211,7 +211,7 @@ body.needSave #revertRules {
     font-size: 1.6em;
     }
 
-#basicTools:not(.canPick) .needPick {
+#basicTools .needPick:not(.canPick) {
     visibility: hidden;
     }
 

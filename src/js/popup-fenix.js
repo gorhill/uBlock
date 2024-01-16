@@ -614,11 +614,11 @@ const renderPopup = function() {
         }
     }
 
-    dom.cl.toggle(
-        '#basicTools',
-        'canPick',
-        popupData.canElementPicker === true && isFiltering
-    );
+    const canPick = popupData.canElementPicker && isFiltering;
+
+    dom.cl.toggle('#gotoZap', 'canPick', canPick);
+    dom.cl.toggle('#gotoPick', 'canPick', canPick && popupData.userFiltersAreEnabled);
+    dom.cl.toggle('#gotoReport', 'canPick', canPick);
 
     let blocked, total;
     if ( popupData.pageCounts !== undefined ) {
@@ -675,7 +675,7 @@ const renderPopup = function() {
         total ? Math.min(total, 99).toLocaleString() : ''
     );
 
-    // Unprocesseed request(s) warning
+    // Unprocessed request(s) warning
     dom.cl.toggle(dom.root, 'warn', popupData.hasUnprocessedRequest === true);
 
     dom.cl.toggle(dom.html, 'colorBlind', popupData.colorBlindFriendly === true);

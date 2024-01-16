@@ -200,7 +200,11 @@ let currentBits = 0;
 
 const update = function(tabId = undefined) {
     let newBits = 0;
-    if ( µb.userSettings.contextMenuEnabled && tabId !== undefined ) {
+    if (
+        µb.userSettings.contextMenuEnabled &&
+        µb.userFiltersAreEnabled() &&
+        tabId !== undefined
+    ) {
         const pageStore = µb.pageStoreFromTabId(tabId);
         if ( pageStore && pageStore.getNetFilteringSwitch() ) {
             if ( pageStore.shouldApplySpecificCosmeticFilters(0) ) {

@@ -139,6 +139,8 @@ vAPI.commands.onCommand.addListener(async command => {
 
     switch ( command ) {
     case 'launch-element-picker':
+        if ( µb.userFiltersAreEnabled() === false ) { break; }
+        /* fall through */
     case 'launch-element-zapper': {
         µb.epickerArgs.mouse = false;
         µb.elementPickerExec(

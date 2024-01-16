@@ -628,6 +628,10 @@ onBroadcast(msg => {
     );
 };
 
+µb.userFiltersAreEnabled = function() {
+    return this.selectedFilterLists.includes(this.userFiltersPath);
+};
+
 /******************************************************************************/
 
 µb.autoSelectRegionalFilterLists = function(lists) {

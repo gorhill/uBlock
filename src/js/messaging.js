@@ -369,6 +369,7 @@ const popupDataFromTabId = function(tabId, tabTitle) {
         fontSize: µbhs.popupFontSize,
         godMode: µbhs.filterAuthorMode,
         netFilteringSwitch: false,
+        userFiltersAreEnabled: µb.userFiltersAreEnabled(),
         rawURL: tabContext.rawURL,
         pageURL: tabContext.normalURL,
         pageHostname: rootHostname,
