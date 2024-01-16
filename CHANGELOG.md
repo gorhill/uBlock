@@ -1,5 +1,7 @@
 ## Fixes / changes
 
+- [Fix improperly assembled `!#include` sublists](https://github.com/gorhill/uBlock/commit/0e00010b91)
+- [Mark procedural filters with pseudo-elements selector as invalid](https://github.com/gorhill/uBlock/commit/757b8be9cd)
 - [Prevent access to picker when "My filters" is not enabled](https://github.com/gorhill/uBlock/commit/bc641fc024)
 - [Provide visual feedback when applying changes in "Filter lists" pane](https://github.com/gorhill/uBlock/commit/c4bb8a0f64)
 - [Empty query parameters must still use `=`](https://github.com/gorhill/uBlock/commit/1cac61a9a4)
