@@ -428,7 +428,7 @@ assets.fetchFilterList = async function(mainlistURL) {
                 continue;
             }
             if ( result instanceof Object === false ) { continue; }
-            const content = result.content;
+            const content = result.content.trimEnd() + '\n';
             const slices = sfp.utils.preparser.splitter(
                 content,
                 vAPI.webextFlavor.env
@@ -500,7 +500,7 @@ assets.fetchFilterList = async function(mainlistURL) {
         resourceTime,
         content: allParts.length === 1
             ? allParts[0]
-            : allParts.join('') + '\n'
+            : allParts.join('')
     };
 };
 
