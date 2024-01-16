@@ -900,7 +900,7 @@
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "请至 <code>uBlock/wiki</code> 参阅 uBlock Origin 的所有功用以及使用说明。",
+    "message": "请至 <code>uBlock/wiki</code> 参阅 uBlock Origin 的所有功能以及使用说明。",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
@@ -912,7 +912,7 @@
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "过滤规则或者网页的问题",
+    "message": "过滤规则问题/网页被损坏",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
