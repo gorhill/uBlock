@@ -867,6 +867,10 @@
 		"tags": "ads swedish svenska",
 		"lang": "sv",
 		"contentURL": "https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Frellwits-Swedish-Filter.txt",
+		"cdnURLs": [
+			"https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/swefilter/swefilter.min.txt",
+			"https://cdn.jsdelivr.net/gh/lassekongo83/Frellwits-filter-lists@swefilter/swefilter.min.txt"
+		],
 		"supportURL": "https://github.com/lassekongo83/Frellwits-filter-lists"
 	},
 	"THA-0": {
