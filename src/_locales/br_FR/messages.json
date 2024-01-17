@@ -444,7 +444,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "Ar siloù kenedel a servij da guzhat elfennoù ur bajenn web a c'hallfe bezañ noazadurioù d'ar gwelet ha ne c'hallont ket bezañ stanket gant silañ ar rouedad diazezet war ar rekedoù.",
+    "message": "Ar siloù kenedel a servij da guzhat elfennoù ur bajenn web a c'hallfe saotrañ ar gweled ha ne c'hallont ket bezañ stanket gant ar siloù rouedad diazezet war ar rekedoù.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -452,7 +452,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "Ar siloù kenedel hollek a zo siloù kenedel bet savet evit bezañ implijet war an holl lec'hiennoù. Ma'z enaouit an dibarzh-mañ e vo implijer nebeutoc'h a vevor hag ar reizhiad kornoiñ (CPU) war al lec'hiennoù-se.\n\nErbedet eo deoc'h enaouiñ an dibarzh-mañ m'emaoc'h oc'h ober gant un ardivink re zic'halloudek.",
+    "message": "Ar siloù kenedel hollek a zo siloù kenedel bet savet evit bezañ implijet war an holl lec'hiennoù. Ma'z enaouit an dibarzh-mañ e vo implijer nebeutoc'h a vevor hag ar reizhiad korvoiñ (CPU) war al lec'hiennoù-se.\n\nErbedet eo deoc'h enaouiñ an dibarzh-mañ m'emaoc'h oc'h ober gant un ardivink re zic'halloudek.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
