@@ -5309,13 +5309,16 @@ FilterContainer.prototype.transformRequest = function(fctxt) {
     const cache = refs.$cache;
     if ( cache === undefined ) { return; }
     const redirectURL = new URL(fctxt.url);
-    const before = redirectURL.pathname + redirectURL.search;
+    const before = `${redirectURL.pathname}${redirectURL.search}${redirectURL.hash}`;
     if ( cache.re.test(before) !== true ) { return; }
     const after = before.replace(cache.re, cache.replacement);
     if ( after === before ) { return; }
-    const searchPos = after.includes('?') && after.indexOf('?') || after.length;
-    redirectURL.pathname = after.slice(0, searchPos);
-    redirectURL.search = after.slice(searchPos);
+    const hashPos = after.indexOf('#');
+    redirectURL.hash = hashPos !== -1 ? after.slice(hashPos) : '';
+    const afterMinusHash = hashPos !== -1 ? after.slice(0, hashPos) : after;
+    const searchPos = afterMinusHash.indexOf('?');
+    redirectURL.search = searchPos !== -1 ? afterMinusHash.slice(searchPos) : '';
+    redirectURL.pathname = searchPos !== -1 ? after.slice(0, searchPos) : after;
     fctxt.redirectURL = redirectURL.href;
     return directives;
 };
