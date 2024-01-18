@@ -1,5 +1,6 @@
 ## Fixes / changes
 
+- [Allow `uritransform` to process the hash part of a URL](https://github.com/gorhill/uBlock/commit/b19094339f)
 - [Remember presentation state of "My rules" pane](https://github.com/gorhill/uBlock/commit/3d1b100646)
 - [Fix improperly assembled `!#include` sublists](https://github.com/gorhill/uBlock/commit/0e00010b91)
 - [Mark procedural filters with pseudo-elements selector as invalid](https://github.com/gorhill/uBlock/commit/757b8be9cd)
