@@ -45,10 +45,13 @@ const contentScriptRegisterer = new (class {
     constructor() {
         this.hostnameToDetails = new Map();
         if ( browser.contentScripts === undefined ) { return; }
-        onBroadcast(msg => {
+        this.bc = onBroadcast(msg => {
             if ( msg.what !== 'filteringBehaviorChanged' ) { return; }
-            if ( msg.direction > 0 ) { return; }
-            if ( msg.hostname ) { return this.flush(msg.hostname); }
+            const direction = msg.direction || 0;
+            if ( direction > 0 ) { return; }
+            if ( direction >= 0 && msg.hostname ) {
+                return this.flush(msg.hostname);
+            }
             this.reset();
         });
     }
@@ -78,6 +81,7 @@ const contentScriptRegisterer = new (class {
         return false;
     }
     unregister(hostname) {
+        if ( hostname === '' ) { return; }
         if ( this.hostnameToDetails.size === 0 ) { return; }
         const details = this.hostnameToDetails.get(hostname);
         if ( details === undefined ) { return; }
@@ -85,6 +89,7 @@ const contentScriptRegisterer = new (class {
         this.unregisterHandle(details.handle);
     }
     flush(hostname) {
+        if ( hostname === '' ) { return; }
         if ( hostname === '*' ) { return this.reset(); }
         for ( const hn of this.hostnameToDetails.keys() ) {
             if ( hn.endsWith(hostname) === false ) { continue; }
