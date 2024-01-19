@@ -309,7 +309,7 @@ select {
         font-size: 1.2rem;
         padding: 0;
         }
-    button.iconified > [data-i18n] {
+    button.iconified:not(.dontshrink) > [data-i18n] {
         display: none;
         }
     }
