@@ -79,6 +79,9 @@ function safeSelf() {
             if ( `${args[0]}` === '' ) { return; }
             this.log('[uBO]', ...args);
         },
+        escapeRegexChars(s) {
+            return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        },
         initPattern(pattern, options = {}) {
             if ( pattern === '' ) {
                 return { matchAll: true };
@@ -99,8 +102,7 @@ function safeSelf() {
             }
             if ( options.flags !== undefined ) {
                 return {
-                    re: new this.RegExp(pattern.replace(
-                        /[.*+?^${}()|[\]\\]/g, '\\$&'),
+                    re: new this.RegExp(this.escapeRegexChars(pattern),
                         options.flags
                     ),
                     expect,
@@ -119,7 +121,7 @@ function safeSelf() {
             if ( pattern === '' ) { return /^/; }
             const match = /^\/(.+)\/([gimsu]*)$/.exec(pattern);
             if ( match === null ) {
-                const reStr = pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const reStr = this.escapeRegexChars(pattern);
                 return new RegExp(verbatim ? `^${reStr}$` : reStr, flags);
             }
             try {
@@ -836,8 +838,62 @@ function objectFindOwnerFn(
 /******************************************************************************/
 
 builtinScriptlets.push({
+    name: 'get-all-cookies.fn',
+    fn: getAllCookiesFn,
+});
+function getAllCookiesFn() {
+    return document.cookie.split(/\s*;\s*/).map(s => {
+        const pos = s.indexOf('=');
+        if ( pos === 0 ) { return; }
+        if ( pos === -1 ) { return `${s.trim()}=`; }
+        const key = s.slice(0, pos).trim();
+        const value = s.slice(pos+1).trim();
+        return { key, value };
+    }).filter(s => s !== undefined);
+}
+
+/******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'get-all-local-storage.fn',
+    fn: getAllLocalStorageFn,
+});
+function getAllLocalStorageFn(which = 'localStorage') {
+    const storage = self[which];
+    const out = [];
+    for ( let i = 0; i < storage.length; i++ ) {
+        const key = storage.key(i);
+        const value = storage.getItem(key);
+        return { key, value };
+    }
+    return out;
+}
+
+/******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'get-cookie.fn',
+    fn: getCookieFn,
+});
+function getCookieFn(
+    name = ''
+) {
+    for ( const s of document.cookie.split(/\s*;\s*/) ) {
+        const pos = s.indexOf('=');
+        if ( pos === -1 ) { continue; }
+        if ( s.slice(0, pos) !== name ) { continue; }
+        return s.slice(pos+1).trim();
+    }
+}
+
+/******************************************************************************/
+
+builtinScriptlets.push({
     name: 'set-cookie.fn',
     fn: setCookieFn,
+    dependencies: [
+        'get-cookie.fn',
+    ],
 });
 function setCookieFn(
     trusted = false,
@@ -847,16 +903,7 @@ function setCookieFn(
     path = '',
     options = {},
 ) {
-    const getCookieValue = name => {
-        for ( const s of document.cookie.split(/\s*;\s*/) ) {
-            const pos = s.indexOf('=');
-            if ( pos === -1 ) { continue; }
-            if ( s.slice(0, pos) !== name ) { continue; }
-            return s.slice(pos+1);
-        }
-    };
-
-    const cookieBefore = getCookieValue(name);
+    const cookieBefore = getCookieFn(name);
     if ( cookieBefore !== undefined && options.dontOverwrite ) { return; }
     if ( cookieBefore === value && options.reload ) { return; }
 
@@ -884,7 +931,7 @@ function setCookieFn(
     } catch(_) {
     }
 
-    if ( options.reload && getCookieValue(name) === value ) {
+    if ( options.reload && getCookieFn(name) === value ) {
         window.location.reload();
     }
 }
@@ -4029,6 +4076,9 @@ function trustedSetSessionStorageItem(key = '', value = '') {
 builtinScriptlets.push({
     name: 'trusted-replace-fetch-response.js',
     requiresTrust: true,
+    aliases: [
+        'trusted-rpfr.js',
+    ],
     fn: trustedReplaceFetchResponse,
     dependencies: [
         'replace-fetch-response.fn',
@@ -4140,22 +4190,66 @@ builtinScriptlets.push({
     fn: trustedClickElement,
     world: 'ISOLATED',
     dependencies: [
+        'get-all-cookies.fn',
+        'get-all-local-storage.fn',
         'run-at-html-element.fn',
         'safe-self.fn',
     ],
 });
 function trustedClickElement(
     selectors = '',
-    extraMatch = '', // not yet supported
+    extraMatch = '',
     delay = ''
 ) {
-    if ( extraMatch !== '' ) { return; }
-
     const safe = safeSelf();
     const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
     const uboLog = extraArgs.log !== undefined
         ? ((...args) => { safe.uboLog(...args); })
         : (( ) => { });
+
+    if ( extraMatch !== '' ) {
+        const assertions = extraMatch.split(',').map(s => {
+            const pos1 = s.indexOf(':');
+            const s1 = pos1 !== -1 ? s.slice(0, pos1) : s;
+            const not = s1.startsWith('!');
+            const type = not ? s1.slice(1) : s1;
+            const s2 = pos1 !== -1 ? s.slice(pos1+1).trim() : '';
+            if ( s2 === '' ) { return; }
+            const out = { not, type };
+            const match = /^\/(.+)\/(i?)$/.exec(s2);
+            if ( match !== null ) {
+                out.re = new RegExp(match[1], match[2] || undefined);
+                return out;
+            }
+            const pos2 = s2.indexOf('=');
+            const key = pos2 !== -1 ? s2.slice(0, pos2).trim() : s2;
+            const value = pos2 !== -1 ? s2.slice(pos2+1).trim() : '';
+            out.re = new RegExp(`^${this.escapeRegexChars(key)}=${this.escapeRegexChars(value)}`);
+            return out;
+        }).filter(details => details !== undefined);
+        const allCookies = assertions.some(o => o.type === 'cookie')
+            ? getAllCookiesFn()
+            : [];
+        const allStorageItems = assertions.some(o => o.type === 'localStorage')
+            ? getAllLocalStorageFn()
+            : [];
+        const hasNeedle = (haystack, needle) => {
+            for ( const { key, value } of haystack ) {
+                if ( needle.test(`${key}=${value}`) ) { return true; }
+            }
+            return false;
+        };
+        for ( const { not, type, re } of assertions ) {
+            switch ( type ) {
+            case 'cookie':
+                if ( hasNeedle(allCookies, re) === not ) { return; }
+                break;
+            case 'localStorage':
+                if ( hasNeedle(allStorageItems, re) === not ) { return; }
+                break;
+            }
+        }
+    }
 
     const querySelectorEx = (selector, context = document) => {
         const pos = selector.indexOf(' >>> ');
