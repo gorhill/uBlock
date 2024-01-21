@@ -4571,17 +4571,7 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
             }
             break;
         case 'uritransform': {
-            const path = rule.__modifierValue;
-            let priority = rule.priority || 1;
-            if ( rule.__modifierAction !== ALLOW_REALM ) {
-                const transform = { path };
-                rule.action.type = 'redirect';
-                rule.action.redirect = { transform };
-                rule.priority = priority + 1;
-            } else {
-                rule.action.type = 'block';
-                rule.priority = priority + 2;
-            }
+            dnrAddRuleError(rule, `Unsupported uritransform=${rule.__modifierValue}`);
             break;
         }
         default:

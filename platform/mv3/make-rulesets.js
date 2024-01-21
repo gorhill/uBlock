@@ -110,7 +110,7 @@ const urlToFileName = url => {
         ;
 };
 
-const fetchList = (url, cacheDir) => {
+const fetchText = (url, cacheDir) => {
     return new Promise((resolve, reject) => {
         const fname = urlToFileName(url);
         fs.readFile(`${cacheDir}/${fname}`, { encoding: 'utf8' }).then(content => {
@@ -168,7 +168,7 @@ const requiredRedirectResources = new Set();
 
 /******************************************************************************/
 
-async function fetchAsset(assetDetails) {
+async function fetchList(assetDetails) {
     // Remember fetched URLs
     const fetchedURLs = new Set();
 
@@ -190,7 +190,7 @@ async function fetchAsset(assetDetails) {
                 newParts.push(`!#trusted on ${assetDetails.secret}`);
             }
             newParts.push(
-                fetchList(part.url, cacheDir).then(details => {
+                fetchText(part.url, cacheDir).then(details => {
                     const { url } = details;
                     const content = details.content.trim();
                     if ( typeof content === 'string' && content !== '' ) {
@@ -227,10 +227,13 @@ const isRegex = rule =>
     rule.condition !== undefined &&
     rule.condition.regexFilter !== undefined;
 
-const isRedirect = rule =>
-    rule.action !== undefined &&
-    rule.action.type === 'redirect' &&
-    rule.action.redirect.extensionPath !== undefined;
+const isRedirect = rule => {
+    if ( rule.action === undefined ) { return false; }
+    if ( rule.action.type !== 'redirect' ) { return false; }
+    if ( rule.action.redirect?.extensionPath !== undefined ) { return true; }
+    if ( rule.action.redirect?.transform?.path !== undefined ) { return true; }
+    return false;
+};
 
 const isModifyHeaders = rule =>
     rule.action !== undefined &&
@@ -367,6 +370,14 @@ async function processNetworkFilters(assetDetails, network) {
         }
     }
 
+    // Add native DNR ruleset if present
+    if ( assetDetails.dnrURL ) {
+        const result = await fetchText(assetDetails.dnrURL, cacheDir);
+        for ( const rule of JSON.parse(result.content) ) {
+            rules.push(rule);
+        }
+    }
+
     const plainGood = rules.filter(rule => isGood(rule) && isRegex(rule) === false);
     log(`\tPlain good: ${plainGood.length}`);
     log(plainGood
@@ -384,6 +395,7 @@ async function processNetworkFilters(assetDetails, network) {
         isRedirect(rule)
     );
     redirects.forEach(rule => {
+        if ( rule.action.redirect.extensionPath === undefined ) { return; }
         requiredRedirectResources.add(
             rule.action.redirect.extensionPath.replace(/^\/+/, '')
         );
@@ -979,7 +991,7 @@ async function rulesetFromURLs(assetDetails) {
     log(`Listset for '${assetDetails.id}':`);
 
     if ( assetDetails.text === undefined ) {
-        const text = await fetchAsset(assetDetails);
+        const text = await fetchList(assetDetails);
         if ( text === '' ) { return; }
         assetDetails.text = text;
     }
@@ -1155,6 +1167,7 @@ async function main() {
         enabled: true,
         secret,
         urls: contentURLs,
+        dnrURL: 'https://ublockorigin.github.io/uAssets/dnr/default.json',
         homeURL: 'https://github.com/uBlockOrigin/uAssets',
     });
 
