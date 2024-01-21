@@ -99,7 +99,21 @@ const patchScriptlet = (content, arglist) => {
 };
 
 const decompile = json => {
-    const args = JSON.parse(json).map(s => s.replace(/,/g, '\\,'));
+    const args = JSON.parse(json).map(s => {
+        if ( /^(["'`]).+\1$/.test(s) ) {
+            const c0 = s.charAt(0);
+            const inner = s.slice(1,-1);
+            if ( c0 === '"' || c0 === '`' ) {
+                return inner.includes("'")
+                    ? '`' + s.replace(/`/g, '\\`') + '`'
+                    : `'${s}'`;
+            }
+            return inner.includes('"')
+                ? '`' + s.replace(/`/g, '\\`') + '`'
+                : `"${s}"`;
+        }
+        return s.replace(/,/g, '\\,');
+    });
     if ( args.length === 0 ) { return '+js()'; }
     return `+js(${args.join(', ')})`;
 };
