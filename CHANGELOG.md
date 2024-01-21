@@ -1,6 +1,6 @@
 ## Fixes / changes
 
-- [Fix decompiling of scriptlet parameters](https://github.com/gorhill/uBlock/commit/fa3a290ad4)
+- [Fix decompiling of scriptlet parameters](https://github.com/gorhill/uBlock/commit/49dd68ef3d)
 - [Add support for `extraMatch` in `trusted-click-element` scriptlet](https://github.com/gorhill/uBlock/commit/45e62c939f)
 - [Remove minimum height constraint from "My filters" pane](https://github.com/gorhill/uBlock/commit/f624c835c2)
 - [Unregister all scriptlets when disabling uBO on a specific site](https://github.com/gorhill/uBlock/commit/13dcd844a7)
