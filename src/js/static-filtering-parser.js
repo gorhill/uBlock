@@ -4022,6 +4022,7 @@ class ExtSelectorCompiler {
     compileXpathExpression(s) {
         const r = this.unquoteString(s);
         if ( r.i !== s.length ) { return; }
+        if ( globalThis.document instanceof Object === false ) { return r.s; }
         try {
             globalThis.document.createExpression(r.s, null);
         } catch (e) {

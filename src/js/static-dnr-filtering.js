@@ -299,10 +299,10 @@ function addToDNR(context, list) {
 
         if ( parser.isComment() ) {
             if ( line === `!#trusted on ${context.secret}` ) {
-                parser.trustedSource = true;
+                parser.options.trustedSource = true;
                 context.trustedSource = true;
             } else if ( line === `!#trusted off ${context.secret}` ) {
-                parser.trustedSource = false;
+                parser.options.trustedSource = false;
                 context.trustedSource = false;
             }
             continue;
@@ -312,6 +312,8 @@ function addToDNR(context, list) {
         if ( parser.hasError() ) {
             if ( parser.astError === sfp.AST_ERROR_OPTION_EXCLUDED ) {
                 context.invalid.add(`Incompatible with DNR: ${line}`);
+            } else {
+                context.invalid.add(`Rejected filter: ${line}`);
             }
             continue;
         }

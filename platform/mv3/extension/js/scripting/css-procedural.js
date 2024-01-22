@@ -566,6 +566,13 @@ class PSelectorRoot extends PSelector {
         }
         return [];
     }
+    exec(input) {
+        try {
+            return super.exec(input);
+        } catch (ex) {
+        }
+        return [];
+    }
 }
 
 /******************************************************************************/

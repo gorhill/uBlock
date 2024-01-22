@@ -4571,7 +4571,7 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
             }
             break;
         case 'uritransform': {
-            dnrAddRuleError(rule, `Unsupported uritransform=${rule.__modifierValue}`);
+            dnrAddRuleError(rule, `Incompatible with DNR: uritransform=${rule.__modifierValue}`);
             break;
         }
         default:
