@@ -210,6 +210,7 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
         this.warSecret = undefined;
         this.scriptletCache = new MRUCache(32);
         this.isDevBuild = undefined;
+        this.logLevel = 1;
         this.bc = onBroadcast(msg => {
             switch ( msg.what ) {
             case 'filteringBehaviorChanged': {
@@ -226,8 +227,25 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
                 /* fall through */
             case 'loggerEnabled':
             case 'loggerDisabled':
-                this.scriptletCache.reset();
-                contentScriptRegisterer.reset();
+                this.clearCache();
+                break;
+            case 'loggerLevelChanged':
+                this.logLevel = msg.level;
+                vAPI.tabs.query({
+                    discarded: false,
+                    url: [ 'http://*/*', 'https://*/*' ],
+                }).then(tabs => {
+                    for ( const tab of tabs ) {
+                        const { status } = tab;
+                        if ( status !== 'loading' && status !== 'complete' ) { continue; }
+                        vAPI.tabs.executeScript(tab.id, {
+                            allFrames: true,
+                            file: `/js/scriptlets/scriptlet-loglevel-${this.logLevel}.js`,
+                            matchAboutBlank: true,
+                        });
+                    }
+                });
+                this.clearCache();
                 break;
             }
         });
@@ -243,6 +261,11 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
     freeze() {
         super.freeze();
         this.warSecret = vAPI.warSecret.long(this.warSecret);
+        this.scriptletCache.reset();
+        contentScriptRegisterer.reset();
+    }
+
+    clearCache() {
         this.scriptletCache.reset();
         contentScriptRegisterer.reset();
     }
@@ -289,6 +312,7 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
         };
         if ( logger.enabled ) {
             options.scriptletGlobals.bcSecret = bcSecret;
+            options.scriptletGlobals.logLevel = this.logLevel;
         }
 
         scriptletDetails = super.retrieve(request, options);

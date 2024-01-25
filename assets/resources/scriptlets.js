@@ -158,7 +158,7 @@ function safeSelf() {
     };
     if ( scriptletGlobals.bcSecret !== undefined ) {
         const bc = new self.BroadcastChannel(scriptletGlobals.bcSecret);
-        safe.logLevel = 1;
+        safe.logLevel = scriptletGlobals.logLevel || 1;
         safe.sendToLogger = (type, ...args) => {
             if ( args.length === 0 ) { return; }
             const text = `[${document.location.hostname || document.location.href}]${args.join(' ')}`;
@@ -692,7 +692,10 @@ function replaceNodeTextFn(
             ? before.replace(rePattern, replacement)
             : replacement;
         node.textContent = after;
-        safe.uboLog(logPrefix, `Replace result:\n${after.trim()}`);
+        if ( safe.logLevel > 1 ) {
+            safe.uboLog(logPrefix, `Text before:\n${before.trim()}`);
+        }
+        safe.uboLog(logPrefix, `Text after:\n${after.trim()}`);
         return sedCount === 0 || (sedCount -= 1) !== 0;
     };
     const handleMutations = mutations => {

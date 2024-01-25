@@ -21,7 +21,7 @@
 
 'use strict';
 
-import webext from './webext.js';
+import { broadcast } from './broadcast.js';
 import { hostnameFromURI } from './uri-utils.js';
 import { i18n, i18n$ } from './i18n.js';
 import { dom, qs$, qsa$ } from './dom.js';
@@ -3043,20 +3043,7 @@ dom.on('#pause', 'click', pauseNetInspector);
 
 dom.on('#logLevel', 'click', ev => {
     const level = dom.cl.toggle(ev.currentTarget, 'active') ? 2 : 1;
-    webext.tabs.query({
-        discarded: false,
-        url: [ 'http://*/*', 'https://*/*' ],
-    }).then(tabs => {
-        for ( const tab of tabs ) {
-            const { status } = tab;
-            if ( status !== 'loading' && status !== 'complete' ) { continue; }
-            webext.tabs.executeScript(tab.id, {
-                allFrames: true,
-                file: `/js/scriptlets/scriptlet-loglevel-${level}.js`,
-                matchAboutBlank: true,
-            });
-        }
-    });
+    broadcast({ what: 'loggerLevelChanged', level });
 });
 
 dom.on('#netInspector', 'copy', ev => {
