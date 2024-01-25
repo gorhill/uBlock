@@ -353,6 +353,7 @@ const loadBenchmarkDataset = (( ) => {
         hostname: '',
         tabId: 0,
         url: '',
+        nocache: true,
     };
     let count = 0;
     const t0 = performance.now();

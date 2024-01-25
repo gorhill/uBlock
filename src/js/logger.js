@@ -23,13 +23,14 @@
 
 /******************************************************************************/
 
-import { broadcastToAll } from './broadcast.js';
+import { broadcast, broadcastToAll } from './broadcast.js';
 
 /******************************************************************************/
 
 let buffer = null;
 let lastReadTime = 0;
 let writePtr = 0;
+let lastBoxedEntry = '';
 
 // After 30 seconds without being read, the logger buffer will be considered
 // unused, and thus disabled.
@@ -43,36 +44,48 @@ const janitorTimer = vAPI.defer.create(( ) => {
     logger.enabled = false;
     buffer = null;
     writePtr = 0;
+    lastBoxedEntry = '';
     logger.ownerId = undefined;
     broadcastToAll({ what: 'loggerDisabled' });
 });
 
-const boxEntry = function(details) {
-    if ( details.tstamp === undefined ) {
-        details.tstamp = Date.now();
-    }
+const boxEntry = details => {
+    details.tstamp = Date.now() / 1000 | 0;
     return JSON.stringify(details);
+};
+
+const pushOne = box => {
+    if ( writePtr === buffer.length ) {
+        buffer.push(box);
+    } else {
+        buffer[writePtr] = box;
+    }
+    writePtr += 1;
 };
 
 const logger = {
     enabled: false,
     ownerId: undefined,
-    writeOne: function(details) {
+    writeOne(details) {
         if ( buffer === null ) { return; }
         const box = boxEntry(details);
-        if ( writePtr === buffer.length ) {
-            buffer.push(box);
-        } else {
-            buffer[writePtr] = box;
+        if ( box === lastBoxedEntry ) { return; }
+        if ( lastBoxedEntry !== '' ) {
+            pushOne(lastBoxedEntry);
         }
-        writePtr += 1;
+        lastBoxedEntry = box;
     },
-    readAll: function(ownerId) {
+    readAll(ownerId) {
         this.ownerId = ownerId;
         if ( buffer === null ) {
             this.enabled = true;
             buffer = [];
             janitorTimer.on(logBufferObsoleteAfter);
+            broadcast({ what: 'loggerEnabled' });
+        }
+        if ( lastBoxedEntry !== '' ) {
+            pushOne(lastBoxedEntry);
+            lastBoxedEntry = '';
         }
         const out = buffer.slice(0, writePtr);
         writePtr = 0;

@@ -265,10 +265,10 @@ export class ScriptletFilteringEngine {
             }
         }
     
-        const scriptletGlobals = options.scriptletGlobals || [];
+        const scriptletGlobals = options.scriptletGlobals || {};
 
         if ( options.debug ) {
-            scriptletGlobals.push([ 'canDebug', true ]);
+            scriptletGlobals.canDebug = true;
         }
 
         return {
@@ -279,7 +279,7 @@ export class ScriptletFilteringEngine {
                 options.debugScriptlets ? 'debugger;' : ';',
                 '',
                 // For use by scriptlets to share local data among themselves
-                `const scriptletGlobals = new Map(${JSON.stringify(scriptletGlobals, null, 2)});`,
+                `const scriptletGlobals = ${JSON.stringify(scriptletGlobals, null, 4)}`,
                 '',
                 scriptletDetails.mainWorld,
                 '',
@@ -293,7 +293,7 @@ export class ScriptletFilteringEngine {
                 options.debugScriptlets ? 'debugger;' : ';',
                 '',
                 // For use by scriptlets to share local data among themselves
-                `const scriptletGlobals = new Map(${JSON.stringify(scriptletGlobals, null, 2)});`,
+                `const scriptletGlobals = ${JSON.stringify(scriptletGlobals, null, 4)}`,
                 '',
                 scriptletDetails.isolatedWorld,
                 '',

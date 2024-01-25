@@ -374,7 +374,7 @@ const µBlock = {  // jshint ignore:line
     toLogger() {
         const details = {
             id: this.id,
-            tstamp: Date.now(),
+            tstamp: 0,
             realm: this.realm,
             method: this.getMethodName(),
             type: this.stype,

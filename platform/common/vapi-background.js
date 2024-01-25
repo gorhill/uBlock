@@ -87,6 +87,19 @@ vAPI.app = {
     },
 };
 
+/******************************************************************************/
+
+// Generate segments of random six alphanumeric characters, thus one segment
+// is a value out of 36^6 = over 2x10^9 values.
+
+vAPI.generateSecret = (size = 1) => {
+    let secret = '';
+    while ( size-- ) {
+        secret += (Math.floor(Math.random() * 2176782336) + 2176782336).toString(36).slice(1);
+    }
+    return secret;
+};
+
 /*******************************************************************************
  * 
  * https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/API/storage/session
@@ -1165,11 +1178,6 @@ vAPI.messaging = {
 //   Support using a new secret for every network request.
 
 {
-    // Generate a 6-character alphanumeric string, thus one random value out
-    // of 36^6 = over 2x10^9 values.
-    const generateSecret = ( ) =>
-        (Math.floor(Math.random() * 2176782336) + 2176782336).toString(36).slice(1);
-
     const root = vAPI.getURL('/');
     const reSecret = /\?secret=(\w+)/;
     const shortSecrets = [];
@@ -1207,7 +1215,7 @@ vAPI.messaging = {
                 }
             }
             lastShortSecretTime = Date.now();
-            const secret = generateSecret();
+            const secret = vAPI.generateSecret();
             shortSecrets.push(secret);
             return secret;
         },
@@ -1215,7 +1223,7 @@ vAPI.messaging = {
             if ( previous !== undefined ) {
                 longSecrets.delete(previous);
             }
-            const secret = `${generateSecret()}${generateSecret()}${generateSecret()}`;
+            const secret = vAPI.generateSecret(3);
             longSecrets.add(secret);
             return secret;
         },

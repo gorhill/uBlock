@@ -95,6 +95,7 @@
 .fa-icon > .fa-icon_spinner,
 .fa-icon > .fa-icon_unlink,
 .fa-icon > .fa-icon_upload-alt,
+.fa-icon > .fa-icon_volume-up,
 .fa-icon > .fa-icon_zoom-in,
 .fa-icon > .fa-icon_zoom-out {
     width: calc(1em * 1664 / 1792);

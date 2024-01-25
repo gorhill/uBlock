@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a comprehensive, efficient content blocker
-    Copyright (C) 2018-present Raymond Hill
+    Copyright (C) 2024-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,20 +21,30 @@
 
 'use strict';
 
-// If content scripts are already injected, we need to respond with `false`,
-// to "should inject content scripts?"
-//
-// https://github.com/uBlockOrigin/uBlock-issues/issues/403
-//   If the content script was not bootstrapped, give it another try.
+/******************************************************************************/
 
 (( ) => {
-    try {
-        const status = vAPI.uBO !== true;
-        if ( status === false && vAPI.bootstrap ) {
-            self.requestIdleCallback(( ) => vAPI && vAPI.bootstrap());
-        }
-        return status;
-    } catch(ex) {
-    }
-    return true;
+    if ( typeof vAPI !== 'object' || vAPI === null ) { return; }
+    if ( vAPI.bcSecret instanceof self.BroadcastChannel === false ) { return; }
+    vAPI.bcSecret.postMessage({ what: 'setScriptletLogLevel', level: 1 });
 })();
+
+
+
+
+
+
+
+
+/*******************************************************************************
+
+    DO NOT:
+    - Remove the following code
+    - Add code beyond the following code
+    Reason:
+    - https://github.com/gorhill/uBlock/pull/3721
+    - uBO never uses the return value from injected content scripts
+
+**/
+
+void 0;

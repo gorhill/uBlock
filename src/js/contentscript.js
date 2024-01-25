@@ -462,28 +462,6 @@ vAPI.SafeAnimationFrame = class {
 
 /******************************************************************************/
 /******************************************************************************/
-/******************************************************************************/
-
-vAPI.injectScriptlet = function(doc, text) {
-    if ( !doc ) { return; }
-    let script, url;
-    try {
-        const blob = new self.Blob([ text ], { type: 'text/javascript; charset=utf-8' });
-        url = self.URL.createObjectURL(blob);
-        script = doc.createElement('script');
-        script.async = false;
-        script.src = url;
-        (doc.head || doc.documentElement || doc).appendChild(script);
-    } catch (ex) {
-    }
-    if ( url ) {
-        if ( script ) { script.remove(); }
-        self.URL.revokeObjectURL(url);
-    }
-};
-
-/******************************************************************************/
-/******************************************************************************/
 /*******************************************************************************
 
   The DOM filterer is the heart of uBO's cosmetic filtering.
@@ -1298,7 +1276,6 @@ vAPI.DOMFilterer = class {
         const {
             noSpecificCosmeticFiltering,
             noGenericCosmeticFiltering,
-            scriptletDetails,
         } = response;
 
         vAPI.noSpecificCosmeticFiltering = noSpecificCosmeticFiltering;
@@ -1318,14 +1295,6 @@ vAPI.DOMFilterer = class {
             domFilterer.exceptCSSRules(cfeDetails.exceptedFilters);
             domFilterer.convertedProceduralFilters = cfeDetails.convertedProceduralFilters;
             vAPI.userStylesheet.apply();
-        }
-
-        if ( scriptletDetails && typeof self.uBO_scriptletsInjected !== 'string' ) {
-            self.uBO_scriptletsInjected = scriptletDetails.filters;
-            if ( scriptletDetails.mainWorld ) {
-                vAPI.injectScriptlet(document, scriptletDetails.mainWorld);
-                vAPI.injectedScripts = scriptletDetails.mainWorld;
-            }
         }
 
         if ( vAPI.domSurveyor ) {

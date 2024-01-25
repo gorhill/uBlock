@@ -850,7 +850,8 @@ onBroadcast(msg => {
     let t0 = 0;
 
     const onDone = ( ) => {
-        ubolog(`loadFilterLists() took ${Date.now()-t0} ms`);
+        const td = Date.now() - t0;
+        ubolog(`loadFilterLists() took ${td} ms`);
 
         staticNetFilteringEngine.freeze();
         staticExtFilteringEngine.freeze();
@@ -863,7 +864,7 @@ onBroadcast(msg => {
         logger.writeOne({
             realm: 'message',
             type: 'info',
-            text: 'Reloading all filter lists: done'
+            text: `Reloading all filter lists: done, took ${td} ms`
         });
 
         broadcast({

@@ -49,9 +49,8 @@ document.body.addEventListener('click', ev => {
         what: 'clickToLoad',
         frameURL,
     }).then(ok => {
-        if ( ok ) {
-            self.location.replace(frameURL);
-        }
+        if ( ok !== true ) { return; }
+        self.location.replace(frameURL);
     });
 });
 

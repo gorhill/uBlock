@@ -74,9 +74,17 @@
                                 </span>
                             </div>
                             <div id="filterExprCnameOf" style="display:none"><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span><span data-filtex="\x1FaliasURL=.">CNAME</span></div>
+                            <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span>
+                                <span style="flex-direction: column;">
+                                    <div><span data-filtex="\x1Finfo\x1F">info</span><span data-filtex="\x1Ferror\x1F">error</span></div>
+                                </span>
+                            </div>
                         </div>
                     </span>
                 </span>
+            </div>
+            <div>
+                <button id="logLevel" class="iconified notext" data-i18n-title="loggerLogLevelTip" type="button"><span class="fa-icon">volume-up</span><span class="hover"></span></button>
             </div>
             <div>
                 <button id="loggerStats" class="iconified notext" style="display: none;"><span class="fa-icon">bar-chart</span><span class="hover"></span></button>
@@ -92,7 +100,7 @@
                     </div>
                 </div>
                 <div id="vwLineSizer">
-                    <div class="logEntry oneLine"><div><span>00:00:00</span><span>&nbsp;</span><span>**</span><span>&nbsp;</span><span>3,3</span><span>options</span><span>inline-script</span><span>&nbsp;</span></div></div>
+                    <div class="logEntry oneLine"><div class="fields"><span>00:00:00</span><span>&nbsp;</span><span>**</span><span>&nbsp;</span><span>3,3</span><span>options</span><span>inline-script</span><span>&nbsp;</span></div></div>
                 </div>
             </div>
         </div>
@@ -109,7 +117,7 @@
 </div>
 
 <div id="templates" style="display: none;">
-    <div id="logEntryTemplate"><div><span></span>&#8203;<span></span>&#8203;<span></span>&#8203;<span></span>&#8203;<span></span>&#8203;<span></span>&#8203;<span></span>&#8203;<span></span></div></div>
+    <div id="logEntryTemplate"><div class="fields"><span></span>&#8203;<span></span>&#8203;<span></span>&#8203;<span></span>&#8203;<span></span>&#8203;<span></span>&#8203;<span></span>&#8203;<span></span></div></div>
 
     <div class="netFilteringDialog" data-pane="details">
         <div class="dialogControls">

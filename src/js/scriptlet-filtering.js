@@ -44,16 +44,6 @@ import {
 const contentScriptRegisterer = new (class {
     constructor() {
         this.hostnameToDetails = new Map();
-        if ( browser.contentScripts === undefined ) { return; }
-        this.bc = onBroadcast(msg => {
-            if ( msg.what !== 'filteringBehaviorChanged' ) { return; }
-            const direction = msg.direction || 0;
-            if ( direction > 0 ) { return; }
-            if ( direction >= 0 && msg.hostname ) {
-                return this.flush(msg.hostname);
-            }
-            this.reset();
-        });
     }
     register(hostname, code) {
         if ( browser.contentScripts === undefined ) { return false; }
@@ -133,16 +123,15 @@ const mainWorldInjector = (( ) => {
             'json-slot',
         ');',
     ];
+    const jsonSlot = parts.indexOf('json-slot');
     return {
-        parts,
-        jsonSlot: parts.indexOf('json-slot'),
-        assemble: function(hostname, scriptlets, filters) {
-            this.parts[this.jsonSlot] = JSON.stringify({
+        assemble: function(hostname, details) {
+            parts[jsonSlot] = JSON.stringify({
                 hostname,
-                scriptlets,
-                filters,
+                scriptlets: details.mainWorld,
+                filters: details.filters,
             });
-            return this.parts.join('');
+            return parts.join('');
         },
     };
 })();
@@ -165,20 +154,49 @@ const isolatedWorldInjector = (( ) => {
             'json-slot',
         ');',
     ];
+    const jsonSlot = parts.indexOf('json-slot');
     return {
-        parts,
-        jsonSlot: parts.indexOf('json-slot'),
-        assemble: function(hostname, scriptlets) {
-            this.parts[this.jsonSlot] = JSON.stringify({ hostname });
-            const code = this.parts.join('');
+        assemble(hostname, details) {
+            parts[jsonSlot] = JSON.stringify({ hostname });
+            const code = parts.join('');
             // Manually substitute noop function with scriptlet wrapper
             // function, so as to not suffer instances of special
             // replacement characters `$`,`\` when using String.replace()
             // with scriptlet code.
             const match = /function\(\)\{\}/.exec(code);
             return code.slice(0, match.index) +
-                scriptlets +
+                details.isolatedWorld +
                 code.slice(match.index + match[0].length);
+        },
+    };
+})();
+
+const onScriptletMessageInjector = (( ) => {
+    const parts = [
+        '(',
+        function(name) {
+            if ( typeof vAPI !== 'object' ) { return; }
+            if ( vAPI === null ) { return; }
+            if ( vAPI.bcSecret ) { return; }
+            const bcSecret = new self.BroadcastChannel(name);
+            bcSecret.onmessage = ev => {
+                if ( self.vAPI && self.vAPI.messaging ) {
+                    self.vAPI.messaging.send('contentscript', ev.data);
+                } else {
+                    bcSecret.onmessage = null; 
+                }
+            };
+            vAPI.bcSecret = bcSecret;
+        }.toString(),
+        ')(',
+            'bcSecret-slot',
+        ');',
+    ];
+    const bcSecretSlot = parts.indexOf('bcSecret-slot');
+    return {
+        assemble(details) {
+            parts[bcSecretSlot] = JSON.stringify(details.bcSecret);
+            return parts.join('\n');
         },
     };
 })();
@@ -192,10 +210,26 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
         this.warSecret = undefined;
         this.scriptletCache = new MRUCache(32);
         this.isDevBuild = undefined;
-        onBroadcast(msg => {
-            if ( msg.what !== 'hiddenSettingsChanged' ) { return; }
-            this.scriptletCache.reset();
-            this.isDevBuild = undefined;
+        this.bc = onBroadcast(msg => {
+            switch ( msg.what ) {
+            case 'filteringBehaviorChanged': {
+                const direction = msg.direction || 0;
+                if ( direction > 0 ) { return; }
+                if ( direction >= 0 && msg.hostname ) {
+                    return contentScriptRegisterer.flush(msg.hostname);
+                }
+                contentScriptRegisterer.reset();
+                break;
+            }
+            case 'hiddenSettingsChanged':
+                this.isDevBuild = undefined;
+                /* fall through */
+            case 'loggerEnabled':
+            case 'loggerDisabled':
+                this.scriptletCache.reset();
+                contentScriptRegisterer.reset();
+                break;
+            }
         });
     }
 
@@ -243,58 +277,82 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
             this.warSecret = vAPI.warSecret.long();
         }
 
+        const bcSecret = vAPI.generateSecret(3);
+
         const options = {
-            scriptletGlobals: [
-                [ 'warOrigin', this.warOrigin ],
-                [ 'warSecret', this.warSecret ],
-            ],
+            scriptletGlobals: {
+                warOrigin: this.warOrigin,
+                warSecret: this.warSecret,
+            },
             debug: this.isDevBuild,
             debugScriptlets: µb.hiddenSettings.debugScriptlets,
         };
+        if ( logger.enabled ) {
+            options.scriptletGlobals.bcSecret = bcSecret;
+        }
 
         scriptletDetails = super.retrieve(request, options);
 
-        this.scriptletCache.add(hostname, scriptletDetails || null);
+        if ( scriptletDetails === undefined ) {
+            if ( request.nocache !== true ) {
+                this.scriptletCache.add(hostname, null);
+            }
+            return;
+        }
 
-        return scriptletDetails;
+        const contentScript = [];
+        if ( scriptletDetails.mainWorld !== '' ) {
+            contentScript.push(mainWorldInjector.assemble(hostname, scriptletDetails));
+        }
+        if ( scriptletDetails.isolatedWorld !== '' ) {
+            contentScript.push(isolatedWorldInjector.assemble(hostname, scriptletDetails));
+        }
+
+        const cachedScriptletDetails = {
+            bcSecret,
+            code: contentScript.join('\n\n'),
+            filters: scriptletDetails.filters,
+        };
+
+        if ( request.nocache !== true ) {
+            this.scriptletCache.add(hostname, cachedScriptletDetails);
+        }
+
+        return cachedScriptletDetails;
     }
 
     injectNow(details) {
         if ( typeof details.frameId !== 'number' ) { return; }
 
+        const hostname = hostnameFromURI(details.url);
+
         const request = {
             tabId: details.tabId,
             frameId: details.frameId,
             url: details.url,
-            hostname: hostnameFromURI(details.url),
-            domain: undefined,
-            entity: undefined
+            hostname,
+            domain: domainFromHostname(hostname),
+            entity: entityFromDomain(hostname),
         };
-
-        request.domain = domainFromHostname(request.hostname);
-        request.entity = entityFromDomain(request.domain);
 
         const scriptletDetails = this.retrieve(request);
         if ( scriptletDetails === undefined ) {
-            contentScriptRegisterer.unregister(request.hostname);
+            contentScriptRegisterer.unregister(hostname);
             return;
         }
 
-        const contentScript = [];
+        const contentScript = [ scriptletDetails.code ];
+        if ( logger.enabled ) {
+            contentScript.unshift(
+                onScriptletMessageInjector.assemble(scriptletDetails)
+            );
+        }
         if ( µb.hiddenSettings.debugScriptletInjector ) {
-            contentScript.push('debugger');
+            contentScript.unshift('debugger');
         }
-        const { mainWorld = '', isolatedWorld = '', filters } = scriptletDetails;
-        if ( mainWorld !== '' ) {
-            contentScript.push(mainWorldInjector.assemble(request.hostname, mainWorld, filters));
-        }
-        if ( isolatedWorld !== '' ) {
-            contentScript.push(isolatedWorldInjector.assemble(request.hostname, isolatedWorld));
-        }
-
         const code = contentScript.join('\n\n');
 
-        const isAlreadyInjected = contentScriptRegisterer.register(request.hostname, code);
+        const isAlreadyInjected = contentScriptRegisterer.register(hostname, code);
         if ( isAlreadyInjected !== true ) {
             vAPI.tabs.executeScript(details.tabId, {
                 code,
@@ -303,7 +361,6 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
                 runAt: 'document_start',
             });
         }
-
         return scriptletDetails;
     }
 
