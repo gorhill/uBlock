@@ -1,5 +1,6 @@
 ## Fixes / changes
 
+- [Output scriptlet logging information to the logger](https://github.com/gorhill/uBlock/commit/869a653fdf)
 - [Fix decompiling of scriptlet parameters](https://github.com/gorhill/uBlock/commit/49dd68ef3d)
 - [Add support for `extraMatch` in `trusted-click-element` scriptlet](https://github.com/gorhill/uBlock/commit/45e62c939f)
 - [Remove minimum height constraint from "My filters" pane](https://github.com/gorhill/uBlock/commit/f624c835c2)
