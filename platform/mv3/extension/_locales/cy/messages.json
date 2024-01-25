@@ -1,0 +1,158 @@
+{
+  "extName": {
+    "message": "uBlock Origin Lite",
+    "description": "extension name."
+  },
+  "extShortDesc": {
+    "message": "Rhwystrydd cynnwys nad yw'n gofyn am hawliau. Rhwystrwch hysbysebion, tracwyr, cloddwyr, a mwy, yn syth ar ôl gosod.",
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
+  },
+  "perRulesetStats": {
+    "message": "{{ruleCount}} rules, converted from {{filterCount}} network filters",
+    "description": "Appears aside each filter list in the _3rd-party filters_ pane"
+  },
+  "dashboardName": {
+    "message": "uBO Lite — Dashfwrdd",
+    "description": "English: uBO Lite — Dashboard"
+  },
+  "settingsPageName": {
+    "message": "Gosodiadau",
+    "description": "appears as tab name in dashboard"
+  },
+  "aboutPageName": {
+    "message": "Ynghylch",
+    "description": "appears as tab name in dashboard"
+  },
+  "aboutPrivacyPolicy": {
+    "message": "Polisi preifatrwydd",
+    "description": "Link to privacy policy on GitHub (English)"
+  },
+  "popupFilteringModeLabel": {
+    "message": "modd hidlo",
+    "description": "Label in the popup panel for the current filtering mode"
+  },
+  "popupTipDashboard": {
+    "message": "Agor y dashfwrdd",
+    "description": "English: Click to open the dashboard"
+  },
+  "popupMoreButton": {
+    "message": "Mwy",
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton": {
+    "message": "Llai",
+    "description": "Label to be used to hide popup panel sections"
+  },
+  "3pGroupDefault": {
+    "message": "Default",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupAds": {
+    "message": "Hysbysebion",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupPrivacy": {
+    "message": "Preifatrwydd",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupMalware": {
+    "message": "Malware domains",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupAnnoyances": {
+    "message": "Pethau diflas",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupMisc": {
+    "message": "Amrywiol",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "3pGroupRegions": {
+    "message": "Rhanbarthau, ieithoedd",
+    "description": "Header for a ruleset section in 'Filter lists pane'"
+  },
+  "aboutChangelog": {
+    "message": "Cofnod newidiadau",
+    "description": ""
+  },
+  "aboutCode": {
+    "message": "Cod ffynhonnell (GPLv3)",
+    "description": "English: Source code (GPLv3)"
+  },
+  "aboutContributors": {
+    "message": "Cyfranwyr",
+    "description": "English: Contributors"
+  },
+  "aboutSourceCode": {
+    "message": "Cod ffynhonnell",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "Cyfieithiadau",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "Rhestri hidlo",
+    "description": "Link text to uBO's own filter lists repo"
+  },
+  "aboutDependencies": {
+    "message": "Gofynion allanol (cydnaws â GPLv3):",
+    "description": "Shown in the About pane"
+  },
+  "firstRunSectionLabel": {
+    "message": "Croeso",
+    "description": "The header text for the welcome message section"
+  },
+  "firstRunDescription": {
+    "message": "You have just installed uBO Lite. Here you can choose the default filtering mode to use on all websites.\n\nBy default, <em>Basic</em> mode is selected because it does not require the permission to read and modify data. If you trust uBO Lite, you can give it broad permission to read and modify data on all websites in order to enable more advanced filtering capabilities for all websites by default.",
+    "description": "Descriptive text shown at first install time only "
+  },
+  "defaultFilteringModeSectionLabel": {
+    "message": "Default filtering mode",
+    "description": "The header text for the default filtering mode section"
+  },
+  "defaultFilteringModeDescription": {
+    "message": "The default filtering mode will be overridden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
+    "description": "This describes the default filtering mode setting"
+  },
+  "filteringMode0Name": {
+    "message": "dim hidlo",
+    "description": "Name of blocking mode 0"
+  },
+  "filteringMode1Name": {
+    "message": "sylfaenol",
+    "description": "Name of blocking mode 1"
+  },
+  "filteringMode2Name": {
+    "message": "priodol",
+    "description": "Name of blocking mode 2"
+  },
+  "filteringMode3Name": {
+    "message": "cyflawn",
+    "description": "Name of blocking mode 3"
+  },
+  "basicFilteringModeDescription": {
+    "message": "Basic network filtering from selected filter lists.\n\nDoes not require permission to read and modify data on websites.",
+    "description": "This describes the 'basic' filtering mode"
+  },
+  "optimalFilteringModeDescription": {
+    "message": "Advanced network filtering plus specific extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.",
+    "description": "This describes the 'optimal' filtering mode"
+  },
+  "completeFilteringModeDescription": {
+    "message": "Advanced network filtering plus specific and generic extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.\n\nGeneric extended filtering may cause higher webpage resources usage.",
+    "description": "This describes the 'complete' filtering mode"
+  },
+  "noFilteringModeDescription": {
+    "message": "List of hostnames for which no filtering will take place",
+    "description": "A short description for the editable field which lists trusted sites"
+  },
+  "behaviorSectionLabel": {
+    "message": "Ymddygiad",
+    "description": "The header text for the 'Behavior' section"
+  },
+  "autoReloadLabel": {
+    "message": "Ail-lwytho tudalen ar ôl newid y modd hidlo",
+    "description": "Label for a checkbox in the options page"
+  }
+}
