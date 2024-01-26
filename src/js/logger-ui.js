@@ -36,6 +36,7 @@ const logger = self.logger = { ownerId: Date.now() };
 const logDate = new Date();
 const logDateTimezoneOffset = logDate.getTimezoneOffset() * 60;
 const loggerEntries = [];
+let loggerEntryIdGenerator = 1;
 
 const COLUMN_TIMESTAMP = 0;
 const COLUMN_FILTER = 1;
@@ -319,13 +320,11 @@ const LogEntry = function(details) {
     if ( details instanceof Object === false ) { return; }
     const receiver = LogEntry.prototype;
     for ( const prop in receiver ) {
-        if (
-            details.hasOwnProperty(prop) &&
-            details[prop] !== receiver[prop]
-        ) {
-            this[prop] = details[prop];
-        }
+        if ( details.hasOwnProperty(prop) === false ) { continue; }
+        if ( details[prop] === receiver[prop] ) { continue; }
+        this[prop] = details[prop];
     }
+    this.id = `${loggerEntryIdGenerator++}`;
     if ( details.aliasURL !== undefined ) {
         this.aliased = true;
     }
@@ -346,7 +345,6 @@ LogEntry.prototype = {
     docHostname: '',
     domain: '',
     filter: undefined,
-    id: '',
     method: '',
     realm: '',
     tabDomain: '',
@@ -1627,9 +1625,10 @@ dom.on(document, 'keydown', ev => {
     const aliasURLFromID = function(id) {
         if ( id === '' ) { return ''; }
         for ( const entry of loggerEntries ) {
-            if ( entry.id !== id || entry.aliased ) { continue; }
-            const fields = entry.textContent.split('\x1F');
-            return fields[COLUMN_URL] || '';
+            if ( entry.id !== id ) { continue; }
+            const match = /\baliasURL=([^\x1F]+)/.exec(entry.textContent);
+            if ( match === null ) { return ''; }
+            return match[1];
         }
         return '';
     };

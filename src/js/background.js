@@ -311,7 +311,6 @@ const µBlock = {  // jshint ignore:line
         }
         this.fromTabId(tabId); // Must be called AFTER tab context management
         this.realm = '';
-        this.id = details.requestId;
         this.setMethod(details.method);
         this.setURL(details.url);
         this.aliasURL = details.aliasURL || undefined;
@@ -373,7 +372,6 @@ const µBlock = {  // jshint ignore:line
 
     toLogger() {
         const details = {
-            id: this.id,
             tstamp: 0,
             realm: this.realm,
             method: this.getMethodName(),
