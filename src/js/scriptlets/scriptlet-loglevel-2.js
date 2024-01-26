@@ -26,7 +26,7 @@
 (( ) => {
     if ( typeof vAPI !== 'object' || vAPI === null ) { return; }
     if ( vAPI.bcSecret instanceof self.BroadcastChannel === false ) { return; }
-    vAPI.bcSecret.postMessage({ what: 'setScriptletLogLevel', level: 2 });
+    vAPI.bcSecret.postMessage('setScriptletLogLevelToTwo');
 })();
 
 

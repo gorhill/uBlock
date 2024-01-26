@@ -180,12 +180,22 @@ const onScriptletMessageInjector = (( ) => {
             if ( vAPI.bcSecret ) { return; }
             const bcSecret = new self.BroadcastChannel(name);
             bcSecret.onmessage = ev => {
-                if ( self.vAPI && self.vAPI.messaging ) {
-                    self.vAPI.messaging.send('contentscript', ev.data);
-                } else {
-                    bcSecret.onmessage = null; 
+                const msg = ev.data;
+                switch ( typeof msg ) {
+                case 'string':
+                    if ( msg !== 'areyouready?' ) { break; }
+                    bcSecret.postMessage('iamready!');
+                    break;
+                case 'object':
+                    if ( self.vAPI && self.vAPI.messaging ) {
+                        self.vAPI.messaging.send('contentscript', msg);
+                    } else {
+                        bcSecret.onmessage = null; 
+                    }
+                    break;
                 }
             };
+            bcSecret.postMessage('iamready!');
             vAPI.bcSecret = bcSecret;
         }.toString(),
         ')(',
