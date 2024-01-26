@@ -551,7 +551,7 @@ const onHeadersReceived = function(details) {
             }
         }
         if ( jobs.length !== 0 ) {
-            bodyFilterer.doFilter(fctxt, jobs);
+            bodyFilterer.doFilter(details.requestId, fctxt, jobs);
         }
     }
 
@@ -886,10 +886,10 @@ const bodyFilterer = (( ) => {
             this.str = s;
             this.modified = true;
         }
-        static doFilter(fctxt, jobs) {
+        static doFilter(requestId, fctxt, jobs) {
             if ( jobs.length === 0 ) { return; }
             const session = new Session(fctxt, mime, charset, jobs);
-            session.stream = browser.webRequest.filterResponseData(session.id);
+            session.stream = browser.webRequest.filterResponseData(requestId);
             session.stream.ondata = onStreamData;
             session.stream.onstop = onStreamStop;
             session.stream.onerror = onStreamError;
