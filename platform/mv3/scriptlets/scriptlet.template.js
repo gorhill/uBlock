@@ -40,7 +40,7 @@
 // Start of code to inject
 const uBOL_$scriptletName$ = function() {
 
-const scriptletGlobals = new Map(); // jshint ignore: line
+const scriptletGlobals = {}; // jshint ignore: line
 
 const argsList = self.$argsList$;
 
