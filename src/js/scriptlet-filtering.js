@@ -349,17 +349,16 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
         if ( typeof details.frameId !== 'number' ) { return; }
 
         const hostname = hostnameFromURI(details.url);
+        const domain = domainFromHostname(hostname);
 
-        const request = {
+        const scriptletDetails = this.retrieve({
             tabId: details.tabId,
             frameId: details.frameId,
             url: details.url,
             hostname,
-            domain: domainFromHostname(hostname),
-            entity: entityFromDomain(hostname),
-        };
-
-        const scriptletDetails = this.retrieve(request);
+            domain,
+            entity: entityFromDomain(domain),
+        });
         if ( scriptletDetails === undefined ) {
             contentScriptRegisterer.unregister(hostname);
             return;
