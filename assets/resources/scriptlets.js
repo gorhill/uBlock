@@ -428,7 +428,7 @@ function abortCurrentScriptCore(
             return;
         }
         if ( safe.logLevel > 1 && e.src !== '' ) {
-            safe.uboLevel(logPrefix, `Matched src\n${e.src}`);
+            safe.uboLog(logPrefix, `Matched src\n${e.src}`);
         }
         const scriptText = getScriptText(e);
         if ( reNeedle.test(scriptText) === false ) {
@@ -436,7 +436,7 @@ function abortCurrentScriptCore(
             return;
         }
         if ( safe.logLevel > 1 ) {
-            safe.uboLevel(logPrefix, `Matched text\n${scriptText}`);
+            safe.uboLog(logPrefix, `Matched text\n${scriptText}`);
         }
         if ( debug === 'match' || debug === 'all' ) { debugger; }  // jshint ignore: line
         safe.uboLog(logPrefix, 'Aborted');
