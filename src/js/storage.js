@@ -849,8 +849,10 @@ onBroadcast(msg => {
     let loadingPromise;
     let t0 = 0;
 
+    const elapsed = ( ) => `${Date.now() - t0} ms`;
+
     const onDone = ( ) => {
-        ubolog(`loadFilterLists() All filters in memory at ${Date.now() - t0} ms`);
+        ubolog(`loadFilterLists() All filters in memory at ${elapsed()}`);
 
         staticNetFilteringEngine.freeze();
         staticExtFilteringEngine.freeze();
@@ -858,12 +860,12 @@ onBroadcast(msg => {
         vAPI.net.unsuspend();
         filteringBehaviorChanged();
 
-        ubolog(`loadFilterLists() All filters ready at ${Date.now() - t0} ms`);
+        ubolog(`loadFilterLists() All filters ready at ${elapsed()}`);
 
         logger.writeOne({
             realm: 'message',
             type: 'info',
-            text: `Reloading all filter lists: done, took ${Date.now() - t0} ms`
+            text: `Reloading all filter lists: done, took ${elapsed()}`
         });
 
         vAPI.storage.set({ 'availableFilterLists': µb.availableFilterLists });
@@ -883,7 +885,7 @@ onBroadcast(msg => {
     };
 
     const applyCompiledFilters = (assetKey, compiled) => {
-        ubolog(`loadFilterLists() Loading filters from ${assetKey} at ${Date.now() - t0} ms`);
+        ubolog(`loadFilterLists() Loading filters from ${assetKey} at ${elapsed()}`);
         const snfe = staticNetFilteringEngine;
         const sxfe = staticExtFilteringEngine;
         let acceptedCount = snfe.acceptedCount + sxfe.acceptedCount;
@@ -917,7 +919,7 @@ onBroadcast(msg => {
         µb.selfieManager.destroy();
         staticFilteringReverseLookup.resetLists();
 
-        ubolog(`loadFilterLists() All filters removed at ${Date.now() - t0} ms`);
+        ubolog(`loadFilterLists() All filters removed at ${elapsed()}`);
 
         // We need to build a complete list of assets to pull first: this is
         // because it *may* happens that some load operations are synchronous:
@@ -959,7 +961,9 @@ onBroadcast(msg => {
         loadedListKeys.length = 0;
         loadingPromise = Promise.all([
             this.getAvailableLists().then(lists => onFilterListsReady(lists)),
-            this.loadRedirectResources(),
+            this.loadRedirectResources().then(( ) => {
+                ubolog(`loadFilterLists() Redirects/scriptlets ready at ${elapsed()}`);
+            }),
         ]).then(( ) => {
             onDone();
         });
