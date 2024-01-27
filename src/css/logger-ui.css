@@ -967,7 +967,7 @@ body.dirty .netFilteringDialog > div.panes > .dynamic > .toolbar #saveRules {
     background-color: rgb(var(--primary-70) / 40%);
     }
 #loggerExportDialog .output {
-    font: smaller mono;
+    font-size: small;
     height: 80vh;
     padding: 0.5em;
     white-space: pre-wrap;
