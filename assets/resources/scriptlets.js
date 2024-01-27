@@ -1678,7 +1678,7 @@ function jsonPrune(
             if ( objAfter === undefined ) { return objBefore; }
             safe.uboLog(logPrefix, 'Pruned');
             if ( safe.logLevel > 1 ) {
-                safe.uboLog(logPrefix, JSON.stringify(objAfter, null, 1));
+                safe.uboLog(logPrefix, `After pruning:\n${JSON.stringify(objAfter, null, 1)}`);
             }
             return objAfter;
         },
@@ -3939,6 +3939,58 @@ function multiup() {
         document.location.href = link;
     };
     document.addEventListener('click', handler, { capture: true });
+}
+
+/******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'remove-cache-storage-item.js',
+    fn: removeCacheStorageItem,
+    world: 'ISOLATED',
+    dependencies: [
+        'safe-self.fn',
+    ],
+});
+function removeCacheStorageItem(
+    cacheNamePattern = '',
+    requestPattern = ''
+) {
+    if ( cacheNamePattern === '' ) { return; }
+    const safe = safeSelf();
+    const logPrefix = safe.makeLogPrefix('remove-cache-storage-item', cacheNamePattern, requestPattern);
+    const cacheStorage = self.caches;
+    if ( cacheStorage instanceof Object === false ) { return; }
+    const reCache = safe.patternToRegex(cacheNamePattern, undefined, true);
+    const reRequest = safe.patternToRegex(requestPattern, undefined, true);
+    cacheStorage.keys().then(cacheNames => {
+        for ( const cacheName of cacheNames ) {
+            if ( reCache.test(cacheName) === false ) { continue; }
+            if ( requestPattern === '' ) {
+                cacheStorage.delete(cacheName).then(result => {
+                    if ( safe.logLevel > 1 ) {
+                        safe.uboLog(logPrefix, `Deleting ${cacheName}`);
+                    }
+                    if ( result !== true ) { return; }
+                    safe.uboLog(logPrefix, `Deleted ${cacheName}: ${result}`);
+                });
+                continue;
+            }
+            cacheStorage.open(cacheName).then(cache => {
+                cache.keys().then(requests => {
+                    for ( const request of requests ) {
+                        if ( reRequest.test(request.url) === false ) { continue; }
+                        if ( safe.logLevel > 1 ) {
+                            safe.uboLog(logPrefix, `Deleting ${cacheName}/${request.url}`);
+                        }
+                        cache.delete(request).then(result => {
+                            if ( result !== true ) { return; }
+                            safe.uboLog(logPrefix, `Deleted ${cacheName}/${request.url}: ${result}`);
+                        });
+                    }
+                });
+            });
+        }
+    });
 }
 
 
