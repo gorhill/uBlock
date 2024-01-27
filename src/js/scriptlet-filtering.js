@@ -335,10 +335,10 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
         }
 
         const contentScript = [];
-        if ( scriptletDetails.mainWorld !== '' ) {
+        if ( scriptletDetails.mainWorld ) {
             contentScript.push(mainWorldInjector.assemble(hostname, scriptletDetails));
         }
-        if ( scriptletDetails.isolatedWorld !== '' ) {
+        if ( scriptletDetails.isolatedWorld ) {
             contentScript.push(isolatedWorldInjector.assemble(hostname, scriptletDetails));
         }
 
@@ -372,6 +372,9 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
         if ( scriptletDetails === undefined ) {
             contentScriptRegisterer.unregister(hostname);
             return;
+        }
+        if ( Boolean(scriptletDetails.code) === false ) {
+            return scriptletDetails;
         }
 
         const contentScript = [ scriptletDetails.code ];

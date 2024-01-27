@@ -259,12 +259,6 @@ export class ScriptletFilteringEngine {
         $mainWorldMap.clear();
         $isolatedWorldMap.clear();
 
-        if ( scriptletDetails.mainWorld === '' ) {
-            if ( scriptletDetails.isolatedWorld === '' ) {
-                return { filters: scriptletDetails.filters };
-            }
-        }
-    
         const scriptletGlobals = options.scriptletGlobals || {};
 
         if ( options.debug ) {
