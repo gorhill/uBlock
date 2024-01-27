@@ -427,7 +427,7 @@ function abortCurrentScriptCore(
             if ( debug === 'nomatch' || debug === 'all' ) { debugger; }  // jshint ignore: line
             return;
         }
-        if ( safe.logLevel > 1 && e.src !== '' ) {
+        if ( safe.logLevel > 1 && context !== '' ) {
             safe.uboLog(logPrefix, `Matched src\n${e.src}`);
         }
         const scriptText = getScriptText(e);
@@ -1659,19 +1659,28 @@ function jsonPrune(
     stackNeedle = ''
 ) {
     const safe = safeSelf();
+    const logPrefix = safe.makeLogPrefix('json-prune', rawPrunePaths, rawNeedlePaths, stackNeedle);
     const stackNeedleDetails = safe.initPattern(stackNeedle, { canNegate: true });
     const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
     JSON.parse = new Proxy(JSON.parse, {
         apply: function(target, thisArg, args) {
             const objBefore = Reflect.apply(target, thisArg, args);
+            if ( rawPrunePaths === '' ) {
+                safe.uboLog(logPrefix, JSON.stringify(objBefore, null, 1));
+            }
             const objAfter = objectPruneFn(
                 objBefore,
                 rawPrunePaths,
                 rawNeedlePaths,
                 stackNeedleDetails,
                 extraArgs
-           );
-           return objAfter || objBefore;
+            );
+            if ( objAfter === undefined ) { return objBefore; }
+            safe.uboLog(logPrefix, 'Pruned');
+            if ( safe.logLevel > 1 ) {
+                safe.uboLog(logPrefix, JSON.stringify(objAfter, null, 1));
+            }
+            return objAfter;
         },
     });
 }
