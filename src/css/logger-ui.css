@@ -968,9 +968,9 @@ body.dirty .netFilteringDialog > div.panes > .dynamic > .toolbar #saveRules {
     }
 #loggerExportDialog .output {
     font: smaller mono;
-    height: 60vh;
+    height: 80vh;
     padding: 0.5em;
-    white-space: pre;
+    white-space: pre-wrap;
     }
 
 #loggerSettingsDialog {
