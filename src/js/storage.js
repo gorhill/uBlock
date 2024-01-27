@@ -850,8 +850,7 @@ onBroadcast(msg => {
     let t0 = 0;
 
     const onDone = ( ) => {
-        const td = Date.now() - t0;
-        ubolog(`loadFilterLists() took ${td} ms`);
+        ubolog(`loadFilterLists() All filters in memory at ${Date.now() - t0} ms`);
 
         staticNetFilteringEngine.freeze();
         staticExtFilteringEngine.freeze();
@@ -859,13 +858,15 @@ onBroadcast(msg => {
         vAPI.net.unsuspend();
         filteringBehaviorChanged();
 
-        vAPI.storage.set({ 'availableFilterLists': µb.availableFilterLists });
+        ubolog(`loadFilterLists() All filters ready at ${Date.now() - t0} ms`);
 
         logger.writeOne({
             realm: 'message',
             type: 'info',
-            text: `Reloading all filter lists: done, took ${td} ms`
+            text: `Reloading all filter lists: done, took ${Date.now() - t0} ms`
         });
+
+        vAPI.storage.set({ 'availableFilterLists': µb.availableFilterLists });
 
         broadcast({
             what: 'staticFilteringDataChanged',
@@ -882,6 +883,7 @@ onBroadcast(msg => {
     };
 
     const applyCompiledFilters = (assetKey, compiled) => {
+        ubolog(`loadFilterLists() Loading filters from ${assetKey} at ${Date.now() - t0} ms`);
         const snfe = staticNetFilteringEngine;
         const sxfe = staticExtFilteringEngine;
         let acceptedCount = snfe.acceptedCount + sxfe.acceptedCount;
@@ -914,6 +916,8 @@ onBroadcast(msg => {
         staticNetFilteringEngine.reset();
         µb.selfieManager.destroy();
         staticFilteringReverseLookup.resetLists();
+
+        ubolog(`loadFilterLists() All filters removed at ${Date.now() - t0} ms`);
 
         // We need to build a complete list of assets to pull first: this is
         // because it *may* happens that some load operations are synchronous:
@@ -950,6 +954,7 @@ onBroadcast(msg => {
 
     µb.loadFilterLists = function() {
         if ( loadingPromise instanceof Promise ) { return loadingPromise; }
+        ubolog('loadFilterLists() Start');
         t0 = Date.now();
         loadedListKeys.length = 0;
         loadingPromise = Promise.all([
