@@ -1602,9 +1602,6 @@ function addEventListenerDefuser(
         const matchesHandler = safe.RegExp_test.call(rePattern, handler);
         const matchesEither = matchesType || matchesHandler;
         const matchesBoth = matchesType && matchesHandler;
-        if ( safe.logLevel > 1 && matchesEither ) {
-            safe.uboLog(logPrefix, `Matched "${type}"\n${handler.trim()}`);
-        }
         if ( debug === 1 && matchesBoth || debug === 2 && matchesEither ) {
             debugger; // jshint ignore:line
         }
@@ -1613,18 +1610,20 @@ function addEventListenerDefuser(
     const trapEddEventListeners = ( ) => {
         const eventListenerHandler = {
             apply: function(target, thisArg, args) {
-                let type, handler;
+                let t, h;
                 try {
-                    type = String(args[0]);
-                    handler = args[1] instanceof Function
+                    t = String(args[0]);
+                    h = args[1] instanceof Function
                         ? String(safe.Function_toString(args[1]))
                         : String(args[1]);
                 } catch(ex) {
                 }
-                if ( shouldPrevent(thisArg, type, handler) !== true ) {
-                    return Reflect.apply(target, thisArg, args);
+                if ( type === '' && pattern === '' ) {
+                    safe.uboLog(logPrefix, `Called: ${t}\n${h}`);
+                } else if ( shouldPrevent(thisArg, t, h) ) {
+                    return safe.uboLog(logPrefix, `Prevented: ${t}\n${h}`);
                 }
-                safe.uboLog(logPrefix, 'Prevented');
+                return Reflect.apply(target, thisArg, args);
             },
             get(target, prop, receiver) {
                 if ( prop === 'toString' ) {
@@ -2328,6 +2327,10 @@ function noSetIntervalIf(
                 ? String(safe.Function_toString(args[0]))
                 : String(args[0]);
             const b = args[1];
+            if ( needle === '' && delay === undefined ) {
+                safe.uboLog(logPrefix, `Called:\n${a}\n${b}`);
+                return Reflect.apply(target, thisArg, args);
+            }
             let defuse;
             if ( needle !== '' ) {
                 defuse = reNeedle.test(a) !== needleNot;
@@ -2387,6 +2390,10 @@ function noSetTimeoutIf(
                 ? String(safe.Function_toString(args[0]))
                 : String(args[0]);
             const b = args[1];
+            if ( needle === '' && delay === undefined ) {
+                safe.uboLog(logPrefix, `Called:\n${a}\n${b}`);
+                return Reflect.apply(target, thisArg, args);
+            }
             let defuse;
             if ( needle !== '' ) {
                 defuse = reNeedle.test(a) !== needleNot;
