@@ -1167,7 +1167,7 @@ function matchObjectProperties(propNeedles, ...objs) {
         let value = haystack[prop];
         if ( value === undefined ) { continue; }
         if ( typeof value !== 'string' ) {
-            try { value = JSON.stringify(value); }
+            try { value = safe.JSON_stringify(value); }
             catch(ex) { }
             if ( typeof value !== 'string' ) { continue; }
         }
@@ -1665,7 +1665,7 @@ function jsonPrune(
         apply: function(target, thisArg, args) {
             const objBefore = Reflect.apply(target, thisArg, args);
             if ( rawPrunePaths === '' ) {
-                safe.uboLog(logPrefix, JSON.stringify(objBefore, null, 1));
+                safe.uboLog(logPrefix, safe.JSON_stringify(objBefore, null, 2));
             }
             const objAfter = objectPruneFn(
                 objBefore,
@@ -1677,7 +1677,7 @@ function jsonPrune(
             if ( objAfter === undefined ) { return objBefore; }
             safe.uboLog(logPrefix, 'Pruned');
             if ( safe.logLevel > 1 ) {
-                safe.uboLog(logPrefix, `After pruning:\n${JSON.stringify(objAfter, null, 1)}`);
+                safe.uboLog(logPrefix, `After pruning:\n${safe.JSON_stringify(objAfter, null, 2)}`);
             }
             return objAfter;
         },
@@ -1997,13 +1997,16 @@ function noFetchIf(
             const details = args[0] instanceof self.Request
                 ? args[0]
                 : Object.assign({ url: args[0] }, args[1]);
+            if ( propsToMatch === '' && responseBody === '' ) {
+                return safe.uboLog(logPrefix, `Called: ${safe.JSON_stringify(details, null, 2)}`);
+            }
             let proceed = true;
             try {
                 const props = new Map();
                 for ( const prop in details ) {
                     let v = details[prop];
                     if ( typeof v !== 'string' ) {
-                        try { v = JSON.stringify(v); }
+                        try { v = safe.JSON_stringify(v); }
                         catch(ex) { }
                     }
                     if ( typeof v !== 'string' ) { continue; }
@@ -2523,6 +2526,9 @@ function noXhrIf(
             const haystack = { method, url };
             if ( matchObjectProperties(propNeedles, haystack) ) {
                 xhrInstances.set(this, haystack);
+            }
+            if ( propsToMatch === '' && directive === '' ) {
+                return safe.uboLog(logPrefix, `Called: ${safe.JSON_stringify(haystack, null, 2)}`);
             }
             haystack.headers = Object.assign({}, headers);
             return super.open(method, url, ...args);
