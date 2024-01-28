@@ -1998,7 +1998,8 @@ function noFetchIf(
                 ? args[0]
                 : Object.assign({ url: args[0] }, args[1]);
             if ( propsToMatch === '' && responseBody === '' ) {
-                return safe.uboLog(logPrefix, `Called: ${safe.JSON_stringify(details, null, 2)}`);
+                safe.uboLog(logPrefix, `Called: ${safe.JSON_stringify(details, null, 2)}`);
+                return Reflect.apply(target, thisArg, args);
             }
             let proceed = true;
             try {
@@ -2528,7 +2529,7 @@ function noXhrIf(
                 xhrInstances.set(this, haystack);
             }
             if ( propsToMatch === '' && directive === '' ) {
-                return safe.uboLog(logPrefix, `Called: ${safe.JSON_stringify(haystack, null, 2)}`);
+                safe.uboLog(logPrefix, `Called: ${safe.JSON_stringify(haystack, null, 2)}`);
             }
             haystack.headers = Object.assign({}, headers);
             return super.open(method, url, ...args);
