@@ -3045,11 +3045,11 @@ dom.on('#logLevel', 'click', ev => {
     broadcast({ what: 'loggerLevelChanged', level });
 });
 
-dom.on('#netInspector', 'copy', ev => {
+dom.on('#netInspector #vwContent', 'copy', ev => {
     const selection = document.getSelection();
-    ev.clipboardData.setData('text/plain',
-        selection.toString().replace(/\x1F|\u200B/g, '\t')
-    );
+    const text = selection.toString();
+    if ( /\x1F|\u200B/.test(text) === false ) { return; }
+    ev.clipboardData.setData('text/plain', text.replace(/\x1F|\u200B/g, '\t'));
     ev.preventDefault();
 });
 
