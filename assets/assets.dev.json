@@ -651,8 +651,7 @@
 		"lang": "fa ps tg",
 		"contentURL": [
 			"https://raw.githubusercontent.com/MasterKia/PersianBlocker/main/PersianBlocker.txt",
-			"https://cdn.statically.io/gh/MasterKia/PersianBlocker/main/PersianBlocker.txt",
-			"https://raw.githubusercontent.com/MasterKia/PersianBlocker/main/PersianBlocker.txt"
+			"https://cdn.statically.io/gh/MasterKia/PersianBlocker/main/PersianBlocker.txt"
 		],
 		"cdnURLs": [
 			"https://cdn.jsdelivr.net/gh/MasterKia/PersianBlocker@main/PersianBlocker.txt",
