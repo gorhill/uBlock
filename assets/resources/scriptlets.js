@@ -2525,11 +2525,12 @@ function noXhrIf(
                 return super.open(method, url, ...args);
             }
             const haystack = { method, url };
-            if ( matchObjectProperties(propNeedles, haystack) ) {
-                xhrInstances.set(this, haystack);
-            }
             if ( propsToMatch === '' && directive === '' ) {
                 safe.uboLog(logPrefix, `Called: ${safe.JSON_stringify(haystack, null, 2)}`);
+                return super.open(method, url, ...args);
+            }
+            if ( matchObjectProperties(propNeedles, haystack) ) {
+                xhrInstances.set(this, haystack);
             }
             haystack.headers = Object.assign({}, headers);
             return super.open(method, url, ...args);
