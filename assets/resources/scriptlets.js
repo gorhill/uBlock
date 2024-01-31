@@ -2893,31 +2893,6 @@ function noWebrtc() {
 /******************************************************************************/
 
 builtinScriptlets.push({
-    name: 'golem.de.js',
-    fn: golemDe,
-});
-// https://github.com/uBlockOrigin/uAssets/issues/88
-function golemDe() {
-    const rael = window.addEventListener;
-    window.addEventListener = function(a, b) {
-        rael(...arguments);
-        let haystack;
-        try {
-            haystack = b.toString();
-        } catch(ex) {
-        }
-        if (
-            typeof haystack === 'string' &&
-            /^\s*function\s*\(\)\s*\{\s*window\.clearTimeout\(r\)\s*\}\s*$/.test(haystack)
-        ) {
-            b();
-        }
-    }.bind(window);
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
     name: 'disable-newtab-links.js',
     fn: disableNewtabLinks,
 });
