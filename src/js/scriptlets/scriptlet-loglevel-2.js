@@ -24,9 +24,8 @@
 /******************************************************************************/
 
 (( ) => {
-    if ( typeof vAPI !== 'object' || vAPI === null ) { return; }
-    if ( vAPI.bcSecret instanceof self.BroadcastChannel === false ) { return; }
-    vAPI.bcSecret.postMessage('setScriptletLogLevelToTwo');
+    if ( self.uBO_bcSecret instanceof self.BroadcastChannel === false ) { return; }
+    self.uBO_bcSecret.postMessage('setScriptletLogLevelToTwo');
 })();
 
 

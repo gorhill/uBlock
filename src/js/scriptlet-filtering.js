@@ -175,9 +175,7 @@ const onScriptletMessageInjector = (( ) => {
     const parts = [
         '(',
         function(name) {
-            if ( typeof vAPI !== 'object' ) { return; }
-            if ( vAPI === null ) { return; }
-            if ( vAPI.bcSecret ) { return; }
+            if ( self.uBO_bcSecret ) { return; }
             const bcSecret = new self.BroadcastChannel(name);
             bcSecret.onmessage = ev => {
                 const msg = ev.data;
@@ -189,14 +187,12 @@ const onScriptletMessageInjector = (( ) => {
                 case 'object':
                     if ( self.vAPI && self.vAPI.messaging ) {
                         self.vAPI.messaging.send('contentscript', msg);
-                    } else {
-                        bcSecret.onmessage = null; 
                     }
                     break;
                 }
             };
             bcSecret.postMessage('iamready!');
-            vAPI.bcSecret = bcSecret;
+            self.uBO_bcSecret = bcSecret;
         }.toString(),
         ')(',
             'bcSecret-slot',
