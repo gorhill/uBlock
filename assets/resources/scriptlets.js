@@ -2679,9 +2679,12 @@ function noWindowOpenIf(
         apply: function(target, thisArg, args) {
             const haystack = args.join(' ');
             if ( rePattern.test(haystack) !== targetMatchResult ) {
+                if ( safe.logLevel > 1 ) {
+                    safe.uboLog(logPrefix, `Allowed (${args.join(', ')})`);
+                }
                 return Reflect.apply(target, thisArg, args);
             }
-            safe.uboLog(logPrefix, 'Prevented');
+            safe.uboLog(logPrefix, `Prevented (${args.join(', ')})`);
             if ( autoRemoveAfter < 0 ) { return null; }
             const decoyElem = decoy === 'obj'
                 ? createDecoy('object', 'data', ...args)
