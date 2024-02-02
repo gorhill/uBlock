@@ -187,6 +187,8 @@ const onScriptletMessageInjector = (( ) => {
                 case 'object':
                     if ( self.vAPI && self.vAPI.messaging ) {
                         self.vAPI.messaging.send('contentscript', msg);
+                    } else {
+                        console.log(`[uBO][${msg.type}]${msg.text}`);
                     }
                     break;
                 }
