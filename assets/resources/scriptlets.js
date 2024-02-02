@@ -4610,7 +4610,7 @@ function trustedReplaceArgument(
         ? safe.patternToRegex(extraArgs.condition)
         : /^/;
     const reflector = proxyApplyFn(propChain, function(...args) {
-        const arglist = args.length >= 2 && args[1];
+        const arglist = args[args.length-1];
         if ( Array.isArray(arglist) === false ) { return reflector(...args); }
         const argBefore = arglist[argpos];
         if ( reCondition.test(argBefore) === false ) { return reflector(...args); }
