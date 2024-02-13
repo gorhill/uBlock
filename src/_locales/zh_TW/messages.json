@@ -756,7 +756,7 @@
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
-    "message": "所屬方",
+    "message": "第一方/第三方",
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
@@ -864,7 +864,7 @@
     "description": "A label for the context column"
   },
   "loggerSettingHideColumnPartyness": {
-    "message": "{{input}} 所屬方",
+    "message": "{{input}} 第一方/第三方",
     "description": "A label for the partyness column"
   },
   "loggerExportFormatList": {

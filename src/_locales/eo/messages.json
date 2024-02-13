@@ -452,11 +452,11 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "Generic cosmetic filters are those cosmetic filters which are meant to apply on all web sites. Enabling this option will eliminate the memory and CPU overhead added to web pages as a result of handling generic cosmetic filters.\n\nIt is recommended to enable this option on less powerful devices.",
+    "message": "Ĝenerikaj kozmetikaj filtriloj estas tiuj kozmetikaj filtriloj, kiuj estas intencitaj esti aplikitaj sur ĉiuj retejoj. Aktivigante tiun opcion, oni eliminigos la memoran kaj procesorecan ŝarĝon, kiu estas aldonita al retpaĝoj pro la pritraktado de ĝenerikaj kozmetikaj filtriloj.\n\nEstas rekomendite aktivigi tiun opcion sur aparatoj ne estas potencaj.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
-    "message": "Suspend network activity until all filter lists are loaded",
+    "message": "Suspendu retan aktivecon ĝis ĉiuj filtraj listoj estas ŝargitaj.",
     "description": "A checkbox in the 'Filter lists' pane"
   },
   "3pListsOfBlockedHostsHeader": {
@@ -532,7 +532,7 @@
     "description": "Short information about how to create custom filters"
   },
   "1pTrustWarning": {
-    "message": "Do not add filters from untrusted sources.",
+    "message": "Ne aldonu filtrilojn el ne fidindaj fontoj.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {
@@ -824,11 +824,11 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Static filter could not be found in any of the currently enabled filter lists",
+    "message": "Stata filtro ne povis esti trovita en iu ajn el la nuntempe aktivigitaj filtro-listoj.",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
-    "message": "Logger entries which do not fulfill all three conditions below will be automatically discarded:",
+    "message": "Logeto-enskriboj, kiuj ne plenumas ĉiujn tri kondiĉojn sube, estos aŭtomate forĵetitaj:",
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {

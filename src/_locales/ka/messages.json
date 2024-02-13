@@ -60,7 +60,7 @@
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
-    "message": "uBlock₀ — რესურსები",
+    "message": "uBlock₀ — მასალების ნახვა",
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
@@ -72,11 +72,11 @@
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "დააწკაპეთ uBlock₀-ის გამოსართავად ამ საიტზე.\n\nCtrl+დაწკაპებით uBlock₀ მხოლოდ ამ გვერდზე გამოირთვება.",
+    "message": "დაწკაპეთ, რომ გაითიშოს uBlock₀ ამ საიტისთვის.\n\nCtrl+დაწკაპებით uBlock₀ მხოლოდ ამ გვერდზე გაითიშება.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "დააწკაპეთ uBlock₀-ის ჩასართავად ამ საიტზე.",
+    "message": "დაწკაპეთ, რომ ჩაირთოს uBlock₀ ამ საიტისთვის.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -136,11 +136,11 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "დააწკაპეთ ყველა ამომხტომი ფანჯრის შესაზღუდად ამ საიტზე",
+    "message": "დაწკაპეთ, რომ ყველა ამომხტომი ფანჯარა შეიზღუდოს ამ საიტზე",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "დააწკაპეთ, ამომხტომი ფანჯრების შეზღუდვის გასაუქმებლად ამ საიტზე",
+    "message": "დაწკაპეთ, რომ ამომხტომი ფანჯრები აღარ შეიზღუდოს ამ საიტზე",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -148,11 +148,11 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "დააწკაპეთ დიდი მედიაფაილების შესაზღუდად ამ საიტზე",
+    "message": "დაწკაპეთ, რომ დიდი მედიაფაილები შეიზღუდოს ამ საიტზე",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "დააწკაპეთ დიდი მედიაფაილების შეზღუდვის გასაუქმებლად ამ საიტზე",
+    "message": "დაწკაპეთ, რომ დიდი მედიაფაილები აღარ შეიზღუდოს ამ საიტზე",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -164,7 +164,7 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "დააწკაპეთ გარეგნული ნაწილების გასაფილტრად ამ საიტზე",
+    "message": "დაწკაპეთ გარეგნული ნაწილების გასაფილტრად ამ საიტზე",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -172,19 +172,19 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "დააწკაპეთ ვებშრიფტების შესაზღუდად ამ საიტზე",
+    "message": "დაწკაპეთ, რომ ვებშრიფტები შეიზღუდოს ამ საიტზე",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "დააწკაპეთ ვებშრიფტების შეზღუდვის გასაუქმებლად ამ საიტზე",
+    "message": "დაწკაპეთ, რომ ვებშრიფტები აღარ შეიზღუდოს ამ საიტზე",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "დააწკაპეთ JavaScript-ის გასათიშად ამ საიტზე",
+    "message": "დაწკაპეთ, რომ გაითიშოს JavaScript ამ საიტზე",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "დააწკაპეთ JavaScript-ზე შეზღუდვის მოსახსნელად ამ საიტზე",
+    "message": "დაწკაპეთ, რომ აღარ გაითიშოს JavaScript ამ საიტზე",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
@@ -332,7 +332,7 @@
     "description": "English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt": {
-    "message": "ფერთა გასწორება დაქვეითებულად მხედველთათვის",
+    "message": "ფერთა მორგება სუსტად მხედველთათვის",
     "description": "English: Color-blind friendly"
   },
   "settingsAppearance": {
@@ -360,7 +360,7 @@
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
-    "message": "ბმულებით სარგებლობაზე თვალყურის დევნების არიდება",
+    "message": "ბმულებით სარგებლობისას აღრიცხვის არიდება",
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
@@ -376,7 +376,7 @@
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "გარეგნული ნაწილების ფილტრის გათიშვა",
+    "message": "გარეგნული ნაწილების გაფილტვრის გათიშვა",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
@@ -424,7 +424,7 @@
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
-    "message": "{{total}}-დან გამოიყენება {{used}}",
+    "message": "{{total}}-იდან გამოიყენება {{used}}",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
@@ -444,7 +444,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "გარეგნული ფილტრები, ძირითადად, იმ ხილული ნაწილების დასამალად გამოიყენება ვებგვერდზე, რომელთაც ქსელის მოთხოვნაზე დაფუძნებული ფილტრები ვერ ზღუდავს.",
+    "message": "გარეგნული ფილტრები, ჩვეულებრივ, ვებგვერდზე იმ ხილული ნაწილების დასამალად გამოიყენება, რომლებზეც ქსელში მოთხოვნის შემზღუდავი ფილტრები ვერ მოქმედებს.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -452,7 +452,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "გარეგნული საერთო ფილტრები ისეთი ფილტრებია, რომლებიც ყველა ვებსაიტზე მოქმედებს. ამ პარამეტრის ჩართვით კი თავიდან აიცილებთ გარეგნული საერთო ფილტრების შედეგად მეხსიერებისა და პროცესორის ზედმეტ დატვირთვას.\n\nამ პარამეტრის ჩართვა სასურველია სუსტ მოწყობილობებზე.",
+    "message": "გარეგნული საერთო ფილტრებია, რომლებიც ყველა ვებსაიტზე მოქმედებს. ამ პარამეტრის ჩართვით კი თავიდან აიცილებთ გარეგნული საერთო ფილტრებით მეხსიერებისა და პროცესორის ზედმეტ დატვირთვას.\n\nამ პარამეტრის ჩართვა სასურველია სუსტ მოწყობილობებზე.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
@@ -544,7 +544,7 @@
     "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
-    "message": "ჩემი-ublock-მუდმივი-ფილტრები_{{datetime}}.txt",
+    "message": "ჩემი-უცვლელი-ublock-ფილტრები_{{datetime}}.txt",
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges": {
@@ -676,7 +676,7 @@
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
-    "message": "uBlock Origin-ის ვიკი: აღმრიცხავი",
+    "message": "uBlock-Origin-ცნობარი: აღმრიცხავი",
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
@@ -780,7 +780,7 @@
     "description": "Label for the type selector"
   },
   "loggerStaticFilteringHeader": {
-    "message": "მუდმივი ფილტრები",
+    "message": "უცვლელი ფილტრები",
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
@@ -820,11 +820,11 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "მუდმივი ფილტრი <code>{{filter}}</code> ნაპოვნია სიაში:",
+    "message": "უცვლელი ფილტრი <code>{{filter}}</code> ნაპოვნია სიაში:",
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "მუდმივი ფილტრი <code>{{filter}}</code> ვერ მოიძებნა ამჟამად გამოყენებულ ფილტრებს შორის",
+    "message": "უცვლელი ფილტრი ვერ მოიძებნა ამჟამად გამოყენებულ ფილტრებში",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
@@ -900,7 +900,7 @@
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "დამატებითი მასალებისთვის იხილეთ <code>uBlock/wiki</code>, რომ უკეთ გაეცნოთ uBlock Origin-ის შესაძლებლობებს.",
+    "message": "დამატებითი მასალებისთვის იხილეთ <code>uBlock/wiki</code>, რომ უკეთ გაიცნოთ uBlock Origin და მისი შესაძლებლობები.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
@@ -912,7 +912,7 @@
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "ფილტრის ხარვეზი/საიტი დაზიანდა",
+    "message": "ფილტრის ხარვეზი/გაუმართაობა საიტზე",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
@@ -920,7 +920,7 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>ყურადღება:</b> ეცადეთ, არ გამოიყენოთ სხვა მსგავსი დანიშნულების შემზღუდავები uBlock Origin-თან ერთად, ვინაიდან წარმოშობს ფილტრების ხარვეზებს ცალკეულ საიტებზე.",
+    "message": "<b>ყურადღება:</b> ეცადეთ, არ გამოიყენოთ uBlock Origin და სხვა მსგავსი შემზღუდავები ერთდროულად, ვინაიდან წარმოიქმნება ფილტრების ხარვეზები ცალკეულ საიტებზე.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
@@ -1132,11 +1132,11 @@
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {
-    "message": "uBlock Origin-მა შეზღუდა მოცემული გვერდის ჩატვირთვა:",
+    "message": "uBlock Origin ზღუდავს მოცემული გვერდის ჩატვირთვას:",
     "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
-    "message": "მოცემული ფილტრიდან გამომდინარე",
+    "message": "აღნიშნული ფილტრის მიხედვით:",
     "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
@@ -1144,7 +1144,7 @@
     "description": "label to be used for the parameter-less URL: https://cloud.githubusercontent.com/assets/585534/9832014/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {
-    "message": "პოვნა:",
+    "message": "შეიცავს:",
     "description": "English: List of filter list names follows"
   },
   "docblockedBack": {
@@ -1196,7 +1196,7 @@
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
-    "message": "გაფრთხილება! გაფართოებული პარამეტრების ცვლილების შედეგებზე, თავად იქნებით პასუხისმგებელი.",
+    "message": "გაფრთხილება! გაფართოებული პარამეტრების ჩასწორების შედეგებზე თავად იქნებით პასუხისმგებელი.",
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {

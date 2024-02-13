@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "A permission-less content blocker. Blocks ads, trackers, miners, and more immediately upon installation.",
+    "message": "ಅನುಮತಿ-ಕಡಿಮೆ ವಿಷಯ ಬ್ಲಾಕರ್. ಅನುಸ್ಥಾಪನೆಯ ತಕ್ಷಣವೇ ಜಾಹೀರಾತುಗಳು, ಟ್ರ್ಯಾಕರ್‌ಗಳು, ಗಣಿಗಾರರು ಮತ್ತು ಹೆಚ್ಚಿನದನ್ನು ನಿರ್ಬಂಧಿಸುತ್ತದೆ.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -12,19 +12,19 @@
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
-    "message": "uBO Lite — Dashboard",
+    "message": "\nಯುಬಿಒ ಲೈಟ್ - ಡ್ಯಾಶ್‌ಬೋರ್ಡ್\n",
     "description": "English: uBO Lite — Dashboard"
   },
   "settingsPageName": {
-    "message": "Settings",
+    "message": "ಸಂಯೋಜನೆಗಳು",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
-    "message": "About",
+    "message": "ಬಗ್ಗೆ",
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
-    "message": "Privacy policy",
+    "message": "ಗೌಪ್ಯತಾ ನೀತಿ\n",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupFilteringModeLabel": {
@@ -32,15 +32,15 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {
-    "message": "Open the dashboard",
+    "message": "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ ತೆರೆಯಿರಿ",
     "description": "English: Click to open the dashboard"
   },
   "popupMoreButton": {
-    "message": "More",
+    "message": "ಇನ್ನಷ್ಟು",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Less",
+    "message": "ಕಡಿಮೆ",
     "description": "Label to be used to hide popup panel sections"
   },
   "3pGroupDefault": {
@@ -48,11 +48,11 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAds": {
-    "message": "Ads",
+    "message": "ಜಾಹೀರಾತುಗಳು",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupPrivacy": {
-    "message": "Privacy",
+    "message": "ಗೌಪ್ಯತೆ",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
@@ -68,7 +68,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupRegions": {
-    "message": "Regions, languages",
+    "message": "ಪ್ರದೇಶಗಳು, ಭಾಷೆಗಳು\n",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "aboutChangelog": {
@@ -100,7 +100,7 @@
     "description": "Shown in the About pane"
   },
   "firstRunSectionLabel": {
-    "message": "Welcome",
+    "message": "ಸ್ವಾಗತ",
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {

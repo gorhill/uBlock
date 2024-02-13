@@ -4,203 +4,203 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Behingoz, blokeatzaile eraginkor bat. PUZ eta memorian arina.",
+    "message": "O'r diwedd, rhwystrydd effeithlon. Ysgafn ar y CPU a'r cof.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
-    "message": "uBlock₀ — Kontrol panela",
+    "message": "uBlock₀ — Dashfwrdd",
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Abisua! Gorde gabeko aldaketak dituzu",
+    "message": "Rhybudd! Mae yna newidiadau heb eu cadw",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Geratu",
+    "message": "Aros yma",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Ezikusi",
+    "message": "Anwybyddu",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
-    "message": "Ezarpenak",
+    "message": "Gosodiadau",
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Iragazki-zerrendak",
+    "message": "Rhestri hidlo",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
-    "message": "Nire iragazkiak",
+    "message": "Fy hidlyddion",
     "description": "appears as tab name in dashboard"
   },
   "rulesPageName": {
-    "message": "Nire arauak",
+    "message": "Fy rheolau",
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Konfidantzazko webguneak",
+    "message": "Gwefannau dibynadwy",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "Lasterbideak",
+    "message": "Llwybrau byr",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
-    "message": "uBlock₀ — Egunkaria",
+    "message": "uBlock₀ — Logiwr",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
-    "message": "Honi buruz",
+    "message": "Ynghylch",
     "description": "appears as tab name in dashboard"
   },
   "supportPageName": {
-    "message": "Laguntza",
+    "message": "Cymorth",
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
-    "message": "uBlock₀ — Aktibo-ikuslea",
+    "message": "uBlock₀ — Asset viewer",
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
-    "message": "Ezarpen aurreratuak",
+    "message": "Gosodiadau uwch",
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Klik: gaitu/ezgaitu uBlock₀ gune honetan.\n\nKtrl+klik: ezgaitu uBlock₀ orri honetan soilik.",
+    "message": "Clic: analluogi/galluogi uBlock₀ ar y wefan hon.\n\nCtrl+clic: analluogi uBlock₀ ar y dudalen hon yn unig.",
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Klik: Gaitu/ezgaitu uBlock₀ gune honetan.\n\nKtrl+klik: Desgaitu uBlock₀ orri honetan soilik.",
+    "message": "Cliciwch i analluogi uBlock₀ ar y wefan hon.\n\nDefnyddiwch ctrl+clic i analluogi uBlock₀ ar y dudalen hon yn unig.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Klik: Gaitu uBlock₀ gune honetan.",
+    "message": "Cliciwch i alluogi uBlock₀ ar y wefan hon.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
-    "message": "blokeatutako eskariak",
+    "message": "requests blocked",
     "description": "English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt": {
-    "message": "orri honetan",
+    "message": "ar y dudalen hon",
     "description": "English: on this page"
   },
   "popupBlockedStats": {
-    "message": "{{count}} edo %{{percent}}",
+    "message": "{{count}} ({{percent}}%)",
     "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
-    "message": "instalaziotik",
+    "message": "since install",
     "description": "English: since install"
   },
   "popupOr": {
-    "message": "edo",
+    "message": "neu",
     "description": "English: or"
   },
   "popupBlockedOnThisPage_v2": {
-    "message": "Blokeatuta orri honetan",
+    "message": "Wedi rhwystro ar y dudalen hon",
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "Blokeatuta instalaziotik",
+    "message": "Wedi rhwystro ers gosod",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
-    "message": "Konektatutako domeinuak",
+    "message": "Parthau wedi cysylltu",
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
-    "message": "Ireki kontrol panela",
+    "message": "Agor y dashfwrdd",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Elementuak lekuz aldatzeko modua",
+    "message": "Modd saethu elfen",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Elementuak hautatzeko modua",
+    "message": "Modd dewis elfen",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "Ireki egunkaria",
+    "message": "Agor y logiwr",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Webgune honetan arazo baten berri eman",
+    "message": "Adrodd nam ar y wefan hon",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Txandakatu laster-leihoen blokeoa gune honetan",
+    "message": "Toggle the blocking of all popups for this site",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Klik: Blokeatu gune honetako laster leiho guztiak",
+    "message": "Click to block all popups on this site",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Klik: Utzi gune honetako laster-leihoak blokeatzeari",
+    "message": "Click to no longer block all popups on this site",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Txandakatu multimedia elementu handiak blokeatzea gune honetan",
+    "message": "Toggle the blocking of large media elements for this site",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Klik: Blokeatu gune honetako tamaina handiko elementuak",
+    "message": "Click to block large media elements on this site",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Klik: Utzi gune honetako tamaina handiko elementuak blokeatzeari",
+    "message": "Click to no longer block large media elements on this site",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Txandakatu iragazki kosmetikoa gune honetan",
+    "message": "Toglo hidlo arwynebol ar gyfer y wefan hon",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Klik: Desgaitu iragazki kosmetikoak gune honetan",
+    "message": "Cliciwch i analluogi hidlo arwynebol ar y wefan hon",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Klik: Gaitu iragazki kosmetikoak gune honetan",
+    "message": "Cliciwch i alluogi hidlo arwynebol ar y wefan hon",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Txandakatu urruneko letra tipoen blokeoa gune honetan",
+    "message": "Toggle the blocking of remote fonts for this site",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Klik: Blokeatu urruneko letra-tipoak gune honetan",
+    "message": "Cliciwch i rwystro ffontiau pell ar y wefan hon",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Klik: Utzi urruneko letra-tipoak gune honetan blokeatzeari",
+    "message": "Cliciwch i ganiatáu ffontiau pell ar y wefan hon",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Egin klik gune honetan JavaScript desgaitzeko",
+    "message": "Cliciwch i analluogi JavaScript ar y wefan hon",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Egin klik gune honetan JavaScript desgaitzeari uzteko",
+    "message": "Cliciwch i alluogi JavaScript ar y wefan hon",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
-    "message": "Laster-leihoak",
+    "message": "Pop-up windows",
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
-    "message": "Multimedia elementu handiak",
+    "message": "Large media elements",
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
-    "message": "Iragazki kosmetikoak",
+    "message": "Hidlo arwynebol",
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
-    "message": "Urruneko tipografiak",
+    "message": "Ffontiau pell",
     "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
@@ -208,255 +208,255 @@
     "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
-    "message": "Gehiago",
+    "message": "Mwy",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton_v2": {
-    "message": "Gutxiago",
+    "message": "Llai",
     "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
-    "message": "Arau orokorrak: Zutabe hau gune guztietan aplikatzen diren arauentzat da.",
+    "message": "Global rules: this column is for rules which apply to all sites.",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Tokiko arauak: Zutabe hau soilik uneko gunean aplikatuko diren arauentzat da. Tokiko arauek arau orokorrak gainidazten dituzte.",
+    "message": "Local rules: this column is for rules which apply to the current site only.\nLocal rules override global rules.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
-    "message": "Sakatu aldaketak gordetzeko.",
+    "message": "Click to make your changes permanent.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Sakatu aldaketak desegiteko.",
+    "message": "Click to revert your changes.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {
-    "message": "guztiak",
+    "message": "all",
     "description": ""
   },
   "popupImageRulePrompt": {
-    "message": "irudiak",
+    "message": "images",
     "description": ""
   },
   "popup3pAnyRulePrompt": {
-    "message": "Hirugarrengoak",
+    "message": "3rd-party",
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "Hirugarrengoen CSS/Irudiak",
+    "message": "3rd-party CSS/images",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
-    "message": "barne scriptak",
+    "message": "inline scripts",
     "description": ""
   },
   "popup1pScriptRulePrompt": {
-    "message": "bertako scriptak",
+    "message": "1st-party scripts",
     "description": ""
   },
   "popup3pScriptRulePrompt": {
-    "message": "hirugarrengoen scriptak",
+    "message": "3rd-party scripts",
     "description": ""
   },
   "popup3pFrameRulePrompt": {
-    "message": "hirugarrengoen markoak",
+    "message": "3rd-party frames",
     "description": ""
   },
   "popupHitDomainCountPrompt": {
-    "message": "konektatutako domeinuak",
+    "message": "domains connected",
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
-    "message": "{{count}} / {{total}}",
+    "message": "{{count}} o {{total}}",
     "description": "appears in popup"
   },
   "popupVersion": {
-    "message": "Bertsioa",
+    "message": "Fersiwn",
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilter": {
-    "message": "scripta",
+    "message": "script",
     "description": "Appears as an option to filter out firewall rows"
   },
   "popup3pFrameFilter": {
-    "message": "markoa",
+    "message": "frame",
     "description": "Appears as an option to filter out firewall rows"
   },
   "pickerCreate": {
-    "message": "Sortu",
+    "message": "Creu",
     "description": "English: Create"
   },
   "pickerPick": {
-    "message": "Hautatu",
+    "message": "Pick",
     "description": "English: Pick"
   },
   "pickerQuit": {
-    "message": "Irten",
+    "message": "Quit",
     "description": "English: Quit"
   },
   "pickerPreview": {
-    "message": "Aurreikusi",
+    "message": "Preview",
     "description": "Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters": {
-    "message": "Sare iragazkiak",
+    "message": "Network filters",
     "description": "English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters": {
-    "message": "Iragazki kosmetikoak",
+    "message": "Hidlyddion arwynebol",
     "description": "English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint": {
-    "message": "Klik, Ktrl-klik",
+    "message": "Click, Ctrl-click",
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Blokeatu elementua...",
+    "message": "Block element…",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
-    "message": "Ezkutatu blokeatutako elementuen hutsuneak",
+    "message": "Hide placeholders of blocked elements",
     "description": "English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt": {
-    "message": "Bistaratu blokeatutako eskari kopurua ikonoan",
+    "message": "Show the number of blocked requests on the icon",
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "Desgaitu argibideak",
+    "message": "Disable tooltips",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
-    "message": "Erabili laster-menua egokia denean",
+    "message": "Make use of context menu where appropriate",
     "description": "English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt": {
-    "message": "Kolore-itsuentzat egokia",
+    "message": "Color-blind friendly",
     "description": "English: Color-blind friendly"
   },
   "settingsAppearance": {
-    "message": "Itxura",
+    "message": "Golwg",
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
-    "message": "Azala",
+    "message": "Thema",
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "Azentu-kolore pertsonalizatua",
+    "message": "Custom accent color",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsCloudStorageEnabledPrompt": {
-    "message": "Gaitu hodei biltegiratzearen euskarria",
+    "message": "Enable cloud storage support",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Erabiltzaile aurreratua naiz (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>Irakurri beharrekoa</a>)",
+    "message": "Rwy'n ddefnyddiwr profiadol",
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Desgaitu aurrez-kargatzea (blokeatutako sare eskaeretako edozein konexio galarazteko)",
+    "message": "Disable pre-fetching (to prevent any connection for blocked network requests)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
-    "message": "Desgaitu loturen auditoretza",
+    "message": "Disable hyperlink auditing",
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
-    "message": "Galarazi WebRTCk tokiko IP helbidea iragartzea",
+    "message": "Rhwystro WebRTC rhag datgelu eich cyfeiriad IP mewnol",
     "description": "English: "
   },
   "settingPerSiteSwitchGroup": {
-    "message": "Lehenetsitako portaera",
+    "message": "Default behavior",
     "description": ""
   },
   "settingPerSiteSwitchGroupSynopsis": {
-    "message": "Lehenetsitako portaera hauek gunez gune gainidatzi daitezke",
+    "message": "These default behaviors can be overridden on a per-site basis",
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "Desgaitu iragazki kosmetikoa",
+    "message": "Analluogi hidlo arwynebol",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Blokeatu {{input:number}} kB baino handiagoak diren multimedia elementuak",
+    "message": "Block media elements larger than {{input}} KB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
-    "message": "Blokeatu urruneko letra-tipoak",
+    "message": "Rhwystro ffontiau pell",
     "description": ""
   },
   "settingsNoScriptingPrompt": {
-    "message": "Desgaitu JavaScript",
+    "message": "Analluogi JavaScript",
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
-    "message": "Blokeatu CSP txostenak",
+    "message": "Block CSP reports",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsUncloakCnamePrompt": {
-    "message": "Erakutsi izen kanonikoak",
+    "message": "Uncloak canonical names",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsAdvanced": {
-    "message": "Aurreratua",
+    "message": "Uwch",
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Erabiltzaile teknikoentzat soilik egokiak diren funtzioak",
+    "message": "Features suitable only for technical users",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
-    "message": "ezarpen aurreratuak",
+    "message": "gosodiadau uwch",
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsLastRestorePrompt": {
-    "message": "Azken berreskuratzea:",
+    "message": "Last restore:",
     "description": "English: Last restore:"
   },
   "settingsLastBackupPrompt": {
-    "message": "Azken babeskopia:",
+    "message": "Last backup:",
     "description": "English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt": {
-    "message": "{{netFilterCount}} sare iragazki + {{cosmeticFilterCount}} iragazki kosmetiko hemendik:",
+    "message": "{{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:",
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
-    "message": "{{used}} erabilita, guztira {{total}}",
+    "message": "Defnyddir {{used}} o {{total}}",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
-    "message": "Automatikoki eguneratu iragazkien zerrenda.",
+    "message": "Auto-update filter lists",
     "description": "A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow": {
-    "message": "Eguneratu orain",
+    "message": "Diweddaru nawr",
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll": {
-    "message": "Garbitu cache guztiak",
+    "message": "Purge all caches",
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
-    "message": "Prozesatu eta ezarri iragazki kosmetikoak.",
+    "message": "Parse and enforce cosmetic filters",
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Aukera honek <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">Adblock Plusekin bateragarriak diren &ldquo;elementuak ezkutatzeko&rdquo; iragazkiak</a> prozesatzea eta ezartzea gaitzen du. Iragazki hauek nagusiki kosmetikoak dira, web orri batean itsusitzat jo diren eta sare iragazkien bidez blokeatzerik ez dauden elementuak ezkutatzeko balio dute.</p><p>Ezaugarri hau gaitzeak uBlock₀en memoria erabilera handitzen du.</p>",
+    "message": "Cosmetic filters serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the network request-based filtering engines.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
-    "message": "Ezikusi iragazki kosmetiko orokorrak",
+    "message": "Anwybyddu hidlyddion arwynebol cyffredinol",
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Iragazki kosmetiko orokorrak webgune guztietan aplikatzeko sortu diren iragazki kosmetikoak dira. <p>uBlock₀ aplikazioak ongi kudeatzen baditu ere iragazki kosmetiko orokorrek wegune batzuetan memoria edo PUZ erabilera nabarmena ekar dezakete handiak eta antzinakoak diren horietan gehienbat. <p>Aukera hau gaituz iragazki kosmetiko orokorren erabileraren ondoriozko memoria eta PUZ erabilera gehigarria sahiestuko da, eta baita uBlock₀ beraren memoria erabilera gutxiagotu. <p> Ahalmen gutxiagoko gailuetan aukera hau gaitzea aholkatzen da.",
+    "message": "Hidlyddion arwynebol cyffredinol yw'r hidlyddion arwynebol hynny sy'n gweithredu ar bob gwefan. Mae galluogi'r dewisiad hwn yn dileu'r pwysau a roddir ar y cof a'r CPU gan wefannau o ganlyniad i drin hidlyddion arwynebol cyffredinol.\n\nArgymhellir galluogi'r dewisiad hwn ar ddyfeisiau llai pwerus.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
-    "message": "Eten sarearen jarduera iragazki-zerrenda guztiak kargatuta egon arte",
+    "message": "Suspend network activity until all filter lists are loaded",
     "description": "A checkbox in the 'Filter lists' pane"
   },
   "3pListsOfBlockedHostsHeader": {
@@ -464,183 +464,183 @@
     "description": "English: Lists of blocked hosts"
   },
   "3pApplyChanges": {
-    "message": "Aplikatu aldaketak",
+    "message": "Apply changes",
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Barnekoa",
+    "message": "Built-in",
     "description": "Filter lists section name"
   },
   "3pGroupAds": {
-    "message": "Iragarkiak",
+    "message": "Hysbysebion",
     "description": "Filter lists section name"
   },
   "3pGroupPrivacy": {
-    "message": "Pribatutasuna",
+    "message": "Preifatrwydd",
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Malware domeinuak",
+    "message": "Diogelwch ac amddiffyn rhag maleiswedd",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
-    "message": "Eragozpenak",
+    "message": "Pethau diflas",
     "description": "Filter lists section name"
   },
   "3pGroupMultipurpose": {
-    "message": "Helburu anitzekoak",
+    "message": "Amlbwrpas",
     "description": "Filter lists section name"
   },
   "3pGroupRegions": {
-    "message": "Eskualdeak, hizkuntzak",
+    "message": "Rhanbarthau, ieithoedd",
     "description": "Filter lists section name"
   },
   "3pGroupCustom": {
-    "message": "Pertsonala",
+    "message": "Addasedig",
     "description": "Filter lists section name"
   },
   "3pImport": {
-    "message": "Inportatu...",
+    "message": "Mewnforio…",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "URL bat lerroko. Baliogabeko URL-ak ezikusiko dira.",
+    "message": "One URL per line. Invalid URLs will be silently ignored.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
-    "message": "Zaharkituta.",
+    "message": "Out of date.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pViewContent": {
-    "message": "ikusi edukia",
+    "message": "gweld y cynnwys",
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "Azken eguneraketa: {{ago}}.",
+    "message": "Last update: {{ago}}.\nClick to force an update.",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Eguneratzen...",
+    "message": "Updating…",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
-    "message": "Sare errore batek baliabidea eguneratzea eragotzi du.",
+    "message": "A network error prevented the resource from being updated.",
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Iragazki bat lerroko. Iragazkia hostalari izen soila izan daiteke, edo Adblock Plusekin bateragarria den iragazki bat. Hasieran <code>!</code> duten lerroak ezikusiko dira.",
+    "message": "One filter per line. A filter can be a plain hostname, or an EasyList-compatible filter. Lines prefixed with <code>!</code> will be ignored.",
     "description": "Short information about how to create custom filters"
   },
   "1pTrustWarning": {
-    "message": "Ez gehitu jatorri ezezaguneko iragazkirik",
+    "message": "Do not add filters from untrusted sources.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {
-    "message": "Inportatu eta gehitu",
+    "message": "Import and append…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "Esportatu",
+    "message": "Allforio…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
-    "message": "nire-ublock-iragazki-estatikoak_{{datetime}}.txt",
+    "message": "fy-hidlyddion-statig_{{datetime}}.txt",
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges": {
-    "message": "Aplikatu aldaketak",
+    "message": "Apply changes",
     "description": "English: Apply changes"
   },
   "rulesPermanentHeader": {
-    "message": "Behin betiko arauak",
+    "message": "Permanent rules",
     "description": "header"
   },
   "rulesTemporaryHeader": {
-    "message": "Behin behineko arauak",
+    "message": "Temporary rules",
     "description": "header"
   },
   "rulesRevert": {
-    "message": "Baztertu",
+    "message": "Revert",
     "description": "This will remove all temporary rules"
   },
   "rulesCommit": {
-    "message": "Behin betiko bihurtu",
+    "message": "Commit",
     "description": "This will persist temporary rules"
   },
   "rulesEdit": {
-    "message": "Aldatu",
+    "message": "Golygu",
     "description": "Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave": {
-    "message": "Gorde",
+    "message": "Cadw",
     "description": "Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard": {
-    "message": "Baztertu",
+    "message": "Discard",
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Inportatu fitxategitik...",
+    "message": "Import from file…",
     "description": ""
   },
   "rulesExport": {
-    "message": "Esportatu fitxategira",
+    "message": "Export to file…",
     "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
-    "message": "nire-ublock-arau-dinamikoak_{{datetime}}.txt",
+    "message": "fy-hidlyddion-deinamig_{{datetime}}.txt",
     "description": "default file name to use"
   },
   "rulesHint": {
-    "message": "Zure iragazki dinamikoen arau zerrenda.",
+    "message": "Rhestr o'ch rheolau hidlo deinamig. ",
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
-    "message": "Arauen sintaxia: <code>jatorria helburua mota ekintza</code>(<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>Dokumentazio osoa</a>).",
+    "message": "Rule syntax: <code>source destination type action</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>full documentation</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
-    "message": "Ordena:",
+    "message": "Trefnu:",
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
-    "message": "Arau mota",
+    "message": "Math o reol",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortBySource": {
-    "message": "Iturria",
+    "message": "Ffynhonnell",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortByDestination": {
-    "message": "Helburua",
+    "message": "Cyrchfan",
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "Zerrenda zuriaren direktibek uBlock zeintzu web orrietan desgaituko den zehazten dute. Sarrera bat lerroko. Baliogabeko ostalari izenak ezikusiko dira.",
+    "message": "The trusted site directives dictate on which web pages uBlock Origin should be disabled. One entry per line.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Inportatu eta gehitu",
+    "message": "Import and append…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
-    "message": "Esportatu",
+    "message": "Allforio…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
-    "message": "nire-ublock-zerrendazuria_{{datetime}}.txt",
+    "message": "my-ublock-trusted-sites_{{datetime}}.txt",
     "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
-    "message": "Aplikatu aldaketak",
+    "message": "Apply changes",
     "description": "English: Apply changes"
   },
   "logRequestsHeaderType": {
-    "message": "Mota",
+    "message": "Math",
     "description": "English: Type"
   },
   "logRequestsHeaderDomain": {
-    "message": "Domeinua",
+    "message": "Parth",
     "description": "English: Domain"
   },
   "logRequestsHeaderURL": {
@@ -648,63 +648,63 @@
     "description": "English: URL"
   },
   "logRequestsHeaderFilter": {
-    "message": "Iragazkia",
+    "message": "Hidlydd",
     "description": "English: Filter"
   },
   "logAll": {
-    "message": "Guztiak",
+    "message": "Y cyfan",
     "description": "Appears in the logger's tab selector"
   },
   "logBehindTheScene": {
-    "message": "Atzeko planoan",
+    "message": "Tabless",
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
-    "message": "Uneko fitxa",
+    "message": "Y tab presennol",
     "description": "Appears in the logger's tab selector"
   },
   "loggerReloadTip": {
-    "message": "Birkargatu fitxako edukia",
+    "message": "Reload the tab content",
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
-    "message": "Txandakatu DOM ikuskatzailea",
+    "message": "Toggle the DOM inspector",
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "Txandakatu laster-leiho panela",
+    "message": "Toggle the popup panel",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
-    "message": "uBlock Origin wiki: Egunkaria",
+    "message": "uBlock Origin wiki: The logger",
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
-    "message": "Garbitu egunkaria",
+    "message": "Clirio'r logiwr",
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
-    "message": "Pausatu egunkaria (baztertu jasotako informazioa)",
+    "message": "Oedi'r logiwr (diystyru data sy'n cyrraedd)",
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {
-    "message": "Kendu pausa egunkariari",
+    "message": "Dad-oedi'r logiwr",
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "Txandakatu egunkariaren iragazkia",
+    "message": "Toglo hidlo'r logiwr",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
-    "message": "iragazi egunkariko sarrerak",
+    "message": "hidlo cynnwys yr hidlydd",
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
-    "message": "Egunkaria iragazteko aukerak",
+    "message": "Dewisiadau hidlo'r logiwr",
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {
-    "message": "Ez",
+    "message": "Nid",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinEventful": {
@@ -712,171 +712,171 @@
     "description": "A keyword in the built-in row filtering expression: all items corresponding to uBO doing something (blocked, allowed, redirected, etc.)"
   },
   "loggerRowFiltererBuiltinBlocked": {
-    "message": "blokeatuta",
+    "message": "wedi rhwystro",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinAllowed": {
-    "message": "baimenduta",
+    "message": "wedi caniatáu",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinModified": {
-    "message": "aldatua",
+    "message": "wedi addasu",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
-    "message": "Lehen eskukoa",
+    "message": "1st-party",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin3p": {
-    "message": "Hirugarrengoa",
+    "message": "3rd-party",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerEntryDetailsHeader": {
-    "message": "Xehetasunak",
+    "message": "Manylion",
     "description": "Small header to identify the 'Details' pane for a specific logger entry"
   },
   "loggerEntryDetailsFilter": {
-    "message": "Iragazkia",
+    "message": "Hidlydd",
     "description": "Label to identify a filter field"
   },
   "loggerEntryDetailsFilterList": {
-    "message": "Iragazki-zerrendak",
+    "message": "Filter list",
     "description": "Label to identify a filter list field"
   },
   "loggerEntryDetailsRule": {
-    "message": "Araua",
+    "message": "Rheol",
     "description": "Label to identify a rule field"
   },
   "loggerEntryDetailsContext": {
-    "message": "Testuingurua",
+    "message": "Cyd-destun",
     "description": "Label to identify a context field (typically a hostname)"
   },
   "loggerEntryDetailsRootContext": {
-    "message": "Erro testuingurua",
+    "message": "Root context",
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
-    "message": "Jatorria",
+    "message": "Partyness",
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
-    "message": "Mota",
+    "message": "Math",
     "description": "Label to identify the type of an entry"
   },
   "loggerEntryDetailsURL": {
-    "message": "URLa",
+    "message": "URL",
     "description": "Label to identify the URL of an entry"
   },
   "loggerURLFilteringHeader": {
-    "message": "URL araua",
+    "message": "URL rule",
     "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
-    "message": "Testuingurua:",
+    "message": "Cyd-destun:",
     "description": "Label for the context selector"
   },
   "loggerURLFilteringTypeLabel": {
-    "message": "Mota:",
+    "message": "Math:",
     "description": "Label for the type selector"
   },
   "loggerStaticFilteringHeader": {
-    "message": "Iragazketa estatikoa",
+    "message": "Hidlydd statig",
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "{{action}} {{type}} motako sare eskariak {{br}}URL helbidea {{url}} helbidearekin bat datorrenean {{br}}eta jatorria {{origin}} denean,{{br}}{{importance}} bat datorren salbuespen iragazki bat badago.",
+    "message": "{{action}} network requests of {{type}} {{br}}which URL address matches {{url}} {{br}}and which originates {{origin}},{{br}}{{importance}} there is a matching exception filter.",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
-    "message": "Blokeatu",
+    "message": "Rhwystro",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAllow": {
-    "message": "Baimendu",
+    "message": "Caniatáu",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType": {
-    "message": "mota “{{type}}”",
+    "message": "math \"{{type}}\"",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyType": {
-    "message": "edozein mota",
+    "message": "any type",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin": {
-    "message": "hemendik “{{origin}}”",
+    "message": "o \"{{origin}}\"",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin": {
-    "message": "edonondik",
+    "message": "from anywhere",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant": {
-    "message": "kenduta",
+    "message": "except when",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartImportant": {
-    "message": "nahiz eta",
+    "message": "even if",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "<code>{{filter}}</code> iragazki estatikoa aurkitu da hemen:",
+    "message": "Static filter <code>{{filter}}</code> found in:",
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "<code>{{filter}}</code> iragazki estatikoa ezin izan da aurkitu orain aktibatutako iragazki zerrendetan",
+    "message": "Static filter could not be found in any of the currently enabled filter lists",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
-    "message": "Beheko hiru baldintzak betetzen ez dituzten egunkariko sarrerak automatikoki ezikusiko dira:",
+    "message": "Logger entries which do not fulfill all three conditions below will be automatically discarded:",
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
-    "message": "Mantendu azken {{input}} minutuetako sarrerak",
+    "message": "Preserve entries from the last {{input}} minutes",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "Mantendu gehienez {{input}} orrien kargak fitxako",
+    "message": "Preserve at most {{input}} page loads per tab",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
-    "message": "Mantendu gehienez {{input}} sarrera fitxako",
+    "message": "Preserve at most {{input}} entries per tab",
     "description": "A logger setting"
   },
   "loggerSettingPerEntryLineCount": {
-    "message": "Erabili {{input}} errenkada sarrerako bertikalki hedatutako moduan",
+    "message": "Use {{input}} lines per entry in vertically expanded mode",
     "description": "A logger setting"
   },
   "loggerSettingHideColumnsPrompt": {
-    "message": "Ezkutatu zutabeak:",
+    "message": "Cuddio colofnau:",
     "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
   },
   "loggerSettingHideColumnTime": {
-    "message": "{{input}} Denbora",
+    "message": "{{input}} Amser",
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
-    "message": "{{input}} Iragazkia/araua",
+    "message": "{{input}} Hidlydd/rheol",
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
-    "message": "{{input}} Testuingurua",
+    "message": "{{input}} Cyd-destun",
     "description": "A label for the context column"
   },
   "loggerSettingHideColumnPartyness": {
-    "message": "{{input}} jatorria",
+    "message": "{{input}} Partyness",
     "description": "A label for the partyness column"
   },
   "loggerExportFormatList": {
-    "message": "Zerrenda",
+    "message": "Rhestr",
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportFormatTable": {
-    "message": "Taula",
+    "message": "Tabl",
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportEncodePlain": {
-    "message": "Laua",
+    "message": "Plaen",
     "description": "Label for radio-button to pick export text format"
   },
   "loggerExportEncodeMarkdown": {
@@ -884,307 +884,307 @@
     "description": "Label for radio-button to pick export text format"
   },
   "supportOpenButton": {
-    "message": "Ireki",
+    "message": "Agor",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Txosten berri bat sortu",
+    "message": "Creu adroddiad newydd",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Antzeko txostenak aurkitu",
+    "message": "Canfod adroddiadau tebyg",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
-    "message": "Dokumentazioa",
+    "message": "Dogfennaeth",
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Irakurri dokumentazioa <code>uBlock/wiki</code> helbidean, uBlock Originen funtzio guztiak ezagutzeko.",
+    "message": "Read the documentation at <code>uBlock/wiki</code> to learn about all of uBlock Origin's features.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
-    "message": "Galderak eta laguntza",
+    "message": "Cwestiynau a chymorth",
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
-    "message": "<code>/r/uBlockOrigin</code> azpidian galderen erantzunak eta beste laguntza mota batzuk eskaintzen dira.",
+    "message": "Answers to questions and other kinds of help support is provided on the subreddit <code>/r/uBlockOrigin</code>.",
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "Arazoak iragazkiekin/webguneak ez du funtzionatzen",
+    "message": "Filter issues/website is broken",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Web-gune espezifikoekin iragazteko arazoak jakinaraz iezaguzu hemen: <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">uBlockOrigin/uAssets</code> issue tracker</span>. <u>GitHub kontu bat behar da</u>",
+    "message": "Report filter issues with specific websites to the <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Kontuan izan:</b> Ez erabili antzeko helburua duten beste blokeatzaile batzuk uBlock Originekin batera, horrek arazoak sor baititzake webgune espezifikoetan iragazteko.",
+    "message": "<b>Important:</b> Avoid using other similarly-purposed blockers along with uBlock Origin, as this may cause filter issues on specific websites.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Aholkuak</b> Ziurtatu zure iragazki-zerrendak eguneratuta daudela. <span data-url=\"logger-ui.html#_\">Erregistratzailea</span> da iragazkiekin lotutako arazoak diagnostikatzeko tresna nagusia.",
+    "message": "<b>Tips:</b> Be sure your filter lists are up to date. <span data-url=\"logger-ui.html#_\">The logger</span> is the primary tool to diagnose filter-related issues.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
-    "message": "Errore-txostena",
+    "message": "Bug report",
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Arazoak jakinarazi uBlock Originekin arazoen erregistroan <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code>issue tracker</span>. <u>GitHub kontua beharrezkoa da.</u>",
+    "message": "Report issues with uBlock Origin itself to the <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
-    "message": "Arazoen konponbideari buruzko informazioa",
+    "message": "Troubleshooting Information",
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "Jarraian, boluntarioek arazo bat konpontzen laguntzen saiatzen direnean baliagarria izan daitekeen informazio teknikoa aurkituko duzu.",
+    "message": "Below is technical information that might be useful when volunteers are trying to help you solve a problem.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Garrantzitsua:</b> Pribatua edo sentikorra izan daitekeen informazioa modu lehenetsian idazten da. Idatzitako informazioak arazo bat konpontzea zaildu dezake.",
+    "message": "<b>Important:</b> Potentially private or sensitive information is redacted by default. Redacted information may make it more difficult to solve a problem.",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
-    "message": "Iragazkiko arazo baten berri eman",
+    "message": "Adrodd nam ar hidlydd",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Txosten bikoiztuak dituzten boluntarioak ez gainkargatzeko, mesedez egiaztatu arazoa ez dela jakinarazi.",
+    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Iragazki-zerrendak egunero eguneratzen dira. Begiratu zure kasua azken iragazki-zerrendetako baten konpondu den.",
+    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Egiaztatu zure kasua arazoak eman dizkizun webgunea berriz kargatu ostean oraindik ere gertatzen den.",
+    "message": "Verify that the issue still exists after reloading the problematic webpage.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Web orriaren helbidea:",
+    "message": "Cyfeiriad y dudalen we:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "Webgunea...",
+    "message": "Y dudalen we…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Aukeratu sarrera bat --",
+    "message": "-- Pick an entry --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Iragarkiak edo iragarkien hondarrak erakusten ditu",
+    "message": "Shows ads or ad leftovers",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Gainjartzeak edo bestelako eragozpenak ditu",
+    "message": "Has overlays or other nuisances",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "uBlock Origin detektatzen du",
+    "message": "Detects uBlock Origin",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Pribatutasun-arazoak ditu",
+    "message": "Has privacy-related issues",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Funtzionamendu-akatsak uBlock Origin aktibatuta dagoenean",
+    "message": "Malfunctions when uBlock Origin is enabled",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Ireki nahi ez diren erlaitzak edo leihoak",
+    "message": "Opens unwanted tabs or windows",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Web orria «NSFW» moduan jarri (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work” </a>)",
+    "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
-    "message": "Erredaktatu",
+    "message": "Redact",
     "description": "Text for 'Redact' button"
   },
   "supportUnredact": {
-    "message": "Desegin erredakzioa",
+    "message": "Unredact",
     "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
-    "message": "Pribatutasun politika",
+    "message": "Polisi preifatrwydd",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {
-    "message": "Aldaketa egunkaria",
+    "message": "Changelog",
     "description": ""
   },
   "aboutCode": {
-    "message": "Iturburu kodea (GPLv3)",
+    "message": "Cod ffynhonnell (GPLv3)",
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Parte-hartzaileak",
+    "message": "Cyfranwyr",
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Iturburu-kodea",
+    "message": "Cod ffynhonnell",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
-    "message": "Itzulpenak",
+    "message": "Cyfieithiadau",
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
-    "message": "Iragazki-zerrendak",
+    "message": "Rhestri hidlo",
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "Kanpo menpekotasunak (GPLv3 lizentziarekin bateragarriak):",
+    "message": "External dependencies (GPLv3-compatible):",
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "uBOren iragazki zerrendan <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a> hauetan daude:",
+    "message": "uBO's own filter lists are freely hosted on the following <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "Ausaz aukeratutako CDN bat erabiltzen da iragazki zerrenda bat eguneratu behar denean",
+    "message": "A randomly picked CDN is used when a filter list needs to be updated.",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "Egin babeskopia fitxategian",
+    "message": "Back up to file…",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
-    "message": "nire-ublock-babeskopia_{{datetime}}.txt",
+    "message": "my-ublock-backup_{{datetime}}.txt",
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Berreskuratu fitxategitik...",
+    "message": "Restore from file…",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Leheneratu lehenetsitako ezarpenetara...",
+    "message": "Reset to default settings…",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
-    "message": "Zure ezarpen guztiak gainidatziko dira {{time}}ko datuak erabiliz, eta uBlock₀ berrabiaraziko da.\n\nGainidatzi ezarpen guztiak babeskopiako datuekin?",
+    "message": "All your settings will be overwritten using data backed up on {{time}}, and uBlock₀ will restart.\n\nOverwrite all existing settings using backed up data?",
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {
-    "message": "Datuak ezin dira irakurri edo baliogabeak dira",
+    "message": "The data could not be read or is invalid",
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
-    "message": "Zure ezarpen guztiak ezabatuko dira, eta uBlock₀ berrabiaraziko da.\n\nLeheneratu uBlock₀ jatorrizko ezarpenetara?",
+    "message": "All your settings will be removed, and uBlock₀ will restart.\n\nReset uBlock₀ to factory settings?",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
-    "message": "Sare-errorea: {{msg}}",
+    "message": "Network error: {{msg}}",
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: Gehitu honako URL hauek zure iragazki pertsonalizatuen zerrendara?\n\nIzenburua: \"{{title}}\"\nURLa: {{url}}",
+    "message": "Add the following URL to your custom filter lists?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
     "description": "No longer used"
   },
   "subscribeButton": {
-    "message": "Harpidetu",
+    "message": "Tanysgrifio",
     "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
-    "message": "duela minutu bat",
+    "message": "funud yn ôl",
     "description": "English: a minute ago"
   },
   "elapsedManyMinutesAgo": {
-    "message": "duela {{value}} minutu",
+    "message": "{{value}} o funudau yn ôl",
     "description": "English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo": {
-    "message": "duela ordu bat",
+    "message": "awr yn ôl",
     "description": "English: an hour ago"
   },
   "elapsedManyHoursAgo": {
-    "message": "duela {{value}} ordu",
+    "message": "{{value}} awr yn ôl",
     "description": "English: {{value}} hours ago"
   },
   "elapsedOneDayAgo": {
-    "message": "duela egun bat",
+    "message": "ddiwrnod yn ôl",
     "description": "English: a day ago"
   },
   "elapsedManyDaysAgo": {
-    "message": "duela {{value}} egun",
+    "message": "{{value}} o ddiwrnodau yn ôl",
     "description": "English: {{value}} days ago"
   },
   "showDashboardButton": {
-    "message": "Bistaratu kontrol panela",
+    "message": "Dangos y dashfwrdd",
     "description": "Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
-    "message": "Bistaratu egunkaria",
+    "message": "Dangos y logiwr",
     "description": "Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
-    "message": "itzalita",
+    "message": "off",
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedTitle": {
-    "message": "Blokeatutako orrialdea",
+    "message": "Page blocked",
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {
-    "message": "uBlock₀ek orri hau kargatzea galarazi du:",
+    "message": "uBlock Origin has prevented the following page from loading:",
     "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
-    "message": "Iragazki hau dela eta",
+    "message": "Because of the following filter:",
     "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
-    "message": "parametrorik gabe",
+    "message": "without parameters",
     "description": "label to be used for the parameter-less URL: https://cloud.githubusercontent.com/assets/585534/9832014/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {
-    "message": "Hemen aurkitua:",
+    "message": "Found in:",
     "description": "English: List of filter list names follows"
   },
   "docblockedBack": {
-    "message": "Atzera",
+    "message": "Yn ôl",
     "description": "English: Go back"
   },
   "docblockedClose": {
-    "message": "Itxi leiho hau",
+    "message": "Cau'r ffenestr hon",
     "description": "English: Close this window"
   },
   "docblockedDontWarn": {
-    "message": "Ez esan ezer berriz ere orrialde honi buruz",
+    "message": "Don't warn me again about this site",
     "description": "Label for checkbox in document-blocked page"
   },
   "docblockedProceed": {
-    "message": "Ezgaitu blokeatze zorrotza {{hostname}} gunean",
+    "message": "Disable strict blocking for {{hostname}}",
     "description": "English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary": {
-    "message": "Une batez",
+    "message": "Dros dro",
     "description": "English: Temporarily"
   },
   "docblockedDisablePermanent": {
-    "message": "Behin betiko",
+    "message": "Yn barhaol",
     "description": "English: Permanently"
   },
   "docblockedDisable": {
-    "message": "Aurrera",
+    "message": "Parhau",
     "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {
-    "message": "Esportatu hodei biltegiratzera",
+    "message": "Export to cloud storage",
     "description": "tooltip"
   },
   "cloudPull": {
-    "message": "Inportatu hodei biltegiratzetik",
+    "message": "Import from cloud storage",
     "description": "tooltip"
   },
   "cloudPullAndMerge": {
-    "message": "Inportatu hodeiko biltegiratzetik eta nahastu oraingo ezarpenekin",
+    "message": "Import from cloud storage and merge with current settings",
     "description": "tooltip"
   },
   "cloudNoData": {
@@ -1192,75 +1192,75 @@
     "description": ""
   },
   "cloudDeviceNamePrompt": {
-    "message": "Gailu honen izena:",
+    "message": "Enw'r ddyfais hon:",
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
-    "message": "Abisua! Ez aldatu ezarpen aurreratu hauek zertan ari zaren ez badakizu.",
+    "message": "Warning! Change these advanced settings at your own risk.",
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {
-    "message": "Bidali",
+    "message": "Cyflwyno",
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Aplikatu aldaketak",
+    "message": "Apply changes",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
-    "message": "Baztertu",
+    "message": "Revert",
     "description": "for generic 'Revert' buttons"
   },
   "genericBytes": {
-    "message": "byte",
+    "message": "bytes",
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "Marko bateko elementua blokeatu...",
+    "message": "Block element in frame…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Harpidetu iragazki zerrenda batera...",
+    "message": "Subscribe to filter list…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
-    "message": "Une batez baimendu multimedia elementu handiak",
+    "message": "Temporarily allow large media elements",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "contextMenuViewSource": {
-    "message": "Ikusi iturburu kodea…",
+    "message": "Gweld y cod ffynhonnell…",
     "description": "A context menu entry, to view the source code of the target resource"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Idatzi lasterbide bat",
+    "message": "Type a shortcut",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "Txandakatu korritze blokeatua",
+    "message": "Toggle locked scrolling",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
-    "message": "Kopiatu arbelera",
+    "message": "Copïo i'r clipfwrdd",
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "genericSelectAll": {
-    "message": "Hautatu dena",
+    "message": "Dewis y cyfan",
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleCosmeticFiltering": {
-    "message": "Iragazte kosmetikoa txandakatu",
+    "message": "Toglo hidlo arwynebol",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "toggleJavascript": {
-    "message": "JavaScripta aktibatu/desaktibatu",
+    "message": "Toglo JavaScript",
     "description": "Label for keyboard shortcut used to toggle no-scripting switch"
   },
   "relaxBlockingMode": {
-    "message": "Baretu blokeatze-modua",
+    "message": "Relax blocking mode",
     "description": "Label for keyboard shortcut used to relax blocking mode"
   },
   "storageUsed": {
-    "message": "Erabilitako biltegiratzea: {{value}} {{unit}}",
+    "message": "Storfa: {{value}} {{unit}}",
     "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
   },
   "KB": {
@@ -1276,15 +1276,15 @@
     "description": "short for 'gigabytes'"
   },
   "clickToLoad": {
-    "message": "Sakatu kargatzeko",
+    "message": "Click to load",
     "description": "Message used in frame placeholders"
   },
   "linterMainReport": {
-    "message": "Erroreak: {{count}}",
+    "message": "Gwallau: {{count}}",
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Iragazkia ezin izan da kargatu nabigatzailea irekitzeak. Kargatu berriz orria iragazkiak ondo funtzionatzen duela ziurtatzeko.",
+    "message": "Could not filter properly at browser launch. Reload the page to ensure proper filtering.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {
