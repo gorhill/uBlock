@@ -27,8 +27,7 @@
         activity: noopfn,
         virtualPage: noopfn
     };
-    const hider = document.querySelector('style[id^=chartbeat-flicker-control]');
-    if ( hider ) {
+    for ( const hider of document.querySelectorAll('style[id^=chartbeat-flicker-control]') ) {
         hider.remove();
     }
 })();
