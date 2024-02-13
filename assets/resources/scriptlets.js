@@ -1997,10 +1997,6 @@ function noFetchIf(
             const details = args[0] instanceof self.Request
                 ? args[0]
                 : Object.assign({ url: args[0] }, args[1]);
-            if ( propsToMatch === '' && responseBody === '' ) {
-                safe.uboLog(logPrefix, `Called: ${safe.JSON_stringify(details, null, 2)}`);
-                return Reflect.apply(target, thisArg, args);
-            }
             let proceed = true;
             try {
                 const props = new Map();
@@ -2012,6 +2008,11 @@ function noFetchIf(
                     }
                     if ( typeof v !== 'string' ) { continue; }
                     props.set(prop, v);
+                }
+                if ( propsToMatch === '' && responseBody === '' ) {
+                    const out = Array.from(props).map(a => `${a[0]}:${a[1]}`);
+                    safe.uboLog(logPrefix, `Called: ${out.join('\n')}`);
+                    return Reflect.apply(target, thisArg, args);
                 }
                 proceed = needles.length === 0;
                 for ( const { key, re } of needles ) {
