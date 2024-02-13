@@ -3796,6 +3796,7 @@ function setAttr(
 
     const extractValue = elem => {
         if ( copyFrom !== '' ) {
+            if ( copyFrom.startsWith('on') && copyFrom in elem ) { return; }
             return elem.getAttribute(copyFrom) || '';
         }
         return value;
@@ -3812,6 +3813,7 @@ function setAttr(
         for ( const elem of elems ) {
             const before = elem.getAttribute(attr);
             const after = extractValue(elem);
+            if ( after === undefined ) { continue; }
             if ( after === before ) { continue; }
             elem.setAttribute(attr, after);
         }
