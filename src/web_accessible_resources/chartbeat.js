@@ -27,8 +27,8 @@
         activity: noopfn,
         virtualPage: noopfn
     };
-    const flickerElm = document.querySelector('[id^=chartbeat-flicker-control]')
-    if (flickerElm) {
-        flickerElm.parentNode.removeChild(flickerElm)
+    const hider = document.querySelector('style[id^=chartbeat-flicker-control]');
+    if ( hider ) {
+        hider.remove();
     }
 })();
