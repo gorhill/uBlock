@@ -897,6 +897,7 @@ export class AstFilterParser {
         this.rePatternScriptletJsonArgs = /^\{.*\}$/;
         this.reGoodRegexToken = /[^\x01%0-9A-Za-z][%0-9A-Za-z]{7,}|[^\x01%0-9A-Za-z][%0-9A-Za-z]{1,6}[^\x01%0-9A-Za-z]/;
         this.reBadCSP = /(?:^|;)\s*report-(?:to|uri)\b/i;
+        this.reBadPP = /(?:^|;)\s*report-to\b/i;
         this.reNoopOption = /^_+$/;
         this.scriptletArgListParser = new ArgListParser(',');
     }
@@ -1400,7 +1401,11 @@ export class AstFilterParser {
                     realBad = this.isRegexPattern() === false;
                     break;
                 case NODE_TYPE_NET_OPTION_NAME_PERMISSIONS:
-                    realBad = modifierType !== 0 || (hasValue || isException) === false;
+                    realBad = modifierType !== 0 ||
+                        (hasValue || isException) === false ||
+                        this.reBadPP.test(
+                            this.getNetOptionValue(NODE_TYPE_NET_OPTION_NAME_PERMISSIONS)
+                        );
                     if ( realBad ) { break; }
                     modifierType = type;
                     break;
