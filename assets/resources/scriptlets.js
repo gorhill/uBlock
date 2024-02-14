@@ -4650,7 +4650,7 @@ function trustedReplaceArgument(
         const argBefore = arglist[argpos];
         if ( reCondition.test(argBefore) === false ) { return reflector(...args); }
         arglist[argpos] = normalValue;
-        safe.uboLog(logPrefix, `Replaced argument:\nBefore: ${argBefore.trim()}\nAfter: ${normalValue}`);
+        safe.uboLog(logPrefix, `Replaced argument:\nBefore: ${JSON.stringify(argBefore)}\nAfter: ${normalValue}`);
         return reflector(...args);
     });
 }
