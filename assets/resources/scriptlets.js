@@ -3770,6 +3770,7 @@ builtinScriptlets.push({
     world: 'ISOLATED',
     dependencies: [
         'run-at.fn',
+        'safe-self.fn',
     ],
 });
 function setAttr(
@@ -3777,9 +3778,11 @@ function setAttr(
     attr = '',
     value = ''
 ) {
-    if ( typeof selector !== 'string' ) { return; }
     if ( selector === '' ) { return; }
+    if ( attr === '' ) { return; }
 
+    const safe = safeSelf();
+    const logPrefix = safe.makeLogPrefix('set-attr', attr, value);
     const validValues = [ '', 'false', 'true' ];
     let copyFrom = '';
 
@@ -3797,7 +3800,6 @@ function setAttr(
 
     const extractValue = elem => {
         if ( copyFrom !== '' ) {
-            if ( copyFrom.startsWith('on') && copyFrom in elem ) { return; }
             return elem.getAttribute(copyFrom) || '';
         }
         return value;
@@ -3814,9 +3816,10 @@ function setAttr(
         for ( const elem of elems ) {
             const before = elem.getAttribute(attr);
             const after = extractValue(elem);
-            if ( after === undefined ) { continue; }
             if ( after === before ) { continue; }
+            if ( attr.startsWith('on') && attr in elem && after !== '' ) { continue; }
             elem.setAttribute(attr, after);
+            safe.uboLog(logPrefix, `${attr}="${after}"`);
         }
         return true;
     };
