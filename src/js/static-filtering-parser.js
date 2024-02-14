@@ -896,8 +896,8 @@ export class AstFilterParser {
         this.reResponseheaderPattern = /^\^responseheader\(.*\)$/;
         this.rePatternScriptletJsonArgs = /^\{.*\}$/;
         this.reGoodRegexToken = /[^\x01%0-9A-Za-z][%0-9A-Za-z]{7,}|[^\x01%0-9A-Za-z][%0-9A-Za-z]{1,6}[^\x01%0-9A-Za-z]/;
-        this.reBadCSP = /(?:^|;)\s*report-(?:to|uri)\b/i;
-        this.reBadPP = /(?:^|;)\s*report-to\b/i;
+        this.reBadCSP = /(?:^|[;,])\s*report-(?:to|uri)\b/i;
+        this.reBadPP = /(?:^|[;,])\s*report-to\b/i;
         this.reNoopOption = /^_+$/;
         this.scriptletArgListParser = new ArgListParser(',');
     }
