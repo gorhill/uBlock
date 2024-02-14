@@ -1501,7 +1501,7 @@ export class AstFilterParser {
                 }
                 break;
             }
-            case NODE_TYPE_NET_OPTION_NAME_URLTRANSFORM:
+            case NODE_TYPE_NET_OPTION_NAME_URLTRANSFORM: {
                 realBad = abstractTypeCount || behaviorTypeCount || unredirectableTypeCount;
                 if ( realBad ) { break; }
                 if ( isException !== true && this.options.trustedSource !== true ) {
@@ -1510,11 +1510,12 @@ export class AstFilterParser {
                     break;
                 }
                 const value = this.getNetOptionValue(NODE_TYPE_NET_OPTION_NAME_URLTRANSFORM);
-                if ( parseReplaceValue(value) === undefined ) {
+                if ( value !== '' && parseReplaceValue(value) === undefined ) {
                     this.astError = AST_ERROR_OPTION_BADVALUE;
                     realBad = true;
                 }
                 break;
+            }
             case NODE_TYPE_NET_OPTION_NAME_REMOVEPARAM:
                 realBad = abstractTypeCount || behaviorTypeCount;
                 break;

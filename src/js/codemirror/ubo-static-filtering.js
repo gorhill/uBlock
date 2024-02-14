@@ -192,6 +192,7 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
             case sfp.NODE_TYPE_NET_OPTION_NAME_SCRIPT:
             case sfp.NODE_TYPE_NET_OPTION_NAME_SHIDE:
             case sfp.NODE_TYPE_NET_OPTION_NAME_TO:
+            case sfp.NODE_TYPE_NET_OPTION_NAME_URLTRANSFORM:
             case sfp.NODE_TYPE_NET_OPTION_NAME_XHR:
             case sfp.NODE_TYPE_NET_OPTION_NAME_WEBRTC:
             case sfp.NODE_TYPE_NET_OPTION_NAME_WEBSOCKET:
