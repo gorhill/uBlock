@@ -3844,7 +3844,9 @@ function setAttr(
             const before = elem.getAttribute(attr);
             const after = extractValue(elem);
             if ( after === before ) { continue; }
-            if ( attr.startsWith('on') && attr in elem && after !== '' ) { continue; }
+            if ( after !== '' && /^on/i.test(attr) ) {
+                if ( attr.toLowerCase() in elem ) { continue; }
+            }
             elem.setAttribute(attr, after);
             safe.uboLog(logPrefix, `${attr}="${after}"`);
         }
