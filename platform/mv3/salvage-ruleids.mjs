@@ -89,9 +89,10 @@ async function main() {
             afterRule.id = ruleIdGenerator++;
         }
         afterRules.sort((a, b) => a.id - b.id);
+        const indent = afterRules.length > 10 ? undefined : 1;
         const lines = [];
         for ( const afterRule of afterRules ) {
-            lines.push(JSON.stringify(afterRule));
+            lines.push(JSON.stringify(afterRule, null, indent));
         }
         writePromises.push(
             fs.writeFile(
