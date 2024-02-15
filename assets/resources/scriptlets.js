@@ -3706,7 +3706,7 @@ function setCookie(
         value,
         '',
         path,
-        safeSelf().getExtraArgs(Array.from(arguments), 3)
+        safe.getExtraArgs(Array.from(arguments), 3)
     );
 
     if ( done ) {
