@@ -1,5 +1,7 @@
 ## Fixes / changes
 
+- [Mind that multiple `uritransform` may apply to a single request](https://github.com/gorhill/uBlock/commit/2a5a444482)
+- [Fix incorrect built-in filtering expression in logger](https://github.com/gorhill/uBlock/commit/9bff0c2f94)
 - [Fix improper invalidation of valid `uritransform` exception filters](https://github.com/gorhill/uBlock/commit/21ec5a277c)
 - [Improve `prevent-addEventListener` scriptlet](https://github.com/gorhill/uBlock/commit/b22b3d729b)
 - [Fix Chartbeat flicker control `div`'s](https://github.com/gorhill/uBlock/commit/397d6d47b9) (by @ryanbr)
