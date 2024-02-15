@@ -55,51 +55,60 @@ if ( beforeDir === '' || afterDir === '' ) {
 /******************************************************************************/
 
 async function main() {
-    const afterFiles = await fs.readdir(`${afterDir}/rulesets/main`);
+    const folders = [
+        'main',
+        'modify-headers',
+        'redirect',
+        'regex',
+        'removeparam',
+    ];
     const writePromises = [];
-    for ( const file of afterFiles ) {
-        let raw = await fs.readFile(`${beforeDir}/rulesets/main/${file}`, 'utf-8').catch(( ) => '');
-        let beforeRules;
-        try { beforeRules = JSON.parse(raw); } catch(_) { }
-        if ( Array.isArray(beforeRules) === false ) { continue; }
-        raw = await fs.readFile(`${afterDir}/rulesets/main/${file}`, 'utf-8').catch(( ) => '');
-        let afterRules;
-        try { afterRules = JSON.parse(raw); } catch(_) { }
-        if ( Array.isArray(afterRules) === false ) { continue; }
-        const beforeMap = new Map(beforeRules.map(a => {
-            const id = a.id;
-            a.id = 0;
-            return [ JSON.stringify(a), id ];
-        }));
-        const usedIds = new Set();
-        for ( const afterRule of afterRules ) {
-            afterRule.id = 0;
-            const key = JSON.stringify(afterRule);
-            const beforeId = beforeMap.get(key);
-            if ( beforeId === undefined ) { continue; }
-            if ( usedIds.has(beforeId) ) { continue; }
-            afterRule.id = beforeId;
-            usedIds.add(beforeId);
+    for ( const folder of folders ) {
+        const afterFiles = await fs.readdir(`${afterDir}/rulesets/${folder}`);
+        for ( const file of afterFiles ) {
+            let raw = await fs.readFile(`${beforeDir}/rulesets/${folder}/${file}`, 'utf-8').catch(( ) => '');
+            let beforeRules;
+            try { beforeRules = JSON.parse(raw); } catch(_) { }
+            if ( Array.isArray(beforeRules) === false ) { continue; }
+            raw = await fs.readFile(`${afterDir}/rulesets/${folder}/${file}`, 'utf-8').catch(( ) => '');
+            let afterRules;
+            try { afterRules = JSON.parse(raw); } catch(_) { }
+            if ( Array.isArray(afterRules) === false ) { continue; }
+            const beforeMap = new Map(beforeRules.map(a => {
+                const id = a.id;
+                a.id = 0;
+                return [ JSON.stringify(a), id ];
+            }));
+            const usedIds = new Set();
+            for ( const afterRule of afterRules ) {
+                afterRule.id = 0;
+                const key = JSON.stringify(afterRule);
+                const beforeId = beforeMap.get(key);
+                if ( beforeId === undefined ) { continue; }
+                if ( usedIds.has(beforeId) ) { continue; }
+                afterRule.id = beforeId;
+                usedIds.add(beforeId);
+            }
+            // Assign new ids to unmatched rules
+            let ruleIdGenerator = 1;
+            for ( const afterRule of afterRules ) {
+                if ( afterRule.id !== 0 ) { continue; }
+                while ( usedIds.has(ruleIdGenerator) ) { ruleIdGenerator += 1; }
+                afterRule.id = ruleIdGenerator++;
+            }
+            afterRules.sort((a, b) => a.id - b.id);
+            const indent = afterRules.length > 10 ? undefined : 1;
+            const lines = [];
+            for ( const afterRule of afterRules ) {
+                lines.push(JSON.stringify(afterRule, null, indent));
+            }
+            writePromises.push(
+                fs.writeFile(
+                    `${afterDir}/rulesets/${folder}/${file}`,
+                    `[\n${lines.join(',\n')}\n]\n`
+                )
+            );
         }
-        // Assign new ids to unmatched rules
-        let ruleIdGenerator = 1;
-        for ( const afterRule of afterRules ) {
-            if ( afterRule.id !== 0 ) { continue; }
-            while ( usedIds.has(ruleIdGenerator) ) { ruleIdGenerator += 1; }
-            afterRule.id = ruleIdGenerator++;
-        }
-        afterRules.sort((a, b) => a.id - b.id);
-        const indent = afterRules.length > 10 ? undefined : 1;
-        const lines = [];
-        for ( const afterRule of afterRules ) {
-            lines.push(JSON.stringify(afterRule, null, indent));
-        }
-        writePromises.push(
-            fs.writeFile(
-                `${afterDir}/rulesets/main/${file}`,
-                `[\n${lines.join(',\n')}\n]\n`
-            )
-        );
     }
     await Promise.all(writePromises);
 }
