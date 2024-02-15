@@ -5289,28 +5289,37 @@ FilterContainer.prototype.redirectRequest = function(redirectEngine, fctxt) {
 FilterContainer.prototype.transformRequest = function(fctxt) {
     const directives = this.matchAndFetchModifiers(fctxt, 'uritransform');
     if ( directives === undefined ) { return; }
-    const directive = directives[directives.length-1];
-    if ( (directive.bits & ALLOW_REALM) !== 0 ) { return directives; }
-    if ( directive.refs instanceof Object === false ) { return; }
-    const { refs } = directive;
-    if ( refs.$cache === null ) {
-        refs.$cache = sfp.parseReplaceValue(refs.value);
-    }
-    const cache = refs.$cache;
-    if ( cache === undefined ) { return; }
     const redirectURL = new URL(fctxt.url);
-    const before = `${redirectURL.pathname}${redirectURL.search}${redirectURL.hash}`;
-    if ( cache.re.test(before) !== true ) { return; }
-    const after = before.replace(cache.re, cache.replacement);
-    if ( after === before ) { return; }
-    const hashPos = after.indexOf('#');
-    redirectURL.hash = hashPos !== -1 ? after.slice(hashPos) : '';
-    const afterMinusHash = hashPos !== -1 ? after.slice(0, hashPos) : after;
-    const searchPos = afterMinusHash.indexOf('?');
-    redirectURL.search = searchPos !== -1 ? afterMinusHash.slice(searchPos) : '';
-    redirectURL.pathname = searchPos !== -1 ? after.slice(0, searchPos) : after;
-    fctxt.redirectURL = redirectURL.href;
-    return directives;
+    const out = [];
+    for ( const directive of directives ) {
+        if ( (directive.bits & ALLOW_REALM) !== 0 ) {
+            out.push(directive);
+            continue;
+        }
+        const { refs } = directive;
+        if ( refs instanceof Object === false ) { continue; }
+        if ( refs.$cache === null ) {
+            refs.$cache = sfp.parseReplaceValue(refs.value);
+        }
+        const cache = refs.$cache;
+        if ( cache === undefined ) { continue; }
+        const before = `${redirectURL.pathname}${redirectURL.search}${redirectURL.hash}`;
+        if ( cache.re.test(before) !== true ) { continue; }
+        const after = before.replace(cache.re, cache.replacement);
+        if ( after === before ) { continue; }
+        const hashPos = after.indexOf('#');
+        redirectURL.hash = hashPos !== -1 ? after.slice(hashPos) : '';
+        const afterMinusHash = hashPos !== -1 ? after.slice(0, hashPos) : after;
+        const searchPos = afterMinusHash.indexOf('?');
+        redirectURL.search = searchPos !== -1 ? afterMinusHash.slice(searchPos) : '';
+        redirectURL.pathname = searchPos !== -1 ? after.slice(0, searchPos) : after;
+        out.push(directive);
+    }
+    if ( out.length === 0 ) { return; }
+    if ( redirectURL.href !== fctxt.url ) {
+        fctxt.redirectURL = redirectURL.href;
+    }
+    return out;
 };
 
 function parseRedirectRequestValue(directive) {
