@@ -3455,7 +3455,7 @@ function hrefSanitizer(
             if ( shouldSanitize ) { break; }
         }
         if ( shouldSanitize === false ) { return; }
-        timer = self.requestAnimationFrame(( ) => {
+        timer = self.requestIdleCallback(( ) => {
             timer = undefined;
             sanitize();
         });
