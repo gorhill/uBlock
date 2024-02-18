@@ -18,7 +18,7 @@ body {
 :root.mobile body {
     min-height: unset;
     }
-[data-i18n="1pTrustWarning"] {
+html:not(.mobile) [data-i18n="1pTrustWarning"] {
     font-weight: bold;
     }
 .codeMirrorContainer {
