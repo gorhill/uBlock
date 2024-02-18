@@ -3458,6 +3458,8 @@ class ExtSelectorCompiler {
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/2300
     //   Unquoted attribute values are parsed as Identifier instead of String.
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/3127
+    //   Escape [\t\n\v\f\r]
     astSerializePart(part) {
         const out = [];
         const { data } = part;
@@ -3473,7 +3475,14 @@ class ExtSelectorCompiler {
             if ( typeof value !== 'string' ) {
                 value = data.value.name;
             }
-            value = value.replace(/["\\]/g, '\\$&');
+            if ( /["\\]/.test(value) ) {
+                value = value.replace(/["\\]/g, '\\$&');
+            }
+            if ( /[\x09-\x0D]/.test(value) ) {
+                value = value.replace(/[\x09-\x0D]/g, s =>
+                    `\\${s.charCodeAt(0).toString(16).toUpperCase()} `
+                );
+            }
             let flags = '';
             if ( typeof data.flags === 'string' ) {
                 if ( /^(is?|si?)$/.test(data.flags) === false ) { return; }
