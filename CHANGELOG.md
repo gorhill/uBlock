@@ -1,5 +1,13 @@
 ## Fixes / changes
 
+- [Escape special whitespace characters in attribute values](https://github.com/gorhill/uBlock/commit/be3e366019)
+
+----------
+
+# 1.56.0
+
+## Fixes / changes
+
 - [Mind that multiple `uritransform` may apply to a single request](https://github.com/gorhill/uBlock/commit/2a5a444482)
 - [Fix incorrect built-in filtering expression in logger](https://github.com/gorhill/uBlock/commit/9bff0c2f94)
 - [Fix improper invalidation of valid `uritransform` exception filters](https://github.com/gorhill/uBlock/commit/21ec5a277c)
