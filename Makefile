@@ -1,7 +1,7 @@
 # https://stackoverflow.com/a/6273809
 run_options := $(filter-out $@,$(MAKECMDGOALS))
 
-.PHONY: all clean test lint chromium opera firefox npm dig mv3 mv3-quick \
+.PHONY: all clean cleanassets test lint chromium opera firefox npm dig mv3 mv3-quick \
 	compare maxcost medcost mincost modifiers record wasm
 
 sources := $(wildcard assets/* assets/*/* dist/version src/* src/*/* src/*/*/* src/*/*/*/*)
@@ -73,6 +73,8 @@ dist/build/uAssets:
 clean:
 	rm -rf dist/build tmp/node_modules
 
+cleanassets:
+	rm -rf dist/build/mv3-data dist/build/uAssets
 
 # Not real targets, just convenient for auto-completion at shell prompt
 compare:
