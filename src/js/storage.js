@@ -38,7 +38,6 @@ import µb from './background.js';
 import { hostnameFromURI } from './uri-utils.js';
 import { i18n, i18n$ } from './i18n.js';
 import { redirectEngine } from './redirect-engine.js';
-import { sparseBase64 } from './base64-custom.js';
 import { ubolog, ubologSet } from './console.js';
 import * as sfp from './static-filtering-parser.js';
 
@@ -974,7 +973,7 @@ onBroadcast(msg => {
 /******************************************************************************/
 
 µb.getCompiledFilterList = async function(assetKey) {
-    const compiledPath = 'compiled/' + assetKey;
+    const compiledPath = `compiled/${assetKey}`;
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1365
     //   Verify that the list version matches that of the current compiled
@@ -983,11 +982,10 @@ onBroadcast(msg => {
         this.compiledFormatChanged === false &&
         this.badLists.has(assetKey) === false
     ) {
-        const compiledDetails = await io.get(compiledPath);
+        const content = await io.fromCache(compiledPath);
         const compilerVersion = `${this.systemSettings.compiledMagic}\n`;
-        if ( compiledDetails.content.startsWith(compilerVersion) ) {
-            compiledDetails.assetKey = assetKey;
-            return compiledDetails;
+        if ( content.startsWith(compilerVersion) ) {
+            return { assetKey, content };
         }
     }
 
@@ -1017,7 +1015,7 @@ onBroadcast(msg => {
         assetKey,
         trustedSource: this.isTrustedList(assetKey),
     });
-    io.put(compiledPath, compiledContent);
+    io.toCache(compiledPath, compiledContent);
 
     return { assetKey, content: compiledContent };
 };
@@ -1046,7 +1044,7 @@ onBroadcast(msg => {
 /******************************************************************************/
 
 µb.removeCompiledFilterList = function(assetKey) {
-    io.remove('compiled/' + assetKey);
+    io.remove(`compiled/${assetKey}`);
 };
 
 µb.removeFilterList = function(assetKey) {
@@ -1173,20 +1171,17 @@ onBroadcast(msg => {
         const results = await Promise.all(fetchPromises);
         if ( Array.isArray(results) === false ) { return results; }
 
-        let content = '';
+        const content = [];
         for ( let i = 1; i < results.length; i++ ) {
             const result = results[i];
-            if (
-                result instanceof Object === false ||
-                typeof result.content !== 'string' ||
-                result.content === ''
-            ) {
-                continue;
-            }
-            content += '\n\n' + result.content;
+            if ( result instanceof Object === false ) { continue; }
+            if ( typeof result.content !== 'string' ) { continue; }
+            if ( result.content === '' ) { continue; }
+            content.push(result.content);
         }
-
-        redirectEngine.resourcesFromString(content);
+        if ( content.length !== 0 ) {
+            redirectEngine.resourcesFromString(content.join('\n\n'));
+        }
         redirectEngine.selfieFromResources(io);
     } catch(ex) {
         ubolog(ex);
@@ -1225,8 +1220,8 @@ onBroadcast(msg => {
     }
 
     try {
-        const result = await io.get(`compiled/${this.pslAssetKey}`);
-        if ( psl.fromSelfie(result.content, sparseBase64) ) { return; }
+        const selfie = await io.fromCache(`compiled/${this.pslAssetKey}`);
+        if ( psl.fromSelfie(selfie) ) { return; }
     } catch (reason) {
         ubolog(reason);
     }
@@ -1240,7 +1235,7 @@ onBroadcast(msg => {
 µb.compilePublicSuffixList = function(content) {
     const psl = publicSuffixList;
     psl.parse(content, punycode.toASCII);
-    io.put(`compiled/${this.pslAssetKey}`, psl.toSelfie(sparseBase64));
+    return io.toCache(`compiled/${this.pslAssetKey}`, psl.toSelfie());
 };
 
 /******************************************************************************/
@@ -1260,39 +1255,24 @@ onBroadcast(msg => {
         if ( µb.inMemoryFilters.length !== 0 ) { return; }
         if ( Object.keys(µb.availableFilterLists).length === 0 ) { return; }
         await Promise.all([
-            io.put(
-                'selfie/main',
-                JSON.stringify({
-                    magic: µb.systemSettings.selfieMagic,
-                    availableFilterLists: µb.availableFilterLists,
-                })
+            io.toCache('selfie/main', {
+                magic: µb.systemSettings.selfieMagic,
+                availableFilterLists: µb.availableFilterLists,
+            }),
+            io.toCache('selfie/staticExtFilteringEngine',
+                staticExtFilteringEngine.toSelfie()
             ),
-            redirectEngine.toSelfie('selfie/redirectEngine'),
-            staticExtFilteringEngine.toSelfie(
-                'selfie/staticExtFilteringEngine'
-            ),
-            staticNetFilteringEngine.toSelfie(io,
-                'selfie/staticNetFilteringEngine'
+            io.toCache('selfie/staticNetFilteringEngine',
+                staticNetFilteringEngine.toSelfie()
             ),
         ]);
         lz4Codec.relinquish();
         µb.selfieIsInvalid = false;
+        ubolog(`Selfie was created`);
     };
 
     const loadMain = async function() {
-        const details = await io.get('selfie/main');
-        if (
-            details instanceof Object === false ||
-            typeof details.content !== 'string' ||
-            details.content === ''
-        ) {
-            return false;
-        }
-        let selfie;
-        try {
-            selfie = JSON.parse(details.content);
-        } catch(ex) {
-        }
+        const selfie = await io.fromCache('selfie/main');
         if ( selfie instanceof Object === false ) { return false; }
         if ( selfie.magic !== µb.systemSettings.selfieMagic ) { return false; }
         if ( selfie.availableFilterLists instanceof Object === false ) { return false; }
@@ -1306,12 +1286,11 @@ onBroadcast(msg => {
         try {
             const results = await Promise.all([
                 loadMain(),
-                redirectEngine.fromSelfie('selfie/redirectEngine'),
-                staticExtFilteringEngine.fromSelfie(
-                    'selfie/staticExtFilteringEngine'
+                io.fromCache('selfie/staticExtFilteringEngine').then(selfie =>
+                    staticExtFilteringEngine.fromSelfie(selfie)
                 ),
-                staticNetFilteringEngine.fromSelfie(io,
-                    'selfie/staticNetFilteringEngine'
+                io.fromCache('selfie/staticNetFilteringEngine').then(selfie =>
+                    staticNetFilteringEngine.fromSelfie(selfie)
                 ),
             ]);
             if ( results.every(v => v) ) {
@@ -1325,10 +1304,11 @@ onBroadcast(msg => {
         return false;
     };
 
-    const destroy = function() {
+    const destroy = function(options = {}) {
         if ( µb.selfieIsInvalid === false ) {
-            io.remove(/^selfie\//);
+            io.remove(/^selfie\//, options);
             µb.selfieIsInvalid = true;
+            ubolog(`Selfie was removed`);
         }
         if ( µb.wakeupReason === 'createSelfie' ) {
             µb.wakeupReason = '';
@@ -1594,8 +1574,7 @@ onBroadcast(msg => {
     if ( topic === 'after-asset-updated' ) {
         // Skip selfie-related content.
         if ( details.assetKey.startsWith('selfie/') ) { return; }
-        const cached = typeof details.content === 'string' &&
-                       details.content !== '';
+        const cached = typeof details.content === 'string' && details.content !== '';
         if ( this.availableFilterLists.hasOwnProperty(details.assetKey) ) {
             if ( cached ) {
                 if ( this.selectedFilterLists.indexOf(details.assetKey) !== -1 ) {
@@ -1604,8 +1583,7 @@ onBroadcast(msg => {
                         details.content
                     );
                     if ( this.badLists.has(details.assetKey) === false ) {
-                        io.put(
-                            'compiled/' + details.assetKey,
+                        io.toCache(`compiled/${details.assetKey}`,
                             this.compileFilters(details.content, {
                                 assetKey: details.assetKey,
                                 trustedSource: this.isTrustedList(details.assetKey),

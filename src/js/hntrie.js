@@ -445,28 +445,17 @@ class HNTrieContainer {
         };
     }
 
-    serialize(encoder) {
-        if ( encoder instanceof Object ) {
-            return encoder.encode(
-                this.buf32.buffer,
-                this.buf32[CHAR1_SLOT]
-            );
-        }
-        return Array.from(
-            new Uint32Array(
-                this.buf32.buffer,
-                0,
-                this.buf32[CHAR1_SLOT] + 3 >>> 2
-            )
+    toSelfie() {
+        return this.buf32.subarray(
+            0,
+            this.buf32[CHAR1_SLOT] + 3 >>> 2
         );
     }
 
-    unserialize(selfie, decoder) {
+    fromSelfie(selfie) {
+        if ( selfie instanceof Uint32Array === false ) { return false; }
         this.needle = '';
-        const shouldDecode = typeof selfie === 'string';
-        let byteLength = shouldDecode
-            ? decoder.decodeSize(selfie)
-            : selfie.length << 2;
+        let byteLength = selfie.length << 2;
         if ( byteLength === 0 ) { return false; }
         byteLength = roundToPageSize(byteLength);
         if ( this.wasmMemory !== null ) {
@@ -477,14 +466,10 @@ class HNTrieContainer {
                 this.buf = new Uint8Array(this.wasmMemory.buffer);
                 this.buf32 = new Uint32Array(this.buf.buffer);
             }
-        } else if ( byteLength > this.buf.length ) {
-            this.buf = new Uint8Array(byteLength);
-            this.buf32 = new Uint32Array(this.buf.buffer);
-        }
-        if ( shouldDecode ) {
-            decoder.decode(selfie, this.buf.buffer);
-        } else {
             this.buf32.set(selfie);
+        } else {
+            this.buf32 = selfie;
+            this.buf = new Uint8Array(this.buf32.buffer);
         }
         // https://github.com/uBlockOrigin/uBlock-issues/issues/2925
         this.buf[255] = 0;

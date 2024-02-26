@@ -141,8 +141,8 @@ const StaticExtFilteringHostnameDB = class {
     toSelfie() {
         return {
             version: this.version,
-            hostnameToSlotIdMap: Array.from(this.hostnameToSlotIdMap),
-            regexToSlotIdMap: Array.from(this.regexToSlotIdMap),
+            hostnameToSlotIdMap: this.hostnameToSlotIdMap,
+            regexToSlotIdMap: this.regexToSlotIdMap,
             hostnameSlots: this.hostnameSlots,
             strSlots: this.strSlots,
             size: this.size
@@ -150,11 +150,11 @@ const StaticExtFilteringHostnameDB = class {
     }
 
     fromSelfie(selfie) {
-        if ( selfie === undefined ) { return; }
-        this.hostnameToSlotIdMap = new Map(selfie.hostnameToSlotIdMap);
+        if ( typeof selfie !== 'object' || selfie === null ) { return; }
+        this.hostnameToSlotIdMap = selfie.hostnameToSlotIdMap;
         // Regex-based lookup available in uBO 1.47.0 and above
-        if ( Array.isArray(selfie.regexToSlotIdMap) ) {
-            this.regexToSlotIdMap = new Map(selfie.regexToSlotIdMap);
+        if ( selfie.regexToSlotIdMap ) {
+            this.regexToSlotIdMap = selfie.regexToSlotIdMap;
         }
         this.hostnameSlots = selfie.hostnameSlots;
         this.strSlots = selfie.strSlots;

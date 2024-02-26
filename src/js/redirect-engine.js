@@ -24,11 +24,7 @@
 /******************************************************************************/
 
 import redirectableResources from './redirect-resources.js';
-
-import {
-    LineIterator,
-    orphanizeString,
-} from './text-utils.js';
+import { LineIterator, orphanizeString } from './text-utils.js';
 
 /******************************************************************************/
 
@@ -448,33 +444,22 @@ class RedirectEngine {
     }
 
     selfieFromResources(storage) {
-        storage.put(
-            RESOURCES_SELFIE_NAME,
-            JSON.stringify({
-                version: RESOURCES_SELFIE_VERSION,
-                aliases: Array.from(this.aliases),
-                resources: Array.from(this.resources),
-            })
-        );
+        return storage.toCache(RESOURCES_SELFIE_NAME, {
+            version: RESOURCES_SELFIE_VERSION,
+            aliases: this.aliases,
+            resources: this.resources,
+        });
     }
 
     async resourcesFromSelfie(storage) {
-        const result = await storage.get(RESOURCES_SELFIE_NAME);
-        let selfie;
-        try {
-            selfie = JSON.parse(result.content);
-        } catch(ex) {
-        }
-        if (
-            selfie instanceof Object === false ||
-            selfie.version !== RESOURCES_SELFIE_VERSION ||
-            Array.isArray(selfie.resources) === false
-        ) {
-            return false;
-        }
-        this.aliases = new Map(selfie.aliases);
-        this.resources = new Map();
-        for ( const [ token, entry ] of selfie.resources ) {
+        const selfie = await storage.fromCache(RESOURCES_SELFIE_NAME);
+        if ( selfie instanceof Object === false ) { return false; }
+        if ( selfie.version !== RESOURCES_SELFIE_VERSION ) { return false; }
+        if ( selfie.aliases instanceof Map === false ) { return false; }
+        if ( selfie.resources instanceof Map === false ) { return false; }
+        this.aliases = selfie.aliases;
+        this.resources = selfie.resources;
+        for ( const [ token, entry ] of this.resources ) {
             this.resources.set(token, RedirectEntry.fromDetails(entry));
         }
         return true;

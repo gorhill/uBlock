@@ -139,7 +139,7 @@ const initializeTabs = async ( ) => {
 // https://www.reddit.com/r/uBlockOrigin/comments/s7c9go/
 //   Abort suspending network requests when uBO is merely being installed.
 
-const onVersionReady = lastVersion => {
+const onVersionReady = async lastVersion => {
     if ( lastVersion === vAPI.app.version ) { return; }
 
     vAPI.storage.set({
@@ -153,6 +153,11 @@ const onVersionReady = lastVersion => {
     if ( lastVersionInt === 0 ) {
         vAPI.net.unsuspend({ all: true, discard: true });
         return;
+    }
+
+    // Migrate cache storage
+    if ( lastVersionInt < vAPI.app.intFromVersion('1.56.1b1') ) {
+        await cacheStorage.migrate(µb.hiddenSettings.cacheStorageAPI);
     }
 
     // Since built-in resources may have changed since last version, we
@@ -252,19 +257,19 @@ const onUserSettingsReady = fetched => {
 //   Wait for removal of invalid cached data to be completed.
 
 const onCacheSettingsReady = async (fetched = {}) => {
+    let selfieIsInvalid = false;
     if ( fetched.compiledMagic !== µb.systemSettings.compiledMagic ) {
         µb.compiledFormatChanged = true;
-        µb.selfieIsInvalid = true;
+        selfieIsInvalid = true;
         ubolog(`Serialized format of static filter lists changed`);
     }
     if ( fetched.selfieMagic !== µb.systemSettings.selfieMagic ) {
-        µb.selfieIsInvalid = true;
+        selfieIsInvalid = true;
         ubolog(`Serialized format of selfie changed`);
     }
-    if ( µb.selfieIsInvalid ) {
-        µb.selfieManager.destroy();
-        cacheStorage.set(µb.systemSettings);
-    }
+    if ( selfieIsInvalid === false ) { return; }
+    µb.selfieManager.destroy({ janitor: true });
+    cacheStorage.set(µb.systemSettings);
 };
 
 /******************************************************************************/
@@ -305,10 +310,7 @@ const onHiddenSettingsReady = async ( ) => {
     }
 
     // Maybe override default cache storage
-    µb.supportStats.cacheBackend = await cacheStorage.select(
-        µb.hiddenSettings.cacheStorageAPI
-    );
-    ubolog(`Backend storage for cache will be ${µb.supportStats.cacheBackend}`);
+    µb.supportStats.cacheBackend = 'browser.storage.local';
 };
 
 /******************************************************************************/
@@ -333,7 +335,6 @@ const onFirstFetchReady = (fetched, adminExtra) => {
     sessionSwitches.assign(permanentSwitches);
 
     onNetWhitelistReady(fetched.netWhitelist, adminExtra);
-    onVersionReady(fetched.version);
 };
 
 /******************************************************************************/
@@ -389,22 +390,19 @@ try {
     const adminExtra = await vAPI.adminStorage.get('toAdd');
     ubolog(`Extra admin settings ready ${Date.now()-vAPI.T0} ms after launch`);
 
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/1365
-    //   Wait for onCacheSettingsReady() to be fully ready.
-    const [ , , lastVersion ] = await Promise.all([
+    const lastVersion = await vAPI.storage.get(createDefaultProps()).then(async fetched => {
+        ubolog(`Version ready ${Date.now()-vAPI.T0} ms after launch`);
+        await onVersionReady(fetched.version);
+        return fetched;
+    }).then(fetched => {
+        ubolog(`First fetch ready ${Date.now()-vAPI.T0} ms after launch`);
+        onFirstFetchReady(fetched, adminExtra);
+        return fetched.version;
+    });
+
+    await Promise.all([
         µb.loadSelectedFilterLists().then(( ) => {
             ubolog(`List selection ready ${Date.now()-vAPI.T0} ms after launch`);
-        }),
-        cacheStorage.get(
-            { compiledMagic: 0, selfieMagic: 0 }
-        ).then(fetched => {
-            ubolog(`Cache magic numbers ready ${Date.now()-vAPI.T0} ms after launch`);
-            onCacheSettingsReady(fetched);
-        }),
-        vAPI.storage.get(createDefaultProps()).then(fetched => {
-            ubolog(`First fetch ready ${Date.now()-vAPI.T0} ms after launch`);
-            onFirstFetchReady(fetched, adminExtra);
-            return fetched.version;
         }),
         µb.loadUserSettings().then(fetched => {
             ubolog(`User settings ready ${Date.now()-vAPI.T0} ms after launch`);
@@ -412,6 +410,10 @@ try {
         }),
         µb.loadPublicSuffixList().then(( ) => {
             ubolog(`PSL ready ${Date.now()-vAPI.T0} ms after launch`);
+        }),
+        cacheStorage.get({ compiledMagic: 0, selfieMagic: 0 }).then(bin => {
+            ubolog(`Cache magic numbers ready ${Date.now()-vAPI.T0} ms after launch`);
+            onCacheSettingsReady(bin);
         }),
     ]);
 

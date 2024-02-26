@@ -56,6 +56,7 @@ const hiddenSettingsDefault = {
     blockingProfiles: '11111/#F00 11010/#C0F 11001/#00F 00001',
     cacheStorageAPI: 'unset',
     cacheStorageCompression: true,
+    cacheStorageMultithread: 2,
     cacheControlForFirefox1376932: 'no-cache, no-store, must-revalidate',
     cloudStorageCompression: true,
     cnameIgnoreList: 'unset',
@@ -181,7 +182,7 @@ const µBlock = {  // jshint ignore:line
     // Read-only
     systemSettings: {
         compiledMagic: 57,  // Increase when compiled format changes
-        selfieMagic: 57,    // Increase when selfie format changes
+        selfieMagic: 58,    // Increase when selfie format changes
     },
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/759#issuecomment-546654501

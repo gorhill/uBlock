@@ -28,7 +28,6 @@
 import { queueTask, dropTask } from './tasks.js';
 import BidiTrieContainer from './biditrie.js';
 import HNTrieContainer from './hntrie.js';
-import { sparseBase64 } from './base64-custom.js';
 import { CompiledListReader } from './static-filtering-io.js';
 import * as sfp from './static-filtering-parser.js';
 
@@ -493,17 +492,13 @@ const filterDataReset = ( ) => {
     filterData.fill(0);
     filterDataWritePtr = 2;
 };
-const filterDataToSelfie = ( ) => {
-    return JSON.stringify(Array.from(filterData.subarray(0, filterDataWritePtr)));
-};
+const filterDataToSelfie = ( ) =>
+    filterData.subarray(0, filterDataWritePtr);
+
 const filterDataFromSelfie = selfie => {
-    if ( typeof selfie !== 'string' || selfie === '' ) { return false; }
-    const data = JSON.parse(selfie);
-    if ( Array.isArray(data) === false ) { return false; }
-    filterDataGrow(data.length);
-    filterDataWritePtr = data.length;
-    filterData.set(data);
-    filterDataShrink();
+    if ( selfie instanceof Int32Array === false ) { return false; }
+    filterData = selfie;
+    filterDataWritePtr = selfie.length;
     return true;
 };
 
@@ -519,53 +514,15 @@ const filterRefsReset = ( ) => {
     filterRefs.fill(null);
     filterRefsWritePtr = 1;
 };
-const filterRefsToSelfie = ( ) => {
-    const refs = [];
-    for ( let i = 0; i < filterRefsWritePtr; i++ ) {
-        const v = filterRefs[i];
-        if ( v instanceof RegExp ) {
-            refs.push({ t: 1, s: v.source, f: v.flags });
-            continue;
-        }
-        if ( Array.isArray(v) ) {
-            refs.push({ t: 2, v });
-            continue;
-        }
-        if ( typeof v !== 'object' || v === null ) {
-            refs.push({ t: 0, v });
-            continue;
-        }
-        const out = Object.create(null);
-        for ( const prop of Object.keys(v) ) {
-            const value = v[prop];
-            out[prop] = prop.startsWith('$')
-                ? (typeof value === 'string' ? '' : null)
-                : value;
-        }
-        refs.push({ t: 3, v: out });
-    }
-    return JSON.stringify(refs);
-};
+const filterRefsToSelfie = ( ) =>
+    filterRefs.slice(0, filterRefsWritePtr);
+
 const filterRefsFromSelfie = selfie => {
-    if ( typeof selfie !== 'string' || selfie === '' ) { return false; }
-    const refs = JSON.parse(selfie);
-    if ( Array.isArray(refs) === false ) { return false; }
-    for ( let i = 0; i < refs.length; i++ ) {
-        const v = refs[i];
-        switch ( v.t ) {
-        case 0:
-        case 2:
-        case 3:
-            filterRefs[i] = v.v;
-            break;
-        case 1:
-            filterRefs[i] = new RegExp(v.s, v.f);
-            break;
-        default:
-            throw new Error('Unknown filter reference!');
-        }
+    if ( Array.isArray(selfie) === false ) { return false; }
+    for ( let i = 0, n = selfie.length; i < n; i++ ) {
+        filterRefs[i] = selfie[i];
     }
-    filterRefsWritePtr = refs.length;
+    filterRefsWritePtr = selfie.length;
     return true;
 };
 
@@ -3121,14 +3078,11 @@ const urlTokenizer = new (class {
     }
 
     toSelfie() {
-        return sparseBase64.encode(
-            this.knownTokens.buffer,
-            this.knownTokens.byteLength
-        );
+        return this.knownTokens;
     }
 
     fromSelfie(selfie) {
-        return sparseBase64.decode(selfie, this.knownTokens.buffer);
+        this.knownTokens = selfie;
     }
 
     // https://github.com/chrisaljoudi/uBlock/issues/1118
@@ -4674,52 +4628,24 @@ FilterContainer.prototype.optimize = function(throttle = 0) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.toSelfie = async function(storage, path) {
-    if ( typeof storage !== 'object' || storage === null ) { return; }
-    if ( typeof storage.put !== 'function' ) { return; }
-
+FilterContainer.prototype.toSelfie = function() {
     bidiTrieOptimize(true);
-    keyvalStore.setItem(
-        'SNFE.origHNTrieContainer.trieDetails',
+    keyvalStore.setItem('SNFE.origHNTrieContainer.trieDetails',
         origHNTrieContainer.optimize()
     );
-
-    return Promise.all([
-        storage.put(
-            `${path}/destHNTrieContainer`,
-            destHNTrieContainer.serialize(sparseBase64)
-        ),
-        storage.put(
-            `${path}/origHNTrieContainer`,
-            origHNTrieContainer.serialize(sparseBase64)
-        ),
-        storage.put(
-            `${path}/bidiTrie`,
-            bidiTrie.serialize(sparseBase64)
-        ),
-        storage.put(
-            `${path}/filterData`,
-            filterDataToSelfie()
-        ),
-        storage.put(
-            `${path}/filterRefs`,
-            filterRefsToSelfie()
-        ),
-        storage.put(
-            `${path}/main`,
-            JSON.stringify({
-                version: this.selfieVersion,
-                processedFilterCount: this.processedFilterCount,
-                acceptedCount: this.acceptedCount,
-                discardedCount: this.discardedCount,
-                bitsToBucket: Array.from(this.bitsToBucket).map(kv => {
-                    kv[1] = Array.from(kv[1]);
-                    return kv;
-                }),
-                urlTokenizer: urlTokenizer.toSelfie(),
-            })
-        )
-    ]);
+    return {
+        version: this.selfieVersion,
+        processedFilterCount: this.processedFilterCount,
+        acceptedCount: this.acceptedCount,
+        discardedCount: this.discardedCount,
+        bitsToBucket: this.bitsToBucket,
+        urlTokenizer: urlTokenizer.toSelfie(),
+        destHNTrieContainer: destHNTrieContainer.toSelfie(),
+        origHNTrieContainer: origHNTrieContainer.toSelfie(),
+        bidiTrie: bidiTrie.toSelfie(),
+        filterData: filterDataToSelfie(),
+        filterRefs: filterRefsToSelfie(),
+    };
 };
 
 FilterContainer.prototype.serialize = async function() {
@@ -4735,53 +4661,27 @@ FilterContainer.prototype.serialize = async function() {
 
 /******************************************************************************/
 
-FilterContainer.prototype.fromSelfie = async function(storage, path) {
-    if ( typeof storage !== 'object' || storage === null ) { return; }
-    if ( typeof storage.get !== 'function' ) { return; }
+FilterContainer.prototype.fromSelfie = async function(selfie) {
+    if ( typeof selfie !== 'object' || selfie === null ) { return; }
 
     this.reset();
 
     this.notReady = true;
 
-    const results = await Promise.all([
-        storage.get(`${path}/main`),
-        storage.get(`${path}/destHNTrieContainer`).then(details =>
-            destHNTrieContainer.unserialize(details.content, sparseBase64)
-        ),
-        storage.get(`${path}/origHNTrieContainer`).then(details =>
-            origHNTrieContainer.unserialize(details.content, sparseBase64)
-        ),
-        storage.get(`${path}/bidiTrie`).then(details =>
-            bidiTrie.unserialize(details.content, sparseBase64)
-        ),
-        storage.get(`${path}/filterData`).then(details =>
-            filterDataFromSelfie(details.content)
-        ),
-        storage.get(`${path}/filterRefs`).then(details =>
-            filterRefsFromSelfie(details.content)
-        ),
-    ]);
-
+    const results = [
+        destHNTrieContainer.fromSelfie(selfie.destHNTrieContainer),
+        origHNTrieContainer.fromSelfie(selfie.origHNTrieContainer),
+        bidiTrie.fromSelfie(selfie.bidiTrie),
+        filterDataFromSelfie(selfie.filterData),
+        filterRefsFromSelfie(selfie.filterRefs),
+    ];
     if ( results.slice(1).every(v => v === true) === false ) { return false; }
 
-    const details = results[0];
-    if ( typeof details !== 'object' || details === null ) { return false; }
-    if ( typeof details.content !== 'string' ) { return false; }
-    if ( details.content === '' ) { return false; }
-    let selfie;
-    try {
-        selfie = JSON.parse(details.content);
-    } catch (ex) {
-    }
-    if ( typeof selfie !== 'object' || selfie === null ) { return false; }
     if ( selfie.version !== this.selfieVersion ) { return false; }
     this.processedFilterCount = selfie.processedFilterCount;
     this.acceptedCount = selfie.acceptedCount;
     this.discardedCount = selfie.discardedCount;
-    this.bitsToBucket = new Map(selfie.bitsToBucket.map(kv => {
-        kv[1] = new Map(kv[1]);
-        return kv;
-    }));
+    this.bitsToBucket = selfie.bitsToBucket;
     urlTokenizer.fromSelfie(selfie.urlTokenizer);
 
     // If this point is never reached, it means the internal state is

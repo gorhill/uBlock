@@ -46,105 +46,6 @@ const digitToVal = new Uint8Array(128);
     }
 }
 
-// The sparse base64 codec is best for buffers which contains a lot of
-// small u32 integer values. Those small u32 integer values are better
-// represented with stringified integers, because small values can be
-// represented with fewer bits than the usual base64 codec. For example,
-// 0 become '0 ', i.e. 16 bits instead of 48 bits with official base64
-// codec.
-
-const sparseBase64 = {
-    magic: 'Base64_1',
-
-    encode: function(arrbuf, arrlen) {
-        const inputLength = (arrlen + 3) >>> 2;
-        const inbuf = new Uint32Array(arrbuf, 0, inputLength);
-        const outputLength = this.magic.length + 7 + inputLength * 7;
-        const outbuf = new Uint8Array(outputLength);
-        // magic bytes
-        let j = 0;
-        for ( let i = 0; i < this.magic.length; i++ ) {
-            outbuf[j++] = this.magic.charCodeAt(i);
-        }
-        // array size
-        let v = inputLength;
-        do {
-            outbuf[j++] = valToDigit[v & 0b111111];
-            v >>>= 6;
-        } while ( v !== 0 );
-        outbuf[j++] = 0x20 /* ' ' */;
-        // array content
-        for ( let i = 0; i < inputLength; i++ ) {
-            v = inbuf[i];
-            do {
-                outbuf[j++] = valToDigit[v & 0b111111];
-                v >>>= 6;
-            } while ( v !== 0 );
-            outbuf[j++] = 0x20 /* ' ' */;
-        }
-        if ( typeof TextDecoder === 'undefined' ) {
-            return JSON.stringify(
-                Array.from(new Uint32Array(outbuf.buffer, 0, j >>> 2))
-            );
-        }
-        const textDecoder = new TextDecoder();
-        return textDecoder.decode(new Uint8Array(outbuf.buffer, 0, j));
-    },
-
-    decode: function(instr, arrbuf) {
-        if ( instr.charCodeAt(0) === 0x5B /* '[' */ ) {
-            const inbuf = JSON.parse(instr);
-            if ( arrbuf instanceof ArrayBuffer === false ) {
-                return new Uint32Array(inbuf);
-            }
-            const outbuf = new Uint32Array(arrbuf);
-            outbuf.set(inbuf);
-            return outbuf;
-        }
-        if ( instr.startsWith(this.magic) === false ) {
-            throw new Error('Invalid µBlock.base64 encoding');
-        }
-        const inputLength = instr.length;
-        const outputLength = this.decodeSize(instr) >> 2;
-        const outbuf = arrbuf instanceof ArrayBuffer === false
-            ? new Uint32Array(outputLength)
-            : new Uint32Array(arrbuf);
-        let i = instr.indexOf(' ', this.magic.length) + 1;
-        if ( i === -1 ) {
-            throw new Error('Invalid µBlock.base64 encoding');
-        }
-        // array content
-        let j = 0;
-        for (;;) {
-            if ( j === outputLength || i >= inputLength ) { break; }
-            let v = 0, l = 0;
-            for (;;) {
-                const c = instr.charCodeAt(i++);
-                if ( c === 0x20 /* ' ' */ ) { break; }
-                v += digitToVal[c] << l;
-                l += 6;
-            }
-            outbuf[j++] = v;
-        }
-        if ( i < inputLength || j < outputLength ) {
-            throw new Error('Invalid µBlock.base64 encoding');
-        }
-        return outbuf;
-    },
-
-    decodeSize: function(instr) {
-        if ( instr.startsWith(this.magic) === false ) { return 0; }
-        let v = 0, l = 0, i = this.magic.length;
-        for (;;) {
-            const c = instr.charCodeAt(i++);
-            if ( c === 0x20 /* ' ' */ ) { break; }
-            v += digitToVal[c] << l;
-            l += 6;
-        }
-        return v << 2;
-    },
-};
-
 // The dense base64 codec is best for typed buffers which values are
 // more random. For example, buffer contents as a result of compression
 // contain less repetitive values and thus the content is more
@@ -154,7 +55,7 @@ const sparseBase64 = {
 //       ArrayBuffer fails, the content of the resulting Uint8Array is
 //       non-sensical. WASM-related?
 
-const denseBase64 = {
+export const denseBase64 = {
     magic: 'DenseBase64_1',
 
     encode: function(input) {
@@ -242,5 +143,3 @@ const denseBase64 = {
 };
 
 /******************************************************************************/
-
-export { denseBase64, sparseBase64 };

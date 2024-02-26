@@ -1671,10 +1671,7 @@ vAPI.cloud = (( ) => {
 
     const push = async function(details) {
         const { datakey, data, encode } = details;
-        if (
-            data === undefined ||
-            typeof data === 'string' && data === ''
-        ) {
+        if ( data === undefined || typeof data === 'string' && data === '' ) {
             return deleteChunks(datakey, 0);
         }
         const item = {
@@ -1682,10 +1679,9 @@ vAPI.cloud = (( ) => {
             tstamp: Date.now(),
             data,
         };
-        const json = JSON.stringify(item);
         const encoded = encode instanceof Function
-            ? await encode(json)
-            : json;
+            ? await encode(item)
+            : JSON.stringify(item);
 
         // Chunkify taking into account QUOTA_BYTES_PER_ITEM:
         //   https://developer.chrome.com/extensions/storage#property-sync
@@ -1750,13 +1746,16 @@ vAPI.cloud = (( ) => {
             i += 1;
         }
         encoded = encoded.join('');
-        const json = decode instanceof Function
-            ? await decode(encoded)
-            : encoded;
+
         let entry = null;
         try {
-            entry = JSON.parse(json);
-        } catch(ex) {
+            if ( decode instanceof Function ) {
+                entry = await decode(encoded) || null;
+            }
+            if ( typeof entry === 'string' ) {
+                entry = JSON.parse(entry);
+            }
+        } catch(_) {
         }
         return entry;
     };

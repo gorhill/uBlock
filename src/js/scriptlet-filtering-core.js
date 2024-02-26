@@ -200,7 +200,7 @@ export class ScriptletFilteringEngine {
     }
 
     fromSelfie(selfie) {
-        if ( selfie instanceof Object === false ) { return false; }
+        if ( typeof selfie !== 'object' || selfie === null ) { return false; }
         if ( selfie.version !== VERSION ) { return false; }
         this.scriptletDB.fromSelfie(selfie);
         return true;

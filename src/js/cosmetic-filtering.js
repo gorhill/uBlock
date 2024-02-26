@@ -292,7 +292,7 @@ FilterContainer.prototype.reset = function() {
     this.highlyGeneric.complex.str = '';
     this.highlyGeneric.complex.mru.reset();
 
-    this.selfieVersion = 1;
+    this.selfieVersion = 2;
 };
 
 /******************************************************************************/
@@ -576,9 +576,11 @@ FilterContainer.prototype.toSelfie = function() {
         acceptedCount: this.acceptedCount,
         discardedCount: this.discardedCount,
         specificFilters: this.specificFilters.toSelfie(),
-        lowlyGeneric: Array.from(this.lowlyGeneric),
-        highSimpleGenericHideArray: Array.from(this.highlyGeneric.simple.dict),
-        highComplexGenericHideArray: Array.from(this.highlyGeneric.complex.dict),
+        lowlyGeneric: this.lowlyGeneric,
+        highSimpleGenericHideDict: this.highlyGeneric.simple.dict,
+        highSimpleGenericHideStr: this.highlyGeneric.simple.str,
+        highComplexGenericHideDict: this.highlyGeneric.complex.dict,
+        highComplexGenericHideStr: this.highlyGeneric.complex.str,
     };
 };
 
@@ -593,11 +595,11 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
     this.acceptedCount = selfie.acceptedCount;
     this.discardedCount = selfie.discardedCount;
     this.specificFilters.fromSelfie(selfie.specificFilters);
-    this.lowlyGeneric = new Map(selfie.lowlyGeneric);
-    this.highlyGeneric.simple.dict = new Set(selfie.highSimpleGenericHideArray);
-    this.highlyGeneric.simple.str = selfie.highSimpleGenericHideArray.join(',\n');
-    this.highlyGeneric.complex.dict = new Set(selfie.highComplexGenericHideArray);
-    this.highlyGeneric.complex.str = selfie.highComplexGenericHideArray.join(',\n');
+    this.lowlyGeneric = selfie.lowlyGeneric;
+    this.highlyGeneric.simple.dict = selfie.highSimpleGenericHideDict;
+    this.highlyGeneric.simple.str = selfie.highSimpleGenericHideStr;
+    this.highlyGeneric.complex.dict = selfie.highComplexGenericHideDict;
+    this.highlyGeneric.complex.str = selfie.highComplexGenericHideStr;
     this.frozen = true;
 };
 

@@ -13,8 +13,6 @@
 
 /*! Home: https://github.com/gorhill/publicsuffixlist.js -- GPLv3 APLv2 */
 
-/* globals WebAssembly, exports:true, module */
-
 'use strict';
 
 /*******************************************************************************
@@ -70,7 +68,7 @@ const RULES_PTR_SLOT        = 100;  // 100 / 400 (400-256=144 => 144>128)
 const SUFFIX_NOT_FOUND_SLOT = 399;  //  -- / 399 (safe, see above)
 const CHARDATA_PTR_SLOT     = 101;  // 101 / 404
 const EMPTY_STRING          = '';
-const SELFIE_MAGIC          = 2;
+const SELFIE_MAGIC          = 3;
 
 let wasmMemory;
 let pslBuffer32;
@@ -499,9 +497,7 @@ const toSelfie = function(encoder) {
     }
     return {
         magic: SELFIE_MAGIC,
-        buf32: Array.from(
-            new Uint32Array(pslBuffer8.buffer, 0, pslByteLength >>> 2)
-        ),
+        buf32: pslBuffer32.subarray(0, pslByteLength >> 2),
     };
 };
 
@@ -524,7 +520,7 @@ const fromSelfie = function(selfie, decoder) {
     } else if (
         selfie instanceof Object &&
         selfie.magic === SELFIE_MAGIC &&
-        Array.isArray(selfie.buf32)
+        selfie.buf32 instanceof Uint32Array
     ) {
         byteLength = selfie.buf32.length << 2;
         allocateBuffers(byteLength);

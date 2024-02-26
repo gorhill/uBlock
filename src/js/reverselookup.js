@@ -62,7 +62,7 @@ const stopWorker = function() {
 };
 
 const workerTTLTimer = vAPI.defer.create(stopWorker);
-const workerTTL = { min: 5 };
+const workerTTL = { min: 1.5 };
 
 const initWorker = function() {
     if ( worker === null ) {
