@@ -619,6 +619,21 @@ const filterToDOMInterface = (( ) => {
     const reCaret = '(?:[^%.0-9a-z_-]|$)';
     const rePseudoElements = /:(?::?after|:?before|:[a-z-]+)$/;
 
+    const matchElemToRegex = (elem, re) => {
+        const srcProp = netFilter1stSources[elem.localName];
+        let src = elem[srcProp];
+        if ( src instanceof SVGAnimatedString ) {
+            src = src.baseVal;
+        }
+        if ( typeof src === 'string' && /^https?:\/\//.test(src) ) {
+            if ( re.test(src) ) { return srcProp; }
+        }
+        src = elem.currentSrc;
+        if ( typeof src === 'string' && /^https?:\/\//.test(src) ) {
+            if ( re.test(src) ) { return srcProp; }
+        }
+    };
+
     // Net filters: we need to lookup manually -- translating into a foolproof
     // CSS selector is just not possible.
     //
@@ -672,28 +687,21 @@ const filterToDOMInterface = (( ) => {
         // Lookup by tag names.
         // https://github.com/uBlockOrigin/uBlock-issues/issues/2260
         //   Maybe get to the actual URL indirectly.
+        //
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/3142
+        //   Don't try to match against non-network URIs.
         const elems = document.querySelectorAll(
             Object.keys(netFilter1stSources).join()
         );
         for ( const elem of elems ) {
-            const srcProp = netFilter1stSources[elem.localName];
-            let src = elem[srcProp];
-            if ( src instanceof SVGAnimatedString ) {
-                src = src.baseVal;
-            }
-            if (
-                typeof src === 'string' &&
-                    reFilter.test(src) ||
-                typeof elem.currentSrc === 'string' &&
-                    reFilter.test(elem.currentSrc)
-            ) {
-                out.push({
-                    elem,
-                    src: srcProp,
-                    opt: filterTypes[elem.localName],
-                    style: vAPI.hideStyle,
-                });
-            }
+            const srcProp = matchElemToRegex(elem, reFilter);
+            if ( srcProp === undefined ) { continue; }
+            out.push({
+                elem,
+                src: srcProp,
+                opt: filterTypes[elem.localName],
+                style: vAPI.hideStyle,
+            });
         }
 
         // Find matching background image in current set of candidate elements.
