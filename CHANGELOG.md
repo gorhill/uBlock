@@ -1,5 +1,9 @@
 ## Fixes / changes
 
+- [Redesign cache storage](https://github.com/gorhill/uBlock/commit/086766a924)
+- [Don't match network filter-derived regexes against non-network URIs](https://github.com/gorhill/uBlock/commit/2262a129ec)
+- [Remove obsolete trusted directives](https://github.com/gorhill/uBlock/commit/439a059cca)
+- [Support logging details of calls to `json-prune-fetch-response`](https://github.com/gorhill/uBlock/commit/e527a8f9af)
 - [Escape special whitespace characters in attribute values](https://github.com/gorhill/uBlock/commit/be3e366019)
 
 ----------
