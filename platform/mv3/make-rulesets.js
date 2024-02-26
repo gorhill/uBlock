@@ -996,6 +996,10 @@ async function rulesetFromURLs(assetDetails) {
         assetDetails.text = text;
     }
 
+    if ( Array.isArray(assetDetails.filters) ) {
+        assetDetails.text += '\n' + assetDetails.filters.join('\n');
+    }
+
     const extensionPaths = [];
     for ( const [ fname, details ] of redirectResourcesMap ) {
         const path = `/web_accessible_resources/${fname}`;
@@ -1169,6 +1173,8 @@ async function main() {
         urls: contentURLs,
         dnrURL: 'https://ublockorigin.github.io/uAssets/dnr/default.json',
         homeURL: 'https://github.com/uBlockOrigin/uAssets',
+        filters: [
+        ],
     });
 
     // Regional rulesets
