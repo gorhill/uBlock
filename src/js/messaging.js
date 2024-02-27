@@ -948,7 +948,7 @@ const onMessage = function(request, sender, callback) {
 
     case 'cloudPull':
         request.decode = encoded => {
-            if ( scuo.canDeserialize(encoded) ) {
+            if ( scuo.isSerialized(encoded) ) {
                 return scuo.deserializeAsync(encoded, { thread: true });
             }
             // Legacy decoding: needs to be kept around for the foreseeable future.

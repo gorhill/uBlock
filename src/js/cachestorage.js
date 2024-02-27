@@ -58,6 +58,19 @@ const shouldCache = bin => {
     return out;
 };
 
+const missingKeys = (wanted, inbin, outbin) => {
+    inbin = inbin || {};
+    const found = Object.keys(inbin);
+    Object.assign(outbin, inbin);
+    if ( found.length === wanted.length ) { return; }
+    const missing = [];
+    for ( const key of wanted ) {
+        if ( outbin.hasOwnProperty(key) ) { continue; }
+        missing.push(key);
+    }
+    return missing;
+};
+
 /*******************************************************************************
  * 
  * Extension storage
@@ -68,11 +81,10 @@ const shouldCache = bin => {
 
 const cacheStorage = (( ) => {
 
-    const LARGE = 65536;
-
     const compress = async (key, data) => {
-        const isLarge = typeof data === 'string' && data.length >= LARGE;
         const µbhs = µb.hiddenSettings;
+        const isLarge = typeof data === 'string' &&
+            data.length >= µbhs.cacheStorageCompressionThreshold;
         const after = await scuo.serializeAsync(data, {
             compress: isLarge && µbhs.cacheStorageCompression,
             multithreaded: isLarge && µbhs.cacheStorageMultithread || 0,
@@ -80,40 +92,39 @@ const cacheStorage = (( ) => {
         return { key, data: after };
     };
 
-    const decompress = async (key, data) => {
-        if ( scuo.canDeserialize(data) === false ) {
-            return { key, data };
-        }
-        const isLarge = data.length >= LARGE;
-        const after = await scuo.deserializeAsync(data, {
-            multithreaded: isLarge && µb.hiddenSettings.cacheStorageMultithread || 0,
+    const decompress = async (bin, key) => {
+        const data = bin[key];
+        if ( scuo.isSerialized(data) === false ) { return; }
+        const µbhs = µb.hiddenSettings;
+        const isLarge = data.length >= µbhs.cacheStorageCompressionThreshold;
+        bin[key] = await scuo.deserializeAsync(data, {
+            multithreaded: isLarge && µbhs.cacheStorageMultithread || 0,
         });
-        return { key, data: after };
     };
 
     return {
-        name: 'browser.storage.local',
-
-        get(arg) {
-            const keys = arg;
-            return cacheAPI.get(keysFromGetArg(arg)).then(bin => {
-                if ( bin !== undefined ) { return bin; }
-                return extensionStorage.get(keys).catch(reason => {
-                    ubolog(reason);
+        get(argbin) {
+            const outbin = {};
+            const wanted0 = keysFromGetArg(argbin);
+            return cacheAPI.get(wanted0).then(bin => {
+                const wanted1 = missingKeys(wanted0, bin, outbin);
+                if ( wanted1 === undefined ) { return; }
+                return extensionStorage.get(wanted1).then(bin => {
+                    const wanted2 = missingKeys(wanted1, bin, outbin);
+                    if ( wanted2 === undefined ) { return; }
+                    if ( argbin instanceof Object === false ) { return; }
+                    if ( Array.isArray(argbin) ) { return; }
+                    for ( const key of wanted2 ) {
+                        if ( argbin.hasOwnProperty(key) === false ) { continue; }
+                        outbin[key] = argbin[key];
+                    }
                 });
-            }).then(bin => {
-                if ( bin instanceof Object === false ) { return bin; }
+            }).then(( ) => {
                 const promises = [];
-                for ( const key of Object.keys(bin) ) {
-                    promises.push(decompress(key, bin[key]));
+                for ( const key of Object.keys(outbin) ) {
+                    promises.push(decompress(outbin, key));
                 }
-                return Promise.all(promises);
-            }).then(results => {
-                const bin = {};
-                for ( const { key, data } of results ) {
-                    bin[key] = data;
-                }
-                return bin;
+                return Promise.all(promises).then(( ) => outbin);
             }).catch(reason => {
                 ubolog(reason);
             });
@@ -183,8 +194,6 @@ const cacheStorage = (( ) => {
             idbStorage.clear();
             return Promise.all(toMigrate);
         },
-
-        error: undefined
     };
 })();
 
@@ -217,6 +226,7 @@ const cacheAPI = (( ) => {
         }
         resolve(caches.open(STORAGE_NAME).catch(reason => {
             ubolog(reason);
+            return null;
         }));
     });
 
@@ -232,7 +242,7 @@ const cacheAPI = (( ) => {
         const cache = await cacheStoragePromise;
         if ( cache === null ) { return; }
         return cache.match(keyToURL(key)).then(response => {
-            if ( response instanceof Response === false ) { return; }
+            if ( response === undefined ) { return; }
             return response.text();
         }).then(text => {
             if ( text === undefined ) { return; }
@@ -302,7 +312,7 @@ const cacheAPI = (( ) => {
             }
             const responses = await Promise.all(toFetch);
             for ( const response of responses ) {
-                if ( response instanceof Object === false ) { continue; }
+                if ( response === undefined ) { continue; }
                 const { key, text } = response;
                 if ( typeof key !== 'string' ) { continue; }
                 if ( typeof text !== 'string' ) { continue; }
@@ -321,7 +331,7 @@ const cacheAPI = (( ) => {
             ).catch(( ) => []);
         },
 
-        async set(keyvalStore) {
+        set(keyvalStore) {
             const keys = Object.keys(keyvalStore);
             if ( keys.length === 0 ) { return; }
             const promises = [];
@@ -331,7 +341,7 @@ const cacheAPI = (( ) => {
             return Promise.all(promises);
         },
 
-        async remove(keys) {
+        remove(keys) {
             const toRemove = [];
             if ( typeof keys === 'string' ) {
                 toRemove.push(removeOne(keys));
@@ -343,7 +353,7 @@ const cacheAPI = (( ) => {
             return Promise.all(toRemove);
         },
 
-        async clear() {
+        clear() {
             return globalThis.caches.delete(STORAGE_NAME).catch(reason => {
                 ubolog(reason);
             });
