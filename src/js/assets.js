@@ -696,15 +696,14 @@ function getAssetCacheRegistry() {
 const saveAssetCacheRegistry = (( ) => {
     const save = ( ) => {
         timer.off();
-        cacheStorage.set({ assetCacheRegistry });
+        return cacheStorage.set({ assetCacheRegistry });
     };
     const timer = vAPI.defer.create(save);
-    return function(lazily) {
-        if ( lazily ) {
-            timer.offon({ sec: 30 });
-        } else {
-            save();
+    return (throttle = 0) => {
+        if ( throttle === 0 ) {
+            return save();
         }
+        timer.offon({ sec: throttle });
     };
 })();
 
@@ -741,7 +740,7 @@ async function assetCacheRead(assetKey, updateReadTime = false) {
 
     entry.readTime = Date.now();
     if ( updateReadTime ) {
-        saveAssetCacheRegistry(true);
+        saveAssetCacheRegistry(23);
     }
 
     return reportBack(bin[internalKey]);
@@ -752,18 +751,20 @@ async function assetCacheWrite(assetKey, content, options = {}) {
         return assetCacheRemove(assetKey);
     }
 
-    const { resourceTime, url } = options;
+    const cacheDict = await getAssetCacheRegistry();
 
-    getAssetCacheRegistry().then(cacheDict => {
-        const entry = cacheDict[assetKey] || {};
-        cacheDict[assetKey] = entry;
-        entry.writeTime = entry.readTime = Date.now();
-        entry.resourceTime = resourceTime || 0;
-        if ( typeof url === 'string' ) {
-            entry.remoteURL = url;
-        }
-        cacheStorage.set({ assetCacheRegistry, [`cache/${assetKey}`]: content });
-    });
+    const { resourceTime, url } = options;
+    const entry = cacheDict[assetKey] || {};
+    entry.writeTime = entry.readTime = Date.now();
+    entry.resourceTime = resourceTime || 0;
+    if ( typeof url === 'string' ) {
+        entry.remoteURL = url;
+    }
+    cacheDict[assetKey] = entry;
+
+    await cacheStorage.set({ [`cache/${assetKey}`]: content });
+
+    saveAssetCacheRegistry(3);
 
     const result = { assetKey, content };
     // https://github.com/uBlockOrigin/uBlock-issues/issues/248

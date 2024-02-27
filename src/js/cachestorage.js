@@ -87,7 +87,7 @@ const cacheStorage = (( ) => {
             data.length >= µbhs.cacheStorageCompressionThreshold;
         const after = await scuo.serializeAsync(data, {
             compress: isLarge && µbhs.cacheStorageCompression,
-            multithreaded: isLarge && µbhs.cacheStorageMultithread || 0,
+            multithreaded: isLarge && µbhs.cacheStorageMultithread || 2,
         });
         return { key, data: after };
     };
@@ -98,7 +98,7 @@ const cacheStorage = (( ) => {
         const µbhs = µb.hiddenSettings;
         const isLarge = data.length >= µbhs.cacheStorageCompressionThreshold;
         bin[key] = await scuo.deserializeAsync(data, {
-            multithreaded: isLarge && µbhs.cacheStorageMultithread || 0,
+            multithreaded: isLarge && µbhs.cacheStorageMultithread || 2,
         });
     };
 

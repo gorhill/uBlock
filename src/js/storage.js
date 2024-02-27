@@ -1300,6 +1300,7 @@ onBroadcast(msg => {
         catch (reason) {
             ubolog(reason);
         }
+        ubolog('Selfie not available');
         destroy();
         return false;
     };
@@ -1308,7 +1309,7 @@ onBroadcast(msg => {
         if ( µb.selfieIsInvalid === false ) {
             io.remove(/^selfie\//, options);
             µb.selfieIsInvalid = true;
-            ubolog(`Selfie was removed`);
+            ubolog('Selfie marked for invalidation');
         }
         if ( µb.wakeupReason === 'createSelfie' ) {
             µb.wakeupReason = '';
