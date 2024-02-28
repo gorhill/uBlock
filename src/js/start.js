@@ -159,11 +159,6 @@ const onVersionReady = async lastVersion => {
         return;
     }
 
-    // Migrate cache storage
-    if ( lastVersionInt < vAPI.app.intFromVersion('1.56.1b1') ) {
-        await cacheStorage.migrate(µb.hiddenSettings.cacheStorageAPI);
-    }
-
     // Remove cache items with obsolete names
     if ( lastVersionInt < vAPI.app.intFromVersion('1.56.1b5') ) {
         io.remove(`compiled/${µb.pslAssetKey}`);
@@ -319,9 +314,6 @@ const onHiddenSettingsReady = async ( ) => {
             ubolog(`WASM modules ready ${Date.now()-vAPI.T0} ms after launch`);
         });
     }
-
-    // Maybe override default cache storage
-    µb.supportStats.cacheBackend = 'browser.storage.local';
 };
 
 /******************************************************************************/
@@ -400,6 +392,12 @@ try {
 
     const adminExtra = await vAPI.adminStorage.get('toAdd');
     ubolog(`Extra admin settings ready ${Date.now()-vAPI.T0} ms after launch`);
+
+    // Maybe override default cache storage
+    µb.supportStats.cacheBackend = await cacheStorage.select(
+        µb.hiddenSettings.cacheStorageAPI
+    );
+    ubolog(`Backend storage for cache will be ${µb.supportStats.cacheBackend}`);
 
     const lastVersion = await vAPI.storage.get(createDefaultProps()).then(async fetched => {
         ubolog(`Version ready ${Date.now()-vAPI.T0} ms after launch`);

@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global browser, indexedDB */
+/* global indexedDB */
 
 'use strict';
 
@@ -44,6 +44,8 @@ const keysFromGetArg = arg => {
     if ( type !== 'object' ) { return; }
     return Object.keys(arg);
 };
+
+let fastCache = 'indexedDB';
 
 /*******************************************************************************
  * 
@@ -93,7 +95,11 @@ const cacheStorage = (( ) => {
     const api = {
         get(argbin) {
             const outbin = {};
-            return exGet(cacheAPI, keysFromGetArg(argbin), outbin).then(wanted => {
+            return exGet(
+                cacheAPIs[fastCache],
+                keysFromGetArg(argbin),
+                outbin
+            ).then(wanted => {
                 if ( wanted === undefined ) { return; }
                 return exGet(extensionStorage, wanted, outbin);
             }).then(wanted => {
@@ -117,7 +123,7 @@ const cacheStorage = (( ) => {
 
         async keys(regex) {
             const results = await Promise.all([
-                cacheAPI.keys(regex),
+                cacheAPIs[fastCache].keys(regex),
                 extensionStorage.get(null).catch(( ) => {}),
             ]);
             const keys = new Set(results[0]);
@@ -129,53 +135,43 @@ const cacheStorage = (( ) => {
             return keys;
         },
 
-        async set(keyvalStore) {
-            const keys = Object.keys(keyvalStore);
+        async set(inbin) {
+            const keys = Object.keys(inbin);
             if ( keys.length === 0 ) { return; }
             const bin = {};
             const promises = [];
             for ( const key of keys ) {
-                promises.push(compress(bin, key, keyvalStore[key]));
+                promises.push(compress(bin, key, inbin[key]));
             }
             await Promise.all(promises);
-            memoryStorage.set(bin);
-            cacheAPI.set(bin);
+            cacheAPIs[fastCache].set(inbin, bin);
             return extensionStorage.set(bin).catch(reason => {
                 ubolog(reason);
             });
         },
 
         remove(...args) {
-            cacheAPI.remove(...args);
+            cacheAPIs[fastCache].remove(...args);
             return extensionStorage.remove(...args).catch(reason => {
                 ubolog(reason);
             });
         },
 
         clear(...args) {
-            cacheAPI.clear(...args);
+            cacheAPIs[fastCache].clear(...args);
             return extensionStorage.clear(...args).catch(reason => {
                 ubolog(reason);
             });
         },
 
-        async migrate(cacheAPI) {
-            if ( cacheAPI === 'browser.storage.local' ) { return; }
-            if ( cacheAPI !== 'indexedDB' ) {
-                if ( vAPI.webextFlavor.soup.has('firefox') === false ) { return; }
+        select(api) {
+            if ( cacheAPIs.hasOwnProperty(api) === false ) { return fastCache; }
+            fastCache = api;
+            for ( const k of Object.keys(cacheAPIs) ) {
+                if ( k === api ) { continue; }
+                cacheAPIs[k]['clear']();
             }
-            if ( browser.extension.inIncognitoContext ) { return; }
-            // Copy all items to new cache storage
-            const bin = await idbStorage.get(null);
-            if ( typeof bin !== 'object' || bin === null ) { return; }
-            const toMigrate = [];
-            for ( const key of Object.keys(bin) ) {
-                if ( key.startsWith('cache/selfie/') ) { continue; }
-                ubolog(`Migrating ${key}=${JSON.stringify(bin[key]).slice(0,32)}`);
-                toMigrate.push(cacheStorage.set({ [key]: bin[key] }));
-            }
-            idbStorage.clear();
-            return Promise.all(toMigrate);
+            return fastCache;
         },
     };
 
@@ -203,17 +199,23 @@ const cacheStorage = (( ) => {
 
 const cacheAPI = (( ) => {
     const caches = globalThis.caches;
-    const cacheStoragePromise = new Promise(resolve => {
-        if ( typeof caches !== 'object' || caches === null ) {
-            ubolog('CacheStorage API not available');
-            resolve(null);
-            return;
-        }
-        resolve(caches.open(STORAGE_NAME).catch(reason => {
+    let cacheStoragePromise;
+
+    const getAPI = ( ) => {
+        if ( cacheStoragePromise !== undefined ) { return cacheStoragePromise; }
+        cacheStoragePromise = new Promise(resolve => {
+            if ( typeof caches !== 'object' || caches === null ) {
+                ubolog('CacheStorage API not available');
+                resolve(null);
+                return;
+            }
+            resolve(caches.open(STORAGE_NAME));
+        }).catch(reason => {
             ubolog(reason);
             return null;
-        }));
-    });
+        });
+        return cacheStoragePromise;
+    };
 
     const urlPrefix = 'https://ublock0.invalid/';
 
@@ -237,7 +239,7 @@ const cacheAPI = (( ) => {
     };
 
     const getOne = async key => {
-        const cache = await cacheStoragePromise;
+        const cache = await getAPI();
         if ( cache === null ) { return; }
         return cache.match(keyToURL(key)).then(response => {
             if ( response === undefined ) { return; }
@@ -251,7 +253,7 @@ const cacheAPI = (( ) => {
     };
 
     const getAll = async ( ) => {
-        const cache = await cacheStoragePromise;
+        const cache = await getAPI();
         if ( cache === null ) { return; }
         return cache.keys().then(requests => {
             const promises = [];
@@ -274,7 +276,7 @@ const cacheAPI = (( ) => {
     const setOne = async (key, text) => {
         if ( text === undefined ) { return removeOne(key); }
         const blob = new Blob([ text ], { type: 'text/plain;charset=utf-8'});
-        const cache = await cacheStoragePromise;
+        const cache = await getAPI();
         if ( cache === null ) { return; }
         return cache
             .put(keyToURL(key), new Response(blob))
@@ -284,7 +286,7 @@ const cacheAPI = (( ) => {
     };
 
     const removeOne = async key => {
-        const cache = await cacheStoragePromise;
+        const cache = await getAPI();
         if ( cache === null ) { return; }
         return cache.delete(keyToURL(key)).catch(reason => {
             ubolog(reason);
@@ -321,7 +323,7 @@ const cacheAPI = (( ) => {
         },
 
         async keys(regex) {
-            const cache = await cacheStoragePromise;
+            const cache = await getAPI();
             if ( cache === null ) { return []; }
             return cache.keys().then(requests =>
                 requests.map(r => urlToKey(r.url))
@@ -329,8 +331,8 @@ const cacheAPI = (( ) => {
             ).catch(( ) => []);
         },
 
-        async set(...args) {
-            const bin = shouldCache(...args);
+        async set(rawbin, serializedbin) {
+            const bin = shouldCache(serializedbin);
             if ( bin === undefined ) { return; }
             const keys = Object.keys(bin);
             const promises = [];
@@ -352,10 +354,16 @@ const cacheAPI = (( ) => {
             return Promise.all(toRemove);
         },
 
-        clear() {
+        async clear() {
+            if ( typeof caches !== 'object' || caches === null ) { return; }
             return globalThis.caches.delete(STORAGE_NAME).catch(reason => {
                 ubolog(reason);
             });
+        },
+        
+        shutdown() {
+            cacheStoragePromise = undefined;
+            return this.clear();
         },
     };
 })();
@@ -366,7 +374,7 @@ const cacheAPI = (( ) => {
  * 
  * */
 
-const memoryStorage = (( ) => {  // jshint ignore:line
+const memoryStorage = (( ) => {
 
     const sessionStorage = vAPI.sessionStorage;
 
@@ -393,7 +401,7 @@ const memoryStorage = (( ) => {  // jshint ignore:line
         },
 
         async keys(regex) {
-            const bin = await sessionStorage.get(null).catch(( ) => {});
+            const bin = await this.get(null);
             const keys = [];
             for ( const key of Object.keys(bin || {}) ) {
                 if ( regex && regex.test(key) === false ) { continue; }
@@ -402,8 +410,8 @@ const memoryStorage = (( ) => {  // jshint ignore:line
             return keys;
         },
 
-        async set(...args) {
-            const bin = shouldCache(...args);
+        async set(rawbin, serializedbin) {
+            const bin = shouldCache(serializedbin);
             if ( bin === undefined ) { return; }
             return sessionStorage.set(bin).catch(reason => {
                 ubolog(reason);
@@ -420,6 +428,10 @@ const memoryStorage = (( ) => {  // jshint ignore:line
             return sessionStorage.clear(...args).catch(reason => {
                 ubolog(reason);
             });
+        },
+
+        shutdown() {
+            return this.clear();
         },
     };
 })();
@@ -438,28 +450,8 @@ const idbStorage = (( ) => {
     const getDb = function() {
         if ( dbPromise !== undefined ) { return dbPromise; }
         dbPromise = new Promise(resolve => {
-            let req;
-            try {
-                req = indexedDB.open(STORAGE_NAME, 1);
-                if ( req.error ) {
-                    ubolog(req.error);
-                    req = undefined;
-                }
-            } catch(ex) {
-            }
-            if ( req === undefined ) {
-                return resolve(null);
-            }
-            req.onupgradeneeded = function(ev) {
-                // https://github.com/uBlockOrigin/uBlock-issues/issues/2725
-                //   If context Firefox + incognito mode, fall back to
-                //   browser.storage.local for cache storage purpose.
-                if (
-                    vAPI.webextFlavor.soup.has('firefox') &&
-                    browser.extension.inIncognitoContext === true
-                ) {
-                    return req.onerror();
-                }
+            const req = indexedDB.open(STORAGE_NAME, 1);
+            req.onupgradeneeded = ev => {
                 if ( ev.oldVersion === 1 ) { return; }
                 try {
                     const db = ev.target.result;
@@ -468,27 +460,44 @@ const idbStorage = (( ) => {
                     req.onerror();
                 }
             };
-            req.onsuccess = function(ev) {
+            req.onsuccess = ev => {
                 if ( resolve === undefined ) { return; }
-                req = undefined;
-                resolve(ev.target.result);
+                resolve(ev.target.result || null);
                 resolve = undefined;
             };
-            req.onerror = req.onblocked = function() {
+            req.onerror = req.onblocked = ( ) => {
                 if ( resolve === undefined ) { return; }
+                ubolog(req.error);
                 resolve(null);
                 resolve = undefined;
             };
-            vAPI.defer.once(5000).then(( ) => {
+            vAPI.defer.once(10000).then(( ) => {
                 if ( resolve === undefined ) { return; }
                 resolve(null);
                 resolve = undefined;
             });
+        }).catch(reason => {
+            ubolog(`idbStorage() / getDb() failed: ${reason}`);
+            return null;
         });
         return dbPromise;
     };
 
-    const fromBlob = function(data) {
+    // Cache API is subject to quota so we will use it only for what is key
+    // performance-wise
+    const shouldCache = bin => {
+        const out = {};
+        for ( const key of Object.keys(bin) ) {
+            if ( key.startsWith('cache/' ) ) {
+                if ( /^cache\/(compiled|selfie)\//.test(key) === false ) { continue; }
+            }
+            out[key] = bin[key];
+        }
+        if ( Object.keys(out).length === 0 ) { return; }
+        return out;
+    };
+
+    const fromBlob = data => {
         if ( data instanceof Blob === false ) {
             return Promise.resolve(data);
         }
@@ -501,80 +510,213 @@ const idbStorage = (( ) => {
         });
     };
 
-    const decompress = function(store, key, data) {
-        return lz4Codec.decode(data, fromBlob).then(data => {
-            store[key] = data;
+    const decompress = (key, value) => {
+        return lz4Codec.decode(value, fromBlob).then(value => {
+            return { key, value };
         });
     };
 
-    const visitAllFromDb = async function(visitFn) {
+    const getAllEntries = async function() {
         const db = await getDb();
-        if ( !db ) { return visitFn(); }
-        const transaction = db.transaction(STORAGE_NAME, 'readonly');
-        transaction.oncomplete =
-        transaction.onerror =
-        transaction.onabort = ( ) => visitFn();
-        const table = transaction.objectStore(STORAGE_NAME);
-        const req = table.openCursor();
-        req.onsuccess = function(ev) {
-            let cursor = ev.target && ev.target.result;
-            if ( !cursor ) { return; }
-            let entry = cursor.value;
-            visitFn(entry);
-            cursor.continue();
-        };
-    };
-
-    const getAllFromDb = function(callback) {
-        if ( typeof callback !== 'function' ) { return; }
-        const promises = [];
-        const keyvalStore = {};
-        visitAllFromDb(entry => {
-            if ( entry === undefined ) {
-                Promise.all(promises).then(( ) => {
-                    callback(keyvalStore);
-                });
-                return;
-            }
-            const { key, value } = entry;
-            keyvalStore[key] = value;
-            if ( entry.value instanceof Blob === false ) { return; }
-            promises.push(decompress(keyvalStore, key, value));
+        if ( db === null ) { return []; }
+        return new Promise(resolve => {
+            const entries = [];
+            const transaction = db.transaction(STORAGE_NAME, 'readonly');
+            transaction.oncomplete =
+            transaction.onerror =
+            transaction.onabort = ( ) => {
+                resolve(Promise.all(entries));
+            };
+            const table = transaction.objectStore(STORAGE_NAME);
+            const req = table.openCursor();
+            req.onsuccess = ev => {
+                const cursor = ev.target && ev.target.result;
+                if ( !cursor ) { return; }
+                const { key, value } = cursor.value;
+                if ( value instanceof Blob ) {
+                    entries.push(decompress(key, value));
+                } else {
+                    entries.push({ key, value });
+                }
+                cursor.continue();
+            };
         }).catch(reason => {
-            ubolog(`idbStorage.getAllFromDb() failed: ${reason}`);
-            callback();
+            ubolog(`idbStorage() / getAllEntries() failed: ${reason}`);
+            return [];
         });
     };
 
-    const clearDb = async function(callback) {
-        if ( typeof callback !== 'function' ) {
-            callback = ()=>{};
+    const getAllKeys = async function() {
+        const db = await getDb();
+        if ( db === null ) { return []; }
+        return new Promise(resolve => {
+            const keys = [];
+            const transaction = db.transaction(STORAGE_NAME, 'readonly');
+            transaction.oncomplete =
+            transaction.onerror =
+            transaction.onabort = ( ) => {
+                resolve(keys);
+            };
+            const table = transaction.objectStore(STORAGE_NAME);
+            const req = table.openCursor();
+            req.onsuccess = ev => {
+                const cursor = ev.target && ev.target.result;
+                if ( !cursor ) { return; }
+                keys.push(cursor.key);
+                cursor.continue();
+            };
+        }).catch(reason => {
+            ubolog(`idbStorage() / getAllKeys() failed: ${reason}`);
+            return [];
+        });
+    };
+
+    const getEntries = async function(keys) {
+        const db = await getDb();
+        if ( db === null ) { return []; }
+        return new Promise(resolve => {
+            const entries = [];
+            const gotOne = ev => {
+                const { result } = ev.target;
+                if ( typeof result !== 'object' ) { return; }
+                if ( result === null ) { return; }
+                const { key, value } = result;
+                if ( value instanceof Blob ) {
+                    entries.push(decompress(key, value));
+                } else {
+                    entries.push({ key, value });
+                }
+            };
+            const transaction = db.transaction(STORAGE_NAME, 'readonly');
+            transaction.oncomplete =
+            transaction.onerror =
+                transaction.onabort = ( ) => {
+                resolve(Promise.all(entries));
+            };
+            const table = transaction.objectStore(STORAGE_NAME);
+            for ( const key of keys ) {
+                const req = table.get(key);
+                req.onsuccess = gotOne;
+                req.onerror = ( ) => { };
+            }
+        }).catch(reason => {
+            ubolog(`idbStorage() / getEntries() failed: ${reason}`);
+            return [];
+        });
+    };
+
+    const getAll = async ( ) => {
+        const entries = await getAllEntries();
+        const outbin = {};
+        for ( const { key, value } of entries ) {
+            outbin[key] = value;
         }
-        try {
-            const db = await getDb();
-            if ( !db ) { return callback(); }
-            db.close();
-            indexedDB.deleteDatabase(STORAGE_NAME);
-            callback();
-        }
-        catch(reason) {
-            callback();
-        }
+        return outbin;
+    };
+
+    const setEntries = async inbin => {
+        const keys = Object.keys(inbin);
+        if ( keys.length === 0 ) { return; }
+        const db = await getDb();
+        if ( db === null ) { return; }
+        return new Promise(resolve => {
+            const entries = [];
+            for ( const key of keys ) {
+                entries.push({ key, value: inbin[key] });
+            }
+            const transaction = db.transaction(STORAGE_NAME, 'readwrite');
+            transaction.oncomplete =
+            transaction.onerror =
+            transaction.onabort = ( ) => {
+                resolve();
+            };
+            const table = transaction.objectStore(STORAGE_NAME);
+            for ( const entry of entries ) {
+                table.put(entry);
+            }
+        }).catch(reason => {
+            ubolog(`idbStorage() / setEntries() failed: ${reason}`);
+        });
+    };
+
+    const deleteEntries = async arg => {
+        const keys = Array.isArray(arg) ? arg.slice() : [ arg ];
+        if ( keys.length === 0 ) { return; }
+        const db = await getDb();
+        if ( db === null ) { return; }
+        return new Promise(resolve => {
+            const transaction = db.transaction(STORAGE_NAME, 'readwrite');
+            transaction.oncomplete =
+            transaction.onerror =
+            transaction.onabort = ( ) => {
+                resolve();
+            };
+            const table = transaction.objectStore(STORAGE_NAME);
+            for ( const key of keys ) {
+                table.delete(key);
+            }
+        }).catch(reason => {
+            ubolog(`idbStorage() / deleteEntries() failed: ${reason}`);
+        });
     };
 
     return {
-        get: function get() {
-            return new Promise(resolve => {
-                return getAllFromDb(bin => resolve(bin));
+        async get(argbin) {
+            const keys = keysFromGetArg(argbin);
+            if ( keys === undefined ) { return; }
+            if ( keys.length === 0 ) { return getAll(); }
+            const entries = await getEntries(keys);
+            const outbin = {};
+            for ( const { key, value } of entries ) {
+                outbin[key] = value;
+            }
+            if ( argbin instanceof Object && Array.isArray(argbin) === false ) {
+                for ( const key of keys ) {
+                    if ( outbin.hasOwnProperty(key) ) { continue; }
+                    outbin[key] = argbin[key];
+                }
+            }
+            return outbin;
+        },
+
+        async set(rawbin) {
+            const bin = shouldCache(rawbin);
+            if ( bin === undefined ) { return; }
+            return setEntries(bin);
+        },
+
+        keys() {
+            return getAllKeys();
+        },
+
+        remove(...args) {
+            return deleteEntries(...args);
+        },
+
+        clear() {
+             return getDb().then(db => {
+                if ( db === null ) { return; }
+                db.close();
+                indexedDB.deleteDatabase(STORAGE_NAME);
+            }).catch(reason => {
+                ubolog(`idbStorage.clear() failed: ${reason}`);
             });
         },
-        clear: function clear() {
-            return new Promise(resolve => {
-                clearDb(( ) => resolve());
-            });
+
+        async shutdown() {
+            await this.clear();
+            dbPromise = undefined;
         },
     };
 })();
+
+/******************************************************************************/
+
+const cacheAPIs = {
+    'indexedDB': idbStorage,
+    'cacheAPI': cacheAPI,
+    'browser.storage.session': memoryStorage,
+};
 
 /******************************************************************************/
 
