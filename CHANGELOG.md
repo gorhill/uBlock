@@ -1,5 +1,6 @@
 ## Fixes / changes
 
+- [Remove trusted-source requirement when using `badfilter`](https://github.com/gorhill/uBlock/commit/3c299b8632)
 - [Redesign cache storage](https://github.com/gorhill/uBlock/commit/086766a924)
 - [Don't match network filter-derived regexes against non-network URIs](https://github.com/gorhill/uBlock/commit/2262a129ec)
 - [Remove obsolete trusted directives](https://github.com/gorhill/uBlock/commit/439a059cca)
