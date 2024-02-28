@@ -156,15 +156,6 @@ if ( chrome.storage.sync instanceof Object ) {
     };
 }
 
-// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage/session
-webext.storage.session = {
-    clear: ( ) => Promise.resolve(),
-    get: ( ) => Promise.resolve(),
-    getBytesInUse: ( ) => Promise.resolve(),
-    remove: ( ) => Promise.resolve(),
-    set: ( ) => Promise.resolve(),
-};
-
 // https://bugs.chromium.org/p/chromium/issues/detail?id=608854
 if ( chrome.tabs.removeCSS instanceof Function ) {
     webext.tabs.removeCSS = promisifyNoFail(chrome.tabs, 'removeCSS');

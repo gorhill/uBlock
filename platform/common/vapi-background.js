@@ -109,7 +109,7 @@ vAPI.generateSecret = (size = 1) => {
  * 
  * */
 
-vAPI.sessionStorage = {
+vAPI.sessionStorage = webext.storage.session || {
     get() {
         return Promise.resolve({});
     },
@@ -122,7 +122,6 @@ vAPI.sessionStorage = {
     clear() {
         return Promise.resolve();
     },
-    implemented: false,
 };
 
 /*******************************************************************************
@@ -137,46 +136,21 @@ vAPI.sessionStorage = {
 
 vAPI.storage = {
     get(key, ...args) {
-        if ( vAPI.sessionStorage.implemented !== true ) {
-            return webext.storage.local.get(key, ...args).catch(reason => {
-                console.log(reason);
-            });
-        }
-        return vAPI.sessionStorage.get(key, ...args).then(bin => {
-            const size = Object.keys(bin).length;
-            if ( size === 1 && typeof key === 'string' && bin[key] === null ) {
-                return {};
-            }
-            if ( size !== 0 ) { return bin; }
-            return webext.storage.local.get(key, ...args).then(bin => {
-                if ( bin instanceof Object === false ) { return bin; }
-                // Mirror empty result as null value in order to prevent
-                // from falling back to storage.local when there is no need.
-                const tomirror = Object.assign({}, bin);
-                if ( typeof key === 'string' && Object.keys(bin).length === 0 ) {
-                    Object.assign(tomirror, { [key]: null });
-                }
-                vAPI.sessionStorage.set(tomirror);
-                return bin;
-            }).catch(reason => {
-                console.log(reason);
-            });
+        return webext.storage.local.get(key, ...args).catch(reason => {
+            console.log(reason);
         });
     },
     set(...args) {
-        vAPI.sessionStorage.set(...args);
         return webext.storage.local.set(...args).catch(reason => {
             console.log(reason);
         });
     },
     remove(...args) {
-        vAPI.sessionStorage.remove(...args);
         return webext.storage.local.remove(...args).catch(reason => {
             console.log(reason);
         });
     },
     clear(...args) {
-        vAPI.sessionStorage.clear(...args);
         return webext.storage.local.clear(...args).catch(reason => {
             console.log(reason);
         });

@@ -1147,7 +1147,10 @@ onBroadcast(msg => {
 µb.loadRedirectResources = async function() {
     try {
         const success = await redirectEngine.resourcesFromSelfie(io);
-        if ( success === true ) { return true; }
+        if ( success === true ) {
+            ubolog('Loaded redirect/scriptlets resources from selfie');
+            return true;
+        }
 
         const fetcher = (path, options = undefined) => {
             if ( path.startsWith('/web_accessible_resources/') ) {
@@ -1220,8 +1223,11 @@ onBroadcast(msg => {
     }
 
     try {
-        const selfie = await io.fromCache(`compiled/${this.pslAssetKey}`);
-        if ( psl.fromSelfie(selfie) ) { return; }
+        const selfie = await io.fromCache(`selfie/${this.pslAssetKey}`);
+        if ( psl.fromSelfie(selfie) ) {
+            ubolog('Loaded PSL from selfie');
+            return;
+        }
     } catch (reason) {
         ubolog(reason);
     }
@@ -1235,7 +1241,8 @@ onBroadcast(msg => {
 µb.compilePublicSuffixList = function(content) {
     const psl = publicSuffixList;
     psl.parse(content, punycode.toASCII);
-    return io.toCache(`compiled/${this.pslAssetKey}`, psl.toSelfie());
+    ubolog(`Loaded PSL from ${this.pslAssetKey}`);
+    return io.toCache(`selfie/${this.pslAssetKey}`, psl.toSelfie());
 };
 
 /******************************************************************************/
@@ -1255,7 +1262,7 @@ onBroadcast(msg => {
         if ( µb.inMemoryFilters.length !== 0 ) { return; }
         if ( Object.keys(µb.availableFilterLists).length === 0 ) { return; }
         await Promise.all([
-            io.toCache('selfie/main', {
+            io.toCache('selfie/staticMain', {
                 magic: µb.systemSettings.selfieMagic,
                 availableFilterLists: µb.availableFilterLists,
             }),
@@ -1268,11 +1275,11 @@ onBroadcast(msg => {
         ]);
         lz4Codec.relinquish();
         µb.selfieIsInvalid = false;
-        ubolog(`Selfie was created`);
+        ubolog('Filtering engine selfie created');
     };
 
     const loadMain = async function() {
-        const selfie = await io.fromCache('selfie/main');
+        const selfie = await io.fromCache('selfie/staticMain');
         if ( selfie instanceof Object === false ) { return false; }
         if ( selfie.magic !== µb.systemSettings.selfieMagic ) { return false; }
         if ( selfie.availableFilterLists instanceof Object === false ) { return false; }
@@ -1300,35 +1307,26 @@ onBroadcast(msg => {
         catch (reason) {
             ubolog(reason);
         }
-        ubolog('Selfie not available');
+        ubolog('Filtering engine selfie not available');
         destroy();
         return false;
     };
 
     const destroy = function(options = {}) {
         if ( µb.selfieIsInvalid === false ) {
-            io.remove(/^selfie\//, options);
+            io.remove(/^selfie\/static/, options);
             µb.selfieIsInvalid = true;
-            ubolog('Selfie marked for invalidation');
-        }
-        if ( µb.wakeupReason === 'createSelfie' ) {
-            µb.wakeupReason = '';
-            return createTimer.offon({ sec: 27 });
+            ubolog('Filtering engine selfie marked for invalidation');
         }
         vAPI.alarms.create('createSelfie', {
-            delayInMinutes: µb.hiddenSettings.selfieAfter
+            delayInMinutes: µb.hiddenSettings.selfieAfter + 0.5
         });
         createTimer.offon({ min: µb.hiddenSettings.selfieAfter });
     };
 
     const createTimer = vAPI.defer.create(create);
 
-    vAPI.alarms.onAlarm.addListener(alarm => {
-        if ( alarm.name !== 'createSelfie') { return; }
-        µb.wakeupReason = 'createSelfie';
-    });
-
-    µb.selfieManager = { load, destroy };
+    µb.selfieManager = { load, create, destroy };
 }
 
 /******************************************************************************/

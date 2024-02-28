@@ -76,6 +76,10 @@ vAPI.app.onShutdown = ( ) => {
     permanentSwitches.reset();
 };
 
+vAPI.alarms.onAlarm.addListener(alarm => {
+    µb.alarmQueue.push(alarm.name);
+});
+
 /******************************************************************************/
 
 // This is called only once, when everything has been loaded in memory after
@@ -158,6 +162,13 @@ const onVersionReady = async lastVersion => {
     // Migrate cache storage
     if ( lastVersionInt < vAPI.app.intFromVersion('1.56.1b1') ) {
         await cacheStorage.migrate(µb.hiddenSettings.cacheStorageAPI);
+    }
+
+    // Remove cache items with obsolete names
+    if ( lastVersionInt < vAPI.app.intFromVersion('1.56.1b5') ) {
+        io.remove(`compiled/${µb.pslAssetKey}`);
+        io.remove('compiled/redirectEngine/resources');
+        io.remove('selfie/main');
     }
 
     // Since built-in resources may have changed since last version, we
@@ -436,7 +447,7 @@ let selfieIsValid = false;
 try {
     selfieIsValid = await µb.selfieManager.load();
     if ( selfieIsValid === true ) {
-        ubolog(`Selfie ready ${Date.now()-vAPI.T0} ms after launch`);
+        ubolog(`Loaded filtering engine from selfie ${Date.now()-vAPI.T0} ms after launch`);
     }
 } catch (ex) {
     console.trace(ex);
@@ -505,6 +516,17 @@ if ( selfieIsValid ) {
 ubolog(`All ready ${µb.supportStats.allReadyAfter} after launch`);
 
 µb.isReadyResolve();
+
+// Process alarm queue
+while ( µb.alarmQueue.length !== 0 ) {
+    const what = µb.alarmQueue.shift();
+    ubolog(`Processing alarm event from suspended state: '${what}'`);
+    switch ( what ) {
+    case 'createSelfie':
+        µb.selfieManager.create();
+        break;
+    }
+}
 
 // <<<<< end of async/await scope
 })();

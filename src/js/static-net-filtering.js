@@ -4629,6 +4629,7 @@ FilterContainer.prototype.optimize = function(throttle = 0) {
 /******************************************************************************/
 
 FilterContainer.prototype.toSelfie = function() {
+    this.optimize(0);
     bidiTrieOptimize(true);
     keyvalStore.setItem('SNFE.origHNTrieContainer.trieDetails',
         origHNTrieContainer.optimize()

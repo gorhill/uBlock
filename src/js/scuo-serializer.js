@@ -281,6 +281,12 @@ const isInstanceOf = (o, s) => {
     );
 };
 
+const shouldCompress = (s, options) =>
+    options.compress === true && (
+        options.compressThreshold === undefined ||
+        options.compressThreshold <= s.length
+    );
+
 /*******************************************************************************
  * 
  * A large Uint is always a positive integer (can be zero), assumed to be
@@ -1051,10 +1057,9 @@ export const serialize = (data, options = {}) => {
     const s = writeBuffer.join('');
     writeRefs.clear();
     writeBuffer.length = 0;
-    if ( options.compress !== true ) { return s; }
+    if ( shouldCompress(s, options) === false ) { return s; }
     const lz4Util = new LZ4BlockJS();
-    const encoder = new TextEncoder();
-    const uint8ArrayBefore = encoder.encode(s);
+    const uint8ArrayBefore = textEncoder.encode(s);
     const uint8ArrayAfter = lz4Util.encode(uint8ArrayBefore, 0);
     const lz4 = {
         size: uint8ArrayBefore.length,
@@ -1144,7 +1149,6 @@ const THREAD_AREYOUREADY = 1;
 const THREAD_IAMREADY    = 2;
 const THREAD_SERIALIZE   = 3;
 const THREAD_DESERIALIZE = 4;
-
 
 class MainThread {
     constructor() {

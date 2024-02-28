@@ -72,7 +72,7 @@ const warSecret = typeof vAPI === 'object' && vAPI !== null
     : ( ) => '';
 
 const RESOURCES_SELFIE_VERSION = 7;
-const RESOURCES_SELFIE_NAME = 'compiled/redirectEngine/resources';
+const RESOURCES_SELFIE_NAME = 'selfie/redirectEngine/resources';
 
 /******************************************************************************/
 /******************************************************************************/

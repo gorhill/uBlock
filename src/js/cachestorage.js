@@ -45,34 +45,6 @@ const keysFromGetArg = arg => {
     return Object.keys(arg);
 };
 
-// Cache API is subject to quota so we will use it only for what is key
-// performance-wise
-const shouldCache = bin => {
-    const out = {};
-    for ( const key of Object.keys(bin) ) {
-        if ( key.startsWith('cache/') ) {
-            if ( /^cache\/(compiled|selfie)\//.test(key) === false ) { continue; }
-        }
-        out[key] = bin[key];
-    }
-    return out;
-};
-
-const exGet = (api, wanted, outbin) => {
-    return api.get(wanted).then(inbin => {
-        inbin = inbin || {};
-        const found = Object.keys(inbin);
-        Object.assign(outbin, inbin);
-        if ( found.length === wanted.length ) { return; }
-        const missing = [];
-        for ( const key of wanted ) {
-            if ( outbin.hasOwnProperty(key) ) { continue; }
-            missing.push(key);
-        }
-        return missing;
-    });
-};
-
 /*******************************************************************************
  * 
  * Extension storage
@@ -83,12 +55,26 @@ const exGet = (api, wanted, outbin) => {
 
 const cacheStorage = (( ) => {
 
+    const exGet = (api, wanted, outbin) => {
+        return api.get(wanted).then(inbin => {
+            inbin = inbin || {};
+            const found = Object.keys(inbin);
+            Object.assign(outbin, inbin);
+            if ( found.length === wanted.length ) { return; }
+            const missing = [];
+            for ( const key of wanted ) {
+                if ( outbin.hasOwnProperty(key) ) { continue; }
+                missing.push(key);
+            }
+            return missing;
+        });
+    };
+
     const compress = async (bin, key, data) => {
         const µbhs = µb.hiddenSettings;
-        const isLarge = typeof data === 'string' &&
-            data.length >= µbhs.cacheStorageCompressionThreshold;
         const after = await scuo.serializeAsync(data, {
-            compress: isLarge && µbhs.cacheStorageCompression,
+            compress: µbhs.cacheStorageCompression,
+            compressThreshold: µbhs.cacheStorageCompressionThreshold,
             multithreaded: µbhs.cacheStorageMultithread,
         });
         bin[key] = after;
@@ -104,7 +90,7 @@ const cacheStorage = (( ) => {
         });
     };
 
-    return {
+    const api = {
         get(argbin) {
             const outbin = {};
             return exGet(cacheAPI, keysFromGetArg(argbin), outbin).then(wanted => {
@@ -152,7 +138,8 @@ const cacheStorage = (( ) => {
                 promises.push(compress(bin, key, keyvalStore[key]));
             }
             await Promise.all(promises);
-            cacheAPI.set(shouldCache(bin));
+            memoryStorage.set(bin);
+            cacheAPI.set(bin);
             return extensionStorage.set(bin).catch(reason => {
                 ubolog(reason);
             });
@@ -191,16 +178,18 @@ const cacheStorage = (( ) => {
             return Promise.all(toMigrate);
         },
     };
-})();
 
-// Not all platforms support getBytesInUse
-if ( extensionStorage.getBytesInUse instanceof Function ) {
-    cacheStorage.getBytesInUse = function(...args) {
-        return extensionStorage.getBytesInUse(...args).catch(reason => {
-            ubolog(reason);
-        });
-    };
-}
+    // Not all platforms support getBytesInUse
+    if ( extensionStorage.getBytesInUse instanceof Function ) {
+        api.getBytesInUse = function(...args) {
+            return extensionStorage.getBytesInUse(...args).catch(reason => {
+                ubolog(reason);
+            });
+        };
+    }
+
+    return api;
+})();
 
 /*******************************************************************************
  * 
@@ -233,6 +222,19 @@ const cacheAPI = (( ) => {
 
     const urlToKey = url =>
         decodeURIComponent(url.slice(urlPrefix.length));
+
+    // Cache API is subject to quota so we will use it only for what is key
+    // performance-wise
+    const shouldCache = bin => {
+        const out = {};
+        for ( const key of Object.keys(bin) ) {
+            if ( key.startsWith('cache/' ) ) {
+                if ( /^cache\/(compiled|selfie)\//.test(key) === false ) { continue; }
+            }
+            out[key] = bin[key];
+        }
+        if ( Object.keys(out).length !== 0 ) { return out; }
+    };
 
     const getOne = async key => {
         const cache = await cacheStoragePromise;
@@ -327,12 +329,13 @@ const cacheAPI = (( ) => {
             ).catch(( ) => []);
         },
 
-        set(keyvalStore) {
-            const keys = Object.keys(keyvalStore);
-            if ( keys.length === 0 ) { return; }
+        async set(...args) {
+            const bin = shouldCache(...args);
+            if ( bin === undefined ) { return; }
+            const keys = Object.keys(bin);
             const promises = [];
             for ( const key of keys ) {
-                promises.push(setOne(key, keyvalStore[key]));
+                promises.push(setOne(key, bin[key]));
             }
             return Promise.all(promises);
         },
@@ -363,30 +366,46 @@ const cacheAPI = (( ) => {
  * 
  * */
 
-const memoryStorage = (( ) => {
+const memoryStorage = (( ) => {  // jshint ignore:line
 
-    const sessionStorage = webext.storage.session;
+    const sessionStorage = vAPI.sessionStorage;
+
+    // This should help speed up loading from suspended state in Firefox for
+    // Android.
+    // 20240228 Observation: Slows down loading from suspended state in
+    // Firefox desktop. Could be different in Firefox for Android.
+    const shouldCache = bin => {
+        const out = {};
+        for ( const key of Object.keys(bin) ) {
+            if ( key.startsWith('cache/compiled/') ) { continue; }
+            out[key] = bin[key];
+        }
+        if ( Object.keys(out).length !== 0 ) { return out; }
+    };
 
     return {
         get(...args) {
-            return sessionStorage.get(...args).catch(reason => {
+            return sessionStorage.get(...args).then(bin => {
+                return bin;
+            }).catch(reason => {
                 ubolog(reason);
             });
         },
 
         async keys(regex) {
-            const results = await sessionStorage.get(null).catch(( ) => {});
-            const keys = new Set(results[0]);
-            const bin = results[1] || {};
-            for ( const key of Object.keys(bin) ) {
+            const bin = await sessionStorage.get(null).catch(( ) => {});
+            const keys = [];
+            for ( const key of Object.keys(bin || {}) ) {
                 if ( regex && regex.test(key) === false ) { continue; }
-                keys.add(key);
+                keys.push(key);
             }
             return keys;
         },
 
         async set(...args) {
-            return sessionStorage.set(...args).catch(reason => {
+            const bin = shouldCache(...args);
+            if ( bin === undefined ) { return; }
+            return sessionStorage.set(bin).catch(reason => {
                 ubolog(reason);
             });
         },
@@ -522,7 +541,7 @@ const idbStorage = (( ) => {
             if ( entry.value instanceof Blob === false ) { return; }
             promises.push(decompress(keyvalStore, key, value));
         }).catch(reason => {
-            ubolog(`cacheStorage.getAllFromDb() failed: ${reason}`);
+            ubolog(`idbStorage.getAllFromDb() failed: ${reason}`);
             callback();
         });
     };
