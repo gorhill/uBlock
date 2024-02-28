@@ -838,7 +838,7 @@ async function assetCacheSetDetails(assetKey, details) {
         }
     }
     if ( modified ) {
-        saveAssetCacheRegistry();
+        saveAssetCacheRegistry(3);
     }
 }
 

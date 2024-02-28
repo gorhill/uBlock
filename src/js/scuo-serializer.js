@@ -1148,10 +1148,11 @@ const THREAD_DESERIALIZE = 4;
 
 class MainThread {
     constructor() {
+        this.name = 'main';
         this.jobs = [];
         this.workload = 0;
         this.timer = undefined;
-        this.busy = false;
+        this.busy = 2;
     }
 
     process() {
@@ -1164,7 +1165,9 @@ class MainThread {
         job.resolve(result);
         this.processAsync();
         if ( this.jobs.length === 0 ) {
-            this.busy = false;
+            this.busy = 2;
+        } else if ( this.busy > 2 ) {
+            this.busy -= 1;
         }
     }
 
@@ -1174,11 +1177,12 @@ class MainThread {
         this.timer = globalThis.requestIdleCallback(deadline => {
             this.timer = undefined;
             globalThis.queueMicrotask(( ) => {
-                this.timer = undefined;
                 this.process();
             });
-            this.busy = deadline.timeRemaining() === 0;
-        }, { timeout: 7 });
+            if ( deadline.timeRemaining() === 0 ) {
+                this.busy += 1;
+            }
+        }, { timeout: 5 });
     }
 
     serialize(data, options) {
@@ -1199,16 +1203,17 @@ class MainThread {
     }
 
     get queueSize() {
-        return this.jobs.length + 1;
+        return this.jobs.length;
     }
 
     get workSize() {
-        return this.busy ? Number.MAX_SAFE_INTEGER : this.workload * 2;
+        return this.workload * this.busy;
     }
 }
 
 class Thread {
     constructor(gcer) {
+        this.name = 'worker';
         this.jobs = new Map();
         this.jobIdGenerator = 1;
         this.workload = 0;
@@ -1263,7 +1268,10 @@ class Thread {
     }
 
     onmessage(ev) {
-        const job = ev.data;
+        this.ondone(ev.data);
+    }
+
+    ondone(job) {
         const resolve = this.jobs.get(job.id);
         if ( resolve === undefined ) { return; }
         this.jobs.delete(job.id);
@@ -1274,37 +1282,35 @@ class Thread {
     }
 
     async serialize(data, options) {
-        this.workerAccessTime = Date.now();
-        const worker = await this.workerPromise;
-        if ( worker === null ) {
-            const result = serialize(data, options);
-            this.countdownWorker();
-            return result;
-        }
-        const id = this.jobIdGenerator++;
         return new Promise(resolve => {
+            const id = this.jobIdGenerator++;
             this.workload += 1;
-            const job = { what: THREAD_SERIALIZE, id, data, options, size: 1 };
-            this.jobs.set(job.id, resolve);
-            worker.postMessage(job);
+            this.jobs.set(id, resolve);
+            return this.workerPromise.then(worker => {
+                this.workerAccessTime = Date.now();
+                if ( worker === null ) {
+                    this.ondone({ id, result: serialize(data, options), size: 1 });
+                } else {
+                    worker.postMessage({ what: THREAD_SERIALIZE, id, data, options, size: 1 });
+                }
+            });
         });
     }
 
     async deserialize(data, options) {
-        this.workerAccessTime = Date.now();
-        const worker = await this.workerPromise;
-        if ( worker === null ) {
-            const result = deserialize(data, options);
-            this.countdownWorker();
-            return result;
-        }
-        const id = this.jobIdGenerator++;
         return new Promise(resolve => {
+            const id = this.jobIdGenerator++;
             const size = data.length;
             this.workload += size;
-            const job = { what: THREAD_DESERIALIZE, id, data, options, size };
-            this.jobs.set(job.id, resolve);
-            worker.postMessage(job);
+            this.jobs.set(id, resolve);
+            return this.workerPromise.then(worker => {
+                this.workerAccessTime = Date.now();
+                if ( worker === null ) {
+                    this.ondone({ id, result: deserialize(data, options), size });
+                } else {
+                    worker.postMessage({ what: THREAD_DESERIALIZE, id, data, options, size });
+                }
+            });
         });
     }
 
@@ -1323,12 +1329,11 @@ const threads = {
         const poolSize = this.pool.length;
         if ( poolSize !== 0 && poolSize >= maxPoolSize ) {
             if ( poolSize === 1 ) { return this.pool[0]; }
-            return this.pool.reduce((best, candidate) => {
-                if ( candidate.queueSize === 0 ) { return candidate; }
-                if ( best.queueSize === 0 ) { return best; }
-                return candidate.workSize < best.workSize
-                    ? candidate
-                    : best;
+            return this.pool.reduce((a, b) => {
+                //console.log(`${a.name}: q=${a.queueSize} w=${a.workSize} ${b.name}: q=${b.queueSize} w=${b.workSize}`);
+                if ( b.queueSize === 0 ) { return b; }
+                if ( a.queueSize === 0 ) { return a; }
+                return b.workSize < a.workSize ? b : a;
             });
         }
         const thread = new Thread(thread => {
@@ -1346,9 +1351,9 @@ export async function serializeAsync(data, options = {}) {
     if ( maxThreadCount === 0 ) {
         return serialize(data, options);
     }
-    const result = await threads
-        .thread(maxThreadCount)
-        .serialize(data, options);
+    const thread = threads.thread(maxThreadCount);
+    //console.log(`serializeAsync: thread=${thread.name} workload=${thread.workSize}`);
+    const result = await thread.serialize(data, options);
     if ( result !== undefined ) { return result; }
     return serialize(data, options);
 }
@@ -1359,9 +1364,9 @@ export async function deserializeAsync(data, options = {}) {
     if ( maxThreadCount === 0 ) {
         return deserialize(data, options);
     }
-    const result = await threads
-        .thread(maxThreadCount)
-        .deserialize(data, options);
+    const thread = threads.thread(maxThreadCount);
+    //console.log(`deserializeAsync: thread=${thread.name} data=${data.length} workload=${thread.workSize}`);
+    const result = await thread.deserialize(data, options);
     if ( result !== undefined ) { return result; }
     return deserialize(data, options);
 }

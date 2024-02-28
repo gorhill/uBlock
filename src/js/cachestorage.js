@@ -58,17 +58,19 @@ const shouldCache = bin => {
     return out;
 };
 
-const missingKeys = (wanted, inbin, outbin) => {
-    inbin = inbin || {};
-    const found = Object.keys(inbin);
-    Object.assign(outbin, inbin);
-    if ( found.length === wanted.length ) { return; }
-    const missing = [];
-    for ( const key of wanted ) {
-        if ( outbin.hasOwnProperty(key) ) { continue; }
-        missing.push(key);
-    }
-    return missing;
+const exGet = (api, wanted, outbin) => {
+    return api.get(wanted).then(inbin => {
+        inbin = inbin || {};
+        const found = Object.keys(inbin);
+        Object.assign(outbin, inbin);
+        if ( found.length === wanted.length ) { return; }
+        const missing = [];
+        for ( const key of wanted ) {
+            if ( outbin.hasOwnProperty(key) ) { continue; }
+            missing.push(key);
+        }
+        return missing;
+    });
 };
 
 /*******************************************************************************
@@ -81,15 +83,15 @@ const missingKeys = (wanted, inbin, outbin) => {
 
 const cacheStorage = (( ) => {
 
-    const compress = async (key, data) => {
+    const compress = async (bin, key, data) => {
         const µbhs = µb.hiddenSettings;
         const isLarge = typeof data === 'string' &&
             data.length >= µbhs.cacheStorageCompressionThreshold;
         const after = await scuo.serializeAsync(data, {
             compress: isLarge && µbhs.cacheStorageCompression,
-            multithreaded: isLarge && µbhs.cacheStorageMultithread || 2,
+            multithreaded: µbhs.cacheStorageMultithread,
         });
-        return { key, data: after };
+        bin[key] = after;
     };
 
     const decompress = async (bin, key) => {
@@ -98,27 +100,24 @@ const cacheStorage = (( ) => {
         const µbhs = µb.hiddenSettings;
         const isLarge = data.length >= µbhs.cacheStorageCompressionThreshold;
         bin[key] = await scuo.deserializeAsync(data, {
-            multithreaded: isLarge && µbhs.cacheStorageMultithread || 2,
+            multithreaded: isLarge && µbhs.cacheStorageMultithread || 1,
         });
     };
 
     return {
         get(argbin) {
             const outbin = {};
-            const wanted0 = keysFromGetArg(argbin);
-            return cacheAPI.get(wanted0).then(bin => {
-                const wanted1 = missingKeys(wanted0, bin, outbin);
-                if ( wanted1 === undefined ) { return; }
-                return extensionStorage.get(wanted1).then(bin => {
-                    const wanted2 = missingKeys(wanted1, bin, outbin);
-                    if ( wanted2 === undefined ) { return; }
-                    if ( argbin instanceof Object === false ) { return; }
-                    if ( Array.isArray(argbin) ) { return; }
-                    for ( const key of wanted2 ) {
-                        if ( argbin.hasOwnProperty(key) === false ) { continue; }
-                        outbin[key] = argbin[key];
-                    }
-                });
+            return exGet(cacheAPI, keysFromGetArg(argbin), outbin).then(wanted => {
+                if ( wanted === undefined ) { return; }
+                return exGet(extensionStorage, wanted, outbin);
+            }).then(wanted => {
+                if ( wanted === undefined ) { return; }
+                if ( argbin instanceof Object === false ) { return; }
+                if ( Array.isArray(argbin) ) { return; }
+                for ( const key of wanted ) {
+                    if ( argbin.hasOwnProperty(key) === false ) { continue; }
+                    outbin[key] = argbin[key];
+                }
             }).then(( ) => {
                 const promises = [];
                 for ( const key of Object.keys(outbin) ) {
@@ -147,17 +146,14 @@ const cacheStorage = (( ) => {
         async set(keyvalStore) {
             const keys = Object.keys(keyvalStore);
             if ( keys.length === 0 ) { return; }
+            const bin = {};
             const promises = [];
             for ( const key of keys ) {
-                promises.push(compress(key, keyvalStore[key]));
+                promises.push(compress(bin, key, keyvalStore[key]));
             }
-            const results = await Promise.all(promises);
-            const serializedStore = {};
-            for ( const { key, data } of results ) {
-                serializedStore[key] = data;
-            }
-            cacheAPI.set(shouldCache(serializedStore));
-            return extensionStorage.set(serializedStore).catch(reason => {
+            await Promise.all(promises);
+            cacheAPI.set(shouldCache(bin));
+            return extensionStorage.set(bin).catch(reason => {
                 ubolog(reason);
             });
         },
@@ -355,6 +351,54 @@ const cacheAPI = (( ) => {
 
         clear() {
             return globalThis.caches.delete(STORAGE_NAME).catch(reason => {
+                ubolog(reason);
+            });
+        },
+    };
+})();
+
+/*******************************************************************************
+ * 
+ * In-memory storage
+ * 
+ * */
+
+const memoryStorage = (( ) => {
+
+    const sessionStorage = webext.storage.session;
+
+    return {
+        get(...args) {
+            return sessionStorage.get(...args).catch(reason => {
+                ubolog(reason);
+            });
+        },
+
+        async keys(regex) {
+            const results = await sessionStorage.get(null).catch(( ) => {});
+            const keys = new Set(results[0]);
+            const bin = results[1] || {};
+            for ( const key of Object.keys(bin) ) {
+                if ( regex && regex.test(key) === false ) { continue; }
+                keys.add(key);
+            }
+            return keys;
+        },
+
+        async set(...args) {
+            return sessionStorage.set(...args).catch(reason => {
+                ubolog(reason);
+            });
+        },
+
+        remove(...args) {
+            return sessionStorage.remove(...args).catch(reason => {
+                ubolog(reason);
+            });
+        },
+
+        clear(...args) {
+            return sessionStorage.clear(...args).catch(reason => {
                 ubolog(reason);
             });
         },
