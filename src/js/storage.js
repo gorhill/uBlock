@@ -625,6 +625,7 @@ onBroadcast(msg => {
     cosmeticFilteringEngine.removeFromSelectorCache(
         hostnameFromURI(details.docURL)
     );
+    staticFilteringReverseLookup.resetLists();
 };
 
 µb.userFiltersAreEnabled = function() {
