@@ -135,17 +135,17 @@ const cacheStorage = (( ) => {
             return keys;
         },
 
-        async set(inbin) {
-            const keys = Object.keys(inbin);
+        async set(rawbin) {
+            const keys = Object.keys(rawbin);
             if ( keys.length === 0 ) { return; }
-            const bin = {};
+            const serializedbin = {};
             const promises = [];
             for ( const key of keys ) {
-                promises.push(compress(bin, key, inbin[key]));
+                promises.push(compress(serializedbin, key, rawbin[key]));
             }
             await Promise.all(promises);
-            cacheAPIs[fastCache].set(inbin, bin);
-            return extensionStorage.set(bin).catch(reason => {
+            cacheAPIs[fastCache].set(rawbin, serializedbin);
+            return extensionStorage.set(serializedbin).catch(reason => {
                 ubolog(reason);
             });
         },

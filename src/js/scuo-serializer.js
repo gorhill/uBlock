@@ -224,7 +224,7 @@ const xtypeToSerializedInt = {
     '[object DataView]': I_DATAVIEW,
 };
 
-const typeToSerializedChar = {
+const xtypeToSerializedChar = {
     '[object Int8Array]': C_INT8ARRAY,
     '[object Uint8Array]': C_UINT8ARRAY,
     '[object Uint8ClampedArray]': C_UINT8CLAMPEDARRAY,
@@ -664,7 +664,7 @@ const _serialize = data => {
         case I_FLOAT32ARRAY:
         case I_FLOAT64ARRAY:
             writeBuffer.push(
-                typeToSerializedChar[xtypeName],
+                xtypeToSerializedChar[xtypeName],
                 strFromLargeUint(data.byteOffset),
                 strFromLargeUint(data.length)
             );
