@@ -109,9 +109,9 @@ vAPI.generateSecret = (size = 1) => {
  * 
  * */
 
-vAPI.sessionStorage = webext.storage.session || {
+vAPI.sessionStorage = browser.storage.session || {
     get() {
-        return Promise.resolve({});
+        return Promise.resolve();
     },
     set() {
         return Promise.resolve();
@@ -122,6 +122,7 @@ vAPI.sessionStorage = webext.storage.session || {
     clear() {
         return Promise.resolve();
     },
+    unavailable: true,
 };
 
 /*******************************************************************************
@@ -315,10 +316,10 @@ vAPI.Tabs = class {
         });
      }
 
-    async executeScript() {
+    async executeScript(...args) {
         let result;
         try {
-            result = await webext.tabs.executeScript(...arguments);
+            result = await webext.tabs.executeScript(...args);
         }
         catch(reason) {
         }
@@ -543,7 +544,7 @@ vAPI.Tabs = class {
             targetURL = vAPI.getURL(targetURL);
         }
 
-        vAPI.tabs.update(tabId, { url: targetURL });
+        return vAPI.tabs.update(tabId, { url: targetURL });
     }
 
     async remove(tabId) {
@@ -1778,15 +1779,24 @@ vAPI.cloud = (( ) => {
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.alarms = browser.alarms || {
-    create() {
+vAPI.alarms = {
+    create(...args) {
+        browser.alarms.create(...args);
     },
-    clear() {
+    createIfNotPresent(name, ...args) {
+        browser.alarms.get(name).then(details => {
+            if ( details !== undefined ) { return; }
+            browser.alarms.create(name, ...args);
+        });
+    },
+    async clear(...args) {
+        return browser.alarms.clear(...args);
     },
     onAlarm: {
-        addListener() {
-        }
-    }
+        addListener(...args) {
+            browser.alarms.onAlarm.addListener(...args);
+        },
+    },
 };
 
 /******************************************************************************/

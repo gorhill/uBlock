@@ -327,7 +327,6 @@ const onFirstFetchReady = (fetched, adminExtra) => {
     }
 
     // Order is important -- do not change:
-    fromFetch(µb.localSettings, fetched);
     fromFetch(µb.restoreBackupSettings, fetched);
 
     permanentFirewall.fromString(fetched.dynamicFilteringString);
@@ -362,14 +361,9 @@ const createDefaultProps = ( ) => {
         'dynamicFilteringString': µb.dynamicFilteringDefault.join('\n'),
         'urlFilteringString': '',
         'hostnameSwitchesString': µb.hostnameSwitchesDefault.join('\n'),
-        'lastRestoreFile': '',
-        'lastRestoreTime': 0,
-        'lastBackupFile': '',
-        'lastBackupTime': 0,
         'netWhitelist': µb.netWhitelistDefault,
         'version': '0.0.0.0'
     };
-    toFetch(µb.localSettings, fetchableProps);
     toFetch(µb.restoreBackupSettings, fetchableProps);
     return fetchableProps;
 };
@@ -424,6 +418,7 @@ try {
             ubolog(`Cache magic numbers ready ${Date.now()-vAPI.T0} ms after launch`);
             onCacheSettingsReady(bin);
         }),
+        µb.loadLocalSettings(),
     ]);
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1547
@@ -522,6 +517,9 @@ while ( µb.alarmQueue.length !== 0 ) {
     switch ( what ) {
     case 'createSelfie':
         µb.selfieManager.create();
+        break;
+    case 'saveLocalSettings':
+        µb.saveLocalSettings();
         break;
     }
 }

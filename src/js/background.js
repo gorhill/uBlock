@@ -174,11 +174,10 @@ const µBlock = {  // jshint ignore:line
         'moz-extension-scheme',
     ],
 
-    localSettings: {
-        blockedRequestCount: 0,
-        allowedRequestCount: 0,
+    requestStats: {
+        blockedCount: 0,
+        allowedCount: 0,
     },
-    localSettingsLastModified: 0,
 
     // Read-only
     systemSettings: {

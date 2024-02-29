@@ -97,23 +97,51 @@ import {
 /******************************************************************************/
 
 {
-    let localSettingsLastSaved = Date.now();
-
-    const shouldSave = ( ) => {
-        if ( µb.localSettingsLastModified > localSettingsLastSaved ) {
-            µb.saveLocalSettings();
+    µb.loadLocalSettings = ( ) => Promise.all([
+        vAPI.sessionStorage.get('requestStats'),
+        vAPI.storage.get('requestStats'),
+        vAPI.storage.get([ 'blockedRequestCount', 'allowedRequestCount' ]),
+    ]).then(([ a, b, c ]) => {
+        if ( a instanceof Object && a.requestStats ) { return a.requestStats; }
+        if ( b instanceof Object && b.requestStats ) { return b.requestStats; }
+        if ( c instanceof Object && Object.keys(c).length === 2 ) {
+            return {
+                blockedCount: c.blockedRequestCount,
+                allowedCount: c.allowedRequestCount,
+            };
         }
-        saveTimer.on(saveDelay);
+        return { blockedCount: 0, allowedCount: 0 };
+    }).then(({ blockedCount, allowedCount }) => {
+        µb.requestStats.blockedCount += blockedCount;
+        µb.requestStats.allowedCount += allowedCount;
+    });
+
+    const SAVE_DELAY_IN_MINUTES = 3.6;
+    const QUICK_SAVE_DELAY_IN_SECONDS = 23;
+
+    const saveTimer = vAPI.defer.create(( ) => {
+        µb.saveLocalSettings();
+    });
+
+    const quickSaveTimer = vAPI.defer.create(( ) => {
+        saveTimer.on({ min: SAVE_DELAY_IN_MINUTES });
+        if ( vAPI.sessionStorage.unavailable ) { return; }
+        vAPI.sessionStorage.set({ requestStats: µb.requestStats });
+        vAPI.alarms.createIfNotPresent('saveLocalSettings', {
+            delayInMinutes: SAVE_DELAY_IN_MINUTES + 0.5
+        });
+    });
+
+    µb.incrementRequestStats = (blocked, allowed) => {
+        µb.requestStats.blockedCount += blocked;
+        µb.requestStats.allowedCount += allowed;
+        quickSaveTimer.on({ sec: QUICK_SAVE_DELAY_IN_SECONDS });
     };
 
-    const saveTimer = vAPI.defer.create(shouldSave);
-    const saveDelay = { sec: 23 };
-
-    saveTimer.onidle(saveDelay);
-
-    µb.saveLocalSettings = function() {
-        localSettingsLastSaved = Date.now();
-        return vAPI.storage.set(this.localSettings);
+    µb.saveLocalSettings = ( ) => {
+        vAPI.alarms.clear('saveLocalSettings');
+        quickSaveTimer.off(); saveTimer.off();
+        return vAPI.storage.set({ requestStats: µb.requestStats });
     };
 }
 

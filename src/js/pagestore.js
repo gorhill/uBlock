@@ -739,10 +739,8 @@ const PageStore = class {
                 aggregateAllowed += 1;
             }
         }
-        if ( aggregateAllowed !== 0 || aggregateBlocked !== 0 ) {
-            µb.localSettings.blockedRequestCount += aggregateBlocked;
-            µb.localSettings.allowedRequestCount += aggregateAllowed;
-            µb.localSettingsLastModified = now;
+        if ( aggregateAllowed || aggregateBlocked ) {
+            µb.incrementRequestStats(aggregateBlocked, aggregateAllowed);
         }
         journal.length = 0;
     }
