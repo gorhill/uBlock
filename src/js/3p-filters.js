@@ -547,10 +547,9 @@ const selectFilterLists = async ( ) => {
                     after.push(line);
                     continue;
                 }
-                const input = qs$(`[data-key="${list.group}"] [data-key="${listkey}"]  > .detailbar input`);
-                if ( input === null ) { break; }
-                input.checked = true;
-                toggleFilterList(input, true, true);
+                const listEntry = qs$(`[data-key="${list.group}"] [data-key="${listkey}"]`);
+                if ( listEntry === null ) { break; }
+                toggleFilterList(listEntry, true);
                 break;
             }
         }
