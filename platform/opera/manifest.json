@@ -93,6 +93,7 @@
   "name": "uBlock Origin",
   "options_page": "dashboard.html",
   "permissions": [
+    "alarms",
     "contextMenus",
     "privacy",
     "storage",
