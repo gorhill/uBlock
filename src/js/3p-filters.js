@@ -530,6 +530,35 @@ dom.on('#lists', 'click', 'span.cache', onPurgeClicked);
 /******************************************************************************/
 
 const selectFilterLists = async ( ) => {
+    // External filter lists to import
+    // Find stock list matching entries in lists to import
+    const toImport = (( ) => {
+        const textarea = qs$('#lists .listEntry[data-role="import"].expanded textarea');
+        if ( textarea === null ) { return ''; }
+        const lists = listsetDetails.available;
+        const lines = textarea.value.split(/\s+\n|\s+/);
+        const after = [];
+        for ( const line of lines ) {
+            if ( /^https?:\/\//.test(line) === false ) { continue; }
+            for ( const [ listkey, list ] of Object.entries(lists) ) {
+                if ( list.content !== 'filters' ) { continue; }
+                if ( list.contentURL === undefined ) { continue; }
+                if ( list.contentURL.includes(line) === false ) {
+                    after.push(line);
+                    continue;
+                }
+                const input = qs$(`[data-key="${list.group}"] [data-key="${listkey}"]  > .detailbar input`);
+                if ( input === null ) { break; }
+                input.checked = true;
+                toggleFilterList(input, true, true);
+                break;
+            }
+        }
+        dom.cl.remove(textarea.closest('.expandable'), 'expanded');
+        textarea.value = '';
+        return after.join('\n');
+    })();
+
     // Cosmetic filtering switch
     let checked = qs$('#parseCosmeticFilters').checked;
     vAPI.messaging.send('dashboard', {
@@ -567,14 +596,6 @@ const selectFilterLists = async ( ) => {
         } else {
             listDetails.off = true;
         }
-    }
-
-    // External filter lists to import
-    const textarea = qs$('#lists .listEntry[data-role="import"].expanded textarea');
-    const toImport = textarea !== null && textarea.value.trim() || '';
-    if ( textarea !== null ) {
-        dom.cl.remove(textarea.closest('.expandable'), 'expanded');
-        textarea.value = '';
     }
 
     hashFromListsetDetails();
