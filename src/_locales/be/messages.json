@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Нарэшце, эфектыўны блакавальнік. Не нагружае працэсар і памяць.",
+    "message": "Нарэшце, эфектыўны блакіроўшчык. Не нагружае працэсар і памяць.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
@@ -20,7 +20,7 @@
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Iгнараваць",
+    "message": "Ігнараваць",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
@@ -68,7 +68,7 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Націсканне: адключыць/уключыць uBlock₀ для гэтага сайта.\n\nCtrl+націсканне: адключыць uBlock₀ толькі на гэтай старонцы.",
+    "message": "Націск: адключыць/уключыць uBlock₀ для гэтага сайта.\n\nCtrl+націск: адключыць uBlock₀ толькі на гэтай старонцы.",
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {

@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "Pranešti apie problemą šioje svetainėje",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -888,11 +888,11 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Create new report",
+    "message": "Sukurti naują ataskaitą",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Find similar reports",
+    "message": "Rasti panašias ataskaitas",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -904,7 +904,7 @@
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
-    "message": "Questions and support",
+    "message": "Klausimai ir pagalba",
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
@@ -1172,7 +1172,7 @@
     "description": "English: Permanently"
   },
   "docblockedDisable": {
-    "message": "Proceed",
+    "message": "Tęsti",
     "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {
@@ -1244,7 +1244,7 @@
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "genericSelectAll": {
-    "message": "Select all",
+    "message": "Žymėti viską",
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleCosmeticFiltering": {
@@ -1280,7 +1280,7 @@
     "description": "Message used in frame placeholders"
   },
   "linterMainReport": {
-    "message": "Errors: {{count}}",
+    "message": "Klaidos: {{count}}",
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {

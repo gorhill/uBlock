@@ -116,7 +116,7 @@
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
-    "message": "ছাঁকনি নেই",
+    "message": "ফিল্টারিং নেই",
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
@@ -152,7 +152,7 @@
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "ফিল্টারিং মোড পরিবর্তন করার সময় স্বয়ংক্রিয়ভাবে পেজ পুনরায় লোড করুন",
+    "message": "ফিল্টারিং মোড পরিবর্তন করার সময় স্বয়ংক্রিয়ভাবে পুনরায় লোড করুন",
     "description": "Label for a checkbox in the options page"
   }
 }

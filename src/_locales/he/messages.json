@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "ביטחון והגנה מפני נוזקה",
+    "message": "הגנה מפני נוזקות, אבטחה",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
@@ -532,15 +532,15 @@
     "description": "Short information about how to create custom filters"
   },
   "1pTrustWarning": {
-    "message": "Do not add filters from untrusted sources.",
+    "message": "אל תוסיף מסננים ממקורות לא מהימנים.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pImport": {
-    "message": "ייבא וצרף",
+    "message": "ייבא וצרף…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "ייצוא",
+    "message": "ייצוא…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
@@ -584,7 +584,7 @@
     "description": ""
   },
   "rulesExport": {
-    "message": "ייצא לקובץ...",
+    "message": "ייצא לקובץ…",
     "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
@@ -620,11 +620,11 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "ייבא וצרף",
+    "message": "ייבא וצרף…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
-    "message": "ייצוא",
+    "message": "ייצוא…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
