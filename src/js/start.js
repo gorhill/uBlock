@@ -232,8 +232,7 @@ const onUserSettingsReady = fetched => {
         fetched.importedLists.length === 0 &&
         fetched.externalLists !== ''
     ) {
-        fetched.importedLists =
-            fetched.externalLists.trim().split(/[\n\r]+/);
+        fetched.importedLists = fetched.externalLists.trim().split(/[\n\r]+/);
     }
 
     fromFetch(µb.userSettings, fetched);

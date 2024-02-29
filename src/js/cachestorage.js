@@ -546,7 +546,7 @@ const idbStorage = (( ) => {
         });
     };
 
-    const getAllKeys = async function() {
+    const getAllKeys = async function(regex) {
         const db = await getDb();
         if ( db === null ) { return []; }
         return new Promise(resolve => {
@@ -562,6 +562,7 @@ const idbStorage = (( ) => {
             req.onsuccess = ev => {
                 const cursor = ev.target && ev.target.result;
                 if ( !cursor ) { return; }
+                if ( regex && regex.test(cursor.key) === false ) { return; }
                 keys.push(cursor.key);
                 cursor.continue();
             };
@@ -685,8 +686,8 @@ const idbStorage = (( ) => {
             return setEntries(bin);
         },
 
-        keys() {
-            return getAllKeys();
+        keys(...args) {
+            return getAllKeys(...args);
         },
 
         remove(...args) {

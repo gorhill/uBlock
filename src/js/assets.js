@@ -790,7 +790,7 @@ async function assetCacheRemove(pattern, options = {}) {
     }
     if ( options.janitor && pattern instanceof RegExp ) {
         const re = new RegExp(
-            pattern.source.replace(/^\^/, 'cache\/'),
+            pattern.source.replace(/^\^/, '^cache\\/'),
             pattern.flags
         );
         const keys = await cacheStorage.keys(re);
