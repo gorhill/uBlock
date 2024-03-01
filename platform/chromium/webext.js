@@ -54,6 +54,15 @@ const promisify = function(thisArg, fnName) {
 };
 
 const webext = {
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/alarms
+    alarms: {
+        clear: promisifyNoFail(chrome.alarms, 'clear'),
+        clearAll: promisifyNoFail(chrome.alarms, 'clearAll'),
+        create: promisifyNoFail(chrome.alarms, 'create'),
+        get: promisifyNoFail(chrome.alarms, 'get'),
+        getAll: promisifyNoFail(chrome.alarms, 'getAll'),
+        onAlarm: chrome.alarms.onAlarm,
+    },
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/browserAction
     browserAction: {
         setBadgeBackgroundColor: promisifyNoFail(chrome.browserAction, 'setBadgeBackgroundColor'),

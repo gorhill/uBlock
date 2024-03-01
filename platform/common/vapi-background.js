@@ -1781,20 +1781,20 @@ vAPI.cloud = (( ) => {
 
 vAPI.alarms = {
     create(...args) {
-        browser.alarms.create(...args);
+        webext.alarms.create(...args);
     },
     createIfNotPresent(name, ...args) {
-        browser.alarms.get(name).then(details => {
+        webext.alarms.get(name).then(details => {
             if ( details !== undefined ) { return; }
-            browser.alarms.create(name, ...args);
+            webext.alarms.create(name, ...args);
         });
     },
     async clear(...args) {
-        return browser.alarms.clear(...args);
+        return webext.alarms.clear(...args);
     },
     onAlarm: {
         addListener(...args) {
-            browser.alarms.onAlarm.addListener(...args);
+            webext.alarms.onAlarm.addListener(...args);
         },
     },
 };
