@@ -17,24 +17,24 @@ html#ublock0-epicker,
     box-sizing: border-box;
     cursor: default;
     display: none;
-    max-height: calc(100vh - 4px);
-    max-width: 36rem;
-    min-width: 24rem;
+    flex-direction: column;
+    max-width: min(32rem, 100vw - 4px);
+    min-width: min(24rem, 100vw - 4px);
     overflow-y: auto;
-    padding: 4px;
     position: fixed;
     right: 2px;
-    width: calc(40% - 2px);
-}
-/* https://github.com/uBlockOrigin/uBlock-issues/discussions/2114 */
-#ublock0-epicker aside {
-    min-width: min(24rem, 100vw - 4px);
+    width: min(32rem, 100vw - 4px);
 }
 #ublock0-epicker.paused:not(.zap) aside {
-    display: block;
+    display: flex;
 }
+#ublock0-epicker aside > *:not(:first-child) {
+    padding: 2px;
+}
+
 #ublock0-epicker #toolbar {
     display: flex;
+    justify-content: space-between;
 }
 #ublock0-epicker ul {
     margin: 0.25em 0 0 0;
@@ -46,8 +46,8 @@ html#ublock0-epicker,
 #ublock0-epicker #move {
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAFElEQVQI12NgwAfKy8v/M5ANYLoBshgEyQo6H9UAAAAASUVORK5CYII=');
     cursor: grab;
-    flex-grow: 1;
-    margin: 2px 4px;
+    height: 1.5rem;
+    margin-bottom: 2px;
     opacity: 0.8;
     }
 #ublock0-epicker aside.moving #move {
@@ -70,8 +70,8 @@ html#ublock0-epicker,
 #ublock0-epicker section .codeMirrorContainer {
     border: none;
     box-sizing: border-box;
-    height: 8em;
-    max-height: 50vh;
+    height: 6em;
+    max-height: min(6em, 10vh);
     min-height: 1em;
     padding: 2px;
     width: 100%;
@@ -174,11 +174,8 @@ html#ublock0-epicker,
     overflow: hidden;
 }
 #ublock0-epicker #candidateFilters {
-    max-height: 14em;
+    max-height: min(14em, 20vh);
     overflow-y: auto;
-}
-#ublock0-epicker #candidateFilters > li:first-of-type {
-    margin-bottom: 0.5em;
 }
 #ublock0-epicker .changeFilter > li > span:nth-of-type(1) {
     font-weight: bold;
@@ -186,6 +183,9 @@ html#ublock0-epicker,
 #ublock0-epicker .changeFilter > li > span:nth-of-type(2) {
     font-size: smaller;
     color: gray;
+}
+#ublock0-epicker #candidateFilters [data-i18n] {
+    font-size: 90%;
 }
 #ublock0-epicker #candidateFilters .changeFilter {
     list-style-type: none;
