@@ -64,8 +64,6 @@ import {
     isNetworkURI,
 } from './uri-utils.js';
 
-import './benchmarks.js';
-
 /******************************************************************************/
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/710
@@ -1847,8 +1845,26 @@ const onMessage = function(request, sender, callback) {
         return;
 
     case 'snfeBenchmark':
-        µb.benchmarkStaticNetFiltering({ redirectEngine }).then(result => {
-            callback(result);
+        import('/js/benchmarks.js').then(module => {
+            module.benchmarkStaticNetFiltering({ redirectEngine }).then(result => {
+                callback(result);
+            });
+        });
+        return;
+
+    case 'cfeBenchmark':
+        import('/js/benchmarks.js').then(module => {
+            module.benchmarkCosmeticFiltering().then(result => {
+                callback(result);
+            });
+        });
+        return;
+
+    case 'sfeBenchmark':
+        import('/js/benchmarks.js').then(module => {
+            module.benchmarkScriptletFiltering().then(result => {
+                callback(result);
+            });
         });
         return;
 

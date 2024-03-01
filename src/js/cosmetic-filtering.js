@@ -930,7 +930,7 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
     if ( injectedCSS.length !== 0 ) {
         out.injectedCSS = injectedCSS.join('\n\n');
         details.code = out.injectedCSS;
-        if ( request.tabId !== undefined ) {
+        if ( request.tabId !== undefined && options.dontInject !== true ) {
             vAPI.tabs.insertCSS(request.tabId, details);
         }
     }
@@ -940,7 +940,7 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
         const networkFilters = [];
         if ( cacheEntry.retrieveNet(networkFilters) ) {
             details.code = `${networkFilters.join('\n')}\n{display:none!important;}`;
-            if ( request.tabId !== undefined ) {
+            if ( request.tabId !== undefined && options.dontInject !== true ) {
                 vAPI.tabs.insertCSS(request.tabId, details);
             }
         }

@@ -187,6 +187,26 @@ vAPI.messaging.send('dashboard', {
             dom.attr(button, 'disabled', null);
         });
     });
+    dom.on('#cfe-benchmark', 'click', ev => {
+        const button = ev.target;
+        dom.attr(button, 'disabled', '');
+        vAPI.messaging.send('devTools', {
+            what: 'cfeBenchmark',
+        }).then(result => {
+            log(result);
+            dom.attr(button, 'disabled', null);
+        });
+    });
+    dom.on('#sfe-benchmark', 'click', ev => {
+        const button = ev.target;
+        dom.attr(button, 'disabled', '');
+        vAPI.messaging.send('devTools', {
+            what: 'sfeBenchmark',
+        }).then(result => {
+            log(result);
+            dom.attr(button, 'disabled', null);
+        });
+    });
 });
 
 /******************************************************************************/
