@@ -97,52 +97,80 @@ import {
 /******************************************************************************/
 
 {
-    µb.loadLocalSettings = ( ) => Promise.all([
-        vAPI.sessionStorage.get('requestStats'),
-        vAPI.storage.get('requestStats'),
-        vAPI.storage.get([ 'blockedRequestCount', 'allowedRequestCount' ]),
-    ]).then(([ a, b, c ]) => {
-        if ( a instanceof Object && a.requestStats ) { return a.requestStats; }
-        if ( b instanceof Object && b.requestStats ) { return b.requestStats; }
-        if ( c instanceof Object && Object.keys(c).length === 2 ) {
-            return {
-                blockedCount: c.blockedRequestCount,
-                allowedCount: c.allowedRequestCount,
-            };
-        }
-        return { blockedCount: 0, allowedCount: 0 };
-    }).then(({ blockedCount, allowedCount }) => {
-        µb.requestStats.blockedCount += blockedCount;
-        µb.requestStats.allowedCount += allowedCount;
-    });
+    const requestStats = µb.requestStats;
+    let requestStatsDisabled = false;
+
+    µb.loadLocalSettings = async ( ) => {
+        requestStatsDisabled = µb.hiddenSettings.requestStatsDisabled;
+        if ( requestStatsDisabled ) { return; }
+        return Promise.all([
+            vAPI.sessionStorage.get('requestStats'),
+            vAPI.storage.get('requestStats'),
+            vAPI.storage.get([ 'blockedRequestCount', 'allowedRequestCount' ]),
+        ]).then(([ a, b, c ]) => {
+            if ( a instanceof Object && a.requestStats ) { return a.requestStats; }
+            if ( b instanceof Object && b.requestStats ) { return b.requestStats; }
+            if ( c instanceof Object && Object.keys(c).length === 2 ) {
+                return {
+                    blockedCount: c.blockedRequestCount,
+                    allowedCount: c.allowedRequestCount,
+                };
+            }
+            return { blockedCount: 0, allowedCount: 0 };
+        }).then(({ blockedCount, allowedCount }) => {
+            requestStats.blockedCount += blockedCount;
+            requestStats.allowedCount += allowedCount;
+        });
+    };
 
     const SAVE_DELAY_IN_MINUTES = 3.6;
     const QUICK_SAVE_DELAY_IN_SECONDS = 23;
+
+    const stopTimers = ( ) => {
+        vAPI.alarms.clear('saveLocalSettings');
+        quickSaveTimer.off();
+        saveTimer.off();
+    };
 
     const saveTimer = vAPI.defer.create(( ) => {
         µb.saveLocalSettings();
     });
 
     const quickSaveTimer = vAPI.defer.create(( ) => {
+        if ( vAPI.sessionStorage.unavailable !== true ) {
+            vAPI.sessionStorage.set({ requestStats: requestStats });
+        }
+        if ( requestStatsDisabled ) { return; }
         saveTimer.on({ min: SAVE_DELAY_IN_MINUTES });
-        if ( vAPI.sessionStorage.unavailable ) { return; }
-        vAPI.sessionStorage.set({ requestStats: µb.requestStats });
         vAPI.alarms.createIfNotPresent('saveLocalSettings', {
             delayInMinutes: SAVE_DELAY_IN_MINUTES + 0.5
         });
     });
 
     µb.incrementRequestStats = (blocked, allowed) => {
-        µb.requestStats.blockedCount += blocked;
-        µb.requestStats.allowedCount += allowed;
+        requestStats.blockedCount += blocked;
+        requestStats.allowedCount += allowed;
         quickSaveTimer.on({ sec: QUICK_SAVE_DELAY_IN_SECONDS });
     };
 
     µb.saveLocalSettings = ( ) => {
-        vAPI.alarms.clear('saveLocalSettings');
-        quickSaveTimer.off(); saveTimer.off();
+        stopTimers();
+        if ( requestStatsDisabled ) { return; }
         return vAPI.storage.set({ requestStats: µb.requestStats });
     };
+
+    onBroadcast(msg => {
+        if ( msg.what !== 'hiddenSettingsChanged' ) { return; }
+        const newState = µb.hiddenSettings.requestStatsDisabled;
+        if ( requestStatsDisabled === newState ) { return; }
+        requestStatsDisabled = newState;
+        if ( newState ) {
+            stopTimers();
+            µb.requestStats.blockedCount = µb.requestStats.allowedCount = 0;
+        } else {
+            µb.loadLocalSettings();
+        }
+    });
 }
 
 /******************************************************************************/

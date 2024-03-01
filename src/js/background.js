@@ -83,6 +83,7 @@ const hiddenSettingsDefault = {
     popupPanelLockedSections: 0,
     popupPanelHeightMode: 0,
     requestJournalProcessPeriod: 1000,
+    requestStatsDisabled: false,
     selfieAfter: 2,
     strictBlockingBypassDuration: 120,
     toolbarWarningTimeout: 60,
