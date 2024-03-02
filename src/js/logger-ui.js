@@ -2011,8 +2011,12 @@ dom.on(document, 'keydown', ev => {
     };
 
     const toggleOn = async function(ev) {
-        targetRow = ev.target.closest('.canDetails');
-        if ( targetRow === null ) { return; }
+        const clickedRow = ev.target.closest('.canDetails');
+        if ( clickedRow === null ) { return; }
+        if ( clickedRow === targetRow ) {
+            return toggleOff();
+        }
+        targetRow = clickedRow;
         ev.stopPropagation();
         targetTabId = tabIdFromAttribute(targetRow);
         targetType = targetRow.children[COLUMN_TYPE].textContent.trim() || '';
