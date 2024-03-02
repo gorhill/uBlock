@@ -3568,6 +3568,11 @@ function spoofCSS(
         }
         return value;
     };
+    const cloackFunc = (fn, thisArg, name) => {
+        const trap = fn.bind(thisArg);
+        Object.defineProperty(trap, 'name', { value: name });
+        return trap;
+    };
     self.getComputedStyle = new Proxy(self.getComputedStyle, {
         apply: function(target, thisArg, args) {
             if ( shouldDebug !== 0 ) { debugger; }    // jshint ignore: line
@@ -3578,11 +3583,11 @@ function spoofCSS(
                 get(target, prop, receiver) {
                     if ( typeof target[prop] === 'function' ) {
                         if ( prop === 'getPropertyValue' ) {
-                            return (function(prop) {
+                            return cloackFunc(function(prop) {
                                 return spoofStyle(prop, target[prop]);
-                            }).bind(target);
+                            }, target, 'getPropertyValue');
                         }
-                        return target[prop].bind(target);
+                        return cloackFunc(target[prop], target, prop);
                     }
                     return spoofStyle(prop, Reflect.get(target, prop, receiver));
                 },
