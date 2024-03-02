@@ -476,15 +476,6 @@ webRequest.start();
 // as possible ensure minimal memory usage baseline.
 lz4Codec.relinquish();
 
-// https://github.com/chrisaljoudi/uBlock/issues/184
-//   Check for updates not too far in the future.
-io.addObserver(µb.assetObserver.bind(µb));
-µb.scheduleAssetUpdater({
-    updateDelay: µb.userSettings.autoUpdate
-        ? µb.hiddenSettings.autoUpdateDelayAfterLaunch * 1000
-        : 0
-});
-
 // Force an update of the context menu according to the currently
 // active tab.
 contextMenu.update();
@@ -509,11 +500,39 @@ ubolog(`All ready ${µb.supportStats.allReadyAfter} after launch`);
 
 µb.isReadyResolve();
 
+
+// https://github.com/chrisaljoudi/uBlock/issues/184
+//   Check for updates not too far in the future.
+io.addObserver(µb.assetObserver.bind(µb));
+if ( µb.userSettings.autoUpdate ) {
+    let needEmergencyUpdate = false;
+    const entries = await io.getUpdateAges({
+        filters: µb.selectedFilterLists,
+        internal: [ '*' ],
+    });
+    for ( const entry of entries ) {
+        if ( entry.ageNormalized < 2 ) { continue; }
+        needEmergencyUpdate = true;
+        break;
+    }
+    const updateDelay = needEmergencyUpdate
+        ? 2000
+        : µb.hiddenSettings.autoUpdateDelayAfterLaunch * 1000;
+    µb.scheduleAssetUpdater({
+        auto: true,
+        updateDelay,
+        fetchDelay: needEmergencyUpdate ? 1000 : undefined
+    });
+}
+
 // Process alarm queue
 while ( µb.alarmQueue.length !== 0 ) {
     const what = µb.alarmQueue.shift();
     ubolog(`Processing alarm event from suspended state: '${what}'`);
     switch ( what ) {
+    case 'assetUpdater':
+        µb.scheduleAssetUpdater({ auto: true, updateDelay: 2000, fetchDelay : 1000 });
+        break;
     case 'createSelfie':
         µb.selfieManager.create();
         break;

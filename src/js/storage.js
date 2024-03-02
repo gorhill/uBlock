@@ -1376,9 +1376,9 @@ onBroadcast(msg => {
             ubolog('Filtering engine selfie marked for invalidation');
         }
         vAPI.alarms.create('createSelfie', {
-            delayInMinutes: µb.hiddenSettings.selfieAfter + 0.5
+            delayInMinutes: (µb.hiddenSettings.selfieDelayInSeconds + 17) / 60,
         });
-        createTimer.offon({ min: µb.hiddenSettings.selfieAfter });
+        createTimer.offon({ sec: µb.hiddenSettings.selfieDelayInSeconds });
     };
 
     const createTimer = vAPI.defer.create(create);
@@ -1543,7 +1543,6 @@ onBroadcast(msg => {
 
 {
     let next = 0;
-    let lastEmergencyUpdate = 0;
 
     const launchTimer = vAPI.defer.create(fetchDelay => {
         next = 0;
@@ -1552,6 +1551,7 @@ onBroadcast(msg => {
 
     µb.scheduleAssetUpdater = async function(details = {}) {
         launchTimer.off();
+        vAPI.alarms.clear('assetUpdater');
 
         if ( details.now ) {
             next = 0;
@@ -1570,40 +1570,23 @@ onBroadcast(msg => {
             this.hiddenSettings.autoUpdatePeriod * 3600000;
 
         const now = Date.now();
-        let needEmergencyUpdate = false;
-
-        // Respect cooldown period before launching an emergency update.
-        const timeSinceLastEmergencyUpdate = (now - lastEmergencyUpdate) / 3600000;
-        if ( timeSinceLastEmergencyUpdate > 1 ) {
-            const entries = await io.getUpdateAges({
-                filters: µb.selectedFilterLists,
-                internal: [ '*' ],
-            });
-            for ( const entry of entries ) {
-                if ( entry.ageNormalized < 2 ) { continue; }
-                needEmergencyUpdate = true;
-                lastEmergencyUpdate = now;
-                break;
-            }
-        }
 
         // Use the new schedule if and only if it is earlier than the previous
         // one.
         if ( next !== 0 ) {
-            updateDelay = Math.min(updateDelay, Math.max(next - now, 0));
-        }
-
-        if ( needEmergencyUpdate ) {
-            updateDelay = Math.min(updateDelay, 15000);
+            updateDelay = Math.min(updateDelay, Math.max(next - now, 1));
         }
 
         next = now + updateDelay;
 
-        const fetchDelay = needEmergencyUpdate
-            ? 2000
-            : this.hiddenSettings.autoUpdateAssetFetchPeriod * 1000 || 60000;
+        const fetchDelay = details.fetchDelay ||
+            this.hiddenSettings.autoUpdateAssetFetchPeriod * 1000 ||
+            60000;
 
         launchTimer.on(updateDelay, fetchDelay);
+        vAPI.alarms.create('assetUpdater', {
+            delayInMinutes: Math.ceil(updateDelay / 60000) + 0.25
+        });
     };
 }
 

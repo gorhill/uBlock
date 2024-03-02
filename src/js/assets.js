@@ -1325,6 +1325,8 @@ async function diffUpdater() {
             terminate();
         };
         const worker = new Worker('js/diff-updater.js');
+    }).catch(reason => {
+        ubolog(`Diff updater: ${reason}`);
     });
 }
 
