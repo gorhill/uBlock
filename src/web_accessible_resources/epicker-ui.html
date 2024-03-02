@@ -15,8 +15,8 @@
 </head>
 
 <body>
-<aside>
-<div id="move"></div>
+<aside style="right: 2px; bottom: 2px;">
+<div id="windowbar"><div id="minimize"><svg viewBox="0 0 64 64"><path d="M 16,48 H 48" /><rect x="16" y="16" height="32" width="32" /></div><div id="move"></div><div id="quit" data-i18n-title="pickerQuit"><svg viewBox="0 0 64 64"><path d="M16 16L48 48M16 48L48 16" /></div></div>
 <section>
     <div>
         <div class="codeMirrorContainer codeMirrorBreakAll cm-theme-override"></div>
@@ -35,14 +35,9 @@
         </div>
     </div>
     <div id="toolbar">
-        <div>
-            <button id="preview" type="button" data-i18n="pickerPreview">_<span class="hover"></span></button>
-        </div>
-        <div>
-            <button id="create" type="button" class="preferred" disabled data-i18n="pickerCreate">_<span class="hover"></span></button>
-            <button id="pick" type="button" data-i18n="pickerPick">_<span class="hover"></span></button>
-            <button id="quit" type="button" data-i18n="pickerQuit">_<span class="hover"></span></button>
-        </div>
+        <button id="pick" type="button" data-i18n="pickerPick">_<span class="hover"></span></button>
+        <button id="preview" type="button" data-i18n="pickerPreview">_<span class="hover"></span></button>
+        <button id="create" type="button" class="preferred" disabled data-i18n="pickerCreate">_<span class="hover"></span></button>
     </div>
 </section>
 <ul id="candidateFilters">
@@ -56,7 +51,7 @@
     </li>
 </ul>
 </aside>
-<svg><path d></path><path d></path></svg>
+<svg id="sea"><path d></path><path d></path></svg>
 
 <script src="../lib/codemirror/lib/codemirror.js"></script>
 <script src="../lib/codemirror/addon/edit/closebrackets.js"></script>
