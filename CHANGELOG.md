@@ -1,5 +1,7 @@
 ## Fixes / changes
 
+- [Make asset updater compatible with non-persistent background page](https://github.com/gorhill/uBlock/commit/96704f2fda)
+- [Move dragbar to the top of element picker dialog](https://github.com/gorhill/uBlock/commit/953c978d59)
 - [Add advanced setting `requestStatsDisabled`](https://github.com/gorhill/uBlock/commit/e02ea69c86)
 - [First lookup matching stock lists when importing URLs](https://github.com/gorhill/uBlock/commit/2b16a10b82)
 - [Reset filter lists in worker when creating filters via "Block element"](https://github.com/gorhill/uBlock/commit/b0067b79d5)
