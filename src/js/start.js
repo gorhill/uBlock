@@ -63,6 +63,11 @@ import {
 
 /******************************************************************************/
 
+let lastVersionInt = 0;
+let thisVersionInt = 0;
+
+/******************************************************************************/
+
 vAPI.app.onShutdown = ( ) => {
     staticFilteringReverseLookup.shutdown();
     io.updateStop();
@@ -144,14 +149,14 @@ const initializeTabs = async ( ) => {
 //   Abort suspending network requests when uBO is merely being installed.
 
 const onVersionReady = async lastVersion => {
-    if ( lastVersion === vAPI.app.version ) { return; }
+    lastVersionInt = vAPI.app.intFromVersion(lastVersion);
+    thisVersionInt = vAPI.app.intFromVersion(vAPI.app.version);
+    if ( thisVersionInt === lastVersionInt ) { return; }
 
     vAPI.storage.set({
         version: vAPI.app.version,
         versionUpdateTime: Date.now(),
     });
-
-    const lastVersionInt = vAPI.app.intFromVersion(lastVersion);
 
     // Special case: first installation
     if ( lastVersionInt === 0 ) {
@@ -173,11 +178,6 @@ const onVersionReady = async lastVersion => {
 
 /******************************************************************************/
 
-// https://github.com/chrisaljoudi/uBlock/issues/226
-// Whitelist in memory.
-// Whitelist parser needs PSL to be ready.
-// gorhill 2014-12-15: not anymore
-//
 // https://github.com/uBlockOrigin/uBlock-issues/issues/1433
 //   Allow admins to add their own trusted-site directives.
 
@@ -185,16 +185,38 @@ const onNetWhitelistReady = (netWhitelistRaw, adminExtra) => {
     if ( typeof netWhitelistRaw === 'string' ) {
         netWhitelistRaw = netWhitelistRaw.split('\n');
     }
-    // Append admin-controlled trusted-site directives
-    if (
-        adminExtra instanceof Object &&
-        Array.isArray(adminExtra.trustedSiteDirectives)
-    ) {
-        for ( const directive of adminExtra.trustedSiteDirectives ) {
-            µb.netWhitelistDefault.push(directive);
-            netWhitelistRaw.push(directive);
+
+    // Remove now obsolete built-in trusted directives
+    if ( lastVersionInt !== thisVersionInt ) {
+        if ( lastVersionInt < vAPI.app.intFromVersion('1.56.1b12') ) {
+            const obsolete = [
+                'about-scheme',
+                'chrome-scheme',
+                'edge-scheme',
+                'opera-scheme',
+                'vivaldi-scheme',
+                'wyciwyg-scheme',
+            ];
+            for ( const directive of obsolete ) {
+                const i = netWhitelistRaw.findIndex(s =>
+                    s === directive || s === `# ${directive}`
+                );
+                if ( i === -1 ) { continue; }
+                netWhitelistRaw.splice(i, 1);
+            }
         }
     }
+
+    // Append admin-controlled trusted-site directives
+    if ( adminExtra instanceof Object ) {
+        if ( Array.isArray(adminExtra.trustedSiteDirectives) ) {
+            for ( const directive of adminExtra.trustedSiteDirectives ) {
+                µb.netWhitelistDefault.push(directive);
+                netWhitelistRaw.push(directive);
+            }
+        }
+    }
+
     µb.netWhitelist = µb.whitelistFromArray(netWhitelistRaw);
     µb.netWhitelistModifyTime = Date.now();
 };
@@ -392,14 +414,13 @@ try {
     );
     ubolog(`Backend storage for cache will be ${µb.supportStats.cacheBackend}`);
 
-    const lastVersion = await vAPI.storage.get(createDefaultProps()).then(async fetched => {
+    await vAPI.storage.get(createDefaultProps()).then(async fetched => {
         ubolog(`Version ready ${Date.now()-vAPI.T0} ms after launch`);
         await onVersionReady(fetched.version);
         return fetched;
     }).then(fetched => {
         ubolog(`First fetch ready ${Date.now()-vAPI.T0} ms after launch`);
         onFirstFetchReady(fetched, adminExtra);
-        return fetched.version;
     });
 
     await Promise.all([
@@ -421,7 +442,7 @@ try {
     ]);
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1547
-    if ( lastVersion === '0.0.0.0' && vAPI.webextFlavor.soup.has('chromium') ) {
+    if ( lastVersionInt === 0 && vAPI.webextFlavor.soup.has('chromium') ) {
         vAPI.app.restart();
         return;
     }
