@@ -115,7 +115,7 @@ const userSettingsDefault = {
     externalLists: '',
     firewallPaneMinimized: true,
     hyperlinkAuditingDisabled: true,
-    ignoreGenericCosmeticFilters: vAPI.webextFlavor.soup.has('mobile'),
+    ignoreGenericCosmeticFilters: false,
     importedLists: [],
     largeMediaSize: 50,
     parseAllABPHideFilters: true,
