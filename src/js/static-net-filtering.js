@@ -4049,7 +4049,7 @@ FilterCompiler.prototype.FILTER_UNSUPPORTED = 2;
 /******************************************************************************/
 /******************************************************************************/
 
-const FilterContainer = function() {
+const StaticNetFilteringEngine = function() {
     this.compilerVersion = '10';
     this.selfieVersion = '10';
 
@@ -4067,7 +4067,7 @@ const FilterContainer = function() {
 
 /******************************************************************************/
 
-FilterContainer.prototype.prime = function() {
+StaticNetFilteringEngine.prototype.prime = function() {
     origHNTrieContainer.reset(
         keyvalStore.getItem('SNFE.origHNTrieContainer.trieDetails')
     );
@@ -4079,7 +4079,7 @@ FilterContainer.prototype.prime = function() {
 
 /******************************************************************************/
 
-FilterContainer.prototype.reset = function() {
+StaticNetFilteringEngine.prototype.reset = function() {
     this.processedFilterCount = 0;
     this.acceptedCount = 0;
     this.discardedCount = 0;
@@ -4113,7 +4113,7 @@ FilterContainer.prototype.reset = function() {
 
 /******************************************************************************/
 
-FilterContainer.prototype.freeze = function() {
+StaticNetFilteringEngine.prototype.freeze = function() {
     const unserialize = CompiledListReader.unserialize;
 
     for ( const line of this.goodFilters ) {
@@ -4210,7 +4210,7 @@ FilterContainer.prototype.freeze = function() {
 
 /******************************************************************************/
 
-FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
+StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...args) {
     if ( op === 'begin' ) {
         Object.assign(context, {
             good: new Set(),
@@ -4545,7 +4545,7 @@ FilterContainer.prototype.dnrFromCompiled = function(op, context, ...args) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.addFilterUnit = function(
+StaticNetFilteringEngine.prototype.addFilterUnit = function(
     bits,
     tokenHash,
     inewunit
@@ -4572,7 +4572,7 @@ FilterContainer.prototype.addFilterUnit = function(
 
 /******************************************************************************/
 
-FilterContainer.prototype.optimize = function(throttle = 0) {
+StaticNetFilteringEngine.prototype.optimize = function(throttle = 0) {
     if ( this.optimizeTaskId !== undefined ) {
         dropTask(this.optimizeTaskId);
         this.optimizeTaskId = undefined;
@@ -4628,7 +4628,7 @@ FilterContainer.prototype.optimize = function(throttle = 0) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.toSelfie = function() {
+StaticNetFilteringEngine.prototype.toSelfie = function() {
     this.optimize(0);
     bidiTrieOptimize(true);
     keyvalStore.setItem('SNFE.origHNTrieContainer.trieDetails',
@@ -4649,7 +4649,7 @@ FilterContainer.prototype.toSelfie = function() {
     };
 };
 
-FilterContainer.prototype.serialize = async function() {
+StaticNetFilteringEngine.prototype.serialize = async function() {
     const selfie = [];
     const storage = {
         put(name, data) {
@@ -4662,7 +4662,7 @@ FilterContainer.prototype.serialize = async function() {
 
 /******************************************************************************/
 
-FilterContainer.prototype.fromSelfie = async function(selfie) {
+StaticNetFilteringEngine.prototype.fromSelfie = async function(selfie) {
     if ( typeof selfie !== 'object' || selfie === null ) { return; }
 
     this.reset();
@@ -4695,7 +4695,7 @@ FilterContainer.prototype.fromSelfie = async function(selfie) {
     return true;
 };
 
-FilterContainer.prototype.unserialize = async function(s) {
+StaticNetFilteringEngine.prototype.unserialize = async function(s) {
     const selfie = new Map(JSON.parse(s));
     const storage = {
         async get(name) {
@@ -4707,13 +4707,13 @@ FilterContainer.prototype.unserialize = async function(s) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.createCompiler = function() {
+StaticNetFilteringEngine.prototype.createCompiler = function() {
     return new FilterCompiler();
 };
 
 /******************************************************************************/
 
-FilterContainer.prototype.fromCompiled = function(reader) {
+StaticNetFilteringEngine.prototype.fromCompiled = function(reader) {
     reader.select('NETWORK_FILTERS:GOOD');
     while ( reader.next() ) {
         this.acceptedCount += 1;
@@ -4732,7 +4732,7 @@ FilterContainer.prototype.fromCompiled = function(reader) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.matchAndFetchModifiers = function(
+StaticNetFilteringEngine.prototype.matchAndFetchModifiers = function(
     fctxt,
     modifierName
 ) {
@@ -4909,7 +4909,7 @@ FilterContainer.prototype.matchAndFetchModifiers = function(
 
 /******************************************************************************/
 
-FilterContainer.prototype.realmMatchString = function(
+StaticNetFilteringEngine.prototype.realmMatchString = function(
     realmBits,
     typeBits,
     partyBits
@@ -5036,7 +5036,7 @@ FilterContainer.prototype.realmMatchString = function(
 // https://www.reddit.com/r/uBlockOrigin/comments/d6vxzj/
 //   Add support for `specifichide`.
 
-FilterContainer.prototype.matchRequestReverse = function(type, url) {
+StaticNetFilteringEngine.prototype.matchRequestReverse = function(type, url) {
     const typeBits = typeNameToTypeValue[type] | 0x80000000;
 
     // Prime tokenizer: we get a normalized URL in return.
@@ -5085,7 +5085,7 @@ FilterContainer.prototype.matchRequestReverse = function(type, url) {
  *
  * @returns {integer} 0=no match, 1=block, 2=allow (exception)
  */
-FilterContainer.prototype.matchRequest = function(fctxt, modifiers = 0) {
+StaticNetFilteringEngine.prototype.matchRequest = function(fctxt, modifiers = 0) {
     let typeBits = typeNameToTypeValue[fctxt.type];
     if ( modifiers === 0 ) {
         if ( typeBits === undefined ) {
@@ -5132,7 +5132,7 @@ FilterContainer.prototype.matchRequest = function(fctxt, modifiers = 0) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.matchHeaders = function(fctxt, headers) {
+StaticNetFilteringEngine.prototype.matchHeaders = function(fctxt, headers) {
     const typeBits = typeNameToTypeValue[fctxt.type] || otherTypeBitValue;
     const partyBits = fctxt.is3rdPartyToDoc() ? THIRDPARTY_REALM : FIRSTPARTY_REALM;
 
@@ -5169,7 +5169,7 @@ FilterContainer.prototype.matchHeaders = function(fctxt, headers) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.redirectRequest = function(redirectEngine, fctxt) {
+StaticNetFilteringEngine.prototype.redirectRequest = function(redirectEngine, fctxt) {
     const directives = this.matchAndFetchModifiers(fctxt, 'redirect-rule');
     // No directive is the most common occurrence.
     if ( directives === undefined ) { return; }
@@ -5187,7 +5187,7 @@ FilterContainer.prototype.redirectRequest = function(redirectEngine, fctxt) {
     return directives;
 };
 
-FilterContainer.prototype.transformRequest = function(fctxt) {
+StaticNetFilteringEngine.prototype.transformRequest = function(fctxt) {
     const directives = this.matchAndFetchModifiers(fctxt, 'uritransform');
     if ( directives === undefined ) { return; }
     const redirectURL = new URL(fctxt.url);
@@ -5251,7 +5251,7 @@ function compareRedirectRequests(redirectEngine, a, b) {
 // https://github.com/uBlockOrigin/uBlock-issues/issues/1626
 //   Do not redirect when the number of query parameters does not change.
 
-FilterContainer.prototype.filterQuery = function(fctxt) {
+StaticNetFilteringEngine.prototype.filterQuery = function(fctxt) {
     const directives = this.matchAndFetchModifiers(fctxt, 'removeparam');
     if ( directives === undefined ) { return; }
     const url = fctxt.url;
@@ -5345,14 +5345,14 @@ function parseQueryPruneValue(directive) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.hasQuery = function(fctxt) {
+StaticNetFilteringEngine.prototype.hasQuery = function(fctxt) {
     urlTokenizer.setURL(fctxt.url);
     return urlTokenizer.hasQuery();
 };
 
 /******************************************************************************/
 
-FilterContainer.prototype.toLogData = function() {
+StaticNetFilteringEngine.prototype.toLogData = function() {
     if ( this.$filterUnit !== 0 ) {
         return new LogData(this.$catBits, this.$tokenHash, this.$filterUnit);
     }
@@ -5360,19 +5360,19 @@ FilterContainer.prototype.toLogData = function() {
 
 /******************************************************************************/
 
-FilterContainer.prototype.isBlockImportant = function() {
+StaticNetFilteringEngine.prototype.isBlockImportant = function() {
     return this.$filterUnit !== 0 && $isBlockImportant;
 };
 
 /******************************************************************************/
 
-FilterContainer.prototype.getFilterCount = function() {
+StaticNetFilteringEngine.prototype.getFilterCount = function() {
     return this.acceptedCount - this.discardedCount;
 };
 
 /******************************************************************************/
 
-FilterContainer.prototype.enableWASM = function(wasmModuleFetcher, path) {
+StaticNetFilteringEngine.prototype.enableWASM = function(wasmModuleFetcher, path) {
     return Promise.all([
         bidiTrie.enableWASM(wasmModuleFetcher, path),
         origHNTrieContainer.enableWASM(wasmModuleFetcher, path),
@@ -5384,7 +5384,7 @@ FilterContainer.prototype.enableWASM = function(wasmModuleFetcher, path) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.test = async function(docURL, type, url) {
+StaticNetFilteringEngine.prototype.test = async function(docURL, type, url) {
     const fctxt = new FilteringContext();
     fctxt.setDocOriginFromURL(docURL);
     fctxt.setType(type);
@@ -5398,7 +5398,7 @@ FilterContainer.prototype.test = async function(docURL, type, url) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.bucketHistogram = function() {
+StaticNetFilteringEngine.prototype.bucketHistogram = function() {
     const results = [];
     for ( const [ bits, bucket ] of this.bitsToBucket ) {
         for ( const [ th, iunit ] of bucket ) {
@@ -5419,7 +5419,7 @@ FilterContainer.prototype.bucketHistogram = function() {
 // Dump the internal state of the filtering engine to the console.
 // Useful to make development decisions and investigate issues.
 
-FilterContainer.prototype.dump = function() {
+StaticNetFilteringEngine.prototype.dump = function() {
     const thConstants = new Map([
         [ NO_TOKEN_HASH, 'NO_TOKEN_HASH' ],
         [ DOT_TOKEN_HASH, 'DOT_TOKEN_HASH' ],
@@ -5549,6 +5549,6 @@ FilterContainer.prototype.dump = function() {
 
 /******************************************************************************/
 
-const staticNetFilteringEngine = new FilterContainer();
+const staticNetFilteringEngine = new StaticNetFilteringEngine();
 
 export default staticNetFilteringEngine;

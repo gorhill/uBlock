@@ -221,7 +221,7 @@ const reEscapeSequence = /\\([0-9A-Fa-f]+ |.)/g;
 // Generic filters can only be enforced once the main document is loaded.
 // Specific filers can be enforced before the main document is loaded.
 
-const FilterContainer = function() {
+const CosmeticFilteringEngine = function() {
     this.reSimpleHighGeneric = /^(?:[a-z]*\[[^\]]+\]|\S+)$/;
 
     this.selectorCache = new Map();
@@ -269,7 +269,7 @@ const FilterContainer = function() {
 
 // Reset all, thus reducing to a minimum memory footprint of the context.
 
-FilterContainer.prototype.reset = function() {
+CosmeticFilteringEngine.prototype.reset = function() {
     this.frozen = false;
     this.acceptedCount = 0;
     this.discardedCount = 0;
@@ -297,7 +297,7 @@ FilterContainer.prototype.reset = function() {
 
 /******************************************************************************/
 
-FilterContainer.prototype.freeze = function() {
+CosmeticFilteringEngine.prototype.freeze = function() {
     this.duplicateBuster.clear();
     this.specificFilters.collectGarbage();
 
@@ -311,7 +311,7 @@ FilterContainer.prototype.freeze = function() {
 
 /******************************************************************************/
 
-FilterContainer.prototype.compile = function(parser, writer) {
+CosmeticFilteringEngine.prototype.compile = function(parser, writer) {
     if ( parser.hasOptions() === false ) {
         this.compileGenericSelector(parser, writer);
         return true;
@@ -337,7 +337,7 @@ FilterContainer.prototype.compile = function(parser, writer) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.compileGenericSelector = function(parser, writer) {
+CosmeticFilteringEngine.prototype.compileGenericSelector = function(parser, writer) {
     if ( parser.isException() ) {
         this.compileGenericUnhideSelector(parser, writer);
     } else {
@@ -347,7 +347,7 @@ FilterContainer.prototype.compileGenericSelector = function(parser, writer) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.compileGenericHideSelector = function(
+CosmeticFilteringEngine.prototype.compileGenericHideSelector = function(
     parser,
     writer
 ) {
@@ -403,7 +403,7 @@ FilterContainer.prototype.compileGenericHideSelector = function(
 
 /******************************************************************************/
 
-FilterContainer.prototype.compileGenericUnhideSelector = function(
+CosmeticFilteringEngine.prototype.compileGenericUnhideSelector = function(
     parser,
     writer
 ) {
@@ -432,7 +432,7 @@ FilterContainer.prototype.compileGenericUnhideSelector = function(
 
 /******************************************************************************/
 
-FilterContainer.prototype.compileSpecificSelector = function(
+CosmeticFilteringEngine.prototype.compileSpecificSelector = function(
     parser,
     hostname,
     not,
@@ -471,7 +471,7 @@ FilterContainer.prototype.compileSpecificSelector = function(
 
 /******************************************************************************/
 
-FilterContainer.prototype.fromCompiledContent = function(reader, options) {
+CosmeticFilteringEngine.prototype.fromCompiledContent = function(reader, options) {
     if ( options.skipCosmetic ) {
         this.skipCompiledContent(reader, 'SPECIFIC');
         this.skipCompiledContent(reader, 'GENERIC');
@@ -560,7 +560,7 @@ FilterContainer.prototype.fromCompiledContent = function(reader, options) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.skipCompiledContent = function(reader, sectionId) {
+CosmeticFilteringEngine.prototype.skipCompiledContent = function(reader, sectionId) {
     reader.select(`COSMETIC_FILTERS:${sectionId}`);
     while ( reader.next() ) {
         this.acceptedCount += 1;
@@ -570,7 +570,7 @@ FilterContainer.prototype.skipCompiledContent = function(reader, sectionId) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.toSelfie = function() {
+CosmeticFilteringEngine.prototype.toSelfie = function() {
     return {
         version: this.selfieVersion,
         acceptedCount: this.acceptedCount,
@@ -586,7 +586,7 @@ FilterContainer.prototype.toSelfie = function() {
 
 /******************************************************************************/
 
-FilterContainer.prototype.fromSelfie = function(selfie) {
+CosmeticFilteringEngine.prototype.fromSelfie = function(selfie) {
     if ( selfie.version !== this.selfieVersion ) {
         throw new Error(
             `cosmeticFilteringEngine: mismatched selfie version, ${selfie.version}, expected ${this.selfieVersion}`
@@ -605,7 +605,7 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.addToSelectorCache = function(details) {
+CosmeticFilteringEngine.prototype.addToSelectorCache = function(details) {
     const hostname = details.hostname;
     if ( typeof hostname !== 'string' || hostname === '' ) { return; }
     const selectors = details.selectors;
@@ -623,7 +623,7 @@ FilterContainer.prototype.addToSelectorCache = function(details) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.removeFromSelectorCache = function(
+CosmeticFilteringEngine.prototype.removeFromSelectorCache = function(
     targetHostname = '*',
     type = undefined
 ) {
@@ -646,7 +646,7 @@ FilterContainer.prototype.removeFromSelectorCache = function(
 
 /******************************************************************************/
 
-FilterContainer.prototype.pruneSelectorCacheAsync = function() {
+CosmeticFilteringEngine.prototype.pruneSelectorCacheAsync = function() {
     if ( this.selectorCache.size <= this.selectorCacheCountMax ) { return; }
     const cache = this.selectorCache;
     const hostnames = Array.from(cache.keys())
@@ -660,7 +660,7 @@ FilterContainer.prototype.pruneSelectorCacheAsync = function() {
 
 /******************************************************************************/
 
-FilterContainer.prototype.disableSurveyor = function(details) {
+CosmeticFilteringEngine.prototype.disableSurveyor = function(details) {
     const hostname = details.hostname;
     if ( typeof hostname !== 'string' || hostname === '' ) { return; }
     const cacheEntry = this.selectorCache.get(hostname);
@@ -670,7 +670,7 @@ FilterContainer.prototype.disableSurveyor = function(details) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.cssRuleFromProcedural = function(pfilter) {
+CosmeticFilteringEngine.prototype.cssRuleFromProcedural = function(pfilter) {
     if ( pfilter.cssable !== true ) { return; }
     const { tasks, action } = pfilter;
     let mq, selector;
@@ -701,7 +701,7 @@ FilterContainer.prototype.cssRuleFromProcedural = function(pfilter) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.retrieveGenericSelectors = function(request) {
+CosmeticFilteringEngine.prototype.retrieveGenericSelectors = function(request) {
     if ( this.lowlyGeneric.size === 0 ) { return; }
     if ( Array.isArray(request.hashes) === false ) { return; }
     if ( request.hashes.length === 0 ) { return; }
@@ -759,7 +759,7 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.retrieveSpecificSelectors = function(
+CosmeticFilteringEngine.prototype.retrieveSpecificSelectors = function(
     request,
     options
 ) {
@@ -951,13 +951,13 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
 
 /******************************************************************************/
 
-FilterContainer.prototype.getFilterCount = function() {
+CosmeticFilteringEngine.prototype.getFilterCount = function() {
     return this.acceptedCount - this.discardedCount;
 };
 
 /******************************************************************************/
 
-FilterContainer.prototype.dump = function() {
+CosmeticFilteringEngine.prototype.dump = function() {
     const lowlyGenerics = [];
     for ( const selectors of this.lowlyGeneric.values() ) {
         lowlyGenerics.push(...selectors.split(',\n'));
@@ -978,7 +978,7 @@ FilterContainer.prototype.dump = function() {
 
 /******************************************************************************/
 
-const cosmeticFilteringEngine = new FilterContainer();
+const cosmeticFilteringEngine = new CosmeticFilteringEngine();
 
 export default cosmeticFilteringEngine;
 
