@@ -1,7 +1,10 @@
 ## Fixes / changes
 
+- [No longer disable generic cosmetic filters by default on mobile](https://github.com/gorhill/uBlock/commit/7a768e7b1a)
+- [Improve `spoof-css` scriptlet](https://github.com/gorhill/uBlock/commit/603239970d)
 - [Make asset updater compatible with non-persistent background page](https://github.com/gorhill/uBlock/commit/96704f2fda)
 - [Move dragbar to the top of element picker dialog](https://github.com/gorhill/uBlock/commit/953c978d59)
+    - [Move "Quit" button to top bar in element picker](https://github.com/gorhill/uBlock/commit/6266c4718d)
 - [Add advanced setting `requestStatsDisabled`](https://github.com/gorhill/uBlock/commit/e02ea69c86)
 - [First lookup matching stock lists when importing URLs](https://github.com/gorhill/uBlock/commit/2b16a10b82)
 - [Reset filter lists in worker when creating filters via "Block element"](https://github.com/gorhill/uBlock/commit/b0067b79d5)
