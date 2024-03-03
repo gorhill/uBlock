@@ -27,4 +27,4 @@ Keep in mind this is still a work in progress, with these end goals:
 
 - No broad host permissions at install time -- extended permissions are granted explicitly by the user on a per-site basis.
 
-- Entirely declarative for reliability and CPU/memory efficiency.
+- Цалкам дэкларатыўная ацэнка надзейнасці і эфектыўнасці работы працэсара/памяці.

@@ -144,7 +144,7 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "Roll eus anvioù domanioù el-lec'h ne vo silañ ebet",
+    "message": "Roll anvioù domanioù ha ne vo ket silet.",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "behaviorSectionLabel": {

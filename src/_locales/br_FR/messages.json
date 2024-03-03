@@ -76,7 +76,7 @@
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Klikit evit enaouiñ uBlock₀ war al lec'hienn-mañ.",
+    "message": "Enaouiñ uBlock₀ war al lec'hienn-mañ.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -136,11 +136,11 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Klikit evit stankañ an holl brenestroù pop-up war al lec'hienn-mañ",
+    "message": "Stankañ an holl brenestroù pop-up war al lec'hienn-mañ",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Klikit evit aotren an holl brenestroù pop-up war al lec'hienn-mañ",
+    "message": "Aotren an holl brenestroù pop-up war al lec'hienn-mañ",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -148,11 +148,11 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Klikit evit stankañ an elfennoù media pounner war al lec'hienn-mañ",
+    "message": "Stankañ an elfennoù media pounner war al lec'hienn-mañ",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Klikit evit aotren an elfennoù media pounner en-dro war al lec'hienn-mañ",
+    "message": "Aotren an elfennoù media pounner en-dro war al lec'hienn-mañ",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -160,11 +160,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Klikit evit lazhañ ar silañ kenedel war al lec'hienn-mañ",
+    "message": "Lazhañ ar silañ kenedel war al lec'hienn-mañ",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Klikit evit enaouiñ ar silañ kenedel war al lec'hienn-mañ",
+    "message": "Enaouiñ ar silañ kenedel war al lec'hienn-mañ",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -172,19 +172,19 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Klikit evit stankañ an nodrezhioù diavaez war al lec'hienn-mañ",
+    "message": "Stankañ an nodrezhioù diavaez war al lec'hienn-mañ",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Klikit evit aotren an nodrezhioù diavaez war al lec'hienn-mañ",
+    "message": "Aotren an nodrezhioù diavaez war al lec'hienn-mañ",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Klikit evit diweredekaat JavaScript war al lec'hienn-mañ",
+    "message": "Diweredekaat JavaScript war al lec'hienn-mañ",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Klikit evit gweredekaat JavaScript war al lec'hienn-mañ en-dro",
+    "message": "Gweredekaat JavaScript war al lec'hienn-mañ en-dro",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
@@ -224,11 +224,11 @@
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
-    "message": "Klikit evit lakaat ho kemmoù da dalvezout.",
+    "message": "Lakaat ho kemmoù da dalvezout.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Klikit evit nullañ ar c'hemmoù ho peus graet.",
+    "message": "Nullañ ar c'hemmoù ho peus graet.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {

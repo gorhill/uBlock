@@ -68,7 +68,7 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Націск: адключыць/уключыць uBlock₀ для гэтага сайта.\n\nCtrl+націск: адключыць uBlock₀ толькі на гэтай старонцы.",
+    "message": "Націсканне: адключыць/уключыць uBlock₀ для гэтага сайта.\n\nCtrl+націсканне: адключыць uBlock₀ толькі на гэтай старонцы.",
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
@@ -972,7 +972,7 @@
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Выберыце катэгорыю --",
+    "message": "-- Выберыце запіс праблемы --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
