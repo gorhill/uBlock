@@ -46,7 +46,7 @@ html#ublock0-epicker,
     justify-content: space-between;
 }
 #ublock0-epicker #toolbar button {
-    min-width: 6em;
+    min-width: 5em;
     }
 #ublock0-epicker ul {
     margin: 0.25em 0 0 0;
