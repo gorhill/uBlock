@@ -483,6 +483,14 @@
     "message": "മാല്‍വെയര്‍ ഡൊമൈനുകള്‍",
     "description": "Filter lists section name"
   },
+  "3pGroupSocial": {
+    "message": "Social widgets",
+    "description": "Filter lists section name"
+  },
+  "3pGroupCookies": {
+    "message": "Cookie notices",
+    "description": "Filter lists section name"
+  },
   "3pGroupAnnoyances": {
     "message": "ശല്യപ്പെടുത്തലുകൾ",
     "description": "Filter lists section name"

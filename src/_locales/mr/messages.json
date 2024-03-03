@@ -483,6 +483,14 @@
     "message": "मालवेअर डोमेन",
     "description": "Filter lists section name"
   },
+  "3pGroupSocial": {
+    "message": "Social widgets",
+    "description": "Filter lists section name"
+  },
+  "3pGroupCookies": {
+    "message": "Cookie notices",
+    "description": "Filter lists section name"
+  },
   "3pGroupAnnoyances": {
     "message": "चिडवणाऱ्या गोष्टी",
     "description": "Filter lists section name"

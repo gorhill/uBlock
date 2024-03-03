@@ -483,6 +483,14 @@
     "message": "Mga domain na may malware",
     "description": "Filter lists section name"
   },
+  "3pGroupSocial": {
+    "message": "Social widgets",
+    "description": "Filter lists section name"
+  },
+  "3pGroupCookies": {
+    "message": "Cookie notices",
+    "description": "Filter lists section name"
+  },
   "3pGroupAnnoyances": {
     "message": "Mga nakakaabalang bagay",
     "description": "Filter lists section name"

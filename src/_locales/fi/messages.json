@@ -483,6 +483,14 @@
     "message": "Haittaohjelmasuojaus, tietoturva",
     "description": "Filter lists section name"
   },
+  "3pGroupSocial": {
+    "message": "Social widgets",
+    "description": "Filter lists section name"
+  },
+  "3pGroupCookies": {
+    "message": "Cookie notices",
+    "description": "Filter lists section name"
+  },
   "3pGroupAnnoyances": {
     "message": "Ärsykkeet",
     "description": "Filter lists section name"

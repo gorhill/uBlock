@@ -483,6 +483,14 @@
     "message": "مواقع مصابة أو تحتوي على فايروسات",
     "description": "Filter lists section name"
   },
+  "3pGroupSocial": {
+    "message": "Social widgets",
+    "description": "Filter lists section name"
+  },
+  "3pGroupCookies": {
+    "message": "Cookie notices",
+    "description": "Filter lists section name"
+  },
   "3pGroupAnnoyances": {
     "message": "عناصر مزعجة",
     "description": "Filter lists section name"

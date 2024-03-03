@@ -483,6 +483,14 @@
     "message": "ম্যালওয়্যার ডোমেইন",
     "description": "Filter lists section name"
   },
+  "3pGroupSocial": {
+    "message": "Social widgets",
+    "description": "Filter lists section name"
+  },
+  "3pGroupCookies": {
+    "message": "Cookie notices",
+    "description": "Filter lists section name"
+  },
   "3pGroupAnnoyances": {
     "message": "বিরক্তিকর",
     "description": "Filter lists section name"

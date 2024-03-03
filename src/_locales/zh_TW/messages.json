@@ -483,6 +483,14 @@
     "message": "惡意軟體防護及安全性",
     "description": "Filter lists section name"
   },
+  "3pGroupSocial": {
+    "message": "Social widgets",
+    "description": "Filter lists section name"
+  },
+  "3pGroupCookies": {
+    "message": "Cookie notices",
+    "description": "Filter lists section name"
+  },
   "3pGroupAnnoyances": {
     "message": "嫌惡元素",
     "description": "Filter lists section name"

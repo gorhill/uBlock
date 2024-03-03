@@ -483,6 +483,14 @@
     "message": "Domenet e rrezikshme, siguria",
     "description": "Filter lists section name"
   },
+  "3pGroupSocial": {
+    "message": "Social widgets",
+    "description": "Filter lists section name"
+  },
+  "3pGroupCookies": {
+    "message": "Cookie notices",
+    "description": "Filter lists section name"
+  },
   "3pGroupAnnoyances": {
     "message": "Elementet e bezdisshme",
     "description": "Filter lists section name"
