@@ -22,15 +22,18 @@ html#ublock0-epicker,
     overflow-y: auto;
     position: fixed;
     width: min(32rem, 100vw - 4px);
+    z-index: 100;
 }
-#ublock0-epicker.paused:not(.zap) aside {
+#ublock0-epicker:not(.zap) aside {
     display: flex;
 }
+#ublock0-epicker:not(.paused) aside,
 #ublock0-epicker.minimized aside {
     min-width: min(16rem, 100vw - 4px);
     overflow: hidden;
     width: min(16rem, 100vw - 4px);
 }
+#ublock0-epicker:not(.paused) aside > *:not(#windowbar),
 #ublock0-epicker.minimized aside > *:not(#windowbar) {
     display: none;
 }
@@ -42,6 +45,9 @@ html#ublock0-epicker,
     display: flex;
     justify-content: space-between;
 }
+#ublock0-epicker #toolbar button {
+    min-width: 6em;
+    }
 #ublock0-epicker ul {
     margin: 0.25em 0 0 0;
 }
@@ -203,15 +209,6 @@ html#ublock0-epicker,
     background-color: var(--surface-2);
 }
 
-/**
-    https://github.com/gorhill/uBlock/issues/3449
-    https://github.com/uBlockOrigin/uBlock-issues/issues/55
-**/
-#ublock0-epicker.paused aside {
-    visibility: visible;
-    z-index: 100;
-}
-
 #ublock0-epicker svg#sea {
     cursor: crosshair;
     box-sizing: border-box;
@@ -269,14 +266,17 @@ html#ublock0-epicker,
     height: 2em;
     width: 2em;
 }
+#ublock0-epicker:not(.paused) #windowbar #minimize {
+    display: none;
+}
 #windowbar #quit:hover,
 #windowbar #minimize:hover {
     background-color: var(--surface-2)
 }
-html.minimized #windowbar #minimize svg > path,
+#ublock0-epicker.minimized #windowbar #minimize svg > path,
 #windowbar #minimize svg > rect {
     display: none;
 }
-html.minimized #windowbar #minimize svg > rect {
+#ublock0-epicker.minimized #windowbar #minimize svg > rect {
     display: initial;
 }
