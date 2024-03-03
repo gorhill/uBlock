@@ -74,7 +74,9 @@ const renderNodeStats = (used, total) => {
 };
 
 const i18nGroupName = name => {
-    return i18n$('3pGroup' + name.charAt(0).toUpperCase() + name.slice(1));
+    const groupname = i18n$('3pGroup' + name.charAt(0).toUpperCase() + name.slice(1));
+    if ( groupname !== '' ) { return groupname; }
+    return `${name.charAt(0).toLocaleUpperCase}${name.slice(1)}`;
 };
 
 /******************************************************************************/
@@ -223,6 +225,8 @@ const renderFilterLists = ( ) => {
             'privacy',
             'malware',
             'multipurpose',
+            'cookies',
+            'social',
             'annoyances',
             'regions',
             'custom'
@@ -235,9 +239,6 @@ const renderFilterLists = ( ) => {
         }
         for ( const [ listkey, listDetails ] of Object.entries(response.available) ) {
             let groupKey = listDetails.group;
-            if ( groupKey === 'social' ) {
-                groupKey = 'annoyances';
-            }
             const groupDetails = listTree[groupKey];
             if ( listDetails.parent !== undefined ) {
                 let lists = groupDetails.lists;
@@ -699,8 +700,6 @@ dom.on('.searchbar input', 'input', searchFilterLists);
 
 const expandedListSet = new Set([
     'uBlock filters',
-    'AdGuard – Annoyances',
-    'EasyList – Annoyances',
 ]);
 
 const listIsExpanded = which => {
