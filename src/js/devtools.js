@@ -187,6 +187,7 @@ vAPI.messaging.send('dashboard', {
             dom.attr(button, 'disabled', null);
         });
     });
+    dom.attr('#cfe-benchmark', 'disabled', null);
     dom.on('#cfe-benchmark', 'click', ev => {
         const button = ev.target;
         dom.attr(button, 'disabled', '');
@@ -197,6 +198,7 @@ vAPI.messaging.send('dashboard', {
             dom.attr(button, 'disabled', null);
         });
     });
+    dom.attr('#sfe-benchmark', 'disabled', null);
     dom.on('#sfe-benchmark', 'click', ev => {
         const button = ev.target;
         dom.attr(button, 'disabled', '');
