@@ -1,5 +1,6 @@
 ## Fixes / changes
 
+- [Add "Social widgets", "Cookie notices" sections in "Filter lists" pane](https://github.com/gorhill/uBlock/commit/21a76e32a1)
 - [No longer disable generic cosmetic filters by default on mobile](https://github.com/gorhill/uBlock/commit/7a768e7b1a)
 - [Improve `spoof-css` scriptlet](https://github.com/gorhill/uBlock/commit/603239970d)
 - [Make asset updater compatible with non-persistent background page](https://github.com/gorhill/uBlock/commit/96704f2fda)
