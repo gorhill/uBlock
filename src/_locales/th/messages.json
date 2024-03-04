@@ -588,11 +588,11 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Import from file…",
+    "message": "นำเข้าจากไฟล์",
     "description": ""
   },
   "rulesExport": {
-    "message": "Export to file…",
+    "message": "ส่งออกไปยังไฟล์",
     "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
@@ -612,7 +612,7 @@
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
-    "message": "Rule type",
+    "message": "ประเภทกฎ",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortBySource": {
@@ -620,15 +620,15 @@
     "description": "English: a sort option for list of rules."
   },
   "rulesSortByDestination": {
-    "message": "Destination",
+    "message": "ปลายทาง",
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "The trusted site directives dictate on which web pages uBlock Origin should be disabled. One entry per line.",
+    "message": "ระบุไซต์ที่เชื่อถือได้เพื่อกำหนดว่าควรปิดการใช้งาน uBlock Origin ที่หน้าเว็บใด พิมพ์หนึ่งรายการต่อบรรทัด",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Import and append…",
+    "message": "นำเข้าและรวม",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
@@ -640,7 +640,7 @@
     "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
-    "message": "Apply changes",
+    "message": "ใช้การเปลี่ยนแปลง",
     "description": "English: Apply changes"
   },
   "logRequestsHeaderType": {

@@ -484,11 +484,11 @@
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
-    "message": "Social widgets",
+    "message": "Tiện ích xã hội",
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
-    "message": "Cookie notices",
+    "message": "Các thông báo cookie",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
