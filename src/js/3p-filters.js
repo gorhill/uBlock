@@ -254,6 +254,14 @@ const renderFilterLists = ( ) => {
                 groupDetails.lists[listkey] = listDetails;
             }
         }
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/3154#issuecomment-1975413427
+        //   Remove empty sections
+        for ( const groupkey of groupKeys ) {
+            const lists = listTree[groupkey].lists;
+            if ( Object.keys(lists).length !== 0 ) { continue; }
+            delete listTree[groupkey];
+        }
+
         const listEntries = createListEntries('root', listTree);
         qs$('#lists .listEntries').replaceWith(listEntries);
 
