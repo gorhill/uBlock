@@ -161,9 +161,9 @@ dom.cl = class {
         }
     }
 
-    static remove(target, name) {
+    static remove(target, ...names) {
         for ( const elem of normalizeTarget(target) ) {
-            elem.classList.remove(name);
+            elem.classList.remove(...names);
         }
     }
 

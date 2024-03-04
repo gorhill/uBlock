@@ -266,9 +266,6 @@ html#ublock0-epicker,
     height: 2em;
     width: 2em;
 }
-#ublock0-epicker:not(.paused) #windowbar #minimize {
-    display: none;
-}
 #windowbar #quit:hover,
 #windowbar #minimize:hover {
     background-color: var(--surface-2)

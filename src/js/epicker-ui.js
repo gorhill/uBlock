@@ -802,14 +802,16 @@ const showDialog = function(details) {
 /******************************************************************************/
 
 const pausePicker = function() {
-    pickerRoot.classList.add('paused');
+    dom.cl.add(pickerRoot, 'paused');
+    dom.cl.remove(pickerRoot, 'minimized');
     svgListening(false);
 };
 
 /******************************************************************************/
 
 const unpausePicker = function() {
-    pickerRoot.classList.remove('paused', 'preview');
+    dom.cl.remove(pickerRoot, 'paused', 'preview');
+    dom.cl.add(pickerRoot, 'minimized');
     pickerContentPort.postMessage({
         what: 'togglePreview',
         state: false,
@@ -836,7 +838,12 @@ const startPicker = function() {
     $id('create').addEventListener('click', onCreateClicked);
     $id('pick').addEventListener('click', onPickClicked);
     $id('minimize').addEventListener('click', ( ) => {
-        dom.cl.toggle(dom.html, 'minimized');
+        if ( dom.cl.has(pickerRoot, 'paused') === false ) {
+            pausePicker();
+            onCandidateChanged();
+        } else {
+            dom.cl.toggle(pickerRoot, 'minimized');
+        }
     });
     $id('quit').addEventListener('click', onQuitClicked);
     $id('move').addEventListener('mousedown', onStartMoving);
