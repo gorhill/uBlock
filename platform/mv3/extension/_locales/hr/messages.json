@@ -144,7 +144,7 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "Popis naziva hostova za koje se neće izvršiti filtriranje",
+    "message": "Popis naziva hostova za koje se neće izvršiti filtriranje.",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "behaviorSectionLabel": {

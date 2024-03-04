@@ -484,11 +484,11 @@
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
-    "message": "Social widgets",
+    "message": "Sotsiaalvõrgustike vidinad",
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
-    "message": "Cookie notices",
+    "message": "Küpsise teatised",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {

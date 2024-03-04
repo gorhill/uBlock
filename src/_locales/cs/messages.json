@@ -484,11 +484,11 @@
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
-    "message": "Social widgets",
+    "message": "Widgety sociálních sítí",
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
-    "message": "Cookie notices",
+    "message": "Oznámení o používání souborů cookie",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
