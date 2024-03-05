@@ -238,8 +238,9 @@ const renderFilterLists = ( ) => {
             };
         }
         for ( const [ listkey, listDetails ] of Object.entries(response.available) ) {
-            let groupKey = listDetails.group;
-            const groupDetails = listTree[groupKey];
+            const groupkey = listDetails.group;
+            const groupDetails = listTree[groupkey];
+            if ( groupDetails === undefined ) { continue; }
             if ( listDetails.parent !== undefined ) {
                 let lists = groupDetails.lists;
                 for ( const parent of listDetails.parent.split('|') ) {
@@ -257,8 +258,9 @@ const renderFilterLists = ( ) => {
         // https://github.com/uBlockOrigin/uBlock-issues/issues/3154#issuecomment-1975413427
         //   Remove empty sections
         for ( const groupkey of groupKeys ) {
-            const lists = listTree[groupkey].lists;
-            if ( Object.keys(lists).length !== 0 ) { continue; }
+            const groupDetails = listTree[groupkey];
+            if ( groupDetails === undefined ) { continue; }
+            if ( Object.keys(groupDetails.lists).length !== 0 ) { continue; }
             delete listTree[groupkey];
         }
 
@@ -707,7 +709,8 @@ dom.on('.searchbar input', 'input', searchFilterLists);
 /******************************************************************************/
 
 const expandedListSet = new Set([
-    'uBlock filters',
+    'cookies',
+    'social',
 ]);
 
 const listIsExpanded = which => {
