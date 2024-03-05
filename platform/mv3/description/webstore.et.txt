@@ -17,14 +17,14 @@ Kuid uBOL võimaldab *selgesõnaliselt* anda täpsemaid lubasid teie valitud vee
 
 Veebilehele täpsustatud lubade andmiseks ava hüpikpaneel ja vali põhjalikum filtreerimisrežiim, näiteks Optimaalne või Põhjalik.
 
-Seejärel hoiatab brauser teid praeguse saidi laienduse taotletud täiendavate õiguste andmise tagajärgede eest ja peate brauserile ütlema, kas nõustute taotlusega või keeldute sellest.
+Seejärel hoiatab veebilehitseja praeguse veebilehe laienduse taotletud täiendavate õiguste andmise tagajärgede eest ja peate veebilehitsejale ütlema, kas nõustute taotlusega või keeldute sellest.
 
-Kui nõustute uBOLi taotlusega täiendavate õiguste saamiseks praegusel saidil, saab see praeguse saidi sisu paremini filtreerida.
+Kui nõustute uBOLi taotlusega täiendavate õiguste saamiseks praegusel veebilehel, saab see praeguse veebilehe sisu paremini filtreerida.
 
-Vaikimisi filtreerimisrežiimi saate määrata uBOLi suvandite lehelt Kui määrate optimaalse või põhjaliku režiimi tavaliseks, peate andma uBOLile loa kõikide veebilehtede andmete lugemiseks ja muutmiseks.
+Fltreerimise tavarežiimi saate määrata uBOLi valikute lehelt. Kui määrate optimaalse või põhjaliku režiimi tavaliseks, peate andma uBOLile loa kõikide veebilehtede andmete lugemiseks ja muutmiseks.
 
-Pidage meeles, et see on veel pooleliolev töö, mille lõppeesmärgid on järgmised:
+Pidage meeles, et see on veel arendamisel, mille lõppeesmärgid on järgmised:
 
-- Installimise ajal laialdased hostiõigused puuduvad – kasutaja annab laiendatud load selgesõnaliselt saidipõhiselt.
+- Paigaldamise ajal laialdased hostiõigused puuduvad – kasutaja annab laiendatud load selgesõnaliselt ja veebilehe põhiselt.
 
 - Täiesti deklaratiivne töökindluse ja protsessori/mälu tõhususe osas.
