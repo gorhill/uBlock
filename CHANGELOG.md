@@ -1,5 +1,9 @@
 ## Fixes / changes
 
+- [Assume UTF-8 when no encoding can be looked up](https://github.com/gorhill/uBlock/commit/63acdcbdeb)
+- [Fix issue with "My filters" pane on mobile](https://github.com/gorhill/uBlock/commit/24d94e559d)
+- [Support aborting "Pick" mode in element picker](https://github.com/gorhill/uBlock/commit/a557f62112)
+- [Remove sections with no lists in "Filter lists" pane](https://github.com/gorhill/uBlock/commit/0f4e50db07)
 - [Add "Social widgets", "Cookie notices" sections in "Filter lists" pane](https://github.com/gorhill/uBlock/commit/21a76e32a1)
 - [No longer disable generic cosmetic filters by default on mobile](https://github.com/gorhill/uBlock/commit/7a768e7b1a)
 - [Improve `spoof-css` scriptlet](https://github.com/gorhill/uBlock/commit/603239970d)
