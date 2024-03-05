@@ -247,7 +247,7 @@
 	"adguard-social": {
 		"content": "filters",
 		"group": "social",
-        "parent": null,
+		"parent": null,
 		"off": true,
 		"title": "AdGuard – Social Widgets",
 		"tags": "annoyances social",
@@ -442,7 +442,7 @@
 	"fanboy-social": {
 		"content": "filters",
 		"group": "social",
-        "parent": null,
+		"parent": null,
 		"off": true,
 		"title": "EasyList – Social Widgets",
 		"tags": "annoyances social",
