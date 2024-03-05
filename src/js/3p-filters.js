@@ -229,6 +229,7 @@ const renderFilterLists = ( ) => {
             'social',
             'annoyances',
             'regions',
+            'unknown',
             'custom'
         ];
         for ( const key of groupKeys ) {
@@ -238,9 +239,11 @@ const renderFilterLists = ( ) => {
             };
         }
         for ( const [ listkey, listDetails ] of Object.entries(response.available) ) {
-            const groupkey = listDetails.group;
+            let groupkey = listDetails.group;
+            if ( listTree.hasOwnProperty(groupkey) === false ) {
+                groupkey = 'unknown';
+            }
             const groupDetails = listTree[groupkey];
-            if ( groupDetails === undefined ) { continue; }
             if ( listDetails.parent !== undefined ) {
                 let lists = groupDetails.lists;
                 for ( const parent of listDetails.parent.split('|') ) {
