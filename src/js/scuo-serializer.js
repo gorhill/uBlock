@@ -1115,7 +1115,7 @@ export const isCompressed = s =>
  * */
 
 const defaultConfig = {
-    threadTTL: 5000,
+    threadTTL: 3000,
 };
 
 const validateConfig = {
