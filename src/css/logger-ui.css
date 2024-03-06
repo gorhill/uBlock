@@ -2,6 +2,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
+        height: 100svh;
     overflow: hidden;
     width: 100vw;
     }
@@ -512,6 +513,7 @@ body[dir="rtl"] .closeButton {
     bottom: 0;
     display: none;
     max-height: min(800px, calc(100vh - 2rem));
+        max-height: min(800px, calc(100svh - 2rem));
     min-width: 360px;
     overflow: hidden;
     position: fixed;

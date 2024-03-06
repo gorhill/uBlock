@@ -300,6 +300,7 @@ body.needSave #revertRules {
     }
 :root.desktop body.vMin #firewall {
     max-height: 100vh;
+        max-height: 100svh;
     }
 #firewall > * {
     direction: ltr;

@@ -2,6 +2,7 @@ html, body {
     display: flex;
     flex-direction: column;
     height: 100vh;
+        height: 100svh;
     justify-content: stretch;
     overflow: hidden;
     position: relative;
@@ -75,6 +76,7 @@ iframe {
     }
 #unsavedWarning > div:last-of-type {
     height: 100vh;
+        height: 100svh;
     position: absolute;
     width: 100vw;
     }
@@ -105,10 +107,6 @@ body.noDashboard #dashboard-nav {
     border-bottom-color: var(--dashboard-tab-hover-border);
     }
 
-/* touch-screen devices */
-:root.mobile, :root.mobile body {
-    height: 100svh;
-    }
 :root.mobile #dashboard-nav {
     flex-wrap: nowrap;
     overflow-x: auto;

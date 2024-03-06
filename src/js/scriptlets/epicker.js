@@ -1255,6 +1255,7 @@ const pickerCSSStyle = [
     'display: block',
     'filter: none',
     'height: 100vh',
+    '    height: 100svh',
     'left: 0',
     'margin: 0',
     'max-height: none',

@@ -23,6 +23,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
+        height: 100svh;
     margin: 0;
     overflow: hidden;
     padding: 0;

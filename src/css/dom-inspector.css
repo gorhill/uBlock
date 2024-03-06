@@ -3,6 +3,7 @@ html#ublock0-inspector,
     background: transparent;
     box-sizing: border-box;
     height: 100vh;
+        height: 100svh;
     margin: 0;
     overflow: hidden;
     width: 100vw;
