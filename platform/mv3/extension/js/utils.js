@@ -131,10 +131,21 @@ export const broadcastMessage = message => {
 /******************************************************************************/
 
 const ubolLog = (...args) => {
-    // Do not pollute dev console in stable release.
-    if ( browser.runtime.id === 'ddkjiahejlhfcafbddmgiahcphecmpfh' ) { return; }
+    // Do not pollute dev console in stable releases.
+    if ( shouldLog !== true ) { return; }
     console.info('[uBOL]', ...args);
 };
+
+const shouldLog = (( ) => {
+    const { id } = browser.runtime;
+    // https://addons.mozilla.org/en-US/firefox/addon/ublock-origin-lite/
+    if ( id === 'uBOLite@raymondhill.net' ) { return false; }
+    // https://chromewebstore.google.com/detail/ddkjiahejlhfcafbddmgiahcphecmpfh
+    if ( id === 'ddkjiahejlhfcafbddmgiahcphecmpfh' ) { return false; }
+    // https://microsoftedge.microsoft.com/addons/detail/cimighlppcgcoapaliogpjjdehbnofhn
+    if ( id === 'cimighlppcgcoapaliogpjjdehbnofhn' ) { return false; }
+    return true;
+})();
 
 /******************************************************************************/
 
