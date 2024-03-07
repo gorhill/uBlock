@@ -125,7 +125,7 @@ echo "*** uBOLite.mv3: extension ready"
 echo "Extension location: $DES/"
 
 # Local build: use a different extension id than the official one
-if [ -z "$TAGNAME" ]; then
+if [ -z "$TAGNAME" ] && [ "$PLATFORM" = "firefox" ]; then
     tmp=$(mktemp)
     jq '.browser_specific_settings.gecko.id = "uBOLite.dev@raymondhill.net"' "$DES/manifest.json"  > "$tmp" \
         && mv "$tmp" "$DES/manifest.json"
