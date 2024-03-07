@@ -1225,7 +1225,6 @@ async function main() {
     for ( const id of handpicked ) {
         const asset = assets[id];
         if ( asset.content !== 'filters' ) { continue; }
-
         const contentURL = Array.isArray(asset.contentURL)
             ? asset.contentURL[0]
             : asset.contentURL;
@@ -1253,45 +1252,45 @@ async function main() {
     });
     await rulesetFromURLs({
         id: 'annoyances-overlays',
-        name: 'AdGuard/uBO – Overlays',
+        name: 'EasyList/uBO – Overlay Notices',
         group: 'annoyances',
         enabled: false,
         secret,
         urls: [
-            'https://filters.adtidy.org/extension/ublock/filters/19.txt',
+            'https://ublockorigin.github.io/uAssets/thirdparties/easylist-newsletters.txt',
             'https://ublockorigin.github.io/uAssets/filters/annoyances-others.txt',
         ],
-        homeURL: 'https://github.com/AdguardTeam/AdguardFilters#adguard-filters',
+        homeURL: 'https://github.com/easylist/easylist#fanboy-lists',
     });
     await rulesetFromURLs({
         id: 'annoyances-social',
-        name: 'AdGuard – Social Media',
+        name: 'EasyList – Social Widgets',
         group: 'annoyances',
         enabled: false,
         urls: [
-            'https://filters.adtidy.org/extension/ublock/filters/4.txt',
+            'https://ublockorigin.github.io/uAssets/thirdparties/easylist-social.txt',
         ],
-        homeURL: 'https://github.com/AdguardTeam/AdguardFilters#adguard-filters',
+        homeURL: 'https://github.com/easylist/easylist#fanboy-lists',
     });
     await rulesetFromURLs({
         id: 'annoyances-widgets',
-        name: 'AdGuard – Widgets',
+        name: 'EasyList – Chat Widgets',
         group: 'annoyances',
         enabled: false,
         urls: [
-            'https://filters.adtidy.org/extension/ublock/filters/22.txt',
+            'https://ublockorigin.github.io/uAssets/thirdparties/easylist-chat.txt',
         ],
-        homeURL: 'https://github.com/AdguardTeam/AdguardFilters#adguard-filters',
+        homeURL: 'https://github.com/easylist/easylist#fanboy-lists',
     });
     await rulesetFromURLs({
         id: 'annoyances-others',
-        name: 'AdGuard – Other Annoyances',
+        name: 'EasyList – Other Annoyances',
         group: 'annoyances',
         enabled: false,
         urls: [
-            'https://filters.adtidy.org/extension/ublock/filters/21.txt',
+            'https://ublockorigin.github.io/uAssets/thirdparties/easylist-annoyances.txt'
         ],
-        homeURL: 'https://github.com/AdguardTeam/AdguardFilters#adguard-filters',
+        homeURL: 'https://github.com/easylist/easylist#fanboy-lists',
     });
 
     // Handpicked rulesets from abroad
