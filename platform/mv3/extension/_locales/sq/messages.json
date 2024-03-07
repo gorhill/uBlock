@@ -144,7 +144,7 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "Emrat e hosteve që nuk do të kalojnë në filtër",
+    "message": "Emrat e hosteve, që nuk do të kalojnë në filtër.",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "behaviorSectionLabel": {

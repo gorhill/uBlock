@@ -484,11 +484,11 @@
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
-    "message": "Social widgets",
+    "message": "Γραφικά στοιχεία κοινωνικής δικτύωσης",
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
-    "message": "Cookie notices",
+    "message": "Ειδοποιήσεις για cookies",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
