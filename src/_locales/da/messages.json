@@ -540,19 +540,19 @@
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pEnableMyFiltersLabel": {
-    "message": "Enable my custom filters",
+    "message": "Aktivér mine tilpassede filtre",
     "description": "Label for the checkbox use to enable/disable 'My filters' list"
   },
   "1pTrustMyFiltersLabel": {
-    "message": "Allow custom filters requiring trust",
+    "message": "Tillad tilpassede filtre som kræver tillid",
     "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
-    "message": "Importer og tilføj…",
+    "message": "Importér og tilføj…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "Eksporter…",
+    "message": "Eksportér…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
@@ -596,7 +596,7 @@
     "description": ""
   },
   "rulesExport": {
-    "message": "Eksporter til fil…",
+    "message": "Eksportér til fil…",
     "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
@@ -632,11 +632,11 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Importer og tilføj…",
+    "message": "Importér og tilføj…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
-    "message": "Eksporter…",
+    "message": "Eksportér…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
