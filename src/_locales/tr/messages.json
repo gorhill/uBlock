@@ -592,7 +592,7 @@
     "description": ""
   },
   "rulesExport": {
-    "message": "Dosyaya aktar",
+    "message": "Dosyaya aktar…",
     "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
