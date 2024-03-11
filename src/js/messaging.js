@@ -378,6 +378,7 @@ const popupDataFromTabId = function(tabId, tabTitle) {
         popupPanelDisabledSections: µbhs.popupPanelDisabledSections,
         popupPanelLockedSections: µbhs.popupPanelLockedSections,
         popupPanelHeightMode: µbhs.popupPanelHeightMode,
+        popupPanelOrientation: µbhs.popupPanelOrientation,
         tabId,
         tabTitle,
         tooltipsDisabled: µbus.tooltipsDisabled,

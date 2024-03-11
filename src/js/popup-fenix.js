@@ -802,7 +802,7 @@ let renderOnce = function() {
         dom.attr('#firewall [title][data-src]', 'title', null);
     }
 
-    // This must be done the firewall is populated
+    // This must be done when the firewall is populated
     if ( popupData.popupPanelHeightMode === 1 ) {
         dom.cl.add(dom.body, 'vMin');
     }
@@ -1462,6 +1462,31 @@ const getPopupData = async function(tabId, first = false) {
         }
     };
 
+    const setOrientation = async ( ) => {
+        if ( dom.cl.has(dom.root, 'mobile') ) {
+            dom.cl.remove(dom.root, 'desktop');
+            dom.cl.add(dom.root, 'portrait');
+            return;
+        }
+        if ( selfURL.searchParams.get('portrait') !== null ) {
+            dom.cl.add(dom.root, 'portrait');
+            return;
+        }
+        if ( popupData.popupPanelOrientation === 'landscape' ) { return; }
+        if ( popupData.popupPanelOrientation === 'portrait' ) {
+            dom.cl.add(dom.root, 'portrait');
+            return;
+        }
+        if ( dom.cl.has(dom.root, 'desktop') === false ) { return; }
+        await nextFrames(8);
+        const main = qs$('#main');
+        const firewall = qs$('#firewall');
+        const minWidth = (main.offsetWidth + firewall.offsetWidth) / 1.1;
+        if ( window.innerWidth < minWidth ) {
+            dom.cl.add(dom.root, 'portrait');
+        }
+    };
+
     // The purpose of the following code is to reset to a vertical layout
     // should the viewport not be enough wide to accommodate the horizontal
     // layout.
@@ -1474,24 +1499,7 @@ const getPopupData = async function(tabId, first = false) {
     // Use a tolerance proportional to the sum of the width of the panes
     // when testing against viewport width.
     const checkViewport = async function() {
-        if (
-            dom.cl.has(dom.root, 'mobile') ||
-            selfURL.searchParams.get('portrait')
-        ) {
-            dom.cl.add(dom.root, 'portrait');
-            dom.cl.remove(dom.root, 'desktop');
-        } else if ( dom.cl.has(dom.root, 'desktop') ) {
-            await nextFrames(8);
-            const main = qs$('#main');
-            const firewall = qs$('#firewall');
-            const minWidth = (main.offsetWidth + firewall.offsetWidth) / 1.1;
-            if (
-                selfURL.searchParams.get('portrait') ||
-                window.innerWidth < minWidth
-            ) {
-                dom.cl.add(dom.root, 'portrait');
-            }
-        }
+        await setOrientation();
         if ( dom.cl.has(dom.root, 'portrait') ) {
             const panes = qs$('#panes');
             const sticky = qs$('#sticky');
