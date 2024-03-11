@@ -1,5 +1,7 @@
 ## Fixes / changes
 
+- [Add advanced setting to force popup panel orientation](https://github.com/gorhill/uBlock/commit/0d77ccded7)
+- [Add checkboxes to "My filters" pane](https://github.com/gorhill/uBlock/commit/46ea5519c1)
 - [Assume UTF-8 when no encoding can be looked up](https://github.com/gorhill/uBlock/commit/63acdcbdeb)
 - [Fix issue with "My filters" pane on mobile](https://github.com/gorhill/uBlock/commit/24d94e559d)
 - [Support aborting "Pick" mode in element picker](https://github.com/gorhill/uBlock/commit/a557f62112)
