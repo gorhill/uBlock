@@ -1227,7 +1227,7 @@ class Thread {
         this.workerPromise = new Promise(resolve => {
             let worker = null;
             try {
-                worker = new Worker('js/scuo-serializer.js', { type: 'module' });
+                worker = new Worker('js/s14e-serializer.js', { type: 'module' });
                 worker.onmessage = ev => {
                     const msg = ev.data;
                     if ( isInstanceOf(msg, 'Object') === false ) { return; }

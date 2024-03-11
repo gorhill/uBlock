@@ -45,7 +45,7 @@ import { dnrRulesetFromRawLists } from './static-dnr-filtering.js';
 import { i18n$ } from './i18n.js';
 import { redirectEngine } from './redirect-engine.js';
 import * as sfp from './static-filtering-parser.js';
-import * as scuo from './scuo-serializer.js';
+import * as s14e from './s14e-serializer.js';
 
 import {
     permanentFirewall,
@@ -947,8 +947,8 @@ const onMessage = function(request, sender, callback) {
 
     case 'cloudPull':
         request.decode = encoded => {
-            if ( scuo.isSerialized(encoded) ) {
-                return scuo.deserializeAsync(encoded, { thread: true });
+            if ( s14e.isSerialized(encoded) ) {
+                return s14e.deserializeAsync(encoded, { thread: true });
             }
             // Legacy decoding: needs to be kept around for the foreseeable future.
             return lz4Codec.decode(encoded, fromBase64);
@@ -963,7 +963,7 @@ const onMessage = function(request, sender, callback) {
                 compress: µb.hiddenSettings.cloudStorageCompression,
                 thread: true,
             };
-            return scuo.serializeAsync(data, options);
+            return s14e.serializeAsync(data, options);
         };
         return vAPI.cloud.push(request).then(result => {
             callback(result);

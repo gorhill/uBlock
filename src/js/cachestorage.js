@@ -29,7 +29,7 @@ import lz4Codec from './lz4.js';
 import webext from './webext.js';
 import µb from './background.js';
 import { ubolog } from './console.js';
-import * as scuo from './scuo-serializer.js';
+import * as s14e from './s14e-serializer.js';
 
 /******************************************************************************/
 
@@ -74,7 +74,7 @@ const cacheStorage = (( ) => {
 
     const compress = async (bin, key, data) => {
         const µbhs = µb.hiddenSettings;
-        const after = await scuo.serializeAsync(data, {
+        const after = await s14e.serializeAsync(data, {
             compress: µbhs.cacheStorageCompression,
             compressThreshold: µbhs.cacheStorageCompressionThreshold,
             multithreaded: µbhs.cacheStorageMultithread,
@@ -84,10 +84,10 @@ const cacheStorage = (( ) => {
 
     const decompress = async (bin, key) => {
         const data = bin[key];
-        if ( scuo.isSerialized(data) === false ) { return; }
+        if ( s14e.isSerialized(data) === false ) { return; }
         const µbhs = µb.hiddenSettings;
         const isLarge = data.length >= µbhs.cacheStorageCompressionThreshold;
-        bin[key] = await scuo.deserializeAsync(data, {
+        bin[key] = await s14e.deserializeAsync(data, {
             multithreaded: isLarge && µbhs.cacheStorageMultithread || 1,
         });
     };
