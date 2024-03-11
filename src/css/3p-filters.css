@@ -7,7 +7,6 @@ body {
     }
 #actions {
     background-color: var(--surface-1);
-    padding: var(--default-gap-small) 0 var(--default-gap-xsmall) 0;
     position: sticky;
     top: 0;
     z-index: 10;

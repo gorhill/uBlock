@@ -174,7 +174,7 @@ const toggleOverlay = (( ) => {
 // - Scroll position preserved
 // - Minimum amount of text updated
 
-const rulesToDoc = function(clearHistory) {
+function rulesToDoc(clearHistory) {
     const orig = thePanes.orig.doc;
     const edit = thePanes.edit.doc;
     orig.startOperation();
@@ -258,11 +258,11 @@ const rulesToDoc = function(clearHistory) {
         { line, ch: 0 },
         (clientHeight - ldoc.defaultTextHeight()) / 2
     );
-};
+}
 
 /******************************************************************************/
 
-const filterRules = function(key) {
+function filterRules(key) {
     const filter = qs$('#ruleFilter input').value;
     const rules = thePanes[key].modified;
     if ( filter === '' ) { return rules; }
@@ -272,11 +272,11 @@ const filterRules = function(key) {
         out.push(rule);
     }
     return out;
-};
+}
 
 /******************************************************************************/
 
-const applyDiff = async function(permanent, toAdd, toRemove) {
+async function applyDiff(permanent, toAdd, toRemove) {
     const details = await vAPI.messaging.send('dashboard', {
         what: 'modifyRuleset',
         permanent: permanent,
@@ -286,7 +286,7 @@ const applyDiff = async function(permanent, toAdd, toRemove) {
     thePanes.orig.original = details.permanentRules;
     thePanes.edit.original = details.sessionRules;
     onPresentationChanged();
-};
+}
 
 /******************************************************************************/
 
@@ -345,14 +345,14 @@ function handleImportFilePicker() {
 
 /******************************************************************************/
 
-const startImportFilePicker = function() {
+function startImportFilePicker() {
     const input = qs$('#importFilePicker');
     // Reset to empty string, this will ensure an change event is properly
     // triggered if the user pick a file, even if it is the same as the last
     // one picked.
     input.value = '';
     input.click();
-};
+}
 
 /******************************************************************************/
 
@@ -562,7 +562,7 @@ const onTextChanged = (( ) => {
         }
     };
 
-    return function(now) {
+    return function onTextChanged(now) {
         if ( timer !== undefined ) { self.cancelIdleCallback(timer); }
         timer = now ? process() : self.requestIdleCallback(process, { timeout: 57 });
     };
@@ -570,7 +570,7 @@ const onTextChanged = (( ) => {
 
 /******************************************************************************/
 
-const revertAllHandler = function() {
+function revertAllHandler() {
     const toAdd = [], toRemove = [];
     const left = mergeView.leftOriginal();
     const edit = mergeView.editor();
@@ -587,11 +587,11 @@ const revertAllHandler = function() {
         toRemove.push(removedLines.trim());
     }
     applyDiff(false, toAdd.join('\n'), toRemove.join('\n'));
-};
+}
 
 /******************************************************************************/
 
-const commitAllHandler = function() {
+function commitAllHandler() {
     const toAdd = [], toRemove = [];
     const left = mergeView.leftOriginal();
     const edit = mergeView.editor();
@@ -608,11 +608,11 @@ const commitAllHandler = function() {
         toRemove.push(removedLines.trim());
     }
     applyDiff(true, toAdd.join('\n'), toRemove.join('\n'));
-};
+}
 
 /******************************************************************************/
 
-const editSaveHandler = function() {
+function editSaveHandler() {
     const editor = mergeView.editor();
     const editText = editor.getValue().trim();
     if ( editText === cleanEditText ) {
@@ -629,7 +629,7 @@ const editSaveHandler = function() {
         }
     }
     applyDiff(false, toAdd.join(''), toRemove.join(''));
-};
+}
 
 /******************************************************************************/
 
@@ -647,6 +647,8 @@ self.cloud.onPull = function(data, append) {
 };
 
 /******************************************************************************/
+
+self.wikilink = 'https://github.com/gorhill/uBlock/wiki/Dashboard:-My-rules';
 
 self.hasUnsavedData = function() {
     return mergeView.editor().isClean(cleanEditToken) === false;
@@ -706,4 +708,3 @@ mergeView.editor().on('updateDiff', ( ) => {
 });
 
 /******************************************************************************/
-

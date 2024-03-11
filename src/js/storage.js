@@ -424,6 +424,9 @@ onBroadcast(msg => {
 /******************************************************************************/
 
 µb.isTrustedList = function(assetKey) {
+    if ( assetKey === this.userFiltersPath ) {
+        if ( this.userSettings.userFiltersTrusted ) { return true; }
+    }
     if ( this.parsedTrustedListPrefixes.length === 0 ) {
         this.parsedTrustedListPrefixes =
             µb.hiddenSettings.trustedListPrefixes.split(/ +/).map(prefix => {

@@ -877,6 +877,8 @@ self.cloud.onPull = function fromCloudData(data, append) {
 
 /******************************************************************************/
 
+self.wikilink = 'https://github.com/gorhill/uBlock/wiki/Dashboard:-Filter-lists';
+
 self.hasUnsavedData = function() {
     return hashFromCurrentFromSettings() !== filteringSettingsHash;
 };

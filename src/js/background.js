@@ -96,7 +96,6 @@ const hiddenSettingsDefault = {
 
 if ( vAPI.webextFlavor.soup.has('devbuild') ) {
     hiddenSettingsDefault.consoleLogLevel = 'info';
-    hiddenSettingsDefault.trustedListPrefixes += ' user-';
     ubologSet(true);
 }
 
@@ -125,6 +124,7 @@ const userSettingsDefault = {
     showIconBadge: true,
     suspendUntilListsAreLoaded: vAPI.Net.canSuspend(),
     tooltipsDisabled: false,
+    userFiltersTrusted: false,
     webrtcIPAddressHidden: false,
 };
 

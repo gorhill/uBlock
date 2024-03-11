@@ -535,13 +535,17 @@
     "message": "Şəbəkə xətası üzündən yeniləmə mümkün olmadı.",
     "description": "used as a tooltip for error icon beside a list"
   },
-  "1pFormatHint": {
-    "message": "Hər sətirdə yalnız bir filtr. Bu, ya domen adı, ya da Adblock Plus formatında yazılmış filtr ola bilər. Əvvəli <code>!</code> ilə başlayan sətirlər nəzərə alınmayacaqdır.",
-    "description": "Short information about how to create custom filters"
-  },
   "1pTrustWarning": {
     "message": "Etibarsız mənbələrdən filtrlər əlavə etməyin.",
     "description": "Warning against copy-pasting filters from random sources"
+  },
+  "1pEnableMyFiltersLabel": {
+    "message": "Enable my custom filters",
+    "description": "Label for the checkbox use to enable/disable 'My filters' list"
+  },
+  "1pTrustMyFiltersLabel": {
+    "message": "Allow custom filters requiring trust",
+    "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
     "message": "İdxal və əlavə et",

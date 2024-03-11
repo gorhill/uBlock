@@ -12,17 +12,22 @@ body.notReady {
     display: none;
     }
 #dashboard-nav {
+    align-items: center;
     border: 0;
     border-bottom: 1px solid var(--border-1);
     display: flex;
     flex-shrink: 0;
-    flex-wrap: wrap;
+    justify-content: space-between;
     overflow-x: hidden;
     padding: 0;
     position: sticky;
     top: 0;
     width: 100%;
     z-index: 10;
+    }
+#dashboard-nav > span {
+    display: flex;
+    flex-wrap: wrap;
     }
 .tabButton {
     background-color: transparent;
@@ -107,7 +112,7 @@ body.noDashboard #dashboard-nav {
     border-bottom-color: var(--dashboard-tab-hover-border);
     }
 
-:root.mobile #dashboard-nav {
+:root.mobile #dashboard-nav > span {
     flex-wrap: nowrap;
     overflow-x: auto;
     }

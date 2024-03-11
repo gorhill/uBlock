@@ -1450,11 +1450,23 @@ const onMessage = function(request, sender, callback) {
 
     case 'readUserFilters':
         return µb.loadUserFilters().then(result => {
-            result.trustedSource = µb.isTrustedList(µb.userFiltersPath);
+            result.enabled = µb.selectedFilterLists.includes(µb.userFiltersPath);
+            result.trusted = µb.isTrustedList(µb.userFiltersPath);
             callback(result);
         });
 
     case 'writeUserFilters':
+        if ( request.enabled ) {
+            µb.applyFilterListSelection({
+                toSelect: [ µb.userFiltersPath ],
+                merge: true,
+            });
+        } else {
+            µb.applyFilterListSelection({
+                toRemove: [ µb.userFiltersPath ],
+            });
+        }
+        µb.changeUserSettings('userFiltersTrusted', request.trusted || false);
         return µb.saveUserFilters(request.content).then(result => {
             callback(result);
         });

@@ -22,15 +22,16 @@
 
 <div class="body">
     <div id="cloudWidget" class="hide" data-cloud-entry="myFiltersPane"></div>
-
-    <p><span data-i18n="1pTrustWarning"></span>&ensp;<span class="vverbose"><span data-i18n="1pFormatHint"></span>&thinsp;<a class="fa-icon info" href="https://github.com/gorhill/uBlock/wiki/Dashboard:-My-filters" target="_blank">question-circle</a></span></p>
     <p>
         <button id="userFiltersApply" class="preferred iconified" type="button" disabled><span class="fa-icon">check</span><span data-i18n="1pApplyChanges">_</span><span class="hover"></span></button>
         <button id="userFiltersRevert" class="iconified" type="button" disabled><span class="fa-icon">undo</span><span data-i18n="genericRevert">_</span><span class="hover"></span></button>
-        &ensp;
+        &emsp;
         <button id="importUserFiltersFromFile" class="iconified" type="button"><span class="fa-icon">download-alt</span><span data-i18n="1pImport">_</span><span class="hover"></span></button>
         <button id="exportUserFiltersToFile" class="iconified" type="button"><span class="fa-icon">upload-alt</span><span data-i18n="1pExport">_</span><span class="hover"></span></button>
     </p>
+    <p data-i18n="1pTrustWarning"></p>
+    <div class="li"><label><span id="enableMyFilters" class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span><span data-i18n="1pEnableMyFiltersLabel"></span></label></div>
+    <div id="trustMyFilters" class="li"><label><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span><span data-i18n="1pTrustMyFiltersLabel"></span></label></div>
 </div>
 <div id="userFilters" class="codeMirrorContainer codeMirrorBreakAll cm-theme-override" spellcheck="false"></div>
 <div class="hidden">

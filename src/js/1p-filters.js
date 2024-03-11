@@ -53,8 +53,6 @@ const cmEditor = new CodeMirror(qs$('#userFilters'), {
 
 uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 
-let cachedUserFilters = '';
-
 /******************************************************************************/
 
 // Add auto-complete ability to the editor. Polling is used as the suggested
@@ -91,9 +89,32 @@ vAPI.messaging.send('dashboard', {
 
 /******************************************************************************/
 
+let originalState = {
+    enabled: true,
+    trusted: false,
+    filters: '',
+};
+
+function getCurrentState() {
+    const enabled = qs$('#enableMyFilters input').checked;
+    return {
+        enabled,
+        trusted: enabled && qs$('#trustMyFilters input').checked,
+        filters: getEditorText(),
+    };
+}
+
+function rememberCurrentState() {
+    originalState = getCurrentState();
+}
+
+function currentStateChanged() {
+    return JSON.stringify(getCurrentState()) !== JSON.stringify(originalState);
+}
+
 function getEditorText() {
     const text = cmEditor.getValue().replace(/\s+$/, '');
-    return text === '' ? text : text + '\n';
+    return text === '' ? text : `${text}\n`;
 }
 
 function setEditorText(text) {
@@ -102,12 +123,23 @@ function setEditorText(text) {
 
 /******************************************************************************/
 
-function userFiltersChanged(changed) {
-    if ( typeof changed !== 'boolean' ) {
-        changed = self.hasUnsavedData();
-    }
+// https://github.com/codemirror/codemirror5/issues/3318
+//   "How could I force to redraw the highlight of all the lines?"
+//   "Resetting the mode option with setOption will trigger a full re-parse."
+
+function userFiltersChanged(details = {}) {
+    const changed = typeof details.changed === 'boolean'
+        ? details.changed
+        : self.hasUnsavedData();
     qs$('#userFiltersApply').disabled = !changed;
     qs$('#userFiltersRevert').disabled = !changed;
+    const enabled = qs$('#enableMyFilters input').checked;
+    dom.attr('#trustMyFilters .input.checkbox', 'disabled', enabled ? null : '');
+    const trustedbefore = cmEditor.getOption('trustedSource');
+    const trustedAfter = enabled && qs$('#trustMyFilters input').checked;
+    if ( trustedAfter === trustedbefore ) { return; }
+    cmEditor.setOption('mode', 'ubo-static-filtering');
+    cmEditor.setOption('trustedSource', trustedAfter);
 }
 
 /******************************************************************************/
@@ -118,7 +150,7 @@ function userFiltersChanged(changed) {
 //   background.
 
 function threeWayMerge(newContent) {
-    const prvContent = cachedUserFilters.trim().split(/\n/);
+    const prvContent = originalState.filters.trim().split(/\n/);
     const differ = new self.diff_match_patch();
     const newChanges = differ.diff(
         prvContent,
@@ -167,19 +199,22 @@ async function renderUserFilters(merge = false) {
     });
     if ( details instanceof Object === false || details.error ) { return; }
 
-    cmEditor.setOption('trustedSource', details.trustedSource === true);
+    cmEditor.setOption('trustedSource', details.trusted);
+
+    qs$('#enableMyFilters input').checked = details.enabled;
+    qs$('#trustMyFilters input').checked = details.trusted;
 
     const newContent = details.content.trim();
 
     if ( merge && self.hasUnsavedData() ) {
         setEditorText(threeWayMerge(newContent));
-        userFiltersChanged(true);
+        userFiltersChanged({ changed: true });
     } else {
         setEditorText(newContent);
-        userFiltersChanged(false);
+        userFiltersChanged({ changed: false });
     }
 
-    cachedUserFilters = newContent;
+    rememberCurrentState();
 }
 
 /******************************************************************************/
@@ -224,7 +259,7 @@ function exportUserFiltersToFile() {
         .replace('{{datetime}}', uBlockDashboard.dateNowToSensibleString())
         .replace(/ +/g, '_');
     vAPI.download({
-        'url': 'data:text/plain;charset=utf-8,' + encodeURIComponent(val + '\n'),
+        'url': `data:text/plain;charset=utf-8,${encodeURIComponent(val)}`,
         'filename': filename
     });
 }
@@ -232,21 +267,26 @@ function exportUserFiltersToFile() {
 /******************************************************************************/
 
 async function applyChanges() {
+    const state = getCurrentState();
     const details = await vAPI.messaging.send('dashboard', {
         what: 'writeUserFilters',
-        content: getEditorText(),
+        content: state.filters,
+        enabled: state.enabled,
+        trusted: state.trusted,
     });
     if ( details instanceof Object === false || details.error ) { return; }
-
-    cachedUserFilters = details.content.trim();
-    userFiltersChanged(false);
+    rememberCurrentState();
+    userFiltersChanged({ changed: false });
     vAPI.messaging.send('dashboard', {
         what: 'reloadAllFilters',
     });
 }
 
 function revertChanges() {
-    setEditorText(cachedUserFilters);
+    qs$('#enableMyFilters input').checked = originalState.enabled;
+    qs$('#trustMyFilters input').checked = originalState.trusted;
+    setEditorText(originalState.filters);
+    userFiltersChanged();
 }
 
 /******************************************************************************/
@@ -268,8 +308,10 @@ self.cloud.onPull = setCloudData;
 
 /******************************************************************************/
 
+self.wikilink = 'https://github.com/gorhill/uBlock/wiki/Dashboard:-My-filters';
+
 self.hasUnsavedData = function() {
-    return getEditorText().trim() !== cachedUserFilters;
+    return currentStateChanged();
 };
 
 /******************************************************************************/
@@ -278,6 +320,8 @@ self.hasUnsavedData = function() {
 dom.on('#exportUserFiltersToFile', 'click', exportUserFiltersToFile);
 dom.on('#userFiltersApply', 'click', ( ) => { applyChanges(); });
 dom.on('#userFiltersRevert', 'click', revertChanges);
+dom.on('#enableMyFilters input', 'change', userFiltersChanged);
+dom.on('#trustMyFilters input', 'change', userFiltersChanged);
 
 (async ( ) => {
     await renderUserFilters();

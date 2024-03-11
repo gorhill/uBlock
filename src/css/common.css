@@ -331,6 +331,22 @@ select {
     width: 100%;
     }
 
+.wikilink[href=""] {
+    display: none;
+    }
+.wikilink.fa-icon {
+    color: var(--info0-ink);
+        fill: var(--info0-ink);
+    padding: var(--default-gap-xxsmall) var(--default-gap-xsmall);
+    }
+.wikilink.fa-icon:hover {
+    transform: scale(1.2);
+    }
+.wikilink.fa-icon > svg {
+    height: 1.25rem;
+    width: 1.25rem;
+    }
+
 /* high dpi devices */
 :root.hidpi button {
     font-family: Metropolis, sans-serif;

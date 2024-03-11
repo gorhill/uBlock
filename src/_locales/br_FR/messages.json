@@ -535,13 +535,17 @@
     "message": "Ur fazi rouedad en deus miret an danvez da vezañ hizivaet.",
     "description": "used as a tooltip for error icon beside a list"
   },
-  "1pFormatHint": {
-    "message": "Ur sil dre linenn. Ur sil a c'hall bezañ un anv ostiz hepken pe ur sil hag a glot gant EasyList.\nAl linennoù a grog gant <code>!</code> a vo dilezet.",
-    "description": "Short information about how to create custom filters"
-  },
   "1pTrustWarning": {
     "message": "Arabat ouzhpennañ siloù a zeu diouzh mammennoù douetus.",
     "description": "Warning against copy-pasting filters from random sources"
+  },
+  "1pEnableMyFiltersLabel": {
+    "message": "Enable my custom filters",
+    "description": "Label for the checkbox use to enable/disable 'My filters' list"
+  },
+  "1pTrustMyFiltersLabel": {
+    "message": "Allow custom filters requiring trust",
+    "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
     "message": "Enporzhiañ hag ouzhpennañ",

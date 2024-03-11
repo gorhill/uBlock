@@ -535,13 +535,17 @@
     "message": "حدث خطأ في الشبكة منع تحديث المورد.",
     "description": "used as a tooltip for error icon beside a list"
   },
-  "1pFormatHint": {
-    "message": "فلتر واحد في كل سطر. يمكن ان يكون الفلتر رابط موقع او فلتر متوافق مع EasyList-compatible. السطور المسبوقة بـ<code>!</code> سوف يتم تجاهلها.",
-    "description": "Short information about how to create custom filters"
-  },
   "1pTrustWarning": {
     "message": "لا تضف مرشحات من مصادر غير موثوقة.",
     "description": "Warning against copy-pasting filters from random sources"
+  },
+  "1pEnableMyFiltersLabel": {
+    "message": "Enable my custom filters",
+    "description": "Label for the checkbox use to enable/disable 'My filters' list"
+  },
+  "1pTrustMyFiltersLabel": {
+    "message": "Allow custom filters requiring trust",
+    "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
     "message": "استيراد و إضافة",

@@ -535,13 +535,17 @@
     "message": "ఈ చిట్టా అనుసంధాన వైఫల్యం వలన నవికరించబడలేదు.",
     "description": "used as a tooltip for error icon beside a list"
   },
-  "1pFormatHint": {
-    "message": "ఒక్కో పంక్తిలో ఒక ఫిల్టర్ నమోదు. పేర్కొనబడే ఫిల్టర్, కేవలం హోస్టుపేరు లేదా Adblock Plusకి అనువైన ఫిల్టర్ కావొచ్చు. పంక్తిలో మొదట &lsquo;!&rsquo; ఉన్నచో ఆ పంక్తి పరిగణలోకి తీసుకొబడదు.",
-    "description": "Short information about how to create custom filters"
-  },
   "1pTrustWarning": {
     "message": "అవిశ్వసనీయ మూలాల నుండి ఫిల్టర్‌లను జోడించవద్దు.",
     "description": "Warning against copy-pasting filters from random sources"
+  },
+  "1pEnableMyFiltersLabel": {
+    "message": "Enable my custom filters",
+    "description": "Label for the checkbox use to enable/disable 'My filters' list"
+  },
+  "1pTrustMyFiltersLabel": {
+    "message": "Allow custom filters requiring trust",
+    "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
     "message": "దిగుమతిచేసి పోడిగించుము",

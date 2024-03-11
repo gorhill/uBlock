@@ -535,13 +535,17 @@
     "message": "Tīkla kļūda neļāva atjaunināt resursu.",
     "description": "used as a tooltip for error icon beside a list"
   },
-  "1pFormatHint": {
-    "message": "Vienu filtru katrā rindā. Filtrs var būt vienkārši resursa adrese, vai ar Adblock Plus saderīgs filtrs. Rindiņas, kuras sākas ar &lsquo;!&rsquo; tiks ignorētas.",
-    "description": "Short information about how to create custom filters"
-  },
   "1pTrustWarning": {
     "message": "Nevajag pievienot filtrus no neuzticamiem avotiem.",
     "description": "Warning against copy-pasting filters from random sources"
+  },
+  "1pEnableMyFiltersLabel": {
+    "message": "Enable my custom filters",
+    "description": "Label for the checkbox use to enable/disable 'My filters' list"
+  },
+  "1pTrustMyFiltersLabel": {
+    "message": "Allow custom filters requiring trust",
+    "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
     "message": "Importēt un pievienot",

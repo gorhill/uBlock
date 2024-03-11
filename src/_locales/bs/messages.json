@@ -535,13 +535,17 @@
     "message": "Mrežna greška je spriječila ažuriranje resursa.",
     "description": "used as a tooltip for error icon beside a list"
   },
-  "1pFormatHint": {
-    "message": "Jedan filter po redu. Filter može biti običan naziv domaćina/hosta ili filter kompatibilan sa EasyList-om. Redovi sa prefiksom <code>!</code> će biti ignorisani.",
-    "description": "Short information about how to create custom filters"
-  },
   "1pTrustWarning": {
     "message": "Nemojte dodavati filtere iz nepouzdanih izvora.",
     "description": "Warning against copy-pasting filters from random sources"
+  },
+  "1pEnableMyFiltersLabel": {
+    "message": "Enable my custom filters",
+    "description": "Label for the checkbox use to enable/disable 'My filters' list"
+  },
+  "1pTrustMyFiltersLabel": {
+    "message": "Allow custom filters requiring trust",
+    "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
     "message": "Uvezi i dodaj",

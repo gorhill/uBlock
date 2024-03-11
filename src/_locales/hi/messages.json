@@ -535,13 +535,17 @@
     "message": "एक नेटवर्क त्रुटि ने रिसोर्स को अपडेट होने से रोक दिया। ",
     "description": "used as a tooltip for error icon beside a list"
   },
-  "1pFormatHint": {
-    "message": "एक लाइन में एक फ़िल्टर। एक फ़िल्टर सीधा होस्टनाम, या एक Adblock Plus- योग्य फ़िल्टर हो सकता है। <code>!<code></code>से  शुरू होने वाली लाइनों को नज़रअंदाज किया जायेगा।",
-    "description": "Short information about how to create custom filters"
-  },
   "1pTrustWarning": {
     "message": "अविश्वसनीय स्रोतों से फ़िल्टर न जोड़ें.",
     "description": "Warning against copy-pasting filters from random sources"
+  },
+  "1pEnableMyFiltersLabel": {
+    "message": "Enable my custom filters",
+    "description": "Label for the checkbox use to enable/disable 'My filters' list"
+  },
+  "1pTrustMyFiltersLabel": {
+    "message": "Allow custom filters requiring trust",
+    "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
     "message": "इम्पोर्ट करें और जोड़ें",

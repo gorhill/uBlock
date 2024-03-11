@@ -30,12 +30,12 @@ import { dom, qs$ } from './dom.js';
 
 const reComment = /^\s*#\s*/;
 
-const directiveFromLine = function(line) {
+function directiveFromLine(line) {
     const match = reComment.exec(line);
     return match === null
         ? line.trim()
         : line.slice(match.index + match[0].length).trim();
-};
+}
 
 /******************************************************************************/
 
@@ -43,7 +43,7 @@ CodeMirror.defineMode("ubo-whitelist-directives", function() {
     const reRegex = /^\/.+\/$/;
 
     return {
-        token: function(stream) {
+        token: function token(stream) {
             const line = stream.string.trim();
             stream.skipToEnd();
             if ( reBadHostname === undefined ) {
@@ -100,18 +100,18 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 
 /******************************************************************************/
 
-const getEditorText = function() {
+function getEditorText() {
     let text = cmEditor.getValue().replace(/\s+$/, '');
     return text === '' ? text : text + '\n';
-};
+}
 
-const setEditorText = function(text) {
+function setEditorText(text) {
     cmEditor.setValue(text.replace(/\s+$/, '') + '\n');
-};
+}
 
 /******************************************************************************/
 
-const whitelistChanged = function() {
+function whitelistChanged() {
     const whitelistElem = qs$('#whitelist');
     const bad = qs$(whitelistElem, '.cm-error') !== null;
     const changedWhitelist = getEditorText().trim();
@@ -119,13 +119,13 @@ const whitelistChanged = function() {
     qs$('#whitelistApply').disabled = !changed || bad;
     qs$('#whitelistRevert').disabled = !changed;
     CodeMirror.commands.save = changed && !bad ? applyChanges : noopFunc;
-};
+}
 
 cmEditor.on('changes', whitelistChanged);
 
 /******************************************************************************/
 
-const renderWhitelist = async function() {
+async function renderWhitelist() {
     const details = await messaging.send('dashboard', {
         what: 'getWhitelist',
     });
@@ -161,11 +161,11 @@ const renderWhitelist = async function() {
     if ( first ) {
         cmEditor.clearHistory();
     }
-};
+}
 
 /******************************************************************************/
 
-const handleImportFilePicker = function() {
+function handleImportFilePicker() {
     const file = this.files[0];
     if ( file === undefined || file.name === '' ) { return; }
     if ( file.type.indexOf('text') !== 0 ) { return; }
@@ -179,22 +179,22 @@ const handleImportFilePicker = function() {
         setEditorText(content);
     };
     fr.readAsText(file);
-};
+}
 
 /******************************************************************************/
 
-const startImportFilePicker = function() {
+function startImportFilePicker() {
     const input = qs$('#importFilePicker');
     // Reset to empty string, this will ensure an change event is properly
     // triggered if the user pick a file, even if it is the same as the last
     // one picked.
     input.value = '';
     input.click();
-};
+}
 
 /******************************************************************************/
 
-const exportWhitelistToFile = function() {
+function exportWhitelistToFile() {
     const val = getEditorText();
     if ( val === '' ) { return; }
     const filename =
@@ -205,41 +205,43 @@ const exportWhitelistToFile = function() {
         'url': `data:text/plain;charset=utf-8,${encodeURIComponent(val + '\n')}`,
         'filename': filename
     });
-};
+}
 
 /******************************************************************************/
 
-const applyChanges = async function() {
+async function applyChanges() {
     cachedWhitelist = getEditorText().trim();
     await messaging.send('dashboard', {
         what: 'setWhitelist',
         whitelist: cachedWhitelist,
     });
     renderWhitelist();
-};
+}
 
-const revertChanges = function() {
+function revertChanges() {
     setEditorText(cachedWhitelist);
-};
+}
 
 /******************************************************************************/
 
-const getCloudData = function() {
+function getCloudData() {
     return getEditorText();
-};
+}
 
-const setCloudData = function(data, append) {
+function setCloudData(data, append) {
     if ( typeof data !== 'string' ) { return; }
     if ( append ) {
         data = uBlockDashboard.mergeNewLines(getEditorText().trim(), data);
     }
     setEditorText(data.trim());
-};
+}
 
 self.cloud.onPush = getCloudData;
 self.cloud.onPull = setCloudData;
 
 /******************************************************************************/
+
+self.wikilink = 'https://github.com/gorhill/uBlock/wiki/Dashboard:-Trusted-sites';
 
 self.hasUnsavedData = function() {
     return getEditorText().trim() !== cachedWhitelist;

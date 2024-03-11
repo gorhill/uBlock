@@ -535,13 +535,17 @@
     "message": "因網路錯誤無法更新資源。",
     "description": "used as a tooltip for error icon beside a list"
   },
-  "1pFormatHint": {
-    "message": "每行一個過濾規則。規則可以單純是主機名稱，或是與 EasyList 相容的過濾規則。以 <code>!</code> 開頭的行將被忽略。",
-    "description": "Short information about how to create custom filters"
-  },
   "1pTrustWarning": {
     "message": "請勿添加未信任來源的過濾規則。",
     "description": "Warning against copy-pasting filters from random sources"
+  },
+  "1pEnableMyFiltersLabel": {
+    "message": "Enable my custom filters",
+    "description": "Label for the checkbox use to enable/disable 'My filters' list"
+  },
+  "1pTrustMyFiltersLabel": {
+    "message": "Allow custom filters requiring trust",
+    "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
     "message": "匯入並加入…",

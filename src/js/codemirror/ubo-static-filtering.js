@@ -39,10 +39,10 @@ let hintHelperRegistered = false;
 
 /******************************************************************************/
 
-CodeMirror.defineOption('trustedSource', false, (cm, state) => {
-    if ( typeof state !== 'boolean' ) { return; }
+CodeMirror.defineOption('trustedSource', false, (cm, trusted) => {
+    if ( typeof trusted !== 'boolean' ) { return; }
     self.dispatchEvent(new CustomEvent('trustedSource', {
-        detail: state,
+        detail: { cm, trusted },
     }));
 });
 
@@ -56,36 +56,28 @@ CodeMirror.defineOption('trustedScriptletTokens', undefined, (cm, tokens) => {
 
 /******************************************************************************/
 
-CodeMirror.defineMode('ubo-static-filtering', function() {
-    const astParser = new sfp.AstFilterParser({
-        interactive: true,
-        nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
-    });
-    const astWalker = astParser.getWalker();
-    let currentWalkerNode = 0;
-    let lastNetOptionType = 0;
-
-    const redirectTokenStyle = node => {
-        const rawToken = astParser.getNodeString(node || currentWalkerNode);
+const uBOStaticFilteringMode = (( ) => {
+    const redirectTokenStyle = (mode, node) => {
+        const rawToken = mode.astParser.getNodeString(node || mode.currentWalkerNode);
         const { token } = sfp.parseRedirectValue(rawToken);
         return redirectNames.has(token) ? 'value' : 'value warning';
     };
 
-    const nodeHasError = node => {
-        return astParser.getNodeFlags(
-            node || currentWalkerNode, sfp.NODE_FLAG_ERROR
+    const nodeHasError = (mode, node) => {
+        return mode.astParser.getNodeFlags(
+            node || mode.currentWalkerNode, sfp.NODE_FLAG_ERROR
         ) !== 0;
     };
 
-    const colorFromAstNode = function() {
-        if ( astParser.nodeIsEmptyString(currentWalkerNode) ) { return '+'; }
-        if ( nodeHasError() ) { return 'error'; }
-        const nodeType = astParser.getNodeType(currentWalkerNode);
+    const colorFromAstNode = mode => {
+        if ( mode.astParser.nodeIsEmptyString(mode.currentWalkerNode) ) { return '+'; }
+        if ( nodeHasError(mode) ) { return 'error'; }
+        const nodeType = mode.astParser.getNodeType(mode.currentWalkerNode);
         switch ( nodeType ) {
             case sfp.NODE_TYPE_WHITESPACE:
                 return '';
             case sfp.NODE_TYPE_COMMENT:
-                if ( astWalker.canGoDown() ) { break; }
+                if ( mode.astWalker.canGoDown() ) { break; }
                 return 'comment';
             case sfp.NODE_TYPE_COMMENT_URL:
                 return 'comment link';
@@ -95,28 +87,28 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
             case sfp.NODE_TYPE_PREPARSE_DIRECTIVE_VALUE:
                 return 'directive';
             case sfp.NODE_TYPE_PREPARSE_DIRECTIVE_IF_VALUE: {
-                const raw = astParser.getNodeString(currentWalkerNode);
+                const raw = mode.astParser.getNodeString(mode.currentWalkerNode);
                 const state = sfp.utils.preparser.evaluateExpr(raw, preparseDirectiveEnv);
                 return state ? 'positive strong' : 'negative strong';
             }
             case sfp.NODE_TYPE_EXT_OPTIONS_ANCHOR:
-                return astParser.getFlags(sfp.AST_FLAG_IS_EXCEPTION)
+                return mode.astParser.getFlags(sfp.AST_FLAG_IS_EXCEPTION)
                     ? 'tag strong'
                     : 'def strong';
             case sfp.NODE_TYPE_EXT_DECORATION:
                 return 'def';
             case sfp.NODE_TYPE_EXT_PATTERN_RAW:
-                if ( astWalker.canGoDown() ) { break; }
+                if ( mode.astWalker.canGoDown() ) { break; }
                 return 'variable';
             case sfp.NODE_TYPE_EXT_PATTERN_COSMETIC:
             case sfp.NODE_TYPE_EXT_PATTERN_HTML:
                 return 'variable';
             case sfp.NODE_TYPE_EXT_PATTERN_RESPONSEHEADER:
             case sfp.NODE_TYPE_EXT_PATTERN_SCRIPTLET:
-                if ( astWalker.canGoDown() ) { break; }
+                if ( mode.astWalker.canGoDown() ) { break; }
                 return 'variable';
             case sfp.NODE_TYPE_EXT_PATTERN_SCRIPTLET_TOKEN: {
-                const token = astParser.getNodeString(currentWalkerNode);
+                const token = mode.astParser.getNodeString(mode.currentWalkerNode);
                 if ( scriptletNames.has(token) === false ) {
                     return 'warning';
                 }
@@ -127,9 +119,9 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
             case sfp.NODE_TYPE_NET_EXCEPTION:
                 return 'tag strong';
             case sfp.NODE_TYPE_NET_PATTERN:
-                if ( astWalker.canGoDown() ) { break; }
-                if ( astParser.isRegexPattern() ) {
-                    if ( astParser.getNodeFlags(currentWalkerNode, sfp.NODE_FLAG_PATTERN_UNTOKENIZABLE) !== 0 ) {
+                if ( mode.astWalker.canGoDown() ) { break; }
+                if ( mode.astParser.isRegexPattern() ) {
+                    if ( mode.astParser.getNodeFlags(mode.currentWalkerNode, sfp.NODE_FLAG_PATTERN_UNTOKENIZABLE) !== 0 ) {
                         return 'variable warning';
                     }
                     return 'variable notice';
@@ -148,10 +140,10 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
                 return 'keyword strong';
             case sfp.NODE_TYPE_NET_OPTIONS_ANCHOR:
             case sfp.NODE_TYPE_NET_OPTION_SEPARATOR:
-                lastNetOptionType = 0;
+                mode.lastNetOptionType = 0;
                 return 'def strong';
             case sfp.NODE_TYPE_NET_OPTION_NAME_UNKNOWN:
-                lastNetOptionType = 0;
+                mode.lastNetOptionType = 0;
                 return 'error';
             case sfp.NODE_TYPE_NET_OPTION_NAME_1P:
             case sfp.NODE_TYPE_NET_OPTION_NAME_STRICT1P:
@@ -196,16 +188,16 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
             case sfp.NODE_TYPE_NET_OPTION_NAME_XHR:
             case sfp.NODE_TYPE_NET_OPTION_NAME_WEBRTC:
             case sfp.NODE_TYPE_NET_OPTION_NAME_WEBSOCKET:
-                lastNetOptionType = nodeType;
+                mode.lastNetOptionType = nodeType;
                 return 'def';
             case sfp.NODE_TYPE_NET_OPTION_ASSIGN:
                 return 'def';
             case sfp.NODE_TYPE_NET_OPTION_VALUE:
-                if ( astWalker.canGoDown() ) { break; }
-                switch ( lastNetOptionType ) {
+                if ( mode.astWalker.canGoDown() ) { break; }
+                switch ( mode.lastNetOptionType ) {
                     case sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECT:
                     case sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE:
-                        return redirectTokenStyle();
+                        return redirectTokenStyle(mode);
                     default:
                         break;
                 }
@@ -222,54 +214,74 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
         return '+';
     };
 
-    self.addEventListener('trustedSource', ev => {
-        astParser.options.trustedSource = ev.detail;
-    });
+    class ModeState {
+        constructor() {
+            this.astParser = new sfp.AstFilterParser({
+                interactive: true,
+                nativeCssHas: vAPI.webextFlavor.env.includes('native_css_has'),
+            });
+            this.astWalker = this.astParser.getWalker();
+            this.currentWalkerNode = 0;
+            this.lastNetOptionType = 0;
+            self.addEventListener('trustedSource', ev => {
+                const { trusted } = ev.detail;
+                this.astParser.options.trustedSource = trusted;
+            });
+            self.addEventListener('trustedScriptletTokens', ev => {
+                this.astParser.options.trustedScriptletTokens = ev.detail;
+            });
+        }
+    }
 
-    self.addEventListener('trustedScriptletTokens', ev => {
-        astParser.options.trustedScriptletTokens = ev.detail;
-    });
-
-   return {
-        lineComment: '!',
-        token: function(stream) {
+    return {
+        state: null,
+        startState() {
+            if ( this.state === null ) {
+                this.state = new ModeState();
+            }
+            return this.state;
+        },
+        copyState(other) {
+            return other;
+        },
+        token(stream, state) {
             if ( stream.sol() ) {
-                astParser.parse(stream.string);
-                if ( astParser.getFlags(sfp.AST_FLAG_UNSUPPORTED) !== 0 ) {
+                state.astParser.parse(stream.string);
+                if ( state.astParser.getFlags(sfp.AST_FLAG_UNSUPPORTED) !== 0 ) {
                     stream.skipToEnd();
                     return 'error';
                 }
-                if ( astParser.getType() === sfp.AST_TYPE_NONE ) {
+                if ( state.astParser.getType() === sfp.AST_TYPE_NONE ) {
                     stream.skipToEnd();
                     return 'comment';
                 }
-                currentWalkerNode = astWalker.reset();
-            } else if ( nodeHasError() ) {
-                currentWalkerNode = astWalker.right();
+                state.currentWalkerNode = state.astWalker.reset();
+            } else if ( nodeHasError(state) ) {
+                state.currentWalkerNode = state.astWalker.right();
             } else {
-                currentWalkerNode = astWalker.next();
+                state.currentWalkerNode = state.astWalker.next();
             }
             let style = '';
-            while ( currentWalkerNode !== 0 ) {
-                style = colorFromAstNode(stream);
+            while ( state.currentWalkerNode !== 0 ) {
+                style = colorFromAstNode(state, stream);
                 if ( style !== '+' ) { break; }
-                currentWalkerNode = astWalker.next();
+                state.currentWalkerNode = state.astWalker.next();
             }
             if ( style === '+' ) {
                 stream.skipToEnd();
                 return null;
             }
-            stream.pos = astParser.getNodeStringEnd(currentWalkerNode);
-            if ( astParser.isNetworkFilter() ) {
+            stream.pos = state.astParser.getNodeStringEnd(state.currentWalkerNode);
+            if ( state.astParser.isNetworkFilter() ) {
                 return style ? `line-cm-net ${style}` : 'line-cm-net';
             }
-            if ( astParser.isExtendedFilter() ) {
+            if ( state.astParser.isExtendedFilter() ) {
                 let flavor = '';
-                if ( astParser.isCosmeticFilter() ) {
+                if ( state.astParser.isCosmeticFilter() ) {
                     flavor = 'line-cm-ext-dom';
-                } else if ( astParser.isScriptletFilter() ) {
+                } else if ( state.astParser.isScriptletFilter() ) {
                     flavor = 'line-cm-ext-js';
-                } else if ( astParser.isHtmlFilter() ) {
+                } else if ( state.astParser.isHtmlFilter() ) {
                     flavor = 'line-cm-ext-html';
                 }
                 if ( flavor !== '' ) {
@@ -279,9 +291,11 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
             style = style.trim();
             return style !== '' ? style : null;
         },
-        parser: astParser,
+        lineComment: '!',
     };
-});
+})();
+
+CodeMirror.defineMode('ubo-static-filtering', ( ) => uBOStaticFilteringMode);
 
 /******************************************************************************/
 
@@ -878,6 +892,11 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
                 ifendifSet.add(lineHandle);
                 ifendifSetChanged = true;
             }
+        } else if ( marker.dataset.lint === 'error' ) {
+            if ( marker.dataset.error !== 'y' ) {
+                marker.dataset.error = 'y';
+                errorCount += 1;
+            }
         }
         if ( typeof details.msg !== 'string' || details.msg === '' ) { return; }
         const msgElem = qs$(marker, '.msg');
@@ -1084,7 +1103,16 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
     };
 
     self.addEventListener('trustedSource', ev => {
-        astParser.options.trustedSource = ev.detail;
+        const { cm, trusted } = ev.detail;
+        astParser.options.trustedSource = trusted;
+        const doc = cm.getDoc();
+        const lineCount = doc.lineCount();
+        onBeforeChanges(cm, {
+            from: { line: 0, ch: 0 },
+            to: { line: lineCount, ch: 0 },
+        });
+        changeset.push({ from: 0, to: lineCount });
+        processChangesetAsync(doc);
     });
 
     self.addEventListener('trustedScriptletTokens', ev => {

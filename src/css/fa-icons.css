@@ -89,6 +89,7 @@
 .fa-icon > .fa-icon_sun-o {
     width: calc(1em * 1708 / 1792);
     }
+.fa-icon > .fa-icon_book,
 .fa-icon > .fa-icon_download-alt,
 .fa-icon > .fa-icon_font,
 .fa-icon > .fa-icon_search,
