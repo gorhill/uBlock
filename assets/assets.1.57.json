@@ -3,14 +3,14 @@
 		"content": "internal",
 		"updateAfter": 13,
 		"contentURL": [
-			"https://raw.githubusercontent.com/gorhill/uBlock/master/assets/assets.dev.json",
-			"assets/assets.dev.json"
+			"https://raw.githubusercontent.com/gorhill/uBlock/master/assets/assets.1.57.json",
+			"assets/assets.1.57.json"
 		],
 		"cdnURLs": [
-			"https://ublockorigin.github.io/uAssetsCDN/ublock/assets.dev.json",
-			"https://ublockorigin.pages.dev/ublock/assets.dev.json",
-			"https://cdn.jsdelivr.net/gh/gorhill/uBlock@master/assets/assets.dev.json",
-			"https://cdn.statically.io/gh/gorhill/uBlock/master/assets/assets.dev.json"
+			"https://ublockorigin.github.io/uAssetsCDN/ublock/assets.1.57.json",
+			"https://ublockorigin.pages.dev/ublock/assets.1.57.json",
+			"https://cdn.jsdelivr.net/gh/gorhill/uBlock@master/assets/assets.1.57.json",
+			"https://cdn.statically.io/gh/gorhill/uBlock/master/assets/assets.1.57.json"
 		]
 	},
 	"public_suffix_list.dat": {

@@ -1143,7 +1143,7 @@ async function main() {
 
     // Get assets.json content
     const assets = await fs.readFile(
-        `./assets.json`,
+        `./assets.1.57.json`,
         { encoding: 'utf8' }
     ).then(text =>
         JSON.parse(text)
