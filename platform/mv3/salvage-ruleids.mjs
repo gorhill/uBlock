@@ -79,21 +79,21 @@ async function main() {
                 a.id = 0;
                 return [ JSON.stringify(a), id ];
             }));
-            const usedIds = new Set();
+            const reusedIds = new Set();
             for ( const afterRule of afterRules ) {
                 afterRule.id = 0;
                 const key = JSON.stringify(afterRule);
                 const beforeId = beforeMap.get(key);
                 if ( beforeId === undefined ) { continue; }
-                if ( usedIds.has(beforeId) ) { continue; }
+                if ( reusedIds.has(beforeId) ) { continue; }
                 afterRule.id = beforeId;
-                usedIds.add(beforeId);
+                reusedIds.add(beforeId);
             }
             // Assign new ids to unmatched rules
             let ruleIdGenerator = 1;
             for ( const afterRule of afterRules ) {
                 if ( afterRule.id !== 0 ) { continue; }
-                while ( usedIds.has(ruleIdGenerator) ) { ruleIdGenerator += 1; }
+                while ( reusedIds.has(ruleIdGenerator) ) { ruleIdGenerator += 1; }
                 afterRule.id = ruleIdGenerator++;
             }
             afterRules.sort((a, b) => a.id - b.id);
@@ -102,11 +102,10 @@ async function main() {
             for ( const afterRule of afterRules ) {
                 lines.push(JSON.stringify(afterRule, null, indent));
             }
+            const path = `${afterDir}/rulesets/${folder}/${file}`;
+            console.log(`    Salvaged ${reusedIds.size} ids in ${folder}/${file}`);
             writePromises.push(
-                fs.writeFile(
-                    `${afterDir}/rulesets/${folder}/${file}`,
-                    `[\n${lines.join(',\n')}\n]\n`
-                )
+                fs.writeFile(path, `[\n${lines.join(',\n')}\n]\n`)
             );
         }
     }
