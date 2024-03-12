@@ -14,6 +14,7 @@ cp -R ./assets $DES/
 VERSION=$(cat ./dist/version)
 if [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
     echo "*** Removing $DES/assets.dev.json"
+    rm -f $DES/assets.json
     rm -f $DES/assets.dev.json
 else
     echo "*** Removing $DES/assets.json"
