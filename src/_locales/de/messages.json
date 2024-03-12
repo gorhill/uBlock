@@ -544,7 +544,7 @@
     "description": "Label for the checkbox use to enable/disable 'My filters' list"
   },
   "1pTrustMyFiltersLabel": {
-    "message": "Eigene Filter zulassen, die Vertrauenswürdigkeit erfordern",
+    "message": "Eigene Filter zulassen, die Vertrauen erfordern",
     "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {

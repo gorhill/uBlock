@@ -540,11 +540,11 @@
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pEnableMyFiltersLabel": {
-    "message": "Enable my custom filters",
+    "message": "啟用我的自訂過濾規則",
     "description": "Label for the checkbox use to enable/disable 'My filters' list"
   },
   "1pTrustMyFiltersLabel": {
-    "message": "Allow custom filters requiring trust",
+    "message": "允許需要信任的自訂過濾規則",
     "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
