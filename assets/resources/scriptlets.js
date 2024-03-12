@@ -861,14 +861,33 @@ function objectFindOwnerFn(
             return modified;
         }
         const prop = chain.slice(0, pos);
+        const next = chain.slice(pos + 1);
+        let found = false;
+        if ( prop === '[-]' && Array.isArray(owner) ) {
+            let i = owner.length;
+            while ( i-- ) {
+                if ( objectFindOwnerFn(owner[i], next) === false ) { continue; }
+                owner.splice(i, 1);
+                found = true;
+            }
+            return found;
+        }
+        if ( prop === '{-}' && owner instanceof Object ) {
+            for ( const key of Object.keys(owner) ) {
+                if ( objectFindOwnerFn(owner[key], next) === false ) { continue; }
+                delete owner[key];
+                found = true;
+            }
+            return found;
+        }
         if (
             prop === '[]' && Array.isArray(owner) ||
+            prop === '{}' && owner instanceof Object ||
             prop === '*' && owner instanceof Object
         ) {
-            const next = chain.slice(pos + 1);
-            let found = false;
             for ( const key of Object.keys(owner) ) {
-                found = objectFindOwnerFn(owner[key], next, prune) || found;
+                if (objectFindOwnerFn(owner[key], next, prune) === false ) { continue; }
+                found = true;
             }
             return found;
         }
