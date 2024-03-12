@@ -52,11 +52,11 @@ body {
     margin: 0;
     padding: 0;
     }
-a {
+a:not(.fa-icon) {
     color: var(--link-ink);
         fill: var(--link-ink);
     }
-a:hover {
+a:not(.fa-icon):hover {
     color: var(--link-hover-ink);
         fill: var(--link-hover-ink);
     }

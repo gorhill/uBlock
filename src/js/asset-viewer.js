@@ -60,6 +60,7 @@ import './codemirror/ubo-static-filtering.js';
         lineWrapping: true,
         matchBrackets: true,
         maxScanLines: 1,
+        maximizable: false,
         readOnly: true,
         styleActiveLine: {
             nonEmpty: true,
