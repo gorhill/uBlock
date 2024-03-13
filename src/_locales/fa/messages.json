@@ -488,7 +488,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
-    "message": "Cookie notices",
+    "message": "اطلاعیه‌های کلوچک",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
@@ -536,15 +536,15 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pTrustWarning": {
-    "message": "Do not add filters from untrusted sources.",
+    "message": "پالایه‌ها از منابع نامعتبر افزوده نشود.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pEnableMyFiltersLabel": {
-    "message": "Enable my custom filters",
+    "message": "فعال‌سازی پالایه‌های سفارشی من",
     "description": "Label for the checkbox use to enable/disable 'My filters' list"
   },
   "1pTrustMyFiltersLabel": {
-    "message": "Allow custom filters requiring trust",
+    "message": "اجازه‌دهی به پالایه‌های سفارشی نیازمند اعتمادسازی ",
     "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
@@ -968,7 +968,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "message": "فهرست‌های پالایش روزانه به‌روز می‌شوند. مطمئن شوید که مشکل شما پیشتر در فهرست‌های پالایش اخیر بررسی نشده باشد.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
@@ -1140,7 +1140,7 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedTitle": {
-    "message": "Page blocked",
+    "message": "صفحه مسدود شده است",
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {
@@ -1168,7 +1168,7 @@
     "description": "English: Close this window"
   },
   "docblockedDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "دیگر در مورد این تارنما هشداری به من داده نشود",
     "description": "Label for checkbox in document-blocked page"
   },
   "docblockedProceed": {
@@ -1184,7 +1184,7 @@
     "description": "English: Permanently"
   },
   "docblockedDisable": {
-    "message": "Proceed",
+    "message": "ادامه",
     "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {
@@ -1240,7 +1240,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "contextMenuViewSource": {
-    "message": "View source code…",
+    "message": "مشاهده کد منبع…",
     "description": "A context menu entry, to view the source code of the target resource"
   },
   "shortcutCapturePlaceholder": {
@@ -1264,7 +1264,7 @@
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "toggleJavascript": {
-    "message": "Toggle JavaScript",
+    "message": "تغییر وضعیت جاوا اسکریپت",
     "description": "Label for keyboard shortcut used to toggle no-scripting switch"
   },
   "relaxBlockingMode": {
@@ -1292,7 +1292,7 @@
     "description": "Message used in frame placeholders"
   },
   "linterMainReport": {
-    "message": "Errors: {{count}}",
+    "message": "خطا: {{count}}",
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {

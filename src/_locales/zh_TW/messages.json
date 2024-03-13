@@ -444,7 +444,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "元素隱藏過濾規則 用於隱藏網頁中礙眼，且不能被基於網路請求的過濾引擎所阻擋的元素。",
+    "message": "「元素隱藏過濾規則」用於隱藏網頁中礙眼，且不能被以網路請求為基礎之過濾引擎所阻擋的元素。",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -484,7 +484,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
-    "message": "社交小工具",
+    "message": "社交媒體小工具",
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
@@ -524,7 +524,7 @@
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "上次更新：{{ago}}。\n點擊此處以要求更新。",
+    "message": "上次更新：{{ago}}。\n點擊此處以強制更新。",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
@@ -536,11 +536,11 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pTrustWarning": {
-    "message": "請勿添加未信任來源的過濾規則。",
+    "message": "切勿添加來歷不明的過濾規則。",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pEnableMyFiltersLabel": {
-    "message": "啟用我的自訂過濾規則",
+    "message": "啟用自訂過濾器",
     "description": "Label for the checkbox use to enable/disable 'My filters' list"
   },
   "1pTrustMyFiltersLabel": {
@@ -900,11 +900,11 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "發出新報告",
+    "message": "建立新報告",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "尋找類似的報告",
+    "message": "尋找類似報告",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -920,11 +920,11 @@
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
-    "message": "問題及其他類型的求助，可以在 <code>/r/uBlockOrigin</code> subreddit 獲得協助與解答。",
+    "message": "如有問題或需要其他類型的幫助，可以在 <code>/r/uBlockOrigin</code> subreddit 獲得協助與解答。",
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "過濾器問題 / 網站被搞壞",
+    "message": "過濾器問題 / 網站被破壞",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
@@ -932,11 +932,11 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>特別注意：</b>不要把其他同性質的阻擋工具跟 uBlock Origin 混用，否則可能會造成特定網站的過濾器問題。",
+    "message": "<b>特別注意：</b>不要把其他同性質的阻擋工具跟 uBlock Origin 混用，否則可能會在特定網站造成過濾器問題。",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>小提示：</b>請確定您的過濾器清單已經更新至最新版本。我們主要用 <span data-url=\"logger-ui.html#_\">記錄器</span> 來分析過濾器相關問題。",
+    "message": "<b>小提示：</b>請確定您的過濾器清單已經更新至最新版本。我們主要用<span data-url=\"logger-ui.html#_\">「記錄器」</span>來分析過濾器相關問題。",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
@@ -956,7 +956,7 @@
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>特別注意：</b>預設情況下，潛在隱私或敏感資料會被替換掉。替換過的資訊可能會加大問題解決的難度。",
+    "message": "<b>特別注意：</b>預設情況下，潛在私人或敏感的資料會被略去。略去的資訊可能會讓問題更難獲解決。",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
@@ -964,11 +964,11 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "請先確認是否已經有人回報過此問題，以免重複回報造成維護者的而外負擔。",
+    "message": "請先確認是否已經有人回報過此問題，以免重複回報造成維護者的額外負擔。",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "過濾器清單每天更新。請確認您的問題無法用最新的過濾器清單解決。",
+    "message": "過濾器清單每天更新。請確保您的問題尚未在最新版本的過濾器清單中解決。",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
@@ -988,11 +988,11 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "顯示廣告或廣告移除後留下的天窗",
+    "message": "會顯示廣告或殘留空位",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "會覆蓋內容或有其他煩人的內容",
+    "message": "會覆蓋內容或含有其他滋擾",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
@@ -1004,11 +1004,11 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "開啟 uBlock Origin 的時候網頁運作不正常",
+    "message": "開啟 uBlock Origin 的時候運作不正常",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "開啟不想出現的分頁或視窗",
+    "message": "會開啟不想要的分頁或視窗",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
@@ -1140,7 +1140,7 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedTitle": {
-    "message": "頁面已阻擋",
+    "message": "已阻擋頁面",
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {
