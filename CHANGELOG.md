@@ -1,5 +1,6 @@
 ## Fixes / changes
 
+- [Fix failure to create popup logger window sometimes](https://github.com/gorhill/uBlock/commit/c8762945d9)
 - [Improve json-prune-related scriptlets](https://github.com/gorhill/uBlock/commit/e7a0f8c781)
 - [Support maximizing editor to viewport size](https://github.com/gorhill/uBlock/commit/664dd95700)
 - [Add advanced setting to force popup panel orientation](https://github.com/gorhill/uBlock/commit/0d77ccded7)
