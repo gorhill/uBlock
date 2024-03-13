@@ -134,8 +134,8 @@ const I_FLOAT             = iota++;
 const I_REGEXP            = iota++;
 const I_DATE              = iota++;
 const I_REFERENCE         = iota++;
-const I_SMALL_OBJECT      = iota++;
-const I_LARGE_OBJECT      = iota++;
+const I_OBJECT_SMALL      = iota++;
+const I_OBJECT_LARGE      = iota++;
 const I_ARRAY_SMALL       = iota++;
 const I_ARRAY_LARGE       = iota++;
 const I_SET_SMALL         = iota++;
@@ -169,8 +169,8 @@ const C_FLOAT             = intToChar[I_FLOAT];
 const C_REGEXP            = intToChar[I_REGEXP];
 const C_DATE              = intToChar[I_DATE];
 const C_REFERENCE         = intToChar[I_REFERENCE];
-const C_SMALL_OBJECT      = intToChar[I_SMALL_OBJECT];
-const C_LARGE_OBJECT      = intToChar[I_LARGE_OBJECT];
+const C_OBJECT_SMALL      = intToChar[I_OBJECT_SMALL];
+const C_OBJECT_LARGE      = intToChar[I_OBJECT_LARGE];
 const C_ARRAY_SMALL       = intToChar[I_ARRAY_SMALL];
 const C_ARRAY_LARGE       = intToChar[I_ARRAY_LARGE];
 const C_SET_SMALL         = intToChar[I_SET_SMALL];
@@ -193,7 +193,7 @@ const C_DATAVIEW          = intToChar[I_DATAVIEW];
 const I_STRING            = I_STRING_SMALL;
 const I_NUMBER            = I_FLOAT;
 const I_BOOL              = I_BOOL_FALSE;
-const I_OBJECT            = I_SMALL_OBJECT;
+const I_OBJECT            = I_OBJECT_SMALL;
 const I_ARRAY             = I_ARRAY_SMALL;
 const I_SET               = I_SET_SMALL;
 const I_MAP               = I_MAP_SMALL;
@@ -678,9 +678,9 @@ const _serialize = data => {
             const keys = Object.keys(data);
             const size = keys.length;
             if ( size < NUMSAFECHARS ) {
-                writeBuffer.push(C_SMALL_OBJECT + intToChar[size]);
+                writeBuffer.push(C_OBJECT_SMALL + intToChar[size]);
             } else {
-                writeBuffer.push(C_LARGE_OBJECT + strFromLargeUint(size));
+                writeBuffer.push(C_OBJECT_LARGE + strFromLargeUint(size));
             }
             for ( const key of keys ) {
                 _serialize(key);
@@ -744,10 +744,10 @@ const _deserialize = ( ) => {
             const ref = deserializeLargeUint();
             return readRefs.get(ref);
         }
-        case I_SMALL_OBJECT:
-        case I_LARGE_OBJECT: {
+        case I_OBJECT_SMALL:
+        case I_OBJECT_LARGE: {
             const entries = [];
-            const size = type === I_SMALL_OBJECT
+            const size = type === I_OBJECT_SMALL
                 ? charCodeToInt[readStr.charCodeAt(readPtr++)]
                 : deserializeLargeUint();
             for ( let i = 0; i < size; i++ ) {
