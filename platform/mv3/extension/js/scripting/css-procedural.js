@@ -341,6 +341,38 @@ class PSelectorOthersTask extends PSelectorTask {
 
 /******************************************************************************/
 
+class PSelectorShadowTask extends PSelectorTask {
+    constructor(task) {
+        super();
+        this.selector = task[1];
+    }
+    transpose(node, output) {
+        const root = this.openOrClosedShadowRoot(node);
+        if ( root === null ) { return; }
+        const nodes = root.querySelectorAll(this.selector);
+        output.push(...nodes);
+    }
+    get openOrClosedShadowRoot() {
+        if ( PSelectorShadowTask.openOrClosedShadowRoot !== undefined ) {
+            return PSelectorShadowTask.openOrClosedShadowRoot;
+        }
+        if ( typeof chrome === 'object' && chrome !== null ) {
+            if ( chrome.dom instanceof Object ) {
+                if ( typeof chrome.dom.openOrClosedShadowRoot === 'function' ) {
+                    PSelectorShadowTask.openOrClosedShadowRoot =
+                        chrome.dom.openOrClosedShadowRoot;
+                    return PSelectorShadowTask.openOrClosedShadowRoot;
+                }
+            }
+        }
+        PSelectorShadowTask.openOrClosedShadowRoot = node =>
+            node.openOrClosedShadowRoot || null;
+        return PSelectorShadowTask.openOrClosedShadowRoot;
+    }
+}
+
+/******************************************************************************/
+
 // https://github.com/AdguardTeam/ExtendedCss/issues/31#issuecomment-302391277
 //   Prepend `:scope ` if needed.
 class PSelectorSpathTask extends PSelectorTask {
@@ -471,7 +503,6 @@ class PSelectorXpathTask extends PSelectorTask {
 
 class PSelector {
     constructor(o) {
-        this.raw = o.raw;
         this.selector = o.selector;
         this.tasks = [];
         const tasks = [];
@@ -542,6 +573,7 @@ PSelector.prototype.operatorToTaskMap = new Map([
     [ 'min-text-length', PSelectorMinTextLengthTask ],
     [ 'not', PSelectorIfNotTask ],
     [ 'others', PSelectorOthersTask ],
+    [ 'shadow', PSelectorShadowTask ],
     [ 'spath', PSelectorSpathTask ],
     [ 'upward', PSelectorUpwardTask ],
     [ 'watch-attr', PSelectorWatchAttrs ],

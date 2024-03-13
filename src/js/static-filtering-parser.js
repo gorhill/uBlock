@@ -3208,6 +3208,7 @@ class ExtSelectorCompiler {
             'matches-path',
             'min-text-length',
             'others',
+            'shadow',
             'upward',
             'watch-attr',
             'xpath',
@@ -3862,6 +3863,8 @@ class ExtSelectorCompiler {
             return this.compileText(arg);
         case 'remove-class':
             return this.compileText(arg);
+        case 'shadow':
+            return this.compileSelector(arg);
         case 'style':
             return this.compileStyleProperties(arg);
         case 'upward':
@@ -3999,6 +4002,10 @@ class ExtSelectorCompiler {
     compileUpwardArgument(s) {
         const i = this.compileInteger(s, 1, 256);
         if ( i !== undefined ) { return i; }
+        return this.compilePlainSelector(s);
+    }
+
+    compilePlainSelector(s) {
         const parts = this.astFromRaw(s, 'selectorList' );
         if ( this.astIsValidSelectorList(parts) !== true ) { return; }
         if ( this.astHasType(parts, 'ProceduralSelector') ) { return; }
