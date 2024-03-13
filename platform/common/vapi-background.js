@@ -433,22 +433,26 @@ vAPI.Tabs = class {
         // For some reasons, some platforms do not honor the left,top
         // position when specified. I found that further calling
         // windows.update again with the same position _may_ help.
+        //
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/2249
+        //   Mind that the creation of the popup window might fail.
         if ( details.popup !== undefined && vAPI.windows instanceof Object ) {
-            const createDetails = {
+            const basicDetails = {
                 url: details.url,
                 type: details.popup,
             };
-            if ( details.box instanceof Object ) {
-                Object.assign(createDetails, details.box);
+            const shouldRestorePosition = details.box instanceof Object;
+            const extraDetails = shouldRestorePosition
+                ? Object.assign({}, basicDetails, details.box)
+                : basicDetails;
+            const win = await vAPI.windows.create(extraDetails);
+            if ( win === null ) {
+                if ( shouldRestorePosition === false ) { return; }
+                return vAPI.windows.create(basicDetails);
             }
-            const win = await vAPI.windows.create(createDetails);
-            if ( win === null ) { return; }
-            if ( details.box instanceof Object === false ) { return; }
-            if (
-                win.left === details.box.left &&
-                win.top === details.box.top
-            ) {
-                return;
+            if ( shouldRestorePosition === false ) { return; }
+            if ( win.left === details.box.left ) {
+                if ( win.top === details.box.top ) { return; }
             }
             vAPI.windows.update(win.id, {
                 left: details.box.left,
