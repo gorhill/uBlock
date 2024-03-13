@@ -54,23 +54,9 @@ body.working #actions button {
     transform: rotate(180deg);
     }
 
-#lists .searchbar {
-    align-items: center;
-    column-gap: var(--default-gap-xxsmall);
-    display: inline-flex;
+#lists .searchfield {
     margin-block-start: calc(var(--font-size) * 0.75);
     margin-inline-start: var(--checkbox-size);
-    position: relative;
-    }
-#lists .searchbar input {
-    padding-inline-start: var(--default-gap-large);
-    }
-#lists .searchbar .fa-icon {
-    color: var(--ink-4);
-        fill: var(--ink-4);
-    left: 4px;
-    position: absolute;
-    transform: none;
     }
 #lists.searchMode > .listEntries .listEntries,
 #lists.searchMode > .listEntries .listEntry.searchMatch {

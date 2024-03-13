@@ -160,7 +160,6 @@
     }
 
 .cm-search-widget {
-    align-items: center;
     background-color: var(--cm-gutter-surface);
     border-bottom: 1px solid var(--cm-gutter-border);
     cursor: default;
@@ -169,6 +168,7 @@
     flex-shrink: 0;
     flex-wrap: wrap;
     justify-content: space-between;
+    line-height: 1.5;
     padding: var(--default-gap-xsmall);
     row-gap: var(--default-gap-xsmall);
     user-select: none;
@@ -186,7 +186,7 @@
 .cm-search-widget .cm-maximize {
     fill: none;
     flex-grow: 0;
-    font-size: 140%;
+    font-size: 130%;
     height: 1em;
     stroke-width: 3px;
     stroke: var(--ink-0);
@@ -221,8 +221,6 @@ html:not(.mobile) .cm-search-widget .fa-icon:not(.fa-icon-ro):hover {
     transform: scale(1.2);
     }
 .cm-search-widget-input input {
-    border: 1px solid var(--cm-gutter-ink);
-    display: inline-flex;
     flex-grow: 1;
     max-width: 16em;
     }

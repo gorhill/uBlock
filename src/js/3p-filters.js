@@ -664,7 +664,7 @@ dom.on('#suspendUntilListsAreLoaded', 'change', userSettingCheckboxChanged);
 /******************************************************************************/
 
 const searchFilterLists = ( ) => {
-    const pattern = dom.prop('.searchbar input', 'value') || '';
+    const pattern = dom.prop('.searchfield input', 'value') || '';
     dom.cl.toggle('#lists', 'searchMode', pattern !== '');
     if ( pattern === '' ) { return; }
     const reflectSearchMatches = listEntry => {
@@ -707,7 +707,7 @@ const searchFilterLists = ( ) => {
 
 const perListHaystack = new WeakMap();
 
-dom.on('.searchbar input', 'input', searchFilterLists);
+dom.on('.searchfield input', 'input', searchFilterLists);
 
 /******************************************************************************/
 

@@ -271,6 +271,24 @@ select {
     padding: 2px;
     }
 
+.searchfield {
+    align-items: center;
+    column-gap: var(--default-gap-xxsmall);
+    display: inline-flex;
+    position: relative;
+    }
+.searchfield .fa-icon {
+    color: var(--ink-4);
+        fill: var(--ink-4);
+    font-size: 1em !important;
+    left: 2px;
+    position: absolute;
+    transform: none;
+    }
+.searchfield input:not(:placeholder-shown) ~ .fa-icon {
+    display: none;
+    }
+
 .hidden {
     display: none;
     height: 0;
