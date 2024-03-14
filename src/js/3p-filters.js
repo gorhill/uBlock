@@ -92,8 +92,9 @@ const renderFilterLists = ( ) => {
 
     const initializeListEntry = (listDetails, listEntry) => {
         const listkey = listEntry.dataset.key;
+        const groupkey = listDetails.group2 || listDetails.group;
         const listEntryPrevious =
-            qs$(`[data-key="${listDetails.group}"] [data-key="${listkey}"]`);
+            qs$(`[data-key="${groupkey}"] [data-key="${listkey}"]`);
         if ( listEntryPrevious !== null ) {
             if ( dom.cl.has(listEntryPrevious, 'checked') ) {
                 dom.cl.add(listEntry, 'checked');
@@ -239,7 +240,7 @@ const renderFilterLists = ( ) => {
             };
         }
         for ( const [ listkey, listDetails ] of Object.entries(response.available) ) {
-            let groupkey = listDetails.group;
+            let groupkey = listDetails.group2 || listDetails.group;
             if ( listTree.hasOwnProperty(groupkey) === false ) {
                 groupkey = 'unknown';
             }
@@ -561,7 +562,8 @@ const selectFilterLists = async ( ) => {
                     after.push(line);
                     continue;
                 }
-                const listEntry = qs$(`[data-key="${list.group}"] [data-key="${listkey}"]`);
+                const groupkey = list.group2 || list.group;
+                const listEntry = qs$(`[data-key="${groupkey}"] [data-key="${listkey}"]`);
                 if ( listEntry === null ) { break; }
                 toggleFilterList(listEntry, true);
                 break;
@@ -691,10 +693,11 @@ const searchFilterLists = ( ) => {
         if ( listDetails === undefined ) { continue; }
         let haystack = perListHaystack.get(listDetails);
         if ( haystack === undefined ) {
+            const groupkey = listDetails.group2 || listDetails.group || '';
             haystack = [
                 listDetails.title,
-                listDetails.group || '',
-                i18nGroupName(listDetails.group || ''),
+                groupkey,
+                i18nGroupName(groupkey),
                 listDetails.tags || '',
                 toI18n(listDetails.tags || ''),
             ].join(' ').trim();

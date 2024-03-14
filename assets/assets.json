@@ -244,17 +244,6 @@
 		],
 		"supportURL": "https://gitlab.com/malware-filter/phishing-filter#phishing-url-blocklist"
 	},
-	"adguard-social": {
-		"content": "filters",
-		"group": "annoyances",
-		"parent": "AdGuard – Annoyances",
-		"off": true,
-		"title": "AdGuard – Social Media",
-		"tags": "annoyances social",
-		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/4.txt",
-		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
-		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
-	},
 	"adguard-cookies": {
 		"content": "filters",
 		"group": "annoyances",
@@ -281,6 +270,82 @@
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/annoyances-cookies.txt"
 		],
 		"supportURL": "https://github.com/uBlockOrigin/uAssets"
+	},
+	"fanboy-cookiemonster": {
+		"content": "filters",
+		"group": "annoyances",
+		"parent": "EasyList – Annoyances|EasyList/uBO – Cookie Notices",
+		"off": true,
+		"title": "EasyList – Cookie Notices",
+		"tags": "annoyances cookies",
+		"contentURL": [
+			"https://ublockorigin.github.io/uAssets/thirdparties/easylist-cookies.txt",
+			"https://secure.fanboy.co.nz/fanboy-cookiemonster_ubo.txt"
+		],
+		"cdnURLs": [
+			"https://ublockorigin.github.io/uAssetsCDN/thirdparties/easylist-cookies.txt",
+			"https://ublockorigin.pages.dev/thirdparties/easylist-cookies.txt",
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/thirdparties/easylist-cookies.txt",
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/thirdparties/easylist-cookies.txt",
+			"https://secure.fanboy.co.nz/fanboy-cookiemonster_ubo.txt"
+		],
+		"supportURL": "https://github.com/easylist/easylist#fanboy-lists"
+	},
+	"ublock-cookies-easylist": {
+		"content": "filters",
+		"group": "annoyances",
+		"parent": "EasyList – Annoyances|EasyList/uBO – Cookie Notices",
+		"off": true,
+		"title": "uBlock filters – Cookie Notices",
+		"tags": "annoyances cookies",
+		"contentURL": "https://ublockorigin.github.io/uAssets/filters/annoyances-cookies.txt",
+		"cdnURLs": [
+			"https://ublockorigin.github.io/uAssetsCDN/filters/annoyances-cookies.txt",
+			"https://ublockorigin.pages.dev/filters/annoyances-cookies.txt",
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/filters/annoyances-cookies.txt",
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/annoyances-cookies.txt"
+		],
+		"supportURL": "https://github.com/uBlockOrigin/uAssets"
+	},
+	"adguard-social": {
+		"content": "filters",
+		"group": "annoyances",
+		"parent": "AdGuard – Annoyances",
+		"off": true,
+		"title": "AdGuard – Social Media",
+		"tags": "annoyances social",
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/4.txt",
+		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
+	},
+	"fanboy-social": {
+		"content": "filters",
+		"group": "annoyances",
+		"parent": "EasyList – Annoyances",
+		"off": true,
+		"title": "EasyList – Social Widgets",
+		"tags": "annoyances social",
+		"contentURL": [
+			"https://ublockorigin.github.io/uAssets/thirdparties/easylist-social.txt",
+			"https://secure.fanboy.co.nz/fanboy-social_ubo.txt"
+		],
+		"cdnURLs": [
+			"https://ublockorigin.github.io/uAssetsCDN/thirdparties/easylist-social.txt",
+			"https://ublockorigin.pages.dev/thirdparties/easylist-social.txt",
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/thirdparties/easylist-social.txt",
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/thirdparties/easylist-social.txt",
+			"https://secure.fanboy.co.nz/fanboy-social_ubo.txt"
+		],
+		"supportURL": "https://easylist.to/"
+	},
+	"fanboy-thirdparty_social": {
+		"content": "filters",
+		"group": "annoyances",
+		"off": true,
+		"title": "Fanboy – Anti-Facebook",
+		"tags": "privacy",
+		"contentURL": "https://secure.fanboy.co.nz/fanboy-antifacebook.txt",
+		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
 	},
 	"adguard-popup-overlays": {
 		"content": "filters",
@@ -326,15 +391,6 @@
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
 		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
 	},
-	"fanboy-thirdparty_social": {
-		"content": "filters",
-		"group": "annoyances",
-		"off": true,
-		"title": "Fanboy – Anti-Facebook",
-		"tags": "privacy",
-		"contentURL": "https://secure.fanboy.co.nz/fanboy-antifacebook.txt",
-		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
-	},
 	"easylist-annoyances": {
 		"content": "filters",
 		"group": "annoyances",
@@ -366,42 +422,6 @@
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/thirdparties/easylist-chat.txt"
 		],
 		"supportURL": "https://github.com/easylist/easylist#fanboy-lists"
-	},
-	"fanboy-cookiemonster": {
-		"content": "filters",
-		"group": "annoyances",
-		"parent": "EasyList – Annoyances|EasyList/uBO – Cookie Notices",
-		"off": true,
-		"title": "EasyList – Cookie Notices",
-		"tags": "annoyances cookies",
-		"contentURL": [
-			"https://ublockorigin.github.io/uAssets/thirdparties/easylist-cookies.txt",
-			"https://secure.fanboy.co.nz/fanboy-cookiemonster_ubo.txt"
-		],
-		"cdnURLs": [
-			"https://ublockorigin.github.io/uAssetsCDN/thirdparties/easylist-cookies.txt",
-			"https://ublockorigin.pages.dev/thirdparties/easylist-cookies.txt",
-			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/thirdparties/easylist-cookies.txt",
-			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/thirdparties/easylist-cookies.txt",
-			"https://secure.fanboy.co.nz/fanboy-cookiemonster_ubo.txt"
-		],
-		"supportURL": "https://github.com/easylist/easylist#fanboy-lists"
-	},
-	"ublock-cookies-easylist": {
-		"content": "filters",
-		"group": "annoyances",
-		"parent": "EasyList – Annoyances|EasyList/uBO – Cookie Notices",
-		"off": true,
-		"title": "uBlock filters – Cookie Notices",
-		"tags": "annoyances cookies",
-		"contentURL": "https://ublockorigin.github.io/uAssets/filters/annoyances-cookies.txt",
-		"cdnURLs": [
-			"https://ublockorigin.github.io/uAssetsCDN/filters/annoyances-cookies.txt",
-			"https://ublockorigin.pages.dev/filters/annoyances-cookies.txt",
-			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/filters/annoyances-cookies.txt",
-			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/annoyances-cookies.txt"
-		],
-		"supportURL": "https://github.com/uBlockOrigin/uAssets"
 	},
 	"easylist-newsletters": {
 		"content": "filters",
@@ -436,26 +456,6 @@
 			"https://ublockorigin.pages.dev/thirdparties/easylist-notifications.txt",
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/thirdparties/easylist-notifications.txt",
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/thirdparties/easylist-notifications.txt"
-		],
-		"supportURL": "https://easylist.to/"
-	},
-	"fanboy-social": {
-		"content": "filters",
-		"group": "annoyances",
-		"parent": "EasyList – Annoyances",
-		"off": true,
-		"title": "EasyList – Social Widgets",
-		"tags": "annoyances social",
-		"contentURL": [
-			"https://ublockorigin.github.io/uAssets/thirdparties/easylist-social.txt",
-			"https://secure.fanboy.co.nz/fanboy-social_ubo.txt"
-		],
-		"cdnURLs": [
-			"https://ublockorigin.github.io/uAssetsCDN/thirdparties/easylist-social.txt",
-			"https://ublockorigin.pages.dev/thirdparties/easylist-social.txt",
-			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/thirdparties/easylist-social.txt",
-			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/thirdparties/easylist-social.txt",
-			"https://secure.fanboy.co.nz/fanboy-social_ubo.txt"
 		],
 		"supportURL": "https://easylist.to/"
 	},

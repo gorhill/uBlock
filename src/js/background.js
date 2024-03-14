@@ -213,7 +213,7 @@ const µBlock = {  // jshint ignore:line
 
     assetsJsonPath: vAPI.webextFlavor.soup.has('devbuild')
         ? '/assets/assets.dev.json'
-        : '/assets/assets.1.57.json',
+        : '/assets/assets.json',
     userFiltersPath: 'user-filters',
     pslAssetKey: 'public_suffix_list.dat',
 
