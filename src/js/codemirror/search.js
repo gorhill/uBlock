@@ -99,6 +99,7 @@ import { i18n$ } from '../i18n.js';
     };
 
     const searchWidgetClickHandler = function(cm, ev) {
+        if ( ev.button !== 0 ) { return; }
         const target = ev.target;
         const tcl = target.classList;
         if ( tcl.contains('cm-search-widget-up') ) {
