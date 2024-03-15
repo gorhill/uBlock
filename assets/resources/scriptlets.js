@@ -3725,7 +3725,7 @@ function setCookie(
     if ( validValues.includes(unquoted) === false ) {
         if ( /^\d+$/.test(unquoted) === false ) { return; }
         const n = parseInt(value, 10);
-        if ( n > 15 ) { return; }
+        if ( n > 32767 ) { return; }
     }
 
     const done = setCookieFn(
