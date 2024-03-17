@@ -11,8 +11,11 @@ rules:
     indent:
       - warn
       - 4
-    no-control-regex: off
-    no-empty: off
+      - 
+        ignoredNodes:
+            - Program > IfStatement > *
+    noControlRegex: off
+    noEmpty: off
     sort-imports: warn
     strict: warn
 globals:
