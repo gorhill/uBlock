@@ -22,10 +22,6 @@
 
 // For non-background page
 
-/* globals browser */
-
-'use strict';
-
 /******************************************************************************/
 
 // https://github.com/chrisaljoudi/uBlock/issues/456
@@ -203,7 +199,7 @@ vAPI.messaging = {
         // the main process is no longer reachable: memory leaks and bad
         // performance become a risk -- especially for long-lived, dynamic
         // pages. Guard against this.
-        if ( this.pending.size > 50 ) {
+        if ( this.pending.size > 1000 ) {
             vAPI.shutdown.exec();
         }
         const port = this.getPort();
