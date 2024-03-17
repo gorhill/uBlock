@@ -42,10 +42,10 @@ a {
     word-break: break-all;
     }
 #warningSign {
-    width: 100%;
-    }
-#warningSign > a {
+    color: var(--accent-surface-1);
+        fill: var(--accent-surface-1);
     font-size: 96px;
+    width: 100%;
     }
 #theURL {
     color: var(--ink-2);
