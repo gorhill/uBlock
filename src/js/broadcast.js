@@ -19,10 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* globals browser */
-
-'use strict';
-
 /******************************************************************************/
 
 // Broadcast a message to all uBO contexts
@@ -47,7 +43,7 @@ export async function broadcastToAll(message) {
     });
     const bcmessage = Object.assign({ broadcast: true }, message);
     for ( const tab of tabs ) {
-        browser.tabs.sendMessage(tab.id, bcmessage);
+        webext.tabs.sendMessage(tab.id, bcmessage).catch(( ) => { });
     }
 }
 

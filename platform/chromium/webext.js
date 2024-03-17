@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
 // `webext` is a promisified api of `chrome`. Entries are added as
 // the promisification of uBO progress.
 
@@ -104,6 +102,7 @@ const webext = {
         query: promisifyNoFail(chrome.tabs, 'query', tabs => Array.isArray(tabs) ? tabs : []),
         reload: promisifyNoFail(chrome.tabs, 'reload'),
         remove: promisifyNoFail(chrome.tabs, 'remove'),
+        sendMessage: promisifyNoFail(chrome.tabs, 'sendMessage'),
         update: promisifyNoFail(chrome.tabs, 'update', tab => tab instanceof Object ? tab : null),
     },
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/webNavigation
