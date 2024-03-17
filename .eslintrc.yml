@@ -1,0 +1,22 @@
+env:
+  browser: true
+  es2022: true
+extends: eslint:recommended
+parserOptions:
+  sourceType: module
+rules:
+    eqeqeq:
+      - warn
+      - always
+    indent:
+      - warn
+      - 4
+    no-control-regex: off
+    no-empty: off
+    sort-imports: warn
+    strict: warn
+globals:
+    browser: readonly
+    chrome: readonly
+    webext: readonly
+    vAPI: readonly
