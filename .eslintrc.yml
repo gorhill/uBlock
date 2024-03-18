@@ -9,13 +9,14 @@ rules:
       - warn
       - always
     indent:
-      - warn
+      - error
       - 4
       - 
         ignoredNodes:
-            - Program > IfStatement > *
-    noControlRegex: off
-    noEmpty: off
+            - Program > IfStatement > BlockStatement
+            - Program > ExpressionStatement > CallExpression > ArrowFunctionExpression > BlockStatement
+    no-control-regex: off
+    no-empty: off
     sort-imports: warn
     strict: warn
 globals:
