@@ -19,11 +19,9 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
-import { onBroadcast } from './broadcast.js';
 import { dom, qs$, qsa$ } from './dom.js';
 import { i18n, i18n$ } from './i18n.js';
+import { onBroadcast } from './broadcast.js';
 
 /******************************************************************************/
 
@@ -31,6 +29,10 @@ const lastUpdateTemplateString = i18n$('3pLastUpdate');
 const obsoleteTemplateString = i18n$('3pExternalListObsolete');
 const reValidExternalList = /^[a-z-]+:\/\/(?:\S+\/\S*|\/\S+)/m;
 const recentlyUpdated = 1 * 60 * 60 * 1000; // 1 hour
+
+// https://eslint.org/docs/latest/rules/no-prototype-builtins
+const hasOwnProperty = (o, p) =>
+    Object.prototype.hasOwnProperty.call(o, p);
 
 let listsetDetails = {};
 
@@ -182,6 +184,9 @@ const renderFilterLists = ( ) => {
         if ( depth !== 0 ) {
             const reEmojis = /\p{Emoji}+/gu;
             treeEntries.sort((a ,b) => {
+                const ap = a[1].preferred === true;
+                const bp = b[1].preferred === true;
+                if ( ap !== bp ) { return ap ? -1 : 1; }
                 const as = (a[1].title || a[0]).replace(reEmojis, '');
                 const bs = (b[1].title || b[0]).replace(reEmojis, '');
                 return as.localeCompare(bs);
@@ -241,7 +246,7 @@ const renderFilterLists = ( ) => {
         }
         for ( const [ listkey, listDetails ] of Object.entries(response.available) ) {
             let groupkey = listDetails.group2 || listDetails.group;
-            if ( listTree.hasOwnProperty(groupkey) === false ) {
+            if ( hasOwnProperty(listTree, groupkey) === false ) {
                 groupkey = 'unknown';
             }
             const groupDetails = listTree[groupkey];
@@ -250,6 +255,9 @@ const renderFilterLists = ( ) => {
                 for ( const parent of listDetails.parent.split('|') ) {
                     if ( lists[parent] === undefined ) {
                         lists[parent] = { title: parent, lists: {} };
+                    }
+                    if ( listDetails.preferred === true ) {
+                        lists[parent].preferred = true;
                     }
                     lists = lists[parent].lists;
                 }
@@ -596,7 +604,7 @@ const selectFilterLists = async ( ) => {
     const toRemove = [];
     for ( const liEntry of qsa$('#lists .listEntry[data-role="leaf"]') ) {
         const listkey = liEntry.dataset.key;
-        if ( listsetDetails.available.hasOwnProperty(listkey) === false ) {
+        if ( hasOwnProperty(listsetDetails.available, listkey) === false ) {
             continue;
         }
         const listDetails = listsetDetails.available[listkey];

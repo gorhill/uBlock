@@ -155,6 +155,7 @@
 		"group": "ads",
 		"title": "EasyList",
 		"tags": "ads",
+        "preferred": true,
 		"contentURL": [
 			"https://ublockorigin.github.io/uAssets/thirdparties/easylist.txt",
 			"assets/thirdparties/easylist/easylist.txt"
@@ -205,6 +206,7 @@
 		"group": "privacy",
 		"title": "EasyPrivacy",
 		"tags": "privacy",
+        "preferred": true,
 		"contentURL": [
 			"https://ublockorigin.github.io/uAssets/thirdparties/easyprivacy.txt",
 			"assets/thirdparties/easylist/easyprivacy.txt"
@@ -281,6 +283,7 @@
 		"off": true,
 		"title": "EasyList – Cookie Notices",
 		"tags": "annoyances cookies",
+        "preferred": true,
 		"contentURL": [
 			"https://ublockorigin.github.io/uAssets/thirdparties/easylist-cookies.txt",
 			"https://secure.fanboy.co.nz/fanboy-cookiemonster_ubo.txt"
@@ -302,6 +305,7 @@
 		"off": true,
 		"title": "uBlock filters – Cookie Notices",
 		"tags": "annoyances cookies",
+        "preferred": true,
 		"contentURL": "https://ublockorigin.github.io/uAssets/filters/annoyances-cookies.txt",
 		"cdnURLs": [
 			"https://ublockorigin.github.io/uAssetsCDN/filters/annoyances-cookies.txt",
@@ -331,6 +335,7 @@
 		"off": true,
 		"title": "EasyList – Social Widgets",
 		"tags": "annoyances social",
+        "preferred": true,
 		"contentURL": [
 			"https://ublockorigin.github.io/uAssets/thirdparties/easylist-social.txt",
 			"https://secure.fanboy.co.nz/fanboy-social_ubo.txt"
@@ -405,6 +410,7 @@
 		"off": true,
 		"title": "EasyList – Other Annoyances",
 		"tags": "annoyances",
+        "preferred": true,
 		"contentURL": "https://ublockorigin.github.io/uAssets/thirdparties/easylist-annoyances.txt",
 		"cdnURLs": [
 			"https://ublockorigin.github.io/uAssetsCDN/thirdparties/easylist-annoyances.txt",
@@ -421,6 +427,7 @@
 		"off": true,
 		"title": "EasyList – Chat Widgets",
 		"tags": "annoyances",
+        "preferred": true,
 		"contentURL": "https://ublockorigin.github.io/uAssets/thirdparties/easylist-chat.txt",
 		"cdnURLs": [
 			"https://ublockorigin.github.io/uAssetsCDN/thirdparties/easylist-chat.txt",
@@ -437,6 +444,7 @@
 		"off": true,
 		"title": "EasyList – Newsletter Notices",
 		"tags": "annoyances",
+        "preferred": true,
 		"contentURL": [
 			"https://ublockorigin.github.io/uAssets/thirdparties/easylist-newsletters.txt"
 		],
@@ -455,6 +463,7 @@
 		"off": true,
 		"title": "EasyList – Notifications",
 		"tags": "annoyances",
+        "preferred": true,
 		"contentURL": [
 			"https://ublockorigin.github.io/uAssets/thirdparties/easylist-notifications.txt"
 		],
@@ -497,6 +506,7 @@
 		"updateAfter": 13,
 		"title": "Peter Lowe’s Ad and tracking server list",
 		"tags": "ads privacy security",
+        "preferred": true,
 		"contentURL": [
 			"https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext",
 			"assets/thirdparties/pgl.yoyo.org/as/serverlist.txt",
