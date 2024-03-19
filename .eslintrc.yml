@@ -11,10 +11,10 @@ rules:
     indent:
       - error
       - 4
-      - 
-        ignoredNodes:
-            - Program > IfStatement > BlockStatement
-            - Program > ExpressionStatement > CallExpression > ArrowFunctionExpression > BlockStatement
+      - ignoredNodes:
+        - Program > IfStatement > BlockStatement
+        - Program > ExpressionStatement > CallExpression > ArrowFunctionExpression > BlockStatement
+        - ArrayExpression > Literal
     no-control-regex: off
     no-empty: off
     sort-imports: warn
