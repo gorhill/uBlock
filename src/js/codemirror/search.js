@@ -25,8 +25,6 @@
 // Ctrl-G.
 // =====
 
-'use strict';
-
 import { dom, qs$ } from '../dom.js';
 import { i18n$ } from '../i18n.js';
 
@@ -45,7 +43,7 @@ import { i18n$ } from '../i18n.js';
     const searchOverlay = function(query, caseInsensitive) {
         if ( typeof query === 'string' )
             query = new RegExp(
-                query.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'),
+                query.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&'),
                 caseInsensitive ? 'gi' : 'g'
             );
         else if ( !query.global )
@@ -98,7 +96,7 @@ import { i18n$ } from '../i18n.js';
         state.queryTimer.offon(350);
     };
 
-    const searchWidgetClickHandler = function(cm, ev) {
+    const searchWidgetClickHandler = (ev, cm) => {
         if ( ev.button !== 0 ) { return; }
         const target = ev.target;
         const tcl = target.classList;
@@ -117,9 +115,7 @@ import { i18n$ } from '../i18n.js';
             }
         }
         if ( target.localName !== 'input' ) {
-            ev.preventDefault();
-        } else {
-            ev.stopImmediatePropagation();
+            cm.focus();
         }
     };
 
@@ -143,7 +139,9 @@ import { i18n$ } from '../i18n.js';
         this.widget = widgetParent.children[0];
         this.widget.addEventListener('keydown', searchWidgetKeydownHandler.bind(null, cm));
         this.widget.addEventListener('input', searchWidgetInputHandler.bind(null, cm));
-        this.widget.addEventListener('mousedown', searchWidgetClickHandler.bind(null, cm));
+        this.widget.addEventListener('click', ev => {
+            searchWidgetClickHandler(ev, cm);
+        });
         if ( typeof cm.addPanel === 'function' ) {
             this.panel = cm.addPanel(this.widget);
         }
@@ -252,10 +250,7 @@ import { i18n$ } from '../i18n.js';
                     notation: 'compact',
                     maximumSignificantDigits: 3
                 });
-                if (
-                    intl.resolvedOptions instanceof Function &&
-                    intl.resolvedOptions().hasOwnProperty('notation')
-                ) {
+                if ( intl.resolvedOptions().notation ) {
                     intlNumberFormat = intl;
                 }
             }
@@ -346,9 +341,6 @@ import { i18n$ } from '../i18n.js';
             state.annotate.update(annotations);
         });
         state.widget.setAttribute('data-query', state.queryText);
-        // Ensure the caret is visible
-        const input = state.widget.querySelector('.cm-search-widget-input input');
-        input.selectionStart = input.selectionStart;
     };
 
     const findNext = function(cm, dir, callback) {

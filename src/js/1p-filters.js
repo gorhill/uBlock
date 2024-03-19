@@ -21,12 +21,10 @@
 
 /* global CodeMirror, uBlockDashboard */
 
-'use strict';
-
-import { onBroadcast } from './broadcast.js';
+import './codemirror/ubo-static-filtering.js';
 import { dom, qs$ } from './dom.js';
 import { i18n$ } from './i18n.js';
-import './codemirror/ubo-static-filtering.js';
+import { onBroadcast } from './broadcast.js';
 
 /******************************************************************************/
 
@@ -123,10 +121,6 @@ function setEditorText(text) {
 
 /******************************************************************************/
 
-// https://github.com/codemirror/codemirror5/issues/3318
-//   "How could I force to redraw the highlight of all the lines?"
-//   "Resetting the mode option with setOption will trigger a full re-parse."
-
 function userFiltersChanged(details = {}) {
     const changed = typeof details.changed === 'boolean'
         ? details.changed
@@ -138,8 +132,19 @@ function userFiltersChanged(details = {}) {
     const trustedbefore = cmEditor.getOption('trustedSource');
     const trustedAfter = enabled && qs$('#trustMyFilters input').checked;
     if ( trustedAfter === trustedbefore ) { return; }
-    cmEditor.setOption('mode', 'ubo-static-filtering');
+    cmEditor.startOperation();
     cmEditor.setOption('trustedSource', trustedAfter);
+    const doc = cmEditor.getDoc();
+    const history = doc.getHistory();
+    const selections = doc.listSelections();
+    doc.replaceRange(doc.getValue(),
+        { line: 0, ch: 0 },
+        { line: doc.lineCount(), ch: 0 }
+    );
+    doc.setSelections(selections);
+    doc.setHistory(history);
+    cmEditor.endOperation();
+    cmEditor.focus();
 }
 
 /******************************************************************************/

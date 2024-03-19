@@ -21,8 +21,6 @@
 
 /* global CodeMirror */
 
-'use strict';
-
 /******************************************************************************/
 
 import * as sfp from '../static-filtering-parser.js';
@@ -74,142 +72,142 @@ const uBOStaticFilteringMode = (( ) => {
         if ( nodeHasError(mode) ) { return 'error'; }
         const nodeType = mode.astParser.getNodeType(mode.currentWalkerNode);
         switch ( nodeType ) {
-            case sfp.NODE_TYPE_WHITESPACE:
-                return '';
-            case sfp.NODE_TYPE_COMMENT:
-                if ( mode.astWalker.canGoDown() ) { break; }
-                return 'comment';
-            case sfp.NODE_TYPE_COMMENT_URL:
-                return 'comment link';
-            case sfp.NODE_TYPE_IGNORE:
-                return 'comment';
-            case sfp.NODE_TYPE_PREPARSE_DIRECTIVE:
-            case sfp.NODE_TYPE_PREPARSE_DIRECTIVE_VALUE:
-                return 'directive';
-            case sfp.NODE_TYPE_PREPARSE_DIRECTIVE_IF_VALUE: {
-                const raw = mode.astParser.getNodeString(mode.currentWalkerNode);
-                const state = sfp.utils.preparser.evaluateExpr(raw, preparseDirectiveEnv);
-                return state ? 'positive strong' : 'negative strong';
+        case sfp.NODE_TYPE_WHITESPACE:
+            return '';
+        case sfp.NODE_TYPE_COMMENT:
+            if ( mode.astWalker.canGoDown() ) { break; }
+            return 'comment';
+        case sfp.NODE_TYPE_COMMENT_URL:
+            return 'comment link';
+        case sfp.NODE_TYPE_IGNORE:
+            return 'comment';
+        case sfp.NODE_TYPE_PREPARSE_DIRECTIVE:
+        case sfp.NODE_TYPE_PREPARSE_DIRECTIVE_VALUE:
+            return 'directive';
+        case sfp.NODE_TYPE_PREPARSE_DIRECTIVE_IF_VALUE: {
+            const raw = mode.astParser.getNodeString(mode.currentWalkerNode);
+            const state = sfp.utils.preparser.evaluateExpr(raw, preparseDirectiveEnv);
+            return state ? 'positive strong' : 'negative strong';
+        }
+        case sfp.NODE_TYPE_EXT_OPTIONS_ANCHOR:
+            return mode.astParser.getFlags(sfp.AST_FLAG_IS_EXCEPTION)
+                ? 'tag strong'
+                : 'def strong';
+        case sfp.NODE_TYPE_EXT_DECORATION:
+            return 'def';
+        case sfp.NODE_TYPE_EXT_PATTERN_RAW:
+            if ( mode.astWalker.canGoDown() ) { break; }
+            return 'variable';
+        case sfp.NODE_TYPE_EXT_PATTERN_COSMETIC:
+        case sfp.NODE_TYPE_EXT_PATTERN_HTML:
+            return 'variable';
+        case sfp.NODE_TYPE_EXT_PATTERN_RESPONSEHEADER:
+        case sfp.NODE_TYPE_EXT_PATTERN_SCRIPTLET:
+            if ( mode.astWalker.canGoDown() ) { break; }
+            return 'variable';
+        case sfp.NODE_TYPE_EXT_PATTERN_SCRIPTLET_TOKEN: {
+            const token = mode.astParser.getNodeString(mode.currentWalkerNode);
+            if ( scriptletNames.has(token) === false ) {
+                return 'warning';
             }
-            case sfp.NODE_TYPE_EXT_OPTIONS_ANCHOR:
-                return mode.astParser.getFlags(sfp.AST_FLAG_IS_EXCEPTION)
-                    ? 'tag strong'
-                    : 'def strong';
-            case sfp.NODE_TYPE_EXT_DECORATION:
-                return 'def';
-            case sfp.NODE_TYPE_EXT_PATTERN_RAW:
-                if ( mode.astWalker.canGoDown() ) { break; }
-                return 'variable';
-            case sfp.NODE_TYPE_EXT_PATTERN_COSMETIC:
-            case sfp.NODE_TYPE_EXT_PATTERN_HTML:
-                return 'variable';
-            case sfp.NODE_TYPE_EXT_PATTERN_RESPONSEHEADER:
-            case sfp.NODE_TYPE_EXT_PATTERN_SCRIPTLET:
-                if ( mode.astWalker.canGoDown() ) { break; }
-                return 'variable';
-            case sfp.NODE_TYPE_EXT_PATTERN_SCRIPTLET_TOKEN: {
-                const token = mode.astParser.getNodeString(mode.currentWalkerNode);
-                if ( scriptletNames.has(token) === false ) {
-                    return 'warning';
+            return 'variable';
+        }
+        case sfp.NODE_TYPE_EXT_PATTERN_SCRIPTLET_ARG:
+            return 'variable';
+        case sfp.NODE_TYPE_NET_EXCEPTION:
+            return 'tag strong';
+        case sfp.NODE_TYPE_NET_PATTERN:
+            if ( mode.astWalker.canGoDown() ) { break; }
+            if ( mode.astParser.isRegexPattern() ) {
+                if ( mode.astParser.getNodeFlags(mode.currentWalkerNode, sfp.NODE_FLAG_PATTERN_UNTOKENIZABLE) !== 0 ) {
+                    return 'variable warning';
                 }
-                return 'variable';
+                return 'variable notice';
             }
-            case sfp.NODE_TYPE_EXT_PATTERN_SCRIPTLET_ARG:
-                return 'variable';
-            case sfp.NODE_TYPE_NET_EXCEPTION:
-                return 'tag strong';
-            case sfp.NODE_TYPE_NET_PATTERN:
-                if ( mode.astWalker.canGoDown() ) { break; }
-                if ( mode.astParser.isRegexPattern() ) {
-                    if ( mode.astParser.getNodeFlags(mode.currentWalkerNode, sfp.NODE_FLAG_PATTERN_UNTOKENIZABLE) !== 0 ) {
-                        return 'variable warning';
-                    }
-                    return 'variable notice';
-                }
-                return 'variable';
-            case sfp.NODE_TYPE_NET_PATTERN_PART:
-                return 'variable';
-            case sfp.NODE_TYPE_NET_PATTERN_PART_SPECIAL:
-                return 'keyword strong';
-            case sfp.NODE_TYPE_NET_PATTERN_PART_UNICODE:
-                return 'variable unicode';
-            case sfp.NODE_TYPE_NET_PATTERN_LEFT_HNANCHOR:
-            case sfp.NODE_TYPE_NET_PATTERN_LEFT_ANCHOR:
-            case sfp.NODE_TYPE_NET_PATTERN_RIGHT_ANCHOR:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_NOT:
-                return 'keyword strong';
-            case sfp.NODE_TYPE_NET_OPTIONS_ANCHOR:
-            case sfp.NODE_TYPE_NET_OPTION_SEPARATOR:
-                mode.lastNetOptionType = 0;
-                return 'def strong';
-            case sfp.NODE_TYPE_NET_OPTION_NAME_UNKNOWN:
-                mode.lastNetOptionType = 0;
-                return 'error';
-            case sfp.NODE_TYPE_NET_OPTION_NAME_1P:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_STRICT1P:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_3P:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_STRICT3P:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_ALL:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_BADFILTER:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_CNAME:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_CSP:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_CSS:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_DENYALLOW:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_DOC:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_EHIDE:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_EMPTY:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_FONT:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_FRAME:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_FROM:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_GENERICBLOCK:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_GHIDE:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_HEADER:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_IMAGE:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_IMPORTANT:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_INLINEFONT:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_INLINESCRIPT:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_MATCHCASE:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_MEDIA:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_METHOD:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_MP4:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_NOOP:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_OBJECT:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_OTHER:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_PING:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_POPUNDER:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_POPUP:
+            return 'variable';
+        case sfp.NODE_TYPE_NET_PATTERN_PART:
+            return 'variable';
+        case sfp.NODE_TYPE_NET_PATTERN_PART_SPECIAL:
+            return 'keyword strong';
+        case sfp.NODE_TYPE_NET_PATTERN_PART_UNICODE:
+            return 'variable unicode';
+        case sfp.NODE_TYPE_NET_PATTERN_LEFT_HNANCHOR:
+        case sfp.NODE_TYPE_NET_PATTERN_LEFT_ANCHOR:
+        case sfp.NODE_TYPE_NET_PATTERN_RIGHT_ANCHOR:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_NOT:
+            return 'keyword strong';
+        case sfp.NODE_TYPE_NET_OPTIONS_ANCHOR:
+        case sfp.NODE_TYPE_NET_OPTION_SEPARATOR:
+            mode.lastNetOptionType = 0;
+            return 'def strong';
+        case sfp.NODE_TYPE_NET_OPTION_NAME_UNKNOWN:
+            mode.lastNetOptionType = 0;
+            return 'error';
+        case sfp.NODE_TYPE_NET_OPTION_NAME_1P:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_STRICT1P:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_3P:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_STRICT3P:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_ALL:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_BADFILTER:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_CNAME:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_CSP:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_CSS:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_DENYALLOW:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_DOC:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_EHIDE:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_EMPTY:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_FONT:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_FRAME:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_FROM:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_GENERICBLOCK:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_GHIDE:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_HEADER:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_IMAGE:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_IMPORTANT:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_INLINEFONT:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_INLINESCRIPT:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_MATCHCASE:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_MEDIA:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_METHOD:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_MP4:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_NOOP:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_OBJECT:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_OTHER:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_PING:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_POPUNDER:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_POPUP:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECT:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_REMOVEPARAM:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_SCRIPT:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_SHIDE:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_TO:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_URLTRANSFORM:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_XHR:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_WEBRTC:
+        case sfp.NODE_TYPE_NET_OPTION_NAME_WEBSOCKET:
+            mode.lastNetOptionType = nodeType;
+            return 'def';
+        case sfp.NODE_TYPE_NET_OPTION_ASSIGN:
+            return 'def';
+        case sfp.NODE_TYPE_NET_OPTION_VALUE:
+            if ( mode.astWalker.canGoDown() ) { break; }
+            switch ( mode.lastNetOptionType ) {
             case sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECT:
             case sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_REMOVEPARAM:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_SCRIPT:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_SHIDE:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_TO:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_URLTRANSFORM:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_XHR:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_WEBRTC:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_WEBSOCKET:
-                mode.lastNetOptionType = nodeType;
-                return 'def';
-            case sfp.NODE_TYPE_NET_OPTION_ASSIGN:
-                return 'def';
-            case sfp.NODE_TYPE_NET_OPTION_VALUE:
-                if ( mode.astWalker.canGoDown() ) { break; }
-                switch ( mode.lastNetOptionType ) {
-                    case sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECT:
-                    case sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE:
-                        return redirectTokenStyle(mode);
-                    default:
-                        break;
-                }
-                return 'value';
-            case sfp.NODE_TYPE_OPTION_VALUE_NOT:
-                return 'keyword strong';
-            case sfp.NODE_TYPE_OPTION_VALUE_DOMAIN:
-                return 'value';
-            case sfp.NODE_TYPE_OPTION_VALUE_SEPARATOR:
-                return 'def';
+                return redirectTokenStyle(mode);
             default:
                 break;
+            }
+            return 'value';
+        case sfp.NODE_TYPE_OPTION_VALUE_NOT:
+            return 'keyword strong';
+        case sfp.NODE_TYPE_OPTION_VALUE_DOMAIN:
+            return 'value';
+        case sfp.NODE_TYPE_OPTION_VALUE_SEPARATOR:
+            return 'def';
+        default:
+            break;
         }
         return '+';
     };
@@ -342,7 +340,7 @@ function initHints() {
     });
     const proceduralOperatorNames = new Map(
         Array.from(sfp.proceduralOperatorTokens)
-             .filter(item => (item[1] & 0b01) !== 0)
+            .filter(item => (item[1] & 0b01) !== 0)
     );
     const excludedHints = new Set([
         'genericblock',
@@ -577,7 +575,7 @@ function initHints() {
 
     const getExtScriptletHints = function(cursor, line) {
         const beg = cursor.ch;
-        const matchLeft = /#\+\js\(([^,]*)$/.exec(line.slice(0, beg));
+        const matchLeft = /#\+js\(([^,]*)$/.exec(line.slice(0, beg));
         const matchRight = /^([^,)]*)/.exec(line.slice(beg));
         if ( matchLeft === null || matchRight === null ) { return; }
         const hints = [];
@@ -724,38 +722,38 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
         if ( astParser.hasError() ) {
             let msg = 'Invalid filter';
             switch ( astParser.astError ) {
-                case sfp.AST_ERROR_UNSUPPORTED:
-                    msg = `${msg}: Unsupported filter syntax`;
-                    break;
-                case sfp.AST_ERROR_REGEX:
-                    msg = `${msg}: Bad regular expression`;
-                    break;
-                case sfp.AST_ERROR_PATTERN:
-                    msg = `${msg}: Bad pattern`;
-                    break;
-                case sfp.AST_ERROR_DOMAIN_NAME:
-                    msg = `${msg}: Bad domain name`;
-                    break;
-                case sfp.AST_ERROR_OPTION_BADVALUE:
-                    msg = `${msg}: Bad value assigned to a valid option`;
-                    break;
-                case sfp.AST_ERROR_OPTION_DUPLICATE:
-                    msg = `${msg}: Duplicate filter option`;
-                    break;
-                case sfp.AST_ERROR_OPTION_UNKNOWN:
-                    msg = `${msg}: Unsupported filter option`;
-                    break;
-                case sfp.AST_ERROR_IF_TOKEN_UNKNOWN:
-                    msg = `${msg}: Unknown preparsing token`;
-                    break;
-                case sfp.AST_ERROR_UNTRUSTED_SOURCE:
-                    msg = `${msg}: Filter requires trusted source`;
-                    break;
-                default:
-                    if ( astParser.isCosmeticFilter() && astParser.result.error ) {
-                        msg = `${msg}: ${astParser.result.error}`;
-                    }
-                    break;
+            case sfp.AST_ERROR_UNSUPPORTED:
+                msg = `${msg}: Unsupported filter syntax`;
+                break;
+            case sfp.AST_ERROR_REGEX:
+                msg = `${msg}: Bad regular expression`;
+                break;
+            case sfp.AST_ERROR_PATTERN:
+                msg = `${msg}: Bad pattern`;
+                break;
+            case sfp.AST_ERROR_DOMAIN_NAME:
+                msg = `${msg}: Bad domain name`;
+                break;
+            case sfp.AST_ERROR_OPTION_BADVALUE:
+                msg = `${msg}: Bad value assigned to a valid option`;
+                break;
+            case sfp.AST_ERROR_OPTION_DUPLICATE:
+                msg = `${msg}: Duplicate filter option`;
+                break;
+            case sfp.AST_ERROR_OPTION_UNKNOWN:
+                msg = `${msg}: Unsupported filter option`;
+                break;
+            case sfp.AST_ERROR_IF_TOKEN_UNKNOWN:
+                msg = `${msg}: Unknown preparsing token`;
+                break;
+            case sfp.AST_ERROR_UNTRUSTED_SOURCE:
+                msg = `${msg}: Filter requires trusted source`;
+                break;
+            default:
+                if ( astParser.isCosmeticFilter() && astParser.result.error ) {
+                    msg = `${msg}: ${astParser.result.error}`;
+                }
+                break;
             }
             return { lint: 'error', msg };
         }
@@ -1103,16 +1101,8 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
     };
 
     self.addEventListener('trustedSource', ev => {
-        const { cm, trusted } = ev.detail;
+        const { trusted } = ev.detail;
         astParser.options.trustedSource = trusted;
-        const doc = cm.getDoc();
-        const lineCount = doc.lineCount();
-        onBeforeChanges(cm, {
-            from: { line: 0, ch: 0 },
-            to: { line: lineCount, ch: 0 },
-        });
-        changeset.push({ from: 0, to: lineCount });
-        processChangesetAsync(doc);
     });
 
     self.addEventListener('trustedScriptletTokens', ev => {
