@@ -22,10 +22,10 @@
     web page context.
 */
 
+/* eslint no-prototype-builtins: 0 */
+
 // Externally added to the private namespace in which scriptlets execute.
 /* global scriptletGlobals */
-
-'use strict';
 
 export const builtinScriptlets = [];
 
@@ -424,7 +424,8 @@ function abortCurrentScriptCore(
         if ( e instanceof HTMLScriptElement === false ) { return; }
         if ( e === thisScript ) { return; }
         if ( context !== '' && reContext.test(e.src) === false ) {
-            if ( debug === 'nomatch' || debug === 'all' ) { debugger; }  // jshint ignore: line
+            // eslint-disable-next-line no-debugger
+            if ( debug === 'nomatch' || debug === 'all' ) { debugger; }
             return;
         }
         if ( safe.logLevel > 1 && context !== '' ) {
@@ -432,17 +433,20 @@ function abortCurrentScriptCore(
         }
         const scriptText = getScriptText(e);
         if ( reNeedle.test(scriptText) === false ) {
-            if ( debug === 'nomatch' || debug === 'all' ) { debugger; }  // jshint ignore: line
+            // eslint-disable-next-line no-debugger
+            if ( debug === 'nomatch' || debug === 'all' ) { debugger; }
             return;
         }
         if ( safe.logLevel > 1 ) {
             safe.uboLog(logPrefix, `Matched text\n${scriptText}`);
         }
-        if ( debug === 'match' || debug === 'all' ) { debugger; }  // jshint ignore: line
+        // eslint-disable-next-line no-debugger
+        if ( debug === 'match' || debug === 'all' ) { debugger; }
         safe.uboLog(logPrefix, 'Aborted');
         throw new ReferenceError(exceptionToken);
     };
-    if ( debug === 'install' ) { debugger; }  // jshint ignore: line
+    // eslint-disable-next-line no-debugger
+    if ( debug === 'install' ) { debugger; }
     try {
         Object.defineProperty(owner, prop, {
             get: function() {
@@ -895,7 +899,6 @@ function objectFindOwnerFn(
         owner = owner[prop];
         chain = chain.slice(pos + 1);
     }
-    return true;
 }
 
 /******************************************************************************/
@@ -1644,7 +1647,7 @@ function addEventListenerDefuser(
         const matchesEither = matchesType || matchesHandler;
         const matchesBoth = matchesType && matchesHandler;
         if ( debug === 1 && matchesBoth || debug === 2 && matchesEither ) {
-            debugger; // jshint ignore:line
+            debugger; // eslint-disable-line no-debugger
         }
         if ( matchesBoth && targetSelector !== undefined ) {
             if ( elementMatches(thisArg) === false ) { return false; }
@@ -3438,7 +3441,7 @@ function hrefSanitizer(
             return elem.textContent
                 .replace(/^[^\x21-\x7e]+/, '') // remove leading invalid characters
                 .replace(/[^\x21-\x7e]+$/, '') // remove trailing invalid characters
-                ;
+            ;
         }
         return '';
     };
@@ -3578,6 +3581,7 @@ function spoofCSS(
     const logPrefix = safe.makeLogPrefix('spoof-css', selector, ...args);
     const canDebug = scriptletGlobals.canDebug;
     const shouldDebug = canDebug && propToValueMap.get('debug') || 0;
+    const instanceProperties = [ 'cssText', 'length', 'parentRule' ];
     const spoofStyle = (prop, real) => {
         const normalProp = toCamelCase(prop);
         const shouldSpoof = propToValueMap.has(normalProp);
@@ -3594,7 +3598,8 @@ function spoofCSS(
     };
     self.getComputedStyle = new Proxy(self.getComputedStyle, {
         apply: function(target, thisArg, args) {
-            if ( shouldDebug !== 0 ) { debugger; }    // jshint ignore: line
+            // eslint-disable-next-line no-debugger
+            if ( shouldDebug !== 0 ) { debugger; }
             const style = Reflect.apply(target, thisArg, args);
             const targetElements = new WeakSet(document.querySelectorAll(selector));
             if ( targetElements.has(args[0]) === false ) { return style; }
@@ -3607,6 +3612,9 @@ function spoofCSS(
                             }, target, 'getPropertyValue');
                         }
                         return cloackFunc(target[prop], target, prop);
+                    }
+                    if ( instanceProperties.includes(prop) ) {
+                        return Reflect.get(target, prop);
                     }
                     return spoofStyle(prop, Reflect.get(target, prop, receiver));
                 },
@@ -3633,7 +3641,8 @@ function spoofCSS(
     });
     Element.prototype.getBoundingClientRect = new Proxy(Element.prototype.getBoundingClientRect, {
         apply: function(target, thisArg, args) {
-            if ( shouldDebug !== 0 ) { debugger; }    // jshint ignore: line
+            // eslint-disable-next-line no-debugger
+            if ( shouldDebug !== 0 ) { debugger; }
             const rect = Reflect.apply(target, thisArg, args);
             const targetElements = new WeakSet(document.querySelectorAll(selector));
             if ( targetElements.has(thisArg) === false ) { return rect; }
