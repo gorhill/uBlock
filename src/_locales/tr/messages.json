@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Zararlı alan adları",
+    "message": "Kötü amaçlı yazılım koruması, güvenlik.",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
@@ -1264,7 +1264,7 @@
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "toggleJavascript": {
-    "message": "Javascript'i Aç/Kapa",
+    "message": "JavaScript'i Aç/Kapa",
     "description": "Label for keyboard shortcut used to toggle no-scripting switch"
   },
   "relaxBlockingMode": {

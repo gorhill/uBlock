@@ -16,7 +16,7 @@
     "description": "English: uBO Lite — Dashboard"
   },
   "settingsPageName": {
-    "message": "পছন্দসমূহ",
+    "message": "সেটিংস",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {

@@ -20,7 +20,7 @@
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
-    "message": "परिचय",
+    "message": "जानकारी",
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
@@ -72,11 +72,11 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "aboutChangelog": {
-    "message": "परिवर्तन लॉग",
+    "message": "परिवर्तन पत्र",
     "description": ""
   },
   "aboutCode": {
-    "message": "सोर्स कोड {GPLv3}",
+    "message": "सोर्स कोड (GPLv3)",
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {

@@ -540,11 +540,11 @@
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pEnableMyFiltersLabel": {
-    "message": "Enable my custom filters",
+    "message": "Aktivizoj filtrat e mi të personalizuar",
     "description": "Label for the checkbox use to enable/disable 'My filters' list"
   },
   "1pTrustMyFiltersLabel": {
-    "message": "Allow custom filters requiring trust",
+    "message": "Lejoj filtrat e personalizuar që duhen besuar",
     "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {

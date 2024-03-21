@@ -64,7 +64,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMisc": {
-    "message": "Miscellaneous",
+    "message": "ವಿವಿಧ",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupRegions": {
@@ -72,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "aboutChangelog": {
-    "message": "Changelog",
+    "message": "ಬದಲಾವಣೆಗಳು",
     "description": ""
   },
   "aboutCode": {
@@ -84,15 +84,15 @@
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Source code",
+    "message": "ಮೂಲ ಕೊಡ್",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
-    "message": "Translations",
+    "message": "ಅನುವಾದ",
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
-    "message": "Filter lists",
+    "message": "ಫಿಲ್ಟರ್ ಪಟ್ಟಿಗಳು",
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
@@ -120,7 +120,7 @@
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
-    "message": "basic",
+    "message": "ಸಾಮಾನ್ಯ",
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
@@ -128,7 +128,7 @@
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
-    "message": "complete",
+    "message": "ಪೂರ್ಣ",
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {

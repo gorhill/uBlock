@@ -252,7 +252,7 @@
     "description": ""
   },
   "popup1pScriptRulePrompt": {
-    "message": "skrypty własne",
+    "message": "skrypty tej samej domeny",
     "description": ""
   },
   "popup3pScriptRulePrompt": {

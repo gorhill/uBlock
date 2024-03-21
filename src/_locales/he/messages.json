@@ -1264,7 +1264,7 @@
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "toggleJavascript": {
-    "message": "הפעלה וחסימה של JavaScript",
+    "message": "מיתוג JavaScript",
     "description": "Label for keyboard shortcut used to toggle no-scripting switch"
   },
   "relaxBlockingMode": {
@@ -1296,7 +1296,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "לא ניתן היה לסנן כראוי בעת הפעלת הדפדפן. טען מחדש את הדף כדי להבטיח סינון מתאים.",
+    "message": "לא ניתן היה לסנן כראוי בעת הפעלת הדפדפן. נא לטעון את העמוד מחדש להבטחת סינון ראוי.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {

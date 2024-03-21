@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "आख़िरकार, क्रोमियम-बेस्ड ब्राउज़रों के लिए एक कुशल अवरोधक। CPU और स्मृति पर आसान।",
+    "message": "आख़िरकार, क्रोमियम-बेस्ड ब्राउज़रों के लिए एक कुशल अवरोधक। सीपीयू और मेमोरी पर कम भार के साथ।\n",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
@@ -36,7 +36,7 @@
     "description": "appears as tab name in dashboard"
   },
   "rulesPageName": {
-    "message": "मेरे नियम",
+    "message": "मेरे नियमों",
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
@@ -240,7 +240,7 @@
     "description": ""
   },
   "popup3pAnyRulePrompt": {
-    "message": "तृतीय-पक्ष",
+    "message": "तीसरे पक्ष",
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
@@ -352,7 +352,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "मैं एक उच्च उपयोगकर्ता हूँ (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>आवश्यक पठन</a>)",
+    "message": "मैं एक उन्नत प्रयोक्ता हूँ",
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
@@ -508,7 +508,7 @@
     "description": "Filter lists section name"
   },
   "3pImport": {
-    "message": "इम्पोर्ट ",
+    "message": "इम्पोर्ट...",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -524,7 +524,7 @@
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "अन्तिम अद्यातन: {{ago}}. कृत्रिम नवीकरण के लिए क्लिक की जिए",
+    "message": "अन्तिम अद्यातन: {{ago}}. \nकृत्रिम नवीकरण के लिए क्लिक की जिए",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
@@ -540,11 +540,11 @@
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pEnableMyFiltersLabel": {
-    "message": "Enable my custom filters",
+    "message": "मेरे कस्टम फ़िल्टर सक्षम करें",
     "description": "Label for the checkbox use to enable/disable 'My filters' list"
   },
   "1pTrustMyFiltersLabel": {
-    "message": "Allow custom filters requiring trust",
+    "message": "विश्वास की आवश्यकता वाले कस्टम फ़िल्टर की अनुमति दें",
     "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
@@ -596,7 +596,7 @@
     "description": ""
   },
   "rulesExport": {
-    "message": "फाइल में एक्सपोर्ट करें ",
+    "message": "फाइल में एक्सपोर्ट करें...",
     "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
@@ -1092,7 +1092,7 @@
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
-    "message": "नेटवर्क त्रुटि : {{msg}}",
+    "message": "नेटवर्क त्रुटि: {{msg}}",
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
@@ -1100,19 +1100,19 @@
     "description": "No longer used"
   },
   "subscribeButton": {
-    "message": "सबˈस्क्राइब्",
+    "message": "फ़िल्टर सूची का उपयोग करें",
     "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
-    "message": "एक मिनट पहले",
+    "message": "एक मिनट पेहेले ",
     "description": "English: a minute ago"
   },
   "elapsedManyMinutesAgo": {
-    "message": "{{value}} मिनट पहले",
+    "message": "{{value}} मिनट पेहेले ",
     "description": "English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo": {
-    "message": "एक घंटे पहले",
+    "message": "एक घंटे पेहेले ",
     "description": "English: an hour ago"
   },
   "elapsedManyHoursAgo": {
@@ -1160,7 +1160,7 @@
     "description": "English: List of filter list names follows"
   },
   "docblockedBack": {
-    "message": "वापस जाएँ",
+    "message": "पीछे जाएं",
     "description": "English: Go back"
   },
   "docblockedClose": {
@@ -1184,7 +1184,7 @@
     "description": "English: Permanently"
   },
   "docblockedDisable": {
-    "message": "आगे बढ़ें",
+    "message": "आगे बढ़ें",
     "description": "Button text to navigate to the blocked page"
   },
   "cloudPush": {
