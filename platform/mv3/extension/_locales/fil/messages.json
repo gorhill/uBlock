@@ -154,5 +154,9 @@
   "autoReloadLabel": {
     "message": "Awtomatikong i-reload ang pahina kapag binago ang mode sa pagfi-filter",
     "description": "Label for a checkbox in the options page"
+  },
+  "showBlockedCountLabel": {
+    "message": "Show the number of blocked requests on the toolbar icon",
+    "description": "Label for a checkbox in the options page"
   }
 }

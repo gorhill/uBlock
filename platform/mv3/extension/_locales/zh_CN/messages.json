@@ -154,5 +154,9 @@
   "autoReloadLabel": {
     "message": "更改过滤模式后自动刷新网页",
     "description": "Label for a checkbox in the options page"
+  },
+  "showBlockedCountLabel": {
+    "message": "Show the number of blocked requests on the toolbar icon",
+    "description": "Label for a checkbox in the options page"
   }
 }

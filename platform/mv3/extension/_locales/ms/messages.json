@@ -154,5 +154,9 @@
   "autoReloadLabel": {
     "message": "Muat semula halaman secara automatik apabila menukar mod penapisan",
     "description": "Label for a checkbox in the options page"
+  },
+  "showBlockedCountLabel": {
+    "message": "Show the number of blocked requests on the toolbar icon",
+    "description": "Label for a checkbox in the options page"
   }
 }

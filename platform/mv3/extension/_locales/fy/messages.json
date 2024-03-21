@@ -154,5 +154,9 @@
   "autoReloadLabel": {
     "message": "Side automatysk fernije by wizigjen fan filtermodus",
     "description": "Label for a checkbox in the options page"
+  },
+  "showBlockedCountLabel": {
+    "message": "Show the number of blocked requests on the toolbar icon",
+    "description": "Label for a checkbox in the options page"
   }
 }

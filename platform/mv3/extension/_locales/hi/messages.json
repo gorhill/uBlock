@@ -154,5 +154,9 @@
   "autoReloadLabel": {
     "message": "फ़िल्टरिंग मोड बदलते समय स्वचालित रूप से पृष्ठ पुनः लोड करें",
     "description": "Label for a checkbox in the options page"
+  },
+  "showBlockedCountLabel": {
+    "message": "Show the number of blocked requests on the toolbar icon",
+    "description": "Label for a checkbox in the options page"
   }
 }

@@ -154,5 +154,9 @@
   "autoReloadLabel": {
     "message": "ఫిల్టరింగ్ మోడ్‌ను మార్చేటప్పుడు పేజీని స్వయంచాలకంగా రీలోడ్ చేయండి",
     "description": "Label for a checkbox in the options page"
+  },
+  "showBlockedCountLabel": {
+    "message": "Show the number of blocked requests on the toolbar icon",
+    "description": "Label for a checkbox in the options page"
   }
 }

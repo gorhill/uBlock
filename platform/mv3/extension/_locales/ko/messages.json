@@ -154,5 +154,9 @@
   "autoReloadLabel": {
     "message": "필터링 모드를 변경할 때 페이지 자동 새로고침",
     "description": "Label for a checkbox in the options page"
+  },
+  "showBlockedCountLabel": {
+    "message": "Show the number of blocked requests on the toolbar icon",
+    "description": "Label for a checkbox in the options page"
   }
 }

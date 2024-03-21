@@ -154,5 +154,9 @@
   "autoReloadLabel": {
     "message": "Recarregar a página automaticamente quando mudar o modo de filtragem",
     "description": "Label for a checkbox in the options page"
+  },
+  "showBlockedCountLabel": {
+    "message": "Show the number of blocked requests on the toolbar icon",
+    "description": "Label for a checkbox in the options page"
   }
 }

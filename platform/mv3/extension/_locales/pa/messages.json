@@ -154,5 +154,9 @@
   "autoReloadLabel": {
     "message": "ਫਿਲਫਰ ਕਰਨ ਦਾ ਢੰਗ ਬਦਲਣ ਦੇ ਬਾਅਦ ਸਫ਼ੇ ਨੂੰ ਆਪਣੇ-ਆਪ ਲੋਡ ਕਰੋ",
     "description": "Label for a checkbox in the options page"
+  },
+  "showBlockedCountLabel": {
+    "message": "Show the number of blocked requests on the toolbar icon",
+    "description": "Label for a checkbox in the options page"
   }
 }

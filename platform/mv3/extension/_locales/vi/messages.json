@@ -154,5 +154,9 @@
   "autoReloadLabel": {
     "message": "Tự động tải lại trang khi thay đổi chế độ bộ lọc",
     "description": "Label for a checkbox in the options page"
+  },
+  "showBlockedCountLabel": {
+    "message": "Show the number of blocked requests on the toolbar icon",
+    "description": "Label for a checkbox in the options page"
   }
 }

@@ -154,5 +154,9 @@
   "autoReloadLabel": {
     "message": "Automatisk last side på nytt ved endring av filtreringsmodus",
     "description": "Label for a checkbox in the options page"
+  },
+  "showBlockedCountLabel": {
+    "message": "Show the number of blocked requests on the toolbar icon",
+    "description": "Label for a checkbox in the options page"
   }
 }

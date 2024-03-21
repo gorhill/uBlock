@@ -154,5 +154,9 @@
   "autoReloadLabel": {
     "message": "Автоматично презареждане на страницата при промяна на режима на филтриране",
     "description": "Label for a checkbox in the options page"
+  },
+  "showBlockedCountLabel": {
+    "message": "Show the number of blocked requests on the toolbar icon",
+    "description": "Label for a checkbox in the options page"
   }
 }
