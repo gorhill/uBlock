@@ -19,11 +19,9 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
-import { browser, sendMessage, localRead, localWrite } from './ext.js';
-import { i18n$, i18n } from './i18n.js';
+import { browser, localRead, localWrite, sendMessage } from './ext.js';
 import { dom, qs$, qsa$ } from './dom.js';
+import { i18n, i18n$ } from './i18n.js';
 import punycode from './punycode.js';
 
 /******************************************************************************/
@@ -211,7 +209,17 @@ function renderWidgets() {
     renderDefaultMode();
     renderTrustedSites();
 
-    qs$('#autoReload input[type="checkbox"').checked = cachedRulesetData.autoReload;
+    qs$('#autoReload input[type="checkbox"]').checked = cachedRulesetData.autoReload;
+
+    {
+        const input = qs$('#showBlockedCount input[type="checkbox"]');
+        if ( cachedRulesetData.canShowBlockedCount ) {
+            input.checked = cachedRulesetData.showBlockedCount;
+        } else {
+            input.checked = false;
+            dom.attr(input, 'disabled', '');
+        }
+    }
 
     // Compute total counts
     let rulesetCount = 0;
@@ -290,9 +298,16 @@ dom.on(
 
 /******************************************************************************/
 
-dom.on('#autoReload input[type="checkbox"', 'change', ev => {
+dom.on('#autoReload input[type="checkbox"]', 'change', ev => {
     sendMessage({
         what: 'setAutoReload',
+        state: ev.target.checked,
+    });
+});
+
+dom.on('#showBlockedCount input[type="checkbox"]', 'change', ev => {
+    sendMessage({
+        what: 'setShowBlockedCount',
         state: ev.target.checked,
     });
 });
@@ -451,6 +466,13 @@ bc.onmessage = ev => {
     if ( message.autoReload !== undefined ) {
         if ( message.autoReload !== local.autoReload ) {
             local.autoReload = message.autoReload;
+            render = true;
+        }
+    }
+
+    if ( message.showBlockedCount !== undefined ) {
+        if ( message.showBlockedCount !== local.showBlockedCount ) {
+            local.showBlockedCount = message.showBlockedCount;
             render = true;
         }
     }

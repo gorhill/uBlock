@@ -22,6 +22,14 @@ p {
     white-space: pre-line;
     }
 
+section > div {
+    padding: 0 var(--default-gap-xxsmall);
+    }
+
+#showBlockedCount:has(input[type="checkbox"][disabled]) {
+    opacity: 0.5;
+    }
+
 #defaultFilteringMode {
     display: grid;
     gap: 1em;
