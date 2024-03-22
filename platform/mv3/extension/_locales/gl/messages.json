@@ -156,7 +156,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "showBlockedCountLabel": {
-    "message": "Show the number of blocked requests on the toolbar icon",
+    "message": "Mostrar na icona da barra o número de peticións bloqueadas",
     "description": "Label for a checkbox in the options page"
   }
 }

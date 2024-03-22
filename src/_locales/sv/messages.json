@@ -656,7 +656,7 @@
     "description": "English: Domain"
   },
   "logRequestsHeaderURL": {
-    "message": "URL",
+    "message": "Webbadress",
     "description": "English: URL"
   },
   "logRequestsHeaderFilter": {
@@ -668,7 +668,7 @@
     "description": "Appears in the logger's tab selector"
   },
   "logBehindTheScene": {
-    "message": "Bakom kulissen",
+    "message": "Tabless",
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
@@ -796,7 +796,7 @@
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "{{action}} nätverksförfrågningar av {{type}} {{br}}vilkas webbadresser matchar {{url}} {{br}}och som kommer från {{origin}},{{br}}{{importance}} det finns ett matchande undantagsfilter.",
+    "message": "{{action}} nätverksförfrågningar av {{type}} {{br}}vilken webbadress matchar {{url}} {{br}}och som kommer från {{origin}},{{br}}{{importance}} det finns ett matchande undantagsfilter.",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {

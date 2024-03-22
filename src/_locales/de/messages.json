@@ -320,7 +320,7 @@
     "description": "English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt": {
-    "message": "Anzahl der blockierten Anfragen auf dem Symbol anzeigen",
+    "message": "Anzahl der blockierten Anfragen auf dem Symbol in der Symbolleiste anzeigen",
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
