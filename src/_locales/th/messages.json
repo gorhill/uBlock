@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "มาแล้ว! โปรแกรมบล็อกโฆษณาเบาเบา ไม่กิน ซีพียู หรือ แรม",
+    "message": "มาแล้ว! โปรแกรมบล็อกโฆษณาได้อย่างมีประสิทธิภาพ โดยที่ไม่กินซีพียูหรือแรม",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
@@ -92,7 +92,7 @@
     "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
-    "message": "จากวันที่ติดตตั้ง",
+    "message": "ตั้งแต่ติดตั้ง",
     "description": "English: since install"
   },
   "popupOr": {
@@ -100,11 +100,11 @@
     "description": "English: or"
   },
   "popupBlockedOnThisPage_v2": {
-    "message": "Blocked on this page",
+    "message": "ถูกบล็อกบนหน้านี้",
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "Blocked since install",
+    "message": "ถูกบล็อกตั้งแต่ติดตั้ง",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
@@ -564,11 +564,11 @@
     "description": "English: Apply changes"
   },
   "rulesPermanentHeader": {
-    "message": "Permanent rules",
+    "message": "กฏถาวร",
     "description": "header"
   },
   "rulesTemporaryHeader": {
-    "message": "Temporary rules",
+    "message": "กฏชั่วคราว",
     "description": "header"
   },
   "rulesRevert": {
@@ -652,7 +652,7 @@
     "description": "English: Type"
   },
   "logRequestsHeaderDomain": {
-    "message": "Domain",
+    "message": "โดเมน",
     "description": "English: Domain"
   },
   "logRequestsHeaderURL": {
@@ -660,7 +660,7 @@
     "description": "English: URL"
   },
   "logRequestsHeaderFilter": {
-    "message": "Filter",
+    "message": "ตัวกรอง",
     "description": "English: Filter"
   },
   "logAll": {
@@ -672,11 +672,11 @@
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
-    "message": "Current tab",
+    "message": "แท็บปัจจุบัน",
     "description": "Appears in the logger's tab selector"
   },
   "loggerReloadTip": {
-    "message": "Reload the tab content",
+    "message": "โหลดเนื้อหาแท็บปัจจุบันใหม่",
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
@@ -864,11 +864,11 @@
     "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
   },
   "loggerSettingHideColumnTime": {
-    "message": "{{input}} Time",
+    "message": "{{input}} เวลา",
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
-    "message": "{{input}} Filter/rule",
+    "message": "{{input}} ตัวกรอง/กฏ",
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
@@ -884,7 +884,7 @@
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportFormatTable": {
-    "message": "Table",
+    "message": "ตาราง",
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportEncodePlain": {
@@ -1024,7 +1024,7 @@
     "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
-    "message": "Privacy policy",
+    "message": "นโยบายความเป็นส่วนตัว",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {
@@ -1100,7 +1100,7 @@
     "description": "No longer used"
   },
   "subscribeButton": {
-    "message": "Subscribe",
+    "message": "สมัครสมาชิก",
     "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
@@ -1136,7 +1136,7 @@
     "description": "Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
-    "message": "off",
+    "message": "ปิด",
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedTitle": {
@@ -1164,7 +1164,7 @@
     "description": "English: Go back"
   },
   "docblockedClose": {
-    "message": "Close this window",
+    "message": "ปิดหน้าต่างนี้",
     "description": "English: Close this window"
   },
   "docblockedDontWarn": {
@@ -1208,7 +1208,7 @@
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
-    "message": "Warning! Change these advanced settings at your own risk.",
+    "message": "คำเตือน! ปรับเปลี่ยนการตั้งค่าขั้นสูงเหล่านี้ด้วยความระมัดระวัง",
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {
@@ -1256,7 +1256,7 @@
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "genericSelectAll": {
-    "message": "Select all",
+    "message": "เลือกทั้งหมด",
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleCosmeticFiltering": {
