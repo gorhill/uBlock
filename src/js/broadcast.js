@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+import webext from './webext.js';
+
 /******************************************************************************/
 
 // Broadcast a message to all uBO contexts

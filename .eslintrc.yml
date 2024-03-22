@@ -22,5 +22,4 @@ rules:
 globals:
     browser: readonly
     chrome: readonly
-    webext: readonly
     vAPI: readonly

@@ -81,6 +81,7 @@ vAPI.messaging = {
     portTimerDelay: 10000,
     msgIdGenerator: 1,
     pending: new Map(),
+    waitStartTime: 0,
     shuttingDown: false,
 
     shutdown: function() {
@@ -111,16 +112,11 @@ vAPI.messaging = {
     //   revisited to isolate the picker dialog DOM from the page DOM.
     messageListener: function(details) {
         if ( typeof details !== 'object' || details === null ) { return; }
-
-        // Response to specific message previously sent
-        if ( details.msgId !== undefined ) {
-            const resolver = this.pending.get(details.msgId);
-            if ( resolver !== undefined ) {
-                this.pending.delete(details.msgId);
-                resolver(details.msg);
-                return;
-            }
-        }
+        if ( details.msgId === undefined ) { return; }
+        const resolver = this.pending.get(details.msgId);
+        if ( resolver === undefined ) { return; }
+        this.pending.delete(details.msgId);
+        resolver(details.msg);
     },
     messageListenerBound: null,
 
@@ -199,12 +195,17 @@ vAPI.messaging = {
         // the main process is no longer reachable: memory leaks and bad
         // performance become a risk -- especially for long-lived, dynamic
         // pages. Guard against this.
-        if ( this.pending.size > 1000 ) {
-            vAPI.shutdown.exec();
+        if ( this.pending.size > 64 ) {
+            if ( (Date.now() - this.waitStartTime) > 60000 ) {
+                vAPI.shutdown.exec();
+            }
         }
         const port = this.getPort();
         if ( port === null ) {
             return Promise.resolve();
+        }
+        if ( this.pending.size === 0 ) {
+            this.waitStartTime = Date.now();
         }
         const msgId = this.msgIdGenerator++;
         const promise = new Promise(resolve => {
