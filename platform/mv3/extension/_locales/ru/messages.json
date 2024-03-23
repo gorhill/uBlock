@@ -156,7 +156,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "showBlockedCountLabel": {
-    "message": "Показывать число заблокированных запросов на значке в панели инструментов",
+    "message": "Показывать количество заблокированных запросов на иконке в панели инструментов",
     "description": "Label for a checkbox in the options page"
   }
 }
