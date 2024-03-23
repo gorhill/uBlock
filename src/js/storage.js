@@ -19,43 +19,39 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
 /******************************************************************************/
 
-import publicSuffixList from '../lib/publicsuffixlist/publicsuffixlist.js';
-import punycode from '../lib/punycode.js';
-
-import io from './assets.js';
-import { broadcast, filteringBehaviorChanged, onBroadcast } from './broadcast.js';
-import cosmeticFilteringEngine from './cosmetic-filtering.js';
-import logger from './logger.js';
-import lz4Codec from './lz4.js';
-import staticExtFilteringEngine from './static-ext-filtering.js';
-import staticFilteringReverseLookup from './reverselookup.js';
-import staticNetFilteringEngine from './static-net-filtering.js';
-import µb from './background.js';
-import { hostnameFromURI } from './uri-utils.js';
-import { i18n, i18n$ } from './i18n.js';
-import { redirectEngine } from './redirect-engine.js';
-import { ubolog, ubologSet } from './console.js';
 import * as sfp from './static-filtering-parser.js';
 
+import { CompiledListReader, CompiledListWriter } from './static-filtering-io.js';
+import { LineIterator, orphanizeString } from './text-utils.js';
+import { broadcast, filteringBehaviorChanged, onBroadcast } from './broadcast.js';
+import { i18n, i18n$ } from './i18n.js';
 import {
     permanentFirewall,
     permanentSwitches,
     permanentURLFiltering,
 } from './filtering-engines.js';
+import { ubolog, ubologSet } from './console.js';
 
-import {
-    CompiledListReader,
-    CompiledListWriter,
-} from './static-filtering-io.js';
+import cosmeticFilteringEngine from './cosmetic-filtering.js';
+import { hostnameFromURI } from './uri-utils.js';
+import io from './assets.js';
+import logger from './logger.js';
+import lz4Codec from './lz4.js';
+import publicSuffixList from '../lib/publicsuffixlist/publicsuffixlist.js';
+import punycode from '../lib/punycode.js';
+import { redirectEngine } from './redirect-engine.js';
+import staticExtFilteringEngine from './static-ext-filtering.js';
+import staticFilteringReverseLookup from './reverselookup.js';
+import staticNetFilteringEngine from './static-net-filtering.js';
+import µb from './background.js';
 
-import {
-    LineIterator,
-    orphanizeString,
-} from './text-utils.js';
+/******************************************************************************/
+
+// https://eslint.org/docs/latest/rules/no-prototype-builtins
+const hasOwnProperty = (o, p) =>
+    Object.prototype.hasOwnProperty.call(o, p);
 
 /******************************************************************************/
 
@@ -191,7 +187,7 @@ import {
         for ( const entry of adminSettings ) {
             if ( entry.length < 1 ) { continue; }
             const name = entry[0];
-            if ( usDefault.hasOwnProperty(name) === false ) { continue; }
+            if ( hasOwnProperty(usDefault, name) === false ) { continue; }
             const value = entry.length < 2
                 ? usDefault[name]
                 : this.settingValueFromString(usDefault, name, entry[1]);
@@ -220,8 +216,8 @@ import {
 
     const toRemove = [];
     for ( const key in this.userSettings ) {
-        if ( this.userSettings.hasOwnProperty(key) === false ) { continue; }
-        if ( toSave.hasOwnProperty(key) ) { continue; }
+        if ( hasOwnProperty(this.userSettings, key) === false ) { continue; }
+        if ( hasOwnProperty(toSave, key) ) { continue; }
         toRemove.push(key);
     }
     if ( toRemove.length !== 0 ) {
@@ -258,7 +254,7 @@ import {
             for ( const entry of advancedSettings ) {
                 if ( entry.length < 1 ) { continue; }
                 const name = entry[0];
-                if ( hsDefault.hasOwnProperty(name) === false ) { continue; }
+                if ( hasOwnProperty(hsDefault, name) === false ) { continue; }
                 const value = entry.length < 2
                     ? hsDefault[name]
                     : this.hiddenSettingValueFromString(name, entry[1]);
@@ -292,8 +288,8 @@ import {
     }
 
     for ( const key in hsDefault ) {
-        if ( hsDefault.hasOwnProperty(key) === false ) { continue; }
-        if ( hsAdmin.hasOwnProperty(name) ) { continue; }
+        if ( hasOwnProperty(hsDefault, key) === false ) { continue; }
+        if ( hasOwnProperty(hsAdmin, name) ) { continue; }
         if ( typeof hs[key] !== typeof hsDefault[key] ) { continue; }
         this.hiddenSettings[key] = hs[key];
     }
@@ -338,8 +334,8 @@ onBroadcast(msg => {
         const matches = /^\s*(\S+)\s+(.+)$/.exec(line);
         if ( matches === null || matches.length !== 3 ) { continue; }
         const name = matches[1];
-        if ( out.hasOwnProperty(name) === false ) { continue; }
-        if ( this.hiddenSettingsAdmin.hasOwnProperty(name) ) { continue; }
+        if ( hasOwnProperty(out, name) === false ) { continue; }
+        if ( hasOwnProperty(this.hiddenSettingsAdmin, name) ) { continue; }
         const value = this.hiddenSettingValueFromString(name, matches[2]);
         if ( value !== undefined ) {
             out[name] = value;
@@ -351,7 +347,7 @@ onBroadcast(msg => {
 µb.hiddenSettingValueFromString = function(name, value) {
     if ( typeof name !== 'string' || typeof value !== 'string' ) { return; }
     const hsDefault = this.hiddenSettingsDefault;
-    if ( hsDefault.hasOwnProperty(name) === false ) { return; }
+    if ( hasOwnProperty(hsDefault, name) === false ) { return; }
     let r;
     switch ( typeof hsDefault[name] ) {
     case 'boolean':
@@ -588,7 +584,6 @@ onBroadcast(msg => {
     // https://github.com/gorhill/uBlock/issues/1022
     //   Be sure to end with an empty line.
     content = content.trim();
-    if ( content !== '' ) { content += '\n'; }
     this.removeCompiledFilterList(this.userFiltersPath);
     return io.put(this.userFiltersPath, content);
 };
@@ -696,7 +691,7 @@ onBroadcast(msg => {
 µb.autoSelectRegionalFilterLists = function(lists) {
     const selectedListKeys = [ this.userFiltersPath ];
     for ( const key in lists ) {
-        if ( lists.hasOwnProperty(key) === false ) { continue; }
+        if ( hasOwnProperty(lists, key) === false ) { continue; }
         const list = lists[key];
         if ( list.content !== 'filters' ) { continue; }
         if ( list.off !== true ) {
@@ -950,7 +945,7 @@ onBroadcast(msg => {
         let acceptedCount = snfe.acceptedCount + sxfe.acceptedCount;
         let discardedCount = snfe.discardedCount + sxfe.discardedCount;
         µb.applyCompiledFilters(compiled, assetKey === µb.userFiltersPath);
-        if ( µb.availableFilterLists.hasOwnProperty(assetKey) ) {
+        if ( hasOwnProperty(µb.availableFilterLists, assetKey) ) {
             const entry = µb.availableFilterLists[assetKey];
             entry.entryCount = snfe.acceptedCount + sxfe.acceptedCount -
                 acceptedCount;
@@ -986,7 +981,7 @@ onBroadcast(msg => {
         // content.
         const toLoad = [];
         for ( const assetKey in lists ) {
-            if ( lists.hasOwnProperty(assetKey) === false ) { continue; }
+            if ( hasOwnProperty(lists, assetKey) === false ) { continue; }
             if ( lists[assetKey].off ) { continue; }
             toLoad.push(
                 µb.getCompiledFilterList(assetKey).then(details => {
@@ -1438,8 +1433,8 @@ onBroadcast(msg => {
         const µbus = this.userSettings;
         const adminus = data.userSettings;
         for ( const name in µbus ) {
-            if ( µbus.hasOwnProperty(name) === false ) { continue; }
-            if ( adminus.hasOwnProperty(name) === false ) { continue; }
+            if ( hasOwnProperty(µbus, name) === false ) { continue; }
+            if ( hasOwnProperty(adminus, name) === false ) { continue; }
             bin[name] = adminus[name];
             binNotEmpty = true;
         }
@@ -1502,13 +1497,21 @@ onBroadcast(msg => {
         vAPI.storage.set(bin);
     }
 
-    if (
-        Array.isArray(toOverwrite.filters) &&
-        toOverwrite.filters.length !== 0
-    ) {
-        this.saveUserFilters(toOverwrite.filters.join('\n'));
+    let userFiltersAfter;
+    if ( Array.isArray(toOverwrite.filters) ) {
+        userFiltersAfter = toOverwrite.filters.join('\n').trim();
     } else if ( typeof data.userFilters === 'string' ) {
-        this.saveUserFilters(data.userFilters);
+        userFiltersAfter = data.userFilters.trim();
+    }
+    if ( typeof userFiltersAfter === 'string' ) {
+        const bin = await vAPI.storage.get(this.userFiltersPath);
+        const userFiltersBefore = bin && bin[this.userFiltersPath] || '';
+        if ( userFiltersAfter !== userFiltersBefore ) {
+            await Promise.all([
+                this.saveUserFilters(userFiltersAfter),
+                this.selfieManager.destroy(),
+            ]);
+        }
     }
 };
 
@@ -1602,7 +1605,7 @@ onBroadcast(msg => {
     if ( topic === 'before-asset-updated' ) {
         if ( details.type === 'filters' ) {
             if (
-                this.availableFilterLists.hasOwnProperty(details.assetKey) === false ||
+                hasOwnProperty(this.availableFilterLists, details.assetKey) === false ||
                 this.selectedFilterLists.indexOf(details.assetKey) === -1 ||
                 this.badLists.get(details.assetKey)
             ) {
@@ -1617,7 +1620,7 @@ onBroadcast(msg => {
         // Skip selfie-related content.
         if ( details.assetKey.startsWith('selfie/') ) { return; }
         const cached = typeof details.content === 'string' && details.content !== '';
-        if ( this.availableFilterLists.hasOwnProperty(details.assetKey) ) {
+        if ( hasOwnProperty(this.availableFilterLists, details.assetKey) ) {
             if ( cached ) {
                 if ( this.selectedFilterLists.indexOf(details.assetKey) !== -1 ) {
                     this.extractFilterListMetadata(

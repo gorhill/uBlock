@@ -19,21 +19,17 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* globals browser */
-
-'use strict';
-
 /******************************************************************************/
-
-import logger from './logger.js';
-import { FilteringContext } from './filtering-context.js';
-import { ubologSet } from './console.js';
 
 import {
     domainFromHostname,
     hostnameFromURI,
     originFromURI,
 } from './uri-utils.js';
+
+import { FilteringContext } from './filtering-context.js';
+import logger from './logger.js';
+import { ubologSet } from './console.js';
 
 /******************************************************************************/
 
@@ -54,7 +50,6 @@ const hiddenSettingsDefault = {
     autoUpdatePeriod: 1,
     benchmarkDatasetURL: 'unset',
     blockingProfiles: '11111/#F00 11010/#C0F 11001/#00F 00001',
-    cacheStorageAPI: 'unset',
     cacheStorageCompression: true,
     cacheStorageCompressionThreshold: 65536,
     cacheStorageMultithread: 2,
@@ -97,6 +92,7 @@ const hiddenSettingsDefault = {
 
 if ( vAPI.webextFlavor.soup.has('devbuild') ) {
     hiddenSettingsDefault.consoleLogLevel = 'info';
+    hiddenSettingsDefault.cacheStorageAPI = 'unset';
     ubologSet(true);
 }
 
