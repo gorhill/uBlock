@@ -1,5 +1,7 @@
 ## Fixes / changes
 
+- [Properly manage cache storage regarding managed user filters](https://github.com/gorhill/uBlock/commit/90ab1a76ab)
+- [Improve `[trusted-]set-cookie` scriptlets](https://github.com/gorhill/uBlock/commit/11a48561e0)
 - [Fixed Belgian and Nepali flags for Windows Chromium users](https://github.com/gorhill/uBlock/commit/499c80bd8a) (by @DandelionSprout)
 - [Mind that `tabs.sendMessage` can throw](https://github.com/gorhill/uBlock/commit/3f7374c1f1)
 - [Improve `set-cookie` scriptlet](https://github.com/gorhill/uBlock/commit/9146134874)
