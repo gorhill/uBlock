@@ -969,6 +969,16 @@ function setCookieFn(
     path = '',
     options = {},
 ) {
+    // https://datatracker.ietf.org/doc/html/rfc2616#section-2.2
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/2777
+    if ( trusted === false && /[^!#$%&'*+\-.0-9A-Z[\]^_`a-z|~]/.test(name) ) {
+        name = encodeURIComponent(name);
+    }
+    // https://datatracker.ietf.org/doc/html/rfc6265#section-4.1.1
+    if ( /[^!#-+\--:<-[\]-~]/.test(value) ) {
+        value = encodeURIComponent(value);
+    }
+
     const cookieBefore = getCookieFn(name);
     if ( cookieBefore !== undefined && options.dontOverwrite ) { return; }
     if ( cookieBefore === value && options.reload ) { return; }
@@ -3713,7 +3723,6 @@ function setCookie(
     if ( name === '' ) { return; }
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix('set-cookie', name, value, path);
-    name = encodeURIComponent(name);
 
     const validValues = [
         'accept', 'reject',
