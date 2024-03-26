@@ -590,7 +590,7 @@ const onHeadersReceived = function(details) {
     }
 };
 
-const reMediaContentTypes = /^(?:audio|image|video)\//;
+const reMediaContentTypes = /^(?:audio|image|video)\/|(?:\/ogg)$/;
 
 /******************************************************************************/
 
