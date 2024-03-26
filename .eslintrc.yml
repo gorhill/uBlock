@@ -14,6 +14,7 @@ rules:
       - ignoredNodes:
         - Program > IfStatement > BlockStatement
         - Program > ExpressionStatement > CallExpression > ArrowFunctionExpression > BlockStatement
+        - CallExpression > MemberExpression
         - ArrayExpression > Literal
     no-control-regex: off
     no-empty: off
