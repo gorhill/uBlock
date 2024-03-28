@@ -20,7 +20,7 @@
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Ignore",
+    "message": "ನಿರ್ಲಕ್ಷಿಸು",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
@@ -108,7 +108,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
-    "message": "Domains connected",
+    "message": "ಸಂಪರ್ಕಳಗಿಸಿದ ಡೊಮೈನುಗಳು ",
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
@@ -276,7 +276,7 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilter": {
-    "message": "script",
+    "message": "ಸ್ಕ್ರಿಪ್ಟ್",
     "description": "Appears as an option to filter out firewall rows"
   },
   "popup3pFrameFilter": {
@@ -336,11 +336,11 @@
     "description": "English: Color-blind friendly"
   },
   "settingsAppearance": {
-    "message": "Appearance",
+    "message": "ನೋಟ",
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
-    "message": "Theme",
+    "message": "ಥೀಮ್",
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
@@ -416,11 +416,11 @@
     "description": "English: Last restore:"
   },
   "settingsLastBackupPrompt": {
-    "message": "Last backup:",
+    "message": "ಕೊನೆಯ ಬ್ಯಾಕಪ್:",
     "description": "English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt": {
-    "message": "{{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:",
+    "message": "ಕೆಳಗಿನ ಫೈಲಟ್ರ್ಪಟ್ಟಿಗೆಯಿಂದ {{netFilterCount}} ನೆಟ್ವರ್ಕ್ ಫಿಲ್ಟರ್ಗಳು + {{cosmeticfiltercount}} ಕಾಸ್ಮೆಟಿಕ್ ಶೋಧಕಗಳು ಕ್ರಿಯಾಶೀಲವಾಗಿದೆ",
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
@@ -620,11 +620,11 @@
     "description": "English: a sort option for list of rules."
   },
   "rulesSortBySource": {
-    "message": "Source",
+    "message": "ಮೂಲ",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortByDestination": {
-    "message": "Destination",
+    "message": "ಗಮ್ಯಸ್ಥಾನ",
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
@@ -632,7 +632,7 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Import and append…",
+    "message": "ಆಮದಿಸಿ ಸೇರ್ಪಡಿಸು",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
@@ -816,7 +816,7 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin": {
-    "message": "from “{{origin}}”",
+    "message": "\"{{origin}} \"ಇಂದಾ",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin": {
@@ -1100,7 +1100,7 @@
     "description": "No longer used"
   },
   "subscribeButton": {
-    "message": "Subscribe",
+    "message": "ಫಿಲ್ಟರ್ ಪಟ್ಟಿಯನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ",
     "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {

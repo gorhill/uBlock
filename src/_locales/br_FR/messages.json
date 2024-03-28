@@ -168,15 +168,15 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Lazhañ/enaouiñ evit stankañ an nodrezhioù diavaez war al lec'hienn-mañ",
+    "message": "Aotren/stankañ ar polisoù diavaez war al lec'hienn-mañ",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Stankañ an nodrezhioù diavaez war al lec'hienn-mañ",
+    "message": "Stankañ ar polisoù diavaez war al lec'hienn-mañ",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Aotren an nodrezhioù diavaez war al lec'hienn-mañ",
+    "message": "Aotren ar polisoù diavaez war al lec'hienn-mañ",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
@@ -200,7 +200,7 @@
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
-    "message": "Nodrezhioù diavaez",
+    "message": "Polisoù diavaez",
     "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
@@ -384,7 +384,7 @@
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
-    "message": "Stankañ an nodrezhioù diavaez",
+    "message": "Stankañ ar polisoù diavaez",
     "description": ""
   },
   "settingsNoScriptingPrompt": {
