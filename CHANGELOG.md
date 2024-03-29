@@ -1,3 +1,7 @@
+----------
+
+# 1.57.0
+
 ## Fixes / changes
 
 - [Do not block large media resources when loaded as top-level document](https://github.com/gorhill/uBlock/commit/3919a16bb8)
