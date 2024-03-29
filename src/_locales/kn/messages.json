@@ -420,7 +420,7 @@
     "description": "English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt": {
-    "message": "ಕೆಳಗಿನ ಫೈಲಟ್ರ್ಪಟ್ಟಿಗೆಯಿಂದ {{netFilterCount}} ನೆಟ್ವರ್ಕ್ ಫಿಲ್ಟರ್ಗಳು + {{cosmeticfiltercount}} ಕಾಸ್ಮೆಟಿಕ್ ಶೋಧಕಗಳು ಕ್ರಿಯಾಶೀಲವಾಗಿದೆ",
+    "message": "ಕೆಳಗಿನ ಫೈಲಟ್ರ್ಪಟ್ಟಿಗೆಯಿಂದ {{netFilterCount}} ನೆಟ್ವರ್ಕ್ ಫಿಲ್ಟರ್ಗಳು + {{cosmeticfiltercount}} ಕಾಸ್ಮೆಟಿಕ್ ಶೋಧಕಗಳು ಕ್ರಿಯಾಶೀಲವಾಗಿದೆ:",
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
@@ -548,7 +548,7 @@
     "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
-    "message": "ಆಮದಿಸಿ ಸೇರ್ಪಡಿಸು",
+    "message": "ಆಮದಿಸಿ ಸೇರ್ಪಡಿಸು...",
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {

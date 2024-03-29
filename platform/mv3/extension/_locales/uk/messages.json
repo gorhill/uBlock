@@ -156,7 +156,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "showBlockedCountLabel": {
-    "message": "Показувати кількість заблокованих запитів на піктограмі",
+    "message": "Показувати кількість заблокованих запитів на піктограмі на панелі інструментів",
     "description": "Label for a checkbox in the options page"
   }
 }
