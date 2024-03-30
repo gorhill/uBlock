@@ -19,10 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
-/* global HTMLDocument, XMLDocument */
-
 // For background page, auxiliary pages, and content scripts.
 
 /******************************************************************************/
