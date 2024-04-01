@@ -78,6 +78,7 @@
     "open_in_tab": true
   },
   "permissions": [
+    "alarms",
     "privacy",
     "storage",
     "tabs",
