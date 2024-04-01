@@ -4704,3 +4704,38 @@ function trustedReplaceArgument(
 }
 
 /******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'trusted-replace-outbound-text.js',
+    requiresTrust: true,
+    fn: trustedReplaceOutboundText,
+    dependencies: [
+        'proxy-apply.fn',
+        'safe-self.fn',
+    ],
+});
+function trustedReplaceOutboundText(
+    propChain = '',
+    pattern = '',
+    replacement = ''
+) {
+    if ( propChain === '' ) { return; }
+    const safe = safeSelf();
+    const logPrefix = safe.makeLogPrefix('trusted-replace-outbound-text', propChain, pattern, replacement);
+    const rePattern = safe.patternToRegex(pattern);
+    const reflector = proxyApplyFn(propChain, function(...args) {
+        const textBefore = reflector(...args);
+        const textAfter = pattern !== ''
+            ? textBefore.replace(rePattern, replacement)
+            : textBefore;
+        if ( textAfter !== textBefore ) {
+            safe.uboLog(logPrefix, 'Matched and replaced');
+        }
+        if ( safe.logLevel > 1 || pattern === '' ) {
+            safe.uboLog(logPrefix, 'Outbound text:\n', textAfter);
+        }
+        return textAfter;
+    });
+}
+
+/******************************************************************************/
