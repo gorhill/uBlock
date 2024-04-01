@@ -1,3 +1,7 @@
+## Fixes / changes
+
+- [Improve `[trusted-]set-cookie` scriptlets](https://github.com/gorhill/uBlock/commit/49ff7cffb1)
+
 ----------
 
 # 1.57.0
