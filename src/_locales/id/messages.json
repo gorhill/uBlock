@@ -484,11 +484,11 @@
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
-    "message": "Social widgets",
+    "message": "Widget sosial",
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
-    "message": "Cookie notices",
+    "message": "Pemberitahuan cookie",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
@@ -540,11 +540,11 @@
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pEnableMyFiltersLabel": {
-    "message": "Enable my custom filters",
+    "message": "Aktifkan filter kustom saya",
     "description": "Label for the checkbox use to enable/disable 'My filters' list"
   },
   "1pTrustMyFiltersLabel": {
-    "message": "Allow custom filters requiring trust",
+    "message": "Izinkan filter kustom yang memerlukan kepercayaan",
     "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
