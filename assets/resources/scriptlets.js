@@ -975,7 +975,9 @@ function setCookieFn(
         name = encodeURIComponent(name);
     }
     // https://datatracker.ietf.org/doc/html/rfc6265#section-4.1.1
-    if ( /[^!#-+\--:<-[\]-~]/.test(value) ) {
+    // The characters [",] are given a pass from the RFC requirements because
+    // apparently browsers do not follow the RFC to the letter.
+    if ( /[^!-:<-[\]-~]/.test(value) ) {
         value = encodeURIComponent(value);
     }
 
