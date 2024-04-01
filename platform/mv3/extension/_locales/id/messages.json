@@ -144,7 +144,7 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "List of hostnames for which no filtering will take place.",
+    "message": "Daftar nama host yang tidak akan difilter.",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "behaviorSectionLabel": {
@@ -156,7 +156,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "showBlockedCountLabel": {
-    "message": "Show the number of blocked requests on the toolbar icon",
+    "message": "Tampilkan jumlah permintaan yang diblokir pada ikon toolbar",
     "description": "Label for a checkbox in the options page"
   }
 }

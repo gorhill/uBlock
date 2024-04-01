@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "অবশেষে, একটি সাশ্রয়ী বিজ্ঞাপন রোধক। সিপিইউ এবং মেমরিতে নমনীয়।",
+    "message": "একটি শক্তিশালী বিজ্ঞাপন প্রতিরোধক, অবশেষে তৈরী হল। যা সিপিইউ এবং মেমরির জন্য সহনীয়।",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
@@ -20,7 +20,7 @@
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "অবজ্ঞা করুন",
+    "message": "বাদ দিন",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
@@ -136,19 +136,19 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "এই সাইটে সব পপআপ অবরুদ্ধ করতে ক্লিক করুন",
+    "message": "এই সাইটে সকল পপআপ বন্ধ করতে ক্লিক করুন",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "এই সাইটে সব পপআপ আর অবরুদ্ধ না করতে ক্লিক করুন",
+    "message": "এই সাইটে আর কোনো পপআপ ব্লক না করতে ক্লিক করুন",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "এই সাইটের জন্য বড় মিডিয়া উপাদান অবরোধ চালু/বন্ধ করুন",
+    "message": "এই সাইটের বড় মিডিয়া উপাদানগুলো অবরোধ ব্লক করার জন্য অদলবদল করুন",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "এই সাইটে বড় মিডিয়া উপাদান অবরুদ্ধ করতে ক্লিক করুন",
+    "message": "এই সাইটে বড় মিডিয়া এলিমেন্ট ব্লক করতে ক্লিক করুন",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
@@ -156,27 +156,27 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "এই সাইটের জন্য কসমেটিক ছাঁকন চালু/বন্ধ করুন",
+    "message": "এই সাইটের জন্য সৌন্দর্যবর্ধক ছাঁকন চালু/বন্ধ করুন",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "এই সাইটে কসমেটিক ফিল্টার নিষ্ক্রিয় করতে ক্লিক করুন",
+    "message": "এই সাইটে সৌন্দর্যবর্ধক ছাঁকন প্রক্রিয়া বন্ধ করতে ক্লিক করুন",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "এই সাইটে কসমেটিক ফিল্টার সক্রিয় করতে ক্লিক করুন",
+    "message": "এই সাইটে সৌন্দর্যবর্ধক ছাঁকন প্রক্রিয়া চালু করতে ক্লিক করুন",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "এই সাইটের রিমোট ফন্টের অবরোধ চালু/বন্ধ করুন",
+    "message": "এই সাইটের রিমোট ফন্ট বন্ধের প্রক্রিয়া অদলবদল করুন",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "এই সাইটে রিমোট ফন্ট অবরুদ্ধ করতে ক্লিক করুন",
+    "message": "এই সাইটে রিমোট ফন্ট ব্লক করতে ক্লিক করুন",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "এই সাইটে রিমোট ফন্ট আর অবরুদ্ধ না করতে ক্লিক করুন",
+    "message": "এই সাইটে রিমোট ফন্ট আর ব্লক না করতে ক্লিক করুন",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
@@ -184,7 +184,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "এই সাইটের জাভাস্ক্রিপ্ট চালু করতে ক্লিক করুণ",
+    "message": "এই সাইটের জাভাস্ক্রিপ্ট চালু করতে ক্লিক করুন",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
@@ -192,11 +192,11 @@
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
-    "message": "বড় মিডিয়া এলিমেন্টগুলি",
+    "message": "বড় মিডিয়ার এলিমেন্টগুলো",
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
-    "message": "সৌন্দর্য্যবর্ধক ছাকন",
+    "message": "সৌন্দর্য্যবর্ধক ছাকন প্রক্রিয়া",
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {

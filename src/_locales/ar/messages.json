@@ -484,7 +484,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
-    "message": "Social widgets",
+    "message": "أدوات مواقع التواصل الاجتماعية",
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
@@ -540,7 +540,7 @@
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pEnableMyFiltersLabel": {
-    "message": "Enable my custom filters",
+    "message": "تفعيل تصفياتي المخصصة",
     "description": "Label for the checkbox use to enable/disable 'My filters' list"
   },
   "1pTrustMyFiltersLabel": {
