@@ -4717,22 +4717,28 @@ builtinScriptlets.push({
 function trustedReplaceOutboundText(
     propChain = '',
     pattern = '',
-    replacement = ''
+    replacement = '',
+    ...args
 ) {
     if ( propChain === '' ) { return; }
     const safe = safeSelf();
-    const logPrefix = safe.makeLogPrefix('trusted-replace-outbound-text', propChain, pattern, replacement);
+    const logPrefix = safe.makeLogPrefix('trusted-replace-outbound-text', propChain, pattern, replacement, ...args);
     const rePattern = safe.patternToRegex(pattern);
+    const extraArgs = safe.getExtraArgs(args);
+    const reCondition = safe.patternToRegex(extraArgs.condition || '');
     const reflector = proxyApplyFn(propChain, function(...args) {
         const textBefore = reflector(...args);
-        const textAfter = pattern !== ''
-            ? textBefore.replace(rePattern, replacement)
-            : textBefore;
-        if ( textAfter !== textBefore ) {
-            safe.uboLog(logPrefix, 'Matched and replaced');
+        if ( pattern === '' ) {
+            safe.uboLog(logPrefix, 'Outbound text:\n', textBefore);
+            return textBefore;
         }
-        if ( safe.logLevel > 1 || pattern === '' ) {
-            safe.uboLog(logPrefix, 'Outbound text:\n', textAfter);
+        reCondition.lastIndex = 0;
+        if ( reCondition.test(textBefore) === false ) { return textBefore; }
+        const textAfter = textBefore.replace(rePattern, replacement);
+        if ( textAfter === textBefore ) { return textBefore; }
+        safe.uboLog(logPrefix, 'Matched and replaced');
+        if ( safe.logLevel > 1 ) {
+            safe.uboLog(logPrefix, 'Modified outbound text:\n', textAfter);
         }
         return textAfter;
     });
