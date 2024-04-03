@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
 /*******************************************************************************
  * 
  * Structured-Cloneable to Unicode-Only SERIALIZER
@@ -103,14 +101,14 @@ const { intToChar, intToCharCode, charCodeToInt } = (( ) => {
     const intToCharCode = [];
     const charCodeToInt = [];
     for ( let i = 0; i < NUMSAFECHARS; i++ ) {
-         intToChar[i] = SAFECHARS.charAt(i);
-         intToCharCode[i] = SAFECHARS.charCodeAt(i);
-         charCodeToInt[i] = 0;
+        intToChar[i] = SAFECHARS.charAt(i);
+        intToCharCode[i] = SAFECHARS.charCodeAt(i);
+        charCodeToInt[i] = 0;
     }
     for ( let i = NUMSAFECHARS; i < 128; i++ ) {
-         intToChar[i] = '';
-         intToCharCode[i] = 0;
-         charCodeToInt[i] = 0;
+        intToChar[i] = '';
+        intToCharCode[i] = 0;
+        charCodeToInt[i] = 0;
     }
     for ( let i = 0; i < SAFECHARS.length; i++ ) {
         charCodeToInt[SAFECHARS.charCodeAt(i)] = i;
@@ -286,6 +284,9 @@ const shouldCompress = (s, options) =>
         options.compressThreshold === undefined ||
         options.compressThreshold <= s.length
     );
+
+const hasOwnProperty = (o, p) =>
+    Object.prototype.hasOwnProperty.call(o, p);
 
 /*******************************************************************************
  * 
@@ -549,38 +550,38 @@ const _serialize = data => {
     }
     // Type name
     switch ( typeToSerializedInt[typeof data] ) {
-        case I_STRING: {
-            const length = data.length;
-            if ( length < NUMSAFECHARS ) {
-                writeBuffer.push(C_STRING_SMALL + intToChar[length], data);
-            } else {
-                writeBuffer.push(C_STRING_LARGE + strFromLargeUint(length), data);
-            }
-            return;
+    case I_STRING: {
+        const length = data.length;
+        if ( length < NUMSAFECHARS ) {
+            writeBuffer.push(C_STRING_SMALL + intToChar[length], data);
+        } else {
+            writeBuffer.push(C_STRING_LARGE + strFromLargeUint(length), data);
         }
-        case I_NUMBER:
-            if ( isInteger(data) ) {
-                if ( data >= NUMSAFECHARS ) {
-                    writeBuffer.push(C_INTEGER_LARGE_POS + strFromLargeUint(data));
-                } else if ( data > 0 ) {
-                    writeBuffer.push(C_INTEGER_SMALL_POS + intToChar[data]);
-                } else if ( data > -NUMSAFECHARS ) {
-                    writeBuffer.push(C_INTEGER_SMALL_NEG + intToChar[-data]);
-                } else {
-                    writeBuffer.push(C_INTEGER_LARGE_NEG + strFromLargeUint(-data));
-                }
+        return;
+    }
+    case I_NUMBER:
+        if ( isInteger(data) ) {
+            if ( data >= NUMSAFECHARS ) {
+                writeBuffer.push(C_INTEGER_LARGE_POS + strFromLargeUint(data));
+            } else if ( data > 0 ) {
+                writeBuffer.push(C_INTEGER_SMALL_POS + intToChar[data]);
+            } else if ( data > -NUMSAFECHARS ) {
+                writeBuffer.push(C_INTEGER_SMALL_NEG + intToChar[-data]);
             } else {
-                const s = `${data}`;
-                writeBuffer.push(C_FLOAT + strFromLargeUint(s.length) + s);
+                writeBuffer.push(C_INTEGER_LARGE_NEG + strFromLargeUint(-data));
             }
-            return;
-        case I_BOOL:
-            writeBuffer.push(data ? C_BOOL_TRUE : C_BOOL_FALSE);
-            return;
-        case I_OBJECT:
-            break;
-        default:
-            return;
+        } else {
+            const s = `${data}`;
+            writeBuffer.push(C_FLOAT + strFromLargeUint(s.length) + s);
+        }
+        return;
+    case I_BOOL:
+        writeBuffer.push(data ? C_BOOL_TRUE : C_BOOL_FALSE);
+        return;
+    case I_OBJECT:
+        break;
+    default:
+        return;
     }
     const xtypeName = Object.prototype.toString.call(data);
     const xtypeInt = xtypeToSerializedInt[xtypeName];
@@ -604,90 +605,90 @@ const _serialize = data => {
     writeRefs.set(data, refCounter++);
     // Extended type name
     switch ( xtypeInt ) {
-        case I_ARRAY: {
-            const size = data.length;
-            if ( size < NUMSAFECHARS ) {
-                writeBuffer.push(C_ARRAY_SMALL + intToChar[size]);
-            } else {
-                writeBuffer.push(C_ARRAY_LARGE + strFromLargeUint(size));
-            }
-            for ( const v of data ) {
-                _serialize(v);
-            }
-            return;
+    case I_ARRAY: {
+        const size = data.length;
+        if ( size < NUMSAFECHARS ) {
+            writeBuffer.push(C_ARRAY_SMALL + intToChar[size]);
+        } else {
+            writeBuffer.push(C_ARRAY_LARGE + strFromLargeUint(size));
         }
-        case I_SET: {
-            const size = data.size;
-            if ( size < NUMSAFECHARS ) {
-                writeBuffer.push(C_SET_SMALL + intToChar[size]);
-            } else {
-                writeBuffer.push(C_SET_LARGE + strFromLargeUint(size));
-            }
-            for ( const v of data ) {
-                _serialize(v);
-            }
-            return;
+        for ( const v of data ) {
+            _serialize(v);
         }
-        case I_MAP: {
-            const size = data.size;
-            if ( size < NUMSAFECHARS ) {
-                writeBuffer.push(C_MAP_SMALL + intToChar[size]);
-            } else {
-                writeBuffer.push(C_MAP_LARGE + strFromLargeUint(size));
-            }
-            for ( const [ k, v ] of data ) {
-                _serialize(k);
-                _serialize(v);
-            }
-            return;
+        return;
+    }
+    case I_SET: {
+        const size = data.size;
+        if ( size < NUMSAFECHARS ) {
+            writeBuffer.push(C_SET_SMALL + intToChar[size]);
+        } else {
+            writeBuffer.push(C_SET_LARGE + strFromLargeUint(size));
         }
-        case I_ARRAYBUFFER: {
-            const byteLength = data.byteLength;
-            writeBuffer.push(C_ARRAYBUFFER + strFromLargeUint(byteLength));
-            _serialize(data.maxByteLength);
-            const arrbuffDetails = analyzeArrayBuffer(data);
-            _serialize(arrbuffDetails.dense);
-            const str = arrbuffDetails.dense
-                ? denseArrayBufferToStr(data, arrbuffDetails)
-                : sparseArrayBufferToStr(data, arrbuffDetails);
-            _serialize(str);
-            //console.log(`arrbuf size=${byteLength} content size=${arrbuffDetails.end} dense=${arrbuffDetails.dense} array size=${arrbuffDetails.dense ? arrbuffDetails.denseSize : arrbuffDetails.sparseSize} serialized size=${str.length}`);
-            return;
+        for ( const v of data ) {
+            _serialize(v);
         }
-        case I_INT8ARRAY:
-        case I_UINT8ARRAY:
-        case I_UINT8CLAMPEDARRAY:
-        case I_INT16ARRAY:
-        case I_UINT16ARRAY:
-        case I_INT32ARRAY:
-        case I_UINT32ARRAY:
-        case I_FLOAT32ARRAY:
-        case I_FLOAT64ARRAY:
-            writeBuffer.push(
-                xtypeToSerializedChar[xtypeName],
-                strFromLargeUint(data.byteOffset),
-                strFromLargeUint(data.length)
-            );
-            _serialize(data.buffer);
-            return;
-        case I_DATAVIEW:
-            writeBuffer.push(C_DATAVIEW, strFromLargeUint(data.byteOffset), strFromLargeUint(data.byteLength));
-            _serialize(data.buffer);
-            return;
-        default: {
-            const keys = Object.keys(data);
-            const size = keys.length;
-            if ( size < NUMSAFECHARS ) {
-                writeBuffer.push(C_OBJECT_SMALL + intToChar[size]);
-            } else {
-                writeBuffer.push(C_OBJECT_LARGE + strFromLargeUint(size));
-            }
-            for ( const key of keys ) {
-                _serialize(key);
-                _serialize(data[key]);
-            }
-            break;
+        return;
+    }
+    case I_MAP: {
+        const size = data.size;
+        if ( size < NUMSAFECHARS ) {
+            writeBuffer.push(C_MAP_SMALL + intToChar[size]);
+        } else {
+            writeBuffer.push(C_MAP_LARGE + strFromLargeUint(size));
         }
+        for ( const [ k, v ] of data ) {
+            _serialize(k);
+            _serialize(v);
+        }
+        return;
+    }
+    case I_ARRAYBUFFER: {
+        const byteLength = data.byteLength;
+        writeBuffer.push(C_ARRAYBUFFER + strFromLargeUint(byteLength));
+        _serialize(data.maxByteLength);
+        const arrbuffDetails = analyzeArrayBuffer(data);
+        _serialize(arrbuffDetails.dense);
+        const str = arrbuffDetails.dense
+            ? denseArrayBufferToStr(data, arrbuffDetails)
+            : sparseArrayBufferToStr(data, arrbuffDetails);
+        _serialize(str);
+        //console.log(`arrbuf size=${byteLength} content size=${arrbuffDetails.end} dense=${arrbuffDetails.dense} array size=${arrbuffDetails.dense ? arrbuffDetails.denseSize : arrbuffDetails.sparseSize} serialized size=${str.length}`);
+        return;
+    }
+    case I_INT8ARRAY:
+    case I_UINT8ARRAY:
+    case I_UINT8CLAMPEDARRAY:
+    case I_INT16ARRAY:
+    case I_UINT16ARRAY:
+    case I_INT32ARRAY:
+    case I_UINT32ARRAY:
+    case I_FLOAT32ARRAY:
+    case I_FLOAT64ARRAY:
+        writeBuffer.push(
+            xtypeToSerializedChar[xtypeName],
+            strFromLargeUint(data.byteOffset),
+            strFromLargeUint(data.length)
+        );
+        _serialize(data.buffer);
+        return;
+    case I_DATAVIEW:
+        writeBuffer.push(C_DATAVIEW, strFromLargeUint(data.byteOffset), strFromLargeUint(data.byteLength));
+        _serialize(data.buffer);
+        return;
+    default: {
+        const keys = Object.keys(data);
+        const size = keys.length;
+        if ( size < NUMSAFECHARS ) {
+            writeBuffer.push(C_OBJECT_SMALL + intToChar[size]);
+        } else {
+            writeBuffer.push(C_OBJECT_LARGE + strFromLargeUint(size));
+        }
+        for ( const key of keys ) {
+            _serialize(key);
+            _serialize(data[key]);
+        }
+        break;
+    }
     }
 };
 
@@ -697,146 +698,146 @@ const _deserialize = ( ) => {
     if ( readPtr >= readEnd ) { return; }
     const type = charCodeToInt[readStr.charCodeAt(readPtr++)];
     switch ( type ) {
-        // Primitive types
-        case I_STRING_SMALL:
-        case I_STRING_LARGE: {
-            const size = type === I_STRING_SMALL
-                ? charCodeToInt[readStr.charCodeAt(readPtr++)]
-                : deserializeLargeUint();
-            const beg = readPtr;
-            readPtr += size;
-            return readStr.slice(beg, readPtr);
+    // Primitive types
+    case I_STRING_SMALL:
+    case I_STRING_LARGE: {
+        const size = type === I_STRING_SMALL
+            ? charCodeToInt[readStr.charCodeAt(readPtr++)]
+            : deserializeLargeUint();
+        const beg = readPtr;
+        readPtr += size;
+        return readStr.slice(beg, readPtr);
+    }
+    case I_ZERO:
+        return 0;
+    case I_INTEGER_SMALL_POS:
+        return charCodeToInt[readStr.charCodeAt(readPtr++)];
+    case I_INTEGER_SMALL_NEG:
+        return -charCodeToInt[readStr.charCodeAt(readPtr++)];
+    case I_INTEGER_LARGE_POS:
+        return deserializeLargeUint();
+    case I_INTEGER_LARGE_NEG:
+        return -deserializeLargeUint();
+    case I_BOOL_FALSE:
+        return false;
+    case I_BOOL_TRUE:
+        return true;
+    case I_NULL:
+        return null;
+    case I_UNDEFINED:
+        return;
+    case I_FLOAT: {
+        const size = deserializeLargeUint();
+        const beg = readPtr;
+        readPtr += size;
+        return parseFloat(readStr.slice(beg, readPtr));
+    }
+    case I_REGEXP: {
+        const source = _deserialize();
+        const flags = _deserialize();
+        return new RegExp(source, flags);
+    }
+    case I_DATE: {
+        const time = _deserialize();
+        return new Date(time);
+    }
+    case I_REFERENCE: {
+        const ref = deserializeLargeUint();
+        return readRefs.get(ref);
+    }
+    case I_OBJECT_SMALL:
+    case I_OBJECT_LARGE: {
+        const entries = [];
+        const size = type === I_OBJECT_SMALL
+            ? charCodeToInt[readStr.charCodeAt(readPtr++)]
+            : deserializeLargeUint();
+        for ( let i = 0; i < size; i++ ) {
+            const k = _deserialize();
+            const v = _deserialize();
+            entries.push([ k, v ]);
         }
-        case I_ZERO:
-            return 0;
-        case I_INTEGER_SMALL_POS:
-            return charCodeToInt[readStr.charCodeAt(readPtr++)];
-        case I_INTEGER_SMALL_NEG:
-            return -charCodeToInt[readStr.charCodeAt(readPtr++)];
-        case I_INTEGER_LARGE_POS:
-            return deserializeLargeUint();
-        case I_INTEGER_LARGE_NEG:
-            return -deserializeLargeUint();
-        case I_BOOL_FALSE:
-            return false;
-        case I_BOOL_TRUE:
-            return true;
-        case I_NULL:
-            return null;
-        case I_UNDEFINED:
-            return;
-        case I_FLOAT: {
-            const size = deserializeLargeUint();
-            const beg = readPtr;
-            readPtr += size;
-            return parseFloat(readStr.slice(beg, readPtr));
+        const out = Object.fromEntries(entries);
+        readRefs.set(refCounter++, out);
+        return out;
+    }
+    case I_ARRAY_SMALL:
+    case I_ARRAY_LARGE: {
+        const out = [];
+        const size = type === I_ARRAY_SMALL
+            ? charCodeToInt[readStr.charCodeAt(readPtr++)]
+            : deserializeLargeUint();
+        for ( let i = 0; i < size; i++ ) {
+            out.push(_deserialize());
         }
-        case I_REGEXP: {
-            const source = _deserialize();
-            const flags = _deserialize();
-            return new RegExp(source, flags);
+        readRefs.set(refCounter++, out);
+        return out;
+    }
+    case I_SET_SMALL:
+    case I_SET_LARGE: {
+        const entries = [];
+        const size = type === I_SET_SMALL
+            ? charCodeToInt[readStr.charCodeAt(readPtr++)]
+            : deserializeLargeUint();
+        for ( let i = 0; i < size; i++ ) {
+            entries.push(_deserialize());
         }
-        case I_DATE: {
-            const time = _deserialize();
-            return new Date(time);
+        const out = new Set(entries);
+        readRefs.set(refCounter++, out);
+        return out;
+    }
+    case I_MAP_SMALL:
+    case I_MAP_LARGE: {
+        const entries = [];
+        const size = type === I_MAP_SMALL
+            ? charCodeToInt[readStr.charCodeAt(readPtr++)]
+            : deserializeLargeUint();
+        for ( let i = 0; i < size; i++ ) {
+            const k = _deserialize();
+            const v = _deserialize();
+            entries.push([ k, v ]);
         }
-        case I_REFERENCE: {
-            const ref = deserializeLargeUint();
-            return readRefs.get(ref);
+        const out = new Map(entries);
+        readRefs.set(refCounter++, out);
+        return out;
+    }
+    case I_ARRAYBUFFER: {
+        const byteLength = deserializeLargeUint();
+        const maxByteLength = _deserialize();
+        let options;
+        if ( maxByteLength !== 0 && maxByteLength !== byteLength ) {
+            options = { maxByteLength };
         }
-        case I_OBJECT_SMALL:
-        case I_OBJECT_LARGE: {
-            const entries = [];
-            const size = type === I_OBJECT_SMALL
-                ? charCodeToInt[readStr.charCodeAt(readPtr++)]
-                : deserializeLargeUint();
-            for ( let i = 0; i < size; i++ ) {
-                const k = _deserialize();
-                const v = _deserialize();
-                entries.push([ k, v ]);
-            }
-            const out = Object.fromEntries(entries);
-            readRefs.set(refCounter++, out);
-            return out;
+        const arrbuf = new ArrayBuffer(byteLength, options);
+        const dense = _deserialize();
+        const str = _deserialize();
+        if ( dense ) {
+            denseArrayBufferFromStr(str, arrbuf);
+        } else {
+            sparseArrayBufferFromStr(str, arrbuf);
         }
-        case I_ARRAY_SMALL:
-        case I_ARRAY_LARGE: {
-            const out = [];
-            const size = type === I_ARRAY_SMALL
-                ? charCodeToInt[readStr.charCodeAt(readPtr++)]
-                : deserializeLargeUint();
-            for ( let i = 0; i < size; i++ ) {
-                out.push(_deserialize());
-            }
-            readRefs.set(refCounter++, out);
-            return out;
-        }
-        case I_SET_SMALL:
-        case I_SET_LARGE: {
-            const entries = [];
-            const size = type === I_SET_SMALL
-                ? charCodeToInt[readStr.charCodeAt(readPtr++)]
-                : deserializeLargeUint();
-            for ( let i = 0; i < size; i++ ) {
-                entries.push(_deserialize());
-            }
-            const out = new Set(entries);
-            readRefs.set(refCounter++, out);
-            return out;
-        }
-        case I_MAP_SMALL:
-        case I_MAP_LARGE: {
-            const entries = [];
-            const size = type === I_MAP_SMALL
-                ? charCodeToInt[readStr.charCodeAt(readPtr++)]
-                : deserializeLargeUint();
-            for ( let i = 0; i < size; i++ ) {
-                const k = _deserialize();
-                const v = _deserialize();
-                entries.push([ k, v ]);
-            }
-            const out = new Map(entries);
-            readRefs.set(refCounter++, out);
-            return out;
-        }
-        case I_ARRAYBUFFER: {
-            const byteLength = deserializeLargeUint();
-            const maxByteLength = _deserialize();
-            let options;
-            if ( maxByteLength !== 0 && maxByteLength !== byteLength ) {
-                options = { maxByteLength };
-            }
-            const arrbuf = new ArrayBuffer(byteLength, options);
-            const dense = _deserialize();
-            const str = _deserialize();
-            if ( dense ) {
-                denseArrayBufferFromStr(str, arrbuf);
-            } else {
-                sparseArrayBufferFromStr(str, arrbuf);
-            }
-            readRefs.set(refCounter++, arrbuf);
-            return arrbuf;
-        }
-        case I_INT8ARRAY:
-        case I_UINT8ARRAY:
-        case I_UINT8CLAMPEDARRAY:
-        case I_INT16ARRAY:
-        case I_UINT16ARRAY:
-        case I_INT32ARRAY:
-        case I_UINT32ARRAY:
-        case I_FLOAT32ARRAY:
-        case I_FLOAT64ARRAY:
-        case I_DATAVIEW: {
-            const byteOffset = deserializeLargeUint();
-            const length = deserializeLargeUint();
-            const arrayBuffer = _deserialize();
-            const ctor = toArrayBufferViewConstructor[`${type}`];
-            const out = new ctor(arrayBuffer, byteOffset, length);
-            readRefs.set(refCounter++, out);
-            return out;
-        }
-        default:
-            break;
+        readRefs.set(refCounter++, arrbuf);
+        return arrbuf;
+    }
+    case I_INT8ARRAY:
+    case I_UINT8ARRAY:
+    case I_UINT8CLAMPEDARRAY:
+    case I_INT16ARRAY:
+    case I_UINT16ARRAY:
+    case I_INT32ARRAY:
+    case I_UINT32ARRAY:
+    case I_FLOAT32ARRAY:
+    case I_FLOAT64ARRAY:
+    case I_DATAVIEW: {
+        const byteOffset = deserializeLargeUint();
+        const length = deserializeLargeUint();
+        const arrayBuffer = _deserialize();
+        const ctor = toArrayBufferViewConstructor[`${type}`];
+        const out = new ctor(arrayBuffer, byteOffset, length);
+        readRefs.set(refCounter++, out);
+        return out;
+    }
+    default:
+        break;
     }
     readPtr = FAILMARK;
 };
@@ -1128,7 +1129,7 @@ export const getConfig = ( ) => Object.assign({}, currentConfig);
 
 export const setConfig = config => {
     for ( const key in Object.keys(config) ) {
-        if ( defaultConfig.hasOwnProperty(key) === false ) { continue; }
+        if ( hasOwnProperty(defaultConfig, key) === false ) { continue; }
         const val = config[key];
         if ( typeof val !== typeof defaultConfig[key] ) { continue; }
         if ( (validateConfig[key])(val) === false ) { continue; }
@@ -1385,19 +1386,22 @@ if ( isInstanceOf(globalThis, 'DedicatedWorkerGlobalScope') ) {
     globalThis.onmessage = ev => {
         const msg = ev.data;
         switch ( msg.what ) {
-            case THREAD_AREYOUREADY:
-                setConfig(msg.config);
-                globalThis.postMessage({ what: THREAD_IAMREADY });
-                break;
-            case THREAD_SERIALIZE:
-                const result = serialize(msg.data, msg.options);
-                globalThis.postMessage({ id: msg.id, size: msg.size, result });
-                break;
-            case THREAD_DESERIALIZE: {
-                const result = deserialize(msg.data);
-                globalThis.postMessage({ id: msg.id, size: msg.size, result });
-                break;
-            }
+        case THREAD_AREYOUREADY:
+            setConfig(msg.config);
+            globalThis.postMessage({ what: THREAD_IAMREADY });
+            break;
+        case THREAD_SERIALIZE: {
+            const result = serialize(msg.data, msg.options);
+            globalThis.postMessage({ id: msg.id, size: msg.size, result });
+            break;
+        }
+        case THREAD_DESERIALIZE: {
+            const result = deserialize(msg.data);
+            globalThis.postMessage({ id: msg.id, size: msg.size, result });
+            break;
+        }
+        default:
+            break;
         }
     };
 }
