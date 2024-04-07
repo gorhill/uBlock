@@ -486,16 +486,9 @@ const idbStorage = (( ) => {
 
     // Cache API is subject to quota so we will use it only for what is key
     // performance-wise
-    const shouldCache = bin => {
-        const out = {};
-        for ( const key of Object.keys(bin) ) {
-            if ( key.startsWith('cache/' ) ) {
-                if ( /^cache\/(compiled|selfie)\//.test(key) === false ) { continue; }
-            }
-            out[key] = bin[key];
-        }
-        if ( Object.keys(out).length === 0 ) { return; }
-        return out;
+    const shouldCache = key => {
+        if ( key.startsWith('cache/') === false ) { return true; }
+        return /^cache\/(compiled|selfie)\//.test(key);
     };
 
     const fromBlob = data => {
@@ -669,7 +662,12 @@ const idbStorage = (( ) => {
             if ( keys.length === 0 ) { return getAll(); }
             const entries = await getEntries(keys);
             const outbin = {};
+            const toRemove = [];
             for ( const { key, value } of entries ) {
+                if ( shouldCache(key) === false ) {
+                    toRemove.push(key);
+                    continue;
+                }
                 outbin[key] = value;
             }
             if ( argbin instanceof Object && Array.isArray(argbin) === false ) {
@@ -678,12 +676,18 @@ const idbStorage = (( ) => {
                     outbin[key] = argbin[key];
                 }
             }
+            if ( toRemove.length !== 0 ) {
+                deleteEntries(toRemove);
+            }
             return outbin;
         },
 
         async set(rawbin) {
-            const bin = shouldCache(rawbin);
-            if ( bin === undefined ) { return; }
+            const bin = {};
+            for ( const key of Object.keys(rawbin) ) {
+                if ( shouldCache(key) === false ) { continue; }
+                bin[key] = rawbin[key];
+            }
             return setEntries(bin);
         },
 
