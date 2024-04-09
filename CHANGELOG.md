@@ -1,8 +1,16 @@
 ## Fixes / changes
 
-- [Fix stray lists in redesigned cache storage](https://github.com/gorhill/uBlock/commit/defd68ef7d)
+- [Fix regression breaking import of `file://` lists](https://github.com/gorhill/uBlock/commit/c223a8cd39)
 - [Add `trusted-replace-outbound-text` scriptlet](https://github.com/gorhill/uBlock/commit/21e1ee30ee)
 - [Improve `[trusted-]set-cookie` scriptlets](https://github.com/gorhill/uBlock/commit/49ff7cffb1)
+
+----------
+
+# 1.57.2
+
+## Fixes / changes
+
+- [Fix stray lists in redesigned cache storage](https://github.com/gorhill/uBlock/commit/defd68ef7d)
 
 ----------
 
