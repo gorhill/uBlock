@@ -605,14 +605,10 @@ onBroadcast(msg => {
         this.hiddenSettings.autoCommentFilterTemplate.indexOf('{{') !== -1
     ) {
         const d = new Date();
-        // Date in YYYY-MM-DD format - https://stackoverflow.com/a/50130338
-        const ISO8601Date = new Date(d.getTime() +
-            (d.getTimezoneOffset()*60000)).toISOString().split('T')[0];
         const url = new URL(options.docURL);
-        comment =
-            '! ' +
+        comment = '! ' +
             this.hiddenSettings.autoCommentFilterTemplate
-                .replace('{{date}}', ISO8601Date)
+                .replace('{{date}}', d.toLocaleDateString(undefined, { dateStyle: 'medium' }))
                 .replace('{{time}}', d.toLocaleTimeString())
                 .replace('{{hostname}}', url.hostname)
                 .replace('{{origin}}', url.origin)
