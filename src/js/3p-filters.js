@@ -559,21 +559,20 @@ const selectFilterLists = async ( ) => {
         const textarea = qs$('#lists .listEntry[data-role="import"].expanded textarea');
         if ( textarea === null ) { return ''; }
         const lists = listsetDetails.available;
-        const lines = textarea.value.split(/\s+\n|\s+/);
+        const lines = textarea.value.split(/\s+/);
         const after = [];
         for ( const line of lines ) {
+            after.push(line);
             if ( /^https?:\/\//.test(line) === false ) { continue; }
             for ( const [ listkey, list ] of Object.entries(lists) ) {
                 if ( list.content !== 'filters' ) { continue; }
                 if ( list.contentURL === undefined ) { continue; }
-                if ( list.contentURL.includes(line) === false ) {
-                    after.push(line);
-                    continue;
-                }
+                if ( list.contentURL.includes(line) === false ) { continue; }
                 const groupkey = list.group2 || list.group;
                 const listEntry = qs$(`[data-key="${groupkey}"] [data-key="${listkey}"]`);
                 if ( listEntry === null ) { break; }
                 toggleFilterList(listEntry, true);
+                after.pop();
                 break;
             }
         }
