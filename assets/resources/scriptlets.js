@@ -3606,6 +3606,9 @@ function spoofCSS(
     const cloackFunc = (fn, thisArg, name) => {
         const trap = fn.bind(thisArg);
         Object.defineProperty(trap, 'name', { value: name });
+        Object.defineProperty(trap, 'toString', {
+            value: ( ) => `function ${name}() { [native code] }`
+        });
         return trap;
     };
     self.getComputedStyle = new Proxy(self.getComputedStyle, {
@@ -3619,7 +3622,7 @@ function spoofCSS(
                 get(target, prop, receiver) {
                     if ( typeof target[prop] === 'function' ) {
                         if ( prop === 'getPropertyValue' ) {
-                            return cloackFunc(function(prop) {
+                            return cloackFunc(function getPropertyValue(prop) {
                                 return spoofStyle(prop, target[prop]);
                             }, target, 'getPropertyValue');
                         }
