@@ -1,5 +1,8 @@
 ## Fixes / changes
 
+- [Improve suggested candidate filters in element picker](https://github.com/gorhill/uBlock/commit/c0b56cffab)
+- [Improve `spoof-css` scriptlet](https://github.com/gorhill/uBlock/commit/277e90a4a7)
+- [Fix bad date computation in auto-comment feature](https://github.com/gorhill/uBlock/commit/a5f6c35bb0)
 - [Fix regression breaking import of `file://` lists](https://github.com/gorhill/uBlock/commit/c223a8cd39)
 - [Add `trusted-replace-outbound-text` scriptlet](https://github.com/gorhill/uBlock/commit/21e1ee30ee)
 - [Improve `[trusted-]set-cookie` scriptlets](https://github.com/gorhill/uBlock/commit/49ff7cffb1)
