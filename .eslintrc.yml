@@ -16,6 +16,7 @@ rules:
         - Program > ExpressionStatement > CallExpression > ArrowFunctionExpression > BlockStatement
         - CallExpression > MemberExpression
         - ArrayExpression > *
+        - ObjectExpression > *
     no-control-regex: off
     no-empty: off
     sort-imports: warn

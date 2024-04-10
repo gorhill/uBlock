@@ -21,14 +21,13 @@
 
 /* global CodeMirror */
 
-'use strict';
-
 import './codemirror/ubo-static-filtering.js';
 
+import * as sfp from './static-filtering-parser.js';
+
+import { dom } from './dom.js';
 import { hostnameFromURI } from './uri-utils.js';
 import punycode from '../lib/punycode.js';
-import * as sfp from './static-filtering-parser.js';
-import { dom } from './dom.js';
 
 /******************************************************************************/
 /******************************************************************************/
@@ -63,13 +62,10 @@ const reCosmeticAnchor = /^#(\$|\?|\$\?)?#/;
 
 const docURL = new URL(vAPI.getURL(''));
 
-let resultsetOpt;
-
-let netFilterCandidates = [];
-let cosmeticFilterCandidates = [];
-let computedCandidateSlot = 0;
-let computedCandidate = '';
 const computedSpecificityCandidates = new Map();
+let resultsetOpt;
+let cosmeticFilterCandidates = [];
+let computedCandidate = '';
 let needBody = false;
 
 /******************************************************************************/
@@ -183,7 +179,6 @@ const candidateFromFilterChoice = function(filterChoice) {
         elem.classList.remove('active');
     }
 
-    computedCandidateSlot = slot;
     computedCandidate = '';
 
     if ( filter === undefined ) { return ''; }
@@ -726,7 +721,6 @@ const svgListening = (( ) => {
 // current mode is narrow or broad.
 
 const populateCandidates = function(candidates, selector) {
-    
     const root = dialog.querySelector(selector);
     const ul = root.querySelector('ul');
     while ( ul.firstChild !== null ) {
@@ -750,8 +744,6 @@ const showDialog = function(details) {
     pausePicker();
 
     const { netFilters, cosmeticFilters, filter } = details;
-
-    netFilterCandidates = netFilters;
 
     needBody  =
         cosmeticFilters.length !== 0 &&
@@ -869,31 +861,31 @@ const quitPicker = function() {
 
 const onPickerMessage = function(msg) {
     switch ( msg.what ) {
-        case 'candidatesOptimized':
-            onCandidatesOptimized(msg);
-            break;
-        case 'showDialog':
-            showDialog(msg);
-            break;
-        case 'resultsetDetails': {
-            resultsetOpt = msg.opt;
-            $id('resultsetCount').textContent = msg.count;
-            if ( msg.count !== 0 ) {
-                $id('create').removeAttribute('disabled');
-            } else {
-                $id('create').setAttribute('disabled', '');
-            }
-            break;
+    case 'candidatesOptimized':
+        onCandidatesOptimized(msg);
+        break;
+    case 'showDialog':
+        showDialog(msg);
+        break;
+    case 'resultsetDetails': {
+        resultsetOpt = msg.opt;
+        $id('resultsetCount').textContent = msg.count;
+        if ( msg.count !== 0 ) {
+            $id('create').removeAttribute('disabled');
+        } else {
+            $id('create').setAttribute('disabled', '');
         }
-        case 'svgPaths': {
-            let { ocean, islands } = msg;
-            ocean += islands;
-            svgOcean.setAttribute('d', ocean);
-            svgIslands.setAttribute('d', islands || NoPaths);
-            break;
-        }
-        default:
-            break;
+        break;
+    }
+    case 'svgPaths': {
+        let { ocean, islands } = msg;
+        ocean += islands;
+        svgOcean.setAttribute('d', ocean);
+        svgIslands.setAttribute('d', islands || NoPaths);
+        break;
+    }
+    default:
+        break;
     }
 };
 
