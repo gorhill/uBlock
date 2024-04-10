@@ -19,10 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* globals browser */
-
-'use strict';
-
 import { dom, qs$, qsa$ } from './dom.js';
 
 /******************************************************************************/
@@ -38,7 +34,6 @@ const domTree = qs$('#domTree');
 const filterToIdMap = new Map();
 
 let inspectedTabId = 0;
-let inspectedURL = '';
 let inspectedHostname = '';
 let uidGenerator = 1;
 
@@ -112,7 +107,6 @@ const contentInspectorChannel = (( ) => {
 
     const onContentMessage = msg => {
         if ( msg.what === 'domLayoutFull' ) {
-            inspectedURL = msg.url;
             inspectedHostname = msg.hostname;
             renderDOMFull(msg);
         } else if ( msg.what === 'domLayoutIncremental' ) {
@@ -661,9 +655,9 @@ const revert = ( ) => {
 const toggleOn = ( ) => {
     dom.cl.add('#inspectors', 'dom');
     window.addEventListener('beforeunload', toggleOff);
-    document.addEventListener('tabIdChanged', onTabIdChanged);
-    domTree.addEventListener('click', onClicked, true);
-    domTree.addEventListener('mouseover', onMouseOver, true);
+    dom.on(document, 'tabIdChanged', onTabIdChanged);
+    dom.on(domTree, 'click', onClicked, true);
+    dom.on(domTree, 'mouseover', onMouseOver, true);
     dom.on('#domInspector .vExpandToggler', 'click', toggleVExpandView);
     dom.on('#domInspector .vCompactToggler', 'click', toggleVCompactView);
     dom.on('#domInspector .hCompactToggler', 'click', toggleHCompactView);
@@ -680,9 +674,9 @@ const toggleOff = ( ) => {
     dom.cl.remove('#inspectors', 'dom');
     shutdownInspector();
     window.removeEventListener('beforeunload', toggleOff);
-    document.removeEventListener('tabIdChanged', onTabIdChanged);
-    domTree.removeEventListener('click', onClicked, true);
-    domTree.removeEventListener('mouseover', onMouseOver, true);
+    dom.off(document, 'tabIdChanged', onTabIdChanged);
+    dom.off(domTree, 'click', onClicked, true);
+    dom.off(domTree, 'mouseover', onMouseOver, true);
     dom.off('#domInspector .vExpandToggler', 'click', toggleVExpandView);
     dom.off('#domInspector .vCompactToggler', 'click', toggleVCompactView);
     dom.off('#domInspector .hCompactToggler', 'click', toggleHCompactView);
@@ -700,7 +694,6 @@ const toggle = ( ) => {
     } else {
         toggleOff();
     }
-    logger.resize();
 };
 
 dom.on(showdomButton, 'click', toggle);

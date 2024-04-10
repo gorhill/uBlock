@@ -19,10 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* globals browser */
-
-'use strict';
-
 /******************************************************************************/
 /******************************************************************************/
 
@@ -31,7 +27,7 @@
 /******************************************************************************/
 
 if ( typeof vAPI !== 'object' ) { return; }
-if ( typeof vAPI === null ) { return; }
+if ( vAPI === null ) { return; }
 if ( vAPI.domFilterer instanceof Object === false ) { return; }
 
 if ( vAPI.inspectorFrame ) { return; }

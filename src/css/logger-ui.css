@@ -3,7 +3,7 @@ body {
     flex-direction: column;
     height: 100vh;
         height: 100svh;
-    overflow: hidden;
+    overflow-y: hidden;
     width: 100vw;
     }
 textarea {
@@ -63,19 +63,28 @@ textarea {
     => https://devhints.io/css-system-font-stack
 */
 #inspectors {
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
+    flex-wrap: nowrap;
     font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    overflow: hidden;
     position: relative;
     }
 .inspector {
-    border-top: 1px solid #ccc;
+    border-top: 1px solid var(--border-4);
     display: flex;
     flex-direction: column;
+    height: 100%;
+    }
+.inspector .permatoolbar {
+    border-bottom: 1px solid var(--border-1);
     }
 .vscrollable {
     direction: ltr;
     flex-grow: 1;
     font-size: var(--font-size-smaller);
+    height: 1px; /* necessary for proper space allocation by flex boxes */
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -106,7 +115,6 @@ textarea {
 }
 #netInspector #filterExprGroup {
     display: flex;
-    margin: 0 1em;
     position: relative;
     }
 #netInspector #filterButton {
@@ -295,7 +303,7 @@ body[dir="rtl"] #netInspector #filterExprPicker {
     display: inline-block;
     height: 100%;
     overflow: hidden;
-    padding: 0.2em;
+    padding: 2px;
     vertical-align: middle;
     white-space: nowrap;
     word-break: break-all;
@@ -391,7 +399,6 @@ body[dir="rtl"] #vwRenderer .logEntry > .fields > span:first-child {
 #vwRenderer .logEntry > .fields > span:nth-of-type(8) a {
     align-items: center;
     background-color: dimgray;
-    bottom: 0;
     color: white;
     display: none;
     height: min(100%, 1.5em);
@@ -401,6 +408,7 @@ body[dir="rtl"] #vwRenderer .logEntry > .fields > span:first-child {
     position: absolute;
     right: 0;
     text-decoration: none;
+    top: 0;
     width: 1.5em;
     }
 #netInspector.vExpanded #vwRenderer .logEntry > .fields > span:nth-of-type(8) a {
@@ -462,20 +470,12 @@ body[dir="rtl"] #vwRenderer .logEntry > .fields > span:first-child {
     width: 100%;
     }
 
-#netInspector .entryTools {
+#inspectors .entryTools {
     background-color: var(--surface-0);
-    filter: drop-shadow(2px 4px 6px black);
-    max-width: 640px;
-    min-width: min(100%, 640px);
-    position: absolute;
-    z-index: 2;
+    flex-basis: 50%;
     }
-#netInspector .entryTools:empty {
+#inspectors .entryTools:empty {
     display: none;
-    }
-#netInspector .entryTools .dialogControls {
-    display: flex;
-    justify-content: stretch;
     }
 
 .closeButton {
@@ -497,15 +497,28 @@ body[dir="rtl"] .closeButton {
 .closeButton > * {
     pointer-events: none;
     }
-.moveBand {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAFElEQVQI12NgwAfKy8v/M5ANYLoBshgEyQo6H9UAAAAASUVORK5CYII=');
-    cursor: grab;
-    flex-grow: 1;
-    opacity: 0.5;
+
+#inspectors #infoInspector {
+    flex-basis: 200%;
     }
-.moving .moveBand {
-    cursor: grabbing;
-}
+#inspectors:not(.console) #infoInspector {
+    display: none;
+    }
+#inspectors #infoInspector .vscrollable {
+    font-family: monospace;
+    font-size: small;
+    }
+#inspectors #infoInspector .vscrollable > div {
+    border-bottom: 1px dotted gray;
+    padding: 0.2em;
+    white-space: pre-wrap;
+    word-break: break-all;
+    }
+#inspectors #infoInspector .vscrollable > div:first-of-type {
+    }
+#inspectors #infoInspector .vscrollable > div[data-type="error"] {
+    color: var(--cm-negative);
+    }
 
 #popupContainer {
     background-color: var(--surface-1);
@@ -613,9 +626,10 @@ body[dir="rtl"] .closeButton {
     align-items: center;
     border-bottom: 1px solid var(--border-4);
     display: flex;
+    justify-content: space-between;
     line-height: 2;
     }
-.netFilteringDialog > .headers > .header {
+.netFilteringDialog > .headers .header {
     border: 1px solid var(--border-2);
     border-bottom: 1px solid var(--border-4);
     border-top-left-radius: 4px;
@@ -628,9 +642,9 @@ body[dir="rtl"] .closeButton {
     position: relative;
     top: 1px;
     }
-.netFilteringDialog[data-pane="details"] > .headers > [data-pane="details"],
-.netFilteringDialog[data-pane="dynamic"] > .headers > [data-pane="dynamic"],
-.netFilteringDialog[data-pane="static"] > .headers > [data-pane="static"] {
+.netFilteringDialog[data-pane="details"] > .headers [data-pane="details"],
+.netFilteringDialog[data-pane="dynamic"] > .headers [data-pane="dynamic"],
+.netFilteringDialog[data-pane="static"] > .headers [data-pane="static"] {
     background-color: var(--surface-0);
     border-color: var(--border-4);
     border-bottom: 1px solid transparent;
@@ -654,11 +668,11 @@ body[dir="rtl"] .closeButton {
     color: var(--ink-1);
         fill: var(--ink-1);
     }
-.netFilteringDialog.extendedRealm > .headers > .dynamic,
+.netFilteringDialog.extendedRealm > .headers .dynamic,
 .netFilteringDialog.extendedRealm > .panes > .dynamic {
     display: none;
     }
-.netFilteringDialog.extendedRealm > .headers > .static,
+.netFilteringDialog.extendedRealm > .headers .static,
 .netFilteringDialog.extendedRealm > .panes > .static {
     display: none;
     }
@@ -875,8 +889,6 @@ body.dirty .netFilteringDialog > div.panes > .dynamic > .toolbar #saveRules {
     }
 .netFilteringDialog > div.panes > div.static textarea {
     height: 6em;
-    max-height: 20vh;
-    min-height: 10vh;
     word-break: break-all;
     }
 .netFilteringDialog > div.panes > div.static > div:nth-of-type(2) {

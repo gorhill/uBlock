@@ -1,5 +1,6 @@
 #domInspector {
     display: none;
+    overflow: hidden;
     }
 #inspectors.dom #domInspector {
     display: flex;

@@ -19,12 +19,10 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
+import { dom, qs$, qsa$ } from './dom.js';
+import { i18n, i18n$ } from './i18n.js';
 import { broadcast } from './broadcast.js';
 import { hostnameFromURI } from './uri-utils.js';
-import { i18n, i18n$ } from './i18n.js';
-import { dom, qs$, qsa$ } from './dom.js';
 
 /******************************************************************************/
 
@@ -36,7 +34,6 @@ const logger = self.logger = { ownerId: Date.now() };
 const logDate = new Date();
 const logDateTimezoneOffset = logDate.getTimezoneOffset() * 60;
 const loggerEntries = [];
-let loggerEntryIdGenerator = 1;
 
 const COLUMN_TIMESTAMP = 0;
 const COLUMN_FILTER = 1;
@@ -73,95 +70,12 @@ const tabIdFromAttribute = function(elem) {
     return isNaN(tabId) ? 0 : tabId;
 };
 
+const hasOwnProperty = (o, p) =>
+    Object.prototype.hasOwnProperty.call(o, p);
 
-/******************************************************************************/
-/******************************************************************************/
-
-const onStartMovingWidget = (( ) => {
-    let widget = null;
-    let ondone = null;
-    let mx0 = 0, my0 = 0;
-    let mx1 = 0, my1 = 0;
-    let l0 = 0, t0 = 0;
-    let pw = 0, ph = 0;
-    let cw = 0, ch = 0;
-    let timer;
-
-    const xyFromEvent = ev => {
-        if ( ev.type.startsWith('mouse') ) {
-            return { x: ev.pageX, y: ev.pageY };
-        }
-        const touch = ev.touches[0];
-        return  { x: touch.pageX, y: touch.pageY };
-    };
-
-    const eatEvent = function(ev) {
-        ev.stopPropagation();
-        if ( ev.touches !== undefined ) { return; }
-        ev.preventDefault();
-    };
-
-    const move = ( ) => {
-        timer = undefined;
-        const l1 = Math.min(Math.max(l0 + mx1 - mx0, 0), Math.max(pw - cw, 0));
-        if ( (l1+cw/2) < (pw/2) ) {
-            widget.style.left = `${l1/pw*100}%`;
-            widget.style.right = '';
-        } else {
-            widget.style.right = `${(pw-l1-cw)/pw*100}%`;
-            widget.style.left = '';
-        }
-        const t1 = Math.min(Math.max(t0 + my1 - my0, 0), Math.max(ph - ch, 0));
-        widget.style.top = `${t1/ph*100}%`;
-        widget.style.bottom = '';
-    };
-
-    const moveAsync = ev => {
-        if ( timer !== undefined ) { return; }
-        const coord = xyFromEvent(ev);
-        mx1 = coord.x; my1 = coord.y;
-        timer = self.requestAnimationFrame(move);
-        eatEvent(ev);
-    };
-
-    const stop = ev => {
-        if ( timer !== undefined ) {
-            self.cancelAnimationFrame(timer);
-            timer = undefined;
-        }
-        if ( widget === null ) { return; }
-        if ( widget.classList.contains('moving') === false ) { return; }
-        widget.classList.remove('moving');
-        self.removeEventListener('mousemove', moveAsync, { capture: true });
-        self.removeEventListener('touchmove', moveAsync, { capture: true });
-        eatEvent(ev);
-        widget = null;
-        if ( ondone !== null ) {
-            ondone();
-            ondone = null;
-        }
-    };
-
-    return function(ev, target, callback) {
-        if ( dom.cl.has(target, 'moving') ) { return; }
-        widget = target;
-        ondone = callback || null;
-        const coord = xyFromEvent(ev);
-        mx0 = coord.x; my0 = coord.y;
-        const widgetParent = widget.parentElement;
-        const crect = widget.getBoundingClientRect();
-        const prect = widgetParent.getBoundingClientRect();
-        pw = prect.width; ph = prect.height;
-        cw = crect.width; ch = crect.height;
-        l0 = crect.x - prect.x; t0 = crect.y - prect.y;
-        widget.classList.add('moving');
-        self.addEventListener('mousemove', moveAsync, { capture: true });
-        self.addEventListener('mouseup', stop, { capture: true, once: true });
-        self.addEventListener('touchmove', moveAsync, { capture: true });
-        self.addEventListener('touchend', stop, { capture: true, once: true });
-        eatEvent(ev);
-    };
-})();
+const dispatchTabidChange = vAPI.defer.create(( ) => {
+    document.dispatchEvent(new Event('tabIdChanged'));
+});
 
 /******************************************************************************/
 /******************************************************************************/
@@ -285,17 +199,17 @@ const nodeFromURL = function(parent, url, re, type) {
         const a = document.createElement('a');
         let href = url;
         switch ( type ) {
-            case 'css':
-            case 'doc':
-            case 'frame':
-            case 'object':
-            case 'other':
-            case 'script':
-            case 'xhr':
-                href = `code-viewer.html?url=${encodeURIComponent(href)}`;
-                break;
-            default:
-                break;
+        case 'css':
+        case 'doc':
+        case 'frame':
+        case 'object':
+        case 'other':
+        case 'script':
+        case 'xhr':
+            href = `code-viewer.html?url=${encodeURIComponent(href)}`;
+            break;
+        default:
+            break;
         }
         dom.attr(a, 'href', href);
         dom.attr(a, 'target', '_blank');
@@ -316,45 +230,44 @@ const normalizeToStr = function(s) {
 
 /******************************************************************************/
 
-const LogEntry = function(details) {
-    if ( details instanceof Object === false ) { return; }
-    const receiver = LogEntry.prototype;
-    for ( const prop in receiver ) {
-        if ( details.hasOwnProperty(prop) === false ) { continue; }
-        if ( details[prop] === receiver[prop] ) { continue; }
-        this[prop] = details[prop];
+class LogEntry {
+    static IdGenerator = 1;
+    constructor(details) {
+        this.aliased = false;
+        this.dead = false;
+        this.docDomain = '';
+        this.docHostname = '';
+        this.domain = '';
+        this.filter = undefined;
+        this.id = LogEntry.IdGenerator++;
+        this.method = '';
+        this.realm = '';
+        this.tabDomain = '';
+        this.tabHostname = '';
+        this.tabId = undefined;
+        this.textContent = '';
+        this.tstamp = 0;
+        this.type = '';
+        this.voided = false;
+        if ( details instanceof Object === false ) { return; }
+        for ( const prop in this ) {
+            if ( hasOwnProperty(details, prop) === false ) { continue; }
+            this[prop] = details[prop];
+        }
+        if ( details.aliasURL !== undefined ) {
+            this.aliased = true;
+        }
+        if ( this.tabDomain === '' ) {
+            this.tabDomain = this.tabHostname || '';
+        }
+        if ( this.docDomain === '' ) {
+            this.docDomain = this.docHostname || '';
+        }
+        if ( this.domain === '' ) {
+            this.domain = details.hostname || '';
+        }
     }
-    this.id = `${loggerEntryIdGenerator++}`;
-    if ( details.aliasURL !== undefined ) {
-        this.aliased = true;
-    }
-    if ( this.tabDomain === '' ) {
-        this.tabDomain = this.tabHostname || '';
-    }
-    if ( this.docDomain === '' ) {
-        this.docDomain = this.docHostname || '';
-    }
-    if ( this.domain === '' ) {
-        this.domain = details.hostname || '';
-    }
-};
-LogEntry.prototype = {
-    aliased: false,
-    dead: false,
-    docDomain: '',
-    docHostname: '',
-    domain: '',
-    filter: undefined,
-    method: '',
-    realm: '',
-    tabDomain: '',
-    tabHostname: '',
-    tabId: undefined,
-    textContent: '',
-    tstamp: 0,
-    type: '',
-    voided: false,
-};
+}
 
 /******************************************************************************/
 
@@ -442,10 +355,10 @@ const processLoggerEntries = function(response) {
     }
 
     const addedCount = filteredLoggerEntries.length - previousCount;
-    if ( addedCount !== 0 ) {
-        viewPort.updateContent(addedCount);
-        rowJanitor.inserted(addedCount);
-    }
+    if ( addedCount === 0 ) { return; }
+    viewPort.updateContent(addedCount);
+    rowJanitor.inserted(addedCount);
+    consolePane.updateContent();
 };
 
 /******************************************************************************/
@@ -716,10 +629,11 @@ const viewPort = (( ) => {
     };
 
     const resizeTimer = vAPI.defer.create(onLayoutChanged);
-    const updateLayout = function() {
+    const updateLayout = ( ) => {
         resizeTimer.onvsync(1000/8);
     };
-    dom.on(window, 'resize', updateLayout, { passive: true });
+    const resizeObserver = new self.ResizeObserver(updateLayout);
+    resizeObserver.observe(qs$('#netInspector .vscrollable'));
 
     updateLayout();
 
@@ -870,7 +784,7 @@ const viewPort = (( ) => {
         if ( cells.length > 8 ) {
             const pos = details.textContent.lastIndexOf('\x1FaliasURL=');
             if ( pos !== -1 ) {
-                dom.attr(div, 'data-aliasid', details.id);
+                div.dataset.aliasid = `${details.id}`;
             }
         }
 
@@ -969,7 +883,7 @@ const viewPort = (( ) => {
         vwScroller.scrollTop = lastTopPix;
     };
 
-    return { updateContent, updateLayout, };
+    return { updateContent, updateLayout };
 })();
 
 /******************************************************************************/
@@ -1008,7 +922,7 @@ const synchronizeTabIds = function(newTabIds) {
     // Mark as "void" all logger entries which are linked to now invalid
     // tab ids.
     // When an entry is voided without being removed, we re-create a new entry
-    // in order to ensure the entry has a new identity. A new identify ensures
+    // in order to ensure the entry has a new identity. A new identity ensures
     // that identity-based associations elsewhere are automatically
     // invalidated.
     if ( toVoid.size !== 0 ) {
@@ -1206,11 +1120,11 @@ const pageSelectorFromURLHash = (( ) => {
         if ( lastSelectedTabId === selectedTabId ) { return; }
 
         rowFilterer.filterAll();
-        document.dispatchEvent(new Event('tabIdChanged'));
         updateCurrentTabTitle();
         dom.cl.toggle('.needdom', 'disabled', selectedTabId <= 0);
         dom.cl.toggle('.needscope', 'disabled', selectedTabId <= 0);
         lastSelectedTabId = selectedTabId;
+        dispatchTabidChange.onric({ timeout: 1000 });
     };
 })();
 
@@ -1234,18 +1148,18 @@ dom.on(document, 'keydown', ev => {
     if ( ev.isComposing ) { return; }
     let bypassCache = false;
     switch ( ev.key ) {
-        case 'F5':
-            bypassCache = ev.ctrlKey || ev.metaKey || ev.shiftKey;
-            break;
-        case 'r':
-            if ( (ev.ctrlKey || ev.metaKey) !== true ) { return; }
-            break;
-        case 'R':
-            if ( (ev.ctrlKey || ev.metaKey) !== true ) { return; }
-            bypassCache = true;
-            break;
-        default:
-            return;
+    case 'F5':
+        bypassCache = ev.ctrlKey || ev.metaKey || ev.shiftKey;
+        break;
+    case 'r':
+        if ( (ev.ctrlKey || ev.metaKey) !== true ) { return; }
+        break;
+    case 'R':
+        if ( (ev.ctrlKey || ev.metaKey) !== true ) { return; }
+        bypassCache = true;
+        break;
+    default:
+        return;
     }
     reloadTab(bypassCache);
     ev.preventDefault();
@@ -1256,7 +1170,7 @@ dom.on(document, 'keydown', ev => {
 /******************************************************************************/
 
 (( ) => {
-    const reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
+    const reRFC3986 = /^([^:/?#]+:)?(\/\/[^/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
     const reSchemeOnly = /^[\w-]+:$/;
     const staticFilterTypes = {
         'beacon': 'ping',
@@ -1308,7 +1222,7 @@ dom.on(document, 'keydown', ev => {
     const onColorsReady = function(response) {
         dom.cl.toggle(dom.body, 'dirty', response.dirty);
         for ( const url in response.colors ) {
-            if ( response.colors.hasOwnProperty(url) === false ) { continue; }
+            if ( hasOwnProperty(response.colors, url) === false ) { continue; }
             const colorEntry = response.colors[url];
             const node = qs$(dialog, `.dynamic .entry .action[data-url="${url}"]`);
             if ( node === null ) { continue; }
@@ -1375,7 +1289,7 @@ dom.on(document, 'keydown', ev => {
         dom.cl.toggle(
             qs$(dialog, '#createStaticFilter'),
             'disabled',
-            createdStaticFilters.hasOwnProperty(value) || value === ''
+            hasOwnProperty(createdStaticFilters, value) || value === ''
         );
     };
 
@@ -1416,7 +1330,7 @@ dom.on(document, 'keydown', ev => {
             const value = staticFilterNode().value
                 .replace(/^((?:@@)?\/.+\/)(\$|$)/, '$1*$2');
             // Avoid duplicates
-            if ( createdStaticFilters.hasOwnProperty(value) ) { return; }
+            if ( hasOwnProperty(createdStaticFilters, value) ) { return; }
             createdStaticFilters[value] = true;
             // https://github.com/uBlockOrigin/uBlock-issues/issues/1281#issuecomment-704217175
             // TODO:
@@ -1624,7 +1538,7 @@ dom.on(document, 'keydown', ev => {
     const aliasURLFromID = function(id) {
         if ( id === '' ) { return ''; }
         for ( const entry of loggerEntries ) {
-            if ( entry.id !== id ) { continue; }
+            if ( `${entry.id}` !== id ) { continue; }
             const match = /\baliasURL=([^\x1F]+)/.exec(entry.textContent);
             if ( match === null ) { return ''; }
             return match[1];
@@ -1796,7 +1710,7 @@ dom.on(document, 'keydown', ev => {
             rows[7].style.display = 'none';
         }
         // Alias URL
-        text = dom.attr(tr, 'data-aliasid');
+        text = tr.dataset.aliasid;
         const aliasURL = text ? aliasURLFromID(text) : '';
         if ( aliasURL !== '' ) {
             rows[8].children[1].textContent =
@@ -1965,22 +1879,6 @@ dom.on(document, 'keydown', ev => {
         parseStaticInputs();
     };
 
-    const moveDialog = ev => {
-        if ( ev.button !== 0 && ev.touches === undefined ) { return; }
-        const widget = qs$('#netInspector .entryTools');
-        onStartMovingWidget(ev, widget, ( ) => {
-            vAPI.localStorage.setItem(
-                'loggerUI.entryTools',
-                JSON.stringify({
-                    bottom: widget.style.bottom,
-                    left: widget.style.left,
-                    right: widget.style.right,
-                    top: widget.style.top,
-                })
-            );
-        });
-    };
-
     const fillDialog = function(domains) {
         dialog = dom.clone('#templates .netFilteringDialog');
         dom.cl.toggle(
@@ -1998,15 +1896,12 @@ dom.on(document, 'keydown', ev => {
         dom.on(dialog, 'click', ev => { onClick(ev); }, true);
         dom.on(dialog, 'change', onSelectChange, true);
         dom.on(dialog, 'input', onInputChange, true);
-        const container = qs$('#netInspector .entryTools');
+        const container = qs$('#inspectors .entryTools');
         if ( container.firstChild ) {
             container.replaceChild(dialog, container.firstChild);
         } else {
             container.append(dialog);
         }
-        const moveBand = qs$(dialog, '.moveBand');
-        dom.on(moveBand, 'mousedown', moveDialog);
-        dom.on(moveBand, 'touchstart', moveDialog);
     };
 
     const toggleOn = async function(ev) {
@@ -2036,7 +1931,7 @@ dom.on(document, 'keydown', ev => {
     };
 
     const toggleOff = function() {
-        const container = qs$('#netInspector .entryTools');
+        const container = qs$('#inspectors .entryTools');
         if ( container.firstChild ) {
             container.firstChild.remove();
         }
@@ -2046,20 +1941,7 @@ dom.on(document, 'keydown', ev => {
     };
 
     // Restore position of entry tools dialog
-    vAPI.localStorage.getItemAsync(
-        'loggerUI.entryTools',
-    ).then(response => {
-        if ( typeof response !== 'string' ) { return; }
-        const settings = JSON.parse(response);
-        const widget = qs$('#netInspector .entryTools');
-        widget.style.bottom = '';
-        widget.style.left = settings.left || '';
-        widget.style.right = settings.right || '';
-        widget.style.top = settings.top || '';
-        if ( /^-/.test(widget.style.top) ) {
-            widget.style.top = '0';
-        }
-    });
+    vAPI.localStorage.removeItem('loggerUI.entryTools');
 
     // This is to detect text selection, in which case the click won't be
     // interpreted as a request to open the details of the entry.
@@ -2102,6 +1984,145 @@ dom.on(document, 'keydown', ev => {
             ev.stopPropagation();
         }
     );
+})();
+
+/******************************************************************************/
+/******************************************************************************/
+
+const consolePane = (( ) => {
+    let on = false;
+
+    const lastInfoEntry = ( ) => {
+        let j = Number.MAX_SAFE_INTEGER;
+        let i = loggerEntries.length;
+        while ( i-- ) {
+            const entry = loggerEntries[i];
+            if ( entry.tabId !== selectedTabId ) { continue; }
+            if ( entry.realm !== 'message' ) { continue; }
+            if ( entry.voided ) { continue; }
+            j = entry.id;
+        }
+        return j;
+    };
+
+    const filterExpr = {
+        not: true,
+        pattern: '',
+    };
+
+    const filterExprFromInput = ( ) => {
+        const raw = qs$('#infoInspector .permatoolbar input').value.trim();
+        if ( raw.startsWith('-') ) {
+            filterExpr.pattern = raw.slice(1);
+            filterExpr.not = true;
+        } else {
+            filterExpr.pattern = raw;
+            filterExpr.not = false;
+        }
+    };
+
+    const addRows = ( ) => {
+        const { not, pattern } = filterExpr;
+        const topRow = qs$('#infoInspector .vscrollable > div');
+        const topid = topRow !== null ? parseInt(topRow.dataset.id, 10) : 0;
+        const fragment = new DocumentFragment();
+        for ( const entry of loggerEntries ) {
+            if ( entry.id <= topid ) { break; }
+            if ( entry.tabId !== selectedTabId ) { continue; }
+            if ( entry.realm !== 'message' ) { continue; }
+            if ( entry.voided ) { continue; }
+            const fields = entry.textContent.split('\x1F').slice(0, 2);
+            const textContent = fields.join('\xA0');
+            if ( pattern !== '' ) {
+                if ( textContent.includes(pattern) === not ) { continue; }
+            }
+            const div = document.createElement('div');
+            div.dataset.id = `${entry.id}`;
+            div.dataset.type = entry.type;
+            div.textContent = textContent;
+            fragment.append(div);
+        }
+        const container = qs$('#infoInspector .vscrollable');
+        container.prepend(fragment);
+    }
+
+    const removeRows = (before = 0) => {
+        if ( before === 0 ) {
+            before = lastInfoEntry();
+        }
+        const rows = qsa$('#infoInspector .vscrollable > div');
+        let i = rows.length;
+        while ( i-- ) {
+            const div = rows[i];
+            const id = parseInt(div.dataset.id, 10);
+            if ( id > before ) { break; }
+            div.remove();
+        }
+    }
+
+    const updateContent = ( ) => {
+        if ( on === false ) { return; }
+        removeRows();
+        addRows();
+    };
+
+    const onTabIdChanged = ( ) => {
+        if ( on === false ) { return; }
+        removeRows(Number.MAX_SAFE_INTEGER);
+        addRows();
+    };
+
+    const toggleOn = ( ) => {
+        if ( on ) { return; }
+        addRows();
+        dom.on(document, 'tabIdChanged', onTabIdChanged);
+        on = true;
+    };
+
+    const toggleOff = ( ) => {
+        removeRows(Number.MAX_SAFE_INTEGER);
+        dom.off(document, 'tabIdChanged', onTabIdChanged);
+        on = false;
+    };
+
+    const resizeObserver = new self.ResizeObserver(entries => {
+        if ( entries.length === 0 ) { return; }
+        const rect = entries[0].contentRect;
+        if ( rect.width > 0 && rect.height > 0 ) {
+            toggleOn();
+        } else {
+            toggleOff();
+        }
+    });
+    resizeObserver.observe(qs$('#infoInspector'));
+
+    dom.on('button.logConsole', 'click', ev => {
+        const active = dom.cl.toggle('#inspectors', 'console');
+        dom.cl.toggle(ev.currentTarget, 'active', active);
+    });
+
+    dom.on('#infoInspector button#clearConsole', 'click', ( ) => {
+        const ids = [];
+        qsa$('#infoInspector .vscrollable > div').forEach(div => {
+            ids.push(parseInt(div.dataset.id, 10));
+        });
+        rowJanitor.removeSpecificRows(ids);
+    });
+
+    dom.on('#infoInspector button#logLevel', 'click', ev => {
+        const level = dom.cl.toggle(ev.currentTarget, 'active') ? 2 : 1;
+        broadcast({ what: 'loggerLevelChanged', level });
+    });
+
+    const throttleFilter = vAPI.defer.create(( ) => {
+        filterExprFromInput();
+        updateContent();
+    });
+    dom.on('#infoInspector .permatoolbar input', 'input', ( ) => {
+        throttleFilter.offon(517);
+    });
+
+    return { updateContent };
 })();
 
 /******************************************************************************/
@@ -2415,6 +2436,7 @@ const rowJanitor = (( ) => {
         if ( modified === false ) { return; }
 
         rowFilterer.filterAll();
+        consolePane.updateContent();
     };
 
     const discardAsync = function(deadline) {
@@ -2488,10 +2510,24 @@ const rowJanitor = (( ) => {
     dom.on('#clear', 'click', clear);
 
     return {
-        inserted: function(count) {
+        inserted(count) {
             if ( rowIndex !== 0 ) {
                 rowIndex += count;
             }
+        },
+        removeSpecificRows(descendingIds) {
+            if ( descendingIds.length === 0 ) { return; }
+            let i = loggerEntries.length;
+            let id = descendingIds.pop();
+            while ( i-- ) {
+                const entry = loggerEntries[i];
+                if ( entry.id !== id ) { continue; }
+                loggerEntries.splice(i, 1);
+                if ( descendingIds.length === 0 ) { break; }
+                id = descendingIds.pop();
+            }
+            rowFilterer.filterAll();
+            consolePane.updateContent();
         },
     };
 })();
@@ -2704,7 +2740,6 @@ const loggerStats = (( ) => {
         for ( const entry of filteredLoggerEntries ) {
             const text = entry.textContent;
             const fields = [];
-            let i = 0;
             let beg = text.indexOf('\x1F');
             if ( beg === 0 ) { continue; }
             let timeField = text.slice(0, beg);
@@ -2718,7 +2753,6 @@ const loggerStats = (( ) => {
                 if ( end === -1 ) { end = text.length; }
                 fields.push(text.slice(beg, end));
                 beg = end + 1;
-                i += 1;
             }
             lines.push(fields);
         }
@@ -2800,7 +2834,7 @@ const loggerStats = (( ) => {
     };
 
     const setRadioButton = function(group, value) {
-        if ( options.hasOwnProperty(group) === false ) { return; }
+        if ( hasOwnProperty(options, group) === false ) { return; }
         const groupEl = qs$(dialog, `[data-radio="${group}"]`);
         const buttonEls = qsa$(groupEl, '[data-radio-item]');
         for ( const buttonEl of buttonEls ) {
@@ -2902,7 +2936,7 @@ const loggerSettings = (( ) => {
             if ( Array.isArray(stored.columns) ) {
                 settings.columns = stored.columns;
             }
-        } catch(ex) {
+        } catch(_) {
         }
     });
 
@@ -2986,36 +3020,6 @@ const loggerSettings = (( ) => {
 
 /******************************************************************************/
 
-logger.resize = (function() {
-    let timer;
-
-    const resize = function() {
-        const vrect = dom.body.getBoundingClientRect();
-        for ( const elem of qsa$('.vscrollable') ) {
-            const crect = elem.getBoundingClientRect();
-            const dh = crect.bottom - vrect.bottom;
-            if ( dh === 0 ) { continue; }
-            elem.style.height = Math.ceil(crect.height - dh) + 'px';
-        }
-    };
-
-    const resizeAsync = function() {
-        if ( timer !== undefined ) { return; }
-        timer = self.requestAnimationFrame(( ) => {
-            timer = undefined;
-            resize();
-        });
-    };
-
-    resizeAsync();
-
-    dom.on(window, 'resize', resizeAsync, { passive: true });
-
-    return resizeAsync;
-})();
-
-/******************************************************************************/
-
 const grabView = function() {
     if ( logger.ownerId === undefined ) {
         logger.ownerId = Date.now();
@@ -3042,11 +3046,6 @@ dom.on(window, 'beforeunload', releaseView);
 dom.on('#pageSelector', 'change', pageSelectorChanged);
 dom.on('#netInspector .vCompactToggler', 'click', toggleVCompactView);
 dom.on('#pause', 'click', pauseNetInspector);
-
-dom.on('#logLevel', 'click', ev => {
-    const level = dom.cl.toggle(ev.currentTarget, 'active') ? 2 : 1;
-    broadcast({ what: 'loggerLevelChanged', level });
-});
 
 dom.on('#netInspector #vwContent', 'copy', ev => {
     const selection = document.getSelection();
