@@ -19,25 +19,22 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* globals browser */
-
-'use strict';
-
 /******************************************************************************/
-
-import µb from './background.js';
-import logger from './logger.js';
-import { onBroadcast } from './broadcast.js';
-import { redirectEngine as reng } from './redirect-engine.js';
-import { sessionFirewall } from './filtering-engines.js';
-import { MRUCache } from './mrucache.js';
-import { ScriptletFilteringEngine } from './scriptlet-filtering-core.js';
 
 import {
     domainFromHostname,
     entityFromDomain,
     hostnameFromURI,
 } from './uri-utils.js';
+
+import { MRUCache } from './mrucache.js';
+import { ScriptletFilteringEngine } from './scriptlet-filtering-core.js';
+
+import logger from './logger.js';
+import { onBroadcast } from './broadcast.js';
+import { redirectEngine as reng } from './redirect-engine.js';
+import { sessionFirewall } from './filtering-engines.js';
+import µb from './background.js';
 
 /******************************************************************************/
 
@@ -262,15 +259,13 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
     reset() {
         super.reset();
         this.warSecret = vAPI.warSecret.long(this.warSecret);
-        this.scriptletCache.reset();
-        contentScriptRegisterer.reset();
+        this.clearCache();
     }
 
     freeze() {
         super.freeze();
         this.warSecret = vAPI.warSecret.long(this.warSecret);
-        this.scriptletCache.reset();
-        contentScriptRegisterer.reset();
+        this.clearCache();
     }
 
     clearCache() {
@@ -290,8 +285,7 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
         }
 
         if ( this.scriptletCache.resetTime < reng.modifyTime ) {
-            this.warSecret = vAPI.warSecret.long(this.warSecret);
-            this.scriptletCache.reset();
+            this.clearCache();
         }
 
         let scriptletDetails = this.scriptletCache.lookup(hostname);
