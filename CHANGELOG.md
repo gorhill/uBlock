@@ -1,5 +1,6 @@
 ## Fixes / changes
 
+- [Add a console pane to the logger](https://github.com/gorhill/uBlock/commit/3b4f02db21)
 - [Improve suggested candidate filters in element picker](https://github.com/gorhill/uBlock/commit/c0b56cffab)
 - [Improve `spoof-css` scriptlet](https://github.com/gorhill/uBlock/commit/277e90a4a7)
 - [Fix bad date computation in auto-comment feature](https://github.com/gorhill/uBlock/commit/a5f6c35bb0)
