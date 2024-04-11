@@ -1947,13 +1947,13 @@ dom.on(document, 'keydown', ev => {
     // interpreted as a request to open the details of the entry.
     let selectionAtMouseDown;
     let selectionAtTimer;
-    dom.on('#netInspector', 'mousedown', '.canDetails *', ev => {
+    dom.on('#netInspector', 'mousedown', '.canDetails *:not(a)', ev => {
         if ( ev.button !== 0 ) { return; }
         if ( selectionAtMouseDown !== undefined ) { return; }
         selectionAtMouseDown =  document.getSelection().toString();
     });
 
-    dom.on('#netInspector', 'click', '.canDetails *', ev => {
+    dom.on('#netInspector', 'click', '.canDetails *:not(a)', ev => {
         if ( ev.button !== 0 ) { return; }
         if ( selectionAtTimer !== undefined ) {
             clearTimeout(selectionAtTimer);
@@ -1968,21 +1968,17 @@ dom.on(document, 'keydown', ev => {
         }, 333);
     });
 
-    dom.on(
-        '#netInspector',
-        'click',
-        '.logEntry > div > span:nth-of-type(8) a',
-        ev => {
-            vAPI.messaging.send('codeViewer', {
-                what: 'gotoURL',
-                details: {
-                    url: ev.target.getAttribute('href'),
-                    select: true,
-                },
-            });
-            ev.preventDefault();
-            ev.stopPropagation();
-        }
+    dom.on('#netInspector', 'click', '.logEntry > div > span:nth-of-type(8) a', ev => {
+        vAPI.messaging.send('codeViewer', {
+            what: 'gotoURL',
+            details: {
+                url: ev.target.getAttribute('href'),
+                select: true,
+            },
+        });
+        ev.preventDefault();
+        ev.stopPropagation();
+    }
     );
 })();
 
