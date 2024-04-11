@@ -3270,6 +3270,10 @@ function m3uPrune(
     };
     const pruner = text => {
         if ( (/^\s*#EXTM3U/.test(text)) === false ) { return text; }
+        if ( m3uPattern === '' ) {
+            safe.uboLog(` Content:\n${text}`);
+            return text;
+        }
         if ( reM3u.multiline ) {
             reM3u.lastIndex = 0;
             for (;;) {
