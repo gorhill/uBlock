@@ -23,7 +23,6 @@
 
 import * as s14e from './s14e-serializer.js';
 
-import lz4Codec from './lz4.js';
 import { ubolog } from './console.js';
 import webext from './webext.js';
 import µb from './background.js';
@@ -32,6 +31,7 @@ import µb from './background.js';
 
 const STORAGE_NAME = 'uBlock0CacheStorage';
 const extensionStorage = webext.storage.local;
+const pendingWrite = new Map();
 
 const keysFromGetArg = arg => {
     if ( arg === null || arg === undefined ) { return []; }
@@ -58,8 +58,18 @@ const hasOwnProperty = (o, p) =>
 
 const cacheStorage = (( ) => {
 
-    const exGet = (api, wanted, outbin) => {
-        return api.get(wanted).then(inbin => {
+    const exGet = async (api, wanted, outbin) => {
+        ubolog('cacheStorage:', api.name || 'storage.local', wanted.join());
+        const missing = [];
+        for ( const key of wanted ) {
+            if ( pendingWrite.has(key) ) {
+                outbin[key] = pendingWrite.get(key);
+            } else {
+                missing.push(key);
+            }
+        }
+        if ( missing.length === 0 ) { return; }
+        return api.get(missing).then(inbin => {
             inbin = inbin || {};
             const found = Object.keys(inbin);
             Object.assign(outbin, inbin);
@@ -139,16 +149,26 @@ const cacheStorage = (( ) => {
         async set(rawbin) {
             const keys = Object.keys(rawbin);
             if ( keys.length === 0 ) { return; }
-            const serializedbin = {};
-            const promises = [];
             for ( const key of keys ) {
-                promises.push(compress(serializedbin, key, rawbin[key]));
+                pendingWrite.set(key, rawbin[key]);
             }
-            await Promise.all(promises);
-            cacheAPIs[fastCache].set(rawbin, serializedbin);
-            return extensionStorage.set(serializedbin).catch(reason => {
+            try {
+                const serializedbin = {};
+                const promises = [];
+                for ( const key of keys ) {
+                    promises.push(compress(serializedbin, key, rawbin[key]));
+                }
+                await Promise.all(promises);
+                await Promise.all([
+                    cacheAPIs[fastCache].set(rawbin, serializedbin),
+                    extensionStorage.set(serializedbin),
+                ]);
+            } catch(reason) {
                 ubolog(reason);
-            });
+            }
+            for ( const key of keys ) {
+                pendingWrite.delete(key);
+            }
         },
 
         remove(...args) {
@@ -295,6 +315,7 @@ const cacheAPI = (( ) => {
     };
 
     return {
+        name: 'cacheAPI',
         async get(arg) {
             const keys = keysFromGetArg(arg);
             if ( keys === undefined ) { return; }
@@ -393,6 +414,7 @@ const memoryStorage = (( ) => {
     };
 
     return {
+        name: 'memoryStorage',
         get(...args) {
             return sessionStorage.get(...args).then(bin => {
                 return bin;
@@ -491,25 +513,6 @@ const idbStorage = (( ) => {
         return /^cache\/(compiled|selfie)\//.test(key);
     };
 
-    const fromBlob = data => {
-        if ( data instanceof Blob === false ) {
-            return Promise.resolve(data);
-        }
-        return new Promise(resolve => {
-            const blobReader = new FileReader();
-            blobReader.onloadend = ev => {
-                resolve(new Uint8Array(ev.target.result));
-            };
-            blobReader.readAsArrayBuffer(data);
-        });
-    };
-
-    const decompress = (key, value) => {
-        return lz4Codec.decode(value, fromBlob).then(value => {
-            return { key, value };
-        });
-    };
-
     const getAllEntries = async function() {
         const db = await getDb();
         if ( db === null ) { return []; }
@@ -527,9 +530,7 @@ const idbStorage = (( ) => {
                 const cursor = ev.target && ev.target.result;
                 if ( !cursor ) { return; }
                 const { key, value } = cursor.value;
-                if ( value instanceof Blob ) {
-                    entries.push(decompress(key, value));
-                } else {
+                if ( value instanceof Blob === false ) {
                     entries.push({ key, value });
                 }
                 cursor.continue();
@@ -576,11 +577,8 @@ const idbStorage = (( ) => {
                 if ( typeof result !== 'object' ) { return; }
                 if ( result === null ) { return; }
                 const { key, value } = result;
-                if ( value instanceof Blob ) {
-                    entries.push(decompress(key, value));
-                } else {
-                    entries.push({ key, value });
-                }
+                if ( value instanceof Blob ) { return; }
+                entries.push({ key, value });
             };
             const transaction = db.transaction(STORAGE_NAME, 'readonly');
             transaction.oncomplete =
@@ -656,6 +654,7 @@ const idbStorage = (( ) => {
     };
 
     return {
+        name: 'idbStorage',
         async get(argbin) {
             const keys = keysFromGetArg(argbin);
             if ( keys === undefined ) { return; }

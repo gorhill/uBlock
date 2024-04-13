@@ -38,7 +38,6 @@ import cosmeticFilteringEngine from './cosmetic-filtering.js';
 import { hostnameFromURI } from './uri-utils.js';
 import io from './assets.js';
 import logger from './logger.js';
-import lz4Codec from './lz4.js';
 import publicSuffixList from '../lib/publicsuffixlist/publicsuffixlist.js';
 import punycode from '../lib/punycode.js';
 import { redirectEngine } from './redirect-engine.js';
@@ -928,7 +927,6 @@ onBroadcast(msg => {
         });
 
         µb.selfieManager.destroy();
-        lz4Codec.relinquish();
         µb.compiledFormatChanged = false;
 
         loadingPromise = undefined;
@@ -1324,7 +1322,6 @@ onBroadcast(msg => {
                 staticNetFilteringEngine.toSelfie()
             ),
         ]);
-        lz4Codec.relinquish();
         µb.selfieIsInvalid = false;
         ubolog('Filtering engine selfie created');
     };
