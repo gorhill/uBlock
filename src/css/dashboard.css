@@ -27,7 +27,8 @@ body.notReady {
     }
 #dashboard-nav > span {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    overflow-x: auto;
     }
 .tabButton {
     background-color: transparent;
@@ -112,10 +113,6 @@ body.noDashboard #dashboard-nav {
     border-bottom-color: var(--dashboard-tab-hover-border);
     }
 
-:root.mobile #dashboard-nav > span {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    }
 :root.mobile #dashboard-nav .logo {
     display: none;
     }

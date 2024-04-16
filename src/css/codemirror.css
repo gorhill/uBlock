@@ -222,7 +222,7 @@ html:not(.mobile) .cm-search-widget .fa-icon:not(.fa-icon-ro):hover {
     }
 .cm-search-widget-input input {
     flex-grow: 1;
-    max-width: 16em;
+    max-width: min(16em, 40svw);
     }
 .cm-search-widget-count {
     align-items: center;
@@ -238,7 +238,7 @@ html:not(.mobile) .cm-search-widget .fa-icon:not(.fa-icon-ro):hover {
     visibility: hidden;
     }
 .cm-search-widget .sourceURL[href=""] {
-    visibility: hidden;
+    display: none;
     }
 :root.mobile .cm-search-widget .sourceURL[href=""] {
     display: none;
