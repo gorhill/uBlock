@@ -1,5 +1,6 @@
 ## Fixes / changes
 
+- [Improve dashboard layout at high zoom factor](https://github.com/gorhill/uBlock/commit/6152f5269e)
 - [Add a console pane to the logger](https://github.com/gorhill/uBlock/commit/3b4f02db21)
 - [Improve suggested candidate filters in element picker](https://github.com/gorhill/uBlock/commit/c0b56cffab)
 - [Improve `spoof-css` scriptlet](https://github.com/gorhill/uBlock/commit/277e90a4a7)
