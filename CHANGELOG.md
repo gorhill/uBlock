@@ -3,7 +3,6 @@
 - [Improve `remove-[attr|class]` scriptlets](https://github.com/gorhill/uBlock/commit/91dfcbef2a)
 - [Improve dashboard layout at high zoom factor](https://github.com/gorhill/uBlock/commit/6152f5269e)
 - [Add a console pane to the logger](https://github.com/gorhill/uBlock/commit/3b4f02db21)
-- [Improve suggested candidate filters in element picker](https://github.com/gorhill/uBlock/commit/c0b56cffab)
 - [Improve `spoof-css` scriptlet](https://github.com/gorhill/uBlock/commit/277e90a4a7)
 - [Fix bad date computation in auto-comment feature](https://github.com/gorhill/uBlock/commit/a5f6c35bb0)
 - [Fix regression breaking import of `file://` lists](https://github.com/gorhill/uBlock/commit/c223a8cd39)
