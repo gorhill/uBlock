@@ -896,19 +896,6 @@ const onOptimizeCandidates = function(details) {
         return a.selector.length - b.selector.length;
     });
 
-    // If two candidates have the same count of matching elements, replace
-    // the less specific cosmetic filters with the more specific one if the
-    // less specific one has an id and is simpler
-    for ( let i = 0, n = results.length-1; i < n; i++ ) {
-        const a = results[i+0];
-        const b = results[i+1];
-        if ( b.count !== a.count ) { continue; }
-        if ( b.selector.length <= a.selector.length ) { continue; }
-        if ( a.selector.startsWith('#') === false ) { continue; }
-        if ( b.selector.length < a.selector.length ) { continue; }
-        b.selector = a.selector;
-    }
-
     pickerFramePort.postMessage({
         what: 'candidatesOptimized',
         candidates: results.map(a => a.selector),

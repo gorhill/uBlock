@@ -73,8 +73,8 @@ html#ublock0-epicker,
 #ublock0-epicker section .codeMirrorContainer {
     border: none;
     box-sizing: border-box;
-    height: 6em;
-    max-height: min(6em, 10vh);
+    height: 10em;
+    max-height: min(10em, 10vh);
     min-height: 1em;
     padding: 2px;
     width: 100%;
@@ -177,7 +177,7 @@ html#ublock0-epicker,
     overflow: hidden;
 }
 #ublock0-epicker #candidateFilters {
-    max-height: min(12em, 18vh);
+    max-height: min(18em, 18vh);
     overflow-y: auto;
 }
 #ublock0-epicker .changeFilter > li > span:nth-of-type(1) {
