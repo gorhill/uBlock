@@ -1,5 +1,6 @@
 ## Fixes / changes
 
+- [Fix potential corruption when reading serialized data](https://github.com/gorhill/uBlock/commit/c098eb8625)
 - [Improve `remove-[attr|class]` scriptlets](https://github.com/gorhill/uBlock/commit/91dfcbef2a)
 - [Improve dashboard layout at high zoom factor](https://github.com/gorhill/uBlock/commit/6152f5269e)
 - [Add a console pane to the logger](https://github.com/gorhill/uBlock/commit/3b4f02db21)
