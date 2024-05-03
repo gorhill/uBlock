@@ -747,6 +747,8 @@ const _deserialize = ( ) => {
     }
     case I_OBJECT_SMALL:
     case I_OBJECT_LARGE: {
+        const out = {};
+        readRefs.set(refCounter++, out);
         const entries = [];
         const size = type === I_OBJECT_SMALL
             ? charCodeToInt[readStr.charCodeAt(readPtr++)]
@@ -756,48 +758,45 @@ const _deserialize = ( ) => {
             const v = _deserialize();
             entries.push([ k, v ]);
         }
-        const out = Object.fromEntries(entries);
-        readRefs.set(refCounter++, out);
+        Object.assign(out, Object.fromEntries(entries));
         return out;
     }
     case I_ARRAY_SMALL:
     case I_ARRAY_LARGE: {
         const out = [];
+        readRefs.set(refCounter++, out);
         const size = type === I_ARRAY_SMALL
             ? charCodeToInt[readStr.charCodeAt(readPtr++)]
             : deserializeLargeUint();
         for ( let i = 0; i < size; i++ ) {
             out.push(_deserialize());
         }
-        readRefs.set(refCounter++, out);
         return out;
     }
     case I_SET_SMALL:
     case I_SET_LARGE: {
-        const entries = [];
+        const out = new Set();
+        readRefs.set(refCounter++, out);
         const size = type === I_SET_SMALL
             ? charCodeToInt[readStr.charCodeAt(readPtr++)]
             : deserializeLargeUint();
         for ( let i = 0; i < size; i++ ) {
-            entries.push(_deserialize());
+            out.add(_deserialize());
         }
-        const out = new Set(entries);
-        readRefs.set(refCounter++, out);
         return out;
     }
     case I_MAP_SMALL:
     case I_MAP_LARGE: {
-        const entries = [];
+        const out = new Map();
+        readRefs.set(refCounter++, out);
         const size = type === I_MAP_SMALL
             ? charCodeToInt[readStr.charCodeAt(readPtr++)]
             : deserializeLargeUint();
         for ( let i = 0; i < size; i++ ) {
             const k = _deserialize();
             const v = _deserialize();
-            entries.push([ k, v ]);
+            out.set(k, v);
         }
-        const out = new Map(entries);
-        readRefs.set(refCounter++, out);
         return out;
     }
     case I_ARRAYBUFFER: {
