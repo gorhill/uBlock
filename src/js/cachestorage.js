@@ -59,7 +59,7 @@ const hasOwnProperty = (o, p) =>
 const cacheStorage = (( ) => {
 
     const exGet = async (api, wanted, outbin) => {
-        ubolog('cacheStorage:', api.name || 'storage.local', wanted.join());
+        ubolog('cacheStorage.get:', api.name || 'storage.local', wanted.join());
         const missing = [];
         for ( const key of wanted ) {
             if ( pendingWrite.has(key) ) {
@@ -149,6 +149,7 @@ const cacheStorage = (( ) => {
         async set(rawbin) {
             const keys = Object.keys(rawbin);
             if ( keys.length === 0 ) { return; }
+            ubolog('cacheStorage.set:', keys.join());
             for ( const key of keys ) {
                 pendingWrite.set(key, rawbin[key]);
             }
