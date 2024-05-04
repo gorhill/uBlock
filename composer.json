@@ -1,0 +1,5 @@
+{
+    "require": {
+        "jyxon/gdpr-cookie-compliance": "^1.2"
+    }
+}

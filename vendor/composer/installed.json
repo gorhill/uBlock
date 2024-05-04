@@ -1,0 +1,50 @@
+{
+    "packages": [
+        {
+            "name": "jyxon/gdpr-cookie-compliance",
+            "version": "1.2.0",
+            "version_normalized": "1.2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Jyxon/GDPR-Cookie-Compliance.git",
+                "reference": "03d43d4b8a3182badb92ab81aac48d407205ae6f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Jyxon/GDPR-Cookie-Compliance/zipball/03d43d4b8a3182badb92ab81aac48d407205ae6f",
+                "reference": "03d43d4b8a3182badb92ab81aac48d407205ae6f",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0|^8.0"
+            },
+            "time": "2022-02-10T17:50:40+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Jyxon\\GdprCookieCompliance\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jyxon",
+                    "homepage": "https://www.jyxon.com"
+                }
+            ],
+            "description": "A library to comply with the GDPR law.",
+            "homepage": "https://www.jyxon.com",
+            "support": {
+                "issues": "https://github.com/Jyxon/GDPR-Cookie-Compliance/issues",
+                "source": "https://github.com/Jyxon/GDPR-Cookie-Compliance/tree/1.2.0"
+            },
+            "install-path": "../jyxon/gdpr-cookie-compliance"
+        }
+    ],
+    "dev": true,
+    "dev-package-names": []
+}

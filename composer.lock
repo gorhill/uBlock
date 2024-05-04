@@ -1,0 +1,60 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "dd1d40c50fe64fdf33ba02b8c0d8a61a",
+    "packages": [
+        {
+            "name": "jyxon/gdpr-cookie-compliance",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Jyxon/GDPR-Cookie-Compliance.git",
+                "reference": "03d43d4b8a3182badb92ab81aac48d407205ae6f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Jyxon/GDPR-Cookie-Compliance/zipball/03d43d4b8a3182badb92ab81aac48d407205ae6f",
+                "reference": "03d43d4b8a3182badb92ab81aac48d407205ae6f",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0|^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jyxon\\GdprCookieCompliance\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jyxon",
+                    "homepage": "https://www.jyxon.com"
+                }
+            ],
+            "description": "A library to comply with the GDPR law.",
+            "homepage": "https://www.jyxon.com",
+            "support": {
+                "issues": "https://github.com/Jyxon/GDPR-Cookie-Compliance/issues",
+                "source": "https://github.com/Jyxon/GDPR-Cookie-Compliance/tree/1.2.0"
+            },
+            "time": "2022-02-10T17:50:40+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.6.0"
+}
