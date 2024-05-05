@@ -3,7 +3,6 @@
     "description": "A library to comply with the GDPR law.",
     "type": "library",
     "homepage": "https://www.jyxon.com",
-    "manifest_version": "2",
     "license": "MIT",
     "authors": [
     {
@@ -27,4 +26,7 @@
             "/.gitignore"
         ]
     }
+
+
+"manifest_version":3,
 }
