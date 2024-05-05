@@ -1,5 +1,6 @@
 {
     "name": "jyxon/gdpr-cookie-compliance",
+    "manifest_version": 2,
     "description": "A library to comply with the GDPR law.",
     "type": "library",
     "homepage": "https://www.jyxon.com",
@@ -27,6 +28,4 @@
         ]
     }
 
-
-"manifest_version":2,
 }
