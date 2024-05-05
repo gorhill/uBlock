@@ -2015,12 +2015,19 @@ function noEvalIf(
 ) {
     if ( typeof needle !== 'string' ) { return; }
     const safe = safeSelf();
+    const logPrefix = safe.makeLogPrefix('noeval-if', needle);
     const reNeedle = safe.patternToRegex(needle);
     window.eval = new Proxy(window.eval, {  // jshint ignore: line
         apply: function(target, thisArg, args) {
-            const a = args[0];
-            if ( reNeedle.test(a.toString()) ) { return; }
-            return target.apply(thisArg, args);
+            const a = String(args[0]);
+            if ( needle !== '' && reNeedle.test(a) ) {
+                safe.uboLog(logPrefix, 'Prevented:\n', a);
+                return;
+            }
+            if ( needle === '' || safe.logLevel > 1 ) {
+                safe.uboLog(logPrefix, 'Not prevented:\n', a);
+            }
+            return Reflect.apply(target, thisArg, args);
         }
     });
 }
