@@ -23,7 +23,7 @@ with open(manifest_out_file) as f:
 manifest_out['version'] = version
 
 # Development build? If so, modify name accordingly.
-match = re.search('^\d+\.\d+\.\d+\.\d+$', version)
+match = re.search(r'^\d+\.\d+\.\d+\.\d+$', version)
 if match:
     manifest_out['name'] += ' development build'
     manifest_out['short_name'] += ' dev build'

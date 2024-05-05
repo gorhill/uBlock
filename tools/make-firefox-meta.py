@@ -21,7 +21,7 @@ with open(firefox_manifest_file) as f2:
     firefox_manifest = json.load(f2)
 
 if 'sidebar_action' in firefox_manifest:
-    match = re.search('^(\d+\.\d+\.\d+)(\.\d+)$', version)
+    match = re.search(r'^(\d+\.\d+\.\d+)(\.\d+)$', version)
     if not match:
         # https://bugzilla.mozilla.org/show_bug.cgi?id=1459007
         # By design Firefox opens the sidebar with new installation of
