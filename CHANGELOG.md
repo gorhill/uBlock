@@ -1,5 +1,6 @@
 ## Fixes / changes
 
+- [Improve `trusted-set-local-storage-item` scriptlet](https://github.com/gorhill/uBlock/commit/2ccc3135c1)
 - [Fix potential corruption when reading serialized data](https://github.com/gorhill/uBlock/commit/c098eb8625)
 - [Improve `remove-[attr|class]` scriptlets](https://github.com/gorhill/uBlock/commit/91dfcbef2a)
 - [Improve dashboard layout at high zoom factor](https://github.com/gorhill/uBlock/commit/6152f5269e)
