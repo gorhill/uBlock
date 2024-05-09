@@ -1047,6 +1047,8 @@ function setLocalStorageItemFn(
         'false', 'true',
         'on', 'off',
         'yes', 'no',
+        'accept', 'reject',
+        'accepted', 'rejected',
         '{}', '[]', '""',
         '$remove$',
     ];
