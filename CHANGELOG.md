@@ -1,5 +1,7 @@
 ## Fixes / changes
 
+- [Add checksum validation when loading trie buffers in selfie](https://github.com/gorhill/uBlock/commit/0e6d607484)
+- [Catch exceptions in API calls for the sake of old Chromium versions](https://github.com/gorhill/uBlock/commit/bb479b0a66)
 - [Use raw string for regex patterns in python scripts](https://github.com/gorhill/uBlock/commit/923452b788)
 - [Improve `noeval-if` scriptlet](https://github.com/gorhill/uBlock/commit/4d8ee35ef7)
 - [Improve `trusted-set-local-storage-item` scriptlet](https://github.com/gorhill/uBlock/commit/2ccc3135c1)
