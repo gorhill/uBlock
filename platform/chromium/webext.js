@@ -24,29 +24,37 @@
 
 const promisifyNoFail = function(thisArg, fnName, outFn = r => r) {
     const fn = thisArg[fnName];
-    return function() {
+    return function(...args) {
         return new Promise(resolve => {
-            fn.call(thisArg, ...arguments, function() {
-                if ( chrome.runtime.lastError instanceof Object ) {
-                    void chrome.runtime.lastError.message;
-                }
-                resolve(outFn(...arguments));
-            });
+            try {
+                fn.call(thisArg, ...args, function(...args) {
+                    void chrome.runtime.lastError;
+                    resolve(outFn(...args));
+                });
+            } catch(ex) {
+                console.error(ex);
+                resolve(outFn());
+            }
         });
     };
 };
 
 const promisify = function(thisArg, fnName) {
     const fn = thisArg[fnName];
-    return function() {
+    return function(...args) {
         return new Promise((resolve, reject) => {
-            fn.call(thisArg, ...arguments, function() {
-                const lastError = chrome.runtime.lastError;
-                if ( lastError instanceof Object ) {
-                    return reject(lastError.message);
-                }
-                resolve(...arguments);
-            });
+            try {
+                fn.call(thisArg, ...args, function(...args) {
+                    const lastError = chrome.runtime.lastError;
+                    if ( lastError instanceof Object ) {
+                        return reject(lastError.message);
+                    }
+                    resolve(...args);
+                });
+            } catch(ex) {
+                console.error(ex);
+                resolve();
+            }
         });
     };
 };
