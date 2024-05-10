@@ -19,10 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* globals WebAssembly, vAPI */
-
-'use strict';
-
 /*******************************************************************************
 
   A BidiTrieContainer is mostly a large buffer in which distinct but related
@@ -124,6 +120,15 @@ const BCELL_EXTRA_MAX = 0x00FFFFFF;
 const toSegmentInfo = (aL, l, r) => ((r - l) << 24) | (aL + l);
 const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
 
+// http://www.cse.yorku.ca/~oz/hash.html#djb2
+const i32Checksum = (buf32) => {
+    const n = buf32.length;
+    let hash = 177573 ^ n;
+    for ( let i = 0; i < n; i++ ) {
+        hash = (hash << 5) + hash ^ buf32[i];
+    }
+    return hash;
+};
 
 class BidiTrieContainer {
 
@@ -577,18 +582,18 @@ class BidiTrieContainer {
     }
 
     toSelfie() {
-        return this.buf32.subarray(
-            0,
-            this.buf32[CHAR1_SLOT] + 3 >>> 2
-        );
+        const buf32 = this.buf32.subarray(0, this.buf32[CHAR1_SLOT] + 3 >>> 2);
+        return { buf32, checksum: i32Checksum(buf32) };
     }
 
     fromSelfie(selfie) {
-        if ( selfie instanceof Uint32Array === false ) { return false; }
-        let byteLength = selfie.length << 2;
+        if ( selfie instanceof Object === false ) { return false; }
+        if ( selfie.buf32 instanceof Uint32Array === false ) { return false; }
+        if ( selfie.checksum !== i32Checksum(selfie.buf32) ) { return false; }
+        const byteLength = selfie.buf32.length << 2;
         if ( byteLength === 0 ) { return false; }
         this.reallocateBuf(byteLength);
-        this.buf32.set(selfie);
+        this.buf32.set(selfie.buf32);
         return true;
     }
 
