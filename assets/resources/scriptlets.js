@@ -1055,13 +1055,13 @@ function setLocalStorageItemFn(
 
     if ( trusted ) {
         if ( value.includes('$now$') ) {
-            value.replaceAll('$now$', Date.now());
+            value = value.replaceAll('$now$', Date.now());
         }
         if ( value.includes('$currentDate$') ) {
-            value.replaceAll('$currentDate$', `${Date()}`);
+            value = value.replaceAll('$currentDate$', `${Date()}`);
         }
         if ( value.includes('$currentISODate$') ) {
-            value.replaceAll('$currentISODate$', (new Date()).toISOString());
+            value = value.replaceAll('$currentISODate$', (new Date()).toISOString());
         }
     } else {
         const normalized = value.toLowerCase();
