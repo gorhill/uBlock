@@ -1,10 +1,10 @@
-uBO Lite (uBOL) is a *permission-less* MV3-based content blocker.
+uBO Lite (uBOL) irakargarri blokeatzailea de, baimen gutxiekin eta MV3ean basatua
 
 The default ruleset corresponds to uBlock Origin's default filterset:
 
-- uBlock Origin's built-in filter lists
+UblockOrigin-eko filtro lista
 - EasyList
-- EasyPrivacy
+PribazitateaErraza
 - Peter Lowe’s Ad and tracking server list
 
 You can add more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
@@ -15,7 +15,7 @@ uBOL does not require broad "read and modify data" permission at install time, h
 
 However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
 
-To grant extended permissions on a given site, open the popup panel and pick a higher filtering mode such as Optimal or Complete.
+Leku jakin batean baimenak emateko, ireki panel emergentea eta aukeratu goiko iragazteko modu bat, optimo edo oso gisa.
 
 The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request.
 

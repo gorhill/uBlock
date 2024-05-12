@@ -96,7 +96,7 @@
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "外部依存関係 (GPLv3 と両立):",
+    "message": "外部依存関係 (GPLv3 互換):",
     "description": "Shown in the About pane"
   },
   "firstRunSectionLabel": {

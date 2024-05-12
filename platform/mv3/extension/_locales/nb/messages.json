@@ -156,7 +156,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "showBlockedCountLabel": {
-    "message": "Vis antall blokkerte forespørsler på vertøyslinje-ikonet",
+    "message": "Vis antall blokkerte forespørsler på verktøylinjeikonet",
     "description": "Label for a checkbox in the options page"
   }
 }

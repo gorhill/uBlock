@@ -76,7 +76,7 @@
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Click to enable uBlock₀ for this site.",
+    "message": "ಈ ಸೈಟ್‌ಗಾಗಿ uBlock₀ ಸಕ್ರಿಯಗೊಳಿಸಲು ಕ್ಲಿಕ್ ಮಾಡಿ.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "ublock origin ಗೆ ಸಂಬಂಧಿಸಿದ ಈ ವೆಬ್‌ಸೈಟ್‌ನಲ್ಲಿ ಸಮಸ್ಯೆಯನ್ನು ವರದಿ ಮಾಡಿ",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -180,7 +180,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Click to disable JavaScript on this site",
+    "message": "ಈ ಸೈಟ್‌ನಲ್ಲಿ ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ ಅನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲು ಕ್ಲಿಕ್ ಮಾಡಿ",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
@@ -388,7 +388,7 @@
     "description": ""
   },
   "settingsNoScriptingPrompt": {
-    "message": "Disable JavaScript",
+    "message": "ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ ಅನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ",
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
@@ -424,7 +424,7 @@
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
-    "message": "{{used}} used out of {{total}}",
+    "message": "{{total}} ರಿಂದ {{used}} ಬಳಸಲುಗುವುತಿದೆ ",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
@@ -520,7 +520,7 @@
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pViewContent": {
-    "message": "view content",
+    "message": "ವಿಷಯವನ್ನು ವೀಕ್ಷಿಸಿ",
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
@@ -552,7 +552,7 @@
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "ರಫ್ತು",
+    "message": "ರಫ್ತು...",
     "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
@@ -580,7 +580,7 @@
     "description": "This will persist temporary rules"
   },
   "rulesEdit": {
-    "message": "ಸಂಪಾದಿಸಿ",
+    "message": "ತಿದ್ದಿ ",
     "description": "Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave": {
@@ -660,7 +660,7 @@
     "description": "English: URL"
   },
   "logRequestsHeaderFilter": {
-    "message": "Filter",
+    "message": "ಫಿಲ್ಟರ್",
     "description": "English: Filter"
   },
   "logAll": {
@@ -716,7 +716,7 @@
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {
-    "message": "Not",
+    "message": "ಅಲ್ಲದ ",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinEventful": {
@@ -780,7 +780,7 @@
     "description": "Label to identify the URL of an entry"
   },
   "loggerURLFilteringHeader": {
-    "message": "URL rule",
+    "message": "URL ನಿಯಮ ",
     "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {

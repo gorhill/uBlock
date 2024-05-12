@@ -56,7 +56,7 @@
     "description": "appears as tab name in dashboard"
   },
   "supportPageName": {
-    "message": "Laguntza",
+    "message": "Soportea",
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
@@ -484,11 +484,11 @@
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
-    "message": "Social widgets",
+    "message": "Widgets Sozialak",
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
-    "message": "Cookie notices",
+    "message": "Cookie oharrak",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
@@ -544,7 +544,7 @@
     "description": "Label for the checkbox use to enable/disable 'My filters' list"
   },
   "1pTrustMyFiltersLabel": {
-    "message": "Allow custom filters requiring trust",
+    "message": "Konfiantza behar duten iragazki pertsonalizatuak baimendu",
     "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {

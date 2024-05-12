@@ -548,7 +548,7 @@
     "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
-    "message": "इम्पोर्ट करें और जोड़ें",
+    "message": "इम्पोर्ट करें और जोड़ें...",
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
@@ -612,7 +612,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
-    "message": "क्रम में लगाये",
+    "message": "क्रम में लगाये:",
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
@@ -620,7 +620,7 @@
     "description": "English: a sort option for list of rules."
   },
   "rulesSortBySource": {
-    "message": "स्रोत",
+    "message": "मूल",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortByDestination": {
@@ -632,11 +632,11 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "इम्पोर्ट करें और जोड़ें",
+    "message": "इम्पोर्ट करें और जोड़ें...",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
-    "message": "निर्यात करें",
+    "message": "निर्यात करें...",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {

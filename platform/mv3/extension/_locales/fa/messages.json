@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "A permission-less content blocker. Blocks ads, trackers, miners, and more immediately upon installation.",
+    "message": "مسدود کننده محتوا بدون نیاز به مجوز که بلافاصله پس از نصب، تبلیغات، ردیاب ها، ابزار‌های استخراج ارز دیجیتال و موارد دیگر را مسدود می کند.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -24,7 +24,7 @@
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
-    "message": "Privacy policy",
+    "message": "حریم خصوصی",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupFilteringModeLabel": {
@@ -32,7 +32,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {
-    "message": "Open the dashboard",
+    "message": "باز کردن داشبورد",
     "description": "English: Click to open the dashboard"
   },
   "popupMoreButton": {
@@ -68,15 +68,15 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupRegions": {
-    "message": "Regions, languages",
+    "message": "مناطق، زبانها",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "aboutChangelog": {
-    "message": "Changelog",
+    "message": "گزارش دگرگونی",
     "description": ""
   },
   "aboutCode": {
-    "message": "Source code (GPLv3)",
+    "message": "سورس کد  (GPLv3)",
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
@@ -84,11 +84,11 @@
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Source code",
+    "message": "کد منبع",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
-    "message": "Translations",
+    "message": "ترجمه‌ها",
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
