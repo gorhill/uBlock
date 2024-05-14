@@ -4482,6 +4482,20 @@ function trustedClickElement(
         }
     }
 
+    const getShadowRoot = elem => {
+        // Firefox
+        if ( elem.openOrClosedShadowRoot ) {
+            return elem.openOrClosedShadowRoot;
+        }
+        // Chromium
+        if ( typeof chrome === 'object' ) {
+            if ( chrome.dom && chrome.dom.openOrClosedShadowRoot ) {
+                return chrome.dom.openOrClosedShadowRoot(elem);
+            }
+        }
+        return null;
+    };
+
     const querySelectorEx = (selector, context = document) => {
         const pos = selector.indexOf(' >>> ');
         if ( pos === -1 ) { return context.querySelector(selector); }
@@ -4489,7 +4503,7 @@ function trustedClickElement(
         const inside = selector.slice(pos + 5).trim();
         const elem = context.querySelector(outside);
         if ( elem === null ) { return null; }
-        const shadowRoot = elem.shadowRoot;
+        const shadowRoot = getShadowRoot(elem);
         return shadowRoot && querySelectorEx(inside, shadowRoot);
     };
 
