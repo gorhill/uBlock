@@ -1,7 +1,10 @@
 ## Fixes / changes
 
+- [Improve `trusted-click-element` scriptlet](https://github.com/gorhill/uBlock/commit/ee67cd6284)
+- [Replace EasyDutch with AdGuard Dutch](https://github.com/gorhill/uBlock/commit/ca7d2ad61d)
 - [Add checksum validation when loading trie buffers in selfie](https://github.com/gorhill/uBlock/commit/0e6d607484)
 - [Catch exceptions in API calls for the sake of old Chromium versions](https://github.com/gorhill/uBlock/commit/bb479b0a66)
+- [Add `accept`/`reject` to `set-local-storage-item`](https://github.com/gorhill/uBlock/commit/363ad6795c) (by @ryanbr)
 - [Use raw string for regex patterns in python scripts](https://github.com/gorhill/uBlock/commit/923452b788)
 - [Improve `noeval-if` scriptlet](https://github.com/gorhill/uBlock/commit/4d8ee35ef7)
 - [Improve `trusted-set-local-storage-item` scriptlet](https://github.com/gorhill/uBlock/commit/2ccc3135c1)
