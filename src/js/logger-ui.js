@@ -77,6 +77,8 @@ const dispatchTabidChange = vAPI.defer.create(( ) => {
     document.dispatchEvent(new Event('tabIdChanged'));
 });
 
+const escapeRegexStr = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
 /******************************************************************************/
 /******************************************************************************/
 
@@ -161,7 +163,7 @@ const regexFromURLFilteringResult = function(result) {
     if ( url === '*' ) {
         return new RegExp('^.*$', 'gi');
     }
-    return new RegExp('^' + url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+    return new RegExp('^' + escapeRegexStr(url), 'gi');
 };
 
 /******************************************************************************/
@@ -174,7 +176,7 @@ const nodeFromURL = function(parent, url, re, type) {
         fragment.textContent = url;
     } else {
         if ( typeof re === 'string' ) {
-            re = new RegExp(re.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
+            re = new RegExp(escapeRegexStr(re), 'g');
         }
         const matches = re.exec(url);
         if ( matches === null || matches[0].length === 0 ) {
@@ -2008,12 +2010,15 @@ const consolePane = (( ) => {
 
     const filterExprFromInput = ( ) => {
         const raw = qs$('#infoInspector .permatoolbar input').value.trim();
-        if ( raw.startsWith('-') ) {
+        if ( raw.startsWith('-') && raw.length > 1 ) {
             filterExpr.pattern = raw.slice(1);
             filterExpr.not = true;
         } else {
             filterExpr.pattern = raw;
             filterExpr.not = false;
+        }
+        if ( filterExpr.pattern !== '' ) {
+            filterExpr.pattern = new RegExp(escapeRegexStr(filterExpr.pattern), 'i');
         }
     };
 
@@ -2029,8 +2034,8 @@ const consolePane = (( ) => {
             if ( entry.voided ) { continue; }
             const fields = entry.textContent.split('\x1F').slice(0, 2);
             const textContent = fields.join('\xA0');
-            if ( pattern !== '' ) {
-                if ( textContent.includes(pattern) === not ) { continue; }
+            if ( pattern instanceof RegExp ) {
+                if ( pattern.test(textContent) === not ) { continue; }
             }
             const div = document.createElement('div');
             div.dataset.id = `${entry.id}`;
@@ -2165,7 +2170,7 @@ const rowFilterer = (( ) => {
                     rawPart = rawPart.slice(0, -1);
                 }
                 // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions
-                reStr = rawPart.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                reStr = escapeRegexStr(rawPart);
                 // https://github.com/orgs/uBlockOrigin/teams/ublock-issues-volunteers/discussions/51
                 //   Be more flexible when interpreting leading/trailing pipes,
                 //   as leading/trailing pipes are often used in static filters.
