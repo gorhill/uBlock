@@ -1,5 +1,6 @@
 ## Fixes / changes
 
+- [Fallback to `requestAnimationFrame` when `requestIdleCallback` is not available](https://github.com/gorhill/uBlock/commit/59ffc96e89)
 - [Improve `trusted-click-element` scriptlet](https://github.com/gorhill/uBlock/commit/ee67cd6284)
 - [Replace EasyDutch with AdGuard Dutch](https://github.com/gorhill/uBlock/commit/ca7d2ad61d)
 - [Add checksum validation when loading trie buffers in selfie](https://github.com/gorhill/uBlock/commit/0e6d607484)
