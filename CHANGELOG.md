@@ -1,3 +1,9 @@
+- [Improve `trusted-set-cookie` scriptlet](https://github.com/gorhill/uBlock/commit/0e1e4b82c5)
+
+----------
+
+# 1.58.0
+
 ## Fixes / changes
 
 - [Fallback to `requestAnimationFrame` when `requestIdleCallback` is not available](https://github.com/gorhill/uBlock/commit/59ffc96e89)
