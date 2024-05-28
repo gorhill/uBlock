@@ -4228,10 +4228,11 @@ function trustedSetCookie(
     const logPrefix = safe.makeLogPrefix('set-cookie', name, value, path);
     const time = new Date();
 
-    if ( value === '$now$' ) {
-        value = Date.now();
-    } else if ( value === '$currentDate$' ) {
-        value = time.toUTCString();
+    if ( value.includes('$now$') ) {
+        value = value.replaceAll('$now$', time.getTime());
+    }
+    if ( value.includes('$currentDate$') ) {
+        value = value.replaceAll('$currentDate$', time.toUTCString());
     }
 
     let expires = '';
