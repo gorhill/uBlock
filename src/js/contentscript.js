@@ -1016,8 +1016,10 @@ vAPI.DOMFilterer = class {
             end = s.indexOf(' ', beg);
             if ( end === beg ) { continue; }
             if ( end === -1 ) { end = len; }
-            const hash = hashFromStr(0x2E /* '.' */, s.slice(beg, end));
+            const token = s.slice(beg, end).trimEnd();
             beg = end;
+            if ( token.length === 0 ) { continue; }
+            const hash = hashFromStr(0x2E /* '.' */, token);
             if ( queriedHashes.has(hash) ) { continue; }
             queriedHashes.add(hash);
             out.push(hash);

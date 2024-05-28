@@ -89,8 +89,10 @@ const uBOL_classesFromNode = (node, out) => {
         end = s.indexOf(' ', beg);
         if ( end === beg ) { continue; }
         if ( end === -1 ) { end = len; }
-        out.push(hashFromStr(0x2E /* '.' */, s.slice(beg, end)));
+        const token = s.slice(beg, end).trimEnd();
         beg = end;
+        if ( token.length === 0 ) { continue; }
+        out.push(hashFromStr(0x2E /* '.' */, token));
     }
 };
 
