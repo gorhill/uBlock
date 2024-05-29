@@ -19,10 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* jshint esversion:11 */
-
-'use strict';
-
 /******************************************************************************/
 
 // Important!
@@ -76,7 +72,11 @@ const hashFromStr = (type, s) => {
 const uBOL_idFromNode = (node, out) => {
     const raw = node.id;
     if ( typeof raw !== 'string' || raw.length === 0 ) { return; }
-    out.push(hashFromStr(0x23 /* '#' */, raw.trim()));
+    const hash = hashFromStr(0x23 /* '#' */, raw.trim());
+    const selectorList = genericSelectorMap.get(hash);
+    if ( selectorList === undefined ) { return; }
+    genericSelectorMap.delete(hash);
+    out.push(selectorList);
 };
 
 // https://github.com/uBlockOrigin/uBlock-issues/discussions/2076
@@ -92,7 +92,11 @@ const uBOL_classesFromNode = (node, out) => {
         const token = s.slice(beg, end).trimEnd();
         beg = end;
         if ( token.length === 0 ) { continue; }
-        out.push(hashFromStr(0x2E /* '.' */, token));
+        const hash = hashFromStr(0x2E /* '.' */, token);
+        const selectorList = genericSelectorMap.get(hash);
+        if ( selectorList === undefined ) { continue; }
+        genericSelectorMap.delete(hash);
+        out.push(selectorList);
     }
 };
 
@@ -131,24 +135,17 @@ const pendingNodes = {
 
 const uBOL_processNodes = ( ) => {
     const t0 = Date.now();
-    const hashes = [];
     const nodes = [];
     const deadline = t0 + maxSurveyTimeSlice;
     for (;;) {
         pendingNodes.next(nodes);
         if ( nodes.length === 0 ) { break; }
         for ( const node of nodes ) {
-            uBOL_idFromNode(node, hashes);
-            uBOL_classesFromNode(node, hashes);
+            uBOL_idFromNode(node, styleSheetSelectors);
+            uBOL_classesFromNode(node, styleSheetSelectors);
         }
         nodes.length = 0;
         if ( performance.now() >= deadline ) { break; }
-    }
-    for ( const hash of hashes ) {
-        const selectorList = genericSelectorMap.get(hash);
-        if ( selectorList === undefined ) { continue; }
-        styleSheetSelectors.push(selectorList);
-        genericSelectorMap.delete(hash);
     }
     surveyCount += 1;
     if ( styleSheetSelectors.length === 0 ) {
