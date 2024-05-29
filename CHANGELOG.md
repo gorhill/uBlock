@@ -1,3 +1,4 @@
+- [Trim end of class tokens in generic cosmetic filtering's surveyor](https://github.com/gorhill/uBlock/commit/8ea1bac80b)
 - [Improve `trusted-set-cookie` scriptlet](https://github.com/gorhill/uBlock/commit/0e1e4b82c5)
 
 ----------
