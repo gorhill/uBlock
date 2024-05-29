@@ -338,24 +338,6 @@ async function processNetworkFilters(assetDetails, network) {
     log(`\tRejected filter count: ${network.rejectedFilterCount}`);
     log(`Output rule count: ${rules.length}`);
 
-    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/declarativeNetRequest/RuleCondition#browser_compatibility
-    // isUrlFilterCaseSensitive is true by default in Chromium. It will be
-    // false by default in Chromium 118+.
-    if ( platform !== 'firefox' ) {
-        for ( const rule of rules ) {
-            const { condition } = rule;
-            if ( condition === undefined ) { continue; }
-            if ( condition.urlFilter === undefined ) {
-                if ( condition.regexFilter === undefined ) { continue; }
-            }
-            if ( condition.isUrlFilterCaseSensitive === undefined ) {
-                condition.isUrlFilterCaseSensitive = false;
-            } else if ( condition.isUrlFilterCaseSensitive === true ) {
-                condition.isUrlFilterCaseSensitive = undefined;
-            }
-        }
-    }
-
     // Minimize requestDomains arrays
     for ( const rule of rules ) {
         const condition = rule.condition;

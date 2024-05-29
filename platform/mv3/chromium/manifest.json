@@ -25,7 +25,7 @@
     "128": "img/icon_128.png"
   },
   "manifest_version": 3,
-  "minimum_chrome_version": "105.0",
+  "minimum_chrome_version": "118.0",
   "name": "__MSG_extName__",
   "options_page": "dashboard.html",
   "optional_host_permissions": [
