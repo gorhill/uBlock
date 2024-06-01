@@ -19,29 +19,23 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* globals browser */
-
-'use strict';
-
 /******************************************************************************/
 
-import htmlFilteringEngine from './html-filtering.js';
-import httpheaderFilteringEngine from './httpheader-filtering.js';
-import logger from './logger.js';
-import scriptletFilteringEngine from './scriptlet-filtering.js';
-import staticNetFilteringEngine from './static-net-filtering.js';
-import textEncode from './text-encode.js';
-import µb from './background.js';
-import * as sfp from './static-filtering-parser.js';
 import * as fc from  './filtering-context.js';
-import { isNetworkURI } from './uri-utils.js';
-
+import * as sfp from './static-filtering-parser.js';
 import {
     sessionFirewall,
     sessionSwitches,
     sessionURLFiltering,
 } from './filtering-engines.js';
-
+import htmlFilteringEngine from './html-filtering.js';
+import httpheaderFilteringEngine from './httpheader-filtering.js';
+import { isNetworkURI } from './uri-utils.js';
+import logger from './logger.js';
+import scriptletFilteringEngine from './scriptlet-filtering.js';
+import staticNetFilteringEngine from './static-net-filtering.js';
+import textEncode from './text-encode.js';
+import µb from './background.js';
 
 /******************************************************************************/
 
@@ -695,7 +689,7 @@ const bodyFilterer = (( ) => {
         'audio/x-mpegurl',
     ]);
     const BINARY_TYPES = fc.FONT | fc.IMAGE | fc.MEDIA | fc.WEBSOCKET;
-    const MAX_BUFFER_LENGTH = 3 * 1024 * 1024;
+    const MAX_RESPONSE_BUFFER_LENGTH = 10 * 1024 * 1024;
 
     let textDecoder, textEncoder;
     let mime = '';
@@ -703,12 +697,12 @@ const bodyFilterer = (( ) => {
 
     const contentTypeFromDetails = details => {
         switch ( details.type ) {
-            case 'script':
-                return 'text/javascript; charset=utf-8';
-            case 'stylesheet':
-                return 'text/css';
-            default:
-                break;
+        case 'script':
+            return 'text/javascript; charset=utf-8';
+        case 'stylesheet':
+            return 'text/css';
+        default:
+            break;
         }
         return '';
     };
@@ -721,13 +715,13 @@ const bodyFilterer = (( ) => {
 
     const charsetFromMime = mime => {
         switch ( mime ) {
-            case 'application/xml':
-            case 'application/xhtml+xml':
-            case 'text/html':
-            case 'text/css':
-                return;
-            default:
-                break;
+        case 'application/xml':
+        case 'application/xhtml+xml':
+        case 'text/html':
+        case 'text/css':
+            return;
+        default:
+            break;
         }
         return 'utf-8';
     };
@@ -811,7 +805,7 @@ const bodyFilterer = (( ) => {
         buffer.set(session.buffer);
         buffer.set(new Uint8Array(ev.data), session.buffer.byteLength);
         session.buffer = buffer;
-        if ( session.buffer.length >= MAX_BUFFER_LENGTH ) {
+        if ( session.buffer.length >= MAX_RESPONSE_BUFFER_LENGTH ) {
             sessions.delete(this);
             this.write(session.buffer);
             this.disconnect();
