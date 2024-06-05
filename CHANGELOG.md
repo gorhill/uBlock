@@ -1,3 +1,4 @@
+- [Improve `trusted-replace-outbound-text` scriptlet](https://github.com/gorhill/uBlock/commit/fa6740a059)
 - [Classify generic cosmetic filters with comma as highly generic](https://github.com/gorhill/uBlock/commit/8f81833efc)
 - [Raise max buffer size for response body filtering](https://github.com/gorhill/uBlock/commit/82a3992896)
 - [Trim end of class tokens in generic cosmetic filtering's surveyor](https://github.com/gorhill/uBlock/commit/8ea1bac80b)
