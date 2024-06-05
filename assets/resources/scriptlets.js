@@ -4782,20 +4782,29 @@ function trustedReplaceOutboundText(
     const extraArgs = safe.getExtraArgs(args);
     const reCondition = safe.patternToRegex(extraArgs.condition || '');
     const reflector = proxyApplyFn(propChain, function(...args) {
-        const textBefore = reflector(...args);
+        const encodedTextBefore = reflector(...args);
+        let textBefore = encodedTextBefore;
+        if ( extraArgs.encoding === 'base64' ) {
+            try { textBefore = self.atob(encodedTextBefore); }
+            catch(ex) { return encodedTextBefore; }
+        }
         if ( pattern === '' ) {
-            safe.uboLog(logPrefix, 'Outbound text:\n', textBefore);
-            return textBefore;
+            safe.uboLog(logPrefix, 'Decoded outbound text:\n', textBefore);
+            return encodedTextBefore;
         }
         reCondition.lastIndex = 0;
-        if ( reCondition.test(textBefore) === false ) { return textBefore; }
+        if ( reCondition.test(textBefore) === false ) { return encodedTextBefore; }
         const textAfter = textBefore.replace(rePattern, replacement);
-        if ( textAfter === textBefore ) { return textBefore; }
+        if ( textAfter === textBefore ) { return encodedTextBefore; }
         safe.uboLog(logPrefix, 'Matched and replaced');
         if ( safe.logLevel > 1 ) {
-            safe.uboLog(logPrefix, 'Modified outbound text:\n', textAfter);
+            safe.uboLog(logPrefix, 'Modified decoded outbound text:\n', textAfter);
         }
-        return textAfter;
+        let encodedTextAfter = textAfter;
+        if ( extraArgs.encoding === 'base64' ) {
+            encodedTextAfter = self.btoa(textAfter);
+        }
+        return encodedTextAfter;
     });
 }
 
