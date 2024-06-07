@@ -607,6 +607,7 @@ onBroadcast(msg => {
         const url = new URL(options.docURL);
         comment = '! ' +
             this.hiddenSettings.autoCommentFilterTemplate
+                .replace('{{isodate}}', d.toISOString().split('T')[0])
                 .replace('{{date}}', d.toLocaleDateString(undefined, { dateStyle: 'medium' }))
                 .replace('{{time}}', d.toLocaleTimeString())
                 .replace('{{hostname}}', url.hostname)
