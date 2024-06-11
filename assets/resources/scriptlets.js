@@ -1642,6 +1642,8 @@ function addEventListenerDefuser(
     const debug = shouldDebug(extraArgs);
     const targetSelector = extraArgs.elements || undefined;
     const elementMatches = elem => {
+        if ( targetSelector === 'window' ) { return elem === window; }
+        if ( targetSelector === 'document' ) { return elem === document; }
         if ( elem && elem.matches && elem.matches(targetSelector) ) { return true; }
         const elems = Array.from(document.querySelectorAll(targetSelector));
         return elems.includes(elem);
