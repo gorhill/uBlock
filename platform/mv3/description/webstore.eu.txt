@@ -3,13 +3,13 @@ uBO Lite (uBOL) irakargarri blokeatzailea de, baimen gutxiekin eta MV3ean basatu
 The default ruleset corresponds to uBlock Origin's default filterset:
 
 UblockOrigin-eko filtro lista
-- EasyList
+ZerrendaErraza
 PribazitateaErraza
-- Peter Lowe’s Ad and tracking server list
+Peter Lowe-ren Ad and tracker zerrenda
 
-You can add more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+Arau gehiago gehitu ditzakezu aukeren orrialdea bisitatuz. Sakatu _Cogs_ ikonoa popup panelean.
 
-uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
+uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. Horrek esan nahi du uBOLek berak ez duela CPU/memoria baliabiderik kontsumitzen edukien blokeoa martxan dagoen bitartean... uBOLren zerbitzuko langileen prozesua _only_ behar da popup panelarekin edo aukera orriekin elkarreragiten denean.
 
 uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read and modify data" permissions at install time.
 
@@ -25,6 +25,6 @@ You can set the default filtering mode from uBOL's options page. If you pick the
 
 Keep in mind this is still a work in progress, with these end goals:
 
-- No broad host permissions at install time -- extended permissions are granted explicitly by the user on a per-site basis.
+- Instalatzeko garaian, ez dago baimen zabalik. Erabiltzaileak esplizituki ematen ditu baimen zabalduak.
 
 - Entirely declarative for reliability and CPU/memory efficiency.
