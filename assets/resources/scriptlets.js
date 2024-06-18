@@ -764,6 +764,7 @@ function replaceNodeTextFn(
             count += 1;
             if ( node === null ) { break; }
             if ( reNodeName.test(node.nodeName) === false ) { continue; }
+            if ( node === document.currentScript ) { continue; }
             if ( handleNode(node) ) { continue; }
             stop(); break;
         }
