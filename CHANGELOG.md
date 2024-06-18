@@ -1,3 +1,4 @@
+- [Improve `trusted-replace-node-text` scriptlet](https://github.com/gorhill/uBlock/commit/cb0f65e035)
 - [Improve `trusted-replace-[fetch|xhr]-response` scriptlets](https://github.com/gorhill/uBlock/commit/9072772f61)
 - [Improve `prevent-addEventListener` scriptlet](https://github.com/gorhill/uBlock/commit/91ee5bdeae)
 - [Add `isodate` as available placeholder for auto-comment](https://github.com/gorhill/uBlock/commit/d5208ee5dd)
