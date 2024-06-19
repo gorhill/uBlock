@@ -1009,6 +1009,8 @@ function setCookieFn(
             cookieParts.push(`; domain=${options.domain}`);
         }
         cookieParts.push('; Secure');
+    } else if ( /^__(Host|Secure)-/.test(name) ) {
+        cookieParts.push('; Secure');
     }
 
     try {
