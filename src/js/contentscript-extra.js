@@ -173,6 +173,26 @@ class PSelectorMatchesPathTask extends PSelectorTask {
     }
 }
 
+class PSelectorMatchesPropTask extends PSelectorTask {
+    constructor(task) {
+        super();
+        this.props = task[1].attr.split('.');
+        this.reValue = task[1].value !== ''
+            ? regexFromString(task[1].value, true)
+            : null;
+    }
+    transpose(node, output) {
+        let value = node;
+        for ( const prop of this.props ) {
+            if ( value === undefined ) { return; }
+            if ( value === null ) { return; }
+            value = value[prop];
+        }
+        if ( this.reValue !== null && this.reValue.test(value) === false ) { return; }
+        output.push(node);
+    }
+}
+
 class PSelectorMinTextLengthTask extends PSelectorTask {
     constructor(task) {
         super();
@@ -461,6 +481,7 @@ PSelector.prototype.operatorToTaskMap = new Map([
     [ 'matches-css-before', PSelectorMatchesCSSBeforeTask ],
     [ 'matches-media', PSelectorMatchesMediaTask ],
     [ 'matches-path', PSelectorMatchesPathTask ],
+    [ 'matches-prop', PSelectorMatchesPropTask ],
     [ 'min-text-length', PSelectorMinTextLengthTask ],
     [ 'not', PSelectorIfNotTask ],
     [ 'others', PSelectorOthersTask ],
