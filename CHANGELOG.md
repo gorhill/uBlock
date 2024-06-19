@@ -1,3 +1,4 @@
+- [Add `:matches-prop()` pseudo CSS operator](https://github.com/gorhill/uBlock/commit/aca7674bac)
 - [Improve `set-cookie` scriptlet](https://github.com/gorhill/uBlock/commit/b4d8750f44)
 - [Improve `trusted-replace-node-text` scriptlet](https://github.com/gorhill/uBlock/commit/cb0f65e035)
 - [Improve `trusted-replace-[fetch|xhr]-response` scriptlets](https://github.com/gorhill/uBlock/commit/9072772f61)
