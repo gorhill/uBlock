@@ -188,7 +188,11 @@ class PSelectorMatchesPropTask extends PSelectorTask {
             if ( value === null ) { return; }
             value = value[prop];
         }
-        if ( this.reValue !== null && this.reValue.test(value) === false ) { return; }
+        if ( this.reValue === null ) {
+            if ( value === undefined ) { return; }
+        } else if ( this.reValue.test(value) === false ) {
+            return;
+        }
         output.push(node);
     }
 }
