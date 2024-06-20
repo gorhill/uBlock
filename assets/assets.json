@@ -634,7 +634,7 @@
 		"title": "🇭🇺hu: hufilter",
 		"tags": "ads hungarian",
 		"lang": "hu",
-		"contentURL": "https://raw.githubusercontent.com/hufilter/hufilter/master/hufilter-ublock.txt",
+		"contentURL": "https://cdn.jsdelivr.net/gh/hufilter/hufilter@gh-pages/hufilter-ublock.txt",
 		"supportURL": "https://github.com/hufilter/hufilter"
 	},
 	"IDN-0": {
