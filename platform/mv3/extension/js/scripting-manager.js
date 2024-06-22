@@ -276,7 +276,7 @@ function registerProcedural(context) {
         allFrames: true,
         matches,
         excludeMatches,
-        runAt: 'document_end',
+        runAt: 'document_start',
     };
 
     // register
