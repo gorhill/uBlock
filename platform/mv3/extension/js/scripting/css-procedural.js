@@ -21,8 +21,6 @@
 
 /* jshint esversion:11 */
 
-'use strict';
-
 /******************************************************************************/
 
 // Important!
@@ -112,18 +110,21 @@ const uBOL_injectCSS = (css, count = 10) => {
 };
 
 const nonVisualElements = {
+    head: true,
+    link: true,
+    meta: true,
     script: true,
     style: true,
 };
 
 const regexFromString = (s, exact = false) => {
     if ( s === '' ) { return /^/; }
-    const match = /^\/(.+)\/([i]?)$/.exec(s);
+    const match = /^\/(.+)\/([imu]*)$/.exec(s);
     if ( match !== null ) {
         return new RegExp(match[1], match[2] || undefined);
     }
     const reStr = s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    return new RegExp(exact ? `^${reStr}$` : reStr, 'i');
+    return new RegExp(exact ? `^${reStr}$` : reStr);
 };
 
 /******************************************************************************/
@@ -269,6 +270,32 @@ class PSelectorMatchesPathTask extends PSelectorTask {
 
 /******************************************************************************/
 
+class PSelectorMatchesPropTask extends PSelectorTask {
+    constructor(task) {
+        super();
+        this.props = task[1].attr.split('.');
+        this.reValue = task[1].value !== ''
+            ? regexFromString(task[1].value, true)
+            : null;
+    }
+    transpose(node, output) {
+        let value = node;
+        for ( const prop of this.props ) {
+            if ( value === undefined ) { return; }
+            if ( value === null ) { return; }
+            value = value[prop];
+        }
+        if ( this.reValue === null ) {
+            if ( value === undefined ) { return; }
+        } else if ( this.reValue.test(value) === false ) {
+            return;
+        }
+        output.push(node);
+    }
+}
+
+/******************************************************************************/
+
 class PSelectorMinTextLengthTask extends PSelectorTask {
     constructor(task) {
         super();
@@ -295,28 +322,27 @@ class PSelectorOthersTask extends PSelectorTask {
         const toKeep = new Set(this.targets);
         const toDiscard = new Set();
         const body = document.body;
+        const head = document.head;
         let discard = null;
         for ( let keep of this.targets ) {
-            while ( keep !== null && keep !== body ) {
+            while ( keep !== null && keep !== body && keep !== head ) {
                 toKeep.add(keep);
                 toDiscard.delete(keep);
                 discard = keep.previousElementSibling;
                 while ( discard !== null ) {
-                    if (
-                        nonVisualElements[discard.localName] !== true &&
-                        toKeep.has(discard) === false
-                    ) {
-                        toDiscard.add(discard);
+                    if ( nonVisualElements[discard.localName] !== true ) {
+                        if ( toKeep.has(discard) === false ) {
+                            toDiscard.add(discard);
+                        }
                     }
                     discard = discard.previousElementSibling;
                 }
                 discard = keep.nextElementSibling;
                 while ( discard !== null ) {
-                    if (
-                        nonVisualElements[discard.localName] !== true &&
-                        toKeep.has(discard) === false
-                    ) {
-                        toDiscard.add(discard);
+                    if ( nonVisualElements[discard.localName] !== true ) {
+                        if ( toKeep.has(discard) === false ) {
+                            toDiscard.add(discard);
+                        }
                     }
                     discard = discard.nextElementSibling;
                 }
@@ -570,6 +596,7 @@ PSelector.prototype.operatorToTaskMap = new Map([
     [ 'matches-css-before', PSelectorMatchesCSSBeforeTask ],
     [ 'matches-media', PSelectorMatchesMediaTask ],
     [ 'matches-path', PSelectorMatchesPathTask ],
+    [ 'matches-prop', PSelectorMatchesPropTask ],
     [ 'min-text-length', PSelectorMinTextLengthTask ],
     [ 'not', PSelectorIfNotTask ],
     [ 'others', PSelectorOthersTask ],
