@@ -1661,7 +1661,9 @@ function addEventListenerDefuser(
         if ( elem instanceof Document ) { return 'document'; }
         if ( elem instanceof Element === false ) { return '?'; }
         const parts = [];
-        if ( elem.id !== '' ) { parts.push(`#${CSS.escape(elem.id)}`); }
+        // https://github.com/uBlockOrigin/uAssets/discussions/17907#discussioncomment-9871079
+        const id = String(elem.id);
+        if ( id !== '' ) { parts.push(`#${CSS.escape(id)}`); }
         for ( let i = 0; i < elem.classList.length; i++ ) {
             parts.push(`.${CSS.escape(elem.classList.item(i))}`);
         }
