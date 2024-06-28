@@ -592,7 +592,8 @@ const _serialize = data => {
         return;
     }
     if ( xtypeInt === I_DATE ) {
-        writeBuffer.push(C_DATE + _serialize(data.getTime()));
+        writeBuffer.push(C_DATE);
+        _serialize(data.getTime());
         return;
     }
     // Reference to composite types
