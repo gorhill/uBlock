@@ -107,7 +107,7 @@ export async function sessionWrite(key, value) {
 
 export async function adminRead(key) {
     if ( browser.storage instanceof Object === false ) { return; }
-    if ( browser.storage.local instanceof Object === false ) { return; }
+    if ( browser.storage.managed instanceof Object === false ) { return; }
     try {
         const bin = await browser.storage.managed.get(key);
         if ( bin instanceof Object === false ) { return; }
