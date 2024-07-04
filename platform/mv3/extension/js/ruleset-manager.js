@@ -428,7 +428,7 @@ async function updateDynamicRules() {
 /******************************************************************************/
 
 async function defaultRulesetsFromLanguage() {
-    const out = [ 'default' ];
+    const out = await dnr.getEnabledRulesets();
 
     const dropCountry = lang => {
         const pos = lang.indexOf('-');
