@@ -386,7 +386,7 @@ const onSvgTouch = (( ) => {
         const stopY = ev.changedTouches[0].screenY;
         const angle = Math.abs(Math.atan2(stopY - startY, stopX - startX));
         const distance = Math.sqrt(
-            Math.pow(stopX - startX, 2),
+            Math.pow(stopX - startX, 2) +
             Math.pow(stopY - startY, 2)
         );
         // Interpret touch events as a tap if:
