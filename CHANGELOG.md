@@ -1,3 +1,7 @@
+- [Fix distance calculation in picker](https://github.com/gorhill/uBlock/commit/9569969b55)
+- [Fix bad serialization of Date objects](https://github.com/gorhill/uBlock/commit/c154aaa69c)
+- [Fix race condition when loading redirect/scriptlet resources](https://github.com/gorhill/uBlock/commit/896737d098)
+- [Improve logging in `prevent-addEventListener` scriptlet](https://github.com/gorhill/uBlock/commit/8eb3b19c69)
 - [Add `:matches-prop()` pseudo CSS operator](https://github.com/gorhill/uBlock/commit/aca7674bac)
 - [Improve `set-cookie` scriptlet](https://github.com/gorhill/uBlock/commit/b4d8750f44)
 - [Improve `trusted-replace-node-text` scriptlet](https://github.com/gorhill/uBlock/commit/cb0f65e035)
