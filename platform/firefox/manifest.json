@@ -99,7 +99,8 @@
     "32": "img/ublock.svg",
     "48": "img/ublock.svg",
     "64": "img/ublock.svg",
-    "96": "img/ublock.svg"
+    "96": "img/ublock.svg",
+    "128": "img/ublock.svg"
   },
   "manifest_version": 2,
   "name": "uBlock Origin",
