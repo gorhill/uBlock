@@ -4248,6 +4248,9 @@ function trustedSetCookie(
     if ( value.includes('$currentDate$') ) {
         value = value.replaceAll('$currentDate$', time.toUTCString());
     }
+    if ( value.includes('$currentISODate$') ) {
+        value = value.replaceAll('$currentISODate$', time.toISOString());
+    }
 
     let expires = '';
     if ( offsetExpiresSec !== '' ) {
