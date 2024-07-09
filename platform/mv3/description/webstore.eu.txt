@@ -1,6 +1,6 @@
 uBO Lite (uBOL) irakargarri blokeatzailea de, baimen gutxiekin eta MV3ean basatua
 
-The default ruleset corresponds to uBlock Origin's default filterset:
+Lehenespenez, iragazki-zerrenda hauek ditu konfiguratuta:
 
 UblockOrigin-eko filtro lista
 ZerrendaErraza
@@ -17,9 +17,9 @@ However, uBOL allows you to *explicitly* grant extended permissions on specific 
 
 Leku jakin batean baimenak emateko, ireki panel emergentea eta aukeratu goiko iragazteko modu bat, optimo edo oso gisa.
 
-The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request.
+Nabigatzaileak orduan jakinaraziko dizu zer ondorio dituen luzapenak eskatutako baimen gehigarriak emateak egungo gunean, eta nabigatzaileari esan beharko diozu eskaera onartzen duzun edo uko egiten diozun.
 
-If you accept uBOL's request for additional permissions on the current site, it will be able to better filter content for the current site.
+Baimen gehigarrien eskaera onartzen baduzu, oraingo gunean edukiak hobeto iragazi ahal izango ditu.
 
 You can set the default filtering mode from uBOL's options page. If you pick the Optimal or Complete mode as the default one, you will need to grant uBOL the permission to read and modify data on all websites.
 

@@ -8,7 +8,7 @@
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
-    "message": "{{ruleCount}} Regole, convertite da {{filterCount}} filtri di rete",
+    "message": "{{ruleCount}} regole, convertite da {{filterCount}} filtri di rete",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
@@ -60,15 +60,15 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
-    "message": "Disturbi",
+    "message": "Elementi fastidiosi",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMisc": {
-    "message": "Generici",
+    "message": "Varie",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupRegions": {
-    "message": "Lingue e regioni",
+    "message": "Regioni, lingue",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "aboutChangelog": {
@@ -92,27 +92,27 @@
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
-    "message": "Elenco filtri",
+    "message": "Liste dei filtri",
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "Dipendenze esterne (in linea con la GPL v3):",
+    "message": "Dipendenze esterne (GPLv3-compatibili):",
     "description": "Shown in the About pane"
   },
   "firstRunSectionLabel": {
-    "message": "Ciao",
+    "message": "Benvenuto",
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "Hai installato uBO Lite. Scegli il filtro predefinito da usare ovunque.\n\nL'impostazione di fabbrica prevede la modalità <em>Basilare</em> che non richiede alcun tipo di autorizzazione. Puoi decidere di attivare il filtro avanzato se vuoi concedere a uBO Lite l'autorizzazione a rielaborare i dati di  tutti i siti web che visiti, in modo da avere un sistema di filtraggio con altre funzioni in più.",
+    "message": "Hai appena installato uBO Lite. Qui puoi scegliere la modalità di filtraggio predefinita da utilizzare su tutti i siti web.\n\nPer impostazione predefinita, viene selezionata la modalità <em>Basilare</em>, perché non richiede l'autorizzazione per leggere e modificare i dati. Se ti fidi di uBO Lite, puoi concedergli un'ampia autorizzazione per leggere e modificare i dati su tutti i siti web, in modo da abilitare capacitità di filtraggio più avanzate per tutti i siti web in modo predefinito.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
-    "message": "Filtro predefinito",
+    "message": "Modalità di filtraggio predefinita",
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "Il filtraggio predefinito può essere sostituito dal filtraggio personalizzato. Puoi regolare il filtraggio per ogni singolo sito web al fine di ottenere il risultato migliore. Ognuno dei filtraggi presenta vantaggi e svantaggi.",
+    "message": "La modalità di filtraggio predefinita sarà sovrascritta dalle modalità di filtraggio per sito web. È possibile regolare la modalità di filtraggio su un determinato sito web in base alla modalità che funziona meglio su quel sito. Ogni modalità presenta vantaggi e svantaggi.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
@@ -120,7 +120,7 @@
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
-    "message": "di base",
+    "message": "basilare",
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
@@ -132,19 +132,19 @@
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Filtro di rete basilare basato su un elenco selezionato di filtri.\n\nNon servono autorizzazioni per rielaborare i dati dei siti web.",
+    "message": "Filtraggio di rete di base da liste di filtri selezionate.\n\nNon richiede l'autorizzazione per leggere e modificare i dati sui siti web.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Filtro di rete avanzato in aggiunta al filtro avanzato basato su un elenco selezionato di filtri.\n\nRichiede delle autorizzazioni specifiche per rielaborare i dati dei siti web.",
+    "message": "Filtraggio di rete avanzato più un filtraggio esteso specifico da liste di filtri selezionate.\n\nRichiede un'ampia autorizzazione per leggere e modificare i dati su tutti i siti web.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Filtro avanzato di rete in aggiunta al filtro esteso basato su un elenco selezionato di filtri.\n\nRichiede autorizzazioni estese per leggere e modificare i dati da ogni sito web.\n\nIl filtro esteso richiede più memoria e un maggiore impegno del processore.",
+    "message": "Filtraggio di rete avanzato più un filtraggio esteso specifico e generico da liste di filtri selezionate.\n\nRichiede un'ampia autorizzazione per leggere e modificare i dati su tutti i siti web.\n\nIl filtraggio esteso generico può causare un maggiore utilizzo delle risorse della pagina web.",
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "Elenco degli host per i quali non viene effettuato nessun filtraggio",
+    "message": "Lista dei nomi host per i quali non verrà effettuato alcun filtraggio.",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "behaviorSectionLabel": {
@@ -152,11 +152,11 @@
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Ricarica la pagina quando scegli un altro metodo di filtraggio",
+    "message": "Ricarica la pagina automaticamente quando cambi la modalità di filtraggio",
     "description": "Label for a checkbox in the options page"
   },
   "showBlockedCountLabel": {
-    "message": "Mostra il numero di richieste bloccate sull'icona nella barra degli strumenti",
+    "message": "Mostra il numero delle richieste bloccate sull'icona nella barra degli strumenti",
     "description": "Label for a checkbox in the options page"
   }
 }

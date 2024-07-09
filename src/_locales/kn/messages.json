@@ -72,7 +72,7 @@
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Click to disable uBlock₀ for this site.\n\nCtrl+click to disable uBlock₀ only on this page.",
+    "message": "ಈ ಸೈಟ್‌ಗಾಗಿ uBlock₀ ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲು ಕ್ಲಿಕ್ ಮಾಡಿ.\n\nಈ ಪುಟದಲ್ಲಿ ಮಾತ್ರ uBlock₀ ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲು Ctrl+ಕ್ಲಿಕ್ ಮಾಡಿ.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
@@ -116,7 +116,7 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Enter element zapper mode",
+    "message": "Element zapper ಮೋಡ್ ಅನ್ನು ಬಳಸಿ",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
@@ -136,15 +136,15 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Click to block all popups on this site",
+    "message": "ಈ ಸೈಟ್‌ನಲ್ಲಿ ಎಲ್ಲಾ ಪಾಪ್‌ಅಪ್‌ಗಳನ್ನು ನಿರ್ಬಂಧಿಸಲು ಕ್ಲಿಕ್ ಮಾಡಿ",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Click to no longer block all popups on this site",
+    "message": "ಈ ಸೈಟ್‌ನಲ್ಲಿ ಇನ್ನು ಮುಂದೆ ಎಲ್ಲಾ ಪಾಪ್‌ಅಪ್‌ಗಳನ್ನು ನಿರ್ಬಂಧಿಸದಿರಲು ಕ್ಲಿಕ್ ಮಾಡಿ",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Toggle the blocking of large media elements for this site",
+    "message": "ಈ ಸೈಟ್‌ಗಾಗಿ ದೊಡ್ಡ ಮಾಧ್ಯಮ ಅಂಶಗಳ ನಿರ್ಬಂಧಿಸುವಿಕೆಯನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲು ಕ್ಲಿಕ್ ಮಾಡಿ",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
@@ -188,15 +188,15 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
-    "message": "Pop-up windows",
+    "message": "ಪಾಪ್-ಅಪ್ ವಿಂಡೋ",
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
-    "message": "Large media elements",
+    "message": "ದೊಡ್ಡ ಮಾಧ್ಯಮ ಅಂಶಗಳು",
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
-    "message": "Cosmetic filtering",
+    "message": "ಕಾಸ್ಮೆಟಿಕ್ ಫಿಲ್ಟರಿಂಗ್",
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
@@ -224,11 +224,11 @@
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
-    "message": "Click to make your changes permanent.",
+    "message": "ಶಾಶ್ವತ ಬದಲಾವಣೆಗಳನ್ನು ಮಾಡಲು ಕ್ಲಿಕ್ ಮಾಡಿ",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Click to revert your changes.",
+    "message": "ನಿಮ್ಮ ಬದಲಾವಣೆಗಳನ್ನು ಹಿಂತಿರುಗಿಸಲು ಕ್ಲಿಕ್ ಮಾಡಿ",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {
@@ -864,7 +864,7 @@
     "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
   },
   "loggerSettingHideColumnTime": {
-    "message": "{{input}} Time",
+    "message": "{{input}} ಗಂಟೆ",
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
@@ -1144,7 +1144,7 @@
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {
-    "message": "uBlock Origin has prevented the following page from loading:",
+    "message": "uBlock Origin ಈ ಕೆಳಗಿನ ಪುಟವನ್ನು ಲೋಡ್ ಮಾಡುವುದನ್ನು ತಡೆಯುತ್ತದೆ:",
     "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
@@ -1272,7 +1272,7 @@
     "description": "Label for keyboard shortcut used to relax blocking mode"
   },
   "storageUsed": {
-    "message": "Storage used: {{value}} {{unit}}",
+    "message": "ಉಪಯೊಗಿಸುತಿರುವ ಸಂಗ್ರಹಣೆ: {{value}} {{unit}}",
     "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
   },
   "KB": {

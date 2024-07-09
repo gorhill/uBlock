@@ -7,7 +7,7 @@ Kumpulan aturan bawaan sesuai dengan kumpulan penyaringan bawaan uBlock Origin:
 - EasyPrivacy
 - Daftar server iklan dan pelacak Peter Lowe
 
-kamu dapat menambahkan rulesets di halaman opsi -- klik ikon _Cogs_ di panel popup.
+Anda dapat menambahkan ruleset dengan mengunjungi halaman options -- klik ikon _Cogs_ di panel popup.
 
 uBOL sepenuhnya deklaratif, yang mana tidak membutuhkan proses permanen uBOL agar penyaringan dapat terjadi, dan penyaringan konten berbasis injeksi CSS/JS dilakukan sepenuhnya oleh peramban itu sendiri ketimbang oleh ekstensi. Ini berarti bahwa uBOL sendiri tidak mengkonsumsi sumber daya CPU/memori selama melakukan pemblokiran konten -- proses pekerja layanan uBOL dibutuhkan _hanya_ ketika Anda berinteraksi dengan panel popup atau opsi halaman.
 

@@ -484,11 +484,11 @@
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
-    "message": "Sosiale medie-widgeter",
+    "message": "Sosiale mediers moduler",
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
-    "message": "Cookie meldinger",
+    "message": "Infokapselmeldinger",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {

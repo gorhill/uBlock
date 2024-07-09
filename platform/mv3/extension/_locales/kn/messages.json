@@ -28,7 +28,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupFilteringModeLabel": {
-    "message": "filtering mode",
+    "message": "ಫಿಲ್ಟರಿಂಗ್ ಮೋಡ್",
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {
@@ -104,7 +104,7 @@
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "You have just installed uBO Lite. Here you can choose the default filtering mode to use on all websites.\n\nBy default, <em>Basic</em> mode is selected because it does not require the permission to read and modify data. If you trust uBO Lite, you can give it broad permission to read and modify data on all websites in order to enable more advanced filtering capabilities for all websites by default.",
+    "message": "ನೀವು ಈಗಷ್ಟೇ uBO Lite ಅನ್ನು ಸ್ಥಾಪಿಸಿರುವಿರಿ. ಇಲ್ಲಿ ನೀವು ಎಲ್ಲಾ ವೆಬ್‌ಸೈಟ್‌ಗಳಲ್ಲಿ ಬಳಸಲು ಡಿಫಾಲ್ಟ್ ಫಿಲ್ಟರಿಂಗ್ ಮೋಡ್ ಅನ್ನು ಆಯ್ಕೆ ಮಾಡಬಹುದು.\n\nಪೂರ್ವನಿಯೋಜಿತವಾಗಿ, <em>ಸಾಮಾನ್ಯ</em> ಮೋಡ್ ಅನ್ನು ಆಯ್ಕೆಮಾಡಲಾಗಿದೆ ಏಕೆಂದರೆ ಇದು ಡೇಟಾವನ್ನು ಓದಲು ಮತ್ತು ಮಾರ್ಪಡಿಸಲು ಅನುಮತಿಯ ಅಗತ್ಯವಿಲ್ಲ. ನೀವು uBO Lite ಅನ್ನು ನಂಬುತ್ತಿದ್ದರೆ, ಡೀಫಾಲ್ಟ್ ಆಗಿ ಎಲ್ಲಾ ವೆಬ್‌ಸೈಟ್‌ಗಳಿಗೆ ಹೆಚ್ಚು ಸುಧಾರಿತ ಫಿಲ್ಟರಿಂಗ್ ಸಾಮರ್ಥ್ಯಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲು ಎಲ್ಲಾ ವೆಬ್‌ಸೈಟ್‌ಗಳಲ್ಲಿನ ಡೇಟಾವನ್ನು ಓದಲು ಮತ್ತು ಮಾರ್ಪಡಿಸಲು ನೀವು ವಿಶಾಲವಾದ ಅನುಮತಿಯನ್ನು ನೀಡಬಹುದು.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
@@ -124,7 +124,7 @@
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
-    "message": "optimal",
+    "message": "ಸೂಕ್ತ",
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
@@ -148,7 +148,7 @@
     "description": "A short description for the editable field which lists trusted sites"
   },
   "behaviorSectionLabel": {
-    "message": "Behavior",
+    "message": "ನಡವಳಿಕೆ",
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {

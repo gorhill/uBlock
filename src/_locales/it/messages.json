@@ -380,7 +380,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Blocca elementi multimediali maggiori di {{input}} KB",
+    "message": "Blocca gli elementi multimediali di dimensioni maggiori di {{input}} KB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -404,7 +404,7 @@
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Caratteristiche adatte solo ad utenti tecnici.",
+    "message": "Funzionalità adatte solo per gli utenti tecnici.",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
@@ -440,11 +440,11 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
-    "message": "Analizza e applica filtri cosmetici",
+    "message": "Analizza e applica i filtri cosmetici",
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "\nI filtri cosmetici servono a nascondere gli elementi in una pagina web che sono considerati un fastidio visivo, e che non possono essere bloccati dai motori di filtraggio basati sulla richiesta di rete.",
+    "message": "\nI filtri cosmetici servono a nascondere gli elementi in una pagina web che sono considerati visivamente fastidiosi e che non possono essere bloccati dai motori di filtraggio basati sulle richieste di rete.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -456,7 +456,7 @@
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
-    "message": "Sospendi l'attività di rete finché non vengono caricate tutte le liste filtri",
+    "message": "Sospendi l'attività di rete finché tutte le liste dei filtri sono caricate",
     "description": "A checkbox in the 'Filter lists' pane"
   },
   "3pListsOfBlockedHostsHeader": {
@@ -480,15 +480,15 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Domini con Malware",
+    "message": "Protezione dai malware, sicurezza",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
-    "message": "Widget sociali",
+    "message": "Widget dei social",
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
-    "message": "Avviso sui cookie",
+    "message": "Avvisi sui cookie",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
@@ -512,7 +512,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "Un URL per riga. URL non validi verranno silenziosamente ignorati.",
+    "message": "Un URL per riga. Gli URL non validi saranno silenziosamente ignorati.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -536,7 +536,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pTrustWarning": {
-    "message": "Non aggiungere filtri da fonti non attendibili.",
+    "message": "Non aggiungere filtri da fonti non affidabili.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pEnableMyFiltersLabel": {
@@ -688,7 +688,7 @@
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
-    "message": "uBlock Origin Wiki: Registro",
+    "message": "Wiki di uBlock Origin: Il registro",
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
@@ -836,7 +836,7 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Non è stato possibile trovare il filtro statico in nessuno degli elenchi di filtri attualmente abilitati",
+    "message": "Non è stato possibile trovare il filtro statico in alcuna delle liste dei filtri attualmente abilitate",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
@@ -932,7 +932,7 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Importante:</b> Evita di utilizzare altre estensioni simili insieme a uBlock Origin, poiché ciò potrebbe causare problemi di filtro su specifici siti.",
+    "message": "<b>Importante:</b> Evita di utilizzare altre estensioni simili insieme a uBlock Origin, poiché ciò potrebbe causare problemi di filtraggio su specifici siti.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
@@ -952,7 +952,7 @@
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "Di seguito sono riportate le informazioni tecniche che potrebbero essere utili quando i volontari stanno cercando di aiutarti a risolvere un problema.",
+    "message": "Di seguito sono riportate informazioni tecniche che potrebbero essere utili quando i volontari cercheranno di aiutarti a risolvere un problema.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
@@ -1024,11 +1024,11 @@
     "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
-    "message": "Codice di condotta sulla privacy",
+    "message": "Informativa sulla privacy",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {
-    "message": "Changelog",
+    "message": "Registro delle modifiche",
     "description": ""
   },
   "aboutCode": {
@@ -1072,7 +1072,7 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Ripristina configurazione",
+    "message": "Ripristina dal file...",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
@@ -1168,7 +1168,7 @@
     "description": "English: Close this window"
   },
   "docblockedDontWarn": {
-    "message": "Non avvisarmi più per questo sito",
+    "message": "Non avvisarmi di nuovo riguardo questo sito",
     "description": "Label for checkbox in document-blocked page"
   },
   "docblockedProceed": {
@@ -1240,7 +1240,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "contextMenuViewSource": {
-    "message": "Visualizza origine...",
+    "message": "Visualizza il codice sorgente…",
     "description": "A context menu entry, to view the source code of the target resource"
   },
   "shortcutCapturePlaceholder": {
@@ -1260,7 +1260,7 @@
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleCosmeticFiltering": {
-    "message": "Attiva/Disattiva filtri cosmetici",
+    "message": "Attiva/Disattiva il filtraggio cosmetico",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "toggleJavascript": {
@@ -1296,7 +1296,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Non è stato possibile filtrare correttamente all'avvio del browser.\nRicaricare la pagina per garantire un filtraggio corretto",
+    "message": "Non è stato effettuato correttamente il filtraggio all'avvio del browser.\nRicarica la pagina per garantire un filtraggio adeguato.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {

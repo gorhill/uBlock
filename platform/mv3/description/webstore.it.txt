@@ -1,30 +1,30 @@
 uBO Lite (uBOL) è un sistema per bloccare contenuti che *non richiede autorizzazioni* basato su MV3.
 
-L'insieme di regole predefinite corrisponde a quello di uBlock Origin:
+L'insieme di regole predefinito corrisponde all'insieme di filtri predefinito di uBlock Origin:
 
-- Elenco dei filtri integrati in uBlock Origin
+- Liste dei filtri integrati di uBlock Origin
 - EasyList
 - EasyPrivacy
-- Elenco dei server di tracciatura e pubblicità di Peter Lowe
+- Elenco dei server pubblicitari e di tracciamento di Peter Lowe
 
-Puoi aggiungere altre regole nella pagina delle opzioni. Clicca sull'icona _Ingranaggi_ nel pannello a comparsa.
+Puoi aggiungere altri insiemi di regole visitando la pagina delle opzioni: clicca sull'icona con gli _Ingranaggi_ nel pannello a comparsa.
 
-uBOL è interamente dichiarativo ovvero non è necessario un processo uBOL permanente per eseguire il filtraggio e il filtraggio dei contenuti CSS/JS inietattai viene eseguito in modo affidabile dal browser stesso piuttosto che dall'estensione. Ciò significa che lo stesso uBOL non consuma risorse di CPU/memoria mentre il blocco dei contenuti è in corso: il processo di lavoro di servizio di uBOL è richiesto _solo_ quando interagisci con il pannello popup o le pagine delle opzioni.
+uBOL è interamente dichiarativo, ovvero non è necessario che ci sia un processo di uBOL permanente per poter eseguire il filtraggio; e il filtraggio dei contenuti basato sull'iniezione di elementi CSS/JS viene eseguito in modo affidabile dal browser stesso piuttosto che dall'estensione. Ciò significa che lo stesso uBOL non consuma risorse di CPU o memoria mentre il blocco dei contenuti viene eseguito: il processo che esegue il servizio di uBOL è richiesto _solamente_ quando interagisci con il pannello  a comparsa o con le pagine delle opzioni.
 
 uBOL non richiede un'ampia autorizzazione di "lettura e modifica dei dati" al momento dell'installazione, da qui le sue capacità limitate rispetto a uBlock Origin o ad altre estensioni che richiedono ampie autorizzazioni di "lettura e modifica dei dati" al momento dell'installazione.
 
 Tuttavia, uBOL consente di concedere *esplicitamente* permessi estesi a siti specifici di vostra scelta, in modo da poter filtrare meglio tali siti utilizzando il filtraggio cosmetico e le iniezioni di scriptlet.
 
-Per concedere autorizzazioni estese su un determinato sito, apri il pannello popup e scegli una modalità di filtraggio più restrittiva come Ottimale o Completa.
+Per concedere autorizzazioni estese su un determinato sito, apri il pannello popup e scegli una modalità di filtraggio più elevata come Ottimale o Completa.
 
-Il browser ti avviserà degli effetti della concessione delle autorizzazioni aggiuntive richieste dall'estensione sul sito corrente e dovrai comunicare al browser se accetti o rifiuti la richiesta.
+Il browser quindi ti avviserà degli effetti della concessione delle autorizzazioni aggiuntive richieste dall'estensione sul sito corrente e dovrai comunicare al browser se accetti o rifiuti la richiesta.
 
-Se accetti la richiesta di uBOL per ulteriori autorizzazioni sul sito corrente, sarà in grado di filtrare meglio i contenuti per il sito corrente.
+Se accetti la richiesta di uBOL per autorizzazioni aggiuntive sul sito corrente, esso sarà in grado di filtrare meglio il contenuto per il sito corrente.
 
 Puoi impostare la modalità di filtraggio predefinita dalla pagina delle opzioni di uBOL. Se scegli come predefinita la modalità Ottimale o Completa, dovrai concedere a uBOL il permesso di leggere e modificare i dati di tutti i siti web.
 
 Tieni presente che questo è ancora un work in progress, con questi obiettivi finali:
 
-- Nessuna autorizzazione host ampia al momento dell'installazione: le autorizzazioni estese vengono concesse esplicitamente dall'utente in base al sito.
+- Nessuna autorizzazione estesa degli host al momento dell'installazione; le autorizzazioni estese vengono concesse esplicitamente dall'utente in base al sito.
 
 - Interamente dichiarativo per l'affidabilità e l'efficienza della CPU/memoria.

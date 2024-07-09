@@ -9,9 +9,9 @@ The default ruleset corresponds to uBlock Origin's default filterset:
 
 You can add more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
 
-uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
+uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. ಇದರರ್ಥ ವಿಷಯ ನಿರ್ಬಂಧಿಸುವಿಕೆಯು ನಡೆಯುತ್ತಿರುವಾಗ uBOL ಸ್ವತಃ CPU/ಮೆಮೊರಿ ಸಂಪನ್ಮೂಲಗಳನ್ನು ಬಳಸುವುದಿಲ್ಲ -- ನೀವು ಪಾಪ್ಅಪ್ ಪ್ಯಾನೆಲ್ ಅಥವಾ ಆಯ್ಕೆಯ ಪುಟಗಳೊಂದಿಗೆ ಸಂವಹನ ನಡೆಸಿದಾಗ uBOL ನ ಸೇವಾ ವರ್ಕರ್ ಪ್ರಕ್ರಿಯೆಯು _ಮಾತ್ರಾ_ ಅಗತ್ಯವಿದೆ.
 
-uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read and modify data" permissions at install time.
+uBOL ಗೆ ಅನುಸ್ಥಾಪನೆಯ ಸಮಯದಲ್ಲಿ ವಿಶಾಲವಾದ "ಡೇಟಾವನ್ನು ಓದಲು ಮತ್ತು ಮಾರ್ಪಡಿಸಲು" ಅನುಮತಿಯ ಅಗತ್ಯವಿರುವುದಿಲ್ಲ, ಆದ್ದರಿಂದ uBlock ಮೂಲಕ್ಕೆ ಹೋಲಿಸಿದರೆ ಅದರ ಸೀಮಿತ ಸಾಮರ್ಥ್ಯಗಳು ಅಥವಾ ಅನುಸ್ಥಾಪನೆಯ ಸಮಯದಲ್ಲಿ ವಿಶಾಲವಾದ "ಡೇಟಾವನ್ನು ಓದಲು ಮತ್ತು ಮಾರ್ಪಡಿಸಲು" ಅನುಮತಿಗಳ ಅಗತ್ಯವಿರುವ ಇತರ ವಿಷಯ ಬ್ಲಾಕರ್‌ಗಳಿಗೆ ಹೋಲಿಸಿದರೆ.
 
 However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
 
@@ -21,9 +21,9 @@ The browser will then warn you about the effects of granting the additional perm
 
 If you accept uBOL's request for additional permissions on the current site, it will be able to better filter content for the current site.
 
-You can set the default filtering mode from uBOL's options page. If you pick the Optimal or Complete mode as the default one, you will need to grant uBOL the permission to read and modify data on all websites.
+You can set the default filtering mode from uBOL's options page. ನೀವು ಆಪ್ಟಿಮಲ್ ಅಥವಾ ಕಂಪ್ಲೀಟ್ ಮೋಡ್ ಅನ್ನು ಡಿಫಾಲ್ಟ್ ಆಗಿ ಆರಿಸಿದರೆ, ಎಲ್ಲಾ ವೆಬ್‌ಸೈಟ್‌ಗಳಲ್ಲಿನ ಡೇಟಾವನ್ನು ಓದಲು ಮತ್ತು ಮಾರ್ಪಡಿಸಲು ನೀವು uBOL ಗೆ ಅನುಮತಿಯನ್ನು ನೀಡಬೇಕಾಗುತ್ತದೆ.
 
-Keep in mind this is still a work in progress, with these end goals:
+ಈ ಅಂತಿಮ ಗುರಿಗಳೊಂದಿಗೆ ಇದು ಇನ್ನೂ ಪ್ರಗತಿಯಲ್ಲಿದೆ ಎಂಬುದನ್ನು ನೆನಪಿನಲ್ಲಿಡಿ:
 
 - No broad host permissions at install time -- extended permissions are granted explicitly by the user on a per-site basis.
 

@@ -8,7 +8,7 @@
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
-    "message": "{{ruleCount}} de reguli convertite din {{filterCount}} filtre de rețea",
+    "message": "{{ruleCount}} de reguli, convertite din {{filterCount}} filtre de rețea",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
@@ -156,7 +156,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "showBlockedCountLabel": {
-    "message": "Show the number of blocked requests on the toolbar icon",
+    "message": "Arată numărul cererilor blocate pe simbolul extensiei",
     "description": "Label for a checkbox in the options page"
   }
 }
