@@ -4756,24 +4756,29 @@ builtinScriptlets.push({
 });
 function trustedReplaceArgument(
     propChain = '',
-    argpos = '',
+    argposRaw = '',
     argraw = ''
 ) {
     if ( propChain === '' ) { return; }
-    if ( argpos === '' ) { return; }
-    if ( argraw === '' ) { return; }
     const safe = safeSelf();
-    const logPrefix = safe.makeLogPrefix('trusted-replace-argument', propChain, argpos, argraw);
+    const logPrefix = safe.makeLogPrefix('trusted-replace-argument', propChain, argposRaw, argraw);
+    const argpos = parseInt(argposRaw, 10) || 0;
     const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
     const normalValue = validateConstantFn(true, argraw);
     const reCondition = extraArgs.condition
         ? safe.patternToRegex(extraArgs.condition)
         : /^/;
     const reflector = proxyApplyFn(propChain, function(...args) {
+        if ( argposRaw === '' ) {
+            safe.uboLog(logPrefix, `Arguments:\n${args.join('\n')}`);
+            return reflector(...args);
+        }
         const arglist = args[args.length-1];
         if ( Array.isArray(arglist) === false ) { return reflector(...args); }
         const argBefore = arglist[argpos];
-        if ( reCondition.test(argBefore) === false ) { return reflector(...args); }
+        if ( safe.RegExp_test.call(reCondition, argBefore) === false ) {
+            return reflector(...args);
+        }
         arglist[argpos] = normalValue;
         safe.uboLog(logPrefix, `Replaced argument:\nBefore: ${JSON.stringify(argBefore)}\nAfter: ${normalValue}`);
         return reflector(...args);
@@ -4827,6 +4832,91 @@ function trustedReplaceOutboundText(
             encodedTextAfter = self.btoa(textAfter);
         }
         return encodedTextAfter;
+    });
+}
+
+/*******************************************************************************
+ * 
+ * Reference:
+ * https://github.com/AdguardTeam/Scriptlets/blob/5a92d79489/wiki/about-trusted-scriptlets.md#trusted-suppress-native-method
+ * 
+ * This is a first version with current limitations:
+ * - Does not support matching arguments which are object or array
+ * - Does not support `stack` parameter
+ * 
+ * If `signatureStr` parameter is not declared, the scriptlet will log all calls
+ * to `methodPath` along with the arguments passed and will not prevent the
+ * trapped method.
+ * 
+ * */
+
+builtinScriptlets.push({
+    name: 'trusted-suppress-native-method.js',
+    requiresTrust: true,
+    fn: trustedSuppressNativeMethod,
+    dependencies: [
+        'proxy-apply.fn',
+        'safe-self.fn',
+    ],
+});
+function trustedSuppressNativeMethod(
+    methodPath = '',
+    signature = '',
+    how = '',
+    stack = ''
+) {
+    if ( methodPath === '' ) { return; }
+    if ( stack !== '' ) { return; }
+    const safe = safeSelf();
+    const logPrefix = safe.makeLogPrefix('trusted-suppress-native-method', methodPath, signature, how);
+    const signatureArgs = signature.split(/\s*\|\s*/).map(v => {
+        if ( /^".*"$/.test(v) ) {
+            return { type: 'pattern', re: safe.patternToRegex(v.slice(1, -1)) };
+        }
+        if ( v === 'false' ) {
+            return { type: 'exact', value: false };
+        }
+        if ( v === 'true' ) {
+            return { type: 'exact', value: true };
+        }
+        if ( v === 'null' ) {
+            return { type: 'exact', value: null };
+        }
+        if ( v === 'undefined' ) {
+            return { type: 'exact', value: undefined };
+        }
+    });
+    const reflector = proxyApplyFn(methodPath, function(...args) {
+        if ( signature === '' ) {
+            safe.uboLog(logPrefix, `Arguments:\n${args.join('\n')}`);
+            return reflector(...args);
+        }
+        const arglist = args[args.length-1];
+        if ( Array.isArray(arglist) === false ) {
+            return reflector(...args);
+        }
+        if ( arglist.length < signatureArgs.length ) {
+            return reflector(...args);
+        }
+        for ( let i = 0; i < signatureArgs.length; i++ ) {
+            const signatureArg = signatureArgs[i];
+            if ( signatureArg === undefined ) { continue; }
+            const targetArg = arglist[i];
+            if ( signatureArg.type === 'exact' ) {
+                if ( targetArg !== signatureArg.value ) {
+                    return reflector(...args);
+                }
+            }
+            if ( signatureArg.type === 'pattern' ) {
+                if ( safe.RegExp_test.call(signatureArg.re, targetArg) === false ) {
+                    return reflector(...args);
+                }
+            }
+        }
+        safe.uboLog(logPrefix, `Suppressed:\n${args.join('\n')}`);
+        if ( how === 'abort' ) {
+            throw new ReferenceError();
+        }
     });
 }
 
