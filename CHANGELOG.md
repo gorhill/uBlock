@@ -1,3 +1,4 @@
+- [Add `trusted-suppress-native-method` scriptlet](https://github.com/gorhill/uBlock/commit/97d11c03c2)
 - [Fix distance calculation in picker](https://github.com/gorhill/uBlock/commit/9569969b55)
 - [Fix bad serialization of Date objects](https://github.com/gorhill/uBlock/commit/c154aaa69c)
 - [Fix race condition when loading redirect/scriptlet resources](https://github.com/gorhill/uBlock/commit/896737d098)
