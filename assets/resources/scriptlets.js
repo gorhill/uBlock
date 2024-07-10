@@ -3477,7 +3477,7 @@ function hrefSanitizer(
     };
     const validateURL = text => {
         if ( text === '' ) { return ''; }
-        if ( /[^\x21-\x7e]/.test(text) ) { return ''; }
+        if ( /[\x00-\x20\x7f]/.test(text) ) { return ''; }
         try {
             const url = new URL(text, document.location);
             return url.href;
