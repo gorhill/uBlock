@@ -553,11 +553,16 @@ const onHeadersReceived = function(details) {
     if ( httpheaderFilteringEngine.apply(fctxt, responseHeaders) === true ) {
         modifiedHeaders = true;
     }
-    if ( injectCSP(fctxt, pageStore, responseHeaders) === true ) {
-        modifiedHeaders = true;
-    }
-    if ( injectPP(fctxt, pageStore, responseHeaders) === true ) {
-        modifiedHeaders = true;
+
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/229#issuecomment-2220354261
+    // Inject CSP/PP in document resource only
+    if ( fctxt.isDocument() ) {
+        if ( injectCSP(fctxt, pageStore, responseHeaders) === true ) {
+            modifiedHeaders = true;
+        }
+        if ( injectPP(fctxt, pageStore, responseHeaders) === true ) {
+            modifiedHeaders = true;
+        }
     }
 
     // https://bugzilla.mozilla.org/show_bug.cgi?id=1376932
@@ -945,10 +950,6 @@ const bodyFilterer = (( ) => {
 /******************************************************************************/
 
 const injectCSP = function(fctxt, pageStore, responseHeaders) {
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/229#issuecomment-2220354261
-    // Inject CSP in document resource only
-    if ( fctxt.isDocument() === false ) { return; }
-
     const cspSubsets = [];
     const requestType = fctxt.type;
 
