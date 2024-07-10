@@ -1,4 +1,4 @@
-- [Fix CSP injection in non-document resources](https://github.com/gorhill/uBlock/commit/b98ef8141a)
+- [Fix CSP/PP header injection in non-document resources](https://github.com/gorhill/uBlock/commit/c90f4933df)
 - [Add `trusted-suppress-native-method` scriptlet](https://github.com/gorhill/uBlock/commit/97d11c03c2)
 - [Add support for `$currentISODate$` in `trusted-set-cookie` scriptlet](https://github.com/gorhill/uBlock/commit/a3576ea651)
 - [Add `essential` and `nonessential` to set-cookie](https://github.com/gorhill/uBlock/commit/37d31a82d8) (by @ryanbr)
