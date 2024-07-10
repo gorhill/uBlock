@@ -945,6 +945,10 @@ const bodyFilterer = (( ) => {
 /******************************************************************************/
 
 const injectCSP = function(fctxt, pageStore, responseHeaders) {
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/229#issuecomment-2220354261
+    // Inject CSP in document resource only
+    if ( fctxt.isDocument() === false ) { return; }
+
     const cspSubsets = [];
     const requestType = fctxt.type;
 
