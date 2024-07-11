@@ -1,3 +1,4 @@
+- [Improve `href-sanitizer` scriptlet](https://github.com/gorhill/uBlock/commit/66e3a1ad47)
 - [Fix CSP/PP header injection in non-document resources](https://github.com/gorhill/uBlock/commit/c90f4933df)
 - [Add `trusted-suppress-native-method` scriptlet](https://github.com/gorhill/uBlock/commit/97d11c03c2)
 - [Add support for `$currentISODate$` in `trusted-set-cookie` scriptlet](https://github.com/gorhill/uBlock/commit/a3576ea651)
