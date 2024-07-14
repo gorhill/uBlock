@@ -2089,11 +2089,13 @@ function noFetchIf(
     }
     const validResponseProps = {
         ok: [ false, true ],
-        type: [ 'basic', 'cors', 'opaque' ],
+        statusText: [ '', 'Not Found' ],
+        type: [ 'basic', 'cors', 'default', 'error', 'opaque' ],
     };
-    let responseProps;
+    const responseProps = {
+        statusText: { value: 'OK' },
+    };
     if ( /^\{.*\}$/.test(responseType) ) {
-        responseProps = {};
         try {
             Object.entries(JSON.parse(responseType)).forEach(([ p, v ]) => {
                 if ( validResponseProps[p] === undefined ) { return; }
@@ -2104,7 +2106,7 @@ function noFetchIf(
         catch(ex) {}
     } else if ( responseType !== '' ) {
         if ( validResponseProps.type.includes(responseType) ) {
-            responseProps = { type: { value: responseType } };
+            responseProps.type = { value: responseType };
         }
     }
     self.fetch = new Proxy(self.fetch, {
@@ -2147,7 +2149,6 @@ function noFetchIf(
             return generateContentFn(responseBody).then(text => {
                 safe.uboLog(logPrefix, `Prevented with response "${text}"`);
                 const response = new Response(text, {
-                    statusText: 'OK',
                     headers: {
                         'Content-Length': text.length,
                     }
