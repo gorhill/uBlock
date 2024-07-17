@@ -1,3 +1,4 @@
+- [Improve `set-constant` scriptlet](https://github.com/gorhill/uBlock/commit/77feb25c4d)
 - [Improve `prevent-fetch` scriptlet](https://github.com/gorhill/uBlock/commit/e785b99338)
 - [Improve `href-sanitizer` scriptlet](https://github.com/gorhill/uBlock/commit/66e3a1ad47)
 - [Fix CSP/PP header injection in non-document resources](https://github.com/gorhill/uBlock/commit/c90f4933df)
