@@ -485,9 +485,8 @@ builtinScriptlets.push({
         'safe-self.fn',
     ],
 });
-function validateConstantFn(trusted, raw) {
+function validateConstantFn(trusted, raw, extraArgs = {}) {
     const safe = safeSelf();
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 2);
     let value;
     if ( raw === 'undefined' ) {
         value = undefined;
@@ -587,7 +586,7 @@ function setConstantFn(
         };
         if ( trappedProp === '' ) { return; }
         const thisScript = document.currentScript;
-        let normalValue = validateConstantFn(trusted, rawValue);
+        let normalValue = validateConstantFn(trusted, rawValue, extraArgs);
         if ( rawValue === 'noopFunc' || rawValue === 'trueFunc' || rawValue === 'falseFunc' ) {
             normalValue = cloakFunc(normalValue);
         }
@@ -4772,7 +4771,7 @@ function trustedReplaceArgument(
     const logPrefix = safe.makeLogPrefix('trusted-replace-argument', propChain, argposRaw, argraw);
     const argpos = parseInt(argposRaw, 10) || 0;
     const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
-    const normalValue = validateConstantFn(true, argraw);
+    const normalValue = validateConstantFn(true, argraw, extraArgs);
     const reCondition = extraArgs.condition
         ? safe.patternToRegex(extraArgs.condition)
         : /^/;
