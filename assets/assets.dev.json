@@ -681,8 +681,8 @@
 		"title": "🇮🇸is: Icelandic ABP List",
 		"tags": "ads icelandic",
 		"lang": "is",
-		"contentURL": "https://adblock.gardar.net/is.abp.txt",
-		"supportURL": "https://adblock.gardar.net/"
+		"contentURL": "https://raw.githubusercontent.com/brave/adblock-lists/master/custom/is.txt",
+		"supportURL": "https://github.com/brave/adblock-lists/issues"
 	},
 	"ISR-0": {
 		"content": "filters",
