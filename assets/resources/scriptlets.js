@@ -714,7 +714,8 @@ function replaceNodeTextFn(
     const reNodeName = safe.patternToRegex(nodeName, 'i', true);
     const rePattern = safe.patternToRegex(pattern, 'gms');
     const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
-    const reCondition = safe.patternToRegex(extraArgs.condition || '', 'ms');
+    const reIncludes = safe.patternToRegex(extraArgs.includes || extraArgs.condition || '', 'ms');
+    const reExcludes = safe.patternToRegex(extraArgs.excludes || '', 'ms');
     const stop = (takeRecord = true) => {
         if ( takeRecord ) {
             handleMutations(observer.takeRecords());
@@ -727,8 +728,10 @@ function replaceNodeTextFn(
     let sedCount = extraArgs.sedCount || 0;
     const handleNode = node => {
         const before = node.textContent;
-        reCondition.lastIndex = 0;
-        if ( safe.RegExp_test.call(reCondition, before) === false ) { return true; }
+        reIncludes.lastIndex = 0;
+        if ( safe.RegExp_test.call(reIncludes, before) === false ) { return true; }
+        reExcludes.lastIndex = 0;
+        if ( safe.RegExp_test.call(reExcludes, before) ) { return true; }
         rePattern.lastIndex = 0;
         if ( safe.RegExp_test.call(rePattern, before) === false ) { return true; }
         rePattern.lastIndex = 0;
