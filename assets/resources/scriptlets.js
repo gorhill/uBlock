@@ -3752,10 +3752,10 @@ builtinScriptlets.push({
 });
 function removeNodeText(
     nodeName,
-    condition,
+    includes,
     ...extraArgs
 ) {
-    replaceNodeTextFn(nodeName, '', '', 'condition', condition || '', ...extraArgs);
+    replaceNodeTextFn(nodeName, '', '', 'includes', includes || '', ...extraArgs);
 }
 
 /*******************************************************************************
