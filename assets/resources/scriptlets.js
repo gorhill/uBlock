@@ -715,7 +715,7 @@ function replaceNodeTextFn(
     const rePattern = safe.patternToRegex(pattern, 'gms');
     const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
     const reIncludes = safe.patternToRegex(extraArgs.includes || extraArgs.condition || '', 'ms');
-    const reExcludes = safe.patternToRegex(extraArgs.excludes || '', 'ms');
+    const reExcludes = safe.patternToRegex(extraArgs.excludes || '.^', 'ms');
     const stop = (takeRecord = true) => {
         if ( takeRecord ) {
             handleMutations(observer.takeRecords());
