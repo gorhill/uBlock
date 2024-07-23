@@ -1,3 +1,4 @@
+- [Improve `href-sanitizer` scriptlet](https://github.com/gorhill/uBlock/commit/84be9cde6d)
 - [Improve `trusted-replace-node-text` scriptlet](https://github.com/gorhill/uBlock/commit/8afd9e233d)
 - [Improve `set-constant` scriptlet](https://github.com/gorhill/uBlock/commit/77feb25c4d)
 - [Improve `prevent-fetch` scriptlet](https://github.com/gorhill/uBlock/commit/e785b99338)
