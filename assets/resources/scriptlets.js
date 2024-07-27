@@ -3819,6 +3819,7 @@ function setCookie(
         'approved', 'disapproved',
         'hide', 'hidden',
         'essential', 'nonessential',
+        'dismiss', 'dismissed',
     ];
     const normalized = value.toLowerCase();
     const match = /^("?)(.+)\1$/.exec(normalized);
