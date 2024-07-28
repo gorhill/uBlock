@@ -64,6 +64,7 @@ function safeSelf() {
         'RegExp_test': self.RegExp.prototype.test,
         'RegExp_exec': self.RegExp.prototype.exec,
         'Request_clone': self.Request.prototype.clone,
+        'String_fromCharCode': String.fromCharCode,
         'XMLHttpRequest': self.XMLHttpRequest,
         'addEventListener': self.EventTarget.prototype.addEventListener,
         'removeEventListener': self.EventTarget.prototype.removeEventListener,
@@ -211,7 +212,7 @@ builtinScriptlets.push({
 function getExceptionToken() {
     const safe = safeSelf();
     const token =
-        String.fromCharCode(Date.now() % 26 + 97) +
+        safe.String_fromCharCode(Date.now() % 26 + 97) +
         safe.Math_floor(safe.Math_random() * 982451653 + 982451653).toString(36);
     const oe = self.onerror;
     self.onerror = function(msg, ...args) {
