@@ -19,12 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* jshint esversion:11 */
-
-'use strict';
-
-/******************************************************************************/
-
 export const browser =
     self.browser instanceof Object &&
     self.browser instanceof Element === false
@@ -34,6 +28,7 @@ export const browser =
 export const dnr = browser.declarativeNetRequest;
 export const i18n = browser.i18n;
 export const runtime = browser.runtime;
+export const windows = browser.windows;
 
 /******************************************************************************/
 

@@ -1,0 +1,28 @@
+
+#matchedEntries {
+    display: flex;
+    flex-direction: column;
+    font-family: monospace;
+    font-size: small;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.matchInfo {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.matchInfo:nth-of-type(2n) {
+    background-color: lightgray;
+}
+
+.requestInfo {
+    border-inline-end: 1px dotted black;
+    padding-inline-end: 0.5em;
+    width: 25vw;
+}
+
+.ruleInfo {
+    padding-inline-start: 0.5em;
+}

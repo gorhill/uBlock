@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/******************************************************************************/
-
 import {
     adminRead,
     browser,
@@ -28,12 +26,8 @@ import {
     localRead, localWrite,
     runtime,
     sessionRead, sessionWrite,
+    windows,
 } from './ext.js';
-
-import {
-    broadcastMessage,
-    ubolLog,
-} from './utils.js';
 
 import {
     defaultRulesetsFromLanguage,
@@ -54,8 +48,13 @@ import {
 } from './mode-manager.js';
 
 import {
-    registerInjectables,
-} from './scripting-manager.js';
+    getMatchedRules,
+    isSideloaded,
+    ubolLog,
+} from './debug.js';
+
+import { broadcastMessage } from './utils.js';
+import { registerInjectables } from './scripting-manager.js';
 
 /******************************************************************************/
 
@@ -253,6 +252,7 @@ function onMessage(request, sender, callback) {
                 hasOmnipotence: results[1],
                 hasGreatPowers: results[2],
                 rulesetDetails: results[3],
+                isSideloaded,
             });
         });
         return true;
@@ -307,6 +307,19 @@ function onMessage(request, sender, callback) {
             });
         });
         return true;
+
+    case 'getMatchedRules':
+        getMatchedRules(request.tabId).then(entries => {
+            callback(entries);
+        });
+        return true;
+
+    case 'showMatchedRules':
+        windows.create({
+            type: 'popup',
+            url: `/matched-rules.html?tab=${request.tabId}`,
+        });
+        break;
 
     default:
         break;

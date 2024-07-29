@@ -19,14 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* jshint esversion:11 */
-
-'use strict';
-
-/******************************************************************************/
-
-import { browser } from './ext.js';
-
 /******************************************************************************/
 
 function parsedURLromOrigin(origin) {
@@ -114,7 +106,7 @@ const hostnamesFromMatches = origins => {
             out.push('all-urls');
             continue;
         }
-        const match = /^\*:\/\/(?:\*\.)?([^\/]+)\/\*/.exec(origin);
+        const match = /^\*:\/\/(?:\*\.)?([^/]+)\/\*/.exec(origin);
         if ( match === null ) { continue; }
         out.push(match[1]);
     }
@@ -130,25 +122,6 @@ export const broadcastMessage = message => {
 
 /******************************************************************************/
 
-const ubolLog = (...args) => {
-    // Do not pollute dev console in stable releases.
-    if ( shouldLog !== true ) { return; }
-    console.info('[uBOL]', ...args);
-};
-
-const shouldLog = (( ) => {
-    const { id } = browser.runtime;
-    // https://addons.mozilla.org/en-US/firefox/addon/ublock-origin-lite/
-    if ( id === 'uBOLite@raymondhill.net' ) { return false; }
-    // https://chromewebstore.google.com/detail/ddkjiahejlhfcafbddmgiahcphecmpfh
-    if ( id === 'ddkjiahejlhfcafbddmgiahcphecmpfh' ) { return false; }
-    // https://microsoftedge.microsoft.com/addons/detail/cimighlppcgcoapaliogpjjdehbnofhn
-    if ( id === 'cimighlppcgcoapaliogpjjdehbnofhn' ) { return false; }
-    return true;
-})();
-
-/******************************************************************************/
-
 export {
     parsedURLromOrigin,
     toBroaderHostname,
@@ -158,5 +131,4 @@ export {
     subtractHostnameIters,
     matchesFromHostnames,
     hostnamesFromMatches,
-    ubolLog,
 };

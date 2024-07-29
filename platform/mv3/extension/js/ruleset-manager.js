@@ -19,15 +19,9 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* jshint esversion:11 */
-
-'use strict';
-
-/******************************************************************************/
-
 import { browser, dnr, i18n } from './ext.js';
 import { fetchJSON } from './fetch.js';
-import { ubolLog } from './utils.js';
+import { ubolLog } from './debug.js';
 
 /******************************************************************************/
 

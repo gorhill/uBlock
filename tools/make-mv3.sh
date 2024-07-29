@@ -128,11 +128,19 @@ fi
 echo "*** uBOLite.mv3: extension ready"
 echo "Extension location: $DES/"
 
-# Local build: use a different extension id than the official one
-if [ -z "$TAGNAME" ] && [ "$PLATFORM" = "firefox" ]; then
+# Local build
+if [ -z "$TAGNAME" ]; then
+    # Enable DNR rule debugging
     tmp=$(mktemp)
-    jq '.browser_specific_settings.gecko.id = "uBOLite.dev@raymondhill.net"' "$DES/manifest.json"  > "$tmp" \
+    jq '.permissions += ["declarativeNetRequestFeedback"]' \
+        "$DES/manifest.json" > "$tmp" \
         && mv "$tmp" "$DES/manifest.json"
+    # Use a different extension id than the official one
+    if [ "$PLATFORM" = "firefox" ]; then
+        tmp=$(mktemp)
+        jq '.browser_specific_settings.gecko.id = "uBOLite.dev@raymondhill.net"' "$DES/manifest.json"  > "$tmp" \
+            && mv "$tmp" "$DES/manifest.json"
+    fi
 fi
 
 if [ "$FULL" = "yes" ]; then

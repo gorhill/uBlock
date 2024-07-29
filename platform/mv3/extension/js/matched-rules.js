@@ -19,20 +19,30 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import { dom } from './dom.js';
-import { runtime } from './ext.js';
+import { dom, qs$ } from './dom.js';
+import { sendMessage } from './ext.js';
 
 /******************************************************************************/
 
-{
-    const manifest = runtime.getManifest();
-    dom.text('#aboutNameVer', `${manifest.name} ${manifest.version}`);
+const url = new URL(document.location.href);
+const tabId = parseInt(url.searchParams.get('tab'), 10) || 0;
+
+const entries = await sendMessage({
+    what: 'getMatchedRules',
+    tabId,
+});
+
+const fragment = new DocumentFragment();
+const template = qs$('#matchInfo');
+for ( const entry of (entries || []) ) {
+    if ( entry instanceof Object === false ) { continue; }
+    const row = template.content.cloneNode(true);
+    qs$(row, '.requestInfo').textContent = JSON.stringify(entry.request, null, 2);
+    qs$(row, '.ruleInfo').textContent = JSON.stringify(entry.rule, null, 2);
+    fragment.append(row);
 }
 
-dom.attr('a', 'target', '_blank');
-
-dom.on('#dashboard-nav', 'click', '.tabButton', ev => {
-    dom.body.dataset.pane = ev.target.dataset.pane;
-});
+dom.empty('#matchedEntries');
+qs$('#matchedEntries').append(fragment);
 
 /******************************************************************************/
