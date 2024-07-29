@@ -1,8 +1,8 @@
-uBO Lite (uBOL) is a *permission-less* MV3-based content blocker.
+uBO Lite (uBOL) ایک *اجازت سے کم* MV3 پر مبنی مواد بلاکر ہے۔
 
-The default ruleset corresponds to uBlock Origin's default filterset:
+ڈیفالٹ رولسیٹ uBlock Origin کے ڈیفالٹ فلٹر سیٹ سے مساوی ہے:
 
-- uBlock Origin's built-in filter lists
+- یو بلاک اوریجن کی بلٹ ان فلٹر لسٹ
 - EasyList
 - EasyPrivacy
 - Peter Lowe’s Ad and tracking server list

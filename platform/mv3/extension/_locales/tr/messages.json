@@ -152,7 +152,7 @@
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Filtreleme modu değiştirildiğinde sayfayı yenile",
+    "message": "Filtreleme modunu değiştirirken sayfayı otomatik olarak yenile",
     "description": "Label for a checkbox in the options page"
   },
   "showBlockedCountLabel": {

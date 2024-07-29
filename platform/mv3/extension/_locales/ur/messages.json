@@ -28,31 +28,31 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupFilteringModeLabel": {
-    "message": "filtering mode",
+    "message": "فلٹرنگ موڈ",
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipDashboard": {
-    "message": "Open the dashboard",
+    "message": "ڈیش بورڈ کھولیں۔",
     "description": "English: Click to open the dashboard"
   },
   "popupMoreButton": {
-    "message": "More",
+    "message": "مزید",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Less",
+    "message": "کم",
     "description": "Label to be used to hide popup panel sections"
   },
   "3pGroupDefault": {
-    "message": "Default",
+    "message": "طے شدہ",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAds": {
-    "message": "Ads",
+    "message": "اشتہارات",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupPrivacy": {
-    "message": "Privacy",
+    "message": "رازداری",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
@@ -60,31 +60,31 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
-    "message": "Annoyances",
+    "message": "پریشانیاں",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMisc": {
-    "message": "Miscellaneous",
+    "message": "متفرق",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupRegions": {
-    "message": "Regions, languages",
+    "message": "علاقے، زبانیں۔",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "aboutChangelog": {
-    "message": "Changelog",
+    "message": "چینج لاگ",
     "description": ""
   },
   "aboutCode": {
-    "message": "Source code (GPLv3)",
+    "message": "ماخذ کوڈ (GPLv3)",
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Contributors",
+    "message": "تعاون کرنے والے",
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Source code",
+    "message": "سورس کوڈ",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
@@ -92,39 +92,39 @@
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
-    "message": "Filter lists",
+    "message": "فہرستوں کو فلٹر کریں۔",
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "External dependencies (GPLv3-compatible):",
+    "message": "بیرونی انحصار (GPLv3-مطابق):",
     "description": "Shown in the About pane"
   },
   "firstRunSectionLabel": {
-    "message": "Welcome",
+    "message": "خوش آمدید",
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "You have just installed uBO Lite. Here you can choose the default filtering mode to use on all websites.\n\nBy default, <em>Basic</em> mode is selected because it does not require the permission to read and modify data. If you trust uBO Lite, you can give it broad permission to read and modify data on all websites in order to enable more advanced filtering capabilities for all websites by default.",
+    "message": "آپ نے ابھی یو بی او لائٹ انسٹال کیا ہے۔ یہاں آپ تمام ویب سائٹس پر استعمال کرنے کے لیے ڈیفالٹ فلٹرنگ موڈ کا انتخاب کر سکتے ہیں۔\n\nپہلے سے طے شدہ طور پر، <em>بنیادی</em> موڈ کو منتخب کیا جاتا ہے کیونکہ اسے ڈیٹا کو پڑھنے اور اس میں ترمیم کرنے کی اجازت کی ضرورت نہیں ہوتی ہے۔ اگر آپ کو uBO Lite پر بھروسہ ہے، تو آپ اسے تمام ویب سائٹس پر ڈیٹا کو پڑھنے اور اس میں ترمیم کرنے کی وسیع اجازت دے سکتے ہیں تاکہ تمام ویب سائٹس کے لیے پہلے سے طے شدہ فلٹرنگ کی مزید جدید صلاحیتوں کو فعال کیا جا سکے۔",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
-    "message": "Default filtering mode",
+    "message": "ڈیفالٹ فلٹرنگ موڈ",
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "The default filtering mode will be overridden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
+    "message": "ڈیفالٹ فلٹرنگ موڈ کو فی ویب سائٹ فلٹرنگ موڈز کے ذریعے اوور رائیڈ کر دیا جائے گا۔ آپ کسی بھی ویب سائٹ پر فلٹرنگ موڈ کو ایڈجسٹ کرسکتے ہیں اس کے مطابق جو بھی موڈ اس ویب سائٹ پر بہترین کام کرتا ہے۔ ہر موڈ کے اپنے فوائد اور نقصانات ہیں۔",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
-    "message": "no filtering",
+    "message": "کوئی فلٹرنگ نہیں",
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
-    "message": "basic",
+    "message": "بنیادی",
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
-    "message": "optimal",
+    "message": "بہترین",
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
@@ -132,31 +132,31 @@
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Basic network filtering from selected filter lists.\n\nDoes not require permission to read and modify data on websites.",
+    "message": "منتخب فلٹر فہرستوں سے بنیادی نیٹ ورک فلٹرنگ۔\n\nویب سائٹس پر ڈیٹا کو پڑھنے اور اس میں ترمیم کرنے کے لیے اجازت کی ضرورت نہیں ہے۔",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.",
+    "message": "اعلی درجے کی نیٹ ورک فلٹرنگ کے علاوہ منتخب فلٹر فہرستوں سے مخصوص توسیعی فلٹرنگ۔\n\nتمام ویب سائٹس پر ڈیٹا کو پڑھنے اور اس میں ترمیم کرنے کے لیے وسیع اجازت درکار ہے۔",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific and generic extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.\n\nGeneric extended filtering may cause higher webpage resources usage.",
+    "message": "اعلی درجے کی نیٹ ورک فلٹرنگ کے علاوہ منتخب فلٹر فہرستوں سے مخصوص اور عام توسیعی فلٹرنگ۔\n\nتمام ویب سائٹس پر ڈیٹا کو پڑھنے اور اس میں ترمیم کرنے کے لیے وسیع اجازت درکار ہے۔\n\nعام توسیع شدہ فلٹرنگ ویب پیج کے وسائل کے زیادہ استعمال کا سبب بن سکتی ہے۔",
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "List of hostnames for which no filtering will take place.",
+    "message": "میزبان ناموں کی فہرست جن کے لیے کوئی فلٹرنگ نہیں ہوگی۔",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "behaviorSectionLabel": {
-    "message": "Behavior",
+    "message": "رویہ",
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Automatically reload page when changing filtering mode",
+    "message": "فلٹرنگ موڈ تبدیل کرتے وقت صفحہ خودکار طور پر دوبارہ لوڈ کریں۔",
     "description": "Label for a checkbox in the options page"
   },
   "showBlockedCountLabel": {
-    "message": "Show the number of blocked requests on the toolbar icon",
+    "message": "ٹول بار کے آئیکن پر بلاک شدہ درخواستوں کی تعداد دکھائیں۔",
     "description": "Label for a checkbox in the options page"
   }
 }

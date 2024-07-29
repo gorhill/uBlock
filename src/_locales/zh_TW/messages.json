@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "終於有套使用不多的 CPU 及記憶體資源的高效率阻擋器。",
+    "message": "終於，有款僅使用少量 CPU 及記憶體的高效率阻擋器。",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
@@ -12,7 +12,7 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "警告！您有尚未儲存的變更",
+    "message": "警告！變更尚未儲存。",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "受信任網站",
+    "message": "白名單",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -140,7 +140,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "點擊後將不再封鎖此網站的所有彈出式廣告",
+    "message": "點擊以停止阻擋此網站的所有彈出式視窗",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -176,7 +176,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "點擊以停止封鎖此網站的遠端字型",
+    "message": "點擊以解除封鎖此網站的遠端字體",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
@@ -276,7 +276,7 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilter": {
-    "message": "腳本",
+    "message": "指令碼",
     "description": "Appears as an option to filter out firewall rows"
   },
   "popup3pFrameFilter": {
@@ -324,7 +324,7 @@
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "關閉提示文字功能",
+    "message": "停用提示框",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
@@ -384,7 +384,7 @@
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
-    "message": "封鎖遠端字型",
+    "message": "封鎖遠端字體",
     "description": ""
   },
   "settingsNoScriptingPrompt": {
@@ -444,7 +444,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "「元素隱藏過濾規則」用於隱藏網頁中礙眼，且不能被以網路請求為基礎之過濾引擎所阻擋的元素。",
+    "message": "「網頁元素過濾規則」用來隱藏網頁中被認為礙眼，且不能被以網路請求為基礎之過濾引擎所阻擋的元素。",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -452,7 +452,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "「通用元素隱藏過濾規則」是會套用在所有網站上的元素隱藏過濾規則。啟用此選項會消除網頁處理此類規則時增加的額外記憶體與 CPU 使用量。\n\n建議在較低效能的裝置上啟用此選項。",
+    "message": "「通用元素隱藏過濾規則」是會套用在所有網站上的網頁元素過濾規則。啟用此選項會消除網頁處理此類規則時增加的額外記憶體與 CPU 使用量。\n\n建議在擁有較低效能的裝置上啟用此選項。",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
@@ -992,7 +992,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "含有覆蓋物或其他滋擾",
+    "message": "含有覆蓋物或其他滋擾物",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
@@ -1000,7 +1000,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "有私穩相關問題",
+    "message": "有隱私權相關問題",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
@@ -1008,7 +1008,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "會開啟不想要的分頁或視窗",
+    "message": "會開啟不需要的分頁或視窗",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
@@ -1140,7 +1140,7 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedTitle": {
-    "message": "頁面已阻擋",
+    "message": "已封鎖頁面",
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {
@@ -1208,7 +1208,7 @@
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
-    "message": "警告！修改進階設定時請自負風險。",
+    "message": "警告！修改進階設定時，請自負風險。",
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {
@@ -1244,7 +1244,7 @@
     "description": "A context menu entry, to view the source code of the target resource"
   },
   "shortcutCapturePlaceholder": {
-    "message": "輸入快捷鍵",
+    "message": "鍵入快速鍵",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
@@ -1296,7 +1296,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "無法在瀏覽器啟動的時候正確過濾頁面。請重新載入來確保過濾正確。",
+    "message": "無法在瀏覽器啟動時正確過濾頁面。請重新載入以確保過濾正常。",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {

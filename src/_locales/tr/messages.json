@@ -484,7 +484,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
-    "message": "Sosyal gereçler",
+    "message": "Sosyal medya tuşları",
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
@@ -548,11 +548,11 @@
     "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
-    "message": "İçe aktar ve ekle",
+    "message": "İçe aktar ve ekle…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "Dışa aktar",
+    "message": "Dışa aktar…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
@@ -636,7 +636,7 @@
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
-    "message": "Dışa aktar",
+    "message": "Dışa aktar…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {

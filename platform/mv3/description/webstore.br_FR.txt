@@ -5,19 +5,19 @@ Ar reolennoù dre ziouer a glot gant silañ dre ziouer uBlock Origin:
 - Rolloù siloù genidik a uBlock Origin
 - EasyList
 - EasyPrivacy
-- Peter Lowe’s Ad and tracking server list
+- Roll bruderezh ha servijerioù heuliañ Peter Lowe
 
 Tu zo deoc'h ouzhpennañ reolennoù all en arventennoù -- klikit war an ikon _kendentadur_ er banell popup.
 
-uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
+Disklêriañ a ra uBOL penn-da-benn, da lavaret eo n'eus ket ezhomm eus un argerzh uBOL padus evit ma c'hoarvezfe ar silañ, ha silañ endalc'hadoù diazezet war enlakaat CSS/JS a vez graet en un doare fizius gant ar merdeer e-unan kentoc'h eget gant an astenn. Kement-se a dalvez ne vez ket gounezet gant uBOL e-unan arc'hwelioù CPU/memor e-pad ma vez stanket an endalc'hadoù -- ezhomm zo eus argerzh al labourer servij uBOL _nemet_ pa vez etregweredet gant ar banell digeriñ pe ar pajennoù dibarzhioù.
 
-uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read and modify data" permissions at install time.
+UBOL n'en deus ket ezhomm eus aotreoù ledan "lenn ha kemmañ roadennoù" e-pad ar staliañ, setu perak e c'halloudoù bevennet e-keñver uBlock Origin pe stankerien endalc'hadoù all a c'houlenn aotreoù ledan "lenn ha kemmañ roadennoù" e-pad ar staliañ.
 
 Koulskoude ez eus tu deoc'h reiñ *sklaer* aotreoù ouzhpenn da uBOL el lec'hiennoù ma fell deoc'h, mod-se e vint silet gwelloc'h en ur implij siloù kened hag ensinkladurioù scriplet.
 
 Evit reiñ aotreoù ouzhpenn da uBOL en ul lec'hienn bennak, n'ho peus nemet digeriñ ar prenestr pop-up ha diuzañ ul live silañ uheloc'h evel ar mod Gwellañ pe ar mod Klok
 
-The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request.
+Goude-se e vo kelaouet ac'hanoc'h gant ar merdeer diwar-benn efedoù reiñ an aotreoù ouzhpenn goulennet gant an astenn war al lec'hienn bremanel, ha ret e vo deoc'h lâret d'ar merdeer hag-eñ e vo degemeret pe nac'het ar goulenn ganeoc'h.
 
 Ma asantit da reiñ muioc'h a aotreoù da uBOL war ar bajenn-mañ e vo silet gwelloc'h.
 
@@ -25,6 +25,6 @@ Gallout a rit termeniñ ar mod silañ dre ziouer e pajenn arventennoù uBOL. Ma 
 
 Dalc'hit soñj ez eo uBOL ur raktres war ober c'hoazh hag a zo e bal:
 
-- No broad host permissions at install time -- extended permissions are granted explicitly by the user on a per-site basis.
+- Aotreoù ostiz ledan ebet e-pad ar staliañ -- aotreoù astennet a vez roet splann gant an implijer dre lec'hienn.
 
-- Entirely declarative for reliability and CPU/memory efficiency.
+- Disklêriañ penn-da-benn evit ar fiziañs hag an efedusted CPU/memor.

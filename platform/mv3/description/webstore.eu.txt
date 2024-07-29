@@ -9,11 +9,11 @@ Peter Lowe-ren Ad and tracker zerrenda
 
 Arau gehiago gehitu ditzakezu aukeren orrialdea bisitatuz. Sakatu _Cogs_ ikonoa popup panelean.
 
-uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. Horrek esan nahi du uBOLek berak ez duela CPU/memoria baliabiderik kontsumitzen edukien blokeoa martxan dagoen bitartean... uBOLren zerbitzuko langileen prozesua _only_ behar da popup panelarekin edo aukera orriekin elkarreragiten denean.
+uBOL guztiz deklaratiboa da, hau da, ez dago uBOL prozesu iraunkor baten beharrik iragazketa gertatzeko, eta CSS/JS injekzioan oinarritutako edukien iragazketa nabigatzaileak berak egiten du fidagarritasunez, luzapenaren arabera beharrean. Horrek esan nahi du uBOLek berak ez duela CPU/memoria baliabiderik kontsumitzen edukien blokeoa martxan dagoen bitartean... uBOLren zerbitzuko langileen prozesua _only_ behar da popup panelarekin edo aukera orriekin elkarreragiten denean.
 
-uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read and modify data" permissions at install time.
+uBOLek ez du "irakurtzeko eta aldatzeko datuak" baimen zabalik behar instalazio-unean, horregatik bere gaitasun mugatuak uBlock Origin-ekin alderatuta edo beste eduki-blokeatzaile batzuekin alderatuta, "irakurtzeko eta aldatzeko datuak" baimen zabalak behar dituzten instalazio garaian.
 
-However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
+Hala ere, uBOLek aukera ematen dizu *esplizituki* baimen hedatuak zure aukeratutako gune espezifikoetan, gune horietan hobeto iragazteko iragazte kosmetikoak eta scriptlet injekzioak erabiliz.
 
 Leku jakin batean baimenak emateko, ireki panel emergentea eta aukeratu goiko iragazteko modu bat, optimo edo oso gisa.
 
@@ -21,10 +21,10 @@ Nabigatzaileak orduan jakinaraziko dizu zer ondorio dituen luzapenak eskatutako 
 
 Baimen gehigarrien eskaera onartzen baduzu, oraingo gunean edukiak hobeto iragazi ahal izango ditu.
 
-You can set the default filtering mode from uBOL's options page. If you pick the Optimal or Complete mode as the default one, you will need to grant uBOL the permission to read and modify data on all websites.
+Iragazki modu lehenetsia uBOL-en aukeren orrialdetik ezar dezakezu. Modu hoberena edo osoa aukeratzen baduzu lehenetsitako moduan, uBOL-i webgune guztietako datuak irakurtzeko eta aldatzeko baimena eman beharko diozu.
 
-Keep in mind this is still a work in progress, with these end goals:
+Gogoan izan oraindik lan bat dela, azken helburu hauekin:
 
 - Instalatzeko garaian, ez dago baimen zabalik. Erabiltzaileak esplizituki ematen ditu baimen zabalduak.
 
-- Entirely declarative for reliability and CPU/memory efficiency.
+- Erabat deklaratiboa fidagarritasunagatik eta CPU/memoriaren eraginkortasunagatik.

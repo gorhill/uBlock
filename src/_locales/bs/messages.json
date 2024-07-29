@@ -484,11 +484,11 @@
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
-    "message": "Social widgets",
+    "message": "Društveni widgeti",
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
-    "message": "Cookie notices",
+    "message": "Obavještenja o kolačićima",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
@@ -540,11 +540,11 @@
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pEnableMyFiltersLabel": {
-    "message": "Enable my custom filters",
+    "message": "Omogući moje prilagođene filtere",
     "description": "Label for the checkbox use to enable/disable 'My filters' list"
   },
   "1pTrustMyFiltersLabel": {
-    "message": "Allow custom filters requiring trust",
+    "message": "Dozvolite prilagođene filtere koji zahtijevaju povjerenje",
     "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
@@ -1264,7 +1264,7 @@
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "toggleJavascript": {
-    "message": "Toggle JavaScript",
+    "message": "Uključi JavaScript",
     "description": "Label for keyboard shortcut used to toggle no-scripting switch"
   },
   "relaxBlockingMode": {
