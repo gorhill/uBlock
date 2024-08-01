@@ -1,4 +1,5 @@
 *.bak
 *.pem
+__pycache__/
 /dist/build/
 /tmp/
