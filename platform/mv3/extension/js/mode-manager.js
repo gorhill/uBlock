@@ -19,18 +19,17 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* jshint esversion:11 */
-
-'use strict';
-
-/******************************************************************************/
+import {
+    TRUSTED_DIRECTIVE_BASE_RULE_ID,
+    getDynamicRules,
+} from './ruleset-manager.js';
 
 import {
+    adminRead,
     browser,
     dnr,
-    localRead, localWrite, localRemove,
+    localRead, localRemove, localWrite,
     sessionRead, sessionWrite,
-    adminRead,
 } from './ext.js';
 
 import {
@@ -39,11 +38,6 @@ import {
     isDescendantHostnameOfIter,
     toBroaderHostname,
 } from './utils.js';
-
-import {
-    TRUSTED_DIRECTIVE_BASE_RULE_ID,
-    getDynamicRules
-} from './ruleset-manager.js';
 
 /******************************************************************************/
 
@@ -288,13 +282,15 @@ async function writeFilteringModeDetails(afterDetails) {
 
 async function filteringModesToDNR(modes) {
     const dynamicRuleMap = await getDynamicRules();
-    const presentRule = dynamicRuleMap.get(TRUSTED_DIRECTIVE_BASE_RULE_ID+0);
-    const presentNone = new Set(
-        presentRule && presentRule.condition.requestDomains
-    );
-    if ( eqSets(presentNone, modes.none) ) { return; }
+    const trustedRule = dynamicRuleMap.get(TRUSTED_DIRECTIVE_BASE_RULE_ID+0);
+    const trustedDomainSet = new Set(trustedRule?.condition.requestDomains);
+    if ( trustedDomainSet.size !== 0 ) {
+        if ( eqSets(trustedDomainSet, modes.none) ) { return; }
+    } else if ( trustedRule !== undefined ) {
+        if ( modes.none.has('all-urls') ) { return; }
+    }
     const removeRuleIds = [];
-    if ( presentRule !== undefined ) {
+    if ( trustedRule !== undefined ) {
         removeRuleIds.push(TRUSTED_DIRECTIVE_BASE_RULE_ID+0);
         removeRuleIds.push(TRUSTED_DIRECTIVE_BASE_RULE_ID+1);
         dynamicRuleMap.delete(TRUSTED_DIRECTIVE_BASE_RULE_ID+0);
@@ -394,6 +390,11 @@ export async function setTrustedSites(hostnames) {
     const { none } = filteringModes;
     const hnSet = new Set(hostnames);
     let modified = false;
+    // Set default mode to Basic when removing No-filtering as default mode
+    if ( none.has('all-urls') && hnSet.has('all-urls') === false ) {
+        applyFilteringMode(filteringModes, 'all-urls', MODE_BASIC);
+        modified = true;
+    }
     for ( const hn of none ) {
         if ( hnSet.has(hn) ) {
             hnSet.delete(hn);
