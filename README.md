@@ -32,7 +32,7 @@ uBlock Origin (uBO)
 
 <p align="center">
 <a href="https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm"><img src="https://user-images.githubusercontent.com/585534/107280622-91a8ea80-6a26-11eb-8d07-77c548b28665.png" alt="Get uBlock Origin for Chromium"></a><br>
-<a href="https://github.com/uBlockOrigin/uBOL-home/wiki/Frequently-asked-questions-(FAQ)#will-ubo-automatically-transition-to-ubo-lite-in-the-chrome-web-store"><b>Important</b>: Will uBO automatically transition to uBO Lite in the Chrome Web Store?</a> (tldr: no)
+<a href="https://github.com/gorhill/uBlock/wiki/About-Chrome-Web-Store's-%22This-extension-may-soon-no-longer-be-supported%22"><b>Important</b>: About Chrome Web Store's "This extension may soon no longer be supported"</a>
 </p>
 
 ***
