@@ -203,17 +203,28 @@ function safeSelf() {
 /******************************************************************************/
 
 builtinScriptlets.push({
-    name: 'get-exception-token.fn',
-    fn: getExceptionToken,
+    name: 'get-random-token.fn',
+    fn: getRandomToken,
     dependencies: [
         'safe-self.fn',
     ],
 });
-function getExceptionToken() {
+function getRandomToken() {
     const safe = safeSelf();
-    const token =
-        safe.String_fromCharCode(Date.now() % 26 + 97) +
+    return safe.String_fromCharCode(Date.now() % 26 + 97) +
         safe.Math_floor(safe.Math_random() * 982451653 + 982451653).toString(36);
+}
+/******************************************************************************/
+
+builtinScriptlets.push({
+    name: 'get-exception-token.fn',
+    fn: getExceptionToken,
+    dependencies: [
+        'get-random-token.fn',
+    ],
+});
+function getExceptionToken() {
+    const token = getRandomToken();
     const oe = self.onerror;
     self.onerror = function(msg, ...args) {
         if ( typeof msg === 'string' && msg.includes(token) ) { return true; }
@@ -701,6 +712,7 @@ builtinScriptlets.push({
     name: 'replace-node-text.fn',
     fn: replaceNodeTextFn,
     dependencies: [
+        'get-random-token.fn',
         'run-at.fn',
         'safe-self.fn',
     ],
@@ -736,7 +748,7 @@ function replaceNodeTextFn(
         if ( tt instanceof Object ) {
             if ( typeof tt.getPropertyType === 'function' ) {
                 if ( tt.getPropertyType('script', 'textContent') === 'TrustedScript' ) {
-                    return tt.createPolicy('uBO', out);
+                    return tt.createPolicy(getRandomToken(), out);
                 }
             }
         }
