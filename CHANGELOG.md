@@ -1,3 +1,11 @@
+- [Improve `trusted-replace-node-text` scriptlet](https://github.com/gorhill/uBlock/commit/4f0d1301ab)
+
+----------
+
+# 1.59.0
+
+## Fixes / changes
+
 - [Improve `href-sanitizer` scriptlet](https://github.com/gorhill/uBlock/commit/84be9cde6d)
 - [Improve `trusted-replace-node-text` scriptlet](https://github.com/gorhill/uBlock/commit/8afd9e233d)
 - [Improve `set-constant` scriptlet](https://github.com/gorhill/uBlock/commit/77feb25c4d)
