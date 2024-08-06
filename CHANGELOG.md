@@ -1,3 +1,4 @@
+- [Improve `remove-attr.js` scriptlet](https://github.com/gorhill/uBlock/commit/fb037e97d0)
 - [Improve `trusted-replace-node-text` scriptlet](https://github.com/gorhill/uBlock/commit/4f0d1301ab)
 
 ----------
