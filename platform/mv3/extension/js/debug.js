@@ -87,7 +87,7 @@ export const getMatchedRules = (( ) => {
                 }
             }
             const ruleId = rule.id;
-            rule.id = `${rulesetId}-${ruleId}`;
+            rule.id = `${rulesetId}/${ruleId}`;
             ruleset.set(ruleId, rule);
         }
         rulesets.set(rulesetId, ruleset);
