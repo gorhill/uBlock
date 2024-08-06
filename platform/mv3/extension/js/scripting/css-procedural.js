@@ -243,7 +243,7 @@ class PSelectorMatchesMediaTask extends PSelectorTask {
         if ( this.mql.media === 'not all' ) { return; }
         this.mql.addEventListener('change', ( ) => {
             if ( proceduralFilterer instanceof Object === false ) { return; }
-            proceduralFilterer.onDOMChanged([ null ]);
+            proceduralFilterer.onDOMChanged();
         });
     }
     transpose(node, output) {
@@ -487,7 +487,7 @@ class PSelectorWatchAttrs extends PSelectorTask {
     // TODO: Is it worth trying to re-apply only the current selector?
     handler() {
         if ( proceduralFilterer instanceof Object ) {
-            proceduralFilterer.onDOMChanged([ null ]);
+            proceduralFilterer.onDOMChanged();
         }
     }
     transpose(node, output) {
