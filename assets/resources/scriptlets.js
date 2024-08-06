@@ -163,6 +163,12 @@ function safeSelf() {
             }
             return self.requestAnimationFrame(fn);
         },
+        offIdle(id) {
+            if ( self.requestIdleCallback ) {
+                return self.cancelIdleCallback(id);
+            }
+            return self.cancelAnimationFrame(id);
+        }
     };
     scriptletGlobals.safeSelf = safe;
     if ( scriptletGlobals.bcSecret === undefined ) { return safe; }
@@ -258,7 +264,7 @@ builtinScriptlets.push({
 function runAt(fn, when) {
     const intFromReadyState = state => {
         const targets = {
-            'loading': 1,
+            'loading': 1, 'asap': 1,
             'interactive': 2, 'end': 2, '2': 2,
             'complete': 3, 'idle': 3, '3': 3,
         };
@@ -2266,9 +2272,20 @@ function removeAttr(
     if ( safe.logLevel > 1 ) {
         safe.uboLog(logPrefix, `Target selector:\n\t${selector}`);
     }
-    let timer;
+    const asap = /\basap\b/.test(behavior);
+    let timerId;
+    const rmattrAsync = ( ) => {
+        if ( timerId !== undefined ) { return; }
+        timerId = safe.onIdle(( ) => {
+            timerId = undefined;
+            rmattr();
+        }, { timeout: 17 });
+    };
     const rmattr = ( ) => {
-        timer = undefined;
+        if ( timerId !== undefined ) {
+            safe.offIdle(timerId);
+            timerId = undefined;
+        }
         try {
             const nodes = document.querySelectorAll(selector);
             for ( const node of nodes ) {
@@ -2282,7 +2299,7 @@ function removeAttr(
         }
     };
     const mutationHandler = mutations => {
-        if ( timer !== undefined ) { return; }
+        if ( timerId !== undefined ) { return; }
         let skip = true;
         for ( let i = 0; i < mutations.length && skip; i++ ) {
             const { type, addedNodes, removedNodes } = mutations[i];
@@ -2295,7 +2312,7 @@ function removeAttr(
             }
         }
         if ( skip ) { return; }
-        timer = safe.onIdle(rmattr, { timeout: 67 });
+        asap ? rmattr() : rmattrAsync();
     };
     const start = ( ) => {
         rmattr();
@@ -2308,9 +2325,7 @@ function removeAttr(
             subtree: true,
         });
     };
-    runAt(( ) => {
-        start();
-    }, /\bcomplete\b/.test(behavior) ? 'idle' : 'interactive');
+    runAt(( ) => { start(); }, behavior.split(/\s+/));
 }
 
 /******************************************************************************/

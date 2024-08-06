@@ -91,7 +91,9 @@ async function commitFilteringMode() {
         setFilteringMode(actualLevel);
     }
     if ( actualLevel !== beforeLevel && popupPanelData.autoReload ) {
-        browser.tabs.reload(currentTab.id);
+        self.setTimeout(( ) => {
+            browser.tabs.reload(currentTab.id);
+        }, 437);
     }
 }
 
