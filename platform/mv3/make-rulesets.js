@@ -1278,7 +1278,7 @@ async function main() {
     // Handpicked rulesets from abroad
     await rulesetFromURLs({
         id: 'stevenblack-hosts',
-        name: 'Steven Black\'s hosts file',
+        name: 'Steven Black’s Unified Hosts (adware + malware)',
         enabled: false,
         urls: [ 'https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts' ],
         homeURL: 'https://github.com/StevenBlack/hosts#readme',
