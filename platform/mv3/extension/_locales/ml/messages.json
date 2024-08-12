@@ -147,6 +147,10 @@
     "message": "ഫിൽട്ടറിംഗ് നടക്കാത്ത ഹോസ്റ്റ് നെയിമുകളുടെ ലിസ്റ്റ്",
     "description": "A short description for the editable field which lists trusted sites"
   },
+  "noFilteringModePlaceholder": {
+    "message": "[hostnames only]\nexample.com\ngames.example\n...",
+    "description": "Default text for in edit field"
+  },
   "behaviorSectionLabel": {
     "message": "പെരുമാറ്റം",
     "description": "The header text for the 'Behavior' section"

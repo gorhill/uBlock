@@ -548,11 +548,11 @@
     "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
-    "message": "Увези и додај",
+    "message": "Увези и додај…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "Извези",
+    "message": "Извези…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {

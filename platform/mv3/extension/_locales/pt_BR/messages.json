@@ -147,6 +147,10 @@
     "message": "Lista de nomes dos hospedeiros para os quais nenhuma filtragem acontecerá.",
     "description": "A short description for the editable field which lists trusted sites"
   },
+  "noFilteringModePlaceholder": {
+    "message": "[só nomes de hospedeiros]\nexemplo.com\njogos.exemplo",
+    "description": "Default text for in edit field"
+  },
   "behaviorSectionLabel": {
     "message": "Comportamento",
     "description": "The header text for the 'Behavior' section"
@@ -156,7 +160,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "showBlockedCountLabel": {
-    "message": "Mostrar o número de solicitações bloqueadas no ícone da barra de ferramentas",
+    "message": "Mostrar o número de requisições bloqueadas no ícone da barra de ferramentas",
     "description": "Label for a checkbox in the options page"
   }
 }

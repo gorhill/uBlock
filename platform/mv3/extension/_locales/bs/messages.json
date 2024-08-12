@@ -147,6 +147,10 @@
     "message": "Lista imena hostova za koja se neće vršiti filtriranje",
     "description": "A short description for the editable field which lists trusted sites"
   },
+  "noFilteringModePlaceholder": {
+    "message": "[hostnames only]\nexample.com\ngames.example\n...",
+    "description": "Default text for in edit field"
+  },
   "behaviorSectionLabel": {
     "message": "Ponašanje",
     "description": "The header text for the 'Behavior' section"

@@ -7,7 +7,7 @@ Zadana lista pravila odgovara uBlock Origin-ovoj zadanoj listi filtera:
 - EasyPrivacy
 - Peter Lowe-ova lista oglasa i pratećih servera
 
-Možete dodati više skupova pravila tako što ćete posjetiti stranicu s opcijama -- kliknite ikonu _zupčanika_ na skočnoj ploči.
+Možete omogućiti više skupova pravila tako što ćete posjetiti stranicu s opcijama -- kliknite ikonu _Cogs_ na skočnoj ploči.
 
 uBOL je u potpunosti deklarativan, što znači da nema potrebe za trajnim uBOL procesom za filtriranje, a filtriranje sadržaja temeljeno na ubacivanju CSS/JS pouzdano izvodi sam preglednik, a ne ekstenzija. To znači da sam uBOL ne troši CPU/memorijske resurse dok je blokiranje sadržaja u tijeku -- uBOL-ov servisni radni proces potreban je _samo_ kada komunicirate s skočnom pločom ili stranicama s opcijama.
 

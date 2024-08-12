@@ -147,6 +147,10 @@
     "message": "Seznam názvů hostitelů, pro které nebude probíhat žádné filtrování",
     "description": "A short description for the editable field which lists trusted sites"
   },
+  "noFilteringModePlaceholder": {
+    "message": "[pouze názvy hostitelů]\nexample.com\ngames.example\n...",
+    "description": "Default text for in edit field"
+  },
   "behaviorSectionLabel": {
     "message": "Chování",
     "description": "The header text for the 'Behavior' section"

@@ -147,6 +147,10 @@
     "message": "Listaus osotteista, joita ei suodateta.",
     "description": "A short description for the editable field which lists trusted sites"
   },
+  "noFilteringModePlaceholder": {
+    "message": "[vain isäntänimiä]\nesimerkki.fi\npelit.esimerkki\n...",
+    "description": "Default text for in edit field"
+  },
   "behaviorSectionLabel": {
     "message": "Toiminta",
     "description": "The header text for the 'Behavior' section"

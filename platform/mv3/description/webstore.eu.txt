@@ -7,7 +7,7 @@ ZerrendaErraza
 PribazitateaErraza
 Peter Lowe-ren Ad and tracker zerrenda
 
-Arau gehiago gehitu ditzakezu aukeren orrialdea bisitatuz. Sakatu _Cogs_ ikonoa popup panelean.
+Ruleta gehiago aktibatu ahal duzu aukerak orria --klikatu _Cogs_ ikonoa panelearen lehioan
 
 uBOL guztiz deklaratiboa da, hau da, ez dago uBOL prozesu iraunkor baten beharrik iragazketa gertatzeko, eta CSS/JS injekzioan oinarritutako edukien iragazketa nabigatzaileak berak egiten du fidagarritasunez, luzapenaren arabera beharrean. Horrek esan nahi du uBOLek berak ez duela CPU/memoria baliabiderik kontsumitzen edukien blokeoa martxan dagoen bitartean... uBOLren zerbitzuko langileen prozesua _only_ behar da popup panelarekin edo aukera orriekin elkarreragiten denean.
 

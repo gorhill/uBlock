@@ -7,7 +7,7 @@ Oletusarvoiset sääntömääritykset vastaavat uBlock Origin -laajennuksen olet
 - EasyPrivacy
 - Peter Lowe’s Ad and tracking server list
 
-Voit lisätä sääntömäärityksiä asetussivulta -- paina ponnahduspaneelin _Rataskuvaketta_.
+Voit aktivoida lisää sääntömäärityksiä laajennuksen asetuksista – paina ponnahduspaneelin _Ratas_-kuvaketta.
 
 uBOL on täysin deklaratiivinen, eli suodatus ei edellytä pysyvää uBOL-prosessia ja CSS-/JS-koodin manipulointiin perustuva sisällönsuodatuksen suorittaa laajennusprosessin sijaan luotettavasti selainsovellus. Tämän ansiosta itse uBOL ei kuormita prosessoria tai keskusmuistia sisällöneston tapahtuessa -- uBOL:n työprosessia tarvitaan _ainoastaan_ ponnahduspaneelia ja asetussivuja käytettäessä.
 
@@ -15,7 +15,7 @@ uBOL ei edellytä laajan tietojen luku- ja muokkausoikeuden myöntämistä asenn
 
 On kuitenkin mahdollista myöntää *yksinomaisesti* uBOL:lle laajennetut käyttöoikeudet sivustokohtaisesti niiden suodatuksen tehostamiseksi kosmeettisella suodatuksella ja scriplet-injektoinnilla.
 
-Laajemmat oikeudet myönnetään avoimelle sivustolle avaamalla ponnahduspaneeli ja valitsemalla korkeampi suodatustaso, kuten Optimaalinen tai Täysi.
+Laajemmat oikeudet myönnetään avoimelle sivustolle avaamalla ponnahduspaneeli ja valitsemalla korkeampi suodatustaso, kuten "Optimaalinen" tai "Täysi".
 
 Tällöin selain varoittaa laajennuksen avoimelle sivustolle pyytämien käyttöoikeuksien seurauksista ja pyytää hyväksymään tai hylkäämään pyynnön.
 

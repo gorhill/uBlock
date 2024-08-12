@@ -147,6 +147,10 @@
     "message": "Спіс назваў хостаў, для якіх не будзе праводзіцца фільтраванне",
     "description": "A short description for the editable field which lists trusted sites"
   },
+  "noFilteringModePlaceholder": {
+    "message": "[толькі назвы хостаў]\nexample.com\ngames.example\n...",
+    "description": "Default text for in edit field"
+  },
   "behaviorSectionLabel": {
     "message": "Паводзіны",
     "description": "The header text for the 'Behavior' section"

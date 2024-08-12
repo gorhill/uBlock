@@ -147,6 +147,10 @@
     "message": "Roll anvioù domanioù ha ne vint ket silet.",
     "description": "A short description for the editable field which lists trusted sites"
   },
+  "noFilteringModePlaceholder": {
+    "message": "[anvioù herberc'hierien hepken]\nskouer.com\nchoariou.skouer\n...",
+    "description": "Default text for in edit field"
+  },
   "behaviorSectionLabel": {
     "message": "Emzalc'h",
     "description": "The header text for the 'Behavior' section"

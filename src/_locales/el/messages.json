@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Έμπιστες τοποθεσίες",
+    "message": "Αξιόπιστοι ιστότοποι",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -184,7 +184,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Κάντε κλικ για να μην απενεργοποιείται πλέον η JavaScript σε αυτή την τοποθεσία",
+    "message": "Κάντε κλικ για να μην απενεργοποιήσετε πλέον τη JavaScript σε αυτόν τον ιστότοπο",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
@@ -196,7 +196,7 @@
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
-    "message": "Καλλωπιστικά φίλτρα",
+    "message": "Κοσμητικά φίλτρα",
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
@@ -224,7 +224,7 @@
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
-    "message": "Πατήστε για να κάνετε τις αλλαγές σας μόνιμες.",
+    "message": "Κάντε κλικ για να μονιμοποιήσετε τις αλλαγές σας.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {

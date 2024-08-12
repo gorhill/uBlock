@@ -7,7 +7,7 @@ Standardregeluppsättningen motsvarar uBlock Origins standardfilteruppsättning:
 - EasyPrivacy
 - Peter Lowes reklam- och spårningsserverlista
 
-Du kan lägga till fler regeluppsättningar genom att besöka alternativsidan -- klicka på ikonen _Kugghjulet_ i popup-panelen.
+Du kan lägga till fler regeluppsättningar i alternativ -- klicka på _Kugghjulet_ i popup-panelen.
 
 uBOL är helt deklarativt, vilket innebär att det inte finns något behov av en permanent uBOL-process för att filtreringen ska ske och CSS/JS-injektionsbaserad innehållsfiltrering utförs på ett tillförlitligt sätt av webbläsaren själv snarare än av tillägget. Detta innebär att uBOL själv inte förbrukar CPU/minnesresurser medan innehållsblockering pågår -- uBOLs serviceworkerprocess krävs _endast_ när du interagerar med popup-panelen eller alternativsidorna.
 

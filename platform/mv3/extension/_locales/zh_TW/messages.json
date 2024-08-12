@@ -147,6 +147,10 @@
     "message": "不進行過濾的主機名稱列表",
     "description": "A short description for the editable field which lists trusted sites"
   },
+  "noFilteringModePlaceholder": {
+    "message": "[僅主機名稱]\nexample.com\ngames.example\n...",
+    "description": "Default text for in edit field"
+  },
   "behaviorSectionLabel": {
     "message": "行為",
     "description": "The header text for the 'Behavior' section"

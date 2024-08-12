@@ -7,7 +7,7 @@ Les règles par défaut correspondent au filtrage par défaut d'uBlock Origin :
 - EasyPrivacy
 - La liste anti-serveurs pub et pistage de Peter Lowe
 
-Vous pouvez ajouter plus de règles en consultant la page des paramètres -- Cliquez sur l'_Engrenage_ dans le panneau pop-up.
+Vous pouvez ajouter plus de règles en consultant la page des paramètres -- Cliquez sur l'icône de l'_Engrenage_ dans le panneau pop-up.
 
 uBOL est entièrement déclarative, c'est-à-dire qu'il n'y a pas besoin d'un processus uBOL permanent pour filtrer, et le filtrage basé sur l'injection CSS/JavaScript se fait en toute fiabilité par le navigateur lui-même. Cela veut dire qu'en soi, uBOL ne consomme pas de ressources processeur/mémoire pendant le blocage de contenu -- l'agent de service d'uBOL n'est sollicité _que_ quand vous interagissez avec le panneau pop-up ou la page des paramètres.
 

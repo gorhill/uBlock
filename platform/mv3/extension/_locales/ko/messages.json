@@ -147,6 +147,10 @@
     "message": "필터링을 비활성화할 호스트 이름 목록",
     "description": "A short description for the editable field which lists trusted sites"
   },
+  "noFilteringModePlaceholder": {
+    "message": "[hostnames only]\nexample.com\ngames.example\n...",
+    "description": "Default text for in edit field"
+  },
   "behaviorSectionLabel": {
     "message": "동작",
     "description": "The header text for the 'Behavior' section"

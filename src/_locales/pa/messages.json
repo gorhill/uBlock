@@ -488,7 +488,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
-    "message": "Cookie notices",
+    "message": "ਕੂਕੀਜ਼ ਨੋਟਿਸ",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
@@ -540,7 +540,7 @@
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pEnableMyFiltersLabel": {
-    "message": "Enable my custom filters",
+    "message": "ਮੇਰੇ ਕਸਟਮ ਫਿਲਟਰ ਸਮਰੱਥ ਕਰੋ",
     "description": "Label for the checkbox use to enable/disable 'My filters' list"
   },
   "1pTrustMyFiltersLabel": {
@@ -920,7 +920,7 @@
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
-    "message": "Answers to questions and other kinds of help support is provided on the subreddit <code>/r/uBlockOrigin</code>.",
+    "message": "ਸਵਾਲਾਂ ਦੇ ਜਵਾਬ ਅਤੇ ਹੋਰ ਕਿਸੇ ਵੀ ਕਿਸਮ ਦੀ ਮਦਦ subreddit <code>/r/uBlockOrigin</code> ਉੱਤੇ ਦਿੱਤੀ ਜਾਂਦੀ ਹੈ।",
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
@@ -1068,7 +1068,7 @@
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
-    "message": "my-ublock-backup_{{datetime}}.txt",
+    "message": "ਮੇਰਾ-ublock-ਬੈਕ-ਅੱਪ_{{datetime}}.txt",
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {

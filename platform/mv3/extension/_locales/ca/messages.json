@@ -147,6 +147,10 @@
     "message": "Llistat de noms d'amfitrió als quals no s'aplicarà cap filtre",
     "description": "A short description for the editable field which lists trusted sites"
   },
+  "noFilteringModePlaceholder": {
+    "message": "[només noms d'amfitrió]\nexemple.com\njocs.exemple\n...",
+    "description": "Default text for in edit field"
+  },
   "behaviorSectionLabel": {
     "message": "Comportament",
     "description": "The header text for the 'Behavior' section"

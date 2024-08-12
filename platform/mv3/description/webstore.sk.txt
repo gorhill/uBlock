@@ -7,7 +7,7 @@ Predvolený súbor pravidiel zodpovedá predvolenému súboru filtrov uBlock Ori
 - EasyPrivacy
 - Zoznam reklamných a sledovacích serverov Petra Lowea
 
-Ďalšie súbory pravidiel môžete pridať na stránke s možnosťami – kliknite na ikonu _súkolesia_ vo vyskakovacom paneli.
+Ďalšie súbory pravidiel môžete povoliť na stránke s možnosťami – kliknite na ikonu _súkolesia_ vo vyskakovacom paneli.
 
 uBOL je úplne deklaratívny, čo znamená, že na filtrovanie nie je potrebný trvalý proces uBOL a filtrovanie obsahu založené na injektovaní CSS/JS spoľahlivo vykonáva samotný prehliadač, a nie rozšírenie. To znamená, že samotný uBOL nespotrebúva zdroje CPU/pamäte, kým prebieha blokovanie obsahu -- proces uBOL Service Worker je potrebný _len_ pri interakcii s vyskakovacím panelom alebo stránkami možností.
 

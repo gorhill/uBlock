@@ -144,8 +144,12 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "Liste des noms de domaine qu'uBO Lite ne devra pas filtrer",
+    "message": "Liste des noms de domaine pour lesquels aucun filtrage n'aura lieu.",
     "description": "A short description for the editable field which lists trusted sites"
+  },
+  "noFilteringModePlaceholder": {
+    "message": "[noms de domaine uniquement]\nexemple.com\njeux.exemple\n...",
+    "description": "Default text for in edit field"
   },
   "behaviorSectionLabel": {
     "message": "Comportement",

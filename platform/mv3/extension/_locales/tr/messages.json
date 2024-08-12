@@ -147,6 +147,10 @@
     "message": "Filtreleme yapılmayacak alan alarının listesi",
     "description": "A short description for the editable field which lists trusted sites"
   },
+  "noFilteringModePlaceholder": {
+    "message": "[sadece ana bilgisayar adları]\nörnek.com\noyunlar.site\n…",
+    "description": "Default text for in edit field"
+  },
   "behaviorSectionLabel": {
     "message": "Davranış",
     "description": "The header text for the 'Behavior' section"

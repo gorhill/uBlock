@@ -147,6 +147,10 @@
     "message": "List of hostnames for which no filtering will take place",
     "description": "A short description for the editable field which lists trusted sites"
   },
+  "noFilteringModePlaceholder": {
+    "message": "[hostnames only]\nexample.com\ngames.example\n...",
+    "description": "Default text for in edit field"
+  },
   "behaviorSectionLabel": {
     "message": "Behaviour",
     "description": "The header text for the 'Behavior' section"

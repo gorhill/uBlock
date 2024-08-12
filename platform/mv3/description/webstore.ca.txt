@@ -7,7 +7,7 @@ El conjunt de regles per defecte correspon al conjunt de filtres per defecte d'u
 - EasyPrivacy
 - Llista de servidors de seguiment i anuncis de Peter Lowe
 
-Podeu afegir més conjunts de regles si visiteu la pàgina d'opcions: feu clic a la icona _Cogs_ al tauler emergent.
+Podeu habilitar més conjunts de regles si visiteu la pàgina d'opcions: feu clic a la icona _Cogs_ al tauler emergent.
 
 L'uBOL és totalment declaratiu, és a dir, no cal un procés uBOL permanent perquè es produeixi el filtratge, i el filtratge de contingut basat en injecció CSS/JS es realitza de manera fiable pel propi navegador més que per l'extensió.
  Això vol dir que l'uBOL en si no consumeix recursos de CPU/memòria mentre el bloqueig de contingut està en curs; el procés de treballador de servei d'uBOL només es requereix quan interactueu amb el tauler emergent o les pàgines d'opcions.

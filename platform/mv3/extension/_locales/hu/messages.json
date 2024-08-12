@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Kísérleti, engedélyt nem igénylő nélküli tartalomblokkoló. A telepítés után azonnal blokkolja a hirdetéseket, nyomkövetőket, bányászokat és egyebeket.",
+    "message": "Kísérleti, engedélyeket nem igénylő nélküli tartalomblokkoló. A telepítés után azonnal blokkolja a hirdetéseket, nyomkövetőket, bányászprogramokat és egyebeket.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -100,15 +100,15 @@
     "description": "Shown in the About pane"
   },
   "firstRunSectionLabel": {
-    "message": "Üdvözlünk",
+    "message": "Üdvözöljük",
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "Alapértelmezés szerint az <em>Alap</em> mód van kiválasztva, mert nem igényel engedélyt az adatok olvasásához és módosításához. Ha megbízik az uBO Lite-ban, széles körű engedélyt adhat neki az adatok olvasására és módosítására az összes webhelyen, hogy alapértelmezés szerint fejlettebb szűrési lehetőségeket tegyen lehetővé minden webhelyen.",
+    "message": "Most telepítette a uBO Lite-ot. Itt választhatja ki az összes weboldalon használandó alapértelmezett szűrési módot.\n\nAlapértelmezés szerint az <em>Alapvetú</em> mód van kiválasztva, mert nem igényel engedélyt az adatok olvasásához és módosításához. Ha megbízik az uBO Lite-ban, széles körű engedélyt adhat neki az adatok olvasására és módosítására az összes webhelyen, hogy alapértelmezés szerint fejlettebb szűrési lehetőségeket tegyen lehetővé minden webhelyen.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
-    "message": "Alapértelmezett szűrő",
+    "message": "Alapértelmezett szűrési mód",
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
@@ -116,11 +116,11 @@
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
-    "message": "Nincs szűrés",
+    "message": "nincs szűrés",
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
-    "message": "alapok",
+    "message": "alapvető",
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
@@ -144,8 +144,12 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "Azon hosztnevek listája, amelyek esetében nem történik szűrés",
+    "message": "Azon gépnevek listája, amelyek esetében nem történik szűrés.",
     "description": "A short description for the editable field which lists trusted sites"
+  },
+  "noFilteringModePlaceholder": {
+    "message": "[hostnames only]\nexample.com\ngames.example\n...",
+    "description": "Default text for in edit field"
   },
   "behaviorSectionLabel": {
     "message": "Viselkedés",

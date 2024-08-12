@@ -147,6 +147,10 @@
     "message": "Список імен хостів, для яких буде відбуватись фільтрування",
     "description": "A short description for the editable field which lists trusted sites"
   },
+  "noFilteringModePlaceholder": {
+    "message": "[тільки імена доменів]\nexample.com\ngames.example\n...",
+    "description": "Default text for in edit field"
+  },
   "behaviorSectionLabel": {
     "message": "Поведінка",
     "description": "The header text for the 'Behavior' section"

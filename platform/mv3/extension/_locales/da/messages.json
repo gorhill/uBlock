@@ -147,6 +147,10 @@
     "message": "Liste over værtsnavne, for hvilke ingen filtrering vil ske.",
     "description": "A short description for the editable field which lists trusted sites"
   },
+  "noFilteringModePlaceholder": {
+    "message": "[kun værtsnavne]\neksempel.dk\nspil.eksempel\n...",
+    "description": "Default text for in edit field"
+  },
   "behaviorSectionLabel": {
     "message": "Adfærd",
     "description": "The header text for the 'Behavior' section"

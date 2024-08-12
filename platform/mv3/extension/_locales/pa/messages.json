@@ -147,6 +147,10 @@
     "message": "ਹੋਸਟ-ਨਾਵਾਂ ਦੀ ਸੂਚੀ, ਜਿਨ੍ਹਾਂ ਲਈ ਕੋਈ ਫਿਲਟਰ ਨਹੀਂ ਕੀਤਾ ਜਾਵੇਗਾ",
     "description": "A short description for the editable field which lists trusted sites"
   },
+  "noFilteringModePlaceholder": {
+    "message": "[hostnames only]\nexample.com\ngames.example\n...",
+    "description": "Default text for in edit field"
+  },
   "behaviorSectionLabel": {
     "message": "ਰਵੱਈਆ",
     "description": "The header text for the 'Behavior' section"

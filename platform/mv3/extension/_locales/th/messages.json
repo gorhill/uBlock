@@ -16,15 +16,15 @@
     "description": "English: uBO Lite — Dashboard"
   },
   "settingsPageName": {
-    "message": "Settings",
+    "message": "การตั้งค่า",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
-    "message": "About",
+    "message": "เกี่ยวกับเรา",
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
-    "message": "Privacy policy",
+    "message": "นโยบายความเป็นส่วนตัว",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupFilteringModeLabel": {
@@ -72,7 +72,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "aboutChangelog": {
-    "message": "Changelog",
+    "message": "บันทึการเปลี่ยนแปลง",
     "description": ""
   },
   "aboutCode": {
@@ -100,15 +100,15 @@
     "description": "Shown in the About pane"
   },
   "firstRunSectionLabel": {
-    "message": "Welcome",
+    "message": "ยินดีต้อนรับ",
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "You have just installed uBO Lite. Here you can choose the default filtering mode to use on all websites.\n\nBy default, <em>Basic</em> mode is selected because it does not require the permission to read and modify data. If you trust uBO Lite, you can give it broad permission to read and modify data on all websites in order to enable more advanced filtering capabilities for all websites by default.",
+    "message": "คุณเพิ่งติดตั้ง uBO Lite คุณสามารถเลือกโหมดการกรอง (ค่าเริ่มต้น) ที่จะใช้กับเว็บไซต์ทั้งหมดได้ที่นี่\n\nตามค่าเริ่มต้น โหมด <em>พื้นฐาน</em> จะถูกเลือกเนื่องจากไม่จำเป็นต้องมีสิทธิ์ในการอ่านและแก้ไขข้อมูล หากคุณไว้วางใจ uBO Lite คุณสามารถให้สิทธิ์ในการอ่านและแก้ไขข้อมูลบนเว็บไซต์ทั้งหมดได้ เพื่อเปิดใช้งานคุณสมบัติการกรองข้อมูลขั้นสูงสำหรับเว็บไซต์ทั้งหมดตามค่าเริ่มต้น",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
-    "message": "Default filtering mode",
+    "message": "โหมดการกรองเริ่มต้น",
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
@@ -120,7 +120,7 @@
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
-    "message": "basic",
+    "message": "พื้นฐาน",
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
@@ -144,19 +144,23 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "List of hostnames for which no filtering will take place.",
+    "message": "List of websites for which no filtering will take place.",
     "description": "A short description for the editable field which lists trusted sites"
   },
+  "noFilteringModePlaceholder": {
+    "message": "[hostnames only]\nexample.com\ngames.example\n...",
+    "description": "Default text for in edit field"
+  },
   "behaviorSectionLabel": {
-    "message": "Behavior",
+    "message": "ลักษณะการทำงาน",
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Automatically reload page when changing filtering mode",
+    "message": "โหลดหน้าเว็บใหม่อัตโนมัติเมื่อเปลี่ยนโหมดการกรอง",
     "description": "Label for a checkbox in the options page"
   },
   "showBlockedCountLabel": {
-    "message": "Show the number of blocked requests on the toolbar icon",
+    "message": "แสดงจำนวนคำขอที่ถูกปิดกั้นบนไอคอนแถบเครื่องมือ",
     "description": "Label for a checkbox in the options page"
   }
 }

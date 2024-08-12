@@ -147,6 +147,10 @@
     "message": "Списък с имена на хостове, за които няма да се извършва филтриране",
     "description": "A short description for the editable field which lists trusted sites"
   },
+  "noFilteringModePlaceholder": {
+    "message": "[само имена на хостове]\nprimer.com\nigri.primer\n...",
+    "description": "Default text for in edit field"
+  },
   "behaviorSectionLabel": {
     "message": "Поведение",
     "description": "The header text for the 'Behavior' section"

@@ -7,7 +7,7 @@ Noklusējuma nosacījumu kopa atbilst uBokc Origin noklusējuma aizturēšanas k
 - EasyPrivacy
 - Pētera Lova (Peter Lowe) reklāmu un izsakošanas serveru saraksts
 
-Vairāk nosacījumu kopu var pievienot iestatījumu sadaļā -- jāklikšķina _Zobratu_ ikona uznirstošajā logā.
+Vairāk nosacījumu kopu var iespējot iestatījumu sadaļā -- jāklikšķina _Zobratu_ ikona uznirstošajā logā.
 
 uBOL ir pilnībā vispārīgs, kas nozīmē, ka nav nepieciešamības pēc pastāvīga uBOL procesa, lai notiktu aizturēšana, un uz CSS/JS ievietošanu balstīta satura aizturēšanu uzticami veic pārlūks, nevis paplašinājums. Tas nozīmē, ka uBOL pats par sevi neizmanto procesoru un atmiņu, kamēr satura aizturēšana ir notiekoša -- uBOL pakalpojuma strādņa process ir nepieciešams _tikai_ tad, kad notiek mijiedarbība ar uznirstošo logu vai iestatījumu sadaļām.
 

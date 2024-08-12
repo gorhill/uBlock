@@ -7,7 +7,7 @@ O conjunto de regras padrão corresponde ao conjunto de filtros padrão do uBloc
 - EasyPrivacy
 - Lista de servidores de anúncios e rastreadores do Peter Lowe
 
-Você pode adicionar mais conjuntos de regras visitando a página das opções -- clique no ícone _Engrenagens_ no painel do pop-up.
+Você pode ativar mais conjuntos de regras visitando a página das opções — clique no ícone da _Engranagem_ no painel do popup.
 
 O uBOL é totalmente declarativo, significando que não há necessidade de um processo permanente do uBOL para a filtragem ocorrer e a filtragem de conteúdo baseada em injeção do CSS/JS é realizada confiavelmente pelo próprio navegador ao invés da extensão. Isto significa que o próprio uBOL não consome recursos de CPU/memória enquanto o bloqueio de conteúdo está em andamento -- o processo do service worker do uBOL _só_ é necessário quando você interage com o painel do pop-up ou as páginas das opções.
 

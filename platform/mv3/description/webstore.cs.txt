@@ -7,7 +7,7 @@ Výchozí sada pravidel koresponduje k výchozím sadám filtrů uBlock Origin:
 - EasyPrivacy
 - Peter Lowe’s Ad and tracking server list
 
-Můžete přidat více sad pravidel navštívením stránky nastavení -- klikněte na ikonu ozubených kol ve vyskakovácím panelu.
+Další sady pravidel můžete povolit na stránce nastavení - klikněte na ikonu _Ozubeného kolečka_ ve vyskakovacím panelu.
 
 uBOL je zcela deklarativní, což znamená, že pro filtrování není potřeba permanentní proces uBOL a filtrování obsahu založené na vstřikování CSS/JS je spolehlivě prováděno samotným prohlížečem, nikoli rozšířením. To znamená, že samotný uBOL nespotřebovává zdroje CPU/paměti, zatímco probíhá blokování obsahu – proces servisního pracovníka uBOL je vyžadován _pouze_ při interakci s vyskakovacím panelem nebo stránkami nastavení.
 

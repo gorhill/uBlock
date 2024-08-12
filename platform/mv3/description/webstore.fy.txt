@@ -7,7 +7,7 @@ De standert regelset komt oerien mei de standert filterset fan uBlock Origin:
 - EasyPrivacy
 - Peter Lowe’s Ad and tracking-serverlist
 
-Jo kinne mear regelsets tafoegje troch de opsjesside te besykjen – klik op it _tântsjilpiktogram_ yn it pop-uppaniel.
+Jo kinne mear regelsets ynskeakelje troch de opsjesside te besykjen – klik op it _tântsjilpiktogram_ yn it pop-uppaniel.
 
 uBOL is folslein deklaratyf, wat betsjut dat in permanint uBOL-proses foar de filtering net nedich is, en ynhâldsfiltering op basis fan CSS/JS-ynjeksje op in betroubere manier troch de browser sels útfierd wurdt yn stee fan de útwreiding. Dit betsjut dat uBOL sels gjin CPU-/ûnthâldboarnen brûkt wylst ynhâldsblokkearring aktyf is – it serviceworker-proses fan uBOL is _allinnich_ fereaske as jo mei it pop-uppaniel of de opsjessiden wurkje.
 

@@ -7,7 +7,7 @@ uBO Lite (uBOL) ایک *اجازت سے کم* MV3 پر مبنی مواد بلا�
 - EasyPrivacy
 - Peter Lowe’s Ad and tracking server list
 
-You can add more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+You can enable more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
 
 uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
 

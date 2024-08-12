@@ -147,6 +147,10 @@
     "message": "होस्टनामों की सूची जिनके लिए कोई फ़िल्टरिंग नहीं होगी",
     "description": "A short description for the editable field which lists trusted sites"
   },
+  "noFilteringModePlaceholder": {
+    "message": "[केवल होस्ट का नाम]\nexample.com\ngames.example\n...",
+    "description": "Default text for in edit field"
+  },
   "behaviorSectionLabel": {
     "message": "व्यवहार",
     "description": "The header text for the 'Behavior' section"

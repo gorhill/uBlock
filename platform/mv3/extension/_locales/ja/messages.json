@@ -147,6 +147,10 @@
     "message": "フィルタリングを行わないホスト名のリスト",
     "description": "A short description for the editable field which lists trusted sites"
   },
+  "noFilteringModePlaceholder": {
+    "message": "[ホスト名のみ]\nexample.com\ngames.example\n...",
+    "description": "Default text for in edit field"
+  },
   "behaviorSectionLabel": {
     "message": "動作",
     "description": "The header text for the 'Behavior' section"

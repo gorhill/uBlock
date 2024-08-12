@@ -7,7 +7,7 @@ Listele de filtre încorporate de uBlock Origin
 - EasyPrivacy
 - Oglas Peter Lowe i lista servera za praćenje
 
-Puteți adăuga mai multe seturi de reguli vizitând pagina de opțiuni -- făcând clic pe pictograma _Cogs_ din panoul pop-up
+You can enable more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
 
 uBOL este în întregime declarativ, ceea ce înseamnă că nu este nevoie de un proces uBOL permanent pentru ca filtrarea să aibă loc, iar filtrarea conținutului pe bază de injecție CSS/JS este realizată în mod sigur de browser în sine, mai degrabă decât de extensie. Aceasta înseamnă că uBOL în sine nu consumă resurse CPU/memorie în timp ce blocarea conținutului este în desfășurare -- procesul de lucru al serviciului uBOL este necesar _doar_ atunci când interacționați cu panoul pop-up sau cu paginile de opțiuni.
 

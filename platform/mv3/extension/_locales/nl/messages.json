@@ -147,6 +147,10 @@
     "message": "Lijst van hostnamen waarvoor geen filtering plaatsvindt.",
     "description": "A short description for the editable field which lists trusted sites"
   },
+  "noFilteringModePlaceholder": {
+    "message": "[alleen hostnamen]\nexample.com\ngames.example\n...",
+    "description": "Default text for in edit field"
+  },
   "behaviorSectionLabel": {
     "message": "Gedrag",
     "description": "The header text for the 'Behavior' section"

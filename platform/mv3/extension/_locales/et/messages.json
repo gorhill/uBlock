@@ -144,8 +144,12 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "Hostinimede loend, kus filtreerimine keelatakse",
+    "message": "Veebilehtede loend, kus filtreid ei kasutata.",
     "description": "A short description for the editable field which lists trusted sites"
+  },
+  "noFilteringModePlaceholder": {
+    "message": "[ainult hostinimed]\nnäide.com\nmängud.näide\n...",
+    "description": "Default text for in edit field"
   },
   "behaviorSectionLabel": {
     "message": "Käitumine",

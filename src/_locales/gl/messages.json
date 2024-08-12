@@ -12,7 +12,7 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Aviso! ten cambios sen gardar",
+    "message": "Aviso! Non gardaches os cambios",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Lista branca",
+    "message": "Sitios de confianza",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -336,7 +336,7 @@
     "description": "English: Color-blind friendly"
   },
   "settingsAppearance": {
-    "message": "Aspecto",
+    "message": "Aparencia",
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Dominios de <i>malware</i>",
+    "message": "Protección contra malware, seguridade",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
@@ -596,7 +596,7 @@
     "description": ""
   },
   "rulesExport": {
-    "message": "Exportar a un arquivo…",
+    "message": "Exportar a un ficheiro…",
     "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
@@ -632,15 +632,15 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Importar e anexar",
+    "message": "Importar e engadir…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
-    "message": "Exportar",
+    "message": "Exportar…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
-    "message": "o-meu-ublock-lista-branca_{{datetime}}.txt",
+    "message": "o-meu-ublock-webs-confiables_{{datetime}}.txt",
     "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {

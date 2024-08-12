@@ -7,7 +7,7 @@ The default ruleset corresponds to uBlock Origin's default filterset:
 - EasyPrivacy
 - Peter Lowe’s Ad and tracking server list
 
-You can add more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+You can enable more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
 
 uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. ಇದರರ್ಥ ವಿಷಯ ನಿರ್ಬಂಧಿಸುವಿಕೆಯು ನಡೆಯುತ್ತಿರುವಾಗ uBOL ಸ್ವತಃ CPU/ಮೆಮೊರಿ ಸಂಪನ್ಮೂಲಗಳನ್ನು ಬಳಸುವುದಿಲ್ಲ -- ನೀವು ಪಾಪ್ಅಪ್ ಪ್ಯಾನೆಲ್ ಅಥವಾ ಆಯ್ಕೆಯ ಪುಟಗಳೊಂದಿಗೆ ಸಂವಹನ ನಡೆಸಿದಾಗ uBOL ನ ಸೇವಾ ವರ್ಕರ್ ಪ್ರಕ್ರಿಯೆಯು _ಮಾತ್ರಾ_ ಅಗತ್ಯವಿದೆ.
 

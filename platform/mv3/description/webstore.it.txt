@@ -7,7 +7,7 @@ L'insieme di regole predefinito corrisponde all'insieme di filtri predefinito di
 - EasyPrivacy
 - Elenco dei server pubblicitari e di tracciamento di Peter Lowe
 
-Puoi aggiungere altri insiemi di regole visitando la pagina delle opzioni: clicca sull'icona con gli _Ingranaggi_ nel pannello a comparsa.
+Puoi abilitare altri set di regole visitando la pagina delle opzioni: clicca sull'icona _Cogs_ nel pannello a comparsa.
 
 uBOL è interamente dichiarativo, ovvero non è necessario che ci sia un processo di uBOL permanente per poter eseguire il filtraggio; e il filtraggio dei contenuti basato sull'iniezione di elementi CSS/JS viene eseguito in modo affidabile dal browser stesso piuttosto che dall'estensione. Ciò significa che lo stesso uBOL non consuma risorse di CPU o memoria mentre il blocco dei contenuti viene eseguito: il processo che esegue il servizio di uBOL è richiesto _solamente_ quando interagisci con il pannello  a comparsa o con le pagine delle opzioni.
 

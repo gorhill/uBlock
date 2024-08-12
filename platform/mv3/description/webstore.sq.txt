@@ -7,7 +7,7 @@ Rregullat e tij janë të barasvlershme me filtrat standardë që përdor uBlock
 - EasyPrivacy
 - Lista e Peter Lowe për reklamat dhe gjurmuesit
 
-Në faqen e opsioneve mund të shtoni rregulla të tjera – klikoni ikonën e _ingranazhit_ në panelin modal.
+Në faqen e opsioneve mund të aktivizoni rregulla të tjera – klikoni ikonën e _ingranazhit_ në panelin modal.
 
 uBOL është tërësisht deklarativ, domethënë filtrimi ndodh pa qenë nevoja që procesi i uBOL të vijojë vazhdimisht në sfond, ndërsa injektimi i filtrave CSS/JS te materialet kryhet me saktësi nga vetë shfletuesi. Pra, uBOL i bllokon materialet pa konsumuar resurset e procesorit/memories – asetet e uBOL nevojiten _vetëm_ kur ndërveproni me panelin modal ose faqen e opsioneve të tij.
 

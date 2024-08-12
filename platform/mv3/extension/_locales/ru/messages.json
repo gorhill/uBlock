@@ -147,6 +147,10 @@
     "message": "Список имён хостов, для которых не будет производиться фильтрация.",
     "description": "A short description for the editable field which lists trusted sites"
   },
+  "noFilteringModePlaceholder": {
+    "message": "[только имена хостов]\nexample.com\ngames.example\n...",
+    "description": "Default text for in edit field"
+  },
   "behaviorSectionLabel": {
     "message": "Поведение",
     "description": "The header text for the 'Behavior' section"

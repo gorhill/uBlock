@@ -147,6 +147,10 @@
     "message": "Saraksts ar saimniekdatoru nosaukumiem, kuriem netiks pielietota aizturēšana",
     "description": "A short description for the editable field which lists trusted sites"
   },
+  "noFilteringModePlaceholder": {
+    "message": "[tikai saimniekdatoru nosaukumi]\nexample.com\ngames.example\n...",
+    "description": "Default text for in edit field"
+  },
   "behaviorSectionLabel": {
     "message": "Uzvedība",
     "description": "The header text for the 'Behavior' section"

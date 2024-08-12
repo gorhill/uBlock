@@ -7,7 +7,7 @@ Tavaline reeglitekogum vastab uBlock Origini tavalisele filtritekogumile:
 - EasyPrivacy
 Peter Lowe'i reklaamide ja jälitusserverite loend
 
-Reeglitekogumeid saate lisada valikute lehelt ehk avanenud paneelis klõpsake _Cogs_ ikooni.
+Rohkem reegleid valikutest ehk toksake _Cogs_ ikooni hüpikpaneelis.
 
 uBOL on läbinisti deklaratiivne ehk filtreerimiseks pole vaja kogu aeg töötavat uBOLi protsessi ja CSS/JS süstipõhist sisu filtreerib tegelikult brauser, mitte laiendus. Teisisõnu, uBOL ei kasuta sisu tõkestamisel protsessori/mälu ressursse. uBOLi teenuse toimimise protsessi on vaja _vaid_ juhul, kui kasutate hüpikpaneeli või valikute lehekülgi.
 

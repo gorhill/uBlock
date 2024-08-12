@@ -7,7 +7,7 @@ O conxunto de regras predeterminado corresponde ao conxunto de filtros predeterm
 - EasyPrivacy
 Lista de servidores de seguimento e anuncios de Peter Lowe
 
-Podes engadir máis conxuntos de regras visitando a páxina de opcións: fai clic na icona _Cogs_ no panel emerxente.
+Podes activar máis grupos de regras indo á páxina de opcións -- preme na roda dentada no panel emerxente.
 
 uBOL é totalmente declarativo, o que significa que non é necesario un proceso permanente de uBOL para que se produza o filtrado e o filtrado de contido baseado en inxección de CSS/JS realízao de forma fiable o propio navegador en lugar da extensión. Isto significa que o propio uBOL non consume recursos de CPU/memoria mentres o bloqueo de contido está en curso -- o proceso do traballador do servizo de uBOL é necesario _só_ cando interactúas co panel emerxente ou coas páxinas de opcións.
 

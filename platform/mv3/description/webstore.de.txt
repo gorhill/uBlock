@@ -7,7 +7,7 @@ Die Standardregeln entsprechen den Standardfiltern von uBlock Origin:
 - EasyPrivacy
 - Peter Lowe’s Ad and tracking server list
 
-Sie können weitere Regeln hinzufügen, indem Sie die Optionen aufrufen — klicken Sie dazu im Pop-up-Fenster auf das Symbol mit den _Zahnrädern_.
+Sie können weitere Regeln aktivieren, indem Sie die Einstellungen aufrufen — klicken Sie dazu im Pop-up-Fenster auf das Symbol mit den _Zahnrädern_.
 
 uBOL ist vollständig deklarativ, d. h. es ist kein dauerhafter uBOL-Prozess für das Filtern erforderlich, und die auf CSS/JS-Injektion basierende Inhaltsfilterung wird zuverlässig vom Browser selbst und nicht von der Erweiterung durchgeführt. Das bedeutet, dass uBOL selbst keine CPU-/Speicherressourcen verbraucht, während der Inhalt blockiert wird — der uBOL-Service-Worker-Prozess wird _nur_ benötigt, wenn Sie mit dem Pop-up-Fenster oder den Optionen interagieren.
 

@@ -4,11 +4,11 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "حاجب محتوى و بأقل التراخيص المسبقة. يحجب الإعلانات والمتتبعات والمعدنات والكثير فوراً عند التثبيت.",
+    "message": "أداة لحظر المحتوى بدون إذن. يحظر الإعلانات وأدوات التتبع وأدوات التعدين وغيرها فور التثبيت.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
-    "message": "{{ruleCount}} شرط محولة من {{filterCount}} مصفيّات الشبكة ",
+    "message": "{{ruleCount}} قواعد، محولة من {{filterCount}} مرشحات الشبكة",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
@@ -146,6 +146,10 @@
   "noFilteringModeDescription": {
     "message": "قائمة بأسماء المضيفين التي لن تتم أي تصفية لها",
     "description": "A short description for the editable field which lists trusted sites"
+  },
+  "noFilteringModePlaceholder": {
+    "message": "[hostnames only]\nexample.com\ngames.example\n...",
+    "description": "Default text for in edit field"
   },
   "behaviorSectionLabel": {
     "message": "السلوك",

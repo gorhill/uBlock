@@ -147,6 +147,10 @@
     "message": "Lista de nombres de dominio para los cuales no se realizará ningún filtrado.",
     "description": "A short description for the editable field which lists trusted sites"
   },
+  "noFilteringModePlaceholder": {
+    "message": "[solo nombres de hospedador]\nejemplo.com\njuegos.ejemplo\n...",
+    "description": "Default text for in edit field"
+  },
   "behaviorSectionLabel": {
     "message": "Comportamiento",
     "description": "The header text for the 'Behavior' section"

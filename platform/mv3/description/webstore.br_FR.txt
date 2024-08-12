@@ -7,7 +7,7 @@ Ar reolennoù dre ziouer a glot gant silañ dre ziouer uBlock Origin:
 - EasyPrivacy
 - Roll bruderezh ha servijerioù heuliañ Peter Lowe
 
-Tu zo deoc'h ouzhpennañ reolennoù all en arventennoù -- klikit war an ikon _kendentadur_ er banell popup.
+You can enable more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
 
 Disklêriañ a ra uBOL penn-da-benn, da lavaret eo n'eus ket ezhomm eus un argerzh uBOL padus evit ma c'hoarvezfe ar silañ, ha silañ endalc'hadoù diazezet war enlakaat CSS/JS a vez graet en un doare fizius gant ar merdeer e-unan kentoc'h eget gant an astenn. Kement-se a dalvez ne vez ket gounezet gant uBOL e-unan arc'hwelioù CPU/memor e-pad ma vez stanket an endalc'hadoù -- ezhomm zo eus argerzh al labourer servij uBOL _nemet_ pa vez etregweredet gant ar banell digeriñ pe ar pajennoù dibarzhioù.
 

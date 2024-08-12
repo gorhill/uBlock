@@ -147,6 +147,10 @@
     "message": "Lista de nomes de host para os que non se fará filtrado",
     "description": "A short description for the editable field which lists trusted sites"
   },
+  "noFilteringModePlaceholder": {
+    "message": "[só nomes de servidor]\nexample.com\ngames.example\n...",
+    "description": "Default text for in edit field"
+  },
   "behaviorSectionLabel": {
     "message": "Comportamento",
     "description": "The header text for the 'Behavior' section"

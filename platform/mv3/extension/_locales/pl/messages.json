@@ -147,6 +147,10 @@
     "message": "Lista nazw hostów, dla których nie będzie stosowane żadne filtrowanie",
     "description": "A short description for the editable field which lists trusted sites"
   },
+  "noFilteringModePlaceholder": {
+    "message": "[tylko nazwy hostów]\nexample.com\ngry.przykład\n...",
+    "description": "Default text for in edit field"
+  },
   "behaviorSectionLabel": {
     "message": "Zachowanie",
     "description": "The header text for the 'Behavior' section"

@@ -144,8 +144,12 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "Liste der Hostnamen, für die nicht gefiltert wird.",
+    "message": "Liste der Websites, für die nicht gefiltert wird.",
     "description": "A short description for the editable field which lists trusted sites"
+  },
+  "noFilteringModePlaceholder": {
+    "message": "[nur Hostnamen]\nexample.com\ngames.example\n…",
+    "description": "Default text for in edit field"
   },
   "behaviorSectionLabel": {
     "message": "Verhalten",
