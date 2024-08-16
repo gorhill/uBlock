@@ -1,3 +1,4 @@
+- [Improve various scriptlets](https://github.com/gorhill/uBlock/commit/56dfdd2568)
 - [Improve `href-sanitizer` sciptlet](https://github.com/gorhill/uBlock/commit/db3dc69bcc)
 - [Improve `remove-attr.js` scriptlet](https://github.com/gorhill/uBlock/commit/fb037e97d0)
 - [Improve `trusted-replace-node-text` scriptlet](https://github.com/gorhill/uBlock/commit/4f0d1301ab)
