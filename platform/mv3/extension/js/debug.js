@@ -112,7 +112,9 @@ export const getMatchedRules = (( ) => {
             const j = (writePtr + i) % bufferSize;
             const ruleInfo = matchedRules[j];
             if ( ruleInfo === null ) { continue; }
-            if ( ruleInfo.request.tabId !== tabId ) { continue; }
+            if ( ruleInfo.request.tabId !== -1 ) {
+                if ( ruleInfo.request.tabId !== tabId ) { continue; }
+            }
             const promise = getRuleDetails(ruleInfo);
             if ( promise === undefined ) { continue; }
             promises.unshift(promise);
