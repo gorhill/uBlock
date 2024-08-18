@@ -1462,10 +1462,8 @@ function proxyApplyFn(
     }
     const fn = context[prop];
     if ( typeof fn !== 'function' ) { return; }
-    const fnname = fn.name;
-    const toString = (function toString() {
-        return `function ${fnname}() { [native code] }`;
-    }).bind(null);
+    const fnStr = fn.toString();
+    const toString = (function toString() { return fnStr; }).bind(null);
     if ( fn.prototype && fn.prototype.constructor === fn ) {
         context[prop] = new Proxy(fn, {
             construct: handler,
