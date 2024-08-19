@@ -1,9 +1,9 @@
 - [Use helper function to lookup safe cookie values](https://github.com/gorhill/uBlock/commit/79e10323ad)
 - [Add `checked`/`unchecked` to `set-cookie`](https://github.com/gorhill/uBlock/commit/3e2171f550) (by @ryanbr)
-- [Add `allowed`/`denied` to `set-local-storage-item`](https://github.com/gorhill/uBlock/commit/41c2258f91)
+- [Add `allowed`/`denied` to `set-local-storage-item`](https://github.com/gorhill/uBlock/commit/41c2258f91) (by @ryanbr)
 - [Fix plain exceptions not overriding block filters using `header=` option](https://github.com/gorhill/uBlock/commit/1cb660b94e)
 - [Improve various scriptlets](https://github.com/gorhill/uBlock/commit/56dfdd2568)
-- [Improve `href-sanitizer` sciptlet](https://github.com/gorhill/uBlock/commit/db3dc69bcc)
+- [Improve `href-sanitizer` scriptlet](https://github.com/gorhill/uBlock/commit/db3dc69bcc)
 - [Improve `remove-attr.js` scriptlet](https://github.com/gorhill/uBlock/commit/fb037e97d0)
 - [Improve `trusted-replace-node-text` scriptlet](https://github.com/gorhill/uBlock/commit/4f0d1301ab)
 
