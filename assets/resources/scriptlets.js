@@ -955,6 +955,33 @@ function objectFindOwnerFn(
 /******************************************************************************/
 
 builtinScriptlets.push({
+    name: 'get-safe-cookie-values.fn',
+    fn: getSafeCookieValuesFn,
+});
+function getSafeCookieValuesFn() {
+    return [
+        'accept', 'reject',
+        'accepted', 'rejected', 'notaccepted',
+        'allow', 'disallow', 'deny',
+        'allowed', 'denied',
+        'approved', 'disapproved',
+        'checked', 'unchecked',
+        'dismiss', 'dismissed',
+        'enable', 'disable',
+        'enabled', 'disabled',
+        'essential', 'nonessential',
+        'hide', 'hidden',
+        'necessary', 'required',
+        'ok',
+        'on', 'off',
+        'true', 't', 'false', 'f',
+        'yes', 'y', 'no', 'n',
+    ];
+}
+
+/******************************************************************************/
+
+builtinScriptlets.push({
     name: 'get-all-cookies.fn',
     fn: getAllCookiesFn,
 });
@@ -1076,6 +1103,7 @@ builtinScriptlets.push({
     name: 'set-local-storage-item.fn',
     fn: setLocalStorageItemFn,
     dependencies: [
+        'get-safe-cookie-values.fn',
         'safe-self.fn',
     ],
 });
@@ -1097,14 +1125,9 @@ function setLocalStorageItemFn(
     const trustedValues = [
         '',
         'undefined', 'null',
-        'false', 'true',
-        'on', 'off',
-        'yes', 'no',
-        'accept', 'reject',
-        'accepted', 'rejected',
-        'allowed', 'denied',
         '{}', '[]', '""',
         '$remove$',
+        ...getSafeCookieValuesFn(),
     ];
 
     if ( trusted ) {
@@ -3819,6 +3842,7 @@ builtinScriptlets.push({
     fn: setCookie,
     world: 'ISOLATED',
     dependencies: [
+        'get-safe-cookie-values.fn',
         'safe-self.fn',
         'set-cookie.fn',
     ],
@@ -3831,28 +3855,10 @@ function setCookie(
     if ( name === '' ) { return; }
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix('set-cookie', name, value, path);
-
-    const validValues = [
-        'accept', 'reject',
-        'accepted', 'rejected', 'notaccepted',
-        'allow', 'deny',
-        'allowed', 'disallow',
-        'enable', 'disable',
-        'enabled', 'disabled',
-        'ok',
-        'on', 'off',
-        'true', 't', 'false', 'f',
-        'yes', 'y', 'no', 'n',
-        'necessary', 'required',
-        'approved', 'disapproved',
-        'hide', 'hidden',
-        'essential', 'nonessential',
-        'dismiss', 'dismissed',
-        'checked', 'unchecked',
-    ];
     const normalized = value.toLowerCase();
     const match = /^("?)(.+)\1$/.exec(normalized);
     const unquoted = match && match[2] || normalized;
+    const validValues = getSafeCookieValuesFn();
     if ( validValues.includes(unquoted) === false ) {
         if ( /^\d+$/.test(unquoted) === false ) { return; }
         const n = parseInt(value, 10);
