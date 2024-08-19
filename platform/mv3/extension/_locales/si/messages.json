@@ -16,11 +16,11 @@
     "description": "English: uBO Lite — Dashboard"
   },
   "settingsPageName": {
-    "message": "Settings",
+    "message": "සැකසුම්",
     "description": "appears as tab name in dashboard"
   },
   "aboutPageName": {
-    "message": "About",
+    "message": "පිළිබඳව",
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {

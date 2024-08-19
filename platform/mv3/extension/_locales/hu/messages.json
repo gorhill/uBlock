@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Kísérleti, engedélyeket nem igénylő nélküli tartalomblokkoló. A telepítés után azonnal blokkolja a hirdetéseket, nyomkövetőket, bányászprogramokat és egyebeket.",
+    "message": "Engedélyt nem igénylő tartalomblokkoló. A telepítés után azonnal blokkolja a hirdetéseket, nyomkövetőket, bányászokat és egyebeket.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {

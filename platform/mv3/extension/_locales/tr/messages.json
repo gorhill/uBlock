@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "İzin gerektirmeyen içerik engelleyicisi. Kurulumdan hemen sonra reklamları, izleyicileri, kripto madencilerini, ve daha fazlasını engeller.",
+    "message": "İzin gerektirmeyen içerik engelleyicisi. Kurulumdan hemen sonra reklamları, izleyicileri, ve daha fazlasını engeller.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {

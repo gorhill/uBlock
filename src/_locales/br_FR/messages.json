@@ -156,15 +156,15 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Lazhañ/enaouiñ ar silañ kenedel war al lec'hienn-mañ",
+    "message": "Lazhañ/enaouiñ ar siloù kenedel war al lec'hienn-mañ",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Lazhañ ar silañ kenedel war al lec'hienn-mañ",
+    "message": "Lazhañ ar siloù kenedel war al lec'hienn-mañ",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Enaouiñ ar silañ kenedel war al lec'hienn-mañ",
+    "message": "Enaouiñ ar siloù kenedel war al lec'hienn-mañ",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -376,7 +376,7 @@
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "Lazhañ ar silañ kenedel",
+    "message": "Lazhañ ar siloù kenedel",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
@@ -1260,7 +1260,7 @@
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleCosmeticFiltering": {
-    "message": "Enaouiñ ar silañ kenedel",
+    "message": "Enaouiñ ar siloù kenedel",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "toggleJavascript": {

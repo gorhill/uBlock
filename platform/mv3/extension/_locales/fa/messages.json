@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "مسدود کننده محتوا بدون نیاز به مجوز که بلافاصله پس از نصب، تبلیغات، ردیاب ها، ابزار‌های استخراج ارز دیجیتال و موارد دیگر را مسدود می کند.",
+    "message": "یک مسدود کننده محتوای بدون مجوز که بلافاصله پس از نصب، تبلیغات، ردیاب ها، ابزارهای استخراج و موارد دیگر را مسدود می کند.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {

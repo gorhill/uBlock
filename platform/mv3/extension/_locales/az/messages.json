@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "İcazəyə ehtiyac duymayan məzmun əngəlləyicisi. Reklamları, izləyiciləri, maynerləri və daha çoxunu quraşdırmadan dərhal sonra əngəlləyir.",
+    "message": "İcazəyə ehtiyac duymayan məzmun əngəlləyicisi. Reklamları, izləyiciləri, və daha çoxunu quraşdırmadan dərhal sonra əngəlləyir.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {

@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Փորձարարական բովանդակության արգելափակիչ, որը չի պահանջում թույլտվություններ։ Արգելափակում է ազդերը, հետագծիչները, մայներները և շատ ավելին։",
+    "message": "Փբովանդակության արգելափակիչ, որը չի պահանջում թույլտվություններ։ Արգելափակում է ազդերը, հետագծիչները, մայներները և շատ ավելին։",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {

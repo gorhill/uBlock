@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Um bloqueador de conteúdo com menos permissões - Bloqueie anúncios, rastreadores, mineradores e mais imediatamente após a instalação.",
+    "message": "Um bloqueador de conteúdo com menos permissões - Bloqueie anúncios, rastreadores, mineradores e mais imediatamente após a instalação",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
