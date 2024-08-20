@@ -473,6 +473,7 @@ function registerScriptlet(context, scriptletDetails) {
             //   `MAIN` world not yet supported in Firefox
             if ( isGecko === false ) {
                 directive.world = 'MAIN';
+                directive.matchOriginAsFallback = true;
             }
 
             // register
