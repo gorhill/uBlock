@@ -752,7 +752,7 @@ class FilterImportant {
     }
 
     static dnrFromCompiled(args, rule) {
-        rule.priority = (rule.priority || 1) + 30;
+        rule.priority = (rule.priority || 0) + 30;
     }
 
     static keyFromArgs() {
@@ -4313,17 +4313,17 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
     }
 
     // Priority:
-    //   Block: 0 (default priority)
-    //   Redirect: 1-9
-    //   Excepted redirect: 11-19
+    //   Block: 1 (default priority)
+    //   Redirect: 2-9
+    //   Excepted redirect: 12-19
     //   Allow: 20
     //   Block important: 30
-    //   Redirect important: 31-39
+    //   Redirect important: 32-39
 
     const realms = new Map([
         [ BLOCK_REALM, { type: 'block', priority: 0 } ],
         [ ALLOW_REALM, { type: 'allow', priority: 20 } ],
-        [ REDIRECT_REALM, { type: 'redirect', priority: 1 } ],
+        [ REDIRECT_REALM, { type: 'redirect', priority: 2 } ],
         [ REMOVEPARAM_REALM, { type: 'removeparam', priority: 0 } ],
         [ CSP_REALM, { type: 'csp', priority: 0 } ],
         [ PERMISSIONS_REALM, { type: 'permissions', priority: 0 } ],
