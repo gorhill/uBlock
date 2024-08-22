@@ -19,19 +19,17 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
+import * as makeScriptlet from './make-scriptlets.js';
+import * as sfp from './js/static-filtering-parser.js';
 
-/******************************************************************************/
+import { createHash, randomBytes } from 'crypto';
 
+import { dnrRulesetFromRawLists } from './js/static-dnr-filtering.js';
 import fs from 'fs/promises';
 import https from 'https';
 import path from 'path';
 import process from 'process';
-import { createHash, randomBytes } from 'crypto';
 import redirectResourcesMap from './js/redirect-resources.js';
-import { dnrRulesetFromRawLists } from './js/static-dnr-filtering.js';
-import * as sfp from './js/static-filtering-parser.js';
-import * as makeScriptlet from './make-scriptlets.js';
 import { safeReplace } from './safe-replace.js';
 
 /******************************************************************************/
@@ -106,8 +104,7 @@ const log = (text, silent = false) => {
 const urlToFileName = url => {
     return url
         .replace(/^https?:\/\//, '')
-        .replace(/\//g, '_')
-        ;
+        .replace(/\//g, '_');
 };
 
 const fetchText = (url, cacheDir) => {
@@ -365,8 +362,7 @@ async function processNetworkFilters(assetDetails, network) {
     log(plainGood
         .filter(rule => Array.isArray(rule._warning))
         .map(rule => rule._warning.map(v => `\t\t${v}`))
-        .join('\n'),
-        true
+        .join('\n'), true
     );
 
     const regexes = rules.filter(rule => isGood(rule) && isRegex(rule));
