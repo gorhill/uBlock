@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
 /******************************************************************************/
 
 // The resources referenced below are found in ./web_accessible_resources/
@@ -159,8 +157,20 @@ export default new Map([
         alias: 'nooptext',
         data: 'text',
     } ],
-    [ 'noop-vmap1.0.xml', {
-        alias: 'noopvmap-1.0',
+    [ 'noop-vast2.xml', {
+        alias: 'noopvast-2.0',
+        data: 'text',
+    } ],
+    [ 'noop-vast3.xml', {
+        alias: 'noopvast-3.0',
+        data: 'text',
+    } ],
+    [ 'noop-vast4.xml', {
+        alias: 'noopvast-4.0',
+        data: 'text',
+    } ],
+    [ 'noop-vmap1.xml', {
+        alias: [ 'noop-vmap1.0.xml', 'noopvmap-1.0' ],
         data: 'text',
     } ],
     [ 'outbrain-widget.js', {
