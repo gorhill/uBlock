@@ -1,3 +1,4 @@
+- [Improve `trusted-replace-outbound-text` scriptlet](https://github.com/gorhill/uBlock/commit/0dcb985601)
 - [Improve `prevent-xhr` scriptlet](https://github.com/gorhill/uBlock/commit/3a249f395c)
 - [Add noop resources for redirect purpose](https://github.com/gorhill/uBlock/commit/59a9a43a83)
 - [Use helper function to lookup safe cookie values](https://github.com/gorhill/uBlock/commit/79e10323ad)
