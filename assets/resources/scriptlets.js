@@ -4906,14 +4906,17 @@ builtinScriptlets.push({
 });
 function trustedReplaceOutboundText(
     propChain = '',
-    pattern = '',
-    replacement = '',
+    rawPattern = '',
+    rawReplacement = '',
     ...args
 ) {
     if ( propChain === '' ) { return; }
     const safe = safeSelf();
-    const logPrefix = safe.makeLogPrefix('trusted-replace-outbound-text', propChain, pattern, replacement, ...args);
-    const rePattern = safe.patternToRegex(pattern);
+    const logPrefix = safe.makeLogPrefix('trusted-replace-outbound-text', propChain, rawPattern, rawReplacement, ...args);
+    const rePattern = safe.patternToRegex(rawPattern);
+    const replacement = rawReplacement.startsWith('json:')
+        ? safe.JSON_parse(rawReplacement.slice(5))
+        : rawReplacement;
     const extraArgs = safe.getExtraArgs(args);
     const reCondition = safe.patternToRegex(extraArgs.condition || '');
     const reflector = proxyApplyFn(propChain, function(...args) {
@@ -4923,7 +4926,7 @@ function trustedReplaceOutboundText(
             try { textBefore = self.atob(encodedTextBefore); }
             catch(ex) { return encodedTextBefore; }
         }
-        if ( pattern === '' ) {
+        if ( rawPattern === '' ) {
             safe.uboLog(logPrefix, 'Decoded outbound text:\n', textBefore);
             return encodedTextBefore;
         }
