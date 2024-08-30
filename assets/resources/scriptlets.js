@@ -2885,10 +2885,8 @@ function noWindowOpenIf(
         pattern = pattern.slice(1);
     }
     const rePattern = safe.patternToRegex(pattern);
-    let autoRemoveAfter = parseInt(delay);
-    if ( isNaN(autoRemoveAfter) ) {
-        autoRemoveAfter = -1;
-    }
+    const autoRemoveAfter = parseInt(delay, 10) || 0;
+    const setTimeout = self.setTimeout;
     const createDecoy = function(tag, urlProp, url) {
         const decoyElem = document.createElement(tag);
         decoyElem[urlProp] = url;
@@ -2909,7 +2907,13 @@ function noWindowOpenIf(
             return Reflect.apply(target, thisArg, args);
         }
         safe.uboLog(logPrefix, `Prevented (${args.join(', ')})`);
-        if ( autoRemoveAfter < 0 ) { return null; }
+        if ( delay === '' ) { return null; }
+        if ( decoy === 'blank' ) {
+            args[0] = 'about:blank';
+            const r = Reflect.apply(target, thisArg, args);
+            setTimeout(( ) => { r.close(); }, autoRemoveAfter);
+            return r;
+        }
         const decoyElem = decoy === 'obj'
             ? createDecoy('object', 'data', ...args)
             : createDecoy('iframe', 'src', ...args);
