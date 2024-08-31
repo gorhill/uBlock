@@ -1,3 +1,4 @@
+- [Fix `prevent-window-open` for when logger is open](https://github.com/gorhill/uBlock/commit/f552f655cb)
 - [Improve `prevent-window-open` scriptlet](https://github.com/gorhill/uBlock/commit/7f11d6216e)
 - [Improve `trusted-replace-outbound-text` scriptlet](https://github.com/gorhill/uBlock/commit/0dcb985601)
 - [Improve `prevent-xhr` scriptlet](https://github.com/gorhill/uBlock/commit/3a249f395c)
