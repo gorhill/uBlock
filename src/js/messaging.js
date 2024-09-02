@@ -19,42 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* globals browser */
-
-'use strict';
-
-/******************************************************************************/
-
-import publicSuffixList from '../lib/publicsuffixlist/publicsuffixlist.js';
-import punycode from '../lib/punycode.js';
-
-import { filteringBehaviorChanged } from './broadcast.js';
-import cacheStorage from './cachestorage.js';
-import cosmeticFilteringEngine from './cosmetic-filtering.js';
-import htmlFilteringEngine from './html-filtering.js';
-import logger from './logger.js';
-import lz4Codec from './lz4.js';
-import io from './assets.js';
-import scriptletFilteringEngine from './scriptlet-filtering.js';
-import staticFilteringReverseLookup from './reverselookup.js';
-import staticNetFilteringEngine from './static-net-filtering.js';
-import µb from './background.js';
-import webRequest from './traffic.js';
-import { denseBase64 } from './base64-custom.js';
-import { dnrRulesetFromRawLists } from './static-dnr-filtering.js';
-import { i18n$ } from './i18n.js';
-import { redirectEngine } from './redirect-engine.js';
-import * as sfp from './static-filtering-parser.js';
 import * as s14e from './s14e-serializer.js';
-
-import {
-    permanentFirewall,
-    sessionFirewall,
-    permanentSwitches,
-    sessionSwitches,
-    permanentURLFiltering,
-    sessionURLFiltering,
-} from './filtering-engines.js';
+import * as sfp from './static-filtering-parser.js';
 
 import {
     domainFromHostname,
@@ -64,7 +30,38 @@ import {
     isNetworkURI,
 } from './uri-utils.js';
 
+import {
+    permanentFirewall,
+    permanentSwitches,
+    permanentURLFiltering,
+    sessionFirewall,
+    sessionSwitches,
+    sessionURLFiltering,
+} from './filtering-engines.js';
+
+import cacheStorage from './cachestorage.js';
+import cosmeticFilteringEngine from './cosmetic-filtering.js';
+import { denseBase64 } from './base64-custom.js';
+import { dnrRulesetFromRawLists } from './static-dnr-filtering.js';
+import { filteringBehaviorChanged } from './broadcast.js';
+import htmlFilteringEngine from './html-filtering.js';
+import { i18n$ } from './i18n.js';
+import io from './assets.js';
+import logger from './logger.js';
+import lz4Codec from './lz4.js';
+import publicSuffixList from '../lib/publicsuffixlist/publicsuffixlist.js';
+import punycode from '../lib/punycode.js';
+import { redirectEngine } from './redirect-engine.js';
+import scriptletFilteringEngine from './scriptlet-filtering.js';
+import staticFilteringReverseLookup from './reverselookup.js';
+import staticNetFilteringEngine from './static-net-filtering.js';
+import webRequest from './traffic.js';
+import µb from './background.js';
+
 /******************************************************************************/
+
+const hasOwnProperty = (o, p) =>
+    Object.prototype.hasOwnProperty.call(o, p);
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/710
 //   Listeners have a name and a "privileged" status.
@@ -807,7 +804,7 @@ const onMessage = function(request, sender, callback) {
         });
         break;
 
-    case 'shouldRenderNoscriptTags':
+    case 'shouldRenderNoscriptTags': {
         if ( pageStore === null ) { break; }
         const fctxt = µb.filteringContext.fromTabId(sender.tabId);
         if ( pageStore.filterScripting(fctxt, undefined) ) {
@@ -818,7 +815,7 @@ const onMessage = function(request, sender, callback) {
             });
         }
         break;
-
+    }
     case 'retrieveGenericCosmeticSelectors':
         request.tabId = sender.tabId;
         request.frameId = sender.frameId;
@@ -1098,7 +1095,7 @@ const restoreUserData = async function(request) {
     // Discard unknown setting or setting with default value.
     for ( const key in hiddenSettings ) {
         if (
-            µb.hiddenSettingsDefault.hasOwnProperty(key) === false ||
+            hasOwnProperty(µb.hiddenSettingsDefault, key) === false ||
             hiddenSettings[key] === µb.hiddenSettingsDefault[key]
         ) {
             delete hiddenSettings[key];
@@ -1128,7 +1125,7 @@ const restoreUserData = async function(request) {
     });
     µb.saveUserFilters(userData.userFilters);
     if ( Array.isArray(userData.selectedFilterLists) ) {
-         await µb.saveSelectedFilterLists(userData.selectedFilterLists);
+        await µb.saveSelectedFilterLists(userData.selectedFilterLists);
     }
 
     vAPI.app.restart();
@@ -1150,7 +1147,7 @@ const resetUserData = async function() {
 // Filter lists
 const prepListEntries = function(entries) {
     for ( const k in entries ) {
-        if ( entries.hasOwnProperty(k) === false ) { continue; }
+        if ( hasOwnProperty(entries, k) === false ) { continue; }
         const entry = entries[k];
         if ( typeof entry.supportURL === 'string' && entry.supportURL !== '' ) {
             entry.supportName = hostnameFromURI(entry.supportURL);
@@ -1338,7 +1335,7 @@ const getSupportData = async function() {
     let addedListset = {};
     let removedListset = {};
     for ( const listKey in lists ) {
-        if ( lists.hasOwnProperty(listKey) === false ) { continue; }
+        if ( hasOwnProperty(lists, listKey) === false ) { continue; }
         const list = lists[listKey];
         if ( list.content !== 'filters' ) { continue; }
         const used = µb.selectedFilterLists.includes(listKey);
@@ -1755,7 +1752,7 @@ const onMessage = (request, sender, callback) => {
     // Sync
     let response;
     switch ( request.what ) {
-    case 'getInspectorArgs':
+    case 'getInspectorArgs': {
         const bc = new globalThis.BroadcastChannel('contentInspectorChannel');
         bc.postMessage({
             what: 'contentInspectorChannel',
@@ -1768,6 +1765,7 @@ const onMessage = (request, sender, callback) => {
             ),
         };
         break;
+    }
     default:
         return vAPI.messaging.UNHANDLED;
     }
@@ -2004,6 +2002,12 @@ const onMessage = function(request, sender, callback) {
         response = staticNetFilteringEngine.dump();
         break;
 
+    case 'snfeQuery':
+        response = staticNetFilteringEngine.test(
+            Object.assign({ redirectEngine }, request.query)
+        );
+        break;
+
     case 'cfeDump':
         response = cosmeticFilteringEngine.dump();
         break;
@@ -2181,7 +2185,7 @@ const onMessage = function(request, sender, callback) {
         }
         break;
 
-    case 'subscribeTo':
+    case 'subscribeTo': {
         // https://github.com/uBlockOrigin/uBlock-issues/issues/1797
         if ( /^(file|https?):\/\//.test(request.location) === false ) { break; }
         const url = encodeURIComponent(request.location);
@@ -2194,8 +2198,8 @@ const onMessage = function(request, sender, callback) {
             select: true,
         });
         break;
-
-    case 'updateLists':
+    }
+    case 'updateLists': {
         const listkeys = request.listkeys.split(',').filter(s => s !== '');
         if ( listkeys.length === 0 ) { return; }
         if ( listkeys.includes('all') ) {
@@ -2211,7 +2215,7 @@ const onMessage = function(request, sender, callback) {
         });
         µb.scheduleAssetUpdater({ now: true, fetchDelay: 100, auto: request.auto });
         break;
-
+    }
     default:
         return vAPI.messaging.UNHANDLED;
     }

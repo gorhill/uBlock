@@ -21,8 +21,6 @@
 
 /* global CodeMirror, uBlockDashboard */
 
-'use strict';
-
 import { dom, qs$ } from './dom.js';
 
 /******************************************************************************/
@@ -209,6 +207,47 @@ vAPI.messaging.send('dashboard', {
             dom.attr(button, 'disabled', null);
         });
     });
+});
+
+/******************************************************************************/
+
+async function snfeQuery(lineNo, query) {
+    const doc = cmEditor.getDoc();
+    const lineHandle = doc.getLineHandle(lineNo)
+    const result = await vAPI.messaging.send('devTools', {
+        what: 'snfeQuery',
+        query
+    });
+    if ( typeof result !== 'string' ) { return; }
+    cmEditor.startOperation();
+    const nextLineNo = doc.getLineNumber(lineHandle) + 1;
+    doc.replaceRange(`${result}\n`, { line: nextLineNo, ch: 0 });
+    cmEditor.endOperation();
+}
+
+cmEditor.on('beforeChange', (cm, details) => {
+    if ( details.origin !== '+input' ) { return; }
+    if ( details.text.length !== 2 ) { return; }
+    if ( details.text[1] !== '' ) { return; }
+    const lineNo = details.from.line;
+    const line = cm.getLine(lineNo);
+    if ( details.from.ch !== line.length ) { return; }
+    if ( line.startsWith('snfe?') === false ) { return; }
+    const fields = line.slice(5).split(/\s+/);
+    const query = {};
+    for ( const field of fields ) {
+        if ( /[/.]/.test(field) ) {
+            if ( query.url === undefined ) {
+                query.url = field;
+            } else if ( query.from === undefined ) {
+                query.from = field;
+            }
+        } else if ( query.type === undefined ) {
+            query.type = field;
+        }
+    }
+    if ( query.url === undefined ) { return; }
+    snfeQuery(lineNo, query);
 });
 
 /******************************************************************************/

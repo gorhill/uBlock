@@ -12,6 +12,7 @@ rules:
       - error
       - 4
       - ignoredNodes:
+        - Program > BlockStatement
         - Program > IfStatement > BlockStatement
         - Program > ExpressionStatement > CallExpression > ArrowFunctionExpression > BlockStatement
         - Program > ExpressionStatement > CallExpression > FunctionExpression > BlockStatement

@@ -5384,17 +5384,70 @@ StaticNetFilteringEngine.prototype.enableWASM = function(wasmModuleFetcher, path
 
 /******************************************************************************/
 
-StaticNetFilteringEngine.prototype.test = async function(docURL, type, url) {
+StaticNetFilteringEngine.prototype.test = function(details) {
+    const { url, type, from, redirectEngine } = details;
+    if ( url === undefined ) { return; }
     const fctxt = new FilteringContext();
-    fctxt.setDocOriginFromURL(docURL);
-    fctxt.setType(type);
     fctxt.setURL(url);
+    fctxt.setType(type || '');
+    fctxt.setDocOriginFromURL(from || '');
     const r = this.matchRequest(fctxt);
-    console.info(`${r}`);
-    if ( r !== 0 ) {
-        console.info(this.toLogData());
+    const out = [ `url: ${url}` ];
+    if ( type ) {
+        out.push(`type: ${type}`);
     }
-};
+    if ( from ) {
+        out.push(`context: ${from}`);
+    }
+    if ( r !== 0 ) {
+        const logdata = this.toLogData();
+        if ( r === 1 ) {
+            out.push(`blocked: ${logdata.raw}`);
+        } else if ( r === 2 ) {
+            out.push(`unblocked: ${logdata.raw}`);
+        }
+    } else {
+        out.push('not blocked');
+    }
+    if ( r !== 1 ) {
+        const entries = this.transformRequest(fctxt);
+        if ( entries ) {
+            for ( const entry of entries ) {
+                out.push(`modified: ${entry.logData().raw}`);
+            }
+        }
+        if ( fctxt.redirectURL !== undefined && this.hasQuery(fctxt) ) {
+            const entries = this.filterQuery(fctxt, 'removeparam');
+            if ( entries ) {
+                for ( const entry of entries ) {
+                    out.push(`modified: ${entry.logData().raw}`);
+                }
+            }
+        }
+        if ( fctxt.type === 'main_frame' || fctxt.type === 'sub_frame' ) {
+            const csps = this.matchAndFetchModifiers(fctxt, 'csp');
+            if ( csps ) {
+                for ( const csp of csps ) {
+                    out.push(`modified: ${csp.logData().raw}`);
+                }
+            }
+            const pps = this.matchAndFetchModifiers(fctxt, 'permissions');
+            if ( pps ) {
+                for ( const pp of pps ) {
+                    out.push(`modified: ${pp.logData().raw}`);
+                }
+            }
+        }
+    } else if ( redirectEngine ) {
+        const redirects = this.redirectRequest(redirectEngine, fctxt);
+        if ( redirects ) {
+            for ( const redirect of redirects ) {
+                out.push(`modified: ${redirect.logData().raw}`);
+            }
+        }
+    }
+    return out.join('\n');
+}
 
 /******************************************************************************/
 
