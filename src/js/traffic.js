@@ -680,6 +680,7 @@ const bodyFilterer = (( ) => {
     const sessions = new Map();
     const reContentTypeCharset = /charset=['"]?([^'" ]+)/i;
     const otherValidMimes = new Set([
+        'application/dash+xml',
         'application/javascript',
         'application/json',
         'application/mpegurl',
