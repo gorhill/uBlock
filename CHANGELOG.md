@@ -1,3 +1,5 @@
+- [Improve `xml-prune` scriptlet](https://github.com/gorhill/uBlock/commit/c8307f58a3)
+- [Add support for `application/dash+xml` in `replace=` option](https://github.com/gorhill/uBlock/commit/91125d29cf)
 - [Add ability to directly evaluate static network filtering engine](https://github.com/gorhill/uBlock/commit/b7ed3b45ed)
 - [Fix `prevent-window-open` for when logger is open](https://github.com/gorhill/uBlock/commit/f552f655cb)
 - [Improve `prevent-window-open` scriptlet](https://github.com/gorhill/uBlock/commit/7f11d6216e)
