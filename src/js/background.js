@@ -346,7 +346,7 @@ const µBlock = {  // jshint ignore:line
             this.setDocOrigin(origin).setTabOrigin(origin);
             return this;
         }
-        const origin = (this.itype & this.FRAME_ANY) !== 0
+        const origin = this.isDocument()
             ? originFromURI(this.url)
             : this.tabOrigin;
         this.setDocOrigin(origin).setTabOrigin(origin);
