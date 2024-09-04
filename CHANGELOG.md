@@ -1,3 +1,5 @@
+- [Improve `prevent-fetch` scriptlet](https://github.com/gorhill/uBlock/commit/e8202af11d)
+- [Apply CSP/PP injections to `object` resources](https://github.com/gorhill/uBlock/commit/89f02098fd)
 - [Improve `xml-prune` scriptlet](https://github.com/gorhill/uBlock/commit/c8307f58a3)
 - [Add support for `application/dash+xml` in `replace=` option](https://github.com/gorhill/uBlock/commit/91125d29cf)
 - [Add ability to directly evaluate static network filtering engine](https://github.com/gorhill/uBlock/commit/b7ed3b45ed)
