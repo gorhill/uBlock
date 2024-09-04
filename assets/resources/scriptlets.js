@@ -97,7 +97,7 @@ function safeSelf() {
         },
         initPattern(pattern, options = {}) {
             if ( pattern === '' ) {
-                return { matchAll: true };
+                return { matchAll: true, expect: true };
             }
             const expect = (options.canNegate !== true || pattern.startsWith('!') === false);
             if ( expect === false ) {
@@ -2151,7 +2151,7 @@ function noFetchIf(
             key = 'url';
             value = condition;
         }
-        needles.push({ key, re: safe.patternToRegex(value) });
+        needles.push({ key, pattern: safe.initPattern(value, { canNegate: true }) });
     }
     const validResponseProps = {
         ok: [ false, true ],
@@ -2180,6 +2180,9 @@ function noFetchIf(
             const details = args[0] instanceof self.Request
                 ? args[0]
                 : Object.assign({ url: args[0] }, args[1]);
+            if ( safe.logLevel > 1 ) {
+                safe.uboLog(logPrefix, `apply:\n\t${Object.entries(details).map(a => `${a[0]}: ${a[1]}`).join('\n\t')}`);
+            }
             let proceed = true;
             try {
                 const props = new Map();
@@ -2198,10 +2201,10 @@ function noFetchIf(
                     return Reflect.apply(target, thisArg, args);
                 }
                 proceed = needles.length === 0;
-                for ( const { key, re } of needles ) {
+                for ( const { key, pattern } of needles ) {
                     if (
-                        props.has(key) === false ||
-                        re.test(props.get(key)) === false
+                        pattern.expect && props.has(key) === false ||
+                        safe.testPattern(pattern, props.get(key)) === false
                     ) {
                         proceed = true;
                         break;
