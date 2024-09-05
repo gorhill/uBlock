@@ -622,9 +622,13 @@
 		"group": "regions",
 		"off": true,
 		"title": "🇭🇷hr 🇷🇸rs: Dandelion Sprout's Serbo-Croatian filters",
-		"tags": "ads croatian serbian",
-		"lang": "hr sr",
-		"contentURL": "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/SerboCroatianList.txt",
+		"tags": "ads croatian serbian bosnian",
+		"lang": "bs hr sr",
+		"contentURL": [
+			"https://raw.githubusercontent.com/DandelionSprout/adfilt/master/SerboCroatianList.txt",
+			"https://cdn.jsdelivr.net/gh/DandelionSprout/adfilt@master/SerboCroatianList.txt",
+			"https://cdn.statically.io/gl/DandelionSprout/adfilt/master/SerboCroatianList.txt"
+		],
 		"supportURL": "https://github.com/DandelionSprout/adfilt#readme"
 	},
 	"HUN-0": {
@@ -778,9 +782,7 @@
 		"tags": "ads norwegian danish icelandic",
 		"lang": "nb nn no da is",
 		"contentURL": [
-			"https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianList.txt"
-		],
-		"cdnURLs": [
+			"https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianList.txt",
 			"https://cdn.jsdelivr.net/gh/DandelionSprout/adfilt@master/NorwegianList.txt",
 			"https://cdn.statically.io/gl/DandelionSprout/adfilt/master/NorwegianList.txt"
 		],
