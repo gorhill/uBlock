@@ -2129,6 +2129,7 @@ builtinScriptlets.push({
     fn: noFetchIf,
     dependencies: [
         'generate-content.fn',
+        'proxy-apply.fn',
         'safe-self.fn',
     ],
 });
@@ -2175,61 +2176,58 @@ function noFetchIf(
             responseProps.type = { value: responseType };
         }
     }
-    self.fetch = new Proxy(self.fetch, {
-        apply: function(target, thisArg, args) {
-            const details = args[0] instanceof self.Request
-                ? args[0]
-                : Object.assign({ url: args[0] }, args[1]);
-            if ( safe.logLevel > 1 ) {
-                safe.uboLog(logPrefix, `apply:\n\t${Object.entries(details).map(a => `${a[0]}: ${a[1]}`).join('\n\t')}`);
+    proxyApplyFn('fetch', function fetch(target, thisArg, args) {
+        const details = args[0] instanceof self.Request
+            ? args[0]
+            : Object.assign({ url: args[0] }, args[1]);
+        let proceed = true;
+        try {
+            const props = new Map();
+            for ( const prop in details ) {
+                let v = details[prop];
+                if ( typeof v !== 'string' ) {
+                    try { v = safe.JSON_stringify(v); }
+                    catch(ex) { }
+                }
+                if ( typeof v !== 'string' ) { continue; }
+                props.set(prop, v);
             }
-            let proceed = true;
-            try {
-                const props = new Map();
-                for ( const prop in details ) {
-                    let v = details[prop];
-                    if ( typeof v !== 'string' ) {
-                        try { v = safe.JSON_stringify(v); }
-                        catch(ex) { }
-                    }
-                    if ( typeof v !== 'string' ) { continue; }
-                    props.set(prop, v);
-                }
-                if ( propsToMatch === '' && responseBody === '' ) {
-                    const out = Array.from(props).map(a => `${a[0]}:${a[1]}`);
-                    safe.uboLog(logPrefix, `Called: ${out.join('\n')}`);
-                    return Reflect.apply(target, thisArg, args);
-                }
-                proceed = needles.length === 0;
-                for ( const { key, pattern } of needles ) {
-                    if (
-                        pattern.expect && props.has(key) === false ||
-                        safe.testPattern(pattern, props.get(key)) === false
-                    ) {
-                        proceed = true;
-                        break;
-                    }
-                }
-            } catch(ex) {
+            if ( safe.logLevel > 1 || propsToMatch === '' && responseBody === '' ) {
+                const out = Array.from(props).map(a => `${a[0]}:${a[1]}`);
+                safe.uboLog(logPrefix, `Called: ${out.join('\n')}`);
             }
-            if ( proceed ) {
+            if ( propsToMatch === '' && responseBody === '' ) {
                 return Reflect.apply(target, thisArg, args);
             }
-            return generateContentFn(responseBody).then(text => {
-                safe.uboLog(logPrefix, `Prevented with response "${text}"`);
-                const response = new Response(text, {
-                    headers: {
-                        'Content-Length': text.length,
-                    }
-                });
-                const props = Object.assign(
-                    { url: { value: details.url } },
-                    responseProps
-                );
-                safe.Object_defineProperties(response, props);
-                return response;
-            });
+            proceed = needles.length === 0;
+            for ( const { key, pattern } of needles ) {
+                if (
+                    pattern.expect && props.has(key) === false ||
+                    safe.testPattern(pattern, props.get(key)) === false
+                ) {
+                    proceed = true;
+                    break;
+                }
+            }
+        } catch(ex) {
         }
+        if ( proceed ) {
+            return Reflect.apply(target, thisArg, args);
+        }
+        return generateContentFn(responseBody).then(text => {
+            safe.uboLog(logPrefix, `Prevented with response "${text}"`);
+            const response = new Response(text, {
+                headers: {
+                    'Content-Length': text.length,
+                }
+            });
+            const props = Object.assign(
+                { url: { value: details.url } },
+                responseProps
+            );
+            safe.Object_defineProperties(response, props);
+            return response;
+        });
     });
 }
 
