@@ -386,8 +386,17 @@ async function start() {
     }
 }
 
+// https://github.com/uBlockOrigin/uBOL-home/issues/199
+// Force a restart of the extension once when an "internal error" occurs
 try {
     start();
+    localWrite({ goodStart: true });
 } catch(reason) {
     console.trace(reason);
+    localRead.get('goodStart').then((bin = {}) => {
+        if ( bin.goodStart !== true ) { return; }
+        localWrite({ goodStart: false }).then(( ) => {
+            runtime.reload();
+        });
+    });
 }
