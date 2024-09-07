@@ -958,6 +958,7 @@ vAPI.messaging = {
 
     onPortDisconnect: function(port) {
         this.ports.delete(port.name);
+        void browser.runtime.lastError;
     },
 
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/Port
