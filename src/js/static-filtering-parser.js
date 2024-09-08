@@ -195,6 +195,7 @@ export const NODE_TYPE_NET_OPTION_NAME_XHR          = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_WEBRTC       = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_WEBSOCKET    = iota++;
 export const NODE_TYPE_NET_OPTION_ASSIGN            = iota++;
+export const NODE_TYPE_NET_OPTION_QUOTE             = iota++;
 export const NODE_TYPE_NET_OPTION_VALUE             = iota++;
 export const NODE_TYPE_OPTION_VALUE_DOMAIN_LIST     = iota++;
 export const NODE_TYPE_OPTION_VALUE_DOMAIN_RAW      = iota++;
@@ -896,7 +897,9 @@ export class AstFilterParser {
         this.reGoodRegexToken = /[^\x01%0-9A-Za-z][%0-9A-Za-z]{7,}|[^\x01%0-9A-Za-z][%0-9A-Za-z]{1,6}[^\x01%0-9A-Za-z]/;
         this.reBadCSP = /(?:^|[;,])\s*report-(?:to|uri)\b/i;
         this.reBadPP = /(?:^|[;,])\s*report-to\b/i;
+        this.reNetOption = /^(~?)([13a-z_-]+)(=?)/;
         this.reNoopOption = /^_+$/;
+        this.netOptionValueParser = new ArgListParser(',');
         this.scriptletArgListParser = new ArgListParser(',');
     }
 
@@ -1959,16 +1962,17 @@ export class AstFilterParser {
         const head = this.allocHeadNode();
         let prev = head, next = 0;
         let optionBeg = 0, optionEnd = 0;
-        let emptyOption = false, badComma = false;
         while ( optionBeg !== optionsEnd ) {
-            optionEnd = this.endOfNetOption(s, optionBeg);
             next = this.allocTypedNode(
                 NODE_TYPE_NET_OPTION_RAW,
                 parentBeg + optionBeg,
-                parentBeg + optionEnd
+                parentBeg + optionsEnd // open ended
             );
-            emptyOption = optionEnd === optionBeg;
-            this.linkDown(next, this.parseNetOption(next));
+            const { node: down, len: optionLen } = this.parseNetOption(next);
+            // set next's end to down's end
+            optionEnd += optionLen;
+            this.nodes[next+NODE_END_INDEX] = parentBeg + optionEnd;
+            this.linkDown(next, down);
             prev = this.linkRight(prev, next);
             if ( optionEnd === optionsEnd ) { break; }
             optionBeg = optionEnd + 1;
@@ -1977,12 +1981,12 @@ export class AstFilterParser {
                 parentBeg + optionEnd,
                 parentBeg + optionBeg
             );
-            badComma = optionBeg === optionsEnd;
-            prev = this.linkRight(prev, next);
-            if ( emptyOption || badComma ) {
+            if ( optionLen === 0 || optionBeg === optionsEnd ) {
                 this.addNodeFlags(next, NODE_FLAG_ERROR);
                 this.addFlags(AST_FLAG_HAS_ERROR);
             }
+            prev = this.linkRight(prev, next);
+            optionEnd = optionBeg;
         }
         this.linkRight(prev,
             this.allocSentinelNode(NODE_TYPE_NET_OPTION_SENTINEL, parentEnd)
@@ -1990,19 +1994,21 @@ export class AstFilterParser {
         return this.throwHeadNode(head);
     }
 
-    endOfNetOption(s, beg) {
-        const match = this.reNetOptionComma.exec(s.slice(beg));
-        return match !== null ? beg + match.index : s.length;
-    }
-
     parseNetOption(parent) {
         const parentBeg = this.nodes[parent+NODE_BEG_INDEX];
         const s = this.getNodeString(parent);
-        const optionEnd = s.length;
+        const match = this.reNetOption.exec(s) || [];
+        if ( match.length === 0 ) {
+            this.addNodeFlags(parent, NODE_FLAG_ERROR);
+            this.addFlags(AST_FLAG_HAS_ERROR);
+            this.astError = AST_ERROR_OPTION_UNKNOWN;
+            return { node: 0, len: s.length };
+        }
         const head = this.allocHeadNode();
         let prev = head, next = 0;
-        let nameBeg = 0;
-        if ( s.charCodeAt(0) === 0x7E ) {
+        const matchEnd = match && match[0].length || 0;
+        const negated = match[1] === '~';
+        if ( negated ) {
             this.addNodeFlags(parent, NODE_FLAG_IS_NEGATED);
             next = this.allocTypedNode(
                 NODE_TYPE_NET_OPTION_NAME_NOT,
@@ -2010,11 +2016,11 @@ export class AstFilterParser {
                 parentBeg+1
             );
             prev = this.linkRight(prev, next);
-            nameBeg += 1;
         }
-        const equalPos = s.indexOf('=');
-        const nameEnd = equalPos !== -1 ? equalPos : s.length;
-        const name = s.slice(nameBeg, nameEnd);
+        const nameBeg = negated ? 1 : 0;
+        const assigned = match[3] === '=';
+        const nameEnd = matchEnd - (assigned ? 1 : 0);
+        const name = match[2] || '';
         let nodeOptionType = nodeTypeFromOptionName.get(name);
         if ( nodeOptionType === undefined ) {
             nodeOptionType = this.reNoopOption.test(name)
@@ -2037,27 +2043,43 @@ export class AstFilterParser {
             this.addNodeToRegister(nodeOptionType, parent);
         }
         prev = this.linkRight(prev, next);
-        if ( equalPos === -1 ) {
-            return this.throwHeadNode(head);
+        if ( assigned === false ) {
+            return { node: this.throwHeadNode(head), len: matchEnd };
         }
-        const valueBeg = equalPos + 1;
         next = this.allocTypedNode(
             NODE_TYPE_NET_OPTION_ASSIGN,
-            parentBeg + equalPos,
-            parentBeg + valueBeg
+            parentBeg + matchEnd - 1,
+            parentBeg + matchEnd
         );
         prev = this.linkRight(prev, next);
-        if ( (equalPos+1) === optionEnd ) {
-            this.addNodeFlags(parent, NODE_FLAG_ERROR);
-            this.addFlags(AST_FLAG_HAS_ERROR);
-            return this.throwHeadNode(head);
-        }
         this.addNodeFlags(parent, NODE_FLAG_OPTION_HAS_VALUE);
+        const details = this.netOptionValueParser.nextArg(s, matchEnd);
+        if ( details.quoteBeg !== details.argBeg ) {
+            next = this.allocTypedNode(
+                NODE_TYPE_NET_OPTION_QUOTE,
+                parentBeg + details.quoteBeg,
+                parentBeg + details.argBeg
+            );
+            prev = this.linkRight(prev, next);
+        } else {
+            const argEnd = this.endOfNetOption(s, matchEnd);
+            if ( argEnd !== details.argEnd ) {
+                details.argEnd = details.quoteEnd = argEnd;
+            }
+        }
         next = this.allocTypedNode(
             NODE_TYPE_NET_OPTION_VALUE,
-            parentBeg + valueBeg,
-            parentBeg + optionEnd
+            parentBeg + details.argBeg,
+            parentBeg + details.argEnd
         );
+        if ( details.argBeg === details.argEnd ) {
+            this.addNodeFlags(parent, NODE_FLAG_ERROR);
+            this.addFlags(AST_FLAG_HAS_ERROR);
+            this.astError = AST_ERROR_OPTION_BADVALUE;
+        } else if ( details.transform ) {
+            const arg = s.slice(details.argBeg, details.argEnd);
+            this.setNodeTransform(next, this.netOptionValueParser.normalizeArg(arg));
+        }
         switch ( nodeOptionType ) {
         case NODE_TYPE_NET_OPTION_NAME_DENYALLOW:
             this.linkDown(next, this.parseDomainList(next, '|'), 0b00000);
@@ -2069,8 +2091,21 @@ export class AstFilterParser {
         default:
             break;
         }
-        this.linkRight(prev, next);
-        return this.throwHeadNode(head);
+        prev = this.linkRight(prev, next);
+        if ( details.quoteEnd !== details.argEnd ) {
+            next = this.allocTypedNode(
+                NODE_TYPE_NET_OPTION_QUOTE,
+                parentBeg + details.argEnd,
+                parentBeg + details.quoteEnd
+            );
+            this.linkRight(prev, next);
+        }
+        return { node: this.throwHeadNode(head), len: details.quoteEnd };
+    }
+
+    endOfNetOption(s, beg) {
+        const match = this.reNetOptionComma.exec(s.slice(beg));
+        return match !== null ? beg + match.index : s.length;
     }
 
     getNetOptionValue(type) {
@@ -3086,8 +3121,8 @@ export const netOptionTokenDescriptors = new Map([
     /* synonym */ [ 'rewrite', { mustAssign: true } ],
     [ 'redirect-rule', { mustAssign: true } ],
     [ 'removeparam', { } ],
-    [ 'replace', { mustAssign: true } ],
     /* synonym */ [ 'queryprune', { } ],
+    [ 'replace', { mustAssign: true } ],
     [ 'script', { canNegate: true } ],
     [ 'shide', { } ],
     /* synonym */ [ 'specifichide', { } ],

@@ -409,6 +409,14 @@ class LogData {
     isPureHostname() {
         return this.tokenHash === DOT_TOKEN_HASH;
     }
+
+    static requote(s) {
+        if ( /^(["'`]).+\1$|,/.test(s) === false ) { return s; }
+        if ( s.includes("'") === false ) { return `'${s}'`; }
+        if ( s.includes('"') === false ) { return `"${s}"`; }
+        if ( s.includes('`') === false ) { return `\`${s}\``; }
+        return `'${s.replace(/'/g, "\\'")}'`;
+    }
 }
 
 /******************************************************************************/
@@ -2128,7 +2136,7 @@ class FilterModifier {
         let opt = modifierNameFromType.get(filterData[idata+2]);
         const refs = filterRefs[filterData[idata+3]];
         if ( refs.value !== '' ) {
-            opt += `=${refs.value}`;
+            opt += `=${LogData.requote(refs.value)}`;
         }
         details.options.push(opt);
     }
@@ -2947,7 +2955,7 @@ class FilterOnHeaders {
         const headerOpt = filterRefs[irefs].headerOpt;
         let opt = 'header';
         if ( headerOpt !== '' ) {
-            opt += `=${headerOpt}`;
+            opt += `=${LogData.requote(headerOpt)}`;
         }
         details.options.push(opt);
     }

@@ -189,6 +189,7 @@ const uBOStaticFilteringMode = (( ) => {
             mode.lastNetOptionType = nodeType;
             return 'def';
         case sfp.NODE_TYPE_NET_OPTION_ASSIGN:
+        case sfp.NODE_TYPE_NET_OPTION_QUOTE:
             return 'def';
         case sfp.NODE_TYPE_NET_OPTION_VALUE:
             if ( mode.astWalker.canGoDown() ) { break; }
