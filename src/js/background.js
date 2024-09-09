@@ -307,6 +307,7 @@ const µBlock = {  // jshint ignore:line
         this.setMethod(details.method);
         this.setURL(details.url);
         this.aliasURL = details.aliasURL || undefined;
+        this.ipaddress = details.ip || undefined;
         this.redirectURL = undefined;
         this.filter = undefined;
         if ( this.itype !== this.SUB_FRAME ) {

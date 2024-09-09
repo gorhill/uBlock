@@ -242,6 +242,7 @@ let $requestTypeValue = 0;
 let $requestURL = '';
 let $requestURLRaw = '';
 let $requestHostname = '';
+let $requestAddress = '';
 let $docHostname = '';
 let $docDomain = '';
 let $tokenBeg = 0;
@@ -702,6 +703,8 @@ const dnrAddRuleWarning = (rule, msg) => {
         FilterNotType
         FilterStrictParty
         FilterModifier
+        FilterOnHeaders
+        FilterIPAddress
 
     Collection:
         FilterCollection
@@ -1234,7 +1237,7 @@ class FilterRegex {
         return [
             FilterRegex.fid,
             details.pattern,
-            details.patternMatchCase ? 1 : 0
+            details.optionValues.has('match-case') ? 1 : 0,
         ];
     }
 
@@ -2075,7 +2078,7 @@ const compileToDomainOpt = (...args) => {
 
 class FilterDenyAllow extends FilterToDomainMissSet {
     static compile(details) {
-        return super.compile(details.denyallowOpt, 0b01);
+        return super.compile(details.optionValues.get('denyallow'), 0b01);
     }
 
     static logData(idata, details) {
@@ -2937,12 +2940,12 @@ class FilterOnHeaders {
     }
 
     static compile(details) {
-        return [ FilterOnHeaders.fid, details.headerOpt ];
+        return [ FilterOnHeaders.fid, details.optionValues.get('header') ];
     }
 
     static fromCompiled(args) {
         return filterDataAlloc(
-            args[0],                // fid
+            args[0], // fid
             filterRefAdd({
                 headerOpt: args[1],
                 $parsed: null,
@@ -2962,6 +2965,41 @@ class FilterOnHeaders {
 }
 
 registerFilterClass(FilterOnHeaders);
+
+/******************************************************************************/
+
+class FilterIPAddress {
+    static match(idata) {
+        const details = filterRefs[filterData[idata+1]];
+        if ( details.isRegex === false ) {
+            return $requestAddress === details.pattern;
+        }
+        if ( details.$re === undefined ) {
+            details.$re = new RegExp(details.pattern.slice(1, -1));
+        }
+        return details.$re.test($requestAddress);
+    }
+
+    static compile(details) {
+        return [ FilterIPAddress.fid, details.optionValues.get('ipaddress') ];
+    }
+
+    static fromCompiled(args) {
+        const pattern = args[1];
+        const details = {
+            pattern,
+            isRegex: pattern.startsWith('/') && pattern.endsWith('/'),
+        };
+        return filterDataAlloc(args[0], filterRefAdd(details));
+    }
+
+    static logData(idata, details) {
+        const irefs = filterData[idata+1];
+        details.options.push(`ipaddress=${LogData.requote(filterRefs[irefs].pattern)}`);
+    }
+}
+
+registerFilterClass(FilterIPAddress);
 
 /******************************************************************************/
 /******************************************************************************/
@@ -3146,8 +3184,7 @@ class FilterCompiler {
             return Object.assign(this, other);
         }
         this.reToken = /[%0-9A-Za-z]+/g;
-        this.fromDomainOptList = [];
-        this.toDomainOptList = [];
+        this.optionValues = new Map();
         this.tokenIdToNormalizedType = new Map([
             [ sfp.NODE_TYPE_NET_OPTION_NAME_CNAME, bitFromType('cname') ],
             [ sfp.NODE_TYPE_NET_OPTION_NAME_CSS, bitFromType('stylesheet') ],
@@ -3304,13 +3341,9 @@ class FilterCompiler {
         this.modifyType = undefined;
         this.modifyValue = undefined;
         this.pattern = '';
-        this.patternMatchCase = false;
         this.party = ANYPARTY_REALM;
         this.optionUnitBits = 0;
-        this.fromDomainOpt = '';
-        this.toDomainOpt = '';
-        this.denyallowOpt = '';
-        this.headerOpt = undefined;
+        this.optionValues.clear();
         this.isPureHostname = false;
         this.isGeneric = false;
         this.isRegex = false;
@@ -3322,8 +3355,7 @@ class FilterCompiler {
         this.notTypeBits = 0;
         this.methodBits = 0;
         this.notMethodBits = 0;
-        this.wildcardPos = -1;
-        this.caretPos = -1;
+        this.responseHeadersRealm = false;
         return this;
     }
 
@@ -3421,26 +3453,36 @@ class FilterCompiler {
         case sfp.NODE_TYPE_NET_OPTION_NAME_CSP:
             if ( this.processCspOption(parser.getNetOptionValue(id)) === false ) { return false; }
             break;
-        case sfp.NODE_TYPE_NET_OPTION_NAME_DENYALLOW:
-            this.denyallowOpt = this.processHostnameList(
-                parser.getNetFilterDenyallowOptionIterator(),
+        case sfp.NODE_TYPE_NET_OPTION_NAME_DENYALLOW: {
+            const value = this.processHostnameList(
+                parser.getNetFilterDenyallowOptionIterator()
             );
-            if ( this.denyallowOpt === '' ) { return false; }
+            if ( value === '' ) { return false; }
+            this.optionValues.set('denyallow', value);
             this.optionUnitBits |= DENYALLOW_BIT;
             break;
-        case sfp.NODE_TYPE_NET_OPTION_NAME_FROM:
-            this.fromDomainOpt = this.processHostnameList(
-                parser.getNetFilterFromOptionIterator(),
-                this.fromDomainOptList
-            );
-            if ( this.fromDomainOpt === '' ) { return false; }
+        }
+        case sfp.NODE_TYPE_NET_OPTION_NAME_FROM: {
+            const iter = parser.getNetFilterFromOptionIterator();
+            const list = [];
+            const value = this.processHostnameList(iter, list);
+            if ( value === '' ) { return false; }
+            this.optionValues.set('from', value);
+            this.optionValues.set('fromList', list);
             this.optionUnitBits |= FROM_BIT;
             break;
+        }
         case sfp.NODE_TYPE_NET_OPTION_NAME_HEADER: {
-            this.headerOpt = parser.getNetOptionValue(id) || '';
+            this.optionValues.set('header', parser.getNetOptionValue(id) || '');
             this.optionUnitBits |= HEADER_BIT;
+            this.responseHeadersRealm = true;
             break;
         }
+        case sfp.NODE_TYPE_NET_OPTION_NAME_IPADDRESS:
+            this.optionValues.set('ipaddress', parser.getNetOptionValue(id) || '');
+            this.optionUnitBits |= IPADDRESS_BIT;
+            this.responseHeadersRealm = true;
+            break;
         case sfp.NODE_TYPE_NET_OPTION_NAME_METHOD:
             this.processMethodOption(parser.getNetOptionValue(id));
             this.optionUnitBits |= METHOD_BIT;
@@ -3465,14 +3507,16 @@ class FilterCompiler {
             this.optionUnitBits |= MODIFY_BIT;
             break;
         }
-        case sfp.NODE_TYPE_NET_OPTION_NAME_TO:
-            this.toDomainOpt = this.processHostnameList(
-                parser.getNetFilterToOptionIterator(),
-                this.toDomainOptList
-            );
-            if ( this.toDomainOpt === '' ) { return false; }
+        case sfp.NODE_TYPE_NET_OPTION_NAME_TO: {
+            const iter = parser.getNetFilterToOptionIterator();
+            const list = [];
+            const value = this.processHostnameList(iter, list);
+            if ( value === '' ) { return false; }
+            this.optionValues.set('to', value);
+            this.optionValues.set('toList', list);
             this.optionUnitBits |= TO_BIT;
             break;
+        }
         default:
             break;
         }
@@ -3558,6 +3602,7 @@ class FilterCompiler {
             case sfp.NODE_TYPE_NET_OPTION_NAME_DENYALLOW:
             case sfp.NODE_TYPE_NET_OPTION_NAME_FROM:
             case sfp.NODE_TYPE_NET_OPTION_NAME_HEADER:
+            case sfp.NODE_TYPE_NET_OPTION_NAME_IPADDRESS:
             case sfp.NODE_TYPE_NET_OPTION_NAME_METHOD:
             case sfp.NODE_TYPE_NET_OPTION_NAME_PERMISSIONS:
             case sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECT:
@@ -3591,7 +3636,7 @@ class FilterCompiler {
                 this.action = BLOCKIMPORTANT_REALM;
                 break;
             case sfp.NODE_TYPE_NET_OPTION_NAME_MATCHCASE:
-                this.patternMatchCase = true;
+                this.optionValues.set('match-case', true);
                 break;
             case sfp.NODE_TYPE_NET_OPTION_NAME_MP4: {
                 const id = this.action === ALLOW_REALM
@@ -3659,11 +3704,6 @@ class FilterCompiler {
         // regex?
         if ( this.isRegex ) {
             return this.FILTER_OK;
-        }
-
-        if ( this.isGeneric ) {
-            this.wildcardPos = this.pattern.indexOf('*');
-            this.caretPos = this.pattern.indexOf('^');
         }
 
         if ( this.pattern.length > 1024 ) {
@@ -3793,7 +3833,7 @@ class FilterCompiler {
     isJustOrigin() {
         if ( this.optionUnitBits !== FROM_BIT ) { return false; }
         if ( this.isRegex ) { return false; }
-        if ( /[/~]/.test(this.fromDomainOpt) ) { return false; }
+        if ( /[/~]/.test(this.optionValues.get('from')) ) { return false; }
         if ( this.pattern === '*' ) { return true; }
         if ( this.anchor !== 0b010 ) { return false; }
         if ( /^(?:http[s*]?:(?:\/\/)?)$/.test(this.pattern) ) { return true; }
@@ -3870,7 +3910,7 @@ class FilterCompiler {
             } else /* 'http:' */ {
                 this.tokenHash = ANY_HTTP_TOKEN_HASH;
             }
-            for ( const hn of this.fromDomainOptList ) {
+            for ( const hn of this.optionValues.get('fromList') ) {
                 this.compileToAtomicFilter(hn, writer);
             }
             return;
@@ -3911,31 +3951,36 @@ class FilterCompiler {
         }
 
         // Origin
-        if ( this.fromDomainOpt !== '' ) {
+        if ( this.optionValues.has('from') ) {
             compileFromDomainOpt(
-                this.fromDomainOptList,
+                this.optionValues.get('fromList'),
                 units.length !== 0 && patternClass.isSlow === true,
                 units
             );
         }
 
         // Destination
-        if ( this.toDomainOpt !== '' ) {
+        if ( this.optionValues.has('to') ) {
             compileToDomainOpt(
-                this.toDomainOptList,
+                this.optionValues.get('toList'),
                 units.length !== 0 && patternClass.isSlow === true,
                 units
             );
         }
 
         // Deny-allow
-        if ( this.denyallowOpt !== '' ) {
+        if ( this.optionValues.has('denyallow') ) {
             units.push(FilterDenyAllow.compile(this));
         }
 
         // Header
-        if ( this.headerOpt !== undefined ) {
-            units.push(FilterOnHeaders.compile(this));
+        if ( this.responseHeadersRealm ) {
+            if ( this.optionValues.has('ipaddress') ) {
+                units.push(FilterIPAddress.compile(this));
+            }
+            if ( this.optionValues.has('header') ) {
+                units.push(FilterOnHeaders.compile(this));
+            }
             this.action |= HEADERS_REALM;
         }
 
@@ -3977,12 +4022,13 @@ class FilterCompiler {
             units.push(FilterPatternGeneric.compile(this));
             return FilterPatternGeneric;
         }
-        if ( this.wildcardPos === -1 ) {
-            if ( this.caretPos === -1 ) {
+        if ( this.pattern.includes('*') === false ) {
+            const caretPos = this.pattern.indexOf('^');
+            if ( caretPos === -1 ) {
                 units.push(FilterPatternPlain.compile(this));
                 return FilterPatternPlain;
             }
-            if ( this.caretPos === (this.pattern.length - 1) ) {
+            if ( caretPos === (this.pattern.length - 1) ) {
                 this.pattern = this.pattern.slice(0, -1);
                 units.push(FilterPatternPlain.compile(this));
                 units.push(FilterTrailingSeparator.compile());
@@ -4027,15 +4073,16 @@ class FilterCompiler {
 }
 
 // These are to quickly test whether a filter is composite
-const FROM_BIT         = 0b000000001;
-const TO_BIT           = 0b000000010;
-const DENYALLOW_BIT    = 0b000000100;
-const HEADER_BIT       = 0b000001000;
-const STRICT_PARTY_BIT = 0b000010000;
-const MODIFY_BIT       = 0b000100000;
-const NOT_TYPE_BIT     = 0b001000000;
-const IMPORTANT_BIT    = 0b010000000;
-const METHOD_BIT       = 0b100000000;
+const FROM_BIT         = 0b0000000001;
+const TO_BIT           = 0b0000000010;
+const DENYALLOW_BIT    = 0b0000000100;
+const HEADER_BIT       = 0b0000001000;
+const STRICT_PARTY_BIT = 0b0000010000;
+const MODIFY_BIT       = 0b0000100000;
+const NOT_TYPE_BIT     = 0b0001000000;
+const IMPORTANT_BIT    = 0b0010000000;
+const METHOD_BIT       = 0b0100000000;
+const IPADDRESS_BIT    = 0b1000000000;
 
 FilterCompiler.prototype.FILTER_OK          = 0;
 FilterCompiler.prototype.FILTER_INVALID     = 1;
@@ -4751,6 +4798,7 @@ StaticNetFilteringEngine.prototype.matchAndFetchModifiers = function(
     $requestHostname = fctxt.getHostname();
     $requestMethodBit = fctxt.method || 0;
     $requestTypeValue = (typeBits & TypeBitsMask) >>> TypeBitsOffset;
+    $requestAddress = fctxt.ipaddress || '';
 
     const modifierType = modifierTypeFromName.get(modifierName);
     const modifierBits = modifierBitsFromType.get(modifierType);
@@ -5048,6 +5096,7 @@ StaticNetFilteringEngine.prototype.matchRequestReverse = function(type, url) {
     $requestURLRaw = url;
     $requestMethodBit = 0;
     $requestTypeValue = (typeBits & TypeBitsMask) >>> TypeBitsOffset;
+    $requestAddress = '';
     $isBlockImportant = false;
     this.$filterUnit = 0;
 
@@ -5116,6 +5165,7 @@ StaticNetFilteringEngine.prototype.matchRequest = function(fctxt, modifiers = 0)
     $requestHostname = fctxt.getHostname();
     $requestMethodBit = fctxt.method || 0;
     $requestTypeValue = (typeBits & TypeBitsMask) >>> TypeBitsOffset;
+    $requestAddress = fctxt.ipaddress || '';
     $isBlockImportant = false;
 
     // Evaluate block realm before allow realm, and allow realm before
@@ -5151,6 +5201,7 @@ StaticNetFilteringEngine.prototype.matchHeaders = function(fctxt, headers) {
     $requestHostname = fctxt.getHostname();
     $requestMethodBit = fctxt.method || 0;
     $requestTypeValue = (typeBits & TypeBitsMask) >>> TypeBitsOffset;
+    $requestAddress = fctxt.ipaddress || '';
     $httpHeaders.init(headers);
 
     let r = 0;

@@ -19,13 +19,9 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
-/******************************************************************************/
-
 import {
-    hostnameFromURI,
     domainFromHostname,
+    hostnameFromURI,
     originFromURI,
 } from './uri-utils.js';
 
@@ -140,6 +136,7 @@ export const FilteringContext = class {
         this.stype = undefined;
         this.url = undefined;
         this.aliasURL = undefined;
+        this.ipaddress = undefined;
         this.hostname = undefined;
         this.domain = undefined;
         this.docId = -1;
@@ -418,42 +415,72 @@ export const FilteringContext = class {
     static getMethodName(a) {
         return methodBitToStrMap.get(a) || '';
     }
+
+    BEACON = BEACON;
+    CSP_REPORT = CSP_REPORT;
+    FONT = FONT;
+    IMAGE = IMAGE;
+    IMAGESET = IMAGESET;
+    MAIN_FRAME = MAIN_FRAME;
+    MEDIA = MEDIA;
+    OBJECT = OBJECT;
+    OBJECT_SUBREQUEST = OBJECT_SUBREQUEST;
+    PING = PING;
+    SCRIPT = SCRIPT;
+    STYLESHEET = STYLESHEET;
+    SUB_FRAME = SUB_FRAME;
+    WEBSOCKET = WEBSOCKET;
+    XMLHTTPREQUEST = XMLHTTPREQUEST;
+    INLINE_FONT = INLINE_FONT;
+    INLINE_SCRIPT = INLINE_SCRIPT;
+    OTHER = OTHER;
+    FRAME_ANY = FRAME_ANY;
+    FONT_ANY = FONT_ANY;
+    INLINE_ANY = INLINE_ANY;
+    PING_ANY = PING_ANY;
+    SCRIPT_ANY = SCRIPT_ANY;
+    METHOD_NONE = METHOD_NONE;
+    METHOD_CONNECT = METHOD_CONNECT;
+    METHOD_DELETE = METHOD_DELETE;
+    METHOD_GET = METHOD_GET;
+    METHOD_HEAD = METHOD_HEAD;
+    METHOD_OPTIONS = METHOD_OPTIONS;
+    METHOD_PATCH = METHOD_PATCH;
+    METHOD_POST = METHOD_POST;
+    METHOD_PUT = METHOD_PUT;
+
+    static BEACON = BEACON;
+    static CSP_REPORT = CSP_REPORT;
+    static FONT = FONT;
+    static IMAGE = IMAGE;
+    static IMAGESET = IMAGESET;
+    static MAIN_FRAME = MAIN_FRAME;
+    static MEDIA = MEDIA;
+    static OBJECT = OBJECT;
+    static OBJECT_SUBREQUEST = OBJECT_SUBREQUEST;
+    static PING = PING;
+    static SCRIPT = SCRIPT;
+    static STYLESHEET = STYLESHEET;
+    static SUB_FRAME = SUB_FRAME;
+    static WEBSOCKET = WEBSOCKET;
+    static XMLHTTPREQUEST = XMLHTTPREQUEST;
+    static INLINE_FONT = INLINE_FONT;
+    static INLINE_SCRIPT = INLINE_SCRIPT;
+    static OTHER = OTHER;
+    static FRAME_ANY = FRAME_ANY;
+    static FONT_ANY = FONT_ANY;
+    static INLINE_ANY = INLINE_ANY;
+    static PING_ANY = PING_ANY;
+    static SCRIPT_ANY = SCRIPT_ANY;
+    static METHOD_NONE = METHOD_NONE;
+    static METHOD_CONNECT = METHOD_CONNECT;
+    static METHOD_DELETE = METHOD_DELETE;
+    static METHOD_GET = METHOD_GET;
+    static METHOD_HEAD = METHOD_HEAD;
+    static METHOD_OPTIONS = METHOD_OPTIONS;
+    static METHOD_PATCH = METHOD_PATCH;
+    static METHOD_POST = METHOD_POST;
+    static METHOD_PUT = METHOD_PUT;
 };
-
-/******************************************************************************/
-
-FilteringContext.prototype.BEACON = FilteringContext.BEACON = BEACON;
-FilteringContext.prototype.CSP_REPORT = FilteringContext.CSP_REPORT = CSP_REPORT;
-FilteringContext.prototype.FONT = FilteringContext.FONT = FONT;
-FilteringContext.prototype.IMAGE = FilteringContext.IMAGE = IMAGE;
-FilteringContext.prototype.IMAGESET = FilteringContext.IMAGESET = IMAGESET;
-FilteringContext.prototype.MAIN_FRAME = FilteringContext.MAIN_FRAME = MAIN_FRAME;
-FilteringContext.prototype.MEDIA = FilteringContext.MEDIA = MEDIA;
-FilteringContext.prototype.OBJECT = FilteringContext.OBJECT = OBJECT;
-FilteringContext.prototype.OBJECT_SUBREQUEST = FilteringContext.OBJECT_SUBREQUEST = OBJECT_SUBREQUEST;
-FilteringContext.prototype.PING = FilteringContext.PING = PING;
-FilteringContext.prototype.SCRIPT = FilteringContext.SCRIPT = SCRIPT;
-FilteringContext.prototype.STYLESHEET = FilteringContext.STYLESHEET = STYLESHEET;
-FilteringContext.prototype.SUB_FRAME = FilteringContext.SUB_FRAME = SUB_FRAME;
-FilteringContext.prototype.WEBSOCKET = FilteringContext.WEBSOCKET = WEBSOCKET;
-FilteringContext.prototype.XMLHTTPREQUEST = FilteringContext.XMLHTTPREQUEST = XMLHTTPREQUEST;
-FilteringContext.prototype.INLINE_FONT = FilteringContext.INLINE_FONT = INLINE_FONT;
-FilteringContext.prototype.INLINE_SCRIPT = FilteringContext.INLINE_SCRIPT = INLINE_SCRIPT;
-FilteringContext.prototype.OTHER = FilteringContext.OTHER = OTHER;
-FilteringContext.prototype.FRAME_ANY = FilteringContext.FRAME_ANY = FRAME_ANY;
-FilteringContext.prototype.FONT_ANY = FilteringContext.FONT_ANY = FONT_ANY;
-FilteringContext.prototype.INLINE_ANY = FilteringContext.INLINE_ANY = INLINE_ANY;
-FilteringContext.prototype.PING_ANY = FilteringContext.PING_ANY = PING_ANY;
-FilteringContext.prototype.SCRIPT_ANY = FilteringContext.SCRIPT_ANY = SCRIPT_ANY;
-
-FilteringContext.prototype.METHOD_NONE = FilteringContext.METHOD_NONE = METHOD_NONE;
-FilteringContext.prototype.METHOD_CONNECT = FilteringContext.METHOD_CONNECT = METHOD_CONNECT;
-FilteringContext.prototype.METHOD_DELETE = FilteringContext.METHOD_DELETE = METHOD_DELETE;
-FilteringContext.prototype.METHOD_GET = FilteringContext.METHOD_GET = METHOD_GET;
-FilteringContext.prototype.METHOD_HEAD = FilteringContext.METHOD_HEAD = METHOD_HEAD;
-FilteringContext.prototype.METHOD_OPTIONS = FilteringContext.METHOD_OPTIONS = METHOD_OPTIONS;
-FilteringContext.prototype.METHOD_PATCH = FilteringContext.METHOD_PATCH = METHOD_PATCH;
-FilteringContext.prototype.METHOD_POST = FilteringContext.METHOD_POST = METHOD_POST;
-FilteringContext.prototype.METHOD_PUT = FilteringContext.METHOD_PUT = METHOD_PUT;
 
 /******************************************************************************/

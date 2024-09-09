@@ -172,6 +172,7 @@ export const NODE_TYPE_NET_OPTION_NAME_IMAGE        = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_IMPORTANT    = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_INLINEFONT   = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_INLINESCRIPT = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_IPADDRESS    = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_MATCHCASE    = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_MEDIA        = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_METHOD       = iota++;
@@ -249,6 +250,7 @@ export const nodeTypeFromOptionName = new Map([
     [ 'important', NODE_TYPE_NET_OPTION_NAME_IMPORTANT ],
     [ 'inline-font', NODE_TYPE_NET_OPTION_NAME_INLINEFONT ],
     [ 'inline-script', NODE_TYPE_NET_OPTION_NAME_INLINESCRIPT ],
+    [ 'ipaddress', NODE_TYPE_NET_OPTION_NAME_IPADDRESS ],
     [ 'match-case', NODE_TYPE_NET_OPTION_NAME_MATCHCASE ],
     [ 'media', NODE_TYPE_NET_OPTION_NAME_MEDIA ],
     [ 'method', NODE_TYPE_NET_OPTION_NAME_METHOD ],
@@ -1401,6 +1403,14 @@ export class AstFilterParser {
                 modifierType = type;
                 unredirectableTypeCount += 1;
                 break;
+            case NODE_TYPE_NET_OPTION_NAME_IPADDRESS: {
+                const value = this.getNetOptionValue(NODE_TYPE_NET_OPTION_NAME_IPADDRESS);
+                if ( /^\/.+\/$/.test(value) ) {
+                    try { void new RegExp(value); }
+                    catch(_) { realBad = true; }
+                }
+                break;
+            }
             case NODE_TYPE_NET_OPTION_NAME_MATCHCASE:
                 realBad = this.isRegexPattern() === false;
                 break;
@@ -3104,6 +3114,7 @@ export const netOptionTokenDescriptors = new Map([
     [ 'important', { blockOnly: true } ],
     [ 'inline-font', { canNegate: true } ],
     [ 'inline-script', { canNegate: true } ],
+    [ 'ipaddress', { mustAssign: true } ],
     [ 'match-case', { } ],
     [ 'media', { canNegate: true } ],
     [ 'method', { mustAssign: true } ],
@@ -4324,6 +4335,7 @@ export const utils = (( ) => {
         [ 'env_safari', 'safari' ],
         [ 'cap_html_filtering', 'html_filtering' ],
         [ 'cap_user_stylesheet', 'user_stylesheet' ],
+        [ 'cap_ipaddress', 'ipaddress' ],
         [ 'false', 'false' ],
         // Hoping ABP-only list maintainers can at least make use of it to
         // help non-ABP content blockers better deal with filters benefiting
@@ -4358,8 +4370,11 @@ export const utils = (( ) => {
         static evaluateExprToken(token, env = []) {
             const not = token.charCodeAt(0) === 0x21 /* ! */;
             if ( not ) { token = token.slice(1); }
-            const state = preparserTokens.get(token);
-            if ( state === undefined ) { return; }
+            let state = preparserTokens.get(token);
+            if ( state === undefined ) {
+                if ( token.startsWith('cap_') === false ) { return; }
+                state = 'false';
+            }
             return state === 'false' && not || env.includes(state) !== not;
         }
 
