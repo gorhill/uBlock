@@ -1,3 +1,5 @@
+- [New static network filter option `ipaddress=`](https://github.com/gorhill/uBlock/commit/c6dedd253f)
+- [Add ability to quote static network option values](https://github.com/gorhill/uBlock/commit/20115697e5)
 - [Improve `prevent-fetch` scriptlet](https://github.com/gorhill/uBlock/commit/e8202af11d)
 - [Apply CSP/PP injections to `object` resources](https://github.com/gorhill/uBlock/commit/89f02098fd)
 - [Improve `xml-prune` scriptlet](https://github.com/gorhill/uBlock/commit/c8307f58a3)
