@@ -181,7 +181,8 @@ vAPI.webextFlavor = {
     if ( browser.runtime.getURL('').startsWith('moz-extension://') ) {
         soup.add('firefox')
             .add('user_stylesheet')
-            .add('html_filtering');
+            .add('html_filtering')
+            .add('ipaddress');
         const match = /Firefox\/(\d+)/.exec(ua);
         flavor.major = match && parseInt(match[1], 10) || 115;
     } else {
