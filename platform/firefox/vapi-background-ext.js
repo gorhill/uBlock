@@ -19,12 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* globals browser */
-
-'use strict';
-
-/******************************************************************************/
-
 import {
     domainFromHostname,
     hostnameFromNetworkURL,
@@ -34,24 +28,6 @@ import {
 
 // Canonical name-uncloaking feature.
 let cnameUncloakEnabled = browser.dns instanceof Object;
-let cnameUncloakProxied = false;
-
-// https://github.com/uBlockOrigin/uBlock-issues/issues/911
-//   We detect here whether network requests are proxied, and if so,
-//   de-aliasing of hostnames will be disabled to avoid possible
-//   DNS leaks.
-const proxyDetector = function(details) {
-    if ( details.proxyInfo instanceof Object ) {
-        cnameUncloakEnabled = false;
-        proxyDetectorTryCount = 0;
-    }
-    if ( proxyDetectorTryCount === 0 ) {
-        browser.webRequest.onHeadersReceived.removeListener(proxyDetector);
-        return;
-    }
-    proxyDetectorTryCount -= 1;
-};
-let proxyDetectorTryCount = 0;
 
 // Related issues:
 // - https://github.com/gorhill/uBlock/issues/1327
@@ -81,9 +57,6 @@ vAPI.Net = class extends vAPI.Net {
                 this.canUncloakCnames &&
                 options.cnameUncloakEnabled !== false;
         }
-        if ( 'cnameUncloakProxied' in options ) {
-            cnameUncloakProxied = options.cnameUncloakProxied === true;
-        }
         if ( 'cnameIgnoreList' in options ) {
             this.cnameIgnoreList =
                 this.regexFromStrList(options.cnameIgnoreList);
@@ -108,23 +81,6 @@ vAPI.Net = class extends vAPI.Net {
         }
         this.cnames.clear(); this.cnames.set('', null);
         this.cnameFlushTime = Date.now() + this.cnameMaxTTL * 60000;
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/911
-        //   Install/remove proxy detector.
-        if ( vAPI.webextFlavor.major < 80 ) {
-            const wrohr = browser.webRequest.onHeadersReceived;
-            if ( cnameUncloakEnabled === false || cnameUncloakProxied ) {
-                if ( wrohr.hasListener(proxyDetector) ) {
-                    wrohr.removeListener(proxyDetector);
-                }
-            } else if ( wrohr.hasListener(proxyDetector) === false ) {
-                wrohr.addListener(
-                    proxyDetector,
-                    { urls: [ '*://*/*' ] },
-                    [ 'blocking' ]
-                );
-            }
-            proxyDetectorTryCount = 32;
-        }
     }
     normalizeDetails(details) {
         const type = details.type;
@@ -236,7 +192,7 @@ vAPI.Net = class extends vAPI.Net {
             return /^./;
         }
         return new RegExp(
-            '(?:^|\.)(?:' +
+            '(?:^|\\.)(?:' +
             list.trim()
                 .split(/\s+/)
                 .map(a => a.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
@@ -261,6 +217,7 @@ vAPI.Net = class extends vAPI.Net {
         if ( cnRecord !== undefined ) {
             return this.processCanonicalName(hn, cnRecord, details);
         }
+        if ( details.proxyInfo && details.proxyInfo.proxyDNS ) { return; }
         const documentUrl = details.documentUrl || details.url;
         const isRootDocument = this.cnameIgnoreRootDocument &&
             hn === hostnameFromNetworkURL(documentUrl);
