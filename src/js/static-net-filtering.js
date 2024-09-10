@@ -2970,14 +2970,63 @@ registerFilterClass(FilterOnHeaders);
 
 class FilterIPAddress {
     static match(idata) {
+        const ipaddr = $requestAddress;
         const details = filterRefs[filterData[idata+1]];
-        if ( details.isRegex === false ) {
-            return $requestAddress === details.pattern;
+        if ( details.isRegex ) {
+            if ( details.$re === undefined ) {
+                details.$re = new RegExp(details.pattern.slice(1, -1));
+            }
+            return details.$re.test(ipaddr);
         }
-        if ( details.$re === undefined ) {
-            details.$re = new RegExp(details.pattern.slice(1, -1));
+        if ( ipaddr === '' ) { return false; }
+        if ( details.pattern === 'lan' ) {
+            return this.isLAN(ipaddr);
         }
-        return details.$re.test($requestAddress);
+        if ( details.pattern === 'loopback' ) {
+            return this.isLoopback(ipaddr);
+        }
+        return ipaddr.startsWith(details.pattern);
+    }
+
+    // https://github.com/uBlockOrigin/uAssets/blob/master/filters/lan-block.txt
+    // https://en.wikipedia.org/wiki/Reserved_IP_addresses
+    // `ipaddr` is assumed well-formed
+    static isLAN(ipaddr) {
+        const c0 = ipaddr.charCodeAt(0);
+        // ipv4
+        if ( c0 === 0x30 /* 0 */ ) {
+            return ipaddr.startsWith('0.');
+        }
+        if ( c0 === 0x31 /* 1 */ ) {
+            if ( ipaddr.startsWith('10.') ) { return true; }
+            if ( ipaddr.startsWith('127.') ) { return true; }
+            if ( ipaddr.startsWith('169.254.') ) { return true; }
+            if ( ipaddr.startsWith('172.') ) {
+                const v = parseInt(ipaddr.slice(4), 10);
+                return v >= 16 && v <= 31;
+            }
+            return ipaddr.startsWith('192.168.');
+        }
+        if ( c0 !== 0x5B /* [ */ ) { return false; }
+        // ipv6
+        const c1 = ipaddr.charCodeAt(1);
+        if ( c1 === 0x3A /* : */ ) {
+            if ( ipaddr.startsWith('[::') === false ) { return false; }
+            if ( ipaddr === '[::]' || ipaddr === '[::1]' ) { return true; }
+            if ( ipaddr.startsWith('[::ffff:') === false ) { return false; }
+            return /^\[::ffff:(7f\w{2}|a\w{2}|a9fe|c0a8):\w+\]$/.test(ipaddr);
+        }
+        if ( c1 === 0x36 /* 6 */ ) {
+            return ipaddr.startsWith('[64:ff9b:');
+        }
+        if ( c1 === 0x66 /* f */ ) {
+            return /^\[f[cd]\w{2}:/.test(ipaddr);
+        }
+        return false;
+    }
+
+    static isLoopback(ipaddr) {
+        return ipaddr === '127.0.0.1' || ipaddr === '[::1]';
     }
 
     static compile(details) {
