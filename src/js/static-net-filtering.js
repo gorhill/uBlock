@@ -2905,7 +2905,7 @@ class FilterStrictParty {
 
     static dnrFromCompiled(args, rule) {
         const partyness = args[1] === 0 ? 1 : 3;
-        dnrAddRuleError(rule, `FilterStrictParty: Strict partyness strict${partyness}p not supported`);
+        dnrAddRuleError(rule, `strict${partyness}p not supported`);
     }
 
     static keyFromArgs(args) {
@@ -2951,6 +2951,10 @@ class FilterOnHeaders {
                 $parsed: null,
             })
         );
+    }
+
+    static dnrFromCompiled(args, rule) {
+        dnrAddRuleError(rule, `header="${args[1]}" not supported`);
     }
 
     static logData(idata, details) {
@@ -3040,6 +3044,10 @@ class FilterIPAddress {
             isRegex: pattern.startsWith('/') && pattern.endsWith('/'),
         };
         return filterDataAlloc(args[0], filterRefAdd(details));
+    }
+
+    static dnrFromCompiled(args, rule) {
+        dnrAddRuleError(rule, `"ipaddress=${args[1]}" not supported`);
     }
 
     static logData(idata, details) {
@@ -4432,6 +4440,7 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
         [ CSP_REALM, { type: 'csp', priority: 0 } ],
         [ PERMISSIONS_REALM, { type: 'permissions', priority: 0 } ],
         [ URLTRANSFORM_REALM, { type: 'uritransform', priority: 0 } ],
+        [ HEADERS_REALM, { type: 'block', priority: 0 } ],
     ]);
     const partyness = new Map([
         [ ANYPARTY_REALM, '' ],
