@@ -1,3 +1,4 @@
+- [Add support for `lan`/`loopback` values to `ipaddress=` option](https://github.com/gorhill/uBlock/commit/030d7334e4)
 - [New static network filter option `ipaddress=`](https://github.com/gorhill/uBlock/commit/c6dedd253f)
 - [Add ability to quote static network option values](https://github.com/gorhill/uBlock/commit/20115697e5)
 - [Improve `prevent-fetch` scriptlet](https://github.com/gorhill/uBlock/commit/e8202af11d)
