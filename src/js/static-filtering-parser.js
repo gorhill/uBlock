@@ -578,6 +578,7 @@ export const preparserIfTokens = new Set([
     'env_mv3',
     'env_safari',
     'cap_html_filtering',
+    'cap_ipaddress',
     'cap_user_stylesheet',
     'false',
     'ext_abp',

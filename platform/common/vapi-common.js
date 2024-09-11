@@ -163,6 +163,7 @@ vAPI.webextFlavor = {
 
     // This is always true.
     soup.add('ublock').add('webext');
+    soup.add('ipaddress');
 
     // Whether this is a dev build.
     if ( /^\d+\.\d+\.\d+\D/.test(browser.runtime.getManifest().version) ) {
@@ -181,8 +182,7 @@ vAPI.webextFlavor = {
     if ( browser.runtime.getURL('').startsWith('moz-extension://') ) {
         soup.add('firefox')
             .add('user_stylesheet')
-            .add('html_filtering')
-            .add('ipaddress');
+            .add('html_filtering');
         const match = /Firefox\/(\d+)/.exec(ua);
         flavor.major = match && parseInt(match[1], 10) || 115;
     } else {

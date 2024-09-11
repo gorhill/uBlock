@@ -2973,6 +2973,9 @@ registerFilterClass(FilterOnHeaders);
 /******************************************************************************/
 
 class FilterIPAddress {
+    static reIPv6IPv4lan = /^::ffff:(7f\w{2}|a\w{2}|a9fe|c0a8):\w+$/;
+    static reIPv6local = /^f[cd]\w{2}:/;
+
     static match(idata) {
         const ipaddr = $requestAddress;
         const details = filterRefs[filterData[idata+1]];
@@ -3011,26 +3014,26 @@ class FilterIPAddress {
             }
             return ipaddr.startsWith('192.168.');
         }
-        if ( c0 !== 0x5B /* [ */ ) { return false; }
         // ipv6
-        const c1 = ipaddr.charCodeAt(1);
-        if ( c1 === 0x3A /* : */ ) {
-            if ( ipaddr.startsWith('[::') === false ) { return false; }
-            if ( ipaddr === '[::]' || ipaddr === '[::1]' ) { return true; }
-            if ( ipaddr.startsWith('[::ffff:') === false ) { return false; }
-            return /^\[::ffff:(7f\w{2}|a\w{2}|a9fe|c0a8):\w+\]$/.test(ipaddr);
+        if ( c0 === 0x3A /* : */ ) {
+            if ( ipaddr.startsWith('::') === false ) { return false; }
+            if ( ipaddr === '::' || ipaddr === '::1' ) { return true; }
+            if ( ipaddr.startsWith('::ffff:') === false ) { return false; }
+            return this.reIPv6IPv4lan.test(ipaddr);
         }
-        if ( c1 === 0x36 /* 6 */ ) {
-            return ipaddr.startsWith('[64:ff9b:');
-        }
-        if ( c1 === 0x66 /* f */ ) {
-            return /^\[f[cd]\w{2}:/.test(ipaddr);
+        if ( ipaddr.includes(':') ) {
+            if ( c0 === 0x36 /* 6 */ ) {
+                return ipaddr.startsWith('64:ff9b:');
+            }
+            if ( c0 === 0x66 /* f */ ) {
+                return this.reIPv6local.test(ipaddr);
+            }
         }
         return false;
     }
 
     static isLoopback(ipaddr) {
-        return ipaddr === '127.0.0.1' || ipaddr === '[::1]';
+        return ipaddr === '127.0.0.1' || ipaddr === '::1';
     }
 
     static compile(details) {
@@ -3412,7 +3415,6 @@ class FilterCompiler {
         this.notTypeBits = 0;
         this.methodBits = 0;
         this.notMethodBits = 0;
-        this.responseHeadersRealm = false;
         return this;
     }
 
@@ -3532,13 +3534,11 @@ class FilterCompiler {
         case sfp.NODE_TYPE_NET_OPTION_NAME_HEADER: {
             this.optionValues.set('header', parser.getNetOptionValue(id) || '');
             this.optionUnitBits |= HEADER_BIT;
-            this.responseHeadersRealm = true;
             break;
         }
         case sfp.NODE_TYPE_NET_OPTION_NAME_IPADDRESS:
             this.optionValues.set('ipaddress', parser.getNetOptionValue(id) || '');
             this.optionUnitBits |= IPADDRESS_BIT;
-            this.responseHeadersRealm = true;
             break;
         case sfp.NODE_TYPE_NET_OPTION_NAME_METHOD:
             this.processMethodOption(parser.getNetOptionValue(id));
@@ -4008,7 +4008,7 @@ class FilterCompiler {
         }
 
         // Origin
-        if ( this.optionValues.has('from') ) {
+        if ( (this.optionUnitBits & FROM_BIT) !== 0 ) {
             compileFromDomainOpt(
                 this.optionValues.get('fromList'),
                 units.length !== 0 && patternClass.isSlow === true,
@@ -4017,7 +4017,7 @@ class FilterCompiler {
         }
 
         // Destination
-        if ( this.optionValues.has('to') ) {
+        if ( (this.optionUnitBits & TO_BIT) !== 0 ) {
             compileToDomainOpt(
                 this.optionValues.get('toList'),
                 units.length !== 0 && patternClass.isSlow === true,
@@ -4026,18 +4026,18 @@ class FilterCompiler {
         }
 
         // Deny-allow
-        if ( this.optionValues.has('denyallow') ) {
+        if ( (this.optionUnitBits & DENYALLOW_BIT) !== 0 ) {
             units.push(FilterDenyAllow.compile(this));
         }
 
+        // IP address
+        if ( (this.optionUnitBits & IPADDRESS_BIT) !== 0 ) {
+            units.push(FilterIPAddress.compile(this));
+        }
+
         // Header
-        if ( this.responseHeadersRealm ) {
-            if ( this.optionValues.has('ipaddress') ) {
-                units.push(FilterIPAddress.compile(this));
-            }
-            if ( this.optionValues.has('header') ) {
-                units.push(FilterOnHeaders.compile(this));
-            }
+        if ( (this.optionUnitBits & HEADER_BIT) !== 0 ) {
+            units.push(FilterOnHeaders.compile(this));
             this.action |= HEADERS_REALM;
         }
 
@@ -4058,12 +4058,17 @@ class FilterCompiler {
                 modifierBitsFromType.get(this.modifyType);
         }
 
-        this.compileToAtomicFilter(
-            units.length === 1
-                ? units[0]
-                : FilterCompositeAll.compile(units),
-            writer
-        );
+        const fdata = units.length === 1
+            ? units[0]
+            : FilterCompositeAll.compile(units);
+
+        this.compileToAtomicFilter(fdata, writer);
+
+        if ( (this.optionUnitBits & IPADDRESS_BIT) !== 0 ) {
+            if ( (this.action & HEADERS_REALM) !== 0 ) { return; }
+            this.action |= HEADERS_REALM;
+            this.compileToAtomicFilter(fdata, writer);
+        }
     }
 
     compilePattern(units) {
@@ -4856,7 +4861,7 @@ StaticNetFilteringEngine.prototype.matchAndFetchModifiers = function(
     $requestHostname = fctxt.getHostname();
     $requestMethodBit = fctxt.method || 0;
     $requestTypeValue = (typeBits & TypeBitsMask) >>> TypeBitsOffset;
-    $requestAddress = fctxt.ipaddress || '';
+    $requestAddress = fctxt.getIPAddress();
 
     const modifierType = modifierTypeFromName.get(modifierName);
     const modifierBits = modifierBitsFromType.get(modifierType);
@@ -5223,7 +5228,7 @@ StaticNetFilteringEngine.prototype.matchRequest = function(fctxt, modifiers = 0)
     $requestHostname = fctxt.getHostname();
     $requestMethodBit = fctxt.method || 0;
     $requestTypeValue = (typeBits & TypeBitsMask) >>> TypeBitsOffset;
-    $requestAddress = fctxt.ipaddress || '';
+    $requestAddress = fctxt.getIPAddress();
     $isBlockImportant = false;
 
     // Evaluate block realm before allow realm, and allow realm before
@@ -5259,7 +5264,7 @@ StaticNetFilteringEngine.prototype.matchHeaders = function(fctxt, headers) {
     $requestHostname = fctxt.getHostname();
     $requestMethodBit = fctxt.method || 0;
     $requestTypeValue = (typeBits & TypeBitsMask) >>> TypeBitsOffset;
-    $requestAddress = fctxt.ipaddress || '';
+    $requestAddress = fctxt.getIPAddress();
     $httpHeaders.init(headers);
 
     let r = 0;
