@@ -144,11 +144,11 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "Lista de nomes de anfitriões para os quais não será efetuada qualquer filtragem.",
+    "message": "Lista de sítios ‘web’ para os quais não será efetuada qualquer filtragem.",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
-    "message": "[hostnames only]\nexemplo.com\njogos.exemplo\n...",
+    "message": "[apenas nomes de anfitriões]\nexemplo.com\njogos.exemplo\n...",
     "description": "Default text for in edit field"
   },
   "behaviorSectionLabel": {
