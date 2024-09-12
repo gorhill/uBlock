@@ -26,8 +26,10 @@ import {
 
 /******************************************************************************/
 
-// Canonical name-uncloaking feature.
-let cnameUncloakEnabled = browser.dns instanceof Object;
+const dnsAPI = browser.dns;
+
+const isPromise = o => o instanceof Promise;
+const reIPv4 = /^\d+\.\d+\.\d+\.\d+$/
 
 // Related issues:
 // - https://github.com/gorhill/uBlock/issues/1327
@@ -40,21 +42,24 @@ vAPI.Net = class extends vAPI.Net {
     constructor() {
         super();
         this.pendingRequests = [];
-        this.canUncloakCnames = browser.dns instanceof Object;
-        this.cnames = new Map([ [ '', null ] ]);
+        this.dnsList = [];          // ring buffer
+        this.dnsWritePtr = 0;       // next write pointer in ring buffer
+        this.dnsMaxCount = 256;     // max size of ring buffer
+        this.dnsDict = new Map();   // hn to index in ring buffer
+        this.dnsEntryTTL = 60000;   // delay after which an entry is obsolete
+        this.canUncloakCnames = true;
+        this.cnameUncloakEnabled = true;
         this.cnameIgnoreList = null;
         this.cnameIgnore1stParty = true;
         this.cnameIgnoreExceptions = true;
         this.cnameIgnoreRootDocument = true;
-        this.cnameMaxTTL = 120;
         this.cnameReplayFullURL = false;
-        this.cnameFlushTime = Date.now() + this.cnameMaxTTL * 60000;
     }
+
     setOptions(options) {
         super.setOptions(options);
         if ( 'cnameUncloakEnabled' in options ) {
-            cnameUncloakEnabled =
-                this.canUncloakCnames &&
+            this.cnameUncloakEnabled =
                 options.cnameUncloakEnabled !== false;
         }
         if ( 'cnameIgnoreList' in options ) {
@@ -73,15 +78,13 @@ vAPI.Net = class extends vAPI.Net {
             this.cnameIgnoreRootDocument =
                 options.cnameIgnoreRootDocument !== false;
         }
-        if ( 'cnameMaxTTL' in options ) {
-            this.cnameMaxTTL = options.cnameMaxTTL || 120;
-        }
         if ( 'cnameReplayFullURL' in options ) {
             this.cnameReplayFullURL = options.cnameReplayFullURL === true;
         }
-        this.cnames.clear(); this.cnames.set('', null);
-        this.cnameFlushTime = Date.now() + this.cnameMaxTTL * 60000;
+        this.dnsList.fill(null);
+        this.dnsDict.clear();
     }
+
     normalizeDetails(details) {
         const type = details.type;
 
@@ -104,6 +107,7 @@ vAPI.Net = class extends vAPI.Net {
             }
         }
     }
+
     denormalizeTypes(types) {
         if ( types.length === 0 ) {
             return Array.from(this.validTypes);
@@ -122,75 +126,19 @@ vAPI.Net = class extends vAPI.Net {
         }
         return Array.from(out);
     }
+
     canonicalNameFromHostname(hn) {
-        const cnRecord = this.cnames.get(hn);
-        if ( cnRecord !== undefined && cnRecord !== null ) {
-            return cnRecord.cname;
-        }
+        if ( hn === '' ) { return; }
+        const dnsEntry = this.dnsFromCache(hn);
+        if ( isPromise(dnsEntry) ) { return; }
+        return dnsEntry?.cname;
     }
-    processCanonicalName(hn, cnRecord, details) {
-        if ( cnRecord === null ) { return; }
-        if ( cnRecord.isRootDocument ) { return; }
-        const hnBeg = details.url.indexOf(hn);
-        if ( hnBeg === -1 ) { return; }
-        const oldURL = details.url;
-        let newURL = oldURL.slice(0, hnBeg) + cnRecord.cname;
-        const hnEnd = hnBeg + hn.length;
-        if ( this.cnameReplayFullURL ) {
-            newURL += oldURL.slice(hnEnd);
-        } else {
-            const pathBeg = oldURL.indexOf('/', hnEnd);
-            if ( pathBeg !== -1 ) {
-                newURL += oldURL.slice(hnEnd, pathBeg + 1);
-            }
-        }
-        details.url = newURL;
-        details.aliasURL = oldURL;
-        return super.onBeforeSuspendableRequest(details);
-    }
-    recordCanonicalName(hn, record, isRootDocument) {
-        if ( (this.cnames.size & 0b111111) === 0 ) {
-            const now = Date.now();
-            if ( now >= this.cnameFlushTime ) {
-                this.cnames.clear(); this.cnames.set('', null);
-                this.cnameFlushTime = now + this.cnameMaxTTL * 60000;
-            }
-        }
-        let cname =
-            typeof record.canonicalName === 'string' &&
-            record.canonicalName !== hn
-                ? record.canonicalName
-                : '';
-        if (
-            cname !== '' &&
-            this.cnameIgnore1stParty &&
-            domainFromHostname(cname) === domainFromHostname(hn)
-        ) {
-            cname = '';
-        }
-        if (
-            cname !== '' &&
-            this.cnameIgnoreList !== null &&
-            this.cnameIgnoreList.test(cname)
-        ) {
-            cname = '';
-        }
-        const cnRecord = cname !== '' ? { cname, isRootDocument } : null;
-        this.cnames.set(hn, cnRecord);
-        return cnRecord;
-    }
+
     regexFromStrList(list) {
-        if (
-            typeof list !== 'string' ||
-            list.length === 0 ||
-            list === 'unset' ||
-            browser.dns instanceof Object === false
-        ) {
+        if ( typeof list !== 'string' || list.length === 0 || list === 'unset' ) {
             return null;
         }
-        if ( list === '*' ) {
-            return /^./;
-        }
+        if ( list === '*' ) { return /^./; }
         return new RegExp(
             '(?:^|\\.)(?:' +
             list.trim()
@@ -200,9 +148,14 @@ vAPI.Net = class extends vAPI.Net {
             ')$'
         );
     }
+
     onBeforeSuspendableRequest(details) {
+        const hn = hostnameFromNetworkURL(details.url);
+        const dnsEntry = this.dnsFromCache(hn);
+        if ( dnsEntry?.ip ) {
+            details.ip = dnsEntry.ip;
+        }
         const r = super.onBeforeSuspendableRequest(details);
-        if ( cnameUncloakEnabled === false ) { return r; }
         if ( r !== undefined ) {
             if (
                 r.cancel === true ||
@@ -212,25 +165,128 @@ vAPI.Net = class extends vAPI.Net {
                 return r;
             }
         }
-        const hn = hostnameFromNetworkURL(details.url);
-        const cnRecord = this.cnames.get(hn);
-        if ( cnRecord !== undefined ) {
-            return this.processCanonicalName(hn, cnRecord, details);
-        }
-        if ( details.proxyInfo && details.proxyInfo.proxyDNS ) { return; }
-        const documentUrl = details.documentUrl || details.url;
-        const isRootDocument = this.cnameIgnoreRootDocument &&
-            hn === hostnameFromNetworkURL(documentUrl);
-        return browser.dns.resolve(hn, [ 'canonical_name' ]).then(
-            rec => {
-                const cnRecord = this.recordCanonicalName(hn, rec, isRootDocument);
-                return this.processCanonicalName(hn, cnRecord, details);
-            },
-            ( ) => {
-                this.cnames.set(hn, null);
+        if ( dnsEntry !== undefined ) {
+            if ( isPromise(dnsEntry) === false ) {
+                return this.onAfterDNSResolution(hn, details, dnsEntry);
             }
-        );
+        }
+        if ( this.dnsShouldResolve(hn) === false ) { return; }
+        if ( details.proxyInfo?.proxyDNS ) { return; }
+        const promise = dnsEntry || this.dnsResolve(hn, details);
+        return promise.then(( ) => this.onAfterDNSResolution(hn, details));
     }
+
+    onAfterDNSResolution(hn, details, dnsEntry) {
+        if ( dnsEntry === undefined ) {
+            dnsEntry = this.dnsFromCache(hn);
+            if ( dnsEntry === undefined || isPromise(dnsEntry) ) { return; }
+        }
+        let proceed = false;
+        if ( dnsEntry.cname && this.cnameUncloakEnabled ) {
+            const newURL = this.uncloakURL(hn, dnsEntry, details);
+            if ( newURL ) {
+                details.aliasURL = details.url;
+                details.url = newURL;
+                proceed = true;
+            }
+        }
+        if ( dnsEntry.ip && details.ip !== dnsEntry.ip ) {
+            details.ip = dnsEntry.ip
+            proceed = true;
+        }
+        if ( proceed === false ) { return; }
+        // Must call method on base class
+        return super.onBeforeSuspendableRequest(details);
+    }
+
+    dnsToCache(hn, record, details) {
+        const i = this.dnsDict.get(hn);
+        if ( i === undefined ) { return; }
+        const dnsEntry = {
+            hn,
+            until: Date.now() + this.dnsEntryTTL,
+        };
+        if ( record ) {
+            const cname = this.cnameFromRecord(hn, record, details);
+            if ( cname ) { dnsEntry.cname = cname; }
+            const ip = this.ipFromRecord(record);
+            if ( ip ) { dnsEntry.ip = ip; }
+        }
+        this.dnsList[i] = dnsEntry;
+        return dnsEntry;
+    }
+
+    dnsFromCache(hn) {
+        const i = this.dnsDict.get(hn);
+        if ( i === undefined ) { return; }
+        const dnsEntry = this.dnsList[i];
+        if ( dnsEntry === null ) { return; }
+        if ( isPromise(dnsEntry) ) { return dnsEntry; }
+        if ( dnsEntry.hn !== hn ) { return; }
+        if ( dnsEntry.until >= Date.now() ) { return dnsEntry; }
+        this.dnsList[i] = null;
+        this.dnsDict.delete(hn)
+    }
+
+    dnsShouldResolve(hn) {
+        if ( hn === '' ) { return false; }
+        const c0 = hn.charCodeAt(0);
+        if ( c0 === 0x5B /* [ */ ) { return false; }
+        if ( c0 > 0x39 /* 9 */ ) { return true; }
+        return reIPv4.test(hn) === false;
+    }
+
+    dnsResolve(hn, details) {
+        const i = this.dnsWritePtr++;
+        this.dnsWritePtr %= this.dnsMaxCount;
+        this.dnsDict.set(hn, i);
+        const promise = dnsAPI.resolve(hn, [ 'canonical_name' ]).then(
+            rec => this.dnsToCache(hn, rec, details),
+            ( ) => this.dnsToCache(hn)
+        );
+        return (this.dnsList[i] = promise);
+    }
+
+    cnameFromRecord(hn, record, details) {
+        const cn = record.canonicalName;
+        if ( cn === undefined ) { return; }
+        if ( cn === hn ) { return; }
+        if ( this.cnameIgnore1stParty ) {
+            if ( domainFromHostname(cn) === domainFromHostname(hn) ) { return; }
+        }
+        if ( this.cnameIgnoreList !== null ) {
+            if ( this.cnameIgnoreList.test(cn) === false ) { return; }
+        }
+        if ( this.cnameIgnoreRootDocument ) {
+            const origin = hostnameFromNetworkURL(details.documentUrl || details.url);
+            if ( hn === origin ) { return; }
+        }
+        return cn;
+    }
+
+    uncloakURL(hn, dnsEntry, details) {
+        const hnBeg = details.url.indexOf(hn);
+        if ( hnBeg === -1 ) { return; }
+        const oldURL = details.url;
+        const newURL = oldURL.slice(0, hnBeg) + dnsEntry.cname;
+        const hnEnd = hnBeg + hn.length;
+        if ( this.cnameReplayFullURL ) {
+            return newURL + oldURL.slice(hnEnd);
+        }
+        const pathBeg = oldURL.indexOf('/', hnEnd);
+        if ( pathBeg !== -1 ) {
+            return newURL + oldURL.slice(hnEnd, pathBeg + 1);
+        }
+        return newURL;
+    }
+
+    ipFromRecord(record) {
+        const { addresses } = record;
+        if ( Array.isArray(addresses) === false ) { return; }
+        if ( addresses.length === 0 ) { return; }
+        return addresses[0];
+    }
+
     suspendOneRequest(details) {
         const pending = {
             details: Object.assign({}, details),
@@ -243,6 +299,7 @@ vAPI.Net = class extends vAPI.Net {
         this.pendingRequests.push(pending);
         return pending.promise;
     }
+
     unsuspendAllRequests(discard = false) {
         const pendingRequests = this.pendingRequests;
         this.pendingRequests = [];
@@ -254,6 +311,7 @@ vAPI.Net = class extends vAPI.Net {
             );
         }
     }
+
     static canSuspend() {
         return true;
     }

@@ -59,7 +59,6 @@ const hiddenSettingsDefault = {
     cnameIgnore1stParty: true,
     cnameIgnoreExceptions: true,
     cnameIgnoreRootDocument: true,
-    cnameMaxTTL: 120,
     cnameReplayFullURL: false,
     consoleLogLevel: 'unset',
     debugAssetsJson: false,
