@@ -27,9 +27,12 @@ import {
 /******************************************************************************/
 
 const dnsAPI = browser.dns;
-
 const isPromise = o => o instanceof Promise;
+const isResolvedObject = o => o instanceof Object &&
+    o instanceof Promise === false;
 const reIPv4 = /^\d+\.\d+\.\d+\.\d+$/
+
+/******************************************************************************/
 
 // Related issues:
 // - https://github.com/gorhill/uBlock/issues/1327
@@ -87,12 +90,10 @@ vAPI.Net = class extends vAPI.Net {
 
     normalizeDetails(details) {
         const type = details.type;
-
         if ( type === 'imageset' ) {
             details.type = 'image';
             return;
         }
-
         // https://github.com/uBlockOrigin/uBlock-issues/issues/345
         //   Re-categorize an embedded object as a `sub_frame` if its
         //   content type is that of a HTML document.
@@ -130,8 +131,8 @@ vAPI.Net = class extends vAPI.Net {
     canonicalNameFromHostname(hn) {
         if ( hn === '' ) { return; }
         const dnsEntry = this.dnsFromCache(hn);
-        if ( isPromise(dnsEntry) ) { return; }
-        return dnsEntry?.cname;
+        if ( isResolvedObject(dnsEntry) === false ) { return; }
+        return dnsEntry.cname;
     }
 
     regexFromStrList(list) {
@@ -152,7 +153,7 @@ vAPI.Net = class extends vAPI.Net {
     onBeforeSuspendableRequest(details) {
         const hn = hostnameFromNetworkURL(details.url);
         const dnsEntry = this.dnsFromCache(hn);
-        if ( dnsEntry?.ip ) {
+        if ( isResolvedObject(dnsEntry) && dnsEntry.ip ) {
             details.ip = dnsEntry.ip;
         }
         const r = super.onBeforeSuspendableRequest(details);
@@ -165,10 +166,8 @@ vAPI.Net = class extends vAPI.Net {
                 return r;
             }
         }
-        if ( dnsEntry !== undefined ) {
-            if ( isPromise(dnsEntry) === false ) {
-                return this.onAfterDNSResolution(hn, details, dnsEntry);
-            }
+        if ( isResolvedObject(dnsEntry) ) {
+            return this.onAfterDNSResolution(hn, details, dnsEntry);
         }
         if ( this.dnsShouldResolve(hn) === false ) { return; }
         if ( details.proxyInfo?.proxyDNS ) { return; }
@@ -179,7 +178,7 @@ vAPI.Net = class extends vAPI.Net {
     onAfterDNSResolution(hn, details, dnsEntry) {
         if ( dnsEntry === undefined ) {
             dnsEntry = this.dnsFromCache(hn);
-            if ( dnsEntry === undefined || isPromise(dnsEntry) ) { return; }
+            if ( isResolvedObject(dnsEntry) === false ) { return; }
         }
         let proceed = false;
         if ( dnsEntry.cname && this.cnameUncloakEnabled ) {
@@ -200,32 +199,51 @@ vAPI.Net = class extends vAPI.Net {
     }
 
     dnsToCache(hn, record, details) {
-        const i = this.dnsDict.get(hn);
-        if ( i === undefined ) { return; }
-        const dnsEntry = {
-            hn,
-            until: Date.now() + this.dnsEntryTTL,
-        };
+        const dnsEntry = { hn, until: Date.now() + this.dnsEntryTTL };
         if ( record ) {
             const cname = this.cnameFromRecord(hn, record, details);
             if ( cname ) { dnsEntry.cname = cname; }
             const ip = this.ipFromRecord(record);
             if ( ip ) { dnsEntry.ip = ip; }
         }
-        this.dnsList[i] = dnsEntry;
+        this.dnsSetCache(-1, hn, dnsEntry);
         return dnsEntry;
     }
 
     dnsFromCache(hn) {
         const i = this.dnsDict.get(hn);
         if ( i === undefined ) { return; }
+        if ( isPromise(i) ) { return i; }
         const dnsEntry = this.dnsList[i];
-        if ( dnsEntry === null ) { return; }
-        if ( isPromise(dnsEntry) ) { return dnsEntry; }
-        if ( dnsEntry.hn !== hn ) { return; }
-        if ( dnsEntry.until >= Date.now() ) { return dnsEntry; }
-        this.dnsList[i] = null;
-        this.dnsDict.delete(hn)
+        if ( dnsEntry !== null && dnsEntry.hn === hn ) {
+            if ( dnsEntry.until >= Date.now() ) {
+                return dnsEntry;
+            }
+        }
+        this.dnsSetCache(i);
+    }
+
+    dnsSetCache(i, hn, after) {
+        if ( i < 0 ) {
+            const j = this.dnsDict.get(hn);
+            if ( typeof j === 'number' ) {
+                this.dnsList[j] = after;
+                return;
+            }
+            i = this.dnsWritePtr++;
+            this.dnsWritePtr %= this.dnsMaxCount;
+        }
+        const before = this.dnsList[i];
+        if ( before ) {
+            this.dnsDict.delete(before.hn);
+        }
+        if ( after ) {
+            this.dnsDict.set(hn, i);
+            this.dnsList[i] = after;
+        } else {
+            if ( hn ) { this.dnsDict.delete(hn); }
+            this.dnsList[i] = null;
+        }
     }
 
     dnsShouldResolve(hn) {
@@ -237,14 +255,12 @@ vAPI.Net = class extends vAPI.Net {
     }
 
     dnsResolve(hn, details) {
-        const i = this.dnsWritePtr++;
-        this.dnsWritePtr %= this.dnsMaxCount;
-        this.dnsDict.set(hn, i);
         const promise = dnsAPI.resolve(hn, [ 'canonical_name' ]).then(
             rec => this.dnsToCache(hn, rec, details),
             ( ) => this.dnsToCache(hn)
         );
-        return (this.dnsList[i] = promise);
+        this.dnsDict.set(hn, promise);
+        return promise;
     }
 
     cnameFromRecord(hn, record, details) {
