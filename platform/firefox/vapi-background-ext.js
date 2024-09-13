@@ -26,7 +26,12 @@ import {
 
 /******************************************************************************/
 
-const dnsAPI = browser.dns;
+const dnsAPI = browser.dns || {
+    resolve() {
+        return Promise.resolve();
+    }
+};
+
 const isPromise = o => o instanceof Promise;
 const isResolvedObject = o => o instanceof Object &&
     o instanceof Promise === false;
