@@ -288,9 +288,8 @@ const getHostnameDict = function(hostnameDetailsMap, out) {
     const cnMap = [];
 
     const createDictEntry = (domain, hostname, details) => {
-        const cname = vAPI.net.canonicalNameFromHostname(hostname);
-        if ( cname !== undefined ) {
-            cnMap.push([ cname, hostname ]);
+        if ( details.cname ) {
+            cnMap.push([ details.cname, hostname ]);
         }
         hnDict[hostname] = { domain, counts: details.counts };
     };

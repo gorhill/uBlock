@@ -312,6 +312,7 @@ const HostnameDetails = class {
     }
     init(hostname) {
         this.hostname = hostname;
+        this.cname = vAPI.net.canonicalNameFromHostname(hostname);
         this.counts.reset();
     }
     dispose() {
