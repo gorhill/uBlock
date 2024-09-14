@@ -21,6 +21,7 @@
 
 /* global CodeMirror, uBlockDashboard */
 
+import * as s14e from './s14e-serializer.js';
 import { dom, qs$ } from './dom.js';
 
 /******************************************************************************/
@@ -78,6 +79,100 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 function log(text) {
     cmEditor.replaceRange(text.trim() + '\n\n', { line: 0, ch: 0 });
 }
+
+/******************************************************************************/
+
+function toDNRText(raw) {
+    const result = s14e.deserialize(raw);
+    if ( typeof result === 'string' ) { return result; }
+    const { network } = result;
+    const replacer = (k, v) => {
+        if ( k.startsWith('__') ) { return; }
+        if ( Array.isArray(v) ) {
+            return v.sort();
+        }
+        if ( v instanceof Object ) {
+            const sorted = {};
+            for ( const kk of Object.keys(v).sort() ) {
+                sorted[kk] = v[kk];
+            }
+            return sorted;
+        }
+        return v;
+    };
+    const isUnsupported = rule =>
+        rule._error !== undefined;
+    const isRegex = rule =>
+        rule.condition !== undefined &&
+        rule.condition.regexFilter !== undefined;
+    const isRedirect = rule =>
+        rule.action !== undefined &&
+        rule.action.type === 'redirect' &&
+        rule.action.redirect.extensionPath !== undefined;
+    const isCsp = rule =>
+        rule.action !== undefined &&
+        rule.action.type === 'modifyHeaders';
+    const isRemoveparam = rule =>
+        rule.action !== undefined &&
+        rule.action.type === 'redirect' &&
+        rule.action.redirect.transform !== undefined;
+    const { ruleset } = network;
+    const good = ruleset.filter(rule =>
+        isUnsupported(rule) === false &&
+        isRegex(rule) === false &&
+        isRedirect(rule) === false &&
+        isCsp(rule) === false &&
+        isRemoveparam(rule) === false
+    );
+    const unsupported = ruleset.filter(rule =>
+        isUnsupported(rule)
+    );
+    const regexes = ruleset.filter(rule =>
+        isUnsupported(rule) === false &&
+        isRegex(rule) &&
+        isRedirect(rule) === false &&
+        isCsp(rule) === false &&
+        isRemoveparam(rule) === false
+    );
+    const redirects = ruleset.filter(rule =>
+        isUnsupported(rule) === false &&
+        isRedirect(rule)
+    );
+    const headers = ruleset.filter(rule =>
+        isUnsupported(rule) === false &&
+        isCsp(rule)
+    );
+    const removeparams = ruleset.filter(rule =>
+        isUnsupported(rule) === false &&
+        isRemoveparam(rule)
+    );
+    const out = [
+        `dnrRulesetFromRawLists(${JSON.stringify(result.listNames, null, 2)})`,
+        `Run time: ${result.runtime} ms`,
+        `Filters count: ${network.filterCount}`,
+        `Accepted filter count: ${network.acceptedFilterCount}`,
+        `Rejected filter count: ${network.rejectedFilterCount}`,
+        `Un-DNR-able filter count: ${unsupported.length}`,
+        `Resulting DNR rule count: ${ruleset.length}`,
+    ];
+    out.push(`+ Good filters (${good.length}): ${JSON.stringify(good, replacer, 2)}`);
+    out.push(`+ Regex-based filters (${regexes.length}): ${JSON.stringify(regexes, replacer, 2)}`);
+    out.push(`+ 'redirect=' filters (${redirects.length}): ${JSON.stringify(redirects, replacer, 2)}`);
+    out.push(`+ 'csp=' filters (${headers.length}): ${JSON.stringify(headers, replacer, 2)}`);
+    out.push(`+ 'removeparam=' filters (${removeparams.length}): ${JSON.stringify(removeparams, replacer, 2)}`);
+    out.push(`+ Unsupported filters (${unsupported.length}): ${JSON.stringify(unsupported, replacer, 2)}`);
+    out.push(`+ generichide exclusions (${network.generichideExclusions.length}): ${JSON.stringify(network.generichideExclusions, replacer, 2)}`);
+    if ( result.specificCosmetic ) {
+        out.push(`+ Cosmetic filters: ${result.specificCosmetic.size}`);
+        for ( const details of result.specificCosmetic ) {
+            out.push(`    ${JSON.stringify(details)}`);
+        }
+    } else {
+        out.push('  Cosmetic filters: 0');
+    }
+    return out.join('\n');
+}
+
 
 /******************************************************************************/
 
@@ -146,7 +241,7 @@ dom.on('#snfe-todnr', 'click', ev => {
     vAPI.messaging.send('devTools', {
         what: 'snfeToDNR',
     }).then(result => {
-        log(result);
+        log(toDNRText(result));
         dom.attr(button, 'disabled', null);
     });
 });

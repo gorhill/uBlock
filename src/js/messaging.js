@@ -42,7 +42,6 @@ import {
 import cacheStorage from './cachestorage.js';
 import cosmeticFilteringEngine from './cosmetic-filtering.js';
 import { denseBase64 } from './base64-custom.js';
-import { dnrRulesetFromRawLists } from './static-dnr-filtering.js';
 import { filteringBehaviorChanged } from './broadcast.js';
 import htmlFilteringEngine from './html-filtering.js';
 import { i18n$ } from './i18n.js';
@@ -1897,95 +1896,15 @@ const onMessage = function(request, sender, callback) {
             ),
             env: vAPI.webextFlavor.env,
         };
-        const t0 = Date.now();
-        dnrRulesetFromRawLists(listPromises, options).then(result => {
-            const { network } = result;
-            const replacer = (k, v) => {
-                if ( k.startsWith('__') ) { return; }
-                if ( Array.isArray(v) ) {
-                    return v.sort();
-                }
-                if ( v instanceof Object ) {
-                    const sorted = {};
-                    for ( const kk of Object.keys(v).sort() ) {
-                        sorted[kk] = v[kk];
-                    }
-                    return sorted;
-                }
-                return v;
-            };
-            const isUnsupported = rule =>
-                rule._error !== undefined;
-            const isRegex = rule =>
-                rule.condition !== undefined &&
-                rule.condition.regexFilter !== undefined;
-            const isRedirect = rule =>
-                rule.action !== undefined &&
-                rule.action.type === 'redirect' &&
-                rule.action.redirect.extensionPath !== undefined;
-            const isCsp = rule =>
-                rule.action !== undefined &&
-                rule.action.type === 'modifyHeaders';
-            const isRemoveparam = rule =>
-                rule.action !== undefined &&
-                rule.action.type === 'redirect' &&
-                rule.action.redirect.transform !== undefined;
-            const runtime = Date.now() - t0;
-            const { ruleset } = network;
-            const good = ruleset.filter(rule =>
-                isUnsupported(rule) === false &&
-                isRegex(rule) === false &&
-                isRedirect(rule) === false &&
-                isCsp(rule) === false &&
-                isRemoveparam(rule) === false
-            );
-            const unsupported = ruleset.filter(rule =>
-                isUnsupported(rule)
-            );
-            const regexes = ruleset.filter(rule =>
-                isUnsupported(rule) === false &&
-                isRegex(rule) &&
-                isRedirect(rule) === false &&
-                isCsp(rule) === false &&
-                isRemoveparam(rule) === false
-            );
-            const redirects = ruleset.filter(rule =>
-                isUnsupported(rule) === false &&
-                isRedirect(rule)
-            );
-            const headers = ruleset.filter(rule =>
-                isUnsupported(rule) === false &&
-                isCsp(rule)
-            );
-            const removeparams = ruleset.filter(rule =>
-                isUnsupported(rule) === false &&
-                isRemoveparam(rule)
-            );
-            const out = [
-                `dnrRulesetFromRawLists(${JSON.stringify(listNames, null, 2)})`,
-                `Run time: ${runtime} ms`,
-                `Filters count: ${network.filterCount}`,
-                `Accepted filter count: ${network.acceptedFilterCount}`,
-                `Rejected filter count: ${network.rejectedFilterCount}`,
-                `Un-DNR-able filter count: ${unsupported.length}`,
-                `Resulting DNR rule count: ${ruleset.length}`,
-            ];
-            out.push(`+ Good filters (${good.length}): ${JSON.stringify(good, replacer, 2)}`);
-            out.push(`+ Regex-based filters (${regexes.length}): ${JSON.stringify(regexes, replacer, 2)}`);
-            out.push(`+ 'redirect=' filters (${redirects.length}): ${JSON.stringify(redirects, replacer, 2)}`);
-            out.push(`+ 'csp=' filters (${headers.length}): ${JSON.stringify(headers, replacer, 2)}`);
-            out.push(`+ 'removeparam=' filters (${removeparams.length}): ${JSON.stringify(removeparams, replacer, 2)}`);
-            out.push(`+ Unsupported filters (${unsupported.length}): ${JSON.stringify(unsupported, replacer, 2)}`);
-            out.push(`+ generichide exclusions (${network.generichideExclusions.length}): ${JSON.stringify(network.generichideExclusions, replacer, 2)}`);
-            if ( result.specificCosmetic ) {
-                out.push(`+ Cosmetic filters: ${result.specificCosmetic.size}`);
-                for ( const details of result.specificCosmetic ) {
-                    out.push(`    ${JSON.stringify(details)}`);
-                }
-            } else {
-                out.push('  Cosmetic filters: 0');
-            }
-            callback(out.join('\n'));
+        import('./static-dnr-filtering.js').then(module => {
+            const t0 = Date.now();
+            module.dnrRulesetFromRawLists(listPromises, options).then(dnrdata => {
+                dnrdata.listNames = listNames;
+                dnrdata.runtime = Date.now() - t0;
+                callback(s14e.serialize(dnrdata));
+            })
+        }).catch(reason => {
+            callback(reason);
         });
         return;
     }
