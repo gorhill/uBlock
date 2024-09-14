@@ -61,6 +61,7 @@ const contentScriptRegisterer = new (class {
             runAt: 'document_start',
         }).then(handle => {
             this.hostnameToDetails.set(hostname, { handle, code });
+            return handle;
         }).catch(( ) => {
             this.hostnameToDetails.delete(hostname);
         });
@@ -94,7 +95,9 @@ const contentScriptRegisterer = new (class {
     }
     unregisterHandle(handle) {
         if ( handle instanceof Promise ) {
-            handle.then(handle => { handle.unregister(); });
+            handle.then(handle => {
+                if ( handle ) { handle.unregister(); }
+            });
         } else {
             handle.unregister();
         }
