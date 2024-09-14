@@ -257,7 +257,7 @@ export const FilteringContext = class {
         const c0 = ipaddr.charCodeAt(0);
         if ( c0 === 0x5B /* [ */ ) {
             return (this.ipaddress = ipaddr.slice(1, -1));
-        } else if ( c0 >= 0x30 && c0 <= 0x39 ) {
+        } else if ( c0 <= 0x39 && c0 >= 0x30 ) {
             if ( reIPv4.test(ipaddr) ) {
                 return (this.ipaddress = ipaddr);
             }
