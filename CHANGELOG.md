@@ -11,6 +11,7 @@
 - [Add ability to directly evaluate static network filtering engine](https://github.com/gorhill/uBlock/commit/b7ed3b45ed)
 - [Fix `prevent-window-open` for when logger is open](https://github.com/gorhill/uBlock/commit/f552f655cb)
 - [Improve `prevent-window-open` scriptlet](https://github.com/gorhill/uBlock/commit/7f11d6216e)
+- [Improve `validate-constant` scriptlet helper](https://github.com/gorhill/uBlock/commit/ae5dc6299e)
 - [Improve `trusted-replace-outbound-text` scriptlet](https://github.com/gorhill/uBlock/commit/0dcb985601)
 - [Improve `prevent-xhr` scriptlet](https://github.com/gorhill/uBlock/commit/3a249f395c)
 - [Add noop resources for redirect purpose](https://github.com/gorhill/uBlock/commit/59a9a43a83)
