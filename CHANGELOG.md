@@ -1,3 +1,4 @@
+- [New static network filter option `urlskip=`](https://github.com/gorhill/uBlock/commit/266ec4894b)
 - [Rewrite cname uncloaking code to account for new `ipaddress=` option](https://github.com/gorhill/uBlock/commit/6acf97bf51)
 - [Avoid using dns.resolve() for proxied DNS resolution](https://github.com/gorhill/uBlock/commit/d5f14ffa32)
 - [Add support for `lan`/`loopback` values to `ipaddress=` option](https://github.com/gorhill/uBlock/commit/030d7334e4)
