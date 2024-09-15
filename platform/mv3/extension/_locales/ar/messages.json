@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "أداة لحظر المحتوى بدون إذن. يحظر الإعلانات وأدوات التتبع وأدوات التعدين وغيرها فور التثبيت.",
+    "message": "أداة لحظر المحتوى دون إذن. يحظر الإعلانات وأدوات التتبع وأدوات التعدين وغيرها فور التثبيت.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
