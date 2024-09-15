@@ -163,6 +163,9 @@ export const FilteringContext = class {
         this.stype = a;
     }
 
+    isRootDocument() {
+        return (this.itype & MAIN_FRAME) !== 0;
+    }
     isDocument() {
         return (this.itype & FRAME_ANY) !== 0;
     }

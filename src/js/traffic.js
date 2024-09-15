@@ -188,17 +188,20 @@ const onBeforeRootFrameRequest = function(fctxt) {
     }
 
     if ( logger.enabled ) {
-        fctxt.setFilter(logData);
+        fctxt.setRealm('network').setFilter(logData);
     }
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/760
     //   Redirect non-blocked request?
-    if ( result !== 1 && trusted === false && pageStore !== null ) {
-        pageStore.redirectNonBlockedRequest(fctxt);
+    if ( trusted === false && pageStore !== null ) {
+        if ( result !== 1 ) {
+            pageStore.redirectNonBlockedRequest(fctxt);
+        }
+        pageStore.skipMainDocument(fctxt);
     }
 
     if ( logger.enabled ) {
-        fctxt.setRealm('network').toLogger();
+        fctxt.toLogger();
     }
 
     // Redirected

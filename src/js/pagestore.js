@@ -933,24 +933,32 @@ const PageStore = class {
     }
 
     redirectNonBlockedRequest(fctxt) {
-        const transformDirectives = staticNetFilteringEngine.transformRequest(fctxt);
-        const pruneDirectives = fctxt.redirectURL === undefined &&
-            staticNetFilteringEngine.hasQuery(fctxt) &&
-            staticNetFilteringEngine.filterQuery(fctxt) ||
-            undefined;
-        if ( transformDirectives === undefined && pruneDirectives === undefined ) { return; }
+        const directives = [];
+        staticNetFilteringEngine.transformRequest(fctxt, directives);
+        if ( staticNetFilteringEngine.hasQuery(fctxt) ) {
+            staticNetFilteringEngine.filterQuery(fctxt, directives);
+        }
+        if ( directives.length === 0 ) { return; }
         if ( logger.enabled !== true ) { return; }
-        if ( transformDirectives !== undefined ) {
-            fctxt.pushFilters(transformDirectives.map(a => a.logData()));
-        }
-        if ( pruneDirectives !== undefined ) {
-            fctxt.pushFilters(pruneDirectives.map(a => a.logData()));
-        }
+        fctxt.pushFilters(directives.map(a => a.logData()));
         if ( fctxt.redirectURL === undefined ) { return; }
         fctxt.pushFilter({
             source: 'redirect',
             raw: fctxt.redirectURL
         });
+    }
+
+    skipMainDocument(fctxt) {
+        const directives = staticNetFilteringEngine.urlSkip(fctxt);
+        if ( directives === undefined ) { return; }
+        if ( logger.enabled !== true ) { return; }
+        fctxt.pushFilters(directives.map(a => a.logData()));
+        if ( fctxt.redirectURL !== undefined ) {
+            fctxt.pushFilter({
+                source: 'redirect',
+                raw: fctxt.redirectURL
+            });
+        }
     }
 
     filterCSPReport(fctxt) {

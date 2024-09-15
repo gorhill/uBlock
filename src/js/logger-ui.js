@@ -331,7 +331,7 @@ const processLoggerEntries = function(response) {
             parsed.type === 'main_frame' &&
             parsed.aliased === false && (
                 parsed.filter === undefined ||
-                parsed.filter.modifier !== true
+                parsed.filter.modifier !== true && parsed.filter.source !== 'redirect'
             )
         ) {
             const separator = createLogSeparator(parsed, unboxed.url);
