@@ -1011,6 +1011,10 @@
     "message": "అనవసరమైన ట్యాబ్‌లు లేదా విండోలను తెరుస్తుంది",
     "description": "An entry in the widget used to select the type of issue"
   },
+  "supportS6Select1Option7": {
+    "message": "Leads to badware, phishing",
+    "description": "An entry in the widget used to select the type of issue"
+  },
   "supportS6Checkbox1": {
     "message": "వెబ్ పేజీని “NSFW”గా లేబుల్ చేయండి (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“పని కోసం సురక్షితం కాదు”</a>)",
     "description": "A checkbox to use for NSFW sites"

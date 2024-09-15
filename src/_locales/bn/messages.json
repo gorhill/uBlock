@@ -1011,6 +1011,10 @@
     "message": "অবাঞ্ছিত ট্যাব বা উইন্ডো খোলে",
     "description": "An entry in the widget used to select the type of issue"
   },
+  "supportS6Select1Option7": {
+    "message": "Leads to badware, phishing",
+    "description": "An entry in the widget used to select the type of issue"
+  },
   "supportS6Checkbox1": {
     "message": "ওয়েব পৃষ্ঠাটিকে “NSFW” হিসাবে লেবেল করুন (<a href=\"https://bn.wikipedia.org/wiki/নট_সেফ_ফর_ওয়ার্ক\">“কাজের জন্য নিরাপদ নয়”</a>)",
     "description": "A checkbox to use for NSFW sites"

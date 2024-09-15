@@ -1011,6 +1011,10 @@
     "message": "Malfermas nedeziratajn langetojn aŭ fenestrojn",
     "description": "An entry in the widget used to select the type of issue"
   },
+  "supportS6Select1Option7": {
+    "message": "Leads to badware, phishing",
+    "description": "An entry in the widget used to select the type of issue"
+  },
   "supportS6Checkbox1": {
     "message": "Marki la paĝon kiel «<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">nelabortaŭgan</a>»",
     "description": "A checkbox to use for NSFW sites"

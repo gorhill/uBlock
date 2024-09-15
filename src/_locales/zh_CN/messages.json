@@ -1011,6 +1011,10 @@
     "message": "打开不需要的标签页或窗口",
     "description": "An entry in the widget used to select the type of issue"
   },
+  "supportS6Select1Option7": {
+    "message": "Leads to badware, phishing",
+    "description": "An entry in the widget used to select the type of issue"
+  },
   "supportS6Checkbox1": {
     "message": "将该网页标记为 “NSFW”（<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“工作场所不宜”</a>）",
     "description": "A checkbox to use for NSFW sites"

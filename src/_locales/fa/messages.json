@@ -1011,6 +1011,10 @@
     "message": "تب یا پنجره‌ی ناخواسته باز می‌کند",
     "description": "An entry in the widget used to select the type of issue"
   },
+  "supportS6Select1Option7": {
+    "message": "Leads to badware, phishing",
+    "description": "An entry in the widget used to select the type of issue"
+  },
   "supportS6Checkbox1": {
     "message": "علامت زدن صفحه به عنوان \"NSFW\" (<a href=\"https://fa.wikipedia.org/wiki/%D9%86%D8%A7%D9%85%D9%86%D8%A7%D8%B3%D8%A8_%D8%A8%D8%B1%D8%A7%DB%8C_%DA%A9%D8%A7%D8%B1\">\"نامناسب برای کار\"</a>)",
     "description": "A checkbox to use for NSFW sites"

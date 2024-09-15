@@ -1011,6 +1011,10 @@
     "message": "Xuất hiện các tab và cửa sổ ngoài mong muốn",
     "description": "An entry in the widget used to select the type of issue"
   },
+  "supportS6Select1Option7": {
+    "message": "Leads to badware, phishing",
+    "description": "An entry in the widget used to select the type of issue"
+  },
   "supportS6Checkbox1": {
     "message": "Đánh dấu \"NFSW\" - Not Safe For Work cho trang web. <a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">Tìm hiểu về \"Not Safe For Work\"</a>",
     "description": "A checkbox to use for NSFW sites"

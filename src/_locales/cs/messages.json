@@ -1011,6 +1011,10 @@
     "message": "Otevírá nechtěné karty nebo okna",
     "description": "An entry in the widget used to select the type of issue"
   },
+  "supportS6Select1Option7": {
+    "message": "Leads to badware, phishing",
+    "description": "An entry in the widget used to select the type of issue"
+  },
   "supportS6Checkbox1": {
     "message": "Označit webovou stránku jako &ldquo;NSFW&rdquo; (<a href=\"https://cs.wikipedia.org/wiki/Not_safe_for_work\">Není bezpečné pro práci&rdquo;)",
     "description": "A checkbox to use for NSFW sites"

@@ -1011,6 +1011,10 @@
     "message": "افتح التبويبات أو النوافذ التي ليس مرغوبًا بها",
     "description": "An entry in the widget used to select the type of issue"
   },
+  "supportS6Select1Option7": {
+    "message": "Leads to badware, phishing",
+    "description": "An entry in the widget used to select the type of issue"
+  },
   "supportS6Checkbox1": {
     "message": "تسمية صفحة الويب باسم \"NSFW\" (<a href=\"https://ar.wikipedia.org/wiki/%D8%BA%D9%8A%D8%B1_%D9%85%D9%86%D8%A7%D8%B3%D8%A8_%D9%84%D9%84%D8%B9%D9%85%D9%84\">\"ليس آمن للعمل\"\n",
     "description": "A checkbox to use for NSFW sites"

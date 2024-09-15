@@ -1011,6 +1011,10 @@
     "message": "Բացում է անցանկալի ներդիրները կամ լուսամուտները",
     "description": "An entry in the widget used to select the type of issue"
   },
+  "supportS6Select1Option7": {
+    "message": "Leads to badware, phishing",
+    "description": "An entry in the widget used to select the type of issue"
+  },
   "supportS6Checkbox1": {
     "message": "Նշել վեբ էջը որպես «NSFW» (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">«Աշխատանքի համար անվտանգ չէ»</a>)",
     "description": "A checkbox to use for NSFW sites"

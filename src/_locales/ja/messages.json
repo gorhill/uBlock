@@ -1011,6 +1011,10 @@
     "message": "勝手にタブやウィンドウを開きます",
     "description": "An entry in the widget used to select the type of issue"
   },
+  "supportS6Select1Option7": {
+    "message": "Leads to badware, phishing",
+    "description": "An entry in the widget used to select the type of issue"
+  },
   "supportS6Checkbox1": {
     "message": "ウェブページに“NSFW” (閲覧注意、<a href=\"https://ja.wikipedia.org/wiki/NSFW\">“Not Safe For Work”</a>) とラベルをつける",
     "description": "A checkbox to use for NSFW sites"

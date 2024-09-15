@@ -1011,6 +1011,10 @@
     "message": "원치 않는 탭이나 창을 엽니다",
     "description": "An entry in the widget used to select the type of issue"
   },
+  "supportS6Select1Option7": {
+    "message": "Leads to badware, phishing",
+    "description": "An entry in the widget used to select the type of issue"
+  },
   "supportS6Checkbox1": {
     "message": "웹페이지를 \"NSFW\"  (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)로 분류",
     "description": "A checkbox to use for NSFW sites"
