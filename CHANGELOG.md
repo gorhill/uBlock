@@ -1,3 +1,4 @@
+- [Throttle down repeated scriptlet logging information](https://github.com/gorhill/uBlock/commit/e8f6f3ddff)
 - [Improve scriptlet helper `proxy-apply`](https://github.com/gorhill/uBlock/commit/547fae4842)
 - [Add an entry in _Report_ page for badware/phishing category](https://github.com/gorhill/uBlock/commit/e18a3707c7)
 - [New static network filter option `urlskip=`](https://github.com/gorhill/uBlock/commit/266ec4894b)
