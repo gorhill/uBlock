@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "終於，有款僅使用少量 CPU 及記憶體的高效率阻擋器。",
+    "message": "終於有一款高效能的封鎖工具。對 CPU 和記憶體的佔用極低。",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
@@ -1012,7 +1012,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leads to badware, phishing",
+    "message": "導致惡意軟體、網路釣魚",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {

@@ -76,7 +76,7 @@
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Kattints az uBlock₀ engedélyezéséhez ezen a webhelyen.",
+    "message": "Kattintson a uBlock₀ engedélyezéséhez ezen a webhelyen.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -136,7 +136,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Kattints az összes előugró ablak letiltásához ezen a webhelyen",
+    "message": "Kattintson az összes felugró ablak letiltásához ezen a webhelyen",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
@@ -1012,7 +1012,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leads to badware, phishing",
+    "message": "Kártékony programokhoz, adathalászathoz vezet",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {

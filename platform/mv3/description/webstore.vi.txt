@@ -7,7 +7,7 @@ Bộ quy tắc mặc định tương tự bộ lọc của uBlock Origin:
 - EasyPrivacy
 - Danh sách máy chủ chạy quảng cáo và trình theo dõi của Pete Lowe
 
-You can enable more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+Bạn có thể tự thêm quy tắc mới ở trang cài đặt -- click vào biểu tượng _Bánh răng_ ở trong cửa sổ popup.
 
 uBOL mang tính khai báo hoàn toàn, vì vậy uBOL sẽ không cần phải liên tục chạy để chặn nội dung. Thay vào đó, chính trình duyệt sẽ thực hiện lọc nội dung bằng cách sử dụng công cụ chèn CSS/JS hiệu quả hơn có sẵn của nó. Điều này cũng đồng thời có nghĩa là uBOL sẽ không tiêu tốn tài nguyên CPU/bộ nhớ của bạn để chặn nội dung. uBOL sẽ chỉ chạy _khi và chỉ khi_ bạn đang xem cửa sổ popup của uBOL, hoặc bạn đang cấu hình uBOL ở trang cài đặt.
 

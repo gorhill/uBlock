@@ -128,7 +128,7 @@
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
-    "message": "elkészült",
+    "message": "teljes",
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
@@ -148,7 +148,7 @@
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
-    "message": "[hostnames only]\nexample.com\ngames.example\n...",
+    "message": "[csak kiszolgálónevek]\nexample.com\ngames.example\n...",
     "description": "Default text for in edit field"
   },
   "behaviorSectionLabel": {
