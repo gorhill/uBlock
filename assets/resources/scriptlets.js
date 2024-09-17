@@ -176,9 +176,18 @@ function safeSelf() {
     const bc = new self.BroadcastChannel(scriptletGlobals.bcSecret);
     let bcBuffer = [];
     safe.logLevel = scriptletGlobals.logLevel || 1;
+    let lastLogType = '';
+    let lastLogText = '';
+    let lastLogTime = 0;
     safe.sendToLogger = (type, ...args) => {
         if ( args.length === 0 ) { return; }
         const text = `[${document.location.hostname || document.location.href}]${args.join(' ')}`;
+        if ( text === lastLogText && type === lastLogType ) {
+            if ( (Date.now() - lastLogTime) < 300000 ) { return; }
+        }
+        lastLogType = type;
+        lastLogText = text;
+        lastLogTime = Date.now();
         if ( bcBuffer === undefined ) {
             return bc.postMessage({ what: 'messageToLogger', type, text });
         }
