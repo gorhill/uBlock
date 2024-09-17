@@ -1488,26 +1488,44 @@ function proxyApplyFn(
     }
     const fn = context[prop];
     if ( typeof fn !== 'function' ) { return; }
+    if ( proxyApplyFn.CtorContext === undefined ) {
+        proxyApplyFn.CtorContext = class {
+            constructor(callFn, callArgs) {
+                this.callFn = callFn;
+                this.callArgs = callArgs;
+            }
+            reflect() {
+                return Reflect.construct(this.callFn, this.callArgs);
+            }
+        };
+        proxyApplyFn.ApplyContext = class {
+            constructor(callFn, thisArg, callArgs) {
+                this.callFn = callFn;
+                this.thisArg = thisArg;
+                this.callArgs = callArgs;
+            }
+            reflect() {
+                return Reflect.apply(this.callFn, this.thisArg, this.callArgs);
+            }
+        };
+    }
     const fnStr = fn.toString();
     const toString = (function toString() { return fnStr; }).bind(null);
-    if ( fn.prototype && fn.prototype.constructor === fn ) {
-        context[prop] = new Proxy(fn, {
-            construct: handler,
-            get(target, prop, receiver) {
-                if ( prop === 'toString' ) { return toString; }
-                return Reflect.get(target, prop, receiver);
-            },
-        });
-        return (...args) => Reflect.construct(...args);
-    }
-    context[prop] = new Proxy(fn, {
-        apply: handler,
+    const proxyDetails = {
+        apply(target, thisArg, args) {
+            return handler(new proxyApplyFn.ApplyContext(target, thisArg, args));
+        },
         get(target, prop, receiver) {
             if ( prop === 'toString' ) { return toString; }
             return Reflect.get(target, prop, receiver);
         },
-    });
-    return (...args) => Reflect.apply(...args);
+    };
+    if ( fn.prototype?.constructor === fn ) {
+        proxyDetails.construct = function(target, args) {
+            return handler(new proxyApplyFn.CtorContext(target, args));
+        };
+    }
+    context[prop] = new Proxy(fn, proxyDetails);
 }
 
 /*******************************************************************************
@@ -1771,18 +1789,19 @@ function addEventListenerDefuser(
         return matchesBoth;
     };
     runAt(( ) => {
-        proxyApplyFn('EventTarget.prototype.addEventListener', function(target, thisArg, args) {
+        proxyApplyFn('EventTarget.prototype.addEventListener', function(context) {
+            const { callArgs, thisArg } = context;
             let t, h;
             try {
-                t = String(args[0]);
-                if ( typeof args[1] === 'function' ) {
-                    h = String(safe.Function_toString(args[1]));
-                } else if ( typeof args[1] === 'object' && args[1] !== null ) {
-                    if ( typeof args[1].handleEvent === 'function' ) {
-                        h = String(safe.Function_toString(args[1].handleEvent));
+                t = String(callArgs[0]);
+                if ( typeof callArgs[1] === 'function' ) {
+                    h = String(safe.Function_toString(callArgs[1]));
+                } else if ( typeof callArgs[1] === 'object' && callArgs[1] !== null ) {
+                    if ( typeof callArgs[1].handleEvent === 'function' ) {
+                        h = String(safe.Function_toString(callArgs[1].handleEvent));
                     }
                 } else {
-                    h = String(args[1]);
+                    h = String(callArgs[1]);
                 }
             } catch(ex) {
             }
@@ -1791,7 +1810,7 @@ function addEventListenerDefuser(
             } else if ( shouldPrevent(thisArg, t, h) ) {
                 return safe.uboLog(logPrefix, `Prevented: ${t}\n${h}\n${elementDetails(thisArg)}`);
             }
-            return Reflect.apply(target, thisArg, args);
+            return context.reflect();
         });
     }, extraArgs.runAt);
 }
@@ -2176,10 +2195,11 @@ function noFetchIf(
             responseProps.type = { value: responseType };
         }
     }
-    proxyApplyFn('fetch', function fetch(target, thisArg, args) {
-        const details = args[0] instanceof self.Request
-            ? args[0]
-            : Object.assign({ url: args[0] }, args[1]);
+    proxyApplyFn('fetch', function fetch(context) {
+        const { callArgs } = context;
+        const details = callArgs[0] instanceof self.Request
+            ? callArgs[0]
+            : Object.assign({ url: callArgs[0] }, callArgs[1]);
         let proceed = true;
         try {
             const props = new Map();
@@ -2197,7 +2217,7 @@ function noFetchIf(
                 safe.uboLog(logPrefix, `Called: ${out.join('\n')}`);
             }
             if ( propsToMatch === '' && responseBody === '' ) {
-                return Reflect.apply(target, thisArg, args);
+                return context.reflect();
             }
             proceed = needles.length === 0;
             for ( const { key, pattern } of needles ) {
@@ -2212,7 +2232,7 @@ function noFetchIf(
         } catch(ex) {
         }
         if ( proceed ) {
-            return Reflect.apply(target, thisArg, args);
+            return context.reflect();
         }
         return generateContentFn(responseBody).then(text => {
             safe.uboLog(logPrefix, `Prevented with response "${text}"`);
@@ -2520,14 +2540,15 @@ function noSetIntervalIf(
         delay = parseInt(delay, 10);
     }
     const reNeedle = safe.patternToRegex(needle);
-    proxyApplyFn('setInterval', function setInterval(target, thisArg, args) {
-        const a = args[0] instanceof Function
-            ? String(safe.Function_toString(args[0]))
-            : String(args[0]);
-        const b = args[1];
+    proxyApplyFn('setInterval', function setInterval(context) {
+        const { callArgs } = context;
+        const a = callArgs[0] instanceof Function
+            ? String(safe.Function_toString(callArgs[0]))
+            : String(callArgs[0]);
+        const b = callArgs[1];
         if ( needle === '' && delay === undefined ) {
             safe.uboLog(logPrefix, `Called:\n${a}\n${b}`);
-            return Reflect.apply(target, thisArg, args);
+            return context.reflect();
         }
         let defuse;
         if ( needle !== '' ) {
@@ -2537,10 +2558,10 @@ function noSetIntervalIf(
             defuse = (b === delay || isNaN(b) && isNaN(delay) ) !== delayNot;
         }
         if ( defuse ) {
-            args[0] = function(){};
+            callArgs[0] = function(){};
             safe.uboLog(logPrefix, `Prevented:\n${a}\n${b}`);
         }
-        return Reflect.apply(target, thisArg, args);
+        return context.reflect();
     });
 }
 
@@ -2576,14 +2597,15 @@ function noSetTimeoutIf(
         delay = parseInt(delay, 10);
     }
     const reNeedle = safe.patternToRegex(needle);
-    proxyApplyFn('setTimeout', function setTimeout(target, thisArg, args) {
-        const a = args[0] instanceof Function
-            ? String(safe.Function_toString(args[0]))
-            : String(args[0]);
-        const b = args[1];
+    proxyApplyFn('setTimeout', function setTimeout(context) {
+        const { callArgs } = context;
+        const a = callArgs[0] instanceof Function
+            ? String(safe.Function_toString(callArgs[0]))
+            : String(callArgs[0]);
+        const b = callArgs[1];
         if ( needle === '' && delay === undefined ) {
             safe.uboLog(logPrefix, `Called:\n${a}\n${b}`);
-            return Reflect.apply(target, thisArg, args);
+            return context.reflect();
         }
         let defuse;
         if ( needle !== '' ) {
@@ -2593,10 +2615,10 @@ function noSetTimeoutIf(
             defuse = (b === delay || isNaN(b) && isNaN(delay) ) !== delayNot;
         }
         if ( defuse ) {
-            args[0] = function(){};
+            callArgs[0] = function(){};
             safe.uboLog(logPrefix, `Prevented:\n${a}\n${b}`);
         }
-        return Reflect.apply(target, thisArg, args);
+        return context.reflect();
     });
 }
 
@@ -2900,25 +2922,26 @@ function noWindowOpenIf(
         return decoyElem;
     };
     const noopFunc = function(){};
-    proxyApplyFn('open', function open(target, thisArg, args) {
-        const haystack = args.join(' ');
+    proxyApplyFn('open', function open(context) {
+        const { callArgs } = context;
+        const haystack = callArgs.join(' ');
         if ( rePattern.test(haystack) !== targetMatchResult ) {
             if ( safe.logLevel > 1 ) {
-                safe.uboLog(logPrefix, `Allowed (${args.join(', ')})`);
+                safe.uboLog(logPrefix, `Allowed (${callArgs.join(', ')})`);
             }
-            return Reflect.apply(target, thisArg, args);
+            return context.reflect();
         }
-        safe.uboLog(logPrefix, `Prevented (${args.join(', ')})`);
+        safe.uboLog(logPrefix, `Prevented (${callArgs.join(', ')})`);
         if ( delay === '' ) { return null; }
         if ( decoy === 'blank' ) {
-            args[0] = 'about:blank';
-            const r = Reflect.apply(target, thisArg, args);
+            callArgs[0] = 'about:blank';
+            const r = context.reflect();
             setTimeout(( ) => { r.close(); }, autoRemoveAfter);
             return r;
         }
         const decoyElem = decoy === 'obj'
-            ? createDecoy('object', 'data', ...args)
-            : createDecoy('iframe', 'src', ...args);
+            ? createDecoy('object', 'data', ...callArgs)
+            : createDecoy('iframe', 'src', ...callArgs);
         let popup = decoyElem.contentWindow;
         if ( typeof popup === 'object' && popup !== null ) {
             Object.defineProperty(popup, 'closed', { value: false });
@@ -4850,8 +4873,8 @@ function trustedPruneOutboundObject(
     if ( propChain === '' ) { return; }
     const safe = safeSelf();
     const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
-    const reflector = proxyApplyFn(propChain, function(...args) {
-        const objBefore = reflector(...args);
+    proxyApplyFn(propChain, function(context) {
+        const objBefore = context.reflect();
         if ( objBefore instanceof Object === false ) { return objBefore; }
         const objAfter = objectPruneFn(
             objBefore,
@@ -4884,26 +4907,27 @@ function trustedReplaceArgument(
     if ( propChain === '' ) { return; }
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix('trusted-replace-argument', propChain, argposRaw, argraw);
-    const argpos = parseInt(argposRaw, 10) || 0;
+    const argoffset = parseInt(argposRaw, 10) || 0;
     const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
     const normalValue = validateConstantFn(true, argraw, extraArgs);
     const reCondition = extraArgs.condition
         ? safe.patternToRegex(extraArgs.condition)
         : /^/;
-    const reflector = proxyApplyFn(propChain, function(...args) {
+    proxyApplyFn(propChain, function(context) {
+        const { callArgs } = context;
         if ( argposRaw === '' ) {
-            safe.uboLog(logPrefix, `Arguments:\n${args.join('\n')}`);
-            return reflector(...args);
+            safe.uboLog(logPrefix, `Arguments:\n${callArgs.join('\n')}`);
+            return context.reflect();
         }
-        const arglist = args[args.length-1];
-        if ( Array.isArray(arglist) === false ) { return reflector(...args); }
-        const argBefore = arglist[argpos];
-        if ( safe.RegExp_test.call(reCondition, argBefore) === false ) {
-            return reflector(...args);
+        const argpos = argoffset >= 0 ? argoffset : callArgs.length - argoffset;
+        if ( argpos >= 0 && argpos < callArgs.length ) {
+            const argBefore = callArgs[argpos];
+            if ( safe.RegExp_test.call(reCondition, argBefore) ) {
+                callArgs[argpos] = normalValue;
+                safe.uboLog(logPrefix, `Replaced argument:\nBefore: ${JSON.stringify(argBefore)}\nAfter: ${normalValue}`);
+            }
         }
-        arglist[argpos] = normalValue;
-        safe.uboLog(logPrefix, `Replaced argument:\nBefore: ${JSON.stringify(argBefore)}\nAfter: ${normalValue}`);
-        return reflector(...args);
+        return context.reflect();
     });
 }
 
@@ -4933,8 +4957,8 @@ function trustedReplaceOutboundText(
         : rawReplacement;
     const extraArgs = safe.getExtraArgs(args);
     const reCondition = safe.patternToRegex(extraArgs.condition || '');
-    const reflector = proxyApplyFn(propChain, function(...args) {
-        const encodedTextBefore = reflector(...args);
+    proxyApplyFn(propChain, function(context) {
+        const encodedTextBefore = context.reflect();
         let textBefore = encodedTextBefore;
         if ( extraArgs.encoding === 'base64' ) {
             try { textBefore = self.atob(encodedTextBefore); }
@@ -5011,34 +5035,31 @@ function trustedSuppressNativeMethod(
             return { type: 'exact', value: undefined };
         }
     });
-    const reflector = proxyApplyFn(methodPath, function(...args) {
+    proxyApplyFn(methodPath, function(context) {
+        const { callArgs } = context;
         if ( signature === '' ) {
-            safe.uboLog(logPrefix, `Arguments:\n${args.join('\n')}`);
-            return reflector(...args);
+            safe.uboLog(logPrefix, `Arguments:\n${callArgs.join('\n')}`);
+            return context.reflect();
         }
-        const arglist = args[args.length-1];
-        if ( Array.isArray(arglist) === false ) {
-            return reflector(...args);
-        }
-        if ( arglist.length < signatureArgs.length ) {
-            return reflector(...args);
+        if ( callArgs.length < signatureArgs.length ) {
+            return context.reflect();
         }
         for ( let i = 0; i < signatureArgs.length; i++ ) {
             const signatureArg = signatureArgs[i];
             if ( signatureArg === undefined ) { continue; }
-            const targetArg = arglist[i];
+            const targetArg = callArgs[i];
             if ( signatureArg.type === 'exact' ) {
                 if ( targetArg !== signatureArg.value ) {
-                    return reflector(...args);
+                    return context.reflect();
                 }
             }
             if ( signatureArg.type === 'pattern' ) {
                 if ( safe.RegExp_test.call(signatureArg.re, targetArg) === false ) {
-                    return reflector(...args);
+                    return context.reflect();
                 }
             }
         }
-        safe.uboLog(logPrefix, `Suppressed:\n${args.join('\n')}`);
+        safe.uboLog(logPrefix, `Suppressed:\n${callArgs.join('\n')}`);
         if ( how === 'abort' ) {
             throw new ReferenceError();
         }
