@@ -183,7 +183,7 @@ function safeSelf() {
         if ( args.length === 0 ) { return; }
         const text = `[${document.location.hostname || document.location.href}]${args.join(' ')}`;
         if ( text === lastLogText && type === lastLogType ) {
-            if ( (Date.now() - lastLogTime) < 300000 ) { return; }
+            if ( (Date.now() - lastLogTime) < 5000 ) { return; }
         }
         lastLogType = type;
         lastLogText = text;
