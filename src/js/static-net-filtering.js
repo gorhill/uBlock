@@ -2979,26 +2979,48 @@ registerFilterClass(FilterOnHeaders);
 /******************************************************************************/
 
 class FilterIPAddress {
+    static TYPE_UNKNOWN = 0;
+    static TYPE_EQUAL = 1;
+    static TYPE_STARTSWITH = 2;
+    static TYPE_LAN = 3;
+    static TYPE_LOOPBACK = 4;
+    static TYPE_RE = 5;
     static reIPv6IPv4lan = /^::ffff:(7f\w{2}|a\w{2}|a9fe|c0a8):\w+$/;
     static reIPv6local = /^f[cd]\w{2}:/;
 
     static match(idata) {
         const ipaddr = $requestAddress;
-        const details = filterRefs[filterData[idata+1]];
-        if ( details.isRegex ) {
-            if ( details.$re === undefined ) {
-                details.$re = new RegExp(details.pattern.slice(1, -1));
-            }
-            return details.$re.test(ipaddr);
-        }
         if ( ipaddr === '' ) { return false; }
-        if ( details.pattern === 'lan' ) {
+        const details = filterRefs[filterData[idata+1]];
+        switch ( details.$type || this.TYPE_UNKNOWN ) {
+        case this.TYPE_EQUAL:
+            return ipaddr === details.pattern;
+        case this.TYPE_LAN:
             return this.isLAN(ipaddr);
-        }
-        if ( details.pattern === 'loopback' ) {
+        case this.TYPE_LOOPBACK:
             return this.isLoopback(ipaddr);
+        case this.TYPE_STARTSWITH:
+            return ipaddr.startsWith(details.$pattern);
+        case this.TYPE_RE:
+            return details.$pattern.test(ipaddr)
+        default:
+            break;
         }
-        return ipaddr.startsWith(details.pattern);
+        const { pattern } = details;
+        if ( pattern === 'lan' ) {
+            details.$type = this.TYPE_LAN;
+        } else if ( pattern === 'loopback' ) {
+            details.$type = this.TYPE_LOOPBACK;
+        } else if ( pattern.startsWith('/') && pattern.endsWith('/') ) {
+            details.$type = this.TYPE_RE;
+            details.$pattern = new RegExp(pattern.slice(1, -1));
+        } else if ( pattern.endsWith('*') ) {
+            details.$type = this.TYPE_STARTSWITH;
+            details.$pattern = pattern.slice(0, -1);
+        } else {
+            details.$type = this.TYPE_EQUAL;
+        }
+        return this.match(idata);
     }
 
     // https://github.com/uBlockOrigin/uAssets/blob/master/filters/lan-block.txt
@@ -3048,10 +3070,7 @@ class FilterIPAddress {
 
     static fromCompiled(args) {
         const pattern = args[1];
-        const details = {
-            pattern,
-            isRegex: pattern.startsWith('/') && pattern.endsWith('/'),
-        };
+        const details = { pattern };
         return filterDataAlloc(args[0], filterRefAdd(details));
     }
 
