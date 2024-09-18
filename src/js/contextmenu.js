@@ -19,12 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
-/******************************************************************************/
-
-import µb from './background.js';
 import { i18n$ } from './i18n.js';
+import µb from './background.js';
 
 /******************************************************************************/
 
@@ -55,18 +51,23 @@ const onBlockElement = function(details, tab) {
     let src = details.frameUrl || details.srcUrl || details.linkUrl || '';
 
     if ( !tagName ) {
-        if ( typeof details.frameUrl === 'string' ) {
+        if ( typeof details.frameUrl === 'string' && details.frameId !== 0 ) {
             tagName = 'iframe';
+            src = details.srcUrl;
         } else if ( typeof details.srcUrl === 'string' ) {
             if ( details.mediaType === 'image' ) {
                 tagName = 'img';
+                src = details.srcUrl;
             } else if ( details.mediaType === 'video' ) {
                 tagName = 'video';
+                src = details.srcUrl;
             } else if ( details.mediaType === 'audio' ) {
                 tagName = 'audio';
+                src = details.srcUrl;
             }
         } else if ( typeof details.linkUrl === 'string' ) {
             tagName = 'a';
+            src = details.linkUrl;
         }
     }
 
@@ -200,27 +201,25 @@ let currentBits = 0;
 
 const update = function(tabId = undefined) {
     let newBits = 0;
-    if (
-        µb.userSettings.contextMenuEnabled &&
-        µb.userFiltersAreEnabled() &&
-        tabId !== undefined
-    ) {
-        const pageStore = µb.pageStoreFromTabId(tabId);
-        if ( pageStore && pageStore.getNetFilteringSwitch() ) {
-            if ( pageStore.shouldApplySpecificCosmeticFilters(0) ) {
-                newBits |= BLOCK_ELEMENT_BIT;
-            } else {
-                newBits |= BLOCK_RESOURCE_BIT;
+    if ( µb.userSettings.contextMenuEnabled ) {
+        const pageStore = tabId && µb.pageStoreFromTabId(tabId) || null;
+        if ( pageStore?.getNetFilteringSwitch() ) {
+            if ( µb.userFiltersAreEnabled() ) {
+                if ( pageStore.shouldApplySpecificCosmeticFilters(0) ) {
+                    newBits |= BLOCK_ELEMENT_BIT;
+                } else {
+                    newBits |= BLOCK_RESOURCE_BIT;
+                }
             }
             if ( pageStore.largeMediaCount !== 0 ) {
                 newBits |= TEMP_ALLOW_LARGE_MEDIA_BIT;
             }
         }
-        newBits |= SUBSCRIBE_TO_LIST_BIT;
+        if ( µb.hiddenSettings.filterAuthorMode ) {
+            newBits |= VIEW_SOURCE_BIT;
+        }
     }
-    if ( µb.hiddenSettings.filterAuthorMode ) {
-        newBits |= VIEW_SOURCE_BIT;
-    }
+    newBits |= SUBSCRIBE_TO_LIST_BIT;
     if ( newBits === currentBits ) { return; }
     currentBits = newBits;
     const usedEntries = [];
