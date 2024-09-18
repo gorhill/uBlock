@@ -1,3 +1,5 @@
+- [Fix contextual menu quirks](https://github.com/gorhill/uBlock/commit/0a6dc47a72)
+- [Fix exception thrown in `spoof-css` in Firefox](https://github.com/gorhill/uBlock/commit/11c3a16036)
 - [Throttle down repeated scriptlet logging information](https://github.com/gorhill/uBlock/commit/e8f6f3ddff)
 - [Improve scriptlet helper `proxy-apply`](https://github.com/gorhill/uBlock/commit/547fae4842)
 - [Add an entry in _Report_ page for badware/phishing category](https://github.com/gorhill/uBlock/commit/e18a3707c7)
