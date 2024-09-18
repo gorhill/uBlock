@@ -207,6 +207,9 @@ export async function benchmarkStaticNetFiltering(options = {}) {
                 redirectCount += 1;
             }
         }
+        if ( fctxt.type === 'main_frame' ) {
+            sfne.matchAndFetchModifiers(fctxt, 'urlskip');
+        }
     }
     const t1 = performance.now();
     const dur = t1 - t0;
