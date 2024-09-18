@@ -1524,9 +1524,9 @@ function proxyApplyFn(
         apply(target, thisArg, args) {
             return handler(new proxyApplyFn.ApplyContext(target, thisArg, args));
         },
-        get(target, prop, receiver) {
+        get(target, prop) {
             if ( prop === 'toString' ) { return toString; }
-            return Reflect.get(target, prop, receiver);
+            return Reflect.get(target, prop);
         },
     };
     if ( fn.prototype?.constructor === fn ) {
@@ -3109,11 +3109,11 @@ function alertBuster() {
         apply: function(a) {
             console.info(a);
         },
-        get(target, prop, receiver) {
+        get(target, prop) {
             if ( prop === 'toString' ) {
                 return target.toString.bind(target);
             }
-            return Reflect.get(target, prop, receiver);
+            return Reflect.get(target, prop);
         },
     });
 }
@@ -3836,7 +3836,7 @@ function spoofCSS(
             const targetElements = new WeakSet(document.querySelectorAll(selector));
             if ( targetElements.has(args[0]) === false ) { return style; }
             const proxiedStyle = new Proxy(style, {
-                get(target, prop, receiver) {
+                get(target, prop) {
                     if ( typeof target[prop] === 'function' ) {
                         if ( prop === 'getPropertyValue' ) {
                             return cloackFunc(function getPropertyValue(prop) {
@@ -3848,7 +3848,7 @@ function spoofCSS(
                     if ( instanceProperties.includes(prop) ) {
                         return Reflect.get(target, prop);
                     }
-                    return spoofStyle(prop, Reflect.get(target, prop, receiver));
+                    return spoofStyle(prop, Reflect.get(target, prop));
                 },
                 getOwnPropertyDescriptor(target, prop) {
                     if ( propToValueMap.has(prop) ) {
@@ -3864,11 +3864,11 @@ function spoofCSS(
             });
             return proxiedStyle;
         },
-        get(target, prop, receiver) {
+        get(target, prop) {
             if ( prop === 'toString' ) {
                 return target.toString.bind(target);
             }
-            return Reflect.get(target, prop, receiver);
+            return Reflect.get(target, prop);
         },
     });
     Element.prototype.getBoundingClientRect = new Proxy(Element.prototype.getBoundingClientRect, {
@@ -3887,11 +3887,11 @@ function spoofCSS(
             }
             return new self.DOMRect(rect.x, rect.y, width, height);
         },
-        get(target, prop, receiver) {
+        get(target, prop) {
             if ( prop === 'toString' ) {
                 return target.toString.bind(target);
             }
-            return Reflect.get(target, prop, receiver);
+            return Reflect.get(target, prop);
         },
     });
 }
