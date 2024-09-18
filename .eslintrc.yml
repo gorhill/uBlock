@@ -13,9 +13,10 @@ rules:
       - 4
       - ignoredNodes:
         - Program > BlockStatement
-        - Program > IfStatement > BlockStatement
         - Program > ExpressionStatement > CallExpression > ArrowFunctionExpression > BlockStatement
         - Program > ExpressionStatement > CallExpression > FunctionExpression > BlockStatement
+        - Program > IfStatement > BlockStatement
+        - Program > VariableDeclaration > VariableDeclarator > CallExpression > ArrowFunctionExpression > BlockStatement
         - CallExpression > MemberExpression
         - ArrayExpression > *
         - ObjectExpression > *
