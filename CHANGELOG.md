@@ -1,3 +1,4 @@
+- [Add advanced setting `dnsResolveEnabled`](https://github.com/gorhill/uBlock/commit/760b2ffce6)
 - [Fix contextual menu quirks](https://github.com/gorhill/uBlock/commit/0a6dc47a72)
 - [Fix exception thrown in `spoof-css` in Firefox](https://github.com/gorhill/uBlock/commit/11c3a16036)
 - [Throttle down repeated scriptlet logging information](https://github.com/gorhill/uBlock/commit/e8f6f3ddff)
