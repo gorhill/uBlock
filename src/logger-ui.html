@@ -61,7 +61,7 @@
                         <input type="search" placeholder="logFilterPrompt" spellcheck="false">
                         <span id="filterExprButton" class="button fa-icon expanded" data-i18n-title="loggerRowFiltererBuiltinTip">angle-up</span>
                         <div id="filterExprPicker">
-                            <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span><span data-filtex="\x1F--\x1F|\x1F<<\x1F|\x1F##" data-i18n="loggerRowFiltererBuiltinBlocked"></span><span data-filtex="\x1F\+\+\x1F|\x1F\*\*\x1F|\x1F#@#" data-i18n="loggerRowFiltererBuiltinAllowed"></span><span data-filtex="[$,](?:csp|permissions|removeparam|redirect-rule|replace|urltransform)=|\x1F\<\<\x1F" data-i18n="loggerRowFiltererBuiltinModified"></span></div>
+                            <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span><span data-filtex="\x1F--\x1F|\x1F<<\x1F|\x1F##" data-i18n="loggerRowFiltererBuiltinBlocked"></span><span data-filtex="\x1F\+\+\x1F|\x1F\*\*\x1F|\x1F#@#" data-i18n="loggerRowFiltererBuiltinAllowed"></span><span data-filtex="[$,](?:csp|permissions|removeparam|redirect-rule|replace|urlskip|ur[il]transform)=|\x1F\<\<\x1F" data-i18n="loggerRowFiltererBuiltinModified"></span></div>
                             <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span>
                                 <span style="flex-direction: column;">
                                     <div><span data-filtex="\x1F(?:css|(?:inline-)?font)\x1F">css/font</span><span data-filtex="\x1Fimage\x1F">image</span><span data-filtex="\x1Fmedia\x1F">media</span><span data-filtex="\x1F(?:inline-)?script(?:ing)?\x1F">script</span></div>
@@ -72,8 +72,7 @@
                             <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span><span data-filtex="\x1Fget\x1F">get</span><span data-filtex="\x1Fhead\x1F">head</span><span data-filtex="\x1Fpost\x1F">post</span></div>
                             <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot" class="on"></span>
                                 <span style="flex-direction: column;">
-                                    <div><span data-filtex="\bcsp=[^\x1F]+\x1F(?:--|\+\+)\x1F">csp</span><span data-filtex="\bpermissions=[^\x1F]+\x1F(?:--|\+\+)\x1F" class="on">permissions</span><span data-filtex="\bredirect-rule=[^\x1F]+\x1F(?:--|\+\+)\x1F">redirect</span></div>
-                                    <div><span data-filtex="\bremoveparam=[^\x1F]+\x1F(?:--|\+\+)\x1F">removeparam</span><span data-filtex="\buritransform=[^\x1F]+\x1F(?:--|\+\+)\x1F">uritransform</span></div>
+                                    <span data-filtex="\bcsp=[^\x1F]+\x1F(?:--|\+\+)\x1F">csp</span><span data-filtex="\bpermissions=[^\x1F]+\x1F(?:--|\+\+)\x1F" class="on">permissions</span><span data-filtex="\bredirect-rule=[^\x1F]+\x1F(?:--|\+\+)\x1F">redirect</span><span data-filtex="\bremoveparam=[^\x1F]+\x1F(?:--|\+\+)\x1F">removeparam</span><span data-filtex="\breplace=[^\x1F]+\x1F(?:--|\+\+)\x1F">replace</span><span data-filtex="\burlskip=[^\x1F]+\x1F(?:--|\+\+)\x1F">urlskip</span>
                                 </span>
                             </div>
                             <div id="filterExprCnameOf" style="display:none"><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span><span data-filtex="\x1FaliasURL=.">CNAME</span></div>
