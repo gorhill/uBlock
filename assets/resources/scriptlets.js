@@ -535,6 +535,8 @@ function validateConstantFn(trusted, raw, extraArgs = {}) {
         value = function(){ return true; };
     } else if ( raw === 'falseFunc' ) {
         value = function(){ return false; };
+    } else if ( raw === 'throwFunc' ) {
+        value = function(){ throw ''; };
     } else if ( /^-?\d+$/.test(raw) ) {
         value = parseInt(raw);
         if ( isNaN(raw) ) { return; }
@@ -1498,23 +1500,49 @@ function proxyApplyFn(
     const fn = context[prop];
     if ( typeof fn !== 'function' ) { return; }
     if ( proxyApplyFn.CtorContext === undefined ) {
+        proxyApplyFn.ctorContexts = [];
         proxyApplyFn.CtorContext = class {
-            constructor(callFn, callArgs) {
+            constructor(...args) {
+                this.init(...args);
+            }
+            init(callFn, callArgs) {
                 this.callFn = callFn;
                 this.callArgs = callArgs;
+                return this;
             }
             reflect() {
-                return Reflect.construct(this.callFn, this.callArgs);
+                const r = Reflect.construct(this.callFn, this.callArgs);
+                this.callFn = this.callArgs = undefined;
+                proxyApplyFn.ctorContexts.push(this);
+                return r;
+            }
+            static factory(...args) {
+                return proxyApplyFn.ctorContexts.length !== 0
+                    ? proxyApplyFn.ctorContexts.pop().init(...args)
+                    : new proxyApplyFn.CtorContext(...args);
             }
         };
+        proxyApplyFn.applyContexts = [];
         proxyApplyFn.ApplyContext = class {
-            constructor(callFn, thisArg, callArgs) {
+            constructor(...args) {
+                this.init(...args);
+            }
+            init(callFn, thisArg, callArgs) {
                 this.callFn = callFn;
                 this.thisArg = thisArg;
                 this.callArgs = callArgs;
+                return this;
             }
             reflect() {
-                return Reflect.apply(this.callFn, this.thisArg, this.callArgs);
+                const r = Reflect.apply(this.callFn, this.thisArg, this.callArgs);
+                this.callFn = this.thisArg = this.callArgs = undefined;
+                proxyApplyFn.applyContexts.push(this);
+                return r;
+            }
+            static factory(...args) {
+                return proxyApplyFn.applyContexts.length !== 0
+                    ? proxyApplyFn.applyContexts.pop().init(...args)
+                    : new proxyApplyFn.ApplyContext(...args);
             }
         };
     }
@@ -1522,7 +1550,7 @@ function proxyApplyFn(
     const toString = (function toString() { return fnStr; }).bind(null);
     const proxyDetails = {
         apply(target, thisArg, args) {
-            return handler(new proxyApplyFn.ApplyContext(target, thisArg, args));
+            return handler(proxyApplyFn.ApplyContext.factory(target, thisArg, args));
         },
         get(target, prop) {
             if ( prop === 'toString' ) { return toString; }
@@ -1531,7 +1559,7 @@ function proxyApplyFn(
     };
     if ( fn.prototype?.constructor === fn ) {
         proxyDetails.construct = function(target, args) {
-            return handler(new proxyApplyFn.CtorContext(target, args));
+            return handler(proxyApplyFn.CtorContext.factory(target, args));
         };
     }
     context[prop] = new Proxy(fn, proxyDetails);
