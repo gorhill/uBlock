@@ -62,6 +62,7 @@ vAPI.Net = class extends vAPI.Net {
         this.cnameIgnoreExceptions = true;
         this.cnameIgnoreRootDocument = true;
         this.cnameReplayFullURL = false;
+        this.dnsResolveEnabled = true;
     }
 
     setOptions(options) {
@@ -88,6 +89,9 @@ vAPI.Net = class extends vAPI.Net {
         }
         if ( 'cnameReplayFullURL' in options ) {
             this.cnameReplayFullURL = options.cnameReplayFullURL === true;
+        }
+        if ( 'dnsResolveEnabled' in options ) {
+            this.dnsResolveEnabled = options.dnsResolveEnabled === true;
         }
         this.dnsList.fill(null);
         this.dnsDict.clear();
@@ -256,6 +260,7 @@ vAPI.Net = class extends vAPI.Net {
     }
 
     dnsShouldResolve(hn) {
+        if ( this.dnsResolveEnabled === false ) { return false; }
         if ( hn === '' ) { return false; }
         const c0 = hn.charCodeAt(0);
         if ( c0 === 0x5B /* [ */ ) { return false; }

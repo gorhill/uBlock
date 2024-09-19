@@ -66,6 +66,7 @@ const hiddenSettingsDefault = {
     debugScriptletInjector: false,
     differentialUpdate: true,
     disableWebAssembly: false,
+    dnsResolveEnabled: true,
     extensionUpdateForceReload: false,
     filterAuthorMode: false,
     loggerPopupType: 'popup',
