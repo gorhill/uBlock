@@ -5424,13 +5424,25 @@ function urlSkip(urlin, steps) {
     try {
         let urlout;
         for ( const step of steps ) {
-            if ( step.startsWith('?') === false ) { return; }
-            urlout = (new URL(urlin)).searchParams.get(step.slice(1));
-            if ( urlout === null ) { return; }
-            if ( urlout.includes(' ') ) {
-                urlout = urlout.replace(/ /g, '%20');
+            // Extract from URL parameter
+            if ( step.startsWith('?') ) {
+                urlout = (new URL(urlin)).searchParams.get(step.slice(1));
+                if ( urlout === null ) { return; }
+                if ( urlout.includes(' ') ) {
+                    urlout = urlout.replace(/ /g, '%20');
+                }
+                urlin = urlout;
+                continue;
             }
-            urlin = urlout;
+            // Enforce https
+            if ( step === '+https' ) {
+                const s = urlin.replace(/^https?:\/\//, '');
+                if ( /^[\w-]:\/\//.test(s) ) { return; }
+                urlin = urlout = `https://${s}`;
+                continue;
+            }
+            // Unknown directive
+            return;
         }
         void new URL(urlout);
         return urlout;
