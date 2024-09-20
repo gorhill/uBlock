@@ -2993,16 +2993,14 @@ class FilterIPAddress {
         if ( ipaddr === '' ) { return false; }
         const details = filterRefs[filterData[idata+1]];
         switch ( details.$type || this.TYPE_UNKNOWN ) {
-        case this.TYPE_EQUAL:
-            return ipaddr === details.pattern;
         case this.TYPE_LAN:
             return this.isLAN(ipaddr);
         case this.TYPE_LOOPBACK:
             return this.isLoopback(ipaddr);
+        case this.TYPE_EQUAL:
         case this.TYPE_STARTSWITH:
-            return ipaddr.startsWith(details.$pattern);
         case this.TYPE_RE:
-            return details.$pattern.test(ipaddr)
+            return details.$pattern.test(ipaddr);
         default:
             break;
         }
@@ -3013,12 +3011,13 @@ class FilterIPAddress {
             details.$type = this.TYPE_LOOPBACK;
         } else if ( pattern.startsWith('/') && pattern.endsWith('/') ) {
             details.$type = this.TYPE_RE;
-            details.$pattern = new RegExp(pattern.slice(1, -1));
+            details.$pattern = new RegExp(pattern.slice(1, -1), 'm');
         } else if ( pattern.endsWith('*') ) {
             details.$type = this.TYPE_STARTSWITH;
-            details.$pattern = pattern.slice(0, -1);
+            details.$pattern = new RegExp(`^${restrFromPlainPattern(pattern.slice(0, -1))}`, 'm');
         } else {
             details.$type = this.TYPE_EQUAL;
+            details.$pattern = new RegExp(`^${restrFromPlainPattern(pattern)}$`, 'm');
         }
         return this.match(idata);
     }
@@ -3049,13 +3048,11 @@ class FilterIPAddress {
             if ( ipaddr.startsWith('::ffff:') === false ) { return false; }
             return this.reIPv6IPv4lan.test(ipaddr);
         }
-        if ( ipaddr.includes(':') ) {
-            if ( c0 === 0x36 /* 6 */ ) {
-                return ipaddr.startsWith('64:ff9b:');
-            }
-            if ( c0 === 0x66 /* f */ ) {
-                return this.reIPv6local.test(ipaddr);
-            }
+        if ( c0 === 0x36 /* 6 */ ) {
+            return ipaddr.startsWith('64:ff9b:');
+        }
+        if ( c0 === 0x66 /* f */ ) {
+            return this.reIPv6local.test(ipaddr);
         }
         return false;
     }
@@ -5639,6 +5636,12 @@ StaticNetFilteringEngine.prototype.test = function(details) {
             for ( const redirect of redirects ) {
                 out.push(`modified: ${redirect.logData().raw}`);
             }
+        }
+    }
+    const urlskips = this.matchAndFetchModifiers(fctxt, 'urlskip');
+    if ( urlskips ) {
+        for ( const urlskip of urlskips ) {
+            out.push(`modified: ${urlskip.logData().raw}`);
         }
     }
     return out.join('\n');

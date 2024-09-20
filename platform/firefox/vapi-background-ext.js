@@ -314,7 +314,7 @@ vAPI.Net = class extends vAPI.Net {
         const { addresses } = record;
         if ( Array.isArray(addresses) === false ) { return; }
         if ( addresses.length === 0 ) { return; }
-        return addresses[0];
+        return addresses.join('\n');
     }
 
     suspendOneRequest(details) {
