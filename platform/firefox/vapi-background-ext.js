@@ -99,7 +99,7 @@ vAPI.Net = class extends vAPI.Net {
 
     normalizeDetails(details) {
         // https://github.com/uBlockOrigin/uBlock-issues/issues/3379
-        if ( details.proxyInfo?.proxyDNS && details.ip === '0.0.0.0' ) {
+        if ( details.ip === '0.0.0.0' && details.proxyInfo?.proxyDNS ) {
             details.ip = null;
         }
         const type = details.type;
