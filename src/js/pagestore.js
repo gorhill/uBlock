@@ -53,6 +53,9 @@ To create a log of net requests
 /******************************************************************************/
 
 const NetFilteringResultCache = class {
+    shelfLife = 15000;
+    extensionOriginURL = vAPI.getURL('/');
+
     constructor() {
         this.pruneTimer = vAPI.defer.create(( ) => {
             this.prune();
@@ -172,9 +175,6 @@ const NetFilteringResultCache = class {
     }
 };
 
-NetFilteringResultCache.prototype.shelfLife = 15000;
-NetFilteringResultCache.prototype.extensionOriginURL = vAPI.getURL('/');
-
 /******************************************************************************/
 
 // Frame stores are used solely to associate a URL with a frame id.
@@ -274,17 +274,15 @@ const FrameStore = class {
     }
 
     static factory(frameURL, parentId = -1) {
-        const entry = FrameStore.junkyard.pop();
-        if ( entry === undefined ) {
-            return new FrameStore(frameURL, parentId);
+        const FS = FrameStore;
+        if ( FS.junkyard.length !== 0 ) {
+            return FS.junkyard.pop().init(frameURL, parentId);
         }
-        return entry.init(frameURL, parentId);
+        return new FS(frameURL, parentId);
     }
+    static junkyard = [];
+    static junkyardMax = 50;
 };
-
-// To mitigate memory churning
-FrameStore.junkyard = [];
-FrameStore.junkyardMax = 50;
 
 /******************************************************************************/
 
@@ -314,17 +312,23 @@ const HostnameDetails = class {
         this.hostname = hostname;
         this.cname = vAPI.net.canonicalNameFromHostname(hostname);
         this.counts.reset();
+        return this;
     }
     dispose() {
-        this.hostname = '';
-        if ( HostnameDetails.junkyard.length < HostnameDetails.junkyardMax ) {
-            HostnameDetails.junkyard.push(this);
-        }
+        const HD = HostnameDetails;
+        if ( HD.junkyard.length >= HD.junkyardMax ) { return; }
+        HD.junkyard.push(this);
     }
+    static factory(hostname) {
+        const HD = HostnameDetails;
+        if ( HD.junkyard.length !== 0 ) {
+            return HD.junkyard.pop().init(hostname);
+        }
+        return new HD(hostname);
+    }
+    static junkyard = [];
+    static junkyardMax = 100;
 };
-
-HostnameDetails.junkyard = [];
-HostnameDetails.junkyardMax = 100;
 
 const HostnameDetailsMap = class extends Map {
     reset() {
@@ -623,7 +627,7 @@ const PageStore = class {
         ) {
             this.hostnameDetailsMap.set(
                 this.tabHostname,
-                new HostnameDetails(this.tabHostname)
+                HostnameDetails.factory(this.tabHostname)
             );
         }
         return this.hostnameDetailsMap;
@@ -701,7 +705,7 @@ const PageStore = class {
             const hostname = journal[i+0];
             let hnDetails = this.hostnameDetailsMap.get(hostname);
             if ( hnDetails === undefined ) {
-                hnDetails = new HostnameDetails(hostname);
+                hnDetails = HostnameDetails.factory(hostname);
                 this.hostnameDetailsMap.set(hostname, hnDetails);
                 this.contentLastModified = now;
             }
