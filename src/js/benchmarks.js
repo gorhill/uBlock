@@ -130,8 +130,6 @@ const loadBenchmarkDataset = (( ) => {
 
 /******************************************************************************/
 
-// action: 1=test
-
 export async function benchmarkStaticNetFiltering(options = {}) {
     const { target, redirectEngine } = options;
 
@@ -174,7 +172,9 @@ export async function benchmarkStaticNetFiltering(options = {}) {
     for ( let i = 0; i < requests.length; i++ ) {
         const request = requests[i];
         fctxt.setURL(request.url);
-        fctxt.setIPAddress('93.184.215.14\n2606:2800:21f:cb07:6820:80da:af6b:8b2c');
+        if ( fctxt.getIPAddress() === '' ) {
+            fctxt.setIPAddress('93.184.215.14\n2606:2800:21f:cb07:6820:80da:af6b:8b2c');
+        }
         fctxt.setDocOriginFromURL(request.frameUrl);
         fctxt.setType(request.cpt);
         sfne.redirectURL = undefined;
