@@ -52,9 +52,9 @@ vAPI.Net = class extends vAPI.Net {
         this.pendingRequests = [];
         this.dnsList = [];          // ring buffer
         this.dnsWritePtr = 0;       // next write pointer in ring buffer
-        this.dnsMaxCount = 256;     // max size of ring buffer
+        this.dnsMaxCount = 512;     // max size of ring buffer
         this.dnsDict = new Map();   // hn to index in ring buffer
-        this.dnsEntryTTL = 60000;   // delay after which an entry is obsolete
+        this.dnsCacheTTL = 600;     // TTL in seconds
         this.canUncloakCnames = true;
         this.cnameUncloakEnabled = true;
         this.cnameIgnoreList = null;
@@ -89,6 +89,9 @@ vAPI.Net = class extends vAPI.Net {
         }
         if ( 'cnameReplayFullURL' in options ) {
             this.cnameReplayFullURL = options.cnameReplayFullURL === true;
+        }
+        if ( 'dnsCacheTTL' in options ) {
+            this.dnsCacheTTL = options.dnsCacheTTL;
         }
         if ( 'dnsResolveEnabled' in options ) {
             this.dnsResolveEnabled = options.dnsResolveEnabled === true;
@@ -143,7 +146,7 @@ vAPI.Net = class extends vAPI.Net {
 
     canonicalNameFromHostname(hn) {
         if ( hn === '' ) { return; }
-        const dnsEntry = this.dnsFromCache(hn);
+        const dnsEntry = this.dnsFromCache(hn, true);
         if ( isResolvedObject(dnsEntry) === false ) { return; }
         return dnsEntry.cname;
     }
@@ -212,7 +215,7 @@ vAPI.Net = class extends vAPI.Net {
     }
 
     dnsToCache(hn, record, details) {
-        const dnsEntry = { hn, until: Date.now() + this.dnsEntryTTL };
+        const dnsEntry = { hn, until: Date.now() + this.dnsCacheTTL * 1000 };
         if ( record ) {
             const cname = this.cnameFromRecord(hn, record, details);
             if ( cname ) { dnsEntry.cname = cname; }
@@ -223,13 +226,13 @@ vAPI.Net = class extends vAPI.Net {
         return dnsEntry;
     }
 
-    dnsFromCache(hn) {
+    dnsFromCache(hn, passive = false) {
         const i = this.dnsDict.get(hn);
         if ( i === undefined ) { return; }
         if ( isPromise(i) ) { return i; }
         const dnsEntry = this.dnsList[i];
         if ( dnsEntry !== null && dnsEntry.hn === hn ) {
-            if ( dnsEntry.until >= Date.now() ) {
+            if ( passive || dnsEntry.until >= Date.now() ) {
                 return dnsEntry;
             }
         }

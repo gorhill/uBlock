@@ -66,6 +66,7 @@ const hiddenSettingsDefault = {
     debugScriptletInjector: false,
     differentialUpdate: true,
     disableWebAssembly: false,
+    dnsCacheTTL: 600,
     dnsResolveEnabled: true,
     extensionUpdateForceReload: false,
     filterAuthorMode: false,
