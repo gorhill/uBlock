@@ -1,3 +1,11 @@
+- [Fix images not properly downloading on click](https://github.com/gorhill/uBlock/commit/aec0bd39e3)
+
+----------
+
+# 1.60.0
+
+## Fixes / changes
+
 - [Add advanced setting `dnsResolveEnabled`](https://github.com/gorhill/uBlock/commit/760b2ffce6)
 - [Fix contextual menu quirks](https://github.com/gorhill/uBlock/commit/0a6dc47a72)
 - [Fix exception thrown in `spoof-css` in Firefox](https://github.com/gorhill/uBlock/commit/11c3a16036)
