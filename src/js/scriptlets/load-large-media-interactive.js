@@ -19,10 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
-/******************************************************************************/
-
 (( ) => {
 
 /******************************************************************************/
@@ -132,15 +128,12 @@ if ( vAPI.largeMediaElementStyleSheet === undefined ) {
 
 const loadMedia = async function(elem) {
     const src = elem.getAttribute('src') || '';
+    if ( src === '' ) { return; }
     elem.removeAttribute('src');
-
     await vAPI.messaging.send('scriptlets', {
         what: 'temporarilyAllowLargeMediaElement',
     });
-
-    if ( src !== '' ) {
-        elem.setAttribute('src', src);
-    }
+    elem.setAttribute('src', src);
     elem.load();
 };
 
@@ -148,14 +141,21 @@ const loadMedia = async function(elem) {
 
 const loadImage = async function(elem) {
     const src = elem.getAttribute('src') || '';
-    elem.removeAttribute('src');
-
+    const srcset = src === '' && elem.getAttribute('srcset') || '';
+    if ( src === '' && srcset === '' ) { return; }
+    if ( src !== '' ) {
+        elem.removeAttribute('src');
+    }
+    if ( srcset !== '' ) {
+        elem.removeAttribute('srcset');
+    }
     await vAPI.messaging.send('scriptlets', {
         what: 'temporarilyAllowLargeMediaElement',
     });
-
     if ( src !== '' ) {
         elem.setAttribute('src', src);
+    } else if ( srcset !== '' ) {
+        elem.setAttribute('srcset', srcset);
     }
 };
 
