@@ -1,12 +1,3 @@
-body {
-    align-items: center;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    }
-body > * {
-    width: min(640px, 100%);
-    }
 #dashboard-nav {
     background-color: var(--surface-1);
     border: 0;

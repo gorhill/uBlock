@@ -261,12 +261,6 @@ dom.on('#lessButton', 'click', ( ) => {
 
 /******************************************************************************/
 
-dom.on('[data-i18n-title="popupTipDashboard"]', 'click', ev => {
-    if ( ev.isTrusted !== true ) { return; }
-    if ( ev.button !== 0 ) { return; }
-    runtime.openOptionsPage();
-});
-
 dom.on('#showMatchedRules', 'click', ev => {
     if ( ev.isTrusted !== true ) { return; }
     if ( ev.button !== 0 ) { return; }
@@ -274,6 +268,33 @@ dom.on('#showMatchedRules', 'click', ev => {
         what: 'showMatchedRules',
         tabId: currentTab.id,
     });
+});
+
+/******************************************************************************/
+
+dom.on('[data-i18n-title="popupTipReport"]', 'click', ev => {
+    if ( ev.isTrusted !== true ) { return; }
+    let url;
+    try {
+        url = new URL(currentTab.url);
+    } catch(_) {
+    }
+    if ( url === undefined ) { return; }
+    const reportURL = new URL(runtime.getURL('/report.html'));
+    reportURL.searchParams.set('url', url.href);
+    reportURL.searchParams.set('mode', popupPanelData.level);
+    sendMessage({
+        what: 'gotoURL',
+        url: `${reportURL.pathname}${reportURL.search}`,
+    });
+});
+
+/******************************************************************************/
+
+dom.on('[data-i18n-title="popupTipDashboard"]', 'click', ev => {
+    if ( ev.isTrusted !== true ) { return; }
+    if ( ev.button !== 0 ) { return; }
+    runtime.openOptionsPage();
 });
 
 /******************************************************************************/
@@ -312,6 +333,10 @@ async function init() {
         popupPanelData.isSideloaded === true &&
         typeof currentTab.id === 'number' &&
         isNaN(currentTab.id) === false
+    );
+
+    dom.cl.toggle('#reportFilterIssue', 'enabled',
+        /^https?:\/\//.test(url?.href)
     );
 
     const parent = qs$('#rulesetStats');

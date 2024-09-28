@@ -1,3 +1,14 @@
+body {
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    padding: 0 var(--default-gap-xxsmall);
+    }
+body > * {
+    width: min(640px, 100%);
+    }
+
 h2, h3 {
     margin: 1em 0;
     }
@@ -7,9 +18,11 @@ h2 {
 h3 {
     font-size: 16px;
     }
+
 a {
     text-decoration: none;
     }
+
 .fa-icon.info {
     color: var(--info0-ink);
         fill: var(--info0-ink);

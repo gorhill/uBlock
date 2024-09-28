@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>uBO Lite — Report</title>
+
+<link rel="stylesheet" href="css/default.css">
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/dashboard-common.css">
+<link rel="stylesheet" href="css/fa-icons.css">
+<link rel="shortcut icon" type="image/png" href="img/icon_64.png">
+</head>
+
+<body>
+
+<section>
+
+<h3 data-i18n="supportS6H"></h3>
+<p data-i18n="supportS3P1"></p>
+<div class="supportEntry">
+    <hr>
+    <p data-i18n="supportS6P1S1"></p>
+    <button type="button" data-i18n="supportFindSpecificButton">_<span class="hover"></span></button>
+</div>
+<div class="supportEntry createEntry">
+    <hr>
+    <p>
+        <label data-i18n="supportS6URL"></label><br>
+        <select name="url">
+            <option></option>
+        </select>
+    </p>
+    <p>
+        <label data-i18n="supportS6Select1"></label><br>
+        <select name="type">
+            <option value="[unknown]" data-i18n="supportS6Select1Option0" selected disabled></option>
+            <option value="ads" data-i18n="supportS6Select1Option1"></option>
+            <option value="detection" data-i18n="supportS6Select1Option3"></option>
+            <option value="popups" data-i18n="supportS6Select1Option6"></option>
+            <option value="nuisance" data-i18n="supportS6Select1Option2"></option>
+            <option value="breakage" data-i18n="supportS6Select1Option5"></option>
+            <option value="privacy" data-i18n="supportS6Select1Option4"></option>
+            <option value="badware" data-i18n="supportS6Select1Option7"></option>
+        </select>
+    </p>
+    <p>
+        <label><span class="input checkbox"><input id="isNSFW" type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span><span data-i18n="supportS6Checkbox1"></span></label>
+    </p>
+    <button type="button" data-i18n="supportReportSpecificButton" class="preferred">_<span class="hover"></span></button>
+</div>
+
+</section>
+
+<script src="js/theme.js" type="module"></script>
+<script src="js/fa-icons.js" type="module"></script>
+<script src="js/i18n.js" type="module"></script>
+<script src="js/report.js" type="module"></script>
+
+</body>
+</html>
