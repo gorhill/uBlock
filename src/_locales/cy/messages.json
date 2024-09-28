@@ -4,15 +4,15 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "O'r diwedd, rhwystrydd effeithlon. Ysgafn ar y CPU a'r cof.",
+    "message": "O'r diwedd, rhwystrydd effeithlon sy'n gwell ar y CPU a'r cof.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
-    "message": "uBlock₀ — Dashfwrdd",
+    "message": "uBlock₀ — Dangosfwrdd",
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Rhybudd! Mae yna newidiadau heb eu cadw",
+    "message": "Rhybudd! Mae gennych newidiadau heb eu cadw",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -116,11 +116,11 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Modd saethu elfen",
+    "message": "Galluogi modd saethu elfen",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Modd dewis elfen",
+    "message": "Galluogi modd dewis elfen",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
@@ -208,7 +208,7 @@
     "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
-    "message": "Mwy",
+    "message": "Rhagor",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton_v2": {
@@ -336,7 +336,7 @@
     "description": "English: Color-blind friendly"
   },
   "settingsAppearance": {
-    "message": "Golwg",
+    "message": "Gwedd",
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
@@ -520,7 +520,7 @@
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pViewContent": {
-    "message": "gweld y cynnwys",
+    "message": "gweld cynnwys",
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
@@ -528,7 +528,7 @@
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Updating…",
+    "message": "Wrthi'n diweddaru…",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -1140,7 +1140,7 @@
     "description": "Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
-    "message": "off",
+    "message": "na",
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedTitle": {
@@ -1228,7 +1228,7 @@
     "description": "for generic 'Revert' buttons"
   },
   "genericBytes": {
-    "message": "bytes",
+    "message": "beit",
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
