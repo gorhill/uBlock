@@ -112,11 +112,11 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Чтобы не нагружать добровольцев повторяющимися сообщениями, убедитесь, что о вашей проблеме ещё не писали.",
+    "message": "Чтобы не обременять волонтеров повторяющимися отчетами, пожалуйста, убедитесь, что о данной проблеме еще не сообщали.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Найти похожие сообщения",
+    "message": "Найти похожие отчеты",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -128,23 +128,23 @@
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Выбрать тип --",
+    "message": "-- Выберите категорию --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Показывает рекламу или её остатки",
+    "message": "Показывается реклама или ее заполнители",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Содержит наложения или прочие помехи",
+    "message": "Всплывающие окна или другие помехи",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Определяет uBO Lite",
+    "message": "Обнаруживается uBO Lite",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Содержит проблемы с конфиденциальностью",
+    "message": "Проблемы, связанные с приватностью",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
@@ -164,7 +164,7 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Создать новое сообщение",
+    "message": "Создать новый отчет",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "firstRunSectionLabel": {
