@@ -5441,6 +5441,11 @@ function urlSkip(urlin, steps) {
                 urlin = urlout = `https://${s}`;
                 continue;
             }
+            // Decode base64
+            if ( step === '-base64' ) {
+                urlin = urlout = self.atob(urlin);
+                continue;
+            }
             // Unknown directive
             return;
         }
