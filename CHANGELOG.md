@@ -1,3 +1,4 @@
+- [Add ability to decode base64 in `urlskip=`](https://github.com/gorhill/uBlock/commit/e81e70937f)
 - [Fix images not properly downloading on click](https://github.com/gorhill/uBlock/commit/aec0bd39e3)
 
 ----------
