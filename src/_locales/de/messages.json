@@ -900,11 +900,11 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Neuen Bericht erstellen",
+    "message": "Neue Meldung erstellen",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Ähnliche Berichte suchen",
+    "message": "Ähnliche Meldungen finden",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -988,11 +988,11 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Zeigt Werbung oder Anzeigenreste",
+    "message": "Zeigt Werbung oder Werbereste",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Enthält Überdeckungen oder andere Belästigungen",
+    "message": "Hat Überdeckungen oder andere Belästigungen",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {

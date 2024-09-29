@@ -928,7 +928,7 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Hlášení problémů s filtrem u učitých web. stránek do <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. Vyžaduje účet GitHub.",
+    "message": "Nahlaste problémy s filtrem u učitých webových stránek do <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">sledovače problémů <code>uBlockOrigin/uAssets</code></span>. <u>Vyžaduje účet GitHub.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
@@ -1016,7 +1016,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Označit webovou stránku jako &ldquo;NSFW&rdquo; (<a href=\"https://cs.wikipedia.org/wiki/Not_safe_for_work\">Není bezpečné pro práci&rdquo;)",
+    "message": "Označit webovou stránku jako “NSFW” (<a href=\"https://cs.wikipedia.org/wiki/Not_safe_for_work\">“Není bezpečné pro práci”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {

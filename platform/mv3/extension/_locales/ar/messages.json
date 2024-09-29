@@ -32,7 +32,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "الإبلاغ عن مشكلة في هذا الموقع",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -104,7 +104,7 @@
     "description": "Shown in the About pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "الإبلاغ عن مشكلة في عوامل التصفية",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
