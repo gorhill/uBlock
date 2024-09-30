@@ -4430,14 +4430,14 @@ export const utils = (( ) => {
             const parts = [ 0 ];
             let discard = false;
 
-            const shouldDiscard = ( ) => stack.some(v => v);
+            const shouldDiscard = ( ) => stack.some(v => v.known && v.discard);
 
-            const begif = (startDiscard, match) => {
-                if ( discard === false && startDiscard ) {
-                    parts.push(match.index);
+            const begif = details => {
+                if ( discard === false && details.known && details.discard ) {
+                    parts.push(details.pos);
                     discard = true;
                 }
-                stack.push(startDiscard);
+                stack.push(details);
             };
 
             const endif = match => {
@@ -4455,15 +4455,21 @@ export const utils = (( ) => {
 
                 switch ( match[1] ) {
                 case 'if': {
-                    const startDiscard = this.evaluateExpr(match[2].trim(), env) === false;
-                    begif(startDiscard, match);
+                    const result = this.evaluateExpr(match[2].trim(), env);
+                    begif({
+                        known: result !== undefined,
+                        discard: result === false,
+                        pos: match.index,
+                    });
                     break;
                 }
                 case 'else': {
                     if ( stack.length === 0 ) { break; }
-                    const startDiscard = stack[stack.length-1] === false;
+                    const details = stack[stack.length-1];
                     endif(match);
-                    begif(startDiscard, match);
+                    details.discard = details.discard === false;
+                    details.pos = match.index;
+                    begif(details);
                     break;
                 }
                 case 'endif': {
