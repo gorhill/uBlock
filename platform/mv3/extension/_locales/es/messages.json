@@ -32,7 +32,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipReport": {
-    "message": "Reportar un problema en este sitio web",
+    "message": "Informar de un problema en este sitio web",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -104,7 +104,7 @@
     "description": "Shown in the About pane"
   },
   "supportS6H": {
-    "message": "Reportar un problema de filtro",
+    "message": "Informar de un problema de filtro",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
@@ -164,7 +164,7 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Crear nuevo reporte",
+    "message": "Crear informe nuevo",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "firstRunSectionLabel": {
