@@ -36,6 +36,8 @@ const isPromise = o => o instanceof Promise;
 const isResolvedObject = o => o instanceof Object &&
     o instanceof Promise === false;
 const reIPv4 = /^\d+\.\d+\.\d+\.\d+$/
+const skipDNS = proxyInfo =>
+    proxyInfo?.proxyDNS || proxyInfo?.type?.startsWith('http');
 
 /******************************************************************************/
 
@@ -102,7 +104,7 @@ vAPI.Net = class extends vAPI.Net {
 
     normalizeDetails(details) {
         // https://github.com/uBlockOrigin/uBlock-issues/issues/3379
-        if ( details.proxyInfo?.proxyDNS && details.ip === '0.0.0.0' ) {
+        if ( skipDNS(details.proxyInfo) && details.ip === '0.0.0.0' ) {
             details.ip = null;
         }
         const type = details.type;
@@ -182,8 +184,8 @@ vAPI.Net = class extends vAPI.Net {
         if ( isResolvedObject(dnsEntry) ) {
             return this.onAfterDNSResolution(hn, details, dnsEntry);
         }
+        if ( skipDNS(details.proxyInfo) ) { return; }
         if ( this.dnsShouldResolve(hn) === false ) { return; }
-        if ( details.proxyInfo?.proxyDNS ) { return; }
         const promise = dnsEntry || this.dnsResolve(hn, details);
         return promise.then(( ) => this.onAfterDNSResolution(hn, details));
     }
