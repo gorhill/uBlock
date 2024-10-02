@@ -1019,10 +1019,29 @@ const PageStore = class {
     }
 
     // The caller is responsible to check whether filtering is enabled or not.
-    filterLargeMediaElement(fctxt, size) {
+    filterLargeMediaElement(fctxt, headers) {
         fctxt.filter = undefined;
-
-        if ( this.allowLargeMediaElementsUntil === 0 ) {
+        if ( this.allowLargeMediaElementsUntil === 0 ) { return 0; }
+        if ( sessionSwitches.evaluateZ('no-large-media', fctxt.getTabHostname() ) !== true ) {
+            this.allowLargeMediaElementsUntil = 0;
+            return 0;
+        }
+        // XHR-based streaming is never blocked but we want to prevent autoplay
+        if ( fctxt.itype === fctxt.XMLHTTPREQUEST ) {
+            const ctype = headers.contentType;
+            if ( ctype.startsWith('audio/') || ctype.startsWith('video/') ) {
+                this.largeMediaTimer.on(500);
+            }
+            return 0;
+        }
+        if ( Date.now() < this.allowLargeMediaElementsUntil ) {
+            if ( fctxt.itype === fctxt.MEDIA ) {
+                const sources = this.allowLargeMediaElementsRegex instanceof RegExp
+                    ? [ this.allowLargeMediaElementsRegex.source ]
+                    : [];
+                sources.push('^' + µb.escapeRegex(fctxt.url));
+                this.allowLargeMediaElementsRegex = new RegExp(sources.join('|'));
+            }
             return 0;
         }
         // Disregard large media elements previously allowed: for example, to
@@ -1033,34 +1052,18 @@ const PageStore = class {
         ) {
             return 0;
         }
-        if ( Date.now() < this.allowLargeMediaElementsUntil ) {
-            const sources = this.allowLargeMediaElementsRegex instanceof RegExp
-                ? [ this.allowLargeMediaElementsRegex.source ]
-                : [];
-            sources.push('^' + µb.escapeRegex(fctxt.url));
-            this.allowLargeMediaElementsRegex = new RegExp(sources.join('|'));
-            return 0;
+        // Regardless of whether a media is blocked, we want to prevent autoplay
+        if ( fctxt.itype === fctxt.MEDIA ) {
+            this.largeMediaTimer.on(500);
         }
-        if (
-            sessionSwitches.evaluateZ(
-                'no-large-media',
-                fctxt.getTabHostname()
-            ) !== true
-        ) {
-            this.allowLargeMediaElementsUntil = 0;
-            return 0;
-        }
-        if ( (size >>> 10) < µb.userSettings.largeMediaSize ) {
-            return 0;
-        }
-
+        const size = headers.contentLength;
+        if ( isNaN(size) ) { return 0; }
+        if ( (size >>> 10) < µb.userSettings.largeMediaSize ) { return 0; }
         this.largeMediaCount += 1;
         this.largeMediaTimer.on(500);
-
         if ( logger.enabled ) {
             fctxt.filter = sessionSwitches.toLogData();
         }
-
         return 1;
     }
 

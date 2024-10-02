@@ -488,7 +488,7 @@ const onHeadersReceived = function(details) {
     }
     if ( pageStore.getNetFilteringSwitch(fctxt) === false ) { return; }
 
-    if ( fctxt.itype === fctxt.IMAGE || fctxt.itype === fctxt.MEDIA ) {
+    if ( (fctxt.itype & foilLargeMediaElement.TYPE_BITS) !== 0 ) {
         const result = foilLargeMediaElement(details, fctxt, pageStore);
         if ( result !== undefined ) { return result; }
     }
@@ -1124,15 +1124,12 @@ const injectPP = function(fctxt, pageStore, responseHeaders) {
 const foilLargeMediaElement = function(details, fctxt, pageStore) {
     if ( details.fromCache === true ) { return; }
 
-    let size = 0;
-    if ( µb.userSettings.largeMediaSize !== 0 ) {
-        const headers = details.responseHeaders;
-        const i = headerIndexFromName('content-length', headers);
-        if ( i === -1 ) { return; }
-        size = parseInt(headers[i].value, 10) || 0;
-    }
+    onDemandHeaders.setHeaders(details.responseHeaders);
 
-    const result = pageStore.filterLargeMediaElement(fctxt, size);
+    const result = pageStore.filterLargeMediaElement(fctxt, onDemandHeaders);
+
+    onDemandHeaders.reset();
+
     if ( result === 0 ) { return; }
 
     if ( logger.enabled ) {
@@ -1142,16 +1139,15 @@ const foilLargeMediaElement = function(details, fctxt, pageStore) {
     return { cancel: true };
 };
 
+foilLargeMediaElement.TYPE_BITS = fc.IMAGE | fc.MEDIA | fc.XMLHTTPREQUEST;
+
 /******************************************************************************/
 
 // Caller must ensure headerName is normalized to lower case.
 
 const headerIndexFromName = function(headerName, headers) {
-    let i = headers.length;
-    while ( i-- ) {
-        if ( headers[i].name.toLowerCase() === headerName ) {
-            return i;
-        }
+    for ( let i = 0, n = headers.length; i < n; i++ ) {
+        if ( headers[i].name.toLowerCase() === headerName ) { return i; }
     }
     return -1;
 };
@@ -1159,6 +1155,24 @@ const headerIndexFromName = function(headerName, headers) {
 const headerValueFromName = function(headerName, headers) {
     const i = headerIndexFromName(headerName, headers);
     return i !== -1 ? headers[i].value : '';
+};
+
+const onDemandHeaders = {
+    headers: [],
+    get contentLength() {
+        const contentLength = headerValueFromName('content-length', this.headers);
+        if ( contentLength === '' ) { return Number.NaN; }
+        return parseInt(contentLength, 10) || 0;
+    },
+    get contentType() {
+        return headerValueFromName('content-type', this.headers);
+    },
+    setHeaders(headers) {
+        this.headers = headers;
+    },
+    reset() {
+        this.headers = [];
+    }
 };
 
 /******************************************************************************/

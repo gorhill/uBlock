@@ -110,18 +110,15 @@ vAPI.Net = class extends vAPI.Net {
             details.type = 'image';
             return;
         }
+        if ( type !== 'object' ) { return; }
+        // Try to extract type from response headers if present.
+        if ( details.responseHeaders === undefined ) { return; }
+        const ctype = this.headerValue(details.responseHeaders, 'content-type');
         // https://github.com/uBlockOrigin/uBlock-issues/issues/345
         //   Re-categorize an embedded object as a `sub_frame` if its
         //   content type is that of a HTML document.
-        if ( type === 'object' && Array.isArray(details.responseHeaders) ) {
-            for ( const header of details.responseHeaders ) {
-                if ( header.name.toLowerCase() === 'content-type' ) {
-                    if ( header.value.startsWith('text/html') ) {
-                        details.type = 'sub_frame';
-                    }
-                    break;
-                }
-            }
+        if ( ctype === 'text/html' ) {
+            details.type = 'sub_frame';
         }
     }
 
