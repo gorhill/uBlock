@@ -5143,4 +5143,79 @@ function trustedPreventXhr(...args) {
     return preventXhrFn(true, ...args);
 }
 
+/**
+ * 
+ * @trustedScriptlet trusted-prevent-dom-bypass
+ * 
+ * @description
+ * Prevent the bypassing of uBO scriptlets through anonymous embedded context.
+ * 
+ * Ensure that a target method in the embedded context is using the
+ * corresponding parent context's method (which is assumed to be
+ * properly patched), or to replace the embedded context with that of the
+ * parent context.
+ * 
+ * Root issue:
+ * https://issues.chromium.org/issues/40202434
+ * 
+ * @param methodPath
+ * The method which calls must be intercepted. The arguments
+ * of the intercepted calls are assumed to be HTMLElement, anything else will
+ * be ignored.
+ * 
+ * @param selector (optional)
+ * A plain CSS selector which will be used in a `document.querySelector()`
+ * call, to validate that the returned element must be processed by the
+ * scriptlet. If no selector is provided, all elements will be processed.
+ * 
+ * @param targetMethod (optional)
+ * The method in the embedded context which should be delegated to the
+ * parent context. If no method is specified, the embedded context becomes
+ * the parent one, i.e. all  properties of the embedded context will be that
+ * of the parent context.
+ * 
+ * */
+
+builtinScriptlets.push({
+    name: 'trusted-prevent-dom-bypass.js',
+    requiresTrust: true,
+    fn: trustedPreventDomBypass,
+    dependencies: [
+        'proxy-apply.fn',
+        'safe-self.fn',
+    ],
+});
+function trustedPreventDomBypass(
+    methodPath = '',
+    selector = '',
+    targetMethod = ''
+) {
+    if ( methodPath === '' ) { return; }
+    const safe = safeSelf();
+    const logPrefix = safe.makeLogPrefix('trusted-prevent-dom-bypass', methodPath, selector, targetMethod);
+    proxyApplyFn(methodPath, function(context) {
+        const elems = context.callArgs.filter(e => e instanceof HTMLElement);
+        const r = context.reflect();
+        if ( elems.length === 0 ) { return r; }
+        const targetContexts = selector !== ''
+            ? new Set(document.querySelectorAll(selector))
+            : undefined;
+        for ( const elem of elems ) {
+            try {
+                if ( `${elem.contentWindow}` !== '[object Window]' ) { continue; }
+                if ( elem.contentWindow.location.href !== 'about:blank' ) { continue; }
+                if ( targetContexts && targetContexts.has(elem) === false ) { continue; }
+                if ( targetMethod !== '' ) {
+                    elem.contentWindow[targetMethod] = self[targetMethod];
+                } else {
+                    Object.defineProperty(elem, 'contentWindow', { value: self });
+                }
+                safe.uboLog(logPrefix, 'Bypass prevented');
+            } catch(_) {
+            }
+        }
+        return r;
+    });
+}
+
 /******************************************************************************/
