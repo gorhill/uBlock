@@ -8,7 +8,7 @@
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
-    "message": "{{ruleCount}} правілаў, сканвертаваных з {{filterCount}} сеткавых фільтраў",
+    "message": "{{ruleCount}} правілаў, пераўтвораных з {{filterCount}} сеткавых фільтраў",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
@@ -32,7 +32,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "Паведаміць пра праблему на гэтым вэб-сайце",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -104,67 +104,67 @@
     "description": "Shown in the About pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "Паведаміць пра праблему з фільтрам",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Report filter issues with specific websites to the <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "Паведамляйце пра праблемы з фільтрамі, датычныя канкрэтных вэб-сайтаў, праз <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">трэкер праблем<code>uBlockOrigin/uAssets</code> </span>. <u>Патрэбны ўліковы запіс GitHub.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported.",
+    "message": "Каб не абцяжарваць добраахвотнікаў дубляванымі справаздачамі, калі ласка, пераканайцеся, што пра гэтую праблему не паведамлялі раней.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Find similar reports",
+    "message": "Знайсці падобныя справаздачы",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Address of the webpage:",
+    "message": "Адрас вэб-старонкі:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The webpage…",
+    "message": "Вэб-старонка…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Pick an entry --",
+    "message": "-- Выберыце тэму --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "Паказвае рэкламу або яе астачу",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Has overlays or other nuisances",
+    "message": "Мае накладкі або іншыя недарэчнасці",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Detects uBO Lite",
+    "message": "Выяўляе uBO Lite",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "Мае праблемы, датычныя прыватнасці",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Malfunctions when uBO Lite is enabled",
+    "message": "Няспраўнасці пры ўключаным uBO Lite",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "Адкрывае непажаданыя карткі або вокны",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leads to badware, phishing",
+    "message": "Вядзе да шкодных праграм, фішынгу",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the webpage as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "Пазначыць вэб-старонку як “NSFW” (<a href=\"https://be-tarask.wikipedia.org/wiki/NSFW\">“небяспечна для працы”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Create new report",
+    "message": "Стварыць новую справаздачу",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "firstRunSectionLabel": {

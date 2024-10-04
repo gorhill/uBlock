@@ -108,7 +108,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Повідомляйте про вади с фільтрами на конкретних сайтах у <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"> трекер помилок<code>uBlockOrigin/uAssets</code></span>. <u>Вимагає обліковий запис GitHub.</u>",
+    "message": "Повідомляйте про вади з фільтрами на конкретних вебсайтах у <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">відстежувач помилок <code>uBlockOrigin/uAssets</code></span>. <u>Потрібен обліковий запис GitHub.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS6P1S1": {
@@ -148,7 +148,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Вади коли uBO Lite включено",
+    "message": "Вади коли uBO Lite ввімкнено",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
@@ -160,7 +160,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Помітити цю сторінку як «Небезпечно для роботи» (<a href=\"https://uk.wikipedia.org/wiki/NSFW\">«NSFW»</a>)",
+    "message": "Позначити цю сторінку «Небезпечною для роботи» (<a href=\"https://uk.wikipedia.org/wiki/NSFW\">«NSFW»</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
@@ -208,15 +208,15 @@
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Розширена мережева фільтрація плюс специфічна та загальна розширена фільтрація з вибраних списків фільтрів.\n\nПотребує широкого дозволу на читання та зміну даних на всіх сайтах.\n\nЗагальна розширена фільтрація може призвести до збільшення використання ресурсів веб-сторінки.",
+    "message": "Розширена мережева фільтрація плюс специфічна та загальна розширена фільтрація з вибраних списків фільтрів.\n\nПотребує розширених дозволів на читання та зміну даних на всіх сайтах.\n\nЗагальна розширена фільтрація може призвести до збільшення використання ресурсів вебсторінкою.",
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "Список імен хостів, для яких буде відбуватись фільтрування",
+    "message": "Список імен хостів, для яких не буде застосовуватись фільтрування",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
-    "message": "[тільки імена доменів]\nexample.com\ngames.example\n...",
+    "message": "[тільки імена хостів]\nexample.com\ngames.example\n...",
     "description": "Default text for in edit field"
   },
   "behaviorSectionLabel": {
@@ -228,7 +228,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "showBlockedCountLabel": {
-    "message": "Показувати кількість заблокованих запитів на піктограмі на панелі інструментів",
+    "message": "Показувати кількість заблокованих запитів на піктограмі панелі інструментів",
     "description": "Label for a checkbox in the options page"
   }
 }
