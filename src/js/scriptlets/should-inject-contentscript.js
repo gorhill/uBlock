@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
 // If content scripts are already injected, we need to respond with `false`,
 // to "should inject content scripts?"
 //
@@ -31,7 +29,7 @@
     try {
         const status = vAPI.uBO !== true;
         if ( status === false && vAPI.bootstrap ) {
-            self.requestIdleCallback(( ) => vAPI && vAPI.bootstrap());
+            self.requestIdleCallback(( ) => vAPI?.bootstrap());
         }
         return status;
     } catch(ex) {
