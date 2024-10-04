@@ -4362,7 +4362,7 @@ export const utils = (( ) => {
         // only ABP.
         [ 'ext_abp', 'false' ],
         // Compatibility with other blockers
-        // https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters#adguard-specific
+        // https://adguard.com/kb/general/ad-filtering/create-own-filters/#conditions-directive
         [ 'adguard', 'adguard' ],
         [ 'adguard_app_android', 'false' ],
         [ 'adguard_app_ios', 'false' ],
