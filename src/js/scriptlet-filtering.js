@@ -176,25 +176,28 @@ const onScriptletMessageInjector = (( ) => {
         '(',
         function(name) {
             if ( self.uBO_bcSecret ) { return; }
-            const bcSecret = new self.BroadcastChannel(name);
-            bcSecret.onmessage = ev => {
-                const msg = ev.data;
-                switch ( typeof msg ) {
-                case 'string':
-                    if ( msg !== 'areyouready?' ) { break; }
-                    bcSecret.postMessage('iamready!');
-                    break;
-                case 'object':
-                    if ( self.vAPI && self.vAPI.messaging ) {
-                        self.vAPI.messaging.send('contentscript', msg);
-                    } else {
-                        console.log(`[uBO][${msg.type}]${msg.text}`);
+            try {
+                const bcSecret = new self.BroadcastChannel(name);
+                bcSecret.onmessage = ev => {
+                    const msg = ev.data;
+                    switch ( typeof msg ) {
+                    case 'string':
+                        if ( msg !== 'areyouready?' ) { break; }
+                        bcSecret.postMessage('iamready!');
+                        break;
+                    case 'object':
+                        if ( self.vAPI && self.vAPI.messaging ) {
+                            self.vAPI.messaging.send('contentscript', msg);
+                        } else {
+                            console.log(`[uBO][${msg.type}]${msg.text}`);
+                        }
+                        break;
                     }
-                    break;
-                }
-            };
-            bcSecret.postMessage('iamready!');
-            self.uBO_bcSecret = bcSecret;
+                };
+                bcSecret.postMessage('iamready!');
+                self.uBO_bcSecret = bcSecret;
+            } catch(_) {
+            }
         }.toString(),
         ')(',
             'bcSecret-slot',
