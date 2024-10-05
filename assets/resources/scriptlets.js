@@ -5163,16 +5163,17 @@ function trustedPreventXhr(...args) {
  * of the intercepted calls are assumed to be HTMLElement, anything else will
  * be ignored.
  * 
- * @param selector (optional)
- * A plain CSS selector which will be used in a `document.querySelector()`
- * call, to validate that the returned element must be processed by the
- * scriptlet. If no selector is provided, all elements will be processed.
- * 
- * @param targetMethod (optional)
+ * @param [targetProp]
  * The method in the embedded context which should be delegated to the
  * parent context. If no method is specified, the embedded context becomes
  * the parent one, i.e. all  properties of the embedded context will be that
  * of the parent context.
+ * 
+ * @example
+ * ##+js(trusted-prevent-dom-bypass, Element.prototype.append, open)
+ * 
+ * @example
+ * ##+js(trusted-prevent-dom-bypass, Element.prototype.appendChild, XMLHttpRequest)
  * 
  * */
 
@@ -5187,26 +5188,25 @@ builtinScriptlets.push({
 });
 function trustedPreventDomBypass(
     methodPath = '',
-    selector = '',
-    targetMethod = ''
+    targetProp = ''
 ) {
     if ( methodPath === '' ) { return; }
     const safe = safeSelf();
-    const logPrefix = safe.makeLogPrefix('trusted-prevent-dom-bypass', methodPath, selector, targetMethod);
+    const logPrefix = safe.makeLogPrefix('trusted-prevent-dom-bypass', methodPath, targetProp);
     proxyApplyFn(methodPath, function(context) {
-        const elems = context.callArgs.filter(e => e instanceof HTMLElement);
+        const elems = new Set(context.callArgs.filter(e => e instanceof HTMLElement));
         const r = context.reflect();
         if ( elems.length === 0 ) { return r; }
-        const targetContexts = selector !== ''
-            ? new Set(document.querySelectorAll(selector))
-            : undefined;
         for ( const elem of elems ) {
             try {
                 if ( `${elem.contentWindow}` !== '[object Window]' ) { continue; }
-                if ( elem.contentWindow.location.href !== 'about:blank' ) { continue; }
-                if ( targetContexts && targetContexts.has(elem) === false ) { continue; }
-                if ( targetMethod !== '' ) {
-                    elem.contentWindow[targetMethod] = self[targetMethod];
+                if ( elem.contentWindow.location.href !== 'about:blank' ) {
+                    if ( elem.contentWindow.location.href !== self.location.href ) {
+                        continue;
+                    }
+                }
+                if ( targetProp !== '' ) {
+                    elem.contentWindow[targetProp] = self[targetProp];
                 } else {
                     Object.defineProperty(elem, 'contentWindow', { value: self });
                 }
