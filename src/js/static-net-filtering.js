@@ -5411,14 +5411,25 @@ function urlSkip(urlin, steps) {
     try {
         let urlout;
         for ( const step of steps ) {
+            const c0 = step.charCodeAt(0);
             // Extract from URL parameter
-            if ( step.startsWith('?') ) {
+            if ( c0 === 0x3F ) { /* ? */
                 urlout = (new URL(urlin)).searchParams.get(step.slice(1));
                 if ( urlout === null ) { return; }
                 if ( urlout.includes(' ') ) {
                     urlout = urlout.replace(/ /g, '%20');
                 }
                 urlin = urlout;
+                continue;
+            }
+            // Extract from URL parameter name at position i
+            if ( c0 === 0x26 ) { /* & */
+                const i = (parseInt(step.slice(1)) || 0) - 1;
+                if ( i < 0 ) { return; }
+                const url = new URL(urlin);
+                if ( i >= url.searchParams.size ) { return; }
+                const params = Array.from(url.searchParams.keys());
+                urlin = urlout = decodeURIComponent(params[i]);
                 continue;
             }
             // Enforce https

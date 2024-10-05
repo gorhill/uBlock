@@ -1531,7 +1531,7 @@ export class AstFilterParser {
                 break;
             }
             const value = this.getNetOptionValue(NODE_TYPE_NET_OPTION_NAME_URLSKIP);
-            if ( value.startsWith('?') === false || value.length < 2 ) {
+            if ( value.length < 2 ) {
                 this.astError = AST_ERROR_OPTION_BADVALUE;
                 realBad = true;
             }
