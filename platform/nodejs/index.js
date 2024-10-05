@@ -218,6 +218,7 @@ class StaticNetFilteringEngine {
     }
 
     filterQuery(details) {
+        fctx.redirectURL = undefined;
         const directives = snfe.filterQuery(fctx.fromDetails(details));
         if ( directives === undefined ) { return; }
         return { redirectURL: fctx.redirectURL, directives };

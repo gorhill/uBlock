@@ -495,7 +495,7 @@ const filterDataReset = ( ) => {
     filterDataWritePtr = 2;
 };
 const filterDataToSelfie = ( ) =>
-    filterData.subarray(0, filterDataWritePtr);
+    filterData.slice(0, filterDataWritePtr);
 
 const filterDataFromSelfie = selfie => {
     if ( selfie instanceof Int32Array === false ) { return false; }
@@ -3193,7 +3193,7 @@ const urlTokenizer = new (class {
     }
 
     toSelfie() {
-        return this.knownTokens;
+        return this.knownTokens.slice();
     }
 
     fromSelfie(selfie) {
@@ -4779,7 +4779,7 @@ StaticNetFilteringEngine.prototype.toSelfie = function() {
         processedFilterCount: this.processedFilterCount,
         acceptedCount: this.acceptedCount,
         discardedCount: this.discardedCount,
-        bitsToBucket: this.bitsToBucket,
+        bitsToBucket: new Map(this.bitsToBucket),
         urlTokenizer: urlTokenizer.toSelfie(),
         destHNTrieContainer: destHNTrieContainer.toSelfie(),
         origHNTrieContainer: origHNTrieContainer.toSelfie(),
@@ -4789,20 +4789,13 @@ StaticNetFilteringEngine.prototype.toSelfie = function() {
     };
 };
 
-StaticNetFilteringEngine.prototype.serialize = async function() {
-    const selfie = [];
-    const storage = {
-        put(name, data) {
-            selfie.push([ name, data ]);
-        }
-    };
-    await this.toSelfie(storage, '');
-    return JSON.stringify(selfie);
+StaticNetFilteringEngine.prototype.serialize = function() {
+    return this.toSelfie();
 };
 
 /******************************************************************************/
 
-StaticNetFilteringEngine.prototype.fromSelfie = async function(selfie) {
+StaticNetFilteringEngine.prototype.fromSelfie = function(selfie) {
     if ( typeof selfie !== 'object' || selfie === null ) { return; }
 
     this.reset();
@@ -4835,14 +4828,8 @@ StaticNetFilteringEngine.prototype.fromSelfie = async function(selfie) {
     return true;
 };
 
-StaticNetFilteringEngine.prototype.unserialize = async function(s) {
-    const selfie = new Map(JSON.parse(s));
-    const storage = {
-        async get(name) {
-            return { content: selfie.get(name) };
-        }
-    };
-    return this.fromSelfie(storage, '');
+StaticNetFilteringEngine.prototype.unserialize = function(selfie) {
+    return this.fromSelfie(selfie);
 };
 
 /******************************************************************************/

@@ -452,12 +452,12 @@ class HNTrieContainer {
     }
 
     toSelfie() {
-        const buf32 = this.buf32.subarray(0, this.buf32[CHAR1_SLOT] + 3 >>> 2);
+        const buf32 = this.buf32.slice(0, this.buf32[CHAR1_SLOT] + 3 >>> 2);
         return { buf32, checksum: i32Checksum(buf32) };
     }
 
     fromSelfie(selfie) {
-        if ( selfie instanceof Object === false ) { return false; }
+        if ( typeof selfie !== 'object' || selfie === null ) { return false; }
         if ( selfie.buf32 instanceof Uint32Array === false ) { return false; }
         if ( selfie.checksum !== i32Checksum(selfie.buf32) ) { return false; }
         this.needle = '';
