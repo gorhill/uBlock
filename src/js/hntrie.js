@@ -452,7 +452,7 @@ class HNTrieContainer {
     }
 
     toSelfie() {
-        const buf32 = this.buf32.slice(0, this.buf32[CHAR1_SLOT] + 3 >>> 2);
+        const buf32 = this.buf32.subarray(0, this.buf32[CHAR1_SLOT] + 3 >>> 2);
         return { buf32, checksum: i32Checksum(buf32) };
     }
 

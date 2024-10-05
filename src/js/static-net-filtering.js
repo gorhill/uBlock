@@ -495,7 +495,7 @@ const filterDataReset = ( ) => {
     filterDataWritePtr = 2;
 };
 const filterDataToSelfie = ( ) =>
-    filterData.slice(0, filterDataWritePtr);
+    filterData.subarray(0, filterDataWritePtr);
 
 const filterDataFromSelfie = selfie => {
     if ( selfie instanceof Int32Array === false ) { return false; }
@@ -3193,7 +3193,7 @@ const urlTokenizer = new (class {
     }
 
     toSelfie() {
-        return this.knownTokens.slice();
+        return this.knownTokens;
     }
 
     fromSelfie(selfie) {
@@ -4779,7 +4779,7 @@ StaticNetFilteringEngine.prototype.toSelfie = function() {
         processedFilterCount: this.processedFilterCount,
         acceptedCount: this.acceptedCount,
         discardedCount: this.discardedCount,
-        bitsToBucket: new Map(this.bitsToBucket),
+        bitsToBucket: this.bitsToBucket,
         urlTokenizer: urlTokenizer.toSelfie(),
         destHNTrieContainer: destHNTrieContainer.toSelfie(),
         origHNTrieContainer: origHNTrieContainer.toSelfie(),
