@@ -4116,9 +4116,11 @@ class ExtSelectorCompiler {
     compileXpathExpression(s) {
         const r = this.unquoteString(s);
         if ( r.i !== s.length ) { return; }
-        if ( globalThis.document instanceof Object === false ) { return r.s; }
+        const doc = globalThis.document;
+        if ( doc instanceof Object === false ) { return r.s; }
         try {
-            globalThis.document.createExpression(r.s, null);
+            const expr = doc.createExpression(r.s, null);
+            expr.evaluate(doc, XPathResult.ANY_UNORDERED_NODE_TYPE);
         } catch (e) {
             return;
         }
