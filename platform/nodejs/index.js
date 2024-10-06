@@ -182,7 +182,7 @@ async function useLists(lists, options = {}) {
     // Populate filtering engine with resolved filter lists
     const promises = [];
     for ( const list of lists ) {
-        promises.push(Promise.resolve(list).then(list => consumeList(list));
+        promises.push(Promise.resolve(list).then(list => consumeList(list)));
     }
 
     useLists.promise = Promise.all(promises);
