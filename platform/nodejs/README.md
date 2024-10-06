@@ -90,10 +90,20 @@ if ( snfe.matchRequest({
 }
 ```
 
-It is possible to pre-parse filter lists and save the intermediate results for 
-later use -- useful to speed up the loading of filter lists. This will be 
-documented eventually, but if you feel adventurous, you can look at the code 
-and use this capability now if you figure out the details.
+Once all the filter lists are loaded into the static network filtering engine,
+you can serialize the content of the engine into a JS string:
+
+```js
+const serializedData = await snfe.serialize();
+```
+
+You can save and later use that JS string to fast-load the content of the
+static network filtering engine without having to parse and compile the lists:
+
+```js
+const snfe = await StaticNetFilteringEngine.create();
+await snfe.deserialize(serializedData);
+```
 
 ---
 
