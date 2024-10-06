@@ -222,7 +222,7 @@ function safeSelf() {
         safe.sendToLogger = (type, ...args) => {
             const text = safe.toLogText(type, ...args);
             if ( text === undefined ) { return; }
-            console.log(`uBO${text}`);
+            safe.log(`uBO ${text}`);
         };
     }
     return safe;
@@ -5286,6 +5286,9 @@ function trustedOverrideElementMethod(
         }
         safe.uboLog(logPrefix, 'Overridden');
         if ( disposition === '' ) { return; }
+        if ( disposition === 'debug' && safe.logLevel !== 0 ) {
+            debugger; // eslint-disable-line no-debugger
+        }
         if ( disposition === 'throw' ) {
             throw new ReferenceError();
         }
