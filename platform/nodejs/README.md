@@ -44,7 +44,7 @@ const { StaticNetFilteringEngine } = await import('@gorhill/ubo-core');
 Create an instance of SNFE:
 
 ```js
-const snfe = StaticNetFilteringEngine.create();
+const snfe = await StaticNetFilteringEngine.create();
 ```
 
 Feed the SNFE with filter lists -- `useLists()` accepts an array of
@@ -54,8 +54,8 @@ through the `raw` property, and optionally the name of the list through the
 
 ```js
 await snfe.useLists([
-    fetch('easylist').then(raw => ({ name: 'easylist', raw })),
-    fetch('easyprivacy').then(raw => ({ name: 'easyprivacy', raw })),
+    fetch('easylist').then(r => r.text()).then(raw => ({ name: 'easylist', raw })),
+    fetch('easyprivacy').then(r => r.text()).then(raw => ({ name: 'easyprivacy', raw })),
 ]);
 ```
 
