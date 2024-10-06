@@ -249,8 +249,29 @@ const toArrayBufferViewConstructor = {
 
 /******************************************************************************/
 
-const textDecoder = new TextDecoder();
-const textEncoder = new TextEncoder();
+const textCodec = {
+    decoder: null,
+    encoder: null,
+    decode(...args) {
+        if ( this.decoder === null ) {
+            this.decoder = new globalThis.TextDecoder();
+        }
+        return this.decoder.decode(...args);
+    },
+    encode(...args) {
+        if ( this.encoder === null ) {
+            this.encoder = new globalThis.TextEncoder();
+        }
+        return this.encoder.encode(...args);
+    },
+    encodeInto(...args) {
+        if ( this.encoder === null ) {
+            this.encoder = new globalThis.TextEncoder();
+        }
+        return this.encoder.encodeInto(...args);
+    },
+};
+
 const isInteger = Number.isInteger;
 
 const writeRefs = new Map();
@@ -269,7 +290,7 @@ const uint8InputFromAsciiStr = s => {
     if ( uint8Input === null || uint8Input.length < s.length ) {
         uint8Input = new Uint8Array(s.length + 0x03FF & ~0x03FF);
     }
-    textEncoder.encodeInto(s, uint8Input);
+    textCodec.encodeInto(s, uint8Input);
     return uint8Input;
 };
 
@@ -407,7 +428,7 @@ const denseArrayBufferToStr = (arrbuf, details) => {
             }
         }
     }
-    return textDecoder.decode(output);
+    return textCodec.decode(output);
 };
 
 const BASE88_POW1 = NUMSAFECHARS;
@@ -489,7 +510,7 @@ const sparseArrayBufferToStr = (arrbuf, details) => {
             uint8out[j++] = SEPARATORCHARCODE;
         }
     }
-    return textDecoder.decode(uint8out);
+    return textCodec.decode(uint8out);
 };
 
 const sparseArrayBufferFromStr = (sparseStr, arrbuf) => {
@@ -1060,7 +1081,7 @@ export const serialize = (data, options = {}) => {
     writeBuffer.length = 0;
     if ( shouldCompress(s, options) === false ) { return s; }
     const lz4Util = new LZ4BlockJS();
-    const uint8ArrayBefore = textEncoder.encode(s);
+    const uint8ArrayBefore = textCodec.encode(s);
     const uint8ArrayAfter = lz4Util.encode(uint8ArrayBefore, 0);
     const lz4 = {
         size: uint8ArrayBefore.length,
@@ -1087,7 +1108,7 @@ export const deserialize = s => {
         readStr = '';
         const lz4Util = new LZ4BlockJS();
         const uint8ArrayAfter = lz4Util.decode(lz4.data, 0, lz4.size);
-        s = textDecoder.decode(new Uint8Array(uint8ArrayAfter));
+        s = textCodec.decode(new Uint8Array(uint8ArrayAfter));
     }
     if ( s.startsWith(MAGICPREFIX) === false ) { return; }
     refCounter = 1;
