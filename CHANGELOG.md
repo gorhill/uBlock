@@ -1,3 +1,4 @@
+- [Validate result type of XPath expressions](https://github.com/gorhill/uBlock/commit/c746633693)
 - [Fix npm test suite](https://github.com/gorhill/uBlock/commit/818cb2d801)
 - [Add ability to lookup parameter name in `urlskip=`](https://github.com/gorhill/uBlock/commit/64b2086ba4)
 - [Mind that BroadcastChannel contructor can throw in Firefox](https://github.com/gorhill/uBlock/commit/6d2b3375f8)
