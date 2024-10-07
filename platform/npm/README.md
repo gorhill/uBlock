@@ -27,6 +27,8 @@ and also lists of domain names or hosts file format (i.e. block lists from [The 
 
 ## Usage
 
+See `./demo.js` in package for instructions to quickly get started.
+
 At the moment, there can be only one instance of the static network filtering
 engine ("SNFE"), which proxy API must be imported as follow:
 

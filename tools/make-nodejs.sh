@@ -41,5 +41,4 @@ node -pe "JSON.stringify(Array.from(fs.readFileSync('src/lib/publicsuffixlist/wa
     > $DES/lib/publicsuffixlist/wasm/publicsuffixlist.wasm.json
 
 cp platform/nodejs/*.js      $DES/
-cp platform/nodejs/README.md $DES/
 cp LICENSE.txt               $DES/
