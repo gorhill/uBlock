@@ -119,6 +119,7 @@ function pslInit(raw) {
 /******************************************************************************/
 
 function compileList({ name, raw }, compiler, writer, options = {}) {
+    if ( typeof raw !== 'string' || raw === '' ) { return; }
     const lineIter = new LineIterator(raw);
     const events = Array.isArray(options.events) ? options.events : undefined;
 
