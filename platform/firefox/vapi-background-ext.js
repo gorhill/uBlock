@@ -37,7 +37,7 @@ const isResolvedObject = o => o instanceof Object &&
     o instanceof Promise === false;
 const reIPv4 = /^\d+\.\d+\.\d+\.\d+$/
 const skipDNS = proxyInfo =>
-    proxyInfo?.proxyDNS || proxyInfo?.type?.startsWith('http');
+    proxyInfo && (proxyInfo.proxyDNS || proxyInfo.type?.charCodeAt(0) === 0x68 /* h */);
 
 /******************************************************************************/
 
