@@ -217,7 +217,7 @@ export async function benchmarkStaticNetFiltering(options = {}) {
 
     const output = [
         'Benchmarked static network filtering engine:',
-        `\tEvaluated ${matchCount} match calls in ${dur.toFixed(0)} ms`,
+        `\tEvaluated ${matchCount} requests in ${dur.toFixed(0)} ms`,
         `\tAverage: ${(dur / matchCount).toFixed(3)} ms per request`,
         `\tNot blocked: ${matchCount - blockCount - allowCount}`,
         `\tBlocked: ${blockCount}`,
