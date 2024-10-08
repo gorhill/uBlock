@@ -1988,6 +1988,7 @@ export class AstFilterParser {
         if ( parentEnd === parentBeg ) { return 0; }
         const s = this.getNodeString(parent);
         const optionsEnd = s.length;
+        const parseDetails = { node: 0, len: 0 };
         const head = this.allocHeadNode();
         let prev = head, next = 0;
         let optionBeg = 0, optionEnd = 0;
@@ -1997,11 +1998,11 @@ export class AstFilterParser {
                 parentBeg + optionBeg,
                 parentBeg + optionsEnd // open ended
             );
-            const { node: down, len: optionLen } = this.parseNetOption(next);
+            this.parseNetOption(next, parseDetails);
             // set next's end to down's end
-            optionEnd += optionLen;
+            optionEnd += parseDetails.len;
             this.nodes[next+NODE_END_INDEX] = parentBeg + optionEnd;
-            this.linkDown(next, down);
+            this.linkDown(next, parseDetails.node);
             prev = this.linkRight(prev, next);
             if ( optionEnd === optionsEnd ) { break; }
             optionBeg = optionEnd + 1;
@@ -2010,7 +2011,7 @@ export class AstFilterParser {
                 parentBeg + optionEnd,
                 parentBeg + optionBeg
             );
-            if ( optionLen === 0 || optionBeg === optionsEnd ) {
+            if ( parseDetails.len === 0 || optionBeg === optionsEnd ) {
                 this.addNodeFlags(next, NODE_FLAG_ERROR);
                 this.addFlags(AST_FLAG_HAS_ERROR);
             }
@@ -2023,7 +2024,7 @@ export class AstFilterParser {
         return this.throwHeadNode(head);
     }
 
-    parseNetOption(parent) {
+    parseNetOption(parent, parseDetails) {
         const parentBeg = this.nodes[parent+NODE_BEG_INDEX];
         const s = this.getNodeString(parent);
         const match = this.reNetOption.exec(s) || [];
@@ -2031,7 +2032,9 @@ export class AstFilterParser {
             this.addNodeFlags(parent, NODE_FLAG_ERROR);
             this.addFlags(AST_FLAG_HAS_ERROR);
             this.astError = AST_ERROR_OPTION_UNKNOWN;
-            return { node: 0, len: s.length };
+            parseDetails.node = 0;
+            parseDetails.len = s.length;
+            return;
         }
         const head = this.allocHeadNode();
         let prev = head, next = 0;
@@ -2073,7 +2076,9 @@ export class AstFilterParser {
         }
         prev = this.linkRight(prev, next);
         if ( assigned === false ) {
-            return { node: this.throwHeadNode(head), len: matchEnd };
+            parseDetails.node = this.throwHeadNode(head);
+            parseDetails.len = matchEnd;
+            return;
         }
         next = this.allocTypedNode(
             NODE_TYPE_NET_OPTION_ASSIGN,
@@ -2129,7 +2134,8 @@ export class AstFilterParser {
             );
             this.linkRight(prev, next);
         }
-        return { node: this.throwHeadNode(head), len: details.quoteEnd };
+        parseDetails.node = this.throwHeadNode(head);
+        parseDetails.len = details.quoteEnd;
     }
 
     endOfNetOption(s, beg) {
@@ -2156,32 +2162,26 @@ export class AstFilterParser {
         );
         if ( parentEnd === parentBeg ) { return containerNode; }
         const separatorCode = separator.charCodeAt(0);
+        const parseDetails = { separator, mode, node: 0, len: 0 };
         const listNode = this.allocHeadNode();
         let prev = listNode;
         let domainNode = 0;
         let separatorNode = 0;
         const s = this.getNodeString(parent);
         const listEnd = s.length;
-        let beg = 0, end = 0, c = 0;
+        let beg = 0, end = 0;
         while ( beg < listEnd ) {
-            c = s.charCodeAt(beg);
-            if ( c === 0x7E /* ~ */ ) {
-                c = s.charCodeAt(beg+1) || 0;
-            }
-            if ( c !== 0x2F /* / */ ) {
-                end = s.indexOf(separator, beg);
-            } else {
-                end = s.indexOf('/', beg+1);
-                end = s.indexOf(separator, end !== -1 ? end+1 : beg);
-            }
-            if ( end === -1 ) { end = listEnd; }
+            const next = this.allocTypedNode(
+                NODE_TYPE_OPTION_VALUE_DOMAIN_RAW,
+                parentBeg + beg,
+                parentBeg + listEnd // open ended
+            );
+            this.parseDomain(next, parseDetails);
+            end = beg + parseDetails.len;
+            this.nodes[next+NODE_END_INDEX] = parentBeg + end;
             if ( end !== beg ) {
-                domainNode = this.allocTypedNode(
-                    NODE_TYPE_OPTION_VALUE_DOMAIN_RAW,
-                    parentBeg + beg,
-                    parentBeg + end
-                );
-                this.linkDown(domainNode, this.parseDomain(domainNode, mode));
+                domainNode = next;
+                this.linkDown(domainNode, parseDetails.node);
                 prev = this.linkRight(prev, domainNode);
             } else {
                 domainNode = 0;
@@ -2217,23 +2217,38 @@ export class AstFilterParser {
         return containerNode;
     }
 
-    parseDomain(parent, mode = 0b0000) {
+    parseDomain(parent, parseDetails) {
         const parentBeg = this.nodes[parent+NODE_BEG_INDEX];
         const parentEnd = this.nodes[parent+NODE_END_INDEX];
+        const not = this.charCodeAt(parentBeg) === 0x7E /* ~ */;
         let head = 0, next = 0;
         let beg = parentBeg;
-        const c = this.charCodeAt(beg);
-        if ( c === 0x7E /* ~ */ ) {
+        if ( not ) {
             this.addNodeFlags(parent, NODE_FLAG_IS_NEGATED);
             head = this.allocTypedNode(NODE_TYPE_OPTION_VALUE_NOT, beg, beg + 1);
-            if ( (mode & 0b1000) === 0 ) {
+            if ( (parseDetails.mode & 0b1000) === 0 ) {
                 this.addNodeFlags(parent, NODE_FLAG_ERROR);
             }
             beg += 1;
         }
-        if ( beg !== parentEnd ) {
-            next = this.allocTypedNode(NODE_TYPE_OPTION_VALUE_DOMAIN, beg, parentEnd);
-            const hn = this.normalizeDomainValue(this.getNodeString(next), mode);
+        const c0 = this.charCodeAt(beg);
+        let end = beg;
+        let type = 0;
+        if ( c0 === 0x2F /* / */ ) {
+            end = this.indexOf('/', beg + 1, parentEnd);
+            if ( end !== -1 ) { end += 1; }
+            type = 1;
+        } else if ( c0 === 0x5B /* [ */ && this.startsWith('[$domain=/', beg) ) {
+            end = this.indexOf('/]', beg + 10, parentEnd);
+            if ( end !== -1 ) { end += 2; }
+            type = 2;
+        } else {
+            end = this.indexOf(parseDetails.separator, end, parentEnd);
+        }
+        if ( end === -1 ) { end = parentEnd; }
+        if ( beg !== end ) {
+            next = this.allocTypedNode(NODE_TYPE_OPTION_VALUE_DOMAIN, beg, end);
+            const hn = this.normalizeDomainValue(next, type, parseDetails.mode);
             if ( hn !== undefined ) {
                 if ( hn !== '' ) {
                     this.setNodeTransform(next, hn);
@@ -2252,7 +2267,8 @@ export class AstFilterParser {
             this.addNodeFlags(parent, NODE_FLAG_ERROR);
             this.addFlags(AST_FLAG_HAS_ERROR);
         }
-        return head;
+        parseDetails.node = head;
+        parseDetails.len = end - parentBeg;
     }
 
     // mode bits:
@@ -2261,16 +2277,16 @@ export class AstFilterParser {
     //   0b00100: can use single wildcard
     //   0b01000: can be negated
     //   0b10000: can be a regex
-    normalizeDomainValue(s, modeBits) {
-        if ( (modeBits & 0b10000) === 0 ||
-            s.length <= 2 ||
-            s.charCodeAt(0) !== 0x2F /* / */ ||
-            exCharCodeAt(s, -1) !== 0x2F /* / */
-        ) {
+    normalizeDomainValue(node, type, modeBits) {
+        const s = this.getNodeString(node);
+        if ( type === 0 ) {
             return this.normalizeHostnameValue(s, modeBits);
         }
-        const source = this.normalizeRegexPattern(s);
+        if ( (modeBits & 0b10000) === 0 ) { return ''; }
+        const regex = type === 1 ? s : `/${s.slice(10, -2)}/`;
+        const source = this.normalizeRegexPattern(regex);
         if ( source === '' ) { return ''; }
+        if ( type === 1 && source === regex ) { return; }
         return `/${source}/`;
     }
 
@@ -2855,6 +2871,15 @@ export class AstFilterParser {
 
     charCodeAt(pos) {
         return pos < this.rawEnd ? this.raw.charCodeAt(pos) : -1;
+    }
+
+    indexOf(needle, beg, end = 0) {
+        const haystack = end === 0 ? this.raw : this.raw.slice(0, end);
+        return haystack.indexOf(needle, beg);
+    }
+
+    startsWith(s, pos) {
+        return pos < this.rawEnd && this.raw.startsWith(s, pos);
     }
 
     isTokenCharCode(c) {
