@@ -2952,13 +2952,45 @@ function preventXhr(...args) {
     return preventXhrFn(false, ...args);
 }
 
-/******************************************************************************/
+/**
+ * @scriptlet prevent-window-open
+ * 
+ * @description
+ * Prevent a webpage from opening new tabs through `window.open()`.
+ * 
+ * @param pattern
+ * A plain string or regex to match against the `url` argument for the
+ * prevention to be triggered. If not provided, all calls to `window.open()`
+ * are prevented.
+ * If set to the special value `debug` *and* the logger is opened, the scriptlet
+ * will trigger a `debugger` statement and the prevention will not occur.
+ * 
+ * @param [delay]
+ * If provided, a decoy will be created or opened, and this parameter states
+ * the number of seconds to wait for before the decoy is terminated, i.e.
+ * either removed from the DOM or closed.
+ * 
+ * @param [decoy]
+ * A string representing the type of decoy to use:
+ * - `blank`: replace the `url` parameter with `about:blank`
+ * - `object`: create and append an `object` element to the DOM, and return
+ *   its `contentWindow` property.
+ * - `frame`: create and append an `iframe` element to the DOM, and return
+ *   its `contentWindow` property.
+ * 
+ * @example
+ * ##+js(prevent-window-open, ads.example.com/)
+ * 
+ * @example
+ * ##+js(prevent-window-open, ads.example.com/, 1, iframe)
+ * 
+ * */
 
 builtinScriptlets.push({
-    name: 'no-window-open-if.js',
+    name: 'prevent-window-open.js',
     aliases: [
         'nowoif.js',
-        'prevent-window-open.js',
+        'no-window-open-if.js',
         'window.open-defuser.js',
     ],
     fn: noWindowOpenIf,
@@ -2994,6 +3026,10 @@ function noWindowOpenIf(
     };
     const noopFunc = function(){};
     proxyApplyFn('open', function open(context) {
+        if ( pattern === 'debug' && safe.logLevel !== 0 ) {
+            debugger; // eslint-disable-line no-debugger
+            return context.reflect();
+        }
         const { callArgs } = context;
         const haystack = callArgs.join(' ');
         if ( rePattern.test(haystack) !== targetMatchResult ) {
