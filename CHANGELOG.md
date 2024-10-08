@@ -1,3 +1,5 @@
+- [Improve `prevent-window-open` scriptlet](https://github.com/gorhill/uBlock/commit/85877b12ed)
+- [Add support to parse Adguard's `[$domain=/.../]` regex-based modifier](https://github.com/gorhill/uBlock/commit/58bfe4c846)
 - [Validate result type of XPath expressions](https://github.com/gorhill/uBlock/commit/c746633693)
 - [Fix npm test suite](https://github.com/gorhill/uBlock/commit/818cb2d801)
 - [Add ability to lookup parameter name in `urlskip=`](https://github.com/gorhill/uBlock/commit/64b2086ba4)
