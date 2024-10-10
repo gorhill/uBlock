@@ -5420,7 +5420,7 @@ StaticNetFilteringEngine.prototype.transformRequest = function(fctxt, out = []) 
  * ||example.com/path/to/tracker$urlskip=?url
  * ||example.com/path/to/tracker$urlskip=?url ?to
  * ||pixiv.net/jump.php?$urlskip=&1
- * ||podtrac.com/pts/redirect.mp3/$urlskip=/podtrac\.com\/pts\/redirect\.mp3\/(.*?\.mp3\b)/ +https
+ * ||podtrac.com/pts/redirect.mp3/$urlskip=/\/redirect\.mp3\/(.*?\.mp3\b)/ +https
  * 
  * */
 
