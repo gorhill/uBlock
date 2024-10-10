@@ -5381,7 +5381,7 @@ StaticNetFilteringEngine.prototype.transformRequest = function(fctxt, out = []) 
 };
 
 /**
- * @trustedOption urlkip
+ * @trustedOption urlskip
  * 
  * @description
  * Extract a URL from another URL according to one or more transformation steps,
