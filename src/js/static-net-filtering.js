@@ -5356,12 +5356,10 @@ StaticNetFilteringEngine.prototype.transformRequest = function(fctxt, out = []) 
             out.push(directive);
             continue;
         }
-        const { refs } = directive;
-        if ( refs instanceof Object === false ) { continue; }
-        if ( refs.$cache === null ) {
-            refs.$cache = sfp.parseReplaceValue(refs.value);
+        if ( directive.cache === null ) {
+            directive.cache = sfp.parseReplaceValue(directive.value);
         }
-        const cache = refs.$cache;
+        const cache = directive.cache;
         if ( cache === undefined ) { continue; }
         const before = `${redirectURL.pathname}${redirectURL.search}${redirectURL.hash}`;
         if ( cache.re.test(before) !== true ) { continue; }
@@ -5382,7 +5380,49 @@ StaticNetFilteringEngine.prototype.transformRequest = function(fctxt, out = []) 
     return out;
 };
 
-/******************************************************************************/
+/**
+ * @trustedOption urlkip
+ * 
+ * @description
+ * Extract a URL from another URL according to one or more transformation steps,
+ * thereby skipping over intermediate network request(s) to remote servers.
+ * Requires a trusted source.
+ * 
+ * @param steps
+ * A serie of space-separated directives representing the transformation steps
+ * to perform to extract the final URL to which a network request should be
+ * redirected.
+ * 
+ * Supported directives:
+ * 
+ * `?name`: extract the value of parameter `name` as the current string.
+ * 
+ * `&i`: extract the name of the parameter at position `i` as the current
+ *   string. The position is 1-based.
+ * 
+ * `/.../`: extract the first capture group of a regex as the current string.
+ * 
+ * `+https`: prepend the current string with `https://`.
+ * 
+ * `-base64`: decode the current string as a base64-encoded string.
+ * 
+ * At any given step, the currently extracted string may not necessarily be
+ * a valid URL, and more transformation steps may be needed to obtain a valid
+ * URL once all the steps are applied.
+ * 
+ * An unsupported step or a failed step will abort the transformation and no
+ * redirection will be performed.
+ * 
+ * The final step is expected to yield a valid URL. If the result is not a
+ * valid URL, no redirection will be performed.
+ * 
+ * @example
+ * ||example.com/path/to/tracker$urlskip=?url
+ * ||example.com/path/to/tracker$urlskip=?url ?to
+ * ||pixiv.net/jump.php?$urlskip=&1
+ * ||podtrac.com/pts/redirect.mp3/$urlskip=/podtrac\.com\/pts\/redirect\.mp3\/(.*?\.mp3\b)/ +https
+ * 
+ * */
 
 StaticNetFilteringEngine.prototype.urlSkip = function(fctxt, out = []) {
     if ( fctxt.redirectURL !== undefined ) { return; }
@@ -5396,7 +5436,7 @@ StaticNetFilteringEngine.prototype.urlSkip = function(fctxt, out = []) {
         const urlin = fctxt.url;
         const value = directive.value;
         const steps = value.includes(' ') && value.split(/ +/) || [ value ];
-        const urlout = urlSkip(urlin, steps);
+        const urlout = urlSkip(directive, urlin, steps);
         if ( urlout === undefined ) { continue; }
         if ( urlout === urlin ) { continue; }
         fctxt.redirectURL = urlout;
@@ -5407,41 +5447,52 @@ StaticNetFilteringEngine.prototype.urlSkip = function(fctxt, out = []) {
     return out;
 };
 
-function urlSkip(urlin, steps) {
+function urlSkip(directive, urlin, steps) {
     try {
-        let urlout;
+        let urlout = urlin;
         for ( const step of steps ) {
+            const urlin = urlout;
             const c0 = step.charCodeAt(0);
-            // Extract from URL parameter
-            if ( c0 === 0x3F ) { /* ? */
-                urlout = (new URL(urlin)).searchParams.get(step.slice(1));
-                if ( urlout === null ) { return; }
-                if ( urlout.includes(' ') ) {
-                    urlout = urlout.replace(/ /g, '%20');
-                }
-                urlin = urlout;
-                continue;
-            }
             // Extract from URL parameter name at position i
-            if ( c0 === 0x26 ) { /* & */
+            if ( c0 === 0x26 ) { // &
                 const i = (parseInt(step.slice(1)) || 0) - 1;
                 if ( i < 0 ) { return; }
                 const url = new URL(urlin);
                 if ( i >= url.searchParams.size ) { return; }
                 const params = Array.from(url.searchParams.keys());
-                urlin = urlout = decodeURIComponent(params[i]);
+                urlout = decodeURIComponent(params[i]);
                 continue;
             }
             // Enforce https
-            if ( step === '+https' ) {
+            if ( c0 === 0x2B && step === '+https' ) {
                 const s = urlin.replace(/^https?:\/\//, '');
                 if ( /^[\w-]:\/\//.test(s) ) { return; }
-                urlin = urlout = `https://${s}`;
+                urlout = `https://${s}`;
                 continue;
             }
             // Decode base64
-            if ( step === '-base64' ) {
-                urlin = urlout = self.atob(urlin);
+            if ( c0 === 0x2D && step === '-base64' ) {
+                urlout = self.atob(urlin);
+                continue;
+            }
+            // Regex extraction from first capture group
+            if ( c0 === 0x2F ) { // /
+                if ( directive.cache === null ) {
+                    directive.cache = new RegExp(step.slice(1, -1));
+                }
+                const match = directive.cache.exec(urlin);
+                if ( match === null ) { return; }
+                if ( match.length <= 1 ) { return; }
+                urlout = match[1];
+                continue;
+            }
+            // Extract from URL parameter
+            if ( c0 === 0x3F ) { // ?
+                urlout = (new URL(urlin)).searchParams.get(step.slice(1));
+                if ( urlout === null ) { return; }
+                if ( urlout.includes(' ') ) {
+                    urlout = urlout.replace(/ /g, '%20');
+                }
                 continue;
             }
             // Unknown directive
