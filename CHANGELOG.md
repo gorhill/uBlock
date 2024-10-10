@@ -1,3 +1,4 @@
+- [Add regex extraction transformation step to `urlskip=` option](https://github.com/gorhill/uBlock/commit/c86ed5287b)
 - [Improve `prevent-window-open` scriptlet](https://github.com/gorhill/uBlock/commit/85877b12ed)
 - [Add support to parse Adguard's `[$domain=/.../]` regex-based modifier](https://github.com/gorhill/uBlock/commit/58bfe4c846)
 - [Validate result type of XPath expressions](https://github.com/gorhill/uBlock/commit/c746633693)
