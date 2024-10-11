@@ -106,7 +106,6 @@ async function reportSpecificFilterIssue() {
         '`' + qs$('select[name="url"]').value + '`'
     );
     githubURL.searchParams.set('category', issueType);
-    githubURL.searchParams.set('labels', 'uBOL');
 
     const manifest = runtime.getManifest();
     const rulesets = await dnr.getEnabledRulesets();
