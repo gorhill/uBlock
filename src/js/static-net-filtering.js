@@ -5406,6 +5406,8 @@ StaticNetFilteringEngine.prototype.transformRequest = function(fctxt, out = []) 
  * 
  * `-base64`: decode the current string as a base64-encoded string.
  * 
+ * `-uricomponent`: decode the current string as a URI component string.
+ * 
  * At any given step, the currently extracted string may not necessarily be
  * a valid URL, and more transformation steps may be needed to obtain a valid
  * URL once all the steps are applied.
@@ -5470,10 +5472,18 @@ function urlSkip(directive, urlin, steps) {
                 urlout = `https://${s}`;
                 continue;
             }
-            // Decode base64
-            if ( c0 === 0x2D && step === '-base64' ) {
-                urlout = self.atob(urlin);
-                continue;
+            // Decode
+            if ( c0 === 0x2D ) {
+                // Base64
+                if ( step === '-base64' ) {
+                    urlout = self.atob(urlin);
+                    continue;
+                }
+                // URI component
+                if ( step === '-uricomponent' ) {
+                    urlout = self.decodeURIComponent(urlin);
+                    continue;
+                }
             }
             // Regex extraction from first capture group
             if ( c0 === 0x2F ) { // /
