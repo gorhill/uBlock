@@ -1002,6 +1002,7 @@ function getSafeCookieValuesFn() {
         'enable', 'disable',
         'enabled', 'disabled',
         'essential', 'nonessential',
+        'forbidden', 'forever',
         'hide', 'hidden',
         'necessary', 'required',
         'ok',
