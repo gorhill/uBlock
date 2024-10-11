@@ -5406,7 +5406,7 @@ StaticNetFilteringEngine.prototype.transformRequest = function(fctxt, out = []) 
  * 
  * `-base64`: decode the current string as a base64-encoded string.
  * 
- * `-uricomponent`: decode the current string as a URI component string.
+ * `-uricomponent`: decode the current string as a URI encoded string.
  * 
  * At any given step, the currently extracted string may not necessarily be
  * a valid URL, and more transformation steps may be needed to obtain a valid
