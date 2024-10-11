@@ -1,3 +1,5 @@
+- [Add `-uricomponent` to `urlskip=` option](https://github.com/gorhill/uBlock/commit/01eebffc1f)
+- [Add `forbidden`/`forever` as safe cookie values](https://github.com/gorhill/uBlock/commit/4d982d9972) (by @ryanbr)
 - [Add regex extraction transformation step to `urlskip=` option](https://github.com/gorhill/uBlock/commit/c86ed5287b)
 - [Improve `prevent-window-open` scriptlet](https://github.com/gorhill/uBlock/commit/85877b12ed)
 - [Add support to parse Adguard's `[$domain=/.../]` regex-based modifier](https://github.com/gorhill/uBlock/commit/58bfe4c846)
