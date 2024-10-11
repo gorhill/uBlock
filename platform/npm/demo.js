@@ -36,6 +36,17 @@ import { StaticNetFilteringEngine } from '@gorhill/ubo-core';
 
 /******************************************************************************/
 
+async function fetchList(name, url) {
+    return fetch(url).then(r => {
+        return r.text();
+    }).then(raw => {
+        console.log(`${name} fetched`);
+        return { name, raw };
+    }).catch(reason => {
+        console.error(reason);
+    });
+}
+
 async function main() {
     const pathToSelfie = 'cache/selfie.txt';
 
@@ -62,24 +73,14 @@ async function main() {
     if ( !selfie ) {
         console.log(`Fetching lists...`);
         await snfe.useLists([
-            fetch('https://easylist.to/easylist/easylist.txt')
-                .then(r => {
-                    return r.text();
-                }).then(raw => {
-                    console.log(`easylist fetched`);
-                    return { name: 'easylist', raw };
-                }).catch(reason => {
-                    console.error(reason);
-                }),
-            fetch('https://easylist.to/easylist/easyprivacy.txt')
-                .then(r => {
-                    return r.text();
-                }).then(raw => {
-                    console.log(`easyprivacy fetched`);
-                    return { name: 'easyprivacy', raw };
-                }).catch(reason => {
-                    console.error(reason);
-                }),
+            fetchList('ubo-ads', 'https://ublockorigin.github.io/uAssetsCDN/filters/filters.min.txt'),
+            fetchList('ubo-badware', 'https://ublockorigin.github.io/uAssetsCDN/filters/badware.min.txt'),
+            fetchList('ubo-privacy', 'https://ublockorigin.github.io/uAssetsCDN/filters/privacy.min.txt'),
+            fetchList('ubo-unbreak', 'https://ublockorigin.github.io/uAssetsCDN/filters/unbreak.min.txt'),
+            fetchList('ubo-quick', 'https://ublockorigin.github.io/uAssetsCDN/filters/quick-fixes.min.txt'),
+            fetchList('easylist', 'https://easylist.to/easylist/easylist.txt'),
+            fetchList('easyprivacy', 'https://easylist.to/easylist/easyprivacy.txt'),
+            fetchList('plowe', 'https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext'),
         ]);
         const selfie = await snfe.serialize();
         await fs.mkdir('cache', { recursive: true });
