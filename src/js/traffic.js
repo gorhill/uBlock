@@ -196,8 +196,9 @@ const onBeforeRootFrameRequest = function(fctxt) {
     if ( trusted === false && pageStore !== null ) {
         if ( result !== 1 ) {
             pageStore.redirectNonBlockedRequest(fctxt);
+        } else {
+            pageStore.skipMainDocument(fctxt);
         }
-        pageStore.skipMainDocument(fctxt);
     }
 
     if ( logger.enabled ) {

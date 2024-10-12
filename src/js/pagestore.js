@@ -942,6 +942,9 @@ const PageStore = class {
         if ( staticNetFilteringEngine.hasQuery(fctxt) ) {
             staticNetFilteringEngine.filterQuery(fctxt, directives);
         }
+        if ( this.urlSkippableResources.has(fctxt.itype) ) {
+            staticNetFilteringEngine.urlSkip(fctxt, directives);
+        }
         if ( directives.length === 0 ) { return; }
         if ( logger.enabled !== true ) { return; }
         fctxt.pushFilters(directives.map(a => a.logData()));
@@ -1132,22 +1135,30 @@ const PageStore = class {
         response.blockedResources =
             this.netFilteringCache.lookupAllBlocked(fctxt.getDocHostname());
     }
+
+    cacheableResults = new Set([
+        µb.FilteringContext.SUB_FRAME
+    ]);
+
+    collapsibleResources = new Set([
+        µb.FilteringContext.IMAGE,
+        µb.FilteringContext.MEDIA,
+        µb.FilteringContext.OBJECT,
+        µb.FilteringContext.SUB_FRAME,
+    ]);
+
+    urlSkippableResources = new Set([
+        µb.FilteringContext.IMAGE,
+        µb.FilteringContext.MAIN_FRAME,
+        µb.FilteringContext.MEDIA,
+        µb.FilteringContext.OBJECT,
+        µb.FilteringContext.SUB_FRAME,
+    ]);
+
+    // To mitigate memory churning
+    static junkyard = [];
+    static junkyardMax = 10;
 };
-
-PageStore.prototype.cacheableResults = new Set([
-    µb.FilteringContext.SUB_FRAME,
-]);
-
-PageStore.prototype.collapsibleResources = new Set([
-    µb.FilteringContext.IMAGE,
-    µb.FilteringContext.MEDIA,
-    µb.FilteringContext.OBJECT,
-    µb.FilteringContext.SUB_FRAME,
-]);
-
-// To mitigate memory churning
-PageStore.junkyard = [];
-PageStore.junkyardMax = 10;
 
 /******************************************************************************/
 

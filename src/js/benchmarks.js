@@ -166,11 +166,11 @@ export async function benchmarkStaticNetFiltering(options = {}) {
     let allowCount = 0;
     let redirectCount = 0;
     let removeparamCount = 0;
+    let urlskipCount = 0;
     let cspCount = 0;
     let permissionsCount = 0;
     let replaceCount = 0;
-    for ( let i = 0; i < requests.length; i++ ) {
-        const request = requests[i];
+    for ( const request of requests ) {
         fctxt.setURL(request.url);
         if ( fctxt.getIPAddress() === '' ) {
             fctxt.setIPAddress('93.184.215.14\n2606:2800:21f:cb07:6820:80da:af6b:8b2c');
@@ -186,12 +186,15 @@ export async function benchmarkStaticNetFiltering(options = {}) {
             if ( sfne.transformRequest(fctxt) ) {
                 redirectCount += 1;
             }
-            if ( fctxt.redirectURL !== undefined && sfne.hasQuery(fctxt) ) {
-                if ( sfne.filterQuery(fctxt, 'removeparam') ) {
+            if ( sfne.hasQuery(fctxt) ) {
+                if ( sfne.filterQuery(fctxt) ) {
                     removeparamCount += 1;
                 }
             }
-            if ( fctxt.type === 'main_frame' || fctxt.type === 'sub_frame' ) {
+            if ( sfne.urlSkip(fctxt) ) {
+                urlskipCount += 1;
+            }
+            if ( fctxt.isDocument() ) {
                 if ( sfne.matchAndFetchModifiers(fctxt, 'csp') ) {
                     cspCount += 1;
                 }
@@ -207,9 +210,9 @@ export async function benchmarkStaticNetFiltering(options = {}) {
             if ( sfne.redirectRequest(redirectEngine, fctxt) ) {
                 redirectCount += 1;
             }
-        }
-        if ( fctxt.type === 'main_frame' ) {
-            sfne.matchAndFetchModifiers(fctxt, 'urlskip');
+            if ( fctxt.isRootDocument() && sfne.urlSkip(fctxt) ) {
+                urlskipCount += 1;
+            }
         }
     }
     const t1 = performance.now();
@@ -224,6 +227,7 @@ export async function benchmarkStaticNetFiltering(options = {}) {
         `\tUnblocked: ${allowCount}`,
         `\tredirect=: ${redirectCount}`,
         `\tremoveparam=: ${removeparamCount}`,
+        `\turlskip=: ${urlskipCount}`,
         `\tcsp=: ${cspCount}`,
         `\tpermissions=: ${permissionsCount}`,
         `\treplace=: ${replaceCount}`,
