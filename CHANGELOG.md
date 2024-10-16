@@ -1,3 +1,4 @@
+- [Ensure `urlskip=` redirects only to `https:`](https://github.com/gorhill/uBlock/commit/32f27c5131)
 - [Add support to `urlskip=` media resources](https://github.com/gorhill/uBlock/commit/ce9fc5dc14)
 - [Add `-uricomponent` to `urlskip=` option](https://github.com/gorhill/uBlock/commit/01eebffc1f)
 - [Add `forbidden`/`forever` as safe cookie values](https://github.com/gorhill/uBlock/commit/4d982d9972) (by @ryanbr)
