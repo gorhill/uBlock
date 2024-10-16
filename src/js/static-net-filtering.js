@@ -5508,7 +5508,8 @@ function urlSkip(directive, url, steps) {
             // Unknown directive
             return;
         }
-        void new URL(urlout);
+        const urlfinal = new URL(urlout);
+        if ( urlfinal.protocol !== 'https:' ) { return; }
         return urlout;
     } catch(x) {
     }
