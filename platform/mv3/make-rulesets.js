@@ -1194,6 +1194,16 @@ async function main() {
         });
     }
 
+    await rulesetFromURLs({
+        id: 'est-0',
+		group: 'regions',
+		lang: 'et',
+        name: '🇪🇪ee: Eesti saitidele kohandatud filter',
+        enabled: false,
+        urls: [ 'https://ubol-et.adblock.ee/list.txt' ],
+        homeURL: 'https://github.com/sander85/uBOL-et',
+    });
+
     // Handpicked rulesets from assets.json
     const handpicked = [
         'block-lan',
