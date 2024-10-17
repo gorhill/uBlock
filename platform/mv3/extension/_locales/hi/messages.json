@@ -32,7 +32,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "इस वेबसाइट पर किसी समस्या को रिपोर्ट करें",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {

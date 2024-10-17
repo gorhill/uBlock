@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "マルウェアドメイン",
+    "message": "マルウェアからの保護、セキュリティ",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
@@ -540,7 +540,7 @@
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pEnableMyFiltersLabel": {
-    "message": "マイカスタムフィルターを有効化",
+    "message": "自分のカスタムフィルターを有効化",
     "description": "Label for the checkbox use to enable/disable 'My filters' list"
   },
   "1pTrustMyFiltersLabel": {

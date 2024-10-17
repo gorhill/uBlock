@@ -484,7 +484,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
-    "message": "Social widgets",
+    "message": "ابزارک‌های اجتماعی",
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
@@ -856,7 +856,7 @@
     "description": "A logger setting"
   },
   "loggerSettingPerEntryLineCount": {
-    "message": "Use {{input}} lines per entry in vertically expanded mode",
+    "message": "استفاده از {{input}} خط برای هر ورودی در حالت عمودی گسترش‌یافته",
     "description": "A logger setting"
   },
   "loggerSettingHideColumnsPrompt": {
@@ -928,7 +928,7 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Report filter issues with specific websites to the <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "مشکلات فیلتر با وب‌سایت‌های خاص را به <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code></span> گزارش دهید. <u>نیاز به یک حساب کاربری GitHub دارد.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
@@ -936,7 +936,7 @@
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Tips:</b> Be sure your filter lists are up to date. <span data-url=\"logger-ui.html#_\">The logger</span> is the primary tool to diagnose filter-related issues.",
+    "message": "نکته‌ها: مطمئن شوید که فهرست‌های فیلتر شما به‌روز هستند. <span data-url=\"logger-ui.html#_\">گزارشگر</span> ابزار اصلی برای تشخیص مشکلات مربوط به فیلترهاست.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
@@ -944,7 +944,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Report issues with uBlock Origin itself to the <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "مشکلات مربوط به خود uBlock Origin را به <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code></span> گزارش دهید. <u>نیاز به یک حساب کاربری GitHub دارد.</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
@@ -972,7 +972,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "message": "تأیید کنید که مشکل پس از بارگذاری مجدد صفحهٔ مشکل‌دار همچنان وجود دارد.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -992,7 +992,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Has overlays or other nuisances",
+    "message": "دارای لایه‌های اضافی یا مشکلات مزاحم دیگر",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
@@ -1012,7 +1012,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leads to badware, phishing",
+    "message": "منجر به بدافزار یا فیشینگ می‌شود",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
@@ -1264,7 +1264,7 @@
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleCosmeticFiltering": {
-    "message": "Toggle cosmetic filtering",
+    "message": "فیلترگذاری ظاهری را فعال/غیرفعال کنید",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "toggleJavascript": {
@@ -1300,7 +1300,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Could not filter properly at browser launch. Reload the page to ensure proper filtering.",
+    "message": "فیلترگذاری به‌درستی در هنگام راه‌اندازی مرورگر انجام نشد. صفحه را دوباره بارگذاری کنید تا از فیلترگذاری صحیح اطمینان حاصل کنید.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {

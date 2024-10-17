@@ -1248,7 +1248,7 @@
     "description": "A context menu entry, to view the source code of the target resource"
   },
   "shortcutCapturePlaceholder": {
-    "message": "ادخل اختصار",
+    "message": "أدخِل اختصار",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {

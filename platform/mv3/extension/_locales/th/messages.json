@@ -28,7 +28,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupFilteringModeLabel": {
-    "message": "filtering mode",
+    "message": "โหมดตัวกรอง",
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipReport": {
@@ -52,7 +52,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAds": {
-    "message": "Ads",
+    "message": "โฆษณา",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupPrivacy": {
@@ -164,7 +164,7 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Create new report",
+    "message": "สร้างรายงานใหม่",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "firstRunSectionLabel": {
