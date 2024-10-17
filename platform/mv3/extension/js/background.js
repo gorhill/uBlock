@@ -38,6 +38,8 @@ import {
 } from './ruleset-manager.js';
 
 import {
+    MODE_BASIC,
+    MODE_OPTIMAL,
     getDefaultFilteringMode,
     getFilteringMode,
     getTrustedSites,
@@ -136,7 +138,7 @@ async function onPermissionsRemoved() {
     const modified = await syncWithBrowserPermissions();
     if ( modified === false ) { return false; }
     const afterMode = await getDefaultFilteringMode();
-    if ( beforeMode > 1 && afterMode <= 1 ) {
+    if ( beforeMode > MODE_BASIC && afterMode <= MODE_BASIC ) {
         updateDynamicRules();
     }
     registerInjectables();
@@ -420,9 +422,19 @@ async function start() {
     );
 
     if ( firstRun ) {
+        const enableOptimal = await hasOmnipotence();
+        if ( enableOptimal ) {
+            const afterLevel = await setDefaultFilteringMode(MODE_OPTIMAL);
+            if ( afterLevel === MODE_OPTIMAL ) {
+                updateDynamicRules();
+                registerInjectables();
+            }
+        }
         const disableFirstRunPage = await adminRead('disableFirstRunPage');
         if ( disableFirstRunPage !== true ) {
             runtime.openOptionsPage();
+        } else {
+            firstRun = false;
         }
     }
 }

@@ -316,7 +316,7 @@ dom.on('#showBlockedCount input[type="checkbox"]', 'change', ev => {
 
 function renderTrustedSites() {
     const textarea = qs$('#trustedSites');
-    const hostnames = cachedRulesetData.trustedSites;
+    const hostnames = cachedRulesetData.trustedSites || [];
     textarea.value = hostnames.map(hn => punycode.toUnicode(hn)).join('\n');
     if ( textarea.value !== '' ) {
         textarea.value += '\n';
@@ -325,7 +325,7 @@ function renderTrustedSites() {
 
 function changeTrustedSites() {
     const hostnames = getStagedTrustedSites();
-    const hash = hashFromIterable(cachedRulesetData.trustedSites);
+    const hash = hashFromIterable(cachedRulesetData.trustedSites || []);
     if ( hashFromIterable(hostnames) === hash ) { return; }
     sendMessage({
         what: 'setTrustedSites',
