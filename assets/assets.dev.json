@@ -584,8 +584,8 @@
 		"title": "🇪🇪ee: Eesti saitidele kohandatud filter",
 		"tags": "ads estonian",
 		"lang": "et",
-		"contentURL": "https://adblock.ee/list.php",
-		"supportURL": "https://adblock.ee/"
+		"contentURL": "https://adblock.ee/list.txt",
+		"supportURL": "https://adblock.ee"
 	},
 	"FIN-0": {
 		"content": "filters",
