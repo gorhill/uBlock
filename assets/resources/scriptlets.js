@@ -1617,20 +1617,20 @@ function preventXhrFn(
     };
     const XHRBefore = XMLHttpRequest.prototype;
     self.XMLHttpRequest = class extends self.XMLHttpRequest {
-        open(method, url, defer, ...args) {
+        open(method, url, ...args) {
             xhrInstances.delete(this);
             if ( warOrigin !== undefined && url.startsWith(warOrigin) ) {
-                return super.open(method, url, defer, ...args);
+                return super.open(method, url, ...args);
             }
             const haystack = { method, url };
             if ( propsToMatch === '' && directive === '' ) {
                 safe.uboLog(logPrefix, `Called: ${safe.JSON_stringify(haystack, null, 2)}`);
-                return super.open(method, url, defer, ...args);
+                return super.open(method, url, ...args);
             }
             if ( matchObjectProperties(propNeedles, haystack) ) {
                 const xhrDetails = Object.assign(haystack, {
                     xhr: this,
-                    defer,
+                    defer: args.length === 0 || !!args[0],
                     directive,
                     headers: {
                         'date': '',
@@ -1646,7 +1646,7 @@ function preventXhrFn(
                 });
                 xhrInstances.set(this, xhrDetails);
             }
-            return super.open(method, url, defer, ...args);
+            return super.open(method, url, ...args);
         }
         send(...args) {
             const xhrDetails = xhrInstances.get(this);
