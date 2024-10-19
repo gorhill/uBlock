@@ -19,18 +19,15 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
-/******************************************************************************/
-
-import staticNetFilteringEngine from './static-net-filtering.js';
-import { LineIterator } from './text-utils.js';
 import * as sfp from './static-filtering-parser.js';
 
 import {
     CompiledListReader,
     CompiledListWriter,
 } from './static-filtering-io.js';
+
+import { LineIterator } from './text-utils.js';
+import staticNetFilteringEngine from './static-net-filtering.js';
 
 /******************************************************************************/
 
@@ -47,13 +44,15 @@ const hashFromStr = (type, s) => {
     return hash & 0xFFFFFF;
 };
 
+const isRegex = hn => hn.startsWith('/') && hn.endsWith('/');
+
 /******************************************************************************/
 
 // Copied from cosmetic-filter.js for the time being to avoid unwanted
 // dependencies
 
 const rePlainSelector = /^[#.][\w\\-]+/;
-const rePlainSelectorEx = /^[^#.\[(]+([#.][\w-]+)|([#.][\w-]+)$/;
+const rePlainSelectorEx = /^[^#.[(]+([#.][\w-]+)|([#.][\w-]+)$/;
 const rePlainSelectorEscaped = /^[#.](?:\\[0-9A-Fa-f]+ |\\.|\w|-)+/;
 const reEscapeSequence = /\\([0-9A-Fa-f]+ |.)/g;
 
@@ -106,6 +105,7 @@ function addExtendedToDNR(context, parser) {
         for ( const { hn, not, bad } of parser.getExtFilterDomainIterator() ) {
             if ( bad ) { continue; }
             if ( exception ) { continue; }
+            if ( isRegex(hn) ) { continue; }
             let details = context.scriptletFilters.get(argsToken);
             if ( details === undefined ) {
                 context.scriptletFilters.set(argsToken, details = { args });
@@ -163,6 +163,7 @@ function addExtendedToDNR(context, parser) {
         };
         for ( const { hn, not, bad } of parser.getExtFilterDomainIterator() ) {
             if ( bad ) { continue; }
+            if ( isRegex(hn) ) { continue; }
             if ( not ) {
                 if ( rule.condition.excludedInitiatorDomains === undefined ) {
                     rule.condition.excludedInitiatorDomains = [];
@@ -235,6 +236,7 @@ function addExtendedToDNR(context, parser) {
     }
     for ( const { hn, not, bad } of parser.getExtFilterDomainIterator() ) {
         if ( bad ) { continue; }
+        if ( isRegex(hn) ) { continue; }
         let { compiled, exception, raw } = parser.result;
         if ( exception ) { continue; }
         let rejected;
