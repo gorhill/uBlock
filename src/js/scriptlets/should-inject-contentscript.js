@@ -29,7 +29,7 @@
     try {
         const status = vAPI.uBO !== true;
         if ( status === false && vAPI.bootstrap ) {
-            self.requestIdleCallback(( ) => vAPI?.bootstrap());
+            self.requestIdleCallback(( ) => vAPI?.bootstrap?.());
         }
         return status;
     } catch(ex) {
