@@ -3048,9 +3048,6 @@ class FilterIPAddress {
             if ( ipaddr.startsWith('::ffff:') === false ) { return false; }
             return this.reIPv6IPv4lan.test(ipaddr);
         }
-        if ( c0 === 0x36 /* 6 */ ) {
-            return ipaddr.startsWith('64:ff9b:');
-        }
         if ( c0 === 0x66 /* f */ ) {
             return this.reIPv6local.test(ipaddr);
         }
