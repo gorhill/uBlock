@@ -1,3 +1,4 @@
+- [Add `-blocked` directive to `urlskip=` option](https://github.com/gorhill/uBlock/commit/d04dc4c767)
 - [Add `trusted-set-attr` scriptlet](https://github.com/gorhill/uBlock/commit/11ca4a3923)
 - [Remove `64:ff9b:` as private network block](https://github.com/gorhill/uBlock/commit/2621c908c3)
 - [Ensure `urlskip=` redirects only to `https:`](https://github.com/gorhill/uBlock/commit/32f27c5131)
