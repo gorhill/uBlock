@@ -5405,6 +5405,9 @@ StaticNetFilteringEngine.prototype.transformRequest = function(fctxt, out = []) 
  * 
  * `-uricomponent`: decode the current string as a URI encoded string.
  * 
+ * `-blocked`: allow the redirection of blocked requests. By default, blocked
+ *  requests can't by urlskip'ed.
+ * 
  * At any given step, the currently extracted string may not necessarily be
  * a valid URL, and more transformation steps may be needed to obtain a valid
  * URL once all the steps are applied.
@@ -5423,7 +5426,11 @@ StaticNetFilteringEngine.prototype.transformRequest = function(fctxt, out = []) 
  * 
  * */
 
-StaticNetFilteringEngine.prototype.urlSkip = function(fctxt, out = []) {
+StaticNetFilteringEngine.prototype.urlSkip = function(
+    fctxt,
+    blocked,
+    out = []
+) {
     if ( fctxt.redirectURL !== undefined ) { return; }
     const directives = this.matchAndFetchModifiers(fctxt, 'urlskip');
     if ( directives === undefined ) { return; }
@@ -5435,7 +5442,7 @@ StaticNetFilteringEngine.prototype.urlSkip = function(fctxt, out = []) {
         const urlin = fctxt.url;
         const value = directive.value;
         const steps = value.includes(' ') && value.split(/ +/) || [ value ];
-        const urlout = urlSkip(directive, urlin, steps);
+        const urlout = urlSkip(directive, urlin, blocked, steps);
         if ( urlout === undefined ) { continue; }
         if ( urlout === urlin ) { continue; }
         fctxt.redirectURL = urlout;
@@ -5446,8 +5453,9 @@ StaticNetFilteringEngine.prototype.urlSkip = function(fctxt, out = []) {
     return out;
 };
 
-function urlSkip(directive, url, steps) {
+function urlSkip(directive, url, blocked, steps) {
     try {
+        let redirectBlocked = false;
         let urlout = url;
         for ( const step of steps ) {
             const urlin = urlout;
@@ -5481,6 +5489,11 @@ function urlSkip(directive, url, steps) {
                     urlout = self.decodeURIComponent(urlin);
                     continue;
                 }
+                // Enable skip of blocked requests
+                if ( step === '-blocked' ) {
+                    redirectBlocked = true;
+                    continue;
+                }
             }
             // Regex extraction from first capture group
             if ( c0 === 0x2F ) { // /
@@ -5507,6 +5520,7 @@ function urlSkip(directive, url, steps) {
         }
         const urlfinal = new URL(urlout);
         if ( urlfinal.protocol !== 'https:' ) { return; }
+        if ( blocked && redirectBlocked !== true ) { return; }
         return urlout;
     } catch(x) {
     }

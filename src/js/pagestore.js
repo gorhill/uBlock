@@ -943,7 +943,7 @@ const PageStore = class {
             staticNetFilteringEngine.filterQuery(fctxt, directives);
         }
         if ( this.urlSkippableResources.has(fctxt.itype) ) {
-            staticNetFilteringEngine.urlSkip(fctxt, directives);
+            staticNetFilteringEngine.urlSkip(fctxt, false, directives);
         }
         if ( directives.length === 0 ) { return; }
         if ( logger.enabled !== true ) { return; }

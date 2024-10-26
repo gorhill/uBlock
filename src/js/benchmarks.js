@@ -191,7 +191,7 @@ export async function benchmarkStaticNetFiltering(options = {}) {
                     removeparamCount += 1;
                 }
             }
-            if ( sfne.urlSkip(fctxt) ) {
+            if ( sfne.urlSkip(fctxt, false) ) {
                 urlskipCount += 1;
             }
             if ( fctxt.isDocument() ) {
@@ -210,7 +210,7 @@ export async function benchmarkStaticNetFiltering(options = {}) {
             if ( sfne.redirectRequest(redirectEngine, fctxt) ) {
                 redirectCount += 1;
             }
-            if ( fctxt.isRootDocument() && sfne.urlSkip(fctxt) ) {
+            if ( fctxt.isRootDocument() && sfne.urlSkip(fctxt, true) ) {
                 urlskipCount += 1;
             }
         }
