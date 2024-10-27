@@ -44,7 +44,7 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Ít hơn",
+    "message": "Thu gọn",
     "description": "Label to be used to hide popup panel sections"
   },
   "3pGroupDefault": {
@@ -56,7 +56,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupPrivacy": {
-    "message": "Riêng tư",
+    "message": "Bảo mật",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
@@ -84,7 +84,7 @@
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Những người đóng góp",
+    "message": "Người đóng góp",
     "description": "English: Contributors"
   },
   "aboutSourceCode": {

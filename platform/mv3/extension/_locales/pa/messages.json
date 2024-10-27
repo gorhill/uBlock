@@ -32,7 +32,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "ਇਸ ਵੈੱਬਸਾਈਟ ਉੱਤੇ ਮਸਲੇ ਬਾਰੇ ਰਿਪੋਰਟ ਕਰੋ",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -104,7 +104,7 @@
     "description": "Shown in the About pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "ਫਿਲਟਰ ਮਸਲੇ ਬਾਰੇ ਰਿਪੋਰਟ ਕਰੋ",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
@@ -116,15 +116,15 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Find similar reports",
+    "message": "ਰਲਦੀਆਂ ਰਿਪੋਰਟਾਂ ਲੱਭੋ",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Address of the webpage:",
+    "message": "ਵੈੱਬ-ਸਫ਼ੇ ਦਾ ਸਿਰਨਾਵਾਂ:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The webpage…",
+    "message": "ਵੈੱਬ ਸਫ਼ਾ…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
@@ -132,7 +132,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "ਇਸ਼ਤਿਹਾਰ ਜਾਂ ਇਸ਼ਤਿਹਾਰ ਦੀ ਰਹਿੰਦ-ਖੂੰਦ ਦਿਖਾਉਂਦਾ ਹੈ",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
@@ -144,7 +144,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "ਪਰਦੇਦਾਰੀ ਸੰਬੰਧੀ ਮਸਲੇ ਹਨ",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
@@ -152,7 +152,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "ਬੇਲੋੜੀਆਂ ਟੈਬਾਂ ਜਾਂ ਵਿੰਡੋ ਖੋਲ੍ਹਦਾ ਹੈ",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
@@ -164,7 +164,7 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Create new report",
+    "message": "ਨਵੀਂ ਰਿਪੋਰਟ ਬਣਾਓ",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "firstRunSectionLabel": {

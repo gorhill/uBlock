@@ -108,7 +108,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
-    "message": "Доменів під'єднано",
+    "message": "Підключені домени",
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
@@ -336,7 +336,7 @@
     "description": "English: Color-blind friendly"
   },
   "settingsAppearance": {
-    "message": "Вигляд",
+    "message": "Зовнішній вигляд",
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
@@ -344,7 +344,7 @@
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "Акцент кольору користувача",
+    "message": "Індивідуальний колір акценту",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsCloudStorageEnabledPrompt": {
