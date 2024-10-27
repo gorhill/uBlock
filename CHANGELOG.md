@@ -1,3 +1,4 @@
+- [Offer ability to skip redirects in strict-blocked page](https://github.com/gorhill/uBlock/commit/20b54185fa)
 - [Add `-blocked` directive to `urlskip=` option](https://github.com/gorhill/uBlock/commit/d04dc4c767)
 - [Add `trusted-set-attr` scriptlet](https://github.com/gorhill/uBlock/commit/11ca4a3923)
 - [Remove `64:ff9b:` as private network block](https://github.com/gorhill/uBlock/commit/2621c908c3)
