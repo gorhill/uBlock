@@ -28,12 +28,18 @@ body {
     }
 
 #rootContainer {
-    width: min(100vw, 640px);
+    width: min(100%, 640px);
     }
 #rootContainer > * {
     margin: 0 0 var(--default-gap-xxlarge) 0;
     }
+:root.mobile #rootContainer > * {
+    margin-bottom: var(--default-gap-xlarge);
+    }
 
+p {
+    margin: 0.5em 0;
+    }
 a {
     text-decoration: none;
     }
@@ -45,7 +51,11 @@ a {
     color: var(--accent-surface-1);
         fill: var(--accent-surface-1);
     font-size: 96px;
+    line-height: 1;
     width: 100%;
+    }
+:root.mobile #warningSign {
+    font-size: 64px;
     }
 #theURL {
     color: var(--ink-2);
@@ -118,6 +128,13 @@ body[dir="rtl"] #toggleParse {
     flex-direction: column;
     margin: 0;
     padding-inline-start: var(--default-gap-xsmall);
+    }
+
+#urlskip a {
+    display: block;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     }
 
 #actionContainer {

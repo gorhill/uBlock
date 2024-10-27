@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
 /******************************************************************************/
 
 const i18n =
@@ -168,14 +166,14 @@ if ( isBackgroundProcess !== true ) {
         const re = /\{\{\w+\}\}/g;
         let textout = '';
         for (;;) {
-            let match = re.exec(textin);
+            const match = re.exec(textin);
             if ( match === null ) {
                 textout += textin;
                 break;
             }
             textout += textin.slice(0, match.index);
             let prop = match[0].slice(2, -2);
-            if ( dict.hasOwnProperty(prop) ) {
+            if ( Object.prototype.hasOwnProperty.call(dict, prop) ) {
                 textout += dict[prop].replace(/</g, '&lt;')
                                      .replace(/>/g, '&gt;');
             } else {

@@ -955,8 +955,8 @@ const PageStore = class {
         });
     }
 
-    skipMainDocument(fctxt) {
-        const directives = staticNetFilteringEngine.urlSkip(fctxt);
+    skipMainDocument(fctxt, blocked) {
+        const directives = staticNetFilteringEngine.urlSkip(fctxt, blocked);
         if ( directives === undefined ) { return; }
         if ( logger.enabled !== true ) { return; }
         fctxt.pushFilters(directives.map(a => a.logData()));
