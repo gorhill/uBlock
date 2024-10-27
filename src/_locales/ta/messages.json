@@ -1191,6 +1191,10 @@
     "message": "Proceed",
     "description": "Button text to navigate to the blocked page"
   },
+  "docblockedRedirectPrompt": {
+    "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
+    "description": "Text warning about an incoming redirect"
+  },
   "cloudPush": {
     "message": "மேகக்கணினி சேமிப்பகத்திற்கு ஏற்று",
     "description": "tooltip"
