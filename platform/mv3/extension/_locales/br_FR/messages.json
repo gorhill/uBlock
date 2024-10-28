@@ -112,7 +112,7 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported.",
+    "message": "Evit nompas sammañ ar genlabourerien a-youl vat gant meur a zanevell heñvel, gwiriit ma n'eo ket bet danevellet ho kudenn en ar-raok mar plij.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
