@@ -38,7 +38,9 @@
             const cfr = document.createElement('iframe');
             cfr.id = `google_ads_frame${i}`;
             fr.appendChild(cfr);
-            phs[i].appendChild(fr);
+            const ph = phs[i];
+            ph.appendChild(fr);
+            ph.setAttribute('data-adsbygoogle-status', 'done');
         }
     };
     if (
