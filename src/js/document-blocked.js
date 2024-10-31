@@ -75,7 +75,25 @@ let details = {};
 
 /******************************************************************************/
 
-dom.text('#theURL > p > span:first-of-type', details.url);
+const urlToFragment = raw => {
+    try {
+        const fragment = new DocumentFragment();
+        const url = new URL(raw);
+        const hn = url.hostname;
+        const i = raw.indexOf(hn);
+        const b = document.createElement('b');
+        b.append(hn);
+        fragment.append(raw.slice(0,i), b, raw.slice(i+hn.length));
+        return fragment;
+    } catch(_) {
+    }
+    return raw;
+};
+
+/******************************************************************************/
+
+dom.clear('#theURL > p > span:first-of-type');
+qs$('#theURL > p > span:first-of-type').append(urlToFragment(details.url));
 dom.text('#why', details.fs);
 
 if ( typeof details.to === 'string' && details.to.length !== 0 ) {
@@ -85,7 +103,9 @@ if ( typeof details.to === 'string' && details.to.length !== 0 ) {
     let pos = text.indexOf(linkPlaceholder);
     if ( pos !== -1 ) {
         const link = document.createElement('a');
-        link.href = link.textContent = details.to;
+        link.href = details.to;
+        dom.cl.add(link, 'code');
+        link.append(urlToFragment(details.to)); 
         fragment.append(
             text.slice(0, pos),
             link,

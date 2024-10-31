@@ -68,6 +68,14 @@ a {
     position: relative;
     z-index: 10;
     }
+#theURL > p > span:first-of-type {
+    display: block;
+    max-height: 6lh;
+    overflow-y: auto;
+    }
+:root.mobile #theURL > p > span:first-of-type {
+    max-height: 3lh;
+    }
 #theURL #toggleParse {
     background-color: transparent;
     top: 100%;
@@ -132,9 +140,11 @@ body[dir="rtl"] #toggleParse {
 
 #urlskip a {
     display: block;
-    overflow-x: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    overflow-y: auto;
+    word-break: break-all;
+    }
+:root.mobile #urlskip a {
+    max-height: 3lh;
     }
 
 #actionContainer {
