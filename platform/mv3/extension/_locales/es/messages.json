@@ -32,7 +32,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipReport": {
-    "message": "Informar de un problema en este sitio web",
+    "message": "Reportar un problema en este sitio web",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -104,15 +104,15 @@
     "description": "Shown in the About pane"
   },
   "supportS6H": {
-    "message": "Informar de un problema de filtro",
+    "message": "Reportar un problema de filtro",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Reportar problemas de filtros con sitios web específicos en <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code>, un rastreador de problemas</span>. <u>Requiere una cuenta de GitHub.</u>",
+    "message": "Reportar problemas de filtros con sitios web específicos en el registro de problemas <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code></span>. <u>Requiere una cuenta en GitHub</u>.",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Para evitar sobrecargar a voluntarios con reportes duplicados, verifique que el problema no haya sido reportado.",
+    "message": "Para evitar sobrecargar a voluntarios con reportes duplicados, verifica que el problema no haya sido reportado.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
@@ -156,15 +156,15 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Conduce a malware, phishing",
+    "message": "Conduce a malware y phishing",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Etiqueta la página web como “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“No apto para el trabajo”</a>)",
+    "message": "Etiquetar la página web como “NSFW” (<a href=\"https://es.wikipedia.org/wiki/NSFW\">“no es seguro/apropiado para el trabajo”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Crear informe nuevo",
+    "message": "Crear nuevo reporte",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "firstRunSectionLabel": {
