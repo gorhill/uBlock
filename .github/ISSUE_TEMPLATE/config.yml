@@ -10,5 +10,5 @@ contact_links:
     url: https://github.com/uBlockOrigin/uAssets/issues
     about: Report issues with filter lists or broken website functionality in the uAssets issue tracker.
   - name: uBO Lite (uBOL) Issues
-    url: https://github.com/uBlockOrigin/uBOL-issues/issues
+    url: https://github.com/uBlockOrigin/uBOL-home/issues
     about: Report issues specific to the Manifest Version 3 (MV3) variant in the uBOL issue tracker.
