@@ -31,7 +31,7 @@ uBlock Origin (uBO)
 ***
 
 <p align="center">
-<a href="https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm"><img src="https://user-images.githubusercontent.com/585534/107280622-91a8ea80-6a26-11eb-8d07-77c548b28665.png" alt="Get uBlock Origin for Chromium"></a><br>
+<a href="https://chromewebstore.google.com/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm"><img src="https://user-images.githubusercontent.com/585534/107280622-91a8ea80-6a26-11eb-8d07-77c548b28665.png" alt="Get uBlock Origin for Chromium"></a><br>
 <sub><a href="https://github.com/uBlockOrigin/uBlock-issues/wiki/About-Google-Chrome's-%22This-extension-may-soon-no-longer-be-supported%22"><b>IMPORTANT</b>: About Google Chrome's "This extension may soon no longer be supported"</a></sub>
 </p>
 
@@ -151,13 +151,13 @@ If you ever want to contribute something, think about the people working hard to
 [Performance]: https://www.debugbear.com/blog/chrome-extension-performance-2021#how-do-ad-blockers-and-privacy-tools-affect-browser-performance
 [EasyPrivacy]: https://easylist.to/#easyprivacy
 [Thunderbird]: https://addons.thunderbird.net/thunderbird/addon/ublock-origin/
-[Chrome Dev]: https://chrome.google.com/webstore/detail/ublock-origin-development/cgbcahbpdhpcegmbfconppldiemgcoii
+[Chrome Dev]: https://chromewebstore.google.com/detail/ublock-origin-development/cgbcahbpdhpcegmbfconppldiemgcoii
 [EasyList]: https://easylist.to/#easylist
 [Mozilla]: https://addons.mozilla.org/addon/ublock-origin/
 [Crowdin]: https://crowdin.com/project/ublock
-[Chrome]: https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm
+[Chrome]: https://chromewebstore.google.com/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm
 [Reddit]: https://www.reddit.com/r/uBlockOrigin/
-[Theft]: https://twitter.com/LeaVerou/status/518154828166725632
+[Theft]: https://x.com/LeaVerou/status/518154828166725632
 [Opera]: https://addons.opera.com/extensions/details/ublock/
 [Edge]: https://microsoftedge.microsoft.com/addons/detail/ublock-origin/odfafepnkmbhccpbejgmiehpchacaeak
 [NPM]: https://www.npmjs.com/package/@gorhill/ubo-core
@@ -166,7 +166,6 @@ If you ever want to contribute something, think about the people working hard to
 [License]: LICENSE.txt
 
 [Nicole Rolls]: https://github.com/nicole-ashley
-
 
 <!---------------------------------[ Internal ]-------------------------------->
 
@@ -184,7 +183,6 @@ If you ever want to contribute something, think about the people working hard to
 [Beta]: https://github.com/gorhill/uBlock/blob/master/dist/README.md#for-beta-version
 [Wiki]: https://github.com/gorhill/uBlock/wiki
 
-
 <!----------------------------------[ Badges ]--------------------------------->
 
 [Badge Localization]: https://d322cqt584bo4o.cloudfront.net/ublock/localized.svg
@@ -195,4 +193,3 @@ If you ever want to contribute something, think about the people working hard to
 [Badge Edge]: https://img.shields.io/badge/dynamic/json?label=Edge&color=brightgreen&query=%24.averageRating&suffix=%2F%35&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Fodfafepnkmbhccpbejgmiehpchacaeak
 [Badge Issues]: https://img.shields.io/github/issues/uBlockOrigin/uBlock-issues
 [Badge NPM]: https://img.shields.io/npm/v/@gorhill/ubo-core
-
