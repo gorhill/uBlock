@@ -2315,30 +2315,34 @@ builtinScriptlets.push({
     fn: preventRefresh,
     world: 'ISOLATED',
     dependencies: [
-        'run-at.fn',
         'safe-self.fn',
     ],
 });
 // https://www.reddit.com/r/uBlockOrigin/comments/q0frv0/while_reading_a_sports_article_i_was_redirected/hf7wo9v/
 function preventRefresh(
-    arg1 = ''
+    delay = ''
 ) {
-    if ( typeof arg1 !== 'string' ) { return; }
+    if ( typeof delay !== 'string' ) { return; }
     const safe = safeSelf();
-    const logPrefix = safe.makeLogPrefix('prevent-refresh', arg1);
+    const logPrefix = safe.makeLogPrefix('prevent-refresh', delay);
+    const stop = content => {
+        window.stop();
+        safe.uboLog(logPrefix, `Prevented "${content}"`);
+    };
     const defuse = ( ) => {
         const meta = document.querySelector('meta[http-equiv="refresh" i][content]');
         if ( meta === null ) { return; }
-        safe.uboLog(logPrefix, `Prevented "${meta.textContent}"`);
-        const s = arg1 === ''
-            ? meta.getAttribute('content')
-            : arg1;
-        const ms = Math.max(parseFloat(s) || 0, 0) * 1000;
-        setTimeout(( ) => { window.stop(); }, ms);
+        const content = meta.getAttribute('content') || '';
+        const ms = delay === ''
+            ? Math.max(parseFloat(content) || 0, 0) * 500
+            : 0;
+        if ( ms === 0 ) {
+            stop(content);
+        } else {
+            setTimeout(( ) => { stop(content); }, ms);
+        }
     };
-    runAt(( ) => {
-        defuse();
-    }, 'interactive');
+    self.addEventListener('load', defuse, { capture: true, once: true });
 }
 
 /******************************************************************************/
