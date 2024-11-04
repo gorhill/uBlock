@@ -1,12 +1,14 @@
 name: uBO release
 
 on:
-  workflow_dispatch:
   create:
     branches: master
 
 permissions:
   contents: read
+
+# I used the following project as template to get started:
+# https://github.com/dessant/search-by-image/blob/master/.github/workflows/ci.yml
 
 jobs:
   build:
@@ -16,81 +18,73 @@ jobs:
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/')
     steps:
-      - name: Checkout repository
+      - name: Clone repository
         uses: actions/checkout@v4
         with:
           persist-credentials: false
-      
-      - name: Checkout uAssets repository
+      - name: Clone uAssets
         run: |
           tools/pull-assets.sh
-      
+      # https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
       - name: Get release information
         id: release_info
         run: |
-          echo "VERSION=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
-      
+          echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       - name: Assemble release notes
         run: |
           > release.body.txt
           grep -m1 -B10000 -- "----------" CHANGELOG.md >> release.body.txt
-          sed -e 's/%version%/'"$VERSION"'/g' RELEASE.HEAD.md >> release.body.txt
-      
-      - name: Build MV2 packages
-        run: |
-          tools/make-chromium.sh $VERSION
-          tools/make-firefox.sh $VERSION
-          tools/make-thunderbird.sh $VERSION
-          tools/make-npm.sh $VERSION
-      
+          sed -e 's/%version%/${{ steps.release_info.outputs.VERSION }}/g' RELEASE.HEAD.md >> release.body.txt
       - name: Create GitHub release
         id: create_release
-        uses: softprops/action-gh-release@v2
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         with:
-          tag_name: ${{ env.VERSION }}
-          release_name: ${{ env.VERSION }}
+          tag_name: ${{ steps.release_info.outputs.VERSION }}
+          release_name: ${{ steps.release_info.outputs.VERSION }}
           draft: true
           prerelease: true
           body_path: release.body.txt
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+      - name: Build MV2 packages
+        run: |
+          tools/make-chromium.sh ${{ steps.release_info.outputs.VERSION }}
+          tools/make-firefox.sh ${{ steps.release_info.outputs.VERSION }}
+          tools/make-thunderbird.sh ${{ steps.release_info.outputs.VERSION }}
+          tools/make-npm.sh ${{ steps.release_info.outputs.VERSION }}
       - name: Upload Chromium package
-        uses: softprops/action-gh-release@v2
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/build/uBlock0_${{ env.VERSION }}.chromium.zip
-          asset_name: uBlock0_${{ env.VERSION }}.chromium.zip
-          asset_content_type: application/octet-stream
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.chromium.zip
+          asset_name: uBlock0_${{ steps.release_info.outputs.VERSION }}.chromium.zip
+          asset_content_type: application/octet-stream
       - name: Upload Firefox package
-        uses: softprops/action-gh-release@v2
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/build/uBlock0_${{ env.VERSION }}.firefox.xpi
-          asset_name: uBlock0_${{ env.VERSION }}.firefox.xpi
-          asset_content_type: application/octet-stream
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.firefox.xpi
+          asset_name: uBlock0_${{ steps.release_info.outputs.VERSION }}.firefox.xpi
+          asset_content_type: application/octet-stream
       - name: Upload Thunderbird package
-        uses: softprops/action-gh-release@v2
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/build/uBlock0_${{ env.VERSION }}.thunderbird.xpi
-          asset_name: uBlock0_${{ env.VERSION }}.thunderbird.xpi
-          asset_content_type: application/octet-stream
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.thunderbird.xpi
+          asset_name: uBlock0_${{ steps.release_info.outputs.VERSION }}.thunderbird.xpi
+          asset_content_type: application/octet-stream
       - name: Upload NodeJS package
-        uses: softprops/action-gh-release@v2
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/build/uBlock0_${{ env.VERSION }}.npm.tgz
-          asset_name: uBlock0_${{ env.VERSION }}.npm.tgz
-          asset_content_type: application/octet-stream
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.npm.tgz
+          asset_name: uBlock0_${{ steps.release_info.outputs.VERSION }}.npm.tgz
+          asset_content_type: application/octet-stream
