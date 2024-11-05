@@ -1,6 +1,6 @@
-uBO Lite (uBOL) is a *permission-less* MV3-based content blocker.
+uBO Lite (uBOL) yw blocwr cynnwys MV3 sy'n gweithredu heb ganiatâd safonol.
 
-The default ruleset corresponds to uBlock Origin's default filterset:
+Mae'r set reolau ddiofyn yn cyfateb i set hidlo diofyn uBlock Origin:
 
 - uBlock Origin's built-in filter lists
 - EasyList

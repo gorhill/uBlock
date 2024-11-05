@@ -32,7 +32,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "Rhoi gwybod am broblem ar y wefan hon",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -48,7 +48,7 @@
     "description": "Label to be used to hide popup panel sections"
   },
   "3pGroupDefault": {
-    "message": "Default",
+    "message": "Diofyn",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -104,7 +104,7 @@
     "description": "Shown in the About pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "Adrodd nam ar hidlydd",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
