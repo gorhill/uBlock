@@ -26,7 +26,23 @@ import { safeSelf } from './safe-self.js';
 
 /* eslint no-prototype-builtins: 0 */
 
-/******************************************************************************/
+/**
+ * @helperScriptlet run-at.fn
+ * 
+ * @description
+ * Execute a function at a specific page-load milestone.
+ * 
+ * @param fn
+ * The function to call.
+ * 
+ * @param when
+ * An identifier which tells when the function should be executed.
+ * See <https://developer.mozilla.org/en-US/docs/Web/API/Document/readyState>.
+ * 
+ * @example
+ * `runAt(( ) => { start(); }, 'interactive')`
+ * 
+ * */
 
 export function runAt(fn, when) {
     const intFromReadyState = state => {
