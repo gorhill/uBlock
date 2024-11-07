@@ -22,7 +22,25 @@
     web page context.
 */
 
-import { setAttr, setAttrFn, trustedSetAttr } from './set-attr.js';
+import {
+    getAllCookiesFn,
+    getCookieFn,
+    getSafeCookieValuesFn,
+    removeCookie,
+    setCookie,
+    setCookieFn,
+    setCookieReload,
+    trustedSetCookie,
+    trustedSetCookieReload,
+} from './cookie.js';
+
+import {
+    removeAttr,
+    setAttr,
+    setAttrFn,
+    trustedSetAttr,
+} from './attribute.js';
+
 import { runAt } from './run-at.js';
 import { safeSelf } from './safe-self.js';
 
@@ -53,9 +71,21 @@ const registerScriptlet = fn => {
 };
 
 registerScriptlet(safeSelf);
+
+registerScriptlet(removeAttr);
 registerScriptlet(setAttrFn);
 registerScriptlet(setAttr);
 registerScriptlet(trustedSetAttr);
+
+registerScriptlet(getAllCookiesFn);
+registerScriptlet(getCookieFn);
+registerScriptlet(getSafeCookieValuesFn);
+registerScriptlet(removeCookie);
+registerScriptlet(setCookie);
+registerScriptlet(setCookieFn);
+registerScriptlet(setCookieReload);
+registerScriptlet(trustedSetCookie);
+registerScriptlet(trustedSetCookieReload);
 
 /*******************************************************************************
 
@@ -794,51 +824,6 @@ function objectFindOwnerFn(
 /******************************************************************************/
 
 builtinScriptlets.push({
-    name: 'get-safe-cookie-values.fn',
-    fn: getSafeCookieValuesFn,
-});
-function getSafeCookieValuesFn() {
-    return [
-        'accept', 'reject',
-        'accepted', 'rejected', 'notaccepted',
-        'allow', 'disallow', 'deny',
-        'allowed', 'denied',
-        'approved', 'disapproved',
-        'checked', 'unchecked',
-        'dismiss', 'dismissed',
-        'enable', 'disable',
-        'enabled', 'disabled',
-        'essential', 'nonessential',
-        'forbidden', 'forever',
-        'hide', 'hidden',
-        'necessary', 'required',
-        'ok',
-        'on', 'off',
-        'true', 't', 'false', 'f',
-        'yes', 'y', 'no', 'n',
-    ];
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'get-all-cookies.fn',
-    fn: getAllCookiesFn,
-});
-function getAllCookiesFn() {
-    return document.cookie.split(/\s*;\s*/).map(s => {
-        const pos = s.indexOf('=');
-        if ( pos === 0 ) { return; }
-        if ( pos === -1 ) { return `${s.trim()}=`; }
-        const key = s.slice(0, pos).trim();
-        const value = s.slice(pos+1).trim();
-        return { key, value };
-    }).filter(s => s !== undefined);
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
     name: 'get-all-local-storage.fn',
     fn: getAllLocalStorageFn,
 });
@@ -851,90 +836,6 @@ function getAllLocalStorageFn(which = 'localStorage') {
         return { key, value };
     }
     return out;
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'get-cookie.fn',
-    fn: getCookieFn,
-});
-function getCookieFn(
-    name = ''
-) {
-    for ( const s of document.cookie.split(/\s*;\s*/) ) {
-        const pos = s.indexOf('=');
-        if ( pos === -1 ) { continue; }
-        if ( s.slice(0, pos) !== name ) { continue; }
-        return s.slice(pos+1).trim();
-    }
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'set-cookie.fn',
-    fn: setCookieFn,
-    dependencies: [
-        'get-cookie.fn',
-    ],
-});
-function setCookieFn(
-    trusted = false,
-    name = '',
-    value = '',
-    expires = '',
-    path = '',
-    options = {},
-) {
-    // https://datatracker.ietf.org/doc/html/rfc2616#section-2.2
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/2777
-    if ( trusted === false && /[^!#$%&'*+\-.0-9A-Z[\]^_`a-z|~]/.test(name) ) {
-        name = encodeURIComponent(name);
-    }
-    // https://datatracker.ietf.org/doc/html/rfc6265#section-4.1.1
-    // The characters [",] are given a pass from the RFC requirements because
-    // apparently browsers do not follow the RFC to the letter.
-    if ( /[^ -:<-[\]-~]/.test(value) ) {
-        value = encodeURIComponent(value);
-    }
-
-    const cookieBefore = getCookieFn(name);
-    if ( cookieBefore !== undefined && options.dontOverwrite ) { return; }
-    if ( cookieBefore === value && options.reload ) { return; }
-
-    const cookieParts = [ name, '=', value ];
-    if ( expires !== '' ) {
-        cookieParts.push('; expires=', expires);
-    }
-
-    if ( path === '' ) { path = '/'; }
-    else if ( path === 'none' ) { path = ''; }
-    if ( path !== '' && path !== '/' ) { return; }
-    if ( path === '/' ) {
-        cookieParts.push('; path=/');
-    }
-
-    if ( trusted ) {
-        if ( options.domain ) {
-            cookieParts.push(`; domain=${options.domain}`);
-        }
-        cookieParts.push('; Secure');
-    } else if ( /^__(Host|Secure)-/.test(name) ) {
-        cookieParts.push('; Secure');
-    }
-
-    try {
-        document.cookie = cookieParts.join('');
-    } catch(_) {
-    }
-
-    const done = getCookieFn(name) === value;
-    if ( done && options.reload ) {
-        window.location.reload();
-    }
-
-    return done;
 }
 
 /******************************************************************************/
@@ -2348,91 +2249,6 @@ function preventRefresh(
 /******************************************************************************/
 
 builtinScriptlets.push({
-    name: 'remove-attr.js',
-    aliases: [
-        'ra.js',
-    ],
-    fn: removeAttr,
-    dependencies: [
-        'run-at.fn',
-        'safe-self.fn',
-    ],
-});
-function removeAttr(
-    rawToken = '',
-    rawSelector = '',
-    behavior = ''
-) {
-    if ( typeof rawToken !== 'string' ) { return; }
-    if ( rawToken === '' ) { return; }
-    const safe = safeSelf();
-    const logPrefix = safe.makeLogPrefix('remove-attr', rawToken, rawSelector, behavior);
-    const tokens = rawToken.split(/\s*\|\s*/);
-    const selector = tokens
-        .map(a => `${rawSelector}[${CSS.escape(a)}]`)
-        .join(',');
-    if ( safe.logLevel > 1 ) {
-        safe.uboLog(logPrefix, `Target selector:\n\t${selector}`);
-    }
-    const asap = /\basap\b/.test(behavior);
-    let timerId;
-    const rmattrAsync = ( ) => {
-        if ( timerId !== undefined ) { return; }
-        timerId = safe.onIdle(( ) => {
-            timerId = undefined;
-            rmattr();
-        }, { timeout: 17 });
-    };
-    const rmattr = ( ) => {
-        if ( timerId !== undefined ) {
-            safe.offIdle(timerId);
-            timerId = undefined;
-        }
-        try {
-            const nodes = document.querySelectorAll(selector);
-            for ( const node of nodes ) {
-                for ( const attr of tokens ) {
-                    if ( node.hasAttribute(attr) === false ) { continue; }
-                    node.removeAttribute(attr);
-                    safe.uboLog(logPrefix, `Removed attribute '${attr}'`);
-                }
-            }
-        } catch(ex) {
-        }
-    };
-    const mutationHandler = mutations => {
-        if ( timerId !== undefined ) { return; }
-        let skip = true;
-        for ( let i = 0; i < mutations.length && skip; i++ ) {
-            const { type, addedNodes, removedNodes } = mutations[i];
-            if ( type === 'attributes' ) { skip = false; }
-            for ( let j = 0; j < addedNodes.length && skip; j++ ) {
-                if ( addedNodes[j].nodeType === 1 ) { skip = false; break; }
-            }
-            for ( let j = 0; j < removedNodes.length && skip; j++ ) {
-                if ( removedNodes[j].nodeType === 1 ) { skip = false; break; }
-            }
-        }
-        if ( skip ) { return; }
-        asap ? rmattr() : rmattrAsync();
-    };
-    const start = ( ) => {
-        rmattr();
-        if ( /\bstay\b/.test(behavior) === false ) { return; }
-        const observer = new MutationObserver(mutationHandler);
-        observer.observe(document, {
-            attributes: true,
-            attributeFilter: tokens,
-            childList: true,
-            subtree: true,
-        });
-    };
-    runAt(( ) => { start(); }, behavior.split(/\s+/));
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
     name: 'remove-class.js',
     aliases: [
         'rc.js',
@@ -3086,82 +2902,6 @@ function disableNewtabLinks() {
             target = target.parentNode;
         }
     });
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'remove-cookie.js',
-    aliases: [
-        'cookie-remover.js',
-    ],
-    fn: cookieRemover,
-    world: 'ISOLATED',
-    dependencies: [
-        'safe-self.fn',
-    ],
-});
-// https://github.com/NanoAdblocker/NanoFilters/issues/149
-function cookieRemover(
-    needle = ''
-) {
-    if ( typeof needle !== 'string' ) { return; }
-    const safe = safeSelf();
-    const reName = safe.patternToRegex(needle);
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 1);
-    const throttle = (fn, ms = 500) => {
-        if ( throttle.timer !== undefined ) { return; }
-        throttle.timer = setTimeout(( ) => {
-            throttle.timer = undefined;
-            fn();
-        }, ms);
-    };
-    const removeCookie = ( ) => {
-        document.cookie.split(';').forEach(cookieStr => {
-            const pos = cookieStr.indexOf('=');
-            if ( pos === -1 ) { return; }
-            const cookieName = cookieStr.slice(0, pos).trim();
-            if ( reName.test(cookieName) === false ) { return; }
-            const part1 = cookieName + '=';
-            const part2a = '; domain=' + document.location.hostname;
-            const part2b = '; domain=.' + document.location.hostname;
-            let part2c, part2d;
-            const domain = document.domain;
-            if ( domain ) {
-                if ( domain !== document.location.hostname ) {
-                    part2c = '; domain=.' + domain;
-                }
-                if ( domain.startsWith('www.') ) {
-                    part2d = '; domain=' + domain.replace('www', '');
-                }
-            }
-            const part3 = '; path=/';
-            const part4 = '; Max-Age=-1000; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-            document.cookie = part1 + part4;
-            document.cookie = part1 + part2a + part4;
-            document.cookie = part1 + part2b + part4;
-            document.cookie = part1 + part3 + part4;
-            document.cookie = part1 + part2a + part3 + part4;
-            document.cookie = part1 + part2b + part3 + part4;
-            if ( part2c !== undefined ) {
-                document.cookie = part1 + part2c + part3 + part4;
-            }
-            if ( part2d !== undefined ) {
-                document.cookie = part1 + part2d + part3 + part4;
-            }
-        });
-    };
-    removeCookie();
-    window.addEventListener('beforeunload', removeCookie);
-    if ( typeof extraArgs.when !== 'string' ) { return; }
-    const supportedEventTypes = [ 'scroll', 'keydown' ];
-    const eventTypes = extraArgs.when.split(/\s/);
-    for ( const type of eventTypes ) {
-        if ( supportedEventTypes.includes(type) === false ) { continue; }
-        document.addEventListener(type, ( ) => {
-            throttle(removeCookie);
-        }, { passive: true });
-    }
 }
 
 /******************************************************************************/
@@ -3829,72 +3569,6 @@ function removeNodeText(
 
 /*******************************************************************************
  * 
- * set-cookie.js
- * 
- * Set specified cookie to a specific value.
- * 
- * Reference:
- * https://github.com/AdguardTeam/Scriptlets/blob/master/src/scriptlets/set-cookie.js
- * 
- **/
-
-builtinScriptlets.push({
-    name: 'set-cookie.js',
-    fn: setCookie,
-    world: 'ISOLATED',
-    dependencies: [
-        'get-safe-cookie-values.fn',
-        'safe-self.fn',
-        'set-cookie.fn',
-    ],
-});
-function setCookie(
-    name = '',
-    value = '',
-    path = ''
-) {
-    if ( name === '' ) { return; }
-    const safe = safeSelf();
-    const logPrefix = safe.makeLogPrefix('set-cookie', name, value, path);
-    const normalized = value.toLowerCase();
-    const match = /^("?)(.+)\1$/.exec(normalized);
-    const unquoted = match && match[2] || normalized;
-    const validValues = getSafeCookieValuesFn();
-    if ( validValues.includes(unquoted) === false ) {
-        if ( /^\d+$/.test(unquoted) === false ) { return; }
-        const n = parseInt(value, 10);
-        if ( n > 32767 ) { return; }
-    }
-
-    const done = setCookieFn(
-        false,
-        name,
-        value,
-        '',
-        path,
-        safe.getExtraArgs(Array.from(arguments), 3)
-    );
-
-    if ( done ) {
-        safe.uboLog(logPrefix, 'Done');
-    }
-}
-
-// For compatibility with AdGuard
-builtinScriptlets.push({
-    name: 'set-cookie-reload.js',
-    fn: setCookieReload,
-    world: 'ISOLATED',
-    dependencies: [
-        'set-cookie.js',
-    ],
-});
-function setCookieReload(name, value, path, ...args) {
-    setCookie(name, value, path, 'reload', '1', ...args);
-}
-
-/*******************************************************************************
- * 
  * set-local-storage-item.js
  * set-session-storage-item.js
  * 
@@ -4153,90 +3827,6 @@ function trustedSetConstant(
     ...args
 ) {
     setConstantFn(true, ...args);
-}
-
-/*******************************************************************************
- * 
- * trusted-set-cookie.js
- * 
- * Set specified cookie to an arbitrary value.
- * 
- * Reference:
- * https://github.com/AdguardTeam/Scriptlets/blob/master/src/scriptlets/trusted-set-cookie.js#L23
- * 
- **/
-
-builtinScriptlets.push({
-    name: 'trusted-set-cookie.js',
-    requiresTrust: true,
-    fn: trustedSetCookie,
-    world: 'ISOLATED',
-    dependencies: [
-        'safe-self.fn',
-        'set-cookie.fn',
-    ],
-});
-function trustedSetCookie(
-    name = '',
-    value = '',
-    offsetExpiresSec = '',
-    path = ''
-) {
-    if ( name === '' ) { return; }
-
-    const safe = safeSelf();
-    const logPrefix = safe.makeLogPrefix('set-cookie', name, value, path);
-    const time = new Date();
-
-    if ( value.includes('$now$') ) {
-        value = value.replaceAll('$now$', time.getTime());
-    }
-    if ( value.includes('$currentDate$') ) {
-        value = value.replaceAll('$currentDate$', time.toUTCString());
-    }
-    if ( value.includes('$currentISODate$') ) {
-        value = value.replaceAll('$currentISODate$', time.toISOString());
-    }
-
-    let expires = '';
-    if ( offsetExpiresSec !== '' ) {
-        if ( offsetExpiresSec === '1day' ) {
-            time.setDate(time.getDate() + 1);
-        } else if ( offsetExpiresSec === '1year' ) {
-            time.setFullYear(time.getFullYear() + 1);
-        } else {
-            if ( /^\d+$/.test(offsetExpiresSec) === false ) { return; }
-            time.setSeconds(time.getSeconds() + parseInt(offsetExpiresSec, 10));
-        }
-        expires = time.toUTCString();
-    }
-
-    const done = setCookieFn(
-        true,
-        name,
-        value,
-        expires,
-        path,
-        safeSelf().getExtraArgs(Array.from(arguments), 4)
-    );
-
-    if ( done ) {
-        safe.uboLog(logPrefix, 'Done');
-    }
-}
-
-// For compatibility with AdGuard
-builtinScriptlets.push({
-    name: 'trusted-set-cookie-reload.js',
-    requiresTrust: true,
-    fn: trustedSetCookieReload,
-    world: 'ISOLATED',
-    dependencies: [
-        'trusted-set-cookie.js',
-    ],
-});
-function trustedSetCookieReload(name, value, offsetExpiresSec, path, ...args) {
-    trustedSetCookie(name, value, offsetExpiresSec, path, 'reload', '1', ...args);
 }
 
 /*******************************************************************************
