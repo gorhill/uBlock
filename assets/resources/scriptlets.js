@@ -22,70 +22,24 @@
     web page context.
 */
 
-import {
-    getAllCookiesFn,
-    getCookieFn,
-    getSafeCookieValuesFn,
-    removeCookie,
-    setCookie,
-    setCookieFn,
-    setCookieReload,
-    trustedSetCookie,
-    trustedSetCookieReload,
-} from './cookie.js';
+import './attribute.js';
+import './cookie.js';
+import './localstorage.js';
+import './run-at.js';
+import './safe-self.js';
 
-import {
-    removeAttr,
-    setAttr,
-    setAttrFn,
-    trustedSetAttr,
-} from './attribute.js';
-
+import { getAllCookiesFn } from './cookie.js';
+import { getAllLocalStorageFn } from './localstorage.js';
+import { registeredScriptlets } from './base.js';
 import { runAt } from './run-at.js';
 import { safeSelf } from './safe-self.js';
-
-/* eslint no-prototype-builtins: 0 */
 
 // Externally added to the private namespace in which scriptlets execute.
 /* global scriptletGlobals */
 
-export const builtinScriptlets = [];
+/* eslint no-prototype-builtins: 0 */
 
-/******************************************************************************/
-
-// Register scriptlets declared in other files.
-
-const registerScriptlet = fn => {
-    const details = fn.details;
-    if ( typeof details !== 'object' ) {
-        throw new ReferenceError('Unknown scriptlet function');
-    }
-    details.fn = fn;
-    if ( Array.isArray(details.dependencies) ) {
-        details.dependencies.forEach((fn, i, array) => {
-            if ( typeof fn !== 'function' ) { return; }
-            array[i] = fn.details.name;
-        });
-    }
-    builtinScriptlets.push(details);
-};
-
-registerScriptlet(safeSelf);
-
-registerScriptlet(removeAttr);
-registerScriptlet(setAttrFn);
-registerScriptlet(setAttr);
-registerScriptlet(trustedSetAttr);
-
-registerScriptlet(getAllCookiesFn);
-registerScriptlet(getCookieFn);
-registerScriptlet(getSafeCookieValuesFn);
-registerScriptlet(removeCookie);
-registerScriptlet(setCookie);
-registerScriptlet(setCookieFn);
-registerScriptlet(setCookieReload);
-registerScriptlet(trustedSetCookie);
-registerScriptlet(trustedSetCookieReload);
+export const builtinScriptlets = registeredScriptlets;
 
 /*******************************************************************************
 
@@ -137,34 +91,6 @@ builtinScriptlets.push({
 function shouldDebug(details) {
     if ( details instanceof Object === false ) { return false; }
     return scriptletGlobals.canDebug && details.debug;
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'run-at.fn',
-    fn: runAt,
-    dependencies: [
-        'safe-self.fn',
-    ],
-});
-
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'run-at-html-element.fn',
-    fn: runAtHtmlElementFn,
-});
-function runAtHtmlElementFn(fn) {
-    if ( document.documentElement ) {
-        fn();
-        return;
-    }
-    const observer = new MutationObserver(( ) => {
-        observer.disconnect();
-        fn();
-    });
-    observer.observe(document, { childList: true });
 }
 
 /******************************************************************************/
@@ -818,97 +744,6 @@ function objectFindOwnerFn(
         if ( owner.hasOwnProperty(prop) === false ) { return false; }
         owner = owner[prop];
         chain = chain.slice(pos + 1);
-    }
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'get-all-local-storage.fn',
-    fn: getAllLocalStorageFn,
-});
-function getAllLocalStorageFn(which = 'localStorage') {
-    const storage = self[which];
-    const out = [];
-    for ( let i = 0; i < storage.length; i++ ) {
-        const key = storage.key(i);
-        const value = storage.getItem(key);
-        return { key, value };
-    }
-    return out;
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'set-local-storage-item.fn',
-    fn: setLocalStorageItemFn,
-    dependencies: [
-        'get-safe-cookie-values.fn',
-        'safe-self.fn',
-    ],
-});
-function setLocalStorageItemFn(
-    which = 'local',
-    trusted = false,
-    key = '',
-    value = '',
-) {
-    if ( key === '' ) { return; }
-
-    // For increased compatibility with AdGuard
-    if ( value === 'emptyArr' ) {
-        value = '[]';
-    } else if ( value === 'emptyObj' ) {
-        value = '{}';
-    }
-
-    const trustedValues = [
-        '',
-        'undefined', 'null',
-        '{}', '[]', '""',
-        '$remove$',
-        ...getSafeCookieValuesFn(),
-    ];
-
-    if ( trusted ) {
-        if ( value.includes('$now$') ) {
-            value = value.replaceAll('$now$', Date.now());
-        }
-        if ( value.includes('$currentDate$') ) {
-            value = value.replaceAll('$currentDate$', `${Date()}`);
-        }
-        if ( value.includes('$currentISODate$') ) {
-            value = value.replaceAll('$currentISODate$', (new Date()).toISOString());
-        }
-    } else {
-        const normalized = value.toLowerCase();
-        const match = /^("?)(.+)\1$/.exec(normalized);
-        const unquoted = match && match[2] || normalized;
-        if ( trustedValues.includes(unquoted) === false ) {
-            if ( /^\d+$/.test(unquoted) === false ) { return; }
-            const n = parseInt(unquoted, 10);
-            if ( n > 32767 ) { return; }
-        }
-    }
-
-    try {
-        const storage = self[`${which}Storage`];
-        if ( value === '$remove$' ) {
-            const safe = safeSelf();
-            const pattern = safe.patternToRegex(key, undefined, true );
-            const toRemove = [];
-            for ( let i = 0, n = storage.length; i < n; i++ ) {
-                const key = storage.key(i);
-                if ( pattern.test(key) ) { toRemove.push(key); }
-            }
-            for ( const key of toRemove ) {
-                storage.removeItem(key);
-            }
-        } else {
-            storage.setItem(key, `${value}`);
-        }
-    } catch(ex) {
     }
 }
 
@@ -3571,43 +3406,6 @@ function removeNodeText(
 
 /*******************************************************************************
  * 
- * set-local-storage-item.js
- * set-session-storage-item.js
- * 
- * Set a local/session storage entry to a specific, allowed value.
- * 
- * Reference:
- * https://github.com/AdguardTeam/Scriptlets/blob/master/src/scriptlets/set-local-storage-item.js
- * https://github.com/AdguardTeam/Scriptlets/blob/master/src/scriptlets/set-session-storage-item.js
- * 
- **/
-
-builtinScriptlets.push({
-    name: 'set-local-storage-item.js',
-    fn: setLocalStorageItem,
-    world: 'ISOLATED',
-    dependencies: [
-        'set-local-storage-item.fn',
-    ],
-});
-function setLocalStorageItem(key = '', value = '') {
-    setLocalStorageItemFn('local', false, key, value);
-}
-
-builtinScriptlets.push({
-    name: 'set-session-storage-item.js',
-    fn: setSessionStorageItem,
-    world: 'ISOLATED',
-    dependencies: [
-        'set-local-storage-item.fn',
-    ],
-});
-function setSessionStorageItem(key = '', value = '') {
-    setLocalStorageItemFn('session', false, key, value);
-}
-
-/*******************************************************************************
- * 
  * @scriptlet prevent-canvas
  * 
  * @description
@@ -3693,57 +3491,6 @@ function multiup() {
     document.addEventListener('click', handler, { capture: true });
 }
 
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'remove-cache-storage-item.js',
-    fn: removeCacheStorageItem,
-    world: 'ISOLATED',
-    dependencies: [
-        'safe-self.fn',
-    ],
-});
-function removeCacheStorageItem(
-    cacheNamePattern = '',
-    requestPattern = ''
-) {
-    if ( cacheNamePattern === '' ) { return; }
-    const safe = safeSelf();
-    const logPrefix = safe.makeLogPrefix('remove-cache-storage-item', cacheNamePattern, requestPattern);
-    const cacheStorage = self.caches;
-    if ( cacheStorage instanceof Object === false ) { return; }
-    const reCache = safe.patternToRegex(cacheNamePattern, undefined, true);
-    const reRequest = safe.patternToRegex(requestPattern, undefined, true);
-    cacheStorage.keys().then(cacheNames => {
-        for ( const cacheName of cacheNames ) {
-            if ( reCache.test(cacheName) === false ) { continue; }
-            if ( requestPattern === '' ) {
-                cacheStorage.delete(cacheName).then(result => {
-                    if ( safe.logLevel > 1 ) {
-                        safe.uboLog(logPrefix, `Deleting ${cacheName}`);
-                    }
-                    if ( result !== true ) { return; }
-                    safe.uboLog(logPrefix, `Deleted ${cacheName}: ${result}`);
-                });
-                continue;
-            }
-            cacheStorage.open(cacheName).then(cache => {
-                cache.keys().then(requests => {
-                    for ( const request of requests ) {
-                        if ( reRequest.test(request.url) === false ) { continue; }
-                        if ( safe.logLevel > 1 ) {
-                            safe.uboLog(logPrefix, `Deleting ${cacheName}/${request.url}`);
-                        }
-                        cache.delete(request).then(result => {
-                            if ( result !== true ) { return; }
-                            safe.uboLog(logPrefix, `Deleted ${cacheName}/${request.url}: ${result}`);
-                        });
-                    }
-                });
-            });
-        }
-    });
-}
 
 
 /*******************************************************************************
@@ -3829,43 +3576,6 @@ function trustedSetConstant(
     ...args
 ) {
     setConstantFn(true, ...args);
-}
-
-/*******************************************************************************
- * 
- * trusted-set-local-storage-item.js
- * 
- * Set a local storage entry to an arbitrary value.
- * 
- * Reference:
- * https://github.com/AdguardTeam/Scriptlets/blob/master/src/scriptlets/trusted-set-local-storage-item.js
- * 
- **/
-
-builtinScriptlets.push({
-    name: 'trusted-set-local-storage-item.js',
-    requiresTrust: true,
-    fn: trustedSetLocalStorageItem,
-    world: 'ISOLATED',
-    dependencies: [
-        'set-local-storage-item.fn',
-    ],
-});
-function trustedSetLocalStorageItem(key = '', value = '') {
-    setLocalStorageItemFn('local', true, key, value);
-}
-
-builtinScriptlets.push({
-    name: 'trusted-set-session-storage-item.js',
-    requiresTrust: true,
-    fn: trustedSetSessionStorageItem,
-    world: 'ISOLATED',
-    dependencies: [
-        'set-local-storage-item.fn',
-    ],
-});
-function trustedSetSessionStorageItem(key = '', value = '') {
-    setLocalStorageItemFn('session', true, key, value);
 }
 
 /*******************************************************************************

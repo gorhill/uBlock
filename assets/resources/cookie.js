@@ -22,6 +22,7 @@
     web page context.
 */
 
+import { registerScriptlet } from './base.js';
 import { safeSelf } from './safe-self.js';
 
 /******************************************************************************/
@@ -47,9 +48,9 @@ export function getSafeCookieValuesFn() {
         'yes', 'y', 'no', 'n',
     ];
 }
-getSafeCookieValuesFn.details = {
+registerScriptlet(getSafeCookieValuesFn, {
     name: 'get-safe-cookie-values.fn',
-};
+});
 
 /******************************************************************************/
 
@@ -63,9 +64,9 @@ export function getAllCookiesFn() {
         return { key, value };
     }).filter(s => s !== undefined);
 }
-getAllCookiesFn.details = {
+registerScriptlet(getAllCookiesFn, {
     name: 'get-all-cookies.fn',
-};
+});
 
 /******************************************************************************/
 
@@ -79,9 +80,9 @@ export function getCookieFn(
         return s.slice(pos+1).trim();
     }
 }
-getCookieFn.details = {
+registerScriptlet(getCookieFn, {
     name: 'get-cookie.fn',
-};
+});
 
 /******************************************************************************/
 
@@ -142,12 +143,12 @@ export function setCookieFn(
 
     return done;
 }
-setCookieFn.details = {
+registerScriptlet(setCookieFn, {
     name: 'set-cookie.fn',
     dependencies: [
-        'get-cookie.fn',
+        getCookieFn,
     ],
-};
+});
 
 /**
  * @scriptlet set-cookie
@@ -200,27 +201,27 @@ export function setCookie(
         safe.uboLog(logPrefix, 'Done');
     }
 }
-setCookie.details = {
+registerScriptlet(setCookie, {
     name: 'set-cookie.js',
     world: 'ISOLATED',
     dependencies: [
-        'get-safe-cookie-values.fn',
-        'safe-self.fn',
-        'set-cookie.fn',
+        getSafeCookieValuesFn,
+        safeSelf,
+        setCookieFn,
     ],
-};
+});
 
 // For compatibility with AdGuard
 export function setCookieReload(name, value, path, ...args) {
     setCookie(name, value, path, 'reload', '1', ...args);
 }
-setCookieReload.details = {
+registerScriptlet(setCookieReload, {
     name: 'set-cookie-reload.js',
     world: 'ISOLATED',
     dependencies: [
-        'set-cookie.js',
+        setCookie,
     ],
-};
+});
 
 /**
  * @trustedScriptlet trusted-set-cookie
@@ -294,28 +295,28 @@ export function trustedSetCookie(
         safe.uboLog(logPrefix, 'Done');
     }
 }
-trustedSetCookie.details = {
+registerScriptlet(trustedSetCookie, {
     name: 'trusted-set-cookie.js',
     requiresTrust: true,
     world: 'ISOLATED',
     dependencies: [
-        'safe-self.fn',
-        'set-cookie.fn',
+        safeSelf,
+        setCookieFn,
     ],
-};
+});
 
 // For compatibility with AdGuard
 export function trustedSetCookieReload(name, value, offsetExpiresSec, path, ...args) {
     trustedSetCookie(name, value, offsetExpiresSec, path, 'reload', '1', ...args);
 }
-trustedSetCookieReload.details = {
+registerScriptlet(trustedSetCookieReload, {
     name: 'trusted-set-cookie-reload.js',
     requiresTrust: true,
     world: 'ISOLATED',
     dependencies: [
-        'trusted-set-cookie.js',
+        trustedSetCookie,
     ],
-};
+});
 
 /**
  * @scriptlet remove-cookie
@@ -396,15 +397,15 @@ export function removeCookie(
         }, { passive: true });
     }
 }
-removeCookie.details = {
+registerScriptlet(removeCookie, {
     name: 'remove-cookie.js',
     aliases: [
         'cookie-remover.js',
     ],
     world: 'ISOLATED',
     dependencies: [
-        'safe-self.fn',
+        safeSelf,
     ],
-};
+});
 
 /******************************************************************************/

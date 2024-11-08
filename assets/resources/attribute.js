@@ -22,6 +22,7 @@
     web page context.
 */
 
+import { registerScriptlet } from './base.js';
 import { runAt } from './run-at.js';
 import { safeSelf } from './safe-self.js';
 
@@ -95,13 +96,13 @@ export function setAttrFn(
     };
     runAt(( ) => { start(); }, 'idle');
 }
-setAttrFn.details = {
+registerScriptlet(setAttrFn, {
     name: 'set-attr.fn',
     dependencies: [
         runAt,
         safeSelf,
     ],
-};
+});
 
 /**
  * @scriptlet set-attr
@@ -149,14 +150,14 @@ export function setAttr(
 
     setAttrFn(logPrefix, selector, attr, value);
 }
-setAttr.details = {
+registerScriptlet(setAttr, {
     name: 'set-attr.js',
     dependencies: [
         safeSelf,
         setAttrFn,
     ],
     world: 'ISOLATED',
-};
+});
 
 /**
  * @trustedScriptlet trusted-set-attr
@@ -188,7 +189,7 @@ export function trustedSetAttr(
     const logPrefix = safe.makeLogPrefix('trusted-set-attr', selector, attr, value);
     setAttrFn(logPrefix, selector, attr, value);
 }
-trustedSetAttr.details = {
+registerScriptlet(trustedSetAttr, {
     name: 'trusted-set-attr.js',
     requiresTrust: true,
     dependencies: [
@@ -196,7 +197,7 @@ trustedSetAttr.details = {
         setAttrFn,
     ],
     world: 'ISOLATED',
-};
+});
 
 /**
  * @scriptlet remove-attr
@@ -291,7 +292,7 @@ export function removeAttr(
     };
     runAt(( ) => { start(); }, behavior.split(/\s+/));
 }
-removeAttr.details = {
+registerScriptlet(removeAttr, {
     name: 'remove-attr.js',
     aliases: [
         'ra.js',
@@ -300,6 +301,6 @@ removeAttr.details = {
         runAt,
         safeSelf,
     ],
-};
+});
 
 /******************************************************************************/

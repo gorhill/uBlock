@@ -22,6 +22,7 @@
     web page context.
 */
 
+import { registerScriptlet } from './base.js';
 import { safeSelf } from './safe-self.js';
 
 /* eslint no-prototype-builtins: 0 */
@@ -72,9 +73,26 @@ export function runAt(fn, when) {
     const args = [ 'readystatechange', onStateChange, { capture: true } ];
     safe.addEventListener.apply(document, args);
 }
-runAt.details = {
+registerScriptlet(runAt, {
     name: 'run-at.fn',
     dependencies: [
         safeSelf,
     ],
-};
+});
+
+/******************************************************************************/
+
+function runAtHtmlElementFn(fn) {
+    if ( document.documentElement ) {
+        fn();
+        return;
+    }
+    const observer = new MutationObserver(( ) => {
+        observer.disconnect();
+        fn();
+    });
+    observer.observe(document, { childList: true });
+}
+registerScriptlet(runAtHtmlElementFn, {
+    name: 'run-at-html-element.fn',
+});

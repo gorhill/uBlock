@@ -22,6 +22,8 @@
     web page context.
 */
 
+import { registerScriptlet } from './base.js';
+
 /******************************************************************************/
 
 // Externally added to the private namespace in which scriptlets execute.
@@ -213,6 +215,6 @@ export function safeSelf() {
     }
     return safe;
 }
-safeSelf.details = {
+registerScriptlet(safeSelf, {
     name: 'safe-self.fn',
-};
+});

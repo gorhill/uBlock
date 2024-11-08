@@ -333,6 +333,8 @@ class RedirectEngine {
                     }
                 }
                 this.modifyTime = Date.now();
+            }).catch(reason => {
+                console.error(reason);
             }),
         ];
 
