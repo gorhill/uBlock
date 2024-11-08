@@ -7,9 +7,6 @@ on:
 permissions:
   contents: read
 
-# I used the following project as template to get started:
-# https://github.com/dessant/search-by-image/blob/master/.github/workflows/ci.yml
-
 jobs:
   build:
     permissions:
@@ -25,35 +22,33 @@ jobs:
       - name: Clone uAssets
         run: |
           tools/pull-assets.sh
+      - name: Get release information
+        run: |
+          echo "VERSION=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
       - name: Build MV2 packages
         run: |
-          tools/make-chromium.sh ${{ steps.release_info.outputs.VERSION }}
-          tools/make-firefox.sh ${{ steps.release_info.outputs.VERSION }}
-          tools/make-thunderbird.sh ${{ steps.release_info.outputs.VERSION }}
-          tools/make-npm.sh ${{ steps.release_info.outputs.VERSION }}
-      # https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
-      - name: Get release information
-        id: release_info
-        run: |
-          echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+          tools/make-chromium.sh ${{ env.VERSION }}
+          tools/make-firefox.sh ${{ env.VERSION }}
+          tools/make-thunderbird.sh ${{ env.VERSION }}
+          tools/make-npm.sh ${{ env.VERSION }}
       - name: Assemble release notes
         run: |
           > release.body.txt
           grep -m1 -B10000 -- "----------" CHANGELOG.md >> release.body.txt
-          sed -e 's/%version%/${{ steps.release_info.outputs.VERSION }}/g' RELEASE.HEAD.md >> release.body.txt
+          sed -e 's/%version%/${{ env.VERSION }}/g' RELEASE.HEAD.md >> release.body.txt
       - name: Create GitHub release
         id: create_release
         uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
-          tag_name: ${{ steps.release_info.outputs.VERSION }}
-          name: ${{ steps.release_info.outputs.VERSION }}
+          tag_name: ${{ env.VERSION }}
+          name: ${{ env.VERSION }}
           draft: true
           prerelease: true
           body_path: release.body.txt
           files: |
-            dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.chromium.zip
-            dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.firefox.xpi
-            dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.thunderbird.xpi
-            dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.npm.tgz
+            dist/build/uBlock0_${{ env.VERSION }}.chromium.zip
+            dist/build/uBlock0_${{ env.VERSION }}.firefox.xpi
+            dist/build/uBlock0_${{ env.VERSION }}.thunderbird.xpi
+            dist/build/uBlock0_${{ env.VERSION }}.npm.tgz
