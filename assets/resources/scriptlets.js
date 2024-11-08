@@ -4432,13 +4432,10 @@ function trustedSuppressNativeMethod(
             safe.uboLog(logPrefix, `Arguments:\n${callArgs.join('\n')}`);
             return context.reflect();
         }
-        if ( callArgs.length < signatureArgs.length ) {
-            return context.reflect();
-        }
         for ( let i = 0; i < signatureArgs.length; i++ ) {
             const signatureArg = signatureArgs[i];
             if ( signatureArg === undefined ) { continue; }
-            const targetArg = callArgs[i];
+            const targetArg = i < callArgs.length ? callArgs[i] : undefined;
             if ( signatureArg.type === 'exact' ) {
                 if ( targetArg !== signatureArg.value ) {
                     return context.reflect();
@@ -4449,6 +4446,10 @@ function trustedSuppressNativeMethod(
                     return context.reflect();
                 }
             }
+        }
+        if ( how === 'debug' ) {
+            debugger; // eslint-disable-line no-debugger
+            return context.reflect();
         }
         safe.uboLog(logPrefix, `Suppressed:\n${callArgs.join('\n')}`);
         if ( how === 'abort' ) {
