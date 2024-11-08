@@ -25,6 +25,12 @@ jobs:
       - name: Clone uAssets
         run: |
           tools/pull-assets.sh
+      - name: Build MV2 packages
+        run: |
+          tools/make-chromium.sh ${{ steps.release_info.outputs.VERSION }}
+          tools/make-firefox.sh ${{ steps.release_info.outputs.VERSION }}
+          tools/make-thunderbird.sh ${{ steps.release_info.outputs.VERSION }}
+          tools/make-npm.sh ${{ steps.release_info.outputs.VERSION }}
       # https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
       - name: Get release information
         id: release_info
@@ -37,54 +43,17 @@ jobs:
           sed -e 's/%version%/${{ steps.release_info.outputs.VERSION }}/g' RELEASE.HEAD.md >> release.body.txt
       - name: Create GitHub release
         id: create_release
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           tag_name: ${{ steps.release_info.outputs.VERSION }}
-          release_name: ${{ steps.release_info.outputs.VERSION }}
+          name: ${{ steps.release_info.outputs.VERSION }}
           draft: true
           prerelease: true
           body_path: release.body.txt
-      - name: Build MV2 packages
-        run: |
-          tools/make-chromium.sh ${{ steps.release_info.outputs.VERSION }}
-          tools/make-firefox.sh ${{ steps.release_info.outputs.VERSION }}
-          tools/make-thunderbird.sh ${{ steps.release_info.outputs.VERSION }}
-          tools/make-npm.sh ${{ steps.release_info.outputs.VERSION }}
-      - name: Upload Chromium package
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.chromium.zip
-          asset_name: uBlock0_${{ steps.release_info.outputs.VERSION }}.chromium.zip
-          asset_content_type: application/octet-stream
-      - name: Upload Firefox package
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.firefox.xpi
-          asset_name: uBlock0_${{ steps.release_info.outputs.VERSION }}.firefox.xpi
-          asset_content_type: application/octet-stream
-      - name: Upload Thunderbird package
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.thunderbird.xpi
-          asset_name: uBlock0_${{ steps.release_info.outputs.VERSION }}.thunderbird.xpi
-          asset_content_type: application/octet-stream
-      - name: Upload NodeJS package
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.npm.tgz
-          asset_name: uBlock0_${{ steps.release_info.outputs.VERSION }}.npm.tgz
-          asset_content_type: application/octet-stream
+          files: |
+            dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.chromium.zip
+            dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.firefox.xpi
+            dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.thunderbird.xpi
+            dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.npm.tgz
