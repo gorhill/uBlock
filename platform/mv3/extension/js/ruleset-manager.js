@@ -19,8 +19,14 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import { browser, dnr, i18n } from './ext.js';
+import {
+    browser,
+    dnr,
+    i18n,
+} from './ext.js';
+
 import { fetchJSON } from './fetch.js';
+import { getAdminRulesets } from './admin.js';
 import { ubolLog } from './debug.js';
 
 /******************************************************************************/
@@ -460,7 +466,22 @@ async function defaultRulesetsFromLanguage() {
 
 async function enableRulesets(ids) {
     const afterIds = new Set(ids);
-    const beforeIds = new Set(await dnr.getEnabledRulesets());
+    const [ beforeIds, adminIds, rulesetDetails ] = await Promise.all([
+        dnr.getEnabledRulesets().then(ids => new Set(ids)),
+        getAdminRulesets(),
+        getRulesetDetails(),
+    ]);
+
+    for ( const token of adminIds ) {
+        const c0 = token.charAt(0);
+        const id = token.slice(1);
+        if ( c0 === '+' ) {
+            afterIds.add(id);
+        } else if ( c0 === '-' ) {
+            afterIds.delete(id);
+        }
+    }
+
     const enableRulesetSet = new Set();
     const disableRulesetSet = new Set();
     for ( const id of afterIds ) {
@@ -472,13 +493,8 @@ async function enableRulesets(ids) {
         disableRulesetSet.add(id);
     }
 
-    if ( enableRulesetSet.size === 0 && disableRulesetSet.size === 0 ) {
-        return;
-    }
-
     // Be sure the rulesets to enable/disable do exist in the current version,
     // otherwise the API throws.
-    const rulesetDetails = await getRulesetDetails();
     for ( const id of enableRulesetSet ) {
         if ( rulesetDetails.has(id) ) { continue; }
         enableRulesetSet.delete(id);
@@ -487,6 +503,11 @@ async function enableRulesets(ids) {
         if ( rulesetDetails.has(id) ) { continue; }
         disableRulesetSet.delete(id);
     }
+
+    if ( enableRulesetSet.size === 0 && disableRulesetSet.size === 0 ) {
+        return;
+    }
+
     const enableRulesetIds = Array.from(enableRulesetSet);
     const disableRulesetIds = Array.from(disableRulesetSet);
 
@@ -497,7 +518,7 @@ async function enableRulesets(ids) {
         ubolLog(`Disable ruleset: ${disableRulesetIds}`);
     }
     await dnr.updateEnabledRulesets({ enableRulesetIds, disableRulesetIds });
-    
+
     return updateDynamicRules();
 }
 

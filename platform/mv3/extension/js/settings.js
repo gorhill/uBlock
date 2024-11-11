@@ -40,6 +40,18 @@ function hashFromIterable(iter) {
     return Array.from(iter).sort().join('\n');
 }
 
+function isAdminRuleset(listkey) {
+    const { adminRulesets = [] } = cachedRulesetData;
+    for ( const id of adminRulesets ) {
+        const pos = id.indexOf(listkey);
+        if ( pos === 0 ) { return true; }
+        if ( pos !== 1 ) { continue; }
+        const c = id.charAt(0);
+        if ( c === '+' || c === '-' ) { return true; }
+    }
+    return false;
+}
+
 /******************************************************************************/
 
 function rulesetStats(rulesetId) {
@@ -94,10 +106,13 @@ function renderFilterLists() {
         li.title = listStatsTemplate
             .replace('{{ruleCount}}', renderNumber(stats.ruleCount))
             .replace('{{filterCount}}', renderNumber(stats.filterCount));
+        const fromAdmin = isAdminRuleset(ruleset.id);
+        dom.cl.toggle(li, 'fromAdmin', fromAdmin);
+        const disabled = stats.ruleCount === 0 || fromAdmin;
         dom.attr(
-            qs$(li, '.input.checkbox'),
+            qs$(li, '.input.checkbox input'),
             'disabled',
-            stats.ruleCount === 0 ? '' : null
+            disabled ? '' : null
         );
         dom.cl.remove(li, 'discard');
         return li;
@@ -358,7 +373,9 @@ async function applyEnabledRulesets() {
         const checked = qs$(liEntry, 'input[type="checkbox"]:checked') !== null;
         dom.cl.toggle(liEntry, 'checked', checked);
         if ( checked === false ) { continue; }
-        enabledRulesets.push(liEntry.dataset.listkey);
+        const { listkey } = liEntry.dataset;
+        if ( isAdminRuleset(listkey) ) { continue; }
+        enabledRulesets.push(listkey);
     }
 
     await sendMessage({
@@ -433,9 +450,12 @@ localRead('hideUnusedFilterLists').then(value => {
 
 /******************************************************************************/
 
-const bc = new self.BroadcastChannel('uBOL');
+function listen() {
+    const bc = new self.BroadcastChannel('uBOL');
+    bc.onmessage = listen.onmessage;
+}
 
-bc.onmessage = ev => {
+listen.onmessage = ev => {
     const message = ev.data;
     if ( message instanceof Object === false ) { return; }
     const local = cachedRulesetData;
@@ -477,6 +497,13 @@ bc.onmessage = ev => {
         }
     }
 
+    if ( message.adminRulesets !== undefined ) {
+        if ( hashFromIterable(message.adminRulesets) !== hashFromIterable(local.adminRulesets) ) {
+            local.adminRulesets = message.adminRulesets;
+            render = true;
+        }
+    }
+
     if ( message.enabledRulesets !== undefined ) {
         if ( hashFromIterable(message.enabledRulesets) !== hashFromIterable(local.enabledRulesets) ) {
             local.enabledRulesets = message.enabledRulesets;
@@ -503,6 +530,7 @@ sendMessage({
         renderWidgets();
     } catch(ex) {
     }
+    listen();
 }).catch(reason => {
     console.trace(reason);
 });

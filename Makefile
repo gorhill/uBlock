@@ -1,7 +1,8 @@
 # https://stackoverflow.com/a/6273809
 run_options := $(filter-out $@,$(MAKECMDGOALS))
 
-.PHONY: all clean cleanassets test lint chromium opera firefox npm dig mv3 mv3-quick \
+.PHONY: all clean cleanassets test lint chromium opera firefox npm dig \
+	mv3 mv3-quick mv3-chromium mv3-firefox \
 	compare maxcost medcost mincost modifiers record wasm
 
 sources := $(wildcard assets/* assets/*/* dist/version src/* src/*/* src/*/*/* src/*/*/*/*)
@@ -55,11 +56,15 @@ dig: dist/build/uBlock0.dig
 dig-snfe: dig
 	cd dist/build/uBlock0.dig && npm run snfe $(run_options)
 
-mv3-chromium: tools/make-mv3.sh $(sources) $(platform)
+dist/build/uBOLite.chromium: tools/make-mv3.sh $(sources) $(platform)
 	tools/make-mv3.sh chromium
 
-mv3-firefox: tools/make-mv3.sh $(sources) $(platform)
+mv3-chromium: dist/build/uBOLite.chromium
+
+dist/build/uBOLite.firefox: tools/make-mv3.sh $(sources) $(platform)
 	tools/make-mv3.sh firefox
+
+mv3-firefox: dist/build/uBOLite.firefox
 
 mv3-quick: tools/make-mv3.sh $(sources) $(platform)
 	tools/make-mv3.sh quick

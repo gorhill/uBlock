@@ -114,10 +114,18 @@ h3[data-i18n="filteringMode0Name"]::first-letter {
 .groupEntry:not([data-groupkey="user"]) .listEntry:not(.isDefault).unused {
     display: none;
     }
+
+.listEntry.fromAdmin:has(input[disabled]:not(:checked)) {
+    display: none;
+    }
 .listEntry > * {
     margin-left: 0;
     margin-right: 0;
     unicode-bidi: embed;
+    }
+.listEntry .checkbox:has(input[disabled]),
+.listEntry .checkbox:has(input[disabled]) ~ span {
+    filter: var(--checkbox-disabled-filter);
     }
 .listEntry .listname {
     white-space: nowrap;

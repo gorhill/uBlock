@@ -115,7 +115,7 @@ const hostnamesFromMatches = origins => {
 
 /******************************************************************************/
 
-export const broadcastMessage = message => {
+const broadcastMessage = message => {
     const bc = new self.BroadcastChannel('uBOL');
     bc.postMessage(message);
 };
@@ -123,6 +123,7 @@ export const broadcastMessage = message => {
 /******************************************************************************/
 
 export {
+    broadcastMessage,
     parsedURLromOrigin,
     toBroaderHostname,
     isDescendantHostname,

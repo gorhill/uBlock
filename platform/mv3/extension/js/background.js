@@ -20,24 +20,6 @@
 */
 
 import {
-    adminRead,
-    browser,
-    dnr,
-    localRead, localWrite,
-    runtime,
-    sessionRead, sessionWrite,
-    windows,
-} from './ext.js';
-
-import {
-    defaultRulesetsFromLanguage,
-    enableRulesets,
-    getEnabledRulesetsDetails,
-    getRulesetDetails,
-    updateDynamicRules,
-} from './ruleset-manager.js';
-
-import {
     MODE_BASIC,
     MODE_OPTIMAL,
     getDefaultFilteringMode,
@@ -50,72 +32,48 @@ import {
 } from './mode-manager.js';
 
 import {
+    adminRead,
+    browser,
+    dnr,
+    localRead, localWrite,
+    runtime,
+    windows,
+} from './ext.js';
+
+import {
+    enableRulesets,
+    getEnabledRulesetsDetails,
+    getRulesetDetails,
+    updateDynamicRules,
+} from './ruleset-manager.js';
+
+import {
     getMatchedRules,
     isSideloaded,
     ubolLog,
 } from './debug.js';
 
+import {
+    loadRulesetConfig,
+    process,
+    rulesetConfig,
+    saveRulesetConfig,
+} from './config.js';
+
 import { broadcastMessage } from './utils.js';
+import { getAdminRulesets } from './admin.js';
 import { registerInjectables } from './scripting-manager.js';
 
 /******************************************************************************/
-
-const rulesetConfig = {
-    version: '',
-    enabledRulesets: [ 'default' ],
-    autoReload: true,
-    showBlockedCount: true,
-};
 
 const UBOL_ORIGIN = runtime.getURL('').replace(/\/$/, '');
 
 const canShowBlockedCount = typeof dnr.setExtensionActionOptions === 'function';
 
-let firstRun = false;
-let wakeupRun = false;
-
 /******************************************************************************/
 
 function getCurrentVersion() {
     return runtime.getManifest().version;
-}
-
-async function loadRulesetConfig() {
-    let data = await sessionRead('rulesetConfig');
-    if ( data ) {
-        rulesetConfig.version = data.version;
-        rulesetConfig.enabledRulesets = data.enabledRulesets;
-        rulesetConfig.autoReload = typeof data.autoReload === 'boolean'
-            ? data.autoReload
-            : true;
-        rulesetConfig.showBlockedCount = typeof data.showBlockedCount === 'boolean'
-            ? data.showBlockedCount
-            : true;
-        wakeupRun = true;
-        return;
-    }
-    data = await localRead('rulesetConfig');
-    if ( data ) {
-        rulesetConfig.version = data.version;
-        rulesetConfig.enabledRulesets = data.enabledRulesets;
-        rulesetConfig.autoReload = typeof data.autoReload === 'boolean'
-            ? data.autoReload
-            : true;
-        rulesetConfig.showBlockedCount = typeof data.showBlockedCount === 'boolean'
-            ? data.showBlockedCount
-            : true;
-        sessionWrite('rulesetConfig', rulesetConfig);
-        return;
-    }
-    rulesetConfig.enabledRulesets = await defaultRulesetsFromLanguage();
-    sessionWrite('rulesetConfig', rulesetConfig);
-    localWrite('rulesetConfig', rulesetConfig);
-    firstRun = true;
-}
-
-async function saveRulesetConfig() {
-    sessionWrite('rulesetConfig', rulesetConfig);
-    return localWrite('rulesetConfig', rulesetConfig);
 }
 
 /******************************************************************************/
@@ -216,7 +174,9 @@ function onMessage(request, sender, callback) {
         }).then(( ) => {
             registerInjectables();
             callback();
-            broadcastMessage({ enabledRulesets: rulesetConfig.enabledRulesets });
+            return dnr.getEnabledRulesets();
+        }).then(enabledRulesets => {
+            broadcastMessage({ enabledRulesets });
         });
         return true;
     }
@@ -227,25 +187,28 @@ function onMessage(request, sender, callback) {
             getTrustedSites(),
             getRulesetDetails(),
             dnr.getEnabledRulesets(),
+            getAdminRulesets(),
         ]).then(results => {
             const [
                 defaultFilteringMode,
                 trustedSites,
                 rulesetDetails,
                 enabledRulesets,
+                adminRulesets,
             ] = results;
             callback({
                 defaultFilteringMode,
                 trustedSites: Array.from(trustedSites),
                 enabledRulesets,
+                adminRulesets,
                 maxNumberOfEnabledRulesets: dnr.MAX_NUMBER_OF_ENABLED_STATIC_RULESETS,
                 rulesetDetails: Array.from(rulesetDetails.values()),
                 autoReload: rulesetConfig.autoReload,
                 showBlockedCount: rulesetConfig.showBlockedCount,
                 canShowBlockedCount,
-                firstRun,
+                firstRun: process.firstRun,
             });
-            firstRun = false;
+            process.firstRun = false;
         });
         return true;
     }
@@ -367,6 +330,8 @@ function onMessage(request, sender, callback) {
     default:
         break;
     }
+
+    return false;
 }
 
 /******************************************************************************/
@@ -374,12 +339,12 @@ function onMessage(request, sender, callback) {
 async function start() {
     await loadRulesetConfig();
 
-    if ( wakeupRun === false ) {
+    if ( process.wakeupRun === false ) {
         await enableRulesets(rulesetConfig.enabledRulesets);
     }
 
     // We need to update the regex rules only when ruleset version changes.
-    if ( wakeupRun === false ) {
+    if ( process.wakeupRun === false ) {
         const currentVersion = getCurrentVersion();
         if ( currentVersion !== rulesetConfig.version ) {
             ubolLog(`Version change: ${rulesetConfig.version} => ${currentVersion}`);
@@ -396,7 +361,7 @@ async function start() {
     // Unsure whether the browser remembers correctly registered css/scripts
     // after we quit the browser. For now uBOL will check unconditionally at
     // launch time whether content css/scripts are properly registered.
-    if ( wakeupRun === false || permissionsChanged ) {
+    if ( process.wakeupRun === false || permissionsChanged ) {
         registerInjectables();
 
         const enabledRulesets = await dnr.getEnabledRulesets();
@@ -409,7 +374,7 @@ async function start() {
 
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/declarativeNetRequest
     //   Firefox API does not support `dnr.setExtensionActionOptions`
-    if ( wakeupRun === false && canShowBlockedCount ) {
+    if ( process.wakeupRun === false && canShowBlockedCount ) {
         dnr.setExtensionActionOptions({
             displayActionCountAsBadgeText: rulesetConfig.showBlockedCount,
         });
@@ -421,7 +386,7 @@ async function start() {
         ( ) => { onPermissionsRemoved(); }
     );
 
-    if ( firstRun ) {
+    if ( process.firstRun ) {
         const enableOptimal = await hasOmnipotence();
         if ( enableOptimal ) {
             const afterLevel = await setDefaultFilteringMode(MODE_OPTIMAL);
@@ -434,7 +399,7 @@ async function start() {
         if ( disableFirstRunPage !== true ) {
             runtime.openOptionsPage();
         } else {
-            firstRun = false;
+            process.firstRun = false;
         }
     }
 }

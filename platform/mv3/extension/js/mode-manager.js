@@ -25,19 +25,20 @@ import {
 } from './ruleset-manager.js';
 
 import {
-    adminRead,
-    browser,
-    dnr,
-    localRead, localRemove, localWrite,
-    sessionRead, sessionWrite,
-} from './ext.js';
-
-import {
     broadcastMessage,
     hostnamesFromMatches,
     isDescendantHostnameOfIter,
     toBroaderHostname,
 } from './utils.js';
+
+import {
+    browser,
+    dnr,
+    localRead, localWrite,
+    sessionRead, sessionWrite,
+} from './ext.js';
+
+import { adminReadEx } from './admin.js';
 
 /******************************************************************************/
 
@@ -224,38 +225,40 @@ function applyFilteringMode(filteringModes, hostname, afterLevel) {
 
 /******************************************************************************/
 
-async function readFilteringModeDetails() {
-    if ( readFilteringModeDetails.cache ) {
-        return readFilteringModeDetails.cache;
-    }
-    const sessionModes = await sessionRead('filteringModeDetails');
-    if ( sessionModes instanceof Object ) {
-        readFilteringModeDetails.cache = unserializeModeDetails(sessionModes);
-        return readFilteringModeDetails.cache;
+export async function readFilteringModeDetails(bypassCache = false) {
+    if ( bypassCache === false ) {
+        if ( readFilteringModeDetails.cache ) {
+            return readFilteringModeDetails.cache;
+        }
+        const sessionModes = await sessionRead('filteringModeDetails');
+        if ( sessionModes instanceof Object ) {
+            readFilteringModeDetails.cache = unserializeModeDetails(sessionModes);
+            return readFilteringModeDetails.cache;
+        }
     }
     let [ userModes, adminNoFiltering ] = await Promise.all([
         localRead('filteringModeDetails'),
-        localRead('adminNoFiltering'),
+        adminReadEx('noFiltering'),
     ]);
     if ( userModes === undefined ) {
         userModes = { basic: [ 'all-urls' ] };
     }
     userModes = unserializeModeDetails(userModes);
     if ( Array.isArray(adminNoFiltering) ) {
+        if ( adminNoFiltering.includes('-*') ) {
+            userModes.none.clear();
+        }
         for ( const hn of adminNoFiltering ) {
-            applyFilteringMode(userModes, hn, 0);
+            if ( hn.charAt(0) === '-' ) {
+                userModes.none.delete(hn.slice(1));
+            } else {
+                applyFilteringMode(userModes, hn, 0);
+            }
         }
     }
     filteringModesToDNR(userModes);
     sessionWrite('filteringModeDetails', serializeModeDetails(userModes));
     readFilteringModeDetails.cache = userModes;
-    adminRead('noFiltering').then(results => {
-        if ( results ) {
-            localWrite('adminNoFiltering', results);
-        } else {
-            localRemove('adminNoFiltering');
-        }
-    });
     return userModes;
 }
 

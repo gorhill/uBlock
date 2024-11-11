@@ -10,6 +10,12 @@
     "disableFirstRunPage": {
       "title": "Disable first run page",
       "type": "boolean"
+    },
+    "rulesets": {
+      "title": "Rulesets to add/remove",
+      "description": "Prefix a ruleset id with '+' to add, or '-' to remove. Use '-*' to disable all non-default lists.",
+      "type": "array",
+      "items": { "type": "string" }
     }
   }
 }
