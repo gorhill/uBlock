@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "一個無須任何權限的內容阻擋器。安裝即可阻擋廣告、追蹤器、挖礦程式等網頁內容。",
+    "message": "無須權限的內容阻擋器。安裝即可阻擋廣告、追蹤器、挖礦程式等網頁內容。",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -32,7 +32,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipReport": {
-    "message": "回報此網站的問題",
+    "message": "回報網站問題",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -100,19 +100,19 @@
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "外部相依套件（與 GPLv3 相容）：",
+    "message": "外部依存套件（相容 GPLv3）：",
     "description": "Shown in the About pane"
   },
   "supportS6H": {
-    "message": "回報過濾規則的問題",
+    "message": "回報過濾規則問題",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
-    "message": "回報至特定網站的過濾器問題至 <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> 議題追蹤器</span>。<u>需要 GitHub 帳號。</u>",
+    "message": "回報特定網站的過濾器問題至 <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> 議題追蹤器</span>。<u>需要 GitHub 帳號。</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "為免給志願者帶來額外負擔，請先檢查問題有沒有被回報過，避免重複回報。",
+    "message": "為免給志願者帶來額外負擔，請先檢查問題是否被回報過，以免重複。",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
@@ -136,15 +136,15 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "含有覆蓋物或其他滋擾物",
+    "message": "有覆蓋物或其他滋擾物",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "偵測 uBO Lite",
+    "message": "偵測到 uBO Lite",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "有隱私權相關問題",
+    "message": "有隱私權問題",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
@@ -172,7 +172,7 @@
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "您剛安裝了 uBO Lite。您可以在此處選擇要在所有網站上使用的預設過濾模式。\n\n預設情況下將會選取<em>基礎</em>模式，因為其不需要讀取與變更資料的權限。若您信任 uBO Lite，您可以給予其讀取並變更在所有網站上資料的廣泛權限，以便為所有網站啟用更進階的過濾功能。",
+    "message": "您剛安裝了 uBO Lite。您可以在此處選擇會套用在所有網站上的預設過濾模式。\n\n預設情況下，將會使用<em>基礎</em>模式，因為其不需要讀取與變更資料的權限。若您信任 uBO Lite，您可以給予其讀取並變更在所有網站上資料的廣泛權限，以便為所有網站啟用更進階的過濾功能。",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {

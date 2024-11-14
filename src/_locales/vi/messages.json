@@ -140,7 +140,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Nhấn để bỏ chặn tất cả cửa sổ bật lên trên trang này",
+    "message": "Nhấp để bỏ chặn tất cả cửa sổ bật lên trên trang này",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Bảo mật, bảo vệ khỏi phần mềm nguy hiểm",
+    "message": "Bảo mật, bảo vệ khỏi phần mềm độc hại",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
@@ -628,7 +628,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "Các chỉ thị trang web đáng tin cậy ra lệnh trên đó các trang web uBlock Origin sẽ bị vô hiệu hóa. Một mục nhập cho mỗi dòng. Chỉ thị không hợp lệ sẽ được âm thầm bỏ qua và nhận xét ra.",
+    "message": "Các đường dẫn trang web đáng tin cậy cố định mà uBlock Origin sẽ bị vô hiệu hóa trên trang đó. Một mục nhập cho mỗi dòng.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
@@ -640,7 +640,7 @@
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
-    "message": "my-ublock-whitelist_{{datetime}}.txt",
+    "message": "my-ublock-trusted-sites_{{datetime}}.txt",
     "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
@@ -844,11 +844,11 @@
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
-    "message": "Bảo tồn các mục từ {{input}} phút trước",
+    "message": "Giữ lại các mục từ {{input}} phút trước",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "Bảo tồn nhiều nhất {{input}} trang được tải trên mỗi thẻ",
+    "message": "Giữ lại nhiều nhất {{input}} trang được tải trên mỗi thẻ",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
@@ -928,7 +928,7 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "<u>Cần tài khoản GitHub:</u> Báo cáo lỗi bộ lọc với tên miền cụ thể cho <code>uBlock Origin</code> tại <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\">đây</span>. ",
+    "message": "Báo cáo lỗi bộ lọc với tên miền cụ thể cho  <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Cần tài khoản GitHub</u> ",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
@@ -944,7 +944,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "<u>Cần tài khoản GitHub:</u> Báo cáo lỗi bộ lọc với tên miền cụ thể cho <code>uBlock Origin</code> tại <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\">đây</span>. ",
+    "message": "Báo cáo lỗi cho uBlock Origin cho <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>. <u>Cần tài khoản GitHub</u> ",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
@@ -968,7 +968,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Danh sách bộ lọc được cập nhật hàng ngày. Đảm bảo vấn đề của bạn chưa được giải quyết trong danh sách bộ lọc gần đây nhất.",
+    "message": "Danh sách bộ lọc được cập nhật hàng ngày. Hãy đảm bảo vấn đề của bạn chưa được giải quyết trong danh sách bộ lọc gần đây nhất.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
@@ -984,7 +984,7 @@
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "--Chọn một lỗi--",
+    "message": "-- Chọn một lỗi --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
@@ -1100,7 +1100,7 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: Thêm URL dưới đây vào bộ lọc tuỳ biến của bạn?\n\nTên: \"{{title}}\"\nURL: {{url}}",
+    "message": "Thêm URL dưới đây vào bộ lọc tuỳ biến của bạn?\n\nTên: \"{{title}}\"\nURL: {{url}}",
     "description": "No longer used"
   },
   "subscribeButton": {
@@ -1192,7 +1192,7 @@
     "description": "Button text to navigate to the blocked page"
   },
   "docblockedRedirectPrompt": {
-    "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
+    "message": "Trang đã chặn muốn chuyển hướng sang trang khác. Nếu đồng ý, bạn sẽ được chuyển hướng sang {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "cloudPush": {
@@ -1248,7 +1248,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "contextMenuViewSource": {
-    "message": "Xem mã nguồn",
+    "message": "Xem mã nguồn...",
     "description": "A context menu entry, to view the source code of the target resource"
   },
   "shortcutCapturePlaceholder": {
@@ -1280,7 +1280,7 @@
     "description": "Label for keyboard shortcut used to relax blocking mode"
   },
   "storageUsed": {
-    "message": "Bộ nhớ đã dùng: {{value}} byte",
+    "message": "Bộ nhớ đã dùng: {{value}} {{unit}}",
     "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
   },
   "KB": {
