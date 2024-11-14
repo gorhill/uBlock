@@ -1097,29 +1097,33 @@ export const serialize = (data, options = {}) => {
     return ratio <= 0.85 ? t : s;
 };
 
-export const deserialize = s => {
-    if ( s.startsWith(MAGICLZ4PREFIX) ) {
-        refCounter = 1;
-        readStr = s;
-        readEnd = s.length;
-        readPtr = MAGICLZ4PREFIX.length;
-        const lz4 = _deserialize();
-        readRefs.clear();
-        readStr = '';
-        const lz4Util = new LZ4BlockJS();
-        const uint8ArrayAfter = lz4Util.decode(lz4.data, 0, lz4.size);
-        s = textCodec.decode(new Uint8Array(uint8ArrayAfter));
-    }
-    if ( s.startsWith(MAGICPREFIX) === false ) { return; }
+const deserializeById = (blockid, s) => {
     refCounter = 1;
     readStr = s;
     readEnd = s.length;
-    readPtr = MAGICPREFIX.length;
+    readPtr = blockid.length;
     const data = _deserialize();
     readRefs.clear();
     readStr = '';
-    uint8Input = null;
     if ( readPtr === FAILMARK ) { return; }
+    return data;
+};
+
+export const deserialize = s => {
+    if ( s.startsWith(MAGICLZ4PREFIX) ) {
+        const lz4 = deserializeById(MAGICLZ4PREFIX, s);
+        if ( lz4 ) {
+            const lz4Util = new LZ4BlockJS();
+            const uint8ArrayAfter = lz4Util.decode(lz4.data, 0, lz4.size);
+            if ( uint8ArrayAfter ) {
+                s = textCodec.decode(new Uint8Array(uint8ArrayAfter));
+            }
+        }
+    }
+    const data = s.startsWith(MAGICPREFIX)
+        ? deserializeById(MAGICPREFIX, s)
+        : undefined;
+    uint8Input = null;
     return data;
 };
 
