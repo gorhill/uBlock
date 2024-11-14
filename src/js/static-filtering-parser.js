@@ -3345,10 +3345,13 @@ class ExtSelectorCompiler {
         //   We have an Adguard/ABP cosmetic filter if and only if the
         //   character is `$`, `%` or `?`, otherwise it's not a cosmetic
         //   filter.
-        // Adguard's style injection: translate to uBO's format.
-        if ( compileOptions.adgStyleSyntax === true ) {
-            raw = this.translateAdguardCSSInjectionFilter(raw);
-            if ( raw === '' ) { return false; }
+        // Adguard/EasyList style injection: translate to uBO's format.
+        if ( this.isStyleInjectionFilter(raw) ) {
+            const translated = this.translateStyleInjectionFilter(raw);
+            if ( translated === undefined ) { return false; }
+            raw = translated;
+        } else if ( compileOptions.adgStyleSyntax === true ) {
+            return false;
         }
 
         // Normalize AdGuard's attribute-based procedural operators.
@@ -3884,9 +3887,14 @@ class ExtSelectorCompiler {
         return true;
     }
 
-    translateAdguardCSSInjectionFilter(suffix) {
-        const matches = /^(.*)\s*\{([^}]+)\}\s*$/.exec(suffix);
-        if ( matches === null ) { return ''; }
+    isStyleInjectionFilter(selector) {
+        const len = selector.length;
+        return len !== 0 && selector.charCodeAt(len-1) === 0x7D /* } */;
+    }
+
+    translateStyleInjectionFilter(raw) {
+        const matches = /^(.+)\s*\{([^}]+)\}$/.exec(raw);
+        if ( matches === null ) { return; }
         const selector = matches[1].trim();
         const style = matches[2].trim();
         // Special style directive `remove: true` is converted into a
