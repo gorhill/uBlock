@@ -4452,22 +4452,23 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
     }
 
     // Priority:
-    //   Block: 1 (default priority)
-    //   Redirect: 2-9
-    //   Excepted redirect: 12-19
-    //   Allow: 20
-    //   Block important: 30
-    //   Redirect important: 32-39
+    //   Removeparam: 1-4
+    //   Block: 10 (default priority)
+    //   Redirect: 11-19
+    //   Excepted redirect: 21-29
+    //   Allow: 30
+    //   Block important: 40
+    //   Redirect important: 41-49
 
     const realms = new Map([
-        [ BLOCK_REALM, { type: 'block', priority: 0 } ],
-        [ ALLOW_REALM, { type: 'allow', priority: 20 } ],
-        [ REDIRECT_REALM, { type: 'redirect', priority: 2 } ],
+        [ BLOCK_REALM, { type: 'block', priority: 10 } ],
+        [ ALLOW_REALM, { type: 'allow', priority: 30 } ],
+        [ REDIRECT_REALM, { type: 'redirect', priority: 11 } ],
         [ REMOVEPARAM_REALM, { type: 'removeparam', priority: 0 } ],
         [ CSP_REALM, { type: 'csp', priority: 0 } ],
         [ PERMISSIONS_REALM, { type: 'permissions', priority: 0 } ],
         [ URLTRANSFORM_REALM, { type: 'uritransform', priority: 0 } ],
-        [ HEADERS_REALM, { type: 'block', priority: 0 } ],
+        [ HEADERS_REALM, { type: 'block', priority: 10 } ],
         [ URLSKIP_REALM, { type: 'urlskip', priority: 0 } ],
     ]);
     const partyness = new Map([
@@ -4605,7 +4606,7 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
             if ( token !== '' ) {
                 const match = /:(\d+)$/.exec(token);
                 if ( match !== null ) {
-                    rule.priority = Math.min(rule.priority + parseInt(match[1], 10), 9);
+                    rule.priority += Math.min(rule.priority + parseInt(match[1], 10), 9);
                     token = token.slice(0, match.index);
                 }
             }
@@ -4623,7 +4624,7 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
             }
             break;
         }
-        case 'removeparam':
+        case 'removeparam': {
             rule.action.type = 'redirect';
             if ( rule.__modifierValue === '|' ) {
                 rule.__modifierValue = '';
@@ -4657,10 +4658,21 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
                     'xmlhttprequest',
                 ];
             }
+            // https://github.com/uBlockOrigin/uBOL-home/issues/140
+            //   Mitigate until DNR API flaw is addressed by browser vendors
+            let priority = rule.priority || 1;
+            if ( rule.condition.urlFilter !== undefined ) { priority += 1; }
+            if ( rule.condition.regexFilter !== undefined ) { priority += 1; }
+            if ( rule.condition.initiatorDomains !== undefined ) { priority += 1; }
+            if ( rule.condition.requestDomains !== undefined ) { priority += 1; }
+            if ( priority !== 1 ) {
+                rule.priority = priority;
+            }
             if ( rule.__modifierAction === ALLOW_REALM ) {
                 dnrAddRuleError(rule, `Unsupported removeparam exception: ${rule.__modifierValue}`);
             }
             break;
+        }
         case 'uritransform': {
             dnrAddRuleError(rule, `Incompatible with DNR: uritransform=${rule.__modifierValue}`);
             break;
