@@ -29,6 +29,7 @@ import { safeSelf } from './safe-self.js';
 /******************************************************************************/
 
 export function setAttrFn(
+    trusted = false,
     logPrefix,
     selector = '',
     attr = '',
@@ -38,7 +39,7 @@ export function setAttrFn(
     if ( attr === '' ) { return; }
 
     const safe = safeSelf();
-    const copyFrom = /^\[.+\]$/.test(value)
+    const copyFrom = trusted === false && /^\[.+\]$/.test(value)
         ? value.slice(1, -1)
         : '';
 
@@ -148,7 +149,7 @@ export function setAttr(
         }
     }
 
-    setAttrFn(logPrefix, selector, attr, value);
+    setAttrFn(false, logPrefix, selector, attr, value);
 }
 registerScriptlet(setAttr, {
     name: 'set-attr.js',
@@ -187,7 +188,7 @@ export function trustedSetAttr(
 ) {
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix('trusted-set-attr', selector, attr, value);
-    setAttrFn(logPrefix, selector, attr, value);
+    setAttrFn(true, logPrefix, selector, attr, value);
 }
 registerScriptlet(trustedSetAttr, {
     name: 'trusted-set-attr.js',
