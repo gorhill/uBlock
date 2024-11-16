@@ -82,7 +82,7 @@ registerScriptlet(runAt, {
 
 /******************************************************************************/
 
-function runAtHtmlElementFn(fn) {
+export function runAtHtmlElementFn(fn) {
     if ( document.documentElement ) {
         fn();
         return;

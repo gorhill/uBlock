@@ -27,11 +27,13 @@ import './cookie.js';
 import './localstorage.js';
 import './run-at.js';
 import './safe-self.js';
+import './spoof-css.js';
+
+import { runAt, runAtHtmlElementFn } from './run-at.js';
 
 import { getAllCookiesFn } from './cookie.js';
 import { getAllLocalStorageFn } from './localstorage.js';
 import { registeredScriptlets } from './base.js';
-import { runAt } from './run-at.js';
 import { safeSelf } from './safe-self.js';
 
 // Externally added to the private namespace in which scriptlets execute.
@@ -3265,120 +3267,6 @@ function callNothrow(
             } catch(ex) {
             }
             return r;
-        },
-    });
-}
-
-
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'spoof-css.js',
-    fn: spoofCSS,
-    dependencies: [
-        'safe-self.fn',
-    ],
-});
-function spoofCSS(
-    selector,
-    ...args
-) {
-    if ( typeof selector !== 'string' ) { return; }
-    if ( selector === '' ) { return; }
-    const toCamelCase = s => s.replace(/-[a-z]/g, s => s.charAt(1).toUpperCase());
-    const propToValueMap = new Map();
-    for ( let i = 0; i < args.length; i += 2 ) {
-        if ( typeof args[i+0] !== 'string' ) { break; }
-        if ( args[i+0] === '' ) { break; }
-        if ( typeof args[i+1] !== 'string' ) { break; }
-        propToValueMap.set(toCamelCase(args[i+0]), args[i+1]);
-    }
-    const safe = safeSelf();
-    const logPrefix = safe.makeLogPrefix('spoof-css', selector, ...args);
-    const canDebug = scriptletGlobals.canDebug;
-    const shouldDebug = canDebug && propToValueMap.get('debug') || 0;
-    const instanceProperties = [ 'cssText', 'length', 'parentRule' ];
-    const spoofStyle = (prop, real) => {
-        const normalProp = toCamelCase(prop);
-        const shouldSpoof = propToValueMap.has(normalProp);
-        const value = shouldSpoof ? propToValueMap.get(normalProp) : real;
-        if ( shouldSpoof ) {
-            safe.uboLog(logPrefix, `Spoofing ${prop} to ${value}`);
-        }
-        return value;
-    };
-    const cloackFunc = (fn, thisArg, name) => {
-        const trap = fn.bind(thisArg);
-        Object.defineProperty(trap, 'name', { value: name });
-        Object.defineProperty(trap, 'toString', {
-            value: ( ) => `function ${name}() { [native code] }`
-        });
-        return trap;
-    };
-    self.getComputedStyle = new Proxy(self.getComputedStyle, {
-        apply: function(target, thisArg, args) {
-            // eslint-disable-next-line no-debugger
-            if ( shouldDebug !== 0 ) { debugger; }
-            const style = Reflect.apply(target, thisArg, args);
-            const targetElements = new WeakSet(document.querySelectorAll(selector));
-            if ( targetElements.has(args[0]) === false ) { return style; }
-            const proxiedStyle = new Proxy(style, {
-                get(target, prop) {
-                    if ( typeof target[prop] === 'function' ) {
-                        if ( prop === 'getPropertyValue' ) {
-                            return cloackFunc(function getPropertyValue(prop) {
-                                return spoofStyle(prop, target[prop]);
-                            }, target, 'getPropertyValue');
-                        }
-                        return cloackFunc(target[prop], target, prop);
-                    }
-                    if ( instanceProperties.includes(prop) ) {
-                        return Reflect.get(target, prop);
-                    }
-                    return spoofStyle(prop, Reflect.get(target, prop));
-                },
-                getOwnPropertyDescriptor(target, prop) {
-                    if ( propToValueMap.has(prop) ) {
-                        return {
-                            configurable: true,
-                            enumerable: true,
-                            value: propToValueMap.get(prop),
-                            writable: true,
-                        };
-                    }
-                    return Reflect.getOwnPropertyDescriptor(target, prop);
-                },
-            });
-            return proxiedStyle;
-        },
-        get(target, prop) {
-            if ( prop === 'toString' ) {
-                return target.toString.bind(target);
-            }
-            return Reflect.get(target, prop);
-        },
-    });
-    Element.prototype.getBoundingClientRect = new Proxy(Element.prototype.getBoundingClientRect, {
-        apply: function(target, thisArg, args) {
-            // eslint-disable-next-line no-debugger
-            if ( shouldDebug !== 0 ) { debugger; }
-            const rect = Reflect.apply(target, thisArg, args);
-            const targetElements = new WeakSet(document.querySelectorAll(selector));
-            if ( targetElements.has(thisArg) === false ) { return rect; }
-            let { height, width } = rect;
-            if ( propToValueMap.has('width') ) {
-                width = parseFloat(propToValueMap.get('width'));
-            }
-            if ( propToValueMap.has('height') ) {
-                height = parseFloat(propToValueMap.get('height'));
-            }
-            return new self.DOMRect(rect.x, rect.y, width, height);
-        },
-        get(target, prop) {
-            if ( prop === 'toString' ) {
-                return target.toString.bind(target);
-            }
-            return Reflect.get(target, prop);
         },
     });
 }
