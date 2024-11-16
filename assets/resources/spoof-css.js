@@ -51,14 +51,13 @@ export function spoofCSS(
     const privatePropToValueMap = new Map();
     for ( let i = 0; i < args.length; i += 2 ) {
         const prop = toCamelCase(args[i+0]);
-        if ( typeof prop !== 'string' ) { break; }
         if ( prop === '' ) { break; }
         const value = args[i+1];
         if ( typeof value !== 'string' ) { break; }
         if ( prop.charCodeAt(0) === 0x5F /* _ */ ) {
             privatePropToValueMap.set(prop, value);
         } else {
-            propToValueMap.set(toCamelCase(prop), value);
+            propToValueMap.set(prop, value);
         }
     }
     const safe = safeSelf();
