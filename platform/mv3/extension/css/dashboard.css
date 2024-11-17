@@ -33,6 +33,7 @@
     }
 
 body[data-pane="settings"] #dashboard-nav .tabButton[data-pane="settings"],
+body[data-pane="rulesets"] #dashboard-nav .tabButton[data-pane="rulesets"],
 body[data-pane="about"] #dashboard-nav .tabButton[data-pane="about"] {
     background-color: var(--dashboard-tab-active-surface);
     border-bottom: 3px solid var(--dashboard-tab-active-ink);
@@ -44,6 +45,7 @@ body > section {
     display: none;
     }
 body[data-pane="settings"] > section[data-pane="settings"],
+body[data-pane="rulesets"] > section[data-pane="rulesets"],
 body[data-pane="about"] > section[data-pane="about"] {
     display: block;
     }

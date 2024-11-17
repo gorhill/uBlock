@@ -79,91 +79,100 @@ h3[data-i18n="filteringMode0Name"]::first-letter {
     }
 
 #lists {
-    margin: 0.5em 0 0 0;
-    padding: 0;
+    padding-block-end: 8rem;
     }
-.groupEntry:not([data-groupkey="user"]) .geDetails::before {
-    color: var(--ink-3);
-    content: '\2212';
-    font-family: monospace;
-    font-size: large;
-    margin-inline-end: 0.25em;
-    -webkit-margin-end: 0.25em;
+.listEntry {
+    display: flex;
+    flex-direction: column;
     }
-.groupEntry.hideUnused:not([data-groupkey="user"]) .geDetails::before {
-    content: '+';
+.listEntry[data-nodeid] > .detailbar .listExpander {
+    cursor: pointer;
+    top: 2px;
     }
-.groupEntry {
-    margin: 0.5em 0;
-    }
-.groupEntry .geDetails {
+.listEntry[data-role="rootnode"] > .detailbar,
+.listEntry[data-nodeid] > .detailbar .count {
     cursor: pointer;
     }
-.groupEntry .geName {
+.listEntry[data-role="rootnode"] > .detailbar > *:not(.listExpander) {
     pointer-events: none;
     }
-.groupEntry .geCount {
+.listEntry .detailbar .count {
+    align-self: flex-end;
     color: var(--ink-3);
-    font-size: 90%;
+    font-size: small;
     pointer-events: none;
     }
 .listEntries {
-    margin-inline-start: 0.6em;
-    -webkit-margin-start: 0.6em;
+    display: flex;
+    flex-direction: column;
     }
-.groupEntry:not([data-groupkey="user"]) .listEntry:not(.isDefault).unused {
+.listEntry:not([data-role="rootnode"]) > .listEntries {
+    margin-inline-start: var(--checkbox-size);
+    }
+.listEntry.hideUnused > .listEntries > .listEntry:not(.isDefault):has(> .detailbar input:not(:checked)) {
     display: none;
     }
-
 .listEntry.fromAdmin:has(input[disabled]:not(:checked)) {
     display: none;
     }
 .listEntry > * {
-    margin-left: 0;
-    margin-right: 0;
     unicode-bidi: embed;
+    }
+.listEntry h3 {
+    display: inline-block;
+    margin: 0;
+    }
+.listEntry > .detailbar {
+    align-items: center;
+    display: inline-flex;
+    margin: calc(var(--default-gap-xsmall) / 2 + var(--default-gap-xxsmall) / 2) 0;
+    white-space: nowrap;
+    }
+.listEntry > .detailbar > *:not(:first-child) {
+    margin-inline-start: var(--default-gap-xxsmall);
+    }
+.listEntry[data-nodeid="default"] > .detailbar > .listExpander {
+    display: none;
+    }
+.listEntry > .detailbar > .listExpander svg {
+    transform: rotate(180deg);
+    transform-origin: 50%;
+    }
+.listEntry.hideUnused > .detailbar > .listExpander svg {
+    transform: rotate(90deg);
     }
 .listEntry .checkbox:has(input[disabled]),
 .listEntry .checkbox:has(input[disabled]) ~ span {
     filter: var(--checkbox-disabled-filter);
     }
-.listEntry .listname {
-    white-space: nowrap;
-    }
 .listEntry a,
 .listEntry .fa-icon {
     color: var(--info0-ink);
         fill: var(--info0-ink);
-    display: none;
     font-size: 120%;
-    margin: 0 0.2em 0 0;
     }
 .listEntry .fa-icon:hover {
     transform: scale(1.25);
     }
-.listEntry .content {
-    display: inline-flex;
-    }
-.listEntry a.towiki {
-    display: inline-flex;
-    }
-.listEntry.support a.support {
-    display: inline-flex;
-    }
-.listEntry.mustread a.mustread {
-    color: var(--info1-ink);
-        fill: var(--info1-ink);
-    display: inline-flex;
-    }
-.listEntry .status {
-    cursor: default;
+.listEntry .iconbar a.support[href="#"] {
     display: none;
-}
+    }
 
-body.noMoreRuleset .listEntry:not(.checked) {
+body.noMoreRuleset .listEntry:has(> .detailbar input:not(:checked)) {
     opacity: 0.5;
     pointer-events: none;
 }
+
+#lists.searchMode > .listEntries .listEntries,
+#lists.searchMode > .listEntries .listEntry.searchMatch {
+    display: flex !important;
+    }
+#lists.searchMode > .listEntries .listEntry {
+    display: none;
+    }
+#lists.searchMode > .listEntries .listExpander {
+    visibility: hidden;
+    }
 
 /* touch-screen devices */
 :root.mobile .listEntry .fa-icon {

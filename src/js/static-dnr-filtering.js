@@ -440,9 +440,9 @@ function finalizeRuleset(context, network) {
         }
     };
     mergeRules(rulesetMap, 'resourceTypes');
+    mergeRules(rulesetMap, 'removeParams');
     mergeRules(rulesetMap, 'initiatorDomains');
     mergeRules(rulesetMap, 'requestDomains');
-    mergeRules(rulesetMap, 'removeParams');
     mergeRules(rulesetMap, 'responseHeaders');
 
     // Patch id

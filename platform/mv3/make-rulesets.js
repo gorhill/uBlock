@@ -1068,8 +1068,10 @@ async function rulesetFromURLs(assetDetails) {
         id: assetDetails.id,
         name: assetDetails.name,
         group: assetDetails.group,
+        parent: assetDetails.parent,
         enabled: assetDetails.enabled,
         lang: assetDetails.lang,
+        tags: assetDetails.tags,
         homeURL: assetDetails.homeURL,
         filters: {
             total: results.network.filterCount,
@@ -1121,7 +1123,7 @@ async function main() {
 
     // Get assets.json content
     const assets = await fs.readFile(
-        `./assets.json`,
+        `./assets.dev.json`,
         { encoding: 'utf8' }
     ).then(text =>
         JSON.parse(text)
@@ -1153,55 +1155,6 @@ async function main() {
         homeURL: 'https://github.com/uBlockOrigin/uAssets',
         filters: [
         ],
-    });
-
-    // Regional rulesets
-    const excludedLists = [
-        'ara-0',
-        'EST-0',
-    ];
-    // Merge lists which have same target languages
-    const langToListsMap = new Map();
-    for ( const [ id, asset ] of Object.entries(assets) ) {
-        if ( asset.content !== 'filters' ) { continue; }
-        if ( asset.off !== true ) { continue; }
-        if ( typeof asset.lang !== 'string' ) { continue; }
-        if ( excludedLists.includes(id) ) { continue; }
-        let ids = langToListsMap.get(asset.lang);
-        if ( ids === undefined ) {
-            langToListsMap.set(asset.lang, ids = []);
-        }
-        ids.push(id);
-    }
-    for ( const ids of langToListsMap.values() ) {
-        const urls = [];
-        for ( const id of ids ) {
-            const asset = assets[id];
-            const contentURL = Array.isArray(asset.contentURL)
-                ? asset.contentURL[0]
-                : asset.contentURL;
-            urls.push(contentURL);
-        }
-        const id = ids[0];
-        const asset = assets[id];
-        await rulesetFromURLs({
-            id: id.toLowerCase(),
-            lang: asset.lang,
-            name: asset.title,
-            enabled: false,
-            urls,
-            homeURL: asset.supportURL,
-        });
-    }
-
-    await rulesetFromURLs({
-        id: 'est-0',
-		group: 'regions',
-		lang: 'et',
-        name: '🇪🇪ee: Eesti saitidele kohandatud filter',
-        enabled: false,
-        urls: [ 'https://ubol-et.adblock.ee/list.txt' ],
-        homeURL: 'https://github.com/sander85/uBOL-et',
     });
 
     // Handpicked rulesets from assets.json
@@ -1288,6 +1241,62 @@ async function main() {
         enabled: false,
         urls: [ 'https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts' ],
         homeURL: 'https://github.com/StevenBlack/hosts#readme',
+    });
+
+    // Regional rulesets
+    const excludedLists = [
+        'ara-0',
+        'EST-0',
+    ];
+    // Merge lists which have same target languages
+    const langToListsMap = new Map();
+    for ( const [ id, asset ] of Object.entries(assets) ) {
+        if ( asset.content !== 'filters' ) { continue; }
+        if ( asset.off !== true ) { continue; }
+        if ( asset.group !== 'regions' ) { continue; }
+        if ( excludedLists.includes(id) ) { continue; }
+        // Not all "regions" lists have a set language
+        const bundleId = asset.lang ||
+            createHash('sha256').update(randomBytes(16)).digest('hex').slice(0,16);
+        let ids = langToListsMap.get(bundleId);
+        if ( ids === undefined ) {
+            langToListsMap.set(bundleId, ids = []);
+        }
+        ids.push(id);
+    }
+    for ( const ids of langToListsMap.values() ) {
+        const urls = [];
+        for ( const id of ids ) {
+            const asset = assets[id];
+            const contentURL = Array.isArray(asset.contentURL)
+                ? asset.contentURL[0]
+                : asset.contentURL;
+            urls.push(contentURL);
+        }
+        const id = ids[0];
+        const asset = assets[id];
+        const rulesetDetails = {
+            id: id.toLowerCase(),
+            group: 'regions',
+            parent: asset.parent,
+            lang: asset.lang,
+            name: asset.title,
+            tags: asset.tags,
+            enabled: false,
+            urls,
+            homeURL: asset.supportURL,
+        };
+        await rulesetFromURLs(rulesetDetails);
+    }
+
+    await rulesetFromURLs({
+        id: 'est-0',
+		group: 'regions',
+		lang: 'et',
+        name: '🇪🇪ee: Eesti saitidele kohandatud filter',
+        enabled: false,
+        urls: [ 'https://ubol-et.adblock.ee/list.txt' ],
+        homeURL: 'https://github.com/sander85/uBOL-et',
     });
 
     writeFile(

@@ -21,6 +21,7 @@
     <div id="dashboard-nav">
         <span class="logo"><img data-i18n-title="extName" src="img/ublock.svg" alt="uBO Lite"></span><!--
      --><button class="tabButton" type="button" data-pane="settings" data-i18n="settingsPageName" tabindex="0"></button><!--
+     --><button class="tabButton" type="button" data-pane="rulesets" data-i18n="aboutFilterLists" tabindex="0"></button><!--
      --><button class="tabButton" type="button" data-pane="about" data-i18n="aboutPageName" tabindex="0"></button>
     </div>
     <!-- -------- -->
@@ -95,29 +96,14 @@
             <p><textarea id="trustedSites" spellcheck="false" placeholder="noFilteringModePlaceholder"></textarea>
             </p>
         </div>
-
+    </section>
+    <!-- -------- -->
+    <section data-pane="rulesets">
         <div>
-            <h3 data-i18n="aboutFilterLists"></h3>
-            <div>
-                <p id="listsOfBlockedHostsPrompt"></p>
-            </div>
-            <div>
-                <div id="lists"></div>
-            </div>
+            <p id="listsOfBlockedHostsPrompt"></p>
         </div>
-
-        <div id="templates">
-            <div class="groupEntry">
-                <div class="geDetails"><span class="geName"></span> <span class="geCount"></span></div>
-                <div class="listEntries"></div>
-            </div>
-            <div class="li listEntry">
-                <label><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span><span><span class="listname forinput"></span> <span class="iconbar"><!--
-             --><a class="fa-icon support" href="#" target="_blank">home</a><!--
-             --><a class="fa-icon mustread" href="#" target="_blank">info-circle</a><!--
-             --></span></span></label>
-            </div>
-        </div>
+        <div class="searchfield"><input type="search" spellcheck="false" placeholder="" /><span class="fa-icon">search</span></div>
+        <div id="lists"></div>
     </section>
     <!-- -------- -->
     <section data-pane="about">
@@ -146,6 +132,32 @@
         </div>
     </section>
     <!-- -------- -->
+    <div id="templates">
+        <div class="listEntries"></div>
+        <div class="listEntry" data-role="leaf">
+            <span class="detailbar">
+                <label><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span><span class="listname forinput"></span>
+                </label>
+                <span class="iconbar"><!--
+                 --><a class="fa-icon support" href="#" target="_blank">home</a>
+                </span>
+            </span>
+        </div>
+        <div class="listEntry expandable" data-role="node">
+            <span class="detailbar">
+                <label><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span><span class="listname forinput"></span></label>
+                <span class="count"></span>
+                <span class="fa-icon listExpander">angle-up</span>
+            </span>
+        </div>
+        <div class="listEntry expandable" data-role="rootnode">
+            <span class="detailbar">
+                <h3 class="listname"></h3>
+                <span class="count"></span>
+                <span class="fa-icon listExpander">angle-up</span>
+            </span>
+        </div>
+    </div>
 <script src="js/theme.js" type="module"></script>
 <script src="js/fa-icons.js" type="module"></script>
 <script src="js/i18n.js" type="module"></script>

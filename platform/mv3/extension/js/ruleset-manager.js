@@ -101,9 +101,14 @@ async function pruneInvalidRegexRules(realm, rulesIn) {
             toCheck.push(true);
             continue;
         }
+        if ( pruneInvalidRegexRules.invalidRegexes.has(regex) ) {
+            toCheck.push(false);
+            continue;
+        }
         toCheck.push(
             dnr.isRegexSupported({ regex, isCaseSensitive }).then(result => {
                 if ( result.isSupported ) { return true; }
+                pruneInvalidRegexRules.invalidRegexes.add(regex);
                 rejectedRegexRules.push(`\t${regex}  ${result.reason}`);
                 return false;
             })
@@ -122,6 +127,7 @@ async function pruneInvalidRegexRules(realm, rulesIn) {
 
     return rulesIn.filter((v, i) => isValid[i]);
 }
+pruneInvalidRegexRules.invalidRegexes = new Set();
 
 /******************************************************************************/
 
