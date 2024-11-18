@@ -5533,7 +5533,10 @@ function urlSkip(directive, url, blocked, steps) {
             return;
         }
         const urlfinal = new URL(urlout);
-        if ( urlfinal.protocol !== 'https:' ) { return; }
+        if ( urlfinal.protocol !== 'https:' ) {
+            if ( urlfinal.protocol !== 'http:' ) { return; }
+            urlout = urlout.replace('http', 'https');
+        }
         if ( blocked && redirectBlocked !== true ) { return; }
         return urlout;
     } catch(x) {
