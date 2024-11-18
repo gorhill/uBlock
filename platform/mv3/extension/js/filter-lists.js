@@ -36,7 +36,9 @@ function renderNumber(value) {
     return value.toLocaleString();
 }
 
-function renderRuleCounts() {
+/******************************************************************************/
+
+function renderTotalRuleCounts() {
     let rulesetCount = 0;
     let filterCount = 0;
     let ruleCount = 0;
@@ -49,8 +51,8 @@ function renderRuleCounts() {
         filterCount += stats.filterCount;
     }
     dom.text('#listsOfBlockedHostsPrompt', i18n$('perRulesetStats')
-        .replace('{{ruleCount}}', ruleCount.toLocaleString())
-        .replace('{{filterCount}}', filterCount.toLocaleString())
+        .replace('{{ruleCount}}', renderNumber(ruleCount))
+        .replace('{{filterCount}}', renderNumber(filterCount))
     );
 
     dom.cl.toggle(dom.body, 'noMoreRuleset',
@@ -62,16 +64,26 @@ function renderRuleCounts() {
 
 function updateNodes(listEntries) {
     listEntries = listEntries || qs$('#lists');
+    const sublistSelector = '.listEntry[data-rulesetid] > .detailbar input';
+    const checkedSublistSelector = `${sublistSelector}:checked`;
+    const adminSublistSelector = '.listEntry.fromAdmin[data-rulesetid] > .detailbar input';
     for ( const listEntry of qsa$(listEntries, '.listEntry[data-nodeid]') ) {
-        const totalCount = qsa$(listEntry, '.listEntry[data-rulesetid] input').length;
-        const checkedCount = qsa$(listEntry, '.listEntry[data-rulesetid] input:checked').length;
-        dom.text(qs$(listEntry, '.detailbar .count'), `${checkedCount}/${totalCount}`);
-        const checkbox = qs$(listEntry, ':scope > .detailbar .checkbox');
-        if ( checkbox === null ) { continue; }
-        dom.prop(qs$(checkbox, 'input'), 'checked', checkedCount !== 0);
-        dom.cl.toggle(checkbox, 'partial',
+        const countElem = qs$(listEntry, ':scope > .detailbar .count');
+        if ( countElem === null ) { continue; }
+        const totalCount = qsa$(listEntry, sublistSelector).length;
+        const checkedCount = qsa$(listEntry, checkedSublistSelector).length;
+        dom.text(countElem, `${checkedCount}/${totalCount}`);
+        const checkboxElem = qs$(listEntry, ':scope > .detailbar .checkbox');
+        if ( checkboxElem === null ) { continue; }
+        const checkboxInput = qs$(checkboxElem, 'input');
+        dom.prop(checkboxInput, 'checked', checkedCount !== 0);
+        dom.cl.toggle(checkboxElem, 'partial',
             checkedCount !== 0 && checkedCount !== totalCount
         );
+        const adminCount = qsa$(listEntry, adminSublistSelector).length;
+        const fromAdmin = adminCount === totalCount;
+        dom.cl.toggle(listEntry, 'fromAdmin', fromAdmin);
+        dom.attr(checkboxInput, 'disabled', fromAdmin ? '' : null);
     }
 }
 
@@ -124,6 +136,7 @@ export function renderFilterLists(rulesetData) {
         }
         dom.cl.toggle(listEntry, 'isDefault', ruleset.id === 'default');
         const stats = rulesetStats(ruleset.id);
+        if ( stats === undefined ) { return; }
         listEntry.title = listStatsTemplate
             .replace('{{ruleCount}}', renderNumber(stats.ruleCount))
             .replace('{{filterCount}}', renderNumber(stats.filterCount));
@@ -135,7 +148,6 @@ export function renderFilterLists(rulesetData) {
             'disabled',
             disabled ? '' : null
         );
-        return listEntry;
     };
 
     // Update already rendered DOM lists
@@ -146,7 +158,7 @@ export function renderFilterLists(rulesetData) {
             initializeListEntry(ruleset, listEntry);
         }
         updateNodes();
-        renderRuleCounts();
+        renderTotalRuleCounts();
         return;
     }
 
@@ -229,20 +241,17 @@ export function renderFilterLists(rulesetData) {
     // Build list tree
     const listTree = {};
     const groupNames = new Map();
-    for ( const [ groupKey, groupRulesets ] of groups ) {
-        let groupName = groupNames.get(groupKey);
-        if ( groupName === undefined ) {
-            groupName = i18n$('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1));
-            groupNames.set(groupKey, groupName);
+    for ( const [ nodeid, rulesets ] of groups ) {
+        let name = groupNames.get(nodeid);
+        if ( name === undefined ) {
+            name = i18n$(`3pGroup${nodeid.charAt(0).toUpperCase()}${nodeid.slice(1)}`);
+            groupNames.set(nodeid, name);
         }
-        const groupDetails = {
-            name: groupName,
-            lists: {},
-        };
-        listTree[groupKey] = groupDetails;
-        for ( const ruleset of groupRulesets ) {
+        const details = { name, lists: {} };
+        listTree[nodeid] = details;
+        for ( const ruleset of rulesets ) {
             if ( ruleset.parent !== undefined ) {
-                let lists = groupDetails.lists;
+                let lists = details.lists;
                 for ( const parent of ruleset.parent.split('|') ) {
                     if ( lists[parent] === undefined ) {
                         lists[parent] = { name: parent, lists: {} };
@@ -251,11 +260,11 @@ export function renderFilterLists(rulesetData) {
                 }
                 lists[ruleset.id] = ruleset;
             } else {
-                groupDetails.lists[ruleset.id] = ruleset;
+                details.lists[ruleset.id] = ruleset;
             }
         }
     }
-    // Move lonely sublist to list level
+    // Replace composite list with only one sublist with sublist itself
     const promoteLonelySublist = (parent, depth = 0) => {
         if ( Boolean(parent.lists) === false ) { return parent; }
         const childKeys = Object.keys(parent.lists);
@@ -279,7 +288,7 @@ export function renderFilterLists(rulesetData) {
     dom.clear('#lists');
     qs$('#lists').append(listEntries);
 
-    renderRuleCounts();
+    renderTotalRuleCounts();
 }
 
 /******************************************************************************/
@@ -337,11 +346,12 @@ localRead('hideUnusedFilterLists').then(value => {
 /******************************************************************************/
 
 const searchFilterLists = ( ) => {
-    const pattern = dom.prop('.searchfield input', 'value') || '';
+    const pattern = dom.prop('#findInLists', 'value') || '';
     dom.cl.toggle('#lists', 'searchMode', pattern !== '');
     if ( pattern === '' ) { return; }
     const re = new RegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
     for ( const listEntry of qsa$('#lists [data-role="leaf"]') ) {
+        if ( dom.cl.has(listEntry, 'fromAdmin') ) { continue; }
         const rulesetid = listEntry.dataset.rulesetid;
         const rulesetDetails = rulesetMap.get(rulesetid);
         if ( rulesetDetails === undefined ) { continue; }
@@ -365,7 +375,7 @@ const searchFilterLists = ( ) => {
 
 const perListHaystack = new WeakMap();
 
-dom.on('.searchfield input', 'input', searchFilterLists);
+dom.on('#findInLists', 'input', searchFilterLists);
 
 /******************************************************************************/
 
@@ -378,6 +388,8 @@ async function applyEnabledRulesets() {
         if ( dom.cl.has(liEntry, 'fromAdmin') ) { continue; }
         enabledRulesets.push(rulesetid);
     }
+
+    if ( enabledRulesets.length === 0 ) { return; }
 
     await sendMessage({
         what: 'applyRulesets',
@@ -396,7 +408,7 @@ dom.on('#lists', 'change', '.listEntry input[type="checkbox"]', ev => {
             input.checked = checkAll;
         }
     }
-    renderRuleCounts();
     updateNodes();
+    renderTotalRuleCounts();
     applyEnabledRulesets();
 });

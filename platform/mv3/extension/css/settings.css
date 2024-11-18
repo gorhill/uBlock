@@ -1,12 +1,3 @@
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-    }
-legend {
-    color: var(--ink-3);
-    font-size: var(--font-size-smaller);
-    padding: var(--default-gap-xxsmall);
-    }
 body .firstRun {
     display: none;
     }
@@ -78,8 +69,19 @@ h3[data-i18n="filteringMode0Name"]::first-letter {
     width: 100%;
     }
 
-#lists {
-    padding-block-end: 8rem;
+section[data-pane="rulesets"] > div:first-of-type {
+    background-color: var(--surface-1);
+    flex-shrink: 0;
+    padding: 1em 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    }
+section[data-pane="rulesets"] > div:first-of-type > p:first-of-type {
+    margin-top: 0;
+    }
+section[data-pane="rulesets"] > div:first-of-type > p:last-of-type {
+    margin-bottom: 0;
     }
 .listEntry {
     display: flex;
@@ -112,7 +114,7 @@ h3[data-i18n="filteringMode0Name"]::first-letter {
 .listEntry.hideUnused > .listEntries > .listEntry:not(.isDefault):has(> .detailbar input:not(:checked)) {
     display: none;
     }
-.listEntry.fromAdmin:has(input[disabled]:not(:checked)) {
+.listEntry.fromAdmin:has(> .detailbar input[disabled]:not(:checked)) {
     display: none;
     }
 .listEntry > * {
