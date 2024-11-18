@@ -130,7 +130,9 @@ export function renderFilterLists(rulesetData) {
 
     const initializeListEntry = (ruleset, listEntry) => {
         const on = enabledRulesets.includes(ruleset.id);
-        dom.prop(qs$(listEntry, ':scope > .detailbar input'), 'checked', on);
+        if ( dom.cl.has(listEntry, 'toggled') === false ) {
+            dom.prop(qs$(listEntry, ':scope > .detailbar input'), 'checked', on);
+        }
         if ( ruleset.homeURL ) {
             dom.attr(qs$(listEntry, 'a.support'), 'href', ruleset.homeURL);
         }
@@ -360,6 +362,7 @@ const searchFilterLists = ( ) => {
             haystack = [
                 rulesetDetails.name,
                 listEntry.dataset.nodeid,
+                rulesetDetails.group || '',
                 rulesetDetails.tags || '',
             ].join(' ').trim();
             perListHaystack.set(rulesetDetails, haystack);
@@ -379,34 +382,60 @@ dom.on('#findInLists', 'input', searchFilterLists);
 
 /******************************************************************************/
 
-async function applyEnabledRulesets() {
-    const enabledRulesets = [];
-    for ( const liEntry of qsa$('#lists .listEntry[data-role="leaf"][data-rulesetid]') ) {
-        const checked = qs$(liEntry, 'input[type="checkbox"]:checked') !== null;
-        if ( checked === false ) { continue; }
-        const { rulesetid } = liEntry.dataset;
-        if ( dom.cl.has(liEntry, 'fromAdmin') ) { continue; }
-        enabledRulesets.push(rulesetid);
-    }
+const applyEnabledRulesets = (( ) => {
+    const apply = async ( ) => {
+        const enabledRulesets = [];
+        for ( const liEntry of qsa$('#lists .listEntry[data-role="leaf"][data-rulesetid]') ) {
+            const checked = qs$(liEntry, 'input[type="checkbox"]:checked') !== null;
+            if ( checked === false ) { continue; }
+            const { rulesetid } = liEntry.dataset;
+            if ( dom.cl.has(liEntry, 'fromAdmin') ) { continue; }
+            enabledRulesets.push(rulesetid);
+        }
 
-    if ( enabledRulesets.length === 0 ) { return; }
+        dom.cl.remove('#lists .listEntry.toggled', 'toggled');
 
-    await sendMessage({
-        what: 'applyRulesets',
-        enabledRulesets,
+        if ( enabledRulesets.length === 0 ) { return; }
+
+        await sendMessage({
+            what: 'applyRulesets',
+            enabledRulesets,
+        });
+    };
+
+    let timer;
+
+    self.addEventListener('beforeunload', ( ) => {
+        if ( timer !== undefined ) { return; }
+        self.clearTimeout(timer);
+        timer = undefined;
+        apply();
     });
-}
+
+    return function() {
+        if ( timer !== undefined ) {
+            self.clearTimeout(timer);
+        }
+        timer = self.setTimeout(( ) => {
+            timer = undefined;
+            apply();
+        }, 997);
+    }
+})();
 
 dom.on('#lists', 'change', '.listEntry input[type="checkbox"]', ev => {
     const input = ev.target;
     const listEntry = input.closest('.listEntry');
     if ( listEntry === null ) { return; }
     if ( listEntry.dataset.nodeid !== undefined ) {
-        let checkAll = input.checked ||
+        const checkAll = input.checked ||
             dom.cl.has(qs$(listEntry, ':scope > .detailbar .checkbox'), 'partial');
-        for ( const input of qsa$(listEntry, '.listEntries input') ) {
-            input.checked = checkAll;
+        for ( const subListEntry of qsa$(listEntry, ':scope > .listEntries .listEntry[data-rulesetid]') ) {
+            dom.cl.add(subListEntry, 'toggled');
+            dom.prop(qsa$(subListEntry, ':scope > .detailbar input'), 'checked', checkAll);
         }
+    } else {
+        dom.cl.add(listEntry, 'toggled');
     }
     updateNodes();
     renderTotalRuleCounts();
