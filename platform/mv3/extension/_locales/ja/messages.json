@@ -172,7 +172,7 @@
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "uBO Lite のインストールが完了しました。すべてのサイトに適用するデフォルトのフィルタリングモードを選んでください。\n\nデフォルトでは、データの読み書きの権限が必要ない<em>基本</em>モードが選択されています。 uBO Lite を信用してもらえるなら、データの読み書きや変更の権限を許可してもらえればすべてのサイトに対してより詳細なフィルタリングを有効化できます。",
+    "message": "uBO Lite のインストールが完了しました。すべてのサイトに適用するデフォルトのフィルタリングモードを選んでください。\n\nデフォルトでは、データの読み書きの権限が必要ない<em>基本</em>モードが選択されています。 uBO Lite を信用する場合は、データの読み書きや変更の権限を許可して、すべてのサイトに対してより高度なフィルタリングを有効化できます。",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
