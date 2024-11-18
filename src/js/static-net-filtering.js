@@ -4652,11 +4652,13 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
                 };
             }
             if ( rule.condition.resourceTypes === undefined ) {
-                rule.condition.resourceTypes = [
-                    'main_frame',
-                    'sub_frame',
-                    'xmlhttprequest',
-                ];
+                if ( rule.condition.excludedResourceTypes === undefined ) {
+                    rule.condition.resourceTypes = [
+                        'main_frame',
+                        'sub_frame',
+                        'xmlhttprequest',
+                    ];
+                }
             }
             // https://github.com/uBlockOrigin/uBOL-home/issues/140
             //   Mitigate until DNR API flaw is addressed by browser vendors
