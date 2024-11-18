@@ -1,3 +1,4 @@
+- [Improve `urlskip=` filter option](https://github.com/gorhill/uBlock/commit/77ed83ff2f)
 - [Improve `spoof-css` scriptlet](https://github.com/gorhill/uBlock/commit/5f5e3d730f)
 - [Improve `trusted-set-attr` scriptlet](https://github.com/gorhill/uBlock/commit/c8174d6032)
 - [Better handle unexpected conditions when deserializing](https://github.com/gorhill/uBlock/commit/4c299bfca9)
