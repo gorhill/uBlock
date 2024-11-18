@@ -230,5 +230,9 @@
   "showBlockedCountLabel": {
     "message": "在工具列圖示上顯示被阻擋的連線請求的數量",
     "description": "Label for a checkbox in the options page"
+  },
+  "findListsPlaceholder": {
+    "message": "Find lists",
+    "description": "Placeholder for the input field used to find lists"
   }
 }

@@ -230,5 +230,9 @@
   "showBlockedCountLabel": {
     "message": "ٹول بار کے آئیکن پر بلاک شدہ درخواستوں کی تعداد دکھائیں۔",
     "description": "Label for a checkbox in the options page"
+  },
+  "findListsPlaceholder": {
+    "message": "Find lists",
+    "description": "Placeholder for the input field used to find lists"
   }
 }

@@ -230,5 +230,9 @@
   "showBlockedCountLabel": {
     "message": "차단된 요청 개수를 도구 모음 아이콘에 표시",
     "description": "Label for a checkbox in the options page"
+  },
+  "findListsPlaceholder": {
+    "message": "Find lists",
+    "description": "Placeholder for the input field used to find lists"
   }
 }

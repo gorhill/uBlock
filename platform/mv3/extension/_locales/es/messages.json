@@ -230,5 +230,9 @@
   "showBlockedCountLabel": {
     "message": "Mostrar el número de peticiones bloqueadas en el icono de la barra de herramientas",
     "description": "Label for a checkbox in the options page"
+  },
+  "findListsPlaceholder": {
+    "message": "Find lists",
+    "description": "Placeholder for the input field used to find lists"
   }
 }

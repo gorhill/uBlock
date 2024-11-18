@@ -230,5 +230,9 @@
   "showBlockedCountLabel": {
     "message": "Blokkolt kérések számának megjelenítése az eszköztárikonon",
     "description": "Label for a checkbox in the options page"
+  },
+  "findListsPlaceholder": {
+    "message": "Find lists",
+    "description": "Placeholder for the input field used to find lists"
   }
 }

@@ -230,5 +230,9 @@
   "showBlockedCountLabel": {
     "message": "在工具栏图标上显示拦截请求数",
     "description": "Label for a checkbox in the options page"
+  },
+  "findListsPlaceholder": {
+    "message": "Find lists",
+    "description": "Placeholder for the input field used to find lists"
   }
 }

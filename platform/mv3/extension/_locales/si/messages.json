@@ -230,5 +230,9 @@
   "showBlockedCountLabel": {
     "message": "මෙවලම් තීරු නිරූපකයේ අවහිර කළ ඉල්ලීම් ගණන පෙන්වන්න",
     "description": "Label for a checkbox in the options page"
+  },
+  "findListsPlaceholder": {
+    "message": "Find lists",
+    "description": "Placeholder for the input field used to find lists"
   }
 }
