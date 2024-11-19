@@ -35,7 +35,7 @@ import {
     adminRead,
     browser,
     dnr,
-    localRead, localWrite,
+    localRead, localRemove, localWrite,
     runtime,
     windows,
 } from './ext.js';
@@ -407,13 +407,19 @@ async function start() {
 // https://github.com/uBlockOrigin/uBOL-home/issues/199
 // Force a restart of the extension once when an "internal error" occurs
 start().then(( ) => {
-    localWrite({ goodStart: true });
+    localRemove('goodStart');
+    return false;
 }).catch(reason => {
     console.trace(reason);
-    localRead('goodStart').then((bin = {}) => {
-        if ( bin.goodStart === false ) { return; }
-        localWrite({ goodStart: false }).then(( ) => {
-            runtime.reload();
-        });
+    if ( process.wakeupRun ) { return; }
+    return localRead('goodStart').then(goodStart => {
+        if ( goodStart === false ) {
+            localRemove('goodStart');
+            return false;
+        }
+        return localWrite('goodStart', false).then(( ) => true);
     });
+}).then(restart => {
+    if ( restart !== true ) { return; }
+    runtime.reload();
 });
