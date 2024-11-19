@@ -212,7 +212,7 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "Liste over værtsnavne, for hvilke ingen filtrering vil ske.",
+    "message": "Liste over websteder, for hvilke ingen filtrering vil ske.",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
@@ -232,7 +232,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "findListsPlaceholder": {
-    "message": "Find lists",
+    "message": "Find lister",
     "description": "Placeholder for the input field used to find lists"
   }
 }

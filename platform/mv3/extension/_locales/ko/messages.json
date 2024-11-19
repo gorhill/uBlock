@@ -96,7 +96,7 @@
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
-    "message": "필터 리스트",
+    "message": "필터 목록",
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
@@ -232,7 +232,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "findListsPlaceholder": {
-    "message": "Find lists",
+    "message": "목록 찾기",
     "description": "Placeholder for the input field used to find lists"
   }
 }

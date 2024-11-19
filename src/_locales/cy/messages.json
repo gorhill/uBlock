@@ -236,15 +236,15 @@
     "description": ""
   },
   "popupImageRulePrompt": {
-    "message": "images",
+    "message": "delweddau",
     "description": ""
   },
   "popup3pAnyRulePrompt": {
-    "message": "3rd-party",
+    "message": "3ydd-parti",
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "3rd-party CSS/images",
+    "message": "CSS/delweddau 3ydd-parti",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -312,7 +312,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Block element…",
+    "message": "Blocio elfen…",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -464,11 +464,11 @@
     "description": "English: Lists of blocked hosts"
   },
   "3pApplyChanges": {
-    "message": "Apply changes",
+    "message": "Rhoi newidiadau ar waith",
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Built-in",
+    "message": "Mewnol",
     "description": "Filter lists section name"
   },
   "3pGroupAds": {
@@ -488,7 +488,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
-    "message": "Cookie notices",
+    "message": "Hysbysiadau cwci",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
@@ -940,7 +940,7 @@
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
-    "message": "Bug report",
+    "message": "Adroddiad nam",
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
@@ -1032,7 +1032,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {
-    "message": "Changelog",
+    "message": "Cofnod newidiadau",
     "description": ""
   },
   "aboutCode": {
@@ -1224,11 +1224,11 @@
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Apply changes",
+    "message": "Rhoi newidiadau ar waith",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
-    "message": "Revert",
+    "message": "Gwrthdroi",
     "description": "for generic 'Revert' buttons"
   },
   "genericBytes": {

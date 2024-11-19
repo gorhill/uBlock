@@ -340,7 +340,7 @@
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
-    "message": "Izskats",
+    "message": "Motīvs",
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Ļaundabīgo programmu domēni",
+    "message": "Aizsardzība pret ļaunprātīgām (inficētas vai satur vīrusus) vietnēm, drošība",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
@@ -552,7 +552,7 @@
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "Eksportēt",
+    "message": "Eksportēt…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
@@ -636,7 +636,7 @@
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
-    "message": "Eksportēt",
+    "message": "Eksportēt…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {

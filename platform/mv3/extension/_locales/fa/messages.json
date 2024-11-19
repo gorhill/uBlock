@@ -84,7 +84,7 @@
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Contributors",
+    "message": "شرکت کنندگان",
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
@@ -168,7 +168,7 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "firstRunSectionLabel": {
-    "message": "Welcome",
+    "message": "درود",
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
