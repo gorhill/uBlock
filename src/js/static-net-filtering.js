@@ -5502,7 +5502,7 @@ function urlSkip(directive, url, blocked, steps) {
                 }
                 // Safe Base64
                 if ( step === '-safebase64' ) {
-                    urlout = urlin.replace(/[-_]/, safeBase64Replacer);
+                    urlout = urlin.replace(/[-_]/g, safeBase64Replacer);
                     urlout = self.atob(urlout);
                     continue;
                 }
