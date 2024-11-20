@@ -450,8 +450,8 @@ function registerScriptlet(context, scriptletDetails) {
                     targetHostnames = permissionGrantedHostnames;
                 } else {
                     targetHostnames = ut.intersectHostnameIters(
-                        permissionGrantedHostnames,
-                        scriptletHostnames
+                        scriptletHostnames,
+                        permissionGrantedHostnames
                     );
                 }
             }
