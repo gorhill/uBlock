@@ -1,13 +1,21 @@
+- [Add `-safebase64` directive to `urlskip=` option](https://github.com/gorhill/uBlock/commit/bcc058eba7)
 - [Improve `urlskip=` filter option](https://github.com/gorhill/uBlock/commit/77ed83ff2f)
 - [Improve `spoof-css` scriptlet](https://github.com/gorhill/uBlock/commit/5f5e3d730f)
 - [Improve `trusted-set-attr` scriptlet](https://github.com/gorhill/uBlock/commit/c8174d6032)
-- [Better handle unexpected conditions when deserializing](https://github.com/gorhill/uBlock/commit/4c299bfca9)
 - [Add support for EasyList `{ remove: true }` cosmetic filter syntax](https://github.com/gorhill/uBlock/commit/ff5fc61753)
-- [Fix potential infinite async loop](https://github.com/gorhill/uBlock/commit/335d947c10) (issue found by @Rob--W)
 - [Keep moving related scriptlets into separate files](https://github.com/gorhill/uBlock/commit/e5a088738d)
 - [Improve `prevent-xhr` scriptlet](https://github.com/gorhill/uBlock/commit/ce4908b341)
 - [Improve `trusted-suppress-native-method` scriptlet](https://github.com/gorhill/uBlock/commit/41616df866)
 - [Improve `set-cookie` scriptlet](https://github.com/gorhill/uBlock/commit/e613282698)
+
+----------
+
+# 1.61.2
+
+## Fixes / changes
+
+- [Better handle unexpected conditions when deserializing](https://github.com/gorhill/uBlock/commit/4c299bfca9)
+- [Fix potential infinite async loop](https://github.com/gorhill/uBlock/commit/335d947c10) (issue found by @Rob--W)
 
 ----------
 
