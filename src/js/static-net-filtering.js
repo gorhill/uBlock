@@ -5417,6 +5417,8 @@ StaticNetFilteringEngine.prototype.transformRequest = function(fctxt, out = []) 
  * 
  * `-base64`: decode the current string as a base64-encoded string.
  * 
+ * `-safebase64`: decode the current string as a safe base64-encoded string.
+ * 
  * `-uricomponent`: decode the current string as a URI encoded string.
  * 
  * `-blocked`: allow the redirection of blocked requests. By default, blocked
@@ -5498,6 +5500,12 @@ function urlSkip(directive, url, blocked, steps) {
                     urlout = self.atob(urlin);
                     continue;
                 }
+                // Safe Base64
+                if ( step === '-safebase64' ) {
+                    urlout = urlin.replace(/[-_]/, safeBase64Replacer);
+                    urlout = self.atob(urlout);
+                    continue;
+                }
                 // URI component
                 if ( step === '-uricomponent' ) {
                     urlout = self.decodeURIComponent(urlin);
@@ -5542,6 +5550,9 @@ function urlSkip(directive, url, blocked, steps) {
     } catch(x) {
     }
 }
+
+const safeBase64Map = { '-': '+', '_': '/' };
+const safeBase64Replacer = s => safeBase64Map[s];
 
 /******************************************************************************/
 
