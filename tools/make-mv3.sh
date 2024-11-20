@@ -161,6 +161,7 @@ if [ "$FULL" = "yes" ]; then
     mkdir -p "$TMPDIR"
     cp -R "$DES"/* "$TMPDIR"/
     cd "$TMPDIR" > /dev/null
+    rm -f ./log.txt
     zip "$PACKAGENAME" -qr ./*
     cd - > /dev/null
     cp "$TMPDIR"/"$PACKAGENAME" dist/build/
