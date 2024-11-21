@@ -50,6 +50,7 @@ import {
 import {
     getMatchedRules,
     isSideloaded,
+    toggleDeveloperMode,
     ubolLog,
 } from './debug.js';
 
@@ -207,6 +208,8 @@ function onMessage(request, sender, callback) {
                 showBlockedCount: rulesetConfig.showBlockedCount,
                 canShowBlockedCount,
                 firstRun: process.firstRun,
+                isSideloaded,
+                developerMode: rulesetConfig.developerMode,
             });
             process.firstRun = false;
         });
@@ -234,6 +237,14 @@ function onMessage(request, sender, callback) {
         });
         return true;
 
+    case 'setDeveloperMode':
+        rulesetConfig.developerMode = request.state;
+        toggleDeveloperMode(rulesetConfig.developerMode);
+        saveRulesetConfig().then(( ) => {
+            callback();
+        });
+        return true;
+
     case 'popupPanelData': {
         Promise.all([
             getFilteringMode(request.hostname),
@@ -248,6 +259,7 @@ function onMessage(request, sender, callback) {
                 hasGreatPowers: results[2],
                 rulesetDetails: results[3],
                 isSideloaded,
+                developerMode: rulesetConfig.developerMode,
             });
         });
         return true;
@@ -402,6 +414,8 @@ async function start() {
             process.firstRun = false;
         }
     }
+
+    toggleDeveloperMode(rulesetConfig.developerMode);
 }
 
 // https://github.com/uBlockOrigin/uBOL-home/issues/199

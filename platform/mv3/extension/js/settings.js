@@ -55,6 +55,15 @@ function renderWidgets() {
             dom.attr(input, 'disabled', '');
         }
     }
+
+    {
+        dom.prop('#developerMode input[type="checkbox"]', 'checked',
+            Boolean(cachedRulesetData.developerMode)
+        );
+        if ( cachedRulesetData.isSideloaded ) {
+            dom.attr('#developerMode', 'hidden', null);
+        }
+    }
 }
 
 /******************************************************************************/
@@ -122,6 +131,13 @@ dom.on('#autoReload input[type="checkbox"]', 'change', ev => {
 dom.on('#showBlockedCount input[type="checkbox"]', 'change', ev => {
     sendMessage({
         what: 'setShowBlockedCount',
+        state: ev.target.checked,
+    });
+});
+
+dom.on('#developerMode input[type="checkbox"]', 'change', ev => {
+    sendMessage({
+        what: 'setDeveloperMode',
         state: ev.target.checked,
     });
 });

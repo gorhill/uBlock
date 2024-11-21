@@ -33,6 +33,7 @@ export const rulesetConfig = {
     enabledRulesets: [ 'default' ],
     autoReload: true,
     showBlockedCount: true,
+    developerMode: false,
 };
 
 export const process = {
@@ -47,12 +48,9 @@ export async function loadRulesetConfig() {
     if ( sessionData ) {
         rulesetConfig.version = sessionData.version;
         rulesetConfig.enabledRulesets = sessionData.enabledRulesets;
-        rulesetConfig.autoReload = typeof sessionData.autoReload === 'boolean'
-            ? sessionData.autoReload
-            : true;
-        rulesetConfig.showBlockedCount = typeof sessionData.showBlockedCount === 'boolean'
-            ? sessionData.showBlockedCount
-            : true;
+        rulesetConfig.autoReload = sessionData.autoReload ?? true;
+        rulesetConfig.showBlockedCount = sessionData.showBlockedCount ?? true;
+        rulesetConfig.developerMode = sessionData.developerMode ?? false;
         process.wakeupRun = true;
         return;
     }
@@ -60,12 +58,9 @@ export async function loadRulesetConfig() {
     if ( localData ) {
         rulesetConfig.version = localData.version;
         rulesetConfig.enabledRulesets = localData.enabledRulesets;
-        rulesetConfig.autoReload = typeof localData.autoReload === 'boolean'
-            ? localData.autoReload
-            : true;
-        rulesetConfig.showBlockedCount = typeof localData.showBlockedCount === 'boolean'
-            ? localData.showBlockedCount
-            : true;
+        rulesetConfig.autoReload = localData.autoReload ?? true;
+        rulesetConfig.showBlockedCount = localData.showBlockedCount ?? true;
+        rulesetConfig.developerMode = localData.developerMode ?? false;
         sessionWrite('rulesetConfig', rulesetConfig);
         return;
     }

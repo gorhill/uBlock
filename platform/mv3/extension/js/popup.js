@@ -331,6 +331,7 @@ async function init() {
 
     dom.cl.toggle('#showMatchedRules', 'enabled',
         popupPanelData.isSideloaded === true &&
+        popupPanelData.developerMode &&
         typeof currentTab.id === 'number' &&
         isNaN(currentTab.id) === false
     );
