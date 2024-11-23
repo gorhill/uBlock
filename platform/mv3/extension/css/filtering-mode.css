@@ -13,7 +13,7 @@
     border-radius: 30% 15% / 15% 30%;
     height: 100%;
     position: absolute;
-    width: 25%;
+    width: calc(25% + 2px);
     z-index: 10;
     }
 
@@ -39,10 +39,16 @@
 
 .filteringModeSlider span[data-level] {
     background-color: var(--accent-surface-1);
+    border: 1px solid var(--accent-surface-1);
+    box-sizing: border-box;
     display: inline-flex;
     height: 30%;
     margin-left: 1px;
     width: 25%;
+    }
+
+.filteringModeSlider span[data-level]:first-of-type {
+    margin-left: 0;
     }
 
 .filteringModeSlider.moving span[data-level] {
@@ -53,13 +59,13 @@
     left: 0;
     }
 .filteringModeSlider[data-level="1"] .filteringModeButton {
-    left: 25%;
+    left: calc(25% - 1px);
     }
 .filteringModeSlider[data-level="2"] .filteringModeButton {
-    left: 50%;
+    left: calc(50% - 1px);
     }
 .filteringModeSlider[data-level="3"] .filteringModeButton {
-    left: 75%;
+    left: calc(75% - 1px);
     }
 [dir="rtl"] .filteringModeSlider[data-level="0"] .filteringModeButton {
     left: 75%;
@@ -77,14 +83,17 @@
 
 .filteringModeSlider[data-level="0"] span[data-level] {
     background-color: var(--surface-2);
+    border-color: var(--surface-2);
     }
 
 .filteringModeSlider[data-level="1"] span[data-level]:nth-of-type(1) ~ span[data-level] {
     background-color: var(--surface-2);
+    border-color: var(--surface-2);
     }
 
 .filteringModeSlider[data-level="2"] span[data-level]:nth-of-type(2) ~ span[data-level] {
     background-color: var(--surface-2);
+    border-color: var(--surface-2);
     }
 
 .filteringModeSlider[data-level]:not(.moving) span[data-level]:hover {

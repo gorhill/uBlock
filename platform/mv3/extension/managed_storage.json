@@ -16,6 +16,12 @@
       "description": "Prefix a ruleset id with '+' to add, or '-' to remove. Use '-*' to disable all non-default lists.",
       "type": "array",
       "items": { "type": "string" }
+    },
+    "disabledFeatures": {
+      "title": "User interface features to disable",
+      "description": "A list of tokens, each of which correspond to a user interface feature to disable.",
+      "type": "array",
+      "items": { "type": "string" }
     }
   }
 }

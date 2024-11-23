@@ -63,6 +63,13 @@ hr {
     font-weight: 600;
     }
 
+body[data-forbid~="filteringMode"] .filteringModeSlider {
+    pointer-events: none;
+    }
+body[data-forbid~="dashboard"] #gotoDashboard {
+    display: none;
+    }
+
 #filteringModeText {
     color: var(--ink-3);
     margin: var(--default-gap-small);

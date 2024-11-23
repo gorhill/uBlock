@@ -44,6 +44,14 @@ function normalizedHostname(hn) {
 
 /******************************************************************************/
 
+function renderAdminRules() {
+    const { disabledFeatures: forbid = [] } = popupPanelData;
+    if ( forbid.length === 0 ) { return; }
+    dom.body.dataset.forbid = forbid.join(' ');
+}
+
+/******************************************************************************/
+
 const BLOCKING_MODE_MAX = 3;
 
 function setFilteringMode(level, commit = false) {
@@ -324,6 +332,8 @@ async function init() {
             Object.assign(popupPanelData, response);
         }
     }
+
+    renderAdminRules();
 
     setFilteringMode(popupPanelData.level);
 

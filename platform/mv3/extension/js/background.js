@@ -41,6 +41,11 @@ import {
 } from './ext.js';
 
 import {
+    adminReadEx,
+    getAdminRulesets,
+} from './admin.js';
+
+import {
     enableRulesets,
     getEnabledRulesetsDetails,
     getRulesetDetails,
@@ -62,7 +67,6 @@ import {
 } from './config.js';
 
 import { broadcastMessage } from './utils.js';
-import { getAdminRulesets } from './admin.js';
 import { registerInjectables } from './scripting-manager.js';
 
 /******************************************************************************/
@@ -189,6 +193,7 @@ function onMessage(request, sender, callback) {
             getRulesetDetails(),
             dnr.getEnabledRulesets(),
             getAdminRulesets(),
+            adminReadEx('disabledFeatures'),
         ]).then(results => {
             const [
                 defaultFilteringMode,
@@ -196,6 +201,7 @@ function onMessage(request, sender, callback) {
                 rulesetDetails,
                 enabledRulesets,
                 adminRulesets,
+                disabledFeatures,
             ] = results;
             callback({
                 defaultFilteringMode,
@@ -210,6 +216,7 @@ function onMessage(request, sender, callback) {
                 firstRun: process.firstRun,
                 isSideloaded,
                 developerMode: rulesetConfig.developerMode,
+                disabledFeatures,
             });
             process.firstRun = false;
         });
@@ -251,6 +258,7 @@ function onMessage(request, sender, callback) {
             hasOmnipotence(),
             hasGreatPowers(request.origin),
             getEnabledRulesetsDetails(),
+            adminReadEx('disabledFeatures'),
         ]).then(results => {
             callback({
                 level: results[0],
@@ -260,6 +268,7 @@ function onMessage(request, sender, callback) {
                 rulesetDetails: results[3],
                 isSideloaded,
                 developerMode: rulesetConfig.developerMode,
+                disabledFeatures: results[4],
             });
         });
         return true;
@@ -416,6 +425,11 @@ async function start() {
     }
 
     toggleDeveloperMode(rulesetConfig.developerMode);
+
+    // Required to ensure the up to date property is available when needed
+    if ( process.wakeupRun === false ) {
+        adminReadEx('disabledFeatures');
+    }
 }
 
 // https://github.com/uBlockOrigin/uBOL-home/issues/199

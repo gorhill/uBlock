@@ -36,6 +36,17 @@ function hashFromIterable(iter) {
 
 /******************************************************************************/
 
+function renderAdminRules() {
+    const { disabledFeatures: forbid = [] } = cachedRulesetData;
+    if ( forbid.length === 0 ) { return; }
+    dom.body.dataset.forbid = forbid.join(' ');
+    if ( forbid.includes('dashboard') ) {
+        dom.body.dataset.pane = 'about';
+    }
+}
+
+/******************************************************************************/
+
 function renderWidgets() {
     if ( cachedRulesetData.firstRun ) {
         dom.cl.add(dom.body, 'firstRun');
@@ -256,8 +267,10 @@ sendMessage({
     if ( !data ) { return; }
     cachedRulesetData = data;
     try {
+        renderAdminRules();
         renderFilterLists(cachedRulesetData);
         renderWidgets();
+        dom.cl.remove(dom.body, 'loading');
     } catch(ex) {
     }
     listen();

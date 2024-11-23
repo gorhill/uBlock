@@ -1,3 +1,6 @@
+body.loading {
+    visibility: hidden;
+    }
 body .firstRun {
     display: none;
     }
@@ -11,6 +14,17 @@ h3 {
     }
 p {
     white-space: pre-line;
+    }
+
+body[data-forbid~="dashboard"] #dashboard-nav [data-pane="settings"],
+body[data-forbid~="dashboard"] section[data-pane="settings"],
+body[data-forbid~="dashboard"] #dashboard-nav [data-pane="rulesets"],
+body[data-forbid~="dashboard"] section[data-pane="rulesets"] {
+    display: none;
+    }
+body[data-forbid~="filteringMode"] section[data-pane="settings"] > div:has(> h3[data-i18n="defaultFilteringModeSectionLabel"]),
+body[data-forbid~="filteringMode"] section[data-pane="settings"] > div:has(> h3[data-i18n="filteringMode0Name"]) {
+    display: none;
     }
 
 #showBlockedCount:has(input[type="checkbox"][disabled]) {
