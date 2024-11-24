@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "A permission-less content blocker. Blocks ads, trackers, miners, and more immediately upon installation.",
+    "message": "Блокатор на содржини без дозволи. Блокира реклами, трекери, мајнери и уште многу повеќе веднаш по инсталацијата.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -32,11 +32,11 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "Пријави проблем на оваа веб-страница",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
-    "message": "Отварање на Контролна Табла",
+    "message": "Отварање на Контролна плоча",
     "description": "English: Click to open the dashboard"
   },
   "popupMoreButton": {
@@ -44,7 +44,7 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Less",
+    "message": "Помалку",
     "description": "Label to be used to hide popup panel sections"
   },
   "3pGroupDefault": {
@@ -64,7 +64,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
-    "message": "Annoyances",
+    "message": "Досадувања",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMisc": {
@@ -76,163 +76,163 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "aboutChangelog": {
-    "message": "Changelog",
+    "message": "Промени",
     "description": ""
   },
   "aboutCode": {
-    "message": "Source code (GPLv3)",
+    "message": "Изворен код (GPLv3)",
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Contributors",
+    "message": "Сов contributors",
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Source code",
+    "message": "Изворен код",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
-    "message": "Translations",
+    "message": "Преводи",
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
-    "message": "Filter lists",
+    "message": "Листи за филтрирање",
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "External dependencies (GPLv3-compatible):",
+    "message": "Надворешни зависности (компатибилни со GPLv3):",
     "description": "Shown in the About pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "Пријави проблем со филтерот",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Report filter issues with specific websites to the <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "Пријавете проблеми со филтерите за специфични веб-страници до <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Потребен е GitHub профил.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported.",
+    "message": "За да се избегне оптоварување на волонтерите со дупликат пријави, ве молиме проверете дали проблемот веќе не е пријавен.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Find similar reports",
+    "message": "Најди слични пријави",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Address of the webpage:",
+    "message": "Адреса на веб-страницата:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The webpage…",
+    "message": "Веб-страницата…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Pick an entry --",
+    "message": "-- Изберете внос --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "Покажува реклами или остатоци од реклами",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Has overlays or other nuisances",
+    "message": "Има преOverlayи или други непријатности",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Detects uBO Lite",
+    "message": "Детектира uBO Lite",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "Има проблеми поврзани со приватноста",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Malfunctions when uBO Lite is enabled",
+    "message": "Има многу проблеми кога е вклучен uBO Lite",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "Отвора непожелни табови или прозорци",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leads to badware, phishing",
+    "message": "Води до злонамерен софтвер, фишинг",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the webpage as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "Означи ја веб-страницата како “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Не е безбедно за работа”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Create new report",
+    "message": "Создај нова пријава",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "firstRunSectionLabel": {
-    "message": "Welcome",
+    "message": "Добредојде",
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "You have just installed uBO Lite. Here you can choose the default filtering mode to use on all websites.\n\nBy default, <em>Basic</em> mode is selected because it does not require the permission to read and modify data. If you trust uBO Lite, you can give it broad permission to read and modify data on all websites in order to enable more advanced filtering capabilities for all websites by default.",
+    "message": "Токму ја инсталиравте uBO Lite. Овде можете да изберете режим на филтрирање по подразбирање што ќе го користите на сите веб-страници.\n\nПо подразбирање, е избран режимот <em>Основен</em> затоа што не бара дозвола за читање и модификација на податоци. Ако му верувате на uBO Lite, можете да му дадете ширување на дозволата за читање и модификација на податоци на сите веб-страници за да овозможите попрецизни способности за филтрирање на сите веб-страници по подразбирање.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
-    "message": "Default filtering mode",
+    "message": "Режим на филтрирање по подразбирање",
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "The default filtering mode will be overridden by per-website filtering modes. You can adjust the filtering mode on any given website according to whichever mode works best on that website. Each mode has its advantages and disadvantages.",
+    "message": "Режимот на филтрирање по подразбирање ќе биде заменет со режимите на филтрирање за секоја веб-страница. Можете да го прилагодите режимот на филтрирање на која било дадена веб-страница во согласност со тој режим што најдобро функционира на таа веб-страница. Секој режим има свои предности и недостатоци.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
-    "message": "no filtering",
+    "message": "без филтрирање",
     "description": "Name of blocking mode 0"
   },
   "filteringMode1Name": {
-    "message": "basic",
+    "message": "основен",
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
-    "message": "optimal",
+    "message": "оптимален",
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
-    "message": "complete",
+    "message": "целосен",
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Basic network filtering from selected filter lists.\n\nDoes not require permission to read and modify data on websites.",
+    "message": "Основно мрежно филтрирање од селектираните листи со филтри.\n\nНе бара дозвола за читање и модификација на податоци на веб-страниците.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.",
+    "message": "Напредно мрежно филтрирање плус специфично проширено филтрирање од селектираните листи со филтри.\n\nБара широка дозвола за читање и модификација на податоци на сите веб-страници.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Advanced network filtering plus specific and generic extended filtering from selected filter lists.\n\nRequires broad permission to read and modify data on all websites.\n\nGeneric extended filtering may cause higher webpage resources usage.",
+    "message": "Напредно мрежно филтрирање плус специфично и генералистичко проширено филтрирање од селектираните листи со филтри.\n\nБара широка дозвола за читање и модификација на податоци на сите веб-страници.\n\nГенералистичкото проширено филтрирање може да предизвика поголема потрошувачка на ресурси на веб-страниците.",
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "List of websites for which no filtering will take place.",
+    "message": "Листата на веб-страници за кои нема да се врши филтрирање.",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
-    "message": "[hostnames only]\nexample.com\ngames.example\n...",
+    "message": "[само домени]\nexample.com\ngames.example\n...",
     "description": "Default text for in edit field"
   },
   "behaviorSectionLabel": {
-    "message": "Behavior",
+    "message": "Понашање",
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Automatically reload page when changing filtering mode",
+    "message": "Автоматски освежи ја страницата кога се менува режимот на филтрирање",
     "description": "Label for a checkbox in the options page"
   },
   "showBlockedCountLabel": {
-    "message": "Show the number of blocked requests on the toolbar icon",
+    "message": "Прикажи го бројот на блокирани барања на иконата во алатникот",
     "description": "Label for a checkbox in the options page"
   },
   "findListsPlaceholder": {
-    "message": "Find lists",
+    "message": "Најди листи",
     "description": "Placeholder for the input field used to find lists"
   }
 }

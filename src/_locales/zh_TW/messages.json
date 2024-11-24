@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "終於，有款僅佔用少量 CPU 及記憶體的高效率阻擋器。",
+    "message": "終於，有一款僅使用少量 CPU 及記憶體的高效能攔截器。",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
@@ -176,7 +176,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "點擊以解除封鎖此網站的遠端字體",
+    "message": "點擊以解除封鎖此網站的遠端字型",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
@@ -200,7 +200,7 @@
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
-    "message": "遠端字體",
+    "message": "遠端字型",
     "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
@@ -276,11 +276,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilter": {
-    "message": "指令碼",
+    "message": "程式碼",
     "description": "Appears as an option to filter out firewall rows"
   },
   "popup3pFrameFilter": {
-    "message": "框架",
+    "message": "框架元素",
     "description": "Appears as an option to filter out firewall rows"
   },
   "pickerCreate": {
@@ -356,7 +356,7 @@
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "停用「預先取回連結」功能（避免連接至已阻擋的網路請求）",
+    "message": "停用「預先取回連結」（避免連接至已阻擋的網路請求）",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
@@ -364,7 +364,7 @@
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
-    "message": "防止 WebRTC 洩漏本地 IP 位址",
+    "message": "防止「網頁即時通訊」洩漏本地 IP 位址",
     "description": "English: "
   },
   "settingPerSiteSwitchGroup": {
@@ -384,7 +384,7 @@
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
-    "message": "封鎖遠端字體",
+    "message": "封鎖遠端字型",
     "description": ""
   },
   "settingsNoScriptingPrompt": {
@@ -396,7 +396,7 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsUncloakCnamePrompt": {
-    "message": "揭露網域真實名稱",
+    "message": "揭露網域「正規名稱」",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsAdvanced": {
@@ -404,7 +404,7 @@
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "僅適合技術性使用者的功能",
+    "message": "僅合適技術使用者的功能",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
@@ -452,7 +452,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "「通用元素隱藏過濾規則」是會套用在所有網站上的網頁元素過濾規則。啟用此選項會消除網頁處理此類規則時增加的額外記憶體與 CPU 使用量。\n\n建議在擁有較低效能的裝置上啟用此選項。",
+    "message": "「通用元素過濾規則」是會套用在所有網站上的網頁元素過濾規則。啟用此選項會消除網頁處理此類規則時增加的額外記憶體與 CPU 使用量。\n\n建議在效能較弱的裝置上啟用此選項。",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
@@ -480,11 +480,11 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "惡意軟體保護及保安",
+    "message": "惡意軟體保護、保安",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
-    "message": "社交媒體小工具",
+    "message": "社交小工具",
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
