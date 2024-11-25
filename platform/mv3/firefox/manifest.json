@@ -37,6 +37,7 @@
   "manifest_version": 3,
   "name": "__MSG_extName__",
   "options_ui": {
+      "open_in_tab": true,
       "page": "dashboard.html"
   },
   "optional_permissions": [
