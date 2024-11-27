@@ -316,7 +316,7 @@ class RedirectEngine {
         this.aliases = new Map();
 
         const fetches = [
-            import('/assets/resources/scriptlets.js').then(module => {
+            import('/js/resources/scriptlets.js').then(module => {
                 for ( const scriptlet of module.builtinScriptlets ) {
                     const details = {};
                     details.mime = mimeFromName(scriptlet.name);

@@ -19,12 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
-/******************************************************************************/
-
+import { builtinScriptlets } from './resources/scriptlets.js';
 import fs from 'fs/promises';
-import { builtinScriptlets } from './scriptlets.js';
 import { safeReplace } from './safe-replace.js';
 
 /******************************************************************************/

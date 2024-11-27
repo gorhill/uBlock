@@ -21,7 +21,7 @@
 */
 
 // Code imported from main code base and exposed as injectable scriptlets
-import { ArglistParser } from '../../js/arglist-parser.js';
+import { ArglistParser } from '../arglist-parser.js';
 
 import { registerScriptlet } from './base.js';
 
