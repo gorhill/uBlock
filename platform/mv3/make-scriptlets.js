@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import { builtinScriptlets } from './resources/scriptlets.js';
+import { builtinScriptlets } from './js/resources/scriptlets.js';
 import fs from 'fs/promises';
 import { safeReplace } from './safe-replace.js';
 
