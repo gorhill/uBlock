@@ -22,6 +22,7 @@
 /******************************************************************************/
 
 import * as cssTree from '../lib/csstree/css-tree.js';
+import { ArglistParser } from './arglist-parser.js';
 import Regex from '../lib/regexanalyzer/regex.js';
 
 /*******************************************************************************
@@ -606,102 +607,6 @@ const exCharCodeAt = (s, i) => {
 
 /******************************************************************************/
 
-class ArgListParser {
-    constructor(separatorChar = ',', mustQuote = false) {
-        this.separatorChar = this.actualSeparatorChar = separatorChar;
-        this.separatorCode = this.actualSeparatorCode = separatorChar.charCodeAt(0);
-        this.mustQuote = mustQuote;
-        this.quoteBeg = 0; this.quoteEnd = 0;
-        this.argBeg = 0; this.argEnd = 0;
-        this.separatorBeg = 0; this.separatorEnd = 0;
-        this.transform = false;
-        this.failed = false;
-        this.reWhitespaceStart = /^\s+/;
-        this.reWhitespaceEnd = /\s+$/;
-        this.reOddTrailingEscape = /(?:^|[^\\])(?:\\\\)*\\$/;
-        this.reTrailingEscapeChars = /\\+$/;
-    }
-    nextArg(pattern, beg = 0) {
-        const len = pattern.length;
-        this.quoteBeg = beg + this.leftWhitespaceCount(pattern.slice(beg));
-        this.failed = false;
-        const qc = pattern.charCodeAt(this.quoteBeg);
-        if ( qc === 0x22 /* " */ || qc === 0x27 /* ' */ || qc === 0x60 /* ` */ ) {
-            this.indexOfNextArgSeparator(pattern, qc);
-            if ( this.argEnd !== len ) {
-                this.quoteEnd = this.argEnd + 1;
-                this.separatorBeg = this.separatorEnd = this.quoteEnd;
-                this.separatorEnd += this.leftWhitespaceCount(pattern.slice(this.quoteEnd));
-                if ( this.separatorEnd === len ) { return this; }
-                if ( pattern.charCodeAt(this.separatorEnd) === this.separatorCode ) {
-                    this.separatorEnd += 1;
-                    return this;
-                }
-            }
-        }
-        this.indexOfNextArgSeparator(pattern, this.separatorCode);
-        this.separatorBeg = this.separatorEnd = this.argEnd;
-        if ( this.separatorBeg < len ) {
-            this.separatorEnd += 1;
-        }
-        this.argEnd -= this.rightWhitespaceCount(pattern.slice(0, this.separatorBeg));
-        this.quoteEnd = this.argEnd;
-        if ( this.mustQuote ) {
-            this.failed = true;
-        }
-        return this;
-    }
-    normalizeArg(s, char = '') {
-        if ( char === '' ) { char = this.actualSeparatorChar; }
-        let out = '';
-        let pos = 0;
-        while ( (pos = s.lastIndexOf(char)) !== -1 ) {
-            out = s.slice(pos) + out;
-            s = s.slice(0, pos);
-            const match = this.reTrailingEscapeChars.exec(s);
-            if ( match === null ) { continue; }
-            const tail = (match[0].length & 1) !== 0
-                ? match[0].slice(0, -1)
-                : match[0];
-            out = tail + out;
-            s = s.slice(0, -match[0].length);
-        }
-        if ( out === '' ) { return s; }
-        return s + out;
-    }
-    leftWhitespaceCount(s) {
-        const match = this.reWhitespaceStart.exec(s);
-        return match === null ? 0 : match[0].length;
-    }
-    rightWhitespaceCount(s) {
-        const match = this.reWhitespaceEnd.exec(s);
-        return match === null ? 0 : match[0].length;
-    }
-    indexOfNextArgSeparator(pattern, separatorCode) {
-        this.argBeg = this.argEnd = separatorCode !== this.separatorCode
-            ? this.quoteBeg + 1
-            : this.quoteBeg;
-        this.transform = false;
-        if ( separatorCode !== this.actualSeparatorCode ) {
-            this.actualSeparatorCode = separatorCode;
-            this.actualSeparatorChar = String.fromCharCode(separatorCode);
-        }
-        while ( this.argEnd < pattern.length ) {
-            const pos = pattern.indexOf(this.actualSeparatorChar, this.argEnd);
-            if ( pos === -1 ) {
-                return (this.argEnd = pattern.length);
-            }
-            if ( this.reOddTrailingEscape.test(pattern.slice(0, pos)) === false ) {
-                return (this.argEnd = pos);
-            }
-            this.transform = true;
-            this.argEnd = pos + 1;
-        }
-    }
-}
-
-/******************************************************************************/
-
 class AstWalker {
     constructor(parser, from = 0) {
         this.parser = parser;
@@ -904,8 +809,8 @@ export class AstFilterParser {
         this.reBadPP = /(?:^|[;,])\s*report-to\b/i;
         this.reNetOption = /^(~?)([134a-z_-]+)(=?)/;
         this.reNoopOption = /^_+$/;
-        this.netOptionValueParser = new ArgListParser(',');
-        this.scriptletArgListParser = new ArgListParser(',');
+        this.netOptionValueParser = new ArglistParser(',');
+        this.scriptletArgListParser = new ArglistParser(',');
     }
 
     finish() {
@@ -3100,7 +3005,7 @@ export function parseHeaderValue(arg) {
 
 export function parseReplaceValue(s) {
     if ( s.charCodeAt(0) !== 0x2F /* / */ ) { return; }
-    const parser = new ArgListParser('/');
+    const parser = new ArglistParser('/');
     parser.nextArg(s, 1);
     let pattern = s.slice(parser.argBeg, parser.argEnd);
     if ( parser.transform ) {

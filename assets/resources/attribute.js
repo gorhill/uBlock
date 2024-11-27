@@ -18,8 +18,6 @@
 
     Home: https://github.com/gorhill/uBlock
 
-    The scriptlets below are meant to be injected only into a
-    web page context.
 */
 
 import { registerScriptlet } from './base.js';

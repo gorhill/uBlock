@@ -18,23 +18,20 @@
 
     Home: https://github.com/gorhill/uBlock
 
-    The scriptlets below are meant to be injected only into a
-    web page context.
 */
 
 import './attribute.js';
-import './cookie.js';
-import './localstorage.js';
-import './run-at.js';
-import './safe-self.js';
+import './replace-argument.js';
 import './spoof-css.js';
 
 import { runAt, runAtHtmlElementFn } from './run-at.js';
 
 import { getAllCookiesFn } from './cookie.js';
 import { getAllLocalStorageFn } from './localstorage.js';
+import { proxyApplyFn } from './proxy-apply.js';
 import { registeredScriptlets } from './base.js';
 import { safeSelf } from './safe-self.js';
+import { validateConstantFn } from './set-constant.js';
 
 // Externally added to the private namespace in which scriptlets execute.
 /* global scriptletGlobals */
@@ -285,228 +282,6 @@ function abortCurrentScriptCore(
     } catch(ex) {
         safe.uboErr(logPrefix, `Error: ${ex}`);
     }
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'validate-constant.fn',
-    fn: validateConstantFn,
-    dependencies: [
-        'safe-self.fn',
-    ],
-});
-function validateConstantFn(trusted, raw, extraArgs = {}) {
-    const safe = safeSelf();
-    let value;
-    if ( raw === 'undefined' ) {
-        value = undefined;
-    } else if ( raw === 'false' ) {
-        value = false;
-    } else if ( raw === 'true' ) {
-        value = true;
-    } else if ( raw === 'null' ) {
-        value = null;
-    } else if ( raw === "''" || raw === '' ) {
-        value = '';
-    } else if ( raw === '[]' || raw === 'emptyArr' ) {
-        value = [];
-    } else if ( raw === '{}' || raw === 'emptyObj' ) {
-        value = {};
-    } else if ( raw === 'noopFunc' ) {
-        value = function(){};
-    } else if ( raw === 'trueFunc' ) {
-        value = function(){ return true; };
-    } else if ( raw === 'falseFunc' ) {
-        value = function(){ return false; };
-    } else if ( raw === 'throwFunc' ) {
-        value = function(){ throw ''; };
-    } else if ( /^-?\d+$/.test(raw) ) {
-        value = parseInt(raw);
-        if ( isNaN(raw) ) { return; }
-        if ( Math.abs(raw) > 0x7FFF ) { return; }
-    } else if ( trusted ) {
-        if ( raw.startsWith('json:') ) {
-            try { value = safe.JSON_parse(raw.slice(5)); } catch(ex) { return; }
-        } else if ( raw.startsWith('{') && raw.endsWith('}') ) {
-            try { value = safe.JSON_parse(raw).value; } catch(ex) { return; }
-        }
-    } else {
-        return;
-    }
-    if ( extraArgs.as !== undefined ) {
-        if ( extraArgs.as === 'function' ) {
-            return ( ) => value;
-        } else if ( extraArgs.as === 'callback' ) {
-            return ( ) => (( ) => value);
-        } else if ( extraArgs.as === 'resolved' ) {
-            return Promise.resolve(value);
-        } else if ( extraArgs.as === 'rejected' ) {
-            return Promise.reject(value);
-        }
-    }
-    return value;
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'set-constant.fn',
-    fn: setConstantFn,
-    dependencies: [
-        'run-at.fn',
-        'safe-self.fn',
-        'validate-constant.fn',
-    ],
-});
-function setConstantFn(
-    trusted = false,
-    chain = '',
-    rawValue = ''
-) {
-    if ( chain === '' ) { return; }
-    const safe = safeSelf();
-    const logPrefix = safe.makeLogPrefix('set-constant', chain, rawValue);
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
-    function setConstant(chain, rawValue) {
-        const trappedProp = (( ) => {
-            const pos = chain.lastIndexOf('.');
-            if ( pos === -1 ) { return chain; }
-            return chain.slice(pos+1);
-        })();
-        const cloakFunc = fn => {
-            safe.Object_defineProperty(fn, 'name', { value: trappedProp });
-            return new Proxy(fn, {
-                defineProperty(target, prop) {
-                    if ( prop !== 'toString' ) {
-                        return Reflect.defineProperty(...arguments);
-                    }
-                    return true;
-                },
-                deleteProperty(target, prop) {
-                    if ( prop !== 'toString' ) {
-                        return Reflect.deleteProperty(...arguments);
-                    }
-                    return true;
-                },
-                get(target, prop) {
-                    if ( prop === 'toString' ) {
-                        return function() {
-                            return `function ${trappedProp}() { [native code] }`;
-                        }.bind(null);
-                    }
-                    return Reflect.get(...arguments);
-                },
-            });
-        };
-        if ( trappedProp === '' ) { return; }
-        const thisScript = document.currentScript;
-        let normalValue = validateConstantFn(trusted, rawValue, extraArgs);
-        if ( rawValue === 'noopFunc' || rawValue === 'trueFunc' || rawValue === 'falseFunc' ) {
-            normalValue = cloakFunc(normalValue);
-        }
-        let aborted = false;
-        const mustAbort = function(v) {
-            if ( trusted ) { return false; }
-            if ( aborted ) { return true; }
-            aborted =
-                (v !== undefined && v !== null) &&
-                (normalValue !== undefined && normalValue !== null) &&
-                (typeof v !== typeof normalValue);
-            if ( aborted ) {
-                safe.uboLog(logPrefix, `Aborted because value set to ${v}`);
-            }
-            return aborted;
-        };
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/156
-        //   Support multiple trappers for the same property.
-        const trapProp = function(owner, prop, configurable, handler) {
-            if ( handler.init(configurable ? owner[prop] : normalValue) === false ) { return; }
-            const odesc = safe.Object_getOwnPropertyDescriptor(owner, prop);
-            let prevGetter, prevSetter;
-            if ( odesc instanceof safe.Object ) {
-                owner[prop] = normalValue;
-                if ( odesc.get instanceof Function ) {
-                    prevGetter = odesc.get;
-                }
-                if ( odesc.set instanceof Function ) {
-                    prevSetter = odesc.set;
-                }
-            }
-            try {
-                safe.Object_defineProperty(owner, prop, {
-                    configurable,
-                    get() {
-                        if ( prevGetter !== undefined ) {
-                            prevGetter();
-                        }
-                        return handler.getter();
-                    },
-                    set(a) {
-                        if ( prevSetter !== undefined ) {
-                            prevSetter(a);
-                        }
-                        handler.setter(a);
-                    }
-                });
-                safe.uboLog(logPrefix, 'Trap installed');
-            } catch(ex) {
-                safe.uboErr(logPrefix, ex);
-            }
-        };
-        const trapChain = function(owner, chain) {
-            const pos = chain.indexOf('.');
-            if ( pos === -1 ) {
-                trapProp(owner, chain, false, {
-                    v: undefined,
-                    init: function(v) {
-                        if ( mustAbort(v) ) { return false; }
-                        this.v = v;
-                        return true;
-                    },
-                    getter: function() {
-                        if ( document.currentScript === thisScript ) {
-                            return this.v;
-                        }
-                        safe.uboLog(logPrefix, 'Property read');
-                        return normalValue;
-                    },
-                    setter: function(a) {
-                        if ( mustAbort(a) === false ) { return; }
-                        normalValue = a;
-                    }
-                });
-                return;
-            }
-            const prop = chain.slice(0, pos);
-            const v = owner[prop];
-            chain = chain.slice(pos + 1);
-            if ( v instanceof safe.Object || typeof v === 'object' && v !== null ) {
-                trapChain(v, chain);
-                return;
-            }
-            trapProp(owner, prop, true, {
-                v: undefined,
-                init: function(v) {
-                    this.v = v;
-                    return true;
-                },
-                getter: function() {
-                    return this.v;
-                },
-                setter: function(a) {
-                    this.v = a;
-                    if ( a instanceof safe.Object ) {
-                        trapChain(a, chain);
-                    }
-                }
-            });
-        };
-        trapChain(window, chain);
-    }
-    runAt(( ) => {
-        setConstant(chain, rawValue);
-    }, extraArgs.runAt);
 }
 
 /******************************************************************************/
@@ -1041,93 +816,6 @@ function replaceFetchResponseFn(
             });
         }
     });
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'proxy-apply.fn',
-    fn: proxyApplyFn,
-});
-function proxyApplyFn(
-    target = '',
-    handler = ''
-) {
-    let context = globalThis;
-    let prop = target;
-    for (;;) {
-        const pos = prop.indexOf('.');
-        if ( pos === -1 ) { break; }
-        context = context[prop.slice(0, pos)];
-        if ( context instanceof Object === false ) { return; }
-        prop = prop.slice(pos+1);
-    }
-    const fn = context[prop];
-    if ( typeof fn !== 'function' ) { return; }
-    if ( proxyApplyFn.CtorContext === undefined ) {
-        proxyApplyFn.ctorContexts = [];
-        proxyApplyFn.CtorContext = class {
-            constructor(...args) {
-                this.init(...args);
-            }
-            init(callFn, callArgs) {
-                this.callFn = callFn;
-                this.callArgs = callArgs;
-                return this;
-            }
-            reflect() {
-                const r = Reflect.construct(this.callFn, this.callArgs);
-                this.callFn = this.callArgs = undefined;
-                proxyApplyFn.ctorContexts.push(this);
-                return r;
-            }
-            static factory(...args) {
-                return proxyApplyFn.ctorContexts.length !== 0
-                    ? proxyApplyFn.ctorContexts.pop().init(...args)
-                    : new proxyApplyFn.CtorContext(...args);
-            }
-        };
-        proxyApplyFn.applyContexts = [];
-        proxyApplyFn.ApplyContext = class {
-            constructor(...args) {
-                this.init(...args);
-            }
-            init(callFn, thisArg, callArgs) {
-                this.callFn = callFn;
-                this.thisArg = thisArg;
-                this.callArgs = callArgs;
-                return this;
-            }
-            reflect() {
-                const r = Reflect.apply(this.callFn, this.thisArg, this.callArgs);
-                this.callFn = this.thisArg = this.callArgs = undefined;
-                proxyApplyFn.applyContexts.push(this);
-                return r;
-            }
-            static factory(...args) {
-                return proxyApplyFn.applyContexts.length !== 0
-                    ? proxyApplyFn.applyContexts.pop().init(...args)
-                    : new proxyApplyFn.ApplyContext(...args);
-            }
-        };
-    }
-    const fnStr = fn.toString();
-    const toString = (function toString() { return fnStr; }).bind(null);
-    const proxyDetails = {
-        apply(target, thisArg, args) {
-            return handler(proxyApplyFn.ApplyContext.factory(target, thisArg, args));
-        },
-        get(target, prop) {
-            if ( prop === 'toString' ) { return toString; }
-            return Reflect.get(target, prop);
-        },
-    };
-    if ( fn.prototype?.constructor === fn ) {
-        proxyDetails.construct = function(target, args) {
-            return handler(proxyApplyFn.CtorContext.factory(target, args));
-        };
-    }
-    context[prop] = new Proxy(fn, proxyDetails);
 }
 
 /******************************************************************************/
@@ -2201,24 +1889,6 @@ function noRequestAnimationFrameIf(
             return target.apply(thisArg, args);
         }
     });
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'set-constant.js',
-    aliases: [
-        'set.js',
-    ],
-    fn: setConstant,
-    dependencies: [
-        'set-constant.fn'
-    ],
-});
-function setConstant(
-    ...args
-) {
-    setConstantFn(false, ...args);
 }
 
 /******************************************************************************/
@@ -3442,32 +3112,6 @@ function replaceNodeText(
 
 /*******************************************************************************
  * 
- * trusted-set-constant.js
- * 
- * Set specified property to any value. This is essentially the same as
- * set-constant.js, but with no restriction as to which values can be used.
- * 
- **/
-
-builtinScriptlets.push({
-    name: 'trusted-set-constant.js',
-    requiresTrust: true,
-    aliases: [
-        'trusted-set.js',
-    ],
-    fn: trustedSetConstant,
-    dependencies: [
-        'set-constant.fn'
-    ],
-});
-function trustedSetConstant(
-    ...args
-) {
-    setConstantFn(true, ...args);
-}
-
-/*******************************************************************************
- * 
  * trusted-replace-fetch-response.js
  * 
  * Replaces response text content of fetch requests if all given parameters
@@ -3875,50 +3519,6 @@ function trustedPruneOutboundObject(
             extraArgs
         );
         return objAfter || objBefore;
-    });
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'trusted-replace-argument.js',
-    requiresTrust: true,
-    fn: trustedReplaceArgument,
-    dependencies: [
-        'proxy-apply.fn',
-        'safe-self.fn',
-        'validate-constant.fn',
-    ],
-});
-function trustedReplaceArgument(
-    propChain = '',
-    argposRaw = '',
-    argraw = ''
-) {
-    if ( propChain === '' ) { return; }
-    const safe = safeSelf();
-    const logPrefix = safe.makeLogPrefix('trusted-replace-argument', propChain, argposRaw, argraw);
-    const argoffset = parseInt(argposRaw, 10) || 0;
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
-    const normalValue = validateConstantFn(true, argraw, extraArgs);
-    const reCondition = extraArgs.condition
-        ? safe.patternToRegex(extraArgs.condition)
-        : /^/;
-    proxyApplyFn(propChain, function(context) {
-        const { callArgs } = context;
-        if ( argposRaw === '' ) {
-            safe.uboLog(logPrefix, `Arguments:\n${callArgs.join('\n')}`);
-            return context.reflect();
-        }
-        const argpos = argoffset >= 0 ? argoffset : callArgs.length - argoffset;
-        if ( argpos >= 0 && argpos < callArgs.length ) {
-            const argBefore = callArgs[argpos];
-            if ( safe.RegExp_test.call(reCondition, argBefore) ) {
-                callArgs[argpos] = normalValue;
-                safe.uboLog(logPrefix, `Replaced argument:\nBefore: ${JSON.stringify(argBefore)}\nAfter: ${normalValue}`);
-            }
-        }
-        return context.reflect();
     });
 }
 

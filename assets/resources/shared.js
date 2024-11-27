@@ -20,19 +20,25 @@
 
 */
 
-export const registeredScriptlets = [];
+// Code imported from main code base and exposed as injectable scriptlets
+import { ArglistParser } from '../../js/arglist-parser.js';
 
-export const registerScriptlet = (fn, details) => {
-    if ( typeof details !== 'object' ) {
-        throw new ReferenceError('Missing scriptlet details');
-    }
-    details.fn = fn;
-    fn.details = details;
-    if ( Array.isArray(details.dependencies) ) {
-        details.dependencies.forEach((fn, i, array) => {
-            if ( typeof fn !== 'function' ) { return; }
-            array[i] = fn.details.name;
-        });
-    }
-    registeredScriptlets.push(details);
-};
+import { registerScriptlet } from './base.js';
+
+/******************************************************************************/
+
+registerScriptlet(ArglistParser, {
+    name: 'arglist-parser.fn',
+});
+
+/******************************************************************************/
+
+export function createArglistParser(...args) {
+    return new ArglistParser(...args);
+}
+registerScriptlet(createArglistParser, {
+    name: 'create-arglist-parser.fn',
+    dependencies: [
+        ArglistParser,
+    ],
+});
