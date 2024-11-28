@@ -1,3 +1,5 @@
+- [Improve `prevent-setTimeout`/`prevent-setInterval` scriptlets](https://github.com/gorhill/uBlock/commit/3b7fa79a68)
+- [Improve `trusted-replace-argument` scriptlet](https://github.com/gorhill/uBlock/commit/adced29b5b)
 - [Add `-safebase64` directive to `urlskip=` option](https://github.com/gorhill/uBlock/commit/bcc058eba7)
 - [Improve `urlskip=` filter option](https://github.com/gorhill/uBlock/commit/77ed83ff2f)
 - [Improve `spoof-css` scriptlet](https://github.com/gorhill/uBlock/commit/5f5e3d730f)
