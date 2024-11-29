@@ -208,19 +208,43 @@ vAPI.prefetching = (( ) => {
 
 /******************************************************************************/
 
-vAPI.scriptletsInjector = ((doc, details) => {
-    let script;
-    try {
-        script = doc.createElement('script');
-        script.appendChild(doc.createTextNode(details.scriptlets));
-        (doc.head || doc.documentElement).appendChild(script);
-        self.uBO_scriptletsInjected = details.filters;
-    } catch (ex) {
-    }
-    if ( script ) {
-        script.remove();
-        script.textContent = '';
-    }
-}).toString();
+vAPI.scriptletsInjector = (( ) => {
+    const parts = [
+        '(',
+        function(details) {
+            if ( typeof self.uBO_scriptletsInjected === 'string' ) { return; }
+            const doc = document;
+            const { location } = doc;
+            if ( location === null ) { return; }
+            const { hostname } = location;
+            if ( hostname !== '' && details.hostname !== hostname ) { return; }
+            let script;
+            try {
+                script = doc.createElement('script');
+                script.appendChild(doc.createTextNode(details.scriptlets));
+                (doc.head || doc.documentElement).appendChild(script);
+                self.uBO_scriptletsInjected = details.filters;
+            } catch (ex) {
+            }
+            if ( script ) {
+                script.remove();
+                script.textContent = '';
+            }
+            return 0;
+        }.toString(),
+        ')(',
+            'json-slot',
+        ');',
+    ];
+    const jsonSlot = parts.indexOf('json-slot');
+    return (hostname, details) => {
+        parts[jsonSlot] = JSON.stringify({
+            hostname,
+            scriptlets: details.mainWorld,
+            filters: details.filters,
+        });
+        return parts.join('');
+    };
+})();
 
 /******************************************************************************/

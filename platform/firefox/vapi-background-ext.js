@@ -351,25 +351,77 @@ vAPI.Net = class extends vAPI.Net {
 
 /******************************************************************************/
 
-vAPI.scriptletsInjector = ((doc, details) => {
-    let script, url;
-    try {
-        const blob = new self.Blob(
-            [ details.scriptlets ],
-            { type: 'text/javascript; charset=utf-8' }
-        );
-        url = self.URL.createObjectURL(blob);
-        script = doc.createElement('script');
-        script.async = false;
-        script.src = url;
-        (doc.head || doc.documentElement || doc).append(script);
-        self.uBO_scriptletsInjected = details.filters;
-    } catch (ex) {
-    }
-    if ( url ) {
-        if ( script ) { script.remove(); }
-        self.URL.revokeObjectURL(url);
-    }
-}).toString();
+vAPI.scriptletsInjector = (( ) => {
+    const parts = [
+        '(',
+        function(details) {
+            if ( typeof self.uBO_scriptletsInjected === 'string' ) { return; }
+            const doc = document;
+            const { location } = doc;
+            if ( location === null ) { return; }
+            const { hostname } = location;
+            if ( hostname !== '' && details.hostname !== hostname ) { return; }
+            // Use a page world sentinel to verify that execution was
+            // successful
+            const { sentinel } = details;
+            let script;
+            try {
+                const code = [
+                    `self['${sentinel}'] = true;`,
+                    details.scriptlets,
+                ].join('\n');
+                script = doc.createElement('script');
+                script.appendChild(doc.createTextNode(code));
+                (doc.head || doc.documentElement).appendChild(script);
+            } catch (ex) {
+            }
+            if ( script ) {
+                script.remove();
+                script.textContent = '';
+                script = undefined;
+            }
+            if ( self.wrappedJSObject[sentinel] ) {
+                delete self.wrappedJSObject[sentinel];
+                self.uBO_scriptletsInjected = details.filters;
+                return 0;
+            }
+            // https://github.com/uBlockOrigin/uBlock-issues/issues/235
+            //   Fall back to blob injection if execution through direct
+            //   injection failed
+            let url;
+            try {
+                const blob = new self.Blob(
+                    [ details.scriptlets ],
+                    { type: 'text/javascript; charset=utf-8' }
+                );
+                url = self.URL.createObjectURL(blob);
+                script = doc.createElement('script');
+                script.async = false;
+                script.src = url;
+                (doc.head || doc.documentElement || doc).append(script);
+                self.uBO_scriptletsInjected = details.filters;
+            } catch (ex) {
+            }
+            if ( url ) {
+                if ( script ) { script.remove(); }
+                self.URL.revokeObjectURL(url);
+            }
+            return 0;
+        }.toString(),
+        ')(',
+            'json-slot',
+        ');',
+    ];
+    const jsonSlot = parts.indexOf('json-slot');
+    return (hostname, details) => {
+        parts[jsonSlot] = JSON.stringify({
+            hostname,
+            scriptlets: details.mainWorld,
+            filters: details.filters,
+            sentinel: vAPI.generateSecret(3),
+        });
+        return parts.join('');
+    };
+})();
 
 /******************************************************************************/
