@@ -108,7 +108,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Докладвайте за проблеми с филтъра с конкретни уебсайтове към <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> инструмент за проследяване на проблеми</span>.  <u>Изисква акаунт в GitHub.</u>",
+    "message": "Докладвайте за проблеми с филтрирането на конкретни уебсайтове в <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> за проследяване на проблеми</span>.  <u>Изисква се акаунт в GitHub.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS6P1S1": {
@@ -140,7 +140,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Открива uBO Lite",
+    "message": "Засича uBO Lite",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
@@ -148,7 +148,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Неправилно функциониране, когато е активиран uBO Lite",
+    "message": "Неправилно функциониране, когато uBO Lite е активиран",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
@@ -212,7 +212,7 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "Списък с имена на хостове, за които няма да се извършва филтриране",
+    "message": "Списък с имена на хостове, за които няма да се извършва филтриране.",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {

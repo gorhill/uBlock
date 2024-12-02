@@ -32,7 +32,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipReport": {
-    "message": "Ziņot par problēmu šajā tīmekļa vietnē",
+    "message": "Ziņot par nepilnību šajā tīmekļa vietnē",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -104,15 +104,15 @@
     "description": "Shown in the About pane"
   },
   "supportS6H": {
-    "message": "Ziņot aizturēšanas filtra problēmu",
+    "message": "Ziņot par aizturēšanas filtra nepilnību",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Ziņot par aizturēšanas filtru problēmām konkrētās vietnēs <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> problēmu izsekotājam</span>. <u>Nepieciešams GitHub konts.</u>",
+    "message": "Ziņot par aizturēšanas filtru nepilnībām noteiktās vietnēs <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> pieteikumu izsekotājā</span>. <u>Nepieciešams GitHub konts.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Lai izvairītos no brīvprātīgo noslogošanas ar ziņojumiem, kas atkārtojas, lūgums pārbaudīt, ka par šādu problēmu jau nav ziņots.",
+    "message": "Lai izvairītos no brīvprātīgo noslogošanas ar ziņojumiem, kas atkārtojas, lūgums pārbaudīt, ka par šādu nepilnību jau nav ziņots.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
@@ -128,7 +128,7 @@
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Atlasiet ierakstu --",
+    "message": "-- Atlasīt ierakstu --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
@@ -136,7 +136,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Ir pārklājumi vai citas neērtības (kaitinoši elementi)",
+    "message": "Ir pārklājumi vai citi traucējumi",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
@@ -144,11 +144,11 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Ir ar konfidencialitāti saistītas nebūšanas",
+    "message": "Ir ar privātumu saistītas nepilnības",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Darbības traucējumi, kad uBO Lite ir iespējots",
+    "message": "Darbības traucējumi, kad ir iespējots uBO Lite",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
@@ -156,7 +156,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Noved pie ļaunprātīgas programmatūras, pikšķerēšanas",
+    "message": "Noved pie ļaunatūras, pikšķerēšanas",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
