@@ -231,8 +231,44 @@
     "message": "Прикажи број блокираних захтева на иконици на траци алата",
     "description": "Label for a checkbox in the options page"
   },
+  "enableStrictBlockLabel": {
+    "message": "Enable strict blocking",
+    "description": "Label for a checkbox in the options page"
+  },
+  "enableStrictBlockLegend": {
+    "message": "Navigation to potentially undesirable sites will be blocked, and you will be offered the option to proceed.",
+    "description": "Label for a checkbox in the options page"
+  },
   "findListsPlaceholder": {
     "message": "Пронађи листе",
     "description": "Placeholder for the input field used to find lists"
+  },
+  "strictblockTitle": {
+    "message": "Page blocked",
+    "description": "Webpage title for the strict-blocked page"
+  },
+  "strictblockSentence1": {
+    "message": "uBO Lite has prevented the following page from loading:",
+    "description": "Sentence used in the strict-blocked page"
+  },
+  "strictblockNoParamsPrompt": {
+    "message": "without parameters",
+    "description": "Label to be used for the parameter-less URL"
+  },
+  "strictblockBack": {
+    "message": "Go back",
+    "description": "A button to go back to the previous webpage"
+  },
+  "strictblockClose": {
+    "message": "Close this window",
+    "description": "A button to close the current tab"
+  },
+  "strictblockDontWarn": {
+    "message": "Don't warn me again about this site",
+    "description": "Label for checkbox in document-blocked page"
+  },
+  "strictblockProceed": {
+    "message": "Proceed",
+    "description": "A button to navigate to the blocked page"
   }
 }
