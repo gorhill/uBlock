@@ -12,8 +12,11 @@ body.firstRun .firstRun {
 h3 {
     margin: 1em 0;
     }
-p {
-    white-space: pre-line;
+
+label + legend {
+    color: color-mix(in srgb, currentColor 69%, transparent);
+    font-size: small;
+    margin-inline-start: var(--default-gap-large);
     }
 
 body[data-forbid~="dashboard"] #dashboard-nav [data-pane="settings"],

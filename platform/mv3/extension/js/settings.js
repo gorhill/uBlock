@@ -67,6 +67,8 @@ function renderWidgets() {
         }
     }
 
+    qs$('#strictBlockMode input[type="checkbox"]').checked = cachedRulesetData.strictBlockMode;
+
     {
         dom.prop('#developerMode input[type="checkbox"]', 'checked',
             Boolean(cachedRulesetData.developerMode)
@@ -142,6 +144,13 @@ dom.on('#autoReload input[type="checkbox"]', 'change', ev => {
 dom.on('#showBlockedCount input[type="checkbox"]', 'change', ev => {
     sendMessage({
         what: 'setShowBlockedCount',
+        state: ev.target.checked,
+    });
+});
+
+dom.on('#strictBlockMode input[type="checkbox"]', 'change', ev => {
+    sendMessage({
+        what: 'setStrictBlockMode',
         state: ev.target.checked,
     });
 });
@@ -236,6 +245,13 @@ listen.onmessage = ev => {
     if ( message.showBlockedCount !== undefined ) {
         if ( message.showBlockedCount !== local.showBlockedCount ) {
             local.showBlockedCount = message.showBlockedCount;
+            render = true;
+        }
+    }
+
+    if ( message.strictBlockMode !== undefined ) {
+        if ( message.strictBlockMode !== local.strictBlockMode ) {
+            local.strictBlockMode = message.strictBlockMode;
             render = true;
         }
     }

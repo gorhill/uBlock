@@ -16,10 +16,10 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "uBOLite@raymondhill.net",
-      "strict_min_version": "114.0"
+      "strict_min_version": "127.0"
     },
     "gecko_android": {
-      "strict_min_version": "114.0"
+      "strict_min_version": "127.0"
     }
   },
   "declarative_net_request": {
@@ -50,6 +50,5 @@
     "storage"
   ],
   "short_name": "uBO Lite",
-  "version": "1.0",
-  "web_accessible_resources": []
+  "version": "1.0"
 }

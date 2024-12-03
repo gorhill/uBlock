@@ -34,7 +34,7 @@ import punycode from './punycode.js';
 
 const popupPanelData = {};
 const  currentTab = {};
-let tabHostname = '';
+const tabURL = new URL(runtime.getURL('/'));
 
 /******************************************************************************/
 
@@ -68,8 +68,8 @@ function setFilteringMode(level, commit = false) {
 }
 
 async function commitFilteringMode() {
-    if ( tabHostname === '' ) { return; }
-    const targetHostname = normalizedHostname(tabHostname);
+    if ( tabURL.hostname === '' ) { return; }
+    const targetHostname = normalizedHostname(tabURL.hostname);
     const modeSlider = qs$('.filteringModeSlider');
     const afterLevel = parseInt(modeSlider.dataset.level, 10);
     const beforeLevel = parseInt(modeSlider.dataset.levelBefore, 10);
@@ -100,7 +100,9 @@ async function commitFilteringMode() {
     }
     if ( actualLevel !== beforeLevel && popupPanelData.autoReload ) {
         self.setTimeout(( ) => {
-            browser.tabs.reload(currentTab.id);
+            browser.tabs.update(currentTab.id, {
+                url: tabURL.href,
+            });
         }, 437);
     }
 }
@@ -317,8 +319,12 @@ async function init() {
 
     let url;
     try {
+        const strictBlockURL = runtime.getURL('/strictblock.');
         url = new URL(currentTab.url);
-        tabHostname = url.hostname || '';
+        if ( url.href.startsWith(strictBlockURL) ) {
+            url = new URL(url.hash.slice(1));
+        }
+        tabURL.href = url.href || '';
     } catch(ex) {
     }
 
@@ -326,7 +332,7 @@ async function init() {
         const response = await sendMessage({
             what: 'popupPanelData',
             origin: url.origin,
-            hostname: normalizedHostname(tabHostname),
+            hostname: normalizedHostname(tabURL.hostname),
         });
         if ( response instanceof Object ) {
             Object.assign(popupPanelData, response);
@@ -337,7 +343,7 @@ async function init() {
 
     setFilteringMode(popupPanelData.level);
 
-    dom.text('#hostname', punycode.toUnicode(tabHostname));
+    dom.text('#hostname', punycode.toUnicode(tabURL.hostname));
 
     dom.cl.toggle('#showMatchedRules', 'enabled',
         popupPanelData.isSideloaded === true &&

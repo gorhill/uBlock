@@ -107,6 +107,7 @@ if [ "$QUICK" != "yes" ]; then
     cp platform/mv3/package.json "$TMPDIR"/
     cp platform/mv3/*.js "$TMPDIR"/
     cp platform/mv3/*.mjs "$TMPDIR"/
+    cp platform/mv3/*.html "$TMPDIR"/
     cp platform/mv3/extension/js/utils.js "$TMPDIR"/js/
     cp -R "$UBO_DIR"/src/js/resources "$TMPDIR"/js/
     cp "$UBO_DIR"/assets/assets.dev.json "$TMPDIR"/

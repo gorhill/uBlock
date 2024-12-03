@@ -98,6 +98,12 @@ export async function sessionWrite(key, value) {
     return browser.storage.session.set({ [key]: value });
 }
 
+export async function sessionRemove(key) {
+    if ( browser.storage instanceof Object === false ) { return; }
+    if ( browser.storage.session instanceof Object === false ) { return; }
+    return browser.storage.session.remove(key);
+}
+
 /******************************************************************************/
 
 export async function adminRead(key) {

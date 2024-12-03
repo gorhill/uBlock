@@ -433,6 +433,33 @@ async function processNetworkFilters(assetDetails, network) {
         );
     }
 
+    const strictBlocked = new Set();
+    for ( const rule of plainGood ) {
+        if ( rule.action.type !== 'block' ) { continue; }
+        if ( rule.condition.domainType ) { continue; }
+        if ( rule.condition.regexFilter ) { continue; }
+        if ( rule.condition.urlFilter ) { continue; }
+        if ( rule.condition.requestMethods ) { continue; }
+        if ( rule.condition.excludedRequestMethods ) { continue; }
+        if ( rule.condition.resourceTypes ) { continue; }
+        if ( rule.condition.excludedResourceTypes ) { continue; }
+        if ( rule.condition.responseHeaders ) { continue; }
+        if ( rule.condition.excludedResponseHeaders ) { continue; }
+        if ( rule.condition.initiatorDomains ) { continue; }
+        if ( rule.condition.excludedInitiatorDomains ) { continue; }
+        if ( rule.condition.requestDomains === undefined ) { continue; }
+        if ( rule.condition.excludedRequestDomains ) { continue; }
+        for ( const hn of rule.condition.requestDomains ) {
+            strictBlocked.add(hn);
+        }
+    }
+    if ( strictBlocked.size !== 0 ) {
+        writeFile(
+            `${rulesetDir}/strictblock/${assetDetails.id}.json`,
+            toJSONRuleset(Array.from(strictBlocked))
+        );
+    }
+
     return {
         total: rules.length,
         plain: plainGood.length,
@@ -442,6 +469,7 @@ async function processNetworkFilters(assetDetails, network) {
         removeparam: removeparamsGood.length,
         redirect: redirects.length,
         modifyHeaders: modifyHeaders.length,
+        strictblock: strictBlocked.size,
     };
 }
 
@@ -1085,6 +1113,7 @@ async function rulesetFromURLs(assetDetails) {
             removeparam: netStats.removeparam,
             redirect: netStats.redirect,
             modifyHeaders: netStats.modifyHeaders,
+            strictblock: netStats.strictblock,
             discarded: netStats.discarded,
             rejected: netStats.rejected,
         },
@@ -1332,6 +1361,15 @@ async function main() {
     // Patch declarative_net_request key
     manifest.declarative_net_request = { rule_resources: ruleResources };
     // Patch web_accessible_resources key
+    manifest.web_accessible_resources = manifest.web_accessible_resources || [];
+    // Strict-block-related resource
+    const strictblockDocument = `strictblock.${secret}.html`;
+    copyFile('./strictblock.html', `${outputDir}/${strictblockDocument}`);
+    manifest.web_accessible_resources.push({
+      resources: [ `/${strictblockDocument}` ],
+      matches: [ '<all_urls>' ],
+    });
+    // Secondary resources
     const web_accessible_resources = {
         resources: Array.from(requiredRedirectResources).map(path => `/${path}`),
         matches: [ '<all_urls>' ],
@@ -1339,7 +1377,7 @@ async function main() {
     if ( platform === 'chromium' ) {
         web_accessible_resources.use_dynamic_url = true;
     }
-    manifest.web_accessible_resources = [ web_accessible_resources ];
+    manifest.web_accessible_resources.push(web_accessible_resources);
 
     // Patch manifest version property
     manifest.version = version;
