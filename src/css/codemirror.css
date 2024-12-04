@@ -134,6 +134,10 @@
 .cm-theme-override .cm-s-default .cm-variable {
     color: var(--sf-variable-ink);
     }
+.cm-theme-override .cm-s-default .CodeMirror-activeline .cm-ext-js .cm-variable {
+    text-decoration: underline color-mix(in srgb, var(--sf-variable-ink) 30%, transparent) solid 3px;
+    text-decoration-skip-ink: none;
+    }
 .cm-theme-override .cm-s-default .cm-warning {
     background-color: var(--sf-warning-surface);
     text-decoration: underline var(--sf-warning-ink);
