@@ -826,6 +826,7 @@
 	"RUS-0": {
 		"content": "filters",
 		"group": "regions",
+		"parent": "🇷🇺ru 🇺🇦ua 🇺🇿uz 🇰🇿kz: RU AdList",
 		"off": true,
 		"title": "🇷🇺ru 🇺🇦ua 🇺🇿uz 🇰🇿kz: RU AdList",
 		"tags": "ads belarusian беларуская kazakh tatar russian русский ukrainian українська uzbek",
@@ -835,6 +836,22 @@
 			"https://cdn.jsdelivr.net/gh/dimisa-RUAdList/RUAdListCDN@main/lists/ruadlist.ubo.min.txt",
 			"https://cdn.statically.io/gh/dimisa-RUAdList/RUAdListCDN/main/lists/ruadlist.ubo.min.txt",
 			"https://raw.githubusercontent.com/dimisa-RUAdList/RUAdListCDN/main/lists/ruadlist.ubo.min.txt"
+		],
+		"supportURL": "https://forums.lanik.us/viewforum.php?f=102",
+		"instructionURL": "https://forums.lanik.us/viewtopic.php?f=102&t=22512"
+	},
+	"RUS-1": {
+		"content": "filters",
+		"group": "regions",
+		"parent": "🇷🇺ru 🇺🇦ua 🇺🇿uz 🇰🇿kz: RU AdList",
+		"off": true,
+		"title": "🇷🇺ru 🇺🇦ua 🇺🇿uz 🇰🇿kz: RU AdList: Counters",
+		"tags": "ads belarusian беларуская kazakh tatar russian русский ukrainian українська uzbek be kk tt ru uk uz",
+		"contentURL": "https://raw.githubusercontent.com/easylist/ruadlist/master/cntblock.txt",
+		"cdnURLs": [
+			"https://cdn.jsdelivr.net/gh/easylist/ruadlist@master/cntblock.txt",
+			"https://cdn.statically.io/gh/easylist/ruadlist/master/cntblock.txt",
+			"https://raw.githubusercontent.com/easylist/ruadlist/master/cntblock.txt"
 		],
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=102",
 		"instructionURL": "https://forums.lanik.us/viewtopic.php?f=102&t=22512"
