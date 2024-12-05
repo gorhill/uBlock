@@ -804,6 +804,9 @@ const onMessage = function(request, sender, callback) {
 
     case 'shouldRenderNoscriptTags': {
         if ( pageStore === null ) { break; }
+        if ( µb.hiddenSettings.noScriptingCSP !== µb.hiddenSettingsDefault.noScriptingCSP ) {
+            break;
+        }
         const fctxt = µb.filteringContext.fromTabId(sender.tabId);
         if ( pageStore.filterScripting(fctxt, undefined) ) {
             vAPI.tabs.executeScript(sender.tabId, {
@@ -2009,7 +2012,7 @@ const logCSPViolations = function(pageStore, request) {
         fctxt.type = 'script';
         fctxt.filter = undefined;
         if ( pageStore.filterScripting(fctxt, true) === 1 ) {
-            cspData.set(µb.cspNoScripting, fctxt.filter);
+            cspData.set(µb.hiddenSettings.noScriptingCSP, fctxt.filter);
         }
     
         fctxt.type = 'inline-font';
