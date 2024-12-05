@@ -561,8 +561,6 @@ async function filteringModesToDNR(modes) {
 /******************************************************************************/
 
 async function defaultRulesetsFromLanguage() {
-    const out = await dnr.getEnabledRulesets();
-
     const dropCountry = lang => {
         const pos = lang.indexOf('-');
         if ( pos === -1 ) { return lang; }
@@ -581,12 +579,53 @@ async function defaultRulesetsFromLanguage() {
     );
 
     const rulesetDetails = await getRulesetDetails();
+    const out = [];
     for ( const [ id, details ] of rulesetDetails ) {
+        if ( details.enabled ) {
+            out.push(id);
+            continue;
+        }
         if ( typeof details.lang !== 'string' ) { continue; }
         if ( reTargetLang.test(details.lang) === false ) { continue; }
         out.push(id);
     }
     return out;
+}
+
+/******************************************************************************/
+
+async function patchDefaultRulesets() {
+    const [
+        oldDefaultIds = [],
+        newDefaultIds,
+        newIds,
+    ] = await Promise.all([
+        localRead('defaultRulesetIds'),
+        defaultRulesetsFromLanguage(),
+        getRulesetDetails(),
+    ]);
+    const toAdd = [];
+    const toRemove = [];
+    for ( const id of newDefaultIds ) {
+        if ( oldDefaultIds.includes(id) ) { continue; }
+        toAdd.push(id);
+    }
+    for ( const id of oldDefaultIds ) {
+        if ( newDefaultIds.includes(id) ) { continue; }
+        toRemove.push(id);
+    }
+    for ( const id of rulesetConfig.enabledRulesets ) {
+        if ( newIds.has(id) ) { continue; }
+        toRemove.push(id);
+    }
+    localWrite('defaultRulesetIds', newDefaultIds);
+    if ( toAdd.length === 0 && toRemove.length === 0 ) { return; }
+    const enabledRulesets = new Set(rulesetConfig.enabledRulesets);
+    toAdd.forEach(id => enabledRulesets.add(id));
+    toRemove.forEach(id => enabledRulesets.delete(id));
+    const patchedRulesets = Array.from(enabledRulesets);
+    ubolLog(`Patched rulesets: ${rulesetConfig.enabledRulesets} => ${patchedRulesets}`);
+    rulesetConfig.enabledRulesets = patchedRulesets;
 }
 
 /******************************************************************************/
@@ -679,6 +718,7 @@ export {
     filteringModesToDNR,
     getRulesetDetails,
     getEnabledRulesetsDetails,
+    patchDefaultRulesets,
     setStrictBlockMode,
     updateDynamicRules,
 };

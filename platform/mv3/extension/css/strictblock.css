@@ -26,6 +26,9 @@ body {
 :root.mobile body {
     padding: var(--default-gap-small);
     }
+body.loading {
+    visibility: hidden;
+    }
 
 #rootContainer {
     width: min(100%, 640px);
@@ -42,6 +45,9 @@ p {
     }
 a {
     text-decoration: none;
+    }
+q {
+    font-weight: bold;
     }
 .code {
     font-size: 13px;
@@ -126,6 +132,12 @@ body[dir="rtl"] #toggleParse {
     }
 #parsed span:first-of-type {
     font-weight: bold;
+    }
+
+#urlskip a {
+    display: block;
+    overflow-y: auto;
+    word-break: break-all;
     }
 
 #actionContainer {

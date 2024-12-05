@@ -284,6 +284,7 @@ function addToDNR(context, list) {
         toDNR: true,
         nativeCssHas: env.includes('native_css_has'),
         badTypes: [ sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE ],
+        trustedSource: list.trustedSource || undefined,
     });
     const compiler = staticNetFilteringEngine.createCompiler();
 

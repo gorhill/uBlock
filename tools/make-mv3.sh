@@ -76,6 +76,7 @@ cp "$UBO_DIR"/src/css/fa-icons.css "$DES"/css/
 cp "$UBO_DIR"/src/js/dom.js "$DES"/js/
 cp "$UBO_DIR"/src/js/fa-icons.js "$DES"/js/
 cp "$UBO_DIR"/src/js/i18n.js "$DES"/js/
+cp "$UBO_DIR"/src/js/urlskip.js "$DES"/js/
 cp "$UBO_DIR"/src/lib/punycode.js "$DES"/js/
 
 cp -R "$UBO_DIR/src/img/flags-of-the-world" "$DES"/img

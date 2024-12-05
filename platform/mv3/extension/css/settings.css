@@ -15,7 +15,7 @@ h3 {
 
 label + legend {
     color: color-mix(in srgb, currentColor 69%, transparent);
-    font-size: small;
+    font-size: var(--font-size-smaller);
     margin-inline-start: var(--default-gap-large);
     }
 

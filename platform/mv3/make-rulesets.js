@@ -225,7 +225,7 @@ const isRegex = rule =>
     rule.condition.regexFilter !== undefined;
 
 const isRedirect = rule => {
-    if ( rule.action === undefined ) { return false; }
+    if ( isUnsupported(rule) ) { return false; }
     if ( rule.action.type !== 'redirect' ) { return false; }
     if ( rule.action.redirect?.extensionPath !== undefined ) { return true; }
     if ( rule.action.redirect?.transform?.path !== undefined ) { return true; }
@@ -233,19 +233,26 @@ const isRedirect = rule => {
 };
 
 const isModifyHeaders = rule =>
-    rule.action !== undefined &&
+    isUnsupported(rule) === false &&
     rule.action.type === 'modifyHeaders';
 
 const isRemoveparam = rule =>
-    rule.action !== undefined &&
+    isUnsupported(rule) === false &&
     rule.action.type === 'redirect' &&
     rule.action.redirect.transform !== undefined;
 
-const isGood = rule =>
+const isSafe = rule =>
     isUnsupported(rule) === false &&
-    isRedirect(rule) === false &&
-    isModifyHeaders(rule) === false &&
-    isRemoveparam(rule) === false;
+    rule.action !== undefined && (
+        rule.action.type === 'block' ||
+        rule.action.type === 'allow' ||
+        rule.action.type === 'allowAllRequests'
+    );
+
+const isURLSkip = rule =>
+    isUnsupported(rule) === false &&
+    rule.action !== undefined &&
+    rule.action.type === 'urlskip';
 
 /******************************************************************************/
 
@@ -357,7 +364,7 @@ async function processNetworkFilters(assetDetails, network) {
         }
     }
 
-    const plainGood = rules.filter(rule => isGood(rule) && isRegex(rule) === false);
+    const plainGood = rules.filter(rule => isSafe(rule) && isRegex(rule) === false);
     log(`\tPlain good: ${plainGood.length}`);
     log(plainGood
         .filter(rule => Array.isArray(rule._warning))
@@ -365,7 +372,7 @@ async function processNetworkFilters(assetDetails, network) {
         .join('\n'), true
     );
 
-    const regexes = rules.filter(rule => isGood(rule) && isRegex(rule));
+    const regexes = rules.filter(rule => isSafe(rule) && isRegex(rule));
     log(`\tMaybe good (regexes): ${regexes.length}`);
 
     const redirects = rules.filter(rule =>
@@ -393,6 +400,22 @@ async function processNetworkFilters(assetDetails, network) {
         isModifyHeaders(rule)
     );
     log(`\tmodifyHeaders=: ${modifyHeaders.length}`);
+
+    const urlskips = rules.filter(rule => isURLSkip(rule)).filter(rule =>
+        rule.__modifierAction === 0 &&
+        rule.condition &&
+        rule.condition.regexFilter &&
+        rule.condition.resourceTypes &&
+        rule.condition.resourceTypes.includes('main_frame')
+    ).map(rule => {
+        const steps = rule.__modifierValue;
+        return {
+            re: rule.condition.regexFilter,
+            c: rule.condition.isUrlFilterCaseSensitive,
+            steps: steps.includes(' ') && steps.split(/ +/) || [ steps ],
+        };
+    });
+    log(`\turlskip=: ${urlskips.length}`);
 
     const bad = rules.filter(rule =>
         isUnsupported(rule)
@@ -460,6 +483,13 @@ async function processNetworkFilters(assetDetails, network) {
         );
     }
 
+    if ( urlskips.length !== 0 ) {
+        writeFile(
+            `${rulesetDir}/urlskip/${assetDetails.id}.json`,
+            JSON.stringify(urlskips, null, 1)
+        );
+    }
+
     return {
         total: rules.length,
         plain: plainGood.length,
@@ -470,6 +500,7 @@ async function processNetworkFilters(assetDetails, network) {
         redirect: redirects.length,
         modifyHeaders: modifyHeaders.length,
         strictblock: strictBlocked.size,
+        urlskip: urlskips.length,
     };
 }
 
@@ -1114,6 +1145,7 @@ async function rulesetFromURLs(assetDetails) {
             redirect: netStats.redirect,
             modifyHeaders: netStats.modifyHeaders,
             strictblock: netStats.strictblock,
+            urlskip: netStats.urlskip,
             discarded: netStats.discarded,
             rejected: netStats.rejected,
         },
@@ -1264,6 +1296,14 @@ async function main() {
     });
 
     // Handpicked rulesets from abroad
+    await rulesetFromURLs({
+        id: 'nrd.30day.phishing',
+        name: '30-day Phishing Domain List',
+        enabled: true,
+        urls: [ 'https://raw.githubusercontent.com/xRuffKez/NRD/refs/heads/main/lists/30-day_phishing/domains-only/nrd-phishing-30day.txt' ],
+        homeURL: 'https://github.com/xRuffKez/NRD?tab=readme-ov-file',
+    });
+
     await rulesetFromURLs({
         id: 'stevenblack-hosts',
         name: 'Steven Black’s Unified Hosts (adware + malware)',

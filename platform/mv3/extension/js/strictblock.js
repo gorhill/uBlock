@@ -20,21 +20,15 @@
 */
 
 import { dom, qs$ } from './dom.js';
+import { fetchJSON } from './fetch.js';
+import { getEnabledRulesetsDetails } from './ruleset-manager.js';
 import { i18n$ } from './i18n.js';
 import { sendMessage } from './ext.js';
+import { urlSkip } from './urlskip.js';
 
 /******************************************************************************/
 
-const toURL = new URL('about:blank');
-
-function setURL(url) {
-    try {
-        toURL.href = url;
-    } catch(_) {
-    }
-}
-
-setURL(self.location.hash.slice(1));
+const rulesetDetailsPromise = getEnabledRulesetsDetails();
 
 /******************************************************************************/
 
@@ -65,6 +59,13 @@ async function proceed() {
 }
 
 /******************************************************************************/
+
+const toURL = new URL('about:blank');
+
+try {
+    toURL.href = self.location.hash.slice(1);
+} catch(_) {
+}
 
 dom.clear('#theURL > p > span:first-of-type');
 qs$('#theURL > p > span:first-of-type').append(urlToFragment(toURL.href));
@@ -152,16 +153,92 @@ qs$('#theURL > p > span:first-of-type').append(urlToFragment(toURL.href));
 
 /******************************************************************************/
 
+// Find which list caused the blocking.
+(async ( ) => {
+    const rulesetDetails = await rulesetDetailsPromise;
+    let iList = -1;
+    const searchInList = async i => {
+        if ( iList !== -1 ) { return; }
+        const hostnames = new Set(
+            await fetchJSON(`/rulesets/strictblock/${rulesetDetails[i].id}`)
+        );
+        if ( iList !== -1 ) { return; }
+        let hn = toURL.hostname;
+        for (;;) {
+            if ( hostnames.has(hn) ) { iList = i; break; }
+            const pos = hn.indexOf('.');
+            if ( pos === -1 ) { break; }
+            hn = hn.slice(pos+1);
+        }
+    };
+    const toFetch = [];
+    for ( let i = 0; i < rulesetDetails.length; i++ ) {
+        if ( rulesetDetails[i].rules.strictblock === 0 ) { continue; }
+        toFetch.push(searchInList(i));
+    }
+    if ( toFetch.length === 0 ) { return; }
+    await Promise.all(toFetch);
+    if ( iList === -1 ) { return; }
+
+    const fragment = new DocumentFragment();
+    const text = i18n$('strictblockReasonSentence1');
+    const placeholder = '{{listname}}';
+    const pos = text.indexOf(placeholder);
+    if ( pos === -1 ) { return; }
+    const q = document.createElement('q');
+    q.append(rulesetDetails[iList].name); 
+    fragment.append(text.slice(0, pos), q, text.slice(pos + placeholder.length));
+    qs$('#reason').append(fragment);
+    dom.attr('#reason', 'hidden', null);
+})();
+
+/******************************************************************************/
+
+// Offer to skip redirection whenever possible
+(async ( ) => {
+    const rulesetDetails = await rulesetDetailsPromise;
+    const toFetch = [];
+    for ( const details of rulesetDetails ) {
+        if ( details.rules.urlskip === 0 ) { continue; }
+        toFetch.push(fetchJSON(`/rulesets/urlskip/${details.id}`));
+    }
+    if ( toFetch.length === 0 ) { return; }
+    const urlskipLists = await Promise.all(toFetch);
+    for ( const urlskips of urlskipLists ) {
+        for ( const urlskip of urlskips ) {
+            const re = new RegExp(urlskip.re, urlskip.c ? undefined : 'i');
+            if ( re.test(toURL.href) === false ) { continue; }
+            const finalURL = urlSkip(toURL.href, false, urlskip.steps);
+            if ( finalURL === undefined ) { continue; }
+            const fragment = new DocumentFragment();
+            const text = i18n$('strictblockRedirectSentence1');
+            const linkPlaceholder = '{{url}}';
+            const pos = text.indexOf(linkPlaceholder);
+            if ( pos === -1 ) { return; }
+            const link = document.createElement('a');
+            link.href = finalURL;
+            dom.cl.add(link, 'code');
+            link.append(urlToFragment(finalURL)); 
+            fragment.append(
+                text.slice(0, pos),
+                link,
+                text.slice(pos + linkPlaceholder.length)
+            );
+            qs$('#urlskip').append(fragment);
+            dom.attr('#urlskip', 'hidden', null);
+            return;
+        }
+    }
+})();
+
+/******************************************************************************/
+
 // https://www.reddit.com/r/uBlockOrigin/comments/breeux/
 if ( window.history.length > 1 ) {
-    dom.on('#back', 'click', ( ) => {
-        window.history.back();
-    });
+    dom.on('#back', 'click', ( ) => { window.history.back(); });
     qs$('#bye').style.display = 'none';
 } else {
-    dom.on('#bye', 'click', ( ) => {
-        window.close();
-    });
+    dom.on('#bye', 'click', ( ) => { window.close(); });
     qs$('#back').style.display = 'none';
 }
 
@@ -171,8 +248,8 @@ dom.on('#disableWarning', 'change', ev => {
     dom.cl.toggle('[data-i18n="strictblockClose"]', 'disabled', checked);
 });
 
-dom.on('#proceed', 'click', ( ) => {
-    proceed();
-});
+dom.on('#proceed', 'click', ( ) => { proceed(); });
+
+dom.cl.remove(dom.body, 'loading');
 
 /******************************************************************************/

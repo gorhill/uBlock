@@ -24,13 +24,11 @@ import {
     sessionRead, sessionWrite,
 } from './ext.js';
 
-import { defaultRulesetsFromLanguage } from './ruleset-manager.js';
-
 /******************************************************************************/
 
 export const rulesetConfig = {
     version: '',
-    enabledRulesets: [ 'default' ],
+    enabledRulesets: [],
     autoReload: true,
     showBlockedCount: true,
     strictBlockMode: true,
@@ -67,7 +65,6 @@ export async function loadRulesetConfig() {
         sessionWrite('rulesetConfig', rulesetConfig);
         return;
     }
-    rulesetConfig.enabledRulesets = await defaultRulesetsFromLanguage();
     sessionWrite('rulesetConfig', rulesetConfig);
     localWrite('rulesetConfig', rulesetConfig);
     process.firstRun = true;
