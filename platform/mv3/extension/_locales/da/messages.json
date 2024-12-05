@@ -232,11 +232,11 @@
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLabel": {
-    "message": "Enable strict blocking",
+    "message": "Aktivér striks blokering",
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLegend": {
-    "message": "Navigation to potentially undesirable sites will be blocked, and you will be offered the option to proceed.",
+    "message": "Navigering til potentielt uønskede websteder blokeres, men man tilbydes muligheden for at fortsætte.",
     "description": "Label for a checkbox in the options page"
   },
   "findListsPlaceholder": {
@@ -244,31 +244,31 @@
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
-    "message": "Page blocked",
+    "message": "Side blokeret",
     "description": "Webpage title for the strict-blocked page"
   },
   "strictblockSentence1": {
-    "message": "uBO Lite has prevented the following page from loading:",
+    "message": "uBO Lite har forhindret flg. side i at blive indlæst:",
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockNoParamsPrompt": {
-    "message": "without parameters",
+    "message": "uden parametre",
     "description": "Label to be used for the parameter-less URL"
   },
   "strictblockBack": {
-    "message": "Go back",
+    "message": "Gå tilbage",
     "description": "A button to go back to the previous webpage"
   },
   "strictblockClose": {
-    "message": "Close this window",
+    "message": "Luk dette vindue",
     "description": "A button to close the current tab"
   },
   "strictblockDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "Advar ikke igen om dette websted",
     "description": "Label for checkbox in document-blocked page"
   },
   "strictblockProceed": {
-    "message": "Proceed",
+    "message": "Fortsæt",
     "description": "A button to navigate to the blocked page"
   }
 }

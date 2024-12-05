@@ -928,7 +928,7 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Пријавите проблеме са филтерима на одређеним веб сајтовима на <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code>, страници за праћење проблема</span>. <u>Неопходан је GitHub налог.</u>",
+    "message": "Пријавите проблеме са филтерима на одређеним веб сајтовима на <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Неопходан је GitHub налог.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
@@ -944,7 +944,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Пријавите проблеме са самим uBlock Origin-ом на <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code>, страници за праћење проблема</span>. <u>Неопходан је GitHub налог.</u>",
+    "message": "Пријавите проблеме са самим uBlock Origin-ом на <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>. <u>Неопходан је GitHub налог.</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
@@ -1012,7 +1012,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leads to badware, phishing",
+    "message": "Води до лошег софтвера, „пецања\"",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
@@ -1192,7 +1192,7 @@
     "description": "Button text to navigate to the blocked page"
   },
   "docblockedRedirectPrompt": {
-    "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
+    "message": "Блокирана страница жели да преусмери на други сајт. Ако одлучите да наставите, ићи ћете директно на: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "cloudPush": {

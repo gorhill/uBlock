@@ -232,11 +232,11 @@
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLabel": {
-    "message": "Enable strict blocking",
+    "message": "Stricktes Blockieren aktivieren",
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLegend": {
-    "message": "Navigation to potentially undesirable sites will be blocked, and you will be offered the option to proceed.",
+    "message": "Die Navigation zu potenziell unerwünschten Websites wird verhindert, jedoch wird eine Möglichkeit zum Fortfahren angeboten.",
     "description": "Label for a checkbox in the options page"
   },
   "findListsPlaceholder": {
@@ -244,31 +244,31 @@
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
-    "message": "Page blocked",
+    "message": "Seite blockiert",
     "description": "Webpage title for the strict-blocked page"
   },
   "strictblockSentence1": {
-    "message": "uBO Lite has prevented the following page from loading:",
+    "message": "uBO Lite hat das Laden der folgenden Seite verhindert:",
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockNoParamsPrompt": {
-    "message": "without parameters",
+    "message": "ohne Parameter",
     "description": "Label to be used for the parameter-less URL"
   },
   "strictblockBack": {
-    "message": "Go back",
+    "message": "Zurück",
     "description": "A button to go back to the previous webpage"
   },
   "strictblockClose": {
-    "message": "Close this window",
+    "message": "Dieses Fenster schließen",
     "description": "A button to close the current tab"
   },
   "strictblockDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "Nicht erneut vor dieser Seite warnen",
     "description": "Label for checkbox in document-blocked page"
   },
   "strictblockProceed": {
-    "message": "Proceed",
+    "message": "Fortfahren",
     "description": "A button to navigate to the blocked page"
   }
 }

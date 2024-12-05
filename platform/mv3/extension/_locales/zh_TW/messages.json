@@ -108,7 +108,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
-    "message": "回報特定網站的過濾器問題至 <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> 議題追蹤器</span>。<u>需要 GitHub 帳號。</u>",
+    "message": "將特定網站的過濾器問題回報至 <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> 議題追蹤器</span>。<u>需要 GitHub 帳號。</u>.",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS6P1S1": {
@@ -172,7 +172,7 @@
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "您剛安裝了 uBO Lite。您可以在此處選擇會套用在所有網站上的預設過濾模式。\n\n預設情況下，將會使用<em>基礎</em>模式，因為其不需要讀取與變更資料的權限。若您信任 uBO Lite，您可以給予其讀取並變更在所有網站上資料的廣泛權限，以便為所有網站啟用更進階的過濾功能。",
+    "message": "您剛安裝了 uBO Lite。您可以在此處選擇會套用在所有網站上的預設過濾模式。\n\n預設將會使用<em>基礎</em>模式，因為其不需要讀取與變更資料的權限。若您信任 uBO Lite，您可以給予其讀取並變更在所有網站上資料的廣泛權限，以便為所有網站啟用進階過濾功能。",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
@@ -192,7 +192,7 @@
     "description": "Name of blocking mode 1"
   },
   "filteringMode2Name": {
-    "message": "最佳化",
+    "message": "最佳",
     "description": "Name of blocking mode 2"
   },
   "filteringMode3Name": {
@@ -208,11 +208,11 @@
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "進階網路過濾以及來自選定過濾條件清單的特定與通用擴展過濾條件。\n\n需要在所有網站上讀取並變更資料的廣泛權限。\n\n通用擴展過濾可能會導致更高的網頁資源使用率。",
+    "message": "進階網路過濾以及來自選定過濾清單的特定與通用擴展過濾條件。\n\n需要在所有網站上讀取並變更資料的廣泛權限。\n\n通用擴展過濾可能會導致使用更多的網頁資源。",
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "不進行過濾的主機名稱列表",
+    "message": "不會被過濾的網站",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
@@ -224,19 +224,19 @@
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "變更過濾模式時自動重新載入頁面",
+    "message": "變更過濾模式時，自動重新載入",
     "description": "Label for a checkbox in the options page"
   },
   "showBlockedCountLabel": {
-    "message": "在工具列圖示上顯示被阻擋的連線請求的數量",
+    "message": "在工具列圖示上顯示被阻擋的網路請求數量",
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLabel": {
-    "message": "Enable strict blocking",
+    "message": "啟用嚴格阻擋",
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLegend": {
-    "message": "Navigation to potentially undesirable sites will be blocked, and you will be offered the option to proceed.",
+    "message": "將會阻擋前往潛在不良網站的請求，您可以選擇繼續。",
     "description": "Label for a checkbox in the options page"
   },
   "findListsPlaceholder": {
@@ -244,31 +244,31 @@
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
-    "message": "Page blocked",
+    "message": "已封鎖頁面",
     "description": "Webpage title for the strict-blocked page"
   },
   "strictblockSentence1": {
-    "message": "uBO Lite has prevented the following page from loading:",
+    "message": "uBO Lite 已防止下列頁面載入：",
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockNoParamsPrompt": {
-    "message": "without parameters",
+    "message": "不帶參數",
     "description": "Label to be used for the parameter-less URL"
   },
   "strictblockBack": {
-    "message": "Go back",
+    "message": "返回",
     "description": "A button to go back to the previous webpage"
   },
   "strictblockClose": {
-    "message": "Close this window",
+    "message": "關閉此視窗",
     "description": "A button to close the current tab"
   },
   "strictblockDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "不要再顯示關於此網站的警告",
     "description": "Label for checkbox in document-blocked page"
   },
   "strictblockProceed": {
-    "message": "Proceed",
+    "message": "繼續",
     "description": "A button to navigate to the blocked page"
   }
 }

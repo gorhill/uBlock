@@ -232,11 +232,11 @@
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLabel": {
-    "message": "Enable strict blocking",
+    "message": "开启严格拦截",
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLegend": {
-    "message": "Navigation to potentially undesirable sites will be blocked, and you will be offered the option to proceed.",
+    "message": "导航至潜在不良网站的操作将被拦截，并且您将可以选择继续前往。",
     "description": "Label for a checkbox in the options page"
   },
   "findListsPlaceholder": {
@@ -244,31 +244,31 @@
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
-    "message": "Page blocked",
+    "message": "被拦截的页面",
     "description": "Webpage title for the strict-blocked page"
   },
   "strictblockSentence1": {
-    "message": "uBO Lite has prevented the following page from loading:",
+    "message": "uBO Lite 已阻止了以下页面的加载：",
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockNoParamsPrompt": {
-    "message": "without parameters",
+    "message": "不含参数",
     "description": "Label to be used for the parameter-less URL"
   },
   "strictblockBack": {
-    "message": "Go back",
+    "message": "返回",
     "description": "A button to go back to the previous webpage"
   },
   "strictblockClose": {
-    "message": "Close this window",
+    "message": "关闭此窗口",
     "description": "A button to close the current tab"
   },
   "strictblockDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "不要再警告我关于这个网站了",
     "description": "Label for checkbox in document-blocked page"
   },
   "strictblockProceed": {
-    "message": "Proceed",
+    "message": "继续",
     "description": "A button to navigate to the blocked page"
   }
 }
