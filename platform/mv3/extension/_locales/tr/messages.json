@@ -252,11 +252,11 @@
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {
-    "message": "The page was blocked because of a matching filter in {{listname}}.",
+    "message": "Bu sayfa {{listname}} içindeki bir süzgece takıldığı için engellenmiştir.",
     "description": "Text informing about what is causing the page to be blocked"
   },
   "strictblockRedirectSentence1": {
-    "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
+    "message": "Engellenen sayfa sizi başka bir siteye yönlendirmek istiyor. Devam etmek isterseniz doğrudan şuraya yönlendirileceksiniz: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "strictblockNoParamsPrompt": {
