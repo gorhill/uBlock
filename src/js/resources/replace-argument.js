@@ -38,7 +38,8 @@ import { validateConstantFn } from './set-constant.js';
  * 
  * @param argposRaw
  * The zero-based position of the argument in the argument list. Use a negative
- * number for a position relative to the last argument.
+ * number for a position relative to the last argument. Use literal `this` to
+ * replace the value used in `prototype`-based methods.
  * 
  * @param argraw
  * The replacement value, validated using the same heuristic as with the
