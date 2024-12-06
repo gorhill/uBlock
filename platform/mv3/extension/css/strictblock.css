@@ -50,7 +50,7 @@ q {
     font-weight: bold;
     }
 .code {
-    font-size: 13px;
+    font-size: var(--font-size-smaller);
     word-break: break-all;
     }
 #warningSign {
@@ -137,7 +137,6 @@ body[dir="rtl"] #toggleParse {
 #urlskip a {
     display: block;
     overflow-y: auto;
-    word-break: break-all;
     }
 
 #actionContainer {

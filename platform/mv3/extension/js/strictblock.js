@@ -72,6 +72,31 @@ qs$('#theURL > p > span:first-of-type').append(urlToFragment(toURL.href));
 
 /******************************************************************************/
 
+function fragmentFromTemplate(template, placeholder, text, details) {
+    const fragment = new DocumentFragment();
+    const pos = template.indexOf(placeholder);
+    if ( pos === -1 ) {
+        fragment.append(template);
+        return fragment;
+    }
+    const elem = document.createElement(details.tag);
+    const { attributes } = details;
+    if ( attributes ) {
+        for ( let i = 0; i < attributes.length; i+= 2 ) {
+            elem.setAttribute(attributes[i+0], attributes[i+1]);
+        }
+    }
+    elem.append(text);
+    fragment.append(
+        template.slice(0, pos),
+        elem,
+        template.slice(pos + placeholder.length)
+    );
+    return fragment;
+}
+
+/******************************************************************************/
+
 // https://github.com/gorhill/uBlock/issues/691
 //   Parse URL to extract as much useful information as possible. This is
 //   useful to assist the user in deciding whether to navigate to the web page.
@@ -179,15 +204,11 @@ qs$('#theURL > p > span:first-of-type').append(urlToFragment(toURL.href));
     if ( toFetch.length === 0 ) { return; }
     await Promise.all(toFetch);
     if ( iList === -1 ) { return; }
-
-    const fragment = new DocumentFragment();
-    const text = i18n$('strictblockReasonSentence1');
-    const placeholder = '{{listname}}';
-    const pos = text.indexOf(placeholder);
-    if ( pos === -1 ) { return; }
-    const q = document.createElement('q');
-    q.append(rulesetDetails[iList].name); 
-    fragment.append(text.slice(0, pos), q, text.slice(pos + placeholder.length));
+    const fragment = fragmentFromTemplate(
+        i18n$('strictblockReasonSentence1'),
+        '{{listname}}', rulesetDetails[iList].name,
+        { tag: 'q' }
+    );
     qs$('#reason').append(fragment);
     dom.attr('#reason', 'hidden', null);
 })();
@@ -210,19 +231,10 @@ qs$('#theURL > p > span:first-of-type').append(urlToFragment(toURL.href));
             if ( re.test(toURL.href) === false ) { continue; }
             const finalURL = urlSkip(toURL.href, false, urlskip.steps);
             if ( finalURL === undefined ) { continue; }
-            const fragment = new DocumentFragment();
-            const text = i18n$('strictblockRedirectSentence1');
-            const linkPlaceholder = '{{url}}';
-            const pos = text.indexOf(linkPlaceholder);
-            if ( pos === -1 ) { return; }
-            const link = document.createElement('a');
-            link.href = finalURL;
-            dom.cl.add(link, 'code');
-            link.append(urlToFragment(finalURL)); 
-            fragment.append(
-                text.slice(0, pos),
-                link,
-                text.slice(pos + linkPlaceholder.length)
+            const fragment = fragmentFromTemplate(
+                i18n$('strictblockRedirectSentence1'),
+                '{{url}}', urlToFragment(finalURL),
+                { tag: 'a', attributes: [ 'href', finalURL, 'class', 'code' ] }
             );
             qs$('#urlskip').append(fragment);
             dom.attr('#urlskip', 'hidden', null);
