@@ -192,7 +192,7 @@ function abortCurrentScriptCore(
     const reContext = safe.patternToRegex(context);
     const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
     const thisScript = document.currentScript;
-    const chain = target.split('.');
+    const chain = safe.String_split.call(target, '.');
     let owner = window;
     let prop;
     for (;;) {
@@ -406,6 +406,7 @@ builtinScriptlets.push({
     dependencies: [
         'matches-stack-trace.fn',
         'object-find-owner.fn',
+        'safe-self.fn',
     ],
 });
 //  When no "prune paths" argument is provided, the scriptlet is
@@ -422,11 +423,12 @@ function objectPruneFn(
     extraArgs = {}
 ) {
     if ( typeof rawPrunePaths !== 'string' ) { return; }
+    const safe = safeSelf();
     const prunePaths = rawPrunePaths !== ''
-        ? rawPrunePaths.split(/ +/)
+        ? safe.String_split.call(rawPrunePaths, / +/)
         : [];
     const needlePaths = prunePaths.length !== 0 && rawNeedlePaths !== ''
-        ? rawNeedlePaths.split(/ +/)
+        ? safe.String_split.call(rawNeedlePaths, / +/)
         : [];
     if ( stackNeedleDetails.matchAll !== true ) {
         if ( matchesStackTrace(stackNeedleDetails, extraArgs.logstack) === false ) {
@@ -547,7 +549,7 @@ function matchesStackTrace(
     // Normalize stack trace
     const reLine = /(.*?@)?(\S+)(:\d+):\d+\)?$/;
     const lines = [];
-    for ( let line of error.stack.split(/[\n\r]+/) ) {
+    for ( let line of safe.String_split.call(error.stack, /[\n\r]+/) ) {
         if ( line.includes(exceptionToken) ) { continue; }
         line = line.trim();
         const match = safe.RegExp_exec.call(reLine, line);
@@ -594,8 +596,8 @@ function parsePropertiesToMatch(propsToMatch, implicit = '') {
     const needles = new Map();
     if ( propsToMatch === undefined || propsToMatch === '' ) { return needles; }
     const options = { canNegate: true };
-    for ( const needle of propsToMatch.split(/\s+/) ) {
-        const [ prop, pattern ] = needle.split(':');
+    for ( const needle of safe.String_split.call(propsToMatch, /\s+/) ) {
+        const [ prop, pattern ] = safe.String_split.call(needle, ':');
         if ( prop === '' ) { continue; }
         if ( pattern !== undefined ) {
             needles.set(prop, safe.initPattern(pattern, options));
@@ -1643,7 +1645,7 @@ function noFetchIf(
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix('prevent-fetch', propsToMatch, responseBody, responseType);
     const needles = [];
-    for ( const condition of propsToMatch.split(/\s+/) ) {
+    for ( const condition of safe.String_split.call(propsToMatch, /\s+/) ) {
         if ( condition === '' ) { continue; }
         const pos = condition.indexOf(':');
         let key, value;
@@ -1797,7 +1799,7 @@ function removeClass(
     if ( rawToken === '' ) { return; }
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix('remove-class', rawToken, rawSelector, behavior);
-    const tokens = rawToken.split(/\s*\|\s*/);
+    const tokens = safe.String_split.call(rawToken, /\s*\|\s*/);
     const selector = tokens
         .map(a => `${rawSelector}.${CSS.escape(a)}`)
         .join(',');
@@ -2510,12 +2512,12 @@ function m3uPrune(
                 }
                 text = before.trim() + '\n' + after.trim();
                 reM3u.lastIndex = before.length + 1;
-                toLog.push('Discarding', ...discard.split(/\n+/).map(s => `\t${s}`));
+                toLog.push('Discarding', ...safe.String_split.call(discard, /\n+/).map(s => `\t${s}`));
                 if ( reM3u.global === false ) { break; }
             }
             return text;
         }
-        const lines = text.split(/\n\r|\n|\r/);
+        const lines = safe.String_split.call(text, /\n\r|\n|\r/);
         for ( let i = 0; i < lines.length; i++ ) {
             if ( lines[i] === undefined ) { continue; }
             if ( pruneSpliceoutBlock(lines, i) ) { continue; }
@@ -2758,13 +2760,17 @@ function hrefSanitizer(
 builtinScriptlets.push({
     name: 'call-nothrow.js',
     fn: callNothrow,
+    dependencies: [
+        'safe-self.fn',
+    ],
 });
 function callNothrow(
     chain = ''
 ) {
     if ( typeof chain !== 'string' ) { return; }
     if ( chain === '' ) { return; }
-    const parts = chain.split('.');
+    const safe = safeSelf();
+    const parts = safe.String_split.call(chain, '.');
     let owner = window, prop;
     for (;;) {
         prop = parts.shift();
@@ -3095,7 +3101,7 @@ function trustedClickElement(
     const logPrefix = safe.makeLogPrefix('trusted-click-element', selectors, extraMatch, delay);
 
     if ( extraMatch !== '' ) {
-        const assertions = extraMatch.split(',').map(s => {
+        const assertions = safe.String_split.call(extraMatch, ',').map(s => {
             const pos1 = s.indexOf(':');
             const s1 = pos1 !== -1 ? s.slice(0, pos1) : s;
             const not = s1.startsWith('!');
@@ -3163,7 +3169,7 @@ function trustedClickElement(
         return shadowRoot && querySelectorEx(inside, shadowRoot);
     };
 
-    const selectorList = selectors.split(/\s*,\s*/)
+    const selectorList = safe.String_split.call(selectors, /\s*,\s*/)
         .filter(s => {
             try {
                 void querySelectorEx(s);
@@ -3290,10 +3296,10 @@ function trustedPruneInboundObject(
     const extraArgs = safe.getExtraArgs(Array.from(arguments), 4);
     const needlePaths = [];
     if ( rawPrunePaths !== '' ) {
-        needlePaths.push(...rawPrunePaths.split(/ +/));
+        needlePaths.push(...safe.String_split.call(rawPrunePaths, / +/));
     }
     if ( rawNeedlePaths !== '' ) {
-        needlePaths.push(...rawNeedlePaths.split(/ +/));
+        needlePaths.push(...safe.String_split.call(rawNeedlePaths, / +/));
     }
     const stackNeedle = safe.initPattern(extraArgs.stackToMatch || '', { canNegate: true });
     const mustProcess = root => {
@@ -3455,7 +3461,7 @@ function trustedSuppressNativeMethod(
     if ( stack !== '' ) { return; }
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix('trusted-suppress-native-method', methodPath, signature, how);
-    const signatureArgs = signature.split(/\s*\|\s*/).map(v => {
+    const signatureArgs = safe.String_split.call(signature, /\s*\|\s*/).map(v => {
         if ( /^".*"$/.test(v) ) {
             return { type: 'pattern', re: safe.patternToRegex(v.slice(1, -1)) };
         }

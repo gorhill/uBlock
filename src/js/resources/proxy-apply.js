@@ -52,7 +52,7 @@ export function proxyApplyFn(
             }
             reflect() {
                 const r = Reflect.construct(this.callFn, this.callArgs);
-                this.callFn = this.callArgs = undefined;
+                this.callFn = this.callArgs = this.private = undefined;
                 proxyApplyFn.ctorContexts.push(this);
                 return r;
             }
@@ -75,7 +75,7 @@ export function proxyApplyFn(
             }
             reflect() {
                 const r = Reflect.apply(this.callFn, this.thisArg, this.callArgs);
-                this.callFn = this.thisArg = this.callArgs = undefined;
+                this.callFn = this.thisArg = this.callArgs = this.private = undefined;
                 proxyApplyFn.applyContexts.push(this);
                 return r;
             }

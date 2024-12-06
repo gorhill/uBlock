@@ -53,7 +53,8 @@ registerScriptlet(getSafeCookieValuesFn, {
 /******************************************************************************/
 
 export function getAllCookiesFn() {
-    return document.cookie.split(/\s*;\s*/).map(s => {
+    const safe = safeSelf();
+    return safe.String_split.call(document.cookie, /\s*;\s*/).map(s => {
         const pos = s.indexOf('=');
         if ( pos === 0 ) { return; }
         if ( pos === -1 ) { return `${s.trim()}=`; }
@@ -64,6 +65,9 @@ export function getAllCookiesFn() {
 }
 registerScriptlet(getAllCookiesFn, {
     name: 'get-all-cookies.fn',
+    dependencies: [
+        safeSelf,
+    ],
 });
 
 /******************************************************************************/
@@ -71,7 +75,8 @@ registerScriptlet(getAllCookiesFn, {
 export function getCookieFn(
     name = ''
 ) {
-    for ( const s of document.cookie.split(/\s*;\s*/) ) {
+    const safe = safeSelf();
+    for ( const s of safe.String_split.call(document.cookie, /\s*;\s*/) ) {
         const pos = s.indexOf('=');
         if ( pos === -1 ) { continue; }
         if ( s.slice(0, pos) !== name ) { continue; }
@@ -80,6 +85,9 @@ export function getCookieFn(
 }
 registerScriptlet(getCookieFn, {
     name: 'get-cookie.fn',
+    dependencies: [
+        safeSelf,
+    ],
 });
 
 /******************************************************************************/
@@ -349,7 +357,7 @@ export function removeCookie(
         }, ms);
     };
     const remove = ( ) => {
-        document.cookie.split(';').forEach(cookieStr => {
+        safe.String_split.call(document.cookie, ';').forEach(cookieStr => {
             const pos = cookieStr.indexOf('=');
             if ( pos === -1 ) { return; }
             const cookieName = cookieStr.slice(0, pos).trim();
@@ -387,7 +395,7 @@ export function removeCookie(
     window.addEventListener('beforeunload', remove);
     if ( typeof extraArgs.when !== 'string' ) { return; }
     const supportedEventTypes = [ 'scroll', 'keydown' ];
-    const eventTypes = extraArgs.when.split(/\s/);
+    const eventTypes = safe.String_split.call(extraArgs.when, /\s/);
     for ( const type of eventTypes ) {
         if ( supportedEventTypes.includes(type) === false ) { continue; }
         document.addEventListener(type, ( ) => {

@@ -71,25 +71,39 @@ export function trustedReplaceArgument(
     const reCondition = extraArgs.condition
         ? safe.patternToRegex(extraArgs.condition)
         : /^/;
-    proxyApplyFn(propChain, function(context) {
+    const getArg = context => {
+        if ( argposRaw === 'this' ) { return context.thisArg; }
         const { callArgs } = context;
-        if ( argposRaw === '' ) {
-            safe.uboLog(logPrefix, `Arguments:\n${callArgs.join('\n')}`);
-            return context.reflect();
-        }
         const argpos = argoffset >= 0 ? argoffset : callArgs.length - argoffset;
-        if ( argpos < 0 || argpos >= callArgs.length ) {
+        if ( argpos < 0 || argpos >= callArgs.length ) { return; }
+        context.private = { argpos };
+        return callArgs[argpos];
+    };
+    const setArg = (context, value) => {
+        if ( argposRaw === 'this' ) {
+            if ( value !== context.thisArg ) {
+                context.thisArg = value;
+            }
+        } else if ( context.private ) {
+            context.callArgs[context.private.argpos] = value;
+        }
+    };
+    proxyApplyFn(propChain, function(context) {
+        if ( argposRaw === '' ) {
+            safe.uboLog(logPrefix, `Arguments:\n${context.callArgs.join('\n')}`);
             return context.reflect();
         }
-        const argBefore = callArgs[argpos];
+        const argBefore = getArg(context);
         if ( safe.RegExp_test.call(reCondition, argBefore) === false ) {
             return context.reflect();
         }
         const argAfter = replacer && typeof argBefore === 'string'
             ? argBefore.replace(replacer.re, replacer.replacement)
             : value;
-        callArgs[argpos] = argAfter;
-        safe.uboLog(logPrefix, `Replaced argument:\nBefore: ${JSON.stringify(argBefore)}\nAfter: ${argAfter}`);
+        if ( argAfter !== argBefore ) {
+            setArg(context, argAfter);
+            safe.uboLog(logPrefix, `Replaced argument:\nBefore: ${JSON.stringify(argBefore)}\nAfter: ${argAfter}`);
+        }
         return context.reflect();
     });
 }
