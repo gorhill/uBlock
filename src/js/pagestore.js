@@ -1063,7 +1063,9 @@ const PageStore = class {
             this.largeMediaTimer.on(500);
         }
         const size = headers.contentLength;
-        if ( isNaN(size) ) { return 0; }
+        if ( isNaN(size) ) {
+            return µb.userSettings.largeMediaSize === 0 ? 1 : 0;
+        }
         if ( (size >>> 10) < µb.userSettings.largeMediaSize ) { return 0; }
         this.largeMediaCount += 1;
         this.largeMediaTimer.on(500);
