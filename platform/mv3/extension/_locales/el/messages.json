@@ -252,11 +252,11 @@
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {
-    "message": "The page was blocked because of a matching filter in {{listname}}.",
+    "message": "Η σελίδα αποκλείστηκε λόγω αντιστοίχισης φίλτρου στη {{listname}}.",
     "description": "Text informing about what is causing the page to be blocked"
   },
   "strictblockRedirectSentence1": {
-    "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
+    "message": "Η αποκλεισμένη σελίδα θέλει να κάνει ανακατεύθυνση σε άλλο ιστότοπο. Αν επιλέξετε να συνεχίσετε, θα μεταβείτε απευθείας στο: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "strictblockNoParamsPrompt": {

@@ -232,11 +232,11 @@
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLabel": {
-    "message": "Aktivizo bllokimin strikt",
+    "message": "Aktivizoj bllokimin strikt",
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLegend": {
-    "message": "Lundrimi drejt faqeve potencialisht të padëshirueshme do të bllokohet dhe do t'ju ofrohet mundësia për të vazhduar.",
+    "message": "Uebsajtet potencialisht të padëshirueshme do të bllokohen dhe do t'ju jepet mundësia për të vazhduar.",
     "description": "Label for a checkbox in the options page"
   },
   "findListsPlaceholder": {
@@ -248,15 +248,15 @@
     "description": "Webpage title for the strict-blocked page"
   },
   "strictblockSentence1": {
-    "message": "uMatrix ka penguar ngarkimin e faqes vijuese:",
+    "message": "uBO Lite pengoi hapjen e faqes vijuese:",
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {
-    "message": "Faqja u bllokua për shkak të një filtri që përputhet në: {{listname}}.",
+    "message": "Faqja u bllokua për shkak se përputhet me filtrin në {{listname}}.",
     "description": "Text informing about what is causing the page to be blocked"
   },
   "strictblockRedirectSentence1": {
-    "message": "Faqja e bllokuar do t'ju drejtojë në një uebsajt tjetër. Në rast se pranoni do të shkoni te: {{url}}",
+    "message": "Faqja e bllokuar do t'ju drejtojë në një uebsajt tjetër. Në rast se pranoni do të shkoni direkt te: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "strictblockNoParamsPrompt": {
@@ -264,19 +264,19 @@
     "description": "Label to be used for the parameter-less URL"
   },
   "strictblockBack": {
-    "message": "Mbrapa",
+    "message": "Kthehem",
     "description": "A button to go back to the previous webpage"
   },
   "strictblockClose": {
-    "message": "Mbyll këtë dritare",
+    "message": "Mbyll dritaren",
     "description": "A button to close the current tab"
   },
   "strictblockDontWarn": {
-    "message": "Mos më paralajmëro më për këtë faqe.",
+    "message": "Mos më lajmëro për këtë faqen",
     "description": "Label for checkbox in document-blocked page"
   },
   "strictblockProceed": {
-    "message": "Vazhdo",
+    "message": "Vazhdoj",
     "description": "A button to navigate to the blocked page"
   }
 }

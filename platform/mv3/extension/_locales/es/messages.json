@@ -252,11 +252,11 @@
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {
-    "message": "La página fue bloqueada debido a un filtro coincidente en {{listname}}.",
+    "message": "La página ha sido bloqueada como resultado de un filtro coincidente en {{listname}}.",
     "description": "Text informing about what is causing the page to be blocked"
   },
   "strictblockRedirectSentence1": {
-    "message": "La página bloqueada quiere redirigir a otro sitio. Si eliges proceder, navegarás directamente a: {{url}}",
+    "message": "La página bloqueada quiere redirigir a otro sitio. Si eliges continuar, navegarás directamente a: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "strictblockNoParamsPrompt": {
