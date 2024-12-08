@@ -83,11 +83,6 @@ const uidint32 = (s) => {
     return parseInt(h,16) & 0x7FFFFFFF;
 };
 
-const hnSort = (a, b) =>
-    a.split('.').reverse().join('.').localeCompare(
-        b.split('.').reverse().join('.')
-    );
-
 /******************************************************************************/
 
 const stdOutput = [];
@@ -681,14 +676,10 @@ function groupHostnamesBySelectors(arrayin) {
     const out = Array.from(contentMap).map(a => [
         a[0], {
             a: a[1].a,
-            y: a[1].y ? Array.from(a[1].y).sort(hnSort) : '*',
+            y: a[1].y ? Array.from(a[1].y) : undefined,
             n: a[1].n ? Array.from(a[1].n) : undefined,
         }
-    ]).sort((a, b) => {
-        const ha = Array.isArray(a[1].y) ? a[1].y[0] : '*';
-        const hb = Array.isArray(b[1].y) ? b[1].y[0] : '*';
-        return hnSort(ha, hb);
-    });
+    ]);
     return out;
 }
 

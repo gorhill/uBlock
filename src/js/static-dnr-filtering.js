@@ -90,6 +90,39 @@ const keyFromSelector = selector => {
 
 /******************************************************************************/
 
+function addGenericCosmeticFilter(context, selector, isException) {
+    if ( selector === undefined ) { return; }
+    if ( selector.length <= 1 ) { return; }
+    if ( isException ) {
+        if ( context.genericCosmeticExceptions === undefined ) {
+            context.genericCosmeticExceptions = new Set();
+        }
+        context.genericCosmeticExceptions.add(selector);
+        return;
+    }
+    if ( selector.charCodeAt(0) === 0x7B /* '{' */ ) { return; }
+    const key = keyFromSelector(selector);
+    if ( key === undefined ) {
+        if ( context.genericHighCosmeticFilters === undefined ) {
+            context.genericHighCosmeticFilters = new Set();
+        }
+        context.genericHighCosmeticFilters.add(selector);
+        return;
+    }
+    const type = key.charCodeAt(0);
+    const hash = hashFromStr(type, key.slice(1));
+    if ( context.genericCosmeticFilters === undefined ) {
+        context.genericCosmeticFilters = new Map();
+    }
+    let bucket = context.genericCosmeticFilters.get(hash);
+    if ( bucket === undefined ) {
+        context.genericCosmeticFilters.set(hash, bucket = []);
+    }
+    bucket.push(selector);
+}
+
+/******************************************************************************/
+
 function addExtendedToDNR(context, parser) {
     if ( parser.isExtendedFilter() === false ) { return false; }
 
@@ -195,35 +228,8 @@ function addExtendedToDNR(context, parser) {
 
     // Generic cosmetic filtering
     if ( parser.hasOptions() === false ) {
-        const { compiled } = parser.result;
-        if ( compiled === undefined ) { return; }
-        if ( compiled.length <= 1 ) { return; }
-        if ( parser.isException() ) {
-            if ( context.genericCosmeticExceptions === undefined ) {
-                context.genericCosmeticExceptions = new Set();
-            }
-            context.genericCosmeticExceptions.add(compiled);
-            return;
-        }
-        if ( compiled.charCodeAt(0) === 0x7B /* '{' */ ) { return; }
-        const key = keyFromSelector(compiled);
-        if ( key === undefined ) {
-            if ( context.genericHighCosmeticFilters === undefined ) {
-                context.genericHighCosmeticFilters = new Set();
-            }
-            context.genericHighCosmeticFilters.add(compiled);
-            return;
-        }
-        const type = key.charCodeAt(0);
-        const hash = hashFromStr(type, key.slice(1));
-        if ( context.genericCosmeticFilters === undefined ) {
-            context.genericCosmeticFilters = new Map();
-        }
-        let bucket = context.genericCosmeticFilters.get(hash);
-        if ( bucket === undefined ) {
-            context.genericCosmeticFilters.set(hash, bucket = []);
-        }
-        bucket.push(compiled);
+        const { compiled, exception } = parser.result;
+        addGenericCosmeticFilter(context, compiled, exception);
         return;
     }
 
@@ -234,26 +240,22 @@ function addExtendedToDNR(context, parser) {
     if ( context.specificCosmeticFilters === undefined ) {
         context.specificCosmeticFilters = new Map();
     }
+    const { compiled, exception, raw } = parser.result;
+    if ( compiled === undefined ) {
+        context.specificCosmeticFilters.set(`Invalid filter: ...##${raw}`, {
+            rejected: true
+        });
+        return;
+    }
+    let details = context.specificCosmeticFilters.get(compiled);
     for ( const { hn, not, bad } of parser.getExtFilterDomainIterator() ) {
         if ( bad ) { continue; }
+        if ( not && exception ) { continue; }
         if ( isRegex(hn) ) { continue; }
-        let { compiled, exception, raw } = parser.result;
-        if ( exception ) { continue; }
-        let rejected;
-        if ( compiled === undefined ) {
-            rejected = `Invalid filter: ${hn}##${raw}`;
-        }
-        if ( rejected ) {
-            compiled = rejected;
-        }
-        let details = context.specificCosmeticFilters.get(compiled);
         if ( details === undefined ) {
-            details = {};
-            if ( rejected ) { details.rejected = true; }
-            context.specificCosmeticFilters.set(compiled, details);
+            context.specificCosmeticFilters.set(compiled, details = {});
         }
-        if ( rejected ) { continue; }
-        if ( not ) {
+        if ( exception ) {
             if ( details.excludeMatches === undefined ) {
                 details.excludeMatches = [];
             }
@@ -269,6 +271,13 @@ function addExtendedToDNR(context, parser) {
             continue;
         }
         details.matches.push(hn);
+    }
+    if ( details === undefined ) { return; }
+    if ( exception ) { return; }
+    if ( compiled.startsWith('{') ) { return; }
+    if ( details.matches === undefined || details.matches.includes('*') ) {
+        addGenericCosmeticFilter(context, compiled, false);
+        details.matches = undefined;
     }
 }
 
