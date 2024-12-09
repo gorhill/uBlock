@@ -27,11 +27,6 @@ import {
 } from './ext.js';
 
 import {
-    getDynamicRules,
-    getSessionRules,
-} from './ext-compat.js';
-
-import {
     localRead, localRemove, localWrite,
     sessionRead, sessionRemove, sessionWrite,
 } from './ext.js';
@@ -368,8 +363,8 @@ async function commitStrictBlockRules() {
         beforePermanentRules,
         beforeTemporaryRules,
     ] = await Promise.all([
-        getDynamicRules({ ruleIds: [ STRICTBLOCK_BASE_RULE_ID ] }),
-        getSessionRules({ ruleIds: [ STRICTBLOCK_BASE_RULE_ID ] }),
+        dnr.getDynamicRules({ ruleIds: [ STRICTBLOCK_BASE_RULE_ID ] }),
+        dnr.getSessionRules({ ruleIds: [ STRICTBLOCK_BASE_RULE_ID ] }),
     ]);
     if ( beforePermanentRules?.length ) {
         ubolLog(`Remove 1 DNR dynamic strictblock rule`);
@@ -427,11 +422,11 @@ async function updateDynamicRules() {
         dynamicRuleIds,
         sessionRuleIds,
     ] = await Promise.all([
-        getDynamicRules().then(rules =>
+        dnr.getDynamicRules().then(rules =>
             rules.map(rule => rule.id)
                 .filter(id => id < TRUSTED_DIRECTIVE_BASE_RULE_ID)
         ),
-        getSessionRules().then(rules => rules.map(rule => rule.id)),
+        dnr.getSessionRules().then(rules => rules.map(rule => rule.id)),
         updateRegexRules(dynamicRules),
         updateRemoveparamRules(dynamicRules),
         updateRedirectRules(dynamicRules),
@@ -480,7 +475,7 @@ async function updateDynamicRules() {
 /******************************************************************************/
 
 async function filteringModesToDNR(modes) {
-    const trustedRules = await getDynamicRules({
+    const trustedRules = await dnr.getDynamicRules({
         ruleIds: [ TRUSTED_DIRECTIVE_BASE_RULE_ID+0 ],
     });
     const trustedRule = trustedRules.length !== 0 && trustedRules[0] || undefined;
