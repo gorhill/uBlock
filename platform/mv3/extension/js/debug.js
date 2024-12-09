@@ -20,6 +20,7 @@
 */
 
 import { dnr } from './ext.js';
+import { getDynamicRules } from './ext-compat.js';
 
 /******************************************************************************/
 
@@ -53,7 +54,7 @@ const getRuleset = async rulesetId => {
     }
     let rules;
     if ( rulesetId === dnr.DYNAMIC_RULESET_ID ) {
-        rules = await dnr.getDynamicRules().catch(( ) => undefined);
+        rules = await getDynamicRules().catch(( ) => undefined);
     } else {
         const response = await fetch(`/rulesets/main/${rulesetId}.json`).catch(( ) => undefined);
         if ( response === undefined ) { return; }
