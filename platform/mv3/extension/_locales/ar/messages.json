@@ -256,7 +256,7 @@
     "description": "Text informing about what is causing the page to be blocked"
   },
   "strictblockRedirectSentence1": {
-    "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
+    "message": "الصفحة المحظورة تريد إعادة التوجيه إلى موقع آخر. إذا اخترت المتابعة، فسوف تنتقل مباشرة إلى: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "strictblockNoParamsPrompt": {

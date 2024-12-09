@@ -236,7 +236,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLegend": {
-    "message": "Navigatie naar mogelijk ongewenste websites wordt geblokkeerd, en nu krijgt de mogelijkheid om door te gaan.",
+    "message": "Navigatie naar mogelijk ongewenste websites wordt geblokkeerd, en u krijgt de mogelijkheid om door te gaan.",
     "description": "Label for a checkbox in the options page"
   },
   "findListsPlaceholder": {
