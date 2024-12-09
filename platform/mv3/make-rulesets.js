@@ -1288,11 +1288,11 @@ async function main() {
 
     // Handpicked rulesets from abroad
     await rulesetFromURLs({
-        id: 'nrd.30day.phishing',
-        name: '30-day Phishing Domain List',
+        id: 'urlhaus.full',
+        name: 'Malicious URL Blocklist',
         enabled: true,
-        urls: [ 'https://raw.githubusercontent.com/xRuffKez/NRD/refs/heads/main/lists/30-day_phishing/domains-only/nrd-phishing-30day.txt' ],
-        homeURL: 'https://github.com/xRuffKez/NRD?tab=readme-ov-file',
+        urls: [ 'https://malware-filter.gitlab.io/malware-filter/urlhaus-filter-domains.txt' ],
+        homeURL: 'https://gitlab.com/malware-filter/urlhaus-filter',
     });
 
     await rulesetFromURLs({
