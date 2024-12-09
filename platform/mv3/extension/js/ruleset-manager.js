@@ -579,9 +579,10 @@ async function defaultRulesetsFromLanguage() {
     );
 
     const rulesetDetails = await getRulesetDetails();
-    const out = [];
+    const enabledRulesets = await dnr.getEnabledRulesets();
+    const out = enabledRulesets.filter(id => rulesetDetails.has(id));
     for ( const [ id, details ] of rulesetDetails ) {
-        if ( details.enabled ) {
+        if ( details.enabled && !out.includes(id) ) {
             out.push(id);
             continue;
         }
