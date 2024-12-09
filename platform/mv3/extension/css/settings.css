@@ -30,8 +30,9 @@ body[data-forbid~="filteringMode"] section[data-pane="settings"] > div:has(> h3[
     display: none;
     }
 
-#showBlockedCount:has(input[type="checkbox"][disabled]) {
-    opacity: 0.5;
+label:has(input[type="checkbox"][disabled]),
+label:has(input[type="checkbox"][disabled]) + legend {
+    filter: var(--checkbox-disabled-filter);
     }
 
 #defaultFilteringMode {

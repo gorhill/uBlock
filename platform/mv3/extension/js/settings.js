@@ -67,7 +67,12 @@ function renderWidgets() {
         }
     }
 
-    qs$('#strictBlockMode input[type="checkbox"]').checked = cachedRulesetData.strictBlockMode;
+    {
+        const input = qs$('#strictBlockMode input[type="checkbox"]');
+        const canStrictBlock = cachedRulesetData.defaultFilteringMode > 1;
+        input.checked = canStrictBlock && cachedRulesetData.strictBlockMode;
+        dom.attr(input, 'disabled', canStrictBlock ? null : '');
+    }
 
     {
         dom.prop('#developerMode input[type="checkbox"]', 'checked',
