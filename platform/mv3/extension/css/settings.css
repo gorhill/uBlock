@@ -9,6 +9,12 @@ body.firstRun .firstRun {
     display: block;
     padding: 8px;
     }
+body .firstRun > *:first-child {
+    margin-top: 0;
+    }
+body .firstRun > *:last-child {
+    margin-bottom: 0;
+    }
 h3 {
     margin: 1em 0;
     }
