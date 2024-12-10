@@ -931,5 +931,16 @@
 		"lang": "vi",
 		"contentURL": "https://raw.githubusercontent.com/abpvn/abpvn/master/filter/abpvn_ublock.txt",
 		"supportURL": "https://abpvn.com/"
+	},
+	"UKR-0": {
+		"content": "filters",
+		"group": "regions",
+		"off": true,
+		"title": "🇺🇦uk: AdGuard Ukrainian",
+		"tags": "ads ukrainian українська",
+		"lang": "uk",
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/23.txt",
+		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
+		"instructionURL": "https://adguard.com/kb/general/ad-filtering/adguard-filters/"
 	}
 }
