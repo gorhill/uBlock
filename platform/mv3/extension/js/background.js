@@ -93,7 +93,11 @@ async function hasGreatPowers(origin) {
     });
 }
 
-function hasOmnipotence() {
+async function hasOmnipotence() {
+    const manifest = runtime.getManifest();
+    const hasOmnipotence = Array.isArray(manifest.host_permissions) &&
+        manifest.host_permissions.includes('<all_urls>');
+    if ( hasOmnipotence ) { return true; }
     return browser.permissions.contains({
         origins: [ '<all_urls>' ],
     });
@@ -436,13 +440,15 @@ async function start() {
             if ( afterLevel === MODE_OPTIMAL ) {
                 updateDynamicRules();
                 registerInjectables();
+                process.firstRun = false;
             }
-        }
-        const disableFirstRunPage = await adminRead('disableFirstRunPage');
-        if ( disableFirstRunPage !== true ) {
-            runtime.openOptionsPage();
         } else {
-            process.firstRun = false;
+            const disableFirstRunPage = await adminRead('disableFirstRunPage');
+            if ( disableFirstRunPage !== true ) {
+                runtime.openOptionsPage();
+            } else {
+                process.firstRun = false;
+            }
         }
     }
 

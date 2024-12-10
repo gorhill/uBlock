@@ -252,10 +252,11 @@ async function writeFilteringModeDetails(afterDetails) {
     localWrite('filteringModeDetails', data);
     sessionWrite('filteringModeDetails', data);
     readFilteringModeDetails.cache = unserializeModeDetails(data);
-
-    Promise.all([
+    return Promise.all([
         getDefaultFilteringMode(),
         getTrustedSites(),
+        localWrite('filteringModeDetails', data),
+        sessionWrite('filteringModeDetails', data),
     ]).then(results => {
         broadcastMessage({
             defaultFilteringMode: results[0],
