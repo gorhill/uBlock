@@ -431,7 +431,7 @@ function objectPruneFn(
         ? safe.String_split.call(rawNeedlePaths, / +/)
         : [];
     if ( stackNeedleDetails.matchAll !== true ) {
-        if ( matchesStackTrace(stackNeedleDetails, extraArgs.logstack) === false ) {
+        if ( matchesStackTraceFn(stackNeedleDetails, extraArgs.logstack) === false ) {
             return;
         }
     }
@@ -531,13 +531,13 @@ function objectFindOwnerFn(
 
 builtinScriptlets.push({
     name: 'matches-stack-trace.fn',
-    fn: matchesStackTrace,
+    fn: matchesStackTraceFn,
     dependencies: [
         'get-exception-token.fn',
         'safe-self.fn',
     ],
 });
-function matchesStackTrace(
+function matchesStackTraceFn(
     needleDetails,
     logLevel = ''
 ) {
@@ -1169,13 +1169,13 @@ function abortOnStackTrace(
             let v = owner[chain];
             Object.defineProperty(owner, chain, {
                 get: function() {
-                    if ( matchesStackTrace(needleDetails, extraArgs.log) ) {
+                    if ( matchesStackTraceFn(needleDetails, extraArgs.log) ) {
                         throw new ReferenceError(getExceptionToken());
                     }
                     return v;
                 },
                 set: function(a) {
-                    if ( matchesStackTrace(needleDetails, extraArgs.log) ) {
+                    if ( matchesStackTraceFn(needleDetails, extraArgs.log) ) {
                         throw new ReferenceError(getExceptionToken());
                     }
                     v = a;
@@ -3447,6 +3447,7 @@ builtinScriptlets.push({
     requiresTrust: true,
     fn: trustedSuppressNativeMethod,
     dependencies: [
+        'matches-stack-trace.fn',
         'proxy-apply.fn',
         'safe-self.fn',
     ],
@@ -3458,9 +3459,8 @@ function trustedSuppressNativeMethod(
     stack = ''
 ) {
     if ( methodPath === '' ) { return; }
-    if ( stack !== '' ) { return; }
     const safe = safeSelf();
-    const logPrefix = safe.makeLogPrefix('trusted-suppress-native-method', methodPath, signature, how);
+    const logPrefix = safe.makeLogPrefix('trusted-suppress-native-method', methodPath, signature, how, stack);
     const signatureArgs = safe.String_split.call(signature, /\s*\|\s*/).map(v => {
         if ( /^".*"$/.test(v) ) {
             return { type: 'pattern', re: safe.patternToRegex(v.slice(1, -1)) };
@@ -3478,6 +3478,7 @@ function trustedSuppressNativeMethod(
             return { type: 'exact', value: undefined };
         }
     });
+    const stackNeedle = safe.initPattern(stack, { canNegate: true });
     proxyApplyFn(methodPath, function(context) {
         const { callArgs } = context;
         if ( signature === '' ) {
@@ -3497,6 +3498,11 @@ function trustedSuppressNativeMethod(
                 if ( safe.RegExp_test.call(signatureArg.re, targetArg) === false ) {
                     return context.reflect();
                 }
+            }
+        }
+        if ( stackNeedle.matchAll !== true ) {
+            if ( matchesStackTraceFn(stackNeedle) === false ) {
+                return context.reflect();
             }
         }
         if ( how === 'debug' ) {
