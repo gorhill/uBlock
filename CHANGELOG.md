@@ -1,3 +1,4 @@
+- [Improve `trusted-suppress-native-method` scriptlet](https://github.com/gorhill/uBlock/commit/7ed3470844)
 - [Improve `trusted-replace-argument` scriptlet](https://github.com/gorhill/uBlock/commit/3417fe3d5d)
 - [Block media elements unconditionally when max size is set to 0](https://github.com/gorhill/uBlock/commit/36db7f8327)
     - Regression from <https://github.com/gorhill/uBlock/commit/73ce4e6bcf>
