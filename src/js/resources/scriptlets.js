@@ -3501,7 +3501,8 @@ function trustedSuppressNativeMethod(
             }
         }
         if ( stackNeedle.matchAll !== true ) {
-            if ( matchesStackTraceFn(stackNeedle) === false ) {
+            const logLevel = safe.logLevel > 1 ? 'all' : '';
+            if ( matchesStackTraceFn(stackNeedle, logLevel) === false ) {
                 return context.reflect();
             }
         }
