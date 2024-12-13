@@ -419,7 +419,7 @@ class LogData {
     }
 
     static requote(s) {
-        if ( /^(["'`]).+\1$|,/.test(s) === false ) { return s; }
+        if ( /^\$|^(["'`]).*\1$|,/.test(s) === false ) { return s; }
         if ( s.includes("'") === false ) { return `'${s}'`; }
         if ( s.includes('"') === false ) { return `"${s}"`; }
         if ( s.includes('`') === false ) { return `\`${s}\``; }

@@ -1477,18 +1477,15 @@ export class AstFilterParser {
         if ( j === -1 ) { return end; }
         if ( (j+1) === end ) { return end; }
         for (;;) {
-            const before = s.charCodeAt(j-1);
-            if ( j !== start && before === 0x24 /* $ */ ) { return -1; }
-            const after = s.charCodeAt(j+1);
-            if (
-                after !== 0x29 /* ) */ &&
-                after !== 0x2F /* / */ &&
-                after !== 0x7C /* | */ &&
-                before !== 0x5C /* \ */
-            ) {
-                return j;
+            const before = s.charAt(j-1);
+            if ( before === '$' ) { return -1; }
+            const after = s.charAt(j+1);
+            if ( ')/|'.includes(after) === false ) {
+                if ( before === '' || '"\'\\`'.includes(before) === false ) {
+                    return j;
+                }
             }
-            if ( j <= start ) { break; }
+            if ( j === start ) { break; }
             j = s.lastIndexOf('$', j-1);
             if ( j === -1 ) { break; }
         }
