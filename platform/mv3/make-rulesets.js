@@ -1292,9 +1292,11 @@ async function main() {
         name: 'Malicious URL Blocklist',
         enabled: true,
         urls: [
-            'https://malware-filter.gitlab.io/malware-filter/urlhaus-filter-hosts.txt',
+            'https://malware-filter.gitlab.io/malware-filter/urlhaus-filter-domains.txt',
         ],
         filters: [
+            // https://github.com/uBlockOrigin/uBOL-home/issues/256
+            '192.168.1.1$badfilter',
         ],
         homeURL: 'https://gitlab.com/malware-filter/urlhaus-filter',
     });
