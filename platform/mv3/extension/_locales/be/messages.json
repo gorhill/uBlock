@@ -244,7 +244,7 @@
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
-    "message": "Старонка заблакавана",
+    "message": "Старонка заблакаваная",
     "description": "Webpage title for the strict-blocked page"
   },
   "strictblockSentence1": {
@@ -252,11 +252,11 @@
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {
-    "message": "The page was blocked because of a matching filter in {{listname}}.",
+    "message": "Старонка была заблакаваная, бо трапіла ў фільтр праз {{listname}}.",
     "description": "Text informing about what is causing the page to be blocked"
   },
   "strictblockRedirectSentence1": {
-    "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
+    "message": "Заблакаваная старонка мае намер перанакіраваць на іншы сайт. Калі вырашыце працягнуць, вы пяройдзеце непасрэдна на: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "strictblockNoParamsPrompt": {
