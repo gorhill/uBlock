@@ -264,19 +264,19 @@
     "description": "Label to be used for the parameter-less URL"
   },
   "strictblockBack": {
-    "message": "Go back",
+    "message": "Επιστροφή",
     "description": "A button to go back to the previous webpage"
   },
   "strictblockClose": {
-    "message": "Close this window",
+    "message": "Κλείσιμο του παραθύρου",
     "description": "A button to close the current tab"
   },
   "strictblockDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "Να μην προειδοποιηθώ ξανά για αυτόν τον ιστότοπο",
     "description": "Label for checkbox in document-blocked page"
   },
   "strictblockProceed": {
-    "message": "Proceed",
+    "message": "Συνέχεια",
     "description": "A button to navigate to the blocked page"
   }
 }
