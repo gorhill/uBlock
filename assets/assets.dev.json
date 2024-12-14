@@ -926,10 +926,10 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "🇺🇦ua: Ukrainian Ad List",
+		"title": "🇺🇦ua: Ukrainian Filters",
 		"tags": "ads ukraine україна",
 		"lang": "uk",
-		"contentURL": "https://raw.githubusercontent.com/ukrainianfilters/lists/main/ads/ads.txt",
+		"contentURL": "https://raw.githubusercontent.com/ukrainianfilters/lists/main/combined/uBO/uBO.txt",
 		"supportURL": "https://github.com/ukrainianfilters/lists"
 	},
 	"VIE-1": {
