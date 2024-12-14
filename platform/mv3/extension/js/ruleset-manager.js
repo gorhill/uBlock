@@ -23,11 +23,8 @@ import {
     browser,
     dnr,
     i18n,
-    runtime,
-} from './ext.js';
-
-import {
     localRead, localRemove, localWrite,
+    runtime,
     sessionRead, sessionRemove, sessionWrite,
 } from './ext.js';
 
@@ -578,13 +575,17 @@ async function defaultRulesetsFromLanguage() {
         `\\b(${Array.from(langSet).join('|')})\\b`
     );
 
+    const manifest = runtime.getManifest();
+    const rulesets = manifest.declarative_net_request.rule_resources;
     const rulesetDetails = await getRulesetDetails();
     const out = [];
-    for ( const [ id, details ] of rulesetDetails ) {
-        if ( details.enabled ) {
+    for ( const ruleset of rulesets ) {
+        const { id, enabled } = ruleset;
+        if ( enabled ) {
             out.push(id);
             continue;
         }
+        const details = rulesetDetails.get(id);
         if ( typeof details.lang !== 'string' ) { continue; }
         if ( reTargetLang.test(details.lang) === false ) { continue; }
         out.push(id);
@@ -598,12 +599,15 @@ async function patchDefaultRulesets() {
     const [
         oldDefaultIds = [],
         newDefaultIds,
-        newIds,
     ] = await Promise.all([
         localRead('defaultRulesetIds'),
         defaultRulesetsFromLanguage(),
-        getRulesetDetails(),
     ]);
+
+    const manifest = runtime.getManifest();
+    const validIds = new Set(
+        manifest.declarative_net_request.rule_resources.map(r => r.id)
+    );
     const toAdd = [];
     const toRemove = [];
     for ( const id of newDefaultIds ) {
@@ -615,7 +619,7 @@ async function patchDefaultRulesets() {
         toRemove.push(id);
     }
     for ( const id of rulesetConfig.enabledRulesets ) {
-        if ( newIds.has(id) ) { continue; }
+        if ( validIds.has(id) ) { continue; }
         toRemove.push(id);
     }
     localWrite('defaultRulesetIds', newDefaultIds);
