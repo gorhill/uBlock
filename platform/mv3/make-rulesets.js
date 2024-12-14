@@ -1186,23 +1186,22 @@ async function main() {
     log(`Secret: ${secret}`);
 
     // Assemble all default lists as the default ruleset
-    const contentURLs = [
-        'https://ublockorigin.github.io/uAssets/filters/filters.min.txt',
-        'https://ublockorigin.github.io/uAssets/filters/badware.min.txt',
-        'https://ublockorigin.github.io/uAssets/filters/privacy.min.txt',
-        'https://ublockorigin.github.io/uAssets/filters/unbreak.min.txt',
-        'https://ublockorigin.github.io/uAssets/filters/quick-fixes.min.txt',
-        'https://ublockorigin.github.io/uAssets/filters/ubol-filters.txt',
-        'https://ublockorigin.github.io/uAssets/thirdparties/easylist.txt',
-        'https://ublockorigin.github.io/uAssets/thirdparties/easyprivacy.txt',
-        'https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext',
-    ];
     await rulesetFromURLs({
         id: 'default',
         name: 'Ads, trackers, miners, and more' ,
         enabled: true,
         secret,
-        urls: contentURLs,
+        urls: [
+            'https://ublockorigin.github.io/uAssets/filters/filters.min.txt',
+            'https://ublockorigin.github.io/uAssets/filters/badware.min.txt',
+            'https://ublockorigin.github.io/uAssets/filters/privacy.min.txt',
+            'https://ublockorigin.github.io/uAssets/filters/unbreak.min.txt',
+            'https://ublockorigin.github.io/uAssets/filters/quick-fixes.min.txt',
+            'https://ublockorigin.github.io/uAssets/filters/ubol-filters.txt',
+            'https://ublockorigin.github.io/uAssets/thirdparties/easylist.txt',
+            'https://ublockorigin.github.io/uAssets/thirdparties/easyprivacy.txt',
+            'https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext',
+        ],
         dnrURL: 'https://ublockorigin.github.io/uAssets/dnr/default.json',
         homeURL: 'https://github.com/uBlockOrigin/uAssets',
         filters: [
@@ -1290,6 +1289,7 @@ async function main() {
     await rulesetFromURLs({
         id: 'urlhaus.full',
         name: 'Malicious URL Blocklist',
+        group: 'malware',
         enabled: true,
         urls: [
             'https://malware-filter.gitlab.io/malware-filter/urlhaus-filter-hosts.txt',
@@ -1297,6 +1297,18 @@ async function main() {
         filters: [
         ],
         homeURL: 'https://gitlab.com/malware-filter/urlhaus-filter',
+    });
+    await rulesetFromURLs({
+        id: 'openphish.domains',
+        name: 'Openphish Domain Blocklist',
+        group: 'malware',
+        enabled: false,
+        urls: [
+            'https://raw.githubusercontent.com/stephenhawk8054/openphish-adblock/refs/heads/main/filters_init_domains.txt',
+        ],
+        filters: [
+        ],
+        homeURL: 'https://github.com/stephenhawk8054/openphish-adblock',
     });
 
     await rulesetFromURLs({

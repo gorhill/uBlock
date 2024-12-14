@@ -219,6 +219,11 @@ export function renderFilterLists(rulesetData) {
                 ruleset.id === 'default' 
             ),
         ], [
+            'malware',
+            rulesetDetails.filter(ruleset =>
+                ruleset.group === 'malware'
+            ),
+        ], [
             'annoyances',
             rulesetDetails.filter(ruleset =>
                 ruleset.group === 'annoyances'
