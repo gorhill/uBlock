@@ -2779,7 +2779,7 @@ const loggerStats = (( ) => {
             const outputOne = [];
             for ( let i = 0; i < fields.length; i++ ) {
                 const field = fields[i];
-                let code = /\b(?:www\.|https?:\/\/)/.test(field) ? '`' : '';
+                const code = i === 1 || /\b(?:www\.|https?:\/\/)/.test(field) ? '`' : '';
                 outputOne.push(` ${code}${field.replace(/\|/g, '\\|')}${code} `);
             }
             outputAll.push(outputOne.join('|'));
