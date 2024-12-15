@@ -232,11 +232,11 @@
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLabel": {
-    "message": "Enable strict blocking",
+    "message": "Abilita il blocco rigido",
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLegend": {
-    "message": "Navigation to potentially undesirable sites will be blocked, and you will be offered the option to proceed.",
+    "message": "La navigazione verso siti potenzialmente indesiderati verrà bloccata e ti verrà offerta la possibilità di procedere.",
     "description": "Label for a checkbox in the options page"
   },
   "findListsPlaceholder": {
@@ -244,11 +244,11 @@
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
-    "message": "Page blocked",
+    "message": "Pagina bloccata",
     "description": "Webpage title for the strict-blocked page"
   },
   "strictblockSentence1": {
-    "message": "uBO Lite has prevented the following page from loading:",
+    "message": "uBO Lite ha impedito alla seguente pagina di caricarsi:",
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {
@@ -260,23 +260,23 @@
     "description": "Text warning about an incoming redirect"
   },
   "strictblockNoParamsPrompt": {
-    "message": "without parameters",
+    "message": "senza parametri",
     "description": "Label to be used for the parameter-less URL"
   },
   "strictblockBack": {
-    "message": "Go back",
+    "message": "Torna indietro",
     "description": "A button to go back to the previous webpage"
   },
   "strictblockClose": {
-    "message": "Close this window",
+    "message": "Chiudi questa finestra",
     "description": "A button to close the current tab"
   },
   "strictblockDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "Non avvisarmi di nuovo riguardo questo sito",
     "description": "Label for checkbox in document-blocked page"
   },
   "strictblockProceed": {
-    "message": "Proceed",
+    "message": "Procedi",
     "description": "A button to navigate to the blocked page"
   }
 }

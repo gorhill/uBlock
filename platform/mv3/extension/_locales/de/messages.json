@@ -60,7 +60,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Domains mit Schadsoftware",
+    "message": "Schutz vor Schadsoftware, Sicherheit",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
