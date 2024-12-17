@@ -261,7 +261,7 @@ const hasOwnProperty = (o, p) =>
                 hsDefault[name] = hsAdmin[name] = hsUser[name] = value;
             }
         }
-        µb.noDashboard = disableDashboard === true;
+        µb.noDashboard = disableDashboard == true;
         if ( Array.isArray(disabledPopupPanelParts) ) {
             const partNameToBit = new Map([
                 [  'globalStats', 0b00010 ],
