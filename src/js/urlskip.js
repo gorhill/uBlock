@@ -19,9 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-const safeBase64Map = { '-': '+', '_': '/' };
-const safeBase64Replacer = s => safeBase64Map[s];
-
 /**
  * @trustedOption urlskip
  * 
@@ -106,7 +103,11 @@ export function urlSkip(url, blocked, steps, directive = {}) {
                 }
                 // Safe Base64
                 if ( step === '-safebase64' ) {
-                    urlout = urlin.replace(/[-_]/g, safeBase64Replacer);
+                    if ( urlSkip.safeBase64Replacer === undefined ) {
+                        urlSkip.safeBase64Map = { '-': '+', '_': '/' };
+                        urlSkip.safeBase64Replacer = s => urlSkip.safeBase64Map[s];
+                    }
+                    urlout = urlin.replace(/[-_]/g, urlSkip.safeBase64Replacer);
                     urlout = self.atob(urlout);
                     continue;
                 }
