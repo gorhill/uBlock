@@ -1,3 +1,4 @@
+- [Improve `href-sanitizer` scriptlet](https://github.com/gorhill/uBlock/commit/9bf8d53ebe)
 - [Improve quote usage in filter options and scriptlets](https://github.com/gorhill/uBlock/commit/8ba71f09d7)
 - [Improve `trusted-suppress-native-method` scriptlet](https://github.com/gorhill/uBlock/commit/7ed3470844)
 - [Improve `trusted-replace-argument` scriptlet](https://github.com/gorhill/uBlock/commit/3417fe3d5d)
