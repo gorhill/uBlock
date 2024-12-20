@@ -20,6 +20,7 @@
 */
 
 import {
+    TAB_ID_NONE,
     browser,
     dnr,
     i18n,
@@ -44,19 +45,6 @@ const STRICTBLOCK_BASE_RULE_ID = 7000000;
 const TRUSTED_DIRECTIVE_BASE_RULE_ID = 8000000;
 
 let dynamicRuleId = 1;
-
-/******************************************************************************/
-
-const eqSets = (setBefore, setAfter) => {
-    if ( setBefore.size !== setAfter.size ) { return false; }
-    for ( const hn of setAfter ) {
-        if ( setBefore.has(hn) === false ) { return false; }
-    }
-    for ( const hn of setBefore ) {
-        if ( setAfter.has(hn) === false ) { return false; }
-    }
-    return true;
-};
 
 /******************************************************************************/
 
@@ -472,13 +460,17 @@ async function updateDynamicRules() {
 /******************************************************************************/
 
 async function filteringModesToDNR(modes) {
-    const trustedRules = await dnr.getDynamicRules({
-        ruleIds: [ TRUSTED_DIRECTIVE_BASE_RULE_ID+0 ],
-    });
-    const trustedRule = trustedRules.length !== 0 && trustedRules[0] || undefined;
-    const beforeRequestDomainSet = new Set(trustedRule?.condition.requestDomains);
-    const beforeExcludedRrequestDomainSet = new Set(trustedRule?.condition.excludedRequestDomains);
-    if ( trustedRule !== undefined && beforeRequestDomainSet.size === 0 ) {
+    const [
+        dynamicRules,
+        sessionRules,
+    ] = await Promise.all([
+        dnr.getDynamicRules({ ruleIds: [ TRUSTED_DIRECTIVE_BASE_RULE_ID+0 ] }),
+        dnr.getSessionRules({ ruleIds: [ TRUSTED_DIRECTIVE_BASE_RULE_ID+1 ] }),
+    ]);
+    const dynamicRule = dynamicRules?.length && dynamicRules[0] || undefined;
+    const beforeRequestDomainSet = new Set(dynamicRule?.condition.requestDomains);
+    const beforeExcludedRrequestDomainSet = new Set(dynamicRule?.condition.excludedRequestDomains);
+    if ( dynamicRule !== undefined && beforeRequestDomainSet.size === 0 ) {
         beforeRequestDomainSet.add('all-urls');
     } else {
         beforeExcludedRrequestDomainSet.add('all-urls');
@@ -493,27 +485,19 @@ async function filteringModesToDNR(modes) {
         afterExcludedRequestDomainSet = notNoneHostnames;
     } else {
         afterRequestDomainSet = noneHostnames;
-        afterExcludedRequestDomainSet = new Set([ 'all-urls' ]);
+        afterExcludedRequestDomainSet = new Set();
     }
 
-    if ( eqSets(beforeRequestDomainSet, afterRequestDomainSet) ) {
-        if ( eqSets(beforeExcludedRrequestDomainSet, afterExcludedRequestDomainSet) ) {
-            return;
-        }
-    }
-
-    const removeRuleIds = [];
-    if ( trustedRule ) {
-        removeRuleIds.push(
-            TRUSTED_DIRECTIVE_BASE_RULE_ID+0,
-            TRUSTED_DIRECTIVE_BASE_RULE_ID+1
-        );
+    const removeDynamicRuleIds = [];
+    const removeSessionRuleIds = [];
+    if ( dynamicRule ) {
+        removeDynamicRuleIds.push(TRUSTED_DIRECTIVE_BASE_RULE_ID+0);
+        removeSessionRuleIds.push(TRUSTED_DIRECTIVE_BASE_RULE_ID+1);
     }
 
     const allowEverywhere = afterRequestDomainSet.delete('all-urls');
-    afterExcludedRequestDomainSet.delete('all-urls');
-
-    const addRules = [];
+    const addDynamicRules = [];
+    const addSessionRules = [];
     if (
         allowEverywhere ||
         afterRequestDomainSet.size !== 0 ||
@@ -528,32 +512,70 @@ async function filteringModesToDNR(modes) {
             priority: 100,
         };
         if ( afterRequestDomainSet.size !== 0 ) {
-            rule0.condition.requestDomains = Array.from(afterRequestDomainSet);
+            rule0.condition.requestDomains =
+                Array.from(afterRequestDomainSet).sort();
         } else if ( afterExcludedRequestDomainSet.size !== 0 ) {
-            rule0.condition.excludedRequestDomains = Array.from(afterExcludedRequestDomainSet);
+            rule0.condition.excludedRequestDomains =
+                Array.from(afterExcludedRequestDomainSet).sort();
         }
-        addRules.push(rule0);
+        addDynamicRules.push(rule0);
         // https://github.com/uBlockOrigin/uBOL-home/issues/114
+        // https://github.com/uBlockOrigin/uBOL-home/issues/247
         const rule1 = {
             id: TRUSTED_DIRECTIVE_BASE_RULE_ID+1,
             action: { type: 'allow' },
             condition: {
-                resourceTypes: [ 'script' ],
+                tabIds: [ TAB_ID_NONE ],
             },
             priority: 100,
         };
         if ( rule0.condition.requestDomains ) {
-            rule1.condition.initiatorDomains = rule0.condition.requestDomains.slice();
+            rule1.condition.initiatorDomains =
+                rule0.condition.requestDomains.slice();
         } else if ( rule0.condition.excludedRequestDomains ) {
-            rule1.condition.excludedInitiatorDomains = rule0.condition.excludedRequestDomains.slice();
+            rule1.condition.excludedInitiatorDomains =
+                rule0.condition.excludedRequestDomains.slice();
         }
-        addRules.push(rule1);
+        addSessionRules.push(rule1);
     }
 
-    if ( addRules.length === 0 && removeRuleIds.length === 0 ) { return; }
+    const noneCount = noneHostnames.has('all-urls')
+        ? -notNoneHostnames.size
+        : noneHostnames.size;
 
-    return dnr.updateDynamicRules({ addRules, removeRuleIds });
+    const promises = [];
+    if ( isDifferentAllowRules(addDynamicRules, dynamicRules) ) {
+        promises.push(dnr.updateDynamicRules({
+            addRules: addDynamicRules,
+            removeRuleIds: removeDynamicRuleIds,
+        }));
+        ubolLog(`Add "allowAllRequests" dynamic rule for ${noneCount} sites`);
+    }
+    if ( isDifferentAllowRules(addSessionRules, sessionRules) ) {
+        promises.push(dnr.updateSessionRules({
+            addRules: addSessionRules,
+            removeRuleIds: removeSessionRuleIds,
+        }));
+        ubolLog(`Add "allow" session rule for ${noneCount} sites`);
+    }
+    if ( promises.length === 0 ) { return; }
+    return Promise.all(promises);
 }
+
+const isDifferentAllowRules = (a, b) => {
+    const pp = [
+        'requestDomains',
+        'excludedRequestDomains',
+        'initiatorDomains',
+        'excludedInitiatorDomains',
+    ];
+    for ( const p of pp ) {
+        const ac = a?.length && a[0].condition[p] || [];
+        const bc = b?.length && b[0].condition[p] || [];
+        if ( ac.join() !== bc.join() ) { return true; }
+    }
+    return false;
+};
 
 /******************************************************************************/
 

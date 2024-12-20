@@ -28,6 +28,7 @@ export const browser =
 export const dnr = browser.declarativeNetRequest;
 export const i18n = browser.i18n;
 export const runtime = browser.runtime;
+export const TAB_ID_NONE = browser.tabs.TAB_ID_NONE;
 export const windows = browser.windows;
 
 /******************************************************************************/
