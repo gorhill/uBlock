@@ -1300,9 +1300,9 @@ async function main() {
     });
     await rulesetFromURLs({
         id: 'openphish.domains',
-        name: 'Openphish Domain Blocklist',
+        name: 'OpenPhish Domain Blocklist',
         group: 'malware',
-        enabled: false,
+        enabled: true,
         urls: [
             'https://raw.githubusercontent.com/stephenhawk8054/openphish-adblock/refs/heads/main/filters_init_domains.txt',
         ],
