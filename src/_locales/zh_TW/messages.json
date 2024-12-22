@@ -468,7 +468,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "內置",
+    "message": "內建",
     "description": "Filter lists section name"
   },
   "3pGroupAds": {
@@ -480,7 +480,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "惡意軟體保護、保安",
+    "message": "惡意軟體防護及安全性",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
@@ -940,7 +940,7 @@
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
-    "message": "錯誤報告",
+    "message": "錯誤回報",
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
@@ -1036,7 +1036,7 @@
     "description": ""
   },
   "aboutCode": {
-    "message": "源碼（GPLv3）",
+    "message": "原始碼（GPLv3）",
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
@@ -1044,7 +1044,7 @@
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "源碼",
+    "message": "原始碼",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
@@ -1248,7 +1248,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "contextMenuViewSource": {
-    "message": "檢視源碼…",
+    "message": "檢視原始碼…",
     "description": "A context menu entry, to view the source code of the target resource"
   },
   "shortcutCapturePlaceholder": {
