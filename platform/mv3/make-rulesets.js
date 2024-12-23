@@ -1287,7 +1287,7 @@ async function main() {
 
     // Handpicked rulesets from abroad
     await rulesetFromURLs({
-        id: 'urlhaus.full',
+        id: 'urlhaus-full',
         name: 'Malicious URL Blocklist',
         group: 'malware',
         enabled: true,
@@ -1299,7 +1299,7 @@ async function main() {
         homeURL: 'https://gitlab.com/malware-filter/urlhaus-filter',
     });
     await rulesetFromURLs({
-        id: 'openphish.domains',
+        id: 'openphish-domains',
         name: 'OpenPhish Domain Blocklist',
         group: 'malware',
         enabled: true,
