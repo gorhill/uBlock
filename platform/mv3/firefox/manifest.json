@@ -35,7 +35,7 @@
     "128": "img/icon_128.png"
   },
   "manifest_version": 3,
-  "name": "__MSG_extName__",
+  "name": "uBO Lite",
   "options_ui": {
       "open_in_tab": true,
       "page": "dashboard.html"
