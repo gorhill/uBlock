@@ -908,8 +908,7 @@
 		"tags": "ads turkish türkçe",
 		"lang": "tr",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/13.txt",
-		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
-		"instructionURL": "https://adguard.com/kb/general/ad-filtering/adguard-filters/"
+		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters"
 	},
 	"UKR-0": {
 		"content": "filters",
