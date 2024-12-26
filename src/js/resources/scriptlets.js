@@ -3313,6 +3313,9 @@ function trustedSuppressNativeMethod(
         if ( /^".*"$/.test(v) ) {
             return { type: 'pattern', re: safe.patternToRegex(v.slice(1, -1)) };
         }
+        if ( /^\/.+\/$/.test(v) ) {
+            return { type: 'pattern', re: safe.patternToRegex(v) };
+        }
         if ( v === 'false' ) {
             return { type: 'exact', value: false };
         }
