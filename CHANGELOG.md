@@ -1,3 +1,4 @@
+- [Improve `trusted-suppress-native-method` scriptlet](https://github.com/gorhill/uBlock/commit/cb6c11ab6f)
 - [Improve `urlskip=` filter option](https://github.com/gorhill/uBlock/commit/a7aa755f18)
 - [Improve `parse-properties-to-match` scriptlet helper](https://github.com/gorhill/uBlock/commit/7494eaf621)
 - [Improve `href-sanitizer` scriptlet](https://github.com/gorhill/uBlock/commit/9bf8d53ebe)
