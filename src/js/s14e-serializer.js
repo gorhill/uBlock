@@ -851,10 +851,11 @@ const _deserialize = ( ) => {
     case I_DATAVIEW: {
         const byteOffset = deserializeLargeUint();
         const length = deserializeLargeUint();
+        const ref = refCounter++;
         const arrayBuffer = _deserialize();
         const ctor = toArrayBufferViewConstructor[`${type}`];
         const out = new ctor(arrayBuffer, byteOffset, length);
-        readRefs.set(refCounter++, out);
+        readRefs.set(ref, out);
         return out;
     }
     default:
