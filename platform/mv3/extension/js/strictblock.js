@@ -49,26 +49,36 @@ function urlToFragment(raw) {
 
 /******************************************************************************/
 
-async function proceed() {
-    await sendMessage({
-        what: 'excludeFromStrictBlock',
-        hostname: toURL.hostname,
-        permanent: qs$('#disableWarning').checked,
-    });
-    window.location.replace(toURL.href);
-}
-
-/******************************************************************************/
-
 const toURL = new URL('about:blank');
+const toFinalURL = new URL('about:blank');
 
 try {
     toURL.href = self.location.hash.slice(1);
+    toFinalURL.href = toURL.href;
 } catch(_) {
 }
 
 dom.clear('#theURL > p > span:first-of-type');
 qs$('#theURL > p > span:first-of-type').append(urlToFragment(toURL.href));
+
+/******************************************************************************/
+
+async function proceed() {
+    const permanent = qs$('#disableWarning').checked;
+    // Do not exclude current hostname from strict-block ruleset if a urlskip
+    // directive to another site is in effect.
+    // TODO: what if the urlskip directive leads to a different subdomain on
+    //       same site?
+    if ( toFinalURL.hostname !== toURL.hostname && permanent !== true ) {
+        return window.location.replace(toFinalURL.href);
+    }
+    await sendMessage({
+        what: 'excludeFromStrictBlock',
+        hostname: toURL.hostname,
+        permanent,
+    });
+    window.location.replace(toURL.href);
+}
 
 /******************************************************************************/
 
@@ -165,15 +175,7 @@ function fragmentFromTemplate(template, placeholder, text, details) {
 
     dom.on('#toggleParse', 'click', ( ) => {
         dom.cl.toggle('#theURL', 'collapsed');
-        //vAPI.localStorage.setItem(
-        //    'document-blocked-expand-url',
-        //    (dom.cl.has('#theURL', 'collapsed') === false).toString()
-        //);
     });
-
-    //vAPI.localStorage.getItemAsync('document-blocked-expand-url').then(value => {
-    //    dom.cl.toggle('#theURL', 'collapsed', value !== 'true' && value !== true);
-    //});
 })();
 
 /******************************************************************************/
@@ -184,16 +186,30 @@ function fragmentFromTemplate(template, placeholder, text, details) {
     let iList = -1;
     const searchInList = async i => {
         if ( iList !== -1 ) { return; }
-        const hostnames = new Set(
-            await fetchJSON(`/rulesets/strictblock/${rulesetDetails[i].id}`)
-        );
+        const rules = await fetchJSON(`/rulesets/strictblock/${rulesetDetails[i].id}`);
         if ( iList !== -1 ) { return; }
-        let hn = toURL.hostname;
-        for (;;) {
-            if ( hostnames.has(hn) ) { iList = i; break; }
-            const pos = hn.indexOf('.');
-            if ( pos === -1 ) { break; }
-            hn = hn.slice(pos+1);
+        const toHref = toURL.href;
+        for ( const rule of rules ) {
+            const { regexFilter, requestDomains } = rule.condition;
+            let matchesDomain = requestDomains === undefined;
+            if ( requestDomains ) {
+                let hn = toURL.hostname;
+                for (;;) {
+                    if ( requestDomains.includes(hn) ) {
+                        matchesDomain = true;
+                        break;
+                    }
+                    const pos = hn.indexOf('.');
+                    if ( pos === -1 ) { break; }
+                    hn = hn.slice(pos+1);
+                }
+                if ( matchesDomain === false ) { continue; }
+            }
+            const re = new RegExp(regexFilter);
+            const matchesRegex = re.test(toHref);
+            if ( matchesDomain && matchesRegex ) {
+                iList = i;
+            }
         }
     };
     const toFetch = [];
@@ -225,12 +241,24 @@ function fragmentFromTemplate(template, placeholder, text, details) {
     }
     if ( toFetch.length === 0 ) { return; }
     const urlskipLists = await Promise.all(toFetch);
+    const toHn = toURL.hostname;
+    const matchesHn = hn => {
+        if ( hn.endsWith(toHn) === false ) { return false; }
+        if ( hn.length === toHn.length ) { return true; }
+        return toHn.charAt(toHn.length - hn.length - 1) === '.';
+    };
     for ( const urlskips of urlskipLists ) {
         for ( const urlskip of urlskips ) {
             const re = new RegExp(urlskip.re, urlskip.c ? undefined : 'i');
             if ( re.test(toURL.href) === false ) { continue; }
+            if ( urlskip.hostnames ) {
+                if ( urlskip.hostnames.some(hn => matchesHn(hn)) === false ) {
+                    continue;
+                }
+            }
             const finalURL = urlSkip(toURL.href, false, urlskip.steps);
             if ( finalURL === undefined ) { continue; }
+            toFinalURL.href = finalURL;
             const fragment = fragmentFromTemplate(
                 i18n$('strictblockRedirectSentence1'),
                 '{{url}}', urlToFragment(finalURL),

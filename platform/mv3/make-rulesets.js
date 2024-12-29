@@ -22,9 +22,15 @@
 import * as makeScriptlet from './make-scriptlets.js';
 import * as sfp from './js/static-filtering-parser.js';
 
-import { createHash, randomBytes } from 'crypto';
+import {
+    createHash,
+    randomBytes,
+} from 'crypto';
+import {
+    dnrRulesetFromRawLists,
+    mergeRules,
+} from './js/static-dnr-filtering.js';
 
-import { dnrRulesetFromRawLists } from './js/static-dnr-filtering.js';
 import fs from 'fs/promises';
 import https from 'https';
 import path from 'path';
@@ -158,6 +164,52 @@ const scriptletStats = new Map();
 const genericDetails = new Map();
 const requiredRedirectResources = new Set();
 
+// This will be used to sign our inserted `!#trusted on` directives
+const secret = createHash('sha256').update(randomBytes(16)).digest('hex').slice(0,16);
+log(`Secret: ${secret}`);
+
+/******************************************************************************/
+
+const restrSeparator = '(?:[^%.0-9a-z_-]|$)';
+
+const rePatternFromUrlFilter = s => {
+    let anchor = 0b000;
+    if ( s.startsWith('||') ) {
+        anchor = 0b100;
+        s = s.slice(2);
+    } else if ( s.startsWith('|') ) {
+        anchor = 0b010;
+        s = s.slice(1);
+    }
+    if ( s.endsWith('|') ) {
+        anchor |= 0b001;
+        s = s.slice(0, -1);
+    }
+    let reStr = s.replace(rePatternFromUrlFilter.rePlainChars, '\\$&')
+                 .replace(rePatternFromUrlFilter.reSeparators, restrSeparator)
+                 .replace(rePatternFromUrlFilter.reDanglingAsterisks, '')
+                 .replace(rePatternFromUrlFilter.reAsterisks, '\\S*?');
+    if ( anchor & 0b100 ) {
+        reStr = (
+            reStr.startsWith('\\.') ?
+                rePatternFromUrlFilter.restrHostnameAnchor2 :
+                rePatternFromUrlFilter.restrHostnameAnchor1
+        ) + reStr;
+    } else if ( anchor & 0b010 ) {
+        reStr = '^' + reStr;
+    }
+    if ( anchor & 0b001 ) {
+        reStr += '$';
+    }
+    return reStr;
+};
+rePatternFromUrlFilter.rePlainChars = /[.+?${}()|[\]\\]/g;
+rePatternFromUrlFilter.reSeparators = /\^/g;
+rePatternFromUrlFilter.reDanglingAsterisks = /^\*+|\*+$/g;
+rePatternFromUrlFilter.reAsterisks = /\*+/g;
+rePatternFromUrlFilter.restrHostnameAnchor1 = '^[a-z-]+://(?:[^/?#]+\\.)?';
+rePatternFromUrlFilter.restrHostnameAnchor2 = '^[a-z-]+://(?:[^/?#]+)?';
+
 /******************************************************************************/
 
 async function fetchList(assetDetails) {
@@ -179,7 +231,7 @@ async function fetchList(assetDetails) {
             }
             fetchedURLs.add(part.url);
             if ( part.url.startsWith('https://ublockorigin.github.io/uAssets/filters/') ) {
-                newParts.push(`!#trusted on ${assetDetails.secret}`);
+                newParts.push(`!#trusted on ${secret}`);
             }
             newParts.push(
                 fetchText(part.url, cacheDir).then(details => {
@@ -197,7 +249,7 @@ async function fetchList(assetDetails) {
                     return { url, content: '' };
                 })
             );
-            newParts.push(`!#trusted off ${assetDetails.secret}`);
+            newParts.push(`!#trusted off ${secret}`);
         }
         parts = await Promise.all(newParts);
         parts = sfp.utils.preparser.expandIncludes(parts, env);
@@ -330,6 +382,68 @@ function toJSONRuleset(ruleset) {
 
 /******************************************************************************/
 
+function toStrictBlockRule(rule, out) {
+    if ( rule.action.type !== 'block' ) { return; }
+    const { condition } = rule;
+    if ( condition === undefined ) { return; }
+    if ( condition.domainType ) { return; }
+    if ( condition.excludedResourceTypes ) { return; }
+    if ( condition.requestMethods ) { return; }
+    if ( condition.excludedRequestMethods ) { return; }
+    if ( condition.responseHeaders ) { return; }
+    if ( condition.excludedResponseHeaders ) { return; }
+    if ( condition.initiatorDomains ) { return; }
+    if ( condition.excludedInitiatorDomains ) { return; }
+    if ( condition.excludedRequestDomains ) { return; }
+    const { resourceTypes } = condition;
+    if ( resourceTypes === undefined ) {
+        if ( condition.requestDomains === undefined ) { return; }
+    } else {
+        if ( resourceTypes.length !== 1 ) { return; }
+        if ( resourceTypes[0] !== 'main_frame' ) { return; }
+    }
+    let regexFilter;
+    if ( condition.urlFilter ) {
+        regexFilter = rePatternFromUrlFilter(condition.urlFilter);
+    } else if ( condition.regexFilter ) {
+        regexFilter = condition.regexFilter;
+    } else {
+        regexFilter = '^https?://.*';
+    }
+    if (
+        regexFilter.startsWith('^') === false
+    ) {
+        regexFilter = `^.*${regexFilter}`;
+    }
+    if (
+        regexFilter.endsWith('$') === false &&
+        regexFilter.endsWith('.*') === false &&
+        regexFilter.endsWith('.+') === false
+    ) {
+        regexFilter = `${regexFilter}.*`;
+    }
+    const strictBlockRule = {
+        action: {
+            type: 'redirect',
+            redirect: {
+                regexSubstitution: `/strictblock.html#\\0`,
+            },
+        },
+        condition: {
+            regexFilter,
+            resourceTypes: [ 'main_frame' ],
+        },
+        priority: 29,
+    };
+    if ( condition.requestDomains ) {
+        strictBlockRule.condition.requestDomains = condition.requestDomains.slice();
+    }
+    out.set(toStrictBlockRule.ruleId++, strictBlockRule);
+}
+toStrictBlockRule.ruleId = 1;
+
+/******************************************************************************/
+
 async function processNetworkFilters(assetDetails, network) {
     const { ruleset: rules } = network;
     log(`Input filter count: ${network.filterCount}`);
@@ -396,21 +510,46 @@ async function processNetworkFilters(assetDetails, network) {
     );
     log(`\tmodifyHeaders=: ${modifyHeaders.length}`);
 
-    const urlskips = rules.filter(rule => isURLSkip(rule)).filter(rule =>
-        rule.__modifierAction === 0 &&
-        rule.condition &&
-        rule.condition.regexFilter &&
-        rule.condition.resourceTypes &&
-        rule.condition.resourceTypes.includes('main_frame')
-    ).map(rule => {
-        const steps = rule.__modifierValue;
-        return {
-            re: rule.condition.regexFilter,
-            c: rule.condition.isUrlFilterCaseSensitive,
-            steps: steps.includes(' ') && steps.split(/ +/) || [ steps ],
-        };
-    });
-    log(`\turlskip=: ${urlskips.length}`);
+    const urlskips = new Map();
+    for ( const rule of rules ) {
+        if ( isURLSkip(rule) === false ) { continue; }
+        if ( rule.__modifierAction !== 0 ) { continue; }
+        const { condition } = rule;
+        if ( condition.resourceTypes ) {
+            if ( condition.resourceTypes.includes('main_frame') === false ) {
+                continue;
+            }
+        }
+        const { urlFilter, regexFilter, requestDomains } = condition;
+        let re;
+        if ( urlFilter !== undefined ) {
+            re = rePatternFromUrlFilter(urlFilter);
+        } else if ( regexFilter !== undefined ) {
+            re = regexFilter;
+        } else {
+            re = '^';
+        }
+        const rawSteps = rule.__modifierValue;
+        const steps = rawSteps.includes(' ') && rawSteps.split(/ +/) || [ rawSteps ];
+        const keyEntry = {
+            re,
+            c: condition.isUrlFilterCaseSensitive,
+            steps,
+        }
+        const key = JSON.stringify(keyEntry);
+        let actualEntry = urlskips.get(key);
+        if ( actualEntry === undefined ) {
+            urlskips.set(key, keyEntry);
+            actualEntry = keyEntry;
+        }
+        if ( requestDomains !== undefined ) {
+            if ( actualEntry.hostnames === undefined ) {
+                actualEntry.hostnames = [];
+            }
+            actualEntry.hostnames.push(...requestDomains);
+        }
+    }
+    log(`\turlskip=: ${urlskips.size}`);
 
     const bad = rules.filter(rule =>
         isUnsupported(rule)
@@ -451,37 +590,26 @@ async function processNetworkFilters(assetDetails, network) {
         );
     }
 
-    const strictBlocked = new Set();
+    const strictBlocked = new Map();
     for ( const rule of plainGood ) {
-        if ( rule.action.type !== 'block' ) { continue; }
-        if ( rule.condition.domainType ) { continue; }
-        if ( rule.condition.regexFilter ) { continue; }
-        if ( rule.condition.urlFilter ) { continue; }
-        if ( rule.condition.requestMethods ) { continue; }
-        if ( rule.condition.excludedRequestMethods ) { continue; }
-        if ( rule.condition.resourceTypes ) { continue; }
-        if ( rule.condition.excludedResourceTypes ) { continue; }
-        if ( rule.condition.responseHeaders ) { continue; }
-        if ( rule.condition.excludedResponseHeaders ) { continue; }
-        if ( rule.condition.initiatorDomains ) { continue; }
-        if ( rule.condition.excludedInitiatorDomains ) { continue; }
-        if ( rule.condition.requestDomains === undefined ) { continue; }
-        if ( rule.condition.excludedRequestDomains ) { continue; }
-        for ( const hn of rule.condition.requestDomains ) {
-            strictBlocked.add(hn);
-        }
+        toStrictBlockRule(rule, strictBlocked);
     }
     if ( strictBlocked.size !== 0 ) {
+        mergeRules(strictBlocked, 'requestDomains');
+        let id = 1;
+        for ( const rule of strictBlocked.values() ) {
+            rule.id = id++;
+        }
         writeFile(
             `${rulesetDir}/strictblock/${assetDetails.id}.json`,
-            toJSONRuleset(Array.from(strictBlocked))
+            toJSONRuleset(Array.from(strictBlocked.values()))
         );
     }
 
-    if ( urlskips.length !== 0 ) {
+    if ( urlskips.size !== 0 ) {
         writeFile(
             `${rulesetDir}/urlskip/${assetDetails.id}.json`,
-            JSON.stringify(urlskips, null, 1)
+            JSON.stringify(Array.from(urlskips.values()), null, 1)
         );
     }
 
@@ -495,7 +623,7 @@ async function processNetworkFilters(assetDetails, network) {
         redirect: redirects.length,
         modifyHeaders: modifyHeaders.length,
         strictblock: strictBlocked.size,
-        urlskip: urlskips.length,
+        urlskip: urlskips.size,
     };
 }
 
@@ -1018,15 +1146,24 @@ async function rulesetFromURLs(assetDetails) {
     log('============================');
     log(`Listset for '${assetDetails.id}':`);
 
-    if ( assetDetails.text === undefined ) {
+    if ( assetDetails.text === undefined && assetDetails.urls.length !== 0 ) {
         const text = await fetchList(assetDetails);
-        if ( text === '' ) { return; }
         assetDetails.text = text;
+    } else {
+        assetDetails.text = '';
     }
 
-    if ( Array.isArray(assetDetails.filters) ) {
-        assetDetails.text += '\n' + assetDetails.filters.join('\n');
+    if ( Array.isArray(assetDetails.filters) && assetDetails.filters.length ) {
+        const extra = [
+            `!#trusted on ${secret}`,
+            ...assetDetails.filters,
+            `!#trusted off ${secret}`,
+            assetDetails.text,
+        ];
+        assetDetails.text = extra.join('\n').trim();
     }
+
+    if ( assetDetails.text === '' ) { return; }
 
     const extensionPaths = [];
     for ( const [ fname, details ] of redirectResourcesMap ) {
@@ -1045,7 +1182,7 @@ async function rulesetFromURLs(assetDetails) {
 
     const results = await dnrRulesetFromRawLists(
         [ { name: assetDetails.id, text: assetDetails.text } ],
-        { env, extensionPaths, secret: assetDetails.secret }
+        { env, extensionPaths, secret }
     );
 
     const netStats = await processNetworkFilters(
@@ -1181,19 +1318,13 @@ async function main() {
         JSON.parse(text)
     );
 
-    // This will be used to sign our inserted `!#trusted on` directives
-    const secret = createHash('sha256').update(randomBytes(16)).digest('hex').slice(0,16);
-    log(`Secret: ${secret}`);
-
     // Assemble all default lists as the default ruleset
     await rulesetFromURLs({
         id: 'default',
         name: 'Ads, trackers, miners, and more' ,
         enabled: true,
-        secret,
         urls: [
             'https://ublockorigin.github.io/uAssets/filters/filters.min.txt',
-            'https://ublockorigin.github.io/uAssets/filters/badware.min.txt',
             'https://ublockorigin.github.io/uAssets/filters/privacy.min.txt',
             'https://ublockorigin.github.io/uAssets/filters/unbreak.min.txt',
             'https://ublockorigin.github.io/uAssets/filters/quick-fixes.min.txt',
@@ -1203,6 +1334,19 @@ async function main() {
             'https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext',
         ],
         dnrURL: 'https://ublockorigin.github.io/uAssets/dnr/default.json',
+        homeURL: 'https://github.com/uBlockOrigin/uAssets',
+        filters: [
+        ],
+    });
+
+    await rulesetFromURLs({
+        id: 'badware',
+        name: 'Badware risks' ,
+        group: 'default',
+        enabled: true,
+        urls: [
+            'https://ublockorigin.github.io/uAssets/filters/badware.min.txt',
+        ],
         homeURL: 'https://github.com/uBlockOrigin/uAssets',
         filters: [
         ],
@@ -1235,7 +1379,6 @@ async function main() {
         name: 'EasyList/uBO – Cookie Notices',
         group: 'annoyances',
         enabled: false,
-        secret,
         urls: [
             'https://ublockorigin.github.io/uAssets/thirdparties/easylist-cookies.txt',
             'https://ublockorigin.github.io/uAssets/filters/annoyances-cookies.txt',
@@ -1247,7 +1390,6 @@ async function main() {
         name: 'EasyList/uBO – Overlay Notices',
         group: 'annoyances',
         enabled: false,
-        secret,
         urls: [
             'https://ublockorigin.github.io/uAssets/thirdparties/easylist-newsletters.txt',
             'https://ublockorigin.github.io/uAssets/filters/annoyances-others.txt',
@@ -1409,14 +1551,6 @@ async function main() {
     manifest.declarative_net_request = { rule_resources: ruleResources };
     // Patch web_accessible_resources key
     manifest.web_accessible_resources = manifest.web_accessible_resources || [];
-    // Strict-block-related resource
-    const strictblockDocument = `strictblock.${secret}.html`;
-    copyFile('./strictblock.html', `${outputDir}/${strictblockDocument}`);
-    manifest.web_accessible_resources.push({
-      resources: [ `/${strictblockDocument}` ],
-      matches: [ '<all_urls>' ],
-    });
-    // Secondary resources
     const web_accessible_resources = {
         resources: Array.from(requiredRedirectResources).map(path => `/${path}`),
         matches: [ '<all_urls>' ],

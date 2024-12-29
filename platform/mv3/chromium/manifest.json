@@ -41,5 +41,16 @@
   "storage": {
     "managed_schema": "managed_storage.json"
   },
-  "version": "1.0"
+  "version": "1.0",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/strictblock.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "use_dynamic_url": true
+    }
+  ]
 }

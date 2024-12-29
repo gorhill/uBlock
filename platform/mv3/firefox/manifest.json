@@ -50,5 +50,15 @@
     "storage"
   ],
   "short_name": "uBO Lite",
-  "version": "1.0"
+  "version": "1.0",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/strictblock.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
 }
