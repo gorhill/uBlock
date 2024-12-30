@@ -1342,7 +1342,7 @@ async function main() {
     await rulesetFromURLs({
         id: 'badware',
         name: 'Badware risks' ,
-        group: 'default',
+        group: 'malware',
         enabled: true,
         urls: [
             'https://ublockorigin.github.io/uAssets/filters/badware.min.txt',

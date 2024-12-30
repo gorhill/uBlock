@@ -52,6 +52,9 @@ label:has(input[type="checkbox"][disabled]) + legend {
     display: flex;
     flex-direction: column;
     }
+.filteringModeCard:hover {
+    background-color: color-mix(in hsl, var(--surface-1) 75%, var(--surface-0) 25%);
+    }
 .filteringModeCard:has(.radio > [type="radio"]:checked) {
     background-color: var(--surface-0);
     }
