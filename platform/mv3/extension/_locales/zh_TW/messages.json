@@ -4,11 +4,11 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "一個無須任何權限的內容阻擋器。安裝即可阻擋廣告、追蹤器、挖礦程式等網頁內容。",
+    "message": "一個無須授權的內容封鎖器。安裝後即可立即封鎖廣告、追蹤器、挖礦程式等等。",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
-    "message": "{{ruleCount}} 條規則，轉換自 {{filterCount}} 條網路過濾規則",
+    "message": "{{ruleCount}} 條規則，由 {{filterCount}} 條網路過濾規則轉換而來",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
@@ -32,7 +32,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipReport": {
-    "message": "回報網站問題",
+    "message": "回報此網站的問題",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -112,7 +112,7 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "為免增加志願者的負擔，請先確認該問題尚未被報告。",
+    "message": "為避免增加志願者的負擔，請先確認該問題被尚未被回報過。",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
@@ -128,15 +128,15 @@
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- 挑選一種情況 --",
+    "message": "-- 選擇一項 --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "會顯示廣告或殘留空位",
+    "message": "會顯示廣告或廣告殘留物",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "有覆蓋物或其他滋擾物",
+    "message": "有覆蓋層或其他干擾",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
@@ -144,19 +144,19 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "存在隱私問題",
+    "message": "有隱私相關問題",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "開啟 uBO Lite 的時候運作異常",
+    "message": "在 uBO Lite 啟用時運作異常",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "會開啟不需要的分頁或視窗",
+    "message": "開啟不需要的分頁或視窗",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "導致惡意軟體、網路釣魚",
+    "message": "導向惡意軟體、釣魚網站",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
@@ -172,7 +172,7 @@
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "您剛安裝了 uBO Lite。您可以在此處選擇會套用在所有網站上的預設過濾模式。\n\n預設情況下，會使用<em>基礎</em>模式，因為其不需要讀取與變更資料的權限。若您信任 uBO Lite，您可以授予其讀取並變更在所有網站上資料的廣泛權限，以便為所有網站啟用進階過濾功能。",
+    "message": "您剛安裝了 uBO Lite。您可以在此處選擇會在所有網站上套用的預設過濾模式。\n\n預設情況下，選擇了<em>基礎</em>模式，因為其不需要讀取與變更資料的權限。若您信任 uBO Lite，您可以授予其讀取並變更在所有網站上資料的廣泛權限，以便為所有網站啟用進階過濾功能。",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
@@ -204,15 +204,15 @@
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "進階網路過濾以及來自選定過濾條件清單的特定擴展過濾。\n\n需要廣泛的權限以讀取和修改所有網站的數據。",
+    "message": "進階的網路過濾功能，並結合選定過濾清單中的特定延伸過濾。  \n\n需要授予讀取和修改所有網站資料的廣泛權限。",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "進階網路過濾加上來自選定過濾清單的特定及通用擴展過濾。\n\n需要廣泛的權限以讀取和修改所有網站的數據。\n\n通用擴展過濾可能導致網頁資源使用量增加。",
+    "message": "進階網路過濾，加上從選定過濾清單中進行特定與通用延伸過濾。\n\n需要授予讀取和修改所有網站資料的廣泛權限。\n\n通用延伸過濾可能會導致較高的網頁資源使用量。",
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "不會被過濾的網站",
+    "message": "白名單",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
@@ -224,11 +224,11 @@
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "變更過濾模式時，自動重新載入",
+    "message": "變更過濾模式時自動重新載入",
     "description": "Label for a checkbox in the options page"
   },
   "showBlockedCountLabel": {
-    "message": "在工具列圖示上顯示被阻擋的網路請求數量",
+    "message": "在工具列圖示上顯示已封鎖請求的數量。",
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLabel": {
@@ -236,7 +236,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLegend": {
-    "message": "將會阻擋前往潛在不良網站的請求，您可以選擇繼續。",
+    "message": "前往潛在不良網站的導航將被阻止，您可以選擇是否繼續前往。",
     "description": "Label for a checkbox in the options page"
   },
   "findListsPlaceholder": {
@@ -252,11 +252,11 @@
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {
-    "message": "由於在 {{listname}} 中有符合的過濾條件，因此該頁面被封鎖。",
+    "message": "由於符合 {{listname}} 中的過濾規則，此頁面已被封鎖。",
     "description": "Text informing about what is causing the page to be blocked"
   },
   "strictblockRedirectSentence1": {
-    "message": "被阻擋的頁面試圖重定向到另一個網站。如果您選擇繼續，將直接導航至：{{url}}",
+    "message": "被阻擋的頁面想要重定向到另一個網站。如果您選擇繼續，將直接導航至：{{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "strictblockNoParamsPrompt": {
@@ -272,7 +272,7 @@
     "description": "A button to close the current tab"
   },
   "strictblockDontWarn": {
-    "message": "不要再顯示關於此網站的警告",
+    "message": "不再就此網站警告我",
     "description": "Label for checkbox in document-blocked page"
   },
   "strictblockProceed": {

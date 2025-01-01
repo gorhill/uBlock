@@ -7,7 +7,7 @@ Varsayılan kural seti, uBlock Origin'in varsayılan filtre setine karşılık g
 - EasyPrivacy
 - Peter Lowe'un Reklam ve izleme sunucusu listesi
 
-Seçenekler ekranına uğrayarak daha çok kuralı uygulatabilirsiniz, bunun için açılır paneldeki _dişli_ simgesine tıklayın.
+Seçenekler ekranına uğrayarak daha fazla kuralı aktif hale getirebilirsiniz, bunun için açılır paneldeki _dişli_ simgesine tıklayın.
 
 uBOL tamamen bildirimseldir, yani filtrelemenin gerçekleşmesi için kalıcı bir uBOL işlemine gerek yoktur, içerik filtreleme eklenti yerine tarayıcının kendisi tarafından CSS/JS yerleştirerek gerçekleştirilir. Bu, içerik engelleme devam ederken uBOL'nin kendisinin CPU/bellek kaynaklarını tüketmediği anlamına gelir -- uBOL'un hizmet çalışanı işlemi, _only_ açılan panel veya seçenek sayfalarıyla etkileşim kurduğunuzda gereklidir.
 

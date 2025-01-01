@@ -104,7 +104,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "Đã chặn từ khi cài đặt",
+    "message": "Bị chặn kể từ khi cài đặt",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
@@ -140,7 +140,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Nhấp để bỏ chặn tất cả cửa sổ bật lên trên trang này",
+    "message": "Bấm để bỏ chặn tất cả cửa sổ bật lên trên trang này",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -176,7 +176,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Nhấp để không chặn phông tải về trên trang này",
+    "message": "Bấm để ngừng chặn remote fonts trên trang này",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
@@ -200,7 +200,7 @@
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
-    "message": "Phông tải về",
+    "message": "Remote fonts",
     "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
@@ -380,7 +380,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Chặn yếu tố đa phương tiện lớn hơn {{input}} KB",
+    "message": "Chặn phần tử đa phương tiện kich thước lớn hơn {{input}} KB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -404,7 +404,7 @@
     "description": "Section for controlling advanced-user settings"
   },
   "settingsAdvancedSynopsis": {
-    "message": "Những tính năng dành cho người dùng nâng cao",
+    "message": "Các tính năng chỉ phù hợp với kỹ thuật viên",
     "description": "Description of section controlling advanced-user settings"
   },
   "settingsAdvancedUserSettings": {
