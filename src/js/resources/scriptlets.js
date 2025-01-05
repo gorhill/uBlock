@@ -1174,13 +1174,15 @@ function abortOnStackTrace(
             let v = owner[chain];
             Object.defineProperty(owner, chain, {
                 get: function() {
-                    if ( matchesStackTraceFn(needleDetails, extraArgs.log) ) {
+                    const log = safe.logLevel > 1 ? 'all' : 'match';
+                    if ( matchesStackTraceFn(needleDetails, log) ) {
                         throw new ReferenceError(getExceptionToken());
                     }
                     return v;
                 },
                 set: function(a) {
-                    if ( matchesStackTraceFn(needleDetails, extraArgs.log) ) {
+                    const log = safe.logLevel > 1 ? 'all' : 'match';
+                    if ( matchesStackTraceFn(needleDetails, log) ) {
                         throw new ReferenceError(getExceptionToken());
                     }
                     v = a;
