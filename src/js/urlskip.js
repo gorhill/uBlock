@@ -121,7 +121,7 @@ export function urlSkip(url, blocked, steps, directive = {}) {
                 }
                 // URI component
                 if ( step === '-uricomponent' ) {
-                    urlout = self.decodeURIComponent(urlin);
+                    urlout = decodeURIComponent(urlin);
                     continue;
                 }
                 // Enable skip of blocked requests
