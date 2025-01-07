@@ -68,7 +68,7 @@ export function trustedReplaceArgument(
     const replacer = argraw.startsWith('repl:/') &&
         parseReplaceFn(argraw.slice(5)) || undefined;
     const value = replacer === undefined &&
-        validateConstantFn(true, argraw, extraArgs) || undefined;
+        validateConstantFn(true, argraw, extraArgs);
     const reCondition = extraArgs.condition
         ? safe.patternToRegex(extraArgs.condition)
         : /^/;
