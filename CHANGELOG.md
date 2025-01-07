@@ -5,7 +5,9 @@
 
 # 1.62.0
 
-## Fixes / changes- [Fix deserialization of ArrayBuffer shared by multiple TypedArrays](https://github.com/gorhill/uBlock/commit/c92a518218)
+## Fixes / changes
+
+- [Fix deserialization of ArrayBuffer shared by multiple TypedArrays](https://github.com/gorhill/uBlock/commit/c92a518218)
 - [Improve `trusted-suppress-native-method` scriptlet](https://github.com/gorhill/uBlock/commit/cb6c11ab6f)
 - [Improve `urlskip=` filter option](https://github.com/gorhill/uBlock/commit/a7aa755f18)
 - [Improve `parse-properties-to-match` scriptlet helper](https://github.com/gorhill/uBlock/commit/7494eaf621)
