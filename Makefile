@@ -78,6 +78,11 @@ mv3-firefox: dist/build/uBOLite.firefox
 dist/build/uBOLite.edge: tools/make-mv3.sh tools/make-edge.mjs $(sources) $(platform) $(mv3-data) dist/build/mv3-data
 	tools/make-mv3.sh edge
 
+dist/build/uBOLite.safari: tools/make-mv3.sh $(sources) $(platform)
+	tools/make-mv3.sh safari
+
+mv3-safari: dist/build/uBOLite.safari
+
 mv3-edge: dist/build/uBOLite.edge
 
 dist/build/uBOLite.safari: tools/make-mv3.sh $(sources) $(platform) $(mv3-data) dist/build/mv3-data

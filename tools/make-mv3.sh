@@ -27,6 +27,9 @@ for i in "$@"; do
     edge)
       PLATFORM="edge"
       ;;
+    safari)
+      PLATFORM="safari"
+      ;;
     uBOLite_+([0-9]).+([0-9]).+([0-9]).+([0-9]))
       TAGNAME="$i"
       FULL="yes"

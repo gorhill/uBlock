@@ -8,6 +8,11 @@
     "scripts": [ "/js/background.js" ],
     "type": "module"
   },
+  "commands": {
+    "enter-zapper-mode": {
+      "description": "__MSG_zapperTipEnter__"
+    }
+  },
   "declarative_net_request": {
     "rule_resources": [
     ]
@@ -32,6 +37,7 @@
   "permissions": [
     "activeTab",
     "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess",
     "scripting",
     "storage"
   ],
@@ -41,6 +47,14 @@
     {
       "resources": [
         "/strictblock.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "/zapper-ui.html"
       ],
       "matches": [
         "<all_urls>"

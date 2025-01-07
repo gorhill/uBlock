@@ -347,6 +347,7 @@ async function init() {
         }
         tabURL.href = url.href || '';
     } catch {
+        return false;
     }
 
     if ( url !== undefined ) {

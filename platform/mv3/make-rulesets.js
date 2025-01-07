@@ -431,8 +431,8 @@ function toStrictBlockRule(rule, out) {
     if ( condition.excludedRequestMethods ) { return; }
     if ( condition.responseHeaders ) { return; }
     if ( condition.excludedResponseHeaders ) { return; }
-    if ( condition.initiatorDomains ) { return; }
-    if ( condition.excludedInitiatorDomains ) { return; }
+    if ( condition.initiatorDomains || condition.domains ) { return; }
+    if ( condition.excludedInitiatorDomains || condition.excludedDomains ) { return; }
     if ( condition.excludedRequestDomains ) { return; }
     const { resourceTypes } = condition;
     if ( resourceTypes === undefined ) {
