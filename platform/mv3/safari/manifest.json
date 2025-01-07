@@ -1,0 +1,50 @@
+{
+  "action": {
+    "default_icon": "/img/icon_64.png",
+    "default_popup": "popup.html"
+  },
+  "author": "Raymond Hill",
+  "background": {
+    "scripts": [ "/js/background.js" ],
+    "type": "module"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+    ]
+  },
+  "default_locale": "en",
+  "description": "__MSG_extShortDesc__",
+  "icons": {
+    "16": "/img/icon_16.png",
+    "32": "/img/icon_32.png",
+    "64": "/img/icon_64.png",
+    "128": "/img/icon_128.png",
+    "512": "/img/icon_512.png"
+  },
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "options_ui": {
+    "page": "dashboard.html"
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "permissions": [
+    "activeTab",
+    "declarativeNetRequest",
+    "scripting",
+    "storage"
+  ],
+  "short_name": "uBO Lite",
+  "version": "1.0",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/strictblock.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

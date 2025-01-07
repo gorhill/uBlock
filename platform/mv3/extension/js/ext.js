@@ -19,17 +19,23 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-export const browser =
-    self.browser instanceof Object &&
-    self.browser instanceof Element === false
-        ? self.browser
-        : self.chrome;
+import {
+    excludedInitiatorDomains,
+    initiatorDomains,
+    webext,
+} from './ext-compat.js';
 
+/******************************************************************************/
+
+export const browser = webext;
 export const dnr = browser.declarativeNetRequest;
 export const i18n = browser.i18n;
 export const runtime = browser.runtime;
 export const TAB_ID_NONE = browser.tabs.TAB_ID_NONE;
 export const windows = browser.windows;
+
+export const INITIATOR_DOMAINS = initiatorDomains;
+export const EXCLUDED_INITIATOR_DOMAINS = excludedInitiatorDomains;
 
 /******************************************************************************/
 

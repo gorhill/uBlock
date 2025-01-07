@@ -20,6 +20,8 @@
 */
 
 import {
+    EXCLUDED_INITIATOR_DOMAINS,
+    INITIATOR_DOMAINS,
     TAB_ID_NONE,
     browser,
     dnr,
@@ -305,7 +307,7 @@ async function updateDynamicRules() {
     ]);
     if ( addRules.length === 0 && removeRuleIds.length === 0 ) { return; }
 
-    const maxRegexRuleCount = dnr.MAX_NUMBER_OF_REGEX_RULES;
+    const maxRegexRuleCount = dnr.MAX_NUMBER_OF_REGEX_RULES || 1000;
     let regexRuleCount = 0;
     let ruleId = 1;
     for ( const rule of addRules ) {
@@ -527,10 +529,10 @@ async function filteringModesToDNR(modes) {
             priority: 100,
         };
         if ( rule0.condition.requestDomains ) {
-            rule1.condition.initiatorDomains =
+            rule1.condition[INITIATOR_DOMAINS] =
                 rule0.condition.requestDomains.slice();
         } else if ( rule0.condition.excludedRequestDomains ) {
-            rule1.condition.excludedInitiatorDomains =
+            rule1.condition[EXCLUDED_INITIATOR_DOMAINS] =
                 rule0.condition.excludedRequestDomains.slice();
         }
         addSessionRules.push(rule1);
@@ -564,8 +566,8 @@ const isDifferentAllowRules = (a = [], b = []) => {
     const pp = [
         'requestDomains',
         'excludedRequestDomains',
-        'initiatorDomains',
-        'excludedInitiatorDomains',
+        INITIATOR_DOMAINS,
+        EXCLUDED_INITIATOR_DOMAINS,
     ];
     for ( const p of pp ) {
         const ac = a.length && a[0].condition[p] || [];
