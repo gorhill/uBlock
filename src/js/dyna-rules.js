@@ -21,15 +21,11 @@
 
 /* global CodeMirror, diff_match_patch, uBlockDashboard */
 
-'use strict';
-
-import publicSuffixList from '../lib/publicsuffixlist/publicsuffixlist.js';
-
+import './codemirror/ubo-dynamic-filtering.js';
+import { dom, qs$, qsa$ } from './dom.js';
 import { hostnameFromURI } from './uri-utils.js';
 import { i18n$ } from './i18n.js';
-import { dom, qs$, qsa$ } from './dom.js';
-
-import './codemirror/ubo-dynamic-filtering.js';
+import publicSuffixList from '../lib/publicsuffixlist/publicsuffixlist.js';
 
 /******************************************************************************/
 
@@ -327,7 +323,7 @@ function handleImportFilePicker() {
         // https://github.com/chrisaljoudi/uBlock/issues/757
         // Support RequestPolicy rule syntax
         let result = this.result;
-        let matches = /\[origins-to-destinations\]([^\[]+)/.exec(result);
+        let matches = /\[origins-to-destinations\]([^[]+)/.exec(result);
         if ( matches && matches.length === 2 ) {
             result = matches[1].trim()
                                .replace(/\|/g, ' ')
@@ -459,13 +455,12 @@ const onPresentationChanged = (( ) => {
             thePanes.orig.modified.join('\n'),
             thePanes.edit.modified.join('\n')
         );
-        const ll = []; let il = 0, lellipsis = false;
-        const rr = []; let ir = 0, rellipsis = false;
+        const ll = []; let lellipsis = false;
+        const rr = []; let rellipsis = false;
         for ( let i = 0; i < diffs.length; i++ ) {
             const diff =  diffs[i];
             if ( diff[0] === 0 ) {
                 lellipsis = rellipsis = true;
-                il += 1; ir += 1;
                 continue;
             }
             if ( diff[0] < 0 ) {
@@ -475,7 +470,6 @@ const onPresentationChanged = (( ) => {
                     lellipsis = rellipsis = false;
                 }
                 ll.push(diff[1].trim());
-                il += 1;
                 continue;
             }
             /* diff[0] > 0 */
@@ -485,7 +479,6 @@ const onPresentationChanged = (( ) => {
                 lellipsis = rellipsis = false;
             }
             rr.push(diff[1].trim());
-            ir += 1;
         }
         if ( lellipsis ) { ll.push('...'); }
         if ( rellipsis ) { rr.push('...'); }

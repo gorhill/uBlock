@@ -231,7 +231,7 @@ function abortCurrentScriptCore(
                 text = self.decodeURIComponent(content);
                 break;
             }
-        } catch(ex) {
+        } catch {
         }
         scriptTexts.set(elem, text);
         return text;
@@ -644,7 +644,7 @@ function matchObjectProperties(propNeedles, ...objs) {
         if ( value === undefined ) { continue; }
         if ( typeof value !== 'string' ) {
             try { value = safe.JSON_stringify(value); }
-            catch(ex) { }
+            catch { }
             if ( typeof value !== 'string' ) { continue; }
         }
         if ( safe.testPattern(details, value) ) { continue; }
@@ -853,7 +853,7 @@ function preventXhrFn(
     const safeDispatchEvent = (xhr, type) => {
         try {
             xhr.dispatchEvent(new Event(type));
-        } catch(_) {
+        } catch {
         }
     };
     const XHRBefore = XMLHttpRequest.prototype;
@@ -1295,7 +1295,7 @@ function addEventListenerDefuser(
                 } else {
                     h = String(callArgs[1]);
                 }
-            } catch(ex) {
+            } catch {
             }
             if ( type === '' && pattern === '' ) {
                 safe.uboLog(logPrefix, `Called: ${t}\n${h}\n${elementDetails(thisArg)}`);
@@ -1429,7 +1429,7 @@ function jsonPruneXhrResponse(
             } else if ( typeof innerResponse === 'string' ) {
                 try {
                     objBefore = safe.JSON_parse(innerResponse);
-                } catch(ex) {
+                } catch {
                 }
             }
             if ( typeof objBefore !== 'object' ) {
@@ -1681,7 +1681,7 @@ function noFetchIf(
                 responseProps[p] = { value: v };
             });
         }
-        catch(ex) {}
+        catch { }
     } else if ( responseType !== '' ) {
         if ( validResponseProps.type.includes(responseType) ) {
             responseProps.type = { value: responseType };
@@ -1699,7 +1699,7 @@ function noFetchIf(
                 let v = details[prop];
                 if ( typeof v !== 'string' ) {
                     try { v = safe.JSON_stringify(v); }
-                    catch(ex) { }
+                    catch { }
                 }
                 if ( typeof v !== 'string' ) { continue; }
                 props.set(prop, v);
@@ -1721,7 +1721,7 @@ function noFetchIf(
                     break;
                 }
             }
-        } catch(ex) {
+        } catch {
         }
         if ( proceed ) {
             return context.reflect();
@@ -1823,7 +1823,7 @@ function removeClass(
                 node.classList.remove(...tokens);
                 safe.uboLog(logPrefix, 'Removed class(es)');
             }
-        } catch(ex) {
+        } catch {
         }
         if ( mustStay ) { return; }
         if ( document.readyState !== 'complete' ) { return; }
@@ -2342,7 +2342,7 @@ function xmlPrune(
             pruneFromDoc(xmlDoc);
             const serializer = new XMLSerializer();
             text = serializer.serializeToString(xmlDoc);
-        } catch(ex) {
+        } catch {
         }
         return text;
     };
@@ -2636,7 +2636,7 @@ function callNothrow(
             let r;
             try {
                 r = Reflect.apply(...args);
-            } catch(ex) {
+            } catch {
             }
             return r;
         },
@@ -3023,7 +3023,7 @@ function trustedClickElement(
         .filter(s => {
             try {
                 void querySelectorEx(s);
-            } catch(_) {
+            } catch {
                 return false;
             }
             return true;
@@ -3170,7 +3170,7 @@ function trustedPruneInboundObject(
                 if ( extraArgs.dontOverwrite ) {
                     try {
                         objBefore = safe.JSON_parse(safe.JSON_stringify(targetArg));
-                    } catch(_) {
+                    } catch {
                         objBefore = undefined;
                     }
                 }
@@ -3255,7 +3255,7 @@ function trustedReplaceOutboundText(
         let textBefore = encodedTextBefore;
         if ( extraArgs.encoding === 'base64' ) {
             try { textBefore = self.atob(encodedTextBefore); }
-            catch(ex) { return encodedTextBefore; }
+            catch { return encodedTextBefore; }
         }
         if ( rawPattern === '' ) {
             safe.uboLog(logPrefix, 'Decoded outbound text:\n', textBefore);
@@ -3456,7 +3456,7 @@ function trustedPreventDomBypass(
                     Object.defineProperty(elem, 'contentWindow', { value: self });
                 }
                 safe.uboLog(logPrefix, 'Bypass prevented');
-            } catch(_) {
+            } catch {
             }
         }
         return r;
@@ -3511,7 +3511,7 @@ function trustedOverrideElementMethod(
             const { thisArg } = context;
             try {
                 override = thisArg.closest(selector) === thisArg;
-            } catch(_) {
+            } catch {
             }
         }
         if ( override === false ) {

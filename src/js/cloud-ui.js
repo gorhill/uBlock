@@ -19,12 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global faIconsInit */
-
-'use strict';
-
-import { i18n, i18n$ } from './i18n.js';
 import { dom, qs$ } from './dom.js';
+import { i18n, i18n$ } from './i18n.js';
 import { faIconsInit } from './fa-icons.js';
 
 /******************************************************************************/

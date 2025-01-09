@@ -19,20 +19,15 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
-/******************************************************************************/
-
-import staticNetFilteringEngine from './static-net-filtering.js';
-import µb from './background.js';
-import { CompiledListWriter } from './static-filtering-io.js';
-import { i18n$ } from './i18n.js';
 import * as sfp from './static-filtering-parser.js';
-
 import {
     domainFromHostname,
     hostnameFromURI,
 } from './uri-utils.js';
+import { CompiledListWriter } from './static-filtering-io.js';
+import { i18n$ } from './i18n.js';
+import staticNetFilteringEngine from './static-net-filtering.js';
+import µb from './background.js';
 
 /******************************************************************************/
 

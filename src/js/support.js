@@ -21,10 +21,8 @@
 
 /* global CodeMirror, uBlockDashboard */
 
-'use strict';
-
-import { onBroadcast } from './broadcast.js';
 import { dom, qs$ } from './dom.js';
+import { onBroadcast } from './broadcast.js';
 
 /******************************************************************************/
 
@@ -220,7 +218,7 @@ const reportedPage = (( ) => {
             hostname: parsedURL.hostname.replace(/^(m|mobile|www)\./, ''),
             popupPanel: JSON.parse(url.searchParams.get('popupPanel')),
         };
-    } catch(ex) {
+    } catch {
     }
     return null;
 })();

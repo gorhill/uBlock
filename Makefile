@@ -32,11 +32,12 @@ firefox: dist/build/uBlock0.firefox
 dist/build/uBlock0.npm: tools/make-nodejs.sh $(sources) $(platform) $(assets)
 	tools/make-npm.sh
 
-# Build the Node.js package.
-npm: dist/build/uBlock0.npm
+# Dev tools
+npm: node_modules/
+	npm install
 
 lint: npm
-	cd dist/build/uBlock0.npm && npm run lint
+	npm run lint
 
 test: npm
 	cd dist/build/uBlock0.npm && npm run test

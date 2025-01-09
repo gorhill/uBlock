@@ -19,15 +19,11 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
-/******************************************************************************/
-
 import cosmeticFilteringEngine from './cosmetic-filtering.js';
 import htmlFilteringEngine from './html-filtering.js';
 import httpheaderFilteringEngine from './httpheader-filtering.js';
-import scriptletFilteringEngine from './scriptlet-filtering.js';
 import logger from './logger.js';
+import scriptletFilteringEngine from './scriptlet-filtering.js';
 
 /*******************************************************************************
 

@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
 /******************************************************************************/
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/756

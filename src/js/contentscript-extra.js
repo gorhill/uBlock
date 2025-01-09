@@ -508,7 +508,7 @@ class PSelectorRoot extends PSelector {
     prime(input) {
         try {
             return super.prime(input);
-        } catch (ex) {
+        } catch {
         }
         return [];
     }

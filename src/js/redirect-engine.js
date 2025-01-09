@@ -19,12 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
-/******************************************************************************/
-
-import redirectableResources from './redirect-resources.js';
 import { LineIterator, orphanizeString } from './text-utils.js';
+import redirectableResources from './redirect-resources.js';
 
 /******************************************************************************/
 

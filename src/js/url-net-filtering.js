@@ -19,10 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
-/******************************************************************************/
-
 import { LineIterator } from './text-utils.js';
 import { decomposeHostname } from './uri-utils.js';
 

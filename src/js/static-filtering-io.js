@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
 /******************************************************************************/
 
 // https://www.reddit.com/r/uBlockOrigin/comments/oq6kt5/ubo_loads_generic_filter_instead_of_specific/

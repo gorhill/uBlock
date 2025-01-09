@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
 /******************************************************************************/
 
 (( ) => {
@@ -34,7 +32,7 @@
         let loaded = false;
         try {
             loaded = sheet.rules.length !== 0;
-        } catch(ex) {
+        } catch {
         }
         if ( loaded ) { continue; }
         const link = sheet.ownerNode || null;

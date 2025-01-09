@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
 /******************************************************************************/
 
 // https://bugs.chromium.org/p/v8/issues/detail?id=2869

@@ -91,7 +91,7 @@ const onSubscribeToList = function(details) {
     try {
         parsedURL = new URL(details.linkUrl);
     }
-    catch(ex) {
+    catch {
     }
     if ( parsedURL instanceof URL === false ) { return; }
     const url = parsedURL.searchParams.get('location');

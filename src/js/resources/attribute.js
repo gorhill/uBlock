@@ -49,7 +49,7 @@ export function setAttrFn(
         let elems;
         try {
             elems = document.querySelectorAll(selector);
-        } catch(_) {
+        } catch {
             return false;
         }
         for ( const elem of elems ) {
@@ -259,7 +259,7 @@ export function removeAttr(
                     safe.uboLog(logPrefix, `Removed attribute '${attr}'`);
                 }
             }
-        } catch(ex) {
+        } catch {
         }
     };
     const mutationHandler = mutations => {

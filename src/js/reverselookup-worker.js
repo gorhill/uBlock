@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
 /******************************************************************************/
 
 let listEntries = Object.create(null);
@@ -212,6 +210,7 @@ const fromExtendedFilter = function(details) {
             case 8:
             // HTML filtering
             // Response header filtering
+            /* fallthrough */
             case 64: {
                 if ( exception !== ((fargs[2] & 0b001) !== 0) ) { break; }
                 const isProcedural = (fargs[2] & 0b010) !== 0;

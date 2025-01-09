@@ -226,7 +226,7 @@ import { i18n$ } from '../i18n.js';
                 query = re.source;
                 flags = re.flags;
             }
-            catch (e) {
+            catch {
                 reParsed = null;
             }
         }

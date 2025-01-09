@@ -19,10 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
-/******************************************************************************/
-
 export function safeReplace(text, pattern, replacement, count = 1) {
     const rePattern = typeof pattern === 'string'
         ? new RegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))

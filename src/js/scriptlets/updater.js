@@ -19,10 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global HTMLDocument */
-
-'use strict';
-
 /******************************************************************************/
 
 // Injected into specific webpages, those which have been pre-selected
@@ -75,7 +71,7 @@ function updateStockLists(target) {
             auto,
         });
         return true;
-    } catch (_) {
+    } catch {
     }
 }
 

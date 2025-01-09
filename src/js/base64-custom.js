@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
 /******************************************************************************/
 
 // Custom base64 codecs. These codecs are meant to encode/decode typed arrays

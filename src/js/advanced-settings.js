@@ -21,8 +21,6 @@
 
 /* global CodeMirror, uBlockDashboard */
 
-'use strict';
-
 import { dom, qs$ } from './dom.js';
 
 /******************************************************************************/

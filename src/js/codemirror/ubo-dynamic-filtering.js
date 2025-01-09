@@ -21,8 +21,6 @@
 
 /* global CodeMirror */
 
-'use strict';
-
 CodeMirror.defineMode('ubo-dynamic-filtering', ( ) => {
 
     const validSwitches = new Set([
@@ -69,7 +67,7 @@ CodeMirror.defineMode('ubo-dynamic-filtering', ( ) => {
         hnValidator.hostname = '_';
         try {
             hnValidator.hostname = hnin;
-        } catch(_) {
+        } catch {
             return false;
         }
         const hnout = hnValidator.hostname;

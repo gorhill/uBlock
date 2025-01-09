@@ -19,10 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
-/******************************************************************************/
-
 import µb from './background.js';
 
 /******************************************************************************/
@@ -72,7 +68,7 @@ import µb from './background.js';
                 popupLoggerBox = JSON.parse(
                     vAPI.localStorage.getItem('popupLoggerBox')
                 );
-            } catch(ex) {
+            } catch {
             }
             if ( popupLoggerBox !== undefined ) {
                 details.box = popupLoggerBox;

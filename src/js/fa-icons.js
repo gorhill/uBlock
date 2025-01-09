@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uMatrix
 */
 
-'use strict';
-
 /******************************************************************************/
 
 export const faIconsInit = (( ) => {

@@ -95,8 +95,10 @@ export function trustedReplaceArgument(
             return context.reflect();
         }
         const argBefore = getArg(context);
-        if ( safe.RegExp_test.call(reCondition, argBefore) === false ) {
-            return context.reflect();
+        if ( extraArgs.condition !== undefined ) {
+            if ( safe.RegExp_test.call(reCondition, argBefore) === false ) {
+                return context.reflect();
+            }
         }
         const argAfter = replacer && typeof argBefore === 'string'
             ? argBefore.replace(replacer.re, replacer.replacement)

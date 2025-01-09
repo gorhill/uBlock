@@ -19,15 +19,13 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
 // This module can be dynamically loaded or spun off as a worker.
 
 /******************************************************************************/
 
 const patches = new Map();
 const encoder = new TextEncoder();
-const reFileName = /([^\/]+?)(?:#.+)?$/;
+const reFileName = /([^/]+?)(?:#.+)?$/;
 const EMPTYLINE = '';
 
 /******************************************************************************/
@@ -50,8 +48,7 @@ const basename = url => {
 const resolveURL = (path, url) => {
     try {
         return new URL(path, url);
-    }
-    catch(_) {
+    } catch {
     }
 };
 

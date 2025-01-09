@@ -52,7 +52,7 @@ const safeQuerySelectorAll = function(node, selector) {
     if ( node !== null ) {
         try {
             return node.querySelectorAll(selector);
-        } catch (e) {
+        } catch {
         }
     }
     return [];
@@ -672,8 +672,7 @@ const filterToDOMInterface = (( ) => {
         let reFilter = null;
         try {
             reFilter = new RegExp(reStr, 'i');
-        }
-        catch (e) {
+        } catch {
             return out;
         }
 
@@ -727,8 +726,7 @@ const filterToDOMInterface = (( ) => {
             elems = document.querySelectorAll(
                 raw.replace(rePseudoElements, '')
             );
-        }
-        catch (e) {
+        } catch {
             return;
         }
         const out = [];
@@ -762,7 +760,7 @@ const filterToDOMInterface = (( ) => {
             default:
                 break;
             }
-        } catch(ex) {
+        } catch {
             return;
         }
         if ( !elems ) { return; }

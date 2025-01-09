@@ -19,12 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* globals requestIdleCallback, cancelIdleCallback */
-
-'use strict';
-
-/******************************************************************************/
-
 export function queueTask(func, timeout = 5000) {
     if ( typeof requestIdleCallback === 'undefined' ) {
         return setTimeout(func, 1);

@@ -19,10 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global HTMLDocument */
-
-'use strict';
-
 /******************************************************************************/
 
 // Injected into specific web pages, those which have been pre-selected
@@ -70,7 +66,7 @@ const onMaybeSubscriptionLinkClicked = function(target) {
             title,
         });
         return true;
-    } catch (_) {
+    } catch {
     }
 };
 

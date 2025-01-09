@@ -19,10 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
-/******************************************************************************/
-
 import DynamicHostRuleFiltering from './dynamic-net-filtering.js';
 import DynamicSwitchRuleFiltering from './hnswitches.js';
 import DynamicURLRuleFiltering from './url-net-filtering.js';

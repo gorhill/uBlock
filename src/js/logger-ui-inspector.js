@@ -88,7 +88,7 @@ const contentInspectorChannel = (( ) => {
             toContentPort = browser.tabs.connect(tabId, { frameId });
             toContentPort.onMessage.addListener(onContentMessage);
             toContentPort.onDisconnect.addListener(onContentDisconnect);
-        } catch(_) {
+        } catch {
         }
     };
 

@@ -19,22 +19,12 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* eslint-disable-next-line no-redeclare */
 /* globals process */
 
-'use strict';
-
-/******************************************************************************/
-
-import { strict as assert } from 'assert';
+import { StaticNetFilteringEngine, enableWASM } from './index.js';
+import { mkdir, readFile, writeFile } from 'fs/promises';
 import { createRequire } from 'module';
-import { readFile, writeFile, mkdir } from 'fs/promises';
 import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-import { enableWASM, StaticNetFilteringEngine } from './index.js';
 
 /******************************************************************************/
 

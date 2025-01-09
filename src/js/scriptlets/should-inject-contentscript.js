@@ -32,7 +32,7 @@
             self.requestIdleCallback(( ) => vAPI?.bootstrap?.());
         }
         return status;
-    } catch(ex) {
+    } catch {
     }
     return true;
 })();

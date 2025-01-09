@@ -22,8 +22,6 @@
 // Code below has been imported from uMatrix and modified to fit uBO:
 // https://github.com/gorhill/uMatrix/blob/3f8794dd899a05e066c24066c6c0a2515d5c60d2/src/js/contentscript.js#L464-L531
 
-'use strict';
-
 /******************************************************************************/
 
 // https://github.com/gorhill/uMatrix/issues/232
@@ -46,15 +44,13 @@
         let url;
         try {
             url = new URL(refreshURL, document.baseURI);
-        } catch(ex) {
+        } catch {
             return;
         }
         if ( reSafeURL.test(url.href) === false ) { return; }
         redirectTimer = setTimeout(( ) => {
-                location.assign(url.href);
-            },
-            parseInt(match[1], 10) * 1000 + 1
-        );
+            location.assign(url.href);
+        }, parseInt(match[1], 10) * 1000 + 1);
         meta.parentNode.removeChild(meta);
     };
 

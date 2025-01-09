@@ -918,7 +918,7 @@ const fromBase64 = function(encoded) {
     let u8array;
     try {
         u8array = denseBase64.decode(encoded);
-    } catch(ex) {
+    } catch {
     }
     return Promise.resolve(u8array !== undefined ? u8array : encoded);
 };

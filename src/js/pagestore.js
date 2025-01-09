@@ -549,7 +549,7 @@ const PageStore = class {
             entries = await webext.webNavigation.getAllFrames({
                 tabId: this.tabId
             });
-        } catch(ex) {
+        } catch {
         }
         if ( Array.isArray(entries) === false ) { return; }
         const toKeep = new Set();

@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
 /******************************************************************************/
 
 if ( typeof vAPI === 'object' && vAPI.domFilterer ) {

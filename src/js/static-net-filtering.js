@@ -3453,7 +3453,7 @@ class FilterCompiler {
         try {
             const re = new RegExp(s);
             return re.source;
-        } catch (ex) {
+        } catch {
         }
         return '';
     }
@@ -5503,7 +5503,7 @@ StaticNetFilteringEngine.prototype.filterQuery = function(fctxt, out = []) {
         for ( const [ key, raw ] of params ) {
             let value = raw;
             try { value = decodeURIComponent(value); }
-            catch(ex) { }
+            catch { }
             if ( re.test(`${key}=${value}`) === not ) { continue; }
             if ( isException === false ) { params.delete(key); }
             filtered = true;

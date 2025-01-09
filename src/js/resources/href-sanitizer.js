@@ -73,7 +73,7 @@ function hrefSanitizer(
         try {
             elems = document.querySelectorAll(`a[href="${href}"`);
         }
-        catch(ex) {
+        catch {
         }
         for ( const elem of elems ) {
             elem.setAttribute('href', text);
@@ -87,7 +87,7 @@ function hrefSanitizer(
         try {
             const url = new URL(text, document.location);
             return url.href;
-        } catch(ex) {
+        } catch {
         }
         return '';
     };
@@ -101,7 +101,7 @@ function hrefSanitizer(
             if ( value === null ) { return href }
             if ( recursive ) { return extractParam(value, source.slice(end)); }
             return value;
-        } catch(x) {
+        } catch {
         }
         return href;
     };
@@ -128,7 +128,7 @@ function hrefSanitizer(
         try {
             elems = document.querySelectorAll(selector);
         }
-        catch(ex) {
+        catch {
             return false;
         }
         for ( const elem of elems ) {

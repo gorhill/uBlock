@@ -43,7 +43,7 @@ export function parseReplaceFn(s) {
     const flags = s.slice(parser.separatorEnd);
     try {
         return { re: new RegExp(pattern, flags), replacement };
-    } catch(_) {
+    } catch {
     }
 }
 registerScriptlet(parseReplaceFn, {

@@ -19,16 +19,9 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* jshint bitwise: false */
-
-'use strict';
-
-/******************************************************************************/
-
-import punycode from '../lib/punycode.js';
-
-import { decomposeHostname } from './uri-utils.js';
 import { LineIterator } from './text-utils.js';
+import { decomposeHostname } from './uri-utils.js';
+import punycode from '../lib/punycode.js';
 
 /******************************************************************************/
 

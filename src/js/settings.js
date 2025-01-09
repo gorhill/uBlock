@@ -19,11 +19,9 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
-import { i18n$ } from './i18n.js';
 import { dom, qs$, qsa$ } from './dom.js';
 import { setAccentColor, setTheme } from './theme.js';
+import { i18n$ } from './i18n.js';
 
 /******************************************************************************/
 
@@ -69,7 +67,7 @@ function handleImportFilePicker() {
                 throw 'Invalid';
             }
         }
-        catch (e) {
+        catch {
             userData = undefined;
         }
         if ( userData === undefined ) {

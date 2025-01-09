@@ -85,7 +85,7 @@ const urlToFragment = raw => {
         b.append(hn);
         fragment.append(raw.slice(0,i), b, raw.slice(i+hn.length));
         return fragment;
-    } catch(_) {
+    } catch {
     }
     return raw;
 };
@@ -157,7 +157,7 @@ if ( typeof details.to === 'string' && details.to.length !== 0 ) {
         let url;
         try {
             url = new URL(rawURL);
-        } catch(ex) {
+        } catch {
             return false;
         }
 

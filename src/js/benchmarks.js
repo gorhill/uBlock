@@ -89,7 +89,7 @@ const loadBenchmarkDataset = (( ) => {
             if ( details.content.startsWith('[') ) {
                 try {
                     requests = JSON.parse(details.content);
-                } catch(ex) {
+                } catch {
                 }
             } else {
                 const lineIter = new LineIterator(details.content);
@@ -99,7 +99,7 @@ const loadBenchmarkDataset = (( ) => {
                     if ( line === '' ) { continue; }
                     try {
                         parsed.push(JSON.parse(line));
-                    } catch(ex) {
+                    } catch {
                         parsed.length = 0;
                         break;
                     }

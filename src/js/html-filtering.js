@@ -19,15 +19,11 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
-/******************************************************************************/
-
-import logger from './logger.js';
-import µb from './background.js';
-import { sessionFirewall } from './filtering-engines.js';
 import { StaticExtFilteringHostnameDB } from './static-ext-filtering-db.js';
 import { entityFromDomain } from './uri-utils.js';
+import logger from './logger.js';
+import { sessionFirewall } from './filtering-engines.js';
+import µb from './background.js';
 
 /******************************************************************************/
 

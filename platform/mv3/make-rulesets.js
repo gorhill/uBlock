@@ -125,7 +125,7 @@ const fetchText = (url, cacheDir) => {
                     const content = data.join('');
                     try {
                         writeFile(`${cacheDir}/${fname}`, content);
-                    } catch (ex) {
+                    } catch {
                     }
                     resolve({ url, content });
                 });

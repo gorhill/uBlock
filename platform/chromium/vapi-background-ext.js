@@ -224,7 +224,7 @@ vAPI.scriptletsInjector = (( ) => {
                 script.appendChild(doc.createTextNode(details.scriptlets));
                 (doc.head || doc.documentElement).appendChild(script);
                 self.uBO_scriptletsInjected = details.filters;
-            } catch (ex) {
+            } catch {
             }
             if ( script ) {
                 script.remove();

@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* globals process */
+
 import * as s14e from './js/s14e-serializer.js';
 import * as sfp from './js/static-filtering-parser.js';
 
@@ -188,7 +190,7 @@ async function useLists(lists, options = {}) {
 
     useLists.promise = Promise.all(promises);
     await useLists.promise;
-    useLists.promise = null; // eslint-disable-line require-atomic-updates
+    useLists.promise = null;
 
     // Commit changes
     snfe.freeze();
@@ -283,7 +285,7 @@ class StaticNetFilteringEngine {
 // module.exports. Once all included files are written like ES modules, using
 // export statements, this should no longer be necessary.
 if ( typeof module !== 'undefined' && typeof exports !== 'undefined' ) {
-    module.exports = exports;
+    module.exports = exports; // eslint-disable-line no-undef
 }
 
 export {

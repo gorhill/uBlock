@@ -480,7 +480,7 @@ const idbStorage = (( ) => {
                 try {
                     const db = ev.target.result;
                     db.createObjectStore(STORAGE_NAME, { keyPath: 'key' });
-                } catch(ex) {
+                } catch {
                     req.onerror();
                 }
             };

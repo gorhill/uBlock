@@ -166,7 +166,7 @@ const onScriptletMessageInjector = (( ) => {
                 };
                 bcSecret.postMessage('iamready!');
                 self.uBO_bcSecret = bcSecret;
-            } catch(_) {
+            } catch {
             }
         }.toString(),
         ')(',

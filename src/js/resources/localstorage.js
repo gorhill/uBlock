@@ -102,7 +102,7 @@ export function setLocalStorageItemFn(
         } else {
             storage.setItem(key, `${value}`);
         }
-    } catch(ex) {
+    } catch {
     }
 }
 registerScriptlet(setLocalStorageItemFn, {

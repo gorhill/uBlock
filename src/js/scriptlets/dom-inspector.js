@@ -431,7 +431,7 @@ const elementsFromSelector = function(selector, context) {
     // plain CSS selector
     try {
         return context.querySelectorAll(selector);
-    } catch (ex) {
+    } catch {
     }
     return [];
 };
@@ -443,7 +443,7 @@ const elementsFromSpecialSelector = function(selector) {
         let nodes;
         try {
             nodes = document.querySelectorAll(matches[1]);
-        } catch(ex) {
+        } catch {
             nodes = [];
         }
         for ( const node of nodes ) {
@@ -772,7 +772,7 @@ const contentInspectorChannel = (( ) => {
         if ( toLoggerPort === undefined ) { return; }
         try {
             toLoggerPort.postMessage(msg);
-        } catch(_) {
+        } catch {
             shutdownInspector();
         }
     };

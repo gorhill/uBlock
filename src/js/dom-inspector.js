@@ -19,9 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
-/******************************************************************************/
 /******************************************************************************/
 
 const svgRoot = document.querySelector('svg');
@@ -36,20 +33,20 @@ const shutdown = ( ) => {
 const contentInspectorChannel = ev => {
     const msg = ev.data || {};
     switch ( msg.what ) {
-        case 'quitInspector': {
-            shutdown();
-            break;
-        }
-        case 'svgPaths': {
-            const paths = svgRoot.children;
-            paths[0].setAttribute('d', msg.paths[0]);
-            paths[1].setAttribute('d', msg.paths[1]);
-            paths[2].setAttribute('d', msg.paths[2]);
-            paths[3].setAttribute('d', msg.paths[3]);
-            break;
-        }
-        default:
-            break;
+    case 'quitInspector': {
+        shutdown();
+        break;
+    }
+    case 'svgPaths': {
+        const paths = svgRoot.children;
+        paths[0].setAttribute('d', msg.paths[0]);
+        paths[1].setAttribute('d', msg.paths[1]);
+        paths[2].setAttribute('d', msg.paths[2]);
+        paths[3].setAttribute('d', msg.paths[3]);
+        break;
+    }
+    default:
+        break;
     }
 };
 

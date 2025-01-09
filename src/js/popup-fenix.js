@@ -19,11 +19,9 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
-import punycode from '../lib/punycode.js';
-import { i18n$ } from './i18n.js';
 import { dom, qs$, qsa$ } from './dom.js';
+import { i18n$ } from './i18n.js';
+import punycode from '../lib/punycode.js';
 
 /******************************************************************************/
 
@@ -178,11 +176,11 @@ const formatNumber = function(count) {
     //   a poor's man compact form, which unfortunately is not i18n-friendly.
     count /= 1000000;
     if ( count >= 100 ) {
-      count = Math.floor(count * 10) / 10;
+        count = Math.floor(count * 10) / 10;
     } else if ( count > 10 ) {
-      count = Math.floor(count * 100) / 100;
+        count = Math.floor(count * 100) / 100;
     } else {
-      count = Math.floor(count * 1000) / 1000;
+        count = Math.floor(count * 1000) / 1000;
     }
     return (count).toLocaleString(undefined) + '\u2009M';
 };
@@ -469,27 +467,27 @@ function filterFirewallRows() {
     for ( const elem of elems ) {
         const on = dom.cl.has(elem, 'on');
         switch ( elem.dataset.expr ) {
-            case 'not':
-                not = on;
-                break;
-            case 'blocked':
-                dom.cl.toggle(firewallElem, 'showBlocked', !not && on);
-                dom.cl.toggle(firewallElem, 'hideBlocked', not && on);
-                break;
-            case 'allowed':
-                dom.cl.toggle(firewallElem, 'showAllowed', !not && on);
-                dom.cl.toggle(firewallElem, 'hideAllowed', not && on);
-                break;
-            case 'script':
-                dom.cl.toggle(firewallElem, 'show3pScript', !not && on);
-                dom.cl.toggle(firewallElem, 'hide3pScript', not && on);
-                break;
-            case 'frame':
-                dom.cl.toggle(firewallElem, 'show3pFrame', !not && on);
-                dom.cl.toggle(firewallElem, 'hide3pFrame', not && on);
-                break;
-            default:
-                break;
+        case 'not':
+            not = on;
+            break;
+        case 'blocked':
+            dom.cl.toggle(firewallElem, 'showBlocked', !not && on);
+            dom.cl.toggle(firewallElem, 'hideBlocked', not && on);
+            break;
+        case 'allowed':
+            dom.cl.toggle(firewallElem, 'showAllowed', !not && on);
+            dom.cl.toggle(firewallElem, 'hideAllowed', not && on);
+            break;
+        case 'script':
+            dom.cl.toggle(firewallElem, 'show3pScript', !not && on);
+            dom.cl.toggle(firewallElem, 'hide3pScript', not && on);
+            break;
+        case 'frame':
+            dom.cl.toggle(firewallElem, 'show3pFrame', !not && on);
+            dom.cl.toggle(firewallElem, 'hide3pFrame', not && on);
+            break;
+        default:
+            break;
         }
     }
 }
@@ -498,14 +496,14 @@ dom.on('#firewall .filterExpressions', 'click', 'span[data-expr]', ev => {
     const target = ev.target;
     dom.cl.toggle(target, 'on');
     switch ( target.dataset.expr ) {
-        case 'blocked':
-            if ( dom.cl.has(target, 'on') === false ) { break; }
-            dom.cl.remove('#firewall .filterExpressions span[data-expr="allowed"]', 'on');
-            break;
-        case 'allowed':
-            if ( dom.cl.has(target, 'on') === false ) { break; }
-            dom.cl.remove('#firewall .filterExpressions span[data-expr="blocked"]', 'on');
-            break;
+    case 'blocked':
+        if ( dom.cl.has(target, 'on') === false ) { break; }
+        dom.cl.remove('#firewall .filterExpressions span[data-expr="allowed"]', 'on');
+        break;
+    case 'allowed':
+        if ( dom.cl.has(target, 'on') === false ) { break; }
+        dom.cl.remove('#firewall .filterExpressions span[data-expr="blocked"]', 'on');
+        break;
     }
     filterFirewallRows();
     const elems = qsa$('#firewall .filterExpressions span[data-expr]');
@@ -1194,18 +1192,18 @@ dom.on(document, 'keydown', ev => {
     if ( ev.isComposing ) { return; }
     let bypassCache = false;
     switch ( ev.key ) {
-        case 'F5':
-            bypassCache = ev.ctrlKey || ev.metaKey || ev.shiftKey;
-            break;
-        case 'r':
-            if ( (ev.ctrlKey || ev.metaKey) !== true ) { return; }
-            break;
-        case 'R':
-            if ( (ev.ctrlKey || ev.metaKey) !== true ) { return; }
-            bypassCache = true;
-            break;
-        default:
-            return;
+    case 'F5':
+        bypassCache = ev.ctrlKey || ev.metaKey || ev.shiftKey;
+        break;
+    case 'r':
+        if ( (ev.ctrlKey || ev.metaKey) !== true ) { return; }
+        break;
+    case 'R':
+        if ( (ev.ctrlKey || ev.metaKey) !== true ) { return; }
+        bypassCache = true;
+        break;
+    default:
+        return;
     }
     reloadTab(bypassCache);
     ev.preventDefault();
@@ -1223,7 +1221,7 @@ vAPI.localStorage.getItemAsync('popupExpandExceptions').then(exceptions => {
             expandExceptions.add(exception);
         }
     }
-    catch(ex) {
+    catch {
     }
 });
 

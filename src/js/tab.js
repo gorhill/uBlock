@@ -19,18 +19,11 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
-/******************************************************************************/
-
-import contextMenu from './contextmenu.js';
-import logger from './logger.js';
-import scriptletFilteringEngine from './scriptlet-filtering.js';
-import staticNetFilteringEngine from './static-net-filtering.js';
-import µb from './background.js';
-import webext from './webext.js';
-import { PageStore } from './pagestore.js';
-import { i18n$ } from './i18n.js';
+import {
+    domainFromHostname,
+    hostnameFromURI,
+    originFromURI,
+} from './uri-utils.js';
 
 import {
     sessionFirewall,
@@ -38,11 +31,14 @@ import {
     sessionURLFiltering,
 } from './filtering-engines.js';
 
-import {
-    domainFromHostname,
-    hostnameFromURI,
-    originFromURI,
-} from './uri-utils.js';
+import { PageStore } from './pagestore.js';
+import contextMenu from './contextmenu.js';
+import { i18n$ } from './i18n.js';
+import logger from './logger.js';
+import scriptletFilteringEngine from './scriptlet-filtering.js';
+import staticNetFilteringEngine from './static-net-filtering.js';
+import webext from './webext.js';
+import µb from './background.js';
 
 /******************************************************************************/
 /******************************************************************************/
@@ -65,7 +61,7 @@ import {
         }
         try {
             tabURLNormalizer.href = tabURL;
-        } catch(ex) {
+        } catch {
             return tabURL;
         }
         const protocol = tabURLNormalizer.protocol.slice(0, -1);
@@ -574,8 +570,7 @@ housekeep itself.
                         frameId: sourceFrameId,
                     }),
                 ]);
-            }
-            catch (reason) {
+            } catch {
                 return;
             }
             if (

@@ -320,7 +320,7 @@ vAPI.Tabs = class {
         try {
             result = await webext.tabs.executeScript(...args);
         }
-        catch(reason) {
+        catch {
         }
         return Array.isArray(result) ? result : [];
     }
@@ -334,7 +334,7 @@ vAPI.Tabs = class {
         try {
             tab = await webext.tabs.get(tabId);
         }
-        catch(reason) {
+        catch {
         }
         return tab instanceof Object ? tab : null;
     }
@@ -351,7 +351,7 @@ vAPI.Tabs = class {
         try {
             await webext.tabs.insertCSS(...arguments);
         }
-        catch(reason) {
+        catch {
         }
     }
 
@@ -360,7 +360,7 @@ vAPI.Tabs = class {
         try {
             tabs = await webext.tabs.query(queryInfo);
         }
-        catch(reason) {
+        catch {
         }
         return Array.isArray(tabs) ? tabs : [];
     }
@@ -372,7 +372,7 @@ vAPI.Tabs = class {
         try {
             await webext.tabs.removeCSS(...arguments);
         }
-        catch(reason) {
+        catch {
         }
     }
 
@@ -530,7 +530,7 @@ vAPI.Tabs = class {
         try {
             tab = await webext.tabs.update(...arguments);
         }
-        catch (reason) {
+        catch {
         }
         return tab instanceof Object ? tab : null;
     }
@@ -556,7 +556,7 @@ vAPI.Tabs = class {
         try {
             await webext.tabs.remove(tabId);
         }
-        catch (reason) {
+        catch {
         }
     }
 
@@ -569,7 +569,7 @@ vAPI.Tabs = class {
                 { bypassCache: bypassCache === true }
             );
         }
-        catch (reason) {
+        catch {
         }
     }
 
@@ -668,7 +668,7 @@ if ( webext.windows instanceof Object ) {
             try {
                 win = await webext.windows.get(...arguments);
             }
-            catch (reason) {
+            catch {
             }
             return win instanceof Object ? win : null;
         },
@@ -677,7 +677,7 @@ if ( webext.windows instanceof Object ) {
             try {
                 win = await webext.windows.create(...arguments);
             }
-            catch (reason) {
+            catch {
             }
             return win instanceof Object ? win : null;
         },
@@ -686,7 +686,7 @@ if ( webext.windows instanceof Object ) {
             try {
                 win = await webext.windows.update(...arguments);
             }
-            catch (reason) {
+            catch {
             }
             return win instanceof Object ? win : null;
         },
@@ -702,7 +702,7 @@ if ( webext.browserAction instanceof Object ) {
             try {
                 await webext.browserAction.setTitle(...arguments);
             }
-            catch (reason) {
+            catch {
             }
         },
     };
@@ -712,28 +712,28 @@ if ( webext.browserAction instanceof Object ) {
             try {
                 await webext.browserAction.setBadgeTextColor(...arguments);
             }
-            catch (reason) {
+            catch {
             }
         };
         vAPI.browserAction.setBadgeBackgroundColor = async function() {
             try {
                 await webext.browserAction.setBadgeBackgroundColor(...arguments);
             }
-            catch (reason) {
+            catch {
             }
         };
         vAPI.browserAction.setBadgeText = async function() {
             try {
                 await webext.browserAction.setBadgeText(...arguments);
             }
-            catch (reason) {
+            catch {
             }
         };
         vAPI.browserAction.setIcon = async function() {
             try {
                 await webext.browserAction.setIcon(...arguments);
             }
-            catch (reason) {
+            catch {
             }
         };
     }
@@ -807,7 +807,7 @@ if ( webext.browserAction instanceof Object ) {
             let data;
             try {
                 data = ctx.getImageData(0, 0, w, h);
-            } catch(ex) {
+            } catch {
             }
             return data;
         };
@@ -1084,7 +1084,7 @@ vAPI.messaging = {
                     msgId: this.msgId,
                     msg: response !== undefined ? response : null,
                 });
-            } catch (ex) {
+            } catch {
                 this.messaging.onPortDisconnect(this.port);
             }
             // Store for reuse
@@ -1473,7 +1473,7 @@ vAPI.adminStorage = (( ) => {
         let store;
         try {
             store = await webext.storage.managed.get();
-        } catch(ex) {
+        } catch {
         }
         vAPI.storage.set({ cachedManagedStorage: store || {} });
     };
@@ -1488,7 +1488,7 @@ vAPI.adminStorage = (( ) => {
                 } else {
                     bin = bin.cachedManagedStorage;
                 }
-            } catch(ex) {
+            } catch {
                 bin = {};
             }
             cacheManagedStorage();
@@ -1688,7 +1688,7 @@ vAPI.cloud = (( ) => {
         // operation to fail.
         try {
             await deleteChunks(datakey, chunkCount + 1);
-        } catch (reason) {
+        } catch {
         }
 
         // Push the data to browser-provided cloud storage.
@@ -1742,7 +1742,7 @@ vAPI.cloud = (( ) => {
             if ( typeof entry === 'string' ) {
                 entry = JSON.parse(entry);
             }
-        } catch(_) {
+        } catch {
         }
         return entry;
     };
@@ -1763,7 +1763,7 @@ vAPI.cloud = (( ) => {
                 webext.storage.sync.getBytesInUse(keys),
                 webext.storage.sync.getBytesInUse(null),
             ]);
-        } catch(ex) {
+        } catch {
         }
         if ( Array.isArray(results) === false ) { return; }
         return { used: results[0], total: results[1], max: QUOTA_BYTES };

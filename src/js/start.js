@@ -19,12 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* globals browser */
-
-'use strict';
-
-/******************************************************************************/
-
 import './vapi-common.js';
 import './vapi-background.js';
 import './vapi-background-ext.js';
@@ -39,26 +33,26 @@ import './tab.js';
 import './ublock.js';
 import './utils.js';
 
-import io from './assets.js';
-import µb from './background.js';
-import { filteringBehaviorChanged } from './broadcast.js';
-import cacheStorage from './cachestorage.js';
-import { ubolog } from './console.js';
-import contextMenu from './contextmenu.js';
-import { redirectEngine } from './redirect-engine.js';
-import staticFilteringReverseLookup from './reverselookup.js';
-import staticExtFilteringEngine from './static-ext-filtering.js';
-import staticNetFilteringEngine from './static-net-filtering.js';
-import webRequest from './traffic.js';
-
 import {
     permanentFirewall,
-    sessionFirewall,
     permanentSwitches,
-    sessionSwitches,
     permanentURLFiltering,
+    sessionFirewall,
+    sessionSwitches,
     sessionURLFiltering,
 } from './filtering-engines.js';
+
+import cacheStorage from './cachestorage.js';
+import contextMenu from './contextmenu.js';
+import { filteringBehaviorChanged } from './broadcast.js';
+import io from './assets.js';
+import { redirectEngine } from './redirect-engine.js';
+import staticExtFilteringEngine from './static-ext-filtering.js';
+import staticFilteringReverseLookup from './reverselookup.js';
+import staticNetFilteringEngine from './static-net-filtering.js';
+import { ubolog } from './console.js';
+import webRequest from './traffic.js';
+import µb from './background.js';
 
 /******************************************************************************/
 

@@ -31,8 +31,8 @@
  * 
  * */
 
-import fs from 'fs/promises';
 import { StaticNetFilteringEngine } from '@gorhill/ubo-core';
+import fs from 'fs/promises';
 
 /******************************************************************************/
 

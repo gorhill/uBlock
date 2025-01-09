@@ -161,6 +161,6 @@ export function urlSkip(url, blocked, steps, directive = {}) {
         }
         if ( blocked && redirectBlocked !== true ) { return; }
         return urlout;
-    } catch(x) {
+    } catch {
     }
 }

@@ -30,11 +30,9 @@
 // collected.
 
 (function() {
-    'use strict';
-
-    var pc = null;
+    let pc = null;
     try {
-        var PC = self.RTCPeerConnection || self.webkitRTCPeerConnection;
+        const PC = self.RTCPeerConnection || self.webkitRTCPeerConnection;
         if ( PC ) {
             pc = new PC(null);
         }

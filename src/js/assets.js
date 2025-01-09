@@ -319,7 +319,7 @@ assets.fetch = function(url, options = {}) {
         xhr.responseType = options.responseType || 'text';
         xhr.send();
         timeoutTimer.on({ sec: timeoutAfter });
-    } catch (e) {
+    } catch {
         onErrorEvent.call(xhr);
     }
 
@@ -396,7 +396,7 @@ assets.fetchFilterList = async function(mainlistURL) {
     const toParsedURL = url => {
         try {
             return new URL(url.trim());
-        } catch (ex) {
+        } catch {
         }
     };
 
@@ -622,7 +622,7 @@ function updateAssetSourceRegistry(json, silent = false) {
             Array.from(Object.entries(newDict))
                 .filter(a => a[1].content === 'filters' && a[1].off === undefined)
                 .map(a => a[0]);
-    } catch (ex) {
+    } catch {
     }
     if ( newDict instanceof Object === false ) { return; }
 

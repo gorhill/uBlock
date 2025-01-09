@@ -165,7 +165,7 @@ vAPI.messaging = {
         }
         try {
             this.port = browser.runtime.connect({name: vAPI.sessionId}) || null;
-        } catch (ex) {
+        } catch {
             this.port = null;
         }
         // Not having a valid port at this point means the main process is

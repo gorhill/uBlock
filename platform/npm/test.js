@@ -19,15 +19,10 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* eslint-disable-next-line no-redeclare */
 /* globals process */
 
-'use strict';
-
-/******************************************************************************/
-
-import { spawn } from "child_process";
 import { promisify } from 'util';
+import { spawn } from "child_process";
 
 /******************************************************************************/
 

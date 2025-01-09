@@ -6,7 +6,6 @@
   "main": "index.js",
   "scripts": {
     "build": "node build.js",
-    "lint": "eslint js/ *.js tests/*.js",
     "test": "c8 --include=index.js --include=js/**/*.js node test.js --mocha",
     "test-full-battery": "c8 --include=index.js --include=js/**/*.js node test.js --mocha --full-battery",
     "check-leaks": "mocha --check-leaks tests/leaks.js"
@@ -36,7 +35,6 @@
   },
   "devDependencies": {
     "c8": "^7.12.0",
-    "eslint": "^8.29.0",
     "esm-world": "0.1.3",
     "mocha": "^10.2.0",
     "scaling-palm-tree": "github:mjethani/scaling-palm-tree#15cf1ab37e038771e1ff8005edc46d95f176739f"

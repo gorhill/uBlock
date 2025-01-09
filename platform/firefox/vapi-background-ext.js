@@ -373,7 +373,7 @@ vAPI.scriptletsInjector = (( ) => {
                 script = doc.createElement('script');
                 script.appendChild(doc.createTextNode(code));
                 (doc.head || doc.documentElement).appendChild(script);
-            } catch (ex) {
+            } catch {
             }
             if ( script ) {
                 script.remove();
@@ -400,7 +400,7 @@ vAPI.scriptletsInjector = (( ) => {
                 script.src = url;
                 (doc.head || doc.documentElement || doc).append(script);
                 self.uBO_scriptletsInjected = details.filters;
-            } catch (ex) {
+            } catch {
             }
             if ( url ) {
                 if ( script ) { script.remove(); }

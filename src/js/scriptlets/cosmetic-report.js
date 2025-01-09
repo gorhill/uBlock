@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
 /******************************************************************************/
 
 (( ) => {
@@ -40,7 +38,7 @@ const hasSelector = selector => {
     try {
         return document.querySelector(selector) !== null;
     }
-    catch(ex) {
+    catch {
     }
     return false;
 };
@@ -52,7 +50,7 @@ const safeQuerySelector = selector => {
     try {
         return document.querySelector(safeSelector);
     }
-    catch(ex) {
+    catch {
     }
     return null;
 };

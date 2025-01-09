@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/******************************************************************************/
-
 import * as cssTree from '../lib/csstree/css-tree.js';
 import { ArglistParser } from './arglist-parser.js';
 import Regex from '../lib/regexanalyzer/regex.js';
@@ -1315,7 +1313,7 @@ export class AstFilterParser {
                 const value = this.getNetOptionValue(NODE_TYPE_NET_OPTION_NAME_IPADDRESS);
                 if ( /^\/.+\/$/.test(value) ) {
                     try { void new RegExp(value); }
-                    catch(_) { realBad = true; }
+                    catch { realBad = true; }
                 }
                 break;
             }
@@ -1849,7 +1847,7 @@ export class AstFilterParser {
             normal = normal.replace(this.reUnicodeChars, s =>
                 encodeURIComponent(s).toLowerCase()
             );
-        } catch (ex) {
+        } catch {
             return;
         }
         return normal;
@@ -2827,7 +2825,7 @@ export class AstFilterParser {
         try {
             this.punycoder.hostname = hn;
             hn = this.punycoder.hostname;
-        } catch (_) {
+        } catch {
             return '';
         }
         if ( hn === '_' || hn === '' ) { return ''; }
@@ -2951,7 +2949,7 @@ export function parseQueryPruneValue(arg) {
         try {
             out.re = new RegExp(match[1], match[2] || '');
         }
-        catch(ex) {
+        catch {
             out.bad = true;
         }
         return out;
@@ -2960,7 +2958,7 @@ export function parseQueryPruneValue(arg) {
     if ( s.startsWith('|') ) {
         try {
             out.re = new RegExp('^' + s.slice(1), 'i');
-        } catch(ex) {
+        } catch {
             out.bad = true;
         }
         return out;
@@ -2990,7 +2988,7 @@ export function parseHeaderValue(arg) {
         try {
             out.re = new RegExp(match[1], match[2] || '');
         }
-        catch(ex) {
+        catch {
             out.bad = true;
         }
     }
@@ -3022,7 +3020,7 @@ export function parseReplaceValue(s) {
     const flags = s.slice(parser.separatorEnd);
     try {
         return { re: new RegExp(pattern, flags), replacement };
-    } catch(_) {
+    } catch {
     }
 }
 
@@ -4056,7 +4054,7 @@ class ExtSelectorCompiler {
         try {
             const expr = doc.createExpression(r.s, null);
             expr.evaluate(doc, XPathResult.ANY_UNORDERED_NODE_TYPE);
-        } catch (e) {
+        } catch {
             return;
         }
         return r.s;
@@ -4212,7 +4210,7 @@ export const utils = (( ) => {
                         regexAnalyzer(reStr, false).tree()
                     );
                 }
-            } catch(ex) {
+            } catch {
                 return false;
             }
             return true;
@@ -4223,7 +4221,7 @@ export const utils = (( ) => {
             let tree;
             try {
                 tree = regexAnalyzer(reStr, false).tree();
-            } catch(ex) {
+            } catch {
                 return;
             }
             const isRE2 = node => {
@@ -4254,7 +4252,7 @@ export const utils = (( ) => {
                 s = this.tokenizableStrFromNode(
                     regexAnalyzer(reStr, false).tree()
                 );
-            } catch(ex) {
+            } catch {
             }
             // Process optional sequences
             const reOptional = /[\x02\x03]+/;
@@ -4316,7 +4314,7 @@ export const utils = (( ) => {
     const toURL = url => {
         try {
             return new URL(url.trim());
-        } catch (ex) {
+        } catch {
         }
     };
 

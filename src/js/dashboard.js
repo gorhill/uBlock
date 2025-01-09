@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
 import { dom, qs$ } from './dom.js';
 
 /******************************************************************************/
@@ -118,7 +116,7 @@ if ( self.location.hash.slice(1) === 'no-dashboard.html' ) {
                 if ( iframe.src !== '' ) {
                     iframe.src = '';
                 }
-            } catch(ex) {
+            } catch {
             }
             vAPI.defer.once(250).then(( ) => check());
         };

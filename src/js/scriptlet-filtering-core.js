@@ -19,12 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
-/******************************************************************************/
-
-import { redirectEngine as reng } from './redirect-engine.js';
 import { StaticExtFilteringHostnameDB } from './static-ext-filtering-db.js';
+import { redirectEngine as reng } from './redirect-engine.js';
 
 /******************************************************************************/
 
