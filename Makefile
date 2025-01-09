@@ -33,10 +33,15 @@ firefox: dist/build/uBlock0.firefox
 dist/build/uBlock0.npm: tools/make-nodejs.sh $(sources) $(platform) $(assets)
 	tools/make-npm.sh
 
+<<<<<<< HEAD
 npm: dist/build/uBlock0.npm
 
 # Dev tools
 node_modules:
+=======
+# Dev tools
+npm: node_modules/
+>>>>>>> 858174a6d (Better integrate latest eslint version)
 	npm install
 
 init: node_modules
