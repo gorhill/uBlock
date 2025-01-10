@@ -30,6 +30,11 @@ jobs:
           tools/make-chromium.sh ${{ env.VERSION }}
           tools/make-firefox.sh ${{ env.VERSION }}
           tools/make-thunderbird.sh ${{ env.VERSION }}
+      - name: Build NPM package
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+        run: |
           tools/make-npm.sh ${{ env.VERSION }}
       - name: Assemble release notes
         run: |
