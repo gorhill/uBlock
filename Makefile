@@ -33,8 +33,10 @@ dist/build/uBlock0.npm: tools/make-nodejs.sh $(sources) $(platform) $(assets)
 	tools/make-npm.sh
 
 # Dev tools
-npm: node_modules/
+node_modules:
 	npm install
+
+npm: node_modules
 
 lint: npm
 	npm run lint
@@ -77,7 +79,7 @@ dist/build/uAssets:
 	tools/pull-assets.sh
 
 clean:
-	rm -rf dist/build tmp/node_modules
+	rm -rf dist/build tmp/node_modules node_modules
 
 cleanassets:
 	rm -rf dist/build/mv3-data dist/build/uAssets

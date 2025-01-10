@@ -15,10 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/')
     steps:
-      - name: Setup nodejs
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
       - name: Clone repository
         uses: actions/checkout@v4
         with:
@@ -34,9 +30,6 @@ jobs:
           tools/make-chromium.sh ${{ env.VERSION }}
           tools/make-firefox.sh ${{ env.VERSION }}
           tools/make-thunderbird.sh ${{ env.VERSION }}
-      - name: Build NPM package
-        run: |
-          tools/make-npm.sh ${{ env.VERSION }}
       - name: Assemble release notes
         run: |
           > release.body.txt
@@ -57,4 +50,3 @@ jobs:
             dist/build/uBlock0_${{ env.VERSION }}.chromium.zip
             dist/build/uBlock0_${{ env.VERSION }}.firefox.xpi
             dist/build/uBlock0_${{ env.VERSION }}.thunderbird.xpi
-            dist/build/uBlock0_${{ env.VERSION }}.npm.tgz
