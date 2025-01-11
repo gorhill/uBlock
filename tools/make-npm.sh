@@ -17,7 +17,6 @@ rm -rf $DES
 # Target-specific
 cp    platform/npm/.npmignore  $DES/
 cp    platform/npm/*.json      $DES/
-cp    platform/npm/.*.json     $DES/
 cp    platform/npm/*.js        $DES/
 cp -R platform/npm/tests       $DES/
 cp    platform/npm/README.md   $DES/
