@@ -104,7 +104,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "تم حظره منذ التثبيت",
+    "message": "حُجِب منذ التنصيب",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
@@ -188,7 +188,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
-    "message": "الإطارات المنبثقة",
+    "message": "نوافذ منبثقة",
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
@@ -196,7 +196,7 @@
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
-    "message": "إعادات الفلاتر التجميلية العمومية",
+    "message": "المرشحات التجميلية",
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
@@ -272,11 +272,11 @@
     "description": "appears in popup"
   },
   "popupVersion": {
-    "message": "نسخة",
+    "message": "الإصدار",
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilter": {
-    "message": "سكربت",
+    "message": "برنامَج نصي",
     "description": "Appears as an option to filter out firewall rows"
   },
   "popup3pFrameFilter": {
@@ -340,7 +340,7 @@
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
-    "message": "المظاهر",
+    "message": "السمة",
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {

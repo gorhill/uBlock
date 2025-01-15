@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "終於，有一款僅使用少量 CPU 及記憶體的高效能攔截器。",
+    "message": "一款基於Chromium瀏覽器的高效率廣告封鎖工具，只需要超低的CPU與記憶體使用量。",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
@@ -16,7 +16,7 @@
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "留在這裡",
+    "message": "不離開",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "白名單",
+    "message": "受信任網站",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -72,11 +72,11 @@
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "點擊：在此網站停用 uBlock₀ 。\n\nCtrl + 點擊：僅在此頁面停用 uBlock₀ 。",
+    "message": "點擊：在這個網站停用 uBlock₀ 。\n\nCtrl + 點擊：僅在這個頁面停用 uBlock₀ 。",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "點擊以在此網站啟用 uBlock₀ 。",
+    "message": "點擊以在這個網站啟用 uBlock₀。",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -136,11 +136,11 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "點擊以封鎖此網站的所有彈出式視窗",
+    "message": "點擊以封鎖這個網站的所有彈出式視窗",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "點擊以解除封鎖此網站的所有彈出式視窗",
+    "message": "點擊以解除封鎖這個網站的所有彈出式視窗",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -164,7 +164,7 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "點擊以啟用此網站的網頁元素過濾",
+    "message": "點擊以啟用這個網站的網頁元素過濾",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -176,15 +176,15 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "點擊以解除封鎖此網站的遠端字型",
+    "message": "點擊以解除封鎖這個網站的遠端字型",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "點擊以停用此網站的 JavaScript",
+    "message": "點擊以停用這個網站的 JavaScript",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "點擊以重新啟用此網站的 JavaScript ",
+    "message": "點擊以重新啟用這個網站的 JavaScript ",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
@@ -444,7 +444,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "「網頁元素過濾規則」用來隱藏網頁中被認為礙眼，且不能被以網路請求為基礎之過濾引擎所阻擋的元素。",
+    "message": "「網頁元素過濾規則」負責隱藏網頁中被認為礙眼，且不能被網路請求過濾引擎阻擋的元素。",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -480,11 +480,11 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "惡意軟體防護及安全性",
+    "message": "惡意軟體保護及保安",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
-    "message": "社交小工具",
+    "message": "社交媒體小工具",
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
@@ -492,7 +492,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
-    "message": "嫌惡元素",
+    "message": "騷擾",
     "description": "Filter lists section name"
   },
   "3pGroupMultipurpose": {
@@ -512,7 +512,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "每行一個網址。無效的網址將被忽略。",
+    "message": "每行一個網址。以「!」開頭的行將被忽略。無效的網址也將被忽略。",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -524,7 +524,7 @@
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "上次更新：{{ago}}。\n點擊此處以強制更新。",
+    "message": "最後更新：{{ago}}。",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
@@ -536,11 +536,11 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pTrustWarning": {
-    "message": "切勿加入來歷不明的過濾規則。",
+    "message": "切勿添加來自不可信來源的過濾規則。",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pEnableMyFiltersLabel": {
-    "message": "啟用自訂過濾器",
+    "message": "啟用我的自訂過濾規則",
     "description": "Label for the checkbox use to enable/disable 'My filters' list"
   },
   "1pTrustMyFiltersLabel": {
@@ -624,7 +624,7 @@
     "description": "English: a sort option for list of rules."
   },
   "rulesSortByDestination": {
-    "message": "目標",
+    "message": "目的地",
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
@@ -760,15 +760,15 @@
     "description": "Label to identify a rule field"
   },
   "loggerEntryDetailsContext": {
-    "message": "上下文",
+    "message": "來源",
     "description": "Label to identify a context field (typically a hostname)"
   },
   "loggerEntryDetailsRootContext": {
-    "message": "根上下文",
+    "message": "主內容",
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
-    "message": "第一方/第三方",
+    "message": "第一方／第三方",
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
@@ -832,15 +832,15 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "在下列清單中找到靜態過濾規則 <code>{{filter}}</code>：",
+    "message": "在下列清單中找到靜態過濾規則 {{filter}}：",
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "無法在任何目前已啟用的過濾規則清單中找到靜態過濾規則",
+    "message": "無法在任何啟用的過濾清單中，找到靜態過濾規則 <code>{{filter}}</code>",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
-    "message": "未符合以下所有條件的記錄將會被自動捨棄：",
+    "message": "不符合以下任一狀況的記錄將會被自動清除：",
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
@@ -848,7 +848,7 @@
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "每個分頁最多保留 {{input}} 次重新載入該頁所產生的記錄",
+    "message": "每個分頁最多保留 {{input}} 次內容加載產生的記錄",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
@@ -856,7 +856,7 @@
     "description": "A logger setting"
   },
   "loggerSettingPerEntryLineCount": {
-    "message": "在垂直延展模式中每條記錄顯示 {{input}} 行",
+    "message": "在垂直延展的模式中每個項目顯示 {{input}} 行",
     "description": "A logger setting"
   },
   "loggerSettingHideColumnsPrompt": {
@@ -900,7 +900,7 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "建立新報告",
+    "message": "發出新報告",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
@@ -924,7 +924,7 @@
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "過濾器問題 / 網站被破壞",
+    "message": "過濾器問題 / 網站被搞壞",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
@@ -936,7 +936,7 @@
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>小提示：</b>請確定您的過濾器清單已經更新至最新版本。我們主要用<span data-url=\"logger-ui.html#_\">「記錄器」</span>來分析過濾器相關問題。",
+    "message": "<b>小提示：</b>請確定您的過濾器清單已經更新至最新版本。我們主要用 <span data-url=\"logger-ui.html#_\">記錄器</span> 來分析過濾器相關問題。",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
@@ -964,11 +964,11 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "為免給志願者帶來額外負擔，請先檢查問題有沒有被回報過，避免重複回報。",
+    "message": "為了避免太多人發出重複的報告拖垮志工，請先確認是否已經有人回報過您打算報告的問題。",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "過濾器清單每天更新，請確保問題尚未在最新版本中解決。",
+    "message": "過濾器清單每天更新。請確認您的問題無法用最新的過濾器清單解決。",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
@@ -992,11 +992,11 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "含有覆蓋物或其他滋擾物",
+    "message": "會覆蓋內容或有其他煩人的內容",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "偵測到 uBlock Origin",
+    "message": "會偵測到您已安裝 uBlock Origin",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
@@ -1004,11 +1004,11 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "開啟 uBlock Origin 的時候運作不正常",
+    "message": "開啟 uBlock Origin 的時候網頁運作不正常",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "會開啟不需要的分頁或視窗",
+    "message": "會開啟不想要的分頁或視窗",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
@@ -1036,7 +1036,7 @@
     "description": ""
   },
   "aboutCode": {
-    "message": "原始碼（GPLv3）",
+    "message": "源碼（GPLv3）",
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
@@ -1044,7 +1044,7 @@
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "原始碼",
+    "message": "源碼",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
@@ -1056,11 +1056,11 @@
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "外部相依套件（與 GPLv3 相容）：",
+    "message": "外部相依套件（與通用公眾授權條款第三版相容）：",
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "uBO 自家的過濾規則清單由下列 <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a> 免費代管：",
+    "message": "uBO 自家的過濾規則清單代管於下列 <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a> 中：",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
@@ -1096,7 +1096,7 @@
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
-    "message": "網路錯誤：{{msg}}",
+    "message": "無法連線至 {{url}}",
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
@@ -1144,7 +1144,7 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedTitle": {
-    "message": "已封鎖頁面",
+    "message": "頁面已阻擋",
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {
@@ -1240,7 +1240,7 @@
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "訂閱過濾規則清單…",
+    "message": "訂閱過濾器清單⋯",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
@@ -1304,7 +1304,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "無法在瀏覽器啟動時正確過濾頁面。請重新載入以確保過濾正常。",
+    "message": "無法在瀏覽器啟動的時候正確過濾。\n請重新載入頁面來確保過濾正確。",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {
