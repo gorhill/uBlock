@@ -139,6 +139,7 @@ function registerHighGeneric(context, genericDetails) {
     const directive = {
         id: 'css-generichigh',
         css,
+        allFrames: true,
         matches,
         excludeMatches,
         runAt: 'document_end',
