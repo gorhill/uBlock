@@ -195,7 +195,7 @@ function getStagedTrustedSites() {
             return punycode.toASCII(
                 (new URL(`https://${hn}/`)).hostname
             );
-        } catch(_) {
+        } catch {
         }
         return '';
     }).filter(hn => hn !== '');
@@ -292,7 +292,7 @@ sendMessage({
         renderFilterLists(cachedRulesetData);
         renderWidgets();
         dom.cl.remove(dom.body, 'loading');
-    } catch(ex) {
+    } catch {
     }
     listen();
 }).catch(reason => {

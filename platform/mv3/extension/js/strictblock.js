@@ -42,7 +42,7 @@ function urlToFragment(raw) {
         b.append(hn);
         fragment.append(raw.slice(0,i), b, raw.slice(i+hn.length));
         return fragment;
-    } catch(_) {
+    } catch {
     }
     return raw;
 }
@@ -55,7 +55,7 @@ const toFinalURL = new URL('about:blank');
 try {
     toURL.href = self.location.hash.slice(1);
     toFinalURL.href = toURL.href;
-} catch(_) {
+} catch {
 }
 
 dom.clear('#theURL > p > span:first-of-type');
@@ -144,7 +144,7 @@ function fragmentFromTemplate(template, placeholder, text, details) {
         let url;
         try {
             url = new URL(rawURL);
-        } catch(ex) {
+        } catch {
             return false;
         }
 

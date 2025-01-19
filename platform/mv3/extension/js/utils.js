@@ -24,7 +24,7 @@
 function parsedURLromOrigin(origin) {
     try {
         return new URL(origin);
-    } catch(ex) {
+    } catch {
     }
 }
 

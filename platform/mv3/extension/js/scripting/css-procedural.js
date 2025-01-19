@@ -19,10 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* jshint esversion:11 */
-
-/******************************************************************************/
-
 // Important!
 // Isolate from global scope
 (function uBOL_cssProcedural() {
@@ -37,7 +33,7 @@ delete self.proceduralImports;
 
 const hnParts = [];
 try { hnParts.push(...document.location.hostname.split('.')); }
-catch(ex) { }
+catch { }
 const hnpartslen = hnParts.length;
 if ( hnpartslen === 0 ) { return; }
 
@@ -621,14 +617,14 @@ class PSelectorRoot extends PSelector {
     prime(input) {
         try {
             return super.prime(input);
-        } catch (ex) {
+        } catch {
         }
         return [];
     }
     exec(input) {
         try {
             return super.exec(input);
-        } catch (ex) {
+        } catch {
         }
         return [];
     }

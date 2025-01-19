@@ -52,7 +52,7 @@ const reportedPage = (( ) => {
             hostname: parsedURL.hostname.replace(/^(m|mobile|www)\./, ''),
             mode: url.searchParams.get('mode'),
         };
-    } catch(ex) {
+    } catch {
     }
     return null;
 })();

@@ -19,12 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* jshint esversion:11 */
-
-'use strict';
-
-/******************************************************************************/
-
 // Important!
 // Isolate from global scope
 (function uBOL_cssDeclarative() {
@@ -39,7 +33,7 @@ delete self.declarativeImports;
 
 const hnParts = [];
 try { hnParts.push(...document.location.hostname.split('.')); }
-catch(ex) { }
+catch { }
 const hnpartslen = hnParts.length;
 if ( hnpartslen === 0 ) { return; }
 

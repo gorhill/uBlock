@@ -19,19 +19,13 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* jshint esversion:11 */
-
-'use strict';
-
-/******************************************************************************/
+// $rulesetId$
 
 // Important!
 // Isolate from global scope
 (function uBOL_cssGenericImport() {
 
 /******************************************************************************/
-
-// $rulesetId$
 
 const toImport = self.$genericSelectorMap$;
 

@@ -64,7 +64,7 @@ export async function localRead(key) {
         const bin = await browser.storage.local.get(key);
         if ( bin instanceof Object === false ) { return; }
         return bin[key] ?? undefined;
-    } catch(ex) {
+    } catch {
     }
 }
 
@@ -89,7 +89,7 @@ export async function sessionRead(key) {
         const bin = await browser.storage.session.get(key);
         if ( bin instanceof Object === false ) { return; }
         return bin[key] ?? undefined;
-    } catch(ex) {
+    } catch {
     }
 }
 
@@ -114,7 +114,7 @@ export async function adminRead(key) {
         const bin = await browser.storage.managed.get(key);
         if ( bin instanceof Object === false ) { return; }
         return bin[key] ?? undefined;
-    } catch(ex) {
+    } catch {
     }
 }
 
