@@ -47,6 +47,7 @@ export function getSafeCookieValuesFn() {
         'all', 'none', 'functional',
         'granted', 'done',
         'decline', 'declined',
+        'closed', 'next', 
     ];
 }
 registerScriptlet(getSafeCookieValuesFn, {
