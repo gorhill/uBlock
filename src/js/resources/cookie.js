@@ -47,7 +47,8 @@ export function getSafeCookieValuesFn() {
         'all', 'none', 'functional',
         'granted', 'done',
         'decline', 'declined',
-        'closed', 'next', 'mandatory', 
+        'closed', 'next', 'mandatory',
+        'disagree', 'agree',
     ];
 }
 registerScriptlet(getSafeCookieValuesFn, {
