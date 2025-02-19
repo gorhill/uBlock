@@ -243,7 +243,7 @@ function fragmentFromTemplate(template, placeholder, text, details) {
     const urlskipLists = await Promise.all(toFetch);
     const toHn = toURL.hostname;
     const matchesHn = hn => {
-        if ( hn.endsWith(toHn) === false ) { return false; }
+        if ( toHn.endsWith(hn) === false ) { return false; }
         if ( hn.length === toHn.length ) { return true; }
         return toHn.charAt(toHn.length - hn.length - 1) === '.';
     };
