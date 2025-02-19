@@ -32,7 +32,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "Webgune honetan arazo baten berri eman",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -104,7 +104,7 @@
     "description": "Shown in the About pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "iragazkiko arazo baten berria eman",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
@@ -140,7 +140,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Detects uBO Lite",
+    "message": "uBO Lite detektatzen da",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {

@@ -32,7 +32,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "Զեկուցել կայքի հետ խնդրի մասին",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -124,7 +124,7 @@
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The webpage…",
+    "message": "Վեբկայքը՝",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
@@ -264,11 +264,11 @@
     "description": "Label to be used for the parameter-less URL"
   },
   "strictblockBack": {
-    "message": "Go back",
+    "message": "Հետ գնալ",
     "description": "A button to go back to the previous webpage"
   },
   "strictblockClose": {
-    "message": "Close this window",
+    "message": "Փակել այս պատուհանը",
     "description": "A button to close the current tab"
   },
   "strictblockDontWarn": {
@@ -276,7 +276,7 @@
     "description": "Label for checkbox in document-blocked page"
   },
   "strictblockProceed": {
-    "message": "Proceed",
+    "message": "Շարունակել",
     "description": "A button to navigate to the blocked page"
   }
 }

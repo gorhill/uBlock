@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "一款基於Chromium瀏覽器的高效率廣告封鎖工具，只需要超低的CPU與記憶體使用量。",
+    "message": "終於有一款高效能的封鎖工具。對 CPU 和記憶體的佔用極低。",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
@@ -364,7 +364,7 @@
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
-    "message": "防止 WebRTC 洩漏本機 IP 位址",
+    "message": "防止 WebRTC 洩漏本地 IP 位址",
     "description": "English: "
   },
   "settingPerSiteSwitchGroup": {

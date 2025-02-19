@@ -248,7 +248,7 @@
     "description": "Webpage title for the strict-blocked page"
   },
   "strictblockSentence1": {
-    "message": "uBO Lite заблокував завантаження наступних сторінок:",
+    "message": "uBO Lite заблокував завантаження таких сторінок:",
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {
