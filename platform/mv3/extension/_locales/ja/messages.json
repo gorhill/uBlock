@@ -240,7 +240,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "findListsPlaceholder": {
-    "message": "Find lists",
+    "message": "リストを検索",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
@@ -252,11 +252,11 @@
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {
-    "message": "The page was blocked because of a matching filter in {{listname}}.",
+    "message": "このページは、{{listname}} のフィルターに一致したためブロックされました。",
     "description": "Text informing about what is causing the page to be blocked"
   },
   "strictblockRedirectSentence1": {
-    "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
+    "message": "ブロックしたページは別のサイトへリダイレクトしようとしています。続行すると次の URL へ移動します: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "strictblockNoParamsPrompt": {
