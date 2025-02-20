@@ -112,11 +112,11 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "For at undgå at belaste frivillige med dubletanmeldelser, så tjek venligst, at problemet ikke allerede er anmeldt.",
+    "message": "For at undgå at bebyrde frivillige med dubletanmeldelser, så tjek venligst, at problematikken ikke allerede er anmeldt. <b>Bemærk:</b> Ved at klikke på knappen, sendes sidens oprindelse til GitHub.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Find lign. anmeldelser",
+    "message": "Find lign. anmeldelser på GitHub",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -164,7 +164,7 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Opret ny anmeldelse",
+    "message": "Opret ny anmeldelse på GitHub",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "firstRunSectionLabel": {

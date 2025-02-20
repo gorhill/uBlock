@@ -112,7 +112,7 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "為避免增加志願者的負擔，請先確認該問題被尚未被回報過。",
+    "message": "為避免增加志願者的負擔，請先確認此問題是否已被回報過。<b>請注意：</b>點選按鈕會將本頁的來源傳送到 GitHub。",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {

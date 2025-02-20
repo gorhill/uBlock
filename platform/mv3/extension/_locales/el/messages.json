@@ -104,15 +104,15 @@
     "description": "Shown in the About pane"
   },
   "supportS6H": {
-    "message": "Αναφορά ζητήματος φίλτρου",
+    "message": "Αναφορά προβλήματος φίλτρου",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Αναφέρετε ζητήματα φίλτρου για συγκεκριμένους ιστοτόπους στο <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">εργαλείο παρακολούθησης ζητημάτων του <code>uBlockOrigin/uAssets</code></span>. <u>Απαιτείται λογαριασμός GitHub.</u>",
+    "message": "Αναφέρετε προβλήμα φίλτρου για συγκεκριμένους ιστοτόπους στο <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">εργαλείο παρακολούθησης ζητημάτων του <code>uBlockOrigin/uAssets</code></span>. <u>Απαιτείται λογαριασμός GitHub.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Για να αποφύγετε την επιβάρυνση των εθελοντών με διπλές αναφορές, βεβαιωθείτε ότι το ζήτημα δεν έχει ήδη αναφερθεί.",
+    "message": "Για να μην επιβαρυνθούν οι εθελοντών με διπλές αναφορές, βεβαιωθείτε ότι το ζήτημα δεν έχει ήδη αναφερθεί.<b>Σημείωση:</b> Με το πάτημα του κουμπιού, θα σταλεί η σελίδα προέλευσης στο GitHub.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
