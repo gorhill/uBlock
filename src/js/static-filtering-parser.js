@@ -2494,6 +2494,12 @@ export class AstFilterParser {
         return head;
     }
 
+    getResponseheaderName() {
+        if ( this.isResponseheaderFilter() === false ) { return ''; }
+        const root = this.getBranchFromType(NODE_TYPE_EXT_PATTERN_RESPONSEHEADER);
+        return this.getNodeString(root);
+    }
+
     parseExtPatternHtml(parent) {
         const beg = this.nodes[parent+NODE_BEG_INDEX];
         const end = this.nodes[parent+NODE_END_INDEX];

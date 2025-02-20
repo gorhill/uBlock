@@ -19,7 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import * as sfp from './static-filtering-parser.js';
 import { StaticExtFilteringHostnameDB } from './static-ext-filtering-db.js';
 import { entityFromDomain } from './uri-utils.js';
 import logger from './logger.js';
@@ -83,8 +82,7 @@ httpheaderFilteringEngine.compile = function(parser, writer) {
     writer.select('HTTPHEADER_FILTERS');
 
     const isException = parser.isException();
-    const root = parser.getBranchFromType(sfp.NODE_TYPE_EXT_PATTERN_RESPONSEHEADER);
-    const headerName = parser.getNodeString(root);
+    const headerName = parser.getResponseheaderName();
 
     // Tokenless is meaningful only for exception filters.
     if ( headerName === '' && isException === false ) { return; }
