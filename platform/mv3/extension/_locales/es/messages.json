@@ -164,7 +164,7 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Crear nuevo reporte",
+    "message": "Crear informe nuevo",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "firstRunSectionLabel": {

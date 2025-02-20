@@ -112,7 +112,7 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Per evitare di gravare sui volontari con segnalazioni doppie, verifica che il problema non sia già stato segnalato.",
+    "message": "Per evitare di gravare sui volontari con doppie segnalazioni, verificate che il problema non sia già stato segnalato. <b>Nota:</b> facendo clic sul pulsante, l'origine della pagina verrà inviata a GitHub.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {

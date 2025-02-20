@@ -112,7 +112,7 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Um die Freiwilligen nicht mit doppelten Meldungen zu belasten, vergewissern Sie sich bitte, dass das Problem nicht schon einmal gemeldet wurde.",
+    "message": "Um die Helfer nicht mit doppelten Meldungen zu belasten, vergewissern Sie sich bitte, dass das Problem nicht schon einmal gemeldet wurde. <b>Hinweis:</b> Wenn Sie auf die Schaltfläche klicken, wird der Ursprung der Seite an GitHub gesendet.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
