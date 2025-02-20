@@ -1472,21 +1472,19 @@ builtinScriptlets.push({
     fn: evaldataPrune,
     dependencies: [
         'object-prune.fn',
+        'proxy-apply.fn',
     ],
 });
 function evaldataPrune(
     rawPrunePaths = '',
     rawNeedlePaths = ''
 ) {
-    self.eval = new Proxy(self.eval, {
-        apply(target, thisArg, args) {
-            const before = Reflect.apply(target, thisArg, args);
-            if ( typeof before === 'object' ) {
-                const after = objectPruneFn(before, rawPrunePaths, rawNeedlePaths);
-                return after || before;
-            }
-            return before;
-        }
+    proxyApplyFn('eval', function(context) {
+        const before = context.reflect();
+        if ( typeof before !== 'object' ) { return before; }
+        if ( before === null ) { return null; }
+        const after = objectPruneFn(before, rawPrunePaths, rawNeedlePaths);
+        return after || before;
     });
 }
 
