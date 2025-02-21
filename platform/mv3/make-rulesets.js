@@ -93,7 +93,7 @@ const uidint32 = (s) => {
 
 const stdOutput = [];
 
-const log = (text, silent = false) => {
+const log = (text, silent = true) => {
     stdOutput.push(text);
     if ( silent === false ) {
         console.log(text);
@@ -166,7 +166,7 @@ const requiredRedirectResources = new Set();
 
 // This will be used to sign our inserted `!#trusted on` directives
 const secret = createHash('sha256').update(randomBytes(16)).digest('hex').slice(0,16);
-log(`Secret: ${secret}`);
+log(`Secret: ${secret}`, false);
 
 /******************************************************************************/
 
@@ -245,7 +245,7 @@ async function fetchList(assetDetails) {
                             return { url, content };
                         }
                     }
-                    log(`No valid content for ${details.name}`);
+                    log(`No valid content for ${details.name}`, false);
                     return { url, content: '' };
                 })
             );
@@ -257,7 +257,7 @@ async function fetchList(assetDetails) {
     const text = parts.join('\n');
 
     if ( text === '' ) {
-        log('No filterset found');
+        log('No filterset found', false);
     }
     return text;
 }
@@ -1308,7 +1308,7 @@ async function main() {
         const minutePart = Math.floor(now.getUTCMinutes());
         version = `${yearPart}.${monthPart}.${dayPart}.${hourPart * 60 + minutePart}`;
     }
-    log(`Version: ${version}`);
+    log(`Version: ${version}`, false);
 
     // Get assets.json content
     const assets = await fs.readFile(

@@ -74,6 +74,16 @@ async function commitFilteringMode() {
     const afterLevel = parseInt(modeSlider.dataset.level, 10);
     const beforeLevel = parseInt(modeSlider.dataset.levelBefore, 10);
     if ( afterLevel > 1 ) {
+        if ( beforeLevel <= 1 ) {
+            sendMessage({
+                what: 'setPendingFilteringMode',
+                tabId: currentTab.id,
+                url: tabURL.href,
+                hostname: targetHostname,
+                beforeLevel,
+                afterLevel,
+            });
+        }
         let granted = false;
         try {
             granted = await browser.permissions.request({
