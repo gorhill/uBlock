@@ -16,10 +16,10 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "uBOLiteRedux@raymondhill.net",
-      "strict_min_version": "127.0"
+      "strict_min_version": "128.0"
     },
     "gecko_android": {
-      "strict_min_version": "127.0"
+      "strict_min_version": "128.0"
     }
   },
   "declarative_net_request": {

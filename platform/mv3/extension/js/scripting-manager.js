@@ -29,8 +29,6 @@ import { ubolLog } from './debug.js';
 
 /******************************************************************************/
 
-const isGecko = browser.runtime.getURL('').startsWith('moz-extension://');
-
 const resourceDetailPromises = new Map();
 
 function getScriptletDetails() {
@@ -467,15 +465,10 @@ function registerScriptlet(context, scriptletDetails) {
                 allFrames: true,
                 matches,
                 excludeMatches,
+                matchOriginAsFallback: true,
                 runAt: 'document_start',
+                world: 'MAIN',
             };
-
-            // https://bugzilla.mozilla.org/show_bug.cgi?id=1736575
-            //   `MAIN` world not yet supported in Firefox
-            if ( isGecko === false ) {
-                directive.world = 'MAIN';
-                directive.matchOriginAsFallback = true;
-            }
 
             // register
             if ( registered === undefined ) {
