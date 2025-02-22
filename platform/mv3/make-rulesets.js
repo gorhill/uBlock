@@ -91,14 +91,17 @@ const uidint32 = (s) => {
 
 /******************************************************************************/
 
+const consoleLog = console.log;
 const stdOutput = [];
 
 const log = (text, silent = true) => {
     stdOutput.push(text);
     if ( silent === false ) {
-        console.log(text);
+        consoleLog(text);
     }
 };
+
+console.log = log;
 
 /******************************************************************************/
 
@@ -1126,7 +1129,7 @@ async function processScriptletFilters(assetDetails, mapin) {
     makeScriptlet.init();
 
     for ( const details of mapin.values() ) {
-        makeScriptlet.compile(details);
+        makeScriptlet.compile(assetDetails, details);
     }
     const stats = await makeScriptlet.commit(
         assetDetails.id,

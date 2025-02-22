@@ -75,7 +75,7 @@ export function reset() {
 
 /******************************************************************************/
 
-export function compile(details) {
+export function compile(assetDetails, details) {
     if ( details.args[0].endsWith('.js') === false ) {
         details.args[0] += '.js';
     }
@@ -85,8 +85,9 @@ export function compile(details) {
     const scriptletToken = details.args[0];
     const resourceEntry = resourceDetails.get(scriptletToken);
     if ( resourceEntry === undefined ) { return; }
+    const argsToken = JSON.stringify(details.args.slice(1));
     if ( resourceEntry.requiresTrust && details.trustedSource !== true ) {
-        console.log(`Rejecting ${scriptletToken}: source is not trusted`);
+        console.log(`Rejecting +js(${scriptletToken},${argsToken.slice(1,-1)}): ${assetDetails.id} is not trusted`);
         return;
     }
     if ( scriptletFiles.has(scriptletToken) === false ) {
@@ -102,7 +103,6 @@ export function compile(details) {
         });
     }
     const scriptletDetails = scriptletFiles.get(scriptletToken);
-    const argsToken = JSON.stringify(details.args.slice(1));
     if ( scriptletDetails.args.has(argsToken) === false ) {
         scriptletDetails.args.set(argsToken, scriptletDetails.args.size);
     }
