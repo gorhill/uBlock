@@ -112,7 +112,7 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Gönüllüleri benzer raporlar ile bezdirmemek için sorunun zaten bildirilip bildirilmediğine bakın. <b>Not:</b> düğmeye tıklamak sayfanın kaynağının GitHub üstüne gönderilmesine neden olur.",
+    "message": "Gönüllüleri benzer raporlar ile bezdirmemek için sorunun zaten bildirilip bildirilmediğine bakın. <b>Not:</b> Butona tıklamak sayfanın temel adresini GitHub'a gönderir.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
@@ -216,7 +216,7 @@
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
-    "message": "[sadece ana bilgisayar adları]\nörnek.com\noyunlar.site\n…",
+    "message": "[sadece alan adları]\nexample.com\ngames.example\n…",
     "description": "Default text for in edit field"
   },
   "behaviorSectionLabel": {
@@ -232,7 +232,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLabel": {
-    "message": "Sıkı engellemeyi kullanıma al",
+    "message": "Sıkı engellemeyi etkinleştir",
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLegend": {
@@ -252,7 +252,7 @@
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {
-    "message": "Bu sayfa {{listname}} içindeki bir süzgece takıldığı için engellenmiştir.",
+    "message": "Bu sayfa {{listname}} içindeki bir filtreye takıldığı için engellenmiştir.",
     "description": "Text informing about what is causing the page to be blocked"
   },
   "strictblockRedirectSentence1": {

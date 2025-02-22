@@ -900,11 +900,11 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Neue Meldung erstellen",
+    "message": "Neue Meldung auf GitHub erstellen",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Ähnliche Meldungen finden",
+    "message": "Ähnliche Meldungen auf GitHub finden",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {

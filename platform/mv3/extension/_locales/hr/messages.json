@@ -60,7 +60,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
-    "message": "Zloćudne domene",
+    "message": "Zaštita od zlonamjernog softvera, sigurnost",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
@@ -112,11 +112,11 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Kako biste izbjegli opterećivanje volontera duplim prijavama, provjerite nije li problem već prijavljen.",
+    "message": "Kako biste izbjegli opterećivanje volontera duplim prijavama, provjerite nije li problem već prijavljen. <b>Napomena:</b> klik na gumb uzrokovat će slanje izvorne stranice na GitHub.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Nađi slične prijave",
+    "message": "Nađi slične prijave na GitHub-u",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -164,7 +164,7 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Napravi novu prijavu",
+    "message": "Napravi novu prijavu na GitHub-u",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "firstRunSectionLabel": {

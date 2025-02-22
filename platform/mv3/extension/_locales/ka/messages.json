@@ -112,7 +112,7 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "მოხალისეები რომ არ მოცდნენ ერთნაირი მოსხენებების ნახვით, გთოხვთ გადაამოწმოთ, უკვე ხომ არაა გაგზავნილი საჩივარი ამ ხარვეზზე.",
+    "message": "მოხალისეები რომ არ მოცდნენ ერთნაირი მოსხენებების გაცნობით, გთხოვთ გადაამოწმოთ, უკვე ხომ არაა გაგზავნილი საჩივარი ამ ხარვეზზე. <b>გაითვალისწინეთ:</b> ღილაკზე დაწკაპების შედეგად გვერდის მონაცემები გაიგზავნება GitHub-ზე.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {

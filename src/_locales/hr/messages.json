@@ -964,7 +964,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Kako biste izbjegli opterećivanje volontera duplim prijavama, provjerite nije li problem već prijavljen.",
+    "message": "Kako biste izbjegli opterećivanje volontera duplim prijavama, provjerite nije li problem već prijavljen. <b>Napomena:</b> klik na gumb uzrokovat će slanje izvorne stranice na GitHub.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {

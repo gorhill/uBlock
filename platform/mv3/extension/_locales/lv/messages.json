@@ -112,7 +112,7 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Lai izvairītos no brīvprātīgo noslogošanas ar ziņojumiem, kas atkārtojas, lūgums pārbaudīt, ka par šādu nepilnību jau nav ziņots.",
+    "message": "Lai izvairītos no brīvprātīgo noslogošanas ar ziņojumiem, kas atkārtojas, lūgums pārbaudīt, ka par šādu nepilnību jau nav ziņots. <b>Piebilde:</b> klikšķināšana uz pogas izraisīs arī lapas izcelsmes nosūtīšanu uz GitHub.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {

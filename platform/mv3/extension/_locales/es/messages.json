@@ -112,11 +112,11 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Para evitar sobrecargar a voluntarios con reportes duplicados, por favor verifica que el problema no haya sido reportado. <b>Nota:</b> cliqueando el botón causará que el origen de la página sea enviado a GitHub.",
+    "message": "Para evitar sobrecargar a voluntarios con reportes duplicados, verifica que el problema no haya sido reportado. <b>Nota:</b> al hacer clic en el botón, hará que el origen de la página se envíe a GitHub.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Encontrar reportes similares",
+    "message": "Encontrar reportes similares en GitHub",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -164,7 +164,7 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Crear informe nuevo",
+    "message": "Crear nuevo reporte en GitHub",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "firstRunSectionLabel": {

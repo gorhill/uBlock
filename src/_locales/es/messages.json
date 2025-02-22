@@ -900,11 +900,11 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Crear nuevo reporte",
+    "message": "Crear nuevo reporte en GitHub",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Buscar reportes similares",
+    "message": "Encontrar reportes similares en GitHub",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -964,7 +964,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Para evitar sobrecargar a voluntarios con reportes duplicados, verifica que el problema no haya sido reportado.",
+    "message": "Para evitar sobrecargar a voluntarios con reportes duplicados, verifica que el problema no haya sido reportado. <b>Nota:</b> al hacer clic en el botón, hará que el origen de la página se envíe a GitHub.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
