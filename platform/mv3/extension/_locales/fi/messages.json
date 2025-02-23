@@ -112,11 +112,11 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Välttääksesi vapaaehtoisten kuormittamisen ylimääräisillä ilmoituksilla, tarkista ensin onko ongelmasta jo ilmoitettu.",
+    "message": "Välttääksesi vapaaehtoisten kuormittamisen ylimääräisillä ilmoituksilla, tarkasta ensin onko ongelmasta jo ilmoitettu. <b>Huomioi:</b> painikkeen painalluksen seurauksena sivun osoite lähetetään GitHubiin.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Etsi samankaltaisia ilmoituksia",
+    "message": "Etsi GitHubista vastaavia ilmoituksia",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -164,7 +164,7 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Luo uusi ilmoitus",
+    "message": "Luo GitHubiin uusi ilmoitus",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "firstRunSectionLabel": {
@@ -260,7 +260,7 @@
     "description": "Text warning about an incoming redirect"
   },
   "strictblockNoParamsPrompt": {
-    "message": "ilman parametreja",
+    "message": "parametritön",
     "description": "Label to be used for the parameter-less URL"
   },
   "strictblockBack": {

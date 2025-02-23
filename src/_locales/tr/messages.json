@@ -632,7 +632,7 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "İçe aktar ve ekle",
+    "message": "İçe aktar ve ekle…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
@@ -900,7 +900,7 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Yeni rapor oluştur",
+    "message": "GitHub üzerinde yeni rapor oluştur",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
@@ -1272,7 +1272,7 @@
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "toggleJavascript": {
-    "message": "JavaScript'i Aç/Kapa",
+    "message": "JavaScript'i Aç/Kapat",
     "description": "Label for keyboard shortcut used to toggle no-scripting switch"
   },
   "relaxBlockingMode": {
