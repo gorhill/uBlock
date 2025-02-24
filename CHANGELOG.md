@@ -1,3 +1,4 @@
+- [Improve `prevent-addEventListener` scriptlet](https://github.com/gorhill/uBlock/commit/9c26a07b53)
 - [Fix reverse lookup of `##^responseheader(...)` filters](https://github.com/gorhill/uBlock/commit/5921e50e03)
 - [Improve `evaldata-prune` scriptlet](https://github.com/gorhill/uBlock/commit/9bb1a2baaf)
 - [Comply with Mozilla's "User Consent and Control"](https://github.com/gorhill/uBlock/commit/344539d793)
