@@ -1281,30 +1281,32 @@ function addEventListenerDefuser(
         }
         return matchesBoth;
     };
-    runAt(( ) => {
-        proxyApplyFn('EventTarget.prototype.addEventListener', function(context) {
-            const { callArgs, thisArg } = context;
-            let t, h;
-            try {
-                t = String(callArgs[0]);
-                if ( typeof callArgs[1] === 'function' ) {
-                    h = String(safe.Function_toString(callArgs[1]));
-                } else if ( typeof callArgs[1] === 'object' && callArgs[1] !== null ) {
-                    if ( typeof callArgs[1].handleEvent === 'function' ) {
-                        h = String(safe.Function_toString(callArgs[1].handleEvent));
-                    }
-                } else {
-                    h = String(callArgs[1]);
+    const proxyFn = function(context) {
+        const { callArgs, thisArg } = context;
+        let t, h;
+        try {
+            t = String(callArgs[0]);
+            if ( typeof callArgs[1] === 'function' ) {
+                h = String(safe.Function_toString(callArgs[1]));
+            } else if ( typeof callArgs[1] === 'object' && callArgs[1] !== null ) {
+                if ( typeof callArgs[1].handleEvent === 'function' ) {
+                    h = String(safe.Function_toString(callArgs[1].handleEvent));
                 }
-            } catch {
+            } else {
+                h = String(callArgs[1]);
             }
-            if ( type === '' && pattern === '' ) {
-                safe.uboLog(logPrefix, `Called: ${t}\n${h}\n${elementDetails(thisArg)}`);
-            } else if ( shouldPrevent(thisArg, t, h) ) {
-                return safe.uboLog(logPrefix, `Prevented: ${t}\n${h}\n${elementDetails(thisArg)}`);
-            }
-            return context.reflect();
-        });
+        } catch {
+        }
+        if ( type === '' && pattern === '' ) {
+            safe.uboLog(logPrefix, `Called: ${t}\n${h}\n${elementDetails(thisArg)}`);
+        } else if ( shouldPrevent(thisArg, t, h) ) {
+            return safe.uboLog(logPrefix, `Prevented: ${t}\n${h}\n${elementDetails(thisArg)}`);
+        }
+        return context.reflect();
+    };
+    runAt(( ) => {
+        proxyApplyFn('EventTarget.prototype.addEventListener', proxyFn);
+        proxyApplyFn('document.addEventListener', proxyFn);
     }, extraArgs.runAt);
 }
 
