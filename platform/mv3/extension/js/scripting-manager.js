@@ -430,7 +430,7 @@ function registerScriptlet(context, scriptletDetails) {
         const scriptletList = scriptletDetails.get(rulesetId);
         if ( scriptletList === undefined ) { continue; }
 
-        for ( const [ token, scriptletHostnames ] of scriptletList ) {
+        for ( const [ token, details ] of scriptletList ) {
             const id = `${rulesetId}.${token}`;
             const registered = before.get(id);
 
@@ -439,17 +439,17 @@ function registerScriptlet(context, scriptletDetails) {
             let targetHostnames = [];
             if ( hasBroadHostPermission ) {
                 excludeMatches.push(...permissionRevokedMatches);
-                if ( scriptletHostnames.length > 100 ) {
+                if ( details.hostnames.length > 100 ) {
                     targetHostnames = [ '*' ];
                 } else {
-                    targetHostnames = scriptletHostnames;
+                    targetHostnames = details.hostnames;
                 }
             } else if ( permissionGrantedHostnames.length !== 0 ) {
-                if ( scriptletHostnames.includes('*') ) {
+                if ( details.hostnames.includes('*') ) {
                     targetHostnames = permissionGrantedHostnames;
                 } else {
                     targetHostnames = ut.intersectHostnameIters(
-                        scriptletHostnames,
+                        details.hostnames,
                         permissionGrantedHostnames
                     );
                 }
@@ -467,7 +467,7 @@ function registerScriptlet(context, scriptletDetails) {
                 excludeMatches,
                 matchOriginAsFallback: true,
                 runAt: 'document_start',
-                world: 'MAIN',
+                world: details.world,
             };
 
             // register

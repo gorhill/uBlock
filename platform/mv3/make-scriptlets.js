@@ -163,7 +163,6 @@ export async function commit(rulesetId, path, writeFn) {
         );
         content = safeReplace(content, /\$rulesetId\$/, rulesetId, 0);
         content = safeReplace(content, /\$scriptletName\$/, details.name, 0);
-        content = safeReplace(content, '$world$', details.world);
         content = safeReplace(content,
             'self.$argsList$',
             JSON.stringify(Array.from(details.args.keys()).map(a => JSON.parse(a)))
@@ -181,7 +180,12 @@ export async function commit(rulesetId, path, writeFn) {
             JSON.stringify(Array.from(details.exceptions))
         );
         writeFn(`${path}/${rulesetId}.${name}`, content);
-        scriptletStats.push([ name.slice(0, -3), Array.from(details.matches).sort() ]);
+        scriptletStats.push([
+            name.slice(0, -3), {
+                hostnames: Array.from(details.matches).sort(),
+                world: details.world,
+            }
+        ]);
     }
     return scriptletStats;
 }
