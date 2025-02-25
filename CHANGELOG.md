@@ -1,3 +1,4 @@
+- [Improve `disable-newtab-links` scriptlet](https://github.com/gorhill/uBlock/commit/d41989e62a)
 - [Improve `prevent-addEventListener` scriptlet](https://github.com/gorhill/uBlock/commit/9c26a07b53)
 - [Fix reverse lookup of `##^responseheader(...)` filters](https://github.com/gorhill/uBlock/commit/5921e50e03)
 - [Improve `evaldata-prune` scriptlet](https://github.com/gorhill/uBlock/commit/9bb1a2baaf)
