@@ -2222,8 +2222,8 @@ builtinScriptlets.push({
 });
 // https://github.com/uBlockOrigin/uAssets/issues/913
 function disableNewtabLinks() {
-    document.addEventListener('click', function(ev) {
-        var target = ev.target;
+    document.addEventListener('click', ev => {
+        let target = ev.target;
         while ( target !== null ) {
             if ( target.localName === 'a' && target.hasAttribute('target') ) {
                 ev.stopPropagation();
@@ -2232,7 +2232,7 @@ function disableNewtabLinks() {
             }
             target = target.parentNode;
         }
-    });
+    }, { capture: true });
 }
 
 /******************************************************************************/
