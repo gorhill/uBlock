@@ -265,21 +265,21 @@ async function fetchAndApplyAllPatches(assetDetails) {
 
 /******************************************************************************/
 
-const bc = new globalThis.BroadcastChannel('diffUpdater');
+const self = globalThis;
 
-bc.onmessage = ev => {
+self.onmessage = ev => {
     const message = ev.data || {};
     switch ( message.what ) {
     case 'update':
         fetchAndApplyAllPatches(message).then(response => {
-            bc.postMessage(response);
+            self.postMessage(response);
         }).catch(error => {
-            bc.postMessage({ what: 'broken', error });
+            self.postMessage({ what: 'broken', error });
         });
         break;
     }
 };
 
-bc.postMessage({ what: 'ready' });
+self.postMessage({ what: 'ready' });
 
 /******************************************************************************/

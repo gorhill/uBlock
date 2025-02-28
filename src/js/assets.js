@@ -1244,10 +1244,8 @@ async function diffUpdater() {
     ubolog('Diff updater: cycle start');
     return new Promise(resolve => {
         let pendingOps = 0;
-        const bc = new globalThis.BroadcastChannel('diffUpdater');
         const terminate = error => {
             worker.terminate();
-            bc.close();
             resolve();
             if ( typeof error !== 'string' ) { return; }
             ubolog(`Diff updater: terminate because ${error}`);
@@ -1260,14 +1258,15 @@ async function diffUpdater() {
             if ( metadata.diffPath === data.patchPath ) { return; }
             assetCacheSetDetails(data.assetKey, metadata);
         };
-        bc.onmessage = ev => {
+        const worker = new Worker('js/diff-updater.js');
+        worker.onmessage = ev => {
             const data = ev.data || {};
             if ( data.what === 'ready' ) {
                 ubolog('Diff updater: hard updating', toHardUpdate.map(v => v.assetKey).join());
                 while ( toHardUpdate.length !== 0 ) {
                     const assetDetails = toHardUpdate.shift();
                     assetDetails.fetch = true;
-                    bc.postMessage(assetDetails);
+                    worker.postMessage(assetDetails);
                     pendingOps += 1;
                 }
                 return;
@@ -1284,7 +1283,7 @@ async function diffUpdater() {
                     data.text = result.content || '';
                     data.status = undefined;
                     checkAndCorrectDiffPath(data);
-                    bc.postMessage(data);
+                    worker.postMessage(data);
                 });
                 return;
             }
@@ -1320,7 +1319,7 @@ async function diffUpdater() {
             if ( pendingOps === 0 && toSoftUpdate.length !== 0 ) {
                 ubolog('Diff updater: soft updating', toSoftUpdate.map(v => v.assetKey).join());
                 while ( toSoftUpdate.length !== 0 ) {
-                    bc.postMessage(toSoftUpdate.shift());
+                    worker.postMessage(toSoftUpdate.shift());
                     pendingOps += 1;
                 }
             }
@@ -1328,7 +1327,6 @@ async function diffUpdater() {
             ubolog('Diff updater: cycle complete');
             terminate();
         };
-        const worker = new Worker('js/diff-updater.js');
     }).catch(reason => {
         ubolog(`Diff updater: ${reason}`);
     });
