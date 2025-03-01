@@ -5,7 +5,7 @@ uBO Lite (uBOL) 是一个基于最新浏览器扩展接口（Manifest Version 3�
 - uBlock Origin 内置过滤规则列表
 - EasyList
 - EasyPrivacy
-- Peter Lowe’s Ad and tracking server list
+- Peter Lowe 的广告和跟踪服务器列表
 
 访问选项页面，点击弹出面板中的齿轮图标，即可启用更多规则集。
 

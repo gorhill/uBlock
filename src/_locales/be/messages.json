@@ -228,7 +228,7 @@
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Націсніце, каб скасаваць змены.",
+    "message": "Націсніце, каб вярнуць змены.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {
@@ -252,7 +252,7 @@
     "description": ""
   },
   "popup1pScriptRulePrompt": {
-    "message": "уласныя скрыпты",
+    "message": "Асноўныя скрыпты",
     "description": ""
   },
   "popup3pScriptRulePrompt": {
@@ -260,7 +260,7 @@
     "description": ""
   },
   "popup3pFrameRulePrompt": {
-    "message": "староннія рамкі",
+    "message": "староннія фрэймы",
     "description": ""
   },
   "popupHitDomainCountPrompt": {
@@ -424,7 +424,7 @@
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
-    "message": "{{used}} выкарыстана з {{total}}",
+    "message": "Выкарыстана: {{used}} з {{total}}",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
@@ -740,7 +740,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin3p": {
-    "message": "старонні",
+    "message": "староннія",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerEntryDetailsHeader": {
@@ -796,7 +796,7 @@
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "{{action}} сеткавыя запыты {{type}}, {{br}}URL-адрас якіх супадае з {{url}} {{br}}і паходзяць з {{origin}},{{br}}{{importance}} ёсць адпаведны фільтр-вынятак.",
+    "message": "{{action}} сеткавыя запыты {{type}}, {{br}}URL-адрас якіх супадае з {{url}} {{br}}і якія паходзяць з {{origin}},{{br}}{{importance}} з'яўляюцца адпаведным фільтрам выключэння.",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
@@ -932,11 +932,11 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Важна:</b> Пазбягайце выкарыстання іншых блакавальнікаў аналагічнага прызначэння разам з uBlock Origin, паколькі гэта можа прывесці да праблем з фільтрамі на пэўных сайтах.",
+    "message": "<b>Важна:</b> Пазбягайце выкарыстання іншых блакавальнікаў падобнага прызначэння разам з uBlock Origin, паколькі гэта можа прывесці да праблем з фільтрамі на пэўных сайтах.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Парада:</b> Упэўніцеся, што вашы спісы фільтраў абноўленыя. <span data-url=\"logger-ui.html#_\">Логер</span> — галоўны інструмент для дыягностыкі праблем, звязаных з фільтрамі.",
+    "message": "<b>Парада:</b> Пераканайцеся, што вашы спісы фільтраў знаходзяцца ў актуальным стане. <span data-url=\"logger-ui.html#_\">Рэгістратар</span> — гэта галоўны інструмент для дыягностыкі праблем, якія звязаны з фільтрамі.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
@@ -956,7 +956,7 @@
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Важна:</b> Патэнцыйна прыватная або адчувальная інфармацыя тыпова рэдагуецца. Адрэдагаваная інфармацыя можа зрабіць цяжэйшым вырашэнне праблемы.",
+    "message": "<b>Важна:</b> Патэнцыйна прыватная або канфідэнцыяльныя зветскі прадвызначана рэдагуюцца. Адрэдагаваныя звесткі могуць ускладніць вырашэнне праблемы.",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
@@ -984,7 +984,7 @@
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Выберыце запіс праблемы --",
+    "message": "-- Выберыце праблему --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
@@ -1064,7 +1064,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "Калі спіс фільтраў патрабуе абнаўлення, выкарыстоўваецца выпадкова выбраная сетка CDN",
+    "message": "Пры абнаўленні спіса фільтраў выкарыстоўваецца CDN, які выбіраецца выпадковым чынам",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
@@ -1100,7 +1100,7 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "Дадаць наступны URL-адрас да вашага спісу фільтраў?\n\nНазва: \"{{title}}\"\nURL: {{url}}",
+    "message": "Дадаць наступны URL-адрас да вашага спіса фільтраў?\n\nНазва: \"{{title}}\"\nURL-адрас: {{url}}",
     "description": "No longer used"
   },
   "subscribeButton": {
@@ -1112,7 +1112,7 @@
     "description": "English: a minute ago"
   },
   "elapsedManyMinutesAgo": {
-    "message": "{{value}} хвілін(ы) таму",
+    "message": "Хвілін таму: {{value}}",
     "description": "English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo": {
@@ -1120,7 +1120,7 @@
     "description": "English: an hour ago"
   },
   "elapsedManyHoursAgo": {
-    "message": "{{value}} гадзін(ы) таму",
+    "message": "Гадзін таму: {{value}}",
     "description": "English: {{value}} hours ago"
   },
   "elapsedOneDayAgo": {
@@ -1128,7 +1128,7 @@
     "description": "English: a day ago"
   },
   "elapsedManyDaysAgo": {
-    "message": "{{value}} дні таму",
+    "message": "Дзён таму: {{value}}",
     "description": "English: {{value}} days ago"
   },
   "showDashboardButton": {

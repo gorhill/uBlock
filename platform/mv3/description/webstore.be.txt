@@ -5,7 +5,7 @@ uBO Лайт (uBOL) гэта блакіроўшчык кантэнту з мен
 - Убудаваныя спісы фільтраў uBlock Origin
 - EasyList
 - EasyPrivacy
-- Спіс сервераў рэкламы ды адсочвання ад Peter Lowe
+- Спіс сервераў з рэкламай і адсочвання ад Peter Lowe
 
 You can enable more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
 
@@ -25,6 +25,6 @@ You can set the default filtering mode from uBOL's options page. If you pick the
 
 Keep in mind this is still a work in progress, with these end goals:
 
-- No broad host permissions at install time -- extended permissions are granted explicitly by the user on a per-site basis.
+- Адсутнасць шырокіх дазволаў на вузел падчас усталявання. Пашыраныя дазволы выдаюцца карыстальнікам для кожнага сайта асобна.
 
 - Цалкам дэкларатыўная ацэнка надзейнасці і эфектыўнасці работы працэсара/памяці.

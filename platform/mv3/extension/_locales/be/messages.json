@@ -8,7 +8,7 @@
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
-    "message": "{{ruleCount}} правілаў, пераўтвораных з {{filterCount}} сеткавых фільтраў",
+    "message": "Правілы (колькасць: {{ruleCount}}), якія пераўтвораны з сеткавых фільтраў (колькасць: {{filterCount}})",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
@@ -128,7 +128,7 @@
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Выберыце тэму --",
+    "message": "-- Выберыце праблему --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
@@ -216,7 +216,7 @@
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
-    "message": "[толькі назвы хостаў]\nexample.com\ngames.example\n...",
+    "message": "[толькі назвы вузлоў]\nexample.com\ngames.example\n...",
     "description": "Default text for in edit field"
   },
   "behaviorSectionLabel": {
