@@ -1,3 +1,5 @@
+- [Increase URL buffer size to 8192 (from 2048)](https://github.com/gorhill/uBlock/commit/36404543e4)
+- [Use onmessage/postMessage instead of BroadcastChannel in diff updater](https://github.com/gorhill/uBlock/commit/ea8853cda3)
 - [Improve `disable-newtab-links` scriptlet](https://github.com/gorhill/uBlock/commit/d41989e62a)
 - [Improve `prevent-addEventListener` scriptlet](https://github.com/gorhill/uBlock/commit/9c26a07b53)
 - [Fix reverse lookup of `##^responseheader(...)` filters](https://github.com/gorhill/uBlock/commit/5921e50e03)
