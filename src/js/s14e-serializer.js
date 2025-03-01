@@ -1422,8 +1422,14 @@ if ( isInstanceOf(globalThis, 'DedicatedWorkerGlobalScope') ) {
             break;
         }
         case THREAD_DESERIALIZE: {
-            const result = deserialize(msg.data);
-            globalThis.postMessage({ id: msg.id, size: msg.size, result });
+            let result;
+            try {
+                result = deserialize(msg.data);
+            } catch(ex) {
+                console.error(ex);
+            } finally {
+                globalThis.postMessage({ id: msg.id, size: msg.size, result });
+            }
             break;
         }
         default:

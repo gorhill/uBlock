@@ -24,13 +24,16 @@
   A BidiTrieContainer is mostly a large buffer in which distinct but related
   tries are stored. The memory layout of the buffer is as follow:
 
-      0-2047: haystack section
-   2048-2051: number of significant characters in the haystack
-   2052-2055: offset to start of trie data section (=> trie0)
-   2056-2059: offset to end of trie data section (=> trie1)
-   2060-2063: offset to start of character data section  (=> char0)
-   2064-2067: offset to end of character data section (=> char1)
-        2068: start of trie data section
+      0-8192: haystack section
+   8192-8195: number of significant characters in the haystack
+   8196-8199: offset to start of trie data section (=> trie0)
+   8200-8203: offset to end of trie data section (=> trie1)
+   8204-8207: offset to start of character data section  (=> char0)
+   8208-8211: offset to end of character data section (=> char1)
+   8212-8215: offset to left index result (=> result_l)
+   8216-8219: offset to right index result (=> result_r)
+   8220-8223: offset to extra unit result (=> result_iu)
+        8224: start of trie data section
 
                   +--------------+
   Normal cell:    | And          |  If "Segment info" matches:
@@ -93,18 +96,19 @@
 
 */
 
+const VERSION = 2;
 const PAGE_SIZE = 65536*2;
 const HAYSTACK_START = 0;
-const HAYSTACK_SIZE = 2048;                         //   i32 /   i8
-const HAYSTACK_SIZE_SLOT = HAYSTACK_SIZE >>> 2;     //   512 / 2048
-const TRIE0_SLOT     = HAYSTACK_SIZE_SLOT + 1;      //   513 / 2052
-const TRIE1_SLOT     = HAYSTACK_SIZE_SLOT + 2;      //   514 / 2056
-const CHAR0_SLOT     = HAYSTACK_SIZE_SLOT + 3;      //   515 / 2060
-const CHAR1_SLOT     = HAYSTACK_SIZE_SLOT + 4;      //   516 / 2064
-const RESULT_L_SLOT  = HAYSTACK_SIZE_SLOT + 5;      //   517 / 2068
-const RESULT_R_SLOT  = HAYSTACK_SIZE_SLOT + 6;      //   518 / 2072
-const RESULT_IU_SLOT = HAYSTACK_SIZE_SLOT + 7;      //   519 / 2076
-const TRIE0_START    = HAYSTACK_SIZE_SLOT + 8 << 2; //         2080
+const HAYSTACK_SIZE = 8192;                         //   i32 /   i8
+const HAYSTACK_SIZE_SLOT = HAYSTACK_SIZE >>> 2;     //  2048 / 8192
+const TRIE0_SLOT     = HAYSTACK_SIZE_SLOT + 1;      //  2049 / 8196
+const TRIE1_SLOT     = HAYSTACK_SIZE_SLOT + 2;      //  2050 / 8200
+const CHAR0_SLOT     = HAYSTACK_SIZE_SLOT + 3;      //  2051 / 8204
+const CHAR1_SLOT     = HAYSTACK_SIZE_SLOT + 4;      //  2052 / 8208
+const RESULT_L_SLOT  = HAYSTACK_SIZE_SLOT + 5;      //  2053 / 8212
+const RESULT_R_SLOT  = HAYSTACK_SIZE_SLOT + 6;      //  2054 / 8216
+const RESULT_IU_SLOT = HAYSTACK_SIZE_SLOT + 7;      //  2055 / 8220
+const TRIE0_START    = HAYSTACK_SIZE_SLOT + 8 << 2; //         8224
 
 const CELL_BYTE_LENGTH = 12;
 const MIN_FREE_CELL_BYTE_LENGTH = CELL_BYTE_LENGTH * 8;
@@ -156,28 +160,21 @@ class BidiTrieContainer {
     // Public methods
     //--------------------------------------------------------------------------
 
-    get haystackLen() {
+    getHaystackLen() {
         return this.buf32[HAYSTACK_SIZE_SLOT];
     }
 
-    set haystackLen(v) {
+    setHaystackLen(v) {
+        if ( v > HAYSTACK_SIZE ) {
+            v = HAYSTACK_SIZE;
+        }
         this.buf32[HAYSTACK_SIZE_SLOT] = v;
+        return v;
     }
 
-    reset(details) {
-        if (
-            details instanceof Object &&
-            typeof details.byteLength === 'number' &&
-            typeof details.char0 === 'number'
-        ) {
-            if ( details.byteLength > this.buf8.byteLength ) {
-                this.reallocateBuf(details.byteLength);
-            }
-            this.buf32[CHAR0_SLOT] = details.char0;
-        }
+    reset() {
         this.buf32[TRIE1_SLOT] = this.buf32[TRIE0_SLOT];
         this.buf32[CHAR1_SLOT] = this.buf32[CHAR0_SLOT];
-
         this.lastStored = '';
         this.lastStoredLen = this.lastStoredIndex = 0;
     }
@@ -571,23 +568,22 @@ class BidiTrieContainer {
         this.buf32[iboundary+BCELL_EXTRA] = v;
     }
 
-    optimize(shrink = false) {
-        if ( shrink ) {
-            this.shrinkBuf();
-        }
-        return {
-            byteLength: this.buf8.byteLength,
-            char0: this.buf32[CHAR0_SLOT],
-        };
+    optimize() {
+        this.shrinkBuf();
     }
 
     toSelfie() {
         const buf32 = this.buf32.subarray(0, this.buf32[CHAR1_SLOT] + 3 >>> 2);
-        return { buf32, checksum: i32Checksum(buf32) };
+        return {
+            version: VERSION,
+            buf32,
+            checksum: i32Checksum(buf32),
+        };
     }
 
     fromSelfie(selfie) {
         if ( typeof selfie !== 'object' || selfie === null ) { return false; }
+        if ( selfie.version !== VERSION ) { return false; }
         if ( selfie.buf32 instanceof Uint32Array === false ) { return false; }
         if ( selfie.checksum !== i32Checksum(selfie.buf32) ) { return false; }
         const byteLength = selfie.buf32.length << 2;

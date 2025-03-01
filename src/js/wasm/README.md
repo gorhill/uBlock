@@ -13,7 +13,7 @@ Assuming:
 ### `wat2wasm` tool
 
 The `wat2wasm` tool can be downloaded from an official WebAssembly project:
-<https://github.com/WebAssembly/wabt/releases>.
+<https://github.com/WebAssembly/wabt/releases/tag/1.0.29>
 
 ### `wat2wasm` tool online
 

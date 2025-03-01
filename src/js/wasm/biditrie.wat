@@ -32,16 +32,16 @@
 ;;
 ;; Memory layout, byte offset:
 ;; const HAYSTACK_START = 0;
-;; const HAYSTACK_SIZE = 2048;                         //   i32 /   i8
-;; const HAYSTACK_SIZE_SLOT = HAYSTACK_SIZE >>> 2;     //   512 / 2048
-;; const TRIE0_SLOT     = HAYSTACK_SIZE_SLOT + 1;      //   513 / 2052
-;; const TRIE1_SLOT     = HAYSTACK_SIZE_SLOT + 2;      //   514 / 2056
-;; const CHAR0_SLOT     = HAYSTACK_SIZE_SLOT + 3;      //   515 / 2060
-;; const CHAR1_SLOT     = HAYSTACK_SIZE_SLOT + 4;      //   516 / 2064
-;; const RESULT_L_SLOT  = HAYSTACK_SIZE_SLOT + 5;      //   517 / 2068
-;; const RESULT_R_SLOT  = HAYSTACK_SIZE_SLOT + 6;      //   518 / 2072
-;; const RESULT_IU_SLOT = HAYSTACK_SIZE_SLOT + 7;      //   519 / 2076
-;; const TRIE0_START    = HAYSTACK_SIZE_SLOT + 8 << 2; //         2080
+;; const HAYSTACK_SIZE = 8192;                         //   i32 /   i8
+;; const HAYSTACK_SIZE_SLOT = HAYSTACK_SIZE >>> 2;     //  2048 / 8192
+;; const TRIE0_SLOT     = HAYSTACK_SIZE_SLOT + 1;      //  2049 / 8196
+;; const TRIE1_SLOT     = HAYSTACK_SIZE_SLOT + 2;      //  2050 / 8200
+;; const CHAR0_SLOT     = HAYSTACK_SIZE_SLOT + 3;      //  2051 / 8204
+;; const CHAR1_SLOT     = HAYSTACK_SIZE_SLOT + 4;      //  2052 / 8208
+;; const RESULT_L_SLOT  = HAYSTACK_SIZE_SLOT + 5;      //  2053 / 8212
+;; const RESULT_R_SLOT  = HAYSTACK_SIZE_SLOT + 6;      //  2054 / 8216
+;; const RESULT_IU_SLOT = HAYSTACK_SIZE_SLOT + 7;      //  2055 / 8220
+;; const TRIE0_START    = HAYSTACK_SIZE_SLOT + 8 << 2; //         8224
 ;;
 
 ;;
@@ -71,11 +71,11 @@
     ;; const buf32 = this.buf32;
     ;; const buf8 = this.buf8;
     ;; const char0 = buf32[CHAR0_SLOT];
-    i32.const 2060
+    i32.const 8204
     i32.load align=4
     local.set $char0
     ;; const aR = buf32[HAYSTACK_SIZE_SLOT];
-    i32.const 2048
+    i32.const 8192
     i32.load align=4
     local.set $aR
     ;; let al = ai;
@@ -253,7 +253,7 @@
     ;; const buf32 = this.buf32;
     ;; const buf8 = this.buf8;
     ;; const char0 = buf32[CHAR0_SLOT];
-    i32.const 2060
+    i32.const 8204
     i32.load align=4
     local.set $char0
     block $matchFound
@@ -433,15 +433,15 @@
     ;; }
     end
     ;; this.buf32[RESULT_IU_SLOT] = iu;
-    i32.const 2076
+    i32.const 8220
     local.get $iu
     i32.store align=4
     ;; this.buf32[RESULT_L_SLOT] = l;
-    i32.const 2068
+    i32.const 8212
     local.get $l
     i32.store align=4
     ;; this.buf32[RESULT_R_SLOT] = r;
-    i32.const 2072
+    i32.const 8216
     local.get $r
     i32.store align=4
     end ;; $succeed
@@ -483,7 +483,7 @@
     ;; const charCodes = this.buf8;
     ;; needleLeft += this.buf32[CHAR0_SLOT];
     local.get $needleLeft
-    i32.const 2060              ;; CHAR0_SLOT memory address
+    i32.const 8204              ;; CHAR0_SLOT memory address
     i32.load align=4            ;; CHAR0 memory address
     i32.add                     ;; needle memory address
     local.tee $needleLeft
@@ -559,7 +559,7 @@
     br_if $fail
     ;; needleLeft += this.buf32[CHAR0_SLOT];
     local.get $needleLeft
-    i32.const 2060              ;; CHAR0_SLOT memory address
+    i32.const 8204              ;; CHAR0_SLOT memory address
     i32.load align=4            ;; CHAR0 memory address
     i32.add                     ;; needle memory address
     local.tee $needleLeft
@@ -659,7 +659,7 @@
     br_if $fail
     ;; needleLeft += this.buf32[CHAR0_SLOT];
     local.get $needleLeft
-    i32.const 2060              ;; CHAR0_SLOT memory address
+    i32.const 8204              ;; CHAR0_SLOT memory address
     i32.load align=4            ;; CHAR0 memory address
     i32.add                     ;; needle memory address
     local.tee $needleLeft

@@ -181,7 +181,7 @@ const µBlock = {  // jshint ignore:line
     // Read-only
     systemSettings: {
         compiledMagic: 57,  // Increase when compiled format changes
-        selfieMagic: 58,    // Increase when selfie format changes
+        selfieMagic: 59,    // Increase when selfie format changes
     },
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/759#issuecomment-546654501

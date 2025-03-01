@@ -331,6 +331,7 @@ cmEditor.on('beforeChange', (cm, details) => {
     const fields = line.slice(5).split(/\s+/);
     const query = {};
     for ( const field of fields ) {
+        if ( field === '' ) { continue; }
         if ( /[/.]/.test(field) ) {
             if ( query.url === undefined ) {
                 query.url = field;
