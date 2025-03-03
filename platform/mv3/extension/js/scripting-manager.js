@@ -209,6 +209,7 @@ function registerGeneric(context, genericDetails) {
     const directive = {
         id: 'css-generic',
         js,
+        allFrames: true,
         matches,
         excludeMatches,
         runAt: 'document_idle',
