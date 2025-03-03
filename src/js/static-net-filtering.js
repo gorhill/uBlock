@@ -4565,6 +4565,7 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
     // Patch modifier filters
     for ( const rule of ruleset ) {
         if ( rule.__modifierType === undefined ) { continue; }
+        let patchDomainOption = false;
         switch ( rule.__modifierType ) {
         case 'csp':
             rule.action.type = 'modifyHeaders';
@@ -4576,6 +4577,7 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
             if ( rule.__modifierAction === ALLOW_REALM ) {
                 dnrAddRuleError(rule, `Unsupported csp exception: ${rule.__modifierValue}`);
             }
+            patchDomainOption = true;
             break;
         case 'permissions':
             rule.action.type = 'modifyHeaders';
@@ -4587,6 +4589,7 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
             if ( rule.__modifierAction === ALLOW_REALM ) {
                 dnrAddRuleError(rule, `Unsupported permissions exception: ${rule.__modifierValue}`);
             }
+            patchDomainOption = true;
             break;
         case 'redirect-rule': {
             let token = rule.__modifierValue;
@@ -4688,6 +4691,21 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
         default:
             dnrAddRuleError(rule, `Unsupported modifier ${rule.__modifierType}`);
             break;
+        }
+
+        // Some modifiers only work on document resources
+        // Related issue: https://github.com/uBlockOrigin/uBOL-home/issues/156
+        if ( patchDomainOption ) {
+            const domains = rule.condition.initiatorDomains;
+            if ( Array.isArray(domains) && domains.length !== 0 ) {
+                rule.condition.requestDomains ||= [];
+                rule.condition.requestDomains.push(...domains);
+            }
+            const notDomains = rule.condition.excludedInitiatorDomains;
+            if ( Array.isArray(notDomains) && notDomains.length !== 0 ) {
+                rule.condition.excludedRequestDomains ||= [];
+                rule.condition.excludedRequestDomains.push(...notDomains);
+            }
         }
     }
 
