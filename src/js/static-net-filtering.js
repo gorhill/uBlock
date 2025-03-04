@@ -4577,7 +4577,6 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
             if ( rule.__modifierAction === ALLOW_REALM ) {
                 dnrAddRuleError(rule, `Unsupported csp exception: ${rule.__modifierValue}`);
             }
-            patchDomainOption = true;
             break;
         case 'permissions':
             rule.action.type = 'modifyHeaders';
