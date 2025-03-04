@@ -36,7 +36,7 @@ class RangeParser {
             this.min = this.max = parseInt(s, 10) || 0;
         }
         if ( pos !== -1 ) {
-            this.max = parseInt(s.slice(1), 10) || Number.MAX_SAFE_INTEGER;
+            this.max = parseInt(s.slice(pos + 1), 10) || Number.MAX_SAFE_INTEGER;
         }
     }
     unbound() {
