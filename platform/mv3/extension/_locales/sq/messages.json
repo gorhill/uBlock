@@ -112,11 +112,11 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Verifikoni a është raportuar më parë problemi që të mos i lodhni vullnetarët e tjerë me të njëjtat gjëra.",
+    "message": "Verifikoni a është raportuar edhe më parë që të mos i lodhni vullnetarët e tjerë me të njëjtat probleme. <b>Shënim:</b> kur klikoni butonin, origjina e faqes do të dërgohet në GitHub.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Gjej raporte të ngjashme",
+    "message": "Gjej raporte të ngjashme në GitHub",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -164,7 +164,7 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Krijoj raport të ri",
+    "message": "Krijoj raport të ri në GitHub",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "firstRunSectionLabel": {

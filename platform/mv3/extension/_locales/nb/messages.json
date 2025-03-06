@@ -32,7 +32,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipReport": {
-    "message": "Report an issue on this website",
+    "message": "Rapporter et problem på dette nettstedet",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -104,67 +104,67 @@
     "description": "Shown in the About pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "Rapporter om filterproblem",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Report filter issues with specific websites to the <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "Rapporter filterproblemer med bestemte nettsteder til <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> problemsporing</span>. <u>Krever en GitHub-konto.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported. <b>Note:</b> clicking the button will cause the page's origin to be sent to GitHub.",
+    "message": "For å unngå å belaste de frivillige med dobbeltrapporter, må du kontrollere at problemet ikke allerede har blitt rapportert. <b>Noter:</b> ved å klikke på knappen vil sidens opprinnelse bli sendt til GitHub..",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Find similar reports on GitHub",
+    "message": "Finn lignende rapporter på GitHub",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Address of the webpage:",
+    "message": "Nettsidens adresse:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The webpage…",
+    "message": "Nettsiden...",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Pick an entry --",
+    "message": "-- Velg en oppføring --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "Viser reklame eller reklamerester",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Has overlays or other nuisances",
+    "message": "Har overlegg eller andre ulemper",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Detects uBO Lite",
+    "message": "Oppdager uBO Lite",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "Har personvernrelaterte problemer",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Malfunctions when uBO Lite is enabled",
+    "message": "Feilfunksjoner når uBO Lite er aktivert",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "Åpner uønskede faner eller vinduer",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leads to badware, phishing",
+    "message": "Fører til skadelig programvare og/eller phishing",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the webpage as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "Merk nettsiden som «NSFW» (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Create new report on GitHub",
+    "message": "Opprett ny rapport på GitHub",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "firstRunSectionLabel": {
@@ -216,7 +216,7 @@
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
-    "message": "[hostnames only]\nexample.com\ngames.example\n...",
+    "message": "[kun vertsnavn]\nexample.com\ngames.example\n...",
     "description": "Default text for in edit field"
   },
   "behaviorSectionLabel": {
@@ -232,51 +232,51 @@
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLabel": {
-    "message": "Enable strict blocking",
+    "message": "Aktiver streng blokkering",
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLegend": {
-    "message": "Navigation to potentially undesirable sites will be blocked, and you will be offered the option to proceed.",
+    "message": "Navigering til potensielt uønskede nettsteder blir blokkert, og du får tilbud om å fortsette.",
     "description": "Label for a checkbox in the options page"
   },
   "findListsPlaceholder": {
-    "message": "Find lists",
+    "message": "Finn lister",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
-    "message": "Page blocked",
+    "message": "Side blokkert",
     "description": "Webpage title for the strict-blocked page"
   },
   "strictblockSentence1": {
-    "message": "uBO Lite has prevented the following page from loading:",
+    "message": "uBO Lite har forhindret innlasting av følgende side:",
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {
-    "message": "The page was blocked because of a matching filter in {{listname}}.",
+    "message": "Siden ble blokkert på grunn av et matchende filter i {{listname}}.",
     "description": "Text informing about what is causing the page to be blocked"
   },
   "strictblockRedirectSentence1": {
-    "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
+    "message": "Den blokkerte siden ønsker å omdirigere til et annet nettsted. Hvis du velger å fortsette, vil du navigere direkte til: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "strictblockNoParamsPrompt": {
-    "message": "without parameters",
+    "message": "uten parametere",
     "description": "Label to be used for the parameter-less URL"
   },
   "strictblockBack": {
-    "message": "Go back",
+    "message": "Gå tilbake",
     "description": "A button to go back to the previous webpage"
   },
   "strictblockClose": {
-    "message": "Close this window",
+    "message": "Lukk dette vinduet",
     "description": "A button to close the current tab"
   },
   "strictblockDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "Ikke varsle igjen om dette nettstedet",
     "description": "Label for checkbox in document-blocked page"
   },
   "strictblockProceed": {
-    "message": "Proceed",
+    "message": "Fortsett",
     "description": "A button to navigate to the blocked page"
   }
 }

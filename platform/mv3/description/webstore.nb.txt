@@ -7,7 +7,7 @@ Standardregelsettet tilsvarer standardfiltersettet til uBlock Origin:
 - EasyPrivacy
 - Peter Lowe’s Ad and tracking server list
 
-You can enable more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+Du kan legge til flere regelsett ved å gå til innstillingssiden -- klikk _Tannhjul_-ikonet i oppsprettspanelet.
 
 uBOL er fullstendig deklarativ, noe som betyr at det ikke er behov for en permanent uBOL-prosess for at filtreringen skal skje, og CSS/JS-injeksjonsbasert innholdsfiltrering utføres pålitelig av nettleseren selv i stedet for av utvidelsen. Dette betyr at uBOL selv ikke bruker CPU/minneressurser mens innholdsblokkering pågår -- uBOL's service worker-prosess kreves _bare_ når du samhandler med oppsprettspanelet eller innstillingssidene.
 
