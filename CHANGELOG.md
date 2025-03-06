@@ -1,3 +1,6 @@
+- [Add ability to inject scriptlets according to origin of ancestor contexts](https://github.com/gorhill/uBlock/commit/a483f7955f)
+- [Fix range parser in prevent-setTimeout scriptlet](https://github.com/gorhill/uBlock/commit/e636c32f2a)
+- [Add filter option synonyms for `strict1p`/`strict3p`](https://github.com/gorhill/uBlock/commit/34df044808)
 - [Increase URL buffer size to 8192 (from 2048)](https://github.com/gorhill/uBlock/commit/36404543e4)
 - [Use onmessage/postMessage instead of BroadcastChannel in diff updater](https://github.com/gorhill/uBlock/commit/ea8853cda3)
 - [Improve `disable-newtab-links` scriptlet](https://github.com/gorhill/uBlock/commit/d41989e62a)
