@@ -2104,7 +2104,7 @@ builtinScriptlets.push({
 // if this works well and proves to be useful, this may end up
 // as a stock tool in uBO's popup panel.
 function overlayBuster(allFrames) {
-    if ( allFrame === '' && window !== window.top ) { return; }
+    if ( allFrames === '' && window !== window.top ) { return; }
     var tstart;
     var ttl = 30000;
     var delay = 0;
