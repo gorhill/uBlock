@@ -233,7 +233,10 @@ async function fetchList(assetDetails) {
                 continue;
             }
             fetchedURLs.add(part.url);
-            if ( part.url.startsWith('https://ublockorigin.github.io/uAssets/filters/') ) {
+            if (
+                assetDetails.trustedSource ||
+                part.url.startsWith('https://ublockorigin.github.io/uAssets/filters/')
+            ) {
                 newParts.push(`!#trusted on ${secret}`);
             }
             newParts.push(
@@ -248,7 +251,7 @@ async function fetchList(assetDetails) {
                             return { url, content };
                         }
                     }
-                    log(`No valid content for ${details.name}`, false);
+                    log(`No valid content for ${url}`, false);
                     return { url, content: '' };
                 })
             );
@@ -1462,6 +1465,17 @@ async function main() {
         enabled: false,
         urls: [ 'https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts' ],
         homeURL: 'https://github.com/StevenBlack/hosts#readme',
+    });
+
+    await rulesetFromURLs({
+        id: 'ubol-tests',
+        name: 'uBO Lite Test Filters',
+        enabled: false,
+        trusted: true,
+        urls: [ 'https://ublockorigin.github.io/uBOL-home/tests/test-filters.txt' ],
+        homeURL: 'https://ublockorigin.github.io/uBOL-home/tests/test-filters.html',
+        filters: [
+        ],
     });
 
     // Regional rulesets

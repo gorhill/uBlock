@@ -55,15 +55,18 @@ const hnParts = [];
 try {
     let origin = document.location.origin;
     if ( origin === 'null' ) {
-        const origins = document.location.ancestorOrigins;
+        const origins = document.location.ancestorOrigins || [];
         for ( let i = 0; i < origins.length; i++ ) {
             origin = origins[i];
             if ( origin !== 'null' ) { break; }
         }
     }
-    const pos = origin.lastIndexOf('://');
-    if ( pos === -1 ) { return; }
-    hnParts.push(...origin.slice(pos+3).split('.'));
+    const beg = origin.lastIndexOf('://');
+    if ( beg === -1 ) { return; }
+    let hn = origin.slice(beg+3)
+    const end = hn.indexOf(':');
+    if ( end !== -1 ) { hn = hn.slice(0, end); }
+    hnParts.push(...hn.split('.'));
 } catch {
 }
 const hnpartslen = hnParts.length;
