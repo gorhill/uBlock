@@ -2103,8 +2103,8 @@ builtinScriptlets.push({
 // Experimental: Generic nuisance overlay buster.
 // if this works well and proves to be useful, this may end up
 // as a stock tool in uBO's popup panel.
-function overlayBuster() {
-    if ( window !== window.top ) { return; }
+function overlayBuster(allFrames) {
+    if ( allFrame === '' && window !== window.top ) { return; }
     var tstart;
     var ttl = 30000;
     var delay = 0;
