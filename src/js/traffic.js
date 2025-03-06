@@ -1256,6 +1256,7 @@ const webRequest = {
                     const pageStore = µb.pageStoreFromTabId(details.tabId);
                     if ( pageStore === null ) { return; }
                     if ( pageStore.getNetFilteringSwitch() === false ) { return; }
+                    details.ancestors = pageStore.getFrameAncestorDetails(details.frameId);
                     scriptletFilteringEngine.injectNow(details);
                 },
                 {

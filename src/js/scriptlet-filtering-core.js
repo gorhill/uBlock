@@ -20,6 +20,7 @@
 */
 
 import { StaticExtFilteringHostnameDB } from './static-ext-filtering-db.js';
+import { entityFromHostname } from './uri-utils.js';
 import { redirectEngine as reng } from './redirect-engine.js';
 
 /******************************************************************************/
@@ -208,13 +209,23 @@ export class ScriptletFilteringEngine {
         $scriptlets.clear();
         $exceptions.clear();
 
-        const { hostname } = request;
+        const { ancestors = [], domain, hostname } = request;
 
         this.scriptletDB.retrieve(hostname, [ $scriptlets, $exceptions ]);
-        const entity = request.entity !== ''
-            ? `${hostname.slice(0, -request.domain.length)}${request.entity}`
-            : '*';
-        this.scriptletDB.retrieve(entity, [ $scriptlets, $exceptions ], 1);
+        const entity = entityFromHostname(hostname, domain);
+        if ( entity !== '' ) {
+            this.scriptletDB.retrieve(entity, [ $scriptlets, $exceptions ], 1);
+        } else {
+            this.scriptletDB.retrieve('*', [ $scriptlets, $exceptions ], 1);
+        }
+        for ( const ancestor of ancestors ) {
+            const { domain, hostname } = ancestor;
+            this.scriptletDB.retrieve(`${hostname}>>`, [ $scriptlets, $exceptions ], 1);
+            const entity = entityFromHostname(hostname, domain);
+            if ( entity !== '' ) {
+                this.scriptletDB.retrieve(`${entity}>>`, [ $scriptlets, $exceptions ], 1);
+            }
+        }
         if ( $scriptlets.size === 0 ) { return; }
 
         // Wholly disable scriptlet injection?

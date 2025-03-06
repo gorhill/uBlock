@@ -535,6 +535,21 @@ const PageStore = class {
         return sender.frameURL;
     }
 
+    getFrameAncestorDetails(frameId) {
+        if ( frameId === 0 ) { return []; }
+        const out = [];
+        for (;;) {
+            const frameStore = this.getFrameStore(frameId);
+            if ( frameStore === null ) { break; }
+            const { domain, hostname } = frameStore;
+            if ( hostname !== undefined ) {
+                out.push({ domain, hostname });
+            }
+            frameId = frameStore.parentId;
+        }
+        return out.slice(1);
+    }
+
     // There is no event to tell us a specific subframe has been removed from
     // the main document. The code below will remove subframes which are no
     // longer present in the root document. Removing obsolete subframes is

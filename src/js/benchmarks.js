@@ -321,7 +321,6 @@ export async function benchmarkCosmeticFiltering() {
         frameId: undefined,
         hostname: '',
         domain: '',
-        entity: '',
     };
     const options = {
         noSpecificCosmeticFiltering: false,

@@ -25,7 +25,6 @@ import * as sfp from './static-filtering-parser.js';
 import {
     domainFromHostname,
     domainFromURI,
-    entityFromDomain,
     hostnameFromURI,
     isNetworkURI,
 } from './uri-utils.js';
@@ -684,7 +683,7 @@ const retrieveContentScriptParameters = async function(sender, request) {
     request.frameId = frameId;
     request.hostname = hostnameFromURI(request.url);
     request.domain = domainFromHostname(request.hostname);
-    request.entity = entityFromDomain(request.domain);
+    request.ancestors = pageStore.getFrameAncestorDetails(frameId);
 
     const scf = response.specificCosmeticFilters =
         cosmeticFilteringEngine.retrieveSpecificSelectors(request, response);

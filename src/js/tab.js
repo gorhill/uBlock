@@ -928,6 +928,7 @@ vAPI.Tabs = class extends vAPI.Tabs {
         if ( pageStore === null ) { return; }
         pageStore.setFrameURL(details);
         if ( pageStore.getNetFilteringSwitch() ) {
+            details.ancestors = pageStore.getFrameAncestorDetails(frameId);
             scriptletFilteringEngine.injectNow(details);
         }
     }

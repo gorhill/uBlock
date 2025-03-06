@@ -23,6 +23,7 @@
 
 import { MRUCache } from './mrucache.js';
 import { StaticExtFilteringHostnameDB } from './static-ext-filtering-db.js';
+import { entityFromHostname } from './uri-utils.js';
 import logger from './logger.js';
 import µb from './background.js';
 
@@ -818,9 +819,10 @@ CosmeticFilteringEngine.prototype.retrieveSpecificSelectors = function(
             3
         );
         // Retrieve filters with a entity-based hostname value
-        if ( request.entity !== '' ) {
+        const entity = entityFromHostname(hostname, request.domain);
+        if ( entity !== '' ) {
             this.specificFilters.retrieve(
-                `${hostname.slice(0, -request.domain.length)}${request.entity}`,
+                entity,
                 options.noSpecificCosmeticFiltering ? discardSets : retrieveSets,
                 1
             );

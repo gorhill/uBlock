@@ -70,6 +70,15 @@ function entityFromDomain(domain) {
     return pos !== -1 ? domain.slice(0, pos) + '.*' : '';
 }
 
+function entityFromHostname(hostname, domain) {
+    if ( domain === undefined ) {
+        domain = domainFromHostname(hostname);
+    }
+    const entity = entityFromDomain(domain);
+    if ( entity === '' ) { return ''; }
+    return `${hostname.slice(0, -domain.length)}${entity}`
+}
+
 function hostnameFromURI(uri) {
     let match = reHostnameFromCommonURL.exec(uri);
     if ( match !== null ) { return match[0].slice(8, -1); }
@@ -164,6 +173,7 @@ export {
     domainFromHostname,
     domainFromURI,
     entityFromDomain,
+    entityFromHostname,
     hostnameFromNetworkURL,
     hostnameFromURI,
     isNetworkURI,
