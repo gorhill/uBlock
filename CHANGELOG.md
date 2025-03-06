@@ -1,3 +1,4 @@
+- [Improve `overlay-buster` scriptlet](https://github.com/gorhill/uBlock/commit/fc231998b9)
 - [Add ability to inject scriptlets according to origin of ancestor contexts](https://github.com/gorhill/uBlock/commit/a483f7955f)
 - [Fix range parser in prevent-setTimeout scriptlet](https://github.com/gorhill/uBlock/commit/e636c32f2a)
 - [Add filter option synonyms for `strict1p`/`strict3p`](https://github.com/gorhill/uBlock/commit/34df044808)
