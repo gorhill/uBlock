@@ -1526,8 +1526,8 @@ async function main() {
 
     await rulesetFromURLs({
         id: 'est-0',
-		group: 'regions',
-		lang: 'et',
+        group: 'regions',
+        lang: 'et',
         name: '🇪🇪ee: Eesti saitidele kohandatud filter',
         enabled: false,
         urls: [ 'https://ubol-et.adblock.ee/list.txt' ],
