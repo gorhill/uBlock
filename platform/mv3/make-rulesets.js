@@ -71,7 +71,7 @@ const env = [
     'user_stylesheet',
 ];
 
-if ( platform === 'edge' ) {
+if ( platform === 'edge' || platform === 'safari' ) {
     env.push('chromium');
 }
 
@@ -1652,7 +1652,7 @@ async function main() {
         resources: Array.from(requiredRedirectResources).map(path => `/${path}`),
         matches: [ '<all_urls>' ],
     };
-    if ( env.includes('chromium') ) {
+    if ( env.includes('chromium') && env.includes('safari') === false ) {
         web_accessible_resources.use_dynamic_url = true;
     }
     manifest.web_accessible_resources.push(web_accessible_resources);
