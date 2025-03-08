@@ -144,7 +144,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "มีปัญหาเกี่ยวกับความเป็นส่วนตัว",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
@@ -240,7 +240,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "findListsPlaceholder": {
-    "message": "Find lists",
+    "message": "หารายการ",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
@@ -264,19 +264,19 @@
     "description": "Label to be used for the parameter-less URL"
   },
   "strictblockBack": {
-    "message": "Go back",
+    "message": "ย้อนกลับ",
     "description": "A button to go back to the previous webpage"
   },
   "strictblockClose": {
-    "message": "Close this window",
+    "message": "ปิดหน้าต่างนี้",
     "description": "A button to close the current tab"
   },
   "strictblockDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "อย่าเตือนเกี่ยวกับเว็บไซต์นี้ให้กับฉันอีก",
     "description": "Label for checkbox in document-blocked page"
   },
   "strictblockProceed": {
-    "message": "Proceed",
+    "message": "ดำเนินต่อ",
     "description": "A button to navigate to the blocked page"
   }
 }

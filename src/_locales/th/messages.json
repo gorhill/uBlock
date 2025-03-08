@@ -552,7 +552,7 @@
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "Export…",
+    "message": "ส่งออก",
     "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
@@ -784,7 +784,7 @@
     "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
-    "message": "Context:",
+    "message": "บริบท:",
     "description": "Label for the context selector"
   },
   "loggerURLFilteringTypeLabel": {
@@ -824,7 +824,7 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant": {
-    "message": "except when",
+    "message": "ยกเว้นเมื่อ",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartImportant": {
@@ -1080,7 +1080,7 @@
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Reset to default settings…",
+    "message": "ปรับเป็นการตั้งค่าเริ่มต้น",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
@@ -1260,7 +1260,7 @@
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
-    "message": "Copy to clipboard",
+    "message": "คัดลอกไปยังคลิปบอร์ด",
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "genericSelectAll": {
