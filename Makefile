@@ -9,6 +9,9 @@ sources := $(wildcard assets/* assets/*/* dist/version src/* src/*/* src/*/*/* s
 platform := $(wildcard platform/* platform/*/* platform/*/*/* platform/*/*/*/* platform/*/*/*/*/*)
 assets := dist/build/uAssets
 mv3-data := $(wildcard dist/build/mv3-data/*)
+=======
+mv3-assets := dist/build/mv3-data/*
+>>>>>>> 907fd68d3 (Use "make mv3-edge" to build Edge package)
 
 all: chromium firefox npm
 
@@ -33,15 +36,10 @@ firefox: dist/build/uBlock0.firefox
 dist/build/uBlock0.npm: tools/make-nodejs.sh $(sources) $(platform) $(assets)
 	tools/make-npm.sh
 
-<<<<<<< HEAD
 npm: dist/build/uBlock0.npm
 
 # Dev tools
 node_modules:
-=======
-# Dev tools
-npm: node_modules/
->>>>>>> 858174a6d (Better integrate latest eslint version)
 	npm install
 
 init: node_modules
