@@ -2,12 +2,13 @@
 run_options := $(filter-out $@,$(MAKECMDGOALS))
 
 .PHONY: all clean cleanassets test lint chromium opera firefox npm dig \
-	mv3 mv3-quick mv3-chromium mv3-firefox \
+	mv3-chromium mv3-firefox mv3-edge \
 	compare maxcost medcost mincost modifiers record wasm
 
 sources := $(wildcard assets/* assets/*/* dist/version src/* src/*/* src/*/*/* src/*/*/*/*)
 platform := $(wildcard platform/* platform/*/* platform/*/*/* platform/*/*/*/* platform/*/*/*/*/*)
 assets := dist/build/uAssets
+mv3-assets := dist/build/mv3-data/*
 
 all: chromium firefox npm
 
@@ -61,21 +62,20 @@ dig: dist/build/uBlock0.dig
 dig-snfe: dig
 	cd dist/build/uBlock0.dig && npm run snfe $(run_options)
 
-dist/build/uBOLite.chromium: tools/make-mv3.sh $(sources) $(platform)
+dist/build/uBOLite.chromium: tools/make-mv3.sh $(sources) $(platform) $(mv3-assets)
 	tools/make-mv3.sh chromium
 
 mv3-chromium: dist/build/uBOLite.chromium
 
-dist/build/uBOLite.firefox: tools/make-mv3.sh $(sources) $(platform)
+dist/build/uBOLite.firefox: tools/make-mv3.sh $(sources) $(platform) $(mv3-assets)
 	tools/make-mv3.sh firefox
 
 mv3-firefox: dist/build/uBOLite.firefox
 
-mv3-quick: tools/make-mv3.sh $(sources) $(platform)
-	tools/make-mv3.sh quick
+dist/build/uBOLite.edge: tools/make-mv3.sh tools/make-edge.mjs $(sources) $(platform) $(mv3-assets)
+	tools/make-mv3.sh edge
 
-mv3-full: tools/make-mv3.sh $(sources) $(platform)
-	tools/make-mv3.sh full
+mv3-edge: dist/build/uBOLite.edge
 
 dist/build/uAssets:
 	tools/pull-assets.sh

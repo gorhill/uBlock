@@ -11,9 +11,6 @@ PLATFORM="chromium"
 
 for i in "$@"; do
   case $i in
-    quick)
-      QUICK="yes"
-      ;;
     full)
       FULL="yes"
       ;;
@@ -22,6 +19,9 @@ for i in "$@"; do
       ;;
     chromium)
       PLATFORM="chromium"
+      ;;
+    edge)
+      PLATFORM="edge"
       ;;
     uBOLite_+([0-9]).+([0-9]).+([0-9]).+([0-9]))
       TAGNAME="$i"
@@ -39,9 +39,7 @@ echo "BEFORE=$BEFORE"
 
 DES="dist/build/uBOLite.$PLATFORM"
 
-if [ "$QUICK" != "yes" ]; then
-    rm -rf $DES
-fi
+rm -rf $DES
 
 mkdir -p $DES
 cd $DES
@@ -95,38 +93,44 @@ cp platform/mv3/extension/img/* "$DES"/img/
 cp -R platform/mv3/extension/_locales "$DES"/
 cp platform/mv3/README.md "$DES/"
 
-if [ "$QUICK" != "yes" ]; then
-    echo "*** uBOLite.mv3: Generating rulesets"
-    TMPDIR=$(mktemp -d)
-    mkdir -p "$TMPDIR"
-    if [ "$PLATFORM" = "chromium" ]; then
-        cp platform/mv3/chromium/manifest.json "$DES"/
-    elif [ "$PLATFORM" = "firefox" ]; then
-        cp platform/mv3/firefox/manifest.json "$DES"/
-    fi
-    ./tools/make-nodejs.sh "$TMPDIR"
-    cp platform/mv3/package.json "$TMPDIR"/
-    cp platform/mv3/*.js "$TMPDIR"/
-    cp platform/mv3/*.mjs "$TMPDIR"/
-    cp platform/mv3/extension/js/utils.js "$TMPDIR"/js/
-    cp -R "$UBO_DIR"/src/js/resources "$TMPDIR"/js/
-    cp "$UBO_DIR"/assets/assets.dev.json "$TMPDIR"/
-    cp -R platform/mv3/scriptlets "$TMPDIR"/
-    mkdir -p "$TMPDIR"/web_accessible_resources
-    cp "$UBO_DIR"/src/web_accessible_resources/* "$TMPDIR"/web_accessible_resources/
-    cd "$TMPDIR"
-    node --no-warnings make-rulesets.js output="$DES" platform="$PLATFORM"
-    if [ -n "$BEFORE" ]; then
-        echo "*** uBOLite.mv3: salvaging rule ids to minimize diff size"
-        echo "    before=$BEFORE/$PLATFORM"
-        echo "    after=$DES"
-        node salvage-ruleids.mjs before="$BEFORE"/"$PLATFORM" after="$DES"
-    fi
-    cd - > /dev/null
-    rm -rf "$TMPDIR"
+echo "*** uBOLite.mv3: Generating rulesets"
+TMPDIR=$(mktemp -d)
+mkdir -p "$TMPDIR"
+if [ "$PLATFORM" = "chromium" ] || [ "$PLATFORM" = "edge" ]; then
+    cp platform/mv3/chromium/manifest.json "$DES"/
+elif [ "$PLATFORM" = "firefox" ]; then
+    cp platform/mv3/firefox/manifest.json "$DES"/
+fi
+./tools/make-nodejs.sh "$TMPDIR"
+cp platform/mv3/package.json "$TMPDIR"/
+cp platform/mv3/*.js "$TMPDIR"/
+cp platform/mv3/*.mjs "$TMPDIR"/
+cp platform/mv3/extension/js/utils.js "$TMPDIR"/js/
+cp -R "$UBO_DIR"/src/js/resources "$TMPDIR"/js/
+cp "$UBO_DIR"/assets/assets.dev.json "$TMPDIR"/
+cp -R platform/mv3/scriptlets "$TMPDIR"/
+mkdir -p "$TMPDIR"/web_accessible_resources
+cp "$UBO_DIR"/src/web_accessible_resources/* "$TMPDIR"/web_accessible_resources/
+cd "$TMPDIR"
+node --no-warnings make-rulesets.js output="$DES" platform="$PLATFORM"
+if [ -n "$BEFORE" ]; then
+    echo "*** uBOLite.mv3: salvaging rule ids to minimize diff size"
+    echo "    before=$BEFORE/$PLATFORM"
+    echo "    after=$DES"
+    node salvage-ruleids.mjs before="$BEFORE"/"$PLATFORM" after="$DES"
+fi
+cd - > /dev/null
+rm -rf "$TMPDIR"
+
+# For Edge, declared rulesets must be at package root
+if [ "$PLATFORM" = "edge" ]; then
+    echo "*** uBOLite.edge: Modify reference implementation for Edge compatibility"
+    mv "$DES"/rulesets/main/* "$DES/"
+    rmdir "$DES/rulesets/main"
+    node tools/make-edge.mjs
 fi
 
-echo "*** uBOLite.mv3: extension ready"
+echo "*** uBOLite.$PLATFORM: extension ready"
 echo "Extension location: $DES/"
 
 # Local build
