@@ -9,9 +9,6 @@ sources := $(wildcard assets/* assets/*/* dist/version src/* src/*/* src/*/*/* s
 platform := $(wildcard platform/* platform/*/* platform/*/*/* platform/*/*/*/* platform/*/*/*/*/*)
 assets := dist/build/uAssets
 mv3-data := $(wildcard dist/build/mv3-data/*)
-=======
-mv3-assets := dist/build/mv3-data/*
->>>>>>> 907fd68d3 (Use "make mv3-edge" to build Edge package)
 
 all: chromium firefox npm
 
