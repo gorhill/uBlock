@@ -64,14 +64,15 @@ const rulesetDir = `${outputDir}/rulesets`;
 const scriptletDir = `${rulesetDir}/scripting`;
 const env = [
     platform,
+    'native_css_has',
     'mv3',
     'ublock',
     'ubol',
     'user_stylesheet',
 ];
 
-if ( platform !== 'firefox' ) {
-    env.push('native_css_has');
+if ( platform === 'edge' ) {
+    env.push('chromium');
 }
 
 /******************************************************************************/
@@ -1572,7 +1573,7 @@ async function main() {
         resources: Array.from(requiredRedirectResources).map(path => `/${path}`),
         matches: [ '<all_urls>' ],
     };
-    if ( platform === 'chromium' ) {
+    if ( env.includes('chromium') ) {
         web_accessible_resources.use_dynamic_url = true;
     }
     manifest.web_accessible_resources.push(web_accessible_resources);
