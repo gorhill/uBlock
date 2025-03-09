@@ -62,7 +62,7 @@ dig-snfe: dig
 	cd dist/build/uBlock0.dig && npm run snfe $(run_options)
 
 mv3-assets:
-	mkdir dist/build/mv3-data
+	mkdir -p dist/build/mv3-data
 
 dist/build/uBOLite.chromium: tools/make-mv3.sh $(sources) $(platform) mv3-assets
 	tools/make-mv3.sh chromium
