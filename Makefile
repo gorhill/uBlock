@@ -80,7 +80,7 @@ dist/build/uBOLite.edge: tools/make-mv3.sh tools/make-edge.mjs $(sources) $(plat
 
 mv3-edge: dist/build/uBOLite.edge
 
-dist/build/uBOLite.safari: tools/make-mv3.sh $(sources) $(platform)
+dist/build/uBOLite.safari: tools/make-mv3.sh $(sources) $(platform) $(mv3-data) dist/build/mv3-data
 	tools/make-mv3.sh safari
 
 mv3-safari: dist/build/uBOLite.safari
