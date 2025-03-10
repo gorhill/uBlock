@@ -113,7 +113,10 @@ async function reportSpecificFilterIssue() {
     const modes = [ 'no filtering', 'basic', 'optimal', 'complete' ];
     const config = {
         version: `uBOL ${manifest.version}`,
-        mode: `${modes[reportedPage.mode]} / ${modes[defaultMode]}`,
+        filtering: {
+            'site': `${modes[reportedPage.mode]}`,
+            'default': `${modes[defaultMode]}`,
+        },
         rulesets,
     };
     const configBody = [
