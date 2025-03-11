@@ -157,7 +157,6 @@ export function urlSkip(url, blocked, steps, directive = {}) {
         const urlfinal = new URL(urlout);
         if ( urlfinal.protocol !== 'https:' ) {
             if ( urlfinal.protocol !== 'http:' ) { return; }
-            urlout = urlout.replace('http', 'https');
         }
         if ( blocked && redirectBlocked !== true ) { return; }
         return urlout;
