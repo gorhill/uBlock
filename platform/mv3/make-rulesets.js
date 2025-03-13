@@ -700,25 +700,31 @@ async function processGenericCosmeticFilters(
             if ( selectors === undefined ) {
                 genericSelectorMap.set(hash, selector)
             } else {
-                genericSelectorMap.set(hash, `${selectors},${selector}`)
+                genericSelectorMap.set(hash, `${selectors},\n${selector}`)
             }
         }
     }
 
     // Specific exceptions
+    const genericExceptionSieve = new Set();
     const genericExceptionMap = new Map();
     if ( declarativeMap ) {
-        for ( const details of declarativeMap.values() ) {
+        for ( const [ exception, details ] of declarativeMap ) {
             if ( details.rejected ) { continue; }
             if ( details.key === undefined ) { continue; }
             if ( details.matches !== undefined ) { continue; }
             if ( details.excludeMatches === undefined ) { continue; }
             const type = details.key.charCodeAt(0);
             const hash = hashFromStr(type, details.key.slice(1));
-            const hostnames = genericExceptionMap.get(hash) ?? '';
-            genericExceptionMap.set(hash,
-                `${hostnames} ${details.excludeMatches.join(' ')} `
-            );
+            genericExceptionSieve.add(hash);
+            for ( const hn of details.excludeMatches ) {
+                const exceptions = genericExceptionMap.get(hn);
+                if ( exceptions === undefined ) {
+                    genericExceptionMap.set(hn, exception);
+                } else {
+                    genericExceptionMap.set(hn, `${exceptions}\n${exception}`);
+                }
+            }
         }
     }
 
@@ -736,6 +742,10 @@ async function processGenericCosmeticFilters(
         `${JSON.stringify(genericSelectorMap, scriptletJsonReplacer)}`
     );
     patchedScriptlet = safeReplace(patchedScriptlet,
+        /\bself\.\$genericExceptionSieve\$/,
+        `${JSON.stringify(genericExceptionSieve, scriptletJsonReplacer)}`
+    );
+    patchedScriptlet = safeReplace(patchedScriptlet,
         /\bself\.\$genericExceptionMap\$/,
         `${JSON.stringify(genericExceptionMap, scriptletJsonReplacer)}`
     );
@@ -745,10 +755,10 @@ async function processGenericCosmeticFilters(
         patchedScriptlet
     );
 
+    log(`CSS-generic: ${genericExceptionSieve.size} specific CSS exceptions`);
     log(`CSS-generic: ${genericSelectorMap.size} plain CSS selectors`);
-    log(`CSS-generic: ${genericExceptionMap.size} specific CSS exceptions`);
 
-    return genericSelectorMap.size + genericExceptionMap.size;
+    return genericSelectorMap.size + genericExceptionSieve.size;
 }
 
 const hashFromStr = (type, s) => {
@@ -1491,6 +1501,9 @@ async function main() {
         urls: [ 'https://ublockorigin.github.io/uBOL-home/tests/test-filters.txt' ],
         homeURL: 'https://ublockorigin.github.io/uBOL-home/tests/test-filters.html',
         filters: [
+            '###gcf #gcf1 .fail',
+            '###gcf #gcf2 .fail',
+            'ublockorigin.github.io,localhost#@##gcf #gcf2 .fail',
         ],
     });
 

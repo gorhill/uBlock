@@ -29,6 +29,9 @@ const genericSelectorMap = self.genericSelectorMap || new Map();
 self.genericSelectorMap = undefined;
 if ( genericSelectorMap.size === 0 ) { return; }
 
+const genericExceptionSieve = self.genericExceptionSieve || new Set();
+self.genericExceptionSieve = undefined;
+
 const genericExceptionMap = self.genericExceptionMap || new Map();
 self.genericExceptionMap = undefined;
 
@@ -78,8 +81,11 @@ const uBOL_idFromNode = (node, out) => {
     const selectorList = genericSelectorMap.get(hash);
     if ( selectorList === undefined ) { return; }
     genericSelectorMap.delete(hash);
-    if ( isExcepted(hash) ) { return; }
-    out.push(selectorList);
+    if ( genericExceptionSieve.has(hash) ) {
+        applyExceptions(selectorList, out);
+    } else {
+        out.push(selectorList);
+    }
 };
 
 // https://github.com/uBlockOrigin/uBlock-issues/discussions/2076
@@ -99,18 +105,26 @@ const uBOL_classesFromNode = (node, out) => {
         const selectorList = genericSelectorMap.get(hash);
         if ( selectorList === undefined ) { continue; }
         genericSelectorMap.delete(hash);
-        if ( isExcepted(hash) ) { continue; }
-        out.push(selectorList);
+        if ( genericExceptionSieve.has(hash) ) {
+            applyExceptions(selectorList, out);
+        } else {
+            out.push(selectorList);
+        }
     }
 };
 
-const isExcepted = hash => {
-    const hostnames = genericExceptionMap.get(hash);
-    if ( hostnames === undefined ) { return; }
-    const hasEntities = hostnames.includes('.*');
-    return self.isolatedAPI.forEachHostname((hostname) => {
-        if ( hostnames.includes(` ${hostname} `) ) { return true; }
-    }, { hasEntities });
+const applyExceptions = (selectorList, out) => {
+    const selectors = new Set(selectorList.split(',\n'));
+    self.isolatedAPI.forEachHostname(hostname => {
+        const exceptions = genericExceptionMap.get(hostname);
+        if ( exceptions === undefined ) { return; }
+        for ( const exception of exceptions.split('\n') ) {
+            selectors.delete(exception);
+        }
+        if ( selectors.size === 0 ) { return true; }
+    }, { hasEntities: true });
+    if ( selectors.size === 0 ) { return; }
+    out.push(Array.from(selectors).join(',\n'));
 }
 
 /******************************************************************************/
