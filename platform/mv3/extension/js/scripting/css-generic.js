@@ -26,9 +26,11 @@
 (function uBOL_cssGeneric() {
 
 const genericSelectorMap = self.genericSelectorMap || new Map();
-delete self.genericSelectorMap;
-
+self.genericSelectorMap = undefined;
 if ( genericSelectorMap.size === 0 ) { return; }
+
+const genericExceptionMap = self.genericExceptionMap || new Map();
+self.genericExceptionMap = undefined;
 
 /******************************************************************************/
 
@@ -76,6 +78,7 @@ const uBOL_idFromNode = (node, out) => {
     const selectorList = genericSelectorMap.get(hash);
     if ( selectorList === undefined ) { return; }
     genericSelectorMap.delete(hash);
+    if ( isExcepted(hash) ) { return; }
     out.push(selectorList);
 };
 
@@ -96,9 +99,19 @@ const uBOL_classesFromNode = (node, out) => {
         const selectorList = genericSelectorMap.get(hash);
         if ( selectorList === undefined ) { continue; }
         genericSelectorMap.delete(hash);
+        if ( isExcepted(hash) ) { continue; }
         out.push(selectorList);
     }
 };
+
+const isExcepted = hash => {
+    const hostnames = genericExceptionMap.get(hash);
+    if ( hostnames === undefined ) { return; }
+    const hasEntities = hostnames.includes('.*');
+    return self.isolatedAPI.forEachHostname((hostname) => {
+        if ( hostnames.includes(` ${hostname} `) ) { return true; }
+    }, { hasEntities });
+}
 
 /******************************************************************************/
 
@@ -191,8 +204,22 @@ const uBOL_injectCSS = (css, count = 10) => {
     chrome.runtime.sendMessage({ what: 'insertCSS', css }).catch(( ) => {
         count -= 1;
         if ( count === 0 ) { return; }
-        uBOL_injectCSS(css, count - 1);
+        uBOL_injectCSS(css, count);
     });
+};
+
+/******************************************************************************/
+
+const stopAll = reason => {
+    if ( domChangeTimer !== undefined ) {
+        self.clearTimeout(domChangeTimer);
+        domChangeTimer = undefined;
+    }
+    domMutationObserver.disconnect();
+    domMutationObserver.takeRecords();
+    domMutationObserver = undefined;
+    genericSelectorMap.clear();
+    console.info(`uBOL: Generic cosmetic filtering stopped because ${reason}`);
 };
 
 /******************************************************************************/
@@ -216,20 +243,6 @@ const needDomChangeObserver = ( ) => {
 };
 
 needDomChangeObserver();
-
-/******************************************************************************/
-
-const stopAll = reason => {
-    if ( domChangeTimer !== undefined ) {
-        self.clearTimeout(domChangeTimer);
-        domChangeTimer = undefined;
-    }
-    domMutationObserver.disconnect();
-    domMutationObserver.takeRecords();
-    domMutationObserver = undefined;
-    genericSelectorMap.clear();
-    console.info(`uBOL: Generic cosmetic filtering stopped because ${reason}`);
-};
 
 /******************************************************************************/
 

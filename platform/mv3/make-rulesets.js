@@ -675,36 +675,69 @@ function loadAllSourceScriptlets() {
 
 /******************************************************************************/
 
-async function processGenericCosmeticFilters(assetDetails, bucketsMap, exceptionSet) {
-    if ( bucketsMap === undefined ) { return 0; }
-    if ( exceptionSet ) {
-        for ( const [ hash, selectors ] of bucketsMap ) {
-            let i = selectors.length;
-            while ( i-- ) {
-                const selector = selectors[i];
-                if ( exceptionSet.has(selector) === false ) { continue; }
-                selectors.splice(i, 1);
-                //log(`\tRemoving excepted generic filter ##${selector}`);
-            }
-            if ( selectors.length === 0 ) {
-                bucketsMap.delete(hash);
+// http://www.cse.yorku.ca/~oz/hash.html#djb2
+//   Must mirror content script surveyor's version
+
+async function processGenericCosmeticFilters(
+    assetDetails,
+    selectorList,
+    exceptionList,
+    declarativeMap
+) {
+    const exceptionSet = new Set(
+        exceptionList &&
+        exceptionList.filter(a => a.key !== undefined).map(a => a.selector)
+    );
+
+    const genericSelectorMap = new Map();
+    if ( selectorList ) {
+        for ( const { key, selector } of selectorList ) {
+            if ( key === undefined ) { continue; }
+            if ( exceptionSet.has(selector) ) { continue; }
+            const type = key.charCodeAt(0);
+            const hash = hashFromStr(type, key.slice(1));
+            const selectors = genericSelectorMap.get(hash);
+            if ( selectors === undefined ) {
+                genericSelectorMap.set(hash, selector)
+            } else {
+                genericSelectorMap.set(hash, `${selectors},${selector}`)
             }
         }
     }
-    if ( bucketsMap.size === 0 ) { return 0; }
-    const bucketsList = Array.from(bucketsMap);
-    const count = bucketsList.reduce((a, v) => a += v[1].length, 0);
-    if ( count === 0 ) { return 0; }
-    const selectorLists = bucketsList.map(v => [ v[0], v[1].join(',') ]);
-    const originalScriptletMap = await loadAllSourceScriptlets();
 
+    // Specific exceptions
+    const genericExceptionMap = new Map();
+    if ( declarativeMap ) {
+        for ( const details of declarativeMap.values() ) {
+            if ( details.rejected ) { continue; }
+            if ( details.key === undefined ) { continue; }
+            if ( details.matches !== undefined ) { continue; }
+            if ( details.excludeMatches === undefined ) { continue; }
+            const type = details.key.charCodeAt(0);
+            const hash = hashFromStr(type, details.key.slice(1));
+            const hostnames = genericExceptionMap.get(hash) ?? '';
+            genericExceptionMap.set(hash,
+                `${hostnames} ${details.excludeMatches.join(' ')} `
+            );
+        }
+    }
+
+    if ( genericSelectorMap.size === 0 ) {
+        if ( genericExceptionMap.size === 0 ) { return 0; }
+    }
+
+    const originalScriptletMap = await loadAllSourceScriptlets();
     let patchedScriptlet = originalScriptletMap.get('css-generic').replace(
         '$rulesetId$',
         assetDetails.id
     );
     patchedScriptlet = safeReplace(patchedScriptlet,
         /\bself\.\$genericSelectorMap\$/,
-        `${JSON.stringify(selectorLists, scriptletJsonReplacer)}`
+        `${JSON.stringify(genericSelectorMap, scriptletJsonReplacer)}`
+    );
+    patchedScriptlet = safeReplace(patchedScriptlet,
+        /\bself\.\$genericExceptionMap\$/,
+        `${JSON.stringify(genericExceptionMap, scriptletJsonReplacer)}`
     );
 
     writeFile(
@@ -712,24 +745,49 @@ async function processGenericCosmeticFilters(assetDetails, bucketsMap, exception
         patchedScriptlet
     );
 
-    log(`CSS-generic: ${count} plain CSS selectors`);
+    log(`CSS-generic: ${genericSelectorMap.size} plain CSS selectors`);
+    log(`CSS-generic: ${genericExceptionMap.size} specific CSS exceptions`);
 
-    return count;
+    return genericSelectorMap.size + genericExceptionMap.size;
 }
+
+const hashFromStr = (type, s) => {
+    const len = s.length;
+    const step = len + 7 >>> 3;
+    let hash = (type << 5) + type ^ len;
+    for ( let i = 0; i < len; i += step ) {
+        hash = (hash << 5) + hash ^ s.charCodeAt(i);
+    }
+    return hash & 0xFFFFFF;
+};
 
 /******************************************************************************/
 
-async function processGenericHighCosmeticFilters(assetDetails, selectorSet, exceptionSet) {
-    if ( selectorSet === undefined ) { return 0; }
-    if ( exceptionSet ) {
-        for ( const selector of selectorSet ) {
-            if ( exceptionSet.has(selector) === false ) { continue; }
-            selectorSet.delete(selector);
-            //log(`\tRemoving excepted generic filter ##${selector}`);
+async function processGenericHighCosmeticFilters(
+    assetDetails,
+    genericSelectorList,
+    genericExceptionList
+) {
+    if ( genericSelectorList === undefined ) { return 0; }
+    const genericSelectorSet = new Set(
+        genericSelectorList
+            .filter(a => a.key === undefined)
+            .map(a => a.selector)
+    );
+    if ( genericExceptionList ) {
+        const genericExceptionSet = new Set(
+            genericExceptionList
+                .filter(a => a.key === undefined)
+                .map(a => a.selector)
+        );
+        for ( const selector of genericExceptionSet ) {
+            if ( genericSelectorSet.has(selector) === false ) { continue; }
+            genericSelectorSet.delete(selector);
+            log(`\tRemoving excepted highly generic filter ##${selector}`);
         }
     }
-    if ( selectorSet.size === 0 ) { return 0; }
-    const selectorLists = Array.from(selectorSet).sort().join(',\n');
+    if ( genericSelectorSet.size === 0 ) { return 0; }
+    const selectorLists = Array.from(genericSelectorSet).sort().join(',\n');
     const originalScriptletMap = await loadAllSourceScriptlets();
 
     let patchedScriptlet = originalScriptletMap.get('css-generichigh').replace(
@@ -746,9 +804,9 @@ async function processGenericHighCosmeticFilters(assetDetails, selectorSet, exce
         patchedScriptlet
     );
 
-    log(`CSS-generic-high: ${selectorSet.size} plain CSS selectors`);
+    log(`CSS-generic-high: ${genericSelectorSet.size} plain CSS selectors`);
 
-    return selectorSet.size;
+    return genericSelectorSet.size;
 }
 
 /******************************************************************************/
@@ -846,22 +904,33 @@ const scriptletJsonReplacer = (k, v) => {
 /******************************************************************************/
 
 function argsMap2List(argsMap, hostnamesMap) {
-    const argsList = [];
+    const argsList = [ '' ];
     const indexMap = new Map();
     for ( const [ id, details ] of argsMap ) {
         indexMap.set(id, argsList.length);
         argsList.push(details);
     }
+    const argsSeqs = [ 0 ];
+    const argsSeqsIndices = new Map();
     for ( const [ hn, ids ] of hostnamesMap ) {
+        const seqKey = JSON.stringify(ids);
+        if ( argsSeqsIndices.has(seqKey) ) {
+            hostnamesMap.set(hn, argsSeqsIndices.get(seqKey));
+            continue;
+        }
+        const seqIndex = argsSeqs.length;
+        argsSeqsIndices.set(seqKey, seqIndex);
+        hostnamesMap.set(hn, seqIndex);
         if ( typeof ids === 'number' ) {
-            hostnamesMap.set(hn, indexMap.get(ids));
+            argsSeqs.push(indexMap.get(ids));
             continue;
         }
         for ( let i = 0; i < ids.length; i++ ) {
-            ids[i] = indexMap.get(ids[i]);
+            argsSeqs.push(-indexMap.get(ids[i]));
         }
+        argsSeqs[argsSeqs.length-1] = -argsSeqs[argsSeqs.length-1];
     }
-    return argsList;
+    return { argsList, argsSeqs };
 }
 
 /******************************************************************************/
@@ -885,38 +954,21 @@ async function processCosmeticFilters(assetDetails, mapin) {
 
     const argsMap = domainBasedEntries.map(entry => [
         entry[0],
-        {
-            a: entry[1].a ? entry[1].a.join(',\n') : undefined,
-            n: entry[1].n
-        }
+        entry[1].a ? entry[1].a.join('\n') : undefined,
     ]);
     const hostnamesMap = new Map();
+    let hasEntities = false;
     for ( const [ id, details ] of domainBasedEntries ) {
-        if ( details.y === undefined ) { continue; }
-        scriptletHostnameToIdMap(details.y, id, hostnamesMap);
-    }
-    const argsList = argsMap2List(argsMap, hostnamesMap);
-    const entitiesMap = new Map();
-    for ( const [ hn, details ] of hostnamesMap ) {
-        if ( hn.endsWith('.*') === false ) { continue; }
-        hostnamesMap.delete(hn);
-        entitiesMap.set(hn.slice(0, -2), details);
-    }
-
-    // Extract exceptions from argsList, simplify argsList entries
-    const exceptionsMap = new Map();
-    for ( let i = 0; i < argsList.length; i++ ) {
-        const details = argsList[i];
-        if ( details.n ) {
-            for ( const hn of details.n ) {
-                if ( exceptionsMap.has(hn) === false ) {
-                    exceptionsMap.set(hn, []);
-                }
-                exceptionsMap.get(hn).push(i);
-            }
+        if ( details.y ) {
+            scriptletHostnameToIdMap(details.y, id, hostnamesMap);
+            hasEntities ||= details.y.some(a => a.endsWith('.*'));
         }
-        argsList[i] = details.a;
+        if ( details.n ) {
+            scriptletHostnameToIdMap(details.n.map(a => `~${a}`), id, hostnamesMap);
+            hasEntities ||= details.n.some(a => a.endsWith('.*'));
+        }
     }
+    const { argsList, argsSeqs } = argsMap2List(argsMap, hostnamesMap);
 
     const originalScriptletMap = await loadAllSourceScriptlets();
     let patchedScriptlet = originalScriptletMap.get('css-specific').replace(
@@ -928,16 +980,16 @@ async function processCosmeticFilters(assetDetails, mapin) {
         `${JSON.stringify(argsList, scriptletJsonReplacer)}`
     );
     patchedScriptlet = safeReplace(patchedScriptlet,
+        /\bself\.\$argsSeqs\$/,
+        `${JSON.stringify(argsSeqs, scriptletJsonReplacer)}`
+    );
+    patchedScriptlet = safeReplace(patchedScriptlet,
         /\bself\.\$hostnamesMap\$/,
         `${JSON.stringify(hostnamesMap, scriptletJsonReplacer)}`
     );
     patchedScriptlet = safeReplace(patchedScriptlet,
-        /\bself\.\$entitiesMap\$/,
-        `${JSON.stringify(entitiesMap, scriptletJsonReplacer)}`
-    );
-    patchedScriptlet = safeReplace(patchedScriptlet,
-        /\bself\.\$exceptionsMap\$/,
-        `${JSON.stringify(exceptionsMap, scriptletJsonReplacer)}`
+        'self.$hasEntities$',
+        JSON.stringify(hasEntities)
     );
     writeFile(`${scriptletDir}/specific/${assetDetails.id}.js`, patchedScriptlet);
     generatedFiles.push(`${assetDetails.id}`);
@@ -945,10 +997,9 @@ async function processCosmeticFilters(assetDetails, mapin) {
     if ( generatedFiles.length !== 0 ) {
         log(`CSS-specific: ${mapin.size} distinct filters`);
         log(`\tCombined into ${hostnamesMap.size} distinct hostnames`);
-        log(`\tCombined into ${entitiesMap.size} distinct entities`);
     }
 
-    return hostnamesMap.size + entitiesMap.size;
+    return hostnamesMap.size;
 }
 
 /******************************************************************************/
@@ -973,38 +1024,21 @@ async function processDeclarativeCosmeticFilters(assetDetails, mapin) {
 
     const argsMap = contentArray.map(entry => [
         entry[0],
-        {
-            a: entry[1].a,
-            n: entry[1].n,
-        }
+        entry[1].a ? entry[1].a.join('\n') : undefined,
     ]);
     const hostnamesMap = new Map();
+    let hasEntities = false;
     for ( const [ id, details ] of contentArray ) {
-        if ( details.y === undefined ) { continue; }
-        scriptletHostnameToIdMap(details.y, id, hostnamesMap);
-    }
-    const argsList = argsMap2List(argsMap, hostnamesMap);
-    const entitiesMap = new Map();
-    for ( const [ hn, details ] of hostnamesMap ) {
-        if ( hn.endsWith('.*') === false ) { continue; }
-        hostnamesMap.delete(hn);
-        entitiesMap.set(hn.slice(0, -2), details);
-    }
-
-    // Extract exceptions from argsList, simplify argsList entries
-    const exceptionsMap = new Map();
-    for ( let i = 0; i < argsList.length; i++ ) {
-        const details = argsList[i];
-        if ( details.n ) {
-            for ( const hn of details.n ) {
-                if ( exceptionsMap.has(hn) === false ) {
-                    exceptionsMap.set(hn, []);
-                }
-                exceptionsMap.get(hn).push(i);
-            }
+        if ( details.y ) {
+            scriptletHostnameToIdMap(details.y, id, hostnamesMap);
+            hasEntities ||= details.y.some(a => a.endsWith('.*'));
         }
-        argsList[i] = details.a;
+        if ( details.n ) {
+            scriptletHostnameToIdMap(details.n.map(a => `~${a}`), id, hostnamesMap);
+            hasEntities ||= details.n.some(a => a.endsWith('.*'));
+        }
     }
+    const { argsList, argsSeqs } = argsMap2List(argsMap, hostnamesMap);
 
     const originalScriptletMap = await loadAllSourceScriptlets();
     let patchedScriptlet = originalScriptletMap.get('css-declarative').replace(
@@ -1016,26 +1050,25 @@ async function processDeclarativeCosmeticFilters(assetDetails, mapin) {
         `${JSON.stringify(argsList, scriptletJsonReplacer)}`
     );
     patchedScriptlet = safeReplace(patchedScriptlet,
+        /\bself\.\$argsSeqs\$/,
+        `${JSON.stringify(argsSeqs, scriptletJsonReplacer)}`
+    );
+    patchedScriptlet = safeReplace(patchedScriptlet,
         /\bself\.\$hostnamesMap\$/,
         `${JSON.stringify(hostnamesMap, scriptletJsonReplacer)}`
     );
     patchedScriptlet = safeReplace(patchedScriptlet,
-        /\bself\.\$entitiesMap\$/,
-        `${JSON.stringify(entitiesMap, scriptletJsonReplacer)}`
-    );
-    patchedScriptlet = safeReplace(patchedScriptlet,
-        /\bself\.\$exceptionsMap\$/,
-        `${JSON.stringify(exceptionsMap, scriptletJsonReplacer)}`
+        'self.$hasEntities$',
+        JSON.stringify(hasEntities)
     );
     writeFile(`${scriptletDir}/declarative/${assetDetails.id}.js`, patchedScriptlet);
 
     if ( contentArray.length !== 0 ) {
         log(`CSS-declarative: ${declaratives.size} distinct filters`);
         log(`\tCombined into ${hostnamesMap.size} distinct hostnames`);
-        log(`\tCombined into ${entitiesMap.size} distinct entities`);
     }
 
-    return hostnamesMap.size + entitiesMap.size;
+    return hostnamesMap.size;
 }
 
 /******************************************************************************/
@@ -1059,39 +1092,21 @@ async function processProceduralCosmeticFilters(assetDetails, mapin) {
 
     const argsMap = contentArray.map(entry => [
         entry[0],
-        {
-            a: entry[1].a,
-            n: entry[1].n,
-        }
+        entry[1].a,
     ]);
     const hostnamesMap = new Map();
+    let hasEntities = false;
     for ( const [ id, details ] of contentArray ) {
-        if ( details.y === undefined ) { continue; }
-        scriptletHostnameToIdMap(details.y, id, hostnamesMap);
-    }
-    const argsList = argsMap2List(argsMap, hostnamesMap);
-    const entitiesMap = new Map();
-    for ( const [ hn, details ] of hostnamesMap ) {
-        if ( hn.endsWith('.*') === false ) { continue; }
-        hostnamesMap.delete(hn);
-        entitiesMap.set(hn.slice(0, -2), details);
-    }
-
-    // Extract exceptions from argsList, simplify argsList entries
-    const exceptionsMap = new Map();
-    for ( let i = 0; i < argsList.length; i++ ) {
-        const details = argsList[i];
-        if ( details.n ) {
-            for ( const hn of details.n ) {
-                if ( exceptionsMap.has(hn) === false ) {
-                    exceptionsMap.set(hn, []);
-                }
-                exceptionsMap.get(hn).push(i);
-            }
+        if ( details.y ) {
+            scriptletHostnameToIdMap(details.y, id, hostnamesMap);
+            hasEntities ||= details.y.some(a => a.endsWith('.*'));
         }
-        argsList[i] = details.a;
+        if ( details.n ) {
+            scriptletHostnameToIdMap(details.n.map(a => `~${a}`), id, hostnamesMap);
+            hasEntities ||= details.n.some(a => a.endsWith('.*'));
+        }
     }
-
+    const { argsList, argsSeqs } = argsMap2List(argsMap, hostnamesMap);
     const originalScriptletMap = await loadAllSourceScriptlets();
     let patchedScriptlet = originalScriptletMap.get('css-procedural').replace(
         '$rulesetId$',
@@ -1102,26 +1117,25 @@ async function processProceduralCosmeticFilters(assetDetails, mapin) {
         `${JSON.stringify(argsList, scriptletJsonReplacer)}`
     );
     patchedScriptlet = safeReplace(patchedScriptlet,
+        /\bself\.\$argsSeqs\$/,
+        `${JSON.stringify(argsSeqs, scriptletJsonReplacer)}`
+    );
+    patchedScriptlet = safeReplace(patchedScriptlet,
         /\bself\.\$hostnamesMap\$/,
         `${JSON.stringify(hostnamesMap, scriptletJsonReplacer)}`
     );
     patchedScriptlet = safeReplace(patchedScriptlet,
-        /\bself\.\$entitiesMap\$/,
-        `${JSON.stringify(entitiesMap, scriptletJsonReplacer)}`
-    );
-    patchedScriptlet = safeReplace(patchedScriptlet,
-        /\bself\.\$exceptionsMap\$/,
-        `${JSON.stringify(exceptionsMap, scriptletJsonReplacer)}`
+        'self.$hasEntities$',
+        JSON.stringify(hasEntities)
     );
     writeFile(`${scriptletDir}/procedural/${assetDetails.id}.js`, patchedScriptlet);
 
     if ( contentArray.length !== 0 ) {
         log(`Procedural-related distinct filters: ${procedurals.size} distinct combined selectors`);
         log(`\tCombined into ${hostnamesMap.size} distinct hostnames`);
-        log(`\tCombined into ${entitiesMap.size} distinct entities`);
     }
 
-    return hostnamesMap.size + entitiesMap.size;
+    return hostnamesMap.size;
 }
 
 /******************************************************************************/
@@ -1233,13 +1247,14 @@ async function rulesetFromURLs(assetDetails) {
 
     const genericCosmeticStats = await processGenericCosmeticFilters(
         assetDetails,
-        results.genericCosmetic,
-        results.genericCosmeticExceptions
+        results.genericCosmeticFilters,
+        results.genericCosmeticExceptions,
+        declarativeCosmetic
     );
     const genericHighCosmeticStats = await processGenericHighCosmeticFilters(
         assetDetails,
-        results.genericHighCosmetic,
-        results.genericCosmeticExceptions
+        results.genericCosmeticFilters,
+        results.genericCosmeticExceptions,
     );
     const specificCosmeticStats = await processCosmeticFilters(
         assetDetails,

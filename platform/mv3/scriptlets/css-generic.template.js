@@ -27,26 +27,39 @@
 
 /******************************************************************************/
 
-const toImport = self.$genericSelectorMap$;
+const selectorsToImport = self.$genericSelectorMap$;
+const exceptionsToImport = self.$genericExceptionMap$;
 
-const genericSelectorMap = self.genericSelectorMap || new Map();
+if ( selectorsToImport ) {
+    const map = self.genericSelectorMap =
+        self.genericSelectorMap || new Map();
 
-if ( genericSelectorMap.size === 0 ) {
-    self.genericSelectorMap = new Map(toImport);
-    return;
+    if ( map.size !== 0 ) {
+        for ( const entry of selectorsToImport ) {
+            const before = map.get(entry[0]);
+            map.set(entry[0],
+                before === undefined ? entry[1] : `${before},${entry[1]}`
+            );
+        }
+    } else {
+        self.genericSelectorMap = new Map(selectorsToImport);
+    }
+    selectorsToImport.length = 0;
 }
 
-for ( const toImportEntry of toImport ) {
-    const existing = genericSelectorMap.get(toImportEntry[0]);
-    genericSelectorMap.set(
-        toImportEntry[0],
-        existing === undefined
-            ? toImportEntry[1]
-            : `${existing},${toImportEntry[1]}`
-    );
-}
+if ( exceptionsToImport ) {
+    const map = self.genericExceptionMap =
+        self.genericExceptionMap || new Map();
 
-self.genericSelectorMap = genericSelectorMap;
+    if ( map.size !== 0 ) {
+        for ( const entry of exceptionsToImport ) {
+            map.set(entry[0], `${map.get(entry[0]) || ''}${entry[1]}`);
+        }
+    } else {
+        self.genericExceptionMap = new Map(exceptionsToImport);
+    }
+    exceptionsToImport.length = 0;
+}
 
 /******************************************************************************/
 

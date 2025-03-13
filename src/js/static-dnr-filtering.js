@@ -31,19 +31,6 @@ import staticNetFilteringEngine from './static-net-filtering.js';
 
 /******************************************************************************/
 
-// http://www.cse.yorku.ca/~oz/hash.html#djb2
-//   Must mirror content script surveyor's version
-
-const hashFromStr = (type, s) => {
-    const len = s.length;
-    const step = len + 7 >>> 3;
-    let hash = (type << 5) + type ^ len;
-    for ( let i = 0; i < len; i += step ) {
-        hash = (hash << 5) + hash ^ s.charCodeAt(i);
-    }
-    return hash & 0xFFFFFF;
-};
-
 const isRegex = hn => hn.startsWith('/') && hn.endsWith('/');
 
 /******************************************************************************/
@@ -93,32 +80,19 @@ const keyFromSelector = selector => {
 function addGenericCosmeticFilter(context, selector, isException) {
     if ( selector === undefined ) { return; }
     if ( selector.length <= 1 ) { return; }
-    if ( isException ) {
-        if ( context.genericCosmeticExceptions === undefined ) {
-            context.genericCosmeticExceptions = new Set();
-        }
-        context.genericCosmeticExceptions.add(selector);
-        return;
-    }
     if ( selector.charCodeAt(0) === 0x7B /* '{' */ ) { return; }
     const key = keyFromSelector(selector);
-    if ( key === undefined ) {
-        if ( context.genericHighCosmeticFilters === undefined ) {
-            context.genericHighCosmeticFilters = new Set();
+    if ( isException ) {
+        if ( context.genericCosmeticExceptions === undefined ) {
+            context.genericCosmeticExceptions = [];
         }
-        context.genericHighCosmeticFilters.add(selector);
+        context.genericCosmeticExceptions.push({ key, selector });
         return;
     }
-    const type = key.charCodeAt(0);
-    const hash = hashFromStr(type, key.slice(1));
     if ( context.genericCosmeticFilters === undefined ) {
-        context.genericCosmeticFilters = new Map();
+        context.genericCosmeticFilters = [];
     }
-    let bucket = context.genericCosmeticFilters.get(hash);
-    if ( bucket === undefined ) {
-        context.genericCosmeticFilters.set(hash, bucket = []);
-    }
-    bucket.push(selector);
+    context.genericCosmeticFilters.push({ key, selector });
 }
 
 /******************************************************************************/
@@ -255,7 +229,10 @@ function addExtendedToDNR(context, parser) {
         if ( details === undefined ) {
             context.specificCosmeticFilters.set(compiled, details = {});
         }
-        if ( exception ) {
+        if ( compiled.startsWith('{') === false ) {
+            details.key = keyFromSelector(compiled);
+        }
+        if ( exception || not ) {
             if ( details.excludeMatches === undefined ) {
                 details.excludeMatches = [];
             }
@@ -497,8 +474,7 @@ async function dnrRulesetFromRawLists(lists, options = {}) {
     await Promise.all(toLoad);
     const result = {
         network: staticNetFilteringEngine.dnrFromCompiled('end', context),
-        genericCosmetic: context.genericCosmeticFilters,
-        genericHighCosmetic: context.genericHighCosmeticFilters,
+        genericCosmeticFilters: context.genericCosmeticFilters,
         genericCosmeticExceptions: context.genericCosmeticExceptions,
         specificCosmetic: context.specificCosmeticFilters,
         scriptlet: context.scriptletFilters,

@@ -179,6 +179,7 @@ function registerGeneric(context, genericDetails) {
 
     if ( js.length === 0 ) { return; }
 
+    js.unshift('/js/scripting/isolated-api.js');
     js.push('/js/scripting/css-generic.js');
 
     const { none, basic, optimal, complete } = filteringModeDetails;
@@ -252,6 +253,7 @@ function registerProcedural(context) {
     ];
     if ( matches.length === 0 ) { return; }
 
+    js.unshift('/js/scripting/isolated-api.js');
     js.push('/js/scripting/css-procedural.js');
 
     const excludeMatches = [];
@@ -311,6 +313,7 @@ function registerDeclarative(context) {
     ];
     if ( matches.length === 0 ) { return; }
 
+    js.unshift('/js/scripting/isolated-api.js');
     js.push('/js/scripting/css-declarative.js');
 
     const excludeMatches = [];
@@ -370,6 +373,7 @@ function registerSpecific(context) {
     ];
     if ( matches.length === 0 ) { return; }
 
+    js.unshift('/js/scripting/isolated-api.js');
     js.push('/js/scripting/css-specific.js');
 
     const excludeMatches = [];

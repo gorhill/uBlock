@@ -28,15 +28,12 @@
 /******************************************************************************/
 
 const argsList = self.$argsList$;
-
+const argsSeqs = self.$argsSeqs$;
 const hostnamesMap = new Map(self.$hostnamesMap$);
-
-const entitiesMap = new Map(self.$entitiesMap$);
-
-const exceptionsMap = new Map(self.$exceptionsMap$);
+const hasEntities = self.$hasEntities$;
 
 self.specificImports = self.specificImports || [];
-self.specificImports.push({ argsList, hostnamesMap, entitiesMap, exceptionsMap });
+self.specificImports.push({ argsList, argsSeqs, hostnamesMap, hasEntities });
 
 /******************************************************************************/
 
