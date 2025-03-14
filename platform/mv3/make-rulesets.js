@@ -1501,9 +1501,6 @@ async function main() {
         urls: [ 'https://ublockorigin.github.io/uBOL-home/tests/test-filters.txt' ],
         homeURL: 'https://ublockorigin.github.io/uBOL-home/tests/test-filters.html',
         filters: [
-            '###gcf #gcf1 .fail',
-            '###gcf #gcf2 .fail',
-            'ublockorigin.github.io,localhost#@##gcf #gcf2 .fail',
         ],
     });
 
