@@ -1,3 +1,4 @@
+- [Disable obsolete cache-control workaround for Firefox](https://github.com/gorhill/uBlock/commit/34cea70924)
 - [Improve `overlay-buster` scriptlet](https://github.com/gorhill/uBlock/commit/fc231998b9)
 - [Add ability to inject scriptlets according to origin of ancestor contexts](https://github.com/gorhill/uBlock/commit/a483f7955f)
 - [Fix range parser in prevent-setTimeout scriptlet](https://github.com/gorhill/uBlock/commit/e636c32f2a)
