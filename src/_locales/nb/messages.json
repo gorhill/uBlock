@@ -900,11 +900,11 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Opprett ny rapport",
+    "message": "Opprett ny rapport på GitHub",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Finn lignende rapporter",
+    "message": "Finn lignende rapporter på GitHub",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -964,7 +964,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "For å unngå å belaste frivillige med duplikate rapporter, kontroller at problemet ikke allerede er rapportert.",
+    "message": "For å unngå å belaste de frivillige med dobbeltrapporter, må du kontrollere at problemet ikke allerede har blitt rapportert. <b>Noter:</b> ved å klikke på knappen vil sidens opprinnelse bli sendt til GitHub.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {

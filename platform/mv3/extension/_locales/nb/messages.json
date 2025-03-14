@@ -136,7 +136,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Har overlegg eller andre ulemper",
+    "message": "Har overlegg eller andre plager",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
@@ -148,7 +148,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Feilfunksjoner når uBO Lite er aktivert",
+    "message": "Fungerer ikke når uBO Lite er aktivert",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
@@ -212,7 +212,7 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "Liste over vertsnavn der ingen filtrering vil finne sted",
+    "message": "Liste over nettsider der ingen filtrering vil finne sted.",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
