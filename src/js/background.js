@@ -53,7 +53,7 @@ const hiddenSettingsDefault = {
     cacheStorageCompression: true,
     cacheStorageCompressionThreshold: 65536,
     cacheStorageMultithread: 2,
-    cacheControlForFirefox1376932: 'no-cache, no-store, must-revalidate',
+    cacheControlForFirefox1376932: 'unset',
     cloudStorageCompression: true,
     cnameIgnoreList: 'unset',
     cnameIgnore1stParty: true,
