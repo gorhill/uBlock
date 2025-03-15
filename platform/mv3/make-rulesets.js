@@ -1500,8 +1500,8 @@ async function main() {
         trusted: true,
         urls: [ 'https://ublockorigin.github.io/uBOL-home/tests/test-filters.txt' ],
         homeURL: 'https://ublockorigin.github.io/uBOL-home/tests/test-filters.html',
-        filters: [
-        ],
+        filters: [`
+        `],
     });
 
     // Regional rulesets
