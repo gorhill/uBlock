@@ -495,10 +495,11 @@ function registerScriptlet(context, scriptletDetails) {
 
 /******************************************************************************/
 
-async function registerInjectables(origins) {
-    void origins;
-
+async function registerInjectables() {
     if ( browser.scripting === undefined ) { return false; }
+
+    if ( registerInjectables.barrier ) { return true; }
+    registerInjectables.barrier = true;
 
     const [
         filteringModeDetails,
@@ -547,6 +548,8 @@ async function registerInjectables(origins) {
         await browser.scripting.registerContentScripts(toAdd)
             .catch(reason => { console.info(reason); });
     }
+
+    registerInjectables.barrier = false;
 
     return true;
 }
