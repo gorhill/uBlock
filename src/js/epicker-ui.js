@@ -331,7 +331,7 @@ const onSvgClicked = function(ev) {
             mx: ev.clientX,
             my: ev.clientY,
             options: {
-                stay: ev.shiftKey || ev.type === 'touch',
+                stay: true,
                 highlight: ev.target !== svgIslands,
             },
         });
@@ -822,6 +822,8 @@ const startPicker = function() {
 
     unpausePicker();
 
+    $id('quit').addEventListener('click', onQuitClicked);
+
     if ( pickerRoot.classList.contains('zap') ) { return; }
 
     cmEditor.on('changes', onCandidateChanged);
@@ -837,7 +839,6 @@ const startPicker = function() {
             dom.cl.toggle(pickerRoot, 'minimized');
         }
     });
-    $id('quit').addEventListener('click', onQuitClicked);
     $id('move').addEventListener('mousedown', onStartMoving);
     $id('move').addEventListener('touchstart', onStartMoving);
     $id('candidateFilters').addEventListener('click', onCandidateClicked);

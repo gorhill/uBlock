@@ -16,7 +16,7 @@ html#ublock0-epicker,
     border: 1px solid var(--border-2);
     box-sizing: border-box;
     cursor: default;
-    display: none;
+    display: flex;
     flex-direction: column;
     max-width: min(32rem, 100vw - 4px);
     min-width: min(24rem, 100vw - 4px);
@@ -25,8 +25,18 @@ html#ublock0-epicker,
     width: min(32rem, 100vw - 4px);
     z-index: 100;
 }
-#ublock0-epicker:not(.zap) aside {
-    display: flex;
+#ublock0-epicker.zap aside {
+    min-width: unset !important;
+    width: unset !important;
+}
+#ublock0-epicker.zap aside > section,
+#ublock0-epicker.zap aside > ul,
+#ublock0-epicker.zap aside > #windowbar > div:not(#quit) {
+    display: none;
+}
+#ublock0-epicker.zap aside > #windowbar > #quit {
+    height: 2.5em;
+    width: 2.5em;
 }
 #ublock0-epicker:not(.paused) aside,
 #ublock0-epicker.minimized aside {
