@@ -1,3 +1,4 @@
+- [Improve `prevent-set[Timeout|Interval]` scriptlets](https://github.com/gorhill/uBlock/commit/d36ea89a02)
 - [Add quit button to element zapper mode](https://github.com/gorhill/uBlock/commit/4aebdbb0a9)
 - [Improve `trusted-override-element-method` scriptlet](https://github.com/gorhill/uBlock/commit/9e946ce0c3)
 - [Disable obsolete cache-control workaround for Firefox](https://github.com/gorhill/uBlock/commit/34cea70924)
