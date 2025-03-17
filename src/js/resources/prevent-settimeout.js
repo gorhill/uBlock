@@ -95,8 +95,8 @@ export function preventSetTimeout(
     proxyApplyFn('setTimeout', function(context) {
         const { callArgs } = context;
         const a = callArgs[0] instanceof Function
-            ? String(safe.Function_toString(callArgs[0]))
-            : String(callArgs[0]);
+            ? safe.String(safe.Function_toString(callArgs[0]))
+            : safe.String(callArgs[0]);
         const b = callArgs[1];
         if ( needleRaw === '' && range.unbound() ) {
             safe.uboLog(logPrefix, `Called:\n${a}\n${b}`);
@@ -159,8 +159,8 @@ export function preventSetInterval(
     proxyApplyFn('setInterval', function(context) {
         const { callArgs } = context;
         const a = callArgs[0] instanceof Function
-            ? String(safe.Function_toString(callArgs[0]))
-            : String(callArgs[0]);
+            ? safe.String(safe.Function_toString(callArgs[0]))
+            : safe.String(callArgs[0]);
         const b = callArgs[1];
         if ( needleRaw === '' && range.unbound() ) {
             safe.uboLog(logPrefix, `Called:\n${a}\n${b}`);
@@ -212,8 +212,8 @@ export function preventRequestAnimationFrame(
     proxyApplyFn('requestAnimationFrame', function(context) {
         const { callArgs } = context;
         const a = callArgs[0] instanceof Function
-            ? String(safe.Function_toString(callArgs[0]))
-            : String(callArgs[0]);
+            ? safe.String(safe.Function_toString(callArgs[0]))
+            : safe.String(callArgs[0]);
         if ( needleRaw === '' ) {
             safe.uboLog(logPrefix, `Called:\n${a}`);
         } else if ( reNeedle.test(a) !== needleNot ) {
