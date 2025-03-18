@@ -1245,14 +1245,25 @@ async function rulesetFromURLs(assetDetails) {
         log(rejectedCosmetic.map(line => `\t${line}`).join('\n'), true);
     }
 
+    const genericDetailsForRuleset = {};
     if (
         Array.isArray(results.network.generichideExclusions) &&
         results.network.generichideExclusions.length !== 0
     ) {
-        genericDetails.set(
-            assetDetails.id,
-            results.network.generichideExclusions.filter(hn => hn.endsWith('.*') === false).sort()
-        );
+        genericDetailsForRuleset.unhide = results.network.generichideExclusions
+            .filter(hn => hn.endsWith('.*') === false)
+            .sort();
+    }
+    if (
+        Array.isArray(results.network.generichideInclusions) &&
+        results.network.generichideInclusions.length !== 0
+    ) {
+        genericDetailsForRuleset.hide = results.network.generichideInclusions
+            .filter(hn => hn.endsWith('.*') === false)
+            .sort();
+    }
+    if ( genericDetailsForRuleset.unhide || genericDetailsForRuleset.hide ) {
+        genericDetails.set(assetDetails.id, genericDetailsForRuleset);
     }
 
     const genericCosmeticStats = await processGenericCosmeticFilters(
@@ -1367,8 +1378,8 @@ async function main() {
         ],
         dnrURL: 'https://ublockorigin.github.io/uAssets/dnr/default.json',
         homeURL: 'https://github.com/uBlockOrigin/uAssets',
-        filters: [
-        ],
+        filters: [`
+        `],
     });
 
     await rulesetFromURLs({

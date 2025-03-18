@@ -4511,6 +4511,7 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
 
     // Collect generichide filters
     const generichideExclusions = [];
+    const generichideInclusions = [];
     {
         const bucket = buckets.get(ALLOW_REALM | typeNameToTypeValue['generichide']);
         if ( bucket ) {
@@ -4521,6 +4522,26 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
                         generichideExclusions.push(...rule.condition.initiatorDomains);
                     } else if ( rule.condition.requestDomains ) {
                         generichideExclusions.push(...rule.condition.requestDomains);
+                    }
+                    if ( rule.condition.excludedInitiatorDomains ) {
+                        generichideInclusions.push(...rule.condition.excludedInitiatorDomains);
+                    } else if ( rule.condition.excludedRequestDomains ) {
+                        generichideInclusions.push(...rule.condition.excludedRequestDomains);
+                    }
+                }
+            }
+        }
+    }
+    {
+        const bucket = buckets.get(BLOCKIMPORTANT_REALM | typeNameToTypeValue['generichide']);
+        if ( bucket ) {
+            for ( const rules of bucket.values() ) {
+                for ( const rule of rules ) {
+                    if ( rule.condition === undefined ) { continue; }
+                    if ( rule.condition.initiatorDomains ) {
+                        generichideInclusions.push(...rule.condition.initiatorDomains);
+                    } else if ( rule.condition.requestDomains ) {
+                        generichideInclusions.push(...rule.condition.requestDomains);
                     }
                 }
             }
@@ -4714,6 +4735,7 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
         acceptedFilterCount: context.acceptedFilterCount,
         rejectedFilterCount: context.rejectedFilterCount,
         generichideExclusions: Array.from(new Set(generichideExclusions)),
+        generichideInclusions: Array.from(new Set(generichideInclusions)),
     };
 };
 

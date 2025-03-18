@@ -66,6 +66,15 @@ const arrayEq = (a = [], b = [], sort = true) => {
 
 /******************************************************************************/
 
+const normalizeMatches = matches => {
+    if ( matches.length <= 1 ) { return; }
+    if ( matches.includes('<all_urls>') === false ) { return; }
+    matches.length = 0;
+    matches.push('<all_urls>');
+};
+
+/******************************************************************************/
+
 // The extensions API does not always return exactly what we fed it, so we
 // need to normalize some entries to be sure we properly detect changes when
 // comparing registered entries vs. entries to register.
@@ -93,11 +102,17 @@ function registerHighGeneric(context, genericDetails) {
     const { before, filteringModeDetails, rulesetsDetails } = context;
 
     const excludeHostnames = [];
+    const includeHostnames = [];
     const css = [];
     for ( const details of rulesetsDetails ) {
         const hostnames = genericDetails.get(details.id);
-        if ( hostnames !== undefined ) {
-            excludeHostnames.push(...hostnames);
+        if ( hostnames ) {
+            if ( hostnames.unhide ) {
+                excludeHostnames.push(...hostnames.unhide);
+            }
+            if ( hostnames.hide ) {
+                includeHostnames.push(...hostnames.hide);
+            }
         }
         const count = details.css?.generichigh || 0;
         if ( count === 0 ) { continue; }
@@ -165,12 +180,18 @@ function registerHighGeneric(context, genericDetails) {
 function registerGeneric(context, genericDetails) {
     const { before, filteringModeDetails, rulesetsDetails } = context;
 
-    const excludeHostnames = [];
+    const excludedByFilter = [];
+    const includedByFilter = [];
     const js = [];
     for ( const details of rulesetsDetails ) {
         const hostnames = genericDetails.get(details.id);
-        if ( hostnames !== undefined ) {
-            excludeHostnames.push(...hostnames);
+        if ( hostnames ) {
+            if ( hostnames.unhide ) {
+                excludedByFilter.push(...hostnames.unhide);
+            }
+            if ( hostnames.hide ) {
+                includedByFilter.push(...hostnames.hide);
+            }
         }
         const count = details.css?.generic || 0;
         if ( count === 0 ) { continue; }
@@ -183,53 +204,86 @@ function registerGeneric(context, genericDetails) {
     js.push('/js/scripting/css-generic.js');
 
     const { none, basic, optimal, complete } = filteringModeDetails;
-    const matches = [];
-    const excludeMatches = [];
-    if ( complete.has('all-urls') ) {
-        excludeMatches.push(...ut.matchesFromHostnames(none));
-        excludeMatches.push(...ut.matchesFromHostnames(basic));
-        excludeMatches.push(...ut.matchesFromHostnames(optimal));
-        excludeMatches.push(...ut.matchesFromHostnames(excludeHostnames));
-        matches.push('<all_urls>');
-    } else {
-        matches.push(
+    const includedByMode = [ ...complete ];
+    const excludedByMode = [ ...none, ...basic, ...optimal ];
+
+    if ( complete.has('all-urls') === false ) {
+        const matches = [
             ...ut.matchesFromHostnames(
-                ut.subtractHostnameIters(
-                    Array.from(complete),
-                    excludeHostnames
-                )
-            )
-        );
-    }
-
-    if ( matches.length === 0 ) { return; }
-
-    const registered = before.get('css-generic');
-    before.delete('css-generic'); // Important!
-
-    const directive = {
-        id: 'css-generic',
-        js,
-        allFrames: true,
-        matches,
-        excludeMatches,
-        runAt: 'document_idle',
-    };
-
-    // register
-    if ( registered === undefined ) {
-        context.toAdd.push(directive);
+                ut.subtractHostnameIters(includedByMode, excludedByFilter)
+            ),
+            ...ut.matchesFromHostnames(
+                ut.intersectHostnameIters(includedByMode, includedByFilter)
+            ),
+        ];
+        if ( matches.length === 0 ) { return; }
+        const registered = before.get('css-generic-some');
+        before.delete('css-generic-some'); // Important!
+        const directive = {
+            id: 'css-generic-some',
+            js,
+            allFrames: true,
+            matches,
+            runAt: 'document_idle',
+        };
+        if ( registered === undefined ) { // register
+            context.toAdd.push(directive);
+        } else if ( // update
+            arrayEq(registered.js, js, false) === false ||
+            arrayEq(registered.matches, directive.matches) === false
+        ) {
+            context.toRemove.push('css-generic-some');
+            context.toAdd.push(directive);
+        }
         return;
     }
 
-    // update
-    if (
-        arrayEq(registered.js, js, false) === false ||
-        arrayEq(registered.matches, matches) === false ||
-        arrayEq(registered.excludeMatches, excludeMatches) === false
+    const excludeMatches = [
+        ...ut.matchesFromHostnames(excludedByMode),
+        ...ut.matchesFromHostnames(excludedByFilter),
+    ];
+    const registeredAll = before.get('css-generic-all');
+    before.delete('css-generic-all'); // Important!
+    const directiveAll = {
+        id: 'css-generic-all',
+        js,
+        allFrames: true,
+        matches: [ '<all_urls>' ],
+        excludeMatches,
+        runAt: 'document_idle',
+    };
+    if ( registeredAll === undefined ) { // register
+        context.toAdd.push(directiveAll);
+    } else if ( // update
+        arrayEq(registeredAll.js, js, false) === false ||
+        arrayEq(registeredAll.excludeMatches, directiveAll.excludeMatches) === false
     ) {
-        context.toRemove.push('css-generic');
-        context.toAdd.push(directive);
+        context.toRemove.push('css-generic-all');
+        context.toAdd.push(directiveAll);
+    }
+    const matches = [
+        ...ut.matchesFromHostnames(
+            ut.subtractHostnameIters(includedByFilter, excludedByMode)
+        ),
+    ];
+    if ( matches.length === 0 ) { return; }
+    const registeredSome = before.get('css-generic-some');
+    before.delete('css-generic-some'); // Important!
+    const directiveSome = {
+        id: 'css-generic-some',
+        js,
+        allFrames: true,
+        matches,
+        runAt: 'document_idle',
+    };
+    if ( registeredSome === undefined ) { // register
+        context.toAdd.push(directiveSome);
+    } else if ( // update
+        arrayEq(registeredSome.js, js, false) === false ||
+        arrayEq(registeredSome.matches, directiveSome.matches) === false
+    ) {
+        context.toRemove.push('css-generic-some');
+        context.toAdd.push(directiveSome);
     }
 }
 
@@ -252,6 +306,8 @@ function registerProcedural(context) {
         ...ut.matchesFromHostnames(complete),
     ];
     if ( matches.length === 0 ) { return; }
+
+    normalizeMatches(matches);
 
     js.unshift('/js/scripting/isolated-api.js');
     js.push('/js/scripting/css-procedural.js');
@@ -313,6 +369,8 @@ function registerDeclarative(context) {
     ];
     if ( matches.length === 0 ) { return; }
 
+    normalizeMatches(matches);
+
     js.unshift('/js/scripting/isolated-api.js');
     js.push('/js/scripting/css-declarative.js');
 
@@ -372,6 +430,8 @@ function registerSpecific(context) {
         ...ut.matchesFromHostnames(complete),
     ];
     if ( matches.length === 0 ) { return; }
+
+    normalizeMatches(matches);
 
     js.unshift('/js/scripting/isolated-api.js');
     js.push('/js/scripting/css-specific.js');

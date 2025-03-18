@@ -100,15 +100,13 @@ const subtractHostnameIters = (itera, iterb) => {
 
 /******************************************************************************/
 
+const matchFromHostname = hn =>
+    hn === '*' || hn === 'all-urls' ? '<all_urls>' : `*://*.${hn}/*`;
+
 const matchesFromHostnames = hostnames => {
     const out = [];
     for ( const hn of hostnames ) {
-        if ( hn === '*' || hn === 'all-urls' ) {
-            out.length = 0;
-            out.push('<all_urls>');
-            break;
-        }
-        out.push(`*://*.${hn}/*`);
+        out.push(matchFromHostname(hn));
     }
     return out;
 };
@@ -144,6 +142,7 @@ export {
     isDescendantHostnameOfIter,
     intersectHostnameIters,
     subtractHostnameIters,
+    matchFromHostname,
     matchesFromHostnames,
     hostnamesFromMatches,
 };
