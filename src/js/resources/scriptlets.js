@@ -23,9 +23,10 @@
 import './attribute.js';
 import './href-sanitizer.js';
 import './noeval.js';
+import './prevent-innerHTML.js';
+import './prevent-settimeout.js';
 import './replace-argument.js';
 import './spoof-css.js';
-import './prevent-settimeout.js';
 
 import { runAt, runAtHtmlElementFn } from './run-at.js';
 
