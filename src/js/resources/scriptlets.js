@@ -625,34 +625,23 @@ builtinScriptlets.push({
     ],
 });
 function matchObjectProperties(propNeedles, ...objs) {
-    if ( matchObjectProperties.extractProperties === undefined ) {
-        matchObjectProperties.extractProperties = (src, des, props) => {
-            for ( const p of props ) {
-                const v = src[p];
-                if ( v === undefined ) { continue; }
-                des[p] = src[p];
-            }
-        };
-    }
     const safe = safeSelf();
-    const haystack = {};
-    const props = safe.Array_from(propNeedles.keys());
+    const matched = [];
     for ( const obj of objs ) {
         if ( obj instanceof Object === false ) { continue; }
-        matchObjectProperties.extractProperties(obj, haystack, props);
-    }
-    for ( const [ prop, details ] of propNeedles ) {
-        let value = haystack[prop];
-        if ( value === undefined ) { continue; }
-        if ( typeof value !== 'string' ) {
-            try { value = safe.JSON_stringify(value); }
-            catch { }
-            if ( typeof value !== 'string' ) { continue; }
+        for ( const [ prop, details ] of propNeedles ) {
+            let value = obj[prop];
+            if ( value === undefined ) { continue; }
+            if ( typeof value !== 'string' ) {
+                try { value = safe.JSON_stringify(value); }
+                catch { }
+                if ( typeof value !== 'string' ) { continue; }
+            }
+            if ( safe.testPattern(details, value) === false ) { return; }
+            matched.push(`${prop}: ${value}`);
         }
-        if ( safe.testPattern(details, value) ) { continue; }
-        return false;
     }
-    return true;
+    return matched;
 }
 
 /******************************************************************************/
@@ -679,7 +668,6 @@ function jsonPruneFetchResponseFn(
     const logall = rawPrunePaths === '';
     const applyHandler = function(target, thisArg, args) {
         const fetchPromise = Reflect.apply(target, thisArg, args);
-        let outcome = logall ? 'nomatch' : 'match';
         if ( propNeedles.size !== 0 ) {
             const objs = [ args[0] instanceof Object ? args[0] : { url: args[0] } ];
             if ( objs[0] instanceof Request ) {
@@ -692,13 +680,11 @@ function jsonPruneFetchResponseFn(
             if ( args[1] instanceof Object ) {
                 objs.push(args[1]);
             }
-            if ( matchObjectProperties(propNeedles, ...objs) === false ) {
-                outcome = 'nomatch';
+            const matched =  matchObjectProperties(propNeedles, ...objs);
+            if ( matched === undefined ) { return fetchPromise; }
+            if ( safe.logLevel > 1 ) {
+                safe.uboLog(logPrefix, `Matched "propsToMatch":\n\t${matched.join('\n\t')}`);
             }
-        }
-        if ( logall === false && outcome === 'nomatch' ) { return fetchPromise; }
-        if ( safe.logLevel > 1 && outcome !== 'nomatch' && propNeedles.size !== 0 ) {
-            safe.uboLog(logPrefix, `Matched optional "propsToMatch"\n${extraArgs.propsToMatch}`);
         }
         return fetchPromise.then(responseBefore => {
             const response = responseBefore.clone();
@@ -772,7 +758,6 @@ function replaceFetchResponseFn(
         apply: function(target, thisArg, args) {
             const fetchPromise = Reflect.apply(target, thisArg, args);
             if ( pattern === '' ) { return fetchPromise; }
-            let outcome = 'match';
             if ( propNeedles.size !== 0 ) {
                 const objs = [ args[0] instanceof Object ? args[0] : { url: args[0] } ];
                 if ( objs[0] instanceof Request ) {
@@ -786,13 +771,11 @@ function replaceFetchResponseFn(
                 if ( args[1] instanceof Object ) {
                     objs.push(args[1]);
                 }
-                if ( matchObjectProperties(propNeedles, ...objs) === false ) {
-                    outcome = 'nomatch';
+                const matched = matchObjectProperties(propNeedles, ...objs);
+                if ( matched === undefined ) { return fetchPromise; }
+                if ( safe.logLevel > 1 ) {
+                    safe.uboLog(logPrefix, `Matched "propsToMatch":\n\t${matched.join('\n\t')}`);
                 }
-            }
-            if ( outcome === 'nomatch' ) { return fetchPromise; }
-            if ( safe.logLevel > 1 ) {
-                safe.uboLog(logPrefix, `Matched "propsToMatch"\n${propsToMatch}`);
             }
             return fetchPromise.then(responseBefore => {
                 const response = responseBefore.clone();
@@ -801,8 +784,7 @@ function replaceFetchResponseFn(
                         return responseBefore;
                     }
                     const textAfter = textBefore.replace(rePattern, replacement);
-                    const outcome = textAfter !== textBefore ? 'match' : 'nomatch';
-                    if ( outcome === 'nomatch' ) { return responseBefore; }
+                    if ( textAfter === textBefore ) { return responseBefore; }
                     safe.uboLog(logPrefix, 'Replaced');
                     const responseAfter = new Response(textAfter, {
                         status: responseBefore.status,
@@ -1399,7 +1381,7 @@ function jsonPruneXhrResponse(
             const xhrDetails = { method, url };
             let outcome = 'match';
             if ( propNeedles.size !== 0 ) {
-                if ( matchObjectProperties(propNeedles, xhrDetails) === false ) {
+                if ( matchObjectProperties(propNeedles, xhrDetails) === undefined ) {
                     outcome = 'nomatch';
                 }
             }
@@ -2838,7 +2820,7 @@ function trustedReplaceXhrResponse(
             const xhrDetails = { method, url };
             let outcome = 'match';
             if ( propNeedles.size !== 0 ) {
-                if ( matchObjectProperties(propNeedles, xhrDetails) === false ) {
+                if ( matchObjectProperties(propNeedles, xhrDetails) === undefined ) {
                     outcome = 'nomatch';
                 }
             }
