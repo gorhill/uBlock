@@ -1,3 +1,4 @@
+- [Improve `[json-prune|trusted-replace]-fetch-response` scriptlets](https://github.com/gorhill/uBlock/commit/88fa550a96)
 - [Fix TypedArray overflow](https://github.com/gorhill/uBlock/commit/76b80baaea)
 - [Add prevent-innerHTML scriptlet](https://github.com/gorhill/uBlock/commit/fe744816f1)
 
