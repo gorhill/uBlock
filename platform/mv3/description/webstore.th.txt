@@ -1,30 +1,30 @@
-uBO Lite (uBOL) is a *permission-less* MV3-based content blocker.
+uBO Lite (uBOL) เป็นตัวบล๊อกเนื้อหาที่ *ไม่ต้องขออนุญาต* แบบ MV3-based
 
-The default ruleset corresponds to uBlock Origin's default filterset:
+ชุดเงื่อนไขเริ่มต้นสอดคล้องกันกับค่าตัวกรองเริ่มต้นของ uBlock Origin:
 
-- uBlock Origin's built-in filter lists
+- รายการตัวกรองภายใน uBlock Origin
 - EasyList
 - EasyPrivacy
-- Peter Lowe’s Ad and tracking server list
+- รายการติดตามเซิร์ฟเวอร์โฆษณาของ Peter Lowe
 
-You can enable more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+คุณสามารถเปิดใช้งานชุดเงื่อนไขเพิ่มเติมโดยไปที่เพจทางเลือก -- คลิก the _Cogs_ icon ที่แผงป๊อปอัพ
 
-uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
+uBOL มีการประกาศอย่างชัดเจน ซึ่งหมายความว่าไม่ต้องมีกระบวนการ uBOL ถาวรในการคัดกรอง และการคัดกรองเนื้อหา CSS/JS injection-based จะดำเนินการได้อย่างน่าเชื่อถือด้วยตัวเบราว์เซอร์เองแทนที่จะเป็นส่วนขยาย สิ่งนี้หมายถึงตัว uBOL เองไม่ต้องผลาญทรัพยากรซีพียู/หน่วยความจำในขณะที่ทำการบล๊อก -- กระบวนการทำงานของ uBOL ใช้ required _only_ เมื่อคุณโต้ตอบกับแผงป๊อปอัพหรือเพจตัวเลือก
 
-uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read and modify data" permissions at install time.
+uBOL ไม่จำเป็นต้องขออนุญาตแบบรวมในการ "อ่านและปรับแต่งข้อมูล" เมื่อติดตั้ง ดังนั้นความสามารถที่จำกัดตอนเริ่มใช้งานครั้งแรกเมื่อเทียบกับ uBlock Origin หรือตัวบล๊อกเนื้อหาอื่น ๆ ที่ต้องการการขออนุญาตแบบรวมในการ "อ่านและปรับแต่งข้อมูล" ตั้งแต่ตอนติดตั้ง
 
-However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
+อย่างไรก็ตาม uBOL อนุญาตให้คุณให้สิทธิ์เพิ่มเติมแบบ *ชัดเจน* ในแต่ละเว็บไซต์ตามความต้องการของคุณเอง ดังนั้น มันจะเป็นการคัดกรองที่ดีกว่าบนเว็บไซต์เหล่านั้นด้วยการคัดกรองที่ตกแต่ง และ scriptlet injections
 
-To grant extended permissions on a given site, open the popup panel and pick a higher filtering mode such as Optimal or Complete.
+ในการให้สิทธิ์เพิ่มเติมสำหรับเว็บไซต์ที่กำหนด ให้เปิดแผงป๊อปอัพ แล้วเลือกโหมดการกรองที่สูงขึ้น เช่น เหมาะสมที่สุด หรือ สมบูรณ์
 
-The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request.
+เบราว์เซอร์จะแจ้งเตือนเกี่ยวกับผลกระทบในการให้สิทธิ์เพิ่มเติมที่ร้องขอโดยส่วนขยายบนเว็บไซต์ปัจจุบัน และคุณจะต้องแจ้งกับยอมรับหรือปฏิเสธกับเบราว์เซอร์
 
-If you accept uBOL's request for additional permissions on the current site, it will be able to better filter content for the current site.
+หากคุณยอมรับการร้องขอจาก uBOL ในการขออนุญาตเพิ่มเติมบนเว็บไซต์ปัจจุบัน มันจะสามารถคัดกรองเนื้อหาที่ดีขึ้น
 
-You can set the default filtering mode from uBOL's options page. If you pick the Optimal or Complete mode as the default one, you will need to grant uBOL the permission to read and modify data on all websites.
+คุณสามารถตั้งโหมดการคัดกรองเริ่มต้นจากเพจตัวเลือกของ uBOL  หากคุณเลือกโหมดแบบ เหมาะสมที่สุด หรือ สมบูรณ์ เป็นค่า่เริ่มต้น คุณจำเป็นต้องให้สิทธิ์กับ uBOL ในการอ่านและปรับแต่งข้อมูลบนทุกเว็บไซต์
 
-Keep in mind this is still a work in progress, with these end goals:
+โปรดเข้าใจว่ายังอยู่ในกระบวนการทำงานด้วยเป้าหมายเหล่านี้:
 
-- No broad host permissions at install time -- extended permissions are granted explicitly by the user on a per-site basis.
+- ไม่ต้องขออนุญาตแบบรวมในตอนติดตีั้ง -- การอนุญาตเพิ่มเติมจะเป็นการให้สิทธิ์โดยเฉพาะโดยผู้ใช้ตามแต่ละเว็บไซต์
 
-- Entirely declarative for reliability and CPU/memory efficiency.
+- ยืนยันถึงความน่าเชื่อถือและประสิทธิภาพของซีพียู/หน่วยความจำได้อย่างมีประสิทธิภาพ
