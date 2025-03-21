@@ -1,0 +1,50 @@
+html#ubol-zapper,
+#ubol-zapper body {
+    background: transparent;
+    cursor: not-allowed;
+    height: 100vh;
+        height: 100svh;
+    margin: 0;
+    overflow: hidden;
+    width: 100vw;
+}
+#ubol-zapper :focus {
+    outline: none;
+}
+#ubol-zapper aside {
+    background-color: var(--surface-1);
+    box-sizing: border-box;
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    z-index: 100;
+}
+#ubol-zapper aside > #quit {
+    fill: none;
+    height: 4em;
+    stroke: var(--ink-1);
+    stroke-width: 3px;
+    width: 4em;
+}
+#ubol-zapper svg#sea {
+    cursor: crosshair;
+    box-sizing: border-box;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+#ubol-zapper svg#sea > path:first-child {
+    fill: rgba(0,0,0,0.5);
+    fill-rule: evenodd;
+}
+#ubol-zapper svg#sea > path + path {
+    stroke: #FF0;
+    stroke-width: 0.5px;
+    fill: rgba(255,255,63,0.20);
+}
+#ubol-zapper #quit:hover {
+    background-color: var(--surface-2)
+}

@@ -12,6 +12,11 @@
       "service_worker": "/js/background.js",
       "type": "module"
    },
+  "commands": {
+    "enter-zapper-mode": {
+      "description": "__MSG_zapperTipEnter__"
+    }
+  },
   "declarative_net_request": {
     "rule_resources": [
     ]
@@ -51,6 +56,14 @@
         "<all_urls>"
       ],
       "use_dynamic_url": true
+    },
+    {
+      "resources": [
+        "/zapper-ui.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
     }
   ]
 }

@@ -198,6 +198,20 @@ function onMessage(request, sender, callback) {
         return false;
     }
 
+    case 'removeCSS': {
+        const tabId = sender?.tab?.id ?? false;
+        const frameId = sender?.frameId ?? false;
+        if ( tabId === false || frameId === false ) { return; }
+        browser.scripting.removeCSS({
+            css: request.css,
+            origin: 'USER',
+            target: { tabId, frameIds: [ frameId ] },
+        }).catch(reason => {
+            console.log(reason);
+        });
+        return false;
+    }
+
     default:
         break;
     }
@@ -414,6 +428,23 @@ function onMessage(request, sender, callback) {
 
 /******************************************************************************/
 
+function onCommand(command, tab) {
+    switch ( command ) {
+    case 'enter-zapper-mode': {
+        if ( browser.scripting === undefined ) { return; }
+        browser.scripting.executeScript({
+            files: [ '/js/scripting/zapper.js' ],
+            target: { tabId: tab.id },
+        });
+        break;
+    }
+    default:
+        break;
+    }
+}
+
+/******************************************************************************/
+
 async function start() {
     await loadRulesetConfig();
 
@@ -466,8 +497,6 @@ async function start() {
         });
     }
 
-    runtime.onMessage.addListener(onMessage);
-
     if ( process.firstRun ) {
         const enableOptimal = await hasOmnipotence();
         if ( enableOptimal ) {
@@ -493,27 +522,56 @@ async function start() {
     if ( process.wakeupRun === false ) {
         adminReadEx('disabledFeatures');
     }
-
-    browser.permissions.onRemoved.addListener(onPermissionsRemoved);
-    browser.permissions.onAdded.addListener(onPermissionsAdded);
 }
 
-// https://github.com/uBlockOrigin/uBOL-home/issues/199
-// Force a restart of the extension once when an "internal error" occurs
-start().then(( ) => {
-    localRemove('goodStart');
-    return false;
-}).catch(reason => {
-    console.trace(reason);
-    if ( process.wakeupRun ) { return; }
-    return localRead('goodStart').then(goodStart => {
-        if ( goodStart === false ) {
-            localRemove('goodStart');
-            return false;
-        }
-        return localWrite('goodStart', false).then(( ) => true);
+/******************************************************************************/
+
+const isFullyInitialized = new Promise(resolve => {
+    // https://github.com/uBlockOrigin/uBOL-home/issues/199
+    // Force a restart of the extension once when an "internal error" occurs
+    start().then(( ) => {
+        localRemove('goodStart');
+        return false;
+    }).catch(reason => {
+        console.trace(reason);
+        if ( process.wakeupRun ) { return; }
+        return localRead('goodStart').then(goodStart => {
+            if ( goodStart === false ) {
+                localRemove('goodStart');
+                return false;
+            }
+            return localWrite('goodStart', false).then(( ) => true);
+        });
+    }).then(restart => {
+        if ( restart !== true ) { return; }
+        runtime.reload();
+    }).finally(( ) => {
+        resolve(true);
     });
-}).then(restart => {
-    if ( restart !== true ) { return; }
-    runtime.reload();
+});
+
+runtime.onMessage.addListener((request, sender, callback) => {
+    isFullyInitialized.then(( ) => {
+        const r = onMessage(request, sender, callback);
+        if ( r !== true ) { callback(); }
+    });
+    return true;
+});
+
+browser.permissions.onRemoved.addListener((...args) => {
+    isFullyInitialized.then(( ) => {
+        onPermissionsRemoved(...args);
+    });
+});
+
+browser.permissions.onAdded.addListener((...args) => {
+    isFullyInitialized.then(( ) => {
+        onPermissionsAdded(...args);
+    });
+});
+
+browser.commands.onCommand.addListener((...args) => {
+    isFullyInitialized.then(( ) => {
+        onCommand(...args);
+    });
 });

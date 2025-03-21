@@ -155,13 +155,13 @@ body.needReload #refresh {
     }
 
 .toolRibbon {
-    align-items: center;
+    align-items: start;
     background-color: var(--popup-toolbar-surface);
     display: grid;
     grid-auto-columns: 1fr;
     grid-auto-flow: column;
-    grid-template: auto / repeat(5, 1fr);
-    justify-items: center;
+    grid-template: auto / repeat(4, 1fr);
+    justify-items: stretch;
     white-space: normal;
     }
 .toolRibbon .tool {

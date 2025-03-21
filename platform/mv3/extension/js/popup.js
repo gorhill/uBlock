@@ -319,6 +319,17 @@ dom.on('[data-i18n-title="popupTipDashboard"]', 'click', ev => {
 
 /******************************************************************************/
 
+dom.on('#gotoZapper', 'click', ( ) => {
+    if ( browser.scripting === undefined ) { return; }
+    browser.scripting.executeScript({
+        files: [ '/js/scripting/zapper.js' ],
+        target: { tabId: currentTab.id },
+    });
+    self.close();
+});
+
+/******************************************************************************/
+
 async function init() {
     const [ tab ] = await browser.tabs.query({
         active: true,
@@ -362,9 +373,10 @@ async function init() {
         isNaN(currentTab.id) === false
     );
 
-    dom.cl.toggle('#reportFilterIssue', 'enabled',
-        /^https?:\/\//.test(url?.href)
-    );
+    const isNetworkPage = url.protocol === 'http:' || url.protocol === 'https:';
+
+    dom.cl.toggle('#reportFilterIssue', 'enabled', isNetworkPage );
+    dom.cl.toggle('#gotoZapper', 'enabled', isNetworkPage);
 
     const parent = qs$('#rulesetStats');
     for ( const details of popupPanelData.rulesetDetails || [] ) {
