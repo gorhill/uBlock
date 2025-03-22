@@ -22,16 +22,26 @@
 
 import './attribute.js';
 import './href-sanitizer.js';
+import './json-prune.js';
+import './jsonl-prune.js';
 import './noeval.js';
+import './object-prune.js';
 import './prevent-innerHTML.js';
 import './prevent-settimeout.js';
 import './replace-argument.js';
 import './spoof-css.js';
 
+import {
+    getExceptionTokenFn,
+    getRandomTokenFn,
+    matchObjectPropertiesFn,
+    parsePropertiesToMatchFn,
+} from './utils.js';
 import { runAt, runAtHtmlElementFn } from './run-at.js';
 
 import { getAllCookiesFn } from './cookie.js';
 import { getAllLocalStorageFn } from './localstorage.js';
+import { matchesStackTraceFn } from './stack-trace.js';
 import { proxyApplyFn } from './proxy-apply.js';
 import { registeredScriptlets } from './base.js';
 import { safeSelf } from './safe-self.js';
@@ -51,41 +61,6 @@ export const builtinScriptlets = registeredScriptlets;
     These are meant to be used as dependencies to injectable scriptlets.
 
 *******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'get-random-token.fn',
-    fn: getRandomToken,
-    dependencies: [
-        'safe-self.fn',
-    ],
-});
-function getRandomToken() {
-    const safe = safeSelf();
-    return safe.String_fromCharCode(Date.now() % 26 + 97) +
-        safe.Math_floor(safe.Math_random() * 982451653 + 982451653).toString(36);
-}
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'get-exception-token.fn',
-    fn: getExceptionToken,
-    dependencies: [
-        'get-random-token.fn',
-    ],
-});
-function getExceptionToken() {
-    const token = getRandomToken();
-    const oe = self.onerror;
-    self.onerror = function(msg, ...args) {
-        if ( typeof msg === 'string' && msg.includes(token) ) { return true; }
-        if ( oe instanceof Function ) {
-            return oe.call(this, msg, ...args);
-        }
-    }.bind();
-    return token;
-}
-
-/******************************************************************************/
 
 builtinScriptlets.push({
     name: 'should-debug.fn',
@@ -215,7 +190,7 @@ function abortCurrentScriptCore(
         desc = undefined;
     }
     const debug = shouldDebug(extraArgs);
-    const exceptionToken = getExceptionToken();
+    const exceptionToken = getExceptionTokenFn();
     const scriptTexts = new WeakMap();
     const getScriptText = elem => {
         let text = elem.textContent;
@@ -330,7 +305,7 @@ function replaceNodeTextFn(
         if ( tt instanceof Object ) {
             if ( typeof tt.getPropertyType === 'function' ) {
                 if ( tt.getPropertyType('script', 'textContent') === 'TrustedScript' ) {
-                    return tt.createPolicy(getRandomToken(), out);
+                    return tt.createPolicy(getRandomTokenFn(), out);
                 }
             }
         }
@@ -404,334 +379,6 @@ function replaceNodeTextFn(
 /******************************************************************************/
 
 builtinScriptlets.push({
-    name: 'object-prune.fn',
-    fn: objectPruneFn,
-    dependencies: [
-        'matches-stack-trace.fn',
-        'object-find-owner.fn',
-        'safe-self.fn',
-    ],
-});
-//  When no "prune paths" argument is provided, the scriptlet is
-//  used for logging purpose and the "needle paths" argument is
-//  used to filter logging output.
-//
-//  https://github.com/uBlockOrigin/uBlock-issues/issues/1545
-//  - Add support for "remove everything if needle matches" case
-function objectPruneFn(
-    obj,
-    rawPrunePaths,
-    rawNeedlePaths,
-    stackNeedleDetails = { matchAll: true },
-    extraArgs = {}
-) {
-    if ( typeof rawPrunePaths !== 'string' ) { return; }
-    const safe = safeSelf();
-    const prunePaths = rawPrunePaths !== ''
-        ? safe.String_split.call(rawPrunePaths, / +/)
-        : [];
-    const needlePaths = prunePaths.length !== 0 && rawNeedlePaths !== ''
-        ? safe.String_split.call(rawNeedlePaths, / +/)
-        : [];
-    if ( stackNeedleDetails.matchAll !== true ) {
-        if ( matchesStackTraceFn(stackNeedleDetails, extraArgs.logstack) === false ) {
-            return;
-        }
-    }
-    if ( objectPruneFn.mustProcess === undefined ) {
-        objectPruneFn.mustProcess = (root, needlePaths) => {
-            for ( const needlePath of needlePaths ) {
-                if ( objectFindOwnerFn(root, needlePath) === false ) {
-                    return false;
-                }
-            }
-            return true;
-        };
-    }
-    if ( prunePaths.length === 0 ) { return; }
-    let outcome = 'nomatch';
-    if ( objectPruneFn.mustProcess(obj, needlePaths) ) {
-        for ( const path of prunePaths ) {
-            if ( objectFindOwnerFn(obj, path, true) ) {
-                outcome = 'match';
-            }
-        }
-    }
-    if ( outcome === 'match' ) { return obj; }
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'object-find-owner.fn',
-    fn: objectFindOwnerFn,
-});
-function objectFindOwnerFn(
-    root,
-    path,
-    prune = false
-) {
-    let owner = root;
-    let chain = path;
-    for (;;) {
-        if ( typeof owner !== 'object' || owner === null  ) { return false; }
-        const pos = chain.indexOf('.');
-        if ( pos === -1 ) {
-            if ( prune === false ) {
-                return owner.hasOwnProperty(chain);
-            }
-            let modified = false;
-            if ( chain === '*' ) {
-                for ( const key in owner ) {
-                    if ( owner.hasOwnProperty(key) === false ) { continue; }
-                    delete owner[key];
-                    modified = true;
-                }
-            } else if ( owner.hasOwnProperty(chain) ) {
-                delete owner[chain];
-                modified = true;
-            }
-            return modified;
-        }
-        const prop = chain.slice(0, pos);
-        const next = chain.slice(pos + 1);
-        let found = false;
-        if ( prop === '[-]' && Array.isArray(owner) ) {
-            let i = owner.length;
-            while ( i-- ) {
-                if ( objectFindOwnerFn(owner[i], next) === false ) { continue; }
-                owner.splice(i, 1);
-                found = true;
-            }
-            return found;
-        }
-        if ( prop === '{-}' && owner instanceof Object ) {
-            for ( const key of Object.keys(owner) ) {
-                if ( objectFindOwnerFn(owner[key], next) === false ) { continue; }
-                delete owner[key];
-                found = true;
-            }
-            return found;
-        }
-        if (
-            prop === '[]' && Array.isArray(owner) ||
-            prop === '{}' && owner instanceof Object ||
-            prop === '*' && owner instanceof Object
-        ) {
-            for ( const key of Object.keys(owner) ) {
-                if (objectFindOwnerFn(owner[key], next, prune) === false ) { continue; }
-                found = true;
-            }
-            return found;
-        }
-        if ( owner.hasOwnProperty(prop) === false ) { return false; }
-        owner = owner[prop];
-        chain = chain.slice(pos + 1);
-    }
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'matches-stack-trace.fn',
-    fn: matchesStackTraceFn,
-    dependencies: [
-        'get-exception-token.fn',
-        'safe-self.fn',
-    ],
-});
-function matchesStackTraceFn(
-    needleDetails,
-    logLevel = ''
-) {
-    const safe = safeSelf();
-    const exceptionToken = getExceptionToken();
-    const error = new safe.Error(exceptionToken);
-    const docURL = new URL(self.location.href);
-    docURL.hash = '';
-    // Normalize stack trace
-    const reLine = /(.*?@)?(\S+)(:\d+):\d+\)?$/;
-    const lines = [];
-    for ( let line of safe.String_split.call(error.stack, /[\n\r]+/) ) {
-        if ( line.includes(exceptionToken) ) { continue; }
-        line = line.trim();
-        const match = safe.RegExp_exec.call(reLine, line);
-        if ( match === null ) { continue; }
-        let url = match[2];
-        if ( url.startsWith('(') ) { url = url.slice(1); }
-        if ( url === docURL.href ) {
-            url = 'inlineScript';
-        } else if ( url.startsWith('<anonymous>') ) {
-            url = 'injectedScript';
-        }
-        let fn = match[1] !== undefined
-            ? match[1].slice(0, -1)
-            : line.slice(0, match.index).trim();
-        if ( fn.startsWith('at') ) { fn = fn.slice(2).trim(); }
-        let rowcol = match[3];
-        lines.push(' ' + `${fn} ${url}${rowcol}:1`.trim());
-    }
-    lines[0] = `stackDepth:${lines.length-1}`;
-    const stack = lines.join('\t');
-    const r = needleDetails.matchAll !== true &&
-        safe.testPattern(needleDetails, stack);
-    if (
-        logLevel === 'all' ||
-        logLevel === 'match' && r ||
-        logLevel === 'nomatch' && !r
-    ) {
-        safe.uboLog(stack.replace(/\t/g, '\n'));
-    }
-    return r;
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'parse-properties-to-match.fn',
-    fn: parsePropertiesToMatch,
-    dependencies: [
-        'safe-self.fn',
-    ],
-});
-function parsePropertiesToMatch(propsToMatch, implicit = '') {
-    const safe = safeSelf();
-    const needles = new Map();
-    if ( propsToMatch === undefined || propsToMatch === '' ) { return needles; }
-    const options = { canNegate: true };
-    for ( const needle of safe.String_split.call(propsToMatch, /\s+/) ) {
-        let [ prop, pattern ] = safe.String_split.call(needle, ':');
-        if ( prop === '' ) { continue; }
-        if ( pattern !== undefined && /[^$\w -]/.test(prop) ) {
-            prop = `${prop}:${pattern}`;
-            pattern = undefined;
-        }
-        if ( pattern !== undefined ) {
-            needles.set(prop, safe.initPattern(pattern, options));
-        } else if ( implicit !== '' ) {
-            needles.set(implicit, safe.initPattern(prop, options));
-        }
-    }
-    return needles;
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'match-object-properties.fn',
-    fn: matchObjectProperties,
-    dependencies: [
-        'safe-self.fn',
-    ],
-});
-function matchObjectProperties(propNeedles, ...objs) {
-    const safe = safeSelf();
-    const matched = [];
-    for ( const obj of objs ) {
-        if ( obj instanceof Object === false ) { continue; }
-        for ( const [ prop, details ] of propNeedles ) {
-            let value = obj[prop];
-            if ( value === undefined ) { continue; }
-            if ( typeof value !== 'string' ) {
-                try { value = safe.JSON_stringify(value); }
-                catch { }
-                if ( typeof value !== 'string' ) { continue; }
-            }
-            if ( safe.testPattern(details, value) === false ) { return; }
-            matched.push(`${prop}: ${value}`);
-        }
-    }
-    return matched;
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'json-prune-fetch-response.fn',
-    fn: jsonPruneFetchResponseFn,
-    dependencies: [
-        'match-object-properties.fn',
-        'object-prune.fn',
-        'parse-properties-to-match.fn',
-        'safe-self.fn',
-    ],
-});
-function jsonPruneFetchResponseFn(
-    rawPrunePaths = '',
-    rawNeedlePaths = ''
-) {
-    const safe = safeSelf();
-    const logPrefix = safe.makeLogPrefix('json-prune-fetch-response', rawPrunePaths, rawNeedlePaths);
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 2);
-    const propNeedles = parsePropertiesToMatch(extraArgs.propsToMatch, 'url');
-    const stackNeedle = safe.initPattern(extraArgs.stackToMatch || '', { canNegate: true });
-    const logall = rawPrunePaths === '';
-    const applyHandler = function(target, thisArg, args) {
-        const fetchPromise = Reflect.apply(target, thisArg, args);
-        if ( propNeedles.size !== 0 ) {
-            const objs = [ args[0] instanceof Object ? args[0] : { url: args[0] } ];
-            if ( objs[0] instanceof Request ) {
-                try {
-                    objs[0] = safe.Request_clone.call(objs[0]);
-                } catch(ex) {
-                    safe.uboErr(logPrefix, 'Error:', ex);
-                }
-            }
-            if ( args[1] instanceof Object ) {
-                objs.push(args[1]);
-            }
-            const matched =  matchObjectProperties(propNeedles, ...objs);
-            if ( matched === undefined ) { return fetchPromise; }
-            if ( safe.logLevel > 1 ) {
-                safe.uboLog(logPrefix, `Matched "propsToMatch":\n\t${matched.join('\n\t')}`);
-            }
-        }
-        return fetchPromise.then(responseBefore => {
-            const response = responseBefore.clone();
-            return response.json().then(objBefore => {
-                if ( typeof objBefore !== 'object' ) { return responseBefore; }
-                if ( logall ) {
-                    safe.uboLog(logPrefix, safe.JSON_stringify(objBefore, null, 2));
-                    return responseBefore;
-                }
-                const objAfter = objectPruneFn(
-                    objBefore,
-                    rawPrunePaths,
-                    rawNeedlePaths,
-                    stackNeedle,
-                    extraArgs
-                );
-                if ( typeof objAfter !== 'object' ) { return responseBefore; }
-                safe.uboLog(logPrefix, 'Pruned');
-                const responseAfter = Response.json(objAfter, {
-                    status: responseBefore.status,
-                    statusText: responseBefore.statusText,
-                    headers: responseBefore.headers,
-                });
-                Object.defineProperties(responseAfter, {
-                    ok: { value: responseBefore.ok },
-                    redirected: { value: responseBefore.redirected },
-                    type: { value: responseBefore.type },
-                    url: { value: responseBefore.url },
-                });
-                return responseAfter;
-            }).catch(reason => {
-                safe.uboErr(logPrefix, 'Error:', reason);
-                return responseBefore;
-            });
-        }).catch(reason => {
-            safe.uboErr(logPrefix, 'Error:', reason);
-            return fetchPromise;
-        });
-    };
-    self.fetch = new Proxy(self.fetch, {
-        apply: applyHandler
-    });
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
     name: 'replace-fetch-response.fn',
     fn: replaceFetchResponseFn,
     dependencies: [
@@ -751,7 +398,7 @@ function replaceFetchResponseFn(
     const logPrefix = safe.makeLogPrefix('replace-fetch-response', pattern, replacement, propsToMatch);
     if ( pattern === '*' ) { pattern = '.*'; }
     const rePattern = safe.patternToRegex(pattern);
-    const propNeedles = parsePropertiesToMatch(propsToMatch, 'url');
+    const propNeedles = parsePropertiesToMatchFn(propsToMatch, 'url');
     const extraArgs = safe.getExtraArgs(Array.from(arguments), 4);
     const reIncludes = extraArgs.includes ? safe.patternToRegex(extraArgs.includes) : null;
     self.fetch = new Proxy(self.fetch, {
@@ -771,7 +418,7 @@ function replaceFetchResponseFn(
                 if ( args[1] instanceof Object ) {
                     objs.push(args[1]);
                 }
-                const matched = matchObjectProperties(propNeedles, ...objs);
+                const matched = matchObjectPropertiesFn(propNeedles, ...objs);
                 if ( matched === undefined ) { return fetchPromise; }
                 if ( safe.logLevel > 1 ) {
                     safe.uboLog(logPrefix, `Matched "propsToMatch":\n\t${matched.join('\n\t')}`);
@@ -832,7 +479,7 @@ function preventXhrFn(
     const scriptletName = trusted ? 'trusted-prevent-xhr' : 'prevent-xhr';
     const logPrefix = safe.makeLogPrefix(scriptletName, propsToMatch, directive);
     const xhrInstances = new WeakMap();
-    const propNeedles = parsePropertiesToMatch(propsToMatch, 'url');
+    const propNeedles = parsePropertiesToMatchFn(propsToMatch, 'url');
     const warOrigin = scriptletGlobals.warOrigin;
     const safeDispatchEvent = (xhr, type) => {
         try {
@@ -852,7 +499,7 @@ function preventXhrFn(
                 safe.uboLog(logPrefix, `Called: ${safe.JSON_stringify(haystack, null, 2)}`);
                 return super.open(method, url, ...args);
             }
-            if ( matchObjectProperties(propNeedles, haystack) ) {
+            if ( matchObjectPropertiesFn(propNeedles, haystack) ) {
                 const xhrDetails = Object.assign(haystack, {
                     xhr: this,
                     defer: args.length === 0 || !!args[0],
@@ -1051,7 +698,7 @@ function abortOnPropertyRead(
     if ( chain === '' ) { return; }
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix('abort-on-property-read', chain);
-    const exceptionToken = getExceptionToken();
+    const exceptionToken = getExceptionTokenFn();
     const abort = function() {
         safe.uboLog(logPrefix, 'Aborted');
         throw new ReferenceError(exceptionToken);
@@ -1111,7 +758,7 @@ function abortOnPropertyWrite(
     if ( prop === '' ) { return; }
     const safe = safeSelf();
     const logPrefix = safe.makeLogPrefix('abort-on-property-write', prop);
-    const exceptionToken = getExceptionToken();
+    const exceptionToken = getExceptionTokenFn();
     let owner = window;
     for (;;) {
         const pos = prop.indexOf('.');
@@ -1127,74 +774,6 @@ function abortOnPropertyWrite(
             throw new ReferenceError(exceptionToken);
         }
     });
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'abort-on-stack-trace.js',
-    aliases: [
-        'aost.js',
-    ],
-    fn: abortOnStackTrace,
-    dependencies: [
-        'get-exception-token.fn',
-        'matches-stack-trace.fn',
-        'safe-self.fn',
-    ],
-});
-function abortOnStackTrace(
-    chain = '',
-    needle = ''
-) {
-    if ( typeof chain !== 'string' ) { return; }
-    const safe = safeSelf();
-    const needleDetails = safe.initPattern(needle, { canNegate: true });
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 2);
-    if ( needle === '' ) { extraArgs.log = 'all'; }
-    const makeProxy = function(owner, chain) {
-        const pos = chain.indexOf('.');
-        if ( pos === -1 ) {
-            let v = owner[chain];
-            Object.defineProperty(owner, chain, {
-                get: function() {
-                    const log = safe.logLevel > 1 ? 'all' : 'match';
-                    if ( matchesStackTraceFn(needleDetails, log) ) {
-                        throw new ReferenceError(getExceptionToken());
-                    }
-                    return v;
-                },
-                set: function(a) {
-                    const log = safe.logLevel > 1 ? 'all' : 'match';
-                    if ( matchesStackTraceFn(needleDetails, log) ) {
-                        throw new ReferenceError(getExceptionToken());
-                    }
-                    v = a;
-                },
-            });
-            return;
-        }
-        const prop = chain.slice(0, pos);
-        let v = owner[prop];
-        chain = chain.slice(pos + 1);
-        if ( v ) {
-            makeProxy(v, chain);
-            return;
-        }
-        const desc = Object.getOwnPropertyDescriptor(owner, prop);
-        if ( desc && desc.set !== undefined ) { return; }
-        Object.defineProperty(owner, prop, {
-            get: function() { return v; },
-            set: function(a) {
-                v = a;
-                if ( a instanceof Object ) {
-                    makeProxy(a, chain);
-                }
-            }
-        });
-    };
-    const owner = window;
-    makeProxy(owner, chain);
 }
 
 /******************************************************************************/
@@ -1291,186 +870,6 @@ function addEventListenerDefuser(
         proxyApplyFn('EventTarget.prototype.addEventListener', proxyFn);
         proxyApplyFn('document.addEventListener', proxyFn);
     }, extraArgs.runAt);
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'json-prune.js',
-    fn: jsonPrune,
-    dependencies: [
-        'object-prune.fn',
-        'safe-self.fn',
-    ],
-});
-function jsonPrune(
-    rawPrunePaths = '',
-    rawNeedlePaths = '',
-    stackNeedle = ''
-) {
-    const safe = safeSelf();
-    const logPrefix = safe.makeLogPrefix('json-prune', rawPrunePaths, rawNeedlePaths, stackNeedle);
-    const stackNeedleDetails = safe.initPattern(stackNeedle, { canNegate: true });
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
-    JSON.parse = new Proxy(JSON.parse, {
-        apply: function(target, thisArg, args) {
-            const objBefore = Reflect.apply(target, thisArg, args);
-            if ( rawPrunePaths === '' ) {
-                safe.uboLog(logPrefix, safe.JSON_stringify(objBefore, null, 2));
-            }
-            const objAfter = objectPruneFn(
-                objBefore,
-                rawPrunePaths,
-                rawNeedlePaths,
-                stackNeedleDetails,
-                extraArgs
-            );
-            if ( objAfter === undefined ) { return objBefore; }
-            safe.uboLog(logPrefix, 'Pruned');
-            if ( safe.logLevel > 1 ) {
-                safe.uboLog(logPrefix, `After pruning:\n${safe.JSON_stringify(objAfter, null, 2)}`);
-            }
-            return objAfter;
-        },
-    });
-}
-
-/*******************************************************************************
- * 
- * json-prune-fetch-response.js
- * 
- * Prune JSON response of fetch requests.
- * 
- **/
-
-builtinScriptlets.push({
-    name: 'json-prune-fetch-response.js',
-    fn: jsonPruneFetchResponse,
-    dependencies: [
-        'json-prune-fetch-response.fn',
-    ],
-});
-function jsonPruneFetchResponse(...args) {
-    jsonPruneFetchResponseFn(...args);
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'json-prune-xhr-response.js',
-    fn: jsonPruneXhrResponse,
-    dependencies: [
-        'match-object-properties.fn',
-        'object-prune.fn',
-        'parse-properties-to-match.fn',
-        'safe-self.fn',
-    ],
-});
-function jsonPruneXhrResponse(
-    rawPrunePaths = '',
-    rawNeedlePaths = ''
-) {
-    const safe = safeSelf();
-    const logPrefix = safe.makeLogPrefix('json-prune-xhr-response', rawPrunePaths, rawNeedlePaths);
-    const xhrInstances = new WeakMap();
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 2);
-    const propNeedles = parsePropertiesToMatch(extraArgs.propsToMatch, 'url');
-    const stackNeedle = safe.initPattern(extraArgs.stackToMatch || '', { canNegate: true });
-    self.XMLHttpRequest = class extends self.XMLHttpRequest {
-        open(method, url, ...args) {
-            const xhrDetails = { method, url };
-            let outcome = 'match';
-            if ( propNeedles.size !== 0 ) {
-                if ( matchObjectProperties(propNeedles, xhrDetails) === undefined ) {
-                    outcome = 'nomatch';
-                }
-            }
-            if ( outcome === 'match' ) {
-                if ( safe.logLevel > 1 ) {
-                    safe.uboLog(logPrefix, `Matched optional "propsToMatch", "${extraArgs.propsToMatch}"`);
-                }
-                xhrInstances.set(this, xhrDetails);
-            }
-            return super.open(method, url, ...args);
-        }
-        get response() {
-            const innerResponse = super.response;
-            const xhrDetails = xhrInstances.get(this);
-            if ( xhrDetails === undefined ) {
-                return innerResponse;
-            }
-            const responseLength = typeof innerResponse === 'string'
-                ? innerResponse.length
-                : undefined;
-            if ( xhrDetails.lastResponseLength !== responseLength ) {
-                xhrDetails.response = undefined;
-                xhrDetails.lastResponseLength = responseLength;
-            }
-            if ( xhrDetails.response !== undefined ) {
-                return xhrDetails.response;
-            }
-            let objBefore;
-            if ( typeof innerResponse === 'object' ) {
-                objBefore = innerResponse;
-            } else if ( typeof innerResponse === 'string' ) {
-                try {
-                    objBefore = safe.JSON_parse(innerResponse);
-                } catch {
-                }
-            }
-            if ( typeof objBefore !== 'object' ) {
-                return (xhrDetails.response = innerResponse);
-            }
-            const objAfter = objectPruneFn(
-                objBefore,
-                rawPrunePaths,
-                rawNeedlePaths,
-                stackNeedle,
-                extraArgs
-            );
-            let outerResponse;
-            if ( typeof objAfter === 'object' ) {
-                outerResponse = typeof innerResponse === 'string'
-                    ? safe.JSON_stringify(objAfter)
-                    : objAfter;
-                safe.uboLog(logPrefix, 'Pruned');
-            } else {
-                outerResponse = innerResponse;
-            }
-            return (xhrDetails.response = outerResponse);
-        }
-        get responseText() {
-            const response = this.response;
-            return typeof response !== 'string'
-                ? super.responseText
-                : response;
-        }
-    };
-}
-
-/******************************************************************************/
-
-// There is still code out there which uses `eval` in lieu of `JSON.parse`.
-
-builtinScriptlets.push({
-    name: 'evaldata-prune.js',
-    fn: evaldataPrune,
-    dependencies: [
-        'object-prune.fn',
-        'proxy-apply.fn',
-    ],
-});
-function evaldataPrune(
-    rawPrunePaths = '',
-    rawNeedlePaths = ''
-) {
-    proxyApplyFn('eval', function(context) {
-        const before = context.reflect();
-        if ( typeof before !== 'object' ) { return before; }
-        if ( before === null ) { return null; }
-        const after = objectPruneFn(before, rawPrunePaths, rawNeedlePaths);
-        return after || before;
-    });
 }
 
 /******************************************************************************/
@@ -2811,7 +2210,7 @@ function trustedReplaceXhrResponse(
     const xhrInstances = new WeakMap();
     if ( pattern === '*' ) { pattern = '.*'; }
     const rePattern = safe.patternToRegex(pattern);
-    const propNeedles = parsePropertiesToMatch(propsToMatch, 'url');
+    const propNeedles = parsePropertiesToMatchFn(propsToMatch, 'url');
     const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
     const reIncludes = extraArgs.includes ? safe.patternToRegex(extraArgs.includes) : null;
     self.XMLHttpRequest = class extends self.XMLHttpRequest {
@@ -2820,7 +2219,7 @@ function trustedReplaceXhrResponse(
             const xhrDetails = { method, url };
             let outcome = 'match';
             if ( propNeedles.size !== 0 ) {
-                if ( matchObjectProperties(propNeedles, xhrDetails) === undefined ) {
+                if ( matchObjectPropertiesFn(propNeedles, xhrDetails) === undefined ) {
                     outcome = 'nomatch';
                 }
             }
@@ -3058,120 +2457,6 @@ function trustedClickElement(
     };
 
     runAtHtmlElementFn(process);
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'trusted-prune-inbound-object.js',
-    requiresTrust: true,
-    fn: trustedPruneInboundObject,
-    dependencies: [
-        'object-find-owner.fn',
-        'object-prune.fn',
-        'safe-self.fn',
-    ],
-});
-function trustedPruneInboundObject(
-    entryPoint = '',
-    argPos = '',
-    rawPrunePaths = '',
-    rawNeedlePaths = ''
-) {
-    if ( entryPoint === '' ) { return; }
-    let context = globalThis;
-    let prop = entryPoint;
-    for (;;) {
-        const pos = prop.indexOf('.');
-        if ( pos === -1 ) { break; }
-        context = context[prop.slice(0, pos)];
-        if ( context instanceof Object === false ) { return; }
-        prop = prop.slice(pos+1);
-    }
-    if ( typeof context[prop] !== 'function' ) { return; }
-    const argIndex = parseInt(argPos);
-    if ( isNaN(argIndex) ) { return; }
-    if ( argIndex < 1 ) { return; }
-    const safe = safeSelf();
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 4);
-    const needlePaths = [];
-    if ( rawPrunePaths !== '' ) {
-        needlePaths.push(...safe.String_split.call(rawPrunePaths, / +/));
-    }
-    if ( rawNeedlePaths !== '' ) {
-        needlePaths.push(...safe.String_split.call(rawNeedlePaths, / +/));
-    }
-    const stackNeedle = safe.initPattern(extraArgs.stackToMatch || '', { canNegate: true });
-    const mustProcess = root => {
-        for ( const needlePath of needlePaths ) {
-            if ( objectFindOwnerFn(root, needlePath) === false ) {
-                return false;
-            }
-        }
-        return true;
-    };
-    context[prop] = new Proxy(context[prop], {
-        apply: function(target, thisArg, args) {
-            const targetArg = argIndex <= args.length
-                ? args[argIndex-1]
-                : undefined;
-            if ( targetArg instanceof Object && mustProcess(targetArg) ) {
-                let objBefore = targetArg;
-                if ( extraArgs.dontOverwrite ) {
-                    try {
-                        objBefore = safe.JSON_parse(safe.JSON_stringify(targetArg));
-                    } catch {
-                        objBefore = undefined;
-                    }
-                }
-                if ( objBefore !== undefined ) {
-                    const objAfter = objectPruneFn(
-                        objBefore,
-                        rawPrunePaths,
-                        rawNeedlePaths,
-                        stackNeedle,
-                        extraArgs
-                    );
-                    args[argIndex-1] = objAfter || objBefore;
-                }
-            }
-            return Reflect.apply(target, thisArg, args);
-        },
-    });
-}
-
-/******************************************************************************/
-
-builtinScriptlets.push({
-    name: 'trusted-prune-outbound-object.js',
-    requiresTrust: true,
-    fn: trustedPruneOutboundObject,
-    dependencies: [
-        'object-prune.fn',
-        'proxy-apply.fn',
-        'safe-self.fn',
-    ],
-});
-function trustedPruneOutboundObject(
-    propChain = '',
-    rawPrunePaths = '',
-    rawNeedlePaths = ''
-) {
-    if ( propChain === '' ) { return; }
-    const safe = safeSelf();
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 3);
-    proxyApplyFn(propChain, function(context) {
-        const objBefore = context.reflect();
-        if ( objBefore instanceof Object === false ) { return objBefore; }
-        const objAfter = objectPruneFn(
-            objBefore,
-            rawPrunePaths,
-            rawNeedlePaths,
-            { matchAll: true },
-            extraArgs
-        );
-        return objAfter || objBefore;
-    });
 }
 
 /******************************************************************************/

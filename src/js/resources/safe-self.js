@@ -46,6 +46,7 @@ export function safeSelf() {
         'Object_defineProperties': Object.defineProperties.bind(Object),
         'Object_fromEntries': Object.fromEntries.bind(Object),
         'Object_getOwnPropertyDescriptor': Object.getOwnPropertyDescriptor.bind(Object),
+        'Object_hasOwn': Object.hasOwn.bind(Object),
         'RegExp': self.RegExp,
         'RegExp_test': self.RegExp.prototype.test,
         'RegExp_exec': self.RegExp.prototype.exec,

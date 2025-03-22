@@ -17,10 +17,10 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "uBlock0@raymondhill.net",
-      "strict_min_version": "79.0"
+      "strict_min_version": "92.0"
     },
     "gecko_android": {
-      "strict_min_version": "79.0"
+      "strict_min_version": "92.0"
     }
   },
   "commands": {
