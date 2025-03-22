@@ -116,7 +116,7 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Entrer en mode Zappeur",
+    "message": "Entrer en mode Zappeur d'élément",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {

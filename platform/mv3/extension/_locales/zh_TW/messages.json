@@ -280,11 +280,11 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Enter element zapper mode",
+    "message": "進入元素臨時移除模式",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
-    "message": "Exit element zapper mode",
+    "message": "離開元素臨時移除模式",
     "description": "Tooltip for the button used to exit zapper mode"
   }
 }

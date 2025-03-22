@@ -280,11 +280,11 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Enter element zapper mode",
+    "message": "구성 요소 제거 모드로 진입",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
-    "message": "Exit element zapper mode",
+    "message": "구성 요소 제거 모드 종료",
     "description": "Tooltip for the button used to exit zapper mode"
   }
 }

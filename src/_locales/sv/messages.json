@@ -116,7 +116,7 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Gå till elementzapperläge",
+    "message": "Gå in i elementzapperläge",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
