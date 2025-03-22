@@ -1,4 +1,4 @@
-- [Add jsonl-prune-xhr-response/jsonl-prune-fetch-response scriptlets](https://github.com/gorhill/uBlock/commit/95a3be9d56)
+- [Add `jsonl-prune-xhr-response`/`jsonl-prune-fetch-response` scriptlets](https://github.com/gorhill/uBlock/commit/95a3be9d56)
 - [Improve `[json-prune|trusted-replace]-fetch-response` scriptlets](https://github.com/gorhill/uBlock/commit/88fa550a96)
 
 ----------
