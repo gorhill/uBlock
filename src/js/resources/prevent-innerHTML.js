@@ -48,10 +48,10 @@ export function preventInnerHTML(
     const matcher = safe.initPattern(pattern, { canNegate: true });
     const current = safe.Object_getOwnPropertyDescriptor(Element.prototype, 'innerHTML');
     if ( current === undefined ) { return; }
-    const shouldPreventSet = a => {
+    const shouldPreventSet = (elem, a) => {
         if ( selector !== '' ) {
-            if ( typeof this.matches === 'function' === false ) { return false; }
-            if ( this.matches(selector) === false ) { return false; }
+            if ( typeof elem.matches !== 'function' ) { return false; }
+            if ( elem.matches(selector) === false ) { return false; }
         }
         return safe.testPattern(matcher, a);
     };
@@ -62,7 +62,7 @@ export function preventInnerHTML(
                 : current.value;
         },
         set: function(a) {
-            if ( shouldPreventSet(a) ) {
+            if ( shouldPreventSet(this, a) ) {
                 safe.uboLog(logPrefix, 'Prevented');
             } else if ( current.set ) {
                 current.set.call(this, a);
