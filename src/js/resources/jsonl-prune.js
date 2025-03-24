@@ -54,7 +54,7 @@ function jsonlPruneFn(
             linesAfter.push(lineBefore);
             continue;
         }
-        linesAfter.push(safe.JSON_stringifyFn(objAfter));
+        linesAfter.push(safe.JSON_stringify(objAfter).replace(/\//g, '\\/'));
     }
     return linesAfter.join('\n');
 }
