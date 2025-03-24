@@ -177,7 +177,7 @@ function rulesToDoc(clearHistory) {
     edit.startOperation();
 
     for ( const key in thePanes ) {
-        if ( thePanes.hasOwnProperty(key) === false ) { continue; }
+        if ( Object.hasOwn(thePanes, key) === false ) { continue; }
         const doc = thePanes[key].doc;
         const rules = filterRules(key);
         if (

@@ -251,7 +251,7 @@ const textEncode = (( ) => {
 
     return {
         encode: function(charset, buf) {
-            return encoders.hasOwnProperty(charset) ?
+            return Object.hasOwn(encoders, charset) ?
                 encoders[charset](buf) :
                 buf;
         },

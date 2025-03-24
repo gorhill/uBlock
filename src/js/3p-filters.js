@@ -30,10 +30,6 @@ const obsoleteTemplateString = i18n$('3pExternalListObsolete');
 const reValidExternalList = /^[a-z-]+:\/\/(?:\S+\/\S*|\/\S+)/m;
 const recentlyUpdated = 1 * 60 * 60 * 1000; // 1 hour
 
-// https://eslint.org/docs/latest/rules/no-prototype-builtins
-const hasOwnProperty = (o, p) =>
-    Object.prototype.hasOwnProperty.call(o, p);
-
 let listsetDetails = {};
 
 /******************************************************************************/
@@ -246,7 +242,7 @@ const renderFilterLists = ( ) => {
         }
         for ( const [ listkey, listDetails ] of Object.entries(response.available) ) {
             let groupkey = listDetails.group2 || listDetails.group;
-            if ( hasOwnProperty(listTree, groupkey) === false ) {
+            if ( Object.hasOwn(listTree, groupkey) === false ) {
                 groupkey = 'unknown';
             }
             const groupDetails = listTree[groupkey];
@@ -603,7 +599,7 @@ const selectFilterLists = async ( ) => {
     const toRemove = [];
     for ( const liEntry of qsa$('#lists .listEntry[data-role="leaf"]') ) {
         const listkey = liEntry.dataset.key;
-        if ( hasOwnProperty(listsetDetails.available, listkey) === false ) {
+        if ( Object.hasOwn(listsetDetails.available, listkey) === false ) {
             continue;
         }
         const listDetails = listsetDetails.available[listkey];

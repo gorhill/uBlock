@@ -45,7 +45,7 @@ let details = {};
 
     let lists;
     for ( const rawFilter in response ) {
-        if ( Object.prototype.hasOwnProperty.call(response, rawFilter) ) {
+        if ( Object.hasOwn(response, rawFilter) ) {
             lists = response[rawFilter];
             break;
         }

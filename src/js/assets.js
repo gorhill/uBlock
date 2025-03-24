@@ -47,9 +47,6 @@ let remoteServerFriendly = false;
 
 /******************************************************************************/
 
-const hasOwnProperty = (o, p) =>
-    Object.prototype.hasOwnProperty.call(o, p);
-
 const stringIsNotEmpty = s => typeof s === 'string' && s !== '';
 
 const parseExpires = s => {
@@ -735,7 +732,7 @@ async function assetCacheRead(assetKey, updateReadTime = false) {
     }
 
     if ( bin instanceof Object === false ) { return reportBack(''); }
-    if ( hasOwnProperty(bin, internalKey) === false ) { return reportBack(''); }
+    if ( Object.hasOwn(bin, internalKey) === false ) { return reportBack(''); }
 
     const entry = assetCacheRegistry[assetKey];
     if ( entry === undefined ) { return reportBack(''); }

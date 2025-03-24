@@ -306,9 +306,6 @@ const shouldCompress = (s, options) =>
         options.compressThreshold <= s.length
     );
 
-const hasOwnProperty = (o, p) =>
-    Object.prototype.hasOwnProperty.call(o, p);
-
 /*******************************************************************************
  * 
  * A large Uint is always a positive integer (can be zero), assumed to be
@@ -1155,7 +1152,7 @@ export const getConfig = ( ) => Object.assign({}, currentConfig);
 
 export const setConfig = config => {
     for ( const key in Object.keys(config) ) {
-        if ( hasOwnProperty(defaultConfig, key) === false ) { continue; }
+        if ( Object.hasOwn(defaultConfig, key) === false ) { continue; }
         const val = config[key];
         if ( typeof val !== typeof defaultConfig[key] ) { continue; }
         if ( (validateConfig[key])(val) === false ) { continue; }

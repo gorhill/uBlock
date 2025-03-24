@@ -93,7 +93,7 @@ import µb from './background.js';
 µb.getModifiedSettings = function(edit, orig = {}) {
     const out = {};
     for ( const prop in edit ) {
-        if ( orig.hasOwnProperty(prop) && edit[prop] !== orig[prop] ) {
+        if ( Object.hasOwn(orig, prop) && edit[prop] !== orig[prop] ) {
             out[prop] = edit[prop];
         }
     }
@@ -102,7 +102,7 @@ import µb from './background.js';
 
 µb.settingValueFromString = function(orig, name, s) {
     if ( typeof name !== 'string' || typeof s !== 'string' ) { return; }
-    if ( orig.hasOwnProperty(name) === false ) { return; }
+    if ( Object.hasOwn(orig, name) === false ) { return; }
     let r;
     switch ( typeof orig[name] ) {
     case 'boolean':

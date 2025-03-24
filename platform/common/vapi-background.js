@@ -43,9 +43,6 @@ if ( vAPI.canWASM === false ) {
 
 vAPI.supportsUserStylesheets = vAPI.webextFlavor.soup.has('user_stylesheet');
 
-const hasOwnProperty = (o, p) =>
-    Object.prototype.hasOwnProperty.call(o, p);
-
 /******************************************************************************/
 
 vAPI.app = {
@@ -190,7 +187,7 @@ vAPI.browserSettings = (( ) => {
 
         set: function(details) {
             for ( const setting in details ) {
-                if ( hasOwnProperty(details, setting) === false ) { continue; }
+                if ( Object.hasOwn(details, setting) === false ) { continue; }
                 switch ( setting ) {
                 case 'prefetching': {
                     const enabled = !!details[setting];
@@ -1220,7 +1217,7 @@ vAPI.Net = class {
         {
             const wrrt = browser.webRequest.ResourceType;
             for ( const typeKey in wrrt ) {
-                if ( hasOwnProperty(wrrt, typeKey) ) {
+                if ( Object.hasOwn(wrrt, typeKey) ) {
                     this.validTypes.add(wrrt[typeKey]);
                 }
             }

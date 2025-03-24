@@ -44,10 +44,6 @@ const keysFromGetArg = arg => {
 
 let fastCache = 'indexedDB';
 
-// https://eslint.org/docs/latest/rules/no-prototype-builtins
-const hasOwnProperty = (o, p) =>
-    Object.prototype.hasOwnProperty.call(o, p);
-
 /*******************************************************************************
  * 
  * Extension storage
@@ -76,7 +72,7 @@ const cacheStorage = (( ) => {
             if ( found.length === wanted.length ) { return; }
             const missing = [];
             for ( const key of wanted ) {
-                if ( hasOwnProperty(outbin, key) ) { continue; }
+                if ( Object.hasOwn(outbin, key) ) { continue; }
                 missing.push(key);
             }
             return missing;
@@ -118,7 +114,7 @@ const cacheStorage = (( ) => {
                 if ( argbin instanceof Object === false ) { return; }
                 if ( Array.isArray(argbin) ) { return; }
                 for ( const key of wanted ) {
-                    if ( hasOwnProperty(argbin, key) === false ) { continue; }
+                    if ( Object.hasOwn(argbin, key) === false ) { continue; }
                     outbin[key] = argbin[key];
                 }
             }).then(( ) => {
@@ -187,7 +183,7 @@ const cacheStorage = (( ) => {
         },
 
         select(api) {
-            if ( hasOwnProperty(cacheAPIs, api) === false ) { return fastCache; }
+            if ( Object.hasOwn(cacheAPIs, api) === false ) { return fastCache; }
             fastCache = api;
             for ( const k of Object.keys(cacheAPIs) ) {
                 if ( k === api ) { continue; }
@@ -672,7 +668,7 @@ const idbStorage = (( ) => {
             }
             if ( argbin instanceof Object && Array.isArray(argbin) === false ) {
                 for ( const key of keys ) {
-                    if ( hasOwnProperty(outbin, key) ) { continue; }
+                    if ( Object.hasOwn(outbin, key) ) { continue; }
                     outbin[key] = argbin[key];
                 }
             }

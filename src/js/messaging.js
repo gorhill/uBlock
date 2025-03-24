@@ -58,9 +58,6 @@ import µb from './background.js';
 
 /******************************************************************************/
 
-const hasOwnProperty = (o, p) =>
-    Object.prototype.hasOwnProperty.call(o, p);
-
 // https://github.com/uBlockOrigin/uBlock-issues/issues/710
 //   Listeners have a name and a "privileged" status.
 //   The nameless default handler is always deemed "privileged".
@@ -1095,7 +1092,7 @@ const restoreUserData = async function(request) {
     // Discard unknown setting or setting with default value.
     for ( const key in hiddenSettings ) {
         if (
-            hasOwnProperty(µb.hiddenSettingsDefault, key) === false ||
+            Object.hasOwn(µb.hiddenSettingsDefault, key) === false ||
             hiddenSettings[key] === µb.hiddenSettingsDefault[key]
         ) {
             delete hiddenSettings[key];
@@ -1147,7 +1144,7 @@ const resetUserData = async function() {
 // Filter lists
 const prepListEntries = function(entries) {
     for ( const k in entries ) {
-        if ( hasOwnProperty(entries, k) === false ) { continue; }
+        if ( Object.hasOwn(entries, k) === false ) { continue; }
         const entry = entries[k];
         if ( typeof entry.supportURL === 'string' && entry.supportURL !== '' ) {
             entry.supportName = hostnameFromURI(entry.supportURL);
@@ -1335,7 +1332,7 @@ const getSupportData = async function() {
     let addedListset = {};
     let removedListset = {};
     for ( const listKey in lists ) {
-        if ( hasOwnProperty(lists, listKey) === false ) { continue; }
+        if ( Object.hasOwn(lists, listKey) === false ) { continue; }
         const list = lists[listKey];
         if ( list.content !== 'filters' ) { continue; }
         const used = µb.selectedFilterLists.includes(listKey);

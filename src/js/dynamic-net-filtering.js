@@ -30,7 +30,7 @@ import punycode from '../lib/punycode.js';
 
 // Object.create(null) is used below to eliminate worries about unexpected
 // property names in prototype chain -- and this way we don't have to use
-// hasOwnProperty() to avoid this.
+// Object.hasOwn() to avoid this.
 
 const supportedDynamicTypes = Object.create(null);
 Object.assign(supportedDynamicTypes, {

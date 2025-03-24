@@ -333,7 +333,7 @@ const matchBucket = function(url, hostname, bucket, start) {
     }
 
     // Change -- but only if the user setting actually exists.
-    const mustSave = us.hasOwnProperty(name) && value !== us[name];
+    const mustSave = Object.hasOwn(us, name) && value !== us[name];
     if ( mustSave ) {
         us[name] = value;
     }

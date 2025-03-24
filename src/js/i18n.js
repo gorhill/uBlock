@@ -173,7 +173,7 @@ if ( isBackgroundProcess !== true ) {
             }
             textout += textin.slice(0, match.index);
             let prop = match[0].slice(2, -2);
-            if ( Object.prototype.hasOwnProperty.call(dict, prop) ) {
+            if ( Object.hasOwn(dict, prop) ) {
                 textout += dict[prop].replace(/</g, '&lt;')
                                      .replace(/>/g, '&gt;');
             } else {

@@ -93,7 +93,7 @@ const initWorker = function() {
     };
 
     for ( const listKey in µb.availableFilterLists ) {
-        if ( Object.prototype.hasOwnProperty.call(µb.availableFilterLists, listKey) === false ) {
+        if ( Object.hasOwn(µb.availableFilterLists, listKey) === false ) {
             continue;
         }
         const entry = µb.availableFilterLists[listKey];

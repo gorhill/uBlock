@@ -357,15 +357,15 @@ const onFirstFetchReady = (fetched, adminExtra) => {
 
 const toFetch = (from, fetched) => {
     for ( const k in from ) {
-        if ( from.hasOwnProperty(k) === false ) { continue; }
+        if ( Object.hasOwn(from, k) === false ) { continue; }
         fetched[k] = from[k];
     }
 };
 
 const fromFetch = (to, fetched) => {
     for ( const k in to ) {
-        if ( to.hasOwnProperty(k) === false ) { continue; }
-        if ( fetched.hasOwnProperty(k) === false ) { continue; }
+        if ( Object.hasOwn(to, k) === false ) { continue; }
+        if ( Object.hasOwn(fetched, k) === false ) { continue; }
         to[k] = fetched[k];
     }
 };
