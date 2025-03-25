@@ -244,7 +244,7 @@
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
-    "message": "Page blocked",
+    "message": "Blokeatutako orrialdea",
     "description": "Webpage title for the strict-blocked page"
   },
   "strictblockSentence1": {
@@ -260,31 +260,31 @@
     "description": "Text warning about an incoming redirect"
   },
   "strictblockNoParamsPrompt": {
-    "message": "without parameters",
+    "message": "parametrorik gabe",
     "description": "Label to be used for the parameter-less URL"
   },
   "strictblockBack": {
-    "message": "Go back",
+    "message": "Joan atzera",
     "description": "A button to go back to the previous webpage"
   },
   "strictblockClose": {
-    "message": "Close this window",
+    "message": "Itxi leiho hau",
     "description": "A button to close the current tab"
   },
   "strictblockDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "Ez esan ezer berriz ere orrialde honi buruz",
     "description": "Label for checkbox in document-blocked page"
   },
   "strictblockProceed": {
-    "message": "Proceed",
+    "message": "Aurrera",
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Enter element zapper mode",
+    "message": "Sartu elementua zapper moduan",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
-    "message": "Exit element zapper mode",
+    "message": "Irten elementua zapper moduan",
     "description": "Tooltip for the button used to exit zapper mode"
   }
 }
