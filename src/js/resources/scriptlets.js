@@ -2691,7 +2691,7 @@ function trustedPreventDomBypass(
                     for (;;) {
                         const pos = chain.indexOf('.');
                         if ( pos === -1 ) { break; }
-                        const prop = chain.slice(0, pos)
+                        const prop = chain.slice(0, pos);
                         me = me[prop]; it = it[prop];
                         chain = chain.slice(pos+1);
                     }
