@@ -235,7 +235,7 @@ async function fetchList(assetDetails) {
             }
             fetchedURLs.add(part.url);
             if (
-                assetDetails.trustedSource ||
+                assetDetails.trusted ||
                 part.url.startsWith('https://ublockorigin.github.io/uAssets/filters/')
             ) {
                 newParts.push(`!#trusted on ${secret}`);
