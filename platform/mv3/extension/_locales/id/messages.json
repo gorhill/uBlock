@@ -111,6 +111,10 @@
     "message": "Laporkan masalah filter situs web tertentu ke <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">pelacak masalah <code>uBlockOrigin/uAssets</code></span>. <u>Membutuhkan akun GitHub.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
+  "supportS5H": {
+    "message": "Troubleshooting information",
+    "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
+  },
   "supportS6P1S1": {
     "message": "Untuk menghindari membebani sukarelawan dengan laporan duplikat, harap verifikasi bahwa masalah tersebut belum dilaporkan.",
     "description": "A paragraph in the filter issue reporter section"

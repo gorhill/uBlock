@@ -111,6 +111,10 @@
     "message": "Informa de problemas cos filtros en webs concretas no <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">seguimento de problemas en <code>uBlockOrigin/uAssets</code>. <u>Require unha conta GitHub.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
+  "supportS5H": {
+    "message": "Troubleshooting information",
+    "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
+  },
   "supportS6P1S1": {
     "message": "Para evitar a sobrecarga de traballo para as persoas voluntarias con duplicados dos problemas, comproba que aínda non se informou sobre o problema. <b>Nota:</b> ao premer no botón enviarás a orixe da páxina a GitHub.",
     "description": "A paragraph in the filter issue reporter section"

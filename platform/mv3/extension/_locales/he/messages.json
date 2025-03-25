@@ -111,6 +111,10 @@
     "message": "לדיווח על בעיות באתרים ספציפים יש לפתוח דיווח חדש <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">במעקב הדיווחים של <code>uBlockOrigin/uAssets</code>. <u>נדרש חשבון ב GitHub.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
+  "supportS5H": {
+    "message": "Troubleshooting information",
+    "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
+  },
   "supportS6P1S1": {
     "message": "כדי להימנע מהכבדה על מתנדבים בדווחים כפולים, נא לודא שבעיה דומה טרם דווחה.",
     "description": "A paragraph in the filter issue reporter section"

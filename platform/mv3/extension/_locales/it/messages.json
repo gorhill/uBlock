@@ -111,6 +111,10 @@
     "message": "Segnala i problemi di filtraggio con siti web specifici su <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Richiede un account GitHub.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
+  "supportS5H": {
+    "message": "Troubleshooting information",
+    "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
+  },
   "supportS6P1S1": {
     "message": "Per evitare di gravare sui volontari con segnalazioni duplicate, verifica che il problema non sia già stato segnalato. <b>Nota:</b> cliccando il pulsante l'origine della pagina sarà inviata a GitHub.",
     "description": "A paragraph in the filter issue reporter section"

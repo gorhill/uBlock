@@ -111,6 +111,10 @@
     "message": "Ziņot par aizturēšanas filtru nepilnībām noteiktās vietnēs <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> pieteikumu izsekotājā</span>. <u>Nepieciešams GitHub konts.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
+  "supportS5H": {
+    "message": "Troubleshooting information",
+    "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
+  },
   "supportS6P1S1": {
     "message": "Lai izvairītos no brīvprātīgo noslogošanas ar ziņojumiem, kas atkārtojas, lūgums pārbaudīt, ka par šādu nepilnību jau nav ziņots. <b>Piebilde:</b> klikšķināšana uz pogas izraisīs arī lapas izcelsmes nosūtīšanu uz GitHub.",
     "description": "A paragraph in the filter issue reporter section"

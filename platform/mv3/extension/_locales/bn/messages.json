@@ -111,6 +111,10 @@
     "message": "নির্দিষ্ট ছাঁকনি বিষয়ক সমস্যা এখানে জানাও <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> সমস্যা ট্র্যাকার</span>. <u>গিটহাব অ্যাকাউন্ট প্রয়োজন।</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
+  "supportS5H": {
+    "message": "Troubleshooting information",
+    "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
+  },
   "supportS6P1S1": {
     "message": "একই প্রতিবেদন দুইবার এড়াতে ও স্বেচ্ছাসেবকদের বোঝা কমাতে, অনুগ্রহ করে যাচাই করো যে সমস্যাটি ইতিমধ্যে জানানো হয়নি।",
     "description": "A paragraph in the filter issue reporter section"

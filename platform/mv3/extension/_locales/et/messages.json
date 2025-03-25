@@ -111,6 +111,10 @@
     "message": "Teavita vigasest filtrist kindlate veebilehtedega <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">uBlockOrigin/uAssets</code> vigade andmebaasi kaudu</span>. <u>Nõuab GitHubi kontot.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
+  "supportS5H": {
+    "message": "Troubleshooting information",
+    "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
+  },
   "supportS6P1S1": {
     "message": "Vabatahtlike koormamise vältimiseks samade teadetega veenduge, et keegi pole selle murega juba varem pöördunud. <b>Märge!</b> Nupule klõpsamisega saadetakse GitHubile lehekülje aadress.",
     "description": "A paragraph in the filter issue reporter section"

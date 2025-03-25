@@ -111,6 +111,10 @@
     "message": "Report filter issues with specific websites to the <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
+  "supportS5H": {
+    "message": "Troubleshooting information",
+    "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
+  },
   "supportS6P1S1": {
     "message": "Evit nompas sammañ ar genlabourerien a-youl vat gant meur a zanevell heñvel, gwiriit ma n'eo ket bet danevellet ho kudenn en ar-raok mar plij. <b>Notenn:</b> ma klikit ar bouton e vo kaset anv herberc'hier ar bajenn da c'h-GitHub.",
     "description": "A paragraph in the filter issue reporter section"

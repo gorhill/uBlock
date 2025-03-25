@@ -111,6 +111,10 @@
     "message": "将特定网站的过滤问题报告给<span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>。<u>需要有 GitHub 账户。</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
+  "supportS5H": {
+    "message": "Troubleshooting information",
+    "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
+  },
   "supportS6P1S1": {
     "message": "请确认该问题未曾上报，以避免加重志愿者负担。",
     "description": "A paragraph in the filter issue reporter section"

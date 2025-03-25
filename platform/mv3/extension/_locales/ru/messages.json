@@ -111,6 +111,10 @@
     "message": "Сообщайте о проблемах с фильтрами на определённых сайтах в <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">трекер ошибок <code>uBlockOrigin/uAssets</code></span>. <u>Требуется учётная запись в GitHub.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
+  "supportS5H": {
+    "message": "Troubleshooting information",
+    "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
+  },
   "supportS6P1S1": {
     "message": "Чтобы не обременять добровольцев повторяющимися отчётами, пожалуйста, убедитесь, что об этой проблеме ещё не сообщали. <b>Примечание:</b> щелчок по кнопке приведёт к отправке адреса посещенной страницы GitHub'у.",
     "description": "A paragraph in the filter issue reporter section"

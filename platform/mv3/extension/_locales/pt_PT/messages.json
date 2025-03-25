@@ -111,6 +111,10 @@
     "message": "Relate problemas de filtros em websites específicos no controlador de problemas <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code></span>. <u>Requer uma conta GitHub.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
+  "supportS5H": {
+    "message": "Troubleshooting information",
+    "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
+  },
   "supportS6P1S1": {
     "message": "Para evitar sobrecarregar os voluntários com relatórios duplicados, verifique se o problema ainda não foi relatado. <b>Nota:</b> clicar no botão fará com que a origem da página seja enviada para o GitHub.",
     "description": "A paragraph in the filter issue reporter section"
