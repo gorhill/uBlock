@@ -559,7 +559,8 @@ async function filteringModesToDNR(modes) {
     return Promise.all(promises);
 }
 
-const isDifferentAllowRules = (a, b) => {
+const isDifferentAllowRules = (a = [], b = []) => {
+    if ( a.length !== b.length ) { return true; }
     const pp = [
         'requestDomains',
         'excludedRequestDomains',
@@ -567,8 +568,8 @@ const isDifferentAllowRules = (a, b) => {
         'excludedInitiatorDomains',
     ];
     for ( const p of pp ) {
-        const ac = a?.length && a[0].condition[p] || [];
-        const bc = b?.length && b[0].condition[p] || [];
+        const ac = a.length && a[0].condition[p] || [];
+        const bc = b.length && b[0].condition[p] || [];
         if ( ac.join() !== bc.join() ) { return true; }
     }
     return false;
