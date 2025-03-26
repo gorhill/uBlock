@@ -25,6 +25,7 @@ import {
     parsePropertiesToMatchFn,
 } from './utils.js';
 
+import { JSONPath } from './shared.js';
 import { objectPruneFn } from './object-prune.js';
 import { registerScriptlet } from './base.js';
 import { safeSelf } from './safe-self.js';
@@ -32,36 +33,38 @@ import { safeSelf } from './safe-self.js';
 /******************************************************************************/
 
 function jsonlPruneFn(
-    text = '',
-    rawPrunePaths = '',
-    rawNeedlePaths = ''
+    jsonp,
+    text = ''
 ) {
     const safe = safeSelf();
     const linesBefore = text.split(/\n+/);
     const linesAfter = [];
     for ( const lineBefore of linesBefore ) {
-        let objBefore;
+        let obj;
         try {
-            objBefore = safe.JSON_parse(lineBefore);
+            obj = safe.JSON_parse(lineBefore);
         } catch {
         }
-        if ( typeof objBefore !== 'object' ) {
+        if ( typeof obj !== 'object' || obj === null ) {
             linesAfter.push(lineBefore);
             continue;
         }
-        const objAfter = objectPruneFn(objBefore, rawPrunePaths, rawNeedlePaths);
-        if ( typeof objAfter !== 'object' ) {
+        const paths = jsonp.evaluate(obj);
+        if ( paths.length === 0 ) {
             linesAfter.push(lineBefore);
             continue;
         }
-        linesAfter.push(safe.JSON_stringify(objAfter).replace(/\//g, '\\/'));
+        for ( const path of paths ) {
+            const { obj, key } = jsonp.resolvePath(path);
+            delete obj[key];
+        }
+        linesAfter.push(safe.JSON_stringify(obj).replace(/\//g, '\\/'));
     }
     return linesAfter.join('\n');
 }
 registerScriptlet(jsonlPruneFn, {
     name: 'jsonl-prune.fn',
     dependencies: [
-        objectPruneFn,
         safeSelf,
     ],
 });
@@ -74,11 +77,8 @@ registerScriptlet(jsonlPruneFn, {
  * @description
  * Prune the objects found in a JSONL resource fetched through a XHR instance.
  * 
- * @param rawPrunePaths
- * The property to remove from the objects.
- * 
- * @param rawNeedlePaths
- * A property which must be present for the pruning to take effect.
+ * @param jsonq
+ * A uBO-flavored JSONPath query.
  * 
  * @param [propsToMatch, value]
  * An optional vararg detailing the arguments to match when xhr.open() is
@@ -86,14 +86,14 @@ registerScriptlet(jsonlPruneFn, {
  * 
  * */
 
-function jsonlPruneXhrResponseFn(
-    rawPrunePaths = '',
-    rawNeedlePaths = ''
+function jsonlPruneXhrResponse(
+    jsonq = '',
 ) {
     const safe = safeSelf();
-    const logPrefix = safe.makeLogPrefix('jsonl-prune-xhr-response', rawPrunePaths, rawNeedlePaths);
+    const logPrefix = safe.makeLogPrefix('jsonl-prune-xhr-response', jsonq);
     const xhrInstances = new WeakMap();
-    const extraArgs = safe.getExtraArgs(Array.from(arguments), 2);
+    const jsonp = JSONPath.create(jsonq);
+    const extraArgs = safe.getExtraArgs(Array.from(arguments), 1);
     const propNeedles = parsePropertiesToMatchFn(extraArgs.propsToMatch, 'url');
     self.XMLHttpRequest = class extends self.XMLHttpRequest {
         open(method, url, ...args) {
@@ -127,7 +127,7 @@ function jsonlPruneXhrResponseFn(
             if ( typeof innerResponse !== 'string' ) {
                 return (xhrDetails.response = innerResponse);
             }
-            const outerResponse = jsonlPruneFn(innerResponse, rawPrunePaths, rawNeedlePaths);
+            const outerResponse = jsonlPruneFn(jsonp, innerResponse);
             if ( outerResponse !== innerResponse ) {
                 safe.uboLog(logPrefix, 'Pruned');
             }
@@ -141,25 +141,14 @@ function jsonlPruneXhrResponseFn(
         }
     };
 }
-registerScriptlet(jsonlPruneXhrResponseFn, {
-    name: 'jsonl-prune-xhr-response.fn',
+registerScriptlet(jsonlPruneXhrResponse, {
+    name: 'jsonl-prune-xhr-response.js',
     dependencies: [
+        JSONPath,
         jsonlPruneFn,
         matchObjectPropertiesFn,
         parsePropertiesToMatchFn,
         safeSelf,
-    ],
-});
-
-/******************************************************************************/
-
-function jsonlPruneXhrResponse(...args) {
-    jsonlPruneXhrResponseFn(...args);
-}
-registerScriptlet(jsonlPruneXhrResponse, {
-    name: 'jsonl-prune-xhr-response.js',
-    dependencies: [
-        jsonlPruneXhrResponseFn,
     ],
 });
 
@@ -172,11 +161,8 @@ registerScriptlet(jsonlPruneXhrResponse, {
  * Prune the objects found in a JSONL resource fetched through the fetch API.
  * Once the pruning is performed.
  * 
- * @param rawPrunePaths
- * The property to remove from the objects.
- * 
- * @param rawNeedlePaths
- * A property which must be present for the pruning to take effect.
+ * @param jsonq
+ * A uBO-flavored JSONPath query.
  * 
  * @param [propsToMatch, value]
  * An optional vararg detailing the arguments to match when xhr.open() is
@@ -184,15 +170,15 @@ registerScriptlet(jsonlPruneXhrResponse, {
  * 
  * */
 
-function jsonlPruneFetchResponseFn(
-    rawPrunePaths = '',
-    rawNeedlePaths = ''
+function jsonlPruneFetchResponse(
+    jsonq = ''
 ) {
     const safe = safeSelf();
-    const logPrefix = safe.makeLogPrefix('jsonl-prune-fetch-response', rawPrunePaths, rawNeedlePaths);
+    const logPrefix = safe.makeLogPrefix('jsonl-prune-fetch-response', jsonq);
+    const jsonp = JSONPath.create(jsonq);
     const extraArgs = safe.getExtraArgs(Array.from(arguments), 2);
     const propNeedles = parsePropertiesToMatchFn(extraArgs.propsToMatch, 'url');
-    const logall = rawPrunePaths === '';
+    const logall = jsonq === '';
     const applyHandler = function(target, thisArg, args) {
         const fetchPromise = Reflect.apply(target, thisArg, args);
         if ( propNeedles.size !== 0 ) {
@@ -221,7 +207,7 @@ function jsonlPruneFetchResponseFn(
                     safe.uboLog(logPrefix, textBefore);
                     return responseBefore;
                 }
-                const textAfter = jsonlPruneFn(textBefore, rawPrunePaths, rawNeedlePaths);
+                const textAfter = jsonlPruneFn(jsonp, textBefore);
                 if ( textAfter === textBefore ) { return responseBefore; }
                 safe.uboLog(logPrefix, 'Pruned');
                 const responseAfter = new Response(textAfter, {
@@ -249,25 +235,14 @@ function jsonlPruneFetchResponseFn(
         apply: applyHandler
     });
 }
-registerScriptlet(jsonlPruneFetchResponseFn, {
-    name: 'jsonl-prune-fetch-response.fn',
+registerScriptlet(jsonlPruneFetchResponse, {
+    name: 'jsonl-prune-fetch-response.js',
     dependencies: [
+        JSONPath,
         jsonlPruneFn,
         matchObjectPropertiesFn,
         parsePropertiesToMatchFn,
         safeSelf,
-    ],
-});
-
-/******************************************************************************/
-
-function jsonlPruneFetchResponse(...args) {
-    jsonlPruneFetchResponseFn(...args);
-}
-registerScriptlet(jsonlPruneFetchResponse, {
-    name: 'jsonl-prune-fetch-response.js',
-    dependencies: [
-        jsonlPruneFetchResponseFn,
     ],
 });
 

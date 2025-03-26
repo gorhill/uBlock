@@ -21,24 +21,20 @@
 */
 
 // Code imported from main code base and exposed as injectable scriptlets
-import { ArglistParser } from '../arglist-parser.js';
-
+import { ArglistParser as __ArglistParser__ } from '../arglist-parser.js';
+import { JSONPath as __JSONPath__ } from '../jsonpath.js';
 import { registerScriptlet } from './base.js';
 
 /******************************************************************************/
+
+export const ArglistParser = __ArglistParser__;
 
 registerScriptlet(ArglistParser, {
     name: 'arglist-parser.fn',
 });
 
-/******************************************************************************/
+export const JSONPath = __JSONPath__;
 
-export function createArglistParser(...args) {
-    return new ArglistParser(...args);
-}
-registerScriptlet(createArglistParser, {
-    name: 'create-arglist-parser.fn',
-    dependencies: [
-        ArglistParser,
-    ],
+registerScriptlet(JSONPath, {
+    name: 'jsonpath.fn',
 });

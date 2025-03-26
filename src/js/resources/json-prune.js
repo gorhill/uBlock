@@ -73,7 +73,7 @@ registerScriptlet(jsonPrune, {
 
 /******************************************************************************/
 
-function jsonPruneFetchResponseFn(
+function jsonPruneFetchResponse(
     rawPrunePaths = '',
     rawNeedlePaths = ''
 ) {
@@ -145,8 +145,8 @@ function jsonPruneFetchResponseFn(
         apply: applyHandler
     });
 }
-registerScriptlet(jsonPruneFetchResponseFn, {
-    name: 'json-prune-fetch-response.fn',
+registerScriptlet(jsonPruneFetchResponse, {
+    name: 'json-prune-fetch-response.js',
     dependencies: [
         matchObjectPropertiesFn,
         objectPruneFn,
@@ -157,19 +157,7 @@ registerScriptlet(jsonPruneFetchResponseFn, {
 
 /******************************************************************************/
 
-function jsonPruneFetchResponse(...args) {
-    jsonPruneFetchResponseFn(...args);
-}
-registerScriptlet(jsonPruneFetchResponse, {
-    name: 'json-prune-fetch-response.js',
-    dependencies: [
-        jsonPruneFetchResponseFn,
-    ],
-});
-
-/******************************************************************************/
-
-function jsonPruneXhrResponseFn(
+function jsonPruneXhrResponse(
     rawPrunePaths = '',
     rawNeedlePaths = ''
 ) {
@@ -250,25 +238,13 @@ function jsonPruneXhrResponseFn(
         }
     };
 }
-registerScriptlet(jsonPruneXhrResponseFn, {
-    name: 'json-prune-xhr-response.fn',
+registerScriptlet(jsonPruneXhrResponse, {
+    name: 'json-prune-xhr-response.js',
     dependencies: [
         matchObjectPropertiesFn,
         objectPruneFn,
         parsePropertiesToMatchFn,
         safeSelf,
-    ],
-});
-
-/******************************************************************************/
-
-function jsonPruneXhrResponse(...args) {
-    jsonPruneXhrResponseFn(...args);
-}
-registerScriptlet(jsonPruneXhrResponse, {
-    name: 'json-prune-xhr-response.js',
-    dependencies: [
-        jsonPruneXhrResponseFn,
     ],
 });
 

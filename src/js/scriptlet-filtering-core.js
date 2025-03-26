@@ -35,6 +35,14 @@ const $isolatedWorldMap = new Map();
 
 /******************************************************************************/
 
+// For debugging convenience: all the top function calls will appear
+// at the bottom of a generated content script
+const codeSorter = (a, b) => {
+    if ( a.startsWith('try') ) { return 1; }
+    if ( b.startsWith('try') ) { return -1; }
+    return 0;
+};
+
 const normalizeRawFilter = (parser, sourceIsTrusted = false) => {
     const args = parser.getScriptletArgs();
     if ( args.length !== 0 ) {
@@ -59,6 +67,7 @@ const lookupScriptlet = (rawToken, mainMap, isolatedMap, debug = false) => {
     const details = reng.contentFromName(token, 'text/javascript');
     if ( details === undefined ) { return; }
     const targetWorldMap = details.world !== 'ISOLATED' ? mainMap : isolatedMap;
+    targetWorldMap.set(token, details.js);
     const content = patchScriptlet(details.js, args.slice(1));
     const dependencies = details.dependencies || [];
     while ( dependencies.length !== 0 ) {
@@ -73,22 +82,22 @@ const lookupScriptlet = (rawToken, mainMap, isolatedMap, debug = false) => {
     }
     targetWorldMap.set(rawToken, [
         'try {',
-            '// >>>> scriptlet start',
-            content,
-            '// <<<< scriptlet end',
+            `\t${content}`,
         '} catch (e) {',
-            debug ? 'console.error(e);' : '',
+            debug ? '\tconsole.error(e);' : '',
         '}',
     ].join('\n'));
 };
 
 // Fill-in scriptlet argument placeholders.
 const patchScriptlet = (content, arglist) => {
-    if ( content.startsWith('function') && content.endsWith('}') ) {
-        content = `(${content})({{args}});`;
-    }
-    for ( let i = 0; i < arglist.length; i++ ) {
-        content = content.replace(`{{${i+1}}}`, arglist[i]);
+    const match = /^function\s+([^(\s]+)\s*\(/.exec(content);
+    if ( match ) {
+        content = `${match[1]}({{args}});`;
+    } else {
+        for ( let i = 0; i < arglist.length; i++ ) {
+            content = content.replace(`{{${i+1}}}`, arglist[i]);
+        }
     }
     return content.replace('{{args}}',
         JSON.stringify(arglist).slice(1,-1).replace(/\$/g, '$$$')
@@ -249,11 +258,13 @@ export class ScriptletFilteringEngine {
         for ( const js of $mainWorldMap.values() ) {
             mainWorldCode.push(js);
         }
+        mainWorldCode.sort(codeSorter);
 
         const isolatedWorldCode = [];
         for ( const js of $isolatedWorldMap.values() ) {
             isolatedWorldCode.push(js);
         }
+        isolatedWorldCode.sort(codeSorter);
 
         const scriptletDetails = {
             mainWorld: mainWorldCode.join('\n\n'),
