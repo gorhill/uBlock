@@ -16,6 +16,9 @@
 .matchInfo:nth-of-type(2n) {
     background-color: lightgray;
 }
+html.dark .matchInfo:nth-of-type(2n) {
+    background-color: #444;
+}
 
 .requestInfo {
     border-inline-end: 1px dotted black;
