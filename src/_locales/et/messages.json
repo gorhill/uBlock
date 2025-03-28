@@ -900,11 +900,11 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Loo uus aruanne",
+    "message": "Loo GitHubis uus aruanne",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Leia sarnaseid aruandeid",
+    "message": "Leia GitHubist sarnaseid aruandeid",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -964,7 +964,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Vabatahtlike koormuse vähendamiseks veendu, et probleemi pole juba teatatud.",
+    "message": "Vabatahtlike koormuse vähendamiseks palun veendu, et probleemi ei ole juba teatatud. <b>Märkus:</b> nupu klõpsamine saadab lehe aadressi GitHubi.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {

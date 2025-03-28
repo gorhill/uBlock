@@ -112,7 +112,7 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting information",
+    "message": "Дыягнастычныя звесткі",
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
@@ -284,11 +284,11 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Enter element zapper mode",
+    "message": "Перайсці ў рэжым імгненнага хавання элементаў",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
-    "message": "Exit element zapper mode",
+    "message": "Выйсці з рэжыму імгненнага хавання элементаў",
     "description": "Tooltip for the button used to exit zapper mode"
   }
 }

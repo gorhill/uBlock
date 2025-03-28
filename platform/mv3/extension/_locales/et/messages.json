@@ -112,7 +112,7 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting information",
+    "message": "Tõrkeotsingu teave",
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
@@ -120,7 +120,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Leidke sarnased aruanded",
+    "message": "Leia GitHubist sarnaseid aruandeid",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -168,7 +168,7 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Loo uus aruanne",
+    "message": "Loo GitHubis uus aruanne",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "firstRunSectionLabel": {
