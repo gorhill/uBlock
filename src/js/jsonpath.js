@@ -20,7 +20,60 @@
 
 */
 
-/******************************************************************************/
+/**
+ * Implement the parsing of uBO-flavored JSON path syntax
+ * 
+ * Reference to original JSON path syntax:
+ * https://goessner.net/articles/JsonPath/index.html
+ * 
+ * uBO-flavored JSON path implementation differs as follow:
+ * 
+ * - Both $ and @ are implicit. Though you can use them, you do not have to.
+ *   Use $ only when the implicit context is not that of root. Example:
+ *   -     Official: $..book[?(@.isbn)]
+ *   - uBO-flavored: ..book[?(.isbn)]
+ * 
+ * - uBO-flavor syntax do not (yet) support:
+ *   - Union (,) operator.
+ *   - Array slice operator
+ * 
+ * - Regarding filter expressions, uBO-flavored JSON path supports a limited
+ *   set of expressions since unlike the official implementation, uBO can't use
+ *   JS eval() to evaluate arbitrary JS expressions. The operand MUST be valid
+ *   JSON. The currently supported expressions are:
+ *   - ==: strict equality
+ *   - !=: strict inequality
+ *   -  <: less than
+ *   - <=: less than or equal to
+ *   -  >: greater than
+ *   - >=: greater than or equal to
+ *   - ^=: stringified value starts with 
+ *   - $=: stringified value ends with
+ *   - *=: stringified value includes
+ * 
+ * - Examples (from "JSONPath examples" at reference link)
+ *   - .store.book[*].author
+ *   - ..author
+ *   - .store.*
+ *   - .store..price
+ *   - ..book[2]
+ *   - ..book[?(.isbn)]
+ *   - ..book[?(.price<10)]
+ *   - ..*
+ * 
+ * uBO-flavored syntax supports assigning a value to a resolved JSON path by
+ * appending `=[value]` to the JSON path. The assigned value MUST be valid JSON.
+ * Examples:
+ * - .store..price=0
+ * - .store.book[*].author="redacted"
+ *
+ * A JSONPath instance can be use to compile a JSON path query, and the result
+ * of the compilation can be applied to different objects. When a JSON path
+ * query does not assign a value, the resolved property will be removed.
+ * 
+ * More capabilities can be added in the future as needed.
+ * 
+ * */
 
 export class JSONPath {
     static create(query) {
