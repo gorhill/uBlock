@@ -28,26 +28,62 @@ export class JSONPath {
         jsonp.compile(query);
         return jsonp;
     }
+    static toJSON(obj, stringifier, ...args) {
+        return (stringifier || JSON.stringify)(obj, ...args)
+            .replace(/\//g, '\\/');
+    }
+    get value() {
+        return this.#compiled && this.#compiled.rval;
+    }
+    set value(v) {
+        if ( this.#compiled === undefined ) { return; }
+        this.#compiled.rval = v;
+    }
+    get valid() {
+        return this.#compiled !== undefined;
+    }
     compile(query) {
-        this.#compiled = this.#compile(query, 0);
-        return this.#compiled ? this.#compiled.i : 0;
+        const r = this.#compile(query, 0);
+        if ( r === undefined ) { return; }
+        if ( r.i !== query.length ) {
+            if ( query.startsWith('=', r.i) === false ) { return; }
+            try { r.rval = JSON.parse(query.slice(r.i+1)); }
+            catch { return; }
+        }
+        this.#compiled = r;
     }
     evaluate(root) {
-        if ( this.#compiled === undefined ) { return []; }
-        this.root = root;
-        return this.#evaluate(this.#compiled.steps, []);
+        if ( this.valid === false ) { return []; }
+        this.#root = root;
+        const paths = this.#evaluate(this.#compiled.steps, []);
+        this.#root = null;
+        return paths;
     }
-    resolvePath(path) {
-        if ( path.length === 0 ) { return { value: this.root }; }
-        const key = path.at(-1);
-        let obj = this.root
-        for ( let i = 0, n = path.length-1; i < n; i++ ) {
-            obj = obj[path[i]];
+    apply(root) {
+        if ( this.valid === false ) { return 0; }
+        const { rval } = this.#compiled;
+        this.#root = root;
+        const paths = this.#evaluate(this.#compiled.steps, []);
+        const n = paths.length;
+        let i = n;
+        while ( i-- ) {
+            const { obj, key } = this.#resolvePath(paths[i]);
+            if ( rval !== undefined ) {
+                obj[key] = rval;
+            } else if ( Array.isArray(obj) && typeof key === 'number' ) {
+                obj.splice(key, 1);
+            } else {
+                delete obj[key];
+            }
         }
-        return { obj, key, value: obj[key] };
+        this.#root = null;
+        return n;
     }
-    toString() {
-        return JSON.stringify(this.#compiled);
+    toJSON(obj, ...args) {
+        return JSONPath.toJSON(obj, null, ...args)
+    }
+    get [Symbol.toStringTag]() {
+        return 'JSONPath';
     }
     #UNDEFINED = 0;
     #ROOT = 1;
@@ -57,6 +93,7 @@ export class JSONPath {
     #reUnquotedIdentifier = /^[A-Za-z_][\w]*|^\*/;
     #reExpr = /^([!=^$*]=|[<>]=?)(.+?)\)\]/;
     #reIndice = /^\[-?\d+\]/;
+    #root;
     #compiled;
     #compile(query, i) {
         if ( query.length === 0 ) { return; }
@@ -88,7 +125,7 @@ export class JSONPath {
                 if ( mv === this.#UNDEFINED ) {
                     const step = steps.at(-1);
                     if ( step === undefined ) { return; }
-                    i = this.#compileExpr(step, query, i);
+                    i = this.#compileExpr(query, step, i);
                     break;
                 }
                 const s = this.#consumeUnquotedIdentifier(query, i);
@@ -166,7 +203,7 @@ export class JSONPath {
         const listout = [];
         const recursive = step.mv === this.#DESCENDANTS;
         for ( const pathin of listin ) {
-            const { value: v } = this.resolvePath(pathin);
+            const { value: v } = this.#resolvePath(pathin);
             if ( v === null ) { continue; }
             if ( v === undefined ) { continue; }
             const { steps, k } = step;
@@ -298,7 +335,7 @@ export class JSONPath {
         if ( match === null ) { return; }
         return match[0];
     }
-    #compileExpr(step, query, i) {
+    #compileExpr(query, step, i) {
         const match = this.#reExpr.exec(query.slice(i));
         if ( match === null ) { return i; }
         try {
@@ -308,8 +345,17 @@ export class JSONPath {
         }
         return i + match[1].length + match[2].length;
     }
+    #resolvePath(path) {
+        if ( path.length === 0 ) { return { value: this.#root }; }
+        const key = path.at(-1);
+        let obj = this.#root
+        for ( let i = 0, n = path.length-1; i < n; i++ ) {
+            obj = obj[path[i]];
+        }
+        return { obj, key, value: obj[key] };
+    }
     #evaluateExpr(step, path, out) {
-        const { obj: o, key: k } = this.resolvePath(path);
+        const { obj: o, key: k } = this.#resolvePath(path);
         const hasOwn = o instanceof Object && Object.hasOwn(o, k);
         const v = o[k];
         let outcome = true;

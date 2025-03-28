@@ -625,19 +625,60 @@ function textResponseFilterer(session, directives) {
             continue;
         }
         const { refs } = directive;
+        if ( refs.$cache !== null ) {
+            const { jsonp } = refs.$cache;
+            if ( jsonp && jsonp.apply === undefined ) {
+                refs.$cache = null;
+            }
+        }
         if ( refs.$cache === null ) {
             refs.$cache = sfp.parseReplaceValue(refs.value);
         }
         const cache = refs.$cache;
         if ( cache === undefined ) { continue; }
-        cache.re.lastIndex = 0;
-        if ( cache.re.test(session.getString()) !== true ) { continue; }
-        cache.re.lastIndex = 0;
-        session.setString(session.getString().replace(
-            cache.re,
-            cache.replacement
-        ));
-        applied.push(directive);
+        switch ( cache.type ) {
+        case 'json': {
+            const json = session.getString();
+            let obj;
+            try { obj = JSON.parse(json); } catch { break; }
+            if ( cache.jsonp.apply(obj) === 0 ) { break; }
+            session.setString(cache.jsonp.toJSON(obj));
+            applied.push(directive);
+            break;
+        }
+        case 'jsonl': {
+            const linesBefore = session.getString().split(/\n+/);
+            const linesAfter = [];
+            for ( const lineBefore of linesBefore ) {
+                let obj;
+                try { obj = JSON.parse(lineBefore); } catch { }
+                if ( typeof obj !== 'object' || obj === null ) {
+                    linesAfter.push(lineBefore);
+                    continue;
+                }
+                if ( cache.jsonp.apply(obj) === 0 ) {
+                    linesAfter.push(lineBefore);
+                    continue;
+                }
+                linesAfter.push(cache.jsonp.toJSON(obj));
+            }
+            session.setString(linesAfter.join('\n'));
+            break;
+        }
+        case 'text': {
+            cache.re.lastIndex = 0;
+            if ( cache.re.test(session.getString()) !== true ) { break; }
+            cache.re.lastIndex = 0;
+            session.setString(session.getString().replace(
+                cache.re,
+                cache.replacement
+            ));
+            applied.push(directive);
+            break;
+        }
+        default:
+            break;
+        }
     }
     if ( applied.length === 0 ) { return; }
     if ( logger.enabled !== true ) { return; }

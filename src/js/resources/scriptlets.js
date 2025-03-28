@@ -22,8 +22,8 @@
 
 import './attribute.js';
 import './href-sanitizer.js';
+import './json-edit.js';
 import './json-prune.js';
-import './jsonl-prune.js';
 import './noeval.js';
 import './object-prune.js';
 import './prevent-innerHTML.js';

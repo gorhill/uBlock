@@ -21,6 +21,7 @@
 
 import * as cssTree from '../lib/csstree/css-tree.js';
 import { ArglistParser } from './arglist-parser.js';
+import { JSONPath } from './jsonpath.js';
 import Regex from '../lib/regexanalyzer/regex.js';
 
 /*******************************************************************************
@@ -1472,7 +1473,7 @@ export class AstFilterParser {
                 break;
             }
             const value = this.getNetOptionValue(NODE_TYPE_NET_OPTION_NAME_URLTRANSFORM);
-            if ( value !== '' && parseReplaceValue(value) === undefined ) {
+            if ( value !== '' && parseReplacebyRegexValue(value) === undefined ) {
                 this.astError = AST_ERROR_OPTION_BADVALUE;
                 realBad = true;
             }
@@ -3028,7 +3029,7 @@ export function parseHeaderValue(arg) {
 
 // https://adguard.com/kb/general/ad-filtering/create-own-filters/#replace-modifier
 
-export function parseReplaceValue(s) {
+export function parseReplacebyRegexValue(s) {
     if ( s.charCodeAt(0) !== 0x2F /* / */ ) { return; }
     const parser = new ArglistParser('/');
     parser.nextArg(s, 1);
@@ -3051,6 +3052,23 @@ export function parseReplaceValue(s) {
     try {
         return { re: new RegExp(pattern, flags), replacement };
     } catch {
+    }
+}
+
+export function parseReplaceValue(s) {
+    if ( s.startsWith('/') ) {
+        const r = parseReplacebyRegexValue(s);
+        if ( r ) { r.type = 'text'; }
+        return r;
+    }
+    const pos = s.indexOf(':');
+    if ( pos === -1 ) { return; }
+    const type = s.slice(0, pos);
+    if ( type === 'json' || type === 'jsonl' ) {
+        const query = s.slice(pos+1);
+        const jsonp = JSONPath.create(query);
+        if ( jsonp.valid === false ) { return; }
+        return { type, jsonp };
     }
 }
 

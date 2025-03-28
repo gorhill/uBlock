@@ -5412,7 +5412,7 @@ StaticNetFilteringEngine.prototype.transformRequest = function(fctxt, out = []) 
             continue;
         }
         if ( directive.cache === null ) {
-            directive.cache = sfp.parseReplaceValue(directive.value);
+            directive.cache = sfp.parseReplaceByRegexValue(directive.value);
         }
         const cache = directive.cache;
         if ( cache === undefined ) { continue; }
