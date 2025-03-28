@@ -21,7 +21,7 @@
 */
 
 /**
- * Implement the parsing of uBO-flavored JSON path syntax
+ * Implement the parsing of uBO-flavored JSON path queries.
  * 
  * Reference to original JSON path syntax:
  * https://goessner.net/articles/JsonPath/index.html
@@ -33,7 +33,7 @@
  *   -     Official: $..book[?(@.isbn)]
  *   - uBO-flavored: ..book[?(.isbn)]
  * 
- * - uBO-flavor syntax do not (yet) support:
+ * - uBO-flavor syntax does not (yet) support:
  *   - Union (,) operator.
  *   - Array slice operator
  * 
@@ -62,8 +62,8 @@
  *   - ..*
  * 
  * uBO-flavored syntax supports assigning a value to a resolved JSON path by
- * appending `=[value]` to the JSON path. The assigned value MUST be valid JSON.
- * Examples:
+ * appending `=[value]` to the JSON path query. The assigned value MUST be
+ * valid JSON. Examples:
  * - .store..price=0
  * - .store.book[*].author="redacted"
  *
