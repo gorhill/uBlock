@@ -526,28 +526,25 @@ async function start() {
 
 /******************************************************************************/
 
-const isFullyInitialized = new Promise(resolve => {
-    // https://github.com/uBlockOrigin/uBOL-home/issues/199
-    // Force a restart of the extension once when an "internal error" occurs
-    start().then(( ) => {
-        localRemove('goodStart');
-        return false;
-    }).catch(reason => {
-        console.trace(reason);
-        if ( process.wakeupRun ) { return; }
-        return localRead('goodStart').then(goodStart => {
-            if ( goodStart === false ) {
-                localRemove('goodStart');
-                return false;
-            }
-            return localWrite('goodStart', false).then(( ) => true);
-        });
-    }).then(restart => {
-        if ( restart !== true ) { return; }
-        runtime.reload();
-    }).finally(( ) => {
-        resolve(true);
+// https://github.com/uBlockOrigin/uBOL-home/issues/199
+// Force a restart of the extension once when an "internal error" occurs
+
+const isFullyInitialized = start().then(( ) => {
+    localRemove('goodStart');
+    return false;
+}).catch(reason => {
+    console.trace(reason);
+    if ( process.wakeupRun ) { return; }
+    return localRead('goodStart').then(goodStart => {
+        if ( goodStart === false ) {
+            localRemove('goodStart');
+            return false;
+        }
+        return localWrite('goodStart', false).then(( ) => true);
     });
+}).then(restart => {
+    if ( restart !== true ) { return; }
+    runtime.reload();
 });
 
 runtime.onMessage.addListener((request, sender, callback) => {
