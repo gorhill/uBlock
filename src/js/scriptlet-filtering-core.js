@@ -67,8 +67,10 @@ const lookupScriptlet = (rawToken, mainMap, isolatedMap, debug = false) => {
     const details = reng.contentFromName(token, 'text/javascript');
     if ( details === undefined ) { return; }
     const targetWorldMap = details.world !== 'ISOLATED' ? mainMap : isolatedMap;
-    targetWorldMap.set(token, details.js);
     const content = patchScriptlet(details.js, args.slice(1));
+    if ( content.startsWith('(function(') === false ) {
+        targetWorldMap.set(token, details.js);
+    }
     const dependencies = details.dependencies || [];
     while ( dependencies.length !== 0 ) {
         const token = dependencies.shift();
@@ -291,7 +293,7 @@ export class ScriptletFilteringEngine {
                 options.debugScriptlets ? 'debugger;' : ';',
                 '',
                 // For use by scriptlets to share local data among themselves
-                `const scriptletGlobals = ${JSON.stringify(scriptletGlobals, null, 4)}`,
+                `const scriptletGlobals = ${JSON.stringify(scriptletGlobals, null, 4)};`,
                 '',
                 scriptletDetails.mainWorld,
                 '',
@@ -305,7 +307,7 @@ export class ScriptletFilteringEngine {
                 options.debugScriptlets ? 'debugger;' : ';',
                 '',
                 // For use by scriptlets to share local data among themselves
-                `const scriptletGlobals = ${JSON.stringify(scriptletGlobals, null, 4)}`,
+                `const scriptletGlobals = ${JSON.stringify(scriptletGlobals, null, 4)};`,
                 '',
                 scriptletDetails.isolatedWorld,
                 '',
