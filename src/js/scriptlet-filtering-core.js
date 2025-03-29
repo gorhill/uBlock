@@ -67,8 +67,10 @@ const lookupScriptlet = (rawToken, mainMap, isolatedMap, debug = false) => {
     const details = reng.contentFromName(token, 'text/javascript');
     if ( details === undefined ) { return; }
     const targetWorldMap = details.world !== 'ISOLATED' ? mainMap : isolatedMap;
-    const content = patchScriptlet(details.js, args.slice(1));
-    if ( content.startsWith('(function(') === false ) {
+    const match = /^function\s+([^(\s]+)\s*\(/.exec(details.js);
+    const fname = match && match[1];
+    const content = patchScriptlet(fname, details.js, args.slice(1));
+    if ( fname ) {
         targetWorldMap.set(token, details.js);
     }
     const dependencies = details.dependencies || [];
@@ -92,10 +94,9 @@ const lookupScriptlet = (rawToken, mainMap, isolatedMap, debug = false) => {
 };
 
 // Fill-in scriptlet argument placeholders.
-const patchScriptlet = (content, arglist) => {
-    const match = /^function\s+([^(\s]+)\s*\(/.exec(content);
-    if ( match ) {
-        content = `${match[1]}({{args}});`;
+const patchScriptlet = (fname, content, arglist) => {
+    if ( fname ) {
+        content = `${fname}({{args}});`;
     } else {
         for ( let i = 0; i < arglist.length; i++ ) {
             content = content.replace(`{{${i+1}}}`, arglist[i]);
