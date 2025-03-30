@@ -1,3 +1,4 @@
+- [Code viewer shouldn't be maximizable](https://github.com/gorhill/uBlock/commit/97e740bd2c)
 - [Add `json-edit` suite of scriptlets; extend `replace=` option](https://github.com/gorhill/uBlock/commit/b18daa53aa)
 - [Improve `trusted-prevent-dom-bypass` scriptlet](https://github.com/gorhill/uBlock/commit/68a256bdde)
 - [Add `jsonl-prune-xhr-response`/`jsonl-prune-fetch-response` scriptlets](https://github.com/gorhill/uBlock/commit/95a3be9d56)
