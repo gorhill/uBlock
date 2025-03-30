@@ -34,7 +34,6 @@
  *   - uBO-flavored: ..book[?(.isbn)]
  * 
  * - uBO-flavor syntax does not (yet) support:
- *   - Union (,) operator.
  *   - Array slice operator
  * 
  * - Regarding filter expressions, uBO-flavored JSON path supports a limited
@@ -96,6 +95,7 @@ export class JSONPath {
         return this.#compiled !== undefined;
     }
     compile(query) {
+        this.#compiled = undefined;
         const r = this.#compile(query, 0);
         if ( r === undefined ) { return; }
         if ( r.i !== query.length ) {
@@ -132,6 +132,9 @@ export class JSONPath {
         this.#root = null;
         return n;
     }
+    dump() {
+        return JSON.stringify(this.#compiled);
+    }
     toJSON(obj, ...args) {
         return JSONPath.toJSON(obj, null, ...args)
     }
@@ -145,7 +148,7 @@ export class JSONPath {
     #DESCENDANTS = 4;
     #reUnquotedIdentifier = /^[A-Za-z_][\w]*|^\*/;
     #reExpr = /^([!=^$*]=|[<>]=?)(.+?)\)\]/;
-    #reIndice = /^\[-?\d+\]/;
+    #reIndice = /^-?\d+/;
     #root;
     #compiled;
     #compile(query, i) {
@@ -189,22 +192,6 @@ export class JSONPath {
                 continue;
             }
             // Bracket accessor syntax
-            if ( query.startsWith('[*]', i) ) {
-                mv ||= this.#CHILDREN;
-                steps.push({ mv, k: '*' });
-                i += 3;
-                mv = this.#UNDEFINED;
-                continue;
-            }
-            if ( query.startsWith("['", i) ) {
-                const r = this.#consumeQuotedIdentifier(query, i+2);
-                if ( r === undefined ) { return; }
-                mv ||= this.#CHILDREN;
-                steps.push({ mv, k: r.s });
-                i = r.i;
-                mv = this.#UNDEFINED;
-                continue;
-            }
             if ( query.startsWith('[?(', i) ) {
                 const not = query.charCodeAt(i+3) === 0x21 /* ! */;
                 const j = i + 3 + (not ? 1 : 0);
@@ -217,16 +204,19 @@ export class JSONPath {
                 mv = this.#UNDEFINED;
                 continue;
             }
-            if ( this.#reIndice.test(query.slice(i)) ) {
-                const match = this.#reIndice.exec(query.slice(i));
-                const indice = parseInt(query.slice(i+1), 10);
-                mv ||= this.CHILDREN;
-                steps.push({ mv, k: indice });
-                i += match[0].length;
+            if ( query.startsWith('[*]', i) ) {
+                mv ||= this.#CHILDREN;
+                steps.push({ mv, k: '*' });
+                i += 3;
                 mv = this.#UNDEFINED;
                 continue;
             }
-            return;
+            const r = this.#consumeIdentifier(query, i+1);
+            if ( r === undefined ) { return; }
+            mv ||= this.#CHILDREN;
+            steps.push({ mv, k: r.s });
+            i = r.i + 1;
+            mv = this.#UNDEFINED;
         }
         if ( steps.length <= 1 ) { return; }
         return { steps, i };
@@ -254,64 +244,62 @@ export class JSONPath {
     }
     #getMatches(listin, step) {
         const listout = [];
-        const recursive = step.mv === this.#DESCENDANTS;
         for ( const pathin of listin ) {
-            const { value: v } = this.#resolvePath(pathin);
-            if ( v === null ) { continue; }
-            if ( v === undefined ) { continue; }
-            const { steps, k } = step;
-            if ( k ) {
-                if ( k === '*' ) {
-                    const entries = Array.from(this.#getDescendants(v, recursive));
-                    for ( const { path } of entries ) {
-                        this.#evaluateExpr(step, [ ...pathin, ...path ], listout);
-                    }
-                    continue;
-                }
-                if ( typeof k === 'number' ) {
-                    if ( Array.isArray(v) === false ) { continue; }
-                    const n = v.length;
-                    const i = k >= 0 ? k : n + k;
-                    if ( i < 0 ) { continue; }
-                    if ( i >= n ) { continue; }
-                    this.#evaluateExpr(step, [ ...pathin, i ], listout);
-                } else if ( Array.isArray(k) ) {
-                    for ( const l of k ) {
-                        this.#evaluateExpr(step, [ ...pathin, l ], listout);
-                    }
-                } else {
-                    this.#evaluateExpr(step, [ ...pathin, k ], listout);
-                }
-                if ( recursive !== true ) { continue; }
-                for ( const { obj, key, path } of this.#getDescendants(v, recursive) ) {
-                    const w = obj[key];
-                    if ( w instanceof Object === false ) { continue; }
-                    if ( Object.hasOwn(w, k) === false ) { continue; }
-                    this.#evaluateExpr(step, [ ...pathin, ...path, k ], listout);
-                }
-                continue;
-            }
-            if ( steps ) {
-                const isArray = Array.isArray(v);
-                if ( isArray === false ) {
-                    const r = this.#evaluate(steps, pathin);
-                    if ( r.length !== 0 ) {
-                        listout.push(pathin);
-                    }
-                    if ( recursive !== true ) { continue; }
-                }
-                for ( const { obj, key, path } of this.#getDescendants(v, recursive) ) {
-                    const w = obj[key];
-                    if ( Array.isArray(w) ) { continue; }
-                    const x = [ ...pathin, ...path ];
-                    const r = this.#evaluate(steps, x);
-                    if ( r.length !== 0 ) {
-                        listout.push(x);
-                    }
-                }
+            const { value: owner } = this.#resolvePath(pathin);
+            if ( step.k === '*' ) {
+                this.#getMatchesFromAll(pathin, step, owner, listout);
+            } else if ( step.k !== undefined ) {
+                this.#getMatchesFromKeys(pathin, step, owner, listout);
+            } else if ( step.steps ) {
+                this.#getMatchesFromExpr(pathin, step, owner, listout);
             }
         }
         return listout;
+    }
+    #getMatchesFromAll(pathin, step, owner, out) {
+        const recursive = step.mv === this.#DESCENDANTS;
+        for ( const { path } of this.#getDescendants(owner, recursive) ) {
+            out.push([ ...pathin, ...path ]);
+        }
+    }
+    #getMatchesFromKeys(pathin, step, owner, out) {
+        const kk = Array.isArray(step.k) ? step.k : [ step.k ];
+        for ( const k of kk ) {
+            const normalized = this.#evaluateExpr(step, owner, k);
+            if ( normalized === undefined ) { continue; }
+            out.push([ ...pathin, normalized ]);
+        }
+        if ( step.mv !== this.#DESCENDANTS ) { return; }
+        for ( const { obj, key, path } of this.#getDescendants(owner, true) ) {
+            for ( const k of kk ) {
+                const normalized = this.#evaluateExpr(step, obj[key], k);
+                if ( normalized === undefined ) { continue; }
+                out.push([ ...pathin, ...path, normalized ]);
+            }
+        }
+    }
+    #getMatchesFromExpr(pathin, step, owner, out) {
+        const recursive = step.mv === this.#DESCENDANTS;
+        if ( Array.isArray(owner) === false ) {
+            const r = this.#evaluate(step.steps, pathin);
+            if ( r.length !== 0 ) { out.push(pathin); }
+            if ( recursive !== true ) { return; }
+        }
+        for ( const { obj, key, path } of this.#getDescendants(owner, recursive) ) {
+            if ( Array.isArray(obj[key]) ) { continue; }
+            const q = [ ...pathin, ...path ];
+            const r = this.#evaluate(step.steps, q);
+            if ( r.length === 0 ) { continue; }
+            out.push(q);
+        }
+    }
+    #normalizeKey(owner, key) {
+        if ( typeof key === 'number' ) {
+            if ( Array.isArray(owner) ) {
+                return key >= 0 ? key : owner.length + key;
+            }
+        }
+        return key;
     }
     #getDescendants(v, recursive) {
         const iterator = {
@@ -358,6 +346,37 @@ export class JSONPath {
         }
         return iterator;
     }
+    #consumeIdentifier(query, i) {
+        const keys = [];
+        for (;;) {
+            const c0 = query.charCodeAt(i);
+            if ( c0 === 0x5D /* ] */ ) { break; }
+            if ( c0 === 0x2C /* , */ ) {
+                i += 1;
+                continue;
+            }
+            if ( c0 === 0x27 /* ' */ ) {
+                const r = this.#consumeQuotedIdentifier(query, i+1);
+                if ( r === undefined ) { return; }
+                keys.push(r.s);
+                i = r.i;
+                continue;
+            }
+            if ( c0 === 0x2D /* - */ || c0 >= 0x30 && c0 <= 0x39 ) {
+                const match = this.#reIndice.exec(query.slice(i));
+                if ( match === null ) { return; }
+                const indice = parseInt(query.slice(i), 10);
+                keys.push(indice);
+                i += match[0].length;
+                continue;
+            }
+            const s = this.#consumeUnquotedIdentifier(query, i);
+            if ( s === undefined ) { return; }
+            keys.push(s);
+            i += s.length;
+        }
+        return { s: keys.length === 1 ? keys[0] : keys, i };
+    }
     #consumeQuotedIdentifier(query, i) {
         const len = query.length;
         const parts = [];
@@ -366,9 +385,8 @@ export class JSONPath {
             if ( end === len ) { return; }
             const c = query.charCodeAt(end);
             if ( c === 0x27 /* ' */ ) {
-                if ( query.startsWith("']", end) === false ) { return; }
                 parts.push(query.slice(beg, end));
-                end += 2;
+                end += 1;
                 break;
             }
             if ( c === 0x5C /* \ */ && (end+1) < len ) {
@@ -407,25 +425,29 @@ export class JSONPath {
         }
         return { obj, key, value: obj[key] };
     }
-    #evaluateExpr(step, path, out) {
-        const { obj: o, key: k } = this.#resolvePath(path);
-        const hasOwn = o instanceof Object && Object.hasOwn(o, k);
-        const v = o[k];
-        let outcome = true;
-        if ( step.op !== undefined && hasOwn === false ) { return; }
-        switch ( step.op ) {
-        case '==': outcome = v === step.rval; break;
-        case '!=': outcome = v !== step.rval; break;
-        case '<': outcome = v < step.rval; break;
-        case '<=': outcome = v <= step.rval; break;
-        case '>': outcome = v > step.rval; break;
-        case '>=': outcome = v >= step.rval; break;
-        case '^=': outcome = `${v}`.startsWith(step.rval); break;
-        case '$=': outcome = `${v}`.endsWith(step.rval); break;
-        case '*=': outcome = `${v}`.includes(step.rval); break;
-        default: outcome = hasOwn; break;
+    #evaluateExpr(step, owner, key) {
+        if ( owner === undefined || owner === null ) { return; }
+        if ( typeof key === 'number' ) {
+            if ( Array.isArray(owner) === false ) { return; }
         }
-        if ( outcome === (step.not === true) ) { return; }
-        out.push(path);
+        const k = this.#normalizeKey(owner, key);
+        const hasOwn = Object.hasOwn(owner, k);
+        if ( step.op !== undefined && hasOwn === false ) { return; }
+        const target = step.not !== true;
+        const v = owner[k];
+        let outcome = false;
+        switch ( step.op ) {
+        case '==': outcome = (v === step.rval) === target; break;
+        case '!=': outcome = (v !== step.rval) === target; break;
+        case  '<': outcome = (v < step.rval) === target; break;
+        case '<=': outcome = (v <= step.rval) === target; break;
+        case  '>': outcome = (v > step.rval) === target; break;
+        case '>=': outcome = (v >= step.rval) === target; break;
+        case '^=': outcome = `${v}`.startsWith(step.rval) === target; break;
+        case '$=': outcome = `${v}`.endsWith(step.rval) === target; break;
+        case '*=': outcome = `${v}`.includes(step.rval) === target; break;
+        default: outcome = hasOwn === target; break;
+        }
+        if ( outcome ) { return k; }
     }
 }
