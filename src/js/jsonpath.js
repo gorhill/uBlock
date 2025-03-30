@@ -147,7 +147,7 @@ export class JSONPath {
     #CHILDREN = 3;
     #DESCENDANTS = 4;
     #reUnquotedIdentifier = /^[A-Za-z_][\w]*|^\*/;
-    #reExpr = /^([!=^$*]=|[<>]=?)(.+?)\)\]/;
+    #reExpr = /^([!=^$*]=|[<>]=?)(.+?)\]/;
     #reIndice = /^-?\d+/;
     #root;
     #compiled;
@@ -192,15 +192,15 @@ export class JSONPath {
                 continue;
             }
             // Bracket accessor syntax
-            if ( query.startsWith('[?(', i) ) {
-                const not = query.charCodeAt(i+3) === 0x21 /* ! */;
-                const j = i + 3 + (not ? 1 : 0);
+            if ( query.startsWith('[?', i) ) {
+                const not = query.charCodeAt(i+2) === 0x21 /* ! */;
+                const j = i + 2 + (not ? 1 : 0);
                 const r = this.#compile(query, j);
                 if ( r === undefined ) { return; }
-                if ( query.startsWith(')]', r.i) === false ) { return; }
+                if ( query.startsWith(']', r.i) === false ) { return; }
                 if ( not ) { r.steps.at(-1).not = true; }
                 steps.push({ mv: mv || this.#CHILDREN, steps: r.steps });
-                i = r.i + 2;
+                i = r.i + 1;
                 mv = this.#UNDEFINED;
                 continue;
             }
