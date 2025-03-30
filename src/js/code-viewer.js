@@ -35,6 +35,7 @@ const cmEditor = new CodeMirror(qs$('#content'), {
     gutters: [ 'CodeMirror-linenumbers' ],
     lineNumbers: true,
     lineWrapping: true,
+    maximizable: false,
     matchBrackets: true,
     styleActiveLine: {
         nonEmpty: true,
