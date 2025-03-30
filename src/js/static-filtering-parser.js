@@ -1473,7 +1473,7 @@ export class AstFilterParser {
                 break;
             }
             const value = this.getNetOptionValue(NODE_TYPE_NET_OPTION_NAME_URLTRANSFORM);
-            if ( value !== '' && parseReplacebyRegexValue(value) === undefined ) {
+            if ( value !== '' && parseReplaceByRegexValue(value) === undefined ) {
                 this.astError = AST_ERROR_OPTION_BADVALUE;
                 realBad = true;
             }
@@ -3029,7 +3029,7 @@ export function parseHeaderValue(arg) {
 
 // https://adguard.com/kb/general/ad-filtering/create-own-filters/#replace-modifier
 
-export function parseReplacebyRegexValue(s) {
+export function parseReplaceByRegexValue(s) {
     if ( s.charCodeAt(0) !== 0x2F /* / */ ) { return; }
     const parser = new ArglistParser('/');
     parser.nextArg(s, 1);
@@ -3057,7 +3057,7 @@ export function parseReplacebyRegexValue(s) {
 
 export function parseReplaceValue(s) {
     if ( s.startsWith('/') ) {
-        const r = parseReplacebyRegexValue(s);
+        const r = parseReplaceByRegexValue(s);
         if ( r ) { r.type = 'text'; }
         return r;
     }
