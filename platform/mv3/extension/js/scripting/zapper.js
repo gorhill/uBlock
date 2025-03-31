@@ -365,7 +365,7 @@ const onFrameMessage = function(msg) {
 // can remove the iframe.
 
 const bootstrap = async ( ) => {
-    const url = new URL(chrome.runtime.getURL('/zapper-ui.html'));
+    const dynamicURL = new URL(chrome.runtime.getURL('/zapper-ui.html'));
     return new Promise(resolve => {
         const frame = document.createElement('iframe');
         frame.setAttribute(zapperSecret, '');
@@ -381,9 +381,11 @@ const bootstrap = async ( ) => {
             port.onmessageerror = ( ) => {
                 quitZapper();
             };
+            const realURL = new URL(dynamicURL);
+            realURL.hostname = chrome.i18n.getMessage('@@extension_id');
             frame.contentWindow.postMessage(
                 { what: 'zapperStart' },
-                url.origin,
+                realURL.origin,
                 [ channel.port2 ]
             );
             frame.contentWindow.focus();
@@ -392,7 +394,7 @@ const bootstrap = async ( ) => {
                 zapperFramePort: port,
             });
         };
-        frame.contentWindow.location = url.href;
+        frame.contentWindow.location = dynamicURL.href;
     });
 };
 
