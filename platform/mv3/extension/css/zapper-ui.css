@@ -1,3 +1,7 @@
+:root {
+    --quit-button-size: max(4em, min(6em, calc(100vw / 8), calc(100vh / 8)));
+}
+
 html#ubol-zapper,
 #ubol-zapper body {
     background: transparent;
@@ -18,14 +22,22 @@ html#ubol-zapper,
     display: flex;
     flex-direction: column;
     position: fixed;
+    right: 2px;
+    top: 50%;
+    transform: translateY(-50%);
     z-index: 100;
 }
+#ubol-zapper body[dir="rtl"] aside {
+    left: 2px;
+    right: unset;
+}
 #ubol-zapper aside > #quit {
+    border: 1px solid rgba(0,0,0,0.5);
     fill: none;
-    height: 4em;
     stroke: var(--ink-1);
     stroke-width: 3px;
-    width: 4em;
+    width: var(--quit-button-size);
+    height: var(--quit-button-size);
 }
 #ubol-zapper svg#sea {
     cursor: crosshair;
