@@ -819,7 +819,7 @@
 		"off": true,
 		"title": "🇷🇺ru 🇺🇦ua 🇺🇿uz 🇰🇿kz: RU AdList",
 		"tags": "ads belarusian беларуская kazakh tatar russian русский ukrainian українська uzbek",
-		"lang": "be kk tt ru uk uz",
+		"lang": "be kk tt ru uz",
 		"contentURL": "https://raw.githubusercontent.com/easylist/ruadlist/master/RuAdList-uBO.txt",
 		"cdnURLs": [
 			"https://cdn.jsdelivr.net/gh/dimisa-RUAdList/RUAdListCDN@main/lists/ruadlist.ubo.min.txt",
@@ -908,6 +908,16 @@
 		"lang": "tr",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/13.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters"
+	},
+	"UKR-0": {
+		"content": "filters",
+		"group": "regions",
+		"off": true,
+		"title": "🇺🇦ua: Ukrainian Filters",
+		"tags": "ads ukraine україна",
+		"lang": "uk",
+		"contentURL": "https://raw.githubusercontent.com/ukrainianfilters/lists/main/combined/uBO/uBO.txt",
+		"supportURL": "https://github.com/ukrainianfilters/lists"
 	},
 	"VIE-1": {
 		"content": "filters",
