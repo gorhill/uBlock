@@ -955,6 +955,7 @@ assets.get = async function(assetKey, options = {}) {
 
     let error = 'ENOTFOUND';
     for ( const contentURL of contentURLs ) {
+        ubolog(`Fetching ${contentURL} from remote server `);
         const details = assetDetails.content === 'filters'
             ? await assets.fetchFilterList(contentURL)
             : await assets.fetchText(contentURL);
