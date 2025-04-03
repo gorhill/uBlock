@@ -405,9 +405,8 @@ function toStrictBlockRule(rule, out) {
     const { resourceTypes } = condition;
     if ( resourceTypes === undefined ) {
         if ( condition.requestDomains === undefined ) { return; }
-    } else {
-        if ( resourceTypes.length !== 1 ) { return; }
-        if ( resourceTypes[0] !== 'main_frame' ) { return; }
+    } else if ( resourceTypes.includes('main_frame') === false ) {
+        return;
     }
     let regexFilter;
     if ( condition.urlFilter ) {
