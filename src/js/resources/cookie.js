@@ -50,7 +50,7 @@ export function getSafeCookieValuesFn() {
         'closed', 'next', 'mandatory',
         'disagree', 'agree',
         'set', 'unset',
-        'closed', 'given',
+        'given',
     ];
 }
 registerScriptlet(getSafeCookieValuesFn, {
