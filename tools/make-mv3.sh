@@ -22,10 +22,6 @@ for i in "$@"; do
       ;;
     edge)
       PLATFORM="edge"
-    safari)
-      PLATFORM="safari"
-    edge)
-      PLATFORM="edge"
       ;;
     safari)
       PLATFORM="safari"
