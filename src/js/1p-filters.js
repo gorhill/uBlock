@@ -97,7 +97,7 @@ function getCurrentState() {
     const enabled = qs$('#enableMyFilters input').checked;
     return {
         enabled,
-        trusted: enabled && qs$('#trustMyFilters input').checked,
+        trusted: qs$('#trustMyFilters input').checked,
         filters: getEditorText(),
     };
 }
@@ -128,7 +128,6 @@ function userFiltersChanged(details = {}) {
     qs$('#userFiltersApply').disabled = !changed;
     qs$('#userFiltersRevert').disabled = !changed;
     const enabled = qs$('#enableMyFilters input').checked;
-    dom.attr('#trustMyFilters .input.checkbox', 'disabled', enabled ? null : '');
     const trustedbefore = cmEditor.getOption('trustedSource');
     const trustedAfter = enabled && qs$('#trustMyFilters input').checked;
     if ( trustedAfter === trustedbefore ) { return; }
