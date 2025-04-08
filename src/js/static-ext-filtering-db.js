@@ -21,149 +21,231 @@
 
 /******************************************************************************/
 
-const StaticExtFilteringHostnameDB = class {
-    constructor(nBits, version = 0) {
-        this.version = version;
-        this.nBits = nBits;
-        this.strToIdMap = new Map();
-        this.hostnameToSlotIdMap = new Map();
-        this.regexToSlotIdMap = new Map();
-        this.regexMap = new Map();
-        // Array of integer pairs
-        this.hostnameSlots = [];
-        // Array of strings (selectors and pseudo-selectors)
-        this.strSlots = [];
+//                example.com: domain => no slash
+//           example.com/toto: domain + path => slash
+//         /example\d+\.com$/: domain regex: no literal slash in regex
+// /example\d+\.com\/toto\d+/: domain + path => literal slash in regex
+
+/******************************************************************************/
+
+const naivePathnameFromURL = url => {
+    if ( typeof url !== 'string' ) { return; }
+    const hnPos = url.indexOf('://');
+    if ( hnPos === -1 ) { return; }
+    const pathPos = url.indexOf('/', hnPos+3);
+    if ( pathPos === -1 ) { return; }
+    return url.slice(pathPos);
+};
+
+const extractSubTargets = target => {
+    const isRegex = target.charCodeAt(0) === 0x2F /* / */;
+    if ( isRegex === false ) {
+        const pathPos = target.indexOf('/');
+        if ( pathPos !== -1 ) {
+            return {
+                isRegex,
+                hn: target.slice(0, pathPos),
+                pn: target.slice(pathPos),
+            };
+        }
+        return { isRegex, hn: target };
+    }
+    const pathPos = target.indexOf('\\/');
+    if ( pathPos !== -1 ) {
+        return {
+            isRegex,
+            hn: `${target.slice(1, pathPos)}$`,
+            pn: `^${target.slice(pathPos, -1)}`,
+        };
+    }
+    return { isRegex, hn: target.slice(1, -1) };
+};
+
+/******************************************************************************/
+
+export class StaticExtFilteringHostnameDB {
+    static VERSION = 1;
+    constructor() {
         this.size = 0;
-        this.cleanupTimer = vAPI.defer.create(( ) => {
-            this.strToIdMap.clear();
-        });
     }
 
-    store(hn, bits, s) {
+    #hostnameToStringListMap = new Map();
+    #matcherMap = new Map();
+    #hostnameToMatcherListMap = new Map();
+    #strSlots = [ '' ];     // Array of strings (selectors and pseudo-selectors)
+    #matcherSlots = [ null ];
+    #linkedLists = [ 0, 0 ];// Array of integer pairs
+    #regexMap = new Map();
+    #strToSlotMap = new Map();
+    #cleanupTimer = vAPI.defer.create(( ) => {
+        this.#strToSlotMap.clear();
+    });
+
+    store(target, s) {
         this.size += 1;
-        let iStr = this.strToIdMap.get(s);
+        let iStr = this.#strToSlotMap.get(s);
         if ( iStr === undefined ) {
-            iStr = this.strSlots.length;
-            this.strSlots.push(s);
-            this.strToIdMap.set(s, iStr);
-            if ( this.cleanupTimer.ongoing() === false ) {
+            iStr = this.#strSlots.length;
+            this.#strSlots.push(s);
+            this.#strToSlotMap.set(s, iStr);
+            if ( this.#cleanupTimer.ongoing() === false ) {
                 this.collectGarbage(true);
             }
         }
-        const strId = iStr << this.nBits | bits;
-        const hnIsNotRegex = hn.charCodeAt(0) !== 0x2F /* / */;
-        let iHn = hnIsNotRegex
-            ? this.hostnameToSlotIdMap.get(hn)
-            : this.regexToSlotIdMap.get(hn);
-        if ( iHn === undefined ) {
-            if ( hnIsNotRegex ) {
-                this.hostnameToSlotIdMap.set(hn, this.hostnameSlots.length);
+        if ( target.includes('/') ) {
+            return this.#storeMatcher(target, iStr);
+        }
+        const iList = this.#hostnameToStringListMap.get(target);
+        this.#hostnameToStringListMap.set(target, this.#linkedLists.length);
+        this.#linkedLists.push(iStr, iList !== undefined ? iList : 0);
+    }
+
+    #storeMatcher(target, iStr) {
+        const iMatcher = this.#matcherMap.get(target) ||
+            this.#matcherSlots.length;
+        if ( iMatcher === this.#matcherSlots.length ) {
+            const { isRegex, hn, pn } = extractSubTargets(target);
+            this.#matcherSlots.push({ isRegex, hn, pn, iList: 0 });
+            this.#matcherMap.set(target, iMatcher);
+            if ( isRegex === false ) {
+                const iMatcherList = this.#hostnameToMatcherListMap.get(hn) || 0;
+                this.#hostnameToMatcherListMap.set(hn, this.#linkedLists.length);
+                this.#linkedLists.push(iMatcher, iMatcherList);
             } else {
-                this.regexToSlotIdMap.set(hn, this.hostnameSlots.length);
+                const iMatcherList = this.#hostnameToMatcherListMap.get('') || 0;
+                this.#hostnameToMatcherListMap.set('', this.#linkedLists.length);
+                this.#linkedLists.push(iMatcher, iMatcherList);
             }
-            this.hostnameSlots.push(strId, 0);
-            return;
         }
-        // Add as last item.
-        while ( this.hostnameSlots[iHn+1] !== 0 ) {
-            iHn = this.hostnameSlots[iHn+1];
-        }
-        this.hostnameSlots[iHn+1] = this.hostnameSlots.length;
-        this.hostnameSlots.push(strId, 0);
+        const matcher = this.#matcherSlots[iMatcher];
+        const iList = matcher.iList;
+        matcher.iList = this.#linkedLists.length;
+        this.#linkedLists.push(iStr, iList);
     }
 
     clear() {
-        this.hostnameToSlotIdMap.clear();
-        this.regexToSlotIdMap.clear();
-        this.hostnameSlots.length = 0;
-        this.strSlots.length = 0;
-        this.strToIdMap.clear();
-        this.regexMap.clear();
+        this.#hostnameToStringListMap.clear();
+        this.#matcherMap.clear();
+        this.#hostnameToMatcherListMap.clear();
+        this.#strSlots = [ '' ];
+        this.#matcherSlots = [ null ];
+        this.#linkedLists = [ 0, 0 ];
+        this.#regexMap.clear();
+        this.#strToSlotMap.clear();
         this.size = 0;
     }
 
     collectGarbage(later = false) {
         if ( later ) {
-            return this.cleanupTimer.onidle(5000, { timeout: 5000 });
+            return this.#cleanupTimer.onidle(5000, { timeout: 5000 });
         }
-        this.cleanupTimer.off();
-        this.strToIdMap.clear();
+        this.#cleanupTimer.off();
+        this.#strToSlotMap.clear();
     }
 
-    // modifiers = 0: all items
-    // modifiers = 1: only specific items
-    // modifiers = 2: only generic items
-    // modifiers = 3: only regex-based items
-    //
-    retrieve(hostname, out, modifiers = 0) {
+    retrieveSpecifics(out, hostname) {
         let hn = hostname;
-        if ( modifiers === 2 ) { hn = ''; }
+        if ( hn === '' ) { return; }
         for (;;) {
-            const hnSlot = this.hostnameToSlotIdMap.get(hn);
-            if ( hnSlot !== undefined ) {
-                this.retrieveFromSlot(hnSlot, out);
+            const iList = this.#hostnameToStringListMap.get(hn);
+            if ( iList !== undefined ) {
+                this.#retrieveFromSlot(out, iList);
             }
-            if ( hn === '' ) { break; }
             const pos = hn.indexOf('.');
-            if ( pos === -1 ) {
-                if ( modifiers === 1 ) { break; }
-                hn = '';
-            } else {
-                hn = hn.slice(pos + 1);
-            }
-        }
-        if ( modifiers !== 0 && modifiers !== 3 ) { return; }
-        if ( this.regexToSlotIdMap.size === 0 ) { return; }
-        // TODO: consider using a combined regex to test once for whether
-        // iterating is worth it.
-        for ( const restr of this.regexToSlotIdMap.keys() ) {
-            let re = this.regexMap.get(restr);
-            if ( re === undefined ) {
-                this.regexMap.set(restr, (re = new RegExp(restr.slice(1,-1))));
-            }
-            if ( re.test(hostname) === false ) { continue; }
-            this.retrieveFromSlot(this.regexToSlotIdMap.get(restr), out);
+            if ( pos === -1 ) { break; }
+            hn = hn.slice(pos + 1);
+            if ( hn === '*' ) { break; }
         }
     }
 
-    retrieveFromSlot(hnSlot, out) {
-        if ( hnSlot === undefined ) { return; }
-        const mask = out.length - 1; // out.length must be power of two
+    retrieveGenerics(out) {
+        let iList = this.#hostnameToStringListMap.get('');
+        if ( iList ) { this.#retrieveFromSlot(out, iList); }
+        iList = this.#hostnameToStringListMap.get('*');
+        if ( iList ) { this.#retrieveFromSlot(out, iList); }
+    }
+
+    retrieveSpecificsByRegex(out, hostname, url) {
+        let hn = hostname;
+        if ( hn === '' ) { return; }
+        const pathname = naivePathnameFromURL(url) ?? '';
+        for (;;) {
+            this.#retrieveSpecificsByRegex(hn, out, hostname, pathname);
+            const pos = hn.indexOf('.');
+            if ( pos === -1 ) { break; }
+            hn = hn.slice(pos + 1);
+        }
+        this.#retrieveSpecificsByRegex('', out, hostname, pathname);
+    }
+
+    #retrieveSpecificsByRegex(hn, out, hostname, pathname) {
+        let iMatchList = this.#hostnameToMatcherListMap.get(hn) || 0;
+        while ( iMatchList !== 0 ) {
+            const iMatchSlot = this.#linkedLists[iMatchList+0];
+            const matcher = this.#matcherSlots[iMatchSlot];
+            if ( this.#matcherTest(matcher, hostname, pathname) ) {
+                this.#retrieveFromSlot(out, matcher.iList);
+            }
+            iMatchList = this.#linkedLists[iMatchList+1];
+        }
+    }
+
+    #matcherTest(matcher, hn, pn) {
+        if ( matcher.isRegex ) {
+            if ( this.#restrTest(matcher.hn, hn) === false ) { return false; }
+            if ( matcher.pn === undefined ) { return true; }
+            return this.#restrTest(matcher.pn, pn);
+        }
+        if ( hn.endsWith(matcher.hn) === false ) { return false; }
+        if ( hn.length !== matcher.hn.length ) {
+            if ( hn.at(-1) !== '.' ) { return false; }
+        }
+        return pn.startsWith(matcher.pn);
+    }
+
+    #restrTest(restr, s) {
+        let re = this.#regexMap.get(restr);
+        if ( re === undefined ) {
+            this.#regexMap.set(restr, (re = new RegExp(restr)));
+        }
+        return re.test(s);
+    }
+
+    #retrieveFromSlot(out, iList) {
+        if ( iList === undefined ) { return; }
         do {
-            const strId = this.hostnameSlots[hnSlot+0];
-            out[strId & mask].add(this.strSlots[strId >>> this.nBits]);
-            hnSlot = this.hostnameSlots[hnSlot+1];
-        } while ( hnSlot !== 0 );
+            const iStr = this.#linkedLists[iList+0];
+            out.add(this.#strSlots[iStr]);
+            iList = this.#linkedLists[iList+1];
+        } while ( iList !== 0 );
     }
 
     toSelfie() {
         return {
-            version: this.version,
-            hostnameToSlotIdMap: this.hostnameToSlotIdMap,
-            regexToSlotIdMap: this.regexToSlotIdMap,
-            hostnameSlots: this.hostnameSlots,
-            strSlots: this.strSlots,
+            VERSION: StaticExtFilteringHostnameDB.VERSION,
+            hostnameToStringListMap: this.#hostnameToStringListMap,
+            matcherMap: this.#matcherMap,
+            hostnameToMatcherListMap: this.#hostnameToMatcherListMap,
+            strSlots: this.#strSlots,
+            matcherSlots: this.#matcherSlots,
+            linkedLists: this.#linkedLists,
             size: this.size
         };
     }
 
     fromSelfie(selfie) {
         if ( typeof selfie !== 'object' || selfie === null ) { return; }
-        this.hostnameToSlotIdMap = selfie.hostnameToSlotIdMap;
-        // Regex-based lookup available in uBO 1.47.0 and above
-        if ( selfie.regexToSlotIdMap ) {
-            this.regexToSlotIdMap = selfie.regexToSlotIdMap;
+        if ( selfie.VERSION !== StaticExtFilteringHostnameDB.VERSION ) {
+            throw new TypeError('Bad selfie');
         }
-        this.hostnameSlots = selfie.hostnameSlots;
-        this.strSlots = selfie.strSlots;
+        this.#hostnameToStringListMap = selfie.hostnameToStringListMap;
+        this.#matcherMap = selfie.matcherMap;
+        this.#hostnameToMatcherListMap = selfie.hostnameToMatcherListMap;
+        this.#strSlots = selfie.strSlots;
+        this.#matcherSlots = selfie.matcherSlots;
+        this.#linkedLists = selfie.linkedLists;
         this.size = selfie.size;
     }
-};
-
-/******************************************************************************/
-
-export {
-    StaticExtFilteringHostnameDB,
-};
+}
 
 /******************************************************************************/

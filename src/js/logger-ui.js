@@ -1592,9 +1592,8 @@ dom.on(document, 'keydown', ev => {
             }
             let bestMatchFilter = '';
             for ( const filter in response ) {
-                if ( filter.length > bestMatchFilter.length ) {
-                    bestMatchFilter = filter;
-                }
+                if ( filter.length <= bestMatchFilter.length ) { continue; }
+                bestMatchFilter = filter;
             }
             if (
                 bestMatchFilter !== '' &&
@@ -1619,14 +1618,14 @@ dom.on(document, 'keydown', ev => {
         if ( dom.cl.has(targetRow, 'networkRealm') ) {
             const response = await messaging.send('loggerUI', {
                 what: 'listsFromNetFilter',
-                rawFilter: rawFilter,
+                rawFilter,
             });
             handleResponse(response);
         } else if ( dom.cl.has(targetRow, 'extendedRealm') ) {
             const response = await messaging.send('loggerUI', {
                 what: 'listsFromCosmeticFilter',
                 url: targetRow.children[COLUMN_URL].textContent,
-                rawFilter: rawFilter,
+                rawFilter,
             });
             handleResponse(response);
         }

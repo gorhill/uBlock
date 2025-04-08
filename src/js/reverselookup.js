@@ -177,8 +177,8 @@ const fromExtendedFilter = async function(details) {
     worker.postMessage({
         what: 'fromExtendedFilter',
         id,
+        url: details.url,
         domain: domainFromHostname(hostname),
-        hostname,
         ignoreGeneric:
             staticNetFilteringEngine.matchRequestReverse(
                 'generichide',
@@ -208,13 +208,11 @@ const resetLists = function() {
 
 /******************************************************************************/
 
-const staticFilteringReverseLookup = {
+export const staticFilteringReverseLookup = {
     fromNetFilter,
     fromExtendedFilter,
     resetLists,
     shutdown: stopWorker
 };
-
-export default staticFilteringReverseLookup;
 
 /******************************************************************************/

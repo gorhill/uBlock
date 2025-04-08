@@ -25,11 +25,6 @@ import { redirectEngine as reng } from './redirect-engine.js';
 
 /******************************************************************************/
 
-// Increment when internal representation changes
-const VERSION = 1;
-
-const $scriptlets = new Set();
-const $exceptions = new Set();
 const $mainWorldMap = new Map();
 const $isolatedWorldMap = new Map();
 
@@ -115,10 +110,10 @@ const requote = s => {
     return `'${s.replace(/'/g, "\\'")}'`;
 };
 
-const decompile = json => {
+const decompile = (json, isException) => {
+    const prefix = isException ? '#@#' : '##';
     const args = JSON.parse(json);
-    if ( args.length === 0 ) { return '+js()'; }
-    return `+js(${args.map(s => requote(s)).join(', ')})`;
+    return `${prefix}+js(${args.map(s => requote(s)).join(', ')})`;
 };
 
 /******************************************************************************/
@@ -127,7 +122,7 @@ export class ScriptletFilteringEngine {
     constructor() {
         this.acceptedCount = 0;
         this.discardedCount = 0;
-        this.scriptletDB = new StaticExtFilteringHostnameDB(1, VERSION);
+        this.scriptletDB = new StaticExtFilteringHostnameDB();
         this.duplicates = new Set();
     }
 
@@ -164,7 +159,7 @@ export class ScriptletFilteringEngine {
 
         if ( parser.hasOptions() === false ) {
             if ( isException ) {
-                writer.push([ 32, '', 1, normalized ]);
+                writer.push([ 32, '', `-${normalized}` ]);
             }
             return;
         }
@@ -175,14 +170,8 @@ export class ScriptletFilteringEngine {
 
         for ( const { hn, not, bad } of parser.getExtFilterDomainIterator() ) {
             if ( bad ) { continue; }
-            let kind = 0;
-            if ( isException ) {
-                if ( not ) { continue; }
-                kind |= 1;
-            } else if ( not ) {
-                kind |= 1;
-            }
-            writer.push([ 32, hn, kind, normalized ]);
+            const prefix = ((isException ? 1 : 0) ^ (not ? 1 : 0)) ? '-' : '+';
+            writer.push([ 32, hn, `${prefix}${normalized}` ]);
         }
     }
 
@@ -199,8 +188,7 @@ export class ScriptletFilteringEngine {
             }
             this.duplicates.add(fingerprint);
             const args = reader.args();
-            if ( args.length < 4 ) { continue; }
-            this.scriptletDB.store(args[1], args[2], args[3]);
+            this.scriptletDB.store(args[1], args[2]);
         }
     }
 
@@ -209,8 +197,6 @@ export class ScriptletFilteringEngine {
     }
 
     fromSelfie(selfie) {
-        if ( typeof selfie !== 'object' || selfie === null ) { return false; }
-        if ( selfie.version !== VERSION ) { return false; }
         this.scriptletDB.fromSelfie(selfie);
         return true;
     }
@@ -218,42 +204,46 @@ export class ScriptletFilteringEngine {
     retrieve(request, options = {}) {
         if ( this.scriptletDB.size === 0 ) { return; }
 
-        $scriptlets.clear();
-        $exceptions.clear();
-
+        const all = new Set();
         const { ancestors = [], domain, hostname } = request;
 
-        this.scriptletDB.retrieve(hostname, [ $scriptlets, $exceptions ]);
+        this.scriptletDB.retrieveSpecifics(all, hostname);
         const entity = entityFromHostname(hostname, domain);
-        if ( entity !== '' ) {
-            this.scriptletDB.retrieve(entity, [ $scriptlets, $exceptions ], 1);
-        } else {
-            this.scriptletDB.retrieve('*', [ $scriptlets, $exceptions ], 1);
-        }
+        this.scriptletDB.retrieveSpecifics(all, entity);
+        this.scriptletDB.retrieveSpecificsByRegex(all, hostname, request.url);
+        this.scriptletDB.retrieveGenerics(all);
+        const visitedAncestors = [];
         for ( const ancestor of ancestors ) {
             const { domain, hostname } = ancestor;
-            this.scriptletDB.retrieve(`${hostname}>>`, [ $scriptlets, $exceptions ], 1);
+            if ( visitedAncestors.includes(hostname) ) { continue; }
+            visitedAncestors.push(hostname);
+            this.scriptletDB.retrieveSpecifics(all, `${hostname}>>`);
             const entity = entityFromHostname(hostname, domain);
             if ( entity !== '' ) {
-                this.scriptletDB.retrieve(`${entity}>>`, [ $scriptlets, $exceptions ], 1);
+                this.scriptletDB.retrieveSpecifics(all, `${entity}>>`);
             }
         }
-        if ( $scriptlets.size === 0 ) { return; }
+        if ( all.size === 0 ) { return; }
 
         // Wholly disable scriptlet injection?
-        if ( $exceptions.has('[]') ) {
-            return { filters: '#@#+js()' };
+        if ( all.has('-[]') ) {
+            return { filters: [ '#@#+js()' ] };
         }
 
-        for ( const token of $exceptions ) {
-            if ( $scriptlets.has(token) ) {
-                $scriptlets.delete(token);
+        // Split filters in different groups
+        const scriptlets = new Set();
+        const exceptions = new Set();
+        for ( const s of all ) {
+            if ( s.charCodeAt(0) === 0x2D /* - */ ) { continue; }
+            const selector = s.slice(1);
+            if ( all.has(`-${selector}`) ) {
+                exceptions.add(selector);
             } else {
-                $exceptions.delete(token);
+                scriptlets.add(selector);
             }
         }
 
-        for ( const token of $scriptlets ) {
+        for ( const token of scriptlets ) {
             lookupScriptlet(token, $mainWorldMap, $isolatedWorldMap, options.debug);
         }
 
@@ -273,9 +263,9 @@ export class ScriptletFilteringEngine {
             mainWorld: mainWorldCode.join('\n\n'),
             isolatedWorld: isolatedWorldCode.join('\n\n'),
             filters: [
-                ...Array.from($scriptlets).map(s => `##${decompile(s)}`),
-                ...Array.from($exceptions).map(s => `#@#${decompile(s)}`),
-            ].join('\n'),
+                ...Array.from(scriptlets).map(a => decompile(a, false)),
+                ...Array.from(exceptions).map(a => decompile(a, true)),
+            ],
         };
         $mainWorldMap.clear();
         $isolatedWorldMap.clear();
@@ -286,6 +276,8 @@ export class ScriptletFilteringEngine {
             scriptletGlobals.canDebug = true;
         }
 
+        const scriptletGlobalsJSON = JSON.stringify(scriptletGlobals, null, 4);
+
         return {
             mainWorld: scriptletDetails.mainWorld === '' ? '' : [
                 '(function() {',
@@ -294,7 +286,7 @@ export class ScriptletFilteringEngine {
                 options.debugScriptlets ? 'debugger;' : ';',
                 '',
                 // For use by scriptlets to share local data among themselves
-                `const scriptletGlobals = ${JSON.stringify(scriptletGlobals, null, 4)};`,
+                `const scriptletGlobals = ${scriptletGlobalsJSON};`,
                 '',
                 scriptletDetails.mainWorld,
                 '',
@@ -308,7 +300,7 @@ export class ScriptletFilteringEngine {
                 options.debugScriptlets ? 'debugger;' : ';',
                 '',
                 // For use by scriptlets to share local data among themselves
-                `const scriptletGlobals = ${JSON.stringify(scriptletGlobals, null, 4)};`,
+                `const scriptletGlobals = ${scriptletGlobalsJSON};`,
                 '',
                 scriptletDetails.isolatedWorld,
                 '',

@@ -20,7 +20,7 @@
 */
 
 import { StaticExtFilteringHostnameDB } from './static-ext-filtering-db.js';
-import { entityFromDomain } from './uri-utils.js';
+import { entityFromHostname } from './uri-utils.js';
 import logger from './logger.js';
 import { sessionFirewall } from './filtering-engines.js';
 import µb from './background.js';
@@ -28,10 +28,7 @@ import µb from './background.js';
 /******************************************************************************/
 
 const duplicates = new Set();
-const filterDB = new StaticExtFilteringHostnameDB(1);
-
-const $headers = new Set();
-const $exceptions = new Set();
+const filterDB = new StaticExtFilteringHostnameDB();
 
 let acceptedCount = 0;
 let discardedCount = 0;
@@ -52,7 +49,7 @@ const logOne = function(isException, token, fctxt) {
             modifier: true,
             result: isException ? 2 : 1,
             source: 'extended',
-            raw: `${(isException ? '#@#' : '##')}^responseheader(${token})`
+            raw: `${(isException ? '#@#' : '##')}^responseheader(${token})`,
         })
         .toLogger();
 };
@@ -101,14 +98,8 @@ httpheaderFilteringEngine.compile = function(parser, writer) {
 
     for ( const { hn, not, bad } of parser.getExtFilterDomainIterator() ) {
         if ( bad ) { continue; }
-        let kind = 0;
-        if ( isException ) {
-            if ( not ) { continue; }
-            kind |= 1;
-        } else if ( not ) {
-            kind |= 1;
-        }
-        writer.push([ 64, hn, kind, headerName ]);
+        const prefix = ((isException ? 1 : 0) ^ (not ? 1 : 0)) ? '-' : '+';
+        writer.push([ 64, hn, `${prefix}${headerName}` ]);
     }
 };
 
@@ -129,8 +120,7 @@ httpheaderFilteringEngine.fromCompiledContent = function(reader) {
         }
         duplicates.add(fingerprint);
         const args = reader.args();
-        if ( args.length < 4 ) { continue; }
-        filterDB.store(args[1], args[2], args[3]);
+        filterDB.store(args[1], args[2]);
     }
 };
 
@@ -140,37 +130,39 @@ httpheaderFilteringEngine.apply = function(fctxt, headers) {
     const hostname = fctxt.getHostname();
     if ( hostname === '' ) { return; }
 
-    const domain = fctxt.getDomain();
-    let entity = entityFromDomain(domain);
-    if ( entity !== '' ) {
-        entity = `${hostname.slice(0, -domain.length)}${entity}`;
-    } else {
-        entity = '*';
-    }
-
-    $headers.clear();
-    $exceptions.clear();
-
-    filterDB.retrieve(hostname, [ $headers, $exceptions ]);
-    filterDB.retrieve(entity, [ $headers, $exceptions ], 1);
-    if ( $headers.size === 0 ) { return; }
+    const all = new Set();
+    filterDB.retrieveSpecifics(all, hostname);
+    const entity = entityFromHostname(hostname, fctxt.getDomain());
+    filterDB.retrieveSpecifics(all, entity);
+    filterDB.retrieveSpecificsByRegex(all, hostname, fctxt.url);
+    filterDB.retrieveGenerics(all);
+    if ( all.size === 0 ) { return; }
 
     // https://github.com/gorhill/uBlock/issues/2835
     //   Do not filter response headers if the site is under an `allow` rule.
-    if (
-        µb.userSettings.advancedUserEnabled &&
-        sessionFirewall.evaluateCellZY(hostname, hostname, '*') === 2
-    ) {
-        return;
+    if ( µb.userSettings.advancedUserEnabled ) {
+        if ( sessionFirewall.evaluateCellZY(hostname, hostname, '*') === 2 ) { return; }
     }
 
-    const hasGlobalException = $exceptions.has('');
+    // Split filters in different groups
+    const filters = new Map();
+    const exceptions = new Map();
+    for ( const s of all ) {
+        const selector = s.slice(1);
+        if ( s.charCodeAt(0) === 0x2D /* - */ ) {
+            exceptions.add(selector);
+        } else {
+            filters.add(selector);
+        }
+    }
+
+    const hasGlobalException = exceptions.has('');
 
     let modified = false;
     let i = 0;
 
-    for ( const name of $headers ) {
-        const isExcepted = hasGlobalException || $exceptions.has(name);
+    for ( const name of filters ) {
+        const isExcepted = hasGlobalException || exceptions.has(name);
         if ( isExcepted ) {
             if ( logger.enabled ) {
                 logOne(true, hasGlobalException ? '' : name, fctxt);

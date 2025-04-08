@@ -355,7 +355,7 @@ vAPI.scriptletsInjector = (( ) => {
     const parts = [
         '(',
         function(details) {
-            if ( typeof self.uBO_scriptletsInjected === 'string' ) { return; }
+            if ( self.uBO_scriptletsInjected !== undefined ) { return; }
             const doc = document;
             const { location } = doc;
             if ( location === null ) { return; }
