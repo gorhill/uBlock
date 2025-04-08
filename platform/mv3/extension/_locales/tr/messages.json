@@ -108,7 +108,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Bir sitedeki filtre sorunlarını bildirmek için <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span> kullanın. <u>Bir GitHub hesabı gerekir.</u>",
+    "message": "Bir sitedeki filtre sorunlarını bildirmek için <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> sorun takibi</span> sayfasını kullanın. <u>Bir GitHub hesabı gerekir.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS5H": {
@@ -120,7 +120,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Benzer raporları bul",
+    "message": "GitHub'da benzer raporları bul",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -140,7 +140,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Arayüzde kaplamalar veya diğer sıkıntıları var",
+    "message": "Arayüzde kaplamalar veya diğer can sıkıcı ögeler var",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
@@ -160,7 +160,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Kötü niyetli yazılıma yönlendiriyor, oltalama",
+    "message": "Kötü niyetli yazılıma, oltalamaya yönlendiriyor",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
@@ -168,7 +168,7 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Yeni rapor oluştur",
+    "message": "GitHub'da yeni rapor oluştur",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "firstRunSectionLabel": {
@@ -176,7 +176,7 @@
     "description": "The header text for the welcome message section"
   },
   "firstRunDescription": {
-    "message": "Az önce uBO Lite'ı indirdiniz. Buradan tüm siteler için varsayılan filtreleme modlarını seçebilirsiniz.\n\nVarsayılan olarak, <em>Basit</em> mod seçilidir çünkü verileri okuma ve yazma izni gerektirmez. uBO Lite'a güveniyorsanız, tüm sitelerde verileri okuma ve yazma izni verebilirsiniz ve daha gelişmiş filtreleme yeteneklerine tüm sitelerde sahip olabilirsiniz.",
+    "message": "uBO Lite'ı kurdunuz. Buradan tüm siteler için varsayılan filtreleme modlarını seçebilirsiniz.\n\nVarsayılan olarak, <em>Basit</em> mod seçilidir çünkü verileri okuma ve yazma izni gerektirmez. uBO Lite'a güveniyorsanız, tüm sitelerde verileri okuma ve yazma izni verebilirsiniz ve daha gelişmiş filtreleme yeteneklerine tüm sitelerde sahip olabilirsiniz.",
     "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
@@ -220,7 +220,7 @@
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
-    "message": "[sadece alan adları]\nexample.com\ngames.example\n…",
+    "message": "[sadece alan adları]\norneksite.com\noyunlar.site\n…",
     "description": "Default text for in edit field"
   },
   "behaviorSectionLabel": {
@@ -240,7 +240,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLegend": {
-    "message": "İstenmeyebilecek sitelere giriş engellenecek ve devam edip etmeyeceğiniz size sorulacak.",
+    "message": "İstenmeyebilecek sitelere erişim engellenecek ve devam etme seçeneği sunulacaktır.",
     "description": "Label for a checkbox in the options page"
   },
   "findListsPlaceholder": {
