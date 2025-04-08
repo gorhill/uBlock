@@ -198,7 +198,7 @@ export class StaticExtFilteringHostnameDB {
         }
         if ( hn.endsWith(matcher.hn) === false ) { return false; }
         if ( hn.length !== matcher.hn.length ) {
-            if ( hn.at(-1) !== '.' ) { return false; }
+            if ( hn.at(hn.length - matcher.hn.length - 1) !== '.' ) { return false; }
         }
         return pn.startsWith(matcher.pn);
     }
