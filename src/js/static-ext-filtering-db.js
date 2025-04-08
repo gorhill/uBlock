@@ -41,14 +41,11 @@ const extractSubTargets = target => {
     const isRegex = target.charCodeAt(0) === 0x2F /* / */;
     if ( isRegex === false ) {
         const pathPos = target.indexOf('/');
-        if ( pathPos !== -1 ) {
-            return {
-                isRegex,
-                hn: target.slice(0, pathPos),
-                pn: target.slice(pathPos),
-            };
-        }
-        return { isRegex, hn: target };
+        return {
+            isRegex,
+            hn: target.slice(0, pathPos),
+            pn: target.slice(pathPos),
+        };
     }
     const pathPos = target.indexOf('\\/');
     if ( pathPos !== -1 ) {
@@ -191,16 +188,12 @@ export class StaticExtFilteringHostnameDB {
     }
 
     #matcherTest(matcher, hn, pn) {
-        if ( matcher.isRegex ) {
-            if ( this.#restrTest(matcher.hn, hn) === false ) { return false; }
-            if ( matcher.pn === undefined ) { return true; }
-            return this.#restrTest(matcher.pn, pn);
+        if ( matcher.isRegex === false ) {
+            return pn.startsWith(matcher.pn);
         }
-        if ( hn.endsWith(matcher.hn) === false ) { return false; }
-        if ( hn.length !== matcher.hn.length ) {
-            if ( hn.at(hn.length - matcher.hn.length - 1) !== '.' ) { return false; }
-        }
-        return pn.startsWith(matcher.pn);
+        if ( this.#restrTest(matcher.hn, hn) === false ) { return false; }
+        if ( matcher.pn === undefined ) { return true; }
+        return this.#restrTest(matcher.pn, pn);
     }
 
     #restrTest(restr, s) {
