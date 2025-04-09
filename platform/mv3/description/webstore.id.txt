@@ -1,4 +1,4 @@
-uBO Lite (uBOL) adalah pemblokir konten berbasis MV3 yang membutuhkan lebih sedikit perizinan.
+uBO Lite (uBOL) is an MV3-based content blocker.
 
 Kumpulan aturan bawaan sesuai dengan kumpulan penyaringan bawaan uBlock Origin:
 
@@ -10,21 +10,3 @@ Kumpulan aturan bawaan sesuai dengan kumpulan penyaringan bawaan uBlock Origin:
 Anda dapat mengaktifkan lebih banyak kumpulan pengaturan dengan mengunjungi halaman opsi - klik ikon _Cogs_ pada panel popup.
 
 uBOL sepenuhnya deklaratif, yang mana tidak membutuhkan proses permanen uBOL agar penyaringan dapat terjadi, dan penyaringan konten berbasis injeksi CSS/JS dilakukan sepenuhnya oleh peramban itu sendiri ketimbang oleh ekstensi. Ini berarti bahwa uBOL sendiri tidak mengkonsumsi sumber daya CPU/memori selama melakukan pemblokiran konten -- proses pekerja layanan uBOL dibutuhkan _hanya_ ketika Anda berinteraksi dengan panel popup atau opsi halaman.
-
-uBOL tidak membutuhkan izin "baca dan modifikasi data" pada waktu penginstalan, maka kemampuannya lebih terbatas jika dibandingkan dengan uBlock Origin atau pemblokir konten lain yang memerlukan izin "baca dan modifikasi data" pada waktu penginstalan.
-
-Namun, uBOL memberi anda opsi untuk *secara eksplisit* memberikan izin tambahan pada situs pilihan Anda, sehingga dapat memfilter situs tersebut dengan lebih baik menggunakan pemfilteran kosmetik dan injeksi scriptlet.
-
-Untuk memberikan izin tambahan pada situs tertentu, buka panel popup dan pilih mode pemfilteran yang lebih tinggi seperti Optimal atau Complete.
-
-Perambaan kemudian akan memperingatkan anda tentang efek memberikan izin tambahan yang diminta oleh ekstensi pada situs saat ini, dan Anda harus memberitahu perambaan apakah anda menyetujui atau menolak permintaan.
-
-Jika Anda menyetujui permintaan uBOL untuk izin tambahan pada situs terkini, uBOL akan dapat menyaring konten dengan lebih baik untuk situs terkini.
-
-Anda dapat menentukan mode penyaringan bawaan dari halaman pengaturan uBOL Jika Anda memilih mode Optimal atau Complete sebagai mode bawaan, Anda perlu memberikan uBOL izin untuk membaca dan mengubah data pada semua situs web.
-
-Mohon diingat bahwa ini msaih dalam tahap proses pengerjaan, dengan tujuan akhir sebagai berikut:
-
-- Tidak ada izin pengguna yang luas saat penginstalan -- izin tambahan diberikan secara eksplisit oleh pengguna berdasarkan tiap situs.
-
-- Sepenuhnya delkaratif untuk reliabilitas dan CPU/efisiensi memori.

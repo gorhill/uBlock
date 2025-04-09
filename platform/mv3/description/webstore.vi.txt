@@ -1,4 +1,4 @@
-uBO Lite (uBOL) là trình chặn nội dung dựa trên MV3 *không-cần-cấp-phép*.
+uBO Lite (uBOL) is an MV3-based content blocker.
 
 Bộ quy tắc mặc định tương tự bộ lọc của uBlock Origin:
 
@@ -10,21 +10,3 @@ Bộ quy tắc mặc định tương tự bộ lọc của uBlock Origin:
 Bạn có thể tự thêm quy tắc mới ở trang cài đặt -- click vào biểu tượng _Bánh răng_ ở trong cửa sổ popup.
 
 uBOL mang tính khai báo hoàn toàn, vì vậy uBOL sẽ không cần phải liên tục chạy để chặn nội dung. Thay vào đó, chính trình duyệt sẽ thực hiện lọc nội dung bằng cách sử dụng công cụ chèn CSS/JS hiệu quả hơn có sẵn của nó. Điều này cũng đồng thời có nghĩa là uBOL sẽ không tiêu tốn tài nguyên CPU/bộ nhớ của bạn để chặn nội dung. uBOL sẽ chỉ chạy _khi và chỉ khi_ bạn đang xem cửa sổ popup của uBOL, hoặc bạn đang cấu hình uBOL ở trang cài đặt.
-
-uBOL không yêu cầu cấp quyền "đọc và sửa đổi dữ liệu" chung khi cài đặt, vì vậy nên ban đầu nó sẽ hơi yếu hơn uBlock Origin hoặc các trình chặn nội dung khác mà có yêu cầu quyền "đọc và sửa đổi dữ liệu" chung khi cài đặt.
-
-Tuy nhiên, uBOL lại cho phép bạn cấu hình *rất cụ thể* quyền ở trên bất kỳ trang nào tự chọn của bạn, để nó có thể lọc nội dụng trên các trang đấy tốt hơn bằng các kỹ thuật như lọc hiển thị (cosmetic filtering) hay chèn kịch bản con (scriptlet injections).
-
-Để cấp quyền cho uBOL chặn trang bất kỳ, hãy mở cửa sổ popup và chọn một chế độ chặn cao hơn như "Tối ưu" hoặc "Hoàn toàn".
-
-Trình duyệt của bạn sẽ hiện cảnh báo cho việc cấp quyền cho tiện ích trên trang web hiện tại, và bạn sẽ phải chọn đồng ý hoặc từ chối yêu cầu cấp quyền.
-
-Nếu bạn chọn đồng ý cấp quyền cho uBOL sửa trang web bất kỳ, uBOL sẽ có thể lọc nội dung tốt hơn cho web đấy.
-
-Bạn cũng có thể chọn chế độ chặn mặc định ở trang cài đặt của uBOL. Nếu bạn chọn chế độ Tối ưu hoặc Hoàn toàn làm mặc định, bạn sẽ cần phải cấp quyền "đọc và sửa đổi dữ liệu" trên tất cả các trang web.
-
-Lưu ý rằng sản phẩm này vẫn đang trong giai đoạn phát triển, và bản hoàn thiện sẽ có những tính năng sau:
-
-- Không yêu cầu bất kỳ quyền nào khi cài đặt - người dùng sẽ phải tự chủ động cấp bất kỳ quyền gì cho tiện ích, cụ thể từng trang web một.
-
-- Hoàn toàn mang tính khai báo, để có thế chạy nhẹ hơn và ổn định hơn.

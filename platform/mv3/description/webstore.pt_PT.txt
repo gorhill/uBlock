@@ -1,4 +1,4 @@
-O uBO Lite (uBOL) é um bloqueador de conteúdo baseado no MV3 *sem permissões*.
+uBO Lite (uBOL) is an MV3-based content blocker.
 
 O conjunto de regras padrão corresponde ao conjunto de filtros padrão do uBlock Origin:
 
@@ -10,21 +10,3 @@ O conjunto de regras padrão corresponde ao conjunto de filtros padrão do uBloc
 Pode ativar mais conjuntos de regras visitando a página de opções -- clique no ícone _Cogs_ na janela flutuante.
 
 O uBOL é totalmente declarativo, o que elimina a necessidade de um processo ativo constante para a filtragem ocorrer. A injeção de CSS e JS para filtragem de conteúdo é efetuada de maneira confiável pelo navegador, não dependendo da extensão. Isso significa que o uBOL por si só não gasta recursos de CPU/memória enquanto o bloqueio de conteúdo está a acontecer -- o processo do trabalhador de serviço do uBOL é necessário apenas quando se interage com a janela flutuante ou as páginas de opções.
-
-uBOL não requer ampla permissão de "ler e modificar dados" no momento da instalação, daí as suas capacidades limitadas de pronto a usar em comparação com uBlock Origin ou outros bloqueadores de conteúdo que requerem amplas permissões de "ler e modificar dados" no momento da instalação.
-
-No entanto, o uBOL permite-lhe que *explicitamente* conceda permissões alargadas em websites específicos de sua escolha, para que possa filtrar melhor esses websites usando filtragem cosmética e injeções de scriptlet.
-
-Para conceder permissões alargadas num determinado sítio web, abra a janela flutuante e escolha um modo de filtragem superior, como 'Ideal' ou 'Completo'.
-
-O navegador irá avisá-lo sobre os efeitos da concessão das permissões adicionais solicitadas pela extensão no site atual, e terá que informar ao navegador se aceita ou recusa o pedido.
-
-Se aceitar o pedido do uBOL para permissões adicionais no site atual, o mesmo poderá filtrar melhor o conteúdo do site atual.
-
-Pode definir o modo de filtragem padrão na página de opções do uBOL. Se escolher o modo Ideal ou Completo como o modo predefinido, terá de conceder ao uBOL a permissão para ler e modificar dados em todos os sítios web.
-
-Tenha em mente que este ainda é um trabalho em curso, com estes objetivos finais:
-
-- Sem permissões amplas de anfitrião no momento da instalação -- permissões estendidas são concedidas explicitamente pelo utilizador numa base por site.
-
-- Totalmente declarativo para fiabilidade e eficiência de CPU/memória

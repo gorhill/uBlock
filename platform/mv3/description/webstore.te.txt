@@ -1,4 +1,4 @@
-uBO Lite (uBOL) అనేది *అనుమతి-తక్కువ* MV3-ఆధారిత కంటెంట్ బ్లాకర్.
+uBO Lite (uBOL) is an MV3-based content blocker.
 
 The default ruleset corresponds to uBlock Origin's default filterset:
 
@@ -10,21 +10,3 @@ The default ruleset corresponds to uBlock Origin's default filterset:
 You can enable more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
 
 uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
-
-uBOLకి ఇన్‌స్టాల్ సమయంలో విస్తృత "డేటాను చదవడం మరియు సవరించడం" అనుమతి అవసరం లేదు, అందువల్ల uBlock ఆరిజిన్ లేదా ఇన్‌స్టాల్ సమయంలో విస్తృతమైన "డేటాను చదవడం మరియు సవరించడం" అనుమతులు అవసరమయ్యే ఇతర కంటెంట్ బ్లాకర్‌లతో పోలిస్తే దాని పరిమిత సామర్థ్యాలు బాక్స్ వెలుపల ఉన్నాయి.
-
-అయితే, uBOL మీకు నచ్చిన నిర్దిష్ట సైట్‌లలో పొడిగించిన అనుమతులను *స్పష్టంగా* మంజూరు చేయడానికి మిమ్మల్ని అనుమతిస్తుంది, తద్వారా కాస్మెటిక్ ఫిల్టరింగ్ మరియు స్క్రిప్ట్‌లెట్ ఇంజెక్షన్‌లను ఉపయోగించి ఆ సైట్‌లలో మెరుగ్గా ఫిల్టర్ చేయవచ్చు.
-
-ఇచ్చిన సైట్‌లో పొడిగించిన అనుమతులను మంజూరు చేయడానికి, పాప్‌అప్ ప్యానెల్‌ను తెరిచి, ఆప్టిమల్ లేదా కంప్లీట్ వంటి అధిక ఫిల్టరింగ్ మోడ్‌ను ఎంచుకోండి.
-
-ప్రస్తుత సైట్‌లో పొడిగింపు ద్వారా అభ్యర్థించిన అదనపు అనుమతులను మంజూరు చేయడం వల్ల కలిగే ప్రభావాల గురించి బ్రౌజర్ మిమ్మల్ని హెచ్చరిస్తుంది మరియు మీరు అభ్యర్థనను అంగీకరించాలా లేదా తిరస్కరించాలా అని మీరు బ్రౌజర్‌కి తెలియజేయాలి.
-
-మీరు ప్రస్తుత సైట్‌లో అదనపు అనుమతుల కోసం uBOL అభ్యర్థనను అంగీకరిస్తే, అది ప్రస్తుత సైట్ కోసం కంటెంట్‌ను మెరుగ్గా ఫిల్టర్ చేయగలదు.
-
-మీరు uBOL ఎంపికల పేజీ నుండి డిఫాల్ట్ ఫిల్టరింగ్ మోడ్‌ను సెట్ చేయవచ్చు. మీరు డిఫాల్ట్‌గా ఆప్టిమల్ లేదా కంప్లీట్ మోడ్‌ని ఎంచుకుంటే, మీరు అన్ని వెబ్‌సైట్‌లలోని డేటాను చదవడానికి మరియు సవరించడానికి uBOLకి అనుమతిని మంజూరు చేయాలి.
-
-ఈ తుది లక్ష్యాలతో ఇది ఇంకా పురోగతిలో ఉందని గుర్తుంచుకోండి:
-
-- ఇన్‌స్టాల్ సమయంలో విస్తృత హోస్ట్ అనుమతులు లేవు -- పొడిగించిన అనుమతులు ప్రతి-సైట్ ప్రాతిపదికన వినియోగదారు ద్వారా స్పష్టంగా మంజూరు చేయబడతాయి.
-
-- విశ్వసనీయత మరియు CPU/మెమరీ సామర్థ్యం కోసం పూర్తిగా డిక్లరేటివ్.
