@@ -93,21 +93,9 @@ function getCurrentVersion() {
 
 /******************************************************************************/
 
-async function hasGreatPowers(origin) {
-    if ( /^https?:\/\//.test(origin) === false ) { return false; }
-    return browser.permissions.contains({
-        origins: [ `${origin}/*` ],
-    });
-}
-
 async function onPermissionsRemoved() {
-    const beforeMode = await getDefaultFilteringMode();
     const modified = await syncWithBrowserPermissions();
     if ( modified === false ) { return false; }
-    const afterMode = await getDefaultFilteringMode();
-    if ( (beforeMode > MODE_BASIC) === (afterMode <= MODE_BASIC) ) {
-        updateDynamicRules();
-    }
     registerInjectables();
     return true;
 }
@@ -232,6 +220,7 @@ function onMessage(request, sender, callback) {
 
     case 'getOptionsPageData': {
         Promise.all([
+            hasBroadHostPermissions(),
             getDefaultFilteringMode(),
             getTrustedSites(),
             getRulesetDetails(),
@@ -240,6 +229,7 @@ function onMessage(request, sender, callback) {
             adminReadEx('disabledFeatures'),
         ]).then(results => {
             const [
+                hasOmnipotence,
                 defaultFilteringMode,
                 trustedSites,
                 rulesetDetails,
@@ -248,6 +238,7 @@ function onMessage(request, sender, callback) {
                 disabledFeatures,
             ] = results;
             callback({
+                hasOmnipotence,
                 defaultFilteringMode,
                 trustedSites: Array.from(trustedSites),
                 enabledRulesets,
@@ -306,21 +297,25 @@ function onMessage(request, sender, callback) {
 
     case 'popupPanelData': {
         Promise.all([
-            getFilteringMode(request.hostname),
             hasBroadHostPermissions(),
-            hasGreatPowers(request.origin),
+            getFilteringMode(request.hostname),
             getEnabledRulesetsDetails(),
             adminReadEx('disabledFeatures'),
         ]).then(results => {
+            const [
+                hasOmnipotence,
+                level,
+                rulesetDetails,
+                disabledFeatures,
+            ] = results;
             callback({
-                level: results[0],
+                hasOmnipotence,
+                level,
                 autoReload: rulesetConfig.autoReload,
-                hasOmnipotence: results[1],
-                hasGreatPowers: results[2],
-                rulesetDetails: results[3],
+                rulesetDetails,
                 isSideloaded,
                 developerMode: rulesetConfig.developerMode,
-                disabledFeatures: results[4],
+                disabledFeatures,
             });
         });
         return true;
@@ -365,9 +360,6 @@ function onMessage(request, sender, callback) {
                 ({ beforeLevel, afterLevel })
             )
         ).then(({ beforeLevel, afterLevel }) => {
-            if ( beforeLevel === 1 || afterLevel === 1 ) {
-                updateDynamicRules();
-            }
             if ( afterLevel !== beforeLevel ) {
                 registerInjectables();
             }
@@ -496,7 +488,6 @@ async function start() {
         if ( enableOptimal === false ) {
             const afterLevel = await setDefaultFilteringMode(MODE_BASIC);
             if ( afterLevel === MODE_BASIC ) {
-                updateDynamicRules();
                 registerInjectables();
                 process.firstRun = false;
             }

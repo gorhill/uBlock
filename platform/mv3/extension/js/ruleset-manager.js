@@ -159,13 +159,7 @@ async function updateRemoveparamRules(currentRules, addRules, removeRuleIds) {
         removeRuleIds.push(rule.id);
     }
 
-    const [
-        hasOmnipotence,
-        rulesetDetails,
-    ] = await Promise.all([
-        hasBroadHostPermissions(),
-        getEnabledRulesetsDetails(),
-    ]);
+    const rulesetDetails = await getEnabledRulesetsDetails();
 
     // Fetch removeparam rules for all enabled rulesets
     const toFetch = [];
@@ -177,12 +171,10 @@ async function updateRemoveparamRules(currentRules, addRules, removeRuleIds) {
 
     // Removeparam rules can only be enforced with omnipotence
     const allRules = [];
-    if ( hasOmnipotence ) {
-        for ( const rules of removeparamRulesets ) {
-            if ( Array.isArray(rules) === false ) { continue; }
-            for ( const rule of rules ) {
-                allRules.push(rule);
-            }
+    for ( const rules of removeparamRulesets ) {
+        if ( Array.isArray(rules) === false ) { continue; }
+        for ( const rule of rules ) {
+            allRules.push(rule);
         }
     }
     if ( allRules.length === 0 ) { return; }
@@ -204,13 +196,7 @@ async function updateRedirectRules(currentRules, addRules, removeRuleIds) {
         removeRuleIds.push(rule.id);
     }
 
-    const [
-        hasOmnipotence,
-        rulesetDetails,
-    ] = await Promise.all([
-        hasBroadHostPermissions(),
-        getEnabledRulesetsDetails(),
-    ]);
+    const rulesetDetails = await getEnabledRulesetsDetails();
 
     // Fetch redirect rules for all enabled rulesets
     const toFetch = [];
@@ -222,12 +208,10 @@ async function updateRedirectRules(currentRules, addRules, removeRuleIds) {
 
     // Redirect rules can only be enforced with omnipotence
     const allRules = [];
-    if ( hasOmnipotence ) {
-        for ( const rules of redirectRulesets ) {
-            if ( Array.isArray(rules) === false ) { continue; }
-            for ( const rule of rules ) {
-                allRules.push(rule);
-            }
+    for ( const rules of redirectRulesets ) {
+        if ( Array.isArray(rules) === false ) { continue; }
+        for ( const rule of rules ) {
+            allRules.push(rule);
         }
     }
     if ( allRules.length === 0 ) { return; }
@@ -248,13 +232,7 @@ async function updateModifyHeadersRules(currentRules, addRules, removeRuleIds) {
         removeRuleIds.push(rule.id);
     }
 
-    const [
-        hasOmnipotence,
-        rulesetDetails,
-    ] = await Promise.all([
-        hasBroadHostPermissions(),
-        getEnabledRulesetsDetails(),
-    ]);
+    const rulesetDetails = await getEnabledRulesetsDetails();
 
     // Fetch modifyHeaders rules for all enabled rulesets
     const toFetch = [];
@@ -266,12 +244,10 @@ async function updateModifyHeadersRules(currentRules, addRules, removeRuleIds) {
 
     // Redirect rules can only be enforced with omnipotence
     const allRules = [];
-    if ( hasOmnipotence ) {
-        for ( const rules of rulesets ) {
-            if ( Array.isArray(rules) === false ) { continue; }
-            for ( const rule of rules ) {
-                allRules.push(rule);
-            }
+    for ( const rules of rulesets ) {
+        if ( Array.isArray(rules) === false ) { continue; }
+        for ( const rule of rules ) {
+            allRules.push(rule);
         }
     }
     if ( allRules.length === 0 ) { return; }

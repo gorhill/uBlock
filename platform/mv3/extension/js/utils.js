@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import { browser, runtime } from './ext.js';
+import { browser } from './ext.js';
 
 /******************************************************************************/
 
@@ -136,14 +136,12 @@ const broadcastMessage = message => {
 
 /******************************************************************************/
 
+// https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/manifest.json/host_permissions#requested_permissions_and_user_prompts
+// "Users can grant or revoke host permissions on an ad hoc basis. Therefore,
+// most browsers treat host_permissions as optional."
+
 async function hasBroadHostPermissions() {
-    const manifest = runtime.getManifest();
-    const hasOmnipotence = Array.isArray(manifest.host_permissions) &&
-        manifest.host_permissions.includes('<all_urls>');
-    if ( hasOmnipotence ) { return true; }
-    return browser.permissions.contains({
-        origins: [ '<all_urls>' ],
-    });
+    return browser.permissions.contains({ origins: [ '<all_urls>' ] });
 }
 
 /******************************************************************************/

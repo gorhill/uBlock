@@ -90,12 +90,11 @@ function updateNodes(listEntries) {
 /******************************************************************************/
 
 function rulesetStats(rulesetId) {
-    const hasOmnipotence = cachedRulesetData.defaultFilteringMode > 1;
     const rulesetDetails = rulesetMap.get(rulesetId);
     if ( rulesetDetails === undefined ) { return; }
     const { rules, filters } = rulesetDetails;
     let ruleCount = rules.plain + rules.regex;
-    if ( hasOmnipotence ) {
+    if ( cachedRulesetData.hasOmnipotence ) {
         ruleCount += rules.removeparam + rules.redirect + rules.modifyHeaders;
     }
     const filterCount = filters.accepted;
