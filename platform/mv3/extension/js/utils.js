@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+import { browser, runtime } from './ext.js';
+
 /******************************************************************************/
 
 function parsedURLromOrigin(origin) {
@@ -134,6 +136,18 @@ const broadcastMessage = message => {
 
 /******************************************************************************/
 
+async function hasBroadHostPermissions() {
+    const manifest = runtime.getManifest();
+    const hasOmnipotence = Array.isArray(manifest.host_permissions) &&
+        manifest.host_permissions.includes('<all_urls>');
+    if ( hasOmnipotence ) { return true; }
+    return browser.permissions.contains({
+        origins: [ '<all_urls>' ],
+    });
+}
+
+/******************************************************************************/
+
 export {
     broadcastMessage,
     parsedURLromOrigin,
@@ -145,4 +159,5 @@ export {
     matchFromHostname,
     matchesFromHostnames,
     hostnamesFromMatches,
+    hasBroadHostPermissions,
 };

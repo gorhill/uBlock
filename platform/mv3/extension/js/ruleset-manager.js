@@ -21,7 +21,6 @@
 
 import {
     TAB_ID_NONE,
-    browser,
     dnr,
     i18n,
     localRead, localRemove, localWrite,
@@ -34,9 +33,9 @@ import {
     saveRulesetConfig,
 } from './config.js';
 
-
 import { fetchJSON } from './fetch.js';
 import { getAdminRulesets } from './admin.js';
+import { hasBroadHostPermissions } from './utils.js';
 import { ubolLog } from './debug.js';
 
 /******************************************************************************/
@@ -164,7 +163,7 @@ async function updateRemoveparamRules(currentRules, addRules, removeRuleIds) {
         hasOmnipotence,
         rulesetDetails,
     ] = await Promise.all([
-        browser.permissions.contains({ origins: [ '<all_urls>' ] }),
+        hasBroadHostPermissions(),
         getEnabledRulesetsDetails(),
     ]);
 
@@ -209,7 +208,7 @@ async function updateRedirectRules(currentRules, addRules, removeRuleIds) {
         hasOmnipotence,
         rulesetDetails,
     ] = await Promise.all([
-        browser.permissions.contains({ origins: [ '<all_urls>' ] }),
+        hasBroadHostPermissions(),
         getEnabledRulesetsDetails(),
     ]);
 
@@ -253,7 +252,7 @@ async function updateModifyHeadersRules(currentRules, addRules, removeRuleIds) {
         hasOmnipotence,
         rulesetDetails,
     ] = await Promise.all([
-        browser.permissions.contains({ origins: [ '<all_urls>' ] }),
+        hasBroadHostPermissions(),
         getEnabledRulesetsDetails(),
     ]);
 
@@ -348,7 +347,7 @@ async function updateStrictBlockRules(currentRules, addRules, removeRuleIds) {
         permanentlyExcluded = [],
         temporarilyExcluded = [],
     ] = await Promise.all([
-        browser.permissions.contains({ origins: [ '<all_urls>' ] }),
+        hasBroadHostPermissions(),
         getEnabledRulesetsDetails(),
         localRead('excludedStrictBlockHostnames'),
         sessionRead('excludedStrictBlockHostnames'),

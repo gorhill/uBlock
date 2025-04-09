@@ -47,6 +47,7 @@ import {
 
 import {
     broadcastMessage,
+    hasBroadHostPermissions,
     hostnamesFromMatches,
 } from './utils.js';
 
@@ -97,16 +98,6 @@ async function hasGreatPowers(origin) {
     if ( /^https?:\/\//.test(origin) === false ) { return false; }
     return browser.permissions.contains({
         origins: [ `${origin}/*` ],
-    });
-}
-
-async function hasOmnipotence() {
-    const manifest = runtime.getManifest();
-    const hasOmnipotence = Array.isArray(manifest.host_permissions) &&
-        manifest.host_permissions.includes('<all_urls>');
-    if ( hasOmnipotence ) { return true; }
-    return browser.permissions.contains({
-        origins: [ '<all_urls>' ],
     });
 }
 
@@ -315,7 +306,7 @@ function onMessage(request, sender, callback) {
     case 'popupPanelData': {
         Promise.all([
             getFilteringMode(request.hostname),
-            hasOmnipotence(),
+            hasBroadHostPermissions(),
             hasGreatPowers(request.origin),
             getEnabledRulesetsDetails(),
             adminReadEx('disabledFeatures'),
@@ -498,7 +489,7 @@ async function start() {
     }
 
     if ( process.firstRun ) {
-        const enableOptimal = await hasOmnipotence();
+        const enableOptimal = await hasBroadHostPermissions();
         if ( enableOptimal ) {
             const afterLevel = await setDefaultFilteringMode(MODE_OPTIMAL);
             if ( afterLevel === MODE_OPTIMAL ) {
