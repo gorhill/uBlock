@@ -1,4 +1,4 @@
-uBO Lite (uBOL) ialah penyekat kandungan berasaskan MV3.
+uBO Lite (uBOL) is an MV3-based content blocker.
 
 Set peraturan lalai sepadan dengan set penapis lalai uBlock Origin:
 
@@ -10,21 +10,3 @@ Set peraturan lalai sepadan dengan set penapis lalai uBlock Origin:
 You can enable more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
 
 uBOL adalah deklaratif sepenuhnya, bermakna tidak ada keperluan untuk proses uBOL kekal untuk penapisan berlaku, dan penapisan kandungan berasaskan suntikan CSS/JS dilakukan sepenuhnya oleh penyemak imbas itu sendiri dan bukannya oleh sambungan. Ini bermakna uBOL sendiri tidak menggunakan sumber CPU/memori semasa penyekatan kandungan sedang berjalan -- proses pekerja perkhidmatan uBOL diperlukan _hanya_ apabila anda berinteraksi dengan panel timbul atau halaman pilihan.
-
-uBOL tidak memerlukan kebenaran "baca dan ubah suai data" yang luas pada masa pemasangan, oleh itu keupayaan terhadnya di luar kotak berbanding dengan uBlock Origin atau penyekat kandungan lain yang memerlukan kebenaran "baca dan ubah suai data" yang luas pada masa pemasangan.
-
-Walau bagaimanapun, uBOL membenarkan anda *dengan jelas* memberikan kebenaran lanjutan pada tapak tertentu pilihan anda supaya ia boleh menapis dengan lebih baik pada tapak tersebut menggunakan penapisan kosmetik dan suntikan skrip.
-
-Untuk memberikan kebenaran lanjutan pada tapak tertentu, buka panel timbul dan pilih mod penapisan yang lebih tinggi seperti Optimum atau Lengkap.
-
-Penyemak imbas kemudian akan memberi amaran kepada anda tentang kesan pemberian kebenaran tambahan yang diminta oleh sambungan pada tapak semasa dan anda perlu memberitahu penyemak imbas sama ada anda menerima atau menolak permintaan tersebut.
-
-Jika anda menerima permintaan uBOL untuk mendapatkan kebenaran tambahan pada tapak semasa, ia akan dapat menapis kandungan dengan lebih baik untuk tapak semasa.
-
-Anda boleh menetapkan mod penapisan lalai dari halaman pilihan 'uBOL'. Jika anda memilih mod Optimum atau Lengkap sebagai mod lalai, anda perlu memberikan uBOL kebenaran untuk membaca dan mengubah suai data pada semua tapak web.
-
-Perlu diingat bahawa ini masih dalam proses, dengan matlamat akhir ini:
-
-- Tiada kebenaran hos pada masa pemasangan -- kebenaran lanjutan diberikan secara eksplisit oleh pengguna pada asas setiap tapak.
-
-- Deklaratif sepenuhnya untuk kebolehpercayaan dan kecekapan CPU/memori.

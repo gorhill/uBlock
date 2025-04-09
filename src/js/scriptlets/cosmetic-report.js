@@ -125,8 +125,8 @@ if ( Array.isArray(allSelectors.exceptions) ) {
     }
 }
 
-if ( typeof self.uBO_scriptletsInjected === 'string' ) {
-    matchedSelectors.push(...self.uBO_scriptletsInjected.split('\n'));
+if ( self.uBO_scriptletsInjected !== undefined ) {
+    matchedSelectors.push(...self.uBO_scriptletsInjected);
 }
 
 if ( matchedSelectors.length === 0 ) { return; }

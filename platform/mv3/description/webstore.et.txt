@@ -1,4 +1,4 @@
-uBO Lite (uBOL) on MV3-l põhinev *lubadeta* sisutõkestaja.
+uBO Lite (uBOL) on MV3-l põhinev sisutõkestaja.
 
 Tavaline reeglitekogum vastab uBlock Origini tavalisele filtritekogumile:
 
@@ -10,21 +10,3 @@ Peter Lowe'i reklaamide ja jälitusserverite loend
 Rohkem reegleid valikutest ehk toksake _Cogs_ ikooni hüpikpaneelis.
 
 uBOL on läbinisti deklaratiivne ehk filtreerimiseks pole vaja kogu aeg töötavat uBOLi protsessi ja CSS/JS süstipõhist sisu filtreerib tegelikult brauser, mitte laiendus. Teisisõnu, uBOL ei kasuta sisu tõkestamisel protsessori/mälu ressursse. uBOLi teenuse toimimise protsessi on vaja _vaid_ juhul, kui kasutate hüpikpaneeli või valikute lehekülgi.
-
-uBOL ei nõua paigaldamise ajal teadatuntud andmete lugemise ja muutmise luba, seega võrreldes seda nõudva laiendusega uBlock Origin või muu sisutõkestiga on uBOL-i piiratus üks selle funktsioonidest.
-
-Kuid uBOL võimaldab *selgesõnaliselt* anda täpsemaid lubasid teie valitud veebilehtedele, et neid saaks paremini filtreerida ilufiltrite ja skriptisüstidega.
-
-Veebilehele täpsustatud lubade andmiseks ava hüpikpaneel ja vali põhjalikum filtreerimisrežiim, näiteks Optimaalne või Põhjalik.
-
-Seejärel hoiatab veebilehitseja praeguse veebilehe laienduse taotletud täiendavate õiguste andmise tagajärgede eest ja peate veebilehitsejale ütlema, kas nõustute taotlusega või keeldute sellest.
-
-Kui nõustute uBOLi taotlusega täiendavate õiguste saamiseks praegusel veebilehel, saab see praeguse veebilehe sisu paremini filtreerida.
-
-Fltreerimise tavarežiimi saate määrata uBOLi valikute lehelt. Kui määrate optimaalse või põhjaliku režiimi tavaliseks, peate andma uBOLile loa kõikide veebilehtede andmete lugemiseks ja muutmiseks.
-
-Pidage meeles, et see on veel arendamisel, mille lõppeesmärgid on järgmised:
-
-- Paigaldamise ajal laialdased hostiõigused puuduvad – kasutaja annab laiendatud load selgesõnaliselt ja veebilehe põhiselt.
-
-- Täiesti deklaratiivne töökindluse ja protsessori/mälu tõhususe osas.

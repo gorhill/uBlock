@@ -25,6 +25,7 @@
 
 import * as sfp from '../static-filtering-parser.js';
 import { dom, qs$ } from '../dom.js';
+import { tokenizableStrFromRegex } from '../regex-analyzer.js';
 
 /******************************************************************************/
 
@@ -66,6 +67,8 @@ const uBOStaticFilteringMode = (( ) => {
             node || mode.currentWalkerNode, sfp.NODE_FLAG_ERROR
         ) !== 0;
     };
+
+    const reGoodRegexToken = /[^\x01%0-9A-Za-z][%0-9A-Za-z]{7,}|[^\x01%0-9A-Za-z][%0-9A-Za-z]{1,6}[^\x01%0-9A-Za-z]/;
 
     const colorFromAstNode = mode => {
         if ( mode.astParser.nodeIsEmptyString(mode.currentWalkerNode) ) { return '+'; }
@@ -119,7 +122,9 @@ const uBOStaticFilteringMode = (( ) => {
         case sfp.NODE_TYPE_NET_PATTERN:
             if ( mode.astWalker.canGoDown() ) { break; }
             if ( mode.astParser.isRegexPattern() ) {
-                if ( mode.astParser.getNodeFlags(mode.currentWalkerNode, sfp.NODE_FLAG_PATTERN_UNTOKENIZABLE) !== 0 ) {
+                const s = mode.astParser.getNodeString(mode.currentWalkerNode);
+                const tokenizable = tokenizableStrFromRegex(s);
+                if ( reGoodRegexToken.test(tokenizable) === false ) {
                     return 'variable warning';
                 }
                 return 'variable notice';

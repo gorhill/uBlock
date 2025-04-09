@@ -12,7 +12,7 @@
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "dashboardName": {
-    "message": "uBO Lite — Pannello di controllo",
+    "message": "uBO Lite — Cruscotto",
     "description": "English: uBO Lite — Dashboard"
   },
   "settingsPageName": {
@@ -24,7 +24,7 @@
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
-    "message": "Informativa sulla privacy",
+    "message": "Politica di riservatezza",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupFilteringModeLabel": {
@@ -32,31 +32,31 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipReport": {
-    "message": "Segnala un problema su questo sito web",
+    "message": "Segnala un problema con questo sito",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
-    "message": "Apri il pannello di controllo",
+    "message": "Apri il cruscotto",
     "description": "English: Click to open the dashboard"
   },
   "popupMoreButton": {
-    "message": "Altro",
+    "message": "Più",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton": {
-    "message": "Nascondi",
+    "message": "Meno",
     "description": "Label to be used to hide popup panel sections"
   },
   "3pGroupDefault": {
-    "message": "Predefiniti",
+    "message": "Predefinite",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAds": {
-    "message": "Pubblicità",
+    "message": "Inserz.",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupPrivacy": {
-    "message": "Privacy",
+    "message": "Riservatezza",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
@@ -64,19 +64,19 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAnnoyances": {
-    "message": "Elementi fastidiosi",
+    "message": "Scocciature",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMisc": {
-    "message": "Varie",
+    "message": "Vari",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupRegions": {
-    "message": "Regioni, lingue",
+    "message": "Lingue e regioni",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "aboutChangelog": {
-    "message": "Registro delle modifiche",
+    "message": "Reg. modifiche",
     "description": ""
   },
   "aboutCode": {
@@ -100,15 +100,15 @@
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "Dipendenze esterne (GPLv3-compatibili):",
+    "message": "Dipendenze esterne (in linea con la GPL v3):",
     "description": "Shown in the About pane"
   },
   "supportS6H": {
-    "message": "Segnala un problema di filtro",
+    "message": "Segnala un problema con un filtro",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Segnala i problemi di filtraggio con siti web specifici su <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Richiede un account GitHub.</u>",
+    "message": "Segnala i problemi di filtraggio con siti web specifici nel tracciatore problemi <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code></span>. <u>Richiede un account GitHub.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS5H": {
@@ -120,7 +120,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Trova segnalazioni simili",
+    "message": "Trova segnalazioni simili in GitHub",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -132,15 +132,15 @@
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "Scegli una voce",
+    "message": "− Scegli una voce −",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Mostra pubblicità o avanzi di pubblicità",
+    "message": "Mostra inserzioni o loro residui",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Presenta sovrapposizioni o altri disturbi",
+    "message": "Ha sovrapposizioni o altri fastidi",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
@@ -148,7 +148,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Ha problemi relativi alla privacy",
+    "message": "Ha problemi relativi alla riservatezza",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
@@ -168,23 +168,15 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Crea una nuova segnalazione",
+    "message": "Crea nuova segnalazione in GitHub",
     "description": "Text for button which open an external webpage in Support pane"
-  },
-  "firstRunSectionLabel": {
-    "message": "Benvenuto",
-    "description": "The header text for the welcome message section"
-  },
-  "firstRunDescription": {
-    "message": "Hai appena installato uBO Lite. Qui puoi scegliere la modalità di filtraggio predefinita da utilizzare su tutti i siti web.\n\nPer impostazione predefinita, viene selezionata la modalità <em>Basilare</em>, perché non richiede l'autorizzazione per leggere e modificare i dati. Se ti fidi di uBO Lite, puoi concedergli un'ampia autorizzazione per leggere e modificare i dati su tutti i siti web, in modo da abilitare capacitità di filtraggio più avanzate per tutti i siti web in modo predefinito.",
-    "description": "Descriptive text shown at first install time only "
   },
   "defaultFilteringModeSectionLabel": {
     "message": "Modalità di filtraggio predefinita",
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "La modalità di filtraggio predefinita sarà sovrascritta dalle modalità di filtraggio per sito web. È possibile regolare la modalità di filtraggio su un determinato sito web in base alla modalità che funziona meglio su quel sito. Ogni modalità presenta vantaggi e svantaggi.",
+    "message": "La modalità di filtraggio predefinita sarà sovrascritta dalle modalità di filtraggio per sito web. È possibile regolare la modalità di filtraggio in un determinato sito web in base alla modalità che funziona meglio per quel sito. Ogni modalità presenta vantaggi e svantaggi.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
@@ -204,15 +196,15 @@
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Filtraggio di rete di base da liste di filtri selezionate.\n\nNon richiede l'autorizzazione per leggere e modificare i dati sui siti web.",
+    "message": "Filtraggio di rete di base da liste di filtri selezionate.\n\nNon richiede l'autorizzazione per leggere e modificare i dati nei siti web.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Filtraggio di rete avanzato più un filtraggio esteso specifico da liste di filtri selezionate.\n\nRichiede un'ampia autorizzazione per leggere e modificare i dati su tutti i siti web.",
+    "message": "Filtraggio di rete avanzato più un filtraggio esteso specifico da liste di filtri selezionate.\n\nRichiede un'ampia autorizzazione per leggere e modificare i dati in tutti i siti web.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Filtraggio di rete avanzato più un filtraggio esteso specifico e generico da liste di filtri selezionate.\n\nRichiede un'ampia autorizzazione per leggere e modificare i dati su tutti i siti web.\n\nIl filtraggio esteso generico può causare un maggiore utilizzo delle risorse della pagina web.",
+    "message": "Filtraggio di rete avanzato più un filtraggio esteso specifico e generico da liste di filtri selezionate.\n\nRichiede un'ampia autorizzazione per leggere e modificare i dati in tutti i siti web.\n\nIl filtraggio esteso generico può causare un maggiore uso delle risorse della pagina web.",
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {

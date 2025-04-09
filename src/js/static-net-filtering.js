@@ -23,6 +23,7 @@ import * as sfp from './static-filtering-parser.js';
 
 import { domainFromHostname, hostnameFromNetworkURL } from './uri-utils.js';
 import { dropTask, queueTask } from './tasks.js';
+import { isRE2, tokenizableStrFromRegex } from './regex-analyzer.js';
 
 import BidiTrieContainer from './biditrie.js';
 import { CompiledListReader } from './static-filtering-io.js';
@@ -1250,7 +1251,7 @@ class FilterRegex {
         if ( rule.condition === undefined ) {
             rule.condition = {};
         }
-        if ( sfp.utils.regex.isRE2(args[1]) === false ) {
+        if ( isRE2(args[1]) === false ) {
             dnrAddRuleError(rule, `regexFilter is not RE2-compatible: ${args[1]}`);
         }
         rule.condition.regexFilter = args[1];
@@ -3246,7 +3247,7 @@ class FilterCompiler {
         if ( other !== undefined ) {
             return Object.assign(this, other);
         }
-        this.reToken = /[%0-9A-Za-z]+/g;
+        this.reTokens = /[%0-9A-Za-z]+/g;
         this.optionValues = new Map();
         this.tokenIdToNormalizedType = new Map([
             [ sfp.NODE_TYPE_NET_OPTION_NAME_CNAME, bitFromType('cname') ],
@@ -3797,11 +3798,11 @@ class FilterCompiler {
 
     // Note: a one-char token is better than a documented bad token.
     extractTokenFromPattern(pattern) {
-        this.reToken.lastIndex = 0;
+        this.reTokens.lastIndex = 0;
         let bestMatch = null;
         let bestBadness = 0x7FFFFFFF;
         for (;;) {
-            const match = this.reToken.exec(pattern);
+            const match = this.reTokens.exec(pattern);
             if ( match === null ) { break; }
             const token = match[0];
             const badness = token.length > 1 ? this.badTokens.get(token) || 0 : 1;
@@ -3811,7 +3812,7 @@ class FilterCompiler {
                 if ( c === 0x2A /* '*' */ ) { continue; }
             }
             if ( token.length < MAX_TOKEN_LENGTH ) {
-                const lastIndex = this.reToken.lastIndex;
+                const lastIndex = this.reTokens.lastIndex;
                 if ( lastIndex < pattern.length ) {
                     const c = pattern.charCodeAt(lastIndex);
                     if ( c === 0x2A /* '*' */ ) { continue; }
@@ -3835,18 +3836,18 @@ class FilterCompiler {
     //   Mind `\b` directives: `/\bads\b/` should result in token being `ads`,
     //   not `bads`.
     extractTokenFromRegex(pattern) {
-        pattern = sfp.utils.regex.toTokenizableStr(pattern);
-        this.reToken.lastIndex = 0;
+        pattern = tokenizableStrFromRegex(pattern);
+        this.reTokens.lastIndex = 0;
         let bestToken;
         let bestBadness = 0x7FFFFFFF;
         for (;;) {
-            const matches = this.reToken.exec(pattern);
+            const matches = this.reTokens.exec(pattern);
             if ( matches === null ) { break; }
             const { 0: token, index } = matches;
             if ( index === 0 || pattern.charAt(index - 1) === '\x01' ) {
                 continue;
             }
-            const { lastIndex } = this.reToken;
+            const { lastIndex } = this.reTokens;
             if (
                 token.length < MAX_TOKEN_LENGTH && (
                     lastIndex === pattern.length ||

@@ -23,6 +23,9 @@
   },
   "default_locale": "en",
   "description": "__MSG_extShortDesc__",
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "icons": {
     "16": "img/icon_16.png",
     "32": "img/icon_32.png",
@@ -33,9 +36,6 @@
   "minimum_chrome_version": "122.0",
   "name": "__MSG_extName__",
   "options_page": "dashboard.html",
-  "optional_host_permissions": [
-    "<all_urls>"
-  ],
   "permissions": [
     "activeTab",
     "declarativeNetRequest",

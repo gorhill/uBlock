@@ -1,4 +1,4 @@
-uBO Lite (uBOL) to *niewymagający uprawnień* bloker treści oparty na MV3.
+uBO Lite (uBOL) to bloker treści oparty na MV3.
 
 Domyślny zestaw reguł odpowiada domyślnemu zestawowi filtrów uBlock Origin:
 
@@ -10,21 +10,3 @@ Domyślny zestaw reguł odpowiada domyślnemu zestawowi filtrów uBlock Origin:
 Możesz włączyć więcej zestawów reguł, odwiedzając stronę opcji – kliknij ikonę _koła zębatego_ w wyskakującym panelu.
 
 uBOL jest całkowicie deklaratywny, co oznacza, że nie jest potrzebny stały proces uBOL w celu filtrowania, a filtrowanie treści oparte na wstrzykiwaniu CSS/JS jest wykonywane niezawodnie przez samą przeglądarkę, a nie przez rozszerzenie. Oznacza to, że sam uBOL nie zużywa zasobów procesora/pamięci, gdy trwa blokowanie treści – proces Service Worker uBOL jest wymagany _tylko_ podczas interakcji z panelem wyskakującym lub stronami opcji.
-
-uBOL w trakcie instalacji nie wymaga szerokich uprawnień do „odczytu i modyfikacji danych”, stąd jego ograniczone możliwości w porównaniu z uBlock Origin lub innymi blokerami treści, które w czasie instalacji wymagają szerokich uprawnień do „odczytu i modyfikacji danych”.
-
-Jednakże uBOL umożliwia *jawnie* udzielanie rozszerzonych uprawnień na określonych wybranych witrynach, dzięki czemu może lepiej filtrować te witryny za pomocą filtrowania kosmetycznego i wstrzykiwania skryptletów.
-
-Aby przyznać rozszerzone uprawnienia na danej witrynie, otwórz panel wyskakujący i wybierz wyższy tryb filtrowania, taki jak Optymalny lub Kompletny.
-
-Przeglądarka wyświetli ostrzeżenie o skutkach przyznania dodatkowych uprawnień wymaganych przez rozszerzenie na bieżącej witrynie i będziesz musiał poinformować przeglądarkę, czy akceptujesz, czy odrzucasz żądanie.
-
-Jeśli zaakceptujesz żądanie uBOL o dodatkowe uprawnienia na bieżącej witrynie, będzie on w stanie lepiej filtrować zawartość bieżącej witryny.
-
-Możesz ustawić domyślny tryb filtrowania na stronie opcji uBOL. Jeśli tryb Optymalny lub Pełny zostanie wybrany jako domyślny, trzeba będzie przyznać uBOL uprawnienia do odczytu i modyfikacji danych na wszystkich stronach internetowych.
-
-Należy pamiętać, że nadal trwają prace z następującymi celami końcowymi:
-
-– Brak szerokich uprawnień hosta w czasie instalacji – rozszerzone uprawnienia są przyznawane jawnie przez użytkownika na podstawie poszczególnych witryn.
-
-– Całkowicie deklaratywna niezawodność i wydajność procesora/pamięci.

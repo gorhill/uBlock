@@ -1,4 +1,4 @@
-Ang uBO Lite (uBOL) ay isang eksperimental at *permission-less* na tagaharang ng content na nakabase sa MV3.
+uBO Lite (uBOL) is an MV3-based content blocker.
 
 Tulad ng uBlock Origin, ito rin ang mga default na listahan ng mga filter:
 
@@ -10,21 +10,3 @@ Tulad ng uBlock Origin, ito rin ang mga default na listahan ng mga filter:
 You can enable more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
 
 Deklaratibo lamang ang uBOL, kaya hindi nito kailangan ng permanenteng proseso upang mag-filter, at mainam na ginagawa ng browser mismo imbes na ekstensyon ang pagfi-filter sa content na nakabase sa CSS o JS. Ibig-sabihin, hindi kumokonsyumo ng CPU o memorya ang uBOL habang nanghaharang -- ang proseso ng trabahante ng serbisyo ay kailangan _lang_ kung nasa popup panel o pahina ng opsyon ka.
-
-Hindi kailangan ng uBOL ang malawakang pahintulot para "basahin at baguhin ang data" pagka-install, kaya kung bago pa lang itong install ay limitado ang kakayahan nito kumpara sa uBlock Origin o iba pang mga pangharang ng content na nangangailangan ng malawakang pahintulot para "basahin at baguhin ang data" pagka-install.
-
-Ngunit, pwede mong *pasadyang* pahintulutan ang uBOL na magkaroon ng pinalawak na pahintulot sa mga website na pipiliin mo para mas mapabuti ang pagfi-filter sa mga site na iyon gamit ang kosmetikong pagfi-filter at injeksyon ng scriptlet.
-
-Upang bigyan ito ng pinalawak na pahintulot sa isang site, buksan ang popup panel at pumili ng isang mode sa pagfi-filter tulad ng Pinainam o Kumpleto.
-
-Babalaan ka ng browser tungkol sa mga epekto ng pagbibigay ng karagdagang pahintulot na hinihiling ng ekstensyon sa kasalukuyang site, at kailangan mong tumugon kung pinapahintulutan mo ba ito o hindi.
-
-Kung tatanggapin mo ang hiling ng uBOL para sa karagdagang mga pahintulot sa kasalukuyang site, mas magiging mainam ang pagfi-filter nito sa content para sa kasalukuyang site.
-
-Maitatakda mo ang default na mode sa pagfi-filter sa pahina ng mga opsyon ng uBOL. Kailangan mong pahintulutan ang uBOL na basahin o baguhin ang datos sa lahat ng mga website kung pipiliin mo ang Pinainam o Kumpleto bilang default na mode sa pagfi-filter.
-
-Tandaang kasalukuyan pang binubuo ang ekstensyong ito, at nilalayon nitong:
-
-- Walang kakailanganing malawakang pahintulot pagka-install -- ibibigay lang ng user ang karagdagang pahintulot sa mga piling site.
-
-- Deklaratibo lamang upang maging mapagkakatiwalaan at matipid sa CPU at memorya.

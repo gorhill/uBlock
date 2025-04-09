@@ -48,7 +48,7 @@ import { filteringBehaviorChanged } from './broadcast.js';
 import io from './assets.js';
 import { redirectEngine } from './redirect-engine.js';
 import staticExtFilteringEngine from './static-ext-filtering.js';
-import staticFilteringReverseLookup from './reverselookup.js';
+import { staticFilteringReverseLookup } from './reverselookup.js';
 import staticNetFilteringEngine from './static-net-filtering.js';
 import { ubolog } from './console.js';
 import webRequest from './traffic.js';

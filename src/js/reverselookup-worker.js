@@ -115,7 +115,8 @@ const fromExtendedFilter = function(details) {
     const exception = prefix.charAt(1) === '@';
     const selector = details.rawFilter.slice(prefix.length);
     const isHtmlFilter = prefix.endsWith('^');
-    const hostname = details.hostname;
+    const url = new URL(details.url || 'about:blank');
+    const { hostname, pathname } = url;
 
     // The longer the needle, the lower the number of false positives.
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1139
@@ -147,15 +148,41 @@ const fromExtendedFilter = function(details) {
         }
     }
 
-    const hostnameMatches = hn => {
-        if ( hn === '' ) { return true; }
-        if ( hn.charCodeAt(0) === 0x2F /* / */ ) {
-            return (new RegExp(hn.slice(1,-1))).test(hostname);
-        }
-        if ( reHostname.test(hn) ) { return true; }
+    const hostnameTargetMatchesHostname = target => {
+        if ( target === '' ) { return true; }
+        if ( reHostname.test(target) ) { return true; }
         if ( reEntity === undefined ) { return false; }
-        if ( reEntity.test(hn) ) { return true; }
+        if ( reEntity.test(target) ) { return true; }
         return false;
+    };
+
+    const regexTargetMatchesHostname = target => {
+        return (new RegExp(target)).test(hostname);
+    };
+
+    const regexTargetMatchesURL = target => {
+        const pathPos = target.indexOf('\\/');
+        if ( pathPos === -1 ) {
+            return regexTargetMatchesHostname(target.slice(1, -1));
+        }
+        return regexTargetMatchesHostname(`${target.slice(1, pathPos)}$`) &&
+            (new RegExp(`^${target.slice(pathPos, -1)}`)).test(pathname);
+    };
+
+    const pathTargetMatchesURL = target => {
+        const pathPos = target.indexOf('/');
+        return hostnameTargetMatchesHostname(target.slice(0, pathPos)) &&
+            pathname.startsWith(target.slice(pathPos));
+    };
+
+    const targetMatchesURL = target => {
+        if ( target.charCodeAt(0) === 0x2F /* / */ ) {
+            return regexTargetMatchesURL(target.slice(1, -1));
+        }
+        if ( target.includes('/') ) {
+            return pathTargetMatchesURL(target);
+        }
+        return hostnameTargetMatchesHostname(target);
     };
 
     const response = Object.create(null);
@@ -212,24 +239,25 @@ const fromExtendedFilter = function(details) {
             // Response header filtering
             /* fallthrough */
             case 64: {
-                if ( exception !== ((fargs[2] & 0b001) !== 0) ) { break; }
+                if ( exception !== (fargs[2].charCodeAt(0) === 0x2D /* - */) ) { break; }
+                const candidate = fargs[2].slice(1);
                 if ( /^responseheader\(.+\)$/.test(selector) ) {
-                    if ( fargs[3] !== needle ) { break; }
-                    if ( hostnameMatches(fargs[1]) === false ) { break; }
+                    if ( candidate !== needle ) { break; }
+                    if ( targetMatchesURL(fargs[1]) === false ) { break; }
                     found = fargs[1] + prefix + selector;
                     break;
                 }
-                const isProcedural = (fargs[2] & 0b010) !== 0;
+                const isProcedural = candidate.charCodeAt(0) === 0x7B /* { */;
                 if (
-                    isProcedural === false && fargs[3] !== selector ||
-                    isProcedural && JSON.parse(fargs[3]).raw !== selector
+                    isProcedural === false && candidate !== selector ||
+                    isProcedural && JSON.parse(candidate).raw !== selector
                 ) {
                     break;
                 }
-                if ( hostnameMatches(fargs[1]) === false ) { break; }
+                if ( targetMatchesURL(fargs[1]) === false ) { break; }
                 // https://www.reddit.com/r/uBlockOrigin/comments/d6vxzj/
                 //   Ignore match if specific cosmetic filters are disabled
-                if (
+                if ( 
                     filterType === 8 &&
                     exception === false &&
                     details.ignoreSpecific
@@ -240,13 +268,15 @@ const fromExtendedFilter = function(details) {
                 break;
             }
             // Scriptlet injection
-            case 32:
-                if ( exception !== ((fargs[2] & 0b001) !== 0) ) { break; }
-                if ( fargs[3] !== details.needle ) { break; }
-                if ( hostnameMatches(fargs[1]) ) {
+            case 32: {
+                if ( exception !== (fargs[2].charCodeAt(0) === 0x2D /* - */) ) { break; }
+                const candidate = fargs[2].slice(1);
+                if ( candidate !== details.needle ) { break; }
+                if (targetMatchesURL(fargs[1]) ) {
                     found = fargs[1] + prefix + selector;
                 }
                 break;
+            }
             default:
                 break;
             }

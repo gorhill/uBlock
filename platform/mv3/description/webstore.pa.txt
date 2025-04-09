@@ -1,4 +1,4 @@
-uBO Lite (uBOL) ਇੱਕ *ਬਿਨਾਂ ਇਜਾਜ਼ਤਾਂ* ਵਾਲਾ MV3-ਅਧਾਰਿਤ ਸਮੱਗਰੀ ਬਲਾਕਰ ਹੈ।
+uBO Lite (uBOL) is an MV3-based content blocker.
 
 ਮੂਲ ਨਿਯਮ-ਸਮੂਹ uBlock Origin ਦੇ ਮੂਲ ਫਿਲਟਰ-ਸਮੂਹ ਨਾਲ ਸੰਬੰਧਿਤ ਹੈ:
 
@@ -10,21 +10,3 @@ uBO Lite (uBOL) ਇੱਕ *ਬਿਨਾਂ ਇਜਾਜ਼ਤਾਂ* ਵਾਲਾ M
 ਤੁਸੀਂ ਚੋਣਾਂ ਸਫ਼ੇ ਨੂੰ ਖੋਲ੍ਹ ਕੇ ਹੋਰ ਰੂਲ-ਸੈੱਟ ਸਮਰੱਥ ਕਰ ਕਦੇ ਹੋ -- ਪੌਪ-ਅੱਪ ਪੈਨਲ ਵਿੱਚ _Cogs_ icon ਨੂੰ ਕਲਿੱਕ ਕਰੋ।
 
 uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
-
-uBOL does not require broad "read and modify data" permission at install time, hence its limited capabilities out of the box compared to uBlock Origin or other content blockers requiring broad "read and modify data" permissions at install time.
-
-However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
-
-To grant extended permissions on a given site, open the popup panel and pick a higher filtering mode such as Optimal or Complete.
-
-The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request.
-
-ਜੇ ਤੁਸੀਂ ਮੌਜੂਦਾ ਸਾਈਟਾਂ ਉੱਤੇ ਹੋਰ ਇਜਾਜਤਾਂ ਲਈ uBOL ਦੀ ਬੇਨਤੀ ਨੂੰ ਮਨਜ਼ੂਰ ਕੀਤਾ ਤਾਂ ਇਹ ਮੌਜੂਦਾ ਸਾਈਟ ਬਾਰੇ ਵਧੀਆ ਫਿਲਟਰ ਸਮੱਗਰੀ ਨੂੰ ਸਮਰੱਥ ਕਰੇਗੀ।
-
-You can set the default filtering mode from uBOL's options page. If you pick the Optimal or Complete mode as the default one, you will need to grant uBOL the permission to read and modify data on all websites.
-
-ਯਾਦ ਰੱਖੋ ਕਿ ਇਹ ਕੰਮ ਹਾਲੇ ਵੀ ਜਾਰੀ ਹੈ, ਜਿਸ ਦੇ ਟੀਚੇ ਇਹ ਹਨ:
-
-- No broad host permissions at install time -- extended permissions are granted explicitly by the user on a per-site basis.
-
-- Entirely declarative for reliability and CPU/memory efficiency.

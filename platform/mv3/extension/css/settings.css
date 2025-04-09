@@ -1,20 +1,6 @@
 body.loading {
     visibility: hidden;
     }
-body .firstRun {
-    display: none;
-    }
-body.firstRun .firstRun {
-    background-color: rgb(var(--dashboard-highlight-surface-rgb));
-    display: block;
-    padding: 8px;
-    }
-body .firstRun > *:first-child {
-    margin-top: 0;
-    }
-body .firstRun > *:last-child {
-    margin-bottom: 0;
-    }
 h3 {
     margin: 1em 0;
     }

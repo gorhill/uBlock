@@ -1,4 +1,4 @@
-uBO Lite (uBOL) er en *tilladelsesløs* MV3-baseret indholdsblocker.
+uBO Lite (uBOL) er en MV3-baseret indholdsblocker.
 
 Standardregelsættet svarer til uBlock Origins standardfiltersæt:
 
@@ -10,21 +10,3 @@ Standardregelsættet svarer til uBlock Origins standardfiltersæt:
 Flere regelsæt kan aktiveres ved at gå til indstillingssiden -- klik på ikonet _Tandhjul_ i pop op-panelet.
 
 uBOL er fuldstændig deklarativ, hvilket betyder, at ingen permanent uBOL-proces behøves for at filtreringen kan finde sted, og CSS/JS-injektionsbaseret indholdsfiltrering udføres pålideligt af browseren selv i stedet for af udvidelsen. Dette betyder, at uBOL ikke selv forbruger CPU-/hukommelsesressourcer under indholdsblokeringen -- uBOLs tjenestearbejdsproces er _kun_ nødvendig under interaktion med pop op-panelet eller indstillingssiderne.
-
-uBOL kræver ikke en omfattende "læse og ændre data" tilladelse under installationen, derfor dens begrænsede egenskaber fra start af sammenlignet med uBlock Origin eller andre indholdsblockere, som kræver omfattende "læse/ændre data" tilladelser under installationen.
-
-uBOL giver dog mulighed for *eksplicit* at tildele udvidede tilladelser på bestemte websteder efter eget valg, så den bedre kan filtrere på disse websteder vha. kosmetisk filtrering og scriptlet-injektioner.
-
-For at tildele udvidede tilladelser på et givent websted, åbn pop op-panelet og vælg en højere filtreringstilstand, såsom Optimal eller Komplet.
-
-Browseren advarer derefter om virkningerne af de ekstra tildelte tilladelser, som udvidelsen anmoder om på det aktuelle websted, og man vil skulle fortælle browseren, hvorvidt anmodningen accepteres eller afslås.
-
-Accepteres uBOLs anmodning om ekstra tilladelser på det aktuelle websted, vil den bedre kunne filtrere indhold på webstedet.
-
-Standardfiltreringstilstanden kan angives via uBOLs indstillingsside. Hvis tilstanden Optimal eller Komplet vælges som standardtilstand, skal uBOL tildeles tilladelse til at  læse og ændre data på alle websteder.
-
-Husk dog, at dette stadig er et igangværende arbejde med disse slutmål:
-
-- Ingen omfattende værtstilladelser under installationen -- udvidede tilladelser tildeles eksplicit af brugeren på webstedsbasis.
-
-- Fuldstændig deklarativ for pålidelighed og CPU-/hukommelseseffektivitet.

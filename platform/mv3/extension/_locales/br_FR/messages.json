@@ -171,14 +171,6 @@
     "message": "Sevel ur rentañ-kont nevez",
     "description": "Text for button which open an external webpage in Support pane"
   },
-  "firstRunSectionLabel": {
-    "message": "Donemat",
-    "description": "The header text for the welcome message section"
-  },
-  "firstRunDescription": {
-    "message": "Emaoc'h o paouez staliañ uBO Lite. Amañ-dindan e c'hallit dibab ar mod silañ dre ziouer evit an holl lec'hiennoù.\n\nDre ziouer eo bet dibabet ar mod <em>diazez</em> peogwir n'eus ket ezhomm reiñ aotre da lenn ha kemmañ roadennoù da uBO Lite. M'ho peus fiziañs e uBO Lite e c'hallit reiñ aotreoù ouzhpenn dezhañ a-benn lenn ha kemmañ roadennoù en holl lec'hiennoù, mod-se e vo enaouet ar mod silañ araokaet en holl lec'hiennoù dre ziouer.",
-    "description": "Descriptive text shown at first install time only "
-  },
   "defaultFilteringModeSectionLabel": {
     "message": "Mod silañ dre ziouer",
     "description": "The header text for the default filtering mode section"

@@ -171,14 +171,6 @@
     "message": "Neue Meldung auf GitHub erstellen",
     "description": "Text for button which open an external webpage in Support pane"
   },
-  "firstRunSectionLabel": {
-    "message": "Willkommen",
-    "description": "The header text for the welcome message section"
-  },
-  "firstRunDescription": {
-    "message": "Sie haben soeben uBO Lite installiert. Sie können hier den Standardfiltermodus auswählen, der auf allen Websites angewendet werden soll.\n\nStandardmäßig ist der <em>einfache</em> Modus ausgewählt, weil er keine Berechtigung zum Lesen und Ändern von Daten erfordert. Wenn Sie uBO Lite vertrauen, können Sie dieser Erweiterung eine weitreichende Berechtigung zum Lesen und Ändern von Daten auf allen Websites erteilen, um standardmäßig erweiterte Filterfunktionen für alle Websites zu aktivieren.",
-    "description": "Descriptive text shown at first install time only "
-  },
   "defaultFilteringModeSectionLabel": {
     "message": "Standardfiltermodus",
     "description": "The header text for the default filtering mode section"

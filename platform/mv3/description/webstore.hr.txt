@@ -1,4 +1,4 @@
-uBO Lite (uBOL) je bloker sadržaja *bez dopuštenja* baziran na MV3.
+uBO Lite (uBOL) je bloker sadržaja baziran na MV3.
 
 Zadana lista pravila odgovara uBlock Origin-ovoj zadanoj listi filtera:
 
@@ -10,21 +10,3 @@ Zadana lista pravila odgovara uBlock Origin-ovoj zadanoj listi filtera:
 Možete omogućiti više skupova pravila tako što ćete posjetiti stranicu s opcijama -- kliknite ikonu _Cogs_ na skočnoj ploči.
 
 uBOL je u potpunosti deklarativan, što znači da nema potrebe za trajnim uBOL procesom za filtriranje, a filtriranje sadržaja temeljeno na ubacivanju CSS/JS pouzdano izvodi sam preglednik, a ne ekstenzija. To znači da sam uBOL ne troši CPU/memorijske resurse dok je blokiranje sadržaja u tijeku -- uBOL-ov servisni radni proces potreban je _samo_ kada komunicirate s skočnom pločom ili stranicama s opcijama.
-
-uBOL ne zahtijeva široku dozvolu za "čitanje i izmjenu podataka" u vrijeme instalacije, stoga ima zadane ograničene mogućnosti u usporedbi s uBlock Origin ili drugim blokatorima sadržaja koji zahtijevaju veću dozvolu za "čitanje i izmjenu podataka" u vrijeme instalacije.
-
-Međutim, uBOL vam omogućuje da *eksplicitno* dodijelite proširena dopuštenja na određenim web-stranicama po vašem izboru tako da može bolje filtrirati te web-stranice koristeći kozmetičko filtriranje i injekcijske skripte.
-
-Da biste dodijelili proširena dopuštenja na određenoj web stranici, otvorite skočnu ploču i odaberite viši način filtriranja kao što je Optimalno ili Potpuno.
-
-Preglednik će vas tada upozoriti o učincima dodjele dodatnih dopuštenja koje traži ekstenzija na trenutnom mjestu, a vi ćete morati reći pregledniku prihvaćate li ili odbijate zahtjev.
-
-Ako prihvatite uBOL-ov zahtjev za dodatnim dozvolama na trenutnoj stranici, moći će bolje filtrirati sadržaj na njoj.
-
-Zadani način filtriranja možete postaviti na stranici s opcijama uBOL-a. Ako kao zadano odaberete Optimalni ili Potpuni način rada, morati ćete dati uBOL-u dopuštenje za čitanje i izmjenu podataka na svim web stranicama.
-
-Imajte na umu da je ovo još u tijeku, sa sljedećim krajnjim ciljevima:
-
-- Nema širokih dopuštenja hosta u vrijeme instalacije -- proširena dopuštenja izričito dodjeljuje korisnik za svaku pojedinačnu stranicu.
-
-- Potpuno deklarativno za pouzdanost i učinkovitost CPU/memorije.

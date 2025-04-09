@@ -1,4 +1,4 @@
-uBO Lite (uBOL) er en *tillatelses-begrenset* MV3-basert innholdsblokkerer.
+uBO Lite (uBOL) is an MV3-based content blocker.
 
 Standardregelsettet tilsvarer standardfiltersettet til uBlock Origin:
 
@@ -10,21 +10,3 @@ Standardregelsettet tilsvarer standardfiltersettet til uBlock Origin:
 Du kan legge til flere regelsett ved å gå til innstillingssiden -- klikk _Tannhjul_-ikonet i oppsprettspanelet.
 
 uBOL er fullstendig deklarativ, noe som betyr at det ikke er behov for en permanent uBOL-prosess for at filtreringen skal skje, og CSS/JS-injeksjonsbasert innholdsfiltrering utføres pålitelig av nettleseren selv i stedet for av utvidelsen. Dette betyr at uBOL selv ikke bruker CPU/minneressurser mens innholdsblokkering pågår -- uBOL's service worker-prosess kreves _bare_ når du samhandler med oppsprettspanelet eller innstillingssidene.
-
-uBOL krever ikke bred "lese og endre data"-tillatelse under installasjonen, derav begrensede muligheter i utgangspunktet sammenlignet med uBlock Origin eller andre innholdsblokkerere som krever bred "lese og endre data"-tillatelse under installasjonen.
-
-Men, uBOL lar deg *uttrykkelig* gi utvidede tillatelser på bestemte nettsteder du velger, slik at uBOL bedre kan filtrere på disse nettstedene ved bruk av kosmetisk filtrering og skriptlet-injeksjoner.
-
-For å gi utvidede tillatelser på et gitt nettsted, åpne oppsprettspanelet og velg en høyere filtreringsmodus som Optimal eller Fullstendig.
-
-Nettleseren vil da advare deg om effektene av å gi de ekstra tillatelsene som utvidelsen ber om på det gjeldende nettstedet, og du må fortelle nettleseren om du godtar eller avslår forespørselen.
-
-Hvis du godtar forespørselen fra uBOL om ekstra tillatelser på det gjeldende nettstedet, vil uBOL være i stand til å filtrere innhold bedre for det gjeldende nettstedet.
-
-Du kan angi standard filtreringsmodus fra innstillingssiden i uBOL. Hvis du velger Optimal eller Fullstendig modus som standard, må du gi uBOL tillatelsen til å lese og endre data på alle nettsteder.
-
-Husk at dette fortsatt er et arbeid som pågår, med disse sluttmålene:
-
-- Ingen brede vertstillatelser under installasjonen -- utvidede tillatelser gis uttrykkelig av brukeren på per-side-basis.
-
-- Helt deklarativt for pålitelighet og CPU/minneeffektivitet.

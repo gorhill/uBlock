@@ -1,3 +1,4 @@
+- [Add path support as target option in static extended filtering](https://github.com/gorhill/uBlock/commit/8b696a691a)
 - [Add `trusted-prevent-fetch` scriptlet](https://github.com/gorhill/uBlock/commit/4ce26b63ff)
 - [Code viewer shouldn't be maximizable](https://github.com/gorhill/uBlock/commit/97e740bd2c)
 - [Add `json-edit` suite of scriptlets; extend `replace=` option](https://github.com/gorhill/uBlock/commit/b18daa53aa)
