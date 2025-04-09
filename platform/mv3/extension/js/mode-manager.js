@@ -352,7 +352,7 @@ export async function syncWithBrowserPermissions() {
         modified = true;
     }
     const afterMode = await getDefaultFilteringMode();
-    if ( afterMode > MODE_BASIC ) { return false; }
+    if ( afterMode > MODE_BASIC ) { return afterMode !== beforeMode; }
     const filteringModes = await getFilteringModeDetails();
     const { optimal, complete } = filteringModes;
     for ( const hn of optimal ) {

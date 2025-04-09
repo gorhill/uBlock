@@ -105,7 +105,7 @@ async function onPermissionsRemoved() {
     const modified = await syncWithBrowserPermissions();
     if ( modified === false ) { return false; }
     const afterMode = await getDefaultFilteringMode();
-    if ( beforeMode > MODE_BASIC && afterMode <= MODE_BASIC ) {
+    if ( (beforeMode > MODE_BASIC) === (afterMode <= MODE_BASIC) ) {
         updateDynamicRules();
     }
     registerInjectables();
