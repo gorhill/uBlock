@@ -223,7 +223,7 @@ export async function readFilteringModeDetails(bypassCache = false) {
         adminReadEx('noFiltering'),
     ]);
     if ( userModes === undefined ) {
-        userModes = { basic: [ 'all-urls' ] };
+        userModes = { optimal: [ 'all-urls' ] };
     }
     userModes = unserializeModeDetails(userModes);
     if ( Array.isArray(adminNoFiltering) ) {
@@ -346,6 +346,9 @@ export async function syncWithBrowserPermissions() {
     let modified = false;
     if ( beforeMode > MODE_BASIC && allowedHostnames.has('all-urls') === false ) {
         await setDefaultFilteringMode(MODE_BASIC);
+        modified = true;
+    } else if ( beforeMode === MODE_BASIC && allowedHostnames.has('all-urls') ) {
+        await setDefaultFilteringMode(MODE_OPTIMAL);
         modified = true;
     }
     const afterMode = await getDefaultFilteringMode();

@@ -32,15 +32,6 @@ import {
 } from './mode-manager.js';
 
 import {
-    adminRead,
-    browser,
-    dnr,
-    localRead, localRemove, localWrite,
-    runtime,
-    windows,
-} from './ext.js';
-
-import {
     adminReadEx,
     getAdminRulesets,
 } from './admin.js';
@@ -50,6 +41,14 @@ import {
     hasBroadHostPermissions,
     hostnamesFromMatches,
 } from './utils.js';
+
+import {
+    browser,
+    dnr,
+    localRead, localRemove, localWrite,
+    runtime,
+    windows,
+} from './ext.js';
 
 import {
     enableRulesets,
@@ -117,7 +116,9 @@ async function onPermissionsRemoved() {
 async function onPermissionsAdded(permissions) {
     const details = pendingPermissionRequest;
     pendingPermissionRequest = undefined;
-    if ( details === undefined ) { return; }
+    if ( details === undefined ) {
+        return syncWithBrowserPermissions();
+    }
     const defaultMode = await getDefaultFilteringMode();
     if ( defaultMode >= MODE_OPTIMAL ) { return; }
     if ( Array.isArray(permissions.origins) === false ) { return; }
@@ -488,20 +489,15 @@ async function start() {
         });
     }
 
+    // Switch to basic filtering if uBOL doesn't have broad permissions at
+    // install time.
     if ( process.firstRun ) {
         const enableOptimal = await hasBroadHostPermissions();
-        if ( enableOptimal ) {
-            const afterLevel = await setDefaultFilteringMode(MODE_OPTIMAL);
-            if ( afterLevel === MODE_OPTIMAL ) {
+        if ( enableOptimal === false ) {
+            const afterLevel = await setDefaultFilteringMode(MODE_BASIC);
+            if ( afterLevel === MODE_BASIC ) {
                 updateDynamicRules();
                 registerInjectables();
-                process.firstRun = false;
-            }
-        } else {
-            const disableFirstRunPage = await adminRead('disableFirstRunPage');
-            if ( disableFirstRunPage !== true ) {
-                runtime.openOptionsPage();
-            } else {
                 process.firstRun = false;
             }
         }
