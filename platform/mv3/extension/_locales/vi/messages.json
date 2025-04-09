@@ -171,14 +171,6 @@
     "message": "Tạo báo cáo mới",
     "description": "Text for button which open an external webpage in Support pane"
   },
-  "firstRunSectionLabel": {
-    "message": "Chào mừng",
-    "description": "The header text for the welcome message section"
-  },
-  "firstRunDescription": {
-    "message": "Bạn vừa cài đặt uBO Lite. Bạn có thể chọn chế độ của bộ lọc mặc định để sử dụng trên tất cả các trang web. Theo mặc định, chế độ <em>Cơ bản</em> được chọn vì chế độ này không yêu cầu quyền đọc và thay đổi dữ liệu. Nếu bạn tin tưởng uBO Lite, bạn có thể cấp cho bộ lọc với quyền rộng rãi để đọc và thay đổi dữ liệu trên tất cả các trang web để kích hoạt khả năng lọc nâng cao hơn cho tất cả các trang web theo mặc định.",
-    "description": "Descriptive text shown at first install time only "
-  },
   "defaultFilteringModeSectionLabel": {
     "message": "Chế độ bộ lọc mặc định",
     "description": "The header text for the default filtering mode section"

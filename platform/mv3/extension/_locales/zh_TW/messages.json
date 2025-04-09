@@ -171,14 +171,6 @@
     "message": "建立新報告",
     "description": "Text for button which open an external webpage in Support pane"
   },
-  "firstRunSectionLabel": {
-    "message": "歡迎",
-    "description": "The header text for the welcome message section"
-  },
-  "firstRunDescription": {
-    "message": "您剛安裝了 uBO Lite。您可以在此處選擇會在所有網站上套用的預設過濾模式。\n\n預設情況下，選擇了<em>基礎</em>模式，因為其不需要讀取與變更資料的權限。若您信任 uBO Lite，您可以授予其讀取並變更在所有網站上資料的廣泛權限，以便為所有網站啟用進階過濾功能。",
-    "description": "Descriptive text shown at first install time only "
-  },
   "defaultFilteringModeSectionLabel": {
     "message": "預設過濾模式",
     "description": "The header text for the default filtering mode section"

@@ -171,14 +171,6 @@
     "message": "Izveidot jaunu ziņojumu",
     "description": "Text for button which open an external webpage in Support pane"
   },
-  "firstRunSectionLabel": {
-    "message": "Sveicināti!",
-    "description": "The header text for the welcome message section"
-  },
-  "firstRunDescription": {
-    "message": "Tikko tika uzstādīts uBO Lite. Šeit var izvēlēties noklusējuma aizturēšanas veidu, ko izmantot visām tīmekļa vietnēm.\n\nPēc noklusējuma ir atlasīts <em>Pamata</em>, jo tam nav nepieciešama atļauja lasīt un mainīt datus. Ja uBO Lite šķiet uzticams, ir iespējams piešķirt plašas atļaujas lasīt un mainīt datus visās tīmekļa vietnēs, lai pēc noklusējuma iespējotu pilnīgākas aizturēšanas spējas visās tīmekļa vietnēs.",
-    "description": "Descriptive text shown at first install time only "
-  },
   "defaultFilteringModeSectionLabel": {
     "message": "Noklusējuma aizturēšanas veids",
     "description": "The header text for the default filtering mode section"

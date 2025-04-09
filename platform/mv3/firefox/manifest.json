@@ -45,7 +45,7 @@
       "open_in_tab": true,
       "page": "dashboard.html"
   },
-  "optional_permissions": [
+  "host_permissions": [
     "<all_urls>"
   ],
   "permissions": [

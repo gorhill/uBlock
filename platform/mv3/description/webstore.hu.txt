@@ -10,21 +10,3 @@ Az alapértelmezett szabálykészlet megfelel a uBlock Origin alapértelmezett s
 További szabályokat engedélyezhet a beállítások oldalon – kattintson a _Fogaskerekek_ ikonra a felugró panelen.
 
 A uBOL teljes mértékben deklaratív, vagyis nincs szükség állandó uBOL folyamatra a szűréshez, és a CSS/JS injektálás-alapú tartalomszűrést maga a böngésző végzi megbízhatóan, nem pedig a kiegészítő. Ez azt jelenti, hogy az uBOL maga nem fogyaszt CPU/memória erőforrásokat, amíg a tartalom blokkolása folyamatban van – az uBOL service worker folyamatára _csak_ akkor van szükség, amikor az felugró panellel vagy a beállítási oldalakkal érintkezik.
-
-A uBOL nem igényel széles körű „adatok módosítása és olvasása” engedélyt a telepítéskor, ezért korlátozott képességei vannak a uBlock Originhez vagy más tartalomblokkolókhoz képest, amelyek széles körű „adatok olvasása és módosítása” engedélyeket igényelnek a telepítésükkor.
-
-Az uBOL azonban lehetővé teszi, hogy *kifejezetten* kiterjesztett engedélyeket adjon az Ön által választott bizonyos webhelyeknél, hogy jobban szűrhessen ezeken a webhelyeken kozmetikai szűréssel és parancsfájlbeillesztéssel.
-
-Ha kiterjesztett engedélyeket szeretne adni egy adott webhelyen, nyissa meg a felugró panelt, és válasszon magasabb szűrési módot, mint az Optimális vagy a Teljes.
-
-A böngésző ekkor figyelmezteti Önt a bővítmény által kért további engedélyek megadásának hatásaira az aktuális webhelyen, és közölnie kell a böngészővel, hogy elfogadja-e vagy elutasítja a kérést.
-
-Ha elfogadja az uBOL további engedélyekre vonatkozó kérését az aktuális webhelyen, akkor jobban tudja szűrni az aktuális webhely tartalmát.
-
-Az alapértelmezett szűrési módot az uBOL beállítási oldalán állíthatja be. Ha az Optimális vagy a Teljes módot választja alapértelmezettként, akkor az uBOL-nak engedélyt kell adnia az adatok olvasására és módosítására az összes webhelyen.
-
-Ne feledje, hogy ez még egy folyamatban lévő fejlesztés, a következő célokkal:
-
-- Nincsenek széles körű kiszolgálókra vonatkozó engedélyek a telepítés során – a kiterjesztett engedélyeket a felhasználó kifejezetten webhelyenként adja meg.
-
-- Teljesen deklaratív a nagyobb megbízhatóság, illetve CPU- és memóriahatékonyság érdekében.

@@ -171,14 +171,6 @@
     "message": "Skapa ny rapport på GitHub",
     "description": "Text for button which open an external webpage in Support pane"
   },
-  "firstRunSectionLabel": {
-    "message": "Välkommen",
-    "description": "The header text for the welcome message section"
-  },
-  "firstRunDescription": {
-    "message": "Du har precis installerat uBO Lite. Här kan du välja standardfiltreringsläget som ska användas på alla webbplatser.\n\nSom standard är läget <em>Grundläggande</em> valt eftersom det inte kräver behörighet att läsa och ändra data. Om du litar på uBO Lite kan du ge den högre behörighet att läsa och ändra data på alla webbplatser för att som standard aktivera mer avancerade filtreringsmöjligheter för alla webbplatser.",
-    "description": "Descriptive text shown at first install time only "
-  },
   "defaultFilteringModeSectionLabel": {
     "message": "Standardfiltreringsläge",
     "description": "The header text for the default filtering mode section"

@@ -32,23 +32,23 @@ import {
 } from './mode-manager.js';
 
 import {
-    adminRead,
-    browser,
-    dnr,
-    localRead, localRemove, localWrite,
-    runtime,
-    windows,
-} from './ext.js';
-
-import {
     adminReadEx,
     getAdminRulesets,
 } from './admin.js';
 
 import {
     broadcastMessage,
+    hasBroadHostPermissions,
     hostnamesFromMatches,
 } from './utils.js';
+
+import {
+    browser,
+    dnr,
+    localRead, localRemove, localWrite,
+    runtime,
+    windows,
+} from './ext.js';
 
 import {
     enableRulesets,
@@ -93,31 +93,9 @@ function getCurrentVersion() {
 
 /******************************************************************************/
 
-async function hasGreatPowers(origin) {
-    if ( /^https?:\/\//.test(origin) === false ) { return false; }
-    return browser.permissions.contains({
-        origins: [ `${origin}/*` ],
-    });
-}
-
-async function hasOmnipotence() {
-    const manifest = runtime.getManifest();
-    const hasOmnipotence = Array.isArray(manifest.host_permissions) &&
-        manifest.host_permissions.includes('<all_urls>');
-    if ( hasOmnipotence ) { return true; }
-    return browser.permissions.contains({
-        origins: [ '<all_urls>' ],
-    });
-}
-
 async function onPermissionsRemoved() {
-    const beforeMode = await getDefaultFilteringMode();
     const modified = await syncWithBrowserPermissions();
     if ( modified === false ) { return false; }
-    const afterMode = await getDefaultFilteringMode();
-    if ( beforeMode > MODE_BASIC && afterMode <= MODE_BASIC ) {
-        updateDynamicRules();
-    }
     registerInjectables();
     return true;
 }
@@ -126,7 +104,11 @@ async function onPermissionsRemoved() {
 async function onPermissionsAdded(permissions) {
     const details = pendingPermissionRequest;
     pendingPermissionRequest = undefined;
-    if ( details === undefined ) { return; }
+    if ( details === undefined ) {
+        const modified = await syncWithBrowserPermissions();
+        if ( modified === false ) { return; }
+        return registerInjectables();
+    }
     const defaultMode = await getDefaultFilteringMode();
     if ( defaultMode >= MODE_OPTIMAL ) { return; }
     if ( Array.isArray(permissions.origins) === false ) { return; }
@@ -240,6 +222,7 @@ function onMessage(request, sender, callback) {
 
     case 'getOptionsPageData': {
         Promise.all([
+            hasBroadHostPermissions(),
             getDefaultFilteringMode(),
             getTrustedSites(),
             getRulesetDetails(),
@@ -248,6 +231,7 @@ function onMessage(request, sender, callback) {
             adminReadEx('disabledFeatures'),
         ]).then(results => {
             const [
+                hasOmnipotence,
                 defaultFilteringMode,
                 trustedSites,
                 rulesetDetails,
@@ -256,6 +240,7 @@ function onMessage(request, sender, callback) {
                 disabledFeatures,
             ] = results;
             callback({
+                hasOmnipotence,
                 defaultFilteringMode,
                 trustedSites: Array.from(trustedSites),
                 enabledRulesets,
@@ -314,21 +299,25 @@ function onMessage(request, sender, callback) {
 
     case 'popupPanelData': {
         Promise.all([
+            hasBroadHostPermissions(),
             getFilteringMode(request.hostname),
-            hasOmnipotence(),
-            hasGreatPowers(request.origin),
             getEnabledRulesetsDetails(),
             adminReadEx('disabledFeatures'),
         ]).then(results => {
+            const [
+                hasOmnipotence,
+                level,
+                rulesetDetails,
+                disabledFeatures,
+            ] = results;
             callback({
-                level: results[0],
+                hasOmnipotence,
+                level,
                 autoReload: rulesetConfig.autoReload,
-                hasOmnipotence: results[1],
-                hasGreatPowers: results[2],
-                rulesetDetails: results[3],
+                rulesetDetails,
                 isSideloaded,
                 developerMode: rulesetConfig.developerMode,
-                disabledFeatures: results[4],
+                disabledFeatures,
             });
         });
         return true;
@@ -373,9 +362,6 @@ function onMessage(request, sender, callback) {
                 ({ beforeLevel, afterLevel })
             )
         ).then(({ beforeLevel, afterLevel }) => {
-            if ( beforeLevel === 1 || afterLevel === 1 ) {
-                updateDynamicRules();
-            }
             if ( afterLevel !== beforeLevel ) {
                 registerInjectables();
             }
@@ -497,20 +483,14 @@ async function start() {
         });
     }
 
+    // Switch to basic filtering if uBOL doesn't have broad permissions at
+    // install time.
     if ( process.firstRun ) {
-        const enableOptimal = await hasOmnipotence();
-        if ( enableOptimal ) {
-            const afterLevel = await setDefaultFilteringMode(MODE_OPTIMAL);
-            if ( afterLevel === MODE_OPTIMAL ) {
-                updateDynamicRules();
+        const enableOptimal = await hasBroadHostPermissions();
+        if ( enableOptimal === false ) {
+            const afterLevel = await setDefaultFilteringMode(MODE_BASIC);
+            if ( afterLevel === MODE_BASIC ) {
                 registerInjectables();
-                process.firstRun = false;
-            }
-        } else {
-            const disableFirstRunPage = await adminRead('disableFirstRunPage');
-            if ( disableFirstRunPage !== true ) {
-                runtime.openOptionsPage();
-            } else {
                 process.firstRun = false;
             }
         }

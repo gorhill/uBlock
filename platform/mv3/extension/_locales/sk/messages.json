@@ -171,14 +171,6 @@
     "message": "Vytvoriť nové hlásenie",
     "description": "Text for button which open an external webpage in Support pane"
   },
-  "firstRunSectionLabel": {
-    "message": "Vitajte",
-    "description": "The header text for the welcome message section"
-  },
-  "firstRunDescription": {
-    "message": "Práve ste nainštalovali uBO Lite. Tu si môžete vybrať predvolený režim filtrovania, ktorý sa má používať na všetkých webových stránkach.\n\nV predvolenom nastavení je zvolený režim <em>Základný</em>, pretože nevyžaduje povolenie na čítanie a zmenu údajov. Ak dôverujete rozšíreniu uBO Lite, môžete mu udeliť všeobecné oprávnenie na čítanie a zmenu údajov na všetkých webových stránkach, aby ste v predvolenom nastavení umožnili pokročilejšie možnosti filtrovania všetkých webových stránok.",
-    "description": "Descriptive text shown at first install time only "
-  },
   "defaultFilteringModeSectionLabel": {
     "message": "Predvolený režim filtrovania",
     "description": "The header text for the default filtering mode section"

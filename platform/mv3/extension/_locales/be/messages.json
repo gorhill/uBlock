@@ -171,14 +171,6 @@
     "message": "Стварыць новую справаздачу",
     "description": "Text for button which open an external webpage in Support pane"
   },
-  "firstRunSectionLabel": {
-    "message": "Вітаем",
-    "description": "The header text for the welcome message section"
-  },
-  "firstRunDescription": {
-    "message": "Вы толькі што ўсталявалі uBO Lite. Тут вы можаце выбраць прадвызначаны рэжым фільтравання для ўсіх вэб-сайтаў.\n\nКалі не ўказана іншае, выбраны <em>базавы</em> рэжым, бо ён не патрабуе дазволаў на чытанне і змяненне звестак. Калі вы давяраеце uBO Lite, можаце даць яму шырэйшыя дазволы на чытанне і змяненне звестак на ўсіх вэб-сайтах, каб зрабіць магчымымі больш прасунутыя функцыі фільтравання прадвызначана на ўсіх вэб-сайтах.",
-    "description": "Descriptive text shown at first install time only "
-  },
   "defaultFilteringModeSectionLabel": {
     "message": "Прадвызначаны рэжым фільтравання",
     "description": "The header text for the default filtering mode section"

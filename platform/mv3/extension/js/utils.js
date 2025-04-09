@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+import { browser } from './ext.js';
+
 /******************************************************************************/
 
 function parsedURLromOrigin(origin) {
@@ -134,6 +136,16 @@ const broadcastMessage = message => {
 
 /******************************************************************************/
 
+// https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/manifest.json/host_permissions#requested_permissions_and_user_prompts
+// "Users can grant or revoke host permissions on an ad hoc basis. Therefore,
+// most browsers treat host_permissions as optional."
+
+async function hasBroadHostPermissions() {
+    return browser.permissions.contains({ origins: [ '<all_urls>' ] });
+}
+
+/******************************************************************************/
+
 export {
     broadcastMessage,
     parsedURLromOrigin,
@@ -145,4 +157,5 @@ export {
     matchFromHostname,
     matchesFromHostnames,
     hostnamesFromMatches,
+    hasBroadHostPermissions,
 };

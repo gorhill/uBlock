@@ -1,4 +1,4 @@
-uBO Lite (uBOL) is a *permission-less* MV3-based content blocker.
+uBO Lite (uBOL) is an MV3-based content blocker.
 
 The default ruleset corresponds to uBlock Origin's default filterset:
 
@@ -10,21 +10,3 @@ The default ruleset corresponds to uBlock Origin's default filterset:
 You can enable more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
 
 uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. ಇದರರ್ಥ ವಿಷಯ ನಿರ್ಬಂಧಿಸುವಿಕೆಯು ನಡೆಯುತ್ತಿರುವಾಗ uBOL ಸ್ವತಃ CPU/ಮೆಮೊರಿ ಸಂಪನ್ಮೂಲಗಳನ್ನು ಬಳಸುವುದಿಲ್ಲ -- ನೀವು ಪಾಪ್ಅಪ್ ಪ್ಯಾನೆಲ್ ಅಥವಾ ಆಯ್ಕೆಯ ಪುಟಗಳೊಂದಿಗೆ ಸಂವಹನ ನಡೆಸಿದಾಗ uBOL ನ ಸೇವಾ ವರ್ಕರ್ ಪ್ರಕ್ರಿಯೆಯು _ಮಾತ್ರಾ_ ಅಗತ್ಯವಿದೆ.
-
-uBOL ಗೆ ಅನುಸ್ಥಾಪನೆಯ ಸಮಯದಲ್ಲಿ ವಿಶಾಲವಾದ "ಡೇಟಾವನ್ನು ಓದಲು ಮತ್ತು ಮಾರ್ಪಡಿಸಲು" ಅನುಮತಿಯ ಅಗತ್ಯವಿರುವುದಿಲ್ಲ, ಆದ್ದರಿಂದ uBlock ಮೂಲಕ್ಕೆ ಹೋಲಿಸಿದರೆ ಅದರ ಸೀಮಿತ ಸಾಮರ್ಥ್ಯಗಳು ಅಥವಾ ಅನುಸ್ಥಾಪನೆಯ ಸಮಯದಲ್ಲಿ ವಿಶಾಲವಾದ "ಡೇಟಾವನ್ನು ಓದಲು ಮತ್ತು ಮಾರ್ಪಡಿಸಲು" ಅನುಮತಿಗಳ ಅಗತ್ಯವಿರುವ ಇತರ ವಿಷಯ ಬ್ಲಾಕರ್‌ಗಳಿಗೆ ಹೋಲಿಸಿದರೆ.
-
-However, uBOL allows you to *explicitly* grant extended permissions on specific sites of your choice so that it can better filter on those sites using cosmetic filtering and scriptlet injections.
-
-To grant extended permissions on a given site, open the popup panel and pick a higher filtering mode such as Optimal or Complete.
-
-The browser will then warn you about the effects of granting the additional permissions requested by the extension on the current site, and you will have to tell the browser whether you accept or decline the request.
-
-If you accept uBOL's request for additional permissions on the current site, it will be able to better filter content for the current site.
-
-You can set the default filtering mode from uBOL's options page. ನೀವು ಆಪ್ಟಿಮಲ್ ಅಥವಾ ಕಂಪ್ಲೀಟ್ ಮೋಡ್ ಅನ್ನು ಡಿಫಾಲ್ಟ್ ಆಗಿ ಆರಿಸಿದರೆ, ಎಲ್ಲಾ ವೆಬ್‌ಸೈಟ್‌ಗಳಲ್ಲಿನ ಡೇಟಾವನ್ನು ಓದಲು ಮತ್ತು ಮಾರ್ಪಡಿಸಲು ನೀವು uBOL ಗೆ ಅನುಮತಿಯನ್ನು ನೀಡಬೇಕಾಗುತ್ತದೆ.
-
-ಈ ಅಂತಿಮ ಗುರಿಗಳೊಂದಿಗೆ ಇದು ಇನ್ನೂ ಪ್ರಗತಿಯಲ್ಲಿದೆ ಎಂಬುದನ್ನು ನೆನಪಿನಲ್ಲಿಡಿ:
-
-- No broad host permissions at install time -- extended permissions are granted explicitly by the user on a per-site basis.
-
-- Entirely declarative for reliability and CPU/memory efficiency.

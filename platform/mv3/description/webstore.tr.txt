@@ -1,4 +1,4 @@
-uBO Lite (uBOL), *izin gerektirmeyen* MV3 tabanlı bir içerik engelleyicidir.
+uBO Lite (uBOL), MV3 tabanlı bir içerik engelleyicidir.
 
 Varsayılan kural seti, uBlock Origin'in varsayılan filtre setine karşılık gelir:
 
@@ -10,21 +10,3 @@ Varsayılan kural seti, uBlock Origin'in varsayılan filtre setine karşılık g
 Seçenekler ekranına uğrayarak daha fazla kuralı aktif hale getirebilirsiniz, bunun için açılır paneldeki _dişli_ simgesine tıklayın.
 
 uBOL tamamen bildirimseldir, yani filtrelemenin gerçekleşmesi için kalıcı bir uBOL işlemine gerek yoktur, içerik filtreleme eklenti yerine tarayıcının kendisi tarafından CSS/JS yerleştirerek gerçekleştirilir. Bu, içerik engelleme devam ederken uBOL'nin kendisinin CPU/bellek kaynaklarını tüketmediği anlamına gelir -- uBOL'un hizmet çalışanı işlemi, _only_ açılan panel veya seçenek sayfalarıyla etkileşim kurduğunuzda gereklidir.
-
-uBOL, kurulum sırasında geniş "veri okuma ve değiştirme" izni gerektirmez, bu nedenle, kurulum sırasında geniş "veri okuma ve değiştirme" izinleri gerektiren uBlock Origin veya diğer içerik engelleyicilere kıyasla, kutudan çıkar çıkmaz sınırlı yetenekleri vardır.
-
-Bununla birlikte, uBOL, kozmetik filtreleme ve komut dosyası enjeksiyonları kullanarak bu sitelerde daha iyi filtre uygulayabilmesi için, seçtiğiniz belirli sitelerde *açıkça* genişletilmiş izinler vermenize izin verir.
-
-Belirli bir sitede genişletilmiş izinler vermek için açılır paneli açın ve Optimal veya Complete gibi daha yüksek bir filtreleme modu seçin.
-
-Ardından tarayıcı, uzantı tarafından istenen ek izinlerin geçerli sitede verilmesinin etkileri konusunda sizi uyaracak ve tarayıcıya isteği kabul edip etmediğinizi söylemeniz gerekecektir.
-
-uBOL'un mevcut site için ek izin talebini kabul ederseniz, mevcut site için içeriği daha iyi filtreleyebilecektir.
-
-Varsayılan filtreleme modunu uBOL'un seçenekler sayfasından ayarlayabilirsiniz. Varsayılan mod olarak Optimal veya Complete modunu seçerseniz, uBOL'a tüm web sitelerindeki verileri okuma ve değiştirme izni vermeniz gerekecektir.
-
-Bunun, şu nihai hedeflerle hala devam eden bir çalışma olduğunu unutmayın:
-
-- Yükleme sırasında geniş ana bilgisayar izinleri yoktur -- genişletilmiş izinler, her site için kullanıcı tarafından açıkça verilir.
-
-- Güvenilirlik ve CPU/bellek verimliliği için tamamen bildirimsel.

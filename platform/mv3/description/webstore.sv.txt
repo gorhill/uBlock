@@ -1,4 +1,4 @@
-uBO Lite (uBOL) är en *behörighetslös* MV3-baserad innehållsblockerare.
+uBO Lite (uBOL) is an MV3-based content blocker.
 
 Standardregeluppsättningen motsvarar uBlock Origins standardfilteruppsättning:
 
@@ -10,21 +10,3 @@ Standardregeluppsättningen motsvarar uBlock Origins standardfilteruppsättning:
 Du kan lägga till fler regeluppsättningar i alternativ -- klicka på _Kugghjulet_ i popup-panelen.
 
 uBOL är helt deklarativt, vilket innebär att det inte finns något behov av en permanent uBOL-process för att filtreringen ska ske och CSS/JS-injektionsbaserad innehållsfiltrering utförs på ett tillförlitligt sätt av webbläsaren själv snarare än av tillägget. Detta innebär att uBOL själv inte förbrukar CPU/minnesresurser medan innehållsblockering pågår -- uBOLs serviceworkerprocess krävs _endast_ när du interagerar med popup-panelen eller alternativsidorna.
-
-uBOL kräver inte högre behörighet för "läs och ändra data" vid installationen, därav dess begränsade möjligheter jämfört med uBlock Origin eller andra innehållsblockerare som kräver högre behörighet för "läs och ändra data" vid installationen.
-
-Däremot låter uBOL dig *uttryckligen* ge utökade behörigheter på specifika webbplatser du väljer så att den bättre kan filtrera på dessa webbplatser med hjälp av kosmetisk filtrering och scriptletinjektioner.
-
-För att ge utökade behörigheter på en viss webbplats, öppna popup-panelen och välj ett högre filtreringsläge som optimal eller fullständig.
-
-Webbläsaren kommer sedan att varna dig om effekterna av att bevilja de ytterligare behörigheter som tillägget begär på den aktuella webbplatsen och du måste tala om för webbläsaren om du accepterar eller avslår begäran.
-
-Om du accepterar uBOLs begäran om ytterligare behörigheter på den aktuella webbplatsen kommer den att kunna filtrera innehåll för den aktuella webbplatsen bättre.
-
-Du kan ställa in standardfiltreringsläget från uBOLs alternativsida. Om du väljer läge optimalt eller fullständigt som standard måste du ge uBOL behörighet att läsa och ändra data på alla webbplatser.
-
-Tänk på att detta fortfarande är ett pågående arbete med dessa slutmål:
-
-- Inga högre värdbehörigheter vid installationen - utökade behörigheter ges uttryckligen av användaren per webbplats.
-
-- Helt deklarativt för tillförlitlighet och CPU/minneseffektivitet.

@@ -1,4 +1,4 @@
-uBO Lite (uBOL) ir *bezatļauju* uz MV3 balstīts satura aizturētājs.
+uBO Lite (uBOL) is an MV3-based content blocker.
 
 Noklusējuma nosacījumu kopa atbilst uBokc Origin noklusējuma aizturēšanas kopai:
 
@@ -10,21 +10,3 @@ Noklusējuma nosacījumu kopa atbilst uBokc Origin noklusējuma aizturēšanas k
 Vairāk nosacījumu kopu var iespējot iestatījumu sadaļā -- jāklikšķina _Zobratu_ ikona uznirstošajā logā.
 
 uBOL ir pilnībā vispārīgs, kas nozīmē, ka nav nepieciešamības pēc pastāvīga uBOL procesa, lai notiktu aizturēšana, un uz CSS/JS ievietošanu balstīta satura aizturēšanu uzticami veic pārlūks, nevis paplašinājums. Tas nozīmē, ka uBOL pats par sevi neizmanto procesoru un atmiņu, kamēr satura aizturēšana ir notiekoša -- uBOL pakalpojuma strādņa process ir nepieciešams _tikai_ tad, kad notiek mijiedarbība ar uznirstošo logu vai iestatījumu sadaļām.
-
-uBOL nav nepieciešamas plašas "lasīt un pārveidot datus" atļaujas uzstādīšanas laikā, tāpēc tam ir ierobežotas spējas pēc noklusējuma, salīdzinājumā ar uBlock Origin vai citiem satura aizturētājiem, kas pieprasa plašas "lasīt un pārveidot datus" atļaujas uzstādīšanas laikā. 
-
-Tomēr uBOL ļauj piešķirt paplašinātās atļaujas *tieši* noteiktās vietnēs pēc izvēles, lai tas varētu labāk veikt aizturēšanu tajās, izmantojot kosmētisku aizturēšanu un skriptu ievietošanu.
-
-Lai nodrošinātu paplašinātas piekļuves tiesības noteiktā vietnē, jāatver uznirstošais logs un jāizvēlas striktāks aizturēšanas veids, kā, piemēram, "Labākais" vai "Pilnīgais".
-
-Pārlūks tad brīdinās ietekmi, ko radīs paplašinājuma pieprasīto papildu atļauju nodrošināšana pašreizējā vietnē, un būs jānorāda, vai pieprasījums tiek apstiprināts vai noraidīts.
-
-Ja pašreizējā vietnē tiek apstiprināts uBOL papildu atļauju pieprasījums, paplašinājums varēs labāk veikt satura aizturēšanu.
-
-Noklusējuma aizturēšanas veids ir norādāms uBOL uzstādījumu lapā. Ja tiek izvēlēts "Labākais" vai "Pilnīgais" kā noklusējuma, tad būs nepieciešams nodrošināt uBOL tiesības rakstīt un pārveidot datus visās tīmekļa vietnēs.
-
-Jāpatur prātā, ka šī iespēja joprojām tiek izstrādāta ar šādiem mērķiem:
-
-- Nav plašu saimniekdatora atļauju uzstādīšanas laikā -- paplašinātas atļaujas nodrošina lietotājs atsevišķi katrai vietnei.
-
-- Pilnībā vispārīgs - uzticamībai un procesora/atmiņas lietderīgai izmantošanai.

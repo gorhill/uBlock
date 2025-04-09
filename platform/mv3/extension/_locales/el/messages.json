@@ -171,14 +171,6 @@
     "message": "Δημιουργία νέας αναφοράς",
     "description": "Text for button which open an external webpage in Support pane"
   },
-  "firstRunSectionLabel": {
-    "message": "Καλώς ορίσατε",
-    "description": "The header text for the welcome message section"
-  },
-  "firstRunDescription": {
-    "message": "Μόλις εγκαταστήσατε το uBO Lite. Μπορείτε να επιλέξετε εδώ την προεπιλεγμένη λειτουργία φιλτραρίσματος για χρήση σε όλους τους ιστότοπους.\n\nΑπό προεπιλογή, έχει επιλεγεί η λειτουργία <em>Βασική</em> επειδή δεν απαιτεί άδεια ανάγνωσης και αλλαγής δεδομένων. Εάν εμπιστεύεστε το uBO Lite, μπορείτε να του δώσετε ευρεία άδεια να διαβάζει και να αλλάζει δεδομένα σε όλους τους ιστότοπους, προκειμένου να ενεργοποιηθούν πιο προηγμένες δυνατότητες φιλτραρίσματος για όλους τους ιστότοπους από προεπιλογή.",
-    "description": "Descriptive text shown at first install time only "
-  },
   "defaultFilteringModeSectionLabel": {
     "message": "Προεπιλεγμένη λειτουργία φιλτραρίσματος",
     "description": "The header text for the default filtering mode section"

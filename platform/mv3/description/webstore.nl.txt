@@ -1,4 +1,4 @@
-uBO Lite (uBOL) is een *toestemmingsloze* MV3-gebaseerde inhoudsblokkeerder.
+uBO Lite (uBOL) is een MV3-gebaseerde inhoudsblokkeerder.
 
 De standaard regelset komt overeen met de standaard filterset van uBlock Origin:
 
@@ -10,21 +10,3 @@ De standaard regelset komt overeen met de standaard filterset van uBlock Origin:
 U kunt meer regelsets inschakelen door de optiespagina te bezoeken -- klik hiervoor op het _tandwielpictogram_ in het pop-uppaneel.
 
 uBOL is volledig declaratief, wat betekent dat er geen permanent uBOL-proces voor de filtering nodig is, en inhoudsfiltering op basis van CSS/JS-injectie op een betrouwbare manier door de browser zelf wordt uitgevoerd in plaats van door de extensie. Dit betekent dat uBOL zelf geen CPU-/geheugenbronnen gebruikt terwijl inhoudsblokkering actief is -- het serviceworker-proces van uBOL is _alleen_ vereist als u met het pop-uppaneel of de optiespagina’s werkt.
-
-uBOL vereist geen brede toestemming voor het ‘lezen en aanpassen van gegevens’ tijdens installatie, vandaar de beperkte ingebouwde mogelijkheden ervan in vergelijking met uBlock Origin of andere inhoudsblokkeerders die brede toestemmingen voor het ‘lezen en aanpassen van gegevens’ vereisen tijdens installatie.
-
-U kunt in uBOL echter *expliciet* uitgebreide toestemmingen verlenen op bepaalde websites van uw keuze, zodat het op die websites beter kan filteren via cosmetische filtering en scriptlet-injecties.
-
-Om uitgebreide toestemmingen op een bepaalde website te verlenen, opent u het pop-uppaneel en kiest u een hogere filtermodus, zoals Optimaal of Volledig.
-
-De browser waarschuwt u dan over de gevolgen van het verlenen van de door de extensie aangevraagde aanvullende toestemmingen op de huidige website, en u dient de browser te laten weten of u de aanvraag accepteert of weigert.
-
-Als u de aanvraag van uBOL voor aanvullende toestemmingen op de huidige website accepteert, zal het inhoud voor de huidige website beter kunnen filteren.
-
-U kunt de standaard filtermodus instellen vanaf de optiespagina van uBOL. Als u de modus Optimaal of Volledig als de standaardmodus kiest, dient u uBOL de toestemming voor het lezen en aanpassen van gegevens op alle websites te verlenen.
-
-Onthoud dat dit nog werk in uitvoering is, met deze einddoelen:
-
-- Geen brede host-toestemmingen tijdens installatie -- uitgebreide toestemmingen worden expliciet en per website verleend door de gebruiker.
-
-- Volledig declaratief omwille van betrouwbaarheid en CPU-/geheugenefficiëntie.

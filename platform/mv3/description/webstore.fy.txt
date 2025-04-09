@@ -1,4 +1,4 @@
-uBO Lite (uBOL) is in *tastimmingsleaze* MV3-basearre ynhâldsblokkearder.
+uBO Lite (uBOL) is in MV3-basearre ynhâldsblokkearder.
 
 De standert regelset komt oerien mei de standert filterset fan uBlock Origin:
 
@@ -10,21 +10,3 @@ De standert regelset komt oerien mei de standert filterset fan uBlock Origin:
 Jo kinne mear regelsets ynskeakelje troch de opsjesside te besykjen – klik op it _tântsjilpiktogram_ yn it pop-uppaniel.
 
 uBOL is folslein deklaratyf, wat betsjut dat in permanint uBOL-proses foar de filtering net nedich is, en ynhâldsfiltering op basis fan CSS/JS-ynjeksje op in betroubere manier troch de browser sels útfierd wurdt yn stee fan de útwreiding. Dit betsjut dat uBOL sels gjin CPU-/ûnthâldboarnen brûkt wylst ynhâldsblokkearring aktyf is – it serviceworker-proses fan uBOL is _allinnich_ fereaske as jo mei it pop-uppaniel of de opsjessiden wurkje.
-
-uBOL fereasket gjin brede tastimming foar it ‘lêzen en oanpassen fan gegevens’ wylst ynstallaasje, fan dêr de beheinde ynboude mooglikheden dêrfan yn fergeliking mei uBlock Origin of oare ynhâldsblokkearders dy’t brede tastimmingen foar it ‘lêzen en oanpassen fan gegevens’ fereaskje wylst de ynstallaasje.
-
-Jo kinne yn uBOL echter *eksplisyt* wiidweidige tastimmingen ferliene op bepaalde websites fan jo kar, sadat it op dy websites better filterje kin fia kosmetyske filtering en scriptlet-ynjeksjes.
-
-Om wiidweidige tastimmingen op in bepaalde website te ferlienen, iepenje jo it pop-uppaniel en kieze jo in hegere filtermodus, lykas Optimaal of Folslein.
-
-De browser warskôget jo dan oer de gefolgen fan it ferlienen fan de troch de útwreiding oanfrege oanfoljende tastimmingen op de aktuele website, en jo moatte de browser witte litte oft jo de oanfraach akseptearje of wegerje.
-
-As jo de oanfraach fan uBOL foar oanfoljende tastimmingen op de aktuele website akseptearje, sil it ynhâld foar de aktuele website better filterje kinne.
-
-Jo kinne de standert filtermodus ynstelle fan de opsjesside fan uBOL ôf. As jo de modus Optimaal of Folslein as de standertmodus kieze, moatte jo uBOL de tastimming foar it lêzen en oanpassen fan gegevens op alle websites te ferlienen.
-
-Unthâld dat dit noch wurk yn útfiering is, mei dizze eindoelen:
-
-- Gjin brede host-tastimmingen wylst ynstallaasje – wiidweidige tastimmingen wurde eksplisyt en per website ferliend troch de brûker.
-
-- Folslein deklaratyf omwille fan betrouberheid en CPU-/ûnthâldeffisjinsje.

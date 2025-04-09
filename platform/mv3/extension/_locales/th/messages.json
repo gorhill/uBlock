@@ -171,14 +171,6 @@
     "message": "สร้างรายงานใหม่",
     "description": "Text for button which open an external webpage in Support pane"
   },
-  "firstRunSectionLabel": {
-    "message": "ยินดีต้อนรับ",
-    "description": "The header text for the welcome message section"
-  },
-  "firstRunDescription": {
-    "message": "คุณเพิ่งติดตั้ง uBO Lite คุณสามารถเลือกโหมดการกรอง (ค่าเริ่มต้น) ที่จะใช้กับเว็บไซต์ทั้งหมดได้ที่นี่\n\nตามค่าเริ่มต้น โหมด <em>พื้นฐาน</em> จะถูกเลือกเนื่องจากไม่จำเป็นต้องมีสิทธิ์ในการอ่านและแก้ไขข้อมูล หากคุณไว้วางใจ uBO Lite คุณสามารถให้สิทธิ์ในการอ่านและแก้ไขข้อมูลบนเว็บไซต์ทั้งหมดได้ เพื่อเปิดใช้งานคุณสมบัติการกรองข้อมูลขั้นสูงสำหรับเว็บไซต์ทั้งหมดตามค่าเริ่มต้น",
-    "description": "Descriptive text shown at first install time only "
-  },
   "defaultFilteringModeSectionLabel": {
     "message": "โหมดการกรองเริ่มต้น",
     "description": "The header text for the default filtering mode section"

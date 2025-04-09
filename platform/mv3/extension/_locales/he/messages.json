@@ -171,14 +171,6 @@
     "message": "צור דיווח חדש",
     "description": "Text for button which open an external webpage in Support pane"
   },
-  "firstRunSectionLabel": {
-    "message": "ברוך בואך",
-    "description": "The header text for the welcome message section"
-  },
-  "firstRunDescription": {
-    "message": "התקנת uBO Lite הסתיימה זה עתה. ניתן לבחור כאן את אופן סינון ברירת המחדל בכל אתרי הרשת.\n\nכברירת מחדל, ייבחר אופן סינון <em>בסיסי</em> מאחר והוא אינו דורש הרשאות קריאה ושינוי נתונים. 'סומכים על uBO Lite?' אם כן, ניתן להעניק ל־uBO Lite הרשאות נרחבות לכתיבה ושינוי נתונים בכלול אתרי הרשת על מנת לאפשר יכולות סינון מתקדמות יותר כבררת מחדל.",
-    "description": "Descriptive text shown at first install time only "
-  },
   "defaultFilteringModeSectionLabel": {
     "message": "מצב סינון ברירת מחדל",
     "description": "The header text for the default filtering mode section"

@@ -1,4 +1,4 @@
-uBO Lite (uBOL) zo ur stanker noazadurioù *hep aotre rekis ebet* diazezet war ar manifesto MV3.
+uBO Lite (uBOL) is an MV3-based content blocker.
 
 Ar reolennoù dre ziouer a glot gant silañ dre ziouer uBlock Origin:
 
@@ -10,21 +10,3 @@ Ar reolennoù dre ziouer a glot gant silañ dre ziouer uBlock Origin:
 You can enable more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
 
 Disklêriañ a ra uBOL penn-da-benn, da lavaret eo n'eus ket ezhomm eus un argerzh uBOL padus evit ma c'hoarvezfe ar silañ, ha silañ endalc'hadoù diazezet war enlakaat CSS/JS a vez graet en un doare fizius gant ar merdeer e-unan kentoc'h eget gant an astenn. Kement-se a dalvez ne vez ket gounezet gant uBOL e-unan arc'hwelioù CPU/memor e-pad ma vez stanket an endalc'hadoù -- ezhomm zo eus argerzh al labourer servij uBOL _nemet_ pa vez etregweredet gant ar banell digeriñ pe ar pajennoù dibarzhioù.
-
-UBOL n'en deus ket ezhomm eus aotreoù ledan "lenn ha kemmañ roadennoù" e-pad ar staliañ, setu perak e c'halloudoù bevennet e-keñver uBlock Origin pe stankerien endalc'hadoù all a c'houlenn aotreoù ledan "lenn ha kemmañ roadennoù" e-pad ar staliañ.
-
-Koulskoude ez eus tu deoc'h reiñ *sklaer* aotreoù ouzhpenn da uBOL el lec'hiennoù ma fell deoc'h, mod-se e vint silet gwelloc'h en ur implij siloù kened hag ensinkladurioù scriplet.
-
-Evit reiñ aotreoù ouzhpenn da uBOL en ul lec'hienn bennak, n'ho peus nemet digeriñ ar prenestr pop-up ha diuzañ ul live silañ uheloc'h evel ar mod Gwellañ pe ar mod Klok
-
-Goude-se e vo kelaouet ac'hanoc'h gant ar merdeer diwar-benn efedoù reiñ an aotreoù ouzhpenn goulennet gant an astenn war al lec'hienn bremanel, ha ret e vo deoc'h lâret d'ar merdeer hag-eñ e vo degemeret pe nac'het ar goulenn ganeoc'h.
-
-Ma asantit da reiñ muioc'h a aotreoù da uBOL war ar bajenn-mañ e vo silet gwelloc'h.
-
-Gallout a rit termeniñ ar mod silañ dre ziouer e pajenn arventennoù uBOL. Ma tibabit ar mod Gwellañ pe an hini Klok evel ar mod dre ziouer e vo ret deoc'h aotren uBOL da lenn ha kemmañ roadennoù en holl lec'hiennoù.
-
-Dalc'hit soñj ez eo uBOL ur raktres war ober c'hoazh hag a zo e bal:
-
-- Aotreoù ostiz ledan ebet e-pad ar staliañ -- aotreoù astennet a vez roet splann gant an implijer dre lec'hienn.
-
-- Disklêriañ penn-da-benn evit ar fiziañs hag an efedusted CPU/memor.

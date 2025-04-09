@@ -171,14 +171,6 @@
     "message": "Crear nova denuncia",
     "description": "Text for button which open an external webpage in Support pane"
   },
-  "firstRunSectionLabel": {
-    "message": "Benvida",
-    "description": "The header text for the welcome message section"
-  },
-  "firstRunDescription": {
-    "message": "Acabas de instalar uBO Lite. Aquí podes escoller o modo de filtrado para usar en todas as páxinas web.\n\nPor defecto, o modo <em>Básico</em> está seleccionado porque non require o permiso de lectura ou modificar datos. Se confías en uBO Lite, podes darlle máis permisos para ler e modificar os datos de todos os sitios web para poder realizar por defecto un filtrado máis preciso en todas as páxinas web.",
-    "description": "Descriptive text shown at first install time only "
-  },
   "defaultFilteringModeSectionLabel": {
     "message": "Modo de filtrado por defecto",
     "description": "The header text for the default filtering mode section"

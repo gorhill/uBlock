@@ -171,14 +171,6 @@
     "message": "Créer un nouveau rapport sur GitHub",
     "description": "Text for button which open an external webpage in Support pane"
   },
-  "firstRunSectionLabel": {
-    "message": "Bienvenue",
-    "description": "The header text for the welcome message section"
-  },
-  "firstRunDescription": {
-    "message": "Vous venez d'installer uBO Lite. À présent vous pouvez choisir le mode de filtrage par défaut à utiliser sur tous les sites Web.\n\nPar défaut, le mode <em>Basique</em> est sélectionné car il ne requiert pas de permissions pour lire et modifier les données. Si vous faites confiance à uBO Lite, vous pouvez lui donner des permissions étendues pour lire et modifier les données sur tous les sites Web pour activer des capacités de filtrage plus avancées pour tous les sites Web par défaut.",
-    "description": "Descriptive text shown at first install time only "
-  },
   "defaultFilteringModeSectionLabel": {
     "message": "Mode de filtrage par défaut",
     "description": "The header text for the default filtering mode section"

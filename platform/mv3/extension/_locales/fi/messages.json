@@ -171,14 +171,6 @@
     "message": "Luo GitHubiin uusi ilmoitus",
     "description": "Text for button which open an external webpage in Support pane"
   },
-  "firstRunSectionLabel": {
-    "message": "Tervetuloa",
-    "description": "The header text for the welcome message section"
-  },
-  "firstRunDescription": {
-    "message": "Olet juuri asentanut uBO Liten. Tästä voit valita kaikilla sivustoilla oletusarvoisesti käytettävän suodatustilan.\n\nOletusarvoinen valinta on <em>Perus</em>-tila, koska se ei vaadi tietojen luku- ja muokkausoikeutta. Jos luotat uBO Liteen, voit myöntää sille kaikki sivustot kattavan laajan tietojen luku- ja muokkausoikeuden, jolloin edistyneemmät suodatusominaisuudet ovat oletusarvoisesti käytössä kaikilla sivustoilla.",
-    "description": "Descriptive text shown at first install time only "
-  },
   "defaultFilteringModeSectionLabel": {
     "message": "Oletusarvoinen suodatustila",
     "description": "The header text for the default filtering mode section"

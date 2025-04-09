@@ -171,14 +171,6 @@
     "message": "Krijoj raport të ri në GitHub",
     "description": "Text for button which open an external webpage in Support pane"
   },
-  "firstRunSectionLabel": {
-    "message": "Përshëndetje",
-    "description": "The header text for the welcome message section"
-  },
-  "firstRunDescription": {
-    "message": "Sapo instaluat uBO Lite. Këtu mund të zgjidhni mënyrën e filtrimit që duhet përdorur për të gjitha uebsajtet.\n\n<em>E thjeshta</em> është mënyra standarde, sepse nuk ju merret leje për leximin dhe modifikimin e të dhënave. Nëse keni besim te uBO Lite, mund t'i jepni leje shtesë për leximin dhe modifikimin e të dhënave në të gjitha uebsajtet, në mënyrë që të kryeni një filtrim më të avancuar.",
-    "description": "Descriptive text shown at first install time only "
-  },
   "defaultFilteringModeSectionLabel": {
     "message": "Mënyra standarde e filtrimit",
     "description": "The header text for the default filtering mode section"

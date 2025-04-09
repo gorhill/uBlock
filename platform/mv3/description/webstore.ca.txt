@@ -1,4 +1,4 @@
-L'uBO Lite (uBOL) és un blocador de contingut *sense permisos* basat en MV3.
+uBO Lite (uBOL) is an MV3-based content blocker.
 
 El conjunt de regles per defecte correspon al conjunt de filtres per defecte d'uBlock Origin:
 
@@ -12,21 +12,3 @@ Podeu habilitar més conjunts de regles si visiteu la pàgina d'opcions: feu cli
 L'uBOL és totalment declaratiu, és a dir, no cal un procés uBOL permanent perquè es produeixi el filtratge, i el filtratge de contingut basat en injecció CSS/JS es realitza de manera fiable pel propi navegador més que per l'extensió.
  Això vol dir que l'uBOL en si no consumeix recursos de CPU/memòria mentre el bloqueig de contingut està en curs; el procés de treballador de servei d'uBOL només es requereix quan interactueu amb el tauler emergent o les pàgines d'opcions.
 
-
-L'uBOL no requereix un ampli permís de "lectura i modificació de dades" en el moment de la instal·lació, per tant, les seves capacitats limitades en comparació amb l'uBlock Origin o altres blocadors de contingut que requereixen amplis permisos de "lectura i modificació de dades" en el moment de la instal·lació.
-
-Tanmateix, l'uBOL us permet concedir *explícitament* permisos ampliats en llocs específics que trieu perquè pugui filtrar millor en aquests llocs mitjançant filtres cosmètics i injeccions de scriptlet.
-
-Per concedir permisos ampliats en un lloc determinat, obriu el tauler emergent i seleccioneu un mode de filtrat superior, com ara Òptim o Complet.
-
-Aleshores, el navegador us avisarà sobre els efectes de la concessió dels permisos addicionals sol·licitats per l'extensió al lloc actual, i haureu d'indicar-li al navegador si accepteu o rebutgeu la sol·licitud.
-
-Si accepteu la sol·licitud d'uBOL de permisos addicionals al lloc actual, podrà filtrar millor el contingut del lloc actual.
-
-Podeu establir el mode de filtratge per defecte des de la pàgina d'opcions d'uBOL. Si trieu el mode Òptim o Complet per defecte, haureu de concedir a l'uBOL el permís per llegir i modificar dades a tots els llocs web.
-
-Tingueu en compte que encara és un treball en curs, amb aquests objectius finals:
-
-- No hi ha permisos d'amfitrió amplis en el moment de la instal·lació; els permisos ampliats els concedeix explícitament l'usuari per lloc.
-
-- Totalment declaratiu per a la fiabilitat i l'eficiència de la CPU/memòria.

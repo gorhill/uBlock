@@ -171,14 +171,6 @@
     "message": "Crea un informe nou",
     "description": "Text for button which open an external webpage in Support pane"
   },
-  "firstRunSectionLabel": {
-    "message": "Us donem la benvinguda",
-    "description": "The header text for the welcome message section"
-  },
-  "firstRunDescription": {
-    "message": "Acabeu d'instal·lar l'uBO Lite. Aquí podeu triar el mode de filtrat per defecte per utilitzar-lo a tots els llocs web.\n\nPer defecte, el mode <em>Bàsic</em> està seleccionat perquè no requereix permís per llegir i canviar dades. Si confieu en l'uBO Lite, podeu donar-li un ampli permís per llegir i canviar dades a tots els llocs web per tal d'activar capacitats de filtratge més avançades per a tots els llocs web per defecete.",
-    "description": "Descriptive text shown at first install time only "
-  },
   "defaultFilteringModeSectionLabel": {
     "message": "Mode de filtratge per defecte",
     "description": "The header text for the default filtering mode section"
