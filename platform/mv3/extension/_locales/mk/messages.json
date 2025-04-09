@@ -171,14 +171,6 @@
     "message": "Создај нова пријава",
     "description": "Text for button which open an external webpage in Support pane"
   },
-  "firstRunSectionLabel": {
-    "message": "Добредојде",
-    "description": "The header text for the welcome message section"
-  },
-  "firstRunDescription": {
-    "message": "Токму ја инсталиравте uBO Lite. Овде можете да изберете режим на филтрирање по подразбирање што ќе го користите на сите веб-страници.\n\nПо подразбирање, е избран режимот <em>Основен</em> затоа што не бара дозвола за читање и модификација на податоци. Ако му верувате на uBO Lite, можете да му дадете ширување на дозволата за читање и модификација на податоци на сите веб-страници за да овозможите попрецизни способности за филтрирање на сите веб-страници по подразбирање.",
-    "description": "Descriptive text shown at first install time only "
-  },
   "defaultFilteringModeSectionLabel": {
     "message": "Режим на филтрирање по подразбирање",
     "description": "The header text for the default filtering mode section"

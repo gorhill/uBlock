@@ -171,14 +171,6 @@
     "message": "ਨਵੀਂ ਰਿਪੋਰਟ ਬਣਾਓ",
     "description": "Text for button which open an external webpage in Support pane"
   },
-  "firstRunSectionLabel": {
-    "message": "ਜੀ ਆਇਆਂ ਨੂੰ",
-    "description": "The header text for the welcome message section"
-  },
-  "firstRunDescription": {
-    "message": "ਤੁਸੀਂ ਹੁਣੇ ਹੀ uBO Lite ਨੂੰ ਇੰਸਟਾਲ ਕੀਤਾ ਹੈ। ਤੁਸੀਂ ਸਾਰੀਆਂ ਵੈੱਬਸਾਈਟਾਂ ਲਈ ਵਰਤਣ ਵਾਸਤੇ ਮੂਲ ਫਿਲਟਰ ਕਰਨ ਦੇ ਢੰਗ ਨੂੰ ਚੁਣ ਸਕਦੇ ਹੋ।\n\nਮੂਲ ਰੂਪ ਵਿੱਚ <em>ਮੁੱਢਲਾ (Basic)</em> ਢੰਗ ਚੁਣਿਆ ਜਾਂਦਾ ਹੈ, ਕਿਉਂਕਿ ਇਸ ਵਾਸਤੇ ਡਾਟਾ ਪੜ੍ਹਨ ਅਤੇ ਸੋਧਣ ਲਈ ਕਿਸੇ ਵੀ ਮਨਜ਼ੂਰੀ ਦੀ ਲੋੜ ਨਹੀਂ ਹੁੰਦੀ ਹੈ। ਜੇ ਤੁਹਾਨੂੰ uBO Lite ਉੱਤੇ ਭਰੋਸਾ ਹੋਵੇ ਤਾਂ ਤੁਸੀਂ ਇਸ ਨੂੰ ਸਾਰੀਆਂ ਵੈੱਬਸਾਈਟਾਂ ਉੱਤੇ ਮੂਲ ਰੂਪ ਵਿੱਚ ਹੀ ਵੱਧ ਤਕਨੀਕੀ ਫਿਲਟਰ ਸਮਰੱਥਾ ਨੂੰ ਚਾਲੂ ਕਰਨ ਲਈ ਸਭ ਵੈੱਬਸਾਈਟਾਂ ਉੱਤੇ ਡਾਟਾ ਪੜ੍ਹਨ ਅਤੇ ਸੋਧਣ ਲਈ ਜਿਆਦਾ ਮਨਜ਼ੂਰੀ ਦੇ ਸਕਦੇ ਹੋ।",
-    "description": "Descriptive text shown at first install time only "
-  },
   "defaultFilteringModeSectionLabel": {
     "message": "ਮੂਲ ਫਿਲਟਰ ਕਰਨ ਦਾ ਢੰਗ",
     "description": "The header text for the default filtering mode section"

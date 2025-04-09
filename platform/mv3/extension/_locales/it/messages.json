@@ -171,14 +171,6 @@
     "message": "Crea nuova segnalazione in GitHub",
     "description": "Text for button which open an external webpage in Support pane"
   },
-  "firstRunSectionLabel": {
-    "message": "Benvenuto",
-    "description": "The header text for the welcome message section"
-  },
-  "firstRunDescription": {
-    "message": "Hai appena installato uBO Lite. Qui puoi scegliere la modalità di filtraggio predefinita da usare in tutti i siti web.\n\nPer impostazione predefinita, è selezionata la modalità <em>Basilare</em>, perché non richiede l'autorizzazione per leggere e modificare i dati. Se ti fidi di uBO Lite, puoi concedergli un'ampia autorizzazione per leggere e modificare i dati in tutti i siti web, in modo da abilitare capacitità di filtraggio più avanzate per tutti i siti web in modo predefinito.",
-    "description": "Descriptive text shown at first install time only "
-  },
   "defaultFilteringModeSectionLabel": {
     "message": "Modalità di filtraggio predefinita",
     "description": "The header text for the default filtering mode section"

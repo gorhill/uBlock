@@ -171,14 +171,6 @@
     "message": "Create new report on GitHub",
     "description": "Text for button which open an external webpage in Support pane"
   },
-  "firstRunSectionLabel": {
-    "message": "സ്വാഗതം",
-    "description": "The header text for the welcome message section"
-  },
-  "firstRunDescription": {
-    "message": "നിങ്ങൾ ഇപ്പോൾ uBO Lite ഇൻസ്റ്റാൾ ചെയ്തു. എല്ലാ വെബ്‌സൈറ്റുകളിലും ഉപയോഗിക്കുന്നതിന് ഇവിടെ നിങ്ങൾക്ക് ഡിഫോൾട്ട് ഫിൽട്ടറിംഗ് മോഡ് തിരഞ്ഞെടുക്കാം.\n\nസ്ഥിരസ്ഥിതിയായി, <em>അടിസ്ഥാന</em> മോഡ് തിരഞ്ഞെടുത്തു, കാരണം ഡാറ്റ വായിക്കാനും പരിഷ്ക്കരിക്കാനും അനുമതി ആവശ്യമില്ല. നിങ്ങൾ uBO Lite-നെ വിശ്വസിക്കുന്നുവെങ്കിൽ, ഡിഫോൾട്ടായി എല്ലാ വെബ്‌സൈറ്റുകൾക്കും കൂടുതൽ വിപുലമായ ഫിൽട്ടറിംഗ് കഴിവുകൾ പ്രാപ്‌തമാക്കുന്നതിന് എല്ലാ വെബ്‌സൈറ്റുകളിലെയും ഡാറ്റ വായിക്കാനും പരിഷ്‌ക്കരിക്കാനും നിങ്ങൾക്ക് വിശാലമായ അനുമതി നൽകാം.",
-    "description": "Descriptive text shown at first install time only "
-  },
   "defaultFilteringModeSectionLabel": {
     "message": "ഡിഫോൾട്ട് ഫിൽട്ടറിംഗ് മോഡ്",
     "description": "The header text for the default filtering mode section"
