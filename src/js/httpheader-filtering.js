@@ -145,8 +145,8 @@ httpheaderFilteringEngine.apply = function(fctxt, headers) {
     }
 
     // Split filters in different groups
-    const filters = new Map();
-    const exceptions = new Map();
+    const filters = new Set();
+    const exceptions = new Set();
     for ( const s of all ) {
         const selector = s.slice(1);
         if ( s.charCodeAt(0) === 0x2D /* - */ ) {
