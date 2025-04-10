@@ -780,25 +780,12 @@
 	"POL-0": {
 		"content": "filters",
 		"group": "regions",
-		"parent": "🇵🇱pl: Oficjalne Polskie Filtry",
 		"off": true,
 		"title": "🇵🇱pl: Oficjalne Polskie Filtry do uBlocka Origin",
 		"tags": "ads polish polski",
 		"lang": "szl pl",
 		"contentURL": "https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt",
-		"supportURL": "https://github.com/MajkiIT/polish-ads-filter/issues",
-		"instructionURL": "https://github.com/MajkiIT/polish-ads-filter#polish-filters-for-adblock-ublock-origin--adguard"
-	},
-	"POL-2": {
-		"content": "filters",
-		"group": "regions",
-		"parent": "🇵🇱pl: Oficjalne Polskie Filtry",
-		"off": true,
-		"title": "🇵🇱pl: Oficjalne polskie filtry przeciwko alertom o Adblocku",
-		"tags": "ads polish polski",
-		"lang": "szl pl",
-		"contentURL": "https://raw.githubusercontent.com/olegwukr/polish-privacy-filters/master/anti-adblock.txt",
-		"supportURL": "https://github.com/olegwukr/polish-privacy-filters/issues"
+		"supportURL": "https://github.com/MajkiIT/polish-ads-filter"
 	},
 	"ROU-1": {
 		"content": "filters",
