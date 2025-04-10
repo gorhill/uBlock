@@ -474,18 +474,21 @@ CosmeticFilteringEngine.prototype.fromCompiledContent = function(reader, options
         //   Handle specific filters meant to apply everywhere, i.e. selectors
         //   not to be injected conditionally through the DOM surveyor.
         //   hash,  *, .promoted-tweet
-        case 8:
-            if ( args[1] === '*' ) {
+        case 8: {
+            if ( args[1] === '*' && args[2].charCodeAt(0) === 0x2D /* + */ ) {
                 const selector = args[2].slice(1);
-                if ( this.reSimpleHighGeneric.test(selector) )
-                    this.highlyGeneric.simple.dict.add(selector);
-                else {
-                    this.highlyGeneric.complex.dict.add(selector);
+                if ( selector.charCodeAt(0) !== 0x7B /* { */ ) {
+                    if ( this.reSimpleHighGeneric.test(selector) ) {
+                        this.highlyGeneric.simple.dict.add(selector);
+                    } else {
+                        this.highlyGeneric.complex.dict.add(selector);
+                    }
+                    break;
                 }
-                break;
             }
             this.specificFilters.store(args[1], args[2]);
             break;
+        }
         default:
             this.discardedCount += 1;
             break;

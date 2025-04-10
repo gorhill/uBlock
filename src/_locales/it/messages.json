@@ -28,7 +28,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Filtri di terze parti",
+    "message": "Liste dei filtri",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -76,7 +76,7 @@
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Clicca per attivare uBlock₀ in questo sito.",
+    "message": "Clicca per abilitare uBlock₀ per questo sito.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
