@@ -38,6 +38,7 @@ import µb from './background.js';
 /******************************************************************************/
 
 const contentScriptRegisterer = {
+    id: 1,
     hostnameToDetails: new Map(),
     register(hostname, code) {
         if ( browser.contentScripts === undefined ) { return false; }
@@ -47,9 +48,10 @@ const contentScriptRegisterer = {
             if ( code === details.code ) {
                 return details.handle instanceof Promise === false;
             }
-            details.handle.unregister();
+            this.unregisterHandle(details.handle);
             this.hostnameToDetails.delete(hostname);
         }
+        const id = this.id++;
         const promise = browser.contentScripts.register({
             js: [ { code } ],
             allFrames: true,
@@ -57,12 +59,14 @@ const contentScriptRegisterer = {
             matchAboutBlank: true,
             runAt: 'document_start',
         }).then(handle => {
-            this.hostnameToDetails.set(hostname, { handle, code });
-            return handle;
+            const details = this.hostnameToDetails.get(hostname);
+            if ( details === undefined ) { return; }
+            if ( details.id !== id ) { return; }
+            details.handle = handle;
         }).catch(( ) => {
             this.hostnameToDetails.delete(hostname);
         });
-        this.hostnameToDetails.set(hostname, { handle: promise, code });
+        this.hostnameToDetails.set(hostname, { id, handle: promise, code });
         return false;
     },
     unregister(hostname) {
