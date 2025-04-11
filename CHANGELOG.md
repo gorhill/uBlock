@@ -1,3 +1,5 @@
+- [Mind potential race condition when dynamically registering scriptlets](https://github.com/gorhill/uBlock/commit/15e832da8a)
+- [Fix undue unchecking of setting in "My filters"](https://github.com/gorhill/uBlock/commit/2bb6999e3f)
 - [Add path support as target option in static extended filtering](https://github.com/gorhill/uBlock/commit/8b696a691a)
 - [Add `trusted-prevent-fetch` scriptlet](https://github.com/gorhill/uBlock/commit/4ce26b63ff)
 - [Code viewer shouldn't be maximizable](https://github.com/gorhill/uBlock/commit/97e740bd2c)
