@@ -25,11 +25,6 @@ import { redirectEngine as reng } from './redirect-engine.js';
 
 /******************************************************************************/
 
-const $mainWorldMap = new Map();
-const $isolatedWorldMap = new Map();
-
-/******************************************************************************/
-
 // For debugging convenience: all the top function calls will appear
 // at the bottom of a generated content script
 const codeSorter = (a, b) => {
@@ -243,18 +238,27 @@ export class ScriptletFilteringEngine {
             }
         }
 
+        const mainWorldMap = new Map();
+        const isolatedWorldMap = new Map();
+
         for ( const token of scriptlets ) {
-            lookupScriptlet(token, $mainWorldMap, $isolatedWorldMap, options.debug);
+            lookupScriptlet(token, mainWorldMap, isolatedWorldMap, options.debug);
+        }
+
+        if ( scriptlets.size !== 0 ) {
+            if ( mainWorldMap.size === 0 ) {
+                if ( isolatedWorldMap.size === 0 ) { return; }
+            }
         }
 
         const mainWorldCode = [];
-        for ( const js of $mainWorldMap.values() ) {
+        for ( const js of mainWorldMap.values() ) {
             mainWorldCode.push(js);
         }
         mainWorldCode.sort(codeSorter);
 
         const isolatedWorldCode = [];
-        for ( const js of $isolatedWorldMap.values() ) {
+        for ( const js of isolatedWorldMap.values() ) {
             isolatedWorldCode.push(js);
         }
         isolatedWorldCode.sort(codeSorter);
@@ -267,8 +271,6 @@ export class ScriptletFilteringEngine {
                 ...Array.from(exceptions).map(a => decompile(a, true)),
             ],
         };
-        $mainWorldMap.clear();
-        $isolatedWorldMap.clear();
 
         const scriptletGlobals = options.scriptletGlobals || {};
 

@@ -328,6 +328,7 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
         if ( typeof details.frameId !== 'number' ) { return; }
 
         const hostname = hostnameFromURI(details.url);
+        if ( hostname === '' ) { return; }
         const domain = domainFromHostname(hostname);
 
         const scriptletDetails = this.retrieve({
