@@ -381,9 +381,7 @@
     --logger-scriptlet-surface: rgb(var(--yellow-30) / 40%);
 }
 
-:root.dark input,
-:root.dark select,
-:root.dark textarea {
+:root.dark {
     color-scheme: dark;
 }
 
