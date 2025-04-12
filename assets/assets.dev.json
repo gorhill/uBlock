@@ -780,6 +780,7 @@
 	"POL-0": {
 		"content": "filters",
 		"group": "regions",
+		"parent": "🇵🇱pl: Oficjalne Polskie Filtry",
 		"off": true,
 		"title": "🇵🇱pl: Oficjalne Polskie Filtry do uBlocka Origin",
 		"tags": "ads polish polski",
@@ -790,6 +791,7 @@
 	"POL-3": {
 		"content": "filters",
 		"group": "regions",
+		"parent": "🇵🇱pl: Oficjalne Polskie Filtry",
 		"off": true,
 		"title": "🇵🇱pl: CERT.PL's Warning List",
 		"tags": "malware polish polski",
