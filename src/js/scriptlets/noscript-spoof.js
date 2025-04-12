@@ -33,6 +33,8 @@
 
     const reMetaContent = /^\s*(\d+)\s*;\s*url=(?:"([^"]+)"|'([^']+)'|(.+))/i;
     const reSafeURL = /^https?:\/\//;
+    const reNoscript = /(^|[ >+~])noscript([ >+~]|$)/g;
+    const className = vAPI.sessionId;
     let redirectTimer;
 
     const autoRefresh = function(root) {
@@ -55,30 +57,46 @@
     };
 
     const morphNoscript = function(from) {
+        const fragment = new DocumentFragment();
+        const inHead = from.closest('head');
         if ( /^application\/(?:xhtml\+)?xml/.test(document.contentType) ) {
-            const to = document.createElement('span');
             while ( from.firstChild !== null ) {
-                to.appendChild(from.firstChild);
+                fragment.append(from.firstChild);
             }
-            return to;
+            return fragment;
         }
         const parser = new DOMParser();
         const doc = parser.parseFromString(
-            '<span>' + from.textContent + '</span>',
+            `<span class="${className}" style="display: none; !important">${from.textContent}</span>`,
             'text/html'
         );
-        return document.adoptNode(doc.querySelector('span'));
+        for ( const elem of doc.querySelectorAll(inHead ? 'span > *' : 'span') ) {
+            fragment.append(document.adoptNode(elem));
+        }
+        return fragment;
     };
 
     for ( const noscript of noscripts ) {
-        const parent = noscript.parentNode;
-        if ( parent === null ) { continue; }
-        const span = morphNoscript(noscript);
-        span.style.setProperty('display', 'inline', 'important');
+        const fragment = morphNoscript(noscript);
         if ( redirectTimer === undefined ) {
-            autoRefresh(span);
+            autoRefresh(fragment);
         }
-        parent.replaceChild(span, noscript);
+        noscript.replaceWith(fragment);
+    }
+
+    for ( const sheet of document.styleSheets ) {
+        try {
+            for ( const rule of sheet.cssRules ) {
+                if ( reNoscript.test(rule.selectorText) === false ) { continue; }
+                rule.selectorText =
+                    rule.selectorText.replace(reNoscript, `$1span.${className}$2`);
+            }
+        } catch {
+        }
+    }
+
+    for ( const span of document.querySelectorAll(`.${className}`) ) {
+        span.style.setProperty('display', 'inline', 'important');
     }
 })();
 
