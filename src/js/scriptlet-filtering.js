@@ -317,7 +317,7 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
             filters: scriptletDetails.filters,
         };
 
-        if ( request.nocache !== true ) {
+        if ( hostname !== '' && request.nocache !== true ) {
             this.scriptletCache.add(hostname, cachedScriptletDetails);
         }
 
@@ -328,7 +328,6 @@ export class ScriptletFilteringEngineEx extends ScriptletFilteringEngine {
         if ( typeof details.frameId !== 'number' ) { return; }
 
         const hostname = hostnameFromURI(details.url);
-        if ( hostname === '' ) { return; }
         const domain = domainFromHostname(hostname);
 
         const scriptletDetails = this.retrieve({
