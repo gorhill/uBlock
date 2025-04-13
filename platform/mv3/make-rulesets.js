@@ -105,9 +105,9 @@ const log = (text, silent = true) => {
 console.log = log;
 
 const logProgress = text => {
-    process?.stdout?.clearLine();
-    process?.stdout?.cursorTo(0);
-    process?.stdout?.write(text);
+    process?.stdout?.clearLine?.();
+    process?.stdout?.cursorTo?.(0);
+    process?.stdout?.write?.(text);
 };
 
 /******************************************************************************/
