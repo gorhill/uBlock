@@ -107,7 +107,10 @@ async function onPermissionsAdded(permissions) {
     if ( details === undefined ) {
         const modified = await syncWithBrowserPermissions();
         if ( modified === false ) { return; }
-        return registerInjectables();
+        return Promise.all([
+            updateSessionRules(),
+            registerInjectables(),
+        ]);
     }
     const defaultMode = await getDefaultFilteringMode();
     if ( defaultMode >= MODE_OPTIMAL ) { return; }
