@@ -114,6 +114,9 @@ const urlToFileName = url => {
 
 const fetchText = (url, cacheDir) => {
     return new Promise((resolve, reject) => {
+        process.stdout.clearLine();
+        process.stdout.cursorTo(0);
+        process.stdout.write(`Fetching ${url}`);
         const fname = urlToFileName(url);
         fs.readFile(`${cacheDir}/${fname}`, { encoding: 'utf8' }).then(content => {
             log(`\tFetched local ${url}`);
@@ -1569,6 +1572,9 @@ async function main() {
         urls: [ 'https://ubol-et.adblock.ee/list.txt' ],
         homeURL: 'https://github.com/sander85/uBOL-et',
     });
+
+    process.stdout.clearLine();
+    process.stdout.cursorTo(0);
 
     writeFile(
         `${rulesetDir}/ruleset-details.json`,
