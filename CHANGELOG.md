@@ -1,4 +1,4 @@
-- [Add `trusted-create-element` scriptlet](https://github.com/gorhill/uBlock/commit/20dd606504)
+- [Add `trusted-create-html` scriptlet](https://github.com/gorhill/uBlock/commit/20dd606504)
 - [Mind potential race condition when dynamically registering scriptlets](https://github.com/gorhill/uBlock/commit/15e832da8a)
 - [Fix undue unchecking of setting in "My filters"](https://github.com/gorhill/uBlock/commit/2bb6999e3f)
 - [Add path support as target option in static extended filtering](https://github.com/gorhill/uBlock/commit/8b696a691a)
