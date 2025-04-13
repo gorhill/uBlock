@@ -69,7 +69,7 @@ function renderWidgets() {
 
     {
         const input = qs$('#strictBlockMode input[type="checkbox"]');
-        const canStrictBlock = cachedRulesetData.defaultFilteringMode > 1;
+        const canStrictBlock = cachedRulesetData.hasOmnipotence;
         input.checked = canStrictBlock && cachedRulesetData.strictBlockMode;
         dom.attr(input, 'disabled', canStrictBlock ? null : '');
     }
@@ -231,6 +231,13 @@ listen.onmessage = ev => {
             }
             const combined = Array.from(new Set([ ...message.trustedSites, ...staged ]));
             local.trustedSites = combined;
+            render = true;
+        }
+    }
+
+    if ( message.hasOmnipotence !== undefined ) {
+        if ( message.hasOmnipotence !== local.hasOmnipotence ) {
+            local.hasOmnipotence = message.hasOmnipotence;
             render = true;
         }
     }

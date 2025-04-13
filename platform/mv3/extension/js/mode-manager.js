@@ -21,6 +21,7 @@
 
 import {
     broadcastMessage,
+    hasBroadHostPermissions,
     hostnamesFromMatches,
     isDescendantHostnameOfIter,
     toBroaderHostname,
@@ -255,12 +256,14 @@ async function writeFilteringModeDetails(afterDetails) {
     return Promise.all([
         getDefaultFilteringMode(),
         getTrustedSites(),
+        hasBroadHostPermissions(),
         localWrite('filteringModeDetails', data),
         sessionWrite('filteringModeDetails', data),
     ]).then(results => {
         broadcastMessage({
             defaultFilteringMode: results[0],
             trustedSites: Array.from(results[1]),
+            hasOmnipotence: results[2],
         });
     });
 }
