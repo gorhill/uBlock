@@ -222,6 +222,7 @@ function addExtendedToDNR(context, parser) {
         return;
     }
     let details = context.specificCosmeticFilters.get(compiled);
+    let isGeneric = true;
     for ( const { hn, not, bad } of parser.getExtFilterDomainIterator() ) {
         if ( bad ) { continue; }
         if ( not && exception ) { continue; }
@@ -247,14 +248,14 @@ function addExtendedToDNR(context, parser) {
             details.matches = [ '*' ];
             continue;
         }
+        isGeneric = false;
         details.matches.push(hn);
     }
     if ( details === undefined ) { return; }
     if ( exception ) { return; }
     if ( compiled.startsWith('{') ) { return; }
-    if ( details.matches === undefined || details.matches.includes('*') ) {
+    if ( isGeneric ) {
         addGenericCosmeticFilter(context, compiled, false);
-        details.matches = undefined;
     }
 }
 
