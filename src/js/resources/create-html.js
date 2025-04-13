@@ -26,7 +26,7 @@ import { safeSelf } from './safe-self.js';
 /******************************************************************************/
 
 /**
- * @scriptlet trusted-create-element
+ * @scriptlet trusted-create-html
  * 
  * @description
  * Element(s) from a parsed HTML string are added as child element(s) to a
@@ -46,7 +46,7 @@ import { safeSelf } from './safe-self.js';
  * 
  * */
 
-function trustedCreateElement(
+function trustedCreateHTML(
     parentSelector,
     htmlStr = '',
     durationStr = ''
@@ -54,16 +54,16 @@ function trustedCreateElement(
     if ( parentSelector === '' ) { return; }
     if ( htmlStr === '' ) { return; }
     const safe = safeSelf();
-    const logPrefix = safe.makeLogPrefix('trusted-create-element', parentSelector, htmlStr, durationStr);
+    const logPrefix = safe.makeLogPrefix('trusted-create-html', parentSelector, htmlStr, durationStr);
     // We do not want to recursively create elements
-    self.trustedCreateElement = true;
+    self.trustedCreateHTML = true;
     let ancestor = self.frameElement;
     while ( ancestor !== null ) {
         const doc = ancestor.ownerDocument;
         if ( doc === null ) { break; }
         const win = doc.defaultView;
         if ( win === null ) { break; }
-        if ( win.trustedCreateElement ) { return; }
+        if ( win.trustedCreateHTML ) { return; }
         ancestor = ancestor.frameElement;
     }
     const duration = parseInt(durationStr, 10);
@@ -71,24 +71,25 @@ function trustedCreateElement(
     const externalDoc = domParser.parseFromString(htmlStr, 'text/html');
     const docFragment = new DocumentFragment();
     const toRemove = [];
-    for ( const external of externalDoc.querySelectorAll('body > *') ) {
-        const imported = document.adoptNode(external);
-        docFragment.append(imported);
+    while ( externalDoc.body.firstChild !== null ) {
+        const imported = document.adoptNode(externalDoc.body.firstChild);
+        docFragment.appendChild(imported);
         if ( isNaN(duration) ) { continue; }
         toRemove.push(imported);
     }
-    if ( docFragment.childElementCount === 0 ) { return; }
+    if ( docFragment.firstChild === null ) { return; }
     const remove = ( ) => {
-        for ( const elem of toRemove ) {
-            elem.remove();
+        for ( const node of toRemove ) {
+            if ( node.parentNode === null ) { continue; }
+            node.parentNode.removeChild(node);
         }
-        safe.uboLog(logPrefix, 'Element(s) removed');
+        safe.uboLog(logPrefix, 'Node(s) removed');
     };
     const append = ( ) => {
         const parent = document.querySelector(parentSelector);
         if ( parent === null ) { return false; }
         parent.append(docFragment);
-        safe.uboLog(logPrefix, 'Element(s) appended');
+        safe.uboLog(logPrefix, 'Node(s) appended');
         if ( toRemove.length === 0 ) { return true; }
         setTimeout(remove, duration);
         return true;
@@ -100,8 +101,8 @@ function trustedCreateElement(
     });
     observer.observe(document, { childList: true, subtree: true });
 }
-registerScriptlet(trustedCreateElement, {
-    name: 'trusted-create-element.js',
+registerScriptlet(trustedCreateHTML, {
+    name: 'trusted-create-html.js',
     requiresTrust: true,
     dependencies: [
         safeSelf,

@@ -21,7 +21,7 @@
 */
 
 import './attribute.js';
-import './create-element.js';
+import './create-html.js';
 import './href-sanitizer.js';
 import './json-edit.js';
 import './json-prune.js';
