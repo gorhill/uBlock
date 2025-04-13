@@ -20,7 +20,7 @@
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Ignorēt",
+    "message": "Neņemt vērā",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
@@ -448,11 +448,11 @@
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
-    "message": "Ignorēt vispārīgos kosmētiskos filtrus",
+    "message": "Neņemt vērā vispārīgos kosmētiskos aizturētājus",
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Vispārīgie kosmētikas filtri ir kosmētikas filtri, kurus paredzēts piemērot visās tīmekļvietnēs.<p>Lai gan uBlock ₀ darbojas efektīvi, vispārīgie kosmētikas filtri dažās tīmekļa lapās var ievērojami noslogot atmiņu un centrālo procesoru.<p>Šīs opcijas izmantošana samazinās vispārīgo kosmētikas filtru izmantotās atmiņas un procesora noslodzi kā arī samazinās paša uBlock₀ izmantoto atmiņu.<p>Ieteicams izmantot zemas veiktspējas ierīcēm.",
+    "message": "Vispārīgie kosmētiskie aizturētāji ir tādi kosmētiskie aizturētāji, kurus paredzēts pielietot visās tīmekļvietnēs. Šīs iespējas iespējošana novērsīs tīmekļa lapām pievienoto atmiņas un CPU virstēriņu kā vispārīgo kosmētisko aizturētāju apstrādāšanas iznākumu.\n\nIr ieteicams iespējot šo iespēju mazāk jaudīgās ierīcēs.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
@@ -512,7 +512,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "Vienu URL katrā rindiņā. Rindiņas, kuras sākas ar &lsquo;!&rsquo; tiks ignorētas. Nederīgs URL tiks ignorēts bez brīdinājuma.",
+    "message": "Viens URL katrā rinda. Nederīgi URL netiks ņemti vērā.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
