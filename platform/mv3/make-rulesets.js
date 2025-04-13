@@ -104,6 +104,12 @@ const log = (text, silent = true) => {
 
 console.log = log;
 
+const logProgress = text => {
+    process?.stdout?.clearLine();
+    process?.stdout?.cursorTo(0);
+    process?.stdout?.write(text);
+};
+
 /******************************************************************************/
 
 const urlToFileName = url => {
@@ -114,9 +120,7 @@ const urlToFileName = url => {
 
 const fetchText = (url, cacheDir) => {
     return new Promise((resolve, reject) => {
-        process.stdout.clearLine();
-        process.stdout.cursorTo(0);
-        process.stdout.write(`Fetching ${url}`);
+        logProgress(`Fetching ${url}`);
         const fname = urlToFileName(url);
         fs.readFile(`${cacheDir}/${fname}`, { encoding: 'utf8' }).then(content => {
             log(`\tFetched local ${url}`);
@@ -1573,8 +1577,7 @@ async function main() {
         homeURL: 'https://github.com/sander85/uBOL-et',
     });
 
-    process.stdout.clearLine();
-    process.stdout.cursorTo(0);
+    logProgress('');
 
     writeFile(
         `${rulesetDir}/ruleset-details.json`,
