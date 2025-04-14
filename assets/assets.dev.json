@@ -784,7 +784,7 @@
 		"off": true,
 		"title": "🇵🇱pl: Oficjalne Polskie Filtry do uBlocka Origin",
 		"tags": "ads polish polski",
-		"lang": "szl pl",
+		"lang": "szl pl _",
 		"contentURL": "https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt",
 		"supportURL": "https://github.com/MajkiIT/polish-ads-filter"
 	},
@@ -817,7 +817,7 @@
 		"parent": "🇷🇺ru 🇺🇦ua 🇺🇿uz 🇰🇿kz: RU AdList",
 		"off": true,
 		"title": "🇷🇺ru 🇺🇦ua 🇺🇿uz 🇰🇿kz: RU AdList",
-		"tags": "ads belarusian беларуская kazakh tatar russian русский ukrainian українська uzbek",
+		"tags": "ads belarusian беларуская kazakh tatar russian русский ukrainian українська uzbek uk",
 		"lang": "be kk tt ru uz",
 		"contentURL": "https://raw.githubusercontent.com/easylist/ruadlist/master/RuAdList-uBO.txt",
 		"cdnURLs": [
