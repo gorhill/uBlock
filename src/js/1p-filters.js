@@ -111,12 +111,12 @@ function currentStateChanged() {
 }
 
 function getEditorText() {
-    const text = cmEditor.getValue().replace(/\s+$/, '');
+    const text = cmEditor.getValue().trimEnd();
     return text === '' ? text : `${text}\n`;
 }
 
 function setEditorText(text) {
-    cmEditor.setValue(text.replace(/\s+$/, '') + '\n\n');
+    cmEditor.setValue(`${text.trimEnd()}\n\n`);
 }
 
 /******************************************************************************/

@@ -32,7 +32,7 @@ export class ArglistParser {
         this.transform = false;
         this.failed = false;
         this.reWhitespaceStart = /^\s+/;
-        this.reWhitespaceEnd = /\s+$/;
+        this.reWhitespaceEnd = /(?:^|\S)(\s+)$/;
         this.reOddTrailingEscape = /(?:^|[^\\])(?:\\\\)*\\$/;
         this.reTrailingEscapeChars = /\\+$/;
     }
@@ -90,7 +90,7 @@ export class ArglistParser {
     }
     rightWhitespaceCount(s) {
         const match = this.reWhitespaceEnd.exec(s);
-        return match === null ? 0 : match[0].length;
+        return match === null ? 0 : match[1].length;
     }
     indexOfNextArgSeparator(pattern, separatorCode) {
         this.argBeg = this.argEnd = separatorCode !== this.separatorCode

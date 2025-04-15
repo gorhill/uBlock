@@ -99,12 +99,12 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 /******************************************************************************/
 
 function getEditorText() {
-    let text = cmEditor.getValue().replace(/\s+$/, '');
-    return text === '' ? text : text + '\n';
+    const text = cmEditor.getValue().trimEnd();
+    return text === '' ? text : `${text}\n`;
 }
 
 function setEditorText(text) {
-    cmEditor.setValue(text.replace(/\s+$/, '') + '\n');
+    cmEditor.setValue(`${text.trimEnd()}\n`);
 }
 
 /******************************************************************************/
