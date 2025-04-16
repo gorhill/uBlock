@@ -31,6 +31,7 @@ import {
 } from './ruleset-manager.js';
 
 import {
+    getDefaultFilteringMode,
     getTrustedSites,
     readFilteringModeDetails,
 } from './mode-manager.js';
@@ -65,6 +66,13 @@ const adminSettings = {
             ]);
             const [ adminRulesets, enabledRulesets ] = results;
             broadcastMessage({ adminRulesets, enabledRulesets });
+        }
+        if ( this.keys.has('defaultFiltering') ) {
+            ubolLog('admin setting "defaultFiltering" changed');
+            await readFilteringModeDetails(true);
+            await registerInjectables();
+            const defaultFilteringMode = await getDefaultFilteringMode();
+            broadcastMessage({ defaultFilteringMode });
         }
         if ( this.keys.has('noFiltering') ) {
             ubolLog('admin setting "noFiltering" changed');

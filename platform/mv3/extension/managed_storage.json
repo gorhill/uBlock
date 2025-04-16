@@ -2,6 +2,10 @@
   "$schema": "http://json-schema.org/draft-03/schema#",
   "type": "object",
   "properties": {
+    "defaultFiltering": {
+      "title": "The default filtering mode",
+      "type": "string",
+    },
     "noFiltering": {
       "title": "List of domains for which no filtering should occur",
       "type": "array",

@@ -33,6 +33,11 @@ import {
     sessionRead, sessionWrite,
 } from './ext.js';
 
+import {
+    rulesetConfig,
+    saveRulesetConfig,
+} from './config.js';
+
 import { adminReadEx } from './admin.js';
 import { filteringModesToDNR } from './ruleset-manager.js';
 
@@ -219,14 +224,31 @@ export async function readFilteringModeDetails(bypassCache = false) {
             return readFilteringModeDetails.cache;
         }
     }
-    let [ userModes, adminNoFiltering ] = await Promise.all([
+    let [
+        userModes,
+        adminDefaultFiltering,
+        adminNoFiltering,
+    ] = await Promise.all([
         localRead('filteringModeDetails'),
+        adminReadEx('defaultFiltering'),
         adminReadEx('noFiltering'),
     ]);
     if ( userModes === undefined ) {
         userModes = { optimal: [ 'all-urls' ] };
     }
     userModes = unserializeModeDetails(userModes);
+    if ( adminDefaultFiltering !== undefined ) {
+        const modefromName = {
+            none: MODE_NONE,
+            basic: MODE_BASIC,
+            optimal: MODE_OPTIMAL,
+            complete: MODE_COMPLETE,
+        };
+        const adminDefaultFilteringMode = modefromName[adminDefaultFiltering];
+        if ( adminDefaultFilteringMode !== undefined ) {
+            applyFilteringMode(userModes, 'all-urls', adminDefaultFilteringMode);
+        }
+    }
     if ( Array.isArray(adminNoFiltering) ) {
         if ( adminNoFiltering.includes('-*') ) {
             userModes.none.clear();
@@ -341,18 +363,28 @@ export async function setTrustedSites(hostnames) {
 /******************************************************************************/
 
 export async function syncWithBrowserPermissions() {
-    const [ permissions, beforeMode ] = await Promise.all([
+    const [
+        permissions,
+        beforeMode,
+    ] = await Promise.all([
         browser.permissions.getAll(),
         getDefaultFilteringMode(),
     ]);
     const allowedHostnames = new Set(hostnamesFromMatches(permissions.origins || []));
+    const hasBroadHostPermissions = allowedHostnames.has('all-urls');
+    const broadHostPermissionsToggled =
+        hasBroadHostPermissions !== rulesetConfig.hasBroadHostPermissions;
     let modified = false;
-    if ( beforeMode > MODE_BASIC && allowedHostnames.has('all-urls') === false ) {
+    if ( beforeMode > MODE_BASIC && hasBroadHostPermissions === false ) {
         await setDefaultFilteringMode(MODE_BASIC);
         modified = true;
-    } else if ( beforeMode === MODE_BASIC && allowedHostnames.has('all-urls') ) {
+    } else if ( beforeMode === MODE_BASIC && hasBroadHostPermissions && broadHostPermissionsToggled ) {
         await setDefaultFilteringMode(MODE_OPTIMAL);
         modified = true;
+    }
+    if ( broadHostPermissionsToggled ) {
+        rulesetConfig.hasBroadHostPermissions = hasBroadHostPermissions;
+        saveRulesetConfig();
     }
     const afterMode = await getDefaultFilteringMode();
     if ( afterMode > MODE_BASIC ) { return afterMode !== beforeMode; }
