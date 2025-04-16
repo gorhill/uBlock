@@ -4,7 +4,8 @@
   "properties": {
     "defaultFiltering": {
       "title": "The default filtering mode",
-      "type": "string",
+      "description": "Can be one of \"none\", \"basic\", \"optimal\", \"complete\".",
+      "type": "string"
     },
     "noFiltering": {
       "title": "List of domains for which no filtering should occur",
