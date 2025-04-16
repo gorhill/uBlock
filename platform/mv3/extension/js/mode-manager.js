@@ -249,7 +249,7 @@ export async function readFilteringModeDetails(bypassCache = false) {
             applyFilteringMode(userModes, 'all-urls', adminDefaultFilteringMode);
         }
     }
-    if ( Array.isArray(adminNoFiltering) ) {
+    if ( Array.isArray(adminNoFiltering) && adminNoFiltering.length !== 0 ) {
         if ( adminNoFiltering.includes('-*') ) {
             userModes.none.clear();
         }
