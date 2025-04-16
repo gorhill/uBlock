@@ -460,6 +460,7 @@ class RedirectEngine {
         for ( const [ token, entry ] of this.resources ) {
             this.resources.set(token, RedirectEntry.fromDetails(entry));
         }
+        this.modifyTime = Date.now();
         return true;
     }
 

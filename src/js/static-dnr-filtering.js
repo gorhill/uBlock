@@ -31,7 +31,7 @@ import staticNetFilteringEngine from './static-net-filtering.js';
 
 /******************************************************************************/
 
-const isRegex = hn => hn.startsWith('/') && hn.endsWith('/');
+const isRegexOrPath = hn => hn.includes('/');
 
 /******************************************************************************/
 
@@ -112,7 +112,7 @@ function addExtendedToDNR(context, parser) {
         for ( const { hn, not, bad } of parser.getExtFilterDomainIterator() ) {
             if ( bad ) { continue; }
             if ( exception ) { continue; }
-            if ( isRegex(hn) ) { continue; }
+            if ( isRegexOrPath(hn) ) { continue; }
             let details = context.scriptletFilters.get(argsToken);
             if ( details === undefined ) {
                 context.scriptletFilters.set(argsToken, details = { args });
@@ -170,7 +170,7 @@ function addExtendedToDNR(context, parser) {
         };
         for ( const { hn, not, bad } of parser.getExtFilterDomainIterator() ) {
             if ( bad ) { continue; }
-            if ( isRegex(hn) ) { continue; }
+            if ( isRegexOrPath(hn) ) { continue; }
             if ( not ) {
                 if ( rule.condition.excludedInitiatorDomains === undefined ) {
                     rule.condition.excludedInitiatorDomains = [];
@@ -222,10 +222,11 @@ function addExtendedToDNR(context, parser) {
         return;
     }
     let details = context.specificCosmeticFilters.get(compiled);
+    let isGeneric = true;
     for ( const { hn, not, bad } of parser.getExtFilterDomainIterator() ) {
         if ( bad ) { continue; }
         if ( not && exception ) { continue; }
-        if ( isRegex(hn) ) { continue; }
+        if ( isRegexOrPath(hn) ) { continue; }
         if ( details === undefined ) {
             context.specificCosmeticFilters.set(compiled, details = {});
         }
@@ -247,14 +248,14 @@ function addExtendedToDNR(context, parser) {
             details.matches = [ '*' ];
             continue;
         }
+        isGeneric = false;
         details.matches.push(hn);
     }
     if ( details === undefined ) { return; }
     if ( exception ) { return; }
     if ( compiled.startsWith('{') ) { return; }
-    if ( details.matches === undefined || details.matches.includes('*') ) {
+    if ( isGeneric ) {
         addGenericCosmeticFilter(context, compiled, false);
-        details.matches = undefined;
     }
 }
 

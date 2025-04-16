@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Un blocco sperimentale che non richiede permessi. Blocca pubblicità, tracker, cryptominer e altro ancora.",
+    "message": "Un efficiente bloccatore dei contenuti. Blocca annunci, tracker, minatori e altro ancora subito dopo l'installazione.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {

@@ -92,9 +92,9 @@ export class StaticExtFilteringHostnameDB {
         if ( target.includes('/') ) {
             return this.#storeMatcher(target, iStr);
         }
-        const iList = this.#hostnameToStringListMap.get(target);
+        const iList = this.#hostnameToStringListMap.get(target) ?? 0;
         this.#hostnameToStringListMap.set(target, this.#linkedLists.length);
-        this.#linkedLists.push(iStr, iList !== undefined ? iList : 0);
+        this.#linkedLists.push(iStr, iList);
     }
 
     #storeMatcher(target, iStr) {
@@ -105,11 +105,11 @@ export class StaticExtFilteringHostnameDB {
             this.#matcherSlots.push({ isRegex, hn, pn, iList: 0 });
             this.#matcherMap.set(target, iMatcher);
             if ( isRegex === false ) {
-                const iMatcherList = this.#hostnameToMatcherListMap.get(hn) || 0;
+                const iMatcherList = this.#hostnameToMatcherListMap.get(hn) ?? 0;
                 this.#hostnameToMatcherListMap.set(hn, this.#linkedLists.length);
                 this.#linkedLists.push(iMatcher, iMatcherList);
             } else {
-                const iMatcherList = this.#hostnameToMatcherListMap.get('') || 0;
+                const iMatcherList = this.#hostnameToMatcherListMap.get('') ?? 0;
                 this.#hostnameToMatcherListMap.set('', this.#linkedLists.length);
                 this.#linkedLists.push(iMatcher, iMatcherList);
             }
@@ -176,7 +176,7 @@ export class StaticExtFilteringHostnameDB {
     }
 
     #retrieveSpecificsByRegex(hn, out, hostname, pathname) {
-        let iMatchList = this.#hostnameToMatcherListMap.get(hn) || 0;
+        let iMatchList = this.#hostnameToMatcherListMap.get(hn) ?? 0;
         while ( iMatchList !== 0 ) {
             const iMatchSlot = this.#linkedLists[iMatchList+0];
             const matcher = this.#matcherSlots[iMatchSlot];

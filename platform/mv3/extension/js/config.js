@@ -33,6 +33,7 @@ export const rulesetConfig = {
     showBlockedCount: true,
     strictBlockMode: true,
     developerMode: false,
+    hasBroadHostPermissions: true,
 };
 
 export const process = {

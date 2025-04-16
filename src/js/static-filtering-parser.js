@@ -785,7 +785,7 @@ export class AstFilterParser {
         this.selectorCompiler = new ExtSelectorCompiler(options);
         // Regexes
         this.reWhitespaceStart = /^\s+/;
-        this.reWhitespaceEnd = /\s+$/;
+        this.reWhitespaceEnd = /(?:^|\S)(\s+)$/;
         this.reCommentLine = /^(?:!|#\s|####|\[adblock)/i;
         this.reExtAnchor = /(#@?(?:\$\?|\$|%|\?)?#).{1,2}/;
         this.reInlineComment = /(?:\s+#).*?$/;
@@ -2786,7 +2786,7 @@ export class AstFilterParser {
 
     rightWhitespaceCount(s) {
         const match = this.reWhitespaceEnd.exec(s);
-        return match === null ? 0 : match[0].length;
+        return match === null ? 0 : match[1].length;
     }
 
     nextCommaInCommaSeparatedListString(s, start) {
