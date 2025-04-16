@@ -21,36 +21,51 @@
 
 
 export const webext = self.browser;
+export const INITIATOR_DOMAINS = 'domains';
+export const EXCLUDED_INITIATOR_DOMAINS = 'excludedDomains';
 
-export const initiatorDomains = 'domains';
-export const excludedInitiatorDomains = 'excludedDomains';
+// https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/API/declarativeNetRequest/
 
-const { declarativeNetRequest: dnr } = webext;
-const { getDynamicRules, getSessionRules } = dnr;
+const nativeDNR = webext.declarativeNetRequest;
 
-// https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/API/declarativeNetRequest/getDynamicRules
-dnr.getDynamicRules = function({ ruleIds } = {}) {
-    return new Promise(resolve => {
-        getDynamicRules.call(dnr, rules => {
-            if ( Array.isArray(rules) === false ) { return resolve([]); }
-            if ( Array.isArray(ruleIds) === false ) { return resolve(rules); }
-            return resolve(rules.filter(rule => ruleIds.includes(rule.id)));
+export const dnr = {
+    DYNAMIC_RULESET_ID: '_dynamic',
+    MAX_NUMBER_OF_ENABLED_STATIC_RULESETS: nativeDNR.MAX_NUMBER_OF_ENABLED_STATIC_RULESETS,
+    MAX_NUMBER_OF_REGEX_RULES: nativeDNR.MAX_NUMBER_OF_DYNAMIC_AND_SESSION_RULES,
+    async getAvailableStaticRuleCount() {
+        return 150000;
+    },
+    getDynamicRules({ ruleIds } = {}) {
+        return new Promise(resolve => {
+            nativeDNR.getDynamicRules(rules => {
+                if ( Array.isArray(rules) === false ) { return resolve([]); }
+                if ( Array.isArray(ruleIds) === false ) { return resolve(rules); }
+                return resolve(rules.filter(rule => ruleIds.includes(rule.id)));
+            });
         });
-    });
-};
-
-// https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/API/declarativeNetRequest/getSessionRules
-dnr.getSessionRules = function({ ruleIds } = {}) {
-    return new Promise(resolve => {
-        getSessionRules.call(dnr, rules => {
-            if ( Array.isArray(rules) === false ) { return resolve([]); }
-            if ( Array.isArray(ruleIds) === false ) { return resolve(rules); }
-            return resolve(rules.filter(rule => ruleIds.includes(rule.id)));
+    },
+    getEnabledRulesets(...args) {
+        return nativeDNR.getEnabledRulesets(...args);
+    },
+    getSessionRules({ ruleIds } = {}) {
+        return new Promise(resolve => {
+            nativeDNR.getSessionRules(rules => {
+                if ( Array.isArray(rules) === false ) { return resolve([]); }
+                if ( Array.isArray(ruleIds) === false ) { return resolve(rules); }
+                return resolve(rules.filter(rule => ruleIds.includes(rule.id)));
+            });
         });
-    });
-};
-
-// https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/API/declarativeNetRequest/getSessionRules
-webext.declarativeNetRequest.getAvailableStaticRuleCount = async function() {
-    return 150000;
+    },
+    isRegexSupported(...args) {
+        return nativeDNR.isRegexSupported(...args);
+    },
+    updateDynamicRules(...args) {
+        return nativeDNR.updateDynamicRules(...args);
+    },
+    updateEnabledRulesets(...args) {
+        return nativeDNR.updateEnabledRulesets(...args);
+    },
+    updateSessionRules(...args) {
+        return nativeDNR.updateSessionRules(...args);
+    },
 };

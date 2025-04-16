@@ -22,8 +22,11 @@
 import {
     EXCLUDED_INITIATOR_DOMAINS,
     INITIATOR_DOMAINS,
-    TAB_ID_NONE,
     dnr,
+} from './ext-compat.js';
+
+import {
+    TAB_ID_NONE,
     i18n,
     localRead, localRemove, localWrite,
     runtime,

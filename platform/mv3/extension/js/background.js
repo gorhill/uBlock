@@ -44,7 +44,6 @@ import {
 
 import {
     browser,
-    dnr,
     localRead, localRemove, localWrite,
     runtime,
     windows,
@@ -75,6 +74,7 @@ import {
     saveRulesetConfig,
 } from './config.js';
 
+import { dnr } from './ext-compat.js';
 import { registerInjectables } from './scripting-manager.js';
 
 /******************************************************************************/

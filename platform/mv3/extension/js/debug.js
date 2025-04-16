@@ -19,10 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import {
-    INITIATOR_DOMAINS,
-    dnr,
-} from './ext.js';
+import { INITIATOR_DOMAINS, dnr } from './ext-compat.js';
 
 /******************************************************************************/
 
