@@ -408,7 +408,6 @@ function toStrictBlockRule(rule, out) {
     if ( condition.excludedResponseHeaders ) { return; }
     if ( condition.initiatorDomains ) { return; }
     if ( condition.excludedInitiatorDomains ) { return; }
-    if ( condition.excludedRequestDomains ) { return; }
     const { resourceTypes } = condition;
     if ( resourceTypes === undefined ) {
         if ( condition.requestDomains === undefined ) { return; }
@@ -423,9 +422,7 @@ function toStrictBlockRule(rule, out) {
     } else {
         regexFilter = '^https?://.*';
     }
-    if (
-        regexFilter.startsWith('^') === false
-    ) {
+    if ( regexFilter.startsWith('^') === false ) {
         regexFilter = `^.*${regexFilter}`;
     }
     if (
@@ -435,7 +432,7 @@ function toStrictBlockRule(rule, out) {
     ) {
         regexFilter = `${regexFilter}.*`;
     }
-    const strictBlockRule = {
+    const strictBlockRule = out.get(regexFilter) || {
         action: {
             type: 'redirect',
             redirect: {
@@ -449,9 +446,14 @@ function toStrictBlockRule(rule, out) {
         priority: 29,
     };
     if ( condition.requestDomains ) {
-        strictBlockRule.condition.requestDomains = condition.requestDomains.slice();
+        strictBlockRule.condition.requestDomains ??= [];
+        strictBlockRule.condition.requestDomains.push(...condition.requestDomains);
     }
-    out.set(toStrictBlockRule.ruleId++, strictBlockRule);
+    if ( condition.excludedRequestDomains ) {
+        strictBlockRule.condition.excludedRequestDomains ??= [];
+        strictBlockRule.condition.excludedRequestDomains.push(...condition.excludedRequestDomains);
+    }
+    out.set(regexFilter, strictBlockRule);
 }
 toStrictBlockRule.ruleId = 1;
 
@@ -570,35 +572,30 @@ async function processNetworkFilters(assetDetails, network) {
     log(`\tUnsupported: ${bad.length}`);
     log(bad.map(rule => rule._error.map(v => `\t\t${v}`)).join('\n'), true);
 
-    writeFile(
-        `${rulesetDir}/main/${assetDetails.id}.json`,
+    writeFile(`${rulesetDir}/main/${assetDetails.id}.json`,
         toJSONRuleset(plainGood)
     );
 
     if ( regexes.length !== 0 ) {
-        writeFile(
-            `${rulesetDir}/regex/${assetDetails.id}.json`,
+        writeFile(`${rulesetDir}/regex/${assetDetails.id}.json`,
             toJSONRuleset(regexes)
         );
     }
 
     if ( removeparamsGood.length !== 0 ) {
-        writeFile(
-            `${rulesetDir}/removeparam/${assetDetails.id}.json`,
+        writeFile(`${rulesetDir}/removeparam/${assetDetails.id}.json`,
             toJSONRuleset(removeparamsGood)
         );
     }
 
     if ( redirects.length !== 0 ) {
-        writeFile(
-            `${rulesetDir}/redirect/${assetDetails.id}.json`,
+        writeFile(`${rulesetDir}/redirect/${assetDetails.id}.json`,
             toJSONRuleset(redirects)
         );
     }
 
     if ( modifyHeaders.length !== 0 ) {
-        writeFile(
-            `${rulesetDir}/modify-headers/${assetDetails.id}.json`,
+        writeFile(`${rulesetDir}/modify-headers/${assetDetails.id}.json`,
             toJSONRuleset(modifyHeaders)
         );
     }
@@ -613,15 +610,13 @@ async function processNetworkFilters(assetDetails, network) {
         for ( const rule of strictBlocked.values() ) {
             rule.id = id++;
         }
-        writeFile(
-            `${rulesetDir}/strictblock/${assetDetails.id}.json`,
+        writeFile(`${rulesetDir}/strictblock/${assetDetails.id}.json`,
             toJSONRuleset(Array.from(strictBlocked.values()))
         );
     }
 
     if ( urlskips.size !== 0 ) {
-        writeFile(
-            `${rulesetDir}/urlskip/${assetDetails.id}.json`,
+        writeFile(`${rulesetDir}/urlskip/${assetDetails.id}.json`,
             JSON.stringify(Array.from(urlskips.values()), null, 1)
         );
     }
@@ -756,8 +751,7 @@ async function processGenericCosmeticFilters(
         `${JSON.stringify(genericExceptionMap, scriptletJsonReplacer)}`
     );
 
-    writeFile(
-        `${scriptletDir}/generic/${assetDetails.id}.js`,
+    writeFile(`${scriptletDir}/generic/${assetDetails.id}.js`,
         patchedScriptlet
     );
 
@@ -815,8 +809,7 @@ async function processGenericHighCosmeticFilters(
         selectorLists
     );
 
-    writeFile(
-        `${scriptletDir}/generichigh/${assetDetails.id}.css`,
+    writeFile(`${scriptletDir}/generichigh/${assetDetails.id}.css`,
         patchedScriptlet
     );
 
@@ -1579,18 +1572,15 @@ async function main() {
 
     logProgress('');
 
-    writeFile(
-        `${rulesetDir}/ruleset-details.json`,
+    writeFile(`${rulesetDir}/ruleset-details.json`,
         `${JSON.stringify(rulesetDetails, null, 1)}\n`
     );
 
-    writeFile(
-        `${rulesetDir}/scriptlet-details.json`,
+    writeFile(`${rulesetDir}/scriptlet-details.json`,
         `${JSON.stringify(scriptletStats, jsonSetMapReplacer, 1)}\n`
     );
 
-    writeFile(
-        `${rulesetDir}/generic-details.json`,
+    writeFile(`${rulesetDir}/generic-details.json`,
         `${JSON.stringify(genericDetails, jsonSetMapReplacer, 1)}\n`
     );
 
@@ -1625,8 +1615,7 @@ async function main() {
     // Patch manifest version property
     manifest.version = version;
     // Commit changes
-    await fs.writeFile(
-        `${outputDir}/manifest.json`,
+    await fs.writeFile(`${outputDir}/manifest.json`,
         JSON.stringify(manifest, null, 2) + '\n'
     );
 
