@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "An efficient content blocker. Blocks ads, trackers, miners, and more immediately upon installation.",
+    "message": "Un efficiente bloccatore dei contenuti. Blocca annunci, tracker, minatori e altro ancora subito dopo l'installazione.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
