@@ -47,6 +47,9 @@ export const dnr = {
     getEnabledRulesets(...args) {
         return nativeDNR.getEnabledRulesets(...args);
     },
+    getMatchedRules(...args) {
+        return nativeDNR.getMatchedRules(...args);
+    },
     getSessionRules({ ruleIds } = {}) {
         return new Promise(resolve => {
             nativeDNR.getSessionRules(rules => {
@@ -59,13 +62,31 @@ export const dnr = {
     isRegexSupported(...args) {
         return nativeDNR.isRegexSupported(...args);
     },
-    updateDynamicRules(...args) {
-        return nativeDNR.updateDynamicRules(...args);
+    updateDynamicRules(options) {
+        const { addedRules, removedRuleIds } = options;
+        let validRules = addedRules;
+        if ( validRules ) {
+            validRules = validRules.filter(r => {
+                if ( r.action?.responseHeaders ) { return false; }
+                if ( r.condition?.tabIds !== undefined ) { return false; }
+                return true;
+            });
+        }
+        return nativeDNR.updateDynamicRules({ addedRules: validRules, removedRuleIds });
     },
     updateEnabledRulesets(...args) {
         return nativeDNR.updateEnabledRulesets(...args);
     },
-    updateSessionRules(...args) {
-        return nativeDNR.updateSessionRules(...args);
+    updateSessionRules(options) {
+        const { addedRules, removedRuleIds } = options;
+        let validRules = addedRules;
+        if ( validRules ) {
+            validRules = validRules.filter(r => {
+                if ( r.action?.responseHeaders ) { return false; }
+                if ( r.condition?.tabIds !== undefined ) { return false; }
+                return true;
+            });
+        }
+        return nativeDNR.updateSessionRules({ addedRules: validRules, removedRuleIds });
     },
 };
