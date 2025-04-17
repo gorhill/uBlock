@@ -63,8 +63,8 @@ export const dnr = {
         return nativeDNR.isRegexSupported(...args);
     },
     updateDynamicRules(options) {
-        const { addedRules, removedRuleIds } = options;
-        let validRules = addedRules;
+        const { addRules, removeRuleIds } = options;
+        let validRules = addRules;
         if ( validRules ) {
             validRules = validRules.filter(r => {
                 if ( r.action?.responseHeaders ) { return false; }
@@ -72,14 +72,14 @@ export const dnr = {
                 return true;
             });
         }
-        return nativeDNR.updateDynamicRules({ addedRules: validRules, removedRuleIds });
+        return nativeDNR.updateDynamicRules({ addRules: validRules, removeRuleIds });
     },
     updateEnabledRulesets(...args) {
         return nativeDNR.updateEnabledRulesets(...args);
     },
     updateSessionRules(options) {
-        const { addedRules, removedRuleIds } = options;
-        let validRules = addedRules;
+        const { addRules, removeRuleIds } = options;
+        let validRules = addRules;
         if ( validRules ) {
             validRules = validRules.filter(r => {
                 if ( r.action?.responseHeaders ) { return false; }
@@ -87,6 +87,6 @@ export const dnr = {
                 return true;
             });
         }
-        return nativeDNR.updateSessionRules({ addedRules: validRules, removedRuleIds });
+        return nativeDNR.updateSessionRules({ addRules: validRules, removeRuleIds });
     },
 };
