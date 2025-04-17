@@ -46,7 +46,7 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "/strictblock.html"
+        "strictblock.html"
       ],
       "matches": [
         "<all_urls>"
@@ -54,7 +54,7 @@
     },
     {
       "resources": [
-        "/zapper-ui.html"
+        "zapper-ui.html"
       ],
       "matches": [
         "<all_urls>"

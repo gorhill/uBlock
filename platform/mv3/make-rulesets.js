@@ -1648,7 +1648,7 @@ async function main() {
     // Patch web_accessible_resources key
     manifest.web_accessible_resources = manifest.web_accessible_resources || [];
     const web_accessible_resources = {
-        resources: Array.from(requiredRedirectResources).map(path => `/${path}`),
+        resources: Array.from(requiredRedirectResources).map(path => `${path}`),
         matches: [ '<all_urls>' ],
     };
     if ( env.includes('chromium') && env.includes('safari') === false ) {
