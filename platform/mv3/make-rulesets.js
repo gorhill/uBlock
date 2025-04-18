@@ -107,7 +107,7 @@ console.log = log;
 const logProgress = text => {
     process?.stdout?.clearLine?.();
     process?.stdout?.cursorTo?.(0);
-    process?.stdout?.write?.(text);
+    process?.stdout?.write?.(text.length > 120 ? `${text.slice(0, 119)}…` : text);
 };
 
 /******************************************************************************/
@@ -120,12 +120,13 @@ const urlToFileName = url => {
 
 const fetchText = (url, cacheDir) => {
     return new Promise((resolve, reject) => {
-        logProgress(`Fetching ${url}`);
+        logProgress(`Reading locally cached ${url}`);
         const fname = urlToFileName(url);
         fs.readFile(`${cacheDir}/${fname}`, { encoding: 'utf8' }).then(content => {
             log(`\tFetched local ${url}`);
             resolve({ url, content });
         }).catch(( ) => {
+            logProgress(`Fetching remote ${url}`);
             log(`\tFetching remote ${url}`);
             https.get(url, response => {
                 const data = [];
