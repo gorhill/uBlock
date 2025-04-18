@@ -28,6 +28,12 @@ export const EXCLUDED_INITIATOR_DOMAINS = 'excludedDomains';
 
 const nativeDNR = webext.declarativeNetRequest;
 
+const isSupportedRule = r => {
+    if ( r.action?.responseHeaders ) { return false; }
+    if ( r.condition?.tabIds !== undefined ) { return false; }
+    return true;
+};
+
 export const dnr = {
     DYNAMIC_RULESET_ID: '_dynamic',
     MAX_NUMBER_OF_ENABLED_STATIC_RULESETS: nativeDNR.MAX_NUMBER_OF_ENABLED_STATIC_RULESETS,
@@ -62,31 +68,25 @@ export const dnr = {
     isRegexSupported(...args) {
         return nativeDNR.isRegexSupported(...args);
     },
-    updateDynamicRules(options) {
-        const { addRules, removeRuleIds } = options;
-        let validRules = addRules;
-        if ( validRules ) {
-            validRules = validRules.filter(r => {
-                if ( r.action?.responseHeaders ) { return false; }
-                if ( r.condition?.tabIds !== undefined ) { return false; }
-                return true;
-            });
-        }
-        return nativeDNR.updateDynamicRules({ addRules: validRules, removeRuleIds });
+    async updateDynamicRules(optionsBefore) {
+        const { addRules, removeRuleIds } = optionsBefore;
+        const addRulesAfter = addRules?.filter(isSupportedRule);
+        if ( Boolean(addRulesAfter?.length || removeRuleIds?.length) === false ) { return; }
+        const optionsAfter = {};
+        if ( addRulesAfter?.length ) { optionsAfter.addRules = addRulesAfter; }
+        if ( removeRuleIds?.length ) { optionsAfter.removeRuleIds = removeRuleIds; }
+        return nativeDNR.updateDynamicRules(optionsAfter);
     },
     updateEnabledRulesets(...args) {
         return nativeDNR.updateEnabledRulesets(...args);
     },
-    updateSessionRules(options) {
-        const { addRules, removeRuleIds } = options;
-        let validRules = addRules;
-        if ( validRules ) {
-            validRules = validRules.filter(r => {
-                if ( r.action?.responseHeaders ) { return false; }
-                if ( r.condition?.tabIds !== undefined ) { return false; }
-                return true;
-            });
-        }
-        return nativeDNR.updateSessionRules({ addRules: validRules, removeRuleIds });
+    async updateSessionRules(optionsBefore) {
+        const { addRules, removeRuleIds } = optionsBefore;
+        const addRulesAfter = addRules?.filter(isSupportedRule);
+        if ( Boolean(addRulesAfter?.length || removeRuleIds?.length) === false ) { return; }
+        const optionsAfter = {};
+        if ( optionsAfter?.length ) { optionsAfter.addRules = addRulesAfter; }
+        if ( removeRuleIds?.length ) { optionsAfter.removeRuleIds = removeRuleIds; }
+        return nativeDNR.updateSessionRules(optionsAfter);
     },
 };
