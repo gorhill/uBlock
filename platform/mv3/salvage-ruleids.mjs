@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
-
 /******************************************************************************/
 
 import fs from 'fs/promises';
@@ -64,15 +62,16 @@ async function main() {
     ];
     const writePromises = [];
     for ( const folder of folders ) {
-        const afterFiles = await fs.readdir(`${afterDir}/rulesets/${folder}`);
+        const afterFiles = await fs.readdir(`${afterDir}/rulesets/${folder}`).catch(( ) => { });
+        if ( afterFiles === undefined ) { continue; }
         for ( const file of afterFiles ) {
             let raw = await fs.readFile(`${beforeDir}/rulesets/${folder}/${file}`, 'utf-8').catch(( ) => '');
             let beforeRules;
-            try { beforeRules = JSON.parse(raw); } catch(_) { }
+            try { beforeRules = JSON.parse(raw); } catch { }
             if ( Array.isArray(beforeRules) === false ) { continue; }
             raw = await fs.readFile(`${afterDir}/rulesets/${folder}/${file}`, 'utf-8').catch(( ) => '');
             let afterRules;
-            try { afterRules = JSON.parse(raw); } catch(_) { }
+            try { afterRules = JSON.parse(raw); } catch { }
             if ( Array.isArray(afterRules) === false ) { continue; }
             const beforeMap = new Map(beforeRules.map(a => {
                 const id = a.id;
