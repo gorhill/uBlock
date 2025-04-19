@@ -19,8 +19,9 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import { dnr, runtime } from './ext.js';
 import { dom, qs$ } from './dom.js';
+import { dnr } from './ext-compat.js';
+import { runtime } from './ext.js';
 import { sendMessage } from './ext.js';
 
 /******************************************************************************/

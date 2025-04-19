@@ -116,7 +116,7 @@ const matchesFromHostnames = hostnames => {
 const hostnamesFromMatches = origins => {
     const out = [];
     for ( const origin of origins ) {
-        if ( origin === '<all_urls>' ) {
+        if ( origin === '<all_urls>' || origin === '*://*/*' ) {
             out.push('all-urls');
             continue;
         }
@@ -141,7 +141,10 @@ const broadcastMessage = message => {
 // most browsers treat host_permissions as optional."
 
 async function hasBroadHostPermissions() {
-    return browser.permissions.contains({ origins: [ '<all_urls>' ] });
+    return browser.permissions.getAll().then(permissions =>
+        permissions.origins.includes('<all_urls>') ||
+        permissions.origins.includes('*://*/*')
+    ).catch(( ) => false);
 }
 
 /******************************************************************************/

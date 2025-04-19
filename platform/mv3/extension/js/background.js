@@ -44,7 +44,6 @@ import {
 
 import {
     browser,
-    dnr,
     localRead, localRemove, localWrite,
     runtime,
     windows,
@@ -75,11 +74,12 @@ import {
     saveRulesetConfig,
 } from './config.js';
 
+import { dnr } from './ext-compat.js';
 import { registerInjectables } from './scripting-manager.js';
 
 /******************************************************************************/
 
-const UBOL_ORIGIN = runtime.getURL('').replace(/\/$/, '');
+const UBOL_ORIGIN = runtime.getURL('').replace(/\/$/, '').toLowerCase();
 
 const canShowBlockedCount = typeof dnr.setExtensionActionOptions === 'function';
 
@@ -205,7 +205,9 @@ function onMessage(request, sender, callback) {
 
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/MessageSender
     //   Firefox API does not set `sender.origin`
-    if ( sender.origin !== undefined && sender.origin !== UBOL_ORIGIN ) { return; }
+    if ( sender.origin !== undefined ) {
+        if ( sender.origin.toLowerCase() !== UBOL_ORIGIN ) { return; }
+    }
 
     switch ( request.what ) {
 

@@ -20,8 +20,6 @@
 */
 
 import {
-    TAB_ID_NONE,
-    dnr,
     i18n,
     localRead, localRemove, localWrite,
     runtime,
@@ -33,6 +31,7 @@ import {
     saveRulesetConfig,
 } from './config.js';
 
+import { dnr } from './ext-compat.js';
 import { fetchJSON } from './fetch.js';
 import { getAdminRulesets } from './admin.js';
 import { hasBroadHostPermissions } from './utils.js';
@@ -440,123 +439,29 @@ async function updateSessionRules() {
 /******************************************************************************/
 
 async function filteringModesToDNR(modes) {
-    const [
-        dynamicRules,
-        sessionRules,
-    ] = await Promise.all([
-        dnr.getDynamicRules({ ruleIds: [ TRUSTED_DIRECTIVE_BASE_RULE_ID+0 ] }),
-        dnr.getSessionRules({ ruleIds: [ TRUSTED_DIRECTIVE_BASE_RULE_ID+1 ] }),
-    ]);
-    const dynamicRule = dynamicRules?.length && dynamicRules[0] || undefined;
-    const beforeRequestDomainSet = new Set(dynamicRule?.condition.requestDomains);
-    const beforeExcludedRrequestDomainSet = new Set(dynamicRule?.condition.excludedRequestDomains);
-    if ( dynamicRule !== undefined && beforeRequestDomainSet.size === 0 ) {
-        beforeRequestDomainSet.add('all-urls');
-    } else {
-        beforeExcludedRrequestDomainSet.add('all-urls');
-    }
-
     const noneHostnames = new Set([ ...modes.none ]);
     const notNoneHostnames = new Set([ ...modes.basic, ...modes.optimal, ...modes.complete ]);
-    let afterRequestDomainSet = new Set();
-    let afterExcludedRequestDomainSet = new Set();
-    if ( noneHostnames.has('all-urls') ) {
-        afterRequestDomainSet = new Set([ 'all-urls' ]);
-        afterExcludedRequestDomainSet = notNoneHostnames;
+    const requestDomains = [];
+    const excludedRequestDomains = [];
+    const allowEverywhere = noneHostnames.has('all-urls');
+    if ( allowEverywhere ) {
+        excludedRequestDomains.push(...notNoneHostnames);
     } else {
-        afterRequestDomainSet = noneHostnames;
-        afterExcludedRequestDomainSet = new Set();
+        requestDomains.push(...noneHostnames);
     }
-
-    const removeDynamicRuleIds = [];
-    const removeSessionRuleIds = [];
-    if ( dynamicRule ) {
-        removeDynamicRuleIds.push(TRUSTED_DIRECTIVE_BASE_RULE_ID+0);
-        removeSessionRuleIds.push(TRUSTED_DIRECTIVE_BASE_RULE_ID+1);
-    }
-
-    const allowEverywhere = afterRequestDomainSet.delete('all-urls');
-    const addDynamicRules = [];
-    const addSessionRules = [];
-    if (
-        allowEverywhere ||
-        afterRequestDomainSet.size !== 0 ||
-        afterExcludedRequestDomainSet.size !== 0
-    ) {
-        const rule0 = {
-            id: TRUSTED_DIRECTIVE_BASE_RULE_ID+0,
-            action: { type: 'allowAllRequests' },
-            condition: {
-                resourceTypes: [ 'main_frame' ],
-            },
-            priority: 100,
-        };
-        if ( afterRequestDomainSet.size !== 0 ) {
-            rule0.condition.requestDomains =
-                Array.from(afterRequestDomainSet).sort();
-        } else if ( afterExcludedRequestDomainSet.size !== 0 ) {
-            rule0.condition.excludedRequestDomains =
-                Array.from(afterExcludedRequestDomainSet).sort();
-        }
-        addDynamicRules.push(rule0);
-        // https://github.com/uBlockOrigin/uBOL-home/issues/114
-        // https://github.com/uBlockOrigin/uBOL-home/issues/247
-        const rule1 = {
-            id: TRUSTED_DIRECTIVE_BASE_RULE_ID+1,
-            action: { type: 'allow' },
-            condition: {
-                tabIds: [ TAB_ID_NONE ],
-            },
-            priority: 100,
-        };
-        if ( rule0.condition.requestDomains ) {
-            rule1.condition.initiatorDomains =
-                rule0.condition.requestDomains.slice();
-        } else if ( rule0.condition.excludedRequestDomains ) {
-            rule1.condition.excludedInitiatorDomains =
-                rule0.condition.excludedRequestDomains.slice();
-        }
-        addSessionRules.push(rule1);
-    }
-
-    const noneCount = noneHostnames.has('all-urls')
-        ? -notNoneHostnames.size
+    const noneCount = allowEverywhere
+        ? notNoneHostnames.size
         : noneHostnames.size;
-
-    const promises = [];
-    if ( isDifferentAllowRules(addDynamicRules, dynamicRules) ) {
-        promises.push(dnr.updateDynamicRules({
-            addRules: addDynamicRules,
-            removeRuleIds: removeDynamicRuleIds,
-        }));
-        ubolLog(`Add "allowAllRequests" dynamic rule for ${noneCount} sites`);
-    }
-    if ( isDifferentAllowRules(addSessionRules, sessionRules) ) {
-        promises.push(dnr.updateSessionRules({
-            addRules: addSessionRules,
-            removeRuleIds: removeSessionRuleIds,
-        }));
-        ubolLog(`Add "allow" session rule for ${noneCount} sites`);
-    }
-    if ( promises.length === 0 ) { return; }
-    return Promise.all(promises);
+    return dnr.setAllowAllRules(
+        TRUSTED_DIRECTIVE_BASE_RULE_ID,
+        requestDomains.sort(),
+        excludedRequestDomains.sort(),
+        allowEverywhere
+    ).then(modified => {
+        if ( modified === false ) { return; }
+        ubolLog(`${allowEverywhere ? 'Enabled' : 'Disabled'} DNR filtering for ${noneCount} sites`);
+    });
 }
-
-const isDifferentAllowRules = (a = [], b = []) => {
-    if ( a.length !== b.length ) { return true; }
-    const pp = [
-        'requestDomains',
-        'excludedRequestDomains',
-        'initiatorDomains',
-        'excludedInitiatorDomains',
-    ];
-    for ( const p of pp ) {
-        const ac = a.length && a[0].condition[p] || [];
-        const bc = b.length && b[0].condition[p] || [];
-        if ( ac.join() !== bc.join() ) { return true; }
-    }
-    return false;
-};
 
 /******************************************************************************/
 

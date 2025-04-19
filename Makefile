@@ -2,7 +2,7 @@
 run_options := $(filter-out $@,$(MAKECMDGOALS))
 
 .PHONY: all clean cleanassets test lint chromium opera firefox npm dig \
-	mv3-chromium mv3-firefox mv3-edge \
+	mv3-chromium mv3-firefox mv3-edge mv3-safari \
 	compare maxcost medcost mincost modifiers record wasm
 
 sources := $(wildcard assets/* assets/*/* dist/version src/* src/*/* src/*/*/* src/*/*/*/*)
@@ -79,6 +79,11 @@ dist/build/uBOLite.edge: tools/make-mv3.sh tools/make-edge.mjs $(sources) $(plat
 	tools/make-mv3.sh edge
 
 mv3-edge: dist/build/uBOLite.edge
+
+dist/build/uBOLite.safari: tools/make-mv3.sh $(sources) $(platform) $(mv3-data) dist/build/mv3-data
+	tools/make-mv3.sh safari
+
+mv3-safari: dist/build/uBOLite.safari
 
 dist/build/uAssets:
 	tools/pull-assets.sh

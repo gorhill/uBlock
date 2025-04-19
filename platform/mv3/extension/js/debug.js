@@ -19,11 +19,19 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import { dnr } from './ext.js';
+import { INITIATOR_DOMAINS, dnr } from './ext-compat.js';
+import { browser } from './ext.js';
 
 /******************************************************************************/
 
-export const isSideloaded = dnr.onRuleMatchedDebug instanceof Object;
+const isModern = dnr.onRuleMatchedDebug instanceof Object;
+
+export const isSideloaded = (( ) => {
+    if ( isModern ) { return true; }
+    if ( typeof dnr.getMatchedRules === 'function' ) { return true; }
+    const manifest = browser.runtime.getManifest();
+    return manifest.permissions?.includes('declarativeNetRequestFeedback') ?? false;
+})();
 
 /******************************************************************************/
 
@@ -67,8 +75,8 @@ const getRuleset = async rulesetId => {
             if ( condition.requestDomains ) {
                 condition.requestDomains = pruneLongLists(condition.requestDomains);
             }
-            if ( condition.initiatorDomains ) {
-                condition.initiatorDomains = pruneLongLists(condition.initiatorDomains);
+            if ( condition[INITIATOR_DOMAINS] ) {
+                condition[INITIATOR_DOMAINS] = pruneLongLists(condition[INITIATOR_DOMAINS]);
             }
         }
         const ruleId = rule.id;
@@ -92,20 +100,32 @@ export const getMatchedRules = (( ) => {
     const noopFn = ( ) => Promise.resolve([]);
     if ( isSideloaded !== true ) { return noopFn; }
 
-    return async tabId => {
-        const promises = [];
-        for ( let i = 0; i < bufferSize; i++ ) {
-            const j = (writePtr + i) % bufferSize;
-            const ruleInfo = matchedRules[j];
-            if ( ruleInfo === null ) { continue; }
-            if ( ruleInfo.request.tabId !== -1 ) {
-                if ( ruleInfo.request.tabId !== tabId ) { continue; }
+    if ( isModern ) {
+        return async tabId => {
+            const promises = [];
+            for ( let i = 0; i < bufferSize; i++ ) {
+                const j = (writePtr + i) % bufferSize;
+                const ruleInfo = matchedRules[j];
+                if ( ruleInfo === null ) { continue; }
+                if ( ruleInfo.request.tabId !== -1 ) {
+                    if ( ruleInfo.request.tabId !== tabId ) { continue; }
+                }
+                const promise = getRuleDetails(ruleInfo);
+                if ( promise === undefined ) { continue; }
+                promises.unshift(promise);
             }
-            const promise = getRuleDetails(ruleInfo);
-            if ( promise === undefined ) { continue; }
-            promises.unshift(promise);
+            return Promise.all(promises);
+        };
+    }
+
+    return async tabId => {
+        const matchedRules = await dnr.getMatchedRules({ tabId });
+        if ( matchedRules instanceof Object === false ) { return []; }
+        const out = [];
+        for ( const ruleInfo of matchedRules.rulesMatchedInfo ) {
+            out.push({ request: ruleInfo.request });
         }
-        return Promise.all(promises);
+        return out;
     };
 })();
 
@@ -118,6 +138,7 @@ const matchedRuleListener = ruleInfo => {
 
 export const toggleDeveloperMode = state => {
     if ( isSideloaded !== true ) { return; }
+    if ( isModern === false ) { return; } 
     if ( state ) {
         dnr.onRuleMatchedDebug.addListener(matchedRuleListener);
     } else {

@@ -37,7 +37,7 @@ import {
 } from './mode-manager.js';
 
 import { broadcastMessage } from './utils.js';
-import { dnr } from './ext.js';
+import { dnr } from './ext-compat.js';
 import { registerInjectables } from './scripting-manager.js';
 import { rulesetConfig } from './config.js';
 import { ubolLog } from './debug.js';

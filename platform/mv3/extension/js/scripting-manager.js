@@ -68,7 +68,9 @@ const arrayEq = (a = [], b = [], sort = true) => {
 
 const normalizeMatches = matches => {
     if ( matches.length <= 1 ) { return; }
-    if ( matches.includes('<all_urls>') === false ) { return; }
+    if ( matches.includes('<all_urls>') === false ) {
+        if ( matches.includes('*://*/*') === false ) { return; }
+    }
     matches.length = 0;
     matches.push('<all_urls>');
 };
@@ -554,6 +556,9 @@ function registerScriptlet(context, scriptletDetails) {
 }
 
 /******************************************************************************/
+
+// Issue: Safari appears to completely ignore excludeMatches
+// https://github.com/radiolondra/ExcludeMatches-Test
 
 async function registerInjectables() {
     if ( browser.scripting === undefined ) { return false; }

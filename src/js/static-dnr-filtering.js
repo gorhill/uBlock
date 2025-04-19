@@ -437,6 +437,20 @@ function finalizeRuleset(context, network) {
     mergeRules(rulesetMap, 'requestDomains');
     mergeRules(rulesetMap, 'responseHeaders');
 
+    // Convert back single-entry requestDomains into pattern-based filters
+    // https://github.com/uBlockOrigin/uBOL-home/issues/327
+    // TODO: Remove when (if) Safari is changed to interpret requestDomains as
+    //       in other browsers.
+    for ( const rule of rulesetMap.values() ) {
+        const { condition } = rule;
+        if ( condition?.requestDomains === undefined ) { continue; }
+        if ( condition.requestDomains.length !== 1 ) { continue; }
+        if ( condition.urlFilter !== undefined ) { continue; }
+        if ( condition.regexFilter !== undefined ) { continue; }
+        condition.urlFilter = `||${condition.requestDomains[0]}^`;
+        condition.requestDomains = undefined;
+    }
+
     // Patch id
     const rulesetFinal = [];
     {
