@@ -464,7 +464,8 @@ async function start() {
     }
 
     // Permissions may have been removed while the extension was disabled
-    const permissionsChanged = await onPermissionsRemoved();
+    const permissionsChanged = process.wakeupRun === false &&
+        await onPermissionsRemoved();
 
     // Unsure whether the browser remembers correctly registered css/scripts
     // after we quit the browser. For now uBOL will check unconditionally at

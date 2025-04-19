@@ -46,23 +46,13 @@ export const process = {
 export async function loadRulesetConfig() {
     const sessionData = await sessionRead('rulesetConfig');
     if ( sessionData ) {
-        rulesetConfig.version = sessionData.version;
-        rulesetConfig.enabledRulesets = sessionData.enabledRulesets;
-        rulesetConfig.autoReload = sessionData.autoReload ?? true;
-        rulesetConfig.showBlockedCount = sessionData.showBlockedCount ?? true;
-        rulesetConfig.strictBlockMode = sessionData.strictBlockMode ?? true;
-        rulesetConfig.developerMode = sessionData.developerMode ?? false;
+        Object.assign(rulesetConfig, sessionData)
         process.wakeupRun = true;
         return;
     }
     const localData = await localRead('rulesetConfig');
     if ( localData ) {
-        rulesetConfig.version = localData.version;
-        rulesetConfig.enabledRulesets = localData.enabledRulesets;
-        rulesetConfig.autoReload = localData.autoReload ?? true;
-        rulesetConfig.showBlockedCount = localData.showBlockedCount ?? true;
-        rulesetConfig.strictBlockMode = localData.strictBlockMode ?? true;
-        rulesetConfig.developerMode = localData.developerMode ?? false;
+        Object.assign(rulesetConfig, localData)
         sessionWrite('rulesetConfig', rulesetConfig);
         return;
     }
