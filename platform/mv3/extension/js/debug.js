@@ -20,13 +20,18 @@
 */
 
 import { INITIATOR_DOMAINS, dnr } from './ext-compat.js';
+import { browser } from './ext.js';
 
 /******************************************************************************/
 
 const isModern = dnr.onRuleMatchedDebug instanceof Object;
 
-export const isSideloaded = isModern ||
-    typeof dnr.getMatchedRules === 'function';
+export const isSideloaded = (( ) => {
+    if ( isModern ) { return true; }
+    if ( typeof dnr.getMatchedRules === 'function' ) { return true; }
+    const manifest = browser.runtime.getManifest();
+    return manifest.permissions?.includes('declarativeNetRequestFeedback') ?? false;
+})();
 
 /******************************************************************************/
 

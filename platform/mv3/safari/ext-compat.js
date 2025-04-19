@@ -24,6 +24,8 @@ export const webext = self.browser;
 export const INITIATOR_DOMAINS = 'domains';
 export const EXCLUDED_INITIATOR_DOMAINS = 'excludedDomains';
 
+/******************************************************************************/
+
 // https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/API/declarativeNetRequest/
 
 const nativeDNR = webext.declarativeNetRequest;
@@ -33,6 +35,16 @@ const isSupportedRule = r => {
     if ( r.condition?.tabIds !== undefined ) { return false; }
     return true;
 };
+
+const ruleCompare = (a, b) => a.id - b.id;
+
+const isSameRules = (a, b) => {
+    a.sort(ruleCompare);
+    b.sort(ruleCompare);
+    return JSON.stringify(a) === JSON.stringify(b);
+};
+
+/******************************************************************************/
 
 export const dnr = {
     DYNAMIC_RULESET_ID: '_dynamic',
@@ -88,5 +100,32 @@ export const dnr = {
         if ( optionsAfter?.length ) { optionsAfter.addRules = addRulesAfter; }
         if ( removeRuleIds?.length ) { optionsAfter.removeRuleIds = removeRuleIds; }
         return nativeDNR.updateSessionRules(optionsAfter);
+    },
+    async setAllowAllRules(id, allowed, notAllowed, reverse) {
+        const beforeRules = await this.getDynamicRules({ ruleIds: [ id+0 ] });
+        const addRules = [];
+        if ( reverse || allowed.length || notAllowed.length ) {
+            const rule0 = {
+                id: id+0,
+                action: { type: 'allow' },
+                condition: { urlFilter: '*' },
+                priority: 1000000,
+            };
+            if ( allowed.length ) {
+                rule0.condition.domains = allowed;
+            } else if ( notAllowed.length ) {
+                rule0.condition.excludedDomains = notAllowed;
+            }
+            addRules.push(rule0);
+        }
+        if ( isSameRules(addRules, beforeRules) ) { return false; }
+        return this.updateDynamicRules({
+            addRules,
+            removeRuleIds: beforeRules.map(r => r.id),
+        }).then(( ) =>
+            true
+        ).catch(( ) =>
+            false
+        );
     },
 };
