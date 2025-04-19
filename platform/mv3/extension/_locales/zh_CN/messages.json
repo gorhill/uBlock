@@ -32,11 +32,11 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipReport": {
-    "message": "反馈该网站上的问题",
+    "message": "报告此网站上的问题",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
-    "message": "在仪表板中",
+    "message": "打开控制面板",
     "description": "English: Click to open the dashboard"
   },
   "popupMoreButton": {
@@ -48,7 +48,7 @@
     "description": "Label to be used to hide popup panel sections"
   },
   "3pGroupDefault": {
-    "message": "预设",
+    "message": "默认",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -144,7 +144,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "检测到 uBO Lite",
+    "message": "检测 uBO Lite",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
@@ -208,15 +208,15 @@
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "不进行过滤的主机名列表",
+    "message": "不进行过滤的网站列表。",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
-    "message": "[域名]\nexample.com\ngames.example\n...",
+    "message": "[仅限主机名]\nexample.com\ngames.example\n...",
     "description": "Default text for in edit field"
   },
   "behaviorSectionLabel": {
-    "message": "操作设置",
+    "message": "行为",
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
@@ -244,7 +244,7 @@
     "description": "Webpage title for the strict-blocked page"
   },
   "strictblockSentence1": {
-    "message": "uBO Lite 已阻止了以下页面的加载：",
+    "message": "uBO Lite 已阻止加载以下页面：",
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {
@@ -252,7 +252,7 @@
     "description": "Text informing about what is causing the page to be blocked"
   },
   "strictblockRedirectSentence1": {
-    "message": "被屏蔽的页面希望重定向到另一个网站。如果您选择继续，将直接导航到：{{url}}",
+    "message": "被拦截的页面将重定向至其他网站。如果您选择继续，将直接导航至：{{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "strictblockNoParamsPrompt": {
@@ -268,7 +268,7 @@
     "description": "A button to close the current tab"
   },
   "strictblockDontWarn": {
-    "message": "不要再警告我关于这个网站了",
+    "message": "不要再警告我有关此网站",
     "description": "Label for checkbox in document-blocked page"
   },
   "strictblockProceed": {
@@ -280,7 +280,7 @@
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
-    "message": "进入临时元素移除模式",
+    "message": "退出临时元素移除模式",
     "description": "Tooltip for the button used to exit zapper mode"
   }
 }

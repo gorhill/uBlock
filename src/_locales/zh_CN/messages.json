@@ -908,7 +908,7 @@
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
-    "message": "使用说明",
+    "message": "文档",
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
@@ -1032,7 +1032,7 @@
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {
-    "message": "变更日志",
+    "message": "更新日志",
     "description": ""
   },
   "aboutCode": {

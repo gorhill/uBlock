@@ -1,4 +1,4 @@
-uBO Lite (uBOL) is an MV3-based content blocker.
+uBO Lite (uBOL) 是一个基于最新浏览器扩展接口（Manifest Version 3）打造的的内容屏蔽工具。
 
 该扩展预设的规则列表对应 uBlock Origin 的预设过滤规则列表：
 
@@ -7,6 +7,6 @@ uBO Lite (uBOL) is an MV3-based content blocker.
 - EasyPrivacy
 - Peter Lowe 的广告和跟踪服务器列表
 
-访问选项页面，点击弹出面板中的齿轮图标，即可启用更多规则集。
+访问选项页面，点击弹出面板中的 _齿轮_ 图标，即可启用更多规则集。
 
-uBOL 的过滤规则是完全声明式的，并不需要固定保留一个 uBOL 扩展进程，基于 CSS/JS 注入的内容过滤更是交由浏览器进行调度，比起扩展本身更为可靠。 这也即是说当内容被过滤时 uBOL 自身并不占用额外 CPU 和内存资源，只有在您打开弹出面板或是设置页面时才会生成 uBOL 扩展进程。
+uBOL 的过滤规则是完全声明式的，并不需要固定保留一个 uBOL 扩展进程，基于 CSS/JS 注入的内容过滤更是交由浏览器进行调度，比起扩展本身更为可靠。 这也即是说当内容被过滤时 uBOL 自身并不占用额外 CPU 和内存资源，_只有_在您打开弹出面板或是设置页面时才会生成 uBOL 扩展进程。
