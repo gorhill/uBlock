@@ -42,6 +42,12 @@ echo "BEFORE=$BEFORE"
 
 DES="dist/build/uBOLite.$PLATFORM"
 
+if [ "$PLATFORM" = "edge" ]; then
+    MANIFEST_DIR="chromium"
+else
+    MANIFEST_DIR="$PLATFORM"
+fi
+
 rm -rf $DES
 
 mkdir -p $DES
@@ -85,7 +91,7 @@ cp -R "$UBO_DIR/src/img/flags-of-the-world" "$DES"/img
 cp LICENSE.txt "$DES"/
 
 echo "*** uBOLite.mv3: Copying mv3-specific files"
-cp platform/mv3/"$PLATFORM"/manifest.json "$DES"/
+cp platform/mv3/"$MANIFEST_DIR"/manifest.json "$DES"/
 cp platform/mv3/extension/*.html "$DES"/
 cp platform/mv3/extension/*.json "$DES"/
 cp platform/mv3/extension/css/* "$DES"/css/
