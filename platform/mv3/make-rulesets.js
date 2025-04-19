@@ -1216,6 +1216,9 @@ async function rulesetFromURLs(assetDetails) {
         { env, extensionPaths, secret }
     );
 
+    // Release memory used by filter list content
+    assetDetails.text = undefined;
+
     const netStats = await processNetworkFilters(
         assetDetails,
         results.network
@@ -1353,223 +1356,16 @@ async function main() {
     }
     log(`Version: ${version}`, false);
 
-    // Get assets.json content
-    const assets = await fs.readFile(
-        `./assets.dev.json`,
-        { encoding: 'utf8' }
-    ).then(text =>
+    // Get list of rulesets
+    const rulesets = await fs.readFile('rulesets.json', {
+        encoding: 'utf8'
+    }).then(text =>
         JSON.parse(text)
     );
 
-    // Assemble all default lists as the default ruleset
-    await rulesetFromURLs({
-        id: 'default',
-        name: 'Ads, trackers, miners, and more' ,
-        enabled: true,
-        urls: [
-            'https://ublockorigin.github.io/uAssets/filters/filters.min.txt',
-            'https://ublockorigin.github.io/uAssets/filters/privacy.min.txt',
-            'https://ublockorigin.github.io/uAssets/filters/unbreak.min.txt',
-            'https://ublockorigin.github.io/uAssets/filters/quick-fixes.min.txt',
-            'https://ublockorigin.github.io/uAssets/filters/ubol-filters.txt',
-            'https://ublockorigin.github.io/uAssets/thirdparties/easylist.txt',
-            'https://ublockorigin.github.io/uAssets/thirdparties/easyprivacy.txt',
-            'https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext',
-        ],
-        dnrURL: 'https://ublockorigin.github.io/uAssets/dnr/default.json',
-        homeURL: 'https://github.com/uBlockOrigin/uAssets',
-        filters: [`
-        `],
-    });
-
-    await rulesetFromURLs({
-        id: 'badware',
-        name: 'Badware risks' ,
-        group: 'malware',
-        enabled: true,
-        urls: [
-            'https://ublockorigin.github.io/uAssets/filters/badware.min.txt',
-        ],
-        homeURL: 'https://github.com/uBlockOrigin/uAssets',
-        filters: [
-        ],
-    });
-
-    // Handpicked rulesets from assets.json
-    const handpicked = [
-        'block-lan',
-        'dpollock-0',
-        'adguard-spyware-url',
-    ];
-    for ( const id of handpicked ) {
-        const asset = assets[id];
-        if ( asset.content !== 'filters' ) { continue; }
-        const contentURL = Array.isArray(asset.contentURL)
-            ? asset.contentURL[0]
-            : asset.contentURL;
-        await rulesetFromURLs({
-            id: id.toLowerCase(),
-            name: asset.title,
-            enabled: false,
-            urls: [ contentURL ],
-            homeURL: asset.supportURL,
-        });
+    for ( const ruleset of rulesets ) {
+        await rulesetFromURLs(ruleset);
     }
-
-    // Handpicked annoyance rulesets from assets.json
-    await rulesetFromURLs({
-        id: 'annoyances-cookies',
-        name: 'EasyList/uBO – Cookie Notices',
-        group: 'annoyances',
-        enabled: false,
-        urls: [
-            'https://ublockorigin.github.io/uAssets/thirdparties/easylist-cookies.txt',
-            'https://ublockorigin.github.io/uAssets/filters/annoyances-cookies.txt',
-        ],
-        homeURL: 'https://github.com/easylist/easylist#fanboy-lists',
-    });
-    await rulesetFromURLs({
-        id: 'annoyances-overlays',
-        name: 'EasyList/uBO – Overlay Notices',
-        group: 'annoyances',
-        enabled: false,
-        urls: [
-            'https://ublockorigin.github.io/uAssets/thirdparties/easylist-newsletters.txt',
-            'https://ublockorigin.github.io/uAssets/filters/annoyances-others.txt',
-        ],
-        homeURL: 'https://github.com/easylist/easylist#fanboy-lists',
-    });
-    await rulesetFromURLs({
-        id: 'annoyances-social',
-        name: 'EasyList – Social Widgets',
-        group: 'annoyances',
-        enabled: false,
-        urls: [
-            'https://ublockorigin.github.io/uAssets/thirdparties/easylist-social.txt',
-        ],
-        homeURL: 'https://github.com/easylist/easylist#fanboy-lists',
-    });
-    await rulesetFromURLs({
-        id: 'annoyances-widgets',
-        name: 'EasyList – Chat Widgets',
-        group: 'annoyances',
-        enabled: false,
-        urls: [
-            'https://ublockorigin.github.io/uAssets/thirdparties/easylist-chat.txt',
-        ],
-        homeURL: 'https://github.com/easylist/easylist#fanboy-lists',
-    });
-    await rulesetFromURLs({
-        id: 'annoyances-others',
-        name: 'EasyList – Other Annoyances',
-        group: 'annoyances',
-        enabled: false,
-        urls: [
-            'https://ublockorigin.github.io/uAssets/thirdparties/easylist-annoyances.txt'
-        ],
-        homeURL: 'https://github.com/easylist/easylist#fanboy-lists',
-    });
-
-    // Handpicked rulesets from abroad
-    await rulesetFromURLs({
-        id: 'urlhaus-full',
-        name: 'Malicious URL Blocklist',
-        group: 'malware',
-        enabled: true,
-        urls: [
-            'https://malware-filter.gitlab.io/malware-filter/urlhaus-filter-hosts.txt',
-        ],
-        filters: [
-        ],
-        homeURL: 'https://gitlab.com/malware-filter/urlhaus-filter',
-    });
-    await rulesetFromURLs({
-        id: 'openphish-domains',
-        name: 'OpenPhish Domain Blocklist',
-        group: 'malware',
-        enabled: true,
-        urls: [
-            'https://raw.githubusercontent.com/stephenhawk8054/openphish-adblock/refs/heads/main/filters_init_domains.txt',
-        ],
-        filters: [
-        ],
-        homeURL: 'https://github.com/stephenhawk8054/openphish-adblock',
-    });
-
-    await rulesetFromURLs({
-        id: 'stevenblack-hosts',
-        name: 'Steven Black’s Unified Hosts (adware + malware)',
-        enabled: false,
-        urls: [ 'https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts' ],
-        homeURL: 'https://github.com/StevenBlack/hosts#readme',
-    });
-
-    await rulesetFromURLs({
-        id: 'ubol-tests',
-        name: 'uBO Lite Test Filters',
-        enabled: false,
-        trusted: true,
-        urls: [ 'https://ublockorigin.github.io/uBOL-home/tests/test-filters.txt' ],
-        homeURL: 'https://ublockorigin.github.io/uBOL-home/tests/test-filters.html',
-        filters: [`
-        `],
-    });
-
-    // Regional rulesets
-    const excludedLists = [
-        'ara-0',
-        'EST-0',
-    ];
-    // Merge lists which have same target languages
-    const langToListsMap = new Map();
-    for ( const [ id, asset ] of Object.entries(assets) ) {
-        if ( asset.content !== 'filters' ) { continue; }
-        if ( asset.off !== true ) { continue; }
-        if ( asset.group !== 'regions' ) { continue; }
-        if ( excludedLists.includes(id) ) { continue; }
-        // Not all "regions" lists have a set language
-        const bundleId = asset.lang ||
-            createHash('sha256').update(randomBytes(16)).digest('hex').slice(0,16);
-        let ids = langToListsMap.get(bundleId);
-        if ( ids === undefined ) {
-            langToListsMap.set(bundleId, ids = []);
-        }
-        ids.push(id);
-    }
-    for ( const ids of langToListsMap.values() ) {
-        const urls = [];
-        for ( const id of ids ) {
-            const asset = assets[id];
-            const contentURL = Array.isArray(asset.contentURL)
-                ? asset.contentURL[0]
-                : asset.contentURL;
-            urls.push(contentURL);
-        }
-        const id = ids[0];
-        const asset = assets[id];
-        const rulesetDetails = {
-            id: id.toLowerCase(),
-            group: 'regions',
-            parent: asset.parent,
-            lang: asset.lang,
-            name: asset.title,
-            tags: asset.tags,
-            enabled: false,
-            urls,
-            homeURL: asset.supportURL,
-        };
-        await rulesetFromURLs(rulesetDetails);
-    }
-
-    await rulesetFromURLs({
-        id: 'est-0',
-        group: 'regions',
-        lang: 'et',
-        name: '🇪🇪ee: Eesti saitidele kohandatud filter',
-        enabled: false,
-        urls: [ 'https://ubol-et.adblock.ee/list.txt' ],
-        homeURL: 'https://github.com/sander85/uBOL-et',
-    });
 
     logProgress('');
 

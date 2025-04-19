@@ -102,12 +102,11 @@ elif [ "$PLATFORM" = "firefox" ]; then
     cp platform/mv3/firefox/manifest.json "$DES"/
 fi
 ./tools/make-nodejs.sh "$TMPDIR"
-cp platform/mv3/package.json "$TMPDIR"/
+cp platform/mv3/*.json "$TMPDIR"/
 cp platform/mv3/*.js "$TMPDIR"/
 cp platform/mv3/*.mjs "$TMPDIR"/
 cp platform/mv3/extension/js/utils.js "$TMPDIR"/js/
 cp -R "$UBO_DIR"/src/js/resources "$TMPDIR"/js/
-cp "$UBO_DIR"/assets/assets.dev.json "$TMPDIR"/
 cp -R platform/mv3/scriptlets "$TMPDIR"/
 mkdir -p "$TMPDIR"/web_accessible_resources
 cp "$UBO_DIR"/src/web_accessible_resources/* "$TMPDIR"/web_accessible_resources/
