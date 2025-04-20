@@ -21,7 +21,7 @@
 
 import * as ut from './utils.js';
 
-import { browser, vendor } from './ext.js';
+import { browser } from './ext.js';
 import { fetchJSON } from './fetch.js';
 import { getEnabledRulesetsDetails } from './ruleset-manager.js';
 import { getFilteringModeDetails } from './mode-manager.js';
@@ -168,7 +168,6 @@ function registerHighGeneric(context, genericDetails) {
 
     // update
     if (
-        context.isNewVersion ||
         arrayEq(registered.css, css, false) === false ||
         arrayEq(registered.matches, matches) === false ||
         arrayEq(registered.excludeMatches, excludeMatches) === false
@@ -235,7 +234,6 @@ function registerGeneric(context, genericDetails) {
             arrayEq(registered.js, js, false) === false ||
             arrayEq(registered.matches, directive.matches) === false
         ) {
-            context.isNewVersion ||
             context.toRemove.push('css-generic-some');
             context.toAdd.push(directive);
         }
@@ -262,7 +260,6 @@ function registerGeneric(context, genericDetails) {
         arrayEq(registeredAll.js, js, false) === false ||
         arrayEq(registeredAll.excludeMatches, directiveAll.excludeMatches) === false
     ) {
-        context.isNewVersion ||
         context.toRemove.push('css-generic-all');
         context.toAdd.push(directiveAll);
     }
@@ -287,7 +284,6 @@ function registerGeneric(context, genericDetails) {
         arrayEq(registeredSome.js, js, false) === false ||
         arrayEq(registeredSome.matches, directiveSome.matches) === false
     ) {
-        context.isNewVersion ||
         context.toRemove.push('css-generic-some');
         context.toAdd.push(directiveSome);
     }
@@ -346,7 +342,6 @@ function registerProcedural(context) {
 
     // update
     if (
-        context.isNewVersion ||
         arrayEq(registered.js, js, false) === false ||
         arrayEq(registered.matches, matches) === false ||
         arrayEq(registered.excludeMatches, excludeMatches) === false
@@ -409,7 +404,6 @@ function registerDeclarative(context) {
 
     // update
     if (
-        context.isNewVersion ||
         arrayEq(registered.js, js, false) === false ||
         arrayEq(registered.matches, matches) === false ||
         arrayEq(registered.excludeMatches, excludeMatches) === false
@@ -472,7 +466,6 @@ function registerSpecific(context) {
 
     // update
     if (
-        context.isNewVersion ||
         arrayEq(registered.js, js, false) === false ||
         arrayEq(registered.matches, matches) === false ||
         arrayEq(registered.excludeMatches, excludeMatches) === false
@@ -552,7 +545,6 @@ function registerScriptlet(context, scriptletDetails) {
 
             // update
             if (
-                context.isNewVersion ||
                 arrayEq(registered.matches, matches) === false ||
                 arrayEq(registered.excludeMatches, excludeMatches) === false
             ) {
@@ -565,77 +557,10 @@ function registerScriptlet(context, scriptletDetails) {
 
 /******************************************************************************/
 
-async function injectImmediately(tabId, info) {
-    try {
-        const results = await browser.scripting.executeScript({
-            args: [ info.matches || [], info.excludeMatches || [] ],
-            func: injectImmediately.targetMatches,
-            target: { tabId },
-        });
-        if ( Array.isArray(results) === false ) { return; }
-        if ( results.length === 0 ) { return; }
-        const { frameId, result } = results[0]
-        if ( result !== true ) { return; }
-        if ( Array.isArray(info.js) && info.js.length !== 0 ) {
-            browser.scripting.executeScript({
-                files: info.js,
-                injectImmediately: info.runAt === 'document_start',
-                world: info.world || 'ISOLATED',
-                target: { tabId, frameIds: [ frameId ] },
-            }).catch(( ) => { });
-        } else if ( Array.isArray(info.css) && info.css.length !== 0 ) {
-            browser.scripting.insertCSS({
-                files: info.css,
-                origin: info.origin,
-                target: { tabId, frameIds: [ frameId ] },
-            }).catch(( ) => { });
-        }
-    } catch {
-        return;
-    }
-    return true;
-}
+// Issue: Safari appears to completely ignore excludeMatches
+// https://github.com/radiolondra/ExcludeMatches-Test
 
-injectImmediately.targetMatches = function(matches, excludeMatches) {
-    let matched = matches.includes('<all_urls>');
-    if ( matched === false ) {
-        let hn = document.location.hostname;
-        for (;;) {
-            matched = matches.includes(`*://*.${hn}/*`);
-            if ( matched ) { break; }
-            const pos = hn.indexOf('.');
-            if ( pos === -1 ) { break; }
-            hn = hn.slice(pos + 1);
-        }
-        if ( matched === false ) { return false; }
-    }
-    let hn = document.location.hostname;
-    for (;;) {
-        if ( excludeMatches.includes(`*://*.${hn}/*`) ) { return false; }
-        const pos = hn.indexOf('.');
-        if ( pos === -1 ) { break; }
-        hn = hn.slice(pos + 1);
-    }
-    return true;
-};
-
-async function installContentScripts(toInject) {
-    const tabs = await browser.tabs.query({ discarded: false });
-    const promises = [];
-    for ( const tab of tabs ) {
-        if ( tab.status === 'unloaded' ) { continue; }
-        for ( const info of toInject ) {
-            promises.push(injectImmediately(tab.id, info));
-        }
-    }
-    const results = await Promise.all(promises);
-    const count = results.reduce((a, b) => b ? a+1 : a, 0);
-    ubolLog(`Injected ${count} scriptlets into already opened tabs`);
-}
-
-/******************************************************************************/
-
-async function registerInjectables(isNewVersion = false) {
+async function registerInjectables() {
     if ( browser.scripting === undefined ) { return false; }
 
     if ( registerInjectables.barrier ) { return true; }
@@ -661,7 +586,6 @@ async function registerInjectables(isNewVersion = false) {
     );
     const toAdd = [], toRemove = [];
     const context = {
-        isNewVersion,
         filteringModeDetails,
         rulesetsDetails,
         before,
@@ -687,13 +611,7 @@ async function registerInjectables(isNewVersion = false) {
     if ( toAdd.length !== 0 ) {
         ubolLog(`Registered ${toAdd.map(v => v.id)} content (css/js)`);
         await browser.scripting.registerContentScripts(toAdd)
-            .catch(reason => { ubolLog(reason); });
-        // Chromium-based browsers do not inject newly registered scripts into
-        // already opened tabs, so we do this manually.
-        // https://github.com/w3c/webextensions/issues/617
-        if ( isNewVersion && vendor === 'chrome-extension' ) {
-            installContentScripts(toAdd);
-        }
+            .catch(reason => { console.info(reason); });
     }
 
     registerInjectables.barrier = false;
