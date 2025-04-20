@@ -405,6 +405,23 @@ function pruneHostnameArray(hostnames) {
  * */
 
 function toJSONRuleset(ruleset) {
+    const nodupProps = [ 'domains', 'excludedDomains', 'requestDomains', 'excludedRequestDomains', 'initiatorDomains', 'excludedInitiatorDomains' ];
+    for ( const { condition } of ruleset ) {
+        if ( condition === undefined ) { continue; }
+        for ( const prop of nodupProps ) {
+            if ( condition[prop] === undefined ) { continue; }
+            condition[prop] = Array.from(new Set(condition[prop]));
+        }
+    }
+    const sortProps = [ 'requestDomains', 'initiatorDomains', 'domains' ];
+    ruleset.sort((a, b) => {
+        let aLen = 0, bLen = 0;
+        for ( const prop of sortProps ) {
+            aLen += a.condition[prop]?.length ?? 0;
+            bLen += b.condition[prop]?.length ?? 0;
+        }
+        return bLen - aLen;
+    });
     const replacer = (k, v) => {
         if ( k.startsWith('_') ) { return; }
         if ( Array.isArray(v) ) {
@@ -421,7 +438,9 @@ function toJSONRuleset(ruleset) {
     };
     const indent = ruleset.length > 10 ? undefined : 1;
     const out = [];
+    let id = 1;
     for ( const rule of ruleset ) {
+        rule.id = id++;
         out.push(JSON.stringify(rule, replacer, indent));
     }
     return `[\n${out.join(',\n')}\n]\n`;
@@ -651,10 +670,6 @@ async function processNetworkFilters(assetDetails, network) {
     }
     if ( strictBlocked.size !== 0 ) {
         mergeRules(strictBlocked, 'requestDomains');
-        let id = 1;
-        for ( const rule of strictBlocked.values() ) {
-            rule.id = id++;
-        }
         writeFile(`${rulesetDir}/strictblock/${assetDetails.id}.json`,
             toJSONRuleset(Array.from(strictBlocked.values()))
         );
