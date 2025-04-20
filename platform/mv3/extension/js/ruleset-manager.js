@@ -408,7 +408,7 @@ async function updateSessionRules() {
     const currentRules = await dnr.getSessionRules();
     await updateStrictBlockRules(currentRules, addRulesUnfiltered, removeRuleIds);
     if ( addRulesUnfiltered.length === 0 && removeRuleIds.length === 0 ) { return; }
-    const maxRegexCount = dnr.MAX_NUMBER_OF_REGEX_RULES * 0.95;
+    const maxRegexCount = dnr.MAX_NUMBER_OF_REGEX_RULES * 0.80;
     let regexCount = dynamicRegexCount;
     let ruleId = 1;
     for ( const rule of addRulesUnfiltered ) {
@@ -595,9 +595,18 @@ async function enableRulesets(ids) {
     if ( disableRulesetIds.length !== 0 ) {
         ubolLog(`Disable ruleset: ${disableRulesetIds}`);
     }
-    await dnr.updateEnabledRulesets({ enableRulesetIds, disableRulesetIds });
+    await dnr.updateEnabledRulesets({ enableRulesetIds, disableRulesetIds }).catch(reason => {
+        ubolLog(reason);
+    });
 
     await updateDynamicRules();
+
+    dnr.getEnabledRulesets().then(enabledRulesets => {
+        ubolLog(`Enabled rulesets: ${enabledRulesets}`);
+        return dnr.getAvailableStaticRuleCount();
+    }).then(count => {
+        ubolLog(`Available static rule count: ${count}`);
+    });
 
     return true;
 }
