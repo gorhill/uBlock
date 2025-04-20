@@ -27,6 +27,12 @@ export const browser = webext;
 export const i18n = browser.i18n;
 export const runtime = browser.runtime;
 export const windows = browser.windows;
+export const vendor = (( ) => {
+    const url = browser.runtime.getURL('');
+    const pos = url.indexOf(':');
+    if ( pos === -1 ) { return ''; }
+    return url.slice(0, pos);
+})();
 
 /******************************************************************************/
 

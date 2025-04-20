@@ -463,10 +463,9 @@ async function launch() {
     // Permissions may have been removed while the extension was disabled
     await syncWithBrowserPermissions();
 
-    // Unsure whether the browser remembers correctly registered css/scripts
-    // after we quit the browser. For now uBOL will check unconditionally at
-    // launch time whether content css/scripts are properly registered.
-    registerInjectables();
+    // Ensure that scriplets are registered. Force-execute them when a new
+    // version is detected.
+    registerInjectables(isNewVersion);
 
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/declarativeNetRequest
     //   Firefox API does not support `dnr.setExtensionActionOptions`
