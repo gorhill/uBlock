@@ -1,3 +1,4 @@
+- [Fetch diff patches from "reliable" servers only](https://github.com/gorhill/uBlock/commit/8b964a8c54)
 - [Add `trusted-create-html` scriptlet](https://github.com/gorhill/uBlock/commit/20dd606504)
 - [Mind potential race condition when dynamically registering scriptlets](https://github.com/gorhill/uBlock/commit/15e832da8a)
 - [Fix undue unchecking of setting in "My filters"](https://github.com/gorhill/uBlock/commit/2bb6999e3f)
