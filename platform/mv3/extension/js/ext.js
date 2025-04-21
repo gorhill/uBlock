@@ -34,21 +34,8 @@ export const windows = browser.windows;
 // send a message, we try a few more times when the message fails to be sent.
 
 export function sendMessage(msg) {
-    return new Promise((resolve, reject) => {
-        let i = 5;
-        const send = ( ) => {
-            runtime.sendMessage(msg).then(response => {
-                resolve(response);
-            }).catch(reason => {
-                i -= 1;
-                if ( i <= 0 ) {
-                    reject(reason);
-                } else {
-                    setTimeout(send, 200);
-                }
-            });
-        };
-        send();
+    return runtime.sendMessage(msg).catch(reason => {
+        console.log(reason);
     });
 }
 
