@@ -371,7 +371,7 @@ const bootstrap = async ( ) => {
     return new Promise(resolve => {
         const frame = document.createElement('iframe');
         frame.setAttribute(zapperSecret, '');
-        frame.onload = ( ) => {
+        const onZapperLoad = ( ) => {
             frame.onload = null;
             frame.setAttribute(`${zapperSecret}-loaded`, '');
             const channel = new MessageChannel();
@@ -395,13 +395,11 @@ const bootstrap = async ( ) => {
                 zapperFramePort: port,
             });
         };
-        if ( dynamicURL.protocol !== 'safari-web-extension:' ) {
-            document.documentElement.append(frame);
+        frame.onload = ( ) => {
+            frame.onload = onZapperLoad;
             frame.contentWindow.location = dynamicURL.href;
-        } else {
-            frame.setAttribute('src', dynamicURL.href);
-            document.documentElement.append(frame);
-        }
+        };
+        document.documentElement.append(frame);
     });
 };
 
