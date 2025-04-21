@@ -359,6 +359,7 @@ async function updateStrictBlockRules(currentRules, addRules, removeRuleIds) {
     if ( validRules.length === 0 ) { return; }
     ubolLog(`Add ${validRules.length} DNR strictblock rules`);
     for ( const rule of validRules ) {
+        rule.priority = STRICTBLOCK_PRIORITY;
         addRules.push(rule);
     }
 
