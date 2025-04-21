@@ -395,10 +395,15 @@ const bootstrap = async ( ) => {
                 zapperFramePort: port,
             });
         };
-        frame.onload = ( ) => {
+        if ( dynamicURL.protocol !== 'safari-web-extension:' ) {
+            frame.onload = ( ) => {
+                frame.onload = onZapperLoad;
+                frame.contentWindow.location = dynamicURL.href;
+            };
+        } else {
             frame.onload = onZapperLoad;
-            frame.contentWindow.location = dynamicURL.href;
-        };
+            frame.setAttribute('src', dynamicURL.href);
+        }
         document.documentElement.append(frame);
     });
 };
