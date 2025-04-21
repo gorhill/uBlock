@@ -181,10 +181,10 @@ async function applyPatchAndValidate(assetDetails, diffDetails) {
 }
 
 async function fetchPatchDetailsFromCDNs(assetDetails) {
-    const { patchPath, cdnURLs } = assetDetails;
+    const { patchPath, cdnURLs, patchURLs } = assetDetails;
     if ( Array.isArray(cdnURLs) === false ) { return null; }
     if ( cdnURLs.length === 0 ) { return null; }
-    for ( const cdnURL of suffleArray(cdnURLs) ) {
+    for ( const cdnURL of suffleArray(patchURLs || cdnURLs) ) {
         const patchURL = resolveURL(patchPath, cdnURL);
         if ( patchURL === undefined ) { continue; }
         const response = await fetch(patchURL).catch(reason => {

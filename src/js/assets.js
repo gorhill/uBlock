@@ -1214,6 +1214,9 @@ const getAssetDiffDetails = assetKey => {
     }
     if ( Array.isArray(out.cdnURLs) === false ) { return; }
     if ( out.cdnURLs.length === 0 ) { return; }
+    if ( Array.isArray(assetEntry.patchURLs) ) {
+        out.patchURLs = assetEntry.patchURLs.slice();
+    }
     return out;
 };
 
