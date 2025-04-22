@@ -573,14 +573,12 @@ housekeep itself.
             } catch {
                 return;
             }
-            if (
-                Array.isArray(openerDetails) === false ||
-                openerDetails.length !== 2 ||
-                openerDetails[1] === null ||
-                openerDetails[1].url === 'about:newtab'
-            ) {
-                return;
-            }
+            if ( Array.isArray(openerDetails) === false ) { return; }
+            if ( openerDetails.length !== 2 ) { return; }
+            if ( openerDetails[1] === null ) { return; }
+            if ( openerDetails[1].url === 'about:newtab' ) { return; }
+            // https://github.com/uBlockOrigin/uBlock-issues/issues/2227
+            if ( openerDetails[1].url.startsWith('chrome:') ) { return; }
             popupCandidates.set(
                 tabId,
                 new PopupCandidate(createDetails, openerDetails)
