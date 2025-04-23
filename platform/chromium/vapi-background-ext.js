@@ -26,6 +26,8 @@
 //   so we synthetize these missing events when this happens.
 // https://github.com/uBlockOrigin/uAssets/issues/10323
 //   Also mind whether the new tab is launched from an external application.
+// https://github.com/uBlockOrigin/uBlock-issues/issues/2227
+//   Revert commit related to issue above.
 
 vAPI.Tabs = class extends vAPI.Tabs {
     constructor() {
@@ -66,8 +68,7 @@ vAPI.Tabs = class extends vAPI.Tabs {
         const isClientRedirect =
             Array.isArray(details.transitionQualifiers) &&
             details.transitionQualifiers.includes('client_redirect');
-        const isStartPage = details.transitionType === 'start_page';
-        if ( isClientRedirect === false && isStartPage === false ) { return; }
+        if ( isClientRedirect === false ) { return; }
         this.onCreatedNavigationTargetHandler({
             tabId: details.tabId,
             sourceTabId: details.tabId,
