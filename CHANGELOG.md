@@ -1,3 +1,4 @@
+- [Ignore `start_page` transition for popup-blocking purpose](https://github.com/gorhill/uBlock/commit/0243a141a7)
 - [Exclude `chrome:` as valid openers for popup candidates](https://github.com/gorhill/uBlock/commit/59f4aca010)
 - [Fetch diff patches from "reliable" servers only](https://github.com/gorhill/uBlock/commit/8b964a8c54)
 - [Add `trusted-create-html` scriptlet](https://github.com/gorhill/uBlock/commit/20dd606504)
