@@ -4324,7 +4324,7 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
     if ( op === 'begin' ) {
         Object.assign(context, {
             good: new Set(),
-            bad: new Set(),
+            bad: new Set(context.bad),
             invalid: new Set(),
             filterCount: 0,
             acceptedFilterCount: 0,

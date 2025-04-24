@@ -87,11 +87,32 @@ const adminSettings = {
 /******************************************************************************/
 
 export async function getAdminRulesets() {
-    const adminList = await adminReadEx('rulesets');
+    const [
+        adminList,
+        rulesetDetails,
+    ] = await Promise.all([
+        adminReadEx('rulesets'),
+        getRulesetDetails(),
+    ]);
     const adminRulesets = new Set(Array.isArray(adminList) && adminList || []);
+    if ( adminRulesets.has('-default') ) {
+        adminRulesets.delete('-default');
+        for ( const ruleset of rulesetDetails.values() ) {
+            if ( ruleset.enabled !== true ) { continue; }
+            if ( adminRulesets.has(`+${ruleset.id}`) ) { continue; }
+            adminRulesets.add(`-${ruleset.id}`);
+        }
+    }
+    if ( adminRulesets.has('+default') ) {
+        adminRulesets.delete('+default');
+        for ( const ruleset of rulesetDetails.values() ) {
+            if ( ruleset.enabled !== true ) { continue; }
+            if ( adminRulesets.has(`-${ruleset.id}`) ) { continue; }
+            adminRulesets.add(`+${ruleset.id}`);
+        }
+    }
     if ( adminRulesets.has('-*') ) {
         adminRulesets.delete('-*');
-        const rulesetDetails = await getRulesetDetails();
         for ( const ruleset of rulesetDetails.values() ) {
             if ( ruleset.enabled ) { continue; }
             if ( adminRulesets.has(`+${ruleset.id}`) ) { continue; }

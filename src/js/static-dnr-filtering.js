@@ -475,6 +475,7 @@ function finalizeRuleset(context, network) {
 
 async function dnrRulesetFromRawLists(lists, options = {}) {
     const context = Object.assign({}, options);
+    context.bad = options.networkBad;
     staticNetFilteringEngine.dnrFromCompiled('begin', context);
     context.extensionPaths = new Map(context.extensionPaths || []);
     const toLoad = [];
@@ -489,6 +490,7 @@ async function dnrRulesetFromRawLists(lists, options = {}) {
     await Promise.all(toLoad);
     const result = {
         network: staticNetFilteringEngine.dnrFromCompiled('end', context),
+        networkBad: context.bad,
         genericCosmeticFilters: context.genericCosmeticFilters,
         genericCosmeticExceptions: context.genericCosmeticExceptions,
         specificCosmetic: context.specificCosmeticFilters,

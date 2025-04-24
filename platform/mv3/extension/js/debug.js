@@ -27,10 +27,8 @@ import { browser } from './ext.js';
 const isModern = dnr.onRuleMatchedDebug instanceof Object;
 
 export const isSideloaded = (( ) => {
-    if ( isModern ) { return true; }
-    if ( typeof dnr.getMatchedRules === 'function' ) { return true; }
-    const manifest = browser.runtime.getManifest();
-    return manifest.permissions?.includes('declarativeNetRequestFeedback') ?? false;
+    const { permissions } = browser.runtime.getManifest();
+    return permissions?.includes('declarativeNetRequestFeedback') ?? false;
 })();
 
 /******************************************************************************/
@@ -119,6 +117,7 @@ export const getMatchedRules = (( ) => {
     }
 
     return async tabId => {
+        if ( typeof dnr.getMatchedRules !== 'function' ) { return []; }
         const matchedRules = await dnr.getMatchedRules({ tabId });
         if ( matchedRules instanceof Object === false ) { return []; }
         const out = [];

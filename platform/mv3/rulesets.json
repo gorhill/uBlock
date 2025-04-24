@@ -1,24 +1,51 @@
 [
   {
-    "id": "default",
-    "name": "Ads, trackers, miners, and more",
+    "id": "ublock-filters",
+    "name": "uBlock filters – Ads, trackers, and more",
+    "group": "default",
     "enabled": true,
     "urls": [
+      "https://ublockorigin.github.io/uAssets/filters/quick-fixes.min.txt",
+      "https://ublockorigin.github.io/uAssets/filters/unbreak.min.txt",
       "https://ublockorigin.github.io/uAssets/filters/filters.min.txt",
       "https://ublockorigin.github.io/uAssets/filters/privacy.min.txt",
-      "https://ublockorigin.github.io/uAssets/filters/unbreak.min.txt",
-      "https://ublockorigin.github.io/uAssets/filters/quick-fixes.min.txt",
-      "https://ublockorigin.github.io/uAssets/filters/ubol-filters.txt",
-      "https://ublockorigin.github.io/uAssets/thirdparties/easylist.txt",
-      "https://ublockorigin.github.io/uAssets/thirdparties/easyprivacy.txt",
-      "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext"
+      "https://ublockorigin.github.io/uAssets/filters/ubol-filters.txt"
     ],
-    "dnrURL": "https://ublockorigin.github.io/uAssets/dnr/default.json",
     "homeURL": "https://github.com/uBlockOrigin/uAssets"
   },
   {
-    "id": "badware",
-    "name": "Badware risks",
+    "id": "easylist",
+    "name": "EasyList",
+    "group": "default",
+    "enabled": true,
+    "urls": [
+      "https://ublockorigin.github.io/uAssets/thirdparties/easylist.txt"
+    ],
+    "homeURL": "https://easylist.to/"
+  },
+  {
+    "id": "easyprivacy",
+    "name": "EasyPrivacy",
+    "group": "default",
+    "enabled": true,
+    "urls": [
+      "https://ublockorigin.github.io/uAssets/thirdparties/easyprivacy.txt"
+    ],
+    "homeURL": "https://easylist.to/"
+  },
+  {
+    "id": "pgl",
+    "name": "Peter Lowe – Ads, trackers, and more",
+    "group": "default",
+    "enabled": true,
+    "urls": [
+      "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext"
+    ],
+    "homeURL": "https://pgl.yoyo.org/adservers/"
+  },
+  {
+    "id": "ublock-badware",
+    "name": "uBlock filters – Badware risks",
     "group": "malware",
     "enabled": true,
     "urls": [
@@ -49,6 +76,7 @@
   {
     "id": "block-lan",
     "name": "Block Outsider Intrusion into LAN",
+    "group": "privacy",
     "enabled": false,
     "urls": [
       "https://ublockorigin.github.io/uAssets/filters/lan-block.txt"
@@ -67,6 +95,7 @@
   {
     "id": "adguard-spyware-url",
     "name": "AdGuard URL Tracking Protection",
+    "group": "privacy",
     "enabled": false,
     "urls": [
       "https://filters.adtidy.org/extension/ublock/filters/17.txt"

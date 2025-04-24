@@ -175,6 +175,7 @@ const rulesetDetails = [];
 const scriptletStats = new Map();
 const genericDetails = new Map();
 const requiredRedirectResources = new Set();
+let networkBad = new Set();
 
 // This will be used to sign our inserted `!#trusted on` directives
 const secret = createHash('sha256').update(randomBytes(16)).digest('hex').slice(0,16);
@@ -1272,8 +1273,9 @@ async function rulesetFromURLs(assetDetails) {
 
     const results = await dnrRulesetFromRawLists(
         [ { name: assetDetails.id, text: assetDetails.text } ],
-        { env, extensionPaths, secret }
+        { env, extensionPaths, secret, networkBad }
     );
+    networkBad = results.networkBad;
 
     // Release memory used by filter list content
     assetDetails.text = undefined;

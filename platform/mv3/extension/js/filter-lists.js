@@ -135,7 +135,7 @@ export function renderFilterLists(rulesetData) {
         if ( ruleset.homeURL ) {
             dom.attr(qs$(listEntry, 'a.support'), 'href', ruleset.homeURL);
         }
-        dom.cl.toggle(listEntry, 'isDefault', ruleset.id === 'default');
+        dom.cl.toggle(listEntry, 'isDefault', ruleset.enabled === true);
         const stats = rulesetStats(ruleset.id);
         if ( stats === undefined ) { return; }
         listEntry.title = listStatsTemplate
@@ -215,8 +215,12 @@ export function renderFilterLists(rulesetData) {
         [
             'default',
             rulesetDetails.filter(ruleset =>
-                ruleset.id === 'default' ||
                 ruleset.group === 'default'
+            ),
+        ], [
+            'privacy',
+            rulesetDetails.filter(ruleset =>
+                ruleset.group === 'privacy'
             ),
         ], [
             'malware',
@@ -231,7 +235,6 @@ export function renderFilterLists(rulesetData) {
         ], [
             'misc',
             rulesetDetails.filter(ruleset =>
-                ruleset.id !== 'default' &&
                 ruleset.group === undefined &&
                 typeof ruleset.lang !== 'string' 
             ),
