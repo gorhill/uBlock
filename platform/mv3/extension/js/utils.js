@@ -19,7 +19,10 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import { browser } from './ext.js';
+import {
+    browser,
+    runtime,
+} from './ext.js';
 
 /******************************************************************************/
 
@@ -149,6 +152,36 @@ async function hasBroadHostPermissions() {
 
 /******************************************************************************/
 
+async function gotoURL(url, type) {
+    const pageURL = new URL(url, runtime.getURL('/'));
+    const tabs = await browser.tabs.query({
+        url: pageURL.href,
+        windowType: type !== 'popup' ? 'normal' : 'popup'
+    });
+
+    if ( Array.isArray(tabs) && tabs.length !== 0 ) {
+        const { windowId, id } = tabs[0];
+        return Promise.all([
+            browser.windows.update(windowId, { focused: true }),
+            browser.tabs.update(id, { active: true }),
+        ]);
+    }
+
+    if ( type === 'popup' ) {
+        return browser.windows.create({
+            type: 'popup',
+            url: pageURL.href,
+        });
+    }
+
+    return browser.tabs.create({
+        active: true,
+        url: pageURL.href,
+    });
+}
+
+/******************************************************************************/
+
 export {
     broadcastMessage,
     parsedURLromOrigin,
@@ -161,4 +194,5 @@ export {
     matchesFromHostnames,
     hostnamesFromMatches,
     hasBroadHostPermissions,
+    gotoURL,
 };

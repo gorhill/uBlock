@@ -334,13 +334,18 @@ export async function getTrustedSites() {
 }
 
 export async function setTrustedSites(hostnames) {
-    const filteringModes = await getFilteringModeDetails();
+    const [
+        filteringModes,
+        hasOmnipotence,
+    ] = await Promise.all([
+        getFilteringModeDetails(),
+        hasBroadHostPermissions(),
+    ]);
     const { none } = filteringModes;
     const hnSet = new Set(hostnames);
     let modified = false;
-    // Set default mode to Basic when removing No-filtering as default mode
     if ( none.has('all-urls') && hnSet.has('all-urls') === false ) {
-        applyFilteringMode(filteringModes, 'all-urls', MODE_BASIC);
+        applyFilteringMode(filteringModes, 'all-urls', hasOmnipotence ? MODE_OPTIMAL : MODE_BASIC);
         modified = true;
     }
     for ( const hn of none ) {
@@ -389,16 +394,18 @@ export async function syncWithBrowserPermissions() {
     const afterMode = await getDefaultFilteringMode();
     if ( afterMode > MODE_BASIC ) { return afterMode !== beforeMode; }
     const filteringModes = await getFilteringModeDetails();
-    const { optimal, complete } = filteringModes;
-    for ( const hn of optimal ) {
-        if ( allowedHostnames.has(hn) ) { continue; }
-        optimal.delete(hn);
-        modified = true;
-    }
-    for ( const hn of complete ) {
-        if ( allowedHostnames.has(hn) ) { continue; }
-        complete.delete(hn);
-        modified = true;
+    if ( allowedHostnames.has('all-urls') === false ) {
+        const { optimal, complete } = filteringModes;
+        for ( const hn of optimal ) {
+            if ( allowedHostnames.has(hn) ) { continue; }
+            optimal.delete(hn);
+            modified = true;
+        }
+        for ( const hn of complete ) {
+            if ( allowedHostnames.has(hn) ) { continue; }
+            complete.delete(hn);
+            modified = true;
+        }
     }
     await writeFilteringModeDetails(filteringModes);
     return modified;

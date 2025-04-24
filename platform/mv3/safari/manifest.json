@@ -39,7 +39,9 @@
     "declarativeNetRequest",
     "declarativeNetRequestWithHostAccess",
     "scripting",
-    "storage"
+    "storage",
+    "tabs",
+    "webNavigation"
   ],
   "short_name": "uBO Lite",
   "version": "1.0",

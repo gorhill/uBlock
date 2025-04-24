@@ -26,7 +26,6 @@ import { webext } from './ext-compat.js';
 export const browser = webext;
 export const i18n = browser.i18n;
 export const runtime = browser.runtime;
-export const windows = browser.windows;
 
 /******************************************************************************/
 
