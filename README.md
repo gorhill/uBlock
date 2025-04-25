@@ -148,7 +148,7 @@ If you ever want to contribute something, think about the people working hard to
 
 [Peter Lowe's Blocklist]: https://pgl.yoyo.org/adservers/
 [Malicious Blocklist]: https://gitlab.com/malware-filter/urlhaus-filter#malicious-url-blocklist
-[Performance]: https://www.debugbear.com/blog/chrome-extension-performance-2021#how-do-ad-blockers-and-privacy-tools-affect-browser-performance
+[Performance]: https://www.debugbear.com/blog/chrome-extensions-website-performance#the-impact-of-ad-blocking-on-website-performance
 [EasyPrivacy]: https://easylist.to/#easyprivacy
 [Thunderbird]: https://addons.thunderbird.net/thunderbird/addon/ublock-origin/
 [Chrome Dev]: https://chromewebstore.google.com/detail/ublock-origin-development/cgbcahbpdhpcegmbfconppldiemgcoii
