@@ -33,6 +33,16 @@ const nativeDNR = webext.declarativeNetRequest;
 const isSupportedRule = r => {
     if ( r.action?.responseHeaders ) { return false; }
     if ( r.condition?.tabIds !== undefined ) { return false; }
+    if ( r.condition?.resourceTypes?.includes('object') ) {
+        if ( r.condition.resourceTypes.length === 1 ) { return false; }
+        const i = r.condition.resourceTypes.indexOf('object');
+        r.condition.resourceTypes.splice(i, 1);
+    }
+    if ( r.condition?.excludedResourceTypes?.includes('object') ) {
+        if ( r.condition.excludedResourceTypes.length === 1 ) { return false; }
+        const i = r.condition.excludedResourceTypes.indexOf('object');
+        r.condition.excludedResourceTypes.splice(i, 1);
+    }
     return true;
 };
 
