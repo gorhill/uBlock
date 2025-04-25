@@ -28,6 +28,7 @@ import {
 import {
     enableRulesets,
     getRulesetDetails,
+    setStrictBlockMode,
 } from './ruleset-manager.js';
 
 import {
@@ -36,19 +37,74 @@ import {
     readFilteringModeDetails,
 } from './mode-manager.js';
 
+import {
+    rulesetConfig,
+    saveRulesetConfig,
+} from './config.js';
+
 import { broadcastMessage } from './utils.js';
 import { dnr } from './ext-compat.js';
 import { registerInjectables } from './scripting-manager.js';
-import { rulesetConfig } from './config.js';
 import { ubolLog } from './debug.js';
 
 /******************************************************************************/
 
+export async function loadAdminConfig() {
+    const [
+        showBlockedCount,
+        strictBlockMode,
+    ] = await Promise.all([
+        adminReadEx('showBlockedCount'),
+        adminReadEx('strictBlockMode'),
+    ]);
+    applyAdminConfig({ showBlockedCount, strictBlockMode });
+}
+
+/******************************************************************************/
+
+function applyAdminConfig(config, apply = false) {
+    const toApply = [];
+    for ( const [ key, val ] of Object.entries(config) ) {
+        if ( typeof val !== typeof rulesetConfig[key] ) { continue; }
+        if ( val === rulesetConfig[key] ) { continue; }
+        rulesetConfig[key] = val;
+        toApply.push(key);
+    }
+    if ( toApply.length === 0 ) { return; }
+    saveRulesetConfig();
+    if ( apply !== true ) { return; }
+    while ( toApply.length !== 0 ) {
+        const key = toApply.pop();
+        switch ( key ) {
+        case 'showBlockedCount': {
+            if ( typeof dnr.setExtensionActionOptions !== 'function' ) { break; }
+            const { showBlockedCount } = config;
+            dnr.setExtensionActionOptions({
+                displayActionCountAsBadgeText: showBlockedCount,
+            });
+            broadcastMessage({ showBlockedCount });
+            break;
+        }
+        case 'strictBlockMode': {
+            const { strictBlockMode } = config;
+            setStrictBlockMode(strictBlockMode, true).then(( ) => {
+                broadcastMessage({ strictBlockMode });
+            });
+            break;
+        }
+        default:
+            break;
+        }
+    }
+}
+
+/******************************************************************************/
+
 const adminSettings = {
-    keys: new Set(),
+    keys: new Map(),
     timer: undefined,
-    change(key) {
-        this.keys.add(key);
+    change(key, value) {
+        this.keys.set(key, value);
         if ( this.timer !== undefined ) { return; }
         this.timer = self.setTimeout(( ) => {
             this.timer = undefined;
@@ -79,6 +135,16 @@ const adminSettings = {
             await readFilteringModeDetails(true);
             const trustedSites = await getTrustedSites();
             broadcastMessage({ trustedSites: Array.from(trustedSites) });
+        }
+        if ( this.keys.has('showBlockedCount') ) {
+            ubolLog('admin setting "showBlockedCount" changed');
+            const showBlockedCount = this.keys.get('showBlockedCount');
+            applyAdminConfig({ showBlockedCount }, true);
+        }
+        if ( this.keys.has('strictBlockMode') ) {
+            ubolLog('admin setting "strictBlockMode" changed');
+            const strictBlockMode = this.keys.get('strictBlockMode');
+            applyAdminConfig({ strictBlockMode }, true);
         }
         this.keys.clear();
     }
@@ -142,7 +208,7 @@ export async function adminReadEx(key) {
             localWrite(adminKey, { data: value }),
         ]);
         if ( JSON.stringify(value) === JSON.stringify(cacheValue) ) { return; }
-        adminSettings.change(key);
+        adminSettings.change(key, value);
     });
     return cacheValue;
 }

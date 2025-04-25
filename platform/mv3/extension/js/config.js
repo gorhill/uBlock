@@ -46,7 +46,7 @@ export const process = {
 export async function loadRulesetConfig() {
     const sessionData = await sessionRead('rulesetConfig');
     if ( sessionData ) {
-        Object.assign(rulesetConfig, sessionData)
+        Object.assign(rulesetConfig, sessionData);
         process.wakeupRun = true;
         return;
     }

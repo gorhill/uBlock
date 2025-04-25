@@ -35,6 +35,7 @@ import {
 import {
     adminReadEx,
     getAdminRulesets,
+    loadAdminConfig,
 } from './admin.js';
 
 import {
@@ -418,6 +419,9 @@ function onCommand(command, tab) {
 async function startSession() {
     const currentVersion = getCurrentVersion();
     const isNewVersion = currentVersion !== rulesetConfig.version;
+
+    // Admin settings override user settings
+    await loadAdminConfig();
 
     // The default rulesets may have changed, find out new ruleset to enable,
     // obsolete ruleset to remove.

@@ -386,9 +386,11 @@ async function excludeFromStrictBlock(hostname, permanent) {
     return updateSessionRules();
 }
 
-async function setStrictBlockMode(state) {
+async function setStrictBlockMode(state, force = false) {
     const newState = Boolean(state);
-    if ( newState === rulesetConfig.strictBlockMode ) { return; }
+    if ( force === false ) {
+        if ( newState === rulesetConfig.strictBlockMode ) { return; }
+    }
     rulesetConfig.strictBlockMode = newState;
     const promises = [ saveRulesetConfig() ];
     if ( newState === false ) {
