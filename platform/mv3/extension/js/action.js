@@ -103,7 +103,7 @@ export async function syncToolbarIcon(wakeup) {
 
     webNavigation.onCommitted.addListener(toolbarIconListener, {
         url:  Array.from(toToggle).map(a => ({
-            originAndPathMatches: `^https?://([^.]+\\.)*${a}/`
+            originAndPathMatches: `^https?://([^.].*\\.)?${a.replaceAll('.', '\\.')}/`
         })),
     });
 
