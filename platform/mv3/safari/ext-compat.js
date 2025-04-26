@@ -31,19 +31,32 @@ export const EXCLUDED_INITIATOR_DOMAINS = 'excludedDomains';
 const nativeDNR = webext.declarativeNetRequest;
 
 const isSupportedRule = r => {
-    if ( r.action?.responseHeaders ) { return false; }
-    if ( r.condition?.tabIds !== undefined ) { return false; }
-    if ( r.condition?.resourceTypes?.includes('object') ) {
-        if ( r.condition.resourceTypes.length === 1 ) { return false; }
-        const i = r.condition.resourceTypes.indexOf('object');
-        r.condition.resourceTypes.splice(i, 1);
+    if ( r.action.responseHeaders ) { return false; }
+    const { condition } = r;
+    if ( condition.tabIds !== undefined ) { return false; }
+    if ( condition.resourceTypes?.includes('object') ) {
+        if ( condition.resourceTypes.length === 1 ) { return false; }
+        const i = condition.resourceTypes.indexOf('object');
+        condition.resourceTypes.splice(i, 1);
     }
-    if ( r.condition?.excludedResourceTypes?.includes('object') ) {
-        if ( r.condition.excludedResourceTypes.length === 1 ) { return false; }
-        const i = r.condition.excludedResourceTypes.indexOf('object');
-        r.condition.excludedResourceTypes.splice(i, 1);
+    if ( condition.excludedResourceTypes?.includes('object') ) {
+        const i = condition.excludedResourceTypes.indexOf('object');
+        condition.excludedResourceTypes.splice(i, 1);
+        if ( condition.excludedResourceTypes.length === 0 ) {
+            delete condition.excludedResourceTypes;
+        }
     }
     return true;
+};
+
+const prepareUpdateRules = optionsBefore => {
+    const { addRules, removeRuleIds } = optionsBefore;
+    const addRulesAfter = addRules?.filter(isSupportedRule);
+    if ( Boolean(addRulesAfter?.length || removeRuleIds?.length) === false ) { return; }
+    const optionsAfter = {};
+    if ( addRulesAfter?.length ) { optionsAfter.addRules = addRulesAfter; }
+    if ( removeRuleIds?.length ) { optionsAfter.removeRuleIds = removeRuleIds; }
+    return optionsAfter;
 };
 
 const ruleCompare = (a, b) => a.id - b.id;
@@ -91,24 +104,16 @@ export const dnr = {
         return nativeDNR.isRegexSupported(...args);
     },
     async updateDynamicRules(optionsBefore) {
-        const { addRules, removeRuleIds } = optionsBefore;
-        const addRulesAfter = addRules?.filter(isSupportedRule);
-        if ( Boolean(addRulesAfter?.length || removeRuleIds?.length) === false ) { return; }
-        const optionsAfter = {};
-        if ( addRulesAfter?.length ) { optionsAfter.addRules = addRulesAfter; }
-        if ( removeRuleIds?.length ) { optionsAfter.removeRuleIds = removeRuleIds; }
+        const optionsAfter = prepareUpdateRules(optionsBefore);
+        if ( optionsAfter === undefined ) { return; }
         return nativeDNR.updateDynamicRules(optionsAfter);
     },
     updateEnabledRulesets(...args) {
         return nativeDNR.updateEnabledRulesets(...args);
     },
     async updateSessionRules(optionsBefore) {
-        const { addRules, removeRuleIds } = optionsBefore;
-        const addRulesAfter = addRules?.filter(isSupportedRule);
-        if ( Boolean(addRulesAfter?.length || removeRuleIds?.length) === false ) { return; }
-        const optionsAfter = {};
-        if ( optionsAfter?.length ) { optionsAfter.addRules = addRulesAfter; }
-        if ( removeRuleIds?.length ) { optionsAfter.removeRuleIds = removeRuleIds; }
+        const optionsAfter = prepareUpdateRules(optionsBefore);
+        if ( optionsAfter === undefined ) { return; }
         return nativeDNR.updateSessionRules(optionsAfter);
     },
     async setAllowAllRules(id, allowed, notAllowed, reverse) {
