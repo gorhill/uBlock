@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "In eksperimintele, tastimmingsleaze ynhâldsblokkearder. Blokkearret daliks nei ynstallaasje advertinsjes, trackers, miners en mear.",
+    "message": "In, tastimmingsleaze ynhâldsblokkearder. Blokkearret daliks nei ynstallaasje advertinsjes, trackers, miners en mear.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {

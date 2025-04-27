@@ -356,7 +356,7 @@
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Diweredekaat ar \"rak-lenn\", pe diougan an oberoù war ar rouedad (evit ma ne gennaskfe ket ar rekedoù rouedad stanket)",
+    "message": "Diweredekaat ar \"rak-lenn\", pe diougan an oberoù war ar rouedad (evit ma ne gennaskfe ket rekedoù ar rouedadoù stanket)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
@@ -488,7 +488,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
-    "message": "Kemennadennoù diwar-benn an toupinoù",
+    "message": "Notennoù diwar-benn an toupinoù",
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
@@ -928,7 +928,7 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Danevellit kudennoù silañ e lec'hiennoù resis zo e-barzh <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">roll evezhiañ kudennoù <code>uBlockOrigin/uAssets</code></span>. <u>Ur c'hont GitHub zo rekis.</u>",
+    "message": "Danevellit kudennoù ar siloù e lec'hiennoù resis e-barzh <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> roll evezhiañ kudennoù</span>. <u>Ur c'hont GitHub zo rekis.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
@@ -1012,7 +1012,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leads to badware, phishing",
+    "message": "Kas a ra da veziantoù droukyoulet pe d'an higennañ niverel",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {

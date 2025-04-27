@@ -7,6 +7,6 @@ uBO Lite (uBOL) гэта базаваны на MV3 блакавальнік зм
 - EasyPrivacy
 - Спіс сервераў з рэкламай і адсочвання ад Peter Lowe
 
-You can enable more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+Вы можаце ўключыць больш набораў правіл праз старонку налад -- націсніце на значок _Шасцярэнькі_  на ўсплывальнай панэлі.
 
-uBOL is entirely declarative, meaning there is no need for a permanent uBOL process for the filtering to occur, and CSS/JS injection-based content filtering is performed reliably by the browser itself rather than by the extension. This means that uBOL itself does not consume CPU/memory resources while content blocking is ongoing -- uBOL's service worker process is required _only_ when you interact with the popup panel or the option pages.
+uBOL цалкам дэкларатыўны, то-бок не мае неабходнасці ў сталым uBOL працэсе дзеля фільтрацыі, а фільтрацыя змесціва на аснове інʼекцыі CSS/JS надзейна выконваецца пераважна самім браўзерам замест пашырэння. Гэта значыць, што uBOL не спажывае рэсурсаў працэсара/памяці пры блакаванні зместу -- службовы працэс uBOL патрэбны _толькі_ падчас узаемадзеяння з усплывальнай панэллю або наладамі.

@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "En tilladelsesløs indholdsblocker. Blokerer som standard annoncer, trackere, minere mv. straks efter installationen.",
+    "message": "En effektiv indholdsblokering. Blokerer annoncer, trackere, minere og mere lige efter installation.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {

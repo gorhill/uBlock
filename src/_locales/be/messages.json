@@ -308,7 +308,7 @@
     "description": "English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint": {
-    "message": "Клік, Ctrl-клік",
+    "message": "Націсканне, Ctrl + націсканне",
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {

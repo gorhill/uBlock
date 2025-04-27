@@ -5,7 +5,7 @@ Ar reolennoù dre ziouer a glot gant silañ dre ziouer uBlock Origin:
 - Rolloù siloù genidik a uBlock Origin
 - EasyList
 - EasyPrivacy
-- Roll bruderezh ha servijerioù heuliañ Peter Lowe
+- Roll ar servijerioù brudañ ha heuliañ eus Peter Lowe
 
 Tu zo deoc'h ouzhpennañ reolennoù all en arventennoù -- klikit war an ikon _kendentadur_ er banell popup.
 
