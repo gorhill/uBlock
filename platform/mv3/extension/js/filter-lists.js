@@ -22,6 +22,7 @@
 import { dom, qs$, qsa$ } from './dom.js';
 import { i18n, i18n$ } from './i18n.js';
 import { localRead, localWrite, sendMessage } from './ext.js';
+import { hashFromIterable } from './dashboard.js';
 
 /******************************************************************************/
 
@@ -402,6 +403,10 @@ const applyEnabledRulesets = (( ) => {
         }
 
         dom.cl.remove('#lists .listEntry.toggled', 'toggled');
+
+        const unmodified = hashFromIterable(enabledRulesets) ===
+            hashFromIterable(cachedRulesetData.enabledRulesets);
+        if ( unmodified ) { return; }
 
         await sendMessage({
             what: 'applyRulesets',

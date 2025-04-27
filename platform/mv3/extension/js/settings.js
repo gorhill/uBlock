@@ -21,18 +21,13 @@
 
 import { browser, sendMessage } from './ext.js';
 import { dom, qs$ } from './dom.js';
+import { hashFromIterable } from './dashboard.js';
 import punycode from './punycode.js';
 import { renderFilterLists } from './filter-lists.js';
 
 /******************************************************************************/
 
 let cachedRulesetData = {};
-
-/******************************************************************************/
-
-function hashFromIterable(iter) {
-    return Array.from(iter).sort().join('\n');
-}
 
 /******************************************************************************/
 

@@ -36,3 +36,9 @@ dom.on('#dashboard-nav', 'click', '.tabButton', ev => {
 });
 
 /******************************************************************************/
+
+export function hashFromIterable(iter) {
+    return Array.from(iter).sort().join('\n');
+}
+
+/******************************************************************************/
