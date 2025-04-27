@@ -403,8 +403,6 @@ const applyEnabledRulesets = (( ) => {
 
         dom.cl.remove('#lists .listEntry.toggled', 'toggled');
 
-        if ( enabledRulesets.length === 0 ) { return; }
-
         await sendMessage({
             what: 'applyRulesets',
             enabledRulesets,
