@@ -53,6 +53,12 @@ const prepareUpdateRules = optionsBefore => {
     const { addRules, removeRuleIds } = optionsBefore;
     const addRulesAfter = addRules?.filter(isSupportedRule);
     if ( Boolean(addRulesAfter?.length || removeRuleIds?.length) === false ) { return; }
+    addRulesAfter.forEach(r => {
+        if ( r.action.redirect?.regexSubstitution === undefined ) { return; }
+        if ( r.condition.requestDomains === undefined ) { return; }
+        r.condition.domains = r.condition.requestDomains;
+        delete r.condition.requestDomains;
+    });
     const optionsAfter = {};
     if ( addRulesAfter?.length ) { optionsAfter.addRules = addRulesAfter; }
     if ( removeRuleIds?.length ) { optionsAfter.removeRuleIds = removeRuleIds; }
