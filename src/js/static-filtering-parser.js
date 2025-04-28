@@ -2225,7 +2225,7 @@ export class AstFilterParser {
 
     normalizeDomainRegexValue(before) {
         const regex = before.startsWith('[$domain=/')
-            ? `/${before.slice(9, -1)}/`
+            ? `${before.slice(9, -1)}`
             : before;
         const source = this.normalizeRegexPattern(regex);
         if ( source === '' ) { return ''; }
