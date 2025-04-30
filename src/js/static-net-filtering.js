@@ -762,6 +762,10 @@ class FilterImportant {
         return filterDataAlloc(args[0]);
     }
 
+    static dnrFromCompiled(args, rule) {
+        rule.__important = true;
+    }
+
     static keyFromArgs() {
     }
 
@@ -4446,10 +4450,8 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
 
     const realms = new Map([
         [ BLOCK_REALM, { type: 'block', priority: 10 } ],
-        [ BLOCK_REALM | IMPORTANT_REALM, { type: 'block', priority: 40 } ],
         [ ALLOW_REALM, { type: 'allow', priority: 30 } ],
         [ REDIRECT_REALM, { type: 'redirect', priority: 11 } ],
-        [ REDIRECT_REALM | IMPORTANT_REALM, { type: 'redirect', priority: 41 } ],
         [ REMOVEPARAM_REALM, { type: 'removeparam', priority: 0 } ],
         [ CSP_REALM, { type: 'csp', priority: 0 } ],
         [ PERMISSIONS_REALM, { type: 'permissions', priority: 0 } ],
@@ -4508,6 +4510,13 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
                 }
             }
         }
+    }
+
+    // Adjust `important` priority
+    for ( const rule of ruleset ) {
+        if ( rule.__important !== true ) { continue; }
+        if ( rule.priority === undefined ) { continue; }
+        rule.priority += 30;
     }
 
     // Collect generichide filters
