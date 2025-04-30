@@ -64,16 +64,6 @@
     "homeURL": "https://gitlab.com/malware-filter/urlhaus-filter"
   },
   {
-    "id": "openphish-domains",
-    "name": "OpenPhish Domain Blocklist",
-    "group": "malware",
-    "enabled": true,
-    "urls": [
-      "https://raw.githubusercontent.com/stephenhawk8054/openphish-adblock/refs/heads/main/filters_init_domains.txt"
-    ],
-    "homeURL": "https://github.com/stephenhawk8054/openphish-adblock"
-  },
-  {
     "id": "block-lan",
     "name": "Block Outsider Intrusion into LAN",
     "group": "privacy",
