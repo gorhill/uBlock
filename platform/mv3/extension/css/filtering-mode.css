@@ -1,5 +1,6 @@
 .filteringModeSlider {
     align-items: center;
+    container-type: size;
     display: flex;
     height: 60px;
     justify-content: center;
@@ -11,9 +12,9 @@
     background-color: var(--surface-1);
     box-sizing: border-box;
     border-radius: 30% 15% / 15% 30%;
-    height: 100%;
+    height: calc(25cqw + 2px);
     position: absolute;
-    width: calc(25% + 2px);
+    width: calc(25cqw + 2px);
     z-index: 10;
     }
 

@@ -6,7 +6,8 @@
   "author": "Raymond Hill",
   "background": {
     "scripts": [ "/js/background.js" ],
-    "type": "module"
+    "type": "module",
+    "persistent": false
   },
   "commands": {
     "enter-zapper-mode": {

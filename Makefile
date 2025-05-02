@@ -5,10 +5,11 @@ run_options := $(filter-out $@,$(MAKECMDGOALS))
 	mv3-chromium mv3-firefox mv3-edge mv3-safari \
 	compare maxcost medcost mincost modifiers record wasm
 
-sources := $(wildcard assets/* assets/*/* dist/version src/* src/*/* src/*/*/* src/*/*/*/*)
-platform := $(wildcard platform/* platform/*/* platform/*/*/* platform/*/*/*/* platform/*/*/*/*/*)
+sources := ./dist/version $(shell find ./assets -type f) $(shell find ./src -type f)
+platform := $(wildcard platform/**/*)
 assets := dist/build/uAssets
-mv3-data := $(wildcard dist/build/mv3-data/*)
+mv3-data := $(shell find ./dist/build/mv3-data -type f)
+mv3-safari-deps := $(shell find ./platform/mv3/extension -type f) $(wildcard platform/mv3/safari/*)
 
 all: chromium firefox npm
 
@@ -80,8 +81,10 @@ dist/build/uBOLite.edge: tools/make-mv3.sh tools/make-edge.mjs $(sources) $(plat
 
 mv3-edge: dist/build/uBOLite.edge
 
-dist/build/uBOLite.safari: tools/make-mv3.sh $(sources) $(platform) $(mv3-data) dist/build/mv3-data
+dist/build/uBOLite.safari: tools/make-mv3.sh $(sources) $(mv3-safari-deps) $(mv3-data) dist/build/mv3-data
 	tools/make-mv3.sh safari
+	node platform/mv3/safari/patch-extension.js \
+		packageDir=./dist/build/uBOLite.safari
 
 mv3-safari: dist/build/uBOLite.safari
 

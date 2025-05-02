@@ -70,9 +70,14 @@ body[data-forbid~="dashboard"] #gotoDashboard {
     display: none;
     }
 
+.lrspacer {
+    padding-left: var(--default-gap-small);
+    padding-right: var(--default-gap-small);
+    }
+
 #filteringModeText {
     color: var(--ink-3);
-    margin: var(--default-gap-small);
+    margin-bottom: var(--default-gap-small);
     margin-top: 0;
     text-align: center;
     text-transform: lowercase;
@@ -95,7 +100,8 @@ body[data-forbid~="dashboard"] #gotoDashboard {
 
 .filteringModeSlider {
     align-self: center;
-    margin: var(--popup-gap);
+    margin-bottom: var(--popup-gap);
+    margin-top: var(--popup-gap);
     width: calc(var(--popup-main-min-width) - 1em);
     }
 
