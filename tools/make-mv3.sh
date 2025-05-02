@@ -132,6 +132,11 @@ if [ "$PLATFORM" = "edge" ]; then
     node tools/make-edge.mjs
 fi
 
+# For Safari, we must fix the package for compliance
+if [ "$PLATFORM" = "safari" ]; then
+    node platform/mv3/safari/patch-extension.js packageDir="$UBOL_DIR"
+fi
+
 echo "*** uBOLite.$PLATFORM: extension ready"
 echo "Extension location: $UBOL_DIR/"
 

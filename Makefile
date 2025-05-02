@@ -83,8 +83,6 @@ mv3-edge: dist/build/uBOLite.edge
 
 dist/build/uBOLite.safari: tools/make-mv3.sh $(sources) $(mv3-safari-deps) $(mv3-data) dist/build/mv3-data
 	tools/make-mv3.sh safari
-	node platform/mv3/safari/patch-extension.js \
-		packageDir=./dist/build/uBOLite.safari
 
 mv3-safari: dist/build/uBOLite.safari
 
