@@ -28,7 +28,7 @@ import { onBroadcast } from './broadcast.js';
 
 /******************************************************************************/
 
-const cmOptions = {
+const cmEditor = new CodeMirror(qs$('#userFilters'), {
     autoCloseBrackets: true,
     autofocus: true,
     extraKeys: {
@@ -47,21 +47,7 @@ const cmOptions = {
     styleActiveLine: {
         nonEmpty: true,
     },
-};
-(( ) => {
-    try {
-        const url = new URL(self.top.location.href);
-        const input = url.searchParams.get('input');
-        if ( input === 't' ) {
-            cmOptions.inputStyle = 'textarea';
-        } else if ( input === 'c' ) {
-            cmOptions.inputStyle = 'contenteditable';
-        }
-    } catch {
-    }
-})();
-
-const cmEditor = new CodeMirror(qs$('#userFilters'), cmOptions);
+});
 
 uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 
