@@ -947,8 +947,8 @@
 		"title": "🇺🇦ua: Ukrainian Filters",
 		"tags": "ads ukraine україна",
 		"lang": "uk",
-		"contentURL": "https://raw.githubusercontent.com/ukrainianfilters/lists/main/combined/uBO/uBO.txt",
-		"supportURL": "https://github.com/ukrainianfilters/lists"
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/23.txt",
+		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters"
 	},
 	"VIE-1": {
 		"content": "filters",
