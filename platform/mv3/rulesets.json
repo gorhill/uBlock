@@ -589,13 +589,13 @@
     "id": "ukr-0",
     "group": "regions",
     "lang": "uk",
-    "name": "🇺🇦ua: Ukrainian Filters",
+    "name": "🇺🇦ua: AdGuard Ukrainian",
     "tags": "ads ukraine україна",
     "enabled": false,
     "urls": [
-      "https://raw.githubusercontent.com/ukrainianfilters/lists/main/combined/uBO/uBO.txt"
+      "https://filters.adtidy.org/extension/ublock/filters/23.txt"
     ],
-    "homeURL": "https://github.com/ukrainianfilters/lists"
+    "homeURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters"
   },
   {
     "id": "vie-1",

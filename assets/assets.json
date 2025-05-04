@@ -944,7 +944,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "🇺🇦ua: Ukrainian Filters",
+		"title": "🇺🇦ua: AdGuard Ukrainian",
 		"tags": "ads ukraine україна",
 		"lang": "uk",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/23.txt",
