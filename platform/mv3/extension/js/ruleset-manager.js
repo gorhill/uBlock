@@ -49,10 +49,18 @@ let sessionRegexCount = 0;
 
 const isStrictBlockRule = rule => {
     if ( rule.priority !== STRICTBLOCK_PRIORITY ) { return false; }
-    if ( rule.action.type !== 'redirect' ) { return false; }
-    const substitution = rule.action.redirect.regexSubstitution;
-    return substitution !== undefined &&
-        substitution.includes('/strictblock.');
+    if ( rule.condition?.resourceTypes === undefined ) { return false; }
+    if ( rule.condition.resourceTypes.length !== 1 ) { return false; }
+    if ( rule.condition.resourceTypes[0] !== 'main_frame' ) { return false; }
+    if ( rule.action.type === 'redirect' ) {
+        const substitution = rule.action.redirect.regexSubstitution;
+        return substitution !== undefined &&
+            substitution.includes('/strictblock.');
+    }
+    if ( rule.action.type === 'allow' ) {
+        return Array.isArray(rule.condition?.requestDomains);
+    }
+    return false;
 };
 
 /******************************************************************************/
@@ -365,7 +373,7 @@ async function updateStrictBlockRules(currentRules, addRules, removeRuleIds) {
 
     const allExcluded = permanentlyExcluded.concat(temporarilyExcluded);
     if ( allExcluded.length === 0 ) { return; }
-    addRules.push({
+    addRules.unshift({
         action: { type: 'allow' },
         condition: {
             requestDomains: allExcluded,
