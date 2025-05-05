@@ -8,6 +8,7 @@ run_options := $(filter-out $@,$(MAKECMDGOALS))
 sources := ./dist/version $(shell find ./assets -type f) $(shell find ./src -type f)
 platform := $(wildcard platform/**/*)
 assets := dist/build/uAssets
+mv3-sources := $(shell find ./src -type f) $(shell find ./platform/mv3 -type f)
 mv3-data := $(shell find ./dist/build/mv3-data -type f)
 mv3-safari-deps := $(shell find ./platform/mv3/extension -type f) $(wildcard platform/mv3/safari/*)
 
@@ -66,22 +67,22 @@ dig-snfe: dig
 dist/build/mv3-data:
 	mkdir -p dist/build/mv3-data
 
-dist/build/uBOLite.chromium: tools/make-mv3.sh $(sources) $(platform) $(mv3-data) dist/build/mv3-data
+dist/build/uBOLite.chromium: tools/make-mv3.sh $(mv3-sources) $(platform) $(mv3-data) dist/build/mv3-data
 	tools/make-mv3.sh chromium
 
 mv3-chromium: dist/build/uBOLite.chromium
 
-dist/build/uBOLite.firefox: tools/make-mv3.sh $(sources) $(platform) $(mv3-data) dist/build/mv3-data
+dist/build/uBOLite.firefox: tools/make-mv3.sh $(mv3-sources) $(platform) $(mv3-data) dist/build/mv3-data
 	tools/make-mv3.sh firefox
 
 mv3-firefox: dist/build/uBOLite.firefox
 
-dist/build/uBOLite.edge: tools/make-mv3.sh tools/make-edge.mjs $(sources) $(platform) $(mv3-data) dist/build/mv3-data
+dist/build/uBOLite.edge: tools/make-mv3.sh tools/make-edge.mjs $(mv3-sources) $(platform) $(mv3-data) dist/build/mv3-data
 	tools/make-mv3.sh edge
 
 mv3-edge: dist/build/uBOLite.edge
 
-dist/build/uBOLite.safari: tools/make-mv3.sh $(sources) $(mv3-safari-deps) $(mv3-data) dist/build/mv3-data
+dist/build/uBOLite.safari: tools/make-mv3.sh $(mv3-sources) $(mv3-safari-deps) $(mv3-data) dist/build/mv3-data
 	tools/make-mv3.sh safari
 
 mv3-safari: dist/build/uBOLite.safari
