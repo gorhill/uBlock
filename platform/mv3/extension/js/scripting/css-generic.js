@@ -214,11 +214,11 @@ const uBOL_processChanges = mutations => {
 
 /******************************************************************************/
 
-const uBOL_injectCSS = (css, count = 10) => {
-    chrome.runtime.sendMessage({ what: 'insertCSS', css }).catch(( ) => {
-        count -= 1;
-        if ( count === 0 ) { return; }
-        uBOL_injectCSS(css, count);
+const uBOL_injectCSS = css => {
+    chrome.runtime.sendMessage({
+        what: 'insertCSS',
+        css,
+    }).catch(( ) => {
     });
 };
 

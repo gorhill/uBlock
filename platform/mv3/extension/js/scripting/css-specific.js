@@ -63,20 +63,14 @@ const exceptedSelectors = exceptions.length !== 0
     : selectors;
 if ( exceptedSelectors.length === 0 ) { return; }
 
-/******************************************************************************/
-
-(function uBOL_injectCSS(css, count = 10) {
-    chrome.runtime.sendMessage({ what: 'insertCSS', css }).catch(( ) => {
-        count -= 1;
-        if ( count === 0 ) { return; }
-        uBOL_injectCSS(css, count);
-    });
-})(`${exceptedSelectors.join(',')}{display:none!important;}`);
+chrome.runtime.sendMessage({
+    what: 'insertCSS',
+    css: `${exceptedSelectors.join(',')}{display:none!important;}`,
+}).catch(( ) => {
+});
 
 /******************************************************************************/
 
 })();
-
-/******************************************************************************/
 
 void 0;

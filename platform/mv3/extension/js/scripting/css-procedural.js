@@ -65,11 +65,11 @@ if ( exceptedSelectors.length === 0 ) { return; }
 
 /******************************************************************************/
 
-const uBOL_injectCSS = (css, count = 10) => {
-    chrome.runtime.sendMessage({ what: 'insertCSS', css }).catch(( ) => {
-        count -= 1;
-        if ( count === 0 ) { return; }
-        uBOL_injectCSS(css, count);
+const uBOL_injectCSS = css => {
+    chrome.runtime.sendMessage({
+        what: 'insertCSS',
+        css,
+    }).catch(( ) => {
     });
 };
 

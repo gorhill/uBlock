@@ -103,18 +103,14 @@ for ( const selector of exceptedSelectors ) {
 
 if ( sheetText.length === 0 ) { return; }
 
-(function uBOL_injectCSS(css, count = 10) {
-    chrome.runtime.sendMessage({ what: 'insertCSS', css }).catch(( ) => {
-        count -= 1;
-        if ( count === 0 ) { return; }
-        uBOL_injectCSS(css, count);
-    });
-})(sheetText.join('\n'));
+chrome.runtime.sendMessage({
+    what: 'insertCSS',
+    css: sheetText.join('\n'),
+}).catch(( ) => {
+});
 
 /******************************************************************************/
 
 })();
-
-/******************************************************************************/
 
 void 0;
