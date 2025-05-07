@@ -21,7 +21,6 @@
 
 import {
     MODE_BASIC,
-    MODE_NONE,
     MODE_OPTIMAL,
     getDefaultFilteringMode,
     getFilteringMode,
@@ -78,7 +77,7 @@ import {
 
 import { dnr } from './ext-compat.js';
 import { registerInjectables } from './scripting-manager.js';
-import { syncToolbarIcon } from './action.js';
+import { toggleToolbarIcon } from './action.js';
 
 /******************************************************************************/
 
@@ -167,6 +166,14 @@ function onMessage(request, sender, callback) {
         }).catch(reason => {
             console.log(reason);
         });
+        return false;
+    }
+
+    case 'toggleToolbarIcon': {
+        const tabId = sender?.tab?.id ?? false;
+        if ( tabId ) {
+            toggleToolbarIcon(tabId);
+        }
         return false;
     }
 
@@ -313,17 +320,11 @@ function onMessage(request, sender, callback) {
         break;
 
     case 'setFilteringMode': {
-        let trustedSitesChanged = false;
         getFilteringMode(request.hostname).then(beforeLevel => {
             if ( request.level === beforeLevel ) { return beforeLevel; }
-            trustedSitesChanged = beforeLevel === MODE_NONE;
             return setFilteringMode(request.hostname, request.level);
         }).then(afterLevel => {
             registerInjectables();
-            trustedSitesChanged ||= afterLevel === MODE_NONE;
-            if ( trustedSitesChanged ) {
-                syncToolbarIcon();
-            }
             callback(afterLevel);
         });
         return true;
@@ -357,7 +358,6 @@ function onMessage(request, sender, callback) {
     case 'setTrustedSites':
         setTrustedSites(request.hostnames).then(( ) => {
             registerInjectables();
-            syncToolbarIcon(true);
             return Promise.all([
                 getDefaultFilteringMode(),
                 getTrustedSites(),
@@ -485,7 +485,6 @@ async function start() {
         await startSession();
     }
 
-    syncToolbarIcon(process.wakeupRun);
     toggleDeveloperMode(rulesetConfig.developerMode);
 }
 

@@ -182,6 +182,19 @@ async function gotoURL(url, type) {
 
 /******************************************************************************/
 
+// Important: We need to sort the arrays for fast comparison
+const strArrayEq = (a = [], b = [], sort = true) => {
+    const alen = a.length;
+    if ( alen !== b.length ) { return false; }
+    if ( sort ) { a.sort(); b.sort(); }
+    for ( let i = 0; i < alen; i++ ) {
+        if ( a[i] !== b[i] ) { return false; }
+    }
+    return true;
+};
+
+/******************************************************************************/
+
 export {
     broadcastMessage,
     parsedURLromOrigin,
@@ -195,4 +208,5 @@ export {
     hostnamesFromMatches,
     hasBroadHostPermissions,
     gotoURL,
+    strArrayEq,
 };

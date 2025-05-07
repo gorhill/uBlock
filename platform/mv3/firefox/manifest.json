@@ -52,9 +52,7 @@
     "activeTab",
     "declarativeNetRequest",
     "scripting",
-    "storage",
-    "tabs",
-    "webNavigation"
+    "storage"
   ],
   "short_name": "uBO Lite",
   "version": "1.0",

@@ -25,6 +25,7 @@ import { browser } from './ext.js';
 import { fetchJSON } from './fetch.js';
 import { getEnabledRulesetsDetails } from './ruleset-manager.js';
 import { getFilteringModeDetails } from './mode-manager.js';
+import { registerToolbarIconToggler } from './action.js';
 import { ubolLog } from './debug.js';
 
 /******************************************************************************/
@@ -50,19 +51,6 @@ function getGenericDetails() {
     resourceDetailPromises.set('generic', promise);
     return promise;
 }
-
-/******************************************************************************/
-
-// Important: We need to sort the arrays for fast comparison
-const arrayEq = (a = [], b = [], sort = true) => {
-    const alen = a.length;
-    if ( alen !== b.length ) { return false; }
-    if ( sort ) { a.sort(); b.sort(); }
-    for ( let i = 0; i < alen; i++ ) {
-        if ( a[i] !== b[i] ) { return false; }
-    }
-    return true;
-};
 
 /******************************************************************************/
 
@@ -168,9 +156,9 @@ function registerHighGeneric(context, genericDetails) {
 
     // update
     if (
-        arrayEq(registered.css, css, false) === false ||
-        arrayEq(registered.matches, matches) === false ||
-        arrayEq(registered.excludeMatches, excludeMatches) === false
+        ut.strArrayEq(registered.css, css, false) === false ||
+        ut.strArrayEq(registered.matches, matches) === false ||
+        ut.strArrayEq(registered.excludeMatches, excludeMatches) === false
     ) {
         context.toRemove.push('css-generichigh');
         context.toAdd.push(directive);
@@ -231,8 +219,8 @@ function registerGeneric(context, genericDetails) {
         if ( registered === undefined ) { // register
             context.toAdd.push(directive);
         } else if ( // update
-            arrayEq(registered.js, js, false) === false ||
-            arrayEq(registered.matches, directive.matches) === false
+            ut.strArrayEq(registered.js, js, false) === false ||
+            ut.strArrayEq(registered.matches, directive.matches) === false
         ) {
             context.toRemove.push('css-generic-some');
             context.toAdd.push(directive);
@@ -257,8 +245,8 @@ function registerGeneric(context, genericDetails) {
     if ( registeredAll === undefined ) { // register
         context.toAdd.push(directiveAll);
     } else if ( // update
-        arrayEq(registeredAll.js, js, false) === false ||
-        arrayEq(registeredAll.excludeMatches, directiveAll.excludeMatches) === false
+        ut.strArrayEq(registeredAll.js, js, false) === false ||
+        ut.strArrayEq(registeredAll.excludeMatches, directiveAll.excludeMatches) === false
     ) {
         context.toRemove.push('css-generic-all');
         context.toAdd.push(directiveAll);
@@ -281,8 +269,8 @@ function registerGeneric(context, genericDetails) {
     if ( registeredSome === undefined ) { // register
         context.toAdd.push(directiveSome);
     } else if ( // update
-        arrayEq(registeredSome.js, js, false) === false ||
-        arrayEq(registeredSome.matches, directiveSome.matches) === false
+        ut.strArrayEq(registeredSome.js, js, false) === false ||
+        ut.strArrayEq(registeredSome.matches, directiveSome.matches) === false
     ) {
         context.toRemove.push('css-generic-some');
         context.toAdd.push(directiveSome);
@@ -342,9 +330,9 @@ function registerProcedural(context) {
 
     // update
     if (
-        arrayEq(registered.js, js, false) === false ||
-        arrayEq(registered.matches, matches) === false ||
-        arrayEq(registered.excludeMatches, excludeMatches) === false
+        ut.strArrayEq(registered.js, js, false) === false ||
+        ut.strArrayEq(registered.matches, matches) === false ||
+        ut.strArrayEq(registered.excludeMatches, excludeMatches) === false
     ) {
         context.toRemove.push('css-procedural');
         context.toAdd.push(directive);
@@ -404,9 +392,9 @@ function registerDeclarative(context) {
 
     // update
     if (
-        arrayEq(registered.js, js, false) === false ||
-        arrayEq(registered.matches, matches) === false ||
-        arrayEq(registered.excludeMatches, excludeMatches) === false
+        ut.strArrayEq(registered.js, js, false) === false ||
+        ut.strArrayEq(registered.matches, matches) === false ||
+        ut.strArrayEq(registered.excludeMatches, excludeMatches) === false
     ) {
         context.toRemove.push('css-declarative');
         context.toAdd.push(directive);
@@ -466,9 +454,9 @@ function registerSpecific(context) {
 
     // update
     if (
-        arrayEq(registered.js, js, false) === false ||
-        arrayEq(registered.matches, matches) === false ||
-        arrayEq(registered.excludeMatches, excludeMatches) === false
+        ut.strArrayEq(registered.js, js, false) === false ||
+        ut.strArrayEq(registered.matches, matches) === false ||
+        ut.strArrayEq(registered.excludeMatches, excludeMatches) === false
     ) {
         context.toRemove.push('css-specific');
         context.toAdd.push(directive);
@@ -545,8 +533,8 @@ function registerScriptlet(context, scriptletDetails) {
 
             // update
             if (
-                arrayEq(registered.matches, matches) === false ||
-                arrayEq(registered.excludeMatches, excludeMatches) === false
+                ut.strArrayEq(registered.matches, matches) === false ||
+                ut.strArrayEq(registered.excludeMatches, excludeMatches) === false
             ) {
                 context.toRemove.push(id);
                 context.toAdd.push(directive);
@@ -599,6 +587,7 @@ async function registerInjectables() {
     registerSpecific(context);
     registerGeneric(context, genericDetails);
     registerHighGeneric(context, genericDetails);
+    registerToolbarIconToggler(context);
 
     toRemove.push(...Array.from(before.keys()));
 

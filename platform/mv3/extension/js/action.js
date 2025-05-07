@@ -19,22 +19,14 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+import { matchesFromHostnames, strArrayEq } from './utils.js';
 import { browser } from './ext.js';
-import { getFilteringModeDetails } from './mode-manager.js';
 
 /******************************************************************************/
 
 let reverseMode = false;
 
 /******************************************************************************/
-
-function toggleToolbarIcon(tabId) {
-    if ( reverseMode ) {
-        enableToolbarIcon(tabId);
-    } else {
-        disableToolbarIcon(tabId);
-    }
-}
 
 function disableToolbarIcon(tabId) {
     const details = {
@@ -68,9 +60,12 @@ function enableToolbarIcon(tabId) {
 
 /******************************************************************************/
 
-function toolbarIconListener(details) {
-    if ( details.frameId !== 0 ) { return; }
-    toggleToolbarIcon(details.tabId);
+export function toggleToolbarIcon(tabId) {
+    if ( reverseMode ) {
+        enableToolbarIcon(tabId);
+    } else {
+        disableToolbarIcon(tabId);
+    }
 }
 
 /******************************************************************************/
@@ -78,13 +73,8 @@ function toolbarIconListener(details) {
 // https://github.com/uBlockOrigin/uBOL-home/issues/198
 //  Ensure the toolbar icon reflects the no-filtering mode of "trusted sites"
 
-export async function syncToolbarIcon(wakeup) {
-    const { webNavigation } = browser;
-    if ( typeof webNavigation !== 'object' ) { return; }
-
-    webNavigation.onCommitted.removeListener(toolbarIconListener);
-
-    const { none, basic, optimal, complete } = await getFilteringModeDetails();
+export async function registerToolbarIconToggler(context) {
+    const { none, basic, optimal, complete } = context.filteringModeDetails;
     const reverseModeAfter = none.delete('all-urls');
     const toToggle = reverseModeAfter ?
         new Set([ ...basic, ...optimal, ...complete ])
@@ -101,20 +91,20 @@ export async function syncToolbarIcon(wakeup) {
 
     if ( toToggle.size === 0 ) { return; }
 
-    webNavigation.onCommitted.addListener(toolbarIconListener, {
-        url:  Array.from(toToggle).map(a => ({
-            originAndPathMatches: `^https?://([^.].*\\.)?${a.replaceAll('.', '\\.')}/`
-        })),
-    });
+    const registered = context.before.get('toolbar-icon');
+    context.before.delete('toolbar-icon'); // Important!
 
-    if ( wakeup === undefined ) { return; }
+    const directive = {
+        id: 'toolbar-icon',
+        js: [ '/js/scripting/toolbar-icon.js' ],
+        matches: matchesFromHostnames(toToggle),
+        runAt: 'document_start',
+    };
 
-    // If waking up, update icon for existing tabs
-    const tabs = await browser.tabs.query({
-        url: Array.from(toToggle).map(a => `*://*.${a}/*`)
-    }).catch(( ) => ([]));
-
-    for ( const tab of tabs ) {
-        toggleToolbarIcon(tab.id);
+    if ( registered === undefined ) {
+        context.toAdd.push(directive);
+    } else if ( strArrayEq(registered.matches, directive.matches) === false ) {
+        context.toRemove.push('toolbar-icon');
+        context.toAdd.push(directive);
     }
 }
