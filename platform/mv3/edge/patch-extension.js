@@ -19,16 +19,33 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-'use strict';
+import fs from 'fs/promises';
+import process from 'process';
 
 /******************************************************************************/
 
-import fs from 'fs/promises';
+const commandLineArgs = (( ) => {
+    const args = Object.create(null);
+    let name, value;
+    for ( const arg of process.argv.slice(2) ) {
+        const pos = arg.indexOf('=');
+        if ( pos === -1 ) {
+            name = arg;
+            value = '';
+        } else {
+            name = arg.slice(0, pos);
+            value = arg.slice(pos+1);
+        }
+        args[name] = value;
+    }
+    return args;
+})();
 
 /******************************************************************************/
 
 async function main() {
-    const manifestPath = 'dist/build/uBOLite.edge/manifest.json';
+    const packageDir = commandLineArgs.packageDir;
+    const manifestPath = `${packageDir}/manifest.json`;
 
     // Get manifest content
     const manifest = await fs.readFile(manifestPath, { encoding: 'utf8'
@@ -45,7 +62,7 @@ async function main() {
     }
     // Commit changes
     await fs.writeFile(manifestPath,
-        JSON.stringify(manifest, null, 2) + '\n'
+        JSON.stringify(manifest, null, 2)
     );
 }
 

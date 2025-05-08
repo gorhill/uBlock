@@ -1413,7 +1413,7 @@ async function main() {
         const dayPart = now.getUTCDate();
         const hourPart = Math.floor(now.getUTCHours());
         const minutePart = Math.floor(now.getUTCMinutes());
-        version = `${yearPart}.${monthPart}.${dayPart}.${hourPart * 60 + minutePart}`;
+        version = `${yearPart}.${monthPart*100+dayPart}.${hourPart*100+minutePart}`;
     }
     log(`Version: ${version}`, false);
 

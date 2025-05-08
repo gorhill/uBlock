@@ -26,7 +26,7 @@ for i in "$@"; do
     safari)
       PLATFORM="safari"
       ;;
-    uBOLite_+([0-9]).+([0-9]).+([0-9]).+([0-9]))
+    uBOLite_+([0-9]).+([0-9]).+([0-9]))
       TAGNAME="$i"
       FULL="yes"
       ;;
@@ -124,24 +124,12 @@ fi
 cd - > /dev/null
 rm -rf "$UBOL_BUILD_DIR"
 
-# For Edge, declared rulesets must be at package root
-if [ "$PLATFORM" = "edge" ]; then
-    echo "*** uBOLite.edge: Modify reference implementation for Edge compatibility"
-    mv "$UBOL_DIR"/rulesets/main/* "$UBOL_DIR/"
-    rmdir "$UBOL_DIR/rulesets/main"
-    node tools/make-edge.mjs
-fi
-
-# For Safari, we must fix the package for compliance
-if [ "$PLATFORM" = "safari" ]; then
-    node platform/mv3/safari/patch-extension.js packageDir="$UBOL_DIR"
-fi
-
 echo "*** uBOLite.$PLATFORM: extension ready"
 echo "Extension location: $UBOL_DIR/"
 
 # Local build
 if [ -z "$TAGNAME" ]; then
+    TAGNAME="uBOLite_$(jq -r .version "$UBOL_DIR"/manifest.json)"
     # Enable DNR rule debugging
     tmp=$(mktemp)
     jq '.permissions += ["declarativeNetRequestFeedback"]' \
@@ -153,6 +141,22 @@ if [ -z "$TAGNAME" ]; then
         jq '.browser_specific_settings.gecko.id = "uBOLite.dev@raymondhill.net"' "$UBOL_DIR/manifest.json"  > "$tmp" \
             && mv "$tmp" "$UBOL_DIR/manifest.json"
     fi
+else
+    tmp=$(mktemp)
+    jq --arg version "${TAGNAME:8}" '.version = $version' "$UBOL_DIR/manifest.json"  > "$tmp" \
+        && mv "$tmp" "$UBOL_DIR/manifest.json"
+fi
+
+# Platform-specific steps
+if [ "$PLATFORM" = "edge" ]; then
+    # For Edge, declared rulesets must be at package root
+    echo "*** uBOLite.edge: Modify reference implementation for Edge compatibility"
+    mv "$UBOL_DIR"/rulesets/main/* "$UBOL_DIR/"
+    rmdir "$UBOL_DIR/rulesets/main"
+    node platform/mv3/edge/patch-extension.js packageDir="$UBOL_DIR"
+elif [ "$PLATFORM" = "safari" ]; then
+    # For Safari, we must fix the package for compliance
+    node platform/mv3/safari/patch-extension.js packageDir="$UBOL_DIR"
 fi
 
 if [ "$FULL" = "yes" ]; then
@@ -161,13 +165,6 @@ if [ "$FULL" = "yes" ]; then
         EXTENSION="xpi"
     fi
     echo "*** uBOLite.mv3: Creating publishable package..."
-    if [ -z "$TAGNAME" ]; then
-        TAGNAME="uBOLite_$(jq -r .version "$UBOL_DIR"/manifest.json)"
-    else
-        tmp=$(mktemp)
-        jq --arg version "${TAGNAME:8}" '.version = $version' "$UBOL_DIR/manifest.json"  > "$tmp" \
-            && mv "$tmp" "$UBOL_DIR/manifest.json"
-    fi
     UBOL_PACKAGE_NAME="$TAGNAME.$PLATFORM.mv3.$EXTENSION"
     UBOL_PACKAGE_DIR=$(mktemp -d)
     mkdir -p "$UBOL_PACKAGE_DIR"

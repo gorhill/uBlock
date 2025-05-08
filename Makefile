@@ -6,11 +6,13 @@ run_options := $(filter-out $@,$(MAKECMDGOALS))
 	compare maxcost medcost mincost modifiers record wasm
 
 sources := ./dist/version $(shell find ./assets -type f) $(shell find ./src -type f)
-platform := $(wildcard platform/**/*)
+platform := $(wildcard platform/*/*)
 assets := dist/build/uAssets
-mv3-sources := $(shell find ./src -type f) $(shell find ./platform/mv3 -type f)
+mv3-sources := $(shell find ./src -type f) $(wildcard platform/mv3/*) $(shell find ./platform/mv3/extension -type f)
 mv3-data := $(shell find ./dist/build/mv3-data -type f)
-mv3-safari-deps := $(shell find ./platform/mv3/extension -type f) $(wildcard platform/mv3/safari/*)
+
+mv3-edge-deps := $(wildcard platform/mv3/edge/*)
+mv3-safari-deps := $(wildcard platform/mv3/safari/*)
 
 all: chromium firefox npm
 
@@ -77,7 +79,7 @@ dist/build/uBOLite.firefox: tools/make-mv3.sh $(mv3-sources) $(platform) $(mv3-d
 
 mv3-firefox: dist/build/uBOLite.firefox
 
-dist/build/uBOLite.edge: tools/make-mv3.sh tools/make-edge.mjs $(mv3-sources) $(platform) $(mv3-data) dist/build/mv3-data
+dist/build/uBOLite.edge: tools/make-mv3.sh $(mv3-sources) $(mv3-edge-deps) $(mv3-data) dist/build/mv3-data
 	tools/make-mv3.sh edge
 
 mv3-edge: dist/build/uBOLite.edge
