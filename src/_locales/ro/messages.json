@@ -840,7 +840,7 @@
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
-    "message": "Intrările din jurnal care nu îndeplinesc cele trei condiții de mai jos vor fi respinse automat:",
+    "message": "Intrările în registrul de logare care nu îndeplinesc toate cele trei condiții de mai jos vor fi automat eliminate.",
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {

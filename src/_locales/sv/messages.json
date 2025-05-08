@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Äntligen en effektiv blockerare. Skonsam mot både processor och minne.",
+    "message": "Äntligen en effektiv blockerare. Lätt för både processor och minne.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
