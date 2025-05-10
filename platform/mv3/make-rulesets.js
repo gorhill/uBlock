@@ -71,7 +71,7 @@ const env = [
     'user_stylesheet',
 ];
 
-if ( platform === 'edge' || platform === 'safari' ) {
+if ( platform === 'edge' ) {
     env.push('chromium');
 }
 
