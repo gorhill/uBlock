@@ -149,4 +149,7 @@ export const dnr = {
             false
         );
     },
+    setExtensionActionOptions(...args) {
+        return nativeDNR.setExtensionActionOptions(...args);
+    },
 };
