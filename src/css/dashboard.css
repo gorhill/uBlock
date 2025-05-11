@@ -14,6 +14,7 @@ body.notReady {
     }
 #dashboard-nav {
     align-items: center;
+    background-color: var(--surface-1);
     border: 0;
     border-bottom: 1px solid var(--border-1);
     display: flex;
