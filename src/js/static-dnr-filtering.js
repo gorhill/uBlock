@@ -227,6 +227,7 @@ function addExtendedToDNR(context, parser) {
         if ( bad ) { continue; }
         if ( not && exception ) { continue; }
         isGeneric = false;
+        // TODO: Support regex- and path-based entries
         if ( isRegexOrPath(hn) ) { continue; }
         if ( details === undefined ) {
             context.specificCosmeticFilters.set(compiled, details = {});
