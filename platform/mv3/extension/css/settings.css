@@ -1,3 +1,7 @@
+:root {
+    --filtering-mode-button-size: 32px;
+    }
+
 body.loading {
     visibility: hidden;
     }
@@ -67,9 +71,7 @@ label:has(input[type="checkbox"][disabled]) + legend {
     white-space: pre-line;
     }
 .filteringModeSlider {
-    height: calc(60px / 2);
     pointer-events: none;
-    width: calc(240px / 2);
     }
 
 h3[data-i18n="filteringMode0Name"]::first-letter {

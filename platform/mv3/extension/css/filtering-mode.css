@@ -1,20 +1,24 @@
+:root {
+    --filtering-mode-button-size: 60px; /* should be multiple of 4 */
+    --filtering-mode-slider-width: calc(4 * var(--filtering-mode-button-size) + 3px);
+    }
+
 .filteringModeSlider {
     align-items: center;
     container-type: size;
     display: flex;
-    height: 60px;
+    height: var(--filtering-mode-button-size);
     justify-content: center;
     position: relative;
-    width: 240px;
+    width: var(--filtering-mode-slider-width);
     }
 
 .filteringModeButton {
     background-color: var(--surface-1);
-    box-sizing: border-box;
-    border-radius: 30% 15% / 15% 30%;
-    height: calc(25cqw + 2px);
+    border-radius: 20%;
+    height: var(--filtering-mode-button-size);
     position: absolute;
-    width: calc(25cqw + 2px);
+    width: var(--filtering-mode-button-size);
     z-index: 10;
     }
 
@@ -23,9 +27,8 @@
     border: 4px solid var(--accent-surface-1);
     border-radius: inherit;
     box-sizing: border-box;
-    height: calc(100% - 2px);
-    margin: 1px;
-    width: calc(100% - 2px);
+    height: 100%;
+    width: 100%;
     }
 
 .filteringModeSlider.moving .filteringModeButton > div,
@@ -40,14 +43,12 @@
 
 .filteringModeSlider span[data-level] {
     background-color: var(--accent-surface-1);
-    border: 1px solid var(--accent-surface-1);
-    box-sizing: border-box;
     display: inline-flex;
+    flex-shrink: 0;
     height: 30%;
     margin-left: 1px;
-    width: 25%;
+    width: var(--filtering-mode-button-size);
     }
-
 .filteringModeSlider span[data-level]:first-of-type {
     margin-left: 0;
     }
@@ -60,25 +61,33 @@
     left: 0;
     }
 .filteringModeSlider[data-level="1"] .filteringModeButton {
-    left: calc(25% - 1px);
+    left: calc(var(--filtering-mode-button-size) + 1px);
     }
 .filteringModeSlider[data-level="2"] .filteringModeButton {
-    left: calc(50% - 1px);
+    left: calc(var(--filtering-mode-button-size) * 2 + 2px);
     }
 .filteringModeSlider[data-level="3"] .filteringModeButton {
-    left: calc(75% - 1px);
+    left: calc(var(--filtering-mode-button-size) * 3 + 3px);
+    }
+
+[dir="rtl"] .filteringModeSlider span[data-level] {
+    margin-left: 0;
+    margin-right: 1px;
+    }
+[dir="rtl"] .filteringModeSlider span[data-level]:first-of-type {
+    margin-right: 0;
     }
 [dir="rtl"] .filteringModeSlider[data-level="0"] .filteringModeButton {
-    left: 75%;
+    right: 0;
     }
 [dir="rtl"] .filteringModeSlider[data-level="1"] .filteringModeButton {
-    left: 50%;
+    right: calc(var(--filtering-mode-button-size) + 1px);
     }
 [dir="rtl"] .filteringModeSlider[data-level="2"] .filteringModeButton {
-    left: 25%;
+    right: calc(var(--filtering-mode-button-size) * 2 + 2px);
     }
 [dir="rtl"] .filteringModeSlider[data-level="3"] .filteringModeButton {
-    left: 0;
+    right: calc(var(--filtering-mode-button-size) * 3 + 3px);
     }
 
 

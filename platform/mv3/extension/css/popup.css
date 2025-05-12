@@ -10,7 +10,10 @@
     --popup-gap: var(--font-size);
     --popup-gap-thin: calc(0.5 * var(--popup-gap));
     --popup-gap-extra-thin: calc(0.25 * var(--popup-gap));
-    --popup-main-min-width: 18em;
+    --popup-main-min-width: calc(
+        var(--filtering-mode-slider-width) +
+        var(--filtering-mode-button-size) / 2
+    );
     --popup-firewall-min-width: 30em;
     --popup-rule-cell-width: 5em;
     font-size: var(--font-size);
@@ -34,10 +37,13 @@ a {
     display: flex;
     flex-direction: column;
     max-width: 340px;
-    min-width: 100%;
+    min-width: var(--popup-main-min-width);
     }
 :root.portrait #main {
     align-self: inherit;
+    }
+:root.mobile #main {
+    min-width: 100%;
     }
 hr {
     border: 0;
@@ -70,11 +76,6 @@ body[data-forbid~="dashboard"] #gotoDashboard {
     display: none;
     }
 
-.lrspacer {
-    padding-left: var(--default-gap-small);
-    padding-right: var(--default-gap-small);
-    }
-
 #filteringModeText {
     color: var(--ink-3);
     margin-bottom: var(--default-gap-small);
@@ -102,7 +103,6 @@ body[data-forbid~="dashboard"] #gotoDashboard {
     align-self: center;
     margin-bottom: var(--popup-gap);
     margin-top: var(--popup-gap);
-    width: calc(var(--popup-main-min-width) - 1em);
     }
 
 .rulesetTools {
