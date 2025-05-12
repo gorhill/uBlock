@@ -1,3 +1,4 @@
+- [Use custom blank page for embedded iframe in dashboard](https://github.com/gorhill/uBlock/commit/8cd6212867)
 - [Use `color-scheme` `meta` tag, as suggested](https://github.com/gorhill/uBlock/commit/5c029b3532)
 - [Bring zapper look in line with uBO Lite's zapper](https://github.com/gorhill/uBlock/commit/3f59f94b60)
 - [Ignore `start_page` transition for popup-blocking purpose](https://github.com/gorhill/uBlock/commit/0243a141a7)
