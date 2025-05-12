@@ -34,5 +34,7 @@ import { dom } from './dom.js';
 
 {
     const mql = self.matchMedia('(hover: hover)');
-    dom.cl.toggle(dom.html, 'mobile', mql.matches !== true);
+    const isTouchScreen = mql.matches !== true;
+    dom.cl.toggle(dom.html, 'mobile', isTouchScreen);
+    dom.cl.toggle(dom.html, 'desktop', isTouchScreen === false);
 }

@@ -12,7 +12,7 @@
     --popup-gap-extra-thin: calc(0.25 * var(--popup-gap));
     --popup-main-min-width: calc(
         var(--filtering-mode-slider-width) +
-        var(--filtering-mode-button-size) / 2
+        var(--filtering-mode-button-size)
     );
     --popup-firewall-min-width: 30em;
     --popup-rule-cell-width: 5em;
@@ -43,7 +43,7 @@ a {
     align-self: inherit;
     }
 :root.mobile #main {
-    min-width: 100%;
+    /*min-width: 100%;*/
     }
 hr {
     border: 0;
