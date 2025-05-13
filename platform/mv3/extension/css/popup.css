@@ -18,7 +18,6 @@
     --popup-gap-thin: calc(0.5 * var(--popup-gap));
     --popup-gap-extra-thin: calc(0.25 * var(--popup-gap));
     font-size: var(--font-size);
-    line-height: 20px;
     min-width: var(--popup-min-width);
     }
 :root body.loading {
