@@ -7,18 +7,16 @@
 :root {
     --popup-min-width: calc(
         var(--filtering-mode-slider-width) +
-        var(--filtering-mode-button-size)
+        var(--filtering-mode-button-size) / 2
     );
 }
 
 :root body,
 :root.mobile body {
-    --font-size: 14px;
+    --font-size: 16px;
     --popup-gap: var(--font-size);
     --popup-gap-thin: calc(0.5 * var(--popup-gap));
     --popup-gap-extra-thin: calc(0.25 * var(--popup-gap));
-    --popup-firewall-min-width: 30em;
-    --popup-rule-cell-width: 5em;
     font-size: var(--font-size);
     line-height: 20px;
     min-width: var(--popup-min-width);
@@ -176,7 +174,7 @@ body.needReload #refresh {
     font-size: 1.4em;
     min-width: 32px;
     padding: var(--popup-gap)
-             var(--popup-gap-thin);
+             var(--popup-gap-extra-thin);
     unicode-bidi: embed;
     visibility: hidden;
     }
@@ -188,6 +186,7 @@ body.needReload #refresh {
     visibility: visible;
     }
 .toolRibbon .tool .caption {
+    color: var(--ink-2);
     font: 10px/12px sans-serif;
     margin-top: 6px;
     text-align: center;
