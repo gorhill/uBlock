@@ -13,9 +13,9 @@ The following assumes a linux environment.
 Upon completion of the script, the resulting extension package will become present in:
 
 - Chromium: `dist/build/uBOLite.chromium`
--     Edge: `dist/build/uBOLite.edge`
--  Firefox: `dist/build/uBOLite.firefox`
--   Safari: `dist/build/uBOLite.safari`
+- Edge: `dist/build/uBOLite.edge`
+- Firefox: `dist/build/uBOLite.firefox`
+- Safari: `dist/build/uBOLite.safari`
 
 The folder `dist/build/mv3-data` will cache data fetched from remote servers, so as to avoid fetching repeatedly from remote servers with repeated build commands. Use `make cleanassets` to remove all locally cached filter lists if you want to build with latest versions of filter lists.
 
