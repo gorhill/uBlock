@@ -126,6 +126,7 @@ const svgListening = (( ) => {
     };
 
     return state => {
+        if ( $stor(':root.mobile') !== null ) { return; }
         if ( state === on ) { return; }
         on = state;
         if ( on ) {
@@ -190,6 +191,7 @@ const startZapper = function(port) {
     $stor('svg#sea').addEventListener('touchstart', onSvgTouch, { passive: true });
     $stor('svg#sea').addEventListener('touchend', onSvgTouch);
     $id('quit').addEventListener('click', quitZapper );
+    $id('pick').addEventListener('click', resetZapper );
     svgListening(true);
 };
 
@@ -201,6 +203,7 @@ const quitZapper = function() {
     $stor('svg#sea').removeEventListener('touchstart', onSvgTouch, { passive: true });
     $stor('svg#sea').removeEventListener('touchend', onSvgTouch);
     $id('quit').removeEventListener('click', quitZapper );
+    $id('pick').removeEventListener('click', resetZapper );
     svgListening(false);
     if ( zapperScriptPort ) {
         zapperScriptPort.postMessage({ what: 'quitZapper' });
@@ -209,6 +212,14 @@ const quitZapper = function() {
         zapperScriptPort.onmessageerror = null;
         zapperScriptPort = null;
     }
+};
+
+/******************************************************************************/
+
+const resetZapper = function() {
+    zapperScriptPort.postMessage({
+        what: 'unhighlight'
+    });
 };
 
 /******************************************************************************/

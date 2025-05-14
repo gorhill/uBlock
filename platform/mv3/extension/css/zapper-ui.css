@@ -16,11 +16,11 @@ html#ubol-zapper,
     outline: none;
 }
 #ubol-zapper aside {
-    background-color: var(--surface-1);
     box-sizing: border-box;
     cursor: default;
     display: flex;
     flex-direction: column;
+    gap: 2px;
     position: fixed;
     right: 2px;
     top: 50%;
@@ -30,14 +30,6 @@ html#ubol-zapper,
 #ubol-zapper body[dir="rtl"] aside {
     left: 2px;
     right: unset;
-}
-#ubol-zapper aside > #quit {
-    border: 1px solid rgba(0,0,0,0.5);
-    fill: none;
-    stroke: var(--ink-1);
-    stroke-width: 3px;
-    width: var(--quit-button-size);
-    height: var(--quit-button-size);
 }
 #ubol-zapper svg#sea {
     cursor: crosshair;
@@ -57,6 +49,19 @@ html#ubol-zapper,
     stroke-width: 0.5px;
     fill: rgba(255,255,63,0.20);
 }
-#ubol-zapper #quit:hover {
+#ubol-zapper aside > div {
+    background-color: var(--surface-1);
+    border: 1px solid rgba(0,0,0,0.5);
+    box-sizing: border-box;
+    fill: none;
+    stroke: var(--ink-1);
+    stroke-width: 2px;
+    width: var(--quit-button-size);
+    height: var(--quit-button-size);
+}
+#ubol-zapper aside > div:hover {
     background-color: var(--surface-2)
+}
+:root:not(.mobile) #pick {
+    display: none;
 }
