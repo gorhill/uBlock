@@ -78,10 +78,9 @@ h3[data-i18n="filteringMode0Name"]::first-letter {
     text-transform: capitalize;
     }
 #trustedSites  {
-    box-sizing: border-box;
-    height: 6rem;
-    resize: vertical;
-    width: 100%;
+    background-color: var(--surface-0);
+    border: 1px solid var(--surface-3);
+    min-height: 8rem;
     }
 
 section[data-pane="rulesets"] > div:first-of-type {

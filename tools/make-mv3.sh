@@ -96,6 +96,7 @@ cp platform/mv3/extension/*.html "$UBOL_DIR"/
 cp platform/mv3/extension/*.json "$UBOL_DIR"/
 cp platform/mv3/extension/css/* "$UBOL_DIR"/css/
 cp -R platform/mv3/extension/js/* "$UBOL_DIR"/js/
+cp -R platform/mv3/extension/lib "$UBOL_DIR"/
 cp platform/mv3/"$PLATFORM"/ext-compat.js "$UBOL_DIR"/js/ 2>/dev/null || :
 cp platform/mv3/extension/img/* "$UBOL_DIR"/img/
 cp -R platform/mv3/extension/_locales "$UBOL_DIR"/

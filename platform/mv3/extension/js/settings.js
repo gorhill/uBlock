@@ -22,11 +22,24 @@
 import { browser, sendMessage } from './ext.js';
 import { dom, qs$ } from './dom.js';
 import { hashFromIterable } from './dashboard.js';
+import { i18n$ } from './i18n.js';
 import punycode from './punycode.js';
 import { renderFilterLists } from './filter-lists.js';
 
 /******************************************************************************/
 
+const cm6 = self.cm6;
+const cmView = (( ) => {
+    const options = {};
+    if ( dom.cl.has(':root', 'dark') ) {
+        options.oneDark = true;
+    }
+    options.placeholder = i18n$('noFilteringModePlaceholder');
+    return cm6.createEditorView(
+        cm6.createEditorState('', options),
+        qs$('#trustedSites')
+    );
+})();
 let cachedRulesetData = {};
 
 /******************************************************************************/
@@ -167,12 +180,15 @@ dom.on('#developerMode input[type="checkbox"]', 'change', ev => {
 /******************************************************************************/
 
 function renderTrustedSites() {
-    const textarea = qs$('#trustedSites');
     const hostnames = cachedRulesetData.trustedSites || [];
-    textarea.value = hostnames.map(hn => punycode.toUnicode(hn)).join('\n');
-    if ( textarea.value !== '' ) {
-        textarea.value += '\n';
-    }
+    let text = hostnames.map(hn => punycode.toUnicode(hn)).join('\n');
+    if ( text !== '' ) { text += '\n'; }
+    cmView.dispatch({
+        changes: {
+            from: 0, to: cmView.state.doc.length,
+            insert: text
+        },
+    });
 }
 
 function changeTrustedSites() {
@@ -186,8 +202,8 @@ function changeTrustedSites() {
 }
 
 function getStagedTrustedSites() {
-    const textarea = qs$('#trustedSites');
-    return textarea.value.split(/\s/).map(hn => {
+    const text = cmView.state.doc.toString();
+    return text.split(/\s/).map(hn => {
         try {
             return punycode.toASCII(
                 (new URL(`https://${hn}/`)).hostname
@@ -198,7 +214,7 @@ function getStagedTrustedSites() {
     }).filter(hn => hn !== '');
 }
 
-dom.on('#trustedSites', 'blur', changeTrustedSites);
+dom.on(cmView.contentDOM, 'blur', changeTrustedSites);
 
 self.addEventListener('beforeunload', changeTrustedSites);
 
@@ -296,7 +312,8 @@ sendMessage({
         renderFilterLists(cachedRulesetData);
         renderWidgets();
         dom.cl.remove(dom.body, 'loading');
-    } catch {
+    } catch(reason) {
+        console.error(reason);
     }
     listen();
 }).catch(reason => {
