@@ -80,6 +80,7 @@ h3[data-i18n="filteringMode0Name"]::first-letter {
 #trustedSites  {
     background-color: var(--surface-0);
     border: 1px solid var(--surface-3);
+    font-size: var(--monospace-size);
     min-height: 8rem;
     }
 
