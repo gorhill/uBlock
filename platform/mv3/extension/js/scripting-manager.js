@@ -143,10 +143,14 @@ function registerHighGeneric(context, genericDetails) {
         id: 'css-generichigh',
         css,
         allFrames: true,
-        matches,
-        excludeMatches,
         runAt: 'document_end',
     };
+    if ( matches.length !== 0 ) {
+        directive.matches = matches;
+    }
+    if ( excludeMatches.length !== 0 ) {
+        directive.excludeMatches = excludeMatches;
+    }
 
     // register
     if ( registered === undefined ) {
@@ -239,9 +243,12 @@ function registerGeneric(context, genericDetails) {
         js,
         allFrames: true,
         matches: [ '<all_urls>' ],
-        excludeMatches,
         runAt: 'document_idle',
     };
+    if ( excludeMatches.length !== 0 ) {
+        directiveAll.excludeMatches = excludeMatches;
+    }
+
     if ( registeredAll === undefined ) { // register
         context.toAdd.push(directiveAll);
     } else if ( // update
@@ -317,10 +324,14 @@ function registerProcedural(context) {
         id: 'css-procedural',
         js,
         allFrames: true,
-        matches,
-        excludeMatches,
         runAt: 'document_start',
     };
+    if ( matches.length !== 0 ) {
+        directive.matches = matches;
+    }
+    if ( excludeMatches.length !== 0 ) {
+        directive.excludeMatches = excludeMatches;
+    }
 
     // register
     if ( registered === undefined ) {
@@ -379,10 +390,14 @@ function registerDeclarative(context) {
         id: 'css-declarative',
         js,
         allFrames: true,
-        matches,
-        excludeMatches,
         runAt: 'document_start',
     };
+    if ( matches.length !== 0 ) {
+        directive.matches = matches;
+    }
+    if ( excludeMatches.length !== 0 ) {
+        directive.excludeMatches = excludeMatches;
+    }
 
     // register
     if ( registered === undefined ) {
@@ -441,10 +456,14 @@ function registerSpecific(context) {
         id: 'css-specific',
         js,
         allFrames: true,
-        matches,
-        excludeMatches,
         runAt: 'document_start',
     };
+    if ( matches.length !== 0 ) {
+        directive.matches = matches;
+    }
+    if ( excludeMatches.length !== 0 ) {
+        directive.excludeMatches = excludeMatches;
+    }
 
     // register
     if ( registered === undefined ) {
@@ -518,12 +537,16 @@ function registerScriptlet(context, scriptletDetails) {
                 id,
                 js: [ `/rulesets/scripting/scriptlet/${id}.js` ],
                 allFrames: true,
-                matches,
-                excludeMatches,
                 matchOriginAsFallback: true,
                 runAt: 'document_start',
                 world: details.world,
             };
+            if ( matches.length !== 0 ) {
+                directive.matches = matches;
+            }
+            if ( excludeMatches.length !== 0 ) {
+                directive.excludeMatches = excludeMatches;
+            }
 
             // register
             if ( registered === undefined ) {
