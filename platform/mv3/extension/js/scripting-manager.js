@@ -142,12 +142,10 @@ function registerHighGeneric(context, genericDetails) {
     const directive = {
         id: 'css-generichigh',
         css,
+        matches,
         allFrames: true,
         runAt: 'document_end',
     };
-    if ( matches.length !== 0 ) {
-        directive.matches = matches;
-    }
     if ( excludeMatches.length !== 0 ) {
         directive.excludeMatches = excludeMatches;
     }
@@ -323,12 +321,10 @@ function registerProcedural(context) {
     const directive = {
         id: 'css-procedural',
         js,
+        matches,
         allFrames: true,
         runAt: 'document_start',
     };
-    if ( matches.length !== 0 ) {
-        directive.matches = matches;
-    }
     if ( excludeMatches.length !== 0 ) {
         directive.excludeMatches = excludeMatches;
     }
@@ -389,12 +385,10 @@ function registerDeclarative(context) {
     const directive = {
         id: 'css-declarative',
         js,
+        matches,
         allFrames: true,
         runAt: 'document_start',
     };
-    if ( matches.length !== 0 ) {
-        directive.matches = matches;
-    }
     if ( excludeMatches.length !== 0 ) {
         directive.excludeMatches = excludeMatches;
     }
@@ -455,12 +449,10 @@ function registerSpecific(context) {
     const directive = {
         id: 'css-specific',
         js,
+        matches,
         allFrames: true,
         runAt: 'document_start',
     };
-    if ( matches.length !== 0 ) {
-        directive.matches = matches;
-    }
     if ( excludeMatches.length !== 0 ) {
         directive.excludeMatches = excludeMatches;
     }
@@ -530,20 +522,19 @@ function registerScriptlet(context, scriptletDetails) {
             }
             if ( targetHostnames.length === 0 ) { continue; }
             matches.push(...ut.matchesFromHostnames(targetHostnames));
+            normalizeMatches(matches);
 
             before.delete(id); // Important!
 
             const directive = {
                 id,
                 js: [ `/rulesets/scripting/scriptlet/${id}.js` ],
+                matches,
                 allFrames: true,
                 matchOriginAsFallback: true,
                 runAt: 'document_start',
                 world: details.world,
             };
-            if ( matches.length !== 0 ) {
-                directive.matches = matches;
-            }
             if ( excludeMatches.length !== 0 ) {
                 directive.excludeMatches = excludeMatches;
             }
