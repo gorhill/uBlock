@@ -476,7 +476,7 @@ async function filteringModesToDNR(modes) {
 
 /******************************************************************************/
 
-async function defaultRulesetsFromLanguage() {
+async function defaultRulesetsFromEnv() {
     const dropCountry = lang => {
         const pos = lang.indexOf('-');
         if ( pos === -1 ) { return lang; }
@@ -494,6 +494,10 @@ async function defaultRulesetsFromLanguage() {
         `\\b(${Array.from(langSet).join('|')})\\b`
     );
 
+    const reMobile = /\bMobile\b/.test(navigator.userAgent)
+        ? /\bmobile\b/
+        : null
+
     const rulesetDetails = await getRulesetDetails();
     const out = [];
     for ( const ruleset of rulesetDetails.values() ) {
@@ -502,10 +506,20 @@ async function defaultRulesetsFromLanguage() {
             out.push(id);
             continue;
         }
-        if ( typeof ruleset.lang !== 'string' ) { continue; }
-        if ( reTargetLang.test(ruleset.lang) === false ) { continue; }
-        out.push(id);
+        if ( typeof ruleset.lang === 'string' ) {
+            if ( reTargetLang.test(ruleset.lang) ) {
+                out.push(id);
+                continue;
+            }
+        }
+        if ( typeof ruleset.tags === 'string' ) {
+            if ( reMobile?.test(ruleset.tags) ) {
+                out.push(id);
+                continue;
+            }
+        }
     }
+   
     return out;
 }
 
@@ -518,7 +532,7 @@ async function patchDefaultRulesets() {
         staticRulesetIds,
     ] = await Promise.all([
         localRead('defaultRulesetIds'),
-        defaultRulesetsFromLanguage(),
+        defaultRulesetsFromEnv(),
         getStaticRulesets().then(r => r.map(a => a.id)),
     ]);
     const toAdd = [];
@@ -649,7 +663,6 @@ async function getEnabledRulesetsDetails() {
 /******************************************************************************/
 
 export {
-    defaultRulesetsFromLanguage,
     enableRulesets,
     excludeFromStrictBlock,
     filteringModesToDNR,

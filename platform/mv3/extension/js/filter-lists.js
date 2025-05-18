@@ -29,7 +29,7 @@ import { hashFromIterable } from './dashboard.js';
 export const rulesetMap = new Map();
 
 let cachedRulesetData = {};
-let hideUnusedSet = new Set([ 'regions' ]);
+let hideUnusedSet = new Set([ 'ads', 'regions' ]);
 
 /******************************************************************************/
 
@@ -217,6 +217,11 @@ export function renderFilterLists(rulesetData) {
             'default',
             rulesetDetails.filter(ruleset =>
                 ruleset.group === 'default'
+            ),
+        ], [
+            'ads',
+            rulesetDetails.filter(ruleset =>
+                ruleset.group === 'ads'
             ),
         ], [
             'privacy',

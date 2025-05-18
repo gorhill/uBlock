@@ -64,6 +64,17 @@
     "homeURL": "https://gitlab.com/malware-filter/urlhaus-filter"
   },
   {
+    "id": "adguard-mobile",
+    "name": "AdGuard – Mobile Ads",
+    "group": "ads",
+    "enabled": false,
+    "tags": "mobile",
+    "urls": [
+      "https://filters.adtidy.org/extension/ublock/filters/11.txt"
+    ],
+    "homeURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters"
+  },
+  {
     "id": "block-lan",
     "name": "Block Outsider Intrusion into LAN",
     "group": "privacy",
