@@ -904,7 +904,7 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Benzer raporlar bul",
+    "message": "GitHub'da benzer raporları bul.",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -964,7 +964,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Gönüllülere aynı raporlarla sıkıntı vermemek için, lütfen sorunun daha önce bildirilmediğinden emin olun.",
+    "message": "Gönüllüleri yinelenen bildirimlerle meşgul etmemek için lütfen sorunun daha önce bildirilip bildirilmediğini kontrol edin.\n<b>Not:</b> Butona tıklamak, sayfanın kaynağının GitHub'a gönderilmesine neden olacaktır.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
