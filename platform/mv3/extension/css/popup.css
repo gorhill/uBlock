@@ -13,7 +13,7 @@
 
 :root body,
 :root.mobile body {
-    --font-size: 16px;
+    --font-size: 15px;
     --popup-gap: var(--font-size);
     --popup-gap-thin: calc(0.5 * var(--popup-gap));
     --popup-gap-extra-thin: calc(0.25 * var(--popup-gap));
