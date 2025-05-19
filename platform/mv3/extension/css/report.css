@@ -1,0 +1,11 @@
+:root .safari {
+    display: none;
+}
+
+:root.safari .safari {
+    display: initial;
+}
+
+.warning {
+    color: var(--info2-ink);
+}
