@@ -103,7 +103,7 @@ async function getConfigData() {
         dnr.getEnabledRulesets(),
         sendMessage({ what: 'getDefaultFilteringMode' }),
     ]);
-    let browser = (( ) => {
+    const browser = (( ) => {
         const extURL = runtime.getURL('');
         let agent = '';
         if ( extURL.startsWith('moz-extension:') ) {
