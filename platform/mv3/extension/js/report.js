@@ -115,6 +115,7 @@ async function getConfigData() {
         } else {
             agent = 'Chrome';
         }
+        dom.cl.add('html', agent.toLowerCase());
         if ( /\bMobile\b/.test(navigator.userAgent) ) {
             agent += ' Mobile';
         }
