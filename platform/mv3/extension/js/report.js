@@ -95,16 +95,42 @@ function renderData(data, depth = 0) {
 async function getConfigData() {
     const manifest = runtime.getManifest();
     const [
+        platformInfo,
         rulesets,
         defaultMode,
     ] = await Promise.all([
+        runtime.getPlatformInfo(),
         dnr.getEnabledRulesets(),
         sendMessage({ what: 'getDefaultFilteringMode' }),
     ]);
+    let browser = (( ) => {
+        const extURL = runtime.getURL('');
+        let agent = '';
+        if ( extURL.startsWith('moz-extension:') ) {
+            agent = 'Firefox';
+        } else if ( extURL.startsWith('safari-web-extension:') ) {
+            agent = 'Safari';
+        } else if ( /\bEdg\/\b/.test(navigator.userAgent) ) {
+            agent = 'Edge';
+        } else {
+            agent = 'Chrome';
+        }
+        if ( /\bMobile\b/.test(navigator.userAgent) ) {
+            agent += ' Mobile';
+        }
+        const reVersion = new RegExp(`\\b${agent.slice(0,3)}[^/]*/(\\d+)`);
+        const match = reVersion.exec(navigator.userAgent);
+        if ( match ) {
+            agent += ` ${match[1]}`;
+        }
+        agent += ` (${platformInfo.os})`
+        return agent;
+    })();
     const modes = [ 'no filtering', 'basic', 'optimal', 'complete' ];
     const config = {
         name: manifest.name,
         version: manifest.version,
+        browser,
         filtering: {
             'site': `${modes[reportedPage.mode]}`,
             'default': `${modes[defaultMode]}`,
