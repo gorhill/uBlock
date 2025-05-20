@@ -43,8 +43,8 @@ main {
 <body>
 <h2>uBO-flavored JSONPath tool</h2>
 <main>
-    <textarea id="json-data" placeholder="JSON data"></textarea>
-    <input id="jsonpath-input" placeholder="JSON path expression"/>
+    <textarea id="json-data" placeholder="JSON data" spellcheck="false"></textarea>
+    <input id="jsonpath-input" placeholder="JSON path expression" spellcheck="false" />
     <div id="jsonpath-result">&nbsp;</div>
 </main>
 
@@ -65,7 +65,7 @@ main {
         }
         const out = [];
         for ( const i of a ) {
-            out.push(`[ ${i.map(j => JSON.stringify(j)).join(' ,')} ]`);
+            out.push(`[ ${i.map(j => JSON.stringify(j)).join(', ')} ]`);
         }
         return out.join('\n');
     }
