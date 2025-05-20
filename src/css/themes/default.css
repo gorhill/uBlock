@@ -382,7 +382,7 @@
 }
 
 :root.dark {
-    color-scheme: dark;
+    color-scheme: dark light;
 }
 
 /*
