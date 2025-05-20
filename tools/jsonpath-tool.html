@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JSONPath tool</title>
+<style>
+body {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    height: 100vh;
+    margin: 0;
+    padding: 0.5em;
+    width: 100vw;
+}
+h2 {
+    margin: 0;
+}
+main {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 0.5em;
+}
+#json-data {
+    box-sizing: border-box;
+    min-height: 20vh;
+    resize: vertical;
+}
+#jsonpath-input {
+    font-size: 16px;
+}
+#jsonpath-result {
+    background-color: #eee;
+    flex-grow: 1;
+    white-space: pre-wrap;
+}
+</style>
+</head>
+<body>
+<h2>uBO-flavored JSONPath tool</h2>
+<main>
+    <textarea id="json-data" placeholder="JSON data"></textarea>
+    <input id="jsonpath-input" placeholder="JSON path expression"/>
+    <div id="jsonpath-result">&nbsp;</div>
+</main>
+
+<script type="module">
+    // Requires a local server in root of repo:
+    // python3 -m http.server
+    //
+    // Then load the following URL in the browser:
+    // http://localhost:8000/tools/jsonpath-tool.html
+
+    import { JSONPath } from '../src/js/jsonpath.js';
+
+    function formatResult(a) {
+        if ( a === undefined ) { return 'undefined'; }
+        if ( jsonp.valid === false ) { return 'bad expression'; }
+        if ( Array.isArray(a) === false ) {
+            return JSON.stringify(a, null, 2);
+        }
+        const out = [];
+        for ( const i of a ) {
+            out.push(`[ ${i.map(j => JSON.stringify(j)).join(' ,')} ]`);
+        }
+        return out.join('\n');
+    }
+
+    function process() {
+        const input = document.querySelector('#jsonpath-input');
+        const jsonpath = input.value;
+        jsonp.compile(jsonpath);
+        const result = formatResult(jsonp.evaluate(jsonData));
+        const div = document.querySelector('#jsonpath-result');
+        div.textContent = result;
+    }
+
+    const jsonp = new JSONPath();
+    let jsonData = {};
+
+    {
+        const textarea = document.querySelector('#json-data');
+        textarea.addEventListener('input', ( ) => {
+            try {
+                jsonData = JSON.parse(textarea.value);
+            } catch {
+            }
+            if ( typeof jsonData !== 'object' || jsonData === null ) {
+                jsonData = {};
+            }
+            process();
+        });
+    }
+
+    {
+        const input = document.querySelector('#jsonpath-input');
+        input.addEventListener('input', ( ) => {
+            process();
+        });
+    }
+</script>
+
+</body>
+</html>
