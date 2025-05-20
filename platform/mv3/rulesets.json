@@ -4,6 +4,7 @@
     "name": "uBlock filters – Ads, trackers, and more",
     "group": "default",
     "enabled": true,
+    "trusted": true,
     "urls": [
       "https://ublockorigin.github.io/uAssets/filters/quick-fixes.min.txt",
       "https://ublockorigin.github.io/uAssets/filters/unbreak.min.txt",
@@ -48,6 +49,7 @@
     "name": "uBlock filters – Badware risks",
     "group": "malware",
     "enabled": true,
+    "trusted": true,
     "urls": [
       "https://ublockorigin.github.io/uAssets/filters/badware.min.txt"
     ],

@@ -31,8 +31,8 @@ import {
     mergeRules,
 } from './js/static-dnr-filtering.js';
 
+import { execSync } from 'node:child_process';
 import fs from 'fs/promises';
-import https from 'https';
 import path from 'path';
 import process from 'process';
 import redirectResourcesMap from './js/redirect-resources.js';
@@ -107,46 +107,55 @@ console.log = log;
 const logProgress = text => {
     process?.stdout?.clearLine?.();
     process?.stdout?.cursorTo?.(0);
-    process?.stdout?.write?.(text.length > 120 ? `${text.slice(0, 119)}…` : text);
+    process?.stdout?.write?.(text.length > 120 ? `${text.slice(0, 119)}… ` : `${text} `);
 };
 
 /******************************************************************************/
 
-const urlToFileName = url => {
-    return url
+async function fetchText(url, cacheDir) {
+    logProgress(`Reading locally cached ${url}`);
+    const fname = url
         .replace(/^https?:\/\//, '')
-        .replace(/\//g, '_');
-};
+        .replace(/\//g, '_');(url);
+    const content = await fs.readFile(
+        `${cacheDir}/${fname}`,
+        { encoding: 'utf8' }
+    ).catch(( ) => { });
+    if ( content !== undefined ) {
+        log(`\tFetched local ${url}`);
+        return { url, content };
+    }
+    logProgress(`Fetching remote ${url}`);
+    log(`\tFetching remote ${url}`);
+    const response = await fetch(url).catch(( ) => { });
+    if ( response === undefined ) {
+        return { url, error: `Fetching failed: ${url}` };
+    }
+    let text;
+    if ( response.ok ) {
+        text = await response.text().catch(( ) => { });
+    } else {
+        text = await fallbackFetchText(url).catch(( ) => { });
+    }
+    if ( text === undefined ) {
+        return { url, error: `Fetching text content failed: ${url}` };
+    }
+    writeFile(`${cacheDir}/${fname}`, text);
+    return { url, content: text };
+}
 
-const fetchText = (url, cacheDir) => {
-    return new Promise((resolve, reject) => {
-        logProgress(`Reading locally cached ${url}`);
-        const fname = urlToFileName(url);
-        fs.readFile(`${cacheDir}/${fname}`, { encoding: 'utf8' }).then(content => {
-            log(`\tFetched local ${url}`);
-            resolve({ url, content });
-        }).catch(( ) => {
-            logProgress(`Fetching remote ${url}`);
-            log(`\tFetching remote ${url}`);
-            https.get(url, response => {
-                const data = [];
-                response.on('data', chunk => {
-                    data.push(chunk.toString());
-                });
-                response.on('end', ( ) => {
-                    const content = data.join('');
-                    try {
-                        writeFile(`${cacheDir}/${fname}`, content);
-                    } catch {
-                    }
-                    resolve({ url, content });
-                });
-            }).on('error', error => {
-                reject(error);
-            });
-        });
-    });
-};
+async function fallbackFetchText(url) {
+    const match = /^https:\/\/raw\.githubusercontent\.com\/([^/]+)\/([^/]+)\/master\/([^?]+)/.exec(url);
+    if ( match === null ) { return; }
+    logProgress(`\tGitHub CLI-fetching remote ${url}`);
+    // https://docs.github.com/en/rest/repos/contents
+    const content = execSync(`gh api \
+        -H "Accept: application/vnd.github.raw+json" \
+        -H "X-GitHub-Api-Version: 2022-11-28" \
+        /repos/${match[1]}/${match[2]}/contents/${match[3]} \
+    `, { encoding: 'utf8' });
+    return content;
+}
 
 /******************************************************************************/
 
@@ -251,22 +260,18 @@ async function fetchList(assetDetails) {
             }
             newParts.push(
                 fetchText(part.url, cacheDir).then(details => {
-                    const { url } = details;
+                    const { url, error } = details;
+                    if ( error !== undefined ) { return details; }
                     const content = details.content.trim();
-                    if ( typeof content === 'string' && content !== '' ) {
-                        if (
-                            content.startsWith('<') === false ||
-                            content.endsWith('>') === false
-                        ) {
-                            return { url, content };
-                        }
+                    if ( content === '' || /^<.*>$/.test(content) ) {
+                        return { url, error: `Bad content: ${url}` };
                     }
-                    log(`No valid content for ${url}`, false);
-                    return { url, content: '' };
+                    return { url, content };
                 })
             );
             newParts.push(`!#trusted off ${secret}`);
         }
+        if ( parts.some(v => typeof v === 'object' && v.error) ) { return; }
         parts = await Promise.all(newParts);
         parts = sfp.utils.preparser.expandIncludes(parts, env);
     }
@@ -1239,6 +1244,9 @@ async function rulesetFromURLs(assetDetails) {
 
     if ( assetDetails.text === undefined && assetDetails.urls.length !== 0 ) {
         const text = await fetchList(assetDetails);
+        if ( text === undefined ) {
+            process.exit(1);
+        }
         assetDetails.text = text;
     } else {
         assetDetails.text = '';
