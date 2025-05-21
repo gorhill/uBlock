@@ -96,11 +96,17 @@ cp platform/mv3/extension/*.html "$UBOL_DIR"/
 cp platform/mv3/extension/*.json "$UBOL_DIR"/
 cp platform/mv3/extension/css/* "$UBOL_DIR"/css/
 cp -R platform/mv3/extension/js/* "$UBOL_DIR"/js/
-cp -R platform/mv3/extension/lib "$UBOL_DIR"/
 cp platform/mv3/"$PLATFORM"/ext-compat.js "$UBOL_DIR"/js/ 2>/dev/null || :
 cp platform/mv3/extension/img/* "$UBOL_DIR"/img/
 cp -R platform/mv3/extension/_locales "$UBOL_DIR"/
 cp platform/mv3/README.md "$UBOL_DIR/"
+
+# Libraries
+mkdir -p "$UBOL_DIR"/lib/codemirror
+cp platform/mv3/extension/lib/codemirror/* \
+    "$UBOL_DIR"/lib/codemirror/ 2>/dev/null || :
+cp platform/mv3/extension/lib/codemirror/codemirror-ubol/dist/cm6.bundle.ubol.min.js \
+    "$UBOL_DIR"/lib/codemirror/
 
 echo "*** uBOLite.mv3: Generating rulesets"
 UBOL_BUILD_DIR=$(mktemp -d)
