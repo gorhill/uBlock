@@ -7,6 +7,9 @@
     flex-wrap: wrap;
     overflow-x: hidden;
     padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
     }
 .tabButton {
     background-color: transparent;
@@ -40,7 +43,6 @@ body[data-pane="about"] #dashboard-nav .tabButton[data-pane="about"] {
 
 body > section {
     display: none;
-    overflow: auto;
     padding-bottom: 8rem;
     }
 body[data-pane="settings"] > section[data-pane="settings"],
