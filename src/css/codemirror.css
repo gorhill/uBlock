@@ -356,3 +356,9 @@ html:not(.mobile) .cm-search-widget .fa-icon:not(.fa-icon-ro):hover {
 .CodeMirror-lintmarker[data-error="y"] > span:hover {
     display: initial;
     }
+
+/* https://github.com/uBlockOrigin/uBlock-issues/issues/3645 */
+.CodeMirror-vscrollbar {
+    pointer-events: initial !important;
+    }
+
