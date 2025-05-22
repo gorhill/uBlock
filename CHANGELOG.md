@@ -1,3 +1,5 @@
+- [Make `header=` syntax compatible with DNR rules](https://github.com/gorhill/uBlock/commit/408b538e75)
+- [Counter CodeMirror's `pointer-events: none` on scrollbars](https://github.com/gorhill/uBlock/commit/c44f043ed3)
 - [Fix element picker issue with explicit dark theme](https://github.com/gorhill/uBlock/commit/0130fdf4a1)
 
 ----------
