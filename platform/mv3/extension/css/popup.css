@@ -68,8 +68,9 @@ hr {
 body[data-forbid~="filteringMode"] .filteringModeSlider {
     pointer-events: none;
     }
-body[data-forbid~="dashboard"] #gotoDashboard {
-    display: none;
+body[data-forbid~="dashboard"] #gotoDashboard,
+body[data-forbid~="zapper"] #gotoZapper {
+    visibility: hidden;
     }
 
 #filteringModeText {
