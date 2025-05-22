@@ -630,6 +630,9 @@ const exCharCodeAt = (s, i) => {
     return pos >= 0 ? s.charCodeAt(pos) : -1;
 };
 
+const escapeForRegex = s =>
+    s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
 /******************************************************************************/
 
 class AstWalker {
@@ -3024,24 +3027,43 @@ export function parseHeaderValue(arg) {
     const out = { };
     let pos = s.indexOf(':');
     if ( pos === -1 ) { pos = s.length; }
-    out.name = s.slice(0, pos);
+    out.name = s.slice(0, pos).toLowerCase();
     out.bad = out.name === '';
     s = s.slice(pos + 1);
     out.not = s.charCodeAt(0) === 0x7E /* '~' */;
     if ( out.not ) { s = s.slice(1); }
     out.value = s;
+    if ( s === '' ) { return out; }
     const match = /^\/(.+)\/(i)?$/.exec(s);
-    if ( match !== null ) {
-        try {
-            out.re = new RegExp(match[1], match[2] || '');
-        }
-        catch {
-            out.bad = true;
-        }
+    out.isRegex = match !== null;
+    if ( out.isRegex ) {
+        out.reStr = match[1];
+        out.reFlags = match[2] || '';
+        try { new RegExp(out.reStr, out.reFlags); }
+        catch { out.bad = true; }
+        return out;
     }
+    out.reFlags = 'i';
+    if ( /[*?]/.test(s) === false ) {
+        out.reStr = escapeForRegex(s);
+        return out;
+    }
+    const reConstruct = /(?<!\\)[*?]/g;
+    const reParts = [];
+    let beg = 0;
+    for (;;) {
+        const match = reConstruct.exec(s);
+        if ( match === null ) { break; }
+        reParts.push(
+            escapeForRegex(s.slice(beg, match.index)),
+            match[0] === '*' ? '.*' : '.?',
+        );
+        beg = reConstruct.lastIndex;
+    }
+    reParts.push(escapeForRegex(s.slice(beg)));
+    out.reStr = reParts.join('');
     return out;
 }
-
 
 // https://adguard.com/kb/general/ad-filtering/create-own-filters/#replace-modifier
 
@@ -3194,7 +3216,6 @@ class ExtSelectorCompiler {
         // /^(?:[A-Za-z_][\w-]*(?:[.#][A-Za-z_][\w-]*)*(?:\[[A-Za-z_][\w-]*(?:[*^$]?="[^"\]\\]+")?\])*|[.#][A-Za-z_][\w-]*(?:[.#][A-Za-z_][\w-]*)*(?:\[[A-Za-z_][\w-]*(?:[*^$]?="[^"\]\\]+")?\])*|\[[A-Za-z_][\w-]*(?:[*^$]?="[^"\]\\]+")?\](?:\[[A-Za-z_][\w-]*(?:[*^$]?="[^"\]\\]+")?\])*)(?:(?:\s+|\s*[>+~]\s*)(?:[A-Za-z_][\w-]*(?:[.#][A-Za-z_][\w-]*)*(?:\[[A-Za-z_][\w-]*(?:[*^$]?="[^"\]\\]+")?\])*|[.#][A-Za-z_][\w-]*(?:[.#][A-Za-z_][\w-]*)*(?:\[[A-Za-z_][\w-]*(?:[*^$]?="[^"\]\\]+")?\])*|\[[A-Za-z_][\w-]*(?:[*^$]?="[^"\]\\]+")?\](?:\[[A-Za-z_][\w-]*(?:[*^$]?="[^"\]\\]+")?\])*))*$/
 
         this.reEatBackslashes = /\\([()])/g;
-        this.reEscapeRegex = /[.*+?^${}()|[\]\\]/g;
         // https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes
         this.knownPseudoClasses = new Set([
             'active', 'any-link', 'autofill',
@@ -4043,7 +4064,7 @@ class ExtSelectorCompiler {
                 regexDetails = [ regexDetails, match[2] ];
             }
         } else {
-            regexDetails = '^' + value.replace(this.reEscapeRegex, '\\$&') + '$';
+            regexDetails = `^${escapeForRegex(value)}$`;
         }
         return { name, pseudo, value: regexDetails };
     }

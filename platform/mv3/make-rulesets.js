@@ -333,6 +333,10 @@ function patchRuleset(ruleset) {
             log(`Safari's incomplete API: ${JSON.stringify(rule)}`, true);
             continue;
         }
+        if ( Array.isArray(rule.condition.responseHeaders) ) {
+            log(`Safari's incomplete API: ${JSON.stringify(rule)}`, true);
+            continue;
+        }
         if ( Array.isArray(condition.requestMethods) ) {
             log(`Safari's incomplete API: ${JSON.stringify(rule)}`, true);
             continue;
