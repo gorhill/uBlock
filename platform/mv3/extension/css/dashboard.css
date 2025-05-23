@@ -1,4 +1,4 @@
-#dashboard-nav {
+nav {
     background-color: var(--surface-1);
     border: 0;
     border-bottom: 1px solid var(--border-1);
@@ -11,7 +11,7 @@
     top: 0;
     z-index: 100;
     }
-.tabButton {
+nav > .tabButton {
     background-color: transparent;
     border: 0;
     border-bottom: 3px solid transparent;
@@ -24,29 +24,34 @@
     text-decoration: none;
     white-space: nowrap;
     }
-.tabButton:focus {
+nav > .tabButton:focus {
     outline: 0;
     }
-.tabButton:hover {
+nav > .tabButton:hover {
     background-color: var(--dashboard-tab-hover-surface);
     border-bottom-color: var(--dashboard-tab-hover-border);
     }
 
 body[data-pane="settings"] #dashboard-nav .tabButton[data-pane="settings"],
 body[data-pane="rulesets"] #dashboard-nav .tabButton[data-pane="rulesets"],
+body[data-pane="develop"] #dashboard-nav .tabButton[data-pane="develop"],
 body[data-pane="about"] #dashboard-nav .tabButton[data-pane="about"] {
     background-color: var(--dashboard-tab-active-surface);
     border-bottom: 3px solid var(--dashboard-tab-active-ink);
     color: var(--dashboard-tab-active-ink);
         fill: var(--dashboard-tab-active-ink);
     }
+body:not([data-develop="true"]) #dashboard-nav .tabButton[data-pane="develop"] {
+    display: none;
+    }
 
 body > section {
     display: none;
-    padding-bottom: 8rem;
+    padding-bottom: 2rem;
     }
 body[data-pane="settings"] > section[data-pane="settings"],
 body[data-pane="rulesets"] > section[data-pane="rulesets"],
+body[data-pane="develop"] > section[data-pane="develop"],
 body[data-pane="about"] > section[data-pane="about"] {
     display: block;
     }
@@ -59,10 +64,10 @@ body[data-pane="about"] > section[data-pane="about"] {
     }
 
 /* touch-screen devices */
-:root.mobile #dashboard-nav {
+:root.mobile nav {
     flex-wrap: nowrap;
     overflow-x: auto;
     }
-:root.mobile #dashboard-nav .logo {
+:root.mobile nav .logo {
     display: none;
     }

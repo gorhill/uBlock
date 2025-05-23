@@ -1,0 +1,42 @@
+body[data-pane="develop"] {
+    height: 100vh;
+    }
+
+section[data-pane="develop"] {
+    display: none;
+    flex-grow: 1;
+    overflow: hidden;
+    }
+
+section[data-pane="develop"] > div {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    }
+
+section[data-pane="develop"] > div > * {
+    margin-bottom: 0;
+    margin-top: 1em;
+    }
+
+#cm-dnrRules {
+    flex-grow: 1;
+    font-size: var(--monospace-size);
+    overflow: hidden;
+    }
+
+/* https://discuss.codemirror.net/t/how-to-set-max-height-of-the-editor/2882/2 */
+#cm-dnrRules .cm-editor {
+    background-color: var(--surface-0);
+    height: 100%;
+    }
+
+#cm-dnrRules .cm-editor .cm-line {
+    border-bottom: 1px dotted transparent;
+    border-top: 1px dotted transparent;
+    }
+
+#cm-dnrRules .cm-editor .cm-line:has(.ͼ5) {
+    border-bottom: 1px dotted var(--border-1);
+    border-top: 1px dotted var(--border-1);
+    }
