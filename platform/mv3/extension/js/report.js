@@ -19,10 +19,18 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import { dom, qs$ } from './dom.js';
+import {
+    dom,
+    qs$,
+} from './dom.js';
+
+import {
+    localRead,
+    runtime,
+    sendMessage,
+} from './ext.js';
+
 import { dnr } from './ext-compat.js';
-import { runtime } from './ext.js';
-import { sendMessage } from './ext.js';
 
 /******************************************************************************/
 
@@ -98,10 +106,14 @@ async function getConfigData() {
         platformInfo,
         rulesets,
         defaultMode,
+        registerContentScriptsReason,
+        unregisterContentScriptsReason,
     ] = await Promise.all([
         runtime.getPlatformInfo(),
         dnr.getEnabledRulesets(),
         sendMessage({ what: 'getDefaultFilteringMode' }),
+        localRead('$scripting.registerContentScripts'),
+        localRead('$scripting.unregisterContentScripts'),
     ]);
     const browser = (( ) => {
         const extURL = runtime.getURL('');
@@ -138,6 +150,12 @@ async function getConfigData() {
         },
         rulesets,
     };
+    if ( registerContentScriptsReason !== undefined ) {
+        config.registerContentScripts = registerContentScriptsReason;
+    }
+    if ( unregisterContentScriptsReason !== undefined ) {
+        config.unregisterContentScripts = unregisterContentScriptsReason;
+    }
     return renderData(config);
 }
 

@@ -21,7 +21,12 @@
 
 import * as ut from './utils.js';
 
-import { browser } from './ext.js';
+import {
+    browser,
+    localRemove,
+    localWrite,
+} from './ext.js';
+
 import { fetchJSON } from './fetch.js';
 import { getEnabledRulesetsDetails } from './ruleset-manager.js';
 import { getFilteringModeDetails } from './mode-manager.js';
@@ -607,14 +612,22 @@ async function registerInjectables() {
 
     if ( toRemove.length !== 0 ) {
         ubolLog(`Unregistered ${toRemove} content (css/js)`);
-        await browser.scripting.unregisterContentScripts({ ids: toRemove })
-            .catch(reason => { console.info(reason); });
+        await browser.scripting.unregisterContentScripts({ ids: toRemove }).then(( ) => {
+            localRemove('$scripting.unregisterContentScripts');
+        }).catch(reason => {
+            localWrite('$scripting.unregisterContentScripts', reason);
+            console.info(reason);
+        });
     }
 
     if ( toAdd.length !== 0 ) {
         ubolLog(`Registered ${toAdd.map(v => v.id)} content (css/js)`);
-        await browser.scripting.registerContentScripts(toAdd)
-            .catch(reason => { console.info(reason); });
+        await browser.scripting.registerContentScripts(toAdd).then(( ) => {
+            localRemove('$scripting.registerContentScripts');
+        }).catch(reason => {
+            localWrite('$scripting.registerContentScripts', reason);
+            console.info(reason);
+        });
     }
 
     registerInjectables.barrier = false;
