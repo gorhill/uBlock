@@ -13,18 +13,20 @@
 <link rel="stylesheet" href="css/dashboard-common.css">
 <link rel="stylesheet" href="css/filtering-mode.css">
 <link rel="stylesheet" href="css/settings.css">
+<link rel="stylesheet" href="css/develop.css">
 
-<link rel="shortcut icon" type="image/png" href="img/icon_64.png"/>
+<link rel="icon" type="image/png" href="img/icon_64.png"/>
 </head>
 
 <body data-pane="settings" class="loading">
     <!-- -------- -->
-    <div id="dashboard-nav">
+    <nav id="dashboard-nav">
         <span class="logo"><img data-i18n-title="extName" src="img/ublock.svg" alt="uBO Lite"></span><!--
      --><button class="tabButton" type="button" data-pane="settings" data-i18n="settingsPageName" tabindex="0"></button><!--
      --><button class="tabButton" type="button" data-pane="rulesets" data-i18n="aboutFilterLists" tabindex="0"></button><!--
+     --><button class="tabButton" type="button" data-pane="develop" tabindex="0">Develop</button><!--
      --><button class="tabButton" type="button" data-pane="about" data-i18n="aboutPageName" tabindex="0"></button>
-    </div>
+    </nav>
     <!-- -------- -->
     <section data-pane="settings">
         <div>
@@ -32,6 +34,7 @@
             <p><label id="autoReload" data-i18n="autoReloadLabel"><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span>_</label>
             </p>
             <p><label id="showBlockedCount" data-i18n="showBlockedCountLabel"><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span>_</label>
+            <p id="developerMode"><label><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span>Developer mode</label>
         </div>
 
         <div>
@@ -85,7 +88,6 @@
                 </label>
             </div>
             <p><label id="strictBlockMode" data-i18n="enableStrictBlockLabel"><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span>_</label><legend data-i18n="enableStrictBlockLegend"></legend>
-            <p id="developerMode" hidden><label><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span>Developer mode</label>
         </div>
 
         <div>
@@ -101,6 +103,20 @@
             <p><input id="findInLists" type="search" spellcheck="false" placeholder="findListsPlaceholder" /></p>
         </div>
         <div id="lists"></div>
+    </section>
+    <!-- -------- -->
+    <section data-pane="develop">
+        <div>
+            <p>
+                <button id="dnrRulesApply" class="preferred iconified" type="button" disabled><span class="fa-icon">save</span><span data-i18n>Save</span><span class="hover"></span></button>
+                <button id="dnrRulesRevert" class="iconified" type="button" disabled><span class="fa-icon">undo</span><span data-i18n>Revert</span><span class="hover"></span></button>
+                &emsp;
+                <button id="dnrRulesImport" class="iconified" type="button"><span class="fa-icon">download-alt</span><span data-i18n>Import and append&mldr;</span><span class="hover"></span></button>
+                <button id="dnrRulesExport" class="iconified" type="button"><span class="fa-icon">upload-alt</span><span data-i18n>Export&mldr;</span><span class="hover"></span></button>
+            </p>
+            <p>Enter your own DNR rules below.</p>
+            <div id="cm-dnrRules"></div>
+        </div>
     </section>
     <!-- -------- -->
     <section data-pane="about">
@@ -125,6 +141,7 @@
                 <div class="li"><span><a href="https://fontawesome.com/" target="_blank">FontAwesome font family</a> by <a href="https://github.com/davegandy">Dave Gandy</a></span></div>
                 <div class="li"><span><a href="https://github.com/mathiasbynens/punycode.js" target="_blank">Punycode.js</a> by <a href="https://github.com/mathiasbynens">Mathias Bynens</a></span></div>
                 <div class="li"><span><a href="https://flagpedia.net/" target="_blank">Flags of the World</a> by <a href="https://www.davidkrmela.com/">David Krmela</a></span></div>
+                <div class="li"><span><a href="https://codemirror.net/" target="_blank">CodeMirror</a> by <a href="https://github.com/marijnh">Marijn Haverbeke</a></span></div>
             </div>
         </div>
     </section>
@@ -161,6 +178,7 @@
 <script src="js/i18n.js" type="module"></script>
 <script src="js/dashboard.js" type="module"></script>
 <script src="js/settings.js" type="module"></script>
+<script src="js/develop.js" type="module"></script>
 
 </body>
 </html>
