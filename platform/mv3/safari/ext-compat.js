@@ -122,7 +122,7 @@ export const dnr = {
         if ( optionsAfter === undefined ) { return; }
         return nativeDNR.updateSessionRules(optionsAfter);
     },
-    async setAllowAllRules(id, allowed, notAllowed, reverse) {
+    async setAllowAllRules(id, allowed, notAllowed, reverse, priority) {
         const beforeRules = await this.getDynamicRules({ ruleIds: [ id+0 ] });
         const addRules = [];
         if ( reverse || allowed.length || notAllowed.length ) {
@@ -130,7 +130,7 @@ export const dnr = {
                 id: id+0,
                 action: { type: 'allow' },
                 condition: { urlFilter: '*' },
-                priority: 1000000,
+                priority,
             };
             if ( allowed.length ) {
                 rule0.condition.domains = allowed;

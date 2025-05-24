@@ -20,8 +20,45 @@
 */
 
 import { dom, qs$ } from './dom.js';
-import { localRead } from './ext.js';
+import {
+    localRead,
+    localRemove,
+    localWrite,
+    sendMessage,
+} from './ext.js';
 import { rulesFromText } from './dnr-parser.js';
+
+/******************************************************************************/
+
+function setEditorText(text) {
+    if ( text === undefined ) { return; }
+    if ( text !== '' ) { text += '\n'; }
+    cmRules.dispatch({
+        changes: {
+            from: 0, to: cmRules.state.doc.length,
+            insert: text
+        },
+    });
+}
+
+function getEditorText() {
+    return cmRules.state.doc.toString();
+}
+
+/******************************************************************************/
+
+function saveEditorText() {
+    const text = getEditorText().trim();
+    const promise = text.length !== 0
+        ? localWrite('userDnrRules', text)
+        : localRemove('userDnrRules');
+    promise.then(( ) => {
+        lastSavedText = text;
+        updateWidgets();
+    }).then(( ) => {
+        sendMessage({ what: 'updateUserDnrRules' });
+    });
+}
 
 /******************************************************************************/
 
@@ -30,6 +67,11 @@ function updateWidgets() {
         lastSavedText.trim();
     dom.attr('#dnrRulesApply', 'disabled', changed ? null : '');
     dom.attr('#dnrRulesRevert', 'disabled', changed ? null : '');
+    const { bad } = rulesFromText(getEditorText());
+    self.cm6.lineErrorClear(cmRules);
+    if ( bad?.length ) {
+        self.cm6.lineErrorAt(cmRules, bad);
+    }
 }
 
 function updateWidgetsAsync() {
@@ -42,79 +84,51 @@ function updateWidgetsAsync() {
 
 /******************************************************************************/
 
-let lastSavedText = '';
-
-const cm6 = self.cm6;
 const cmRules = (( ) => {
-    const options = {
+    return self.cm6.createEditorView({
         yaml: true,
         oneDark: dom.cl.has(':root', 'dark'),
         updateListener: function(info) {
             if ( info.docChanged === false ) { return; }
+            const doc = info.state.doc;
+            info.changes.desc.iterChangedRanges((fromA, toA, fromB, toB) => {
+                linesToLint.push([
+                    doc.lineAt(fromA).number - 1,
+                    doc.lineAt(toA).number - 1,
+                ], [
+                    doc.lineAt(fromB).number - 1,
+                    doc.lineAt(toB).number - 1,
+                ]);
+            });
             updateWidgetsAsync();
         },
-    };
-    return cm6.createEditorView(
-        cm6.createEditorState(`# bla bla bla
-action:
-  type: redirect
-  redirect:
-    url: https://cdn.jsdelivr.net/gh/uBlockOrigin/uBOL-home/chromium/web_accessible_resources/noop-1s.mp4
-condition:
-  initiatorDomains:
-    - open.spotify.com
-  resourceTypes:
-    - media
-  urlFilter: ||spotifycdn.com/audio/
-priority: 1000
----
-# bla bla bla
-action:
-  type: block
-condition:
-  toto: lol
-  initiatorDomains:
-    - open.spotify.com
-  resourceTypes:
-    - media
-  urlFilter: ||spotifycdn.com/audio/
-...
-`, options),
-        qs$('#cm-dnrRules')
-    );
+        saveListener: function() {
+            saveEditorText();
+        },
+        lineError: 'bad',
+    }, qs$('#cm-dnrRules'));
 })();
 
 /******************************************************************************/
 
-localRead('userDNRRules').then(text => {
-    if ( text === undefined ) { return; }
-    if ( text !== '' ) { text += '\n'; }
+const linesToLint = [];
+let lastSavedText = '';
+
+localRead('userDnrRules').then(text => {
+    text ||= '';
+    setEditorText(text);
     lastSavedText = text;
-    cmRules.dispatch({
-        changes: {
-            from: 0, to: cmRules.state.doc.length,
-            insert: text
-        },
-    });
 });
 
 /******************************************************************************/
 
 dom.on('#dnrRulesApply', 'click', ( ) => {
-    const text = cmRules.state.doc.toString();
-    lastSavedText = text;
-    const rules = rulesFromText(text);
-    console.log(rules);
-    updateWidgets();
+    saveEditorText();
 });
 
 dom.on('#dnrRulesRevert', 'click', ( ) => {
-    cmRules.dispatch({
-        changes: {
-            from: 0, to: cmRules.state.doc.length,
-            insert: lastSavedText,
-        },
-    });
+    setEditorText(lastSavedText);
+    sendMessage({ what: 'updateUserDnrRules' });
 });
 
 /******************************************************************************/

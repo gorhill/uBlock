@@ -36,10 +36,7 @@ const cmTrustedSites = (( ) => {
         options.oneDark = true;
     }
     options.placeholder = i18n$('noFilteringModePlaceholder');
-    return cm6.createEditorView(
-        cm6.createEditorState('', options),
-        qs$('#trustedSites')
-    );
+    return cm6.createEditorView(options, qs$('#trustedSites'));
 })();
 
 let cachedRulesetData = {};
