@@ -35,11 +35,16 @@ import { dnr } from './ext-compat.js';
 import { fetchJSON } from './fetch.js';
 import { getAdminRulesets } from './admin.js';
 import { hasBroadHostPermissions } from './utils.js';
+import { rulesFromText } from './dnr-parser.js';
 import { ubolLog } from './debug.js';
 
 /******************************************************************************/
 
+const SPECIAL_RULES_REALM = 5000000;
+const USER_RULES_BASE_RULE_ID = 9000000;
+const USER_RULES_PRIORITY = 1000000;
 const TRUSTED_DIRECTIVE_BASE_RULE_ID = 8000000;
+const TRUSTED_DIRECTIVE_PRIORITY = USER_RULES_PRIORITY + 1000000;
 const STRICTBLOCK_PRIORITY = 29;
 
 let dynamicRegexCount = 0;
@@ -80,15 +85,13 @@ function getRulesetDetails() {
 
 /******************************************************************************/
 
-async function pruneInvalidRegexRules(realm, rulesIn) {
-    const rejectedRegexRules = [];
-
+async function pruneInvalidRegexRules(realm, rulesIn, rejectedRegexes = []) {
     const validateRegex = regex => {
         return dnr.isRegexSupported({ regex, isCaseSensitive: false }).then(result => {
             const isSupported = result?.isSupported || false;
             pruneInvalidRegexRules.validated.set(regex, isSupported);
             if ( isSupported ) { return true; }
-            rejectedRegexRules.push(`\t${regex}  ${result?.reason}`);
+            rejectedRegexes.push(`${regex}\x1F${result?.reason}`);
             return false;
         });
     };
@@ -111,9 +114,9 @@ async function pruneInvalidRegexRules(realm, rulesIn) {
     // Collate results
     const isValid = await Promise.all(toCheck);
 
-    if ( rejectedRegexRules.length !== 0 ) {
+    if ( rejectedRegexes.length !== 0 ) {
         ubolLog(`${realm} realm: rejected regexes:\n`,
-            rejectedRegexRules.join('\n')
+            rejectedRegexes.map(s => `${s.replace(/\x1F/g, ' ')}`).join('\n')
         );
     }
 
@@ -126,6 +129,7 @@ pruneInvalidRegexRules.validated = new Map();
 async function updateRegexRules(currentRules, addRules, removeRuleIds) {
     // Remove existing regex-related block rules
     for ( const rule of currentRules ) {
+        if ( rule.id >= SPECIAL_RULES_REALM ) { continue; }
         const { type } = rule.action;
         if ( type !== 'block' && type !== 'allow' ) { continue; }
         if ( rule.condition.regexFilter === undefined ) { continue; }
@@ -164,6 +168,7 @@ async function updateRegexRules(currentRules, addRules, removeRuleIds) {
 async function updateRemoveparamRules(currentRules, addRules, removeRuleIds) {
     // Remove existing removeparam-related rules
     for ( const rule of currentRules ) {
+        if ( rule.id >= SPECIAL_RULES_REALM ) { continue; }
         if ( rule.action.type !== 'redirect' ) { continue; }
         if ( rule.action.redirect.transform === undefined ) { continue; }
         removeRuleIds.push(rule.id);
@@ -179,7 +184,6 @@ async function updateRemoveparamRules(currentRules, addRules, removeRuleIds) {
     }
     const removeparamRulesets = await Promise.all(toFetch);
 
-    // Removeparam rules can only be enforced with omnipotence
     const allRules = [];
     for ( const rules of removeparamRulesets ) {
         if ( Array.isArray(rules) === false ) { continue; }
@@ -201,6 +205,7 @@ async function updateRemoveparamRules(currentRules, addRules, removeRuleIds) {
 async function updateRedirectRules(currentRules, addRules, removeRuleIds) {
     // Remove existing redirect-related rules
     for ( const rule of currentRules ) {
+        if ( rule.id >= SPECIAL_RULES_REALM ) { continue; }
         if ( rule.action.type !== 'redirect' ) { continue; }
         if ( rule.action.redirect.extensionPath === undefined ) { continue; }
         removeRuleIds.push(rule.id);
@@ -216,7 +221,6 @@ async function updateRedirectRules(currentRules, addRules, removeRuleIds) {
     }
     const redirectRulesets = await Promise.all(toFetch);
 
-    // Redirect rules can only be enforced with omnipotence
     const allRules = [];
     for ( const rules of redirectRulesets ) {
         if ( Array.isArray(rules) === false ) { continue; }
@@ -238,6 +242,7 @@ async function updateRedirectRules(currentRules, addRules, removeRuleIds) {
 async function updateModifyHeadersRules(currentRules, addRules, removeRuleIds) {
     // Remove existing header modification-related rules
     for ( const rule of currentRules ) {
+        if ( rule.id >= SPECIAL_RULES_REALM ) { continue; }
         if ( rule.action.type !== 'modifyHeaders' ) { continue; }
         removeRuleIds.push(rule.id);
     }
@@ -252,7 +257,6 @@ async function updateModifyHeadersRules(currentRules, addRules, removeRuleIds) {
     }
     const rulesets = await Promise.all(toFetch);
 
-    // Redirect rules can only be enforced with omnipotence
     const allRules = [];
     for ( const rules of rulesets ) {
         if ( Array.isArray(rules) === false ) { continue; }
@@ -278,6 +282,7 @@ async function updateDynamicRules() {
 
     // Remove potentially left-over strict-block rules from previous version
     for ( const rule of currentRules ) {
+        if ( rule.id >= SPECIAL_RULES_REALM ) { continue; }
         if ( isStrictBlockRule(rule) === false ) { continue; }
         removeRuleIds.push(rule.id);
     }
@@ -294,7 +299,6 @@ async function updateDynamicRules() {
     let ruleId = 1;
     for ( const rule of addRules ) {
         if ( rule?.condition.regexFilter ) { dynamicRegexCount += 1; }
-        if ( (rule.id || 0) >= TRUSTED_DIRECTIVE_BASE_RULE_ID ) { continue; }
         rule.id = ruleId++;
     }
     if ( dynamicRegexCount !== 0 ) {
@@ -467,7 +471,8 @@ async function filteringModesToDNR(modes) {
         TRUSTED_DIRECTIVE_BASE_RULE_ID,
         requestDomains.sort(),
         excludedRequestDomains.sort(),
-        allowEverywhere
+        allowEverywhere,
+        TRUSTED_DIRECTIVE_PRIORITY
     ).then(modified => {
         if ( modified === false ) { return; }
         ubolLog(`${allowEverywhere ? 'Enabled' : 'Disabled'} DNR filtering for ${noneCount} sites`);
@@ -662,6 +667,59 @@ async function getEnabledRulesetsDetails() {
 
 /******************************************************************************/
 
+async function updateUserRules() {
+    const [
+        currentRules,
+        userRulesText = '',
+    ] = await Promise.all([
+        dnr.getDynamicRules(),
+        localRead('userDnrRules'),
+    ]);
+
+    const effectiveRulesText = rulesetConfig.developerMode
+        ? userRulesText
+        : '';
+
+    const parsed = rulesFromText(effectiveRulesText);
+    const { rules } = parsed;
+
+    const removeRuleIds = [];
+    for ( const rule of currentRules ) {
+        if ( rule.id < USER_RULES_BASE_RULE_ID ) { continue; }
+        removeRuleIds.push(rule.id);
+    }
+
+    const rejectedRegexes = [];
+    const addRules = await pruneInvalidRegexRules('user', rules, rejectedRegexes);
+
+    if ( removeRuleIds.length === 0 && addRules.length === 0 ) {
+        return { added: 0, removed: 0, rejectedRegexes };
+    }
+
+    let ruleId = 0;
+    for ( const rule of addRules ) {
+        rule.id = USER_RULES_BASE_RULE_ID + ruleId;
+        rule.priority = (rule.priority || 1) + USER_RULES_PRIORITY;
+    }
+
+    const result = await dnr.updateDynamicRules({ addRules, removeRuleIds }).then(( ) => {
+        if ( removeRuleIds.length !== 0 ) {
+            ubolLog(`updateUserRules() / Removed ${removeRuleIds.length} dynamic DNR rules`);
+        }
+        if ( addRules.length !== 0 ) {
+            ubolLog(`updateUserRules() / Added ${addRules.length} DNR rules`);
+        }
+        return { added: addRules.length, removed: removeRuleIds.length };
+    }).catch(reason => {
+        console.error(`updateUserRules() / ${reason}`);
+        return { error: reason };
+    });
+
+    return Object.assign(result, { rejectedRegexes });
+}
+
+/******************************************************************************/
+
 export {
     enableRulesets,
     excludeFromStrictBlock,
@@ -672,4 +730,5 @@ export {
     setStrictBlockMode,
     updateDynamicRules,
     updateSessionRules,
+    updateUserRules,
 };

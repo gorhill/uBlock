@@ -59,6 +59,7 @@ import {
     setStrictBlockMode,
     updateDynamicRules,
     updateSessionRules,
+    updateUserRules,
 } from './ruleset-manager.js';
 
 import {
@@ -277,6 +278,7 @@ function onMessage(request, sender, callback) {
     case 'setDeveloperMode':
         rulesetConfig.developerMode = request.state;
         toggleDeveloperMode(rulesetConfig.developerMode);
+        updateUserRules();
         saveRulesetConfig().then(( ) => {
             callback();
         });
@@ -389,6 +391,12 @@ function onMessage(request, sender, callback) {
             url: `/matched-rules.html?tab=${request.tabId}`,
         });
         break;
+
+    case 'updateUserDnrRules':
+        updateUserRules().then(result => {
+            callback(result);
+        });
+        return true;
 
     default:
         break;
