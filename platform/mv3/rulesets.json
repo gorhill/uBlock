@@ -466,7 +466,6 @@
   {
     "id": "pol-0",
     "group": "regions",
-    "parent": null,
     "lang": "szl pl _",
     "name": "🇵🇱pl: Oficjalne Polskie Filtry do uBlocka Origin",
     "tags": "ads polish polski",
