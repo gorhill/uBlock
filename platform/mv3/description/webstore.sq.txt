@@ -1,4 +1,4 @@
-uBO Lite (uBOL) është një bllokues *i pavarur* që funksionon sipas modelit MV3.
+uBO Lite (uBOL) është një bllokues materialesh sipas modelit MV3.
 
 Rregullat e tij janë të barasvlershme me filtrat standardë që përdor uBlock Origin:
 

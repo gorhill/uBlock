@@ -48,7 +48,7 @@
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
-    "message": "uBlock₀ — Logger",
+    "message": "යූබ්ලොක්₀ — ලඝුර",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
@@ -60,7 +60,7 @@
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
-    "message": "uBlock₀ — Asset viewer",
+    "message": "යූබ්ලොක්₀ — වත්කම් දක්වනය",
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
@@ -68,11 +68,11 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page.",
+    "message": "ඔබන්න: මෙම අඩවියට යූබ්ලොක්₀ අබල/සබල කරන්න.\n\nCtrl+ඔබන්න: මෙම පිටුවට පමණක් යූබ්ලොක්₀ අබල කරන්න.",
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Click to disable uBlock₀ for this site.\n\nCtrl+click to disable uBlock₀ only on this page.",
+    "message": "මෙම අඩවියට යූබ්ලොක්₀ අබල/සබල කිරීමට ඔබන්න.\n\nමෙම පිටුවට පමණක් යූබ්ලොක්₀ අබල කිරීමට Ctrl+ඔබන්න.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
@@ -116,15 +116,15 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Enter element zapper mode",
+    "message": "මූලද්‍රව්‍ය zapper ප්‍රකාරයට ඇතුළු වන්න",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Enter element picker mode",
+    "message": "මූලද්‍රව්‍ය තෝරක ප්‍රකාරයට ඇතුළු වන්න",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "Open the logger",
+    "message": "ලඝුර අරින්න",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
@@ -132,51 +132,51 @@
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Toggle the blocking of all popups for this site",
+    "message": "මෙම අඩවිය සඳහා සියලු උත්පතන අවහිර කිරීම ටොගල් කරන්න",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Click to block all popups on this site",
+    "message": "මෙම අඩවියේ ඇති සියලුම උත්පතන අවහිර කිරීමට ක්ලික් කරන්න.",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Click to no longer block all popups on this site",
+    "message": "මෙම අඩවියේ ඇති සියලුම උත්පතන තවදුරටත් අවහිර නොකිරීමට ක්ලික් කරන්න.",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Toggle the blocking of large media elements for this site",
+    "message": "මෙම අඩවිය සඳහා විශාල මාධ්‍ය අංග අවහිර කිරීම ටොගල් කරන්න.",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Click to block large media elements on this site",
+    "message": "මෙම අඩවියේ විශාල මාධ්‍ය අංග අවහිර කිරීමට ක්ලික් කරන්න.",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Click to no longer block large media elements on this site",
+    "message": "මෙම අඩවියේ විශාල මාධ්‍ය අංග තවදුරටත් අවහිර නොකිරීමට ක්ලික් කරන්න.",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Toggle cosmetic filtering for this site",
+    "message": "මෙම අඩවිය සඳහා රූපලාවන්‍ය පෙරහන ටොගල් කරන්න",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Click to disable cosmetic filtering on this site",
+    "message": "මෙම අඩවියේ රූපලාවන්‍ය පෙරහන් අක්‍රිය කිරීමට ක්ලික් කරන්න.",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Click to enable cosmetic filtering on this site",
+    "message": "මෙම අඩවියේ රූපලාවන්‍ය පෙරහන් සක්‍රීය කිරීමට ක්ලික් කරන්න.",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Toggle the blocking of remote fonts for this site",
+    "message": "මෙම අඩවිය සඳහා දුරස්ථ අකුරු අවහිර කිරීම ටොගල් කරන්න",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Click to block remote fonts on this site",
+    "message": "මෙම අඩවියේ දුරස්ථ අකුරු අවහිර කිරීමට ක්ලික් කරන්න.",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Click to no longer block remote fonts on this site",
+    "message": "මෙම අඩවියේ දුරස්ථ අකුරු තවදුරටත් අවහිර නොකිරීමට ක්ලික් කරන්න.",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
@@ -196,7 +196,7 @@
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
-    "message": "Cosmetic filtering",
+    "message": "රූපලාවන්‍ය පෙරහන",
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
@@ -220,15 +220,15 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Local rules: this column is for rules which apply to the current site only.\nLocal rules override global rules.",
+    "message": "දේශීය නීති: මෙම තීරුව වත්මන් අඩවියට පමණක් අදාළ වන නීති සඳහා වේ.\nදේශීය නීති ගෝලීය නීති අභිබවා යයි.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
-    "message": "Click to make your changes permanent.",
+    "message": "ඔබගේ වෙනස්කම් ස්ථිර කිරීමට ක්ලික් කරන්න.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Click to revert your changes.",
+    "message": "ඔබගේ වෙනස්කම් ප්‍රතිවර්තනය කිරීමට ක්ලික් කරන්න.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {
@@ -268,7 +268,7 @@
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
-    "message": "{{count}} out of {{total}}",
+    "message": "{{total}}න් {{count}}",
     "description": "appears in popup"
   },
   "popupVersion": {
@@ -288,7 +288,7 @@
     "description": "English: Create"
   },
   "pickerPick": {
-    "message": "Pick",
+    "message": "තෝරන්න",
     "description": "English: Pick"
   },
   "pickerQuit": {
@@ -304,7 +304,7 @@
     "description": "English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters": {
-    "message": "Cosmetic filters",
+    "message": "රූපලාවන්‍ය පෙරහන්",
     "description": "English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint": {
@@ -316,7 +316,7 @@
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
-    "message": "Hide placeholders of blocked elements",
+    "message": "අවහිර කළ මූලද්‍රව්‍යවල ස්ථාන දරන්නන් සඟවන්න",
     "description": "English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt": {
@@ -324,7 +324,7 @@
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "Disable tooltips",
+    "message": "මෙවලම් ඉඟි අක්‍රීය කරන්න",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
@@ -344,7 +344,7 @@
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
-    "message": "Custom accent color",
+    "message": "අභිරුචි උදාත්ත වර්ණය",
     "description": "Label for checkbox to pick an accent color"
   },
   "settingsCloudStorageEnabledPrompt": {
@@ -356,7 +356,7 @@
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "message": "පූර්ව-ලබා ගැනීම අක්‍රීය කරන්න (අවහිර කළ ජාල ඉල්ලීම් සඳහා කිසිදු සම්බන්ධතාවයක් වැළැක්වීමට)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
@@ -364,19 +364,19 @@
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
-    "message": "Prevent WebRTC from leaking local IP addresses",
+    "message": "දේශීය IP ලිපින කාන්දු වීම WebRTC වලක්වන්න",
     "description": "English: "
   },
   "settingPerSiteSwitchGroup": {
-    "message": "Default behavior",
+    "message": "පෙරනිමි හැසිරීම",
     "description": ""
   },
   "settingPerSiteSwitchGroupSynopsis": {
-    "message": "These default behaviors can be overridden on a per-site basis",
+    "message": "මෙම පෙරනිමි හැසිරීම් එක් එක් අඩවියට අනුව අභිබවා යා හැක.",
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "Disable cosmetic filtering",
+    "message": "රූපලාවන්‍ය පෙරහන අක්‍රීය කරන්න",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
@@ -396,7 +396,7 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsUncloakCnamePrompt": {
-    "message": "Uncloak canonical names",
+    "message": "කැනොනිකල් නම් ඉවත් කරන්න",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsAdvanced": {
@@ -420,15 +420,15 @@
     "description": "English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt": {
-    "message": "{{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:",
+    "message": "{{netFilterCount}} ජාල පෙරහන් ＋ {{cosmeticFilterCount}} රූපලාවන්‍ය පෙරහන්:",
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
-    "message": "{{used}} used out of {{total}}",
+    "message": "{{total}} න් {{used}} ක් භාවිතා කර ඇත",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
-    "message": "Auto-update filter lists",
+    "message": "පෙරහන් ලැයිස්තු ස්වයංක්‍රීයව යාවත්කාලීන කරන්න",
     "description": "A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow": {
@@ -436,27 +436,27 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll": {
-    "message": "Purge all caches",
+    "message": "සියලුම හැඹිලි ඉවත් කරන්න",
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
-    "message": "Parse and enforce cosmetic filters",
+    "message": "රූපලාවන්‍ය පෙරහන් විග්‍රහ කර බලාත්මක කරන්න",
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "Cosmetic filters serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the network request-based filtering engines.",
+    "message": "රූපලාවන්‍ය පෙරහන් යනු වෙබ් පිටුවක දෘශ්‍ය කරදරයක් ලෙස සලකනු ලබන සහ ජාල ඉල්ලීම් මත පදනම් වූ පෙරහන් එන්ජින් මගින් අවහිර කළ නොහැකි අංග සැඟවීමට සේවය කරයි.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
-    "message": "Ignore generic cosmetic filters",
+    "message": "සාමාන්‍ය රූපලාවන්‍ය පෙරහන් නොසලකා හරින්න.",
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "Generic cosmetic filters are those cosmetic filters which are meant to apply on all web sites. Enabling this option will eliminate the memory and CPU overhead added to web pages as a result of handling generic cosmetic filters.\n\nIt is recommended to enable this option on less powerful devices.",
+    "message": "සාමාන්‍ය රූපලාවන්‍ය පෙරහන් යනු සියලුම වෙබ් අඩවිවල යෙදීමට අදහස් කරන රූපලාවන්‍ය පෙරහන් වේ. මෙම විකල්පය සක්‍රීය කිරීමෙන් සාමාන්‍ය රූපලාවන්‍ය පෙරහන් හැසිරවීමේ ප්‍රතිඵලයක් ලෙස වෙබ් පිටුවලට එකතු වන මතකය සහ CPU උඩිස් බර ඉවත් කරනු ඇත.\n\nඅඩු බලවත් උපාංගවල මෙම විකල්පය සක්‍රීය කිරීම නිර්දේශ කෙරේ.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
-    "message": "Suspend network activity until all filter lists are loaded",
+    "message": "සියලුම පෙරහන් ලැයිස්තු පූරණය වන තුරු ජාල ක්‍රියාකාරකම් අත්හිටුවන්න.",
     "description": "A checkbox in the 'Filter lists' pane"
   },
   "3pListsOfBlockedHostsHeader": {
@@ -480,11 +480,11 @@
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
-    "message": "Malware protection, security",
+    "message": "අනිෂ්ට මෘදුකාංග ආරක්ෂාව, ආරක්ෂාව",
     "description": "Filter lists section name"
   },
   "3pGroupSocial": {
-    "message": "Social widgets",
+    "message": "සමාජ විජට්",
     "description": "Filter lists section name"
   },
   "3pGroupCookies": {
@@ -492,15 +492,15 @@
     "description": "Filter lists section name"
   },
   "3pGroupAnnoyances": {
-    "message": "Annoyances",
+    "message": "කරදර",
     "description": "Filter lists section name"
   },
   "3pGroupMultipurpose": {
-    "message": "Multipurpose",
+    "message": "බහුකාර්ය",
     "description": "Filter lists section name"
   },
   "3pGroupRegions": {
-    "message": "Regions, languages",
+    "message": "කලාප, භාෂා",
     "description": "Filter lists section name"
   },
   "3pGroupCustom": {
@@ -512,11 +512,11 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "One URL per line. Invalid URLs will be silently ignored.",
+    "message": "පේළියකට එක් URL එකක් බැගින්. අවලංගු URL නිහඬව නොසලකා හරිනු ලැබේ.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
-    "message": "Out of date.",
+    "message": "කල් ඉකුත් වී ඇත.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pViewContent": {
@@ -524,7 +524,7 @@
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "Last update: {{ago}}.\nClick to force an update.",
+    "message": "අවසන් යාවත්කාලීන කිරීම: {{ago}}.\nයාවත්කාලීන කිරීමට බල කිරීමට ක්ලික් කරන්න.",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
@@ -532,23 +532,23 @@
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
-    "message": "A network error prevented the resource from being updated.",
+    "message": "ජාල දෝෂයක් නිසා සම්පත යාවත්කාලීන වීම වැළැක්විණි.",
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pTrustWarning": {
-    "message": "Do not add filters from untrusted sources.",
+    "message": "විශ්වාස නොකළ මූලාශ්‍රවලින් පෙරහන් එක් නොකරන්න.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pEnableMyFiltersLabel": {
-    "message": "Enable my custom filters",
+    "message": "මගේ අභිරුචි පෙරහන් සක්‍රීය කරන්න",
     "description": "Label for the checkbox use to enable/disable 'My filters' list"
   },
   "1pTrustMyFiltersLabel": {
-    "message": "Allow custom filters requiring trust",
+    "message": "විශ්වාසය අවශ්‍ය අභිරුචි පෙරහන් වලට ඉඩ දෙන්න.",
     "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
-    "message": "Import and append…",
+    "message": "…ආයාත කර එකතු කරන්න",
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
@@ -556,7 +556,7 @@
     "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
-    "message": "my-ublock-static-filters_{{datetime}}.txt",
+    "message": "මගේ-ublock-static-filters_{{datetime}}.txt",
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges": {
@@ -564,7 +564,7 @@
     "description": "English: Apply changes"
   },
   "rulesPermanentHeader": {
-    "message": "Permanent rules",
+    "message": "ස්ථිර නීති",
     "description": "header"
   },
   "rulesTemporaryHeader": {
@@ -576,7 +576,7 @@
     "description": "This will remove all temporary rules"
   },
   "rulesCommit": {
-    "message": "Commit",
+    "message": "කැප කරන්න",
     "description": "This will persist temporary rules"
   },
   "rulesEdit": {
@@ -604,11 +604,11 @@
     "description": "default file name to use"
   },
   "rulesHint": {
-    "message": "List of your dynamic filtering rules.",
+    "message": "ඔබගේ ගතික පෙරහන් නීති ලැයිස්තුව.",
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
-    "message": "Rule syntax: <code>source destination type action</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>full documentation</a>).",
+    "message": "රීති වාක්‍ය ඛණ්ඩය: <code>මූලාශ්‍ර ගමනාන්ත වර්ගය ක්‍රියාව</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>සම්පූර්ණ ලියකියවිලි</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
@@ -624,15 +624,15 @@
     "description": "English: a sort option for list of rules."
   },
   "rulesSortByDestination": {
-    "message": "Destination",
+    "message": "ගමනාන්තය",
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "The trusted site directives dictate on which web pages uBlock Origin should be disabled. One entry per line.",
+    "message": "විශ්වාසදායක අඩවි නියෝග මඟින් uBlock Origin අක්‍රිය කළ යුත්තේ කුමන වෙබ් පිටු මතද යන්න නියම කරයි. පේළියකට එක් ඇතුළත් කිරීමක් පමණි.",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Import and append…",
+    "message": "…ආයාත කර එකතු කරන්න",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
@@ -668,55 +668,55 @@
     "description": "Appears in the logger's tab selector"
   },
   "logBehindTheScene": {
-    "message": "Tabless",
+    "message": "මේස",
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
-    "message": "Current tab",
+    "message": "වත්මන් ටැබය",
     "description": "Appears in the logger's tab selector"
   },
   "loggerReloadTip": {
-    "message": "Reload the tab content",
+    "message": "ටැබ් අන්තර්ගතය නැවත පූරණය කරන්න",
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
-    "message": "Toggle the DOM inspector",
+    "message": "DOM පරීක්ෂක ටොගල් කරන්න",
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "Toggle the popup panel",
+    "message": "උත්පතන පැනලය ටොගල් කරන්න",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
-    "message": "uBlock Origin wiki: The logger",
+    "message": "uBlock සම්භවය විකි: ලොගර්",
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
-    "message": "Clear logger",
+    "message": "ලොගර් හිස් කරන්න",
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
-    "message": "Pause logger (discard all incoming data)",
+    "message": "ලොගර් විරාම කරන්න (එන සියලුම දත්ත ඉවතලන්න)",
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {
-    "message": "Unpause logger",
+    "message": "ලොගර් විරාම නොකරන්න",
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "Toggle logger filtering",
+    "message": "ලොගර් පෙරහන ටොගල් කරන්න",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
-    "message": "filter logger content",
+    "message": "පෙරහන් ලොගර් අන්තර්ගතය",
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
-    "message": "Logger filtering options",
+    "message": "ලොගර් පෙරහන් විකල්ප",
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {
-    "message": "Not",
+    "message": "නැහැ",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinEventful": {
@@ -768,7 +768,7 @@
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
-    "message": "Partyness",
+    "message": "සාද ගතිය",
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
@@ -796,7 +796,7 @@
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "{{action}} network requests of {{type}} {{br}}which URL address matches {{url}} {{br}}and which originates {{origin}},{{br}}{{importance}} there is a matching exception filter.",
+    "message": "{{action}} ජාල ඉල්ලීම් {{type}} {{br}}වන URL ලිපිනය {{url}} {{br}}ට ගැලපෙන අතර {{origin}}ට ආරම්භ වේ,{{br}}{{importance}} ට ගැලපෙන ව්‍යතිරේක පෙරහනක් ඇත.",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
@@ -820,43 +820,43 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin": {
-    "message": "from anywhere",
+    "message": "ඕනෑම තැනක සිට",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant": {
-    "message": "except when",
+    "message": "විට හැර",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartImportant": {
-    "message": "even if",
+    "message": "විට දී වුවත්",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Static filter <code>{{filter}}</code> found in:",
+    "message": "ස්ථිතික පෙරහන <code>{{filter}}</code> හමු වූයේ:",
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Static filter could not be found in any of the currently enabled filter lists",
+    "message": "දැනට සක්‍රිය කර ඇති කිසිදු පෙරහන් ලැයිස්තුවක ස්ථිතික පෙරහන සොයාගත නොහැකි විය.",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
-    "message": "Logger entries which do not fulfill all three conditions below will be automatically discarded:",
+    "message": "පහත කොන්දේසි තුනම සපුරා නොමැති ලොගර් ඇතුළත් කිරීම් ස්වයංක්‍රීයව ඉවත දමනු ලැබේ:",
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
-    "message": "Preserve entries from the last {{input}} minutes",
+    "message": "අවසාන මිනිත්තු {{input}} වලින් ඇතුළත් කිරීම් සුරකින්න",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "Preserve at most {{input}} page loads per tab",
+    "message": "ටැබ් එකකට උපරිම වශයෙන් {{input}} පිටු පූරණ සංරක්ෂණය කරන්න",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
-    "message": "Preserve at most {{input}} entries per tab",
+    "message": "ටැබ් එකකට උපරිම වශයෙන් {{input}} ඇතුළත් කිරීම් සංරක්ෂණය කරන්න",
     "description": "A logger setting"
   },
   "loggerSettingPerEntryLineCount": {
-    "message": "Use {{input}} lines per entry in vertically expanded mode",
+    "message": "සිරස් අතට පුළුල් කළ ප්‍රකාරයේදී ඇතුළත් කිරීමකට {{input}} රේඛා භාවිතා කරන්න.",
     "description": "A logger setting"
   },
   "loggerSettingHideColumnsPrompt": {
@@ -872,15 +872,15 @@
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
-    "message": "{{input}} Context",
+    "message": "{{input}} සන්දර්භය",
     "description": "A label for the context column"
   },
   "loggerSettingHideColumnPartyness": {
-    "message": "{{input}} Partyness",
+    "message": "{{input}} සාද ස්වභාවය",
     "description": "A label for the partyness column"
   },
   "loggerExportFormatList": {
-    "message": "List",
+    "message": "ලැයිස්තුව",
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportFormatTable": {
@@ -888,11 +888,11 @@
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportEncodePlain": {
-    "message": "Plain",
+    "message": "සරල",
     "description": "Label for radio-button to pick export text format"
   },
   "loggerExportEncodeMarkdown": {
-    "message": "Markdown",
+    "message": "මාර්ක්ඩවුන්",
     "description": "Label for radio-button to pick export text format"
   },
   "supportOpenButton": {
@@ -912,7 +912,7 @@
     "description": "Header of 'Documentation' section in Support pane"
   },
   "supportS1P1": {
-    "message": "Read the documentation at <code>uBlock/wiki</code> to learn about all of uBlock Origin's features.",
+    "message": "uBlock Origin හි සියලුම විශේෂාංග ගැන ඉගෙන ගැනීමට <code>uBlock/wiki</code> හි ඇති ලේඛන කියවන්න.",
     "description": "First paragraph of 'Documentation' section in Support pane"
   },
   "supportS2H": {
@@ -920,23 +920,23 @@
     "description": "Header of 'Questions and support' section in Support pane"
   },
   "supportS2P1": {
-    "message": "Answers to questions and other kinds of help support is provided on the subreddit <code>/r/uBlockOrigin</code>.",
+    "message": "ප්‍රශ්නවලට පිළිතුරු සහ අනෙකුත් ආකාරයේ උපකාර සහාය <code>/r/uBlockOrigin</code>යන උප රෙඩිට් එකෙන් සපයනු ලැබේ.",
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "Filter issues/website is broken",
+    "message": "පෙරහන් ගැටළු/වෙබ් අඩවිය බිඳ වැටී ඇත",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Report filter issues with specific websites to the <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "නිශ්චිත වෙබ් අඩවි සමඟ පෙරහන් ගැටළු <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> ගැටළු ට්රැකර්</span>වෙත වාර්තා කරන්න. <u>GitHub ගිණුමක් අවශ්‍යයි.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Important:</b> Avoid using other similarly-purposed blockers along with uBlock Origin, as this may cause filter issues on specific websites.",
+    "message": "<b>වැදගත්:</b> uBlock Origin සමඟ සමාන අරමුණු සහිත වෙනත් අවහිර කරන්නන් භාවිතා කිරීමෙන් වළකින්න, මන්ද මෙය නිශ්චිත වෙබ් අඩවි වල පෙරහන් ගැටළු ඇති කළ හැකිය.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Tips:</b> Be sure your filter lists are up to date. <span data-url=\"logger-ui.html#_\">The logger</span> is the primary tool to diagnose filter-related issues.",
+    "message": "<b>ඉඟි:</b> ඔබගේ පෙරහන් ලැයිස්තු යාවත්කාලීනව ඇති බවට වග බලා ගන්න. <span data-url=\"logger-ui.html#_\">පෙරහන් ආශ්‍රිත ගැටළු හඳුනා ගැනීම සඳහා ලොගර්</span> මූලික මෙවලම වේ.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
@@ -944,39 +944,39 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Report issues with uBlock Origin itself to the <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "uBlock Origin සමඟ ඇති ගැටළු <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code> ගැටළු ට්‍රැකර්</span>වෙත වාර්තා කරන්න. <u>GitHub ගිණුමක් අවශ්‍යයි.</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting Information",
+    "message": "දෝශ නිරාකරණ තොරතුරු",
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "Below is technical information that might be useful when volunteers are trying to help you solve a problem.",
+    "message": "ස්වේච්ඡා සේවකයන් ගැටලුවක් විසඳීමට ඔබට උදව් කිරීමට උත්සාහ කරන විට ප්‍රයෝජනවත් විය හැකි තාක්ෂණික තොරතුරු පහත දැක්වේ.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Important:</b> Potentially private or sensitive information is redacted by default. Redacted information may make it more difficult to solve a problem.",
+    "message": "<b>වැදගත්:</b> පුද්ගලික හෝ සංවේදී තොරතුරු පෙරනිමියෙන් සංස්කරණය කරනු ලැබේ. සංස්කරණය කරන ලද තොරතුරු ගැටළුවක් විසඳීම වඩාත් අපහසු කළ හැකිය.",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "පෙරහන් ගැටළුවක් වාර්තා කරන්න",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "To avoid burdening volunteers with duplicate reports, please verify that the issue has not already been reported. <b>Note:</b> clicking the button will cause the page's origin to be sent to GitHub.",
+    "message": "අනුපිටපත් වාර්තා සමඟ ස්වේච්ඡා සේවකයින්ට බරක් වීම වළක්වා ගැනීම සඳහා, කරුණාකර ගැටළුව දැනටමත් වාර්තා කර නොමැති බව තහවුරු කරගන්න. <b>සටහන:</b> බොත්තම ක්ලික් කිරීමෙන් පිටුවේ මූලාරම්භය GitHub වෙත යවනු ලැබේ.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
-    "message": "Filter lists are updated daily. Be sure your issue has not already been addressed in the most recent filter lists.",
+    "message": "පෙරහන් ලැයිස්තු දිනපතා යාවත්කාලීන වේ. ඔබගේ ගැටලුව මෑත කාලීන පෙරහන් ලැයිස්තු වල දැනටමත් විසඳා නොමැති බවට වග බලා ගන්න.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S2": {
-    "message": "Verify that the issue still exists after reloading the problematic webpage.",
+    "message": "ගැටළු සහගත වෙබ් පිටුව නැවත පූරණය කිරීමෙන් පසුවද ගැටලුව පවතින බව තහවුරු කරන්න.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Address of the web page:",
+    "message": "වියමන පිටුවේ ලිපිනය:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
@@ -984,39 +984,39 @@
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Pick an entry --",
+    "message": "-- නිවේශිතයක් තෝරන්න --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "දැන්වීම් හෝ දැන්වීම් ඉතිරි කොටස් පෙන්වයි",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Has overlays or other nuisances",
+    "message": "උඩැතිරි හෝ වෙනත් කරදර ඇති",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Detects uBlock Origin",
+    "message": "යූබ්ලොක් ඔරිජින් හඳුනා ගනියි",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "පෞද්ගලිකත්‍වය ආශ්‍රිත ගැටළු තිබේ",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Malfunctions when uBlock Origin is enabled",
+    "message": "uBlock Origin සක්‍රීය කර ඇති විට සිදුවන අක්‍රමිකතා",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "අනවශ්‍ය පටිති හෝ කවුළු අරියි",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leads to badware, phishing",
+    "message": "නරක මෘදුකාංග, තතුබෑම් වලට මග පාදයි",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "වෙබ් පිටුව “NSFW” ලෙස ලේබල් කරන්න (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“වැඩ සඳහා ආරක්ෂිත නොවේ”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
@@ -1056,15 +1056,15 @@
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "External dependencies (GPLv3-compatible):",
+    "message": "බාහිර පරායත්ත (GPLv3-අනුකූල):",
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "uBO's own filter lists are freely hosted on the following <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>:",
+    "message": "uBO හි පෙරහන් ලැයිස්තු පහත <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>මත නිදහසේ සත්කාරකත්වය දරයි:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "A randomly picked CDN is used when a filter list needs to be updated.",
+    "message": "පෙරහන් ලැයිස්තුවක් යාවත්කාලීන කිරීමට අවශ්‍ය වූ විට අහඹු ලෙස තෝරාගත් CDN එකක් භාවිතා වේ.",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
@@ -1072,7 +1072,7 @@
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
-    "message": "my-ublock-backup_{{datetime}}.txt",
+    "message": "මාගේ-ublock-උපස්ථය_{{datetime}}.txt",
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
@@ -1084,15 +1084,15 @@
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
-    "message": "All your settings will be overwritten using data backed up on {{time}}, and uBlock₀ will restart.\n\nOverwrite all existing settings using backed up data?",
+    "message": "{{time}}මත උපස්ථ කළ දත්ත භාවිතයෙන් ඔබගේ සියලු සැකසුම් උඩින් ලියනු ලබන අතර, uBlock₀ නැවත ආරම්භ වේ.\n\nඋපස්ථ කළ දත්ත භාවිතයෙන් පවතින සියලුම සැකසුම් උඩින් ලියන්නද?",
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {
-    "message": "The data could not be read or is invalid",
+    "message": "දත්ත කියවිය නොහැකි විය නැතහොත් අවලංගුය.",
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
-    "message": "All your settings will be removed, and uBlock₀ will restart.\n\nReset uBlock₀ to factory settings?",
+    "message": "ඔබගේ සියලු සැකසුම් ඉවත් කරනු ලබන අතර, uBlock₀ නැවත ආරම්භ වේ.\n\nuBlock₀ කර්මාන්තශාලා සැකසුම් වෙත නැවත සකසන්නද?",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
@@ -1100,11 +1100,11 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "Add the following URL to your custom filter lists?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
+    "message": "ඔබගේ අභිරුචි පෙරහන් ලැයිස්තුවලට පහත URL එක එක් කරන්නද?\n\nමාතෘකාව: \"{{title}}\"\nURL: {{url}}",
     "description": "No longer used"
   },
   "subscribeButton": {
-    "message": "Subscribe",
+    "message": "දායක වන්න",
     "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
@@ -1136,7 +1136,7 @@
     "description": "Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
-    "message": "Show Logger",
+    "message": "ලඝුව පෙන්වන්න",
     "description": "Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
@@ -1148,15 +1148,15 @@
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {
-    "message": "uBlock Origin has prevented the following page from loading:",
+    "message": "uBlock Origin විසින් පහත පිටුව පූරණය වීම වළක්වා ඇත:",
     "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
-    "message": "Because of the following filter:",
+    "message": "පහත පෙරහන නිසා:",
     "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
-    "message": "without parameters",
+    "message": "පරාමිතීන් නොමැතිව",
     "description": "label to be used for the parameter-less URL: https://cloud.githubusercontent.com/assets/585534/9832014/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {
@@ -1172,11 +1172,11 @@
     "description": "English: Close this window"
   },
   "docblockedDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "මෙම අඩවිය ගැන මට නැවත අනතුරු අඟවන්න එපා.",
     "description": "Label for checkbox in document-blocked page"
   },
   "docblockedProceed": {
-    "message": "Disable strict blocking for {{hostname}}",
+    "message": "{{hostname}}සඳහා දැඩි අවහිර කිරීම අක්‍රීය කරන්න",
     "description": "English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary": {
@@ -1188,11 +1188,11 @@
     "description": "English: Permanently"
   },
   "docblockedDisable": {
-    "message": "Proceed",
+    "message": "ඉදිරියට",
     "description": "Button text to navigate to the blocked page"
   },
   "docblockedRedirectPrompt": {
-    "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
+    "message": "අවහිර කළ පිටුව වෙනත් අඩවියකට හරවා යැවීමට අවශ්‍යයි. ඔබ ඉදිරියට යාමට තෝරා ගන්නේ නම්, ඔබ කෙලින්ම මෙහි සංචාලනය කරනු ඇත: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "cloudPush": {
@@ -1236,15 +1236,15 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "Block element in frame…",
+    "message": "රාමුවේ බ්ලොක් මූලද්‍රව්‍යය…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Subscribe to filter list…",
+    "message": "පෙරහන් ලැයිස්තුවට දායක වන්න…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
-    "message": "Temporarily allow large media elements",
+    "message": "තාවකාලිකව විශාල මාධ්‍ය අංගවලට ඉඩ දෙන්න.",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "contextMenuViewSource": {
@@ -1256,7 +1256,7 @@
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "Toggle locked scrolling",
+    "message": "අගුළු දැමූ අනුචලනය ටොගල් කරන්න",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
@@ -1268,15 +1268,15 @@
     "description": "Label for buttons used to select all text in editor"
   },
   "toggleCosmeticFiltering": {
-    "message": "Toggle cosmetic filtering",
+    "message": "රූපලාවන්‍ය පෙරහන ටොගල් කරන්න",
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "toggleJavascript": {
-    "message": "Toggle JavaScript",
+    "message": "ජාවාස්ක්‍රිප්ට් ටොගල් කරන්න",
     "description": "Label for keyboard shortcut used to toggle no-scripting switch"
   },
   "relaxBlockingMode": {
-    "message": "Relax blocking mode",
+    "message": "අවහිර කිරීමේ මාදිලිය ලිහිල් කරන්න",
     "description": "Label for keyboard shortcut used to relax blocking mode"
   },
   "storageUsed": {
@@ -1304,7 +1304,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Could not filter properly at browser launch. Reload the page to ensure proper filtering.",
+    "message": "බ්‍රව්සරය දියත් කිරීමේදී නිසි ලෙස පෙරීමට නොහැකි විය. නිසි පෙරහන සහතික කිරීම සඳහා පිටුව නැවත පූරණය කරන්න.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {
