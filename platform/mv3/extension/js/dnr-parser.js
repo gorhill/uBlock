@@ -163,8 +163,8 @@ const perScopeParsers = {
         case 'port':
         case 'query':
         case 'scheme': {
-            const prop = key.trim();
-            rule.action.redirect.transform[prop] = val;
+            if ( val === undefined ) { return false; }
+            rule.action.redirect.transform[key] = val;
             break;
         }
         case 'queryTransform':
@@ -201,6 +201,7 @@ const perScopeParsers = {
     },
     'action.redirect.transform.queryTransform.addOrReplaceParams.@': function(scope, rule, node) {
         const { key, val } = node;
+        if ( val === undefined ) { return false; }
         const item = rule.action.redirect.transform.queryTransform.addOrReplaceParams.at(-1);
         switch ( key ) {
         case 'key':
@@ -285,9 +286,11 @@ const perScopeParsers = {
             rule.condition.isUrlFilterCaseSensitive = val === 'true';
             break;
         case 'regexFilter':
+            if ( val === undefined ) { return false; }
             rule.condition.regexFilter = val;
             break;
         case 'urlFilter':
+            if ( val === undefined ) { return false; }
             rule.condition.urlFilter = val;
             break;
         case 'initiatorDomains':
@@ -389,6 +392,7 @@ const perScopeParsers = {
         const item = rule.condition.responseHeaders.at(-1);
         switch ( node.key ) {
         case 'header':
+            if ( node.val === undefined ) { return false; }
             item.header = node.val;
             break;
         case 'values':
@@ -426,6 +430,7 @@ const perScopeParsers = {
         const item = rule.condition.excludedResponseHeaders.at(-1);
         switch ( node.key ) {
         case 'header':
+            if ( node.val === undefined ) { return false; }
             item.header = node.val;
             break;
         case 'values':
@@ -521,12 +526,19 @@ export function rulesFromText(text) {
         const line = lines[i].trimEnd();
         const trimmed = line.trimStart();
         if ( trimmed.startsWith('#') ) { continue; }
+        // Discard leading empty lines
         if ( trimmed === '' ) {
             if ( indices.length === 0 ) { continue; }
         }
         if ( line !== '---' && line !== '...' ) {
             indices.push(i);
             continue;
+        }
+        // Discard trailing empty lines
+        while ( indices.length !== 0 ) {
+            const s = lines[indices.at(-1)].trim();
+            if ( s.length !== 0 ) { break; }
+            indices.pop();
         }
         if ( indices.length === 0 ) { continue; }
         const result = ruleFromLines(lines, indices);
