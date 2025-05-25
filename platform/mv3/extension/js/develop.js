@@ -110,7 +110,7 @@ function getScopeAt(from) {
     return path.join('');
 }
 
-function getAutocompleteCandidatesFromPath(from) {
+function getAutocompleteCandidates(from) {
     const scope = getScopeAt(from);
     switch ( scope ) {
     case '':
@@ -219,12 +219,15 @@ function getAutocompleteCandidatesFromPath(from) {
     }
 }
 
-function getAutocompleteCandidates(context) {
+function autoComplete(context) {
     const match = context.matchBefore(/[\w-]*/);
-    if ( match === undefined ) { return; }
-    const candidates = getAutocompleteCandidatesFromPath(match.from);
-    if ( candidates === undefined ) { return; }
-    return { match, candidates };
+    if ( match === undefined ) { return null; }
+    const candidates = getAutocompleteCandidates(match.from);
+    if ( candidates === undefined ) { return null; }
+    return {
+        from: match.from,
+        options: candidates.map(e => ({ label: e[0], apply: `${e[0]}${e[1]}` })),
+    };
 }
 
 /******************************************************************************/
@@ -306,14 +309,9 @@ const cmRules = (( ) => {
         },
         lineError: 'bad',
         // https://codemirror.net/examples/autocompletion/
-        autoComplete: context => {
-            const result = getAutocompleteCandidates(context);
-            if ( result === undefined ) { return null; }
-            const { match, candidates } = result;
-            return {
-                from: match.from,
-                options: candidates.map(e => ({ label: e[0], apply: `${e[0]}${e[1]}` })),
-            };
+        autocompletion: {
+            override: [ autoComplete ],
+            activateOnCompletion: ( ) => true,
         },
     }, qs$('#cm-dnrRules'));
 })();
