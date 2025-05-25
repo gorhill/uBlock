@@ -34,7 +34,6 @@
             <p><label id="autoReload" data-i18n="autoReloadLabel"><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span>_</label>
             </p>
             <p><label id="showBlockedCount" data-i18n="showBlockedCountLabel"><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span>_</label>
-            <p id="developerMode"><label><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span>Developer mode</label>
         </div>
 
         <div>
@@ -88,6 +87,7 @@
                 </label>
             </div>
             <p><label id="strictBlockMode" data-i18n="enableStrictBlockLabel"><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span>_</label><legend data-i18n="enableStrictBlockLegend"></legend>
+            <p id="developerMode"><label data-i18n="developerModeLabel"><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span>_</label><legend data-i18n="developerModeLegend"></legend>
         </div>
 
         <div>
@@ -108,13 +108,13 @@
     <section data-pane="develop">
         <div>
             <p>
-                <button id="dnrRulesApply" class="preferred iconified" type="button" disabled><span class="fa-icon">save</span><span data-i18n>Save</span><span class="hover"></span></button>
-                <button id="dnrRulesRevert" class="iconified" type="button" disabled><span class="fa-icon">undo</span><span data-i18n>Revert</span><span class="hover"></span></button>
+                <button id="dnrRulesApply" class="preferred iconified" type="button" disabled><span class="fa-icon">save</span><span data-i18n="saveButton">_</span><span class="hover"></span></button>
+                <button id="dnrRulesRevert" class="iconified" type="button" disabled><span class="fa-icon">undo</span><span data-i18n="revertButton">_</span><span class="hover"></span></button>
                 &emsp;
-                <button id="dnrRulesImport" class="iconified" type="button"><span class="fa-icon">download-alt</span><span data-i18n>Import and append&mldr;</span><span class="hover"></span></button>
-                <button id="dnrRulesExport" class="iconified" type="button"><span class="fa-icon">upload-alt</span><span data-i18n>Export&mldr;</span><span class="hover"></span></button>
+                <button id="dnrRulesImport" class="iconified" type="button"><span class="fa-icon">download-alt</span><span data-i18n="importAndAppendButton">_</span><span class="hover"></span></button>
+                <button id="dnrRulesExport" class="iconified" type="button"><span class="fa-icon">upload-alt</span><span data-i18n="exportButton">_</span><span class="hover"></span></button>
             </p>
-            <p>Enter your own DNR rules below.</p>
+            <p data-i18n="dnrRulesSummary"></p>
             <div id="cm-dnrRules"></div>
         </div>
     </section>
