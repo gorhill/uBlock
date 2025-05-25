@@ -136,6 +136,17 @@ async function onPermissionsAdded(permissions) {
 
 /******************************************************************************/
 
+function setDeveloperMode(state) {
+    rulesetConfig.developerMode = state === true;
+    toggleDeveloperMode(rulesetConfig.developerMode);
+    return Promise.all([
+        updateUserRules(),
+        saveRulesetConfig(),
+    ]);
+}
+
+/******************************************************************************/
+
 function onMessage(request, sender, callback) {
 
     // Does not require trusted origin.
@@ -276,10 +287,7 @@ function onMessage(request, sender, callback) {
         return true;
 
     case 'setDeveloperMode':
-        rulesetConfig.developerMode = request.state;
-        toggleDeveloperMode(rulesetConfig.developerMode);
-        updateUserRules();
-        saveRulesetConfig().then(( ) => {
+        setDeveloperMode(request.state).then(( ) => {
             callback();
         });
         return true;
@@ -480,8 +488,15 @@ async function startSession() {
         }
     }
 
-    // Required to ensure the up to date property is available when needed
-    adminReadEx('disabledFeatures');
+    // Required to ensure up to date properties are available when needed
+    adminReadEx('disabledFeatures').then(items => {
+        if ( Array.isArray(items) === false ) { return; }
+        if ( items.includes('develop') ) {
+            if ( rulesetConfig.developerMode ) {
+                setDeveloperMode(false);
+            }
+        }
+    });
 }
 
 /******************************************************************************/
