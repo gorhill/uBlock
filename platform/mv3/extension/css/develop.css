@@ -41,6 +41,6 @@ section[data-pane="develop"] > div > * {
     border-top: 1px dotted var(--border-1);
     }
 
-#cm-dnrRules .cm-editor .cm-line.bad:not(cm-activeLine) {
+#cm-dnrRules .cm-editor .cm-line.bad:not(.cm-activeLine) {
     background-color: var(--sf-error-surface);
     }
