@@ -39,9 +39,15 @@ a {
     color: var(--info3-ink);
         fill: var(--info3-ink);
     }
+
 input[type="number"] {
     width: 5em;
     }
+
+input[type="file"] {
+    display: none;
+    }
+
 @media (max-height: 640px), (max-height: 800px) and (max-width: 480px) {
     .body > p,
     .body > ul {

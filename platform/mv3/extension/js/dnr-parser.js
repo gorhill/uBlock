@@ -479,17 +479,18 @@ function nodeFromLine(line) {
         out.list = true;
     }
     if ( match[4] ) {
-        out.val = match[4];
+        out.val = match[4].trim();
     } else if ( match[3] ) {
         out.key = match[2];
-        out.val = match[3].slice(1);
+        out.val = match[3].trim();
+        if ( out.val === "''" ) { out.val = '' };
     } else {
         out.key = match[2];
     }
     return out;
 }
 
-const reNodeParser = /^\s*(- )?(?:(\S+):( \S+)?|(\S+))$/;
+const reNodeParser = /^\s*(- )?(?:(\S+):( \S.*)?|(\S.*))$/;
 
 /******************************************************************************/
 
@@ -554,5 +555,53 @@ export function rulesFromText(text) {
 
 /******************************************************************************/
 
-export function textFromRules() {
+function textFromValue(val, depth) {
+    const indent = '  '.repeat(depth);
+    switch ( typeof val ) {
+    case 'boolean':
+    case 'number':
+        return `${val}`;
+    case 'string':
+        if ( val === '' ) { return "''"; }
+        return val;
+    }
+    const out = [];
+    if ( Array.isArray(val) ) {
+        for ( const a of val ) {
+            const s = textFromValue(a, depth+1);
+            if ( s === undefined ) { continue; }
+            out.push(`${indent}- ${s.trimStart()}`);
+        }
+        return out.join('\n');
+    }
+    if ( val instanceof Object ) {
+        for ( const [ a, b ] of Object.entries(val) ) {
+            const s = textFromValue(b, depth+1);
+            if ( s === undefined ) { continue; }
+            if ( b instanceof Object ) {
+                out.push(`${indent}${a}:\n${s}`);
+            } else {
+                out.push(`${indent}${a}: ${s}`);
+            }
+        }
+        return out.join('\n');
+    }
+}
+
+/******************************************************************************/
+
+export function textFromRules(rules) {
+    if ( Array.isArray(rules) === false ) {
+        if ( rules instanceof Object === false ) { return; }
+        rules = [ rules ];
+    }
+    const out = [];
+    for ( const rule of rules ) {
+        if ( rule.id ) { rule.id = undefined };
+        const text = textFromValue(rule, 0);
+        if ( text === undefined ) { continue; }
+        out.push(text, '---' );
+    }
+    out.push('');
+    return out.join('\n');
 }
