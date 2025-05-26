@@ -698,24 +698,23 @@ async function updateUserRules() {
 
     let ruleId = 0;
     for ( const rule of addRules ) {
-        rule.id = USER_RULES_BASE_RULE_ID + ruleId;
+        rule.id = USER_RULES_BASE_RULE_ID + ruleId++;
         rule.priority = (rule.priority || 1) + USER_RULES_PRIORITY;
     }
 
-    const result = await dnr.updateDynamicRules({ addRules, removeRuleIds }).then(( ) => {
+    try {
+        await dnr.updateDynamicRules({ addRules, removeRuleIds });
         if ( removeRuleIds.length !== 0 ) {
             ubolLog(`updateUserRules() / Removed ${removeRuleIds.length} dynamic DNR rules`);
         }
         if ( addRules.length !== 0 ) {
             ubolLog(`updateUserRules() / Added ${addRules.length} DNR rules`);
         }
-        return { added: addRules.length, removed: removeRuleIds.length };
-    }).catch(reason => {
+        return { added: addRules.length, removed: removeRuleIds.length, rejectedRegexes };
+    } catch(reason) {
         console.error(`updateUserRules() / ${reason}`);
         return { error: reason };
-    });
-
-    return Object.assign(result, { rejectedRegexes });
+    }
 }
 
 /******************************************************************************/

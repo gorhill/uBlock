@@ -297,7 +297,8 @@ function updateWidgetsAsync() {
 
 function importRulesFromFile() {
     const input = qs$('input[type="file"]');
-    dom.on(input, 'change', ev => {
+    input.onchange = ev => {
+        input.onchange = null;
         const file = ev.target.files[0];
         if ( file === undefined || file.name === '' ) { return; }
         if ( file.type !== 'application/json' ) { return; }
@@ -325,27 +326,21 @@ function importRulesFromFile() {
             const { doc } = cmRules.state;
             const lastChars = doc.toString().trimEnd().slice(-4);
             const lastLine = doc.line(doc.lines);
-            let from;
+            let from = lastLine.to;
+            let prepend = '';
             if ( lastLine.text !== '' ) {
-                text = `\n${text}`;
-                from = lastLine.to;
-                
+                prepend = '\n';
             } else {
                 from = lastLine.from;
             }
             if ( /(?:^|\n)---$/.test(lastChars) === false ) {
-                text = `---\n${text}`;
+                prepend = `${prepend}---\n`;
             }
-            cmRules.dispatch({
-                changes: {
-                    from: doc.length,
-                    insert: text
-                },
-            });
+            cmRules.dispatch({ changes: { from, insert: `${prepend}${text}` } });
             cmRules.focus();
         };
         fr.readAsText(file);
-    });
+    };
     // Reset to empty string, this will ensure a change event is properly
     // triggered if the user pick a file, even if it's the same as the last
     // one picked.
