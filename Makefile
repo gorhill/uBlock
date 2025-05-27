@@ -8,7 +8,7 @@ run_options := $(filter-out $@,$(MAKECMDGOALS))
 sources := ./dist/version $(shell find ./assets -type f) $(shell find ./src -type f)
 platform := $(wildcard platform/*/*)
 assets := dist/build/uAssets
-mv3-sources := $(shell find ./src -type f) $(wildcard platform/mv3/*) $(shell find ./platform/mv3/extension -type f) ubol-codemirror
+mv3-sources := $(shell find ./src -type f) $(wildcard platform/mv3/*) $(shell find ./platform/mv3/extension -name codemirror-ubol -prune -o -type f) ubol-codemirror
 mv3-data := $(shell find ./dist/build/mv3-data -type f)
 
 mv3-edge-deps := $(wildcard platform/mv3/edge/*)
