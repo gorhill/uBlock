@@ -81,27 +81,29 @@ const modifiedRange = { start: -1, end: -1 };
 /******************************************************************************/
 
 function rulesFromJSON(json) {
-    const jsonParse = json => {
-        let rules;
-        try { rules = JSON.parse(json); }
-        catch { }
-        return rules;
-    };
     let content = json.trim();
-    const matchBefore = /^[^[{]+/.exec(content);
-    if ( matchBefore !== null ) {
-        content = content.slice(matchBefore[0].length);
+    if ( /^[[{]/.test(content) === false ) {
+        const match = /^[^[{]+/.exec(content);
+        if ( match === null ) { return; }
+        content = content.slice(match[0].length);
     }
-    const matchAfter = /[^}\]]+$/.exec(content);
-    if ( matchAfter !== null ) {
-        content = content.slice(0, matchAfter.index);
+    const firstChar = content.charAt(0);
+    const expectedLastChar = firstChar === '[' ? ']' : '}';
+    if ( content.at(-1) !== expectedLastChar ) {
+        const re = new RegExp(`\\${expectedLastChar}[^\\${expectedLastChar}]+$`);
+        const match = re.exec(content);
+        if ( match === null ) { return; }
+        content = content.slice(0, match.index);
     }
     if ( content.startsWith('{') && content.endsWith('}') ) {
         content = `[${content}]`;
     }
-    const rules = jsonParse(content);
-    if ( Array.isArray(rules) === false ) { return; }
-    return rules;
+    try {
+        const rules = JSON.parse(json);
+        if ( Array.isArray(rules) ) { return rules; }
+    }
+    catch {
+    }
 }
 
 /******************************************************************************/
