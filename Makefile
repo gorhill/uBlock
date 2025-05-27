@@ -8,7 +8,11 @@ run_options := $(filter-out $@,$(MAKECMDGOALS))
 sources := ./dist/version $(shell find ./assets -type f) $(shell find ./src -type f)
 platform := $(wildcard platform/*/*)
 assets := dist/build/uAssets
-mv3-sources := $(shell find ./src -type f) $(wildcard platform/mv3/*) $(shell find ./platform/mv3/extension -name codemirror-ubol -prune -o -type f)
+mv3-sources := \
+	$(shell find ./src -type f) \
+	$(wildcard platform/mv3/*) \
+	$(shell find ./platform/mv3/extension -name codemirror-ubol -prune -o -type f) \
+	platform/mv3/extension/lib/codemirror/codemirror-ubol/dist/cm6.bundle.ubol.min.js
 mv3-data := $(shell find ./dist/build/mv3-data -type f)
 
 mv3-edge-deps := $(wildcard platform/mv3/edge/*)
@@ -75,22 +79,22 @@ ubol-codemirror:
 dist/build/uBOLite.chromium: tools/make-mv3.sh $(mv3-sources) $(platform) $(mv3-data) dist/build/mv3-data
 	tools/make-mv3.sh chromium
 
-mv3-chromium: dist/build/uBOLite.chromium ubol-codemirror
+mv3-chromium: ubol-codemirror dist/build/uBOLite.chromium
 
 dist/build/uBOLite.firefox: tools/make-mv3.sh $(mv3-sources) $(platform) $(mv3-data) dist/build/mv3-data
 	tools/make-mv3.sh firefox
 
-mv3-firefox: dist/build/uBOLite.firefox ubol-codemirror
+mv3-firefox: ubol-codemirror dist/build/uBOLite.firefox
 
 dist/build/uBOLite.edge: tools/make-mv3.sh $(mv3-sources) $(mv3-edge-deps) $(mv3-data) dist/build/mv3-data
 	tools/make-mv3.sh edge
 
-mv3-edge: dist/build/uBOLite.edge ubol-codemirror
+mv3-edge: ubol-codemirror dist/build/uBOLite.edge
 
 dist/build/uBOLite.safari: tools/make-mv3.sh $(mv3-sources) $(mv3-safari-deps) $(mv3-data) dist/build/mv3-data
 	tools/make-mv3.sh safari
 
-mv3-safari: dist/build/uBOLite.safari ubol-codemirror
+mv3-safari: ubol-codemirror dist/build/uBOLite.safari
 
 dist/build/uAssets:
 	tools/pull-assets.sh
