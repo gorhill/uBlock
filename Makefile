@@ -2,13 +2,13 @@
 run_options := $(filter-out $@,$(MAKECMDGOALS))
 
 .PHONY: all clean cleanassets test lint chromium opera firefox npm dig \
-	mv3-chromium mv3-firefox mv3-edge mv3-safari \
+	mv3-chromium mv3-firefox mv3-edge mv3-safari ubol-codemirror \
 	compare maxcost medcost mincost modifiers record wasm
 
 sources := ./dist/version $(shell find ./assets -type f) $(shell find ./src -type f)
 platform := $(wildcard platform/*/*)
 assets := dist/build/uAssets
-mv3-sources := $(shell find ./src -type f) $(wildcard platform/mv3/*) $(shell find ./platform/mv3/extension -type f)
+mv3-sources := $(shell find ./src -type f) $(wildcard platform/mv3/*) $(shell find ./platform/mv3/extension -type f) ubol-codemirror
 mv3-data := $(shell find ./dist/build/mv3-data -type f)
 
 mv3-edge-deps := $(wildcard platform/mv3/edge/*)
@@ -68,6 +68,9 @@ dig-snfe: dig
 
 dist/build/mv3-data:
 	mkdir -p dist/build/mv3-data
+
+ubol-codemirror:
+	$(MAKE) -C platform/mv3/extension/lib/codemirror/codemirror-ubol/ ubol.bundle
 
 dist/build/uBOLite.chromium: tools/make-mv3.sh $(mv3-sources) $(platform) $(mv3-data) dist/build/mv3-data
 	tools/make-mv3.sh chromium

@@ -67,3 +67,4 @@ section[data-pane="develop"] > div > * {
     font-size: var(--button-font-size);
     min-height: calc(var(--button-font-size) * 1.8);
     }
+    
