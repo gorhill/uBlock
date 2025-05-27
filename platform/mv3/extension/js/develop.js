@@ -80,6 +80,32 @@ const modifiedRange = { start: -1, end: -1 };
 
 /******************************************************************************/
 
+function rulesFromJSON(json) {
+    const jsonParse = json => {
+        let rules;
+        try { rules = JSON.parse(json); }
+        catch { }
+        return rules;
+    };
+    let content = json.trim();
+    const matchBefore = /^[^[{]+/.exec(content);
+    if ( matchBefore !== null ) {
+        content = content.slice(matchBefore[0].length);
+    }
+    const matchAfter = /[^}\]]+$/.exec(content);
+    if ( matchAfter !== null ) {
+        content = content.slice(0, matchAfter.index);
+    }
+    if ( content.startsWith('{') && content.endsWith('}') ) {
+        content = `[${content}]`;
+    }
+    const rules = jsonParse(content);
+    if ( Array.isArray(rules) === false ) { return; }
+    return rules;
+}
+
+/******************************************************************************/
+
 function lineIndentAt(line) {
     const match = /^(?: {2})*/.exec(line.text);
     const indent = match !== null ? match[0].length : -1;
@@ -373,23 +399,9 @@ function importRulesFromFile() {
         const fr = new FileReader();
         fr.onload = ( ) => {
             if ( typeof fr.result !== 'string' ) { return; }
-            const content = fr.result.trim();
-            const jsonParse = json => {
-                let rules;
-                try {
-                    rules = JSON.parse(json);
-                } catch {
-                }
-                return rules;
-            };
-            let rules = jsonParse(content);
-            if ( rules === undefined ) {
-                if ( content.startsWith('{') && content.endsWith('}') ) {
-                    rules = jsonParse(`[${content}]`);
-                }
-            }
-            if ( Array.isArray(rules) === false ) { return; }
-            let text = textFromRules(rules);
+            const rules = rulesFromJSON(fr.result);
+            if ( rules === undefined ) { return; }
+            const text = textFromRules(rules);
             if ( text === undefined ) { return; }
             const { doc } = cmRules.state;
             const lastChars = doc.toString().trimEnd().slice(-4);
@@ -440,19 +452,55 @@ dom.on('#dnrRulesExport', 'click', exportRulesToFile);
 
 /******************************************************************************/
 
+function importRulesFromPaste(from, to) {
+    if ( from === undefined || to === undefined ) { return; }
+    // Paste position must match start of a line
+    const { doc } = cmRules.state;
+    const lineFrom = doc.lineAt(from);
+    if ( lineFrom.from !== from ) { return; }
+    // Paste position must match a rule boundary
+    if ( lineFrom.number !== 1 ) {
+        const lineBefore = doc.line(lineFrom.number-1);
+        if ( /^---\s*$/.test(lineBefore.text) === false ) { return; }
+    }
+    const pastedText = doc.sliceString(from, to);
+    const rules = rulesFromJSON(pastedText);
+    if ( rules === undefined ) { return; }
+    const yamlText = textFromRules(rules);
+    if ( yamlText === undefined ) { return; }
+    cmRules.dispatch({ changes: { from, to, insert: yamlText } });
+}
+
+/******************************************************************************/
+
+function cmUpdateListener(info) {
+    if ( info.docChanged === false ) { return; }
+    const doc = info.state.doc;
+    info.changes.iterChangedRanges((fromA, toA, fromB, toB) => {
+        addToModifiedRange(doc, fromB, toB);
+    });
+    for ( const transaction of info.transactions ) {
+        if ( transaction.isUserEvent('input.paste') === false ) { continue; }
+        if ( transaction.docChanged === false ) { continue; }
+        let from, to;
+        transaction.changes.iterChangedRanges((fromA, toA, fromB, toB) => {
+            if ( from === undefined || fromB < from ) { from = fromB; }
+            if ( to === undefined || toB > to ) { to = toB; }
+        });
+        importRulesFromPaste(from, to);
+        break;
+    }
+    updateWidgetsAsync();
+}
+
+/******************************************************************************/
+
 const cmRules = (( ) => {
     return self.cm6.createEditorView({
         dnrRules: true,
         oneDark: dom.cl.has(':root', 'dark'),
-        updateListener: function(info) {
-            if ( info.docChanged === false ) { return; }
-            const doc = info.state.doc;
-            info.changes.desc.iterChangedRanges((fromA, toA, fromB, toB) => {
-                addToModifiedRange(doc, fromB, toB);
-            });
-            updateWidgetsAsync();
-        },
-        saveListener: function() {
+        updateListener: cmUpdateListener,
+        saveListener: ( ) => {
             saveEditorText();
         },
         lineError: 'bad',
