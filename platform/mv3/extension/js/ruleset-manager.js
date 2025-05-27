@@ -712,7 +712,7 @@ async function updateUserRules() {
         }
         return { added: addRules.length, removed: removeRuleIds.length, rejectedRegexes };
     } catch(reason) {
-        console.error(`updateUserRules() / ${reason}`);
+        console.info(`updateUserRules() / ${reason}`);
         return { error: reason };
     }
 }

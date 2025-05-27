@@ -105,10 +105,14 @@ function getScopeAt(from) {
         const lineBefore = doc.line(lineNo);
         const text = lineBefore.text.trim();
         if ( text.startsWith('#') ) { continue; }
-        if ( lineIndentAt(lineBefore) === (depth-1) ) {
+        if ( lineIndentAt(lineBefore) > (depth-1) ) { continue; }
+        const match = /^- ([^:]+:)/.exec(text);
+        if ( match !== null ) {
+            path.unshift(match[1]);
+        } else {
             path.unshift(text);
-            depth -= 1;
         }
+        depth -= 1;
     }
     return path.join('');
 }
@@ -117,119 +121,183 @@ function getAutocompleteCandidates(from) {
     const scope = getScopeAt(from);
     switch ( scope ) {
     case '':
-        return [
-            [ 'action:', '\n  ' ],
-            [ 'condition:', '\n  ' ],
-            [ 'priority:', ' ' ],
-            [ '---', '\n' ],
-        ];
+        return {
+            before: /^$/,
+            candidates: [
+                { token: 'action:', after: '\n  ' },
+                { token: 'condition:', after: '\n  ' },
+                { token: 'priority:', after: ' ' },
+                { token: '---', after: '\n' },
+            ]
+        };
     case 'action:':
-        return [
-            [ 'type:', ' ' ],
-            [ 'redirect:', '\n    ' ],
-            [ 'requestHeaders:', '\n    ' ],
-            [ 'responseHeaders:', '\n    ' ],
-        ];
+        return {
+            before: /^ {2}$/,
+            candidates: [
+                { token: 'type:', after: ' ' },
+                { token: 'redirect:', after: '\n    ' },
+                { token: 'requestHeaders:', after: '\n    - header: ' },
+                { token: 'responseHeaders:', after: '\n    - header: ' },
+            ],
+        };
     case 'action:type:':
-        return [
-            [ 'block', '\n  ' ],
-            [ 'redirect', '\n  ' ],
-            [ 'upgradeScheme', '\n  ' ],
-            [ 'allow', '\n  ' ],
-            [ 'allowAllRequest', '\n  ' ],
-        ];
+        return {
+            before: /: $/,
+            candidates: [
+                { token: 'block', after: '\n  ' },
+                { token: 'redirect', after: '\n  ' },
+                { token: 'allow', after: '\n  ' },
+                { token: 'modifyHeaders', after: '\n  ' },
+                { token: 'upgradeScheme', after: '\n  ' },
+                { token: 'allowAllRequest', after: '\n  ' },
+            ],
+        };
     case 'action:redirect:':
-        return [
-            [ 'extensionPath:', ' ' ],
-            [ 'regexSubstitution:', ' ' ],
-            [ 'transform:', '\n      ' ],
-            [ 'url:', ' ' ],
-        ];
+        return {
+            before: /^ {4}$/,
+            candidates: [
+                { token: 'extensionPath:', after: ' ' },
+                { token: 'regexSubstitution:', after: ' ' },
+                { token: 'transform:', after: '\n      ' },
+                { token: 'url:', after: ' ' },
+            ],
+        };
     case 'action:redirect:transform:':
-        return [
-            [ 'fragment:', ' ' ],
-            [ 'host:', ' ' ],
-            [ 'path:', ' ' ],
-            [ 'port:', ' ' ],
-            [ 'query:', ' ' ],
-            [ 'scheme:', ' ' ],
-            [ 'queryTransform:', '\n        ' ],
-        ];
+        return {
+            before: /^ {6}$/,
+            candidates: [
+                { token: 'fragment:', after: ' ' },
+                { token: 'host:', after: ' ' },
+                { token: 'path:', after: ' ' },
+                { token: 'port:', after: ' ' },
+                { token: 'query:', after: ' ' },
+                { token: 'scheme:', after: ' ' },
+                { token: 'queryTransform:', after: '\n        ' },
+            ],
+        };
     case 'action:redirect:transform:queryTransform:':
-        return [
-            [ 'addOrReplaceParams:', '\n          - ' ],
-            [ 'removeParams:', '\n          - ' ],
-        ];
+        return {
+            before: /^ {8}$/,
+            candidates: [
+                { token: 'addOrReplaceParams:', after: '\n          - ' },
+                { token: 'removeParams:', after: '\n          - ' },
+            ],
+        };
+    case 'action:responseHeaders:':
+        return {
+            before: /^ {4}- $/,
+            candidates: [
+                { token: 'header:', after: ' ' },
+            ],
+        };
+    case 'action:responseHeaders:header:':
+        return {
+            before: /^ {6}$/,
+            candidates: [
+                { token: 'operation:', after: ' ' },
+                { token: 'value:', after: ' ' },
+            ],
+        };
+    case 'action:responseHeaders:header:operation:':
+        return {
+            before: /: $/,
+            candidates: [
+                { token: 'append', after: '\n      value: ' },
+                { token: 'set', after: '\n      value: ' },
+                { token: 'remove', after: '\n    ' },
+            ],
+        };
     case 'condition:':
-        return [
-            [ 'domainType:', ' ' ],
-            [ 'isUrlFilterCaseSensitive:', ' ' ],
-            [ 'regexFilter:', ' ' ],
-            [ 'urlFilter:', ' ' ],
-            [ 'initiatorDomains:', '\n    - ' ],
-            [ 'excludedInitiatorDomains:', '\n    - ' ],
-            [ 'requestDomains:', '\n    - ' ],
-            [ 'excludedRequestDomains:', '\n    - ' ],
-            [ 'resourceTypes:', '\n    - ' ],
-            [ 'excludedResourceTypes:', '\n    - ' ],
-            [ 'requestMethods:', '\n    - ' ],
-            [ 'excludedRequestMethods:', '\n    - ' ],
-            [ 'responseHeaders:', '\n    - ' ],
-            [ 'excludedResponseHeaders:', '\n    - ' ],
-        ];
+        return {
+            before: /^ {2}$/,
+            candidates: [
+                { token: 'domainType:', after: ' ' },
+                { token: 'isUrlFilterCaseSensitive:', after: ' ' },
+                { token: 'regexFilter:', after: ' ' },
+                { token: 'urlFilter:', after: ' ' },
+                { token: 'initiatorDomains:', after: '\n    - ' },
+                { token: 'excludedInitiatorDomains:', after: '\n    - ' },
+                { token: 'requestDomains:', after: '\n    - ' },
+                { token: 'excludedRequestDomains:', after: '\n    - ' },
+                { token: 'resourceTypes:', after: '\n    - ' },
+                { token: 'excludedResourceTypes:', after: '\n    - ' },
+                { token: 'requestMethods:', after: '\n    - ' },
+                { token: 'excludedRequestMethods:', after: '\n    - ' },
+                { token: 'responseHeaders:', after: '\n    - ' },
+                { token: 'excludedResponseHeaders:', after: '\n    - ' },
+            ],
+        };
     case 'condition:domainType:':
-        return [
-            [ 'firstParty', '\n  ' ],
-            [ 'thirdParty', '\n  ' ],
-        ];
+        return {
+            before: /: $/,
+            candidates: [
+                { token: 'firstParty', after: '\n  ' },
+                { token: 'thirdParty', after: '\n  ' },
+            ],
+        };
     case 'condition:isUrlFilterCaseSensitive:':
-        return [
-            [ 'true', '\n  ' ],
-            [ 'false', '\n  ' ],
-        ];
+        return {
+            before: /: $/,
+            candidates: [
+                { token: 'true', after: '\n  ' },
+                { token: 'false', after: '\n  ' },
+            ],
+        };
     case 'condition:requestMethods:':
     case 'condition:excludedRequestMethods:':
-        return [
-            [ 'connect', '\n    - ' ],
-            [ 'delete', '\n    - ' ],
-            [ 'get', '\n    - ' ],
-            [ 'head', '\n    - ' ],
-            [ 'options', '\n    - ' ],
-            [ 'patch', '\n    - ' ],
-            [ 'post', '\n    - ' ],
-            [ 'put', '\n    - ' ],
-            [ 'other', '\n  ' ],
-        ];
+        return {
+            before: /^ {4}- $/,
+            candidates: [
+                { token: 'connect', after: '\n    - ' },
+                { token: 'delete', after: '\n    - ' },
+                { token: 'get', after: '\n    - ' },
+                { token: 'head', after: '\n    - ' },
+                { token: 'options', after: '\n    - ' },
+                { token: 'patch', after: '\n    - ' },
+                { token: 'post', after: '\n    - ' },
+                { token: 'put', after: '\n    - ' },
+                { token: 'other', after: '\n  ' },
+            ],
+        };
     case 'condition:resourceTypes:':
     case 'condition:excludedResourceTypes:':
-        return [
-            [ 'main_frame', '\n    - ' ],
-            [ 'sub_frame', '\n    - ' ],
-            [ 'stylesheet', '\n    - ' ],
-            [ 'script', '\n    - ' ],
-            [ 'image', '\n    - ' ],
-            [ 'font', '\n    - ' ],
-            [ 'object', '\n    - ' ],
-            [ 'xmlhttprequest', '\n    - ' ],
-            [ 'ping', '\n    - ' ],
-            [ 'csp_report', '\n    - ' ],
-            [ 'media', '\n    - ' ],
-            [ 'websocket', '\n    - ' ],
-            [ 'webtransport', '\n    - ' ],
-            [ 'webbundle', '\n    - ' ],
-            [ 'other', '\n  ' ],
-        ];
+        return {
+            before: /^ {4}- $/,
+            candidates: [
+                { token: 'main_frame', after: '\n    - ' },
+                { token: 'sub_frame', after: '\n    - ' },
+                { token: 'stylesheet', after: '\n    - ' },
+                { token: 'script', after: '\n    - ' },
+                { token: 'image', after: '\n    - ' },
+                { token: 'font', after: '\n    - ' },
+                { token: 'object', after: '\n    - ' },
+                { token: 'xmlhttprequest', after: '\n    - ' },
+                { token: 'ping', after: '\n    - ' },
+                { token: 'csp_report', after: '\n    - ' },
+                { token: 'media', after: '\n    - ' },
+                { token: 'websocket', after: '\n    - ' },
+                { token: 'webtransport', after: '\n    - ' },
+                { token: 'webbundle', after: '\n    - ' },
+                { token: 'other', after: '\n  ' },
+            ],
+        };
     }
 }
 
 function autoComplete(context) {
     const match = context.matchBefore(/[\w-]*/);
     if ( match === undefined ) { return null; }
-    const candidates = getAutocompleteCandidates(match.from);
-    if ( candidates === undefined ) { return null; }
+    const result = getAutocompleteCandidates(match.from);
+    if ( result === undefined ) { return null; }
+    if ( result.before !== undefined ) {
+        const { doc } = context.state;
+        const line = doc.lineAt(context.pos);
+        const before = doc.sliceString(line.from, match.from);
+        if ( result.before.test(before) === false ) { return null; }
+    }
     return {
         from: match.from,
-        options: candidates.map(e => ({ label: e[0], apply: `${e[0]}${e[1]}` })),
+        options: result.candidates.map(e => ({ label: e.token, apply: `${e.token}${e.after}` })),
     };
 }
 
@@ -404,6 +472,7 @@ localRead('userDnrRules').then(text => {
     text ||= '';
     setEditorText(text);
     lastSavedText = text;
+    self.cm6.resetUndoRedo(cmRules);
 
     dom.on('#dnrRulesApply', 'click', ( ) => {
         saveEditorText();
