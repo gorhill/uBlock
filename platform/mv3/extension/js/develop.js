@@ -28,6 +28,7 @@ import {
 } from './ext.js';
 import { dom, qs$ } from './dom.js';
 import { rulesFromText, textFromRules } from './dnr-parser.js';
+import { dnr } from './ext-compat.js';
 
 /******************************************************************************/
 
@@ -357,7 +358,7 @@ function saveEditorText() {
         : localRemove('userDnrRules');
     promise.then(( ) => {
         lastSavedText = text;
-        updateWidgets();
+        updateView();
     }).then(( ) =>
         sendMessage({ what: 'updateUserDnrRules' })
     ).then(result => {
@@ -368,7 +369,41 @@ function saveEditorText() {
 
 /******************************************************************************/
 
-function updateWidgets() {
+async function validateRegexes(regexes) {
+    if ( regexes.length === 0 ) { return; }
+    const promises = regexes.map(regex => validateRegex(regex));
+    await Promise.all(promises);
+    for ( const regex of regexes ) {
+        const i = validatedRegexes.regexes.indexOf(regex);
+        if ( i === -1 ) { continue; }
+        const r = validatedRegexes.results[i];
+        if ( r === true ) { continue; }
+        const entries = self.cm6.findAll(cmRules, `(?<=\\bregexFilter: )${RegExp.escape(regex)}`);
+        for ( const entry of entries ) {
+            self.cm6.spanErrorAdd(cmRules, entry.from, entry.to, r);
+        }
+    }
+}
+
+async function validateRegex(regex) {
+    const details = await dnr.isRegexSupported({ regex });
+    const result = details.isSupported || details.reason;
+    if ( validatedRegexes.regexes.length > 32 ) {
+        validatedRegexes.regexes.pop();
+        validatedRegexes.results.pop();
+    }
+    validatedRegexes.regexes.unshift(regex);
+    validatedRegexes.results.unshift(result);
+}
+
+const validatedRegexes = {
+    regexes: [],
+    results: [],
+};
+
+/******************************************************************************/
+
+function updateView() {
     const { doc } = cmRules.state;
     const changed = doc.toString().trim() !== 
         lastSavedText.trim();
@@ -378,19 +413,40 @@ function updateWidgets() {
     if ( start === -1 || end === -1 ) { return; }
     modifiedRange.start = modifiedRange.end = -1;
     self.cm6.lineErrorClear(cmRules, start, end);
+    self.cm6.spanErrorClear(cmRules, start, end);
     const firstLine = doc.line(start);
     const lastLine = doc.line(end);
     const text = doc.sliceString(firstLine.from, lastLine.to);
     const { bad } = rulesFromText(text);
-    if ( Boolean(bad?.length) === false ) { return; }
-    self.cm6.lineErrorAdd(cmRules, bad.map(i => i + start));
+    if ( Array.isArray(bad) && bad.length !== 0 ) {
+        self.cm6.lineErrorAdd(cmRules, bad.map(i => i + start));
+    }
+    const entries = self.cm6.findAll(
+        cmRules,
+        '\\bregexFilter: (\\S+)',
+        firstLine.from,
+        lastLine.to
+    );
+    const regexes = [];
+    for ( const entry of entries ) {
+        const regex = entry.match[1];
+        const i = validatedRegexes.regexes.indexOf(regex);
+        if ( i !== -1 ) {
+            const reason = validatedRegexes.results[i];
+            if ( reason === true ) { continue; }
+            self.cm6.spanErrorAdd(cmRules, entry.from+13, entry.to, reason );
+        } else { 
+            regexes.push(regex);
+        }
+    }
+    validateRegexes(regexes);
 }
 
-function updateWidgetsAsync() {
-    if ( updateWidgetsAsync.timer !== undefined ) { return; }
-    updateWidgetsAsync.timer = self.setTimeout(( ) => {
-        updateWidgetsAsync.timer = undefined;
-        updateWidgets();
+function updateViewAsync() {
+    if ( updateViewAsync.timer !== undefined ) { return; }
+    updateViewAsync.timer = self.setTimeout(( ) => {
+        updateViewAsync.timer = undefined;
+        updateView();
     }, 71);
 }
 
@@ -417,23 +473,11 @@ localRead('userDnrRuleCount').then(userDnrRuleCount => {
 
 function updateFeedbackPanel(info) {
     const errors = [];
-    if ( typeof info.error === 'string' ) {
-        errors.push(info.error);
-    }
-    if ( Array.isArray(info.rejectedRegexes) ) {
-        const format = s => {
-            const parts = s.split('\x1F');
-            return `"regexFilter: ${parts[0]}": "${parts[1]}"`;
-        };
-        info.rejectedRegexes.forEach(a => {
-            errors.push(format(a));
-        });
+    if ( Array.isArray(info.errors) ) {
+        info.errors.forEach(e => errors.push(e));
     }
     const text = errors.join('\n');
-    self.cm6.showFeedbackPanel(cmRules, {
-        template: '.feedback-panel',
-        text,
-    });
+    self.cm6.showFeedbackPanel(cmRules, { template: '.feedback-panel', text });
 }
 
 /******************************************************************************/
@@ -539,7 +583,7 @@ function cmUpdateListener(info) {
         importRulesFromPaste(from, to);
         break;
     }
-    updateWidgetsAsync();
+    updateViewAsync();
 }
 
 /******************************************************************************/
@@ -552,7 +596,8 @@ const cmRules = (( ) => {
         saveListener: ( ) => {
             saveEditorText();
         },
-        lineError: 'bad',
+        lineError: true,
+        spanError: true,
         // https://codemirror.net/examples/autocompletion/
         autocompletion: {
             override: [ autoComplete ],

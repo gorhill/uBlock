@@ -85,12 +85,12 @@ function getRulesetDetails() {
 
 /******************************************************************************/
 
-async function pruneInvalidRegexRules(realm, rulesIn, rejectedRegexes = []) {
+async function pruneInvalidRegexRules(realm, rulesIn, rejected = []) {
     const validateRegex = regex => {
         return dnr.isRegexSupported({ regex, isCaseSensitive: false }).then(result => {
             pruneInvalidRegexRules.validated.set(regex, result?.reason || true);
             if ( result.isSupported ) { return true; }
-            rejectedRegexes.push(`${regex}\x1F${result?.reason}`);
+            rejected.push({ regex, reason: result?.reason });
             return false;
         });
     };
@@ -103,11 +103,11 @@ async function pruneInvalidRegexRules(realm, rulesIn, rejectedRegexes = []) {
             continue;
         }
         const { regexFilter } = rule.condition;
-        const outcome = pruneInvalidRegexRules.validated.get(regexFilter);
-        if ( outcome !== undefined ) {
-            toCheck.push(outcome === true);
-            if ( outcome === true  ) { continue; }
-            rejectedRegexes.push(`${regexFilter}\x1F${outcome}`);
+        const reason = pruneInvalidRegexRules.validated.get(regexFilter);
+        if ( reason !== undefined ) {
+            toCheck.push(reason === true);
+            if ( reason === true  ) { continue; }
+            rejected.push({ regex: regexFilter, reason });
             continue;
         }
         toCheck.push(validateRegex(regexFilter));
@@ -116,9 +116,9 @@ async function pruneInvalidRegexRules(realm, rulesIn, rejectedRegexes = []) {
     // Collate results
     const isValid = await Promise.all(toCheck);
 
-    if ( rejectedRegexes.length !== 0 ) {
+    if ( rejected.length !== 0 ) {
         ubolLog(`${realm} realm: rejected regexes:\n`,
-            rejectedRegexes.map(s => `${s.replace(/\x1F/g, ' ')}`).join('\n')
+            rejected.map(e => `${e.regex} → ${e.reason}`).join('\n')
         );
     }
 
@@ -697,10 +697,12 @@ async function updateUserRules() {
     const removeRuleIds = [ ...userRules.map(a => a.id) ];
     const rejectedRegexes = [];
     const addRules = await pruneInvalidRegexRules('user', rules, rejectedRegexes);
-    const out = { added: 0, removed: 0 };
+    const out = { added: 0, removed: 0, errors: [] };
 
     if ( rejectedRegexes.length !== 0 ) {
-        out.rejectedRegexes = rejectedRegexes;
+        rejectedRegexes.forEach(e =>
+            out.errors.push(`regexFilter: ${e.regex} → ${e.reason}`)
+        );
     }
 
     if ( removeRuleIds.length === 0 && addRules.length === 0 ) {
@@ -731,7 +733,7 @@ async function updateUserRules() {
         out.removed = removeRuleIds.length;
     } catch(reason) {
         console.info(`updateUserRules() / ${reason}`);
-        out.error = `${reason}`;
+        out.errors.push(`${reason}`);
     } finally {
         const userRules = await getUserRules();
         if ( userRules.length === 0 ) {

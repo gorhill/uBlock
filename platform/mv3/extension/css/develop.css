@@ -41,8 +41,13 @@ section[data-pane="develop"] > div > * {
     border-top: 1px dotted var(--border-1);
     }
 
-#cm-dnrRules .cm-editor .cm-line.bad:not(.cm-activeLine) {
+#cm-dnrRules .cm-editor .cm-line.badline:not(.cm-activeLine) {
     background-color: var(--sf-error-surface);
+    }
+
+#cm-dnrRules .cm-editor .cm-line .badmark {
+    text-decoration: underline var(--cm-negative) wavy;
+    text-decoration-skip-ink: none;
     }
 
 #cm-dnrRules .cm-panel.cm-search {
@@ -76,6 +81,7 @@ section[data-pane="develop"] > div > * {
     }
 #cm-dnrRules .cm-panel.info-panel .info {
     flex-grow: 1;
+    overflow: auto;
     }
 #cm-dnrRules .cm-panel.info-panel .close {
     cursor: default;
@@ -86,9 +92,11 @@ section[data-pane="develop"] > div > * {
     content: '\2715';
     }
 #cm-dnrRules .cm-panel.summary-panel {
-    background-color: color-mix(in srgb, var(--info1-ink) 20%, white 80%);
+    background-color: color-mix(in srgb, var(--info1-ink) 20%, transparent 80%);
     }
 
 #cm-dnrRules .cm-panel.feedback-panel {
-    background-color: color-mix(in srgb, var(--info3-ink) 20%, white 80%);
+    background-color: color-mix(in srgb, var(--info3-ink) 20%, transparent 80%);
+    white-space: pre;
+    max-height: 10cqh;
     }
