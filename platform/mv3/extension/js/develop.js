@@ -92,13 +92,13 @@ function rulesFromJSON(json) {
         const re = new RegExp(`\\${expectedLastChar}[^\\${expectedLastChar}]+$`);
         const match = re.exec(content);
         if ( match === null ) { return; }
-        content = content.slice(0, match.index);
+        content = content.slice(0, match.index+1);
     }
     if ( content.startsWith('{') && content.endsWith('}') ) {
         content = `[${content}]`;
     }
     try {
-        const rules = JSON.parse(json);
+        const rules = JSON.parse(content);
         if ( Array.isArray(rules) ) { return rules; }
     }
     catch {
