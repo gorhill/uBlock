@@ -67,3 +67,28 @@ section[data-pane="develop"] > div > * {
     font-size: var(--button-font-size);
     min-height: calc(var(--button-font-size) * 1.8);
     }
+
+#cm-dnrRules .cm-panel.info-panel {
+    display: flex;
+    flex-wrap: nowrap;
+    font-size: var(--font-size);
+    padding: var(--default-gap-xxsmall) var(--default-gap-xsmall);
+    }
+#cm-dnrRules .cm-panel.info-panel .info {
+    flex-grow: 1;
+    }
+#cm-dnrRules .cm-panel.info-panel .close {
+    cursor: default;
+    flex-shrink: 0;
+    padding-inline-start: 1em;
+    }
+#cm-dnrRules .cm-panel.info-panel .close::after {
+    content: '\2715';
+    }
+#cm-dnrRules .cm-panel.summary-panel {
+    background-color: color-mix(in srgb, var(--info1-ink) 20%, white 80%);
+    }
+
+#cm-dnrRules .cm-panel.feedback-panel {
+    background-color: color-mix(in srgb, var(--info3-ink) 20%, white 80%);
+    }

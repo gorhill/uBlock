@@ -19,17 +19,15 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import { dom, qs$ } from './dom.js';
 import {
+    browser,
     localRead,
     localRemove,
     localWrite,
     sendMessage,
 } from './ext.js';
-import {
-    rulesFromText,
-    textFromRules,
-} from './dnr-parser.js';
+import { dom, qs$ } from './dom.js';
+import { rulesFromText, textFromRules } from './dnr-parser.js';
 
 /******************************************************************************/
 
@@ -323,9 +321,13 @@ function autoComplete(context) {
         const before = doc.sliceString(line.from, match.from);
         if ( result.before.test(before) === false ) { return null; }
     }
+    const filtered = result.candidates.filter(e =>
+        e.token !== match.text || e.after !== '\n'
+    ); 
     return {
         from: match.from,
-        options: result.candidates.map(e => ({ label: e.token, apply: `${e.token}${e.after}` })),
+        options: filtered.map(e => ({ label: e.token, apply: `${e.token}${e.after}` })),
+        validFor: /\w*/,
     };
 }
 
@@ -356,8 +358,11 @@ function saveEditorText() {
     promise.then(( ) => {
         lastSavedText = text;
         updateWidgets();
-    }).then(( ) => {
-        sendMessage({ what: 'updateUserDnrRules' });
+    }).then(( ) =>
+        sendMessage({ what: 'updateUserDnrRules' })
+    ).then(result => {
+        if ( result instanceof Object === false ) { return; }
+        updateFeedbackPanel(result);
     });
 }
 
@@ -387,6 +392,48 @@ function updateWidgetsAsync() {
         updateWidgetsAsync.timer = undefined;
         updateWidgets();
     }, 71);
+}
+
+/******************************************************************************/
+
+function updateSummaryPanel(info) {
+    self.cm6.showSummaryPanel(cmRules, {
+        template: '.summary-panel',
+        text: `Number of registered rules: ${info.userDnrRuleCount || 0}`,
+    });
+}
+
+browser.storage.onChanged.addListener((changes, area) => {
+    if ( area !== 'local' ) { return; }
+    const { userDnrRuleCount } = changes;
+    if ( userDnrRuleCount instanceof Object === false ) { return; }
+    const { newValue } = changes.userDnrRuleCount;
+    updateSummaryPanel({ userDnrRuleCount: newValue });
+});
+
+localRead('userDnrRuleCount').then(userDnrRuleCount => {
+    updateSummaryPanel({ userDnrRuleCount })
+});
+
+function updateFeedbackPanel(info) {
+    const errors = [];
+    if ( typeof info.error === 'string' ) {
+        errors.push(info.error);
+    }
+    if ( Array.isArray(info.rejectedRegexes) ) {
+        const format = s => {
+            const parts = s.split('\x1F');
+            return `"regexFilter: ${parts[0]}": "${parts[1]}"`;
+        };
+        info.rejectedRegexes.forEach(a => {
+            errors.push(format(a));
+        });
+    }
+    const text = errors.join('\n');
+    self.cm6.showFeedbackPanel(cmRules, {
+        template: '.feedback-panel',
+        text,
+    });
 }
 
 /******************************************************************************/

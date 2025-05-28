@@ -88,9 +88,8 @@ function getRulesetDetails() {
 async function pruneInvalidRegexRules(realm, rulesIn, rejectedRegexes = []) {
     const validateRegex = regex => {
         return dnr.isRegexSupported({ regex, isCaseSensitive: false }).then(result => {
-            const isSupported = result?.isSupported || false;
-            pruneInvalidRegexRules.validated.set(regex, isSupported);
-            if ( isSupported ) { return true; }
+            pruneInvalidRegexRules.validated.set(regex, result?.reason || true);
+            if ( result.isSupported ) { return true; }
             rejectedRegexes.push(`${regex}\x1F${result?.reason}`);
             return false;
         });
@@ -104,8 +103,11 @@ async function pruneInvalidRegexRules(realm, rulesIn, rejectedRegexes = []) {
             continue;
         }
         const { regexFilter } = rule.condition;
-        if ( pruneInvalidRegexRules.validated.has(regexFilter) ) {
-            toCheck.push(pruneInvalidRegexRules.validated.get(regexFilter));
+        const outcome = pruneInvalidRegexRules.validated.get(regexFilter);
+        if ( outcome !== undefined ) {
+            toCheck.push(outcome === true);
+            if ( outcome === true  ) { continue; }
+            rejectedRegexes.push(`${regexFilter}\x1F${outcome}`);
             continue;
         }
         toCheck.push(validateRegex(regexFilter));
@@ -667,12 +669,22 @@ async function getEnabledRulesetsDetails() {
 
 /******************************************************************************/
 
+async function getUserRules() {
+    const allRules = await dnr.getDynamicRules();
+    const userRules = [];
+    for ( const rule of allRules ) {
+        if ( rule.id < USER_RULES_BASE_RULE_ID ) { continue; }
+        userRules.push(rule);
+    }
+    return userRules;
+}
+
 async function updateUserRules() {
     const [
-        currentRules,
+        userRules,
         userRulesText = '',
     ] = await Promise.all([
-        dnr.getDynamicRules(),
+        getUserRules(),
         localRead('userDnrRules'),
     ]);
 
@@ -682,18 +694,18 @@ async function updateUserRules() {
 
     const parsed = rulesFromText(effectiveRulesText);
     const { rules } = parsed;
-
-    const removeRuleIds = [];
-    for ( const rule of currentRules ) {
-        if ( rule.id < USER_RULES_BASE_RULE_ID ) { continue; }
-        removeRuleIds.push(rule.id);
-    }
-
+    const removeRuleIds = [ ...userRules.map(a => a.id) ];
     const rejectedRegexes = [];
     const addRules = await pruneInvalidRegexRules('user', rules, rejectedRegexes);
+    const out = { added: 0, removed: 0 };
+
+    if ( rejectedRegexes.length !== 0 ) {
+        out.rejectedRegexes = rejectedRegexes;
+    }
 
     if ( removeRuleIds.length === 0 && addRules.length === 0 ) {
-        return { added: 0, removed: 0, rejectedRegexes };
+        await localRemove('userDnrRuleCount');
+        return out;
     }
 
     let ruleId = 0;
@@ -702,19 +714,33 @@ async function updateUserRules() {
         rule.priority = (rule.priority || 1) + USER_RULES_PRIORITY;
     }
 
+    // Rules are first removed separately to ensure registered rules match
+    // user rules text. A bad rule in user rules text would prevent the
+    // rules from being removed if the removal was done at the same time as
+    // adding rules.
     try {
-        await dnr.updateDynamicRules({ addRules, removeRuleIds });
+        await dnr.updateDynamicRules({ removeRuleIds });
+        await dnr.updateDynamicRules({ addRules });
         if ( removeRuleIds.length !== 0 ) {
             ubolLog(`updateUserRules() / Removed ${removeRuleIds.length} dynamic DNR rules`);
         }
         if ( addRules.length !== 0 ) {
             ubolLog(`updateUserRules() / Added ${addRules.length} DNR rules`);
         }
-        return { added: addRules.length, removed: removeRuleIds.length, rejectedRegexes };
+        out.added = addRules.length;
+        out.removed = removeRuleIds.length;
     } catch(reason) {
         console.info(`updateUserRules() / ${reason}`);
-        return { error: reason };
+        out.error = `${reason}`;
+    } finally {
+        const userRules = await getUserRules();
+        if ( userRules.length === 0 ) {
+            await localRemove('userDnrRuleCount');
+        } else {
+            await localWrite('userDnrRuleCount', addRules.length);
+        }
     }
+    return out;
 }
 
 /******************************************************************************/
