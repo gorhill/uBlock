@@ -19,6 +19,10 @@
     "message": "Settings",
     "description": "appears as tab name in dashboard"
   },
+  "developPageName": {
+    "message": "Develop",
+    "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see <https://developer.apple.com/documentation/safari-developer-tools/develop-menu>"
+  },
   "aboutPageName": {
     "message": "About",
     "description": "appears as tab name in dashboard"
