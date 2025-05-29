@@ -19,6 +19,10 @@
     "message": "Ezarpenak",
     "description": "appears as tab name in dashboard"
   },
+  "developPageName": {
+    "message": "Develop",
+    "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see <https://developer.apple.com/documentation/safari-developer-tools/develop-menu>"
+  },
   "aboutPageName": {
     "message": "Honi buruz",
     "description": "appears as tab name in dashboard"
@@ -240,7 +244,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Enable access to features suitable for technical users.",
+    "message": "Enables access to features suitable for technical users.",
     "description": "Short description for a checkbox in the options page"
   },
   "findListsPlaceholder": {
@@ -310,5 +314,9 @@
   "dnrRulesSummary": {
     "message": "Enter your own DNR rules below. <b>Do not add content from untrusted sources.</b>",
     "description": "Short description of the DNR rules editor pane"
+  },
+  "dnrRulesCountInfo": {
+    "message": "Number of registered rules: {count}",
+    "description": "Short sentence to report the number of currently registered DNR rules"
   }
 }

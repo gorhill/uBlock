@@ -19,6 +19,10 @@
     "message": "Innstillinger",
     "description": "appears as tab name in dashboard"
   },
+  "developPageName": {
+    "message": "Develop",
+    "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see <https://developer.apple.com/documentation/safari-developer-tools/develop-menu>"
+  },
   "aboutPageName": {
     "message": "Om",
     "description": "appears as tab name in dashboard"
@@ -310,5 +314,9 @@
   "dnrRulesSummary": {
     "message": "Legg til dine egne DNR-regler under. <b>Ikke legg til innhold fra usikre kilder.</b>",
     "description": "Short description of the DNR rules editor pane"
+  },
+  "dnrRulesCountInfo": {
+    "message": "Number of registered rules: {count}",
+    "description": "Short sentence to report the number of currently registered DNR rules"
   }
 }
