@@ -76,7 +76,7 @@
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Klikšķināt, lai šai vietnei ieslēgtu uBlock₀.",
+    "message": "Klikšķināt, lai šajā vietnē iespējotu uBlock₀.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -340,7 +340,7 @@
     "description": "Section for controlling user interface appearance"
   },
   "settingsThemeLabel": {
-    "message": "Motīvs",
+    "message": "Izskats",
     "description": "Label for checkbox to enable a custom dark theme"
   },
   "settingsThemeAccent0Label": {
@@ -508,11 +508,11 @@
     "description": "Filter lists section name"
   },
   "3pImport": {
-    "message": "Importēt…",
+    "message": "Ievietot…",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "Viens URL katrā rinda. Nederīgi URL netiks ņemti vērā.",
+    "message": "Viens URL katrā rindā. Nederīgi URL netiks ņemti vērā.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -552,7 +552,7 @@
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "Eksportēt…",
+    "message": "Izgūt…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
@@ -592,11 +592,11 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Importēt no faila…",
+    "message": "Ievietot no datnes…",
     "description": ""
   },
   "rulesExport": {
-    "message": "Eksportēt uz failu",
+    "message": "Izgūt datnē…",
     "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
@@ -636,7 +636,7 @@
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
-    "message": "Eksportēt…",
+    "message": "Izgūt…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
@@ -932,7 +932,7 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Svarīgi:</b> ir jāizvairas no līdzīgu aizturētāju izmantošanas vienlaicīgi ar uBlock Origin, jo tas var radīt aizturēšanas kļūmes noteiktās vietnēs.",
+    "message": "<b>Svarīgi:</b> ir jāizvairās no līdzīgu aizturētāju izmantošanas vienlaicīgi ar uBlock Origin, jo tas var radīt aizturēšanas kļūmes noteiktās vietnēs.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
@@ -956,7 +956,7 @@
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Svarīgi:</b> iespējami privāta vai sensitīva informācija pēc noklusējuma tiek izņemta. Aizvākta informācija var apgrūtināt sarežģījuma atrisināšanu.",
+    "message": "<b>Svarīgi:</b> iespējami privāta vai jūtīga informācija pēc noklusējuma tiek izņemta. Aizvākta informācija var apgrūtināt sarežģījuma atrisināšanu.",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {

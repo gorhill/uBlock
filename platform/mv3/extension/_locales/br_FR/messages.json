@@ -24,7 +24,7 @@
     "description": "appears as tab name in dashboard"
   },
   "aboutPrivacyPolicy": {
-    "message": "Politikerezh prevezded",
+    "message": "Politikerezh ar vuhez prevez",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "popupFilteringModeLabel": {
@@ -56,7 +56,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupPrivacy": {
-    "message": "Prevezded",
+    "message": "Buhez prevez",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMalware": {
@@ -148,7 +148,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Kudennoù a-fed prevezded he deus",
+    "message": "Kudennoù a-fed ar vuhez prevez he deus",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
@@ -236,11 +236,11 @@
     "description": "Short description for a checkbox in the options page"
   },
   "developerModeLabel": {
-    "message": "Developer mode",
+    "message": "Mod diorroer",
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Enable access to features suitable for technical users.",
+    "message": "Gweredekaat ar fonksionelezhioù azasaet d'an implijerien deknikel.",
     "description": "Short description for a checkbox in the options page"
   },
   "findListsPlaceholder": {
@@ -292,23 +292,23 @@
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "saveButton": {
-    "message": "Save",
+    "message": "Enrollañ",
     "description": "Text for buttons used to save changes"
   },
   "revertButton": {
-    "message": "Revert",
+    "message": "Nullañ",
     "description": "Text for buttons used to revert changes"
   },
   "importAndAppendButton": {
-    "message": "Import and append…",
+    "message": "Enporzhiañ hag ouzhpennañ",
     "description": "Text for buttons used to import and append content"
   },
   "exportButton": {
-    "message": "Export…",
+    "message": "Ezporzhiañ",
     "description": "Text for buttons used to export content"
   },
   "dnrRulesSummary": {
-    "message": "Enter your own DNR rules below. <b>Do not add content from untrusted sources.</b>",
+    "message": "Lakait ho reolennoù DNR deoc'h-c'hwi amañ-dindan. <b>Arabat ouzhpennañ danvez a zeu diouzh mammennoù douetus.</b>",
     "description": "Short description of the DNR rules editor pane"
   }
 }

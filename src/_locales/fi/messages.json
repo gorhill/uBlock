@@ -948,11 +948,11 @@
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
-    "message": "Vianmääritystiedot",
+    "message": "Vianselvitystiedot",
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
-    "message": "Alla on teknisiä tietoja, joista voi olla hyötyä vapaaehtoisille, jotka pyrkivät auttamaan ongelmasi ratkaisussa.",
+    "message": "Alla on teknisiä tietoja, jotka saattavat auttaa ongelmasi ratkonnassa auttavia vapaaehtoisia.",
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
@@ -964,7 +964,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Välttääksesi vapaaehtoisten kuormittamisen ylimääräisillä ilmoituksilla, tarkasta ensin onko ongelmasta jo ilmoitettu. <b>Huomioi:</b> painikkeen painalluksen seurauksena sivun osoite lähetetään GitHubiin.",
+    "message": "Välttääksesi vapaaehtoisten kuormittamisen ylimääräisillä ilmoituksilla, tarkasta ensin onko ongelmasta jo ilmoitettu. <b>Huomioi:</b> Painikkeen painallus lähettää sivun osoitteen GitHubiin.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {

@@ -236,11 +236,11 @@
     "description": "Short description for a checkbox in the options page"
   },
   "developerModeLabel": {
-    "message": "Developer mode",
+    "message": "Modo desarrollador",
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Enable access to features suitable for technical users.",
+    "message": "Habilitar acceso a características adecuadas para usuarios técnicos.",
     "description": "Short description for a checkbox in the options page"
   },
   "findListsPlaceholder": {
@@ -292,23 +292,23 @@
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "saveButton": {
-    "message": "Save",
+    "message": "Guardar",
     "description": "Text for buttons used to save changes"
   },
   "revertButton": {
-    "message": "Revert",
+    "message": "Revertir",
     "description": "Text for buttons used to revert changes"
   },
   "importAndAppendButton": {
-    "message": "Import and append…",
+    "message": "Importar y anexar…",
     "description": "Text for buttons used to import and append content"
   },
   "exportButton": {
-    "message": "Export…",
+    "message": "Exportar…",
     "description": "Text for buttons used to export content"
   },
   "dnrRulesSummary": {
-    "message": "Enter your own DNR rules below. <b>Do not add content from untrusted sources.</b>",
+    "message": "Ingresa tus propias reglas DNR abajo. <b>No agregues contenido desde fuentes no confiables.</b>",
     "description": "Short description of the DNR rules editor pane"
   }
 }

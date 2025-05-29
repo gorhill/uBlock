@@ -476,7 +476,7 @@
     "description": "Filter lists section name"
   },
   "3pGroupPrivacy": {
-    "message": "Prevezded",
+    "message": "Buhez prevez",
     "description": "Filter lists section name"
   },
   "3pGroupMalware": {
@@ -964,7 +964,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Evit nompas sammañ ar genlabourerien a-youl vat gant meur a zanevell heñvel, gwiriit ma n'eo ket bet danevellet ho kudenn en ar-raok mar plij.",
+    "message": "Evit nompas sammañ ar genlabourerien a-youl vat gant meur a zanevell heñvel, gwiriit ma n'eo ket bet danevellet ho kudenn en a-raok mar plij.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
@@ -1000,7 +1000,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Kudennoù a-fed prevezded he deus",
+    "message": "Kudennoù a-fed ar vuhez prevez he deus",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
@@ -1028,7 +1028,7 @@
     "description": "Text for 'Unredact' button"
   },
   "aboutPrivacyPolicy": {
-    "message": "Politikerezh prevezded",
+    "message": "Politikerezh ar vuhez prevez",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {

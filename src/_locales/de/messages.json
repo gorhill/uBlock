@@ -548,7 +548,7 @@
     "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
-    "message": "Importieren und anfügen …",
+    "message": "Importieren und ergänzen …",
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
@@ -632,7 +632,7 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Importieren und anfügen …",
+    "message": "Importieren und ergänzen …",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {

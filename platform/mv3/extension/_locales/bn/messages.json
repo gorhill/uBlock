@@ -112,7 +112,7 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting information",
+    "message": "সমস্যা সমাধানের তথ্য",
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
@@ -236,11 +236,11 @@
     "description": "Short description for a checkbox in the options page"
   },
   "developerModeLabel": {
-    "message": "Developer mode",
+    "message": "ডেভেলপার মোড",
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Enable access to features suitable for technical users.",
+    "message": "প্রযুক্তিগত ব্যবহারকারীদের জন্য উপযুক্ত বৈশিষ্ট্যগুলিতে অ্যাক্সেস সক্ষম করুন",
     "description": "Short description for a checkbox in the options page"
   },
   "findListsPlaceholder": {
@@ -284,7 +284,7 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Enter element zapper mode",
+    "message": "এলিমেন্ট জ্যাপার মোডে প্রবেশ করুন",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
@@ -292,7 +292,7 @@
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "saveButton": {
-    "message": "Save",
+    "message": "সেভ করুন",
     "description": "Text for buttons used to save changes"
   },
   "revertButton": {

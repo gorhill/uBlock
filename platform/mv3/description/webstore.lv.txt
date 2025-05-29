@@ -1,11 +1,11 @@
-uBO Lite (uBOL) ir uz MV3 balstīts satura aizturētājs.
+uBO Lite (uBOL) — uz MV3 balstīts satura aizturētājs.
 
-Noklusējuma nosacījumu kopa atbilst uBokc Origin noklusējuma aizturēšanas kopai:
+Noklusējuma nosacījumu kopa atbilst uBock Origin noklusējuma aizturēšanas kopai:
 
 - uBlock Origin iebūvētie aizturēšanas saraksti
 - EasyList
 - EasyPrivacy
-- Pētera Lova (Peter Lowe) reklāmu un izsakošanas serveru saraksts
+- Pētera Lova (Peter Lowe) reklāmu un izsekošanas serveru saraksts
 
 Vairāk nosacījumu kopu var iespējot iestatījumu sadaļā -- jāklikšķina _Zobratu_ ikona uznirstošajā logā.
 
