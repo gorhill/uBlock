@@ -3104,6 +3104,39 @@ class FilterIPAddress {
 registerFilterClass(FilterIPAddress);
 
 /******************************************************************************/
+
+class FilterMessage {
+    static match() {
+        return true;
+    }
+
+    static compile(details) {
+        return [
+            FilterMessage.fid,
+            encodeURIComponent(details.optionValues.get('message')),
+        ];
+    }
+
+    static fromCompiled(args) {
+        const msg = args[1];
+        return filterDataAlloc(args[0], bidiTrie.storeString(msg), msg.length);
+    }
+
+    static keyFromArgs() {
+    }
+
+    static logData(idata, details) {
+        const msg = bidiTrie.extractString(
+                filterData[idata+1],
+                filterData[idata+2]
+        );
+        details.options.push(`message=${decodeURIComponent(msg)}`);
+    }
+}
+
+registerFilterClass(FilterMessage);
+
+/******************************************************************************/
 /******************************************************************************/
 
 // https://github.com/gorhill/uBlock/issues/2630
@@ -3578,6 +3611,10 @@ class FilterCompiler {
             this.optionValues.set('ipaddress', parser.getNetOptionValue(id) || '');
             this.optionUnitBits |= IPADDRESS_BIT;
             break;
+        case sfp.NODE_TYPE_NET_OPTION_NAME_MESSAGE:
+            this.optionValues.set('message', parser.getNetOptionValue(id));
+            this.optionUnitBits |= MESSAGE_BIT;
+            break;
         case sfp.NODE_TYPE_NET_OPTION_NAME_METHOD:
             this.processMethodOption(parser.getNetOptionValue(id));
             this.optionUnitBits |= METHOD_BIT;
@@ -3699,6 +3736,7 @@ class FilterCompiler {
             case sfp.NODE_TYPE_NET_OPTION_NAME_FROM:
             case sfp.NODE_TYPE_NET_OPTION_NAME_HEADER:
             case sfp.NODE_TYPE_NET_OPTION_NAME_IPADDRESS:
+            case sfp.NODE_TYPE_NET_OPTION_NAME_MESSAGE:
             case sfp.NODE_TYPE_NET_OPTION_NAME_METHOD:
             case sfp.NODE_TYPE_NET_OPTION_NAME_PERMISSIONS:
             case sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECT:
@@ -4081,6 +4119,11 @@ class FilterCompiler {
             this.action |= HEADERS_REALM;
         }
 
+        // Message
+        if ( (this.optionUnitBits & MESSAGE_BIT) !== 0 ) {
+            units.push(FilterMessage.compile(this));
+        }
+
         // Important
         //
         // IMPORTANT: must always appear at the end of the sequence, so as to
@@ -4175,16 +4218,17 @@ class FilterCompiler {
 }
 
 // These are to quickly test whether a filter is composite
-const FROM_BIT         = 0b0000000001;
-const TO_BIT           = 0b0000000010;
-const DENYALLOW_BIT    = 0b0000000100;
-const HEADER_BIT       = 0b0000001000;
-const STRICT_PARTY_BIT = 0b0000010000;
-const MODIFY_BIT       = 0b0000100000;
-const NOT_TYPE_BIT     = 0b0001000000;
-const IMPORTANT_BIT    = 0b0010000000;
-const METHOD_BIT       = 0b0100000000;
-const IPADDRESS_BIT    = 0b1000000000;
+const FROM_BIT         = 0b00000000001;
+const TO_BIT           = 0b00000000010;
+const DENYALLOW_BIT    = 0b00000000100;
+const HEADER_BIT       = 0b00000001000;
+const STRICT_PARTY_BIT = 0b00000010000;
+const MODIFY_BIT       = 0b00000100000;
+const NOT_TYPE_BIT     = 0b00001000000;
+const IMPORTANT_BIT    = 0b00010000000;
+const METHOD_BIT       = 0b00100000000;
+const IPADDRESS_BIT    = 0b01000000000;
+const MESSAGE_BIT      = 0b10000000000
 
 FilterCompiler.prototype.FILTER_OK          = 0;
 FilterCompiler.prototype.FILTER_INVALID     = 1;

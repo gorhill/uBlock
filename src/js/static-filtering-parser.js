@@ -174,6 +174,7 @@ export const NODE_TYPE_NET_OPTION_NAME_INLINESCRIPT = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_IPADDRESS    = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_MATCHCASE    = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_MEDIA        = iota++;
+export const NODE_TYPE_NET_OPTION_NAME_MESSAGE      = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_METHOD       = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_MP4          = iota++;
 export const NODE_TYPE_NET_OPTION_NAME_NOOP         = iota++;
@@ -255,6 +256,7 @@ export const nodeTypeFromOptionName = new Map([
     [ 'ipaddress', NODE_TYPE_NET_OPTION_NAME_IPADDRESS ],
     [ 'match-case', NODE_TYPE_NET_OPTION_NAME_MATCHCASE ],
     [ 'media', NODE_TYPE_NET_OPTION_NAME_MEDIA ],
+    [ 'message', NODE_TYPE_NET_OPTION_NAME_MESSAGE ],
     [ 'method', NODE_TYPE_NET_OPTION_NAME_METHOD ],
     [ 'mp4', NODE_TYPE_NET_OPTION_NAME_MP4 ],
     [ '_', NODE_TYPE_NET_OPTION_NAME_NOOP ],
@@ -1349,6 +1351,9 @@ export class AstFilterParser {
             }
             case NODE_TYPE_NET_OPTION_NAME_MATCHCASE:
                 realBad = this.isRegexPattern() === false;
+                break;
+            case NODE_TYPE_NET_OPTION_NAME_MESSAGE:
+                realBad = hasValue === false;
                 break;
             case NODE_TYPE_NET_OPTION_NAME_PERMISSIONS:
                 realBad = modifierType !== 0 ||
@@ -3149,6 +3154,7 @@ export const netOptionTokenDescriptors = new Map([
     [ 'ipaddress', { mustAssign: true } ],
     [ 'match-case', { } ],
     [ 'media', { canNegate: true } ],
+    [ 'message', { mustAssign: true } ],
     [ 'method', { mustAssign: true } ],
     [ 'mp4', { blockOnly: true } ],
     [ '_', { } ],
