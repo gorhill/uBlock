@@ -18,6 +18,7 @@ body {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    font-size: 16px;
     gap: 0;
     height: 100vh;
     margin: 0;
@@ -34,13 +35,29 @@ main {
     flex-grow: 1;
     gap: 0.5em;
 }
-#json-data {
+section {
     box-sizing: border-box;
-    min-height: 20vh;
+    display: flex;
+    gap: 0.5em;
+}
+section > * {
+    border: 1px solid gray;
+    box-sizing: border-box;
+    flex-grow: 1;
+    font-family: monospace;
+    font-size: small;
+    line-height: 1.2;
+    max-height: 60cqh;
+    overflow: auto;
+    white-space: pre;
+    width: 50cqw;
+}
+#jsondata-in {
+    min-height: 50vh;
     resize: vertical;
 }
 #jsonpath-input {
-    font-size: 16px;
+    font-size: medium;
 }
 #jsonpath-result {
     background-color: #eee;
@@ -52,7 +69,8 @@ main {
 <body>
 <h2>uBO-flavored JSONPath tool</h2>
 <main>
-    <textarea id="json-data" placeholder="JSON data" spellcheck="false">{
+    <section>
+        <textarea id="jsondata-in" placeholder="JSON data" spellcheck="false">{
   "store": {
     "book": [ 
       { "category": "reference",
@@ -84,6 +102,8 @@ main {
     }
   }
 }</textarea>
+        <div id="jsondata-out"></div>
+    </section>
     <input id="jsonpath-input" placeholder="JSON path expression" spellcheck="false" value="$..book[?@.price<10]" />
     <div id="jsonpath-result">&nbsp;</div>
 </main>
@@ -98,15 +118,17 @@ main {
     import { JSONPath } from '../src/js/jsonpath.js';
 
     function readJSON() {
-        const textarea = document.querySelector('#json-data');
+        const textarea = document.querySelector('#jsondata-in');
+        let data;
         try {
-            jsonData = JSON.parse(textarea.value);
+            data = JSON.parse(textarea.value);
         } catch {
-            jsonData = {};
+            data = {};
         }
-        if ( typeof jsonData !== 'object' || jsonData === null ) {
-            jsonData = {};
+        if ( typeof data !== 'object' || data === null ) {
+            data = {};
         }
+        return data;
     }
 
     function formatResult(a) {
@@ -126,16 +148,23 @@ main {
         const input = document.querySelector('#jsonpath-input');
         const jsonpath = input.value;
         jsonp.compile(jsonpath);
-        const result = formatResult(jsonp.evaluate(jsonData));
-        const div = document.querySelector('#jsonpath-result');
-        div.textContent = result;
+        const jsonDataIn = readJSON();
+        //const datainDiv = document.querySelector('#jsondata-in');
+        //datainDiv.textContent = JSON.stringify(jsonDataIn, null, 2);
+        const result = formatResult(jsonp.evaluate(jsonDataIn));
+        const pathsDiv = document.querySelector('#jsonpath-result');
+        pathsDiv.textContent = result;
+        const jsonDataOut = readJSON();
+        jsonp.apply(jsonDataOut);
+        const dataoutDiv = document.querySelector('#jsondata-out');
+        dataoutDiv.textContent = JSON.stringify(jsonDataOut, null, 2);
     }
 
     const jsonp = new JSONPath();
-    let jsonData = {};
+    let jsonDataIn = {};
 
     {
-        const textarea = document.querySelector('#json-data');
+        const textarea = document.querySelector('#jsondata-in');
         textarea.addEventListener('input', ( ) => {
             readJSON();
             process();
