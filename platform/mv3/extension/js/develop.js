@@ -245,6 +245,8 @@ function getAutocompleteCandidates(from) {
                 { token: 'urlFilter:', after: ' ' },
                 { token: 'initiatorDomains:', after: '\n    - ' },
                 { token: 'excludedInitiatorDomains:', after: '\n    - ' },
+                { token: 'domains:', after: '\n    - ' },
+                { token: 'excludedDomains:', after: '\n    - ' },
                 { token: 'requestDomains:', after: '\n    - ' },
                 { token: 'excludedRequestDomains:', after: '\n    - ' },
                 { token: 'resourceTypes:', after: '\n    - ' },

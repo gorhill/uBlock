@@ -294,12 +294,14 @@ const perScopeParsers = {
             rule.condition.urlFilter = val;
             break;
         case 'initiatorDomains':
-            rule.condition.initiatorDomains = [];
-            scope.push('initiatorDomains');
+        case 'domains':
+            rule.condition[key] = [];
+            scope.push(key);
             break;
         case 'excludedInitiatorDomains':
-            rule.condition.excludedInitiatorDomains = [];
-            scope.push('excludedInitiatorDomains');
+        case 'excludedDomains':
+            rule.condition[key] = [];
+            scope.push(key);
             break;
         case 'requestDomains':
             rule.condition.requestDomains = [];
@@ -346,6 +348,16 @@ const perScopeParsers = {
     'condition.excludedInitiatorDomains': function(scope, rule, node) {
         if ( node.list !== true ) { return false; }
         rule.condition.excludedInitiatorDomains.push(node.val);
+        return true;
+    },
+    'condition.domains': function(scope, rule, node) {
+        if ( node.list !== true ) { return false; }
+        rule.condition.domains.push(node.val);
+        return true;
+    },
+    'condition.excludedDomains': function(scope, rule, node) {
+        if ( node.list !== true ) { return false; }
+        rule.condition.excludedDomains.push(node.val);
         return true;
     },
     'condition.requestDomains': function(scope, rule, node) {
