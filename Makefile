@@ -74,7 +74,7 @@ dist/build/mv3-data:
 	mkdir -p dist/build/mv3-data
 
 ubol-codemirror:
-	$(MAKE) -C platform/mv3/extension/lib/codemirror/codemirror-ubol/ ubol.bundle
+	$(MAKE) -sC platform/mv3/extension/lib/codemirror/codemirror-ubol/ ubol.bundle
 
 dist/build/uBOLite.chromium: tools/make-mv3.sh $(mv3-sources) $(platform) $(mv3-data) dist/build/mv3-data
 	tools/make-mv3.sh chromium

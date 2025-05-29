@@ -29,6 +29,7 @@ import {
 import { dom, qs$ } from './dom.js';
 import { rulesFromText, textFromRules } from './dnr-parser.js';
 import { dnr } from './ext-compat.js';
+import { i18n$ } from './i18n.js';
 
 /******************************************************************************/
 
@@ -376,11 +377,13 @@ async function validateRegexes(regexes) {
     for ( const regex of regexes ) {
         const i = validatedRegexes.regexes.indexOf(regex);
         if ( i === -1 ) { continue; }
-        const r = validatedRegexes.results[i];
-        if ( r === true ) { continue; }
-        const entries = self.cm6.findAll(cmRules, `(?<=\\bregexFilter: )${RegExp.escape(regex)}`);
+        const reason = validatedRegexes.results[i];
+        if ( reason === true ) { continue; }
+        const entries = self.cm6.findAll(cmRules,
+            `(?<=\\bregexFilter: )${RegExp.escape(regex)}`
+        );
         for ( const entry of entries ) {
-            self.cm6.spanErrorAdd(cmRules, entry.from, entry.to, r);
+            self.cm6.spanErrorAdd(cmRules, entry.from, entry.to, reason);
         }
     }
 }
@@ -434,7 +437,7 @@ function updateView() {
         if ( i !== -1 ) {
             const reason = validatedRegexes.results[i];
             if ( reason === true ) { continue; }
-            self.cm6.spanErrorAdd(cmRules, entry.from+13, entry.to, reason );
+            self.cm6.spanErrorAdd(cmRules, entry.from+13, entry.to, reason);
         } else { 
             regexes.push(regex);
         }
@@ -455,7 +458,8 @@ function updateViewAsync() {
 function updateSummaryPanel(info) {
     self.cm6.showSummaryPanel(cmRules, {
         template: '.summary-panel',
-        text: `Number of registered rules: ${info.userDnrRuleCount || 0}`,
+        text: i18n$('dnrRulesCountInfo')
+            .replace('{count}', (info.userDnrRuleCount || 0).toLocaleString()),
     });
 }
 
@@ -588,6 +592,58 @@ function cmUpdateListener(info) {
 
 /******************************************************************************/
 
+function gutterClick(view, info) {
+    const reSeparator = /^---\s*/;
+    const { doc } = view.state;
+    const lineFirst = doc.lineAt(info.from);
+    if ( lineFirst.text === '' ) { return false; }
+    let { from, to } = lineFirst;
+    if ( reSeparator.test(lineFirst.text) ) {
+        let lineNo = lineFirst.number + 1;
+        while ( lineNo < doc.lines ) {
+            const line = doc.line(lineNo);
+            if ( reSeparator.test(line.text) ) { break; }
+            to = line.to;
+            lineNo += 1;
+        }
+    }
+    view.dispatch({
+        selection: { anchor: from, head: to+1 }
+    });
+    view.focus();
+    return true;
+}
+
+/******************************************************************************/
+
+function hoverTooltip(view, pos, side) {
+    const details = view.domAtPos(pos);
+    const textNode = details.node;
+    if ( textNode.nodeType !== 3 ) { return null; }
+    const { parentElement } = textNode;
+    const targetElement = parentElement.closest('[data-tooltip]');
+    if ( targetElement === null ) { return null; }
+    const tooltipText = targetElement.getAttribute('data-tooltip');
+    if ( Boolean(tooltipText) === false ) { return null; }
+    const start = pos - details.offset;
+    const end = start + textNode.nodeValue.length;
+    if ( start === pos && side < 0 || end === pos && side > 0 ) { return null; }
+    return {
+        above: true,
+        pos: start,
+        end,
+        create() {
+            const template = document.querySelector('.badmark-tooltip');
+            const fragment = template.content.cloneNode(true);
+            const dom = fragment.querySelector('.badmark-tooltip');
+            dom.textContent = tooltipText;
+            return { dom };
+        },
+    };
+}
+
+/******************************************************************************/
+
 const cmRules = (( ) => {
     return self.cm6.createEditorView({
         dnrRules: true,
@@ -603,6 +659,8 @@ const cmRules = (( ) => {
             override: [ autoComplete ],
             activateOnCompletion: ( ) => true,
         },
+        gutterClick,
+        hoverTooltip,
     }, qs$('#cm-dnrRules'));
 })();
 

@@ -42,7 +42,7 @@ section[data-pane="develop"] > div > * {
     }
 
 #cm-dnrRules .cm-editor .cm-line.badline:not(.cm-activeLine) {
-    background-color: var(--sf-error-surface);
+    background-color: color-mix(in srgb, var(--info3-ink) 15%, transparent 85%);
     }
 
 #cm-dnrRules .cm-editor .cm-line .badmark {
@@ -50,7 +50,7 @@ section[data-pane="develop"] > div > * {
     text-decoration-skip-ink: none;
     }
 
-#cm-dnrRules .cm-panel.cm-search {
+#cm-dnrRules .cm-editor .cm-panel.cm-search {
     display: flex;
     flex-wrap: wrap;
     font-family: sans-serif;
@@ -59,13 +59,13 @@ section[data-pane="develop"] > div > * {
     padding: 0.5em 1.5em 0.5em 0.5em;
     }
 
-#cm-dnrRules .cm-panel.cm-search > * {
+#cm-dnrRules .cm-editor .cm-panel.cm-search > * {
     margin: 0;
     }
 
-#cm-dnrRules .cm-panel.cm-search .cm-textfield,
-#cm-dnrRules .cm-panel.cm-search .cm-button,
-#cm-dnrRules .cm-panel.cm-search label {
+#cm-dnrRules .cm-editor .cm-panel.cm-search .cm-textfield,
+#cm-dnrRules .cm-editor .cm-panel.cm-search .cm-button,
+#cm-dnrRules .cm-editor .cm-panel.cm-search label {
     background-image: inherit;
     border: inherit;
     flex-grow: 0;
@@ -73,30 +73,40 @@ section[data-pane="develop"] > div > * {
     min-height: calc(var(--button-font-size) * 1.8);
     }
 
-#cm-dnrRules .cm-panel.info-panel {
+#cm-dnrRules .cm-editor .cm-panel.info-panel {
     display: flex;
     flex-wrap: nowrap;
     font-size: var(--font-size);
     padding: var(--default-gap-xxsmall) var(--default-gap-xsmall);
     }
-#cm-dnrRules .cm-panel.info-panel .info {
+#cm-dnrRules .cm-editor .cm-panel.info-panel .info {
     flex-grow: 1;
     overflow: auto;
     }
-#cm-dnrRules .cm-panel.info-panel .close {
+#cm-dnrRules .cm-editor .cm-panel.info-panel .close {
     cursor: default;
     flex-shrink: 0;
     padding-inline-start: 1em;
     }
-#cm-dnrRules .cm-panel.info-panel .close::after {
+#cm-dnrRules .cm-editor .cm-panel.info-panel .close::after {
     content: '\2715';
     }
-#cm-dnrRules .cm-panel.summary-panel {
-    background-color: color-mix(in srgb, var(--info1-ink) 20%, transparent 80%);
+#cm-dnrRules .cm-editor .cm-panel.summary-panel {
+    background-color: color-mix(in srgb, var(--info1-ink) 15%, transparent 85%);
     }
 
-#cm-dnrRules .cm-panel.feedback-panel {
-    background-color: color-mix(in srgb, var(--info3-ink) 20%, transparent 80%);
+#cm-dnrRules .cm-editor .cm-panel.feedback-panel {
+    background-color: color-mix(in srgb, var(--info3-ink) 15%, transparent 85%);
     white-space: pre;
     max-height: 10cqh;
+    }
+
+#cm-dnrRules .cm-editor .cm-gutterElement {
+    cursor: default;
+    user-select: none;
+    }
+
+#cm-dnrRules .cm-editor .cm-tooltip .badmark-tooltip {
+    background-color: color-mix(in srgb, var(--info3-ink) 15%, transparent 85%);
+    padding: var(--default-gap-xxsmall) var(--default-gap-xsmall);
     }
