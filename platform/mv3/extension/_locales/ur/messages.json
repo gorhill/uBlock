@@ -21,7 +21,7 @@
   },
   "developPageName": {
     "message": "Develop",
-    "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see <https://developer.apple.com/documentation/safari-developer-tools/develop-menu>"
+    "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
     "message": "تعارف",
