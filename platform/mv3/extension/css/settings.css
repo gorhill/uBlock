@@ -25,6 +25,9 @@ body[data-forbid~="filteringMode"] section[data-pane="settings"] > div:has(> h3[
 body[data-forbid~="filteringMode"] section[data-pane="settings"] > div:has(> h3[data-i18n="filteringMode0Name"]) {
     display: none;
     }
+body[data-forbid~="develop"] #developerMode {
+    display: none;
+    }
 
 label:has(input[type="checkbox"][disabled]),
 label:has(input[type="checkbox"][disabled]) + legend {

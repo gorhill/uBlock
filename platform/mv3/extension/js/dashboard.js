@@ -19,6 +19,12 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+import {
+    localRead,
+    localRemove,
+    localWrite,
+} from './ext.js';
+
 import { dom } from './dom.js';
 import { runtime } from './ext.js';
 
@@ -32,7 +38,18 @@ import { runtime } from './ext.js';
 dom.attr('a', 'target', '_blank');
 
 dom.on('#dashboard-nav', 'click', '.tabButton', ev => {
-    dom.body.dataset.pane = ev.target.dataset.pane;
+    const { pane } = ev.target.dataset;
+    dom.body.dataset.pane = pane;
+    if ( pane === 'settings' ) {
+        localRemove('activeDashboardPane');
+    } else {
+        localWrite('activeDashboardPane', pane);
+    }
+});
+
+localRead('activeDashboardPane').then(pane => {
+    if ( typeof pane !== 'string' ) { return; }
+    dom.body.dataset.pane = pane;
 });
 
 /******************************************************************************/

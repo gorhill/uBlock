@@ -1,0 +1,112 @@
+body[data-pane="develop"] {
+    height: 100vh;
+    }
+
+section[data-pane="develop"] {
+    display: none;
+    flex-grow: 1;
+    overflow: hidden;
+    }
+
+section[data-pane="develop"] > div {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    }
+
+section[data-pane="develop"] > div > * {
+    margin-bottom: 0;
+    margin-top: 1em;
+    }
+
+#cm-dnrRules {
+    flex-grow: 1;
+    font-size: var(--monospace-size);
+    overflow: hidden;
+    }
+
+/* https://discuss.codemirror.net/t/how-to-set-max-height-of-the-editor/2882/2 */
+#cm-dnrRules .cm-editor {
+    background-color: var(--surface-0);
+    height: 100%;
+    }
+
+#cm-dnrRules .cm-editor .cm-line {
+    border-bottom: 1px dotted transparent;
+    border-top: 1px dotted transparent;
+    }
+
+#cm-dnrRules .cm-editor .cm-line:has(.ͼ5) {
+    border-bottom: 1px dotted var(--border-1);
+    border-top: 1px dotted var(--border-1);
+    }
+
+#cm-dnrRules .cm-editor .cm-line.badline:not(.cm-activeLine) {
+    background-color: color-mix(in srgb, var(--info3-ink) 15%, transparent 85%);
+    }
+
+#cm-dnrRules .cm-editor .cm-line .badmark {
+    text-decoration: underline var(--cm-negative) wavy;
+    text-decoration-skip-ink: none;
+    }
+
+#cm-dnrRules .cm-editor .cm-panel.cm-search {
+    display: flex;
+    flex-wrap: wrap;
+    font-family: sans-serif;
+    font-size: var(--font-size);
+    gap: 0.5em 1em;
+    padding: 0.5em 1.5em 0.5em 0.5em;
+    }
+
+#cm-dnrRules .cm-editor .cm-panel.cm-search > * {
+    margin: 0;
+    }
+
+#cm-dnrRules .cm-editor .cm-panel.cm-search .cm-textfield,
+#cm-dnrRules .cm-editor .cm-panel.cm-search .cm-button,
+#cm-dnrRules .cm-editor .cm-panel.cm-search label {
+    background-image: inherit;
+    border: inherit;
+    flex-grow: 0;
+    font-size: var(--button-font-size);
+    min-height: calc(var(--button-font-size) * 1.8);
+    }
+
+#cm-dnrRules .cm-editor .cm-panel.info-panel {
+    display: flex;
+    flex-wrap: nowrap;
+    font-size: var(--font-size);
+    padding: var(--default-gap-xxsmall) var(--default-gap-xsmall);
+    }
+#cm-dnrRules .cm-editor .cm-panel.info-panel .info {
+    flex-grow: 1;
+    overflow: auto;
+    }
+#cm-dnrRules .cm-editor .cm-panel.info-panel .close {
+    cursor: default;
+    flex-shrink: 0;
+    padding-inline-start: 1em;
+    }
+#cm-dnrRules .cm-editor .cm-panel.info-panel .close::after {
+    content: '\2715';
+    }
+#cm-dnrRules .cm-editor .cm-panel.summary-panel {
+    background-color: color-mix(in srgb, var(--info1-ink) 15%, transparent 85%);
+    }
+
+#cm-dnrRules .cm-editor .cm-panel.feedback-panel {
+    background-color: color-mix(in srgb, var(--info3-ink) 15%, transparent 85%);
+    white-space: pre;
+    max-height: 10cqh;
+    }
+
+#cm-dnrRules .cm-editor .cm-gutterElement {
+    cursor: default;
+    user-select: none;
+    }
+
+#cm-dnrRules .cm-editor .cm-tooltip .badmark-tooltip {
+    background-color: color-mix(in srgb, var(--info3-ink) 15%, transparent 85%);
+    padding: var(--default-gap-xxsmall) var(--default-gap-xsmall);
+    }

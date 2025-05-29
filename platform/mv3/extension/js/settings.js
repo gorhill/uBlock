@@ -29,17 +29,16 @@ import { renderFilterLists } from './filter-lists.js';
 /******************************************************************************/
 
 const cm6 = self.cm6;
-const cmView = (( ) => {
+
+const cmTrustedSites = (( ) => {
     const options = {};
     if ( dom.cl.has(':root', 'dark') ) {
         options.oneDark = true;
     }
     options.placeholder = i18n$('noFilteringModePlaceholder');
-    return cm6.createEditorView(
-        cm6.createEditorState('', options),
-        qs$('#trustedSites')
-    );
+    return cm6.createEditorView(options, qs$('#trustedSites'));
 })();
+
 let cachedRulesetData = {};
 
 /******************************************************************************/
@@ -83,12 +82,10 @@ function renderWidgets() {
     }
 
     {
-        dom.prop('#developerMode input[type="checkbox"]', 'checked',
-            Boolean(cachedRulesetData.developerMode)
-        );
-        if ( cachedRulesetData.isSideloaded ) {
-            dom.attr('#developerMode', 'hidden', null);
-        }
+        const state = Boolean(cachedRulesetData.developerMode) &&
+            cachedRulesetData.disabledFeatures?.includes('develop') !== true;
+        dom.body.dataset.develop = `${state}`;
+        dom.prop('#developerMode input[type="checkbox"]', 'checked', state);
     }
 }
 
@@ -171,10 +168,9 @@ dom.on('#strictBlockMode input[type="checkbox"]', 'change', ev => {
 });
 
 dom.on('#developerMode input[type="checkbox"]', 'change', ev => {
-    sendMessage({
-        what: 'setDeveloperMode',
-        state: ev.target.checked,
-    });
+    const state = ev.target.checked;
+    sendMessage({ what: 'setDeveloperMode', state });
+    dom.body.dataset.develop = `${state}`;
 });
 
 /******************************************************************************/
@@ -183,9 +179,9 @@ function renderTrustedSites() {
     const hostnames = cachedRulesetData.trustedSites || [];
     let text = hostnames.map(hn => punycode.toUnicode(hn)).join('\n');
     if ( text !== '' ) { text += '\n'; }
-    cmView.dispatch({
+    cmTrustedSites.dispatch({
         changes: {
-            from: 0, to: cmView.state.doc.length,
+            from: 0, to: cmTrustedSites.state.doc.length,
             insert: text
         },
     });
@@ -202,7 +198,7 @@ function changeTrustedSites() {
 }
 
 function getStagedTrustedSites() {
-    const text = cmView.state.doc.toString();
+    const text = cmTrustedSites.state.doc.toString();
     return text.split(/\s/).map(hn => {
         try {
             return punycode.toASCII(
@@ -214,7 +210,7 @@ function getStagedTrustedSites() {
     }).filter(hn => hn !== '');
 }
 
-dom.on(cmView.contentDOM, 'blur', changeTrustedSites);
+dom.on(cmTrustedSites.contentDOM, 'blur', changeTrustedSites);
 
 self.addEventListener('beforeunload', changeTrustedSites);
 
