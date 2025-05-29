@@ -3122,7 +3122,8 @@ class FilterMessage {
         return filterDataAlloc(args[0], bidiTrie.storeString(msg), msg.length);
     }
 
-    static keyFromArgs() {
+    static keyFromArgs(args) {
+        return `${args[1]}`;
     }
 
     static logData(idata, details) {
