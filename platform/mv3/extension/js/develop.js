@@ -65,8 +65,20 @@ function snapToYamlDocument(doc, start, end) {
     return { yamlDocStart, yamlDocEnd };
 }
 
-function addToModifiedRange(doc, start, end) {
-    const { yamlDocStart, yamlDocEnd } = snapToYamlDocument(doc, start, end);
+function rangeFromTransaction(transaction) {
+    let from, to;
+    transaction.changes.iterChangedRanges((fromA, toA, fromB, toB) => {
+        if ( from === undefined || fromB < from ) { from = fromB; }
+        if ( to === undefined || toB > to ) { to = toB; }
+    });
+    return { from, to };
+}
+
+function addToModifiedRange(transaction) {
+    const { newDoc } = transaction;
+    const { from, to } = rangeFromTransaction(transaction);
+    if ( from === undefined || to === undefined ) { return; }
+    const { yamlDocStart, yamlDocEnd } = snapToYamlDocument(newDoc, from, to);
     if ( modifiedRange.start === -1 || yamlDocStart < modifiedRange.start ) {
         modifiedRange.start = yamlDocStart;
     }
@@ -551,10 +563,11 @@ dom.on('#dnrRulesExport', 'click', exportRulesToFile);
 
 /******************************************************************************/
 
-function importRulesFromPaste(from, to) {
+function importRulesFromPaste(transaction) {
+    const { from, to } = rangeFromTransaction(transaction);
     if ( from === undefined || to === undefined ) { return; }
     // Paste position must match start of a line
-    const { doc } = cmRules.state;
+    const { doc } = transaction.newDoc;
     const lineFrom = doc.lineAt(from);
     if ( lineFrom.from !== from ) { return; }
     // Paste position must match a rule boundary
@@ -568,26 +581,33 @@ function importRulesFromPaste(from, to) {
     const yamlText = textFromRules(rules);
     if ( yamlText === undefined ) { return; }
     cmRules.dispatch({ changes: { from, to, insert: yamlText } });
+    return true;
+}
+
+/******************************************************************************/
+
+function smartBackspace(transaction) {
+    const { from, to } = rangeFromTransaction(transaction);
+    if ( from === undefined || to === undefined ) { return; }
+    const { newDoc } = transaction;
+    const line = newDoc.lineAt(from);
+    if ( /^(?: {2})+-$/.test(line.text) === false ) { return; }
+    cmRules.dispatch({ changes: { from: from-3, to: from, insert: '' } });
+    return true;
 }
 
 /******************************************************************************/
 
 function cmUpdateListener(info) {
     if ( info.docChanged === false ) { return; }
-    const doc = info.state.doc;
-    info.changes.iterChangedRanges((fromA, toA, fromB, toB) => {
-        addToModifiedRange(doc, fromB, toB);
-    });
     for ( const transaction of info.transactions ) {
-        if ( transaction.isUserEvent('input.paste') === false ) { continue; }
         if ( transaction.docChanged === false ) { continue; }
-        let from, to;
-        transaction.changes.iterChangedRanges((fromA, toA, fromB, toB) => {
-            if ( from === undefined || fromB < from ) { from = fromB; }
-            if ( to === undefined || toB > to ) { to = toB; }
-        });
-        importRulesFromPaste(from, to);
-        break;
+        addToModifiedRange(transaction);
+        if ( transaction.isUserEvent('delete.backward') ) {
+            if ( smartBackspace(transaction) ) { break; }
+        } else if ( transaction.isUserEvent('input.paste') ) {
+            if ( importRulesFromPaste(transaction) ) { break; }
+        }
     }
     updateViewAsync();
 }
