@@ -375,7 +375,7 @@ registerScriptlet(trustedJsonEditFetchResponse, {
 function jsonlEditFn(jsonp, text = '') {
     const safe = safeSelf();
     const lineSeparator = /\r?\n/.exec(text)?.[0] || '\n';
-    const linesBefore = text.split(lineSeparator);
+    const linesBefore = text.split('\n');
     const linesAfter = [];
     for ( const lineBefore of linesBefore ) {
         let obj;
