@@ -374,7 +374,8 @@ registerScriptlet(trustedJsonEditFetchResponse, {
 
 function jsonlEditFn(jsonp, text = '') {
     const safe = safeSelf();
-    const linesBefore = text.split(/\n+/);
+    const lineSeparator = /\r?\n/.exec(text)?.[0] || '\n';
+    const linesBefore = text.split(lineSeparator);
     const linesAfter = [];
     for ( const lineBefore of linesBefore ) {
         let obj;
@@ -387,9 +388,10 @@ function jsonlEditFn(jsonp, text = '') {
             linesAfter.push(lineBefore);
             continue;
         }
-        linesAfter.push(JSONPath.toJSON(obj, safe.JSON_stringify));
+        const lineAfter = safe.JSON_stringify(obj);
+        linesAfter.push(lineAfter);
     }
-    return linesAfter.join('\n');
+    return linesAfter.join(lineSeparator);
 }
 registerScriptlet(jsonlEditFn, {
     name: 'jsonl-edit.fn',
