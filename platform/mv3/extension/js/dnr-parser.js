@@ -89,14 +89,10 @@ const perScopeParsers = {
         const { key, val } = node;
         switch ( key ) {
         case 'action':
-            if ( val !== undefined ) { return false; }
-            rule.action = {};
-            scope.push('action');
-            break;
         case 'condition':
             if ( val !== undefined ) { return false; }
-            rule.condition = {};
-            scope.push('condition');
+            rule[key] = {};
+            scope.push(key);
             break;
         case 'priority': {
             const n = parseInt(val, 10);
@@ -121,12 +117,9 @@ const perScopeParsers = {
             scope.push('redirect');
             break;
         case 'requestHeaders':
-            rule.action.requestHeaders = [];
-            scope.push('requestHeaders');
-            break;
         case 'responseHeaders':
-            rule.action.responseHeaders = [];
-            scope.push('responseHeaders');
+            rule.action[key] = [];
+            scope.push(key);
             break;
         default:
             return false;
@@ -137,17 +130,13 @@ const perScopeParsers = {
         const { key, val } = node;
         switch ( key ) {
         case 'extensionPath':
-            rule.action.redirect.extensionPath = val;
-            break;
         case 'regexSubstitution':
-            rule.action.redirect.regexSubstitution = val;
+        case 'url':
+            rule.action.redirect[key] = val;
             break;
         case 'transform':
             rule.action.redirect.transform = {};
             scope.push('transform');
-            break;
-        case 'url':
-            rule.action.redirect.url = val;
             break;
         default:
             return false;
@@ -181,12 +170,9 @@ const perScopeParsers = {
         if ( val !== undefined ) { return false; }
         switch ( key ) {
         case 'addOrReplaceParams':
-            rule.action.redirect.transform.queryTransform.addOrReplaceParams = [];
-            scope.push('addOrReplaceParams');
-            break;
         case 'removeParams':
-            rule.action.redirect.transform.queryTransform.removeParams = [];
-            scope.push('removeParams');
+            rule.action.redirect.transform.queryTransform[key] = [];
+            scope.push(key);
             break;
         default:
             return false;
@@ -205,10 +191,8 @@ const perScopeParsers = {
         const item = rule.action.redirect.transform.queryTransform.addOrReplaceParams.at(-1);
         switch ( key ) {
         case 'key':
-            item.key = val;
-            break;
         case 'value':
-            item.value = val;
+            item[key] = val;
             break;
         case 'replaceOnly':
             if ( validBoolValues.includes(val) === false ) { return false; }
@@ -235,10 +219,8 @@ const perScopeParsers = {
         const item = rule.action.requestHeaders.at(-1);
         switch ( key ) {
         case 'header':
-            item.header = val;
-            break;
         case 'value':
-            item.value = val;
+            item[key] = val;
             break;
         case 'operation':
             if ( validHeaderOpValues.includes(val) === false ) { return false; }
@@ -260,10 +242,8 @@ const perScopeParsers = {
         const item = rule.action.responseHeaders.at(-1);
         switch ( key ) {
         case 'header':
-            item.header = val;
-            break;
         case 'value':
-            item.value = val;
+            item[key] = val;
             break;
         case 'operation':
             if ( validHeaderOpValues.includes(val) === false ) { return false; }
@@ -286,54 +266,22 @@ const perScopeParsers = {
             rule.condition.isUrlFilterCaseSensitive = val === 'true';
             break;
         case 'regexFilter':
-            if ( val === undefined ) { return false; }
-            rule.condition.regexFilter = val;
-            break;
         case 'urlFilter':
             if ( val === undefined ) { return false; }
-            rule.condition.urlFilter = val;
+            rule.condition[key] = val;
             break;
         case 'initiatorDomains':
-        case 'domains':
-            rule.condition[key] = [];
-            scope.push(key);
-            break;
         case 'excludedInitiatorDomains':
-        case 'excludedDomains':
+        case 'requestDomains':
+        case 'excludedRequestDomains':
+        case 'resourceTypes':
+        case 'excludedResourceTypes':
+        case 'requestMethods':
+        case 'excludedRequestMethods':
+        case 'responseHeaders':
+        case 'excludedResponseHeaders':
             rule.condition[key] = [];
             scope.push(key);
-            break;
-        case 'requestDomains':
-            rule.condition.requestDomains = [];
-            scope.push('requestDomains');
-            break;
-        case 'excludedRequestDomains':
-            rule.condition.excludedRequestDomains = [];
-            scope.push('excludedRequestDomains');
-            break;
-        case 'resourceTypes':
-            rule.condition.resourceTypes = [];
-            scope.push('resourceTypes');
-            break;
-        case 'excludedResourceTypes':
-            rule.condition.excludedResourceTypes = [];
-            scope.push('excludedResourceTypes');
-            break;
-        case 'requestMethods':
-            rule.condition.requestMethods = [];
-            scope.push('requestMethods');
-            break;
-        case 'excludedRequestMethods':
-            rule.condition.excludedRequestMethods = [];
-            scope.push('excludedRequestMethods');
-            break;
-        case 'responseHeaders':
-            rule.condition.responseHeaders = [];
-            scope.push('responseHeaders');
-            break;
-        case 'excludedResponseHeaders':
-            rule.condition.excludedResponseHeaders = [];
-            scope.push('excludedResponseHeaders');
             break;
         default:
             return false;
@@ -408,12 +356,9 @@ const perScopeParsers = {
             item.header = node.val;
             break;
         case 'values':
-            item.values = [];
-            scope.push('values');
-            break;
         case 'excludedValues':
-            item.excludedValues = [];
-            scope.push('excludedValues');
+            item[node.key] = [];
+            scope.push(node.key);
             break;
         default:
             return false;
@@ -446,12 +391,9 @@ const perScopeParsers = {
             item.header = node.val;
             break;
         case 'values':
-            item.values = [];
-            scope.push('values');
-            break;
         case 'excludedValues':
-            item.excludedValues = [];
-            scope.push('excludedValues');
+            item[node.key] = [];
+            scope.push(node.key);
             break;
         default:
             return false;
