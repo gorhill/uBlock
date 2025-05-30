@@ -1,3 +1,4 @@
+- [Improve `jsonl[...\]` suite of scriptlets](https://github.com/gorhill/uBlock/commit/ed9999efd6)
 - [Add support for network filter option `message`](https://github.com/gorhill/uBlock/commit/d8298bb067)
 - [Make `header=` syntax compatible with DNR rules](https://github.com/gorhill/uBlock/commit/408b538e75)
 - [Counter CodeMirror's `pointer-events: none` on scrollbars](https://github.com/gorhill/uBlock/commit/c44f043ed3)
