@@ -900,7 +900,7 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Nieuwe melding maken",
+    "message": "Nieuwe melding op GitHub maken",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {

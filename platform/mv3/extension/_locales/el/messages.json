@@ -20,7 +20,7 @@
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
-    "message": "Develop",
+    "message": "Ανάπτυξη",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {

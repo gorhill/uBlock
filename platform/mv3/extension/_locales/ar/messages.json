@@ -296,7 +296,7 @@
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "saveButton": {
-    "message": "Save",
+    "message": "حفظ",
     "description": "Text for buttons used to save changes"
   },
   "revertButton": {

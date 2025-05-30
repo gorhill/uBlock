@@ -20,7 +20,7 @@
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
-    "message": "Develop",
+    "message": "Desenvolvedor",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
@@ -316,7 +316,7 @@
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
-    "message": "Number of registered rules: {count}",
+    "message": "Número de regras registradas: {count}",
     "description": "Short sentence to report the number of currently registered DNR rules"
   }
 }

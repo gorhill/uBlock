@@ -20,7 +20,7 @@
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
-    "message": "Develop",
+    "message": "Ontwikkelen",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
@@ -120,7 +120,7 @@
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
-    "message": "Controleer of het probleem niet eerder is gemeld om te voorkomen dat vrijwilligers met dubbele meldingen worden belast.",
+    "message": "Controleer of het probleem niet eerder is gemeld om te voorkomen dat vrijwilligers met dubbele meldingen worden belast. <b>Noot:</b> op de knop klikken zorgt ervoor dat de oorsprong van de pagina naar GitHub wordt verzonden.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
@@ -244,7 +244,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Toegang tot voor technische gebruikers geschikte functies inschaken.",
+    "message": "Schakelt toegang tot voor technische gebruikers geschikte functies in.",
     "description": "Short description for a checkbox in the options page"
   },
   "findListsPlaceholder": {
@@ -316,7 +316,7 @@
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
-    "message": "Number of registered rules: {count}",
+    "message": "Aantal geregistreerde regels: {count}",
     "description": "Short sentence to report the number of currently registered DNR rules"
   }
 }

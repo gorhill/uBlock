@@ -20,7 +20,7 @@
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
-    "message": "Develop",
+    "message": "Desenvolupament",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
@@ -300,15 +300,15 @@
     "description": "Text for buttons used to save changes"
   },
   "revertButton": {
-    "message": "Reverteix",
+    "message": "Restaura",
     "description": "Text for buttons used to revert changes"
   },
   "importAndAppendButton": {
-    "message": "Importa i annexa...",
+    "message": "Importa i annexa…",
     "description": "Text for buttons used to import and append content"
   },
   "exportButton": {
-    "message": "Exporta...",
+    "message": "Exporta…",
     "description": "Text for buttons used to export content"
   },
   "dnrRulesSummary": {
@@ -316,7 +316,7 @@
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
-    "message": "Number of registered rules: {count}",
+    "message": "Nombre de regles registrades: {count}",
     "description": "Short sentence to report the number of currently registered DNR rules"
   }
 }

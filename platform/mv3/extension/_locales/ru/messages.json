@@ -20,7 +20,7 @@
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
-    "message": "Develop",
+    "message": "Разработка",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
@@ -244,7 +244,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Включить доступ к функциям, предназначенным для технических пользователей.",
+    "message": "Включает доступ к функциям, предназначенным для технических пользователей.",
     "description": "Short description for a checkbox in the options page"
   },
   "findListsPlaceholder": {
@@ -316,7 +316,7 @@
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
-    "message": "Number of registered rules: {count}",
+    "message": "Число зарегистрированных правил: {count}",
     "description": "Short sentence to report the number of currently registered DNR rules"
   }
 }

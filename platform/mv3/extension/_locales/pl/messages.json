@@ -20,7 +20,7 @@
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
-    "message": "Develop",
+    "message": "Programowanie",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
@@ -312,11 +312,11 @@
     "description": "Text for buttons used to export content"
   },
   "dnrRulesSummary": {
-    "message": "Wprowadź poniżej własne zasady DNR. <b>Nie dodawaj treści z niezaufanych źródeł.</b>",
+    "message": "Wprowadź poniżej własne reguły DNR. <b>Nie dodawaj treści z niezaufanych źródeł.</b>",
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
-    "message": "Number of registered rules: {count}",
+    "message": "Liczba zarejestrowanych reguł: {count}",
     "description": "Short sentence to report the number of currently registered DNR rules"
   }
 }

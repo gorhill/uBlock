@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "A permission-less content blocker. Blocks ads, trackers, miners, and more immediately upon installation.",
+    "message": "Etkili bir içerik engelleyici. Reklamları, izleyicileri, madencileri ve daha fazlasını kurulumdan hemen sonra engeller.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -20,7 +20,7 @@
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
-    "message": "Develop",
+    "message": "Geliştir",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
@@ -316,7 +316,7 @@
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
-    "message": "Number of registered rules: {count}",
+    "message": "Kayıtlı kural sayısı: {count}",
     "description": "Short sentence to report the number of currently registered DNR rules"
   }
 }
