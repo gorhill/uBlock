@@ -536,7 +536,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pTrustWarning": {
-    "message": "No añadir filtros de fuentes no confiables.",
+    "message": "No añadas filtros de fuentes no confiables.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pEnableMyFiltersLabel": {

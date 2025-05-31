@@ -244,7 +244,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Habilitar acceso a características adecuadas para usuarios técnicos.",
+    "message": "Habilita acceso a características aptas para usuarios técnicos.",
     "description": "Short description for a checkbox in the options page"
   },
   "findListsPlaceholder": {
@@ -312,7 +312,7 @@
     "description": "Text for buttons used to export content"
   },
   "dnrRulesSummary": {
-    "message": "Ingresa tus propias reglas DNR abajo. <b>No agregues contenido desde fuentes no confiables.</b>",
+    "message": "Ingresa tus propias reglas DNR abajo. <b>No añadas contenido de fuentes no confiables.</b>",
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {

@@ -20,7 +20,7 @@
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
-    "message": "Desenvolvedor",
+    "message": "Desenvolva",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
@@ -244,7 +244,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Ativar acesso as funções adequadas pra usuários técnicos.",
+    "message": "Ativa o acesso as funções adequadas pra usuários técnicos.",
     "description": "Short description for a checkbox in the options page"
   },
   "findListsPlaceholder": {
