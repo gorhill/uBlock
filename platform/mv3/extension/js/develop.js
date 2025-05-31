@@ -75,9 +75,9 @@ function rangeFromTransaction(transaction) {
 }
 
 function addToModifiedRange(transaction) {
-    const { newDoc } = transaction;
     const { from, to } = rangeFromTransaction(transaction);
     if ( from === undefined || to === undefined ) { return; }
+    const { newDoc } = transaction;
     const { yamlDocStart, yamlDocEnd } = snapToYamlDocument(newDoc, from, to);
     if ( modifiedRange.start === -1 || yamlDocStart < modifiedRange.start ) {
         modifiedRange.start = yamlDocStart;
@@ -224,6 +224,7 @@ function getAutocompleteCandidates(from) {
             ],
         };
     case 'action:responseHeaders:':
+    case 'action:requestHeaders:':
         return {
             before: /^ {4}- $/,
             candidates: [
@@ -231,6 +232,7 @@ function getAutocompleteCandidates(from) {
             ],
         };
     case 'action:responseHeaders:header:':
+    case 'action:requestHeaders:header:':
         return {
             before: /^ {6}$/,
             candidates: [
@@ -239,6 +241,7 @@ function getAutocompleteCandidates(from) {
             ],
         };
     case 'action:responseHeaders:header:operation:':
+    case 'action:requestHeaders:header:operation:':
         return {
             before: /: $/,
             candidates: [
@@ -587,10 +590,66 @@ function importRulesFromPaste(transaction) {
 function smartBackspace(transaction) {
     const { from, to } = rangeFromTransaction(transaction);
     if ( from === undefined || to === undefined ) { return; }
+    if ( to !== from ) { return; }
     const { newDoc } = transaction;
     const line = newDoc.lineAt(from);
     if ( /^(?: {2})+-$/.test(line.text) === false ) { return; }
     cmRules.dispatch({ changes: { from: from-3, to: from, insert: '' } });
+    return true;
+}
+
+/******************************************************************************/
+
+function lineIsArrayItem(doc, lineNo) {
+    if ( lineNo < 1 || lineNo > doc.lines ) { return false; }
+    const line = doc.line(lineNo);
+    return line.text.startsWith('    - ');
+}
+
+/******************************************************************************/
+
+function smartArrayItem(doc, from) {
+    const line = doc.lineAt(from);
+    if ( lineIsArrayItem(doc, line.number-1) === false ) {
+        if ( lineIsArrayItem(doc, line.number+1) === false ) { return ''; }
+    }
+    const blanks = /^ {2,4}$/.exec(line.text);
+    if ( blanks === null ) { return ''; }
+    const count = blanks[0].length;
+    return `${' '.repeat(4-count)}- `;
+}
+
+/******************************************************************************/
+
+function smartReturn(transaction) {
+    const { from, to } = rangeFromTransaction(transaction);
+    if ( from === undefined || to === undefined ) { return; }
+    const { newDoc } = transaction;
+    const insert = smartArrayItem(newDoc, to);
+    if ( insert === '' ) { return; }
+    cmRules.dispatch({
+        changes: { from: to, insert },
+        selection: { anchor: to + insert.length },
+    });
+    return true;
+}
+
+/******************************************************************************/
+
+function smartSpacebar(transaction) {
+    const { from, to } = rangeFromTransaction(transaction);
+    if ( from === undefined || to === undefined ) { return; }
+    if ( (to - from) !== 1 ) { return; }
+    const { newDoc } = transaction;
+    const line = newDoc.lineAt(to);
+    const localTo = to - line.from;
+    const before = line.text.slice(0, localTo);
+    if ( /^(?: {1}| {3})$/.test(before) === false ) { return; }
+    const insert = smartArrayItem(newDoc, to) || ' ';
+    cmRules.dispatch({
+        changes: { from: to, insert },
+        selection: { anchor: to + insert.length },
+    });
     return true;
 }
 
@@ -605,6 +664,9 @@ function cmUpdateListener(info) {
             if ( smartBackspace(transaction) ) { break; }
         } else if ( transaction.isUserEvent('input.paste') ) {
             if ( importRulesFromPaste(transaction) ) { break; }
+        } else if ( transaction.isUserEvent('input') ) {
+            if ( smartReturn(transaction) ) { break; }
+            if ( smartSpacebar(transaction) ) { break; }
         }
     }
     updateViewAsync();
