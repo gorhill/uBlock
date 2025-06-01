@@ -316,7 +316,7 @@
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
-    "message": "Anzahl registrierter Regeln: {count}",
+    "message": "Anzahl erfasster Regeln: {count}",
     "description": "Short sentence to report the number of currently registered DNR rules"
   }
 }
