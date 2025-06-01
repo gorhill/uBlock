@@ -479,18 +479,6 @@ function updateSummaryPanel(info) {
     });
 }
 
-browser.storage.onChanged.addListener((changes, area) => {
-    if ( area !== 'local' ) { return; }
-    const { userDnrRuleCount } = changes;
-    if ( userDnrRuleCount instanceof Object === false ) { return; }
-    const { newValue } = changes.userDnrRuleCount;
-    updateSummaryPanel({ userDnrRuleCount: newValue });
-});
-
-localRead('userDnrRuleCount').then(userDnrRuleCount => {
-    updateSummaryPanel({ userDnrRuleCount })
-});
-
 function updateFeedbackPanel(info) {
     const errors = [];
     if ( Array.isArray(info.errors) ) {
@@ -542,8 +530,6 @@ function importRulesFromFile() {
     input.click();
 }
 
-dom.on('#dnrRulesImport', 'click', importRulesFromFile);
-
 /******************************************************************************/
 
 function exportRulesToFile() {
@@ -561,8 +547,6 @@ function exportRulesToFile() {
     dom.attr(a, 'type', 'application/json');
     a.click();
 }
-
-dom.on('#dnrRulesExport', 'click', exportRulesToFile);
 
 /******************************************************************************/
 
@@ -601,14 +585,15 @@ function foldService(state, from) {
         const line = doc.line(i);
         if ( reFoldable.test(line.text) === false ) { return null; }
     }
-    for ( let i = lineFrom.number; i < doc.lines; i++ ) {
-        const lineNext = doc.line(i+1);
-        if ( reFoldable.test(lineNext.text) ) { continue; }
-        if ( i === lineFrom.number ) { return null; }
-        const lineFoldEnd = doc.line(i);
-        return { from: lineFrom.from+6, to: lineFoldEnd.to };
+    let i = lineFrom.number + 1;
+    for ( ; i <= doc.lines; i++ ) {
+        const lineNext = doc.line(i);
+        if ( reFoldable.test(lineNext.text) === false ) { break; }
     }
-    return null;
+    i -= 1;
+    if ( i === lineFrom.number ) { return null; }
+    const lineFoldEnd = doc.line(i);
+    return { from: lineFrom.from+6, to: lineFoldEnd.to };
 }
 
 const reFoldable = /^ {4}- \S/;
@@ -846,8 +831,13 @@ function hoverTooltip(view, pos, side) {
 
 /******************************************************************************/
 
-const cmRules = (( ) => {
-    return self.cm6.createEditorView({
+let lastSavedText = '';
+
+const cmRules = await localRead('userDnrRules').then(text => {
+    text ||= '';
+
+    const view = self.cm6.createEditorView({
+        text,
         dnrRules: true,
         oneDark: dom.cl.has(':root', 'dark'),
         updateListener: cmUpdateListener,
@@ -866,27 +856,34 @@ const cmRules = (( ) => {
         streamParser: dnryamlStreamParser,
         foldService,
     }, qs$('#cm-dnrRules'));
-})();
 
-/******************************************************************************/
-
-let lastSavedText = '';
-
-localRead('userDnrRules').then(text => {
-    text ||= '';
-    setEditorText(text);
     lastSavedText = text;
-    self.cm6.foldAll(cmRules);
-    self.cm6.resetUndoRedo(cmRules);
+    self.cm6.foldAll(view);
+    self.cm6.resetUndoRedo(view);
+
+    browser.storage.onChanged.addListener((changes, area) => {
+        if ( area !== 'local' ) { return; }
+        const { userDnrRuleCount } = changes;
+        if ( userDnrRuleCount instanceof Object === false ) { return; }
+        const { newValue } = changes.userDnrRuleCount;
+        updateSummaryPanel({ userDnrRuleCount: newValue });
+    });
+
+    localRead('userDnrRuleCount').then(userDnrRuleCount => {
+        updateSummaryPanel({ userDnrRuleCount })
+    });
 
     dom.on('#dnrRulesApply', 'click', ( ) => {
         saveEditorText();
     });
-
     dom.on('#dnrRulesRevert', 'click', ( ) => {
         setEditorText(lastSavedText);
         sendMessage({ what: 'updateUserDnrRules' });
     });
+    dom.on('#dnrRulesImport', 'click', importRulesFromFile);
+    dom.on('#dnrRulesExport', 'click', exportRulesToFile);
+
+    return view;
 });
 
 /******************************************************************************/
