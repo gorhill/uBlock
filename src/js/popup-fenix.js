@@ -56,6 +56,7 @@ let dfPaneBuilt = false;
 let dfHotspots = null;
 const allHostnameRows = [];
 let cachedPopupHash = '';
+let forceReloadFlag = 0;
 
 // https://github.com/gorhill/uBlock/issues/2550
 // Solution inspired from
@@ -130,6 +131,7 @@ const hashFromPopupData = function(reset = false) {
     const hash = hasher.join('');
     if ( reset ) {
         cachedPopupHash = hash;
+        forceReloadFlag = 0;
     }
     dom.cl.toggle(dom.body, 'needReload',
         hash !== cachedPopupHash || popupData.hasUnprocessedRequest === true
@@ -1167,7 +1169,7 @@ const reloadTab = function(bypassCache = false) {
         tabId: popupData.tabId,
         url: popupData.rawURL,
         select: vAPI.webextFlavor.soup.has('mobile'),
-        bypassCache,
+        bypassCache: bypassCache || forceReloadFlag !== 0,
     });
 
     // Polling will take care of refreshing the popup content
@@ -1343,6 +1345,10 @@ const toggleHostnameSwitch = async function(ev) {
         tabId: popupData.tabId,
         persist: ev.ctrlKey || ev.metaKey,
     });
+
+    if ( switchName === 'no-scripting' ) {
+        forceReloadFlag ^= 1;
+    }
 
     cachePopupData(response);
     hashFromPopupData();
