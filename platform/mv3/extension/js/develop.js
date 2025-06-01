@@ -356,9 +356,10 @@ function setEditorText(text) {
     cmRules.dispatch({
         changes: {
             from: 0, to: cmRules.state.doc.length,
-            insert: text
+            insert: text,
         },
     });
+    cmRules.focus();
 }
 
 function getEditorText() {
@@ -529,6 +530,7 @@ function importRulesFromFile() {
                 prepend = `${prepend}---\n`;
             }
             cmRules.dispatch({ changes: { from, insert: `${prepend}${text}` } });
+            self.cm6.foldAll(cmRules);
             cmRules.focus();
         };
         fr.readAsText(file);
@@ -568,22 +570,54 @@ function importRulesFromPaste(transaction) {
     const { from, to } = rangeFromTransaction(transaction);
     if ( from === undefined || to === undefined ) { return; }
     // Paste position must match start of a line
-    const { doc } = transaction.newDoc;
-    const lineFrom = doc.lineAt(from);
+    const { newDoc } = transaction;
+    const lineFrom = newDoc.lineAt(from);
     if ( lineFrom.from !== from ) { return; }
     // Paste position must match a rule boundary
     if ( lineFrom.number !== 1 ) {
-        const lineBefore = doc.line(lineFrom.number-1);
+        const lineBefore = newDoc.line(lineFrom.number-1);
         if ( /^---\s*$/.test(lineBefore.text) === false ) { return; }
     }
-    const pastedText = doc.sliceString(from, to);
+    const pastedText = newDoc.sliceString(from, to);
     const rules = rulesFromJSON(pastedText);
     if ( rules === undefined ) { return; }
     const yamlText = textFromRules(rules);
     if ( yamlText === undefined ) { return; }
     cmRules.dispatch({ changes: { from, to, insert: yamlText } });
+    self.cm6.foldAll(cmRules);
     return true;
 }
+
+/******************************************************************************/
+
+function foldService(state, from) {
+    const { doc } = state;
+    const lineFrom = doc.lineAt(from);
+    if ( reFoldable.test(lineFrom.text) === false ) { return null; }
+    if ( lineFrom.number <= 5 ) { return null ; }
+    const lineBlockStart = doc.line(lineFrom.number - 5);
+    if ( reFoldCandidates.test(lineBlockStart.text) === false ) { return null; }
+    for ( let i = lineFrom.number-4; i < lineFrom.number; i++ ) {
+        const line = doc.line(i);
+        if ( reFoldable.test(line.text) === false ) { return null; }
+    }
+    for ( let i = lineFrom.number; i < doc.lines; i++ ) {
+        const lineNext = doc.line(i+1);
+        if ( reFoldable.test(lineNext.text) ) { continue; }
+        if ( i === lineFrom.number ) { return null; }
+        const lineFoldEnd = doc.line(i);
+        return { from: lineFrom.from+6, to: lineFoldEnd.to };
+    }
+    return null;
+}
+
+const reFoldable = /^ {4}- \S/;
+const reFoldCandidates = new RegExp(`^(?: {2})+${[
+    'initiatorDomains',
+    'excludedInitiatorDomains',
+    'requestDomains',
+    'excludedRequestDomains',
+].join('|')}:$`);
 
 /******************************************************************************/
 
@@ -655,18 +689,104 @@ function smartSpacebar(transaction) {
 
 /******************************************************************************/
 
+const dnryamlStreamParser = {
+    name: 'dnryaml',
+    startState() {
+        return {
+            scope: 0,
+            reKeywords: new RegExp(`\\b(${[
+                'block',
+                'redirect',
+                'allow',
+                'modifyHeaders',
+                'upgradeScheme',
+                'allowAllRequest',
+                'append',
+                'set',
+                'remove',
+                'firstParty',
+                'thirdParty',
+                'true',
+                'false',
+                'connect',
+                'delete',
+                'get',
+                'head',
+                'options',
+                'patch',
+                'post',
+                'put',
+                'other',
+                'main_frame',
+                'sub_frame',
+                'stylesheet',
+                'script',
+                'image',
+                'font',
+                'object',
+                'xmlhttprequest',
+                'ping',
+                'csp_report',
+                'media',
+                'websocket',
+                'webtransport',
+                'webbundle',
+                'other',
+            ].join('|')})\\b`),
+        };
+    },
+    token(stream, state) {
+        const c = stream.peek();
+        if ( c === '#' ) {
+            if ( (stream.pos === 0 || /\s/.test(stream.string.charAt(stream.pos - 1))) ) {
+                stream.skipToEnd();
+                return 'comment';
+            }
+        }
+        if ( stream.sol() ) {
+            if ( stream.match('---') ) { return 'contentSeparator'; }
+            if ( stream.match('...') ) { return 'contentSeparator'; }
+        }
+        if ( stream.eatSpace() ) {
+            return null;
+        }
+        const { scope } = state;
+        state.scope = 0;
+        if ( scope === 0 && stream.match(/^[^:]+(?=:)/) ) {
+            state.scope = 1;
+            return 'keyword';
+        }
+        if ( scope === 1 && stream.match(/^:(?: |$)/) ) {
+            return 'meta';
+        }
+        if ( stream.match(/^- /) ) {
+            return 'meta';
+        }
+        if ( stream.match(state.reKeywords) ) {
+            return 'literal';
+        }
+        if ( stream.match(/^\S+/) ) {
+            return null;
+        }
+        stream.next();
+        return null;
+    },
+};
+
+/******************************************************************************/
+
 function cmUpdateListener(info) {
     if ( info.docChanged === false ) { return; }
     for ( const transaction of info.transactions ) {
         if ( transaction.docChanged === false ) { continue; }
         addToModifiedRange(transaction);
         if ( transaction.isUserEvent('delete.backward') ) {
-            if ( smartBackspace(transaction) ) { break; }
+            smartBackspace(transaction);
         } else if ( transaction.isUserEvent('input.paste') ) {
-            if ( importRulesFromPaste(transaction) ) { break; }
+            importRulesFromPaste(transaction);
         } else if ( transaction.isUserEvent('input') ) {
-            if ( smartReturn(transaction) ) { break; }
-            if ( smartSpacebar(transaction) ) { break; }
+            if ( smartReturn(transaction) ) { continue; }
+            smartSpacebar(transaction);
         }
     }
     updateViewAsync();
@@ -743,6 +863,8 @@ const cmRules = (( ) => {
         },
         gutterClick,
         hoverTooltip,
+        streamParser: dnryamlStreamParser,
+        foldService,
     }, qs$('#cm-dnrRules'));
 })();
 
@@ -754,6 +876,7 @@ localRead('userDnrRules').then(text => {
     text ||= '';
     setEditorText(text);
     lastSavedText = text;
+    self.cm6.foldAll(cmRules);
     self.cm6.resetUndoRedo(cmRules);
 
     dom.on('#dnrRulesApply', 'click', ( ) => {

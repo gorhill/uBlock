@@ -36,7 +36,7 @@ section[data-pane="develop"] > div > * {
     border-top: 1px dotted transparent;
     }
 
-#cm-dnrRules .cm-editor .cm-line:has(.ͼ5) {
+#cm-dnrRules .cm-editor .cm-line:has(.ͼc) {
     border-bottom: 1px dotted var(--border-1);
     border-top: 1px dotted var(--border-1);
     }

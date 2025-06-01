@@ -200,6 +200,7 @@ function changeTrustedSites() {
 function getStagedTrustedSites() {
     const text = cmTrustedSites.state.doc.toString();
     return text.split(/\s/).map(hn => {
+        if ( hn === '' ) { return ''; }
         try {
             return punycode.toASCII(
                 (new URL(`https://${hn}/`)).hostname
