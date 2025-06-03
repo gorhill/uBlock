@@ -552,7 +552,7 @@
 		"off": true,
 		"title": "🇪🇬eg 🇸🇦sa 🇲🇦ma 🇩🇿dz: Liste AR",
 		"tags": "ads arabic اَلْعَرَبِيَّةُ‎",
-		"lang": "ar",
+		"lang": "ar kab",
 		"contentURL": "https://easylist-downloads.adblockplus.org/Liste_AR.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=98"
 	},
@@ -625,7 +625,7 @@
 		"off": true,
 		"title": "🇫🇷fr 🇨🇦ca: AdGuard Français",
 		"tags": "ads french",
-		"lang": "ar br ff fr lb oc son",
+		"lang": "ar br ff fr kab lb oc son",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/16.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters"
 	},
@@ -679,7 +679,7 @@
 		"off": true,
 		"title": "🇮🇳in 🇱🇰lk 🇳🇵np: IndianList",
 		"tags": "ads assamese bengali gujarati hindi kannada malayalam marathi nepali punjabi sinhala tamil telugu",
-		"lang": "as bn gu hi kn ml mr ne pa si ta te",
+		"lang": "as bn gu hi kn ml mr ne pa sat si ta te",
 		"contentURL": "https://easylist-downloads.adblockplus.org/indianlist.txt",
 		"supportURL": "https://github.com/mediumkreation/IndianList"
 	},
@@ -726,7 +726,7 @@
 		"off": true,
 		"title": "🇮🇹it: EasyList Italy",
 		"tags": "ads italian",
-		"lang": "it lij",
+		"lang": "fur it lij sc",
 		"contentURL": "https://easylist-downloads.adblockplus.org/easylistitaly.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=96"
 	},
