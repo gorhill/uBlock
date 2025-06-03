@@ -308,7 +308,7 @@
     "description": "Text for buttons used to import and append content"
   },
   "exportButton": {
-    "message": "Export…",
+    "message": "تصدير...",
     "description": "Text for buttons used to export content"
   },
   "dnrRulesSummary": {

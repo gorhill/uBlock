@@ -108,7 +108,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
-    "message": "Dominos conectados",
+    "message": "Dominios conectados",
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
@@ -184,7 +184,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Preme para volver a activar JavaScript nesta web",
+    "message": "Preme para volver activar JavaScript nesta web",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {

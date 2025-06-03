@@ -312,11 +312,11 @@
     "description": "Text for buttons used to export content"
   },
   "dnrRulesSummary": {
-    "message": "Enter your own DNR rules below. <b>Do not add content from untrusted sources.</b>",
+    "message": "在下面输入您自己的DNR规则<b> 不要添加来自不可信来源的内容。</b>",
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
-    "message": "Number of registered rules: {count}",
+    "message": "已注册规则的数量：",
     "description": "Short sentence to report the number of currently registered DNR rules"
   }
 }

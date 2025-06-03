@@ -244,7 +244,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Mundëson qasjen në funksione të përshtatshme për përdorues teknik.",
+    "message": "Mundëson qasjen në funksione të përshtatshme për përdoruesit teknikë.",
     "description": "Short description for a checkbox in the options page"
   },
   "findListsPlaceholder": {
@@ -304,11 +304,11 @@
     "description": "Text for buttons used to revert changes"
   },
   "importAndAppendButton": {
-    "message": "Importim e shtim",
+    "message": "Importoj dhe shtoj…",
     "description": "Text for buttons used to import and append content"
   },
   "exportButton": {
-    "message": "Eksportim",
+    "message": "Eksportoj…",
     "description": "Text for buttons used to export content"
   },
   "dnrRulesSummary": {
@@ -316,7 +316,7 @@
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
-    "message": "Numrat e regullave të rregjistruara: {count}",
+    "message": "Numri i rregullave të regjistruara: {count}",
     "description": "Short sentence to report the number of currently registered DNR rules"
   }
 }

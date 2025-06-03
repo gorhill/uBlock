@@ -76,7 +76,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupRegions": {
-    "message": "Rexións, linguaxes",
+    "message": "Rexións, linguas",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "aboutChangelog": {
@@ -204,7 +204,7 @@
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Filtrado avanzado da rede e filtrado extendido específico usando listas de filtrado seleccionadas.\n\nRequire permisos máis amplos para ler e modificar datos en todas as webs.",
+    "message": "Filtrado avanzado da rede e filtrado estendido específico usando listas de filtrado seleccionadas.\n\nRequire permisos máis amplos para ler e modificar datos en todas as webs.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
@@ -316,7 +316,7 @@
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
-    "message": "Number of registered rules: {count}",
+    "message": "Número de regras rexistradas: {count}",
     "description": "Short sentence to report the number of currently registered DNR rules"
   }
 }
