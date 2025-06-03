@@ -178,7 +178,6 @@ section .cm-lineWrapping {
                 const aNewText = info.state.doc.toString();
                 if ( aNewText === aLastText ) { return; }
                 aLastText = aNewText;
-                readJSON();
                 process();
             }, 71);
         },
@@ -191,7 +190,6 @@ section .cm-lineWrapping {
         });
     }
 
-    readJSON();
     process();
 </script>
 
