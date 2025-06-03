@@ -53,6 +53,7 @@ import {
 import {
     enableRulesets,
     excludeFromStrictBlock,
+    getEffectiveUserRules,
     getEnabledRulesetsDetails,
     getRulesetDetails,
     patchDefaultRulesets,
@@ -399,6 +400,12 @@ function onMessage(request, sender, callback) {
             url: `/matched-rules.html?tab=${request.tabId}`,
         });
         break;
+
+    case 'getEffectiveUserRules':
+        getEffectiveUserRules().then(result => {
+            callback(result);
+        });
+        return true;
 
     case 'updateUserDnrRules':
         updateUserRules().then(result => {

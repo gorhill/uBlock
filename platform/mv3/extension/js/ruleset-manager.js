@@ -669,7 +669,7 @@ async function getEnabledRulesetsDetails() {
 
 /******************************************************************************/
 
-async function getUserRules() {
+async function getEffectiveUserRules() {
     const allRules = await dnr.getDynamicRules();
     const userRules = [];
     for ( const rule of allRules ) {
@@ -684,7 +684,7 @@ async function updateUserRules() {
         userRules,
         userRulesText = '',
     ] = await Promise.all([
-        getUserRules(),
+        getEffectiveUserRules(),
         localRead('userDnrRules'),
     ]);
 
@@ -735,7 +735,7 @@ async function updateUserRules() {
         console.info(`updateUserRules() / ${reason}`);
         out.errors.push(`${reason}`);
     } finally {
-        const userRules = await getUserRules();
+        const userRules = await getEffectiveUserRules();
         if ( userRules.length === 0 ) {
             await localRemove('userDnrRuleCount');
         } else {
@@ -751,6 +751,7 @@ export {
     enableRulesets,
     excludeFromStrictBlock,
     filteringModesToDNR,
+    getEffectiveUserRules,
     getEnabledRulesetsDetails,
     getRulesetDetails,
     patchDefaultRulesets,

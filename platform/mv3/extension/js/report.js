@@ -106,12 +106,14 @@ async function getConfigData() {
         platformInfo,
         rulesets,
         defaultMode,
+        userRules,
         registerContentScriptsReason,
         unregisterContentScriptsReason,
     ] = await Promise.all([
         runtime.getPlatformInfo(),
         dnr.getEnabledRulesets(),
         sendMessage({ what: 'getDefaultFilteringMode' }),
+        sendMessage({ what: 'getEffectiveUserRules' }),
         localRead('$scripting.registerContentScripts'),
         localRead('$scripting.unregisterContentScripts'),
     ]);
@@ -148,8 +150,11 @@ async function getConfigData() {
             'site': `${modes[reportedPage.mode]}`,
             'default': `${modes[defaultMode]}`,
         },
-        rulesets,
     };
+    if ( userRules.length !== 0 ) {
+        config['user rules'] = userRules.length;
+    }
+    config.rulesets = rulesets;
     if ( registerContentScriptsReason !== undefined ) {
         config.registerContentScripts = registerContentScriptsReason;
     }
