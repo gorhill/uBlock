@@ -39,6 +39,8 @@ section {
     box-sizing: border-box;
     display: flex;
     gap: 0.5em;
+    max-height: 80cqh;
+    overflow: auto;
 }
 section > * {
     border: 1px solid gray;
@@ -46,11 +48,9 @@ section > * {
     flex-grow: 1;
     font-family: monospace;
     font-size: small;
-    line-height: 1.2;
-    max-height: 60cqh;
-    overflow: auto;
-    white-space: pre;
-    width: 50cqw;
+}
+section .cm-lineWrapping {
+    word-break: break-all !important;
 }
 #jsondata-in {
     min-height: 50vh;
@@ -70,26 +70,45 @@ section > * {
 <h2>uBO-flavored JSONPath tool</h2>
 <main>
     <section>
-        <textarea id="jsondata-in" placeholder="JSON data" spellcheck="false">{
+    </section>
+    <input id="jsonpath-input" placeholder="JSON path expression" spellcheck="false" value="$..book[?@.price<10]" />
+    <div id="jsonpath-result">&nbsp;</div>
+</main>
+
+<script src="../platform/mv3/extension/lib/codemirror/codemirror-ubol/dist/cm6.bundle.ubol.min.js"></script>
+<script type="module">
+    // Requires a local server in root of repo:
+    // python3 -m http.server
+    //
+    // Then load the following URL in the browser:
+    // http://localhost:8000/tools/jsonpath-tool.html
+
+    import { JSONPath } from '../src/js/jsonpath.js';
+
+    let aLastText = `{
   "store": {
-    "book": [ 
-      { "category": "reference",
+    "book": [
+      {
+        "category": "reference",
         "author": "Nigel Rees",
         "title": "Sayings of the Century",
         "price": 8.95
       },
-      { "category": "fiction",
+      {
+        "category": "fiction",
         "author": "Evelyn Waugh",
         "title": "Sword of Honour",
         "price": 12.99
       },
-      { "category": "fiction",
+      {
+        "category": "fiction",
         "author": "Herman Melville",
         "title": "Moby Dick",
         "isbn": "0-553-21311-3",
         "price": 8.99
       },
-      { "category": "fiction",
+      {
+        "category": "fiction",
         "author": "J. R. R. Tolkien",
         "title": "The Lord of the Rings",
         "isbn": "0-395-19395-8",
@@ -101,27 +120,14 @@ section > * {
       "price": 19.95
     }
   }
-}</textarea>
-        <div id="jsondata-out"></div>
-    </section>
-    <input id="jsonpath-input" placeholder="JSON path expression" spellcheck="false" value="$..book[?@.price<10]" />
-    <div id="jsonpath-result">&nbsp;</div>
-</main>
-
-<script type="module">
-    // Requires a local server in root of repo:
-    // python3 -m http.server
-    //
-    // Then load the following URL in the browser:
-    // http://localhost:8000/tools/jsonpath-tool.html
-
-    import { JSONPath } from '../src/js/jsonpath.js';
+}`;
 
     function readJSON() {
         const textarea = document.querySelector('#jsondata-in');
         let data;
         try {
-            data = JSON.parse(textarea.value);
+            const text = cmMergeView.a.state.doc.toString();
+            data = JSON.parse(text);
         } catch {
             data = {};
         }
@@ -149,27 +155,39 @@ section > * {
         const jsonpath = input.value;
         jsonp.compile(jsonpath);
         const jsonDataIn = readJSON();
-        //const datainDiv = document.querySelector('#jsondata-in');
-        //datainDiv.textContent = JSON.stringify(jsonDataIn, null, 2);
         const result = formatResult(jsonp.evaluate(jsonDataIn));
         const pathsDiv = document.querySelector('#jsonpath-result');
         pathsDiv.textContent = result;
         const jsonDataOut = readJSON();
         jsonp.apply(jsonDataOut);
-        const dataoutDiv = document.querySelector('#jsondata-out');
-        dataoutDiv.textContent = JSON.stringify(jsonDataOut, null, 2);
+        const bText = JSON.stringify(jsonDataOut, null, 2);
+        cmMergeView.b.dispatch({
+            changes: {
+                from: 0, to: cmMergeView.b.state.doc.length,
+                insert: bText,
+            },
+        });
     }
 
     const jsonp = new JSONPath();
     let jsonDataIn = {};
+    let processTimer;
 
-    {
-        const textarea = document.querySelector('#jsondata-in');
-        textarea.addEventListener('input', ( ) => {
-            readJSON();
-            process();
-        });
-    }
+    const cmMergeView = self.cm6.createMergeView({
+        aDoc: aLastText,
+        aUpdateListener: info => {
+            if ( info.docChanged === false ) { return; }
+            if ( processTimer !== undefined ) { return; }
+            processTimer = setTimeout(( ) => {
+                processTimer = undefined;
+                const aNewText = info.state.doc.toString();
+                if ( aNewText === aLastText ) { return; }
+                aLastText = aNewText;
+                readJSON();
+                process();
+            }, 71);
+        },
+    }, document.querySelector('section'));
 
     {
         const input = document.querySelector('#jsonpath-input');
