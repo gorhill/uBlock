@@ -278,6 +278,13 @@ listen.onmessage = ev => {
         }
     }
 
+    if ( message.developerMode !== undefined ) {
+        if ( message.developerMode !== local.developerMode ) {
+            local.developerMode = message.developerMode;
+            render = true;
+        }
+    }
+
     if ( message.adminRulesets !== undefined ) {
         if ( hashFromIterable(message.adminRulesets) !== hashFromIterable(local.adminRulesets) ) {
             local.adminRulesets = message.adminRulesets;

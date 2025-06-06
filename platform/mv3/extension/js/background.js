@@ -140,6 +140,7 @@ async function onPermissionsAdded(permissions) {
 function setDeveloperMode(state) {
     rulesetConfig.developerMode = state === true;
     toggleDeveloperMode(rulesetConfig.developerMode);
+    broadcastMessage({ developerMode: rulesetConfig.developerMode });
     return Promise.all([
         updateUserRules(),
         saveRulesetConfig(),
