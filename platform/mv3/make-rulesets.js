@@ -324,38 +324,12 @@ const isURLSkip = rule =>
 
 /******************************************************************************/
 
-function patchRuleset(ruleset) {
-    if ( platform !== 'safari' ) { return ruleset; }
-    const out = [];
-    for ( const rule of ruleset ) {
-        const condition = rule.condition;
-        if ( rule.action.type === 'modifyHeaders' ) {
-            log(`Safari's incomplete API: ${JSON.stringify(rule)}`, true);
-            continue;
-        }
-        if ( Array.isArray(rule.condition.responseHeaders) ) {
-            log(`Safari's incomplete API: ${JSON.stringify(rule)}`, true);
-            continue;
-        }
-        if ( Array.isArray(condition.requestMethods) ) {
-            log(`Safari's incomplete API: ${JSON.stringify(rule)}`, true);
-            continue;
-        }
-        if ( Array.isArray(condition.excludedRequestMethods) ) {
-            log(`Safari's incomplete API: ${JSON.stringify(rule)}`, true);
-            continue;
-        }
-        if ( Array.isArray(condition.initiatorDomains) ) {
-            condition.domains = condition.initiatorDomains;
-            delete condition.initiatorDomains;
-        }
-        if ( Array.isArray(condition.excludedInitiatorDomains) ) {
-            condition.excludedDomains = condition.excludedInitiatorDomains;
-            delete condition.excludedInitiatorDomains;
-        }
-        out.push(rule);
-    }
-    return out;
+async function patchRuleset(ruleset) {
+    return import(`./${platform}/patch-ruleset.js`).then(module => {
+        return module.patchRuleset(ruleset)
+    }).catch(( ) => {
+        return ruleset;
+    });
 }
 
 /******************************************************************************/
@@ -550,7 +524,7 @@ async function processNetworkFilters(assetDetails, network) {
         }
     }
 
-    const plainGood = patchRuleset(
+    const plainGood = await patchRuleset(
         rules.filter(rule => isSafe(rule) && isRegex(rule) === false)
     );
     log(`\tPlain good: ${plainGood.length}`);
@@ -560,12 +534,12 @@ async function processNetworkFilters(assetDetails, network) {
         .join('\n'), true
     );
 
-    const regexes = patchRuleset(
+    const regexes = await patchRuleset(
         rules.filter(rule => isSafe(rule) && isRegex(rule))
     );
     log(`\tMaybe good (regexes): ${regexes.length}`);
 
-    const redirects = patchRuleset(
+    const redirects = await patchRuleset(
         rules.filter(rule =>
             isUnsupported(rule) === false &&
             isRedirect(rule)
@@ -579,19 +553,19 @@ async function processNetworkFilters(assetDetails, network) {
     });
     log(`\tredirect=: ${redirects.length}`);
 
-    const removeparamsGood = patchRuleset(
+    const removeparamsGood = await patchRuleset(
         rules.filter(rule =>
             isUnsupported(rule) === false && isRemoveparam(rule)
         )
     );
-    const removeparamsBad = patchRuleset(
+    const removeparamsBad = await patchRuleset(
         rules.filter(rule =>
             isUnsupported(rule) && isRemoveparam(rule)
         )
     );
     log(`\tremoveparams= (accepted/discarded): ${removeparamsGood.length}/${removeparamsBad.length}`);
 
-    const modifyHeaders = patchRuleset(
+    const modifyHeaders = await patchRuleset(
         rules.filter(rule =>
             isUnsupported(rule) === false &&
             isModifyHeaders(rule)
