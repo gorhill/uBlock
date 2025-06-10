@@ -854,17 +854,17 @@ async function processGenericHighCosmeticFilters(
             .filter(a => a.key === undefined)
             .map(a => a.selector)
     );
+    // https://github.com/uBlockOrigin/uBOL-home/issues/365
     if ( genericExceptionList ) {
-        const genericExceptionSet = new Set(
-            genericExceptionList
-                .filter(a => a.key === undefined)
-                .map(a => a.selector)
-        );
-        for ( const selector of genericExceptionSet ) {
-            if ( genericSelectorSet.has(selector) === false ) { continue; }
-            genericSelectorSet.delete(selector);
-            log(`\tRemoving excepted highly generic filter ##${selector}`);
+        for ( const entry of genericExceptionList ) {
+            if ( entry.key !== undefined ) { continue; }
+            globalHighlyGenericExceptionSet.add(entry.selector);
         }
+    }
+    for ( const selector of globalHighlyGenericExceptionSet ) {
+        if ( genericSelectorSet.has(selector) === false ) { continue; }
+        genericSelectorSet.delete(selector);
+        log(`\tRemoving excepted highly generic filter ##${selector}`);
     }
     if ( genericSelectorSet.size === 0 ) { return 0; }
     const selectorLists = Array.from(genericSelectorSet).sort().join(',\n');
@@ -887,6 +887,8 @@ async function processGenericHighCosmeticFilters(
 
     return genericSelectorSet.size;
 }
+
+const globalHighlyGenericExceptionSet = new Set();
 
 /******************************************************************************/
 
