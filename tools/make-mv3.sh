@@ -122,6 +122,8 @@ cp -R "$UBO_DIR"/src/js/resources "$UBOL_BUILD_DIR"/js/
 cp -R platform/mv3/scriptlets "$UBOL_BUILD_DIR"/
 mkdir -p "$UBOL_BUILD_DIR"/web_accessible_resources
 cp "$UBO_DIR"/src/web_accessible_resources/* "$UBOL_BUILD_DIR"/web_accessible_resources/
+cp -R platform/mv3/"$PLATFORM" "$UBOL_BUILD_DIR"/
+
 cd "$UBOL_BUILD_DIR"
 node --no-warnings make-rulesets.js output="$UBOL_DIR" platform="$PLATFORM"
 if [ -n "$BEFORE" ]; then
