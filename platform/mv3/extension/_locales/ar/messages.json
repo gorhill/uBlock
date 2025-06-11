@@ -20,7 +20,7 @@
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
-    "message": "Develop",
+    "message": "تطوير",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
@@ -240,11 +240,11 @@
     "description": "Short description for a checkbox in the options page"
   },
   "developerModeLabel": {
-    "message": "Developer mode",
+    "message": "وضع المطور",
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Enables access to features suitable for technical users.",
+    "message": "يمكن الوصول إلى الميزات المناسبة للمستخدمين التقنيين.",
     "description": "Short description for a checkbox in the options page"
   },
   "findListsPlaceholder": {
@@ -288,11 +288,11 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Enter element zapper mode",
+    "message": "دخول وضع تحديد العناصر السريع",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
-    "message": "Exit element zapper mode",
+    "message": "الخروج من وضع تحديد العناصر السريع",
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "saveButton": {
@@ -300,11 +300,11 @@
     "description": "Text for buttons used to save changes"
   },
   "revertButton": {
-    "message": "Revert",
+    "message": "إرجاع",
     "description": "Text for buttons used to revert changes"
   },
   "importAndAppendButton": {
-    "message": "Import and append…",
+    "message": "استيراد واضافة…",
     "description": "Text for buttons used to import and append content"
   },
   "exportButton": {
@@ -312,11 +312,11 @@
     "description": "Text for buttons used to export content"
   },
   "dnrRulesSummary": {
-    "message": "Enter your own DNR rules below. <b>Do not add content from untrusted sources.</b>",
+    "message": "أدخل قواعد DNR الخاصة بك أدناه. <b>لا تدرج محتوى من مصادر غير موثوق بها.</b> ",
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
-    "message": "Number of registered rules: {count}",
+    "message": "عدد القواعد المسجلة: {count}",
     "description": "Short sentence to report the number of currently registered DNR rules"
   }
 }

@@ -1,4 +1,4 @@
-uBO Lite (uBOL) is an MV3-based content blocker.
+uBO Lite (uBOL) adalah pemblokir konten berbasis MV3.
 
 Kumpulan aturan bawaan sesuai dengan kumpulan penyaringan bawaan uBlock Origin:
 
@@ -7,6 +7,6 @@ Kumpulan aturan bawaan sesuai dengan kumpulan penyaringan bawaan uBlock Origin:
 - EasyPrivacy
 - Daftar server iklan dan pelacak Peter Lowe
 
-Anda dapat mengaktifkan lebih banyak kumpulan pengaturan dengan mengunjungi halaman opsi - klik ikon _Cogs_ pada panel popup.
+Anda dapat mengaktifkan lebih banyak rangkaian aturan dengan mengunjungi halaman opsi -- klik ikon _Cogs_ di panel popup.
 
-uBOL sepenuhnya deklaratif, yang mana tidak membutuhkan proses permanen uBOL agar penyaringan dapat terjadi, dan penyaringan konten berbasis injeksi CSS/JS dilakukan sepenuhnya oleh peramban itu sendiri ketimbang oleh ekstensi. Ini berarti bahwa uBOL sendiri tidak mengkonsumsi sumber daya CPU/memori selama melakukan pemblokiran konten -- proses pekerja layanan uBOL dibutuhkan _hanya_ ketika Anda berinteraksi dengan panel popup atau opsi halaman.
+uBOL sepenuhnya bersifat deklaratif, artinya tidak diperlukan proses uBOL permanen agar penyaringan dapat terjadi, dan penyaringan konten berbasis injeksi CSS/JS dilakukan secara andal oleh browser itu sendiri dan bukan oleh ekstensi. Artinya uBOL sendiri tidak mengonsumsi sumber daya CPU/memori saat pemblokiran konten sedang berlangsung -- proses pekerja layanan uBOL diperlukan _hanya_ saat Anda berinteraksi dengan panel popup atau halaman opsi.

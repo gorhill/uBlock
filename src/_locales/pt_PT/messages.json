@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Finalmente, um bloqueador eficiente. Leve na CPU e memória.",
+    "message": "Finalmente, um bloqueador eficiente. Leve para a CPU e a memória.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
@@ -48,7 +48,7 @@
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
-    "message": "uBlock₀ — Registador",
+    "message": "uBlock₀ — Registo",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
@@ -116,7 +116,7 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Entrar no modo \"zapper\" de elemento",
+    "message": "Entrar no modo de remoção rápida de elemento",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
@@ -124,7 +124,7 @@
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "Abrir o registador",
+    "message": "Abrir o registo",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
@@ -688,23 +688,23 @@
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
-    "message": "uBlock Origin wiki: O registador",
+    "message": "uBlock Origin wiki: O registo",
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
-    "message": "Limpar registador",
+    "message": "Limpar registo",
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
-    "message": "Pausar registador (descartar todos os dados a receber)",
+    "message": "Pausar registo (descartar todos os dados a receber)",
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {
-    "message": "Retomar registador",
+    "message": "Retomar registo",
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "Alternar filtragem do registador",
+    "message": "Alternar filtragem do registo",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
@@ -712,7 +712,7 @@
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
-    "message": "Opções de filtragem do registador",
+    "message": "Opções de filtragem do registo",
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {
@@ -840,7 +840,7 @@
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
-    "message": "Entradas do registador que não preenchem todas as três condições abaixo serão automaticamente descartadas:",
+    "message": "Entradas do registo que não preenchem todas as três condições abaixo serão automaticamente descartadas:",
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
@@ -936,7 +936,7 @@
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Dicas:</b> certifique-se de que as suas listas de filtros estão atualizadas. <span data-url=\"logger-ui.html#_\">O registador</span> é a ferramenta principal para diagnosticar problemas relacionados com filtros.",
+    "message": "<b>Dicas:</b> certifique-se de que as suas listas de filtros estão atualizadas. <span data-url=\"logger-ui.html#_\">O registo</span> é a ferramenta principal para diagnosticar problemas relacionados com filtros.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
@@ -1136,7 +1136,7 @@
     "description": "Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
-    "message": "Mostrar registador",
+    "message": "Mostrar registo",
     "description": "Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {

@@ -1,4 +1,4 @@
-uBO Lite (uBOL) is an MV3-based content blocker.
+Isang content blocker na nakabase sa MV3 ang uBO Lite (uBOL).
 
 Tulad ng uBlock Origin, ito rin ang mga default na listahan ng mga filter:
 
@@ -7,6 +7,6 @@ Tulad ng uBlock Origin, ito rin ang mga default na listahan ng mga filter:
 - EasyPrivacy
 - Listahan ni Peter Lowe sa mga ad at tracking server (Peter Lowe’s Ad and tracking server list)
 
-You can enable more rulesets by visiting the options page -- click the _Cogs_ icon in the popup panel.
+Maaring magpagana ng mas maraming ruleset sa page ng options -- pindutin ang _Cogs_ sa popup na panel.
 
 Deklaratibo lamang ang uBOL, kaya hindi nito kailangan ng permanenteng proseso upang mag-filter, at mainam na ginagawa ng browser mismo imbes na ekstensyon ang pagfi-filter sa content na nakabase sa CSS o JS. Ibig-sabihin, hindi kumokonsyumo ng CPU o memorya ang uBOL habang nanghaharang -- ang proseso ng trabahante ng serbisyo ay kailangan _lang_ kung nasa popup panel o pahina ng opsyon ka.

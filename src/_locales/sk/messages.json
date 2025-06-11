@@ -1084,7 +1084,7 @@
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
-    "message": "Všetky vaše nastavenia budú prepísané pomocou dáta zálohovaných dňa {{time}} a uBlock sa reštartne.\n\nPrepísať všetky existujúce nastavenia pomocou zálohovaných dát?",
+    "message": "Všetky vaše nastavenia budú prepísané dátami zálohovanými {{time}} a uBlock sa reštartuje.\n\nPrepísať všetky existujúce nastavenia pomocou zálohovaných dát?",
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {

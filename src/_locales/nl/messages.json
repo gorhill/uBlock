@@ -964,7 +964,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Controleer of het probleem niet eerder is gemeld om te voorkomen dat vrijwilligers met dubbele meldingen worden belast.",
+    "message": "Controleer of het probleem niet eerder is gemeld om te voorkomen dat vrijwilligers met dubbele meldingen worden belast. <b>Noot:</b> op de knop klikken zorgt ervoor dat de oorsprong van de pagina naar GitHub wordt verzonden.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {

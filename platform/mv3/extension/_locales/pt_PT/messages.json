@@ -20,7 +20,7 @@
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
-    "message": "Desenvolver",
+    "message": "Programação",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
@@ -288,11 +288,11 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Entrar no modo \"element zapper\"",
+    "message": "Entrar no modo de remoção rápida de elemento",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
-    "message": "Sair do modo \"element zapper\"",
+    "message": "Sair do modo de remoção rápida de elemento",
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "saveButton": {
@@ -312,7 +312,7 @@
     "description": "Text for buttons used to export content"
   },
   "dnrRulesSummary": {
-    "message": "Insira as suas próprias regras de DNR  abaixo. <b>Não adicione conteúdo de fontes não confiáveis.</b>",
+    "message": "Introduza as suas próprias regras DNR abaixo. <b>Não adicione conteúdo de fontes não confiáveis.</b>",
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
