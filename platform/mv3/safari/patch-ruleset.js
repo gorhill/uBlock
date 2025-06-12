@@ -45,16 +45,7 @@ export function patchRuleset(ruleset) {
             condition.excludedDomains = condition.excludedInitiatorDomains;
             delete condition.excludedInitiatorDomains;
         }
-        if (
-            Array.isArray(condition.requestDomains) &&
-            Array.isArray(condition.excludedRequestDomains) === false &&
-            Boolean(condition.regexFilter) === false &&
-            Boolean(condition.urlFilter) === false
-        ) {
-            patchRuleWithRequestDomains(rule, out);
-        } else {
-            out.push(rule);
-        }
+        out.push(rule);
     }
     return out;
 }
