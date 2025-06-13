@@ -41,13 +41,13 @@ dom.on('#dashboard-nav', 'click', '.tabButton', ev => {
     const { pane } = ev.target.dataset;
     dom.body.dataset.pane = pane;
     if ( pane === 'settings' ) {
-        localRemove('activeDashboardPane');
+        localRemove('dashboard.activePane');
     } else {
-        localWrite('activeDashboardPane', pane);
+        localWrite('dashboard.activePane', pane);
     }
 });
 
-localRead('activeDashboardPane').then(pane => {
+localRead('dashboard.activePane').then(pane => {
     if ( typeof pane !== 'string' ) { return; }
     dom.body.dataset.pane = pane;
 });

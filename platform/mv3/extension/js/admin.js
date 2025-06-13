@@ -21,7 +21,7 @@
 
 import {
     adminRead,
-    localRead, localWrite,
+    localRead, localRemove, localWrite,
     sessionRead, sessionWrite,
 } from './ext.js';
 
@@ -33,7 +33,6 @@ import {
 
 import {
     getDefaultFilteringMode,
-    getTrustedSites,
     readFilteringModeDetails,
 } from './mode-manager.js';
 
@@ -132,9 +131,8 @@ const adminSettings = {
         }
         if ( this.keys.has('noFiltering') ) {
             ubolLog('admin setting "noFiltering" changed');
-            await readFilteringModeDetails(true);
-            const trustedSites = await getTrustedSites();
-            broadcastMessage({ trustedSites: Array.from(trustedSites) });
+            const filteringModeDetails = await readFilteringModeDetails(true);
+            broadcastMessage({ filteringModeDetails });
         }
         if ( this.keys.has('showBlockedCount') ) {
             ubolLog('admin setting "showBlockedCount" changed');
@@ -192,17 +190,18 @@ export async function getAdminRulesets() {
 
 export async function adminReadEx(key) {
     let cacheValue;
-    const session = await sessionRead(`admin_${key}`);
+    const session = await sessionRead(`admin.${key}`);
     if ( session ) {
         cacheValue = session.data;
     } else {
-        const local = await localRead(`admin_${key}`);
+        const local = await localRead(`admin.${key}`);
         if ( local ) {
             cacheValue = local.data;
         }
+        localRemove(`admin_${key}`); // TODO: remove eventually
     }
     adminRead(key).then(async value => {
-        const adminKey = `admin_${key}`;
+        const adminKey = `admin.${key}`;
         await Promise.all([
             sessionWrite(adminKey, { data: value }),
             localWrite(adminKey, { data: value }),

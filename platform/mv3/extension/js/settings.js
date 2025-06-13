@@ -22,22 +22,9 @@
 import { browser, sendMessage } from './ext.js';
 import { dom, qs$ } from './dom.js';
 import { hashFromIterable } from './dashboard.js';
-import { i18n$ } from './i18n.js';
-import punycode from './punycode.js';
 import { renderFilterLists } from './filter-lists.js';
 
 /******************************************************************************/
-
-const cm6 = self.cm6;
-
-const cmTrustedSites = (( ) => {
-    const options = {};
-    if ( dom.cl.has(':root', 'dark') ) {
-        options.oneDark = true;
-    }
-    options.placeholder = i18n$('noFilteringModePlaceholder');
-    return cm6.createEditorView(options, qs$('#trustedSites'));
-})();
 
 let cachedRulesetData = {};
 
@@ -60,7 +47,6 @@ function renderWidgets() {
     }
 
     renderDefaultMode();
-    renderTrustedSites();
 
     qs$('#autoReload input[type="checkbox"]').checked = cachedRulesetData.autoReload;
 
@@ -175,48 +161,6 @@ dom.on('#developerMode input[type="checkbox"]', 'change', ev => {
 
 /******************************************************************************/
 
-function renderTrustedSites() {
-    const hostnames = cachedRulesetData.trustedSites || [];
-    let text = hostnames.map(hn => punycode.toUnicode(hn)).join('\n');
-    if ( text !== '' ) { text += '\n'; }
-    cmTrustedSites.dispatch({
-        changes: {
-            from: 0, to: cmTrustedSites.state.doc.length,
-            insert: text
-        },
-    });
-}
-
-function changeTrustedSites() {
-    const hostnames = getStagedTrustedSites();
-    const hash = hashFromIterable(cachedRulesetData.trustedSites || []);
-    if ( hashFromIterable(hostnames) === hash ) { return; }
-    sendMessage({
-        what: 'setTrustedSites',
-        hostnames,
-    });
-}
-
-function getStagedTrustedSites() {
-    const text = cmTrustedSites.state.doc.toString();
-    return text.split(/\s/).map(hn => {
-        if ( hn === '' ) { return ''; }
-        try {
-            return punycode.toASCII(
-                (new URL(`https://${hn}/`)).hostname
-            );
-        } catch {
-        }
-        return '';
-    }).filter(hn => hn !== '');
-}
-
-dom.on(cmTrustedSites.contentDOM, 'blur', changeTrustedSites);
-
-self.addEventListener('beforeunload', changeTrustedSites);
-
-/******************************************************************************/
-
 function listen() {
     const bc = new self.BroadcastChannel('uBOL');
     bc.onmessage = listen.onmessage;
@@ -227,21 +171,6 @@ listen.onmessage = ev => {
     if ( message instanceof Object === false ) { return; }
     const local = cachedRulesetData;
     let render = false;
-
-    // Keep added sites which have not yet been committed
-    if ( message.trustedSites !== undefined ) {
-        if ( hashFromIterable(message.trustedSites) !== hashFromIterable(local.trustedSites) ) {
-            const current = new Set(local.trustedSites);
-            const staged = new Set(getStagedTrustedSites());
-            for ( const hn of staged ) {
-                if ( current.has(hn) === false ) { continue; }
-                staged.delete(hn);
-            }
-            const combined = Array.from(new Set([ ...message.trustedSites, ...staged ]));
-            local.trustedSites = combined;
-            render = true;
-        }
-    }
 
     if ( message.hasOmnipotence !== undefined ) {
         if ( message.hasOmnipotence !== local.hasOmnipotence ) {

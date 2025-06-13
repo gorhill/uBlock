@@ -225,7 +225,7 @@ export async function readFilteringModeDetails(bypassCache = false) {
         }
     }
     let [
-        userModes,
+        userModes = { optimal: [ 'all-urls' ] },
         adminDefaultFiltering,
         adminNoFiltering,
     ] = await Promise.all([
@@ -233,9 +233,6 @@ export async function readFilteringModeDetails(bypassCache = false) {
         adminReadEx('defaultFiltering'),
         adminReadEx('noFiltering'),
     ]);
-    if ( userModes === undefined ) {
-        userModes = { optimal: [ 'all-urls' ] };
-    }
     userModes = unserializeModeDetails(userModes);
     if ( adminDefaultFiltering !== undefined ) {
         const modefromName = {
@@ -277,29 +274,34 @@ async function writeFilteringModeDetails(afterDetails) {
     readFilteringModeDetails.cache = unserializeModeDetails(data);
     return Promise.all([
         getDefaultFilteringMode(),
-        getTrustedSites(),
         hasBroadHostPermissions(),
         localWrite('filteringModeDetails', data),
         sessionWrite('filteringModeDetails', data),
     ]).then(results => {
         broadcastMessage({
             defaultFilteringMode: results[0],
-            trustedSites: Array.from(results[1]),
-            hasOmnipotence: results[2],
+            hasOmnipotence: results[1],
+            filteringModeDetails: readFilteringModeDetails.cache,
         });
     });
 }
 
 /******************************************************************************/
 
-export async function getFilteringModeDetails() {
+export async function getFilteringModeDetails(serializable = false) {
     const actualDetails = await readFilteringModeDetails();
-    return {
+    const out = {
         none: new Set(actualDetails.none),
         basic: new Set(actualDetails.basic),
         optimal: new Set(actualDetails.optimal),
         complete: new Set(actualDetails.complete),
     };
+    return serializable ? serializeModeDetails(out) : out;
+}
+
+export async function setFilteringModeDetails(details) {
+    await localWrite('filteringModeDetails', serializeModeDetails(details));
+    await readFilteringModeDetails(true);
 }
 
 /******************************************************************************/
@@ -324,45 +326,6 @@ export function getDefaultFilteringMode() {
 
 export function setDefaultFilteringMode(afterLevel) {
     return setFilteringMode('all-urls', afterLevel);
-}
-
-/******************************************************************************/
-
-export async function getTrustedSites() {
-    const filteringModes = await getFilteringModeDetails();
-    return filteringModes.none;
-}
-
-export async function setTrustedSites(hostnames) {
-    const [
-        filteringModes,
-        hasOmnipotence,
-    ] = await Promise.all([
-        getFilteringModeDetails(),
-        hasBroadHostPermissions(),
-    ]);
-    const { none } = filteringModes;
-    const hnSet = new Set(hostnames);
-    let modified = false;
-    if ( none.has('all-urls') && hnSet.has('all-urls') === false ) {
-        applyFilteringMode(filteringModes, 'all-urls', hasOmnipotence ? MODE_OPTIMAL : MODE_BASIC);
-        modified = true;
-    }
-    for ( const hn of none ) {
-        if ( hnSet.has(hn) ) {
-            hnSet.delete(hn);
-        } else {
-            none.delete(hn);
-            modified = true;
-        }
-    }
-    for ( const hn of hnSet ) {
-        const level = applyFilteringMode(filteringModes, hn, MODE_NONE);
-        if ( level !== MODE_NONE ) { continue; }
-        modified = true;
-    }
-    if ( modified === false ) { return; }
-    return writeFilteringModeDetails(filteringModes);
 }
 
 /******************************************************************************/

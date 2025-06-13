@@ -89,12 +89,6 @@
             <p><label id="strictBlockMode" data-i18n="enableStrictBlockLabel"><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span>_</label><legend data-i18n="enableStrictBlockLegend"></legend>
             <p id="developerMode"><label data-i18n="developerModeLabel"><span class="input checkbox"><input type="checkbox"><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span>_</label><legend data-i18n="developerModeLegend"></legend>
         </div>
-
-        <div>
-            <h3 data-i18n="filteringMode0Name"></h3>
-            <p data-i18n="noFilteringModeDescription">_</p>
-            <div id="trustedSites"></div>
-        </div>
     </section>
     <!-- -------- -->
     <section data-pane="rulesets">
@@ -108,14 +102,17 @@
     <section data-pane="develop">
         <div>
             <p>
-                <button id="dnrRulesApply" class="preferred iconified" type="button" disabled><span class="fa-icon">save</span><span data-i18n="saveButton">_</span><span class="hover"></span></button>
-                <button id="dnrRulesRevert" class="iconified" type="button" disabled><span class="fa-icon">undo</span><span data-i18n="revertButton">_</span><span class="hover"></span></button>
-                &emsp;
-                <button id="dnrRulesImport" class="iconified" type="button"><span class="fa-icon">download-alt</span><span data-i18n="importAndAppendButton">_</span><span class="hover"></span></button>
-                <button id="dnrRulesExport" class="iconified" type="button"><span class="fa-icon">upload-alt</span><span data-i18n="exportButton">_</span><span class="hover"></span></button><input type="file" accept="json/application">
+                <label for="editors" data-i18n="developDropdownLabel"></label> <select id="editors">
+                    <option value="modes" selected data-i18n="developOptionFilteringModeDetails"></option>
+                    <option value="dnr.rw.user" data-i18n="developOptionCustomDnrRules"></option>
+                    <hr>
+                    <optgroup label="" data-i18n-label="developOptionDnrRulesOf">
+                        <option value="dnr.ro.dynamic" data-i18n="developOptionDynamicRuleset"></option>
+                        <option value="dnr.ro.session" data-i18n="developOptionSessionRuleset"></option>
+                    </optgroup>
+                </select>&nbsp;
             </p>
-            <p data-i18n="dnrRulesSummary"></p>
-            <div id="cm-dnrRules"></div>
+            <div id="cm-container"></div>
         </div>
     </section>
     <!-- -------- -->
@@ -165,22 +162,34 @@
             </span>
         </div>
         <div class="listEntry expandable" data-role="rootnode">
-            <span class="detailbar">
+            <div class="detailbar">
                 <h3 class="listname"></h3>
                 <span class="count"></span>
                 <span class="fa-icon listExpander">angle-up</span>
-            </span>
+            </div>
         </div>
     </div>
+    <template class="io-panel">
+        <span class="io-panel">
+            <button id="apply" class="preferred iconified" type="button" disabled><span class="fa-icon">save</span><span data-i18n="saveButton">_</span><span class="hover"></span></button>
+            <button id="revert" class="iconified" type="button" disabled><span class="fa-icon">undo</span><span data-i18n="revertButton">_</span><span class="hover"></span></button>
+            <button id="import" class="iconified" type="button"><span class="fa-icon">download-alt</span><span data-i18n="importAndAppendButton">_</span><span class="hover"></span></button>
+            <button id="export" class="iconified" type="button"><span class="fa-icon">upload-alt</span><span data-i18n="exportButton">_</span><span class="hover"></span></button><input type="file" accept="json/application">
+        </span>
+    </template>
     <template class="summary-panel">
         <div class="info-panel summary-panel">
-            <div class="info"></div>
+            <span class="info"></span><span class="warning" data-i18n="dnrRulesWarning"></span>
         </div>
     </template>
     <template class="feedback-panel">
         <div class="info-panel feedback-panel">
             <div class="info"></div>
             <div class="close"></div>
+        </div>
+    </template>
+    <template class="ro-summary-panel">
+        <div class="info-panel summary-panel">
         </div>
     </template>
     <template class="badmark-tooltip">

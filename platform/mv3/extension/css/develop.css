@@ -19,38 +19,35 @@ section[data-pane="develop"] > div > * {
     margin-top: 1em;
     }
 
-#cm-dnrRules {
+#cm-container {
     flex-grow: 1;
     font-size: var(--monospace-size);
     overflow: hidden;
     }
 
 /* https://discuss.codemirror.net/t/how-to-set-max-height-of-the-editor/2882/2 */
-#cm-dnrRules .cm-editor {
+#cm-container .cm-editor {
     background-color: var(--surface-0);
     height: 100%;
     }
 
-#cm-dnrRules .cm-editor .cm-line {
-    border-bottom: 1px dotted transparent;
-    border-top: 1px dotted transparent;
+#cm-container .cm-editor .cm-line:has(.ͼ5),
+#cm-container .cm-editor .cm-line:has(.ͼw) {
+    background-image: url('line-hor-dashed.png'), url('line-hor-dashed.png');
+    background-position: left 3px, left calc(100% - 3px);
+    background-repeat: repeat-x;
     }
 
-#cm-dnrRules .cm-editor .cm-line:has(.ͼc) {
-    border-bottom: 1px dotted var(--border-1);
-    border-top: 1px dotted var(--border-1);
-    }
-
-#cm-dnrRules .cm-editor .cm-line.badline:not(.cm-activeLine) {
+#cm-container .cm-editor .cm-line.badline:not(.cm-activeLine) {
     background-color: color-mix(in srgb, var(--info3-ink) 15%, transparent 85%);
     }
 
-#cm-dnrRules .cm-editor .cm-line .badmark {
+#cm-container .cm-editor .cm-line .badmark {
     text-decoration: underline var(--cm-negative) wavy;
     text-decoration-skip-ink: none;
     }
 
-#cm-dnrRules .cm-editor .cm-panel.cm-search {
+#cm-container .cm-editor .cm-panel.cm-search {
     display: flex;
     flex-wrap: wrap;
     font-family: sans-serif;
@@ -59,13 +56,13 @@ section[data-pane="develop"] > div > * {
     padding: 0.5em 1.5em 0.5em 0.5em;
     }
 
-#cm-dnrRules .cm-editor .cm-panel.cm-search > * {
+#cm-container .cm-editor .cm-panel.cm-search > * {
     margin: 0;
     }
 
-#cm-dnrRules .cm-editor .cm-panel.cm-search .cm-textfield,
-#cm-dnrRules .cm-editor .cm-panel.cm-search .cm-button,
-#cm-dnrRules .cm-editor .cm-panel.cm-search label {
+#cm-container .cm-editor .cm-panel.cm-search .cm-textfield,
+#cm-container .cm-editor .cm-panel.cm-search .cm-button,
+#cm-container .cm-editor .cm-panel.cm-search label {
     background-image: inherit;
     border: inherit;
     flex-grow: 0;
@@ -73,40 +70,77 @@ section[data-pane="develop"] > div > * {
     min-height: calc(var(--button-font-size) * 1.8);
     }
 
-#cm-dnrRules .cm-editor .cm-panel.info-panel {
+#cm-container .cm-editor .cm-panel .warning {
+    color: var(--info3-ink);
+    }
+
+#cm-container .cm-editor .cm-panel.io-panel {
+    background-color: var(--surface-1);
+    box-sizing: border-box;
+    display: inline-flex;
+    gap: 0.25em;
+    padding: 0.25em;
+    padding-inline-start: 0;
+    width: 100%;
+    }
+#cm-container .cm-editor .cm-panel.io-panel button {
+    min-height: 30px;
+    }
+#cm-container .cm-editor .cm-panel.io-panel button#revert {
+    margin-inline-end: 1em;
+    }
+#cm-container .cm-editor .cm-panel.io-panel:not([data-io~="apply"]) button#apply {
+    display: none;
+    }
+#cm-container .cm-editor .cm-panel.io-panel:not([data-io~="revert"]) button#revert {
+    display: none;
+    }
+#cm-container .cm-editor .cm-panel.io-panel:not([data-io~="import"]) button#import {
+    display: none;
+    }
+#cm-container .cm-editor .cm-panel.io-panel:not([data-io~="export"]) button#export {
+    display: none;
+    }
+
+#cm-container .cm-editor .cm-panel.info-panel {
     display: flex;
     flex-wrap: nowrap;
     font-size: var(--font-size);
     padding: var(--default-gap-xxsmall) var(--default-gap-xsmall);
     }
-#cm-dnrRules .cm-editor .cm-panel.info-panel .info {
+#cm-container .cm-editor .cm-panel.info-panel .info {
     flex-grow: 1;
     overflow: auto;
     }
-#cm-dnrRules .cm-editor .cm-panel.info-panel .close {
+#cm-container .cm-editor .cm-panel.info-panel .close {
     cursor: default;
     flex-shrink: 0;
     padding-inline-start: 1em;
     }
-#cm-dnrRules .cm-editor .cm-panel.info-panel .close::after {
+#cm-container .cm-editor .cm-panel.info-panel .close::after {
     content: '\2715';
     }
-#cm-dnrRules .cm-editor .cm-panel.summary-panel {
+
+#cm-container .cm-editor .cm-panel.summary-panel {
     background-color: color-mix(in srgb, var(--info1-ink) 15%, transparent 85%);
+    gap: 1em;
+    }
+#cm-container .cm-editor .cm-panel.summary-panel .info {
+    flex-shrink: 0;
     }
 
-#cm-dnrRules .cm-editor .cm-panel.feedback-panel {
+#cm-container .cm-editor .cm-panel.feedback-panel {
     background-color: color-mix(in srgb, var(--info3-ink) 15%, transparent 85%);
     white-space: pre;
     max-height: 10cqh;
     }
 
-#cm-dnrRules .cm-editor .cm-gutterElement {
+#cm-container .cm-editor .cm-gutterElement {
     cursor: default;
     user-select: none;
     }
 
-#cm-dnrRules .cm-editor .cm-tooltip .badmark-tooltip {
+#cm-container .cm-editor .cm-tooltip .badmark-tooltip {
     background-color: color-mix(in srgb, var(--info3-ink) 15%, transparent 85%);
     padding: var(--default-gap-xxsmall) var(--default-gap-xsmall);
     }

@@ -263,6 +263,11 @@ if ( isBackgroundProcess !== true ) {
                 elem.setAttribute('aria-label', text);
             }
         }
+
+        for ( const elem of root.querySelectorAll('[data-i18n-label]') ) {
+            const text = i18n$(elem.getAttribute('data-i18n-label'));
+            elem.setAttribute('label', text);
+        }
     };
 
     i18n.renderElapsedTimeToString = function(tstamp) {

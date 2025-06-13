@@ -94,9 +94,15 @@ const perScopeParsers = {
             rule[key] = {};
             scope.push(key);
             break;
+        case 'id': {
+            const n = parseInt(val, 10);
+            if ( isNaN(n) || n < 1) { return false; }
+            rule.id = n;
+            break;
+        }
         case 'priority': {
             const n = parseInt(val, 10);
-            if ( isNaN(n) || n <= 1 ) { return false; }
+            if ( isNaN(n) || n < 1 ) { return false; }
             rule.priority = n;
             break;
         }
@@ -283,6 +289,10 @@ const perScopeParsers = {
             rule.condition[key] = [];
             scope.push(key);
             break;
+        case 'tabIds':
+            rule.condition.tabIds = [];
+            scope.push('tabIds');
+            break;
         default:
             return false;
         }
@@ -412,6 +422,12 @@ const perScopeParsers = {
         item.excludedValues.push(node.val);
         return true;
     },
+    'condition.tabIds': function(scope, rule, node) {
+        if ( node.list !== true ) { return false; }
+        const n = parseInt(node.val, 10);
+        if ( isNaN(n) || n === 0 ) { return false; }
+        rule.condition.tabIds.push(n);
+    },
 };
 
 /******************************************************************************/
@@ -479,15 +495,16 @@ export function rulesFromText(text) {
     const indices = [];
     for ( let i = 0; i < lines.length; i++ ) {
         const line = lines[i].trimEnd();
-        const trimmed = line.trimStart();
-        if ( trimmed.startsWith('#') ) { continue; }
-        // Discard leading empty lines
-        if ( trimmed === '' ) {
-            if ( indices.length === 0 ) { continue; }
-        }
+        if ( line.trim().startsWith('#') ) { continue; }
         if ( line !== '---' && line !== '...' ) {
             indices.push(i);
             continue;
+        }
+        // Discard leading empty lines
+        while ( indices.length !== 0 ) {
+            const s = lines[indices[0]].trim();
+            if ( s.length !== 0 ) { break; }
+            indices.shift();
         }
         // Discard trailing empty lines
         while ( indices.length !== 0 ) {
@@ -544,18 +561,21 @@ function textFromValue(val, depth) {
 
 /******************************************************************************/
 
-export function textFromRules(rules) {
+export function textFromRules(rules, option = {}) {
     if ( Array.isArray(rules) === false ) {
         if ( rules instanceof Object === false ) { return; }
         rules = [ rules ];
     }
     const out = [];
     for ( const rule of rules ) {
-        if ( rule.id ) { rule.id = undefined };
+        if ( option.keepId !== true && rule.id ) { rule.id = undefined };
         const text = textFromValue(rule, 0);
         if ( text === undefined ) { continue; }
         out.push(text, '---' );
     }
-    out.push('');
+    if ( out.length !== 0 ) {
+        out.unshift('---');
+        out.push('');
+    }
     return out.join('\n');
 }

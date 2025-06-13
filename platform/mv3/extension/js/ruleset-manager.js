@@ -306,19 +306,30 @@ async function updateDynamicRules() {
     if ( dynamicRegexCount !== 0 ) {
         ubolLog(`Using ${dynamicRegexCount}/${dnr.MAX_NUMBER_OF_REGEX_RULES} dynamic regex-based DNR rules`);
     }
-    return Promise.all([
-        dnr.updateDynamicRules({ addRules, removeRuleIds }).then(( ) => {
-            if ( removeRuleIds.length !== 0 ) {
-                ubolLog(`Remove ${removeRuleIds.length} dynamic DNR rules`);
-            }
-            if ( addRules.length !== 0 ) {
-                ubolLog(`Add ${addRules.length} dynamic DNR rules`);
-            }
-        }).catch(reason => {
-            console.error(`updateDynamicRules() / ${reason}`);
-        }),
-        updateSessionRules(),
-    ]);
+    try {
+        await dnr.updateDynamicRules({ addRules, removeRuleIds });
+        if ( removeRuleIds.length !== 0 ) {
+            ubolLog(`Remove ${removeRuleIds.length} dynamic DNR rules`);
+        }
+        if ( addRules.length !== 0 ) {
+            ubolLog(`Add ${addRules.length} dynamic DNR rules`);
+        }
+    } catch(reason) {
+        console.error(`updateDynamicRules() / ${reason}`);
+    }
+    await updateSessionRules();
+}
+
+/******************************************************************************/
+
+async function getEffectiveDynamicRules() {
+    const allRules = await dnr.getDynamicRules();
+    const dynamicRules = [];
+    for ( const rule of allRules ) {
+        if ( rule.id >= USER_RULES_BASE_RULE_ID ) { continue; }
+        dynamicRules.push(rule);
+    }
+    return dynamicRules;
 }
 
 /******************************************************************************/
@@ -441,16 +452,29 @@ async function updateSessionRules() {
     if ( sessionRegexCount !== 0 ) {
         ubolLog(`Using ${sessionRegexCount}/${dnr.MAX_NUMBER_OF_REGEX_RULES} session regex-based DNR rules`);
     }
-    return dnr.updateSessionRules({ addRules, removeRuleIds }).then(( ) => {
+    try {
+        await dnr.updateSessionRules({ addRules, removeRuleIds });
         if ( removeRuleIds.length !== 0 ) {
             ubolLog(`Remove ${removeRuleIds.length} session DNR rules`);
         }
         if ( addRules.length !== 0 ) {
             ubolLog(`Add ${addRules.length} session DNR rules`);
         }
-    }).catch(reason => {
+    } catch(reason) {
         console.error(`updateSessionRules() / ${reason}`);
-    });
+    }
+}
+
+/******************************************************************************/
+
+async function getEffectiveSessionRules() {
+    const allRules = await dnr.getSessionRules();
+    const sessionRules = [];
+    for ( const rule of allRules ) {
+        if ( rule.id >= USER_RULES_BASE_RULE_ID ) { continue; }
+        sessionRules.push(rule);
+    }
+    return sessionRules;
 }
 
 /******************************************************************************/
@@ -751,6 +775,8 @@ export {
     enableRulesets,
     excludeFromStrictBlock,
     filteringModesToDNR,
+    getEffectiveDynamicRules,
+    getEffectiveSessionRules,
     getEffectiveUserRules,
     getEnabledRulesetsDetails,
     getRulesetDetails,
