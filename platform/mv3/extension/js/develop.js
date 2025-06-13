@@ -584,6 +584,9 @@ class Editor {
             stream.next();
             return null;
         },
+        languageData: {
+            commentTokens: { line: '#' },
+        },
     };
 
 }
