@@ -4525,6 +4525,7 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
     const realms = new Map([
         [ BLOCK_REALM, { type: 'block', priority: 10 } ],
         [ ALLOW_REALM, { type: 'allow', priority: 30 } ],
+        [ BLOCK_REALM | IMPORTANT_REALM, { type: 'block', priority: 10 } ],
         [ REDIRECT_REALM, { type: 'redirect', priority: 11 } ],
         [ REMOVEPARAM_REALM, { type: 'removeparam', priority: 0 } ],
         [ CSP_REALM, { type: 'csp', priority: 0 } ],
@@ -4532,7 +4533,7 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
         [ URLTRANSFORM_REALM, { type: 'uritransform', priority: 0 } ],
         [ HEADERS_REALM, { type: 'block', priority: 10 } ],
         [ HEADERS_REALM | ALLOW_REALM, { type: 'allow', priority: 30 } ],
-        [ HEADERS_REALM | IMPORTANT_REALM, { type: 'allow', priority: 40 } ],
+        [ HEADERS_REALM | IMPORTANT_REALM, { type: 'allow', priority: 10 } ],
         [ URLSKIP_REALM, { type: 'urlskip', priority: 0 } ],
     ]);
     const partyness = new Map([
@@ -4556,6 +4557,7 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
         'other',
     ]);
     const ruleset = [];
+    const seen = new Set();
     for ( const [ realmBits, realmDetails ] of realms ) {
         for ( const [ partyBits, partyName ] of partyness ) {
             for ( const typeName in typeNameToTypeValue ) {
@@ -4579,12 +4581,16 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
                             rule.condition = rule.condition || {};
                             rule.condition.resourceTypes = [ typeName ];
                         }
+                        const hash = JSON.stringify(rule);
+                        if ( seen.has(hash) ) { continue; }
+                        seen.add(hash);
                         ruleset.push(rule);
                     }
                 }
             }
         }
     }
+    seen.clear();
 
     // Adjust `important` priority
     for ( const rule of ruleset ) {
