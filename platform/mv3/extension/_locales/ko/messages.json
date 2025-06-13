@@ -295,6 +295,30 @@
     "message": "구성 요소 제거 모드 종료",
     "description": "Tooltip for the button used to exit zapper mode"
   },
+  "developDropdownLabel": {
+    "message": "View:",
+    "description": "A label of a dropdown list"
+  },
+  "developOptionFilteringModeDetails": {
+    "message": "Filtering mode details",
+    "description": "An option in a dropdown list"
+  },
+  "developOptionCustomDnrRules": {
+    "message": "Custom DNR rules",
+    "description": "An option in a dropdown list"
+  },
+  "developOptionDnrRulesOf": {
+    "message": "DNR rules of …",
+    "description": "A section header in a dropdown list"
+  },
+  "developOptionDynamicRuleset": {
+    "message": "Dynamic ruleset",
+    "description": "An option in a dropdown list"
+  },
+  "developOptionSessionRuleset": {
+    "message": "Session ruleset",
+    "description": "An option in a dropdown list"
+  },
   "saveButton": {
     "message": "저장",
     "description": "Text for buttons used to save changes"
@@ -311,8 +335,8 @@
     "message": "내보내기…",
     "description": "Text for buttons used to export content"
   },
-  "dnrRulesSummary": {
-    "message": "아래에 직접 DNR 규칙을 입력하세요. <b>신뢰할 수 없는 출처의 콘텐츠를 추가하지 마세요.</b>",
+  "dnrRulesWarning": {
+    "message": "Do not add content from untrusted sources",
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {

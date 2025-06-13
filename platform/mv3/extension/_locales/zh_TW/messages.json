@@ -295,6 +295,30 @@
     "message": "離開元素臨時移除模式",
     "description": "Tooltip for the button used to exit zapper mode"
   },
+  "developDropdownLabel": {
+    "message": "View:",
+    "description": "A label of a dropdown list"
+  },
+  "developOptionFilteringModeDetails": {
+    "message": "Filtering mode details",
+    "description": "An option in a dropdown list"
+  },
+  "developOptionCustomDnrRules": {
+    "message": "Custom DNR rules",
+    "description": "An option in a dropdown list"
+  },
+  "developOptionDnrRulesOf": {
+    "message": "DNR rules of …",
+    "description": "A section header in a dropdown list"
+  },
+  "developOptionDynamicRuleset": {
+    "message": "Dynamic ruleset",
+    "description": "An option in a dropdown list"
+  },
+  "developOptionSessionRuleset": {
+    "message": "Session ruleset",
+    "description": "An option in a dropdown list"
+  },
   "saveButton": {
     "message": "儲存",
     "description": "Text for buttons used to save changes"
@@ -311,8 +335,8 @@
     "message": "匯出…",
     "description": "Text for buttons used to export content"
   },
-  "dnrRulesSummary": {
-    "message": "請在下方輸入您的 DNR 規則。<b>請勿新增來自不受信任來源的內容。</b>",
+  "dnrRulesWarning": {
+    "message": "Do not add content from untrusted sources",
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
