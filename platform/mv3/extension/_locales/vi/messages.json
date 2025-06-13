@@ -20,7 +20,7 @@
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
-    "message": "Develop",
+    "message": "Phát triển",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
@@ -240,11 +240,11 @@
     "description": "Short description for a checkbox in the options page"
   },
   "developerModeLabel": {
-    "message": "Developer mode",
+    "message": "Chế độ nhà phát triển",
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Enables access to features suitable for technical users.",
+    "message": "Cho phép truy cập các tính năng dành cho người dùng nâng cao",
     "description": "Short description for a checkbox in the options page"
   },
   "findListsPlaceholder": {
@@ -296,23 +296,23 @@
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "saveButton": {
-    "message": "Save",
+    "message": "Lưu",
     "description": "Text for buttons used to save changes"
   },
   "revertButton": {
-    "message": "Revert",
+    "message": "Đặt lại",
     "description": "Text for buttons used to revert changes"
   },
   "importAndAppendButton": {
-    "message": "Import and append…",
+    "message": "Nhập và thêm vào",
     "description": "Text for buttons used to import and append content"
   },
   "exportButton": {
-    "message": "Export…",
+    "message": "Xuất...",
     "description": "Text for buttons used to export content"
   },
   "dnrRulesSummary": {
-    "message": "Enter your own DNR rules below. <b>Do not add content from untrusted sources.</b>",
+    "message": "Nhập các luật lệ DNR của bạn vào ô bên dưới. Không nhập thông tin từ các nguồn không tin cậy.",
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
