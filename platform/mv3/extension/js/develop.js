@@ -484,7 +484,7 @@ class Editor {
     }
 
     gutterClick(view, info) {
-        const reSeparator = /^---\s*/;
+        const reSeparator = /^(?:---|# ---)\s*/;
         const { doc } = view.state;
         const lineFirst = doc.lineAt(info.from);
         if ( lineFirst.text === '' ) { return false; }
@@ -547,16 +547,17 @@ class Editor {
             return { scope: 0 };
         },
         token: (stream, state) => {
+            if ( stream.sol() ) {
+                if ( stream.match(/^---\s*$/) ) { return 'meta'; }
+                if ( stream.match(/^# ---\s*$/) ) { return 'meta comment'; }
+                if ( stream.match(/\.\.\.\s*$/) ) { return 'meta'; }
+            }
             const c = stream.peek();
             if ( c === '#' ) {
                 if ( (stream.pos === 0 || /\s/.test(stream.string.charAt(stream.pos - 1))) ) {
                     stream.skipToEnd();
                     return 'comment';
                 }
-            }
-            if ( stream.sol() ) {
-                if ( stream.match(/---\s*$/) ) { return 'meta'; }
-                if ( stream.match(/\.\.\.\s*$/) ) { return 'meta'; }
             }
             if ( stream.eatSpace() ) {
                 return null;
