@@ -107,8 +107,10 @@ cp platform/mv3/extension/lib/codemirror/* \
     "$UBOL_DIR"/lib/codemirror/ 2>/dev/null || :
 cp platform/mv3/extension/lib/codemirror/codemirror-ubol/dist/cm6.bundle.ubol.min.js \
     "$UBOL_DIR"/lib/codemirror/
-cp platform/mv3/extension/lib/codemirror/codemirror-ubol/LICENSE \
+cp platform/mv3/extension/lib/codemirror/codemirror.LICENSE \
     "$UBOL_DIR"/lib/codemirror/
+cp platform/mv3/extension/lib/codemirror/codemirror-ubol/LICENSE \
+    "$UBOL_DIR"/lib/codemirror/codemirror-quickstart.LICENSE
 
 echo "*** uBOLite.mv3: Generating rulesets"
 UBOL_BUILD_DIR=$(mktemp -d)
