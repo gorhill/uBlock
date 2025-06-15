@@ -1,3 +1,5 @@
+- [Add `json-edit`-related scriptlets](https://github.com/gorhill/uBlock/commit/87e0434c90)
+- [Improve `trusted-set-cookie` scriptlet](https://github.com/gorhill/uBlock/commit/3a2bb62519)
 - [Force cache bypass reload when no-scripting switch is toggled](https://github.com/gorhill/uBlock/commit/4affe343dd)
 - [Improve `jsonl[...]` suite of scriptlets](https://github.com/gorhill/uBlock/commit/ed9999efd6)
 - [Add support for network filter option `message`](https://github.com/gorhill/uBlock/commit/d8298bb067)
