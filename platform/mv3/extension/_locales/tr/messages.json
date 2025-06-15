@@ -296,27 +296,27 @@
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "developDropdownLabel": {
-    "message": "View:",
+    "message": "Görünüm:",
     "description": "A label of a dropdown list"
   },
   "developOptionFilteringModeDetails": {
-    "message": "Filtering mode details",
+    "message": "Filtreleme modu ayrıntıları",
     "description": "An option in a dropdown list"
   },
   "developOptionCustomDnrRules": {
-    "message": "Custom DNR rules",
+    "message": "Özel DNR kuralları",
     "description": "An option in a dropdown list"
   },
   "developOptionDnrRulesOf": {
-    "message": "DNR rules of …",
+    "message": "DNR kuralları …",
     "description": "A section header in a dropdown list"
   },
   "developOptionDynamicRuleset": {
-    "message": "Dynamic ruleset",
+    "message": "Dinamik kural seti",
     "description": "An option in a dropdown list"
   },
   "developOptionSessionRuleset": {
-    "message": "Session ruleset",
+    "message": "Oturum kural seti",
     "description": "An option in a dropdown list"
   },
   "saveButton": {
@@ -336,7 +336,7 @@
     "description": "Text for buttons used to export content"
   },
   "dnrRulesWarning": {
-    "message": "Do not add content from untrusted sources",
+    "message": "Güvenilmeyen kaynaklardan içerik eklemeyin",
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {

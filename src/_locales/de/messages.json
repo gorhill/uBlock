@@ -308,7 +308,7 @@
     "description": "English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint": {
-    "message": "Klick, Strg-Klick",
+    "message": "Klick, Strg+Klick",
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
@@ -888,7 +888,7 @@
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportEncodePlain": {
-    "message": "Einfach",
+    "message": "Reiner Text",
     "description": "Label for radio-button to pick export text format"
   },
   "loggerExportEncodeMarkdown": {

@@ -1092,7 +1092,7 @@
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
-    "message": "Όλες οι ρυθμίσεις σας θα καταργηθούν και θα γίνει επανεκκίνηση του uBlock.\n\nΕπαναφορά του uBlock στις εργοστασιακές ρυθμίσεις;",
+    "message": "Όλες οι ρυθμίσεις σας θα καταργηθούν και θα γίνει επανεκκίνηση του uBlock₀.\n\nΕπαναφορά του uBlock₀ στις αρχικές ρυθμίσεις;",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
