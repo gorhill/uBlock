@@ -31,6 +31,11 @@ import { sendMessage } from './ext.js';
 export class ModeEditor {
     constructor(editor) {
         this.editor = editor;
+        this.bc = null;
+    }
+
+    on() {
+        if ( this.bc !== null ) { return; }
         this.bc = new self.BroadcastChannel('uBOL');
         this.bc.onmessage = ev => {
             const message = ev.data;
@@ -38,8 +43,14 @@ export class ModeEditor {
             if ( message.filteringModeDetails === undefined ) { return; }
             // TODO: merge with ongoing edits?
             const text = textFromModes(message.filteringModeDetails);
-            editor.setEditorText(text, true);
+            this.editor.setEditorText(text, true);
         };
+    }
+
+    off() {
+        if ( this.bc === null ) { return; }
+        this.bc.onmessage = null;
+        this.bc = null;
     }
 
     async getText() {
