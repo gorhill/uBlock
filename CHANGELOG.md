@@ -1,3 +1,4 @@
+- [Improve `remove-cookie` scriptlet](https://github.com/gorhill/uBlock/commit/0a8ea58bb7)
 - [Add `json-edit`-related scriptlets](https://github.com/gorhill/uBlock/commit/87e0434c90)
 - [Improve `trusted-set-cookie` scriptlet](https://github.com/gorhill/uBlock/commit/3a2bb62519)
 - [Force cache bypass reload when no-scripting switch is toggled](https://github.com/gorhill/uBlock/commit/4affe343dd)
