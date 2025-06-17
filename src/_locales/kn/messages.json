@@ -8,7 +8,7 @@
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
-    "message": "uBlock₀ - ಡ್ಯಾಶ್ಬೋರ್ಡ",
+    "message": "uBlock₀ - ಡ್ಯಾಶ್ಬೋರ್ಡು",
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
@@ -148,7 +148,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Click to block large media elements on this site",
+    "message": "ಈ ಸೈಟ್‌ಗಾಗಿ ದೊಡ್ಡ ಮಾಧ್ಯಮ ಅಂಶಗಳ ನಿರ್ಬಂಧಿಸುವಿಕೆಯನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲು ಕ್ಲಿಕ್ ಮಾಡಿ",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
@@ -160,11 +160,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Click to disable cosmetic filtering on this site",
+    "message": "ಈ ಸೈಟ್‌ನಲ್ಲಿ ಕಾಸ್ಮೆಟಿಕ್ ಫಿಲ್ಟರಿಂಗ್ ಅನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲು ಕ್ಲಿಕ್ ಮಾಡಿ.",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Click to enable cosmetic filtering on this site",
+    "message": "ಈ ಸೈಟ್‌ನಲ್ಲಿ ಕಾಸ್ಮೆಟಿಕ್ ಫಿಲ್ಟರಿಂಗ್ ಅನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲು ಕ್ಲಿಕ್ ಮಾಡಿ.",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -616,7 +616,7 @@
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
-    "message": "Rule type",
+    "message": "ನಿಯಮದ ಪ್ರಕಾರ",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortBySource": {
@@ -748,7 +748,7 @@
     "description": "Small header to identify the 'Details' pane for a specific logger entry"
   },
   "loggerEntryDetailsFilter": {
-    "message": "Filter",
+    "message": "ಫಿಲ್ಟರ್",
     "description": "Label to identify a filter field"
   },
   "loggerEntryDetailsFilterList": {
