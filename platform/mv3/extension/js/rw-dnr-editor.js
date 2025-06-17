@@ -95,7 +95,7 @@ export class ReadWriteDNREditor extends DNREditor {
             return {
                 before: /^$/,
                 candidates: [
-                    { token: 'action:', after: '\n  ' },
+                    { token: 'action:', after: '\n' },
                     { token: 'condition:', after: '\n  ' },
                     { token: 'priority:', after: ' ' },
                     { token: '---', after: '\n' },
@@ -382,20 +382,10 @@ export class ReadWriteDNREditor extends DNREditor {
         return true;
     }
 
-    sequenceScopes = [
-        'action:redirect:transform:queryTransform:addOrReplaceParams:',
-        'action:redirect:transform:queryTransform:removeParams:',
-        'condition:resourceTypes:',
-        'condition:excludedResourceTypes:',
-        'condition:initiatorDomains:',
-        'condition:excludedInitiatorDomains:',
-        'condition:requestDomains:',
-        'condition:excludedRequestDomains:',
-        'condition:requestMethods:',
-        'condition:excludedRequestMethods:',
-        'condition:responseHeaders:',
-        'condition:excludedResponseHeaders:',
-    ];
+    newlineAssistant = {
+        'action:': '  type: ',
+        'action:responseHeaders:header:': '      operation: ',
+    };
 
     ioAccept = '.json,application/json';
 };

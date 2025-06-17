@@ -375,9 +375,10 @@ class Editor {
         const text = lineFrom.text.trim();
         if ( text.startsWith('#') ) { return out; }
         const path = [];
-        const pos = text.indexOf(':');
-        if ( pos !== -1 ) {
-            path.push(text.slice(0, pos+1));
+        const end = text.indexOf(':');
+        if ( end !== -1 ) {
+            const beg = text.startsWith('- ') ? 2 : 0;
+            path.push(text.slice(beg, end+1));
         }
         let lineNo = lineFrom.number;
         while ( depth > 0 && lineNo > 1 ) {
@@ -432,38 +433,42 @@ class Editor {
 
     smartArrayItem(doc, from) {
         const line = doc.lineAt(from);
+        if ( line.from === 0 ) { return; }
         const blanks = /^ *$/.exec(line.text);
         if ( blanks === null ) { return; }
-        const lineNumberBefore = line.number - 1;
+        if ( this.editor.newlineAssistant ) {
+            const { scope } = this.getScopeAt(line.from-1, doc);
+            const insert = this.editor.newlineAssistant[scope];
+            if ( insert ) {
+                this.view.dispatch({
+                    changes: { from: line.from, to: line.to, insert },
+                    selection: { anchor: line.from + insert.length },
+                });
+                return true;
+            }
+        }
         let targetIndent;
         if ( this.lineIsArrayItem(doc, line.number-1) ) {
             targetIndent = doc.line(line.number-1).text.indexOf('- ');
         } else if ( this.lineIsArrayItem(doc, line.number+1) ) {
             targetIndent = doc.line(line.number+1).text.indexOf('- ');
-        } else if ( this.editor.sequenceScopes && lineNumberBefore !== 0 ) {
-            const lineBefore = doc.line(lineNumberBefore);
-            const { scope, depth } = this.getScopeAt(lineBefore.to, doc);
-            if ( this.editor.sequenceScopes.includes(scope) ) {
-                targetIndent = depth * 2;
-            }
         }
         if ( targetIndent === undefined ) { return; }
         const indent = targetIndent - blanks[0].length;
         if ( indent < 0 || indent > 2 ) { return; }
-        return `${' '.repeat(indent)}- `;
+        const insert = `${' '.repeat(indent)}- `;
+        this.view.dispatch({
+            changes: { from, insert },
+            selection: { anchor: from + insert.length },
+        });
+        return true;
     }
 
     smartReturn(transaction) {
         const { from, to } = this.rangeFromTransaction(transaction);
         if ( from === undefined || to === undefined ) { return; }
         const { newDoc } = transaction;
-        const insert = this.smartArrayItem(newDoc, to);
-        if ( Boolean(insert) === false ) { return; }
-        this.view.dispatch({
-            changes: { from: to, insert },
-            selection: { anchor: to + insert.length },
-        });
-        return true;
+        return this.smartArrayItem(newDoc, to);
     }
 
     smartSpacebar(transaction) {
@@ -475,10 +480,10 @@ class Editor {
         const localTo = to - line.from;
         const before = line.text.slice(0, localTo);
         if ( /^(?: {1}| {3})$/.test(before) === false ) { return; }
-        const insert = this.smartArrayItem(newDoc, to) || ' ';
+        if ( this.smartArrayItem(newDoc, to) ) { return true; }
         this.view.dispatch({
-            changes: { from: to, insert },
-            selection: { anchor: to + insert.length },
+            changes: { from: to, insert: ' ' },
+            selection: { anchor: to + 1 },
         });
         return true;
     }
