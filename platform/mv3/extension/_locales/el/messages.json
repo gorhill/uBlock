@@ -124,11 +124,11 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Βρείτε παρόμοιες αναφορές",
+    "message": "Βρείτε παρόμοιες αναφορές στο GitHub",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Διεύθυνση ιστοσελίδας:",
+    "message": "Διεύθυνση της ιστοσελίδας:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {

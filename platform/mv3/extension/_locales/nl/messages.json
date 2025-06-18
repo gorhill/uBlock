@@ -296,7 +296,7 @@
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "developDropdownLabel": {
-    "message": "Weergave:",
+    "message": "Weergeven:",
     "description": "A label of a dropdown list"
   },
   "developOptionFilteringModeDetails": {
