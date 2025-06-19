@@ -540,7 +540,7 @@
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pEnableMyFiltersLabel": {
-    "message": "Enable my custom filters",
+    "message": "Galluogi fy hidlyddion addasedig",
     "description": "Label for the checkbox use to enable/disable 'My filters' list"
   },
   "1pTrustMyFiltersLabel": {
@@ -548,7 +548,7 @@
     "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
-    "message": "Import and append…",
+    "message": "Mewnforio ac atodi...",
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
@@ -560,19 +560,19 @@
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges": {
-    "message": "Apply changes",
+    "message": "Rhoi'r newidiadau ar waith",
     "description": "English: Apply changes"
   },
   "rulesPermanentHeader": {
-    "message": "Permanent rules",
+    "message": "Rheolau parhaol",
     "description": "header"
   },
   "rulesTemporaryHeader": {
-    "message": "Temporary rules",
+    "message": "Rheolau dros dro",
     "description": "header"
   },
   "rulesRevert": {
-    "message": "Revert",
+    "message": "Gwrthdroi",
     "description": "This will remove all temporary rules"
   },
   "rulesCommit": {
@@ -592,7 +592,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Import from file…",
+    "message": "Mewnforio o ffeil...",
     "description": ""
   },
   "rulesExport": {
@@ -632,7 +632,7 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Import and append…",
+    "message": "Mewnforio ac atodi...",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
@@ -644,7 +644,7 @@
     "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
-    "message": "Apply changes",
+    "message": "Rhoi'r newidiadau ar waith",
     "description": "English: Apply changes"
   },
   "logRequestsHeaderType": {
@@ -780,7 +780,7 @@
     "description": "Label to identify the URL of an entry"
   },
   "loggerURLFilteringHeader": {
-    "message": "URL rule",
+    "message": "Rheol URL",
     "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
@@ -820,15 +820,15 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin": {
-    "message": "from anywhere",
+    "message": "o unrhyw le",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant": {
-    "message": "except when",
+    "message": "ac eithrio pan",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartImportant": {
-    "message": "even if",
+    "message": "hyd yn oed os",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
@@ -948,7 +948,7 @@
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting Information",
+    "message": "Gwybodaeth datrys problemau",
     "description": "Header of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P1": {
@@ -1016,7 +1016,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Label the web page as “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "Rhoi label “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>) ar y dudalen we",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
@@ -1056,7 +1056,7 @@
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "External dependencies (GPLv3-compatible):",
+    "message": "Gofynion allanol (cydnaws â GPLv3):",
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
@@ -1068,7 +1068,7 @@
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "Back up to file…",
+    "message": "Copïo wrth gefn i ffeil...",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
@@ -1076,11 +1076,11 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Restore from file…",
+    "message": "Adfer o ffeil...",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Reset to default settings…",
+    "message": "Ailosod y gosodiadau i'r rhagosodiad...",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
@@ -1096,7 +1096,7 @@
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
-    "message": "Network error: {{msg}}",
+    "message": "Gwall rhwydwaith: {{msg}}",
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
@@ -1148,7 +1148,7 @@
     "description": "Used as a title for the document-blocked page"
   },
   "docblockedPrompt1": {
-    "message": "uBlock Origin has prevented the following page from loading:",
+    "message": "Mae uBlock Origin wedi atal y dudalen ganlynol rhag llwytho:",
     "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
@@ -1156,7 +1156,7 @@
     "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
-    "message": "without parameters",
+    "message": "heb baramedrau",
     "description": "label to be used for the parameter-less URL: https://cloud.githubusercontent.com/assets/585534/9832014/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {
@@ -1172,7 +1172,7 @@
     "description": "English: Close this window"
   },
   "docblockedDontWarn": {
-    "message": "Don't warn me again about this site",
+    "message": "Peidio â'm rhybuddio eto am y wefan hon",
     "description": "Label for checkbox in document-blocked page"
   },
   "docblockedProceed": {
@@ -1296,7 +1296,7 @@
     "description": "short for 'gigabytes'"
   },
   "clickToLoad": {
-    "message": "Click to load",
+    "message": "Clicio i lwytho",
     "description": "Message used in frame placeholders"
   },
   "linterMainReport": {
