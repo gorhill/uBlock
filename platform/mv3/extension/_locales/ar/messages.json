@@ -304,19 +304,19 @@
     "description": "An option in a dropdown list"
   },
   "developOptionCustomDnrRules": {
-    "message": "Custom DNR rules",
+    "message": "قواعد DNR مخصصة",
     "description": "An option in a dropdown list"
   },
   "developOptionDnrRulesOf": {
-    "message": "DNR rules of …",
+    "message": "قواعد DNR لـ …",
     "description": "A section header in a dropdown list"
   },
   "developOptionDynamicRuleset": {
-    "message": "Dynamic ruleset",
+    "message": "مجموعة قواعد متغيرة",
     "description": "An option in a dropdown list"
   },
   "developOptionSessionRuleset": {
-    "message": "Session ruleset",
+    "message": "مجموعة قواعد جَلسة",
     "description": "An option in a dropdown list"
   },
   "saveButton": {
@@ -336,7 +336,7 @@
     "description": "Text for buttons used to export content"
   },
   "dnrRulesWarning": {
-    "message": "Do not add content from untrusted sources",
+    "message": "لا تضف محتوى من مصادر غير موثوقة",
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
