@@ -76,6 +76,9 @@ registerScriptlet(editOutboundObjectFn, {
  * Prune properties from an object returned by a specific method.
  * Properties can only be removed.
  * 
+ * @param propChain
+ * Property chain of the method to trap.
+ * 
  * @param jsonq
  * A uBO-flavored JSONPath query.
  * 
@@ -96,10 +99,13 @@ registerScriptlet(editOutboundObject, {
  * @scriptlet trusted-edit-outbound-object.js
  * 
  * @description
- * Edit properties from an object returned by a specific method.
+ * Edit properties of an object returned by a specific method.
  * Properties can be assigned new values.
  * 
- * @param jsonq
+  * @param propChain
+ * Property chain of the method to trap.
+ * 
+* @param jsonq
  * A uBO-flavored JSONPath query.
  * 
  * */
@@ -160,6 +166,131 @@ registerScriptlet(trustedJsonEdit, {
     requiresTrust: true,
     dependencies: [
         editOutboundObjectFn,
+    ],
+});
+
+/******************************************************************************/
+/******************************************************************************/
+
+function editInboundObjectFn(
+    trusted = false,
+    propChain = '',
+    argPosRaw = '',
+    jsonq = '',
+) {
+    if ( propChain === '' ) { return; }
+    const safe = safeSelf();
+    const logPrefix = safe.makeLogPrefix(
+        `${trusted ? 'trusted-' : ''}edit-inbound-object`,
+        propChain,
+        jsonq
+    );
+    const jsonp = JSONPath.create(jsonq);
+    if ( jsonp.valid === false || jsonp.value !== undefined && trusted !== true ) {
+        return safe.uboLog(logPrefix, 'Bad JSONPath query');
+    }
+    const argPos = parseInt(argPosRaw, 10);
+    if ( isNaN(argPos) ) { return; }
+    const getArgPos = args => {
+        if ( argPos >= 0 ) {
+            if ( args.length <= argPos ) { return; }
+            return argPos;
+        }
+        if ( args.length < -argPos ) { return; }
+        return args.length + argPos;
+    };
+    const editObj = obj => {
+        let clone;
+        try {
+            clone = safe.JSON_parse(safe.JSON_stringify(obj));
+        } catch {
+        }
+        if ( typeof clone !== 'object' || clone === null ) { return; }
+        if ( jsonp.apply(clone) === 0 ) { return; }
+        safe.uboLog(logPrefix, 'Edited');
+        if ( safe.logLevel > 1 ) {
+            safe.uboLog(logPrefix, `After edit:\n${safe.JSON_stringify(clone, null, 2)}`);
+        }
+        return clone;
+    };
+    proxyApplyFn(propChain, function(context) {
+        const i = getArgPos(context.args);
+        if ( i !== undefined ) {
+            const obj = editObj(context.args[i]);
+            if ( obj ) {
+                context.args[i] = obj;
+            }
+        }
+        return context.reflect();
+    });
+}
+registerScriptlet(editInboundObjectFn, {
+    name: 'edit-inbound-object.fn',
+    dependencies: [
+        JSONPath,
+        proxyApplyFn,
+        safeSelf,
+    ],
+});
+
+/******************************************************************************/
+/**
+ * @scriptlet edit-inbound-object.js
+ * 
+ * @description
+ * Prune properties from an object passed as argument to a specific method.
+ * Properties can only be removed.
+ * 
+ * @param propChain
+ * Property chain of the method to trap.
+ * 
+ * @param argPos
+ * 0-based position of the argument. Use negative integer for position relative
+ * to the end.
+ * 
+ * @param jsonq
+ * A uBO-flavored JSONPath query.
+ * 
+ * */
+
+function editInboundObject(propChain = '', argPos = '', jsonq = '') {
+    editInboundObjectFn(false, propChain, argPos, jsonq);
+}
+registerScriptlet(editInboundObject, {
+    name: 'edit-inbound-object.js',
+    dependencies: [
+        editInboundObjectFn,
+    ],
+});
+
+/******************************************************************************/
+/**
+ * @scriptlet trusted-edit-inbound-object.js
+ * 
+ * @description
+ * Edit properties of an object passed as argument to a specific method.
+ * Properties can be assigned new values.
+ * 
+ * @param propChain
+ * Property chain of the method to trap.
+ * 
+ * @param argPos
+ * 0-based position of the argument. Use negative integer for position relative
+ * to the end.
+ * 
+ * @param jsonq
+ * A uBO-flavored JSONPath query.
+ * 
+ * */
+
+function trustedEditInboundObject(propChain = '', argPos = '', jsonq = '') {
+    editInboundObjectFn(true, propChain, argPos, jsonq);
+}
+registerScriptlet(trustedEditInboundObject, {
+    name: 'trusted-edit-inbound-object.js',
+    requiresTrust: true,
+    dependencies: [
+        editInboundObjectFn,
     ],
 });
 
