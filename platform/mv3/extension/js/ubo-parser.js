@@ -93,7 +93,7 @@ function parseHostnameList(iter) {
 
 /******************************************************************************/
 
-function mergeIncludeExclude(rules) {
+export function mergeIncludeExclude(rules) {
     const includeExcludes = [
         { includeName: 'requestDomains', excludeName: 'excludedRequestDomains' },
         { includeName: 'initiatorDomains', excludeName: 'excludedInitiatorDomains' },
@@ -104,7 +104,7 @@ function mergeIncludeExclude(rules) {
         const out = [];
         const distinctRules = new Map();
         for ( const rule of rules ) {
-            const { condition } = rule;
+            const { id, condition } = rule;
             if ( Boolean(condition[includeName]?.length) === false ) {
                 if ( Boolean(condition[excludeName]?.length) === false ) {
                     out.push(rule);
@@ -115,9 +115,10 @@ function mergeIncludeExclude(rules) {
             condition[includeName] = undefined;
             const excluded = condition[excludeName] || [];
             condition[excludeName] = undefined;
+            rule.id = undefined;
             const hash = JSON.stringify(rule);
             const details = distinctRules.get(hash) ||
-                { included: new Set(), excluded: new Set() };
+                { id, included: new Set(), excluded: new Set() };
             if ( details.included.size === 0 && details.excluded.size === 0 ) {
                 distinctRules.set(hash, details);
             }
@@ -129,13 +130,16 @@ function mergeIncludeExclude(rules) {
                 details.excluded.add(hn);
             }
         }
-        for ( const [ hash, details ] of distinctRules ) {
+        for ( const [ hash, { id, included, excluded } ] of distinctRules ) {
             const rule = JSON.parse(hash);
-            if ( details.included.size !== 0 ) {
-                rule.condition[includeName] = Array.from(details.included);
+            if ( id ) {
+                rule.id = id;
             }
-            if ( details.excluded.size !== 0 ) {
-                rule.condition[excludeName] = Array.from(details.excluded);
+            if ( included.size !== 0 ) {
+                rule.condition[includeName] = Array.from(included);
+            }
+            if ( excluded.size !== 0 ) {
+                rule.condition[excludeName] = Array.from(excluded);
             }
             out.push(rule);
         }
@@ -161,7 +165,7 @@ function parseNetworkFilter(parser) {
     let pattern = parser.getNetPattern();
     if ( parser.isHostnamePattern() ) {
         rule.condition.requestDomains = [ pattern ];
-    } else if ( parser.isGenericPattern() ) {
+    } else if ( parser.isPlainPattern() || parser.isGenericPattern() ) {
         if ( parser.isLeftHnAnchored() ) {
             pattern = `||${pattern}`;
         } else if ( parser.isLeftAnchored() ) {
@@ -203,7 +207,7 @@ function parseNetworkFilter(parser) {
     for ( const type of parser.getNodeTypes() ) {
         switch ( type ) {
         case sfp.NODE_TYPE_NET_OPTION_NAME_1P:
-            rule.domainType = parser.isNegatedOption(type)
+            rule.condition.domainType = parser.isNegatedOption(type)
                 ? 'thirdParty'
                 : 'firstParty';
             break;
