@@ -21,9 +21,6 @@
 
 import { dom, qs$, qsa$ } from './dom.js';
 import { localRead, localWrite, sendMessage } from './ext.js';
-import { ModeEditor } from './mode-editor.js';
-import { ReadOnlyDNREditor } from './ro-dnr-editor.js';
-import { ReadWriteDNREditor } from './rw-dnr-editor.js';
 import { faIconsInit } from './fa-icons.js';
 import { i18n } from './i18n.js';
 
@@ -39,14 +36,21 @@ class Editor {
         this.ioPanel = self.cm6.createViewPanel();
         this.summaryPanel = self.cm6.createViewPanel();
         this.panels = [];
+        this.editors = {};
     }
 
     async init() {
-        this.editors = {
-             'modes': new ModeEditor(this),
-            'dnr.rw': new ReadWriteDNREditor(this),
-            'dnr.ro': new ReadOnlyDNREditor(this),
-        };
+        await Promise.all([
+            import('./mode-editor.js').then(module => {
+                this.editors['modes'] = new module.ModeEditor(this);
+            }),
+            import('./ro-dnr-editor.js').then(module => {
+                this.editors['dnr.ro'] = new module.ReadOnlyDNREditor(this);
+            }),
+            import('./rw-dnr-editor.js').then(module => {
+                this.editors['dnr.rw'] = new module.ReadWriteDNREditor(this);
+            }),
+        ]);
         const rulesetDetails = await sendMessage({ what: 'getRulesetDetails' });
         const parent = qs$('#editors optgroup');
         for ( const details of rulesetDetails ) {

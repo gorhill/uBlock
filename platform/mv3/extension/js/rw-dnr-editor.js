@@ -29,6 +29,7 @@ import {
 import { dom, qs$ } from './dom.js';
 import { i18n, i18n$ } from './i18n.js';
 import { DNREditor } from './dnr-editor.js';
+import { parseFilters } from './ubo-parser.js';
 import { textFromRules } from './dnr-parser.js';
 
 /******************************************************************************/
@@ -368,15 +369,28 @@ export class ReadWriteDNREditor extends DNREditor {
         const lineFrom = newDoc.lineAt(from);
         if ( lineFrom.from !== from ) { return; }
         // Paste position must match a rule boundary
+        let separatorBefore = false;
         if ( lineFrom.number !== 1 ) {
             const lineBefore = newDoc.line(lineFrom.number-1);
             if ( /^---\s*$/.test(lineBefore.text) === false ) { return; }
+            separatorBefore = true;
         }
         const pastedText = newDoc.sliceString(from, to);
-        const rules = this.rulesFromJSON(pastedText);
-        if ( rules === undefined ) { return; }
-        const yamlText = textFromRules(rules);
+        let prepend;
+        let rules = this.rulesFromJSON(pastedText);
+        if ( Boolean(rules?.length) === false ) {
+            rules = parseFilters(pastedText);
+            if ( Boolean(rules?.length) === false ) { return; }
+            prepend = pastedText.trim().split(/\n/).map(a => `# ${a}`).join('\n');
+        }
+        let yamlText = textFromRules(rules);
         if ( yamlText === undefined ) { return; }
+        if ( prepend ) {
+            yamlText = yamlText.replace('---\n', `---\n${prepend}\n`);
+        }
+        if ( separatorBefore && yamlText.startsWith('---\n') ) {
+            yamlText = yamlText.slice(4);
+        }
         editor.view.dispatch({ changes: { from, to, insert: yamlText } });
         self.cm6.foldAll(editor.view);
         return true;
