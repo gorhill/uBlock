@@ -73,9 +73,10 @@ const fromNetFilter = function(details) {
                 continue;
             }
             lists.push({
-                assetKey: assetKey,
+                assetKey,
                 title: entry.title,
-                supportURL: entry.supportURL
+                supportURL: entry.supportURL,
+                reason: entry.reason,
             });
             break;
         }

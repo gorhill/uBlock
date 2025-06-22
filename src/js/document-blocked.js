@@ -21,57 +21,19 @@
 
 import { dom, qs$ } from './dom.js';
 import { i18n, i18n$ } from './i18n.js';
+import { faIconsInit } from './fa-icons.js';
 
 /******************************************************************************/
 
 const messaging = vAPI.messaging;
-let details = {};
+const details = {};
 
 {
     const matches = /details=([^&]+)/.exec(window.location.search);
     if ( matches !== null ) {
-        details = JSON.parse(decodeURIComponent(matches[1]));
+        Object.assign(details, JSON.parse(decodeURIComponent(matches[1])));
     }
 }
-
-/******************************************************************************/
-
-(async ( ) => {
-    const response = await messaging.send('documentBlocked', {
-        what: 'listsFromNetFilter',
-        rawFilter: details.fs,
-    });
-    if ( response instanceof Object === false ) { return; }
-
-    let lists;
-    for ( const rawFilter in response ) {
-        if ( Object.hasOwn(response, rawFilter) ) {
-            lists = response[rawFilter];
-            break;
-        }
-    }
-
-    if ( Array.isArray(lists) === false || lists.length === 0 ) {
-        qs$('#whyex').style.setProperty('visibility', 'collapse');
-        return;
-    }
-
-    const parent = qs$('#whyex > ul');
-    parent.firstElementChild.remove(); // remove placeholder element
-    for ( const list of lists ) {
-        const listElem = dom.clone('#templates .filterList');
-        const sourceElem = qs$(listElem, '.filterListSource');
-        sourceElem.href += encodeURIComponent(list.assetKey);
-        sourceElem.append(i18n.patchUnicodeFlags(list.title));
-        if ( typeof list.supportURL === 'string' && list.supportURL !== '' ) {
-            const supportElem = qs$(listElem, '.filterListSupport');
-            dom.attr(supportElem, 'href', list.supportURL);
-            dom.cl.remove(supportElem, 'hidden');
-        }
-        parent.appendChild(listElem);
-    }
-    qs$('#whyex').style.removeProperty('visibility');
-})();
 
 /******************************************************************************/
 
@@ -94,7 +56,26 @@ const urlToFragment = raw => {
 
 dom.clear('#theURL > p > span:first-of-type');
 qs$('#theURL > p > span:first-of-type').append(urlToFragment(details.url));
-dom.text('#why', details.fs);
+
+/******************************************************************************/
+
+const lookupFilterLists = async ( ) => {
+    const response = await messaging.send('documentBlocked', {
+        what: 'listsFromNetFilter',
+        rawFilter: details.fs,
+    });
+    if ( response instanceof Object === false ) { return; }
+    let lists;
+    for ( const rawFilter in response ) {
+        if ( Object.hasOwn(response, rawFilter) ) {
+            lists = response[rawFilter];
+            break;
+        }
+    }
+    return lists;
+};
+
+/******************************************************************************/
 
 if ( typeof details.to === 'string' && details.to.length !== 0 ) {
     const fragment = new DocumentFragment();
@@ -221,10 +202,6 @@ if ( window.history.length > 1 ) {
 
 /******************************************************************************/
 
-const getTargetHostname = function() {
-    return details.hn;
-};
-
 const proceedToURL = function() {
     window.location.replace(details.url);
 };
@@ -232,7 +209,7 @@ const proceedToURL = function() {
 const proceedTemporary = async function() {
     await messaging.send('documentBlocked', {
         what: 'temporarilyWhitelistDocument',
-        hostname: getTargetHostname(),
+        hostname: details.hn,
     });
     proceedToURL();
 };
@@ -241,7 +218,7 @@ const proceedPermanent = async function() {
     await messaging.send('documentBlocked', {
         what: 'toggleHostnameSwitch',
         name: 'no-strict-blocking',
-        hostname: getTargetHostname(),
+        hostname: details.hn,
         deep: true,
         state: true,
         persist: true,
@@ -261,6 +238,51 @@ dom.on('#proceed', 'click', ( ) => {
     } else {
         proceedTemporary();
     }
+});
+
+lookupFilterLists().then((lists = []) => {
+    let reason = details.reason;
+    if ( Boolean(reason) === false ) {
+        reason = lists.reduce((a, b) => a || b.reason, undefined);
+    }
+    if ( reason ) {
+        const msg = i18n$(`docblockedReason${reason.charAt(0).toUpperCase()}${reason.slice(1)}`);
+        if ( msg ) { reason = msg };
+    }
+    const why = qs$(reason ? 'template.why-reason' : 'template.why')
+        .content
+        .cloneNode(true);
+    i18n.render(why);
+    dom.text(qs$(why, '.why'), details.fs);
+    if ( reason ) {
+        dom.text(qs$(why, 'summary'), `Reason: ${reason}`);
+    }
+    qs$('#why').append(why);
+    dom.cl.remove(dom.body, 'loading');
+
+    if ( lists.length === 0 ) { return; }
+
+    const whyExtra = qs$('template.why-extra').content.cloneNode(true);
+    i18n.render(whyExtra);
+
+    const listTemplate = qs$('template.filterList');
+    const parent = qs$(whyExtra, '.why-extra');
+    let separator = '';
+    for ( const list of lists ) {
+        const listElem = listTemplate.content.cloneNode(true);
+        const sourceElem = qs$(listElem, '.filterListSource');
+        sourceElem.href += encodeURIComponent(list.assetKey);
+        sourceElem.append(i18n.patchUnicodeFlags(list.title));
+        if ( typeof list.supportURL === 'string' && list.supportURL !== '' ) {
+            const supportElem = qs$(listElem, '.filterListSupport');
+            dom.attr(supportElem, 'href', list.supportURL);
+            dom.cl.remove(supportElem, 'hidden');
+        }
+        parent.append(separator, listElem);
+        separator = '\u00A0\u2022\u00A0';
+    }
+    faIconsInit(whyExtra);
+    qs$('#why .why').after(whyExtra);
 });
 
 /******************************************************************************/

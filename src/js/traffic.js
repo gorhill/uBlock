@@ -224,17 +224,20 @@ const onBeforeRootFrameRequest = function(fctxt) {
     // Find out the URL navigated to should the document not be strict-blocked
     pageStore.skipMainDocument(fctxt, false);
 
-    const query = encodeURIComponent(JSON.stringify({
+    const query = {
         url: requestURL,
         dn: fctxt.getDomain() || requestHostname,
         fs: logData.raw,
         hn: requestHostname,
         to: fctxt.redirectURL || '',
-    }));
+    };
+    if ( logData.reason ) {
+        query.reason = logData.reason;
+    }
 
     vAPI.tabs.replace(
         fctxt.tabId,
-        vAPI.getURL('document-blocked.html?details=') + query
+        `${vAPI.getURL('document-blocked.html?details=')}${encodeURIComponent(JSON.stringify(query))}`
     );
 
     return { cancel: true };

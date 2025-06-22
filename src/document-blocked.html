@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="css/document-blocked.css">
 <link rel="icon" type="image/png" href="img/icon_64.png">
 </head>
-<body>
+<body class="loading">
 <div id="rootContainer">
     <div id="warningSign">
         <a class="fa-icon" href="https://github.com/gorhill/uBlock/wiki/Strict-blocking" target="_blank" rel="noopener noreferrer">exclamation-triangle</a>
@@ -25,14 +25,7 @@
         </div>
     </div>
 
-    <div>
-        <p data-i18n="docblockedPrompt2">_</p>
-        <p id="why" class="code">&nbsp;</p>
-        <div id="whyex" style="visibility: hidden;">
-            <span data-i18n="docblockedFoundIn">_</span>
-            <ul><li class="filterList">&nbsp;</ul>
-        </div>
-    </div>
+    <div id="why"></div>
 
     <div id="urlskip" hidden>
     </div>
@@ -47,14 +40,28 @@
         <button id="proceed" class="preferred" data-i18n="docblockedDisable" type="button"><span class="hover"></span></button>
     </div>
 </div>
-<div id="templates" style="display: none;">
-    <ul>
-    <li class="filterList">
-        <a class="filterListSource" href="asset-viewer.html?url=" target="_blank"></a>&nbsp;<!--
+
+<template class="why">
+    <p data-i18n="docblockedPrompt2">_</p>
+    <p class="why code">&nbsp;</p>
+</template>
+<template class="why-reason">
+    <details><summary><span data-i18n="docBlockedReasonLabel"></span> <span></span></summary>
+    <p data-i18n="docblockedPrompt2">_</p>
+    <p class="why code">&nbsp;</p>
+    </details>
+</template>
+<template class="why-extra">
+    <div class="why-extra">
+        <span data-i18n="docblockedFoundIn">_</span>&nbsp;
+    </div>
+</template>
+<template class="filterList">
+    <span class="filterList">
+        <a class="filterListSource" href="asset-viewer.html?url=" target="_blank"></a><!--
      --><a class="fa-icon filterListSupport hidden" href="#" target="_blank" rel="noopener noreferrer">home</a>
-    </li>
-    </ul>
-</div>
+    </span>
+</template>
 
 <script src="lib/hsluv/hsluv-0.1.0.min.js"></script>
 

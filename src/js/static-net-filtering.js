@@ -411,6 +411,9 @@ class LogData {
         }
         this.raw = raw;
         this.regex = logData.regex.join('');
+        if ( logData.reason ) {
+            this.reason = logData.reason;
+        }
     }
     isUntokenized() {
         return this.tokenHash === NO_TOKEN_HASH;
@@ -3113,7 +3116,7 @@ class FilterMessage {
     static compile(details) {
         return [
             FilterMessage.fid,
-            encodeURIComponent(details.optionValues.get('message')),
+            encodeURIComponent(details.optionValues.get('reason')),
         ];
     }
 
@@ -3127,11 +3130,11 @@ class FilterMessage {
     }
 
     static logData(idata, details) {
-        const msg = bidiTrie.extractString(
-                filterData[idata+1],
-                filterData[idata+2]
+        const reason = decodeURIComponent(
+            bidiTrie.extractString(filterData[idata+1], filterData[idata+2])
         );
-        details.options.push(`message=${decodeURIComponent(msg)}`);
+        details.reason = reason;
+        details.options.push(`reason=${reason}`);
     }
 }
 
@@ -3612,10 +3615,6 @@ class FilterCompiler {
             this.optionValues.set('ipaddress', parser.getNetOptionValue(id) || '');
             this.optionUnitBits |= IPADDRESS_BIT;
             break;
-        case sfp.NODE_TYPE_NET_OPTION_NAME_MESSAGE:
-            this.optionValues.set('message', parser.getNetOptionValue(id));
-            this.optionUnitBits |= MESSAGE_BIT;
-            break;
         case sfp.NODE_TYPE_NET_OPTION_NAME_METHOD:
             this.processMethodOption(parser.getNetOptionValue(id));
             this.optionUnitBits |= METHOD_BIT;
@@ -3630,6 +3629,10 @@ class FilterCompiler {
                 return false;
             }
             this.optionUnitBits |= MODIFY_BIT;
+            break;
+        case sfp.NODE_TYPE_NET_OPTION_NAME_REASON:
+            this.optionValues.set('reason', parser.getNetOptionValue(id));
+            this.optionUnitBits |= MESSAGE_BIT;
             break;
         case sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECT: {
             const actualId = this.action === ALLOW_REALM
@@ -3737,9 +3740,9 @@ class FilterCompiler {
             case sfp.NODE_TYPE_NET_OPTION_NAME_FROM:
             case sfp.NODE_TYPE_NET_OPTION_NAME_HEADER:
             case sfp.NODE_TYPE_NET_OPTION_NAME_IPADDRESS:
-            case sfp.NODE_TYPE_NET_OPTION_NAME_MESSAGE:
             case sfp.NODE_TYPE_NET_OPTION_NAME_METHOD:
             case sfp.NODE_TYPE_NET_OPTION_NAME_PERMISSIONS:
+            case sfp.NODE_TYPE_NET_OPTION_NAME_REASON:
             case sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECT:
             case sfp.NODE_TYPE_NET_OPTION_NAME_REDIRECTRULE:
             case sfp.NODE_TYPE_NET_OPTION_NAME_REMOVEPARAM:
