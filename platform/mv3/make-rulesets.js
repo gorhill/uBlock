@@ -1413,6 +1413,7 @@ async function main() {
     );
 
     for ( const ruleset of rulesets ) {
+        if ( ruleset.excludedPlatforms?.includes(platform) ) { continue; }
         await rulesetFromURLs(ruleset);
     }
 

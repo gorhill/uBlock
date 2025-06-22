@@ -60,6 +60,7 @@
     "name": "Malicious URL Blocklist",
     "group": "malware",
     "enabled": true,
+    "excludedPlatforms": [ "safari" ],
     "urls": [
       "https://malware-filter.gitlab.io/malware-filter/urlhaus-filter-hosts.txt"
     ],
@@ -90,6 +91,7 @@
     "id": "dpollock-0",
     "name": "Dan Pollock’s hosts file",
     "enabled": false,
+    "excludedPlatforms": [ "safari" ],
     "urls": [
       "https://someonewhocares.org/hosts/hosts"
     ],
@@ -161,6 +163,7 @@
     "id": "stevenblack-hosts",
     "name": "Steven Black’s Unified Hosts (adware + malware)",
     "enabled": false,
+    "excludedPlatforms": [ "safari" ],
     "urls": [
       "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
     ],
