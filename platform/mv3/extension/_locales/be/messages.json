@@ -244,7 +244,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Enables access to features suitable for technical users.",
+    "message": "Забяспечвае доступ да функцый, прыдатным для тэхнічных карыстальнікаў.",
     "description": "Short description for a checkbox in the options page"
   },
   "findListsPlaceholder": {
@@ -296,27 +296,27 @@
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "developDropdownLabel": {
-    "message": "View:",
+    "message": "Выгляд",
     "description": "A label of a dropdown list"
   },
   "developOptionFilteringModeDetails": {
-    "message": "Filtering mode details",
+    "message": "Падрабязныя звесткі аб рэжыме фільтрацыі",
     "description": "An option in a dropdown list"
   },
   "developOptionCustomDnrRules": {
-    "message": "Custom DNR rules",
+    "message": "Кастомныя правілы DNR",
     "description": "An option in a dropdown list"
   },
   "developOptionDnrRulesOf": {
-    "message": "DNR rules of …",
+    "message": "Правілы у DNR",
     "description": "A section header in a dropdown list"
   },
   "developOptionDynamicRuleset": {
-    "message": "Dynamic ruleset",
+    "message": "Дынамічны набор правілаў",
     "description": "An option in a dropdown list"
   },
   "developOptionSessionRuleset": {
-    "message": "Session ruleset",
+    "message": "Набор правілаў сеансу",
     "description": "An option in a dropdown list"
   },
   "saveButton": {
@@ -336,11 +336,11 @@
     "description": "Text for buttons used to export content"
   },
   "dnrRulesWarning": {
-    "message": "Do not add content from untrusted sources",
+    "message": "Не дадавайце кантэнт з ненадзейных крыніц",
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {
-    "message": "Number of registered rules: {count}",
+    "message": "Колькасць зарэгістраваных правілаў: {count}",
     "description": "Short sentence to report the number of currently registered DNR rules"
   }
 }
