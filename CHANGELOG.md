@@ -1,3 +1,4 @@
+- [Fix broken reverse lookup of filter lists](https://github.com/gorhill/uBlock/commit/527b4a201f)
 - [Add `[trusted-]edit-inbound-object` scriptlets](https://github.com/gorhill/uBlock/commit/6e466cf945)
 - [Improve `remove-cookie` scriptlet](https://github.com/gorhill/uBlock/commit/0a8ea58bb7)
 - [Add `json-edit`-related scriptlets](https://github.com/gorhill/uBlock/commit/87e0434c90)
@@ -5,6 +6,7 @@
 - [Force cache bypass reload when no-scripting switch is toggled](https://github.com/gorhill/uBlock/commit/4affe343dd)
 - [Improve `jsonl[...]` suite of scriptlets](https://github.com/gorhill/uBlock/commit/ed9999efd6)
 - [Add support for network filter option `message`](https://github.com/gorhill/uBlock/commit/d8298bb067)
+    - [Complete support for reporing strict-block messages](https://github.com/gorhill/uBlock/commit/253ef7ade3)
 - [Make `header=` syntax compatible with DNR rules](https://github.com/gorhill/uBlock/commit/408b538e75)
 - [Counter CodeMirror's `pointer-events: none` on scrollbars](https://github.com/gorhill/uBlock/commit/c44f043ed3)
 - [Fix element picker issue with explicit dark theme](https://github.com/gorhill/uBlock/commit/0130fdf4a1)
