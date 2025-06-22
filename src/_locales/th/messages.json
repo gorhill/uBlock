@@ -1195,6 +1195,22 @@
     "message": "เว็บเพจที่บล๊อกต้องการเด้งไปเว็บไซต์อื่น หากคุณต้องการดำเนินการต่อ คุณจะถูกนำทางโดยตรงไปที่: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
+  "docblockedReasonLabel": {
+    "message": "Reason:",
+    "description": "The label which prepend the actual reason why a page was blocked"
+  },
+  "docblockedReasonMalicious": {
+    "message": "Malicious",
+    "description": "An actual reason why a page was blocked"
+  },
+  "docblockedReasonTracker": {
+    "message": "Tracker",
+    "description": "An actual reason why a page was blocked"
+  },
+  "docblockedReasonDisreputable": {
+    "message": "Disreputable",
+    "description": "An actual reason why a page was blocked"
+  },
   "cloudPush": {
     "message": "ส่งออกไปที่เก็บบนคลาวด์",
     "description": "tooltip"

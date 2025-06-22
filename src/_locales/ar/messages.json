@@ -1195,6 +1195,22 @@
     "message": "الصفحة المحظورة تريد إعادة توجيهك إلى موقع آخر. إذا اخترت المتابعة، فسوف تنتقل مباشرة إلى: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
+  "docblockedReasonLabel": {
+    "message": "Reason:",
+    "description": "The label which prepend the actual reason why a page was blocked"
+  },
+  "docblockedReasonMalicious": {
+    "message": "Malicious",
+    "description": "An actual reason why a page was blocked"
+  },
+  "docblockedReasonTracker": {
+    "message": "Tracker",
+    "description": "An actual reason why a page was blocked"
+  },
+  "docblockedReasonDisreputable": {
+    "message": "Disreputable",
+    "description": "An actual reason why a page was blocked"
+  },
   "cloudPush": {
     "message": "التصدير إلى سحابة التخزين",
     "description": "tooltip"

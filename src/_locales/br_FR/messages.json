@@ -1195,6 +1195,22 @@
     "message": "Ar bajenn stanket a fell dezhi adkas d'ul lec'hienn all. M'ho peus c'hoant da genderc'hel e vioc'h kaset d'ar chomlec'h-mañ: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
+  "docblockedReasonLabel": {
+    "message": "Reason:",
+    "description": "The label which prepend the actual reason why a page was blocked"
+  },
+  "docblockedReasonMalicious": {
+    "message": "Malicious",
+    "description": "An actual reason why a page was blocked"
+  },
+  "docblockedReasonTracker": {
+    "message": "Tracker",
+    "description": "An actual reason why a page was blocked"
+  },
+  "docblockedReasonDisreputable": {
+    "message": "Disreputable",
+    "description": "An actual reason why a page was blocked"
+  },
   "cloudPush": {
     "message": "Ezporzhiañ etrezek stokañ ar goumoulenn (cloud)",
     "description": "tooltip"
