@@ -76,12 +76,16 @@ export class ModeEditor {
         }
     }
 
-    sequenceScopes = [
-        `${i18n$('filteringMode0Name')}:`, 'none:',
-        `${i18n$('filteringMode1Name')}:`, 'basic:',
-        `${i18n$('filteringMode2Name')}:`, 'optimal:',
-        `${i18n$('filteringMode3Name')}:`, 'complete:',
-    ];
+    newlineAssistant = {
+        'no filtering:': '  - ',
+        'basic:': '  - ',
+        'optimal:': '  - ',
+        'complete:': '  - ',
+        [`${i18n$('filteringMode0Name')}:`]: '  - ',
+        [`${i18n$('filteringMode1Name')}:`]: '  - ',
+        [`${i18n$('filteringMode2Name')}:`]: '  - ',
+        [`${i18n$('filteringMode3Name')}:`]: '  - ',
+    };
 
     ioAccept = '.json,application/json';
 };
