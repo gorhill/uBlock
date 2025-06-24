@@ -557,9 +557,9 @@ class Editor {
         },
         token: (stream, state) => {
             if ( stream.sol() ) {
-                if ( stream.match(/^---\s*$/) ) { return 'meta'; }
-                if ( stream.match(/^# ---\s*$/) ) { return 'meta comment'; }
-                if ( stream.match(/\.\.\.\s*$/) ) { return 'meta'; }
+                if ( stream.match(/^---\s*$/) ) { return 'yamlboundary'; }
+                if ( stream.match(/^# ---\s*$/) ) { return 'yamlboundary comment'; }
+                if ( stream.match(/\.\.\.\s*$/) ) { return 'yamlboundary'; }
             }
             const c = stream.peek();
             if ( c === '#' ) {
@@ -597,6 +597,9 @@ class Editor {
         languageData: {
             commentTokens: { line: '#' },
         },
+        tokenTable: [
+            'yamlboundary',
+        ],
     };
 }
 

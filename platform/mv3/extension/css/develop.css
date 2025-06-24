@@ -31,8 +31,7 @@ section[data-pane="develop"] > div > * {
     height: 100%;
     }
 
-#cm-container .cm-editor .cm-line:has(.ͼ5),
-#cm-container .cm-editor .cm-line:has(.ͼw) {
+#cm-container .cm-editor .cm-line:has(.yamlboundary) {
     background-image: url('line-hor-dashed.png'), url('line-hor-dashed.png');
     background-position: left 3px, left calc(100% - 3px);
     background-repeat: repeat-x;
