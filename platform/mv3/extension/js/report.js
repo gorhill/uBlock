@@ -19,18 +19,9 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import {
-    dom,
-    qs$,
-} from './dom.js';
-
-import {
-    localRead,
-    runtime,
-    sendMessage,
-} from './ext.js';
-
-import { dnr } from './ext-compat.js';
+import { dom, qs$ } from './dom.js';
+import { getTroubleshootingInfo } from './troubleshooting.js';
+import { sendMessage } from './ext.js';
 
 /******************************************************************************/
 
@@ -74,98 +65,6 @@ function reportSpecificFilterType() {
 
 /******************************************************************************/
 
-function renderData(data, depth = 0) {
-    const indent = ' '.repeat(depth);
-    if ( Array.isArray(data) ) {
-        const out = [];
-        for ( const value of data ) {
-            out.push(renderData(value, depth));
-        }
-        return out.join('\n');
-    }
-    if ( typeof data !== 'object' || data === null ) {
-        return `${indent}${data}`;
-    }
-    const out = [];
-    for ( const [ name, value ] of Object.entries(data) ) {
-        if ( typeof value === 'object' && value !== null ) {
-            out.push(`${indent}${name}:`);
-            out.push(renderData(value, depth + 1));
-            continue;
-        }
-        out.push(`${indent}${name}: ${value}`);
-    }
-    return out.join('\n');
-}
-
-/******************************************************************************/
-
-async function getConfigData() {
-    const manifest = runtime.getManifest();
-    const [
-        platformInfo,
-        rulesets,
-        defaultMode,
-        userRules,
-        registerContentScriptsReason,
-        unregisterContentScriptsReason,
-    ] = await Promise.all([
-        runtime.getPlatformInfo(),
-        dnr.getEnabledRulesets(),
-        sendMessage({ what: 'getDefaultFilteringMode' }),
-        sendMessage({ what: 'getEffectiveUserRules' }),
-        localRead('$scripting.registerContentScripts'),
-        localRead('$scripting.unregisterContentScripts'),
-    ]);
-    const browser = (( ) => {
-        const extURL = runtime.getURL('');
-        let agent = '';
-        if ( extURL.startsWith('moz-extension:') ) {
-            agent = 'Firefox';
-        } else if ( extURL.startsWith('safari-web-extension:') ) {
-            agent = 'Safari';
-        } else if ( /\bEdg\/\b/.test(navigator.userAgent) ) {
-            agent = 'Edge';
-        } else {
-            agent = 'Chrome';
-        }
-        dom.cl.add('html', agent.toLowerCase());
-        if ( /\bMobile\b/.test(navigator.userAgent) ) {
-            agent += ' Mobile';
-        }
-        const reVersion = new RegExp(`\\b${agent.slice(0,3)}[^/]*/(\\d+)`);
-        const match = reVersion.exec(navigator.userAgent);
-        if ( match ) {
-            agent += ` ${match[1]}`;
-        }
-        agent += ` (${platformInfo.os})`
-        return agent;
-    })();
-    const modes = [ 'no filtering', 'basic', 'optimal', 'complete' ];
-    const config = {
-        name: manifest.name,
-        version: manifest.version,
-        browser,
-        filtering: {
-            'site': `${modes[reportedPage.mode]}`,
-            'default': `${modes[defaultMode]}`,
-        },
-    };
-    if ( userRules.length !== 0 ) {
-        config['user rules'] = userRules.length;
-    }
-    config.rulesets = rulesets;
-    if ( registerContentScriptsReason !== undefined ) {
-        config.registerContentScripts = registerContentScriptsReason;
-    }
-    if ( unregisterContentScriptsReason !== undefined ) {
-        config.unregisterContentScripts = unregisterContentScriptsReason;
-    }
-    return renderData(config);
-}
-
-/******************************************************************************/
-
 async function reportSpecificFilterIssue() {
     const githubURL = new URL(
         'https://github.com/uBlockOrigin/uAssets/issues/new?template=specific_report_from_ubol.yml'
@@ -194,7 +93,7 @@ async function reportSpecificFilterIssue() {
 
 /******************************************************************************/
 
-getConfigData().then(config => {
+getTroubleshootingInfo(reportedPage.mode).then(config => {
     qs$('[data-i18n="supportS5H"] + pre').textContent = config;
 
     dom.on('[data-url]', 'click', ev => {
