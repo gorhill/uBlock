@@ -140,11 +140,11 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Kliknite za ukloniti blokiranje svih pop-up prozora na ovom sajtu",
+    "message": "Kliknite za ukloniti blokiranje svih pop-up prozora na ovoj stranici",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Namjestite blokiranje velikih medijskih elemenata za ovo mjesto",
+    "message": "Namjestite blokiranje velikih medijskih elemenata za ovu stranicu",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
@@ -1196,19 +1196,19 @@
     "description": "Text warning about an incoming redirect"
   },
   "docblockedReasonLabel": {
-    "message": "Reason:",
+    "message": "Razlog:",
     "description": "The label which prepend the actual reason why a page was blocked"
   },
   "docblockedReasonMalicious": {
-    "message": "Malicious",
+    "message": "Zlonamjerno",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonTracker": {
-    "message": "Tracker",
+    "message": "Pratioc",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonDisreputable": {
-    "message": "Disreputable",
+    "message": "Zloglasno",
     "description": "An actual reason why a page was blocked"
   },
   "cloudPush": {
