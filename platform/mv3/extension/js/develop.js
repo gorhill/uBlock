@@ -557,35 +557,33 @@ class Editor {
         },
         token: (stream, state) => {
             if ( stream.sol() ) {
-                if ( stream.match(/^---\s*$/) ) { return 'yamlboundary'; }
-                if ( stream.match(/^# ---\s*$/) ) { return 'yamlboundary comment'; }
-                if ( stream.match(/\.\.\.\s*$/) ) { return 'yamlboundary'; }
+                if ( stream.match(/^---\s*$/) ) { return 'ubol-boundary'; }
+                if ( stream.match(/^# ---\s*$/) ) { return 'ubol-boundary ubol-comment'; }
+                if ( stream.match(/\.\.\.\s*$/) ) { return 'ubol-boundary'; }
             }
             const c = stream.peek();
             if ( c === '#' ) {
                 if ( (stream.pos === 0 || /\s/.test(stream.string.charAt(stream.pos - 1))) ) {
                     stream.skipToEnd();
-                    return 'comment';
+                    return 'ubol-comment';
                 }
             }
-            if ( stream.eatSpace() ) {
-                return null;
-            }
+            if ( stream.eatSpace() ) { return null; }
             const { scope } = state;
             state.scope = 0;
             if ( scope === 0 && stream.match(/^[^:]+(?=:)/) ) {
                 state.scope = 1;
-                return 'keyword';
+                return 'ubol-keyword';
             }
             if ( scope === 1 && stream.match(/^:(?: |$)/) ) {
-                return 'punctuation';
+                return 'ubol-punctuation';
             }
             if ( stream.match(/^- /) ) {
-                return 'punctuation';
+                return 'ubol-punctuation';
             }
             if ( this.editor.streamParserKeywords ) {
                 if ( stream.match(this.editor.streamParserKeywords) ) {
-                    return 'literal';
+                    return 'ubol-literal';
                 }
             }
             if ( stream.match(/^\S+/) ) {
@@ -598,7 +596,11 @@ class Editor {
             commentTokens: { line: '#' },
         },
         tokenTable: [
-            'yamlboundary',
+            'ubol-boundary',
+            'ubol-keyword',
+            'ubol-comment',
+            'ubol-punctuation',
+            'ubol-literal',
         ],
     };
 }

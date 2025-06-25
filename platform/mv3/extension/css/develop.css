@@ -31,12 +31,35 @@ section[data-pane="develop"] > div > * {
     height: 100%;
     }
 
-#cm-container .cm-editor .cm-line:has(.yamlboundary) {
+#cm-container .cm-editor .cm-line:has(.ubol-boundary) {
     background-image: url('line-hor-dashed.png'), url('line-hor-dashed.png');
     background-position: left 3px, left calc(100% - 3px);
     background-repeat: repeat-x;
     }
-
+#cm-container .cm-editor {
+    color: var(--ink-1);
+    }
+:root.dark #cm-container .cm-editor {
+    color: var(--ink-2);
+    }
+#cm-container .cm-editor .cm-line .ubol-comment {
+    color: #ba5300;
+    }
+:root.dark #cm-container .cm-editor .cm-line .ubol-comment {
+    color: #fa7000;
+    }
+#cm-container .cm-editor .cm-line .ubol-keyword {
+    color: #ae42be;
+    }
+:root.dark #cm-container .cm-editor .cm-line .ubol-keyword {
+    color: #ea59ff;
+    }
+#cm-container .cm-editor .cm-line .ubol-literal {
+    color: #168156;
+    }
+:root.dark #cm-container .cm-editor .cm-line .ubol-literal {
+    color: #1dae74;
+    }
 #cm-container .cm-editor .cm-line.badline:not(.cm-activeLine) {
     background-color: color-mix(in srgb, var(--info3-ink) 15%, transparent 85%);
     }
