@@ -1,3 +1,4 @@
+- [Reset `important` option flag at `header` evaluation time](https://github.com/gorhill/uBlock/commit/66b68b4442)
 - [Fix broken reverse lookup of filter lists](https://github.com/gorhill/uBlock/commit/527b4a201f)
 - [Add `[trusted-]edit-inbound-object` scriptlets](https://github.com/gorhill/uBlock/commit/6e466cf945)
 - [Improve `remove-cookie` scriptlet](https://github.com/gorhill/uBlock/commit/0a8ea58bb7)
