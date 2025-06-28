@@ -1192,7 +1192,7 @@
     "description": "Button text to navigate to the blocked page"
   },
   "docblockedRedirectPrompt": {
-    "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
+    "message": "ब्लॉक किया गया पेज किसी दूसरी साइट पर ले जाना चाहता है. अगर आप आगे बढ़ना चुनते हैं, तो आप सीधे इस लिंक को खोल सकते हैं: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "docblockedReasonLabel": {
