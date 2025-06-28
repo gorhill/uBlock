@@ -5426,6 +5426,7 @@ StaticNetFilteringEngine.prototype.matchHeaders = function(fctxt, headers) {
     $requestMethodBit = fctxt.method || 0;
     $requestTypeValue = (typeBits & TYPE_REALM) >>> TYPE_REALM_OFFSET;
     $requestAddress = fctxt.getIPAddress();
+    $isBlockImportant = false;
     $httpHeaders.init(headers);
 
     let r = 0;
