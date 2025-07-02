@@ -51,7 +51,7 @@
             const r = callback(`${hnparts.slice(i).join('.')}`, details);
             if ( r !== undefined ) { return r; }
         }
-        if ( details.hasEntities !== true ) { return; }
+        if ( details?.hasEntities !== true ) { return; }
         const n = hnpartslen - 1;
         for ( let i = 0; i < n; i++ ) {
             for ( let j = n; j > i; j-- ) {

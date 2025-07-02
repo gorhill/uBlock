@@ -1,0 +1,214 @@
+:root {
+    --quit-button-size: max(4em, min(6em, calc(100vw / 8), calc(100vh / 8)));
+}
+
+html#ubol-picker,
+#ubol-picker body {
+    background: transparent;
+    height: 100vh;
+        height: 100svh;
+    margin: 0;
+    overflow: hidden;
+    width: 100vw;
+}
+#ubol-picker :focus {
+    outline: none;
+}
+
+#ubol-picker aside {
+    background-color: var(--surface-1);
+    border: 1px solid var(--border-2);
+    box-sizing: border-box;
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    max-height: 40vh;
+    max-width: min(32rem, 100vw - 4px);
+    min-width: min(24rem, 100vw - 4px);
+    position: fixed;
+    row-gap: 1em;
+    width: min(32rem, 100vw - 4px);
+    z-index: 100;
+}
+#ubol-picker.minimized aside,
+#ubol-picker:not(.paused) aside {
+    min-width: min(8rem, 100vw - 4px);
+    width: min(8rem, 100vw - 4px);
+}
+
+#ubol-picker body[dir="rtl"] aside {
+    left: 2px;
+    right: unset;
+}
+
+#ubol-picker aside > section:last-of-type {
+    margin-block-end: 0;
+}
+#ubol-picker aside > section:not(#windowbar,#moreOrLess) {
+    padding: 0 4px;
+}
+
+#ubol-picker[data-view="0"] aside section[data-view="1"],
+#ubol-picker[data-view="0"] aside section[data-view="2"] {
+    display: none;
+}
+#ubol-picker[data-view="1"] aside section[data-view="2"] {
+    display: none;
+}
+
+#ubol-picker.minimized aside > section:not(#windowbar),
+#ubol-picker:not(.paused) aside > section:not(#windowbar) {
+    display: none;
+}
+
+#ubol-picker #windowbar {
+    border-bottom: 1px solid var(--border-1);
+    display: flex;
+}
+#ubol-picker #windowbar > div {
+    fill: none;
+    height: 2em;
+    stroke: var(--ink-1);
+    stroke-width: 2px;
+    width: 2em;
+}
+#ubol-picker.minimized aside #windowbar > #minimize svg > path,
+#windowbar #minimize svg > rect {
+    display: none;
+}
+#ubol-picker.minimized aside #windowbar > #minimize svg > rect {
+    display: initial;
+}
+#ubol-picker #windowbar > #move {
+    align-items: center;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAFElEQVQI12NgwAfKy8v/M5ANYLoBshgEyQo6H9UAAAAASUVORK5CYII=');
+    cursor: grab;
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+}
+#ubol-picker #windowbar > div:hover {
+    background-color: var(--surface-2)
+}
+
+#ubol-picker textarea {
+    border: 0;
+    box-sizing: border-box;
+    height: 6em;
+    min-height: 3em;
+    resize: none;
+    width: 100%;
+}
+#ubol-picker.mobile textarea {
+    height: unset;
+}
+#ubol-picker .resultsetWidgets {
+    display: flex;
+    gap: 0.25em;
+}
+#ubol-picker .resultsetWidgets input {
+    flex-grow: 1;
+}
+#ubol-picker .resultsetWidgets input[max="0"] {
+    display: none;
+}
+#ubol-picker .resultsetWidgets #resultsetCount {
+    display: inline-block;
+    text-align: right;
+    width: 6ch;
+}
+
+#ubol-picker #toolbar {
+    display: flex;
+    justify-content: space-between;
+}
+#ubol-picker #toolbar button {
+    min-width: 5em;
+}
+
+#ubol-picker #candidateFilters {
+    font-family: monospace;
+    font-size: small;
+    min-height: 6em;
+    overflow-y: auto;
+    word-break: break-all;
+}
+#ubol-picker #candidateFilters ul {
+    margin: 0;
+    padding-inline-start: calc(2ch + 4px);
+    user-select: none;
+        -webkit-user-select: none;
+}
+#ubol-picker #candidateFilters ul > li {
+    list-style-type: '\25CB\00A0';
+}
+#ubol-picker #candidateFilters ul > li:nth-of-type(2n+1) {
+    background-color: var(--surface-2);
+}
+#ubol-picker #candidateFilters ul > li > span {
+    border: 1px solid transparent;
+    padding: 1px 2px;
+}
+#ubol-picker #candidateFilters ul > li > span.on {
+    background-color: var(--ink-1);
+    color: var(--surface-1);
+}
+#ubol-picker #candidateFilters ul > li > span:hover {
+    border: 1px solid var(--ink-1);
+}
+
+#ubol-picker #moreOrLess {
+    column-gap: 0;
+    display: grid;
+    grid-template: auto / 1fr 1fr;
+    justify-items: stretch;
+    user-select: none;
+        -webkit-user-select: none;
+    white-space: nowrap;
+    }
+#ubol-picker #moreOrLess > span {
+    cursor: pointer;
+    padding: var(--default-gap-xxsmall) var(--default-gap-xsmall);
+    }
+#ubol-picker #moreOrLess > span:last-of-type {
+    text-align: end;
+    }
+#ubol-picker[data-view="2"] aside #moreOrLess > span:first-of-type {
+    visibility: hidden;
+}
+#ubol-picker[data-view="0"] aside #moreOrLess > span:last-of-type {
+    visibility: hidden;
+}
+#ubol-picker.desktop aside #moreOrLess > span:hover {
+    background-color: var(--surface-2);
+}
+
+#ubol-picker svg#sea {
+    cursor: crosshair;
+    box-sizing: border-box;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+#ubol-picker.paused svg#sea {
+    cursor: not-allowed;
+}
+#ubol-picker svg#sea > path:first-child {
+    fill: rgba(0,0,0,0.5);
+    fill-rule: evenodd;
+}
+#ubol-picker svg#sea > path + path {
+    stroke: #FF0;
+    stroke-width: 0.5px;
+    fill: rgba(255,255,63,0.20);
+}
+
+#ubol-picker.preview #toolbar #preview {
+    color: var(--accent-ink-1);
+    background-color: var(--accent-surface-1);
+}
+#ubol-picker.preview #sea path {
+    display: none;
+}

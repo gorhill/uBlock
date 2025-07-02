@@ -63,6 +63,12 @@ export async function localRemove(key) {
     return browser.storage.local.remove(key);
 }
 
+export async function localKeys() {
+    if ( browser.storage instanceof Object === false ) { return; }
+    if ( browser.storage.local instanceof Object === false ) { return; }
+    return browser.storage.local.getKeys();
+}
+
 /******************************************************************************/
 
 export async function sessionRead(key) {

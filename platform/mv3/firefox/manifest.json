@@ -72,6 +72,14 @@
       "matches": [
         "<all_urls>"
       ]
+    },
+    {
+      "resources": [
+        "/picker-ui.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
     }
   ]
 }

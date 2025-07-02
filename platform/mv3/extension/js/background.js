@@ -32,6 +32,11 @@ import {
 } from './mode-manager.js';
 
 import {
+    addCSSFilter,
+    removeCSSFilter,
+} from './filter-manager.js';
+
+import {
     adminReadEx,
     getAdminRulesets,
     loadAdminConfig,
@@ -56,7 +61,6 @@ import {
     getEffectiveDynamicRules,
     getEffectiveSessionRules,
     getEffectiveUserRules,
-    getEnabledRulesetsDetails,
     getRulesetDetails,
     patchDefaultRulesets,
     setStrictBlockMode,
@@ -302,20 +306,17 @@ function onMessage(request, sender, callback) {
         Promise.all([
             hasBroadHostPermissions(),
             getFilteringMode(request.hostname),
-            getEnabledRulesetsDetails(),
             adminReadEx('disabledFeatures'),
         ]).then(results => {
             const [
                 hasOmnipotence,
                 level,
-                rulesetDetails,
                 disabledFeatures,
             ] = results;
             callback({
                 hasOmnipotence,
                 level,
                 autoReload: rulesetConfig.autoReload,
-                rulesetDetails,
                 isSideloaded,
                 developerMode: rulesetConfig.developerMode,
                 disabledFeatures,
@@ -429,6 +430,22 @@ function onMessage(request, sender, callback) {
     case 'updateUserDnrRules':
         updateUserRules().then(result => {
             callback(result);
+        });
+        return true;
+
+    case 'addCSSFilter':
+        addCSSFilter(request.hostname, request.selector).then(( ) =>
+            registerInjectables()
+        ).then(( ) => {
+            callback();
+        })
+        return true;
+
+    case 'removeCSSFilter':
+        removeCSSFilter(request.hostname, request.selector).then(( ) =>
+            registerInjectables()
+        ).then(( ) => {
+            callback();
         });
         return true;
 

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html id="ubol-picker" class="minimized" data-view="0">
+
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light dark">
+<title>uBO Lite Zapper</title>
+<link rel="stylesheet" href="/css/default.css">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="css/fa-icons.css">
+<link rel="stylesheet" href="/css/picker-ui.css">
+</head>
+
+<body>
+<aside style="right: 2px; bottom: 2px;">
+<section id="windowbar">
+    <div id="minimize"><svg viewBox="0 0 64 64"><path d="M 16,48 H 48" /><rect x="16" y="16" height="32" width="32" /></svg></div>
+    <div id="move"></div>
+    <div id="quit" data-i18n-title="pickerQuit"><svg viewBox="0 0 64 64"><path d="M16 16L48 48M16 48L48 16" /></svg></div>
+</section>
+<section class="block" data-view="2">
+    <textarea spellcheck="false"></textarea>
+</section>
+<section class="block resultsetWidgets" data-view="0">
+    <input id="slider" type="range" min="0" max="10" step="1">
+    <span id="resultsetCount"></span>
+</section>
+<section id="toolbar" class="block" data-view="0">
+    <div>
+        <button id="pick" type="button" data-i18n="pickerPick">Pick<span class="hover"></span></button>
+        <button id="preview" type="button" data-i18n="pickerPreview">Preview<span class="hover"></span></button>
+    </div>
+    <button id="create" type="button" class="preferred" disabled data-i18n="pickerCreate">Create<span class="hover"></span></button>
+</section>
+<section id="candidateFilters"  class="block" data-view="1">
+    <ul></ul>
+</section>
+<section id="moreOrLess">
+    <span><span data-i18n="popupMoreButton"></span>&ensp;<span class="fa-icon fa-icon-vflipped">angle-up</span><span class="hover"></span></span>
+    <span><span class="fa-icon">angle-up</span>&ensp;<span data-i18n="popupLessButton"></span><span class="hover"></span></span>
+</section>
+</aside>
+
+<svg id="sea"><path d></path><path d></path></svg>
+
+<script src="js/theme.js" type="module"></script>
+<script src="js/fa-icons.js" type="module"></script>
+<script src="js/i18n.js" type="module"></script>
+<script src="js/picker-ui.js" type="module"></script>
+
+</body>
+</html>

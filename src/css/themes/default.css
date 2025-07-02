@@ -453,7 +453,7 @@
     --popup-cell-block-surface: rgb(var(--popup-cell-block-surface-rgb));
     --popup-power-ink: rgb(var(--popup-power-ink-rgb));
     --popup-toolbar-surface: rgb(var(--primary-80) / 15%);
-    --popup-toolbar-surface-hover: rgb(var(--primary-80) / 20%);
+    --popup-toolbar-surface-hover: rgb(var(--primary-80) / 30%);
     --popup-ruleset-tool-ink: var(--ink-1);
     --popup-ruleset-tool-surface: rgb(var(--primary-80) / 15%);
     --popup-ruleset-tool-surface-hover: rgb(var(--primary-80) / 20%);
