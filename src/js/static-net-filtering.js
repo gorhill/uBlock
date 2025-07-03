@@ -4709,7 +4709,7 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
             if ( token !== '' ) {
                 const match = /:(\d+)$/.exec(token);
                 if ( match !== null ) {
-                    rule.priority += Math.min(rule.priority + parseInt(match[1], 10), 9);
+                    rule.priority += Math.min(parseInt(match[1], 10), 8);
                     token = token.slice(0, match.index);
                 }
             }
