@@ -385,28 +385,10 @@ function onCandidateClicked(ev) {
             dom.cl.toggle(target, 'on');
         }
     } else if ( target.matches('li') ) {
-        dom.cl.remove('#candidateFilters [data-part]', 'on');
-        dom.cl.toggle(qsa$(target, '[data-part]'), 'on',
-            qs$(target, 'span:not(.on)') !== null
-        );
-    }
-    const selectorParts = [];
-    let liPrevious = null;
-    for ( const li of qsa$('#candidateFilters li') ) {
-        const selector = [];
-        for ( const span of qsa$(li, '.on[data-part]') ) {
-            selector.push(span.textContent);
-        }
-        if ( selector.length !== 0 ) {
-            if ( liPrevious !== null ) {
-                if ( li.previousElementSibling === liPrevious ) {
-                    selectorParts.unshift(' > ');
-                } else if ( liPrevious !== li ) {
-                    selectorParts.unshift(' ');
-                }
-            }
-            liPrevious = li;
-            selectorParts.unshift(selector.join(''));
+        if ( qs$(target, ':scope > span:not(.on)') !== null ) {
+            dom.cl.add(qsa$(target, ':scope > [data-part]:not(.on)'), 'on');
+        } else {
+            dom.cl.remove(qsa$(target, ':scope > [data-part]'), 'on');
         }
     }
     const selector = selectorFromCandidates();

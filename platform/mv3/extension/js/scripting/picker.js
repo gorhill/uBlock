@@ -317,15 +317,15 @@ function candidatesAtPoint(x, y) {
             parts.push(address);
         }
         // https://github.com/chrisaljoudi/uBlock/issues/637
-        //   If the selector is still ambiguous at this point, further narrow using
-        //   `nth-of-type`.
+        //   If the selector is still ambiguous at this point, further narrow
+        // using `:nth-of-type`.
         const parentNode = elem.parentNode;
         if ( safeQuerySelectorAll(parentNode, `:scope > ${selectorFromAddresses(partsDB, parts)}`).length > 1 ) {
             let i = 1;
             while ( elem.previousSibling !== null ) {
                 elem = elem.previousSibling;
                 if ( typeof elem.localName !== 'string' ) { continue; }
-                if ( elem.localName === tagName ) { continue; }
+                if ( elem.localName !== tagName ) { continue; }
                 i++;
             }
             const address = addressMajor | parts.length << 4 | 4;
