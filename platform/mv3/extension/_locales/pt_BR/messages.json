@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Um bloqueador de conteúdo sem permissões. Bloqueia anúncios, rastreadores e muito mais, imediatamente após a instalação.",
+    "message": "Um bloqueador eficiente de conteúdo. Bloqueia anúncios, rastreadores e muito mais, imediatamente após a instalação.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -20,7 +20,7 @@
     "description": "appears as tab name in dashboard"
   },
   "developPageName": {
-    "message": "Desenvolva",
+    "message": "Desenvolver",
     "description": "appears as tab name in dashboard. Inspired from 'Develop' menu in Safari, see https://developer.apple.com/documentation/safari-developer-tools/develop-menu"
   },
   "aboutPageName": {
@@ -36,7 +36,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupTipReport": {
-    "message": "Reportar um problema neste site da web",
+    "message": "Relatar um problema neste site",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -92,7 +92,7 @@
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Código fonte",
+    "message": "Código-fonte",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
@@ -108,11 +108,11 @@
     "description": "Shown in the About pane"
   },
   "supportS6H": {
-    "message": "Reportar um problema com o filtro",
+    "message": "Relatar um problema com o filtro",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Reporte problemas dos filtros com sites da web específicos no rastreador de problemas <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code></span>. <u>Requer uma conta no GitHub.</u>",
+    "message": "Relate problemas dos filtros em sites específicos no rastreador de problemas do<span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code></span>. <u>Uma conta do GitHub é necessária.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS5H": {
@@ -120,23 +120,23 @@
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
-    "message": "Para evitar sobrecarregar os voluntários com relatórios duplicados por favor verifique se o problema já não foi reportado.\n<b>Observação:</b> clicar no botão fará com que a origem da página seja enviada ao GitHub.",
+    "message": "Para evitar sobrecarregar os voluntários com relatórios duplicados por favor verifique se o problema já não foi relatado. <b>Observação:</b> clicar no botão fará com que a origem da página seja enviada ao GitHub.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Achar relatórios similares",
+    "message": "Achar relatórios similares no GitHub",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Endereço da página da web:",
+    "message": "Endereço da página:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "A página da web…",
+    "message": "A página…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "— Escolha uma entrada —",
+    "message": "— Selecione um tipo —",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
@@ -144,7 +144,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Tem sobreposições ou outros incômodos",
+    "message": "Tem sobreposições ou outras perturbações",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
@@ -152,11 +152,11 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Tem problemas relacionados a privacidade",
+    "message": "Tem problemas relacionados à privacidade",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Funciona mal quando o uBO Lite está ativado",
+    "message": "Não funciona direito quando o uBO Lite está ativado",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
@@ -168,11 +168,11 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Rotular a página da web como “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
+    "message": "Rotular a página como “NSFW” (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">“Not Safe For Work”</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Criar novo relatório",
+    "message": "Criar um novo relatório no GitHub",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "defaultFilteringModeSectionLabel": {
@@ -224,11 +224,11 @@
     "description": "The header text for the 'Behavior' section"
   },
   "autoReloadLabel": {
-    "message": "Recarregar a página automaticamente quando mudar o modo de filtragem",
+    "message": "Recarregar a página automaticamente ao alterar o modo de filtragem",
     "description": "Label for a checkbox in the options page"
   },
   "showBlockedCountLabel": {
-    "message": "Mostrar o número de requisições bloqueadas no ícone da barra de ferramentas",
+    "message": "Mostrar o número de solicitações bloqueadas no ícone da barra de ferramentas",
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLabel": {
@@ -236,7 +236,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "enableStrictBlockLegend": {
-    "message": "A navegação até sites potencialmente indesejáveis ​​será bloqueada e será oferecido a você a opção de prosseguir.",
+    "message": "A navegação para sites potencialmente indesejáveis ​​será bloqueada e você terá a opção de prosseguir.",
     "description": "Short description for a checkbox in the options page"
   },
   "developerModeLabel": {
@@ -244,7 +244,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Ativa o acesso as funções adequadas pra usuários técnicos.",
+    "message": "Ativa o acesso à funcionalidade destinada a usuários técnicos.",
     "description": "Short description for a checkbox in the options page"
   },
   "findListsPlaceholder": {
@@ -260,7 +260,7 @@
     "description": "Sentence used in the strict-blocked page"
   },
   "strictblockReasonSentence1": {
-    "message": "A página foi bloqueada por causa de um filtro que combina no {{listname}}.",
+    "message": "A página foi bloqueada devido a um filtro correspondente em {{listname}}.",
     "description": "Text informing about what is causing the page to be blocked"
   },
   "strictblockRedirectSentence1": {
@@ -288,11 +288,11 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Entrar no modo do elemento zapper",
+    "message": "Entrar no modo de remoção de elementos",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
-    "message": "Sair do modo do elemento zapper",
+    "message": "Sair do modo de remoção de elementos",
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "developDropdownLabel": {
@@ -336,7 +336,7 @@
     "description": "Text for buttons used to export content"
   },
   "dnrRulesWarning": {
-    "message": "Não adicionar conteúdo de fontes não confiáveis.",
+    "message": "Não adicione conteúdo de fontes não confiáveis.",
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {

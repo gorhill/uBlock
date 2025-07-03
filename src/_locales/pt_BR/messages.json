@@ -72,11 +72,11 @@
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Clique pra desativar o uBlock₀ neste site.\n\nCtrl+clique pra desativar o uBlock₀ só nesta página.",
+    "message": "Clique para desativar o uBlock₀ neste site.\n\nCtrl+clique para desativar o uBlock₀ só nesta página.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Clique pra ativar o uBlock₀ neste site.",
+    "message": "Clique para ativar o uBlock₀ neste site.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -116,7 +116,7 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Entrar no modo do elemento zapper",
+    "message": "Entrar no modo de remoção de elementos",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Reportar um problema com este site da web",
+    "message": "Relatar um problema neste site",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -176,7 +176,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Clique pra não mais bloquear fontes remotas neste site",
+    "message": "Clique para deixar de bloquear fontes remotas neste site",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
@@ -184,7 +184,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Clique pra não mais desativar o JavaScript neste site",
+    "message": "Clique para deixar de desativar o JavaScript neste site",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
@@ -244,7 +244,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "CSS/Imagens de terceiros",
+    "message": "CSS/imagens de terceiros",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -444,7 +444,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "Os filtros cosméticos servem pra esconder elementos de uma página da web os quais são considerados um incômodo visual e os quais não podem ser bloqueados pelas engines de filtragem baseadas em requisições de rede.",
+    "message": "Os filtros cosméticos servem para ocultar elementos em uma página os quais são considerados um incômodo visual e os quais não podem ser bloqueados pelos motores de filtragem baseadas em solicitações de rede.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -452,7 +452,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "Os filtros cosméticos genéricos são aqueles filtros cosméticos os quais são destinados a serem aplicados em todos os sites da web. Ativar esta opção eliminará a sobrecarga da memória e da CPU adicionada as páginas da web como um resultado de lidar com filtros cosméticos genéricos.\n\nÉ recomendado ativar esta opção em dispositivos menos poderosos.",
+    "message": "Os filtros cosméticos genéricos são aqueles filtros cosméticos os quais são destinados a serem aplicados em todos os sites. Ativar esta opção eliminará a sobrecarga da memória e da CPU adicionada as páginas como um resultado de lidar com filtros cosméticos genéricos.\n\nÉ recomendado ativar esta opção em dispositivos mais lentos.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pSuspendUntilListsAreLoaded": {
@@ -536,7 +536,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pTrustWarning": {
-    "message": "Não adicionar filtros de fontes não confiáveis.",
+    "message": "Não adicione filtros de fontes não confiáveis.",
     "description": "Warning against copy-pasting filters from random sources"
   },
   "1pEnableMyFiltersLabel": {
@@ -548,7 +548,7 @@
     "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
-    "message": "Importar e anexar",
+    "message": "Importar e anexar…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
@@ -576,7 +576,7 @@
     "description": "This will remove all temporary rules"
   },
   "rulesCommit": {
-    "message": "Submeter",
+    "message": "Confirmar",
     "description": "This will persist temporary rules"
   },
   "rulesEdit": {
@@ -596,7 +596,7 @@
     "description": ""
   },
   "rulesExport": {
-    "message": "Exportar pro arquivo",
+    "message": "Exportar para um arquivo…",
     "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
@@ -608,7 +608,7 @@
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
-    "message": "Regras da sintaxe: <code>ação do tipo de destino da origem</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>documentação completa</a>).",
+    "message": "Regras de sintaxe: <code>origem destino tipo ação</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>documentação completa</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
@@ -628,7 +628,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "As diretivas dos sites confiáveis ditam em quais páginas da web o uBlock Origin deve ser desativado. Uma entrada por linha. ",
+    "message": "As diretivas dos sites confiáveis ditam em quais páginas o uBlock Origin deve ser desativado. Uma entrada por linha. ",
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
@@ -684,7 +684,7 @@
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "Alternar o painel do pop-up",
+    "message": "Habilitar o painel pop-up",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
@@ -704,7 +704,7 @@
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "Alternar filtragem do coletor",
+    "message": "Habilitar filtragem do coletor",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
@@ -796,7 +796,7 @@
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "{{action}} requisições da rede de {{type}} {{br}}cujo endereço de URL corresponde {{url}} {{br}}e o qual se origina em {{origin}},{{br}}{{importance}} há um filtro de exceção correspondente.",
+    "message": "{{action}} solicitações de rede do tipo {{type}} {{br}}onde o endereço da URL corresponde a {{url}} {{br}}e que origina de {{origin}},{{br}}{{importance}} há um filtro de exceção correspondente.",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
@@ -900,11 +900,11 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Criar um novo relatório",
+    "message": "Criar um novo relatório no GitHub",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Achar relatórios similares",
+    "message": "Achar relatórios similares no GitHub",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -924,7 +924,7 @@
     "description": "First paragraph of 'Questions and support' section in Support pane"
   },
   "supportS3H": {
-    "message": "Problemas com o filtro/o site da web está quebrado",
+    "message": "Problemas com filtros/o site não funciona",
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
@@ -932,7 +932,7 @@
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
-    "message": "<b>Importante:</b> Evite usar outros bloqueadores com propósito similar junto do uBlock Origin pois isto pode causar problemas com filtros em sites da web específicos.",
+    "message": "<b>Importante:</b> Evite usar outros bloqueadores junto com o uBlock Origin pois isto pode causar problemas com filtros em sites específicos.",
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
@@ -944,7 +944,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Reporte problemas com o próprio uBlock Origin no <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code>rastreador de problemas</span>. <u>Requer uma conta no GitHub.</u>",
+    "message": "Relate problemas com o próprio uBlock Origin no rastreador de problemas do <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code></span>. <u>Uma conta do GitHub é necessária.</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
@@ -956,7 +956,7 @@
     "description": "First paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS5P2": {
-    "message": "<b>Atenção:</b> Informações potencialmente privadas ou sensíveis são eliminadas por padrão. As informações eliminadas podem tornar mais difícil resolver um problema.",
+    "message": "<b>Importante:</b> Informações potencialmente privadas ou sensíveis são eliminadas por padrão. As informações eliminadas podem dificultar a resolução de um problema.",
     "description": "Second paragraph of 'Troubleshooting Information' section in Support pane"
   },
   "supportS6H": {
@@ -964,7 +964,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Pra evitar sobrecarregar os voluntários com relatórios duplicados por favor certifique-se que o problema já não foi reportado.",
+    "message": "Para evitar sobrecarregar os voluntários com relatórios duplicados por favor verifique se o problema já não foi relatado. <b>Observação:</b> clicar no botão fará com que a origem da página seja enviada ao GitHub.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
@@ -984,7 +984,7 @@
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "— Escolha uma entrada —",
+    "message": "— Selecione um tipo —",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
@@ -992,7 +992,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Tem sobreposições ou outros incômodos",
+    "message": "Tem sobreposições ou outras perturbações",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
@@ -1004,7 +1004,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Funciona mal quando o uBlock Origin está ativado",
+    "message": "Não funciona direito quando o uBlock Origin está ativado",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
@@ -1016,7 +1016,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
-    "message": "Rotula a página da web como \"NSFW\" (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">\"Não é Seguro no Trabalho\"</a>)",
+    "message": "Rotular a página da web como \"NSFW\" (<a href=\"https://wikipedia.org/wiki/Not_safe_for_work\">\"Não é Seguro no Trabalho\"</a>)",
     "description": "A checkbox to use for NSFW sites"
   },
   "supportRedact": {
@@ -1060,15 +1060,15 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "As próprias listas de filtros do uBO estão hospedadas gratuitamente nos seguintes <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>: ",
+    "message": "As próprias listas de filtros do uBO estão hospedadas gratuitamente nas seguintes <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDNs</a>: ",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "Um CDN escolhido aleatoriamente é usado quando uma lista de filtros precisa ser atualizada",
+    "message": "Uma CDN é escolhida automaticamente quando uma lista de filtros precisa ser atualizada.",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "Fazer backup no arquivo",
+    "message": "Fazer backup para arquivo",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
@@ -1092,7 +1092,7 @@
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
-    "message": "Todas as suas configurações serão removidas, e o uBlock₀ reiniciará.\n\nResetar o uBlock₀ para as configurações de fábrica?",
+    "message": "Todas as suas configurações serão removidas, e o uBlock₀ reiniciará.\n\nRedefinir o uBlock₀ para as configurações de fábrica?",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
@@ -1192,7 +1192,7 @@
     "description": "Button text to navigate to the blocked page"
   },
   "docblockedRedirectPrompt": {
-    "message": "A página bloqueada quer redirecionar pra outro site. Se você escolher prosseguir você navegará diretamente para: {{url}}",
+    "message": "A página bloqueada deseja redirecionar para outro site. Se você escolher continuar, você navegará diretamente para: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "docblockedReasonLabel": {
@@ -1256,7 +1256,7 @@
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Subscrever na lista de filtros... ",
+    "message": "Inscrever-se na lista de filtros...",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
@@ -1264,7 +1264,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "contextMenuViewSource": {
-    "message": "Visualizar código fonte…",
+    "message": "Visualizar código-fonte…",
     "description": "A context menu entry, to view the source code of the target resource"
   },
   "shortcutCapturePlaceholder": {
@@ -1276,7 +1276,7 @@
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
-    "message": "Copiar pra área de transferência",
+    "message": "Copiar para a área de transferência",
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "genericSelectAll": {
@@ -1320,7 +1320,7 @@
     "description": "Summary of number of errors as reported by the linter "
   },
   "unprocessedRequestTooltip": {
-    "message": "Não conseguiu filtrar apropriadamente na inicialização do navegador. Recarregue a página pra garantir a filtragem apropriada.",
+    "message": "Não foi possível filtrar apropriadamente na inicialização do navegador. Recarregue a página para garantir a filtragem apropriada.",
     "description": "A warning which will appear in the popup panel if needed"
   },
   "dummy": {

@@ -304,7 +304,7 @@
     "description": "An option in a dropdown list"
   },
   "developOptionCustomDnrRules": {
-    "message": "Кастомныя правілы DNR",
+    "message": "Уласныя правілы DNR",
     "description": "An option in a dropdown list"
   },
   "developOptionDnrRulesOf": {

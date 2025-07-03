@@ -1196,7 +1196,7 @@
     "description": "Text warning about an incoming redirect"
   },
   "docblockedReasonLabel": {
-    "message": "Reason:",
+    "message": "دلیل",
     "description": "The label which prepend the actual reason why a page was blocked"
   },
   "docblockedReasonMalicious": {
@@ -1204,7 +1204,7 @@
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonTracker": {
-    "message": "Tracker",
+    "message": "ردیاب",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonDisreputable": {

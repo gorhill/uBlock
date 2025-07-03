@@ -1172,7 +1172,7 @@
     "description": "English: Close this window"
   },
   "docblockedDontWarn": {
-    "message": "Znova mě nevarujte ohladně této stránky",
+    "message": "Nevarujte mě znovu o této stránce",
     "description": "Label for checkbox in document-blocked page"
   },
   "docblockedProceed": {
