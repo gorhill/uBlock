@@ -20,18 +20,19 @@
 */
 
 import {
-    intersectHostnameIters,
-    matchesFromHostnames,
-    strArrayEq,
-    subtractHostnameIters,
-} from './utils.js';
-
-import {
+    browser,
     localKeys,
     localRead,
     localRemove,
     localWrite,
 } from './ext.js';
+
+import {
+    intersectHostnameIters,
+    matchesFromHostnames,
+    strArrayEq,
+    subtractHostnameIters,
+} from './utils.js';
 
 /******************************************************************************/
 
@@ -39,19 +40,47 @@ export async function selectorsFromCSSFilters(hostname) {
     const promises = [];
     let hn = hostname;
     while ( hn !== '' ) {
-        promises.push(chrome.storage.local.get(`site.${hn}`));
+        promises.push(localRead(`site.${hn}`));
         const pos = hn.indexOf('.');
         if ( pos === -1 ) { break; }
         hn = hn.slice(pos + 1);
     }
     const results = await Promise.all(promises);
-    const selectors = [];
+    const out = [];
     for ( let i = 0; i < promises.length; i++ ) {
-        const filters = results[i];
-        if ( filters === undefined ) { continue; }
-        filters.forEach(filter => { selectors.push(filter.slice(1)); });
+        const selectors = results[i];
+        if ( selectors === undefined ) { continue; }
+        selectors.forEach(selector => { out.push(selector.slice(1)); });
     }
-    return selectors;
+    return out;
+}
+
+/******************************************************************************/
+
+export async function injectCSSFilters(tabId, frameId, hostname) {
+    const selectors = await selectorsFromCSSFilters(hostname);
+    if ( selectors.length === 0 ) { return; }
+    return browser.scripting.insertCSS({
+        css: `${selectors.join(',\n')}{display:none!important;}`,
+        origin: 'USER',
+        target: { tabId, frameIds: [ frameId ] },
+    }).catch(reason => {
+        console.log(reason);
+    });
+}
+
+/******************************************************************************/
+
+export async function uninjectCSSFilters(tabId, frameId, hostname) {
+    const selectors = await selectorsFromCSSFilters(hostname);
+    if ( selectors.length === 0 ) { return; }
+    return browser.scripting.removeCSS({
+        css: `${selectors.join(',\n')}{display:none!important;}`,
+        origin: 'USER',
+        target: { tabId, frameIds: [ frameId ] },
+    }).catch(reason => {
+        console.log(reason);
+    });
 }
 
 /******************************************************************************/

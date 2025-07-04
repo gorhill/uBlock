@@ -23,27 +23,10 @@
 
 /******************************************************************************/
 
-const storageKeys = [];
-const promises = [];
-
-self.isolatedAPI.forEachHostname(hn => {
-    const key = `site.${hn}`;
-    storageKeys.push(key);
-    promises.push(chrome.storage.local.get(key));
-});
-
-const results = await Promise.all(promises);
-const selectors = [];
-for ( let i = 0; i < storageKeys.length; i++ ) {
-    const filters = results[i]?.[storageKeys[i]];
-    if ( filters === undefined ) { continue; }
-    selectors.push(filters.map(a => a.slice(1)).join(',\n'));
-}
-if ( selectors.length === 0 ) { return; }
-
+const docURL = new URL(document.baseURI);
 chrome.runtime.sendMessage({
-    what: 'insertCSS',
-    css: `${selectors.join(',\n')}{display:none!important;}`,
+    what: 'injectCSSFilters',
+    hostname: docURL.hostname,
 }).catch(( ) => {
 });
 

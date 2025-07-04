@@ -31,7 +31,7 @@ html#ubol-zapper,
     left: 2px;
     right: unset;
 }
-#ubol-zapper svg#sea {
+#ubol-zapper svg#overlay {
     cursor: crosshair;
     box-sizing: border-box;
     height: 100%;
@@ -40,11 +40,11 @@ html#ubol-zapper,
     top: 0;
     width: 100%;
 }
-#ubol-zapper svg#sea > path:first-child {
+#ubol-zapper svg#overlay > path:first-child {
     fill: rgba(0,0,0,0.5);
     fill-rule: evenodd;
 }
-#ubol-zapper svg#sea > path + path {
+#ubol-zapper svg#overlay > path + path {
     stroke: #FF0;
     stroke-width: 0.5px;
     fill: rgba(255,255,63,0.20);

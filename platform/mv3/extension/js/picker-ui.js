@@ -21,10 +21,11 @@
 
 import { dom, qs$, qsa$ } from './dom.js';
 import { localRead, localWrite, sendMessage } from './ext.js';
+import { toolOverlay } from './tool-overlay-ui.js';
 
 /******************************************************************************/
 
-const svgRoot = qs$('svg#sea');
+const svgRoot = qs$('svg#overlay');
 const svgOcean = svgRoot.children[0];
 const svgIslands = svgRoot.children[1];
 const NoPaths = 'M0 0';
@@ -34,7 +35,6 @@ const pickerRoot = document.documentElement;
 const dialog = qs$('aside');
 
 let selectorPartsDB = new Map();
-let pickerScriptPort;
 let sliderParts = [];
 let previewCSS = '';
 
@@ -83,39 +83,6 @@ function onSvgTouch(ev) {
 }
 onSvgTouch.x0 = onSvgTouch.y0 = 0;
 onSvgTouch.t0 = 0;
-
-/******************************************************************************/
-
-function svgListening(state) {
-    if ( qs$(':root.mobile') !== null ) { return; }
-    if ( state === svgListening.on ) { return; }
-    svgListening.on = state;
-    if ( svgListening.on ) {
-        dom.on(document, 'mousemove', svgListening.onHover, { passive: true });
-        return;
-    }
-    dom.off(document, 'mousemove', svgListening.onHover, { passive: true });
-    if ( svgListening.timer === undefined ) { return; }
-    self.cancelAnimationFrame(svgListening.timer);
-    svgListening.timer = undefined;
-}
-svgListening.on = false;
-svgListening.timer = undefined;
-svgListening.mx = svgListening.my = 0;
-svgListening.onTimer = ( ) => {
-    svgListening.timer = undefined;
-    pickerScriptPort.postMessage({
-        what: 'highlightElementAtPoint',
-        mx: svgListening.mx,
-        my: svgListening.my,
-    });
-};
-svgListening.onHover = ev => {
-    svgListening.mx = ev.clientX;
-    svgListening.my = ev.clientY;
-    if ( svgListening.timer !== undefined ) { return; }
-    svgListening.timer = self.requestAnimationFrame(svgListening.onTimer);
-};
 
 /******************************************************************************/
 
@@ -208,7 +175,7 @@ function onSvgClicked(ev) {
     if ( ev.type === 'touch' ) {
         dom.cl.add(pickerRoot, 'show');
     }
-    pickerScriptPort.postMessage({
+    toolOverlay.postMessage({
         what: 'candidatesAtPoint',
         mx: ev.clientX,
         my: ev.clientY,
@@ -332,12 +299,12 @@ function updatePreview(state) {
         dom.cl.toggle(dom.root, 'preview', state)
     }
     if ( previewCSS !== '' ) {
-        pickerScriptPort.postMessage({ what: 'removeCSS', css: previewCSS });
+        toolOverlay.postMessage({ what: 'removeCSS', css: previewCSS });
         previewCSS = '';
     }
     if ( state === false ) { return; }
     previewCSS = `${qs$('textarea').value}{display:none!important;}`;
-    pickerScriptPort.postMessage({ what: 'insertCSS', css: previewCSS });
+    toolOverlay.postMessage({ what: 'insertCSS', css: previewCSS });
 }
 
 /******************************************************************************/
@@ -346,7 +313,7 @@ function onCreateClicked() {
     const selector = qs$('textarea').value;
     if ( isValidSelector(selector) === false ) { return; }
     const css = `${selector}{display:none!important;}`;
-    pickerScriptPort.postMessage({ what: 'insertCSS', css });
+    toolOverlay.postMessage({ what: 'insertCSS', css });
     sendMessage({
         what: 'addCSSFilter',
         hostname: filterURL.hostname,
@@ -440,11 +407,11 @@ function showDialog(msg) {
 function highlightCandidate() {
     const selector = qs$('textarea').value;
     if ( isValidSelector(selector) === false ) {
-        pickerScriptPort.postMessage({ what: 'unhighlight' });
+        toolOverlay.postMessage({ what: 'unhighlight' });
         updateElementCount({ count: 0, error: isValidSelector.error });
         return;
     }
-    pickerScriptPort.postMessage({
+    toolOverlay.postMessage({
         what: 'highlightFromSelector',
         selector,
     });
@@ -467,30 +434,23 @@ function highlightCandidate() {
 function pausePicker() {
     dom.cl.add(pickerRoot, 'paused');
     dom.cl.remove(pickerRoot, 'minimized');
-    svgListening(false);
+    toolOverlay.highlightElementUnderMouse(false);
 }
 
 function unpausePicker() {
     dom.cl.remove(pickerRoot, 'paused', 'preview');
     updatePreview();
-    pickerScriptPort.postMessage({
+    toolOverlay.postMessage({
         what: 'togglePreview',
         state: false,
     });
-    svgListening(true);
+    toolOverlay.highlightElementUnderMouse(true);
 }
 
 /******************************************************************************/
 
-function startPicker(port) {
-    pickerScriptPort = port;
-    pickerScriptPort.onmessage = ev => {
-        onScriptMessage(ev.data || {});
-    };
-    pickerScriptPort.onmessageerror = ( ) => {
-        quitPicker();
-    };
-    pickerScriptPort.postMessage({ what: 'startPicker' });
+function startPicker() {
+    toolOverlay.postMessage({ what: 'startPicker' });
 
     localRead('picker.view').then(value => {
         if ( Boolean(value) === false ) { return; }
@@ -498,9 +458,9 @@ function startPicker(port) {
     });
 
     self.addEventListener('keydown', onKeyPressed, true);
-    dom.on('svg#sea', 'click', onSvgClicked);
-    dom.on('svg#sea', 'touchstart', onSvgTouch, { passive: true });
-    dom.on('svg#sea', 'touchend', onSvgTouch);
+    dom.on('svg#overlay', 'click', onSvgClicked);
+    dom.on('svg#overlay', 'touchstart', onSvgTouch, { passive: true });
+    dom.on('svg#overlay', 'touchend', onSvgTouch);
     dom.on('#minimize', 'click', onMinimizeClicked);
     dom.on('#move', 'pointerdown', moveDialog);
     dom.on('textarea', 'input', onFilterTextChanged);
@@ -512,34 +472,31 @@ function startPicker(port) {
     dom.on('#moreOrLess > span:last-of-type', 'click', ( ) => { onViewToggled(-1); });
     dom.on('#create', 'click', onCreateClicked);
     dom.on('#candidateFilters ul', 'click', onCandidateClicked);
-    svgListening(true);
+    toolOverlay.highlightElementUnderMouse(true);
 }
 
 /******************************************************************************/
 
 function quitPicker() {
     updatePreview(false);
-    svgListening(false);
-    if ( pickerScriptPort ) {
-        pickerScriptPort.postMessage({ what: 'quitPicker' });
-        pickerScriptPort.close();
-        pickerScriptPort.onmessage = null;
-        pickerScriptPort.onmessageerror = null;
-        pickerScriptPort = null;
-    }
+    toolOverlay.highlightElementUnderMouse(false);
+    toolOverlay.stop();
 }
 
 /******************************************************************************/
 
 function resetPicker() {
-    pickerScriptPort.postMessage({ what: 'unhighlight' });
+    toolOverlay.postMessage({ what: 'unhighlight' });
     unpausePicker();
 }
 
 /******************************************************************************/
 
-function onScriptMessage(msg) {
+function onMessage(msg) {
     switch ( msg.what ) {
+    case 'startTool':
+        startPicker();
+        break;
     case 'countFromSelector':
         updateElementCount(msg);
         break;
@@ -561,13 +518,6 @@ function onScriptMessage(msg) {
 /******************************************************************************/
 
 // Wait for the content script to establish communication
-
-globalThis.addEventListener('message', ev => {
-    const msg = ev.data || {};
-    if ( msg.what !== 'pickerStart' ) { return; }
-    if ( Array.isArray(ev.ports) === false ) { return; }
-    if ( ev.ports.length === 0 ) { return; }
-    startPicker(ev.ports[0]);
-}, { once: true });
+toolOverlay.start(onMessage);
 
 /******************************************************************************/

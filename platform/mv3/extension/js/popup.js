@@ -260,7 +260,7 @@ dom.on('#gotoDashboard', 'click', ev => {
 dom.on('#gotoZapper', 'click', ( ) => {
     if ( browser.scripting === undefined ) { return; }
     browser.scripting.executeScript({
-        files: [ '/js/scripting/zapper.js' ],
+        files: [ '/js/scripting/tool-overlay.js', '/js/scripting/zapper.js' ],
         target: { tabId: currentTab.id },
     });
     self.close();
@@ -271,7 +271,7 @@ dom.on('#gotoZapper', 'click', ( ) => {
 dom.on('#gotoPicker', 'click', ( ) => {
     if ( browser.scripting === undefined ) { return; }
     browser.scripting.executeScript({
-        files: [ '/js/scripting/picker.js' ],
+        files: [ '/js/scripting/tool-overlay.js', '/js/scripting/picker.js' ],
         target: { tabId: currentTab.id },
     });
     self.close();

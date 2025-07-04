@@ -23,200 +23,12 @@
 
 /******************************************************************************/
 
-const picker = self.uBOLPicker = self.uBOLPicker || {};
+const ubolOverlay = self.uBOLOverlay;
+if ( ubolOverlay === undefined ) { return; }
 
+const picker = self.uBOLPicker = self.uBOLPicker || {};
 if ( picker.injected ) { return; }
 picker.injected = true;
-
-const webext = typeof browser === 'object' ? browser : chrome;
-
-/******************************************************************************/
-
-const sendMessage = msg => {
-    try {
-        webext.runtime.sendMessage(msg).catch(( ) => { });
-    } catch {
-    }
-};
-
-/******************************************************************************/
-
-const safeQuerySelectorAll = function(node, selector) {
-    if ( node !== null ) {
-        try {
-            const elems = node.querySelectorAll(selector);
-            safeQuerySelectorAll.error = undefined;
-            return elems;
-        } catch (reason) {
-            safeQuerySelectorAll.error = `${reason}`;
-        }
-    }
-    return [];
-};
-
-/******************************************************************************/
-
-const pickerSecret = (( ) => {
-    let secret = String.fromCharCode((Math.random() * 26) + 97);
-    do {
-        secret += (Math.floor(Math.random() * 2147483647) + 2147483647)
-            .toString(36)
-            .slice(2);
-    } while ( secret.length < 8 );
-    return secret;
-})();
-
-const pickerCSSStyle = [
-    'background: transparent',
-    'border: 0',
-    'border-radius: 0',
-    'box-shadow: none',
-    'color-scheme: light dark',
-    'display: block',
-    'filter: none',
-    'height: 100vh',
-    '    height: 100svh',
-    'left: 0',
-    'margin: 0',
-    'max-height: none',
-    'max-width: none',
-    'min-height: unset',
-    'min-width: unset',
-    'opacity: 1',
-    'outline: 0',
-    'padding: 0',
-    'pointer-events: auto',
-    'position: fixed',
-    'top: 0',
-    'transform: none',
-    'visibility: hidden',
-    'width: 100%',
-    'z-index: 2147483647',
-    ''
-].join(' !important;\n');
-
-const pickerCSS = `
-:root > [${pickerSecret}] {
-    ${pickerCSSStyle}
-}
-:root > [${pickerSecret}-loaded] {
-    visibility: visible !important;
-}
-:root [${pickerSecret}-click] {
-    pointer-events: none !important;
-}
-`;
-
-sendMessage({ what: 'insertCSS', css: pickerCSS });
-
-/******************************************************************************/
-
-const elementFromPoint = (( ) => {
-    let lastX, lastY;
-
-    return (x, y) => {
-        if ( x !== undefined ) {
-            lastX = x; lastY = y;
-        } else if ( lastX !== undefined ) {
-            x = lastX; y = lastY;
-        } else {
-            return null;
-        }
-        if ( !pickerFrame ) { return null; }
-        const magicAttr = `${pickerSecret}-click`;
-        pickerFrame.setAttribute(magicAttr, '');
-        let elem = document.elementFromPoint(x, y);
-        if ( elem === document.body || elem === document.documentElement ) {
-            elem = null;
-        }
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/380
-        pickerFrame.removeAttribute(magicAttr);
-        return elem;
-    };
-})();
-
-/******************************************************************************/
-
-function getElementBoundingClientRect(elem) {
-    let rect = typeof elem.getBoundingClientRect === 'function'
-        ? elem.getBoundingClientRect()
-        : { height: 0, left: 0, top: 0, width: 0 };
-
-    // https://github.com/gorhill/uBlock/issues/1024
-    // Try not returning an empty bounding rect.
-    if ( rect.width !== 0 && rect.height !== 0 ) {
-        return rect;
-    }
-    if ( elem.shadowRoot instanceof DocumentFragment ) {
-        return getElementBoundingClientRect(elem.shadowRoot);
-    }
-
-    let left = rect.left,
-        right = left + rect.width,
-        top = rect.top,
-        bottom = top + rect.height;
-
-    for ( const child of elem.children ) {
-        rect = getElementBoundingClientRect(child);
-        if ( rect.width === 0 || rect.height === 0 ) { continue; }
-        if ( rect.left < left ) { left = rect.left; }
-        if ( rect.right > right ) { right = rect.right; }
-        if ( rect.top < top ) { top = rect.top; }
-        if ( rect.bottom > bottom ) { bottom = rect.bottom; }
-    }
-
-    return {
-        bottom,
-        height: bottom - top,
-        left,
-        right,
-        top,
-        width: right - left
-    };
-}
-
-/******************************************************************************/
-
-function highlightElements(iter = []) {
-    if ( iter !== true ) {
-        highlightElements.current =
-            Array.from(iter).filter(a => a !== pickerFrame);
-    }
-    const ow = self.innerWidth;
-    const oh = self.innerHeight;
-    const islands = [];
-    for ( const elem of highlightElements.current ) {
-        const rect = getElementBoundingClientRect(elem);
-        // Ignore offscreen areas
-        if ( rect.left > ow ) { continue; }
-        if ( rect.top > oh ) { continue; }
-        if ( rect.left + rect.width < 0 ) { continue; }
-        if ( rect.top + rect.height < 0 ) { continue; }
-        islands.push(
-            `M${rect.left} ${rect.top}h${rect.width}v${rect.height}h-${rect.width}z`
-        );
-    }
-    pickerFramePort.postMessage({
-        what: 'svgPaths',
-        ocean: `M0 0h${ow}v${oh}h-${ow}z`,
-        islands: islands.join(''),
-    });
-}
-highlightElements.current = [];
-
-/******************************************************************************/
-
-function highlightElementAtPoint(mx, my) {
-    const elem = elementFromPoint(mx, my);
-    highlightElements(elem !== null ? [ elem ] : []);
-}
-
-/******************************************************************************/
-
-function elementsFromSelector(selector) {
-    const elems = safeQuerySelectorAll(document, selector);
-    return { elems, error: safeQuerySelectorAll.error };
-}
 
 /******************************************************************************/
 
@@ -273,7 +85,7 @@ function candidatesAtPoint(x, y) {
     // We need at least one element.
     let elem = null;
     if ( typeof x === 'number' ) {
-        elem = elementFromPoint(x, y);
+        elem = ubolOverlay.elementFromPoint(x, y);
     } else if ( x instanceof HTMLElement ) {
         elem = x;
         x = undefined;
@@ -320,7 +132,7 @@ function candidatesAtPoint(x, y) {
         //   If the selector is still ambiguous at this point, further narrow
         // using `:nth-of-type`.
         const parentNode = elem.parentNode;
-        if ( safeQuerySelectorAll(parentNode, `:scope > ${selectorFromAddresses(partsDB, parts)}`).length > 1 ) {
+        if ( ubolOverlay.qsa(parentNode, `:scope > ${selectorFromAddresses(partsDB, parts)}`).length > 1 ) {
             let i = 1;
             while ( elem.previousSibling !== null ) {
                 elem = elem.previousSibling;
@@ -377,7 +189,7 @@ function candidatesAtPoint(x, y) {
         const addresses = JSON.parse(json);
         const selector = selectorFromAddresses(partsDB, addresses);
         if ( excludedSelectors.includes(selector) ) { continue; }
-        const elems = safeQuerySelectorAll(document, selector);
+        const elems = ubolOverlay.qsa(document, selector);
         if ( elems.length === 0 ) { continue; }
         const resultSet = [];
         for ( const elem of elems ) {
@@ -429,30 +241,8 @@ const excludedSelectors = [
 
 /******************************************************************************/
 
-function onKeyPressed(ev) {
-    // Esc
-    if ( ev.key === 'Escape' || ev.which === 27 ) {
-        ev.stopPropagation();
-        ev.preventDefault();
-        quitPicker();
-        return;
-    }
-}
-
-/******************************************************************************/
-
-// https://github.com/chrisaljoudi/uBlock/issues/190
-//   May need to dynamically adjust the height of the overlay + new position
-//   of highlighted elements.
-
-function onViewportChanged() {
-    highlightElements(true);
-}
-
-/******************************************************************************/
-
 function showDialog(details) {
-    pickerFramePort.postMessage({
+    ubolOverlay.frameMessage({
         what: 'showDialog',
         url: document.baseURI,
         details,
@@ -462,29 +252,11 @@ function showDialog(details) {
 /******************************************************************************/
 
 function startPicker() {
-    pickerFrame.focus();
-    self.addEventListener('scroll', onViewportChanged, { passive: true });
-    self.addEventListener('resize', onViewportChanged, { passive: true });
-    self.addEventListener('keydown', onKeyPressed, true);
+    ubolOverlay.start();
 }
 
-/******************************************************************************/
-
 function quitPicker() {
-    self.removeEventListener('scroll', onViewportChanged, { passive: true });
-    self.removeEventListener('resize', onViewportChanged, { passive: true });
-    self.removeEventListener('keydown', onKeyPressed, true);
-    if ( pickerFramePort ) {
-        pickerFramePort.close();
-        pickerFramePort.onmessage = null;
-        pickerFramePort.onmessageerror = null;
-        pickerFramePort = null;
-    }
-    if ( pickerFrame ) {
-        pickerFrame.remove();
-        pickerFrame = null;
-    }
-    sendMessage({ what: 'removeCSS', css: pickerCSS });
+    ubolOverlay.stop();
     picker.injected = false;
 }
 
@@ -494,36 +266,29 @@ function onFrameMessage(msg) {
     switch ( msg.what ) {
     case 'startPicker':
         startPicker();
-        if ( Boolean(pickerFramePort) === false ) { break; }
-        highlightElements(true);
+        ubolOverlay.unhighlight();
         break;
-    case 'quitPicker':
+    case 'quitTool':
         quitPicker();
         break;
-    case 'highlightElementAtPoint':
-        highlightElementAtPoint(msg.mx, msg.my);
-        break;
     case 'highlightFromSelector': {
-        const { elems, error } = elementsFromSelector(msg.selector);
-        highlightElements(elems);
-        pickerFramePort.postMessage({
+        const { elems, error } = ubolOverlay.elementsFromSelector(msg.selector);
+        ubolOverlay.highlightElements(elems);
+        ubolOverlay.frameMessage({
             what: 'countFromSelector',
             count: elems.length,
             error,
         });
         break;
     }
-    case 'unhighlight':
-        highlightElements();
-        break;
     case 'candidatesAtPoint':
         candidatesAtPoint(msg.mx, msg.my, msg.broad);
         break;
     case 'insertCSS':
-        sendMessage(msg);
+        ubolOverlay.ubolMessage(msg);
         break;
     case 'removeCSS':
-        sendMessage(msg);
+        ubolOverlay.ubolMessage(msg);
         break;
     default:
         break;
@@ -532,64 +297,10 @@ function onFrameMessage(msg) {
 
 /******************************************************************************/
 
-// picker-ui.html will be injected in the page through an iframe, and
-// is sandboxed so as to prevent the page from interfering with its content
-// and behavior.
-//
-// The purpose of picker.js is to install the picker UI, and wait for the
-// component to establish a direct communication channel.
-//
-// When the picker is installed on a page, the only change the page sees is an
-// iframe with a random attribute. The page can't see the content of the
-// iframe, and cannot interfere with its style properties. However the page
-// can remove the iframe.
-
-const bootstrap = async ( ) => {
-    const dynamicURL = new URL(webext.runtime.getURL('/picker-ui.html'));
-    return new Promise(resolve => {
-        const frame = document.createElement('iframe');
-        frame.setAttribute(pickerSecret, '');
-        const onPickerLoad = ( ) => {
-            frame.onload = null;
-            frame.setAttribute(`${pickerSecret}-loaded`, '');
-            const channel = new MessageChannel();
-            const port = channel.port1;
-            port.onmessage = ev => {
-                onFrameMessage(ev.data || {});
-            };
-            port.onmessageerror = ( ) => {
-                quitPicker();
-            };
-            const realURL = new URL(dynamicURL);
-            realURL.hostname = webext.i18n.getMessage('@@extension_id');
-            frame.contentWindow.postMessage(
-                { what: 'pickerStart' },
-                realURL.origin,
-                [ channel.port2 ]
-            );
-            frame.contentWindow.focus();
-            resolve({
-                pickerFrame: frame,
-                pickerFramePort: port,
-            });
-        };
-        if ( dynamicURL.protocol !== 'safari-web-extension:' ) {
-            frame.onload = ( ) => {
-                frame.onload = onPickerLoad;
-                frame.contentWindow.location = dynamicURL.href;
-            };
-        } else {
-            frame.onload = onPickerLoad;
-            frame.setAttribute('src', dynamicURL.href);
-        }
-        document.documentElement.append(frame);
-    });
-};
-
-let { pickerFrame, pickerFramePort } = await bootstrap();
-if ( pickerFrame && pickerFramePort ) { return; }
-
-quitPicker();
+const success = await ubolOverlay.bootstrap('/picker-ui.html', onFrameMessage);
+if ( success !== true ) {
+    quitPicker();
+}
 
 /******************************************************************************/
 

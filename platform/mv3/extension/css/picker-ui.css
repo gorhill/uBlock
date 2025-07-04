@@ -183,7 +183,7 @@ html#ubol-picker,
     background-color: var(--surface-2);
 }
 
-#ubol-picker svg#sea {
+#ubol-picker svg#overlay {
     cursor: crosshair;
     box-sizing: border-box;
     height: 100%;
@@ -192,23 +192,23 @@ html#ubol-picker,
     top: 0;
     width: 100%;
 }
-#ubol-picker.paused svg#sea {
+#ubol-picker.paused svg#overlay {
     cursor: not-allowed;
 }
-#ubol-picker svg#sea > path:first-child {
+#ubol-picker svg#overlay > path:first-child {
     fill: rgba(0,0,0,0.5);
     fill-rule: evenodd;
 }
-#ubol-picker svg#sea > path + path {
+#ubol-picker svg#overlay > path + path {
     stroke: #FF0;
     stroke-width: 0.5px;
-    fill: rgba(255,255,63,0.20);
+    fill: rgba(255,64,64,0.20);
 }
 
 #ubol-picker.preview #toolbar #preview {
     color: var(--accent-ink-1);
     background-color: var(--accent-surface-1);
 }
-#ubol-picker.preview #sea path {
+#ubol-picker.preview #overlay path {
     display: none;
 }
