@@ -107,10 +107,7 @@ export async function registerCSSFilters(context) {
 
     const directive = {
         id: 'css-user',
-        js: [
-            '/js/scripting/isolated-api.js',
-            '/js/scripting/css-user.js',
-        ],
+        js: [ '/js/scripting/css-user.js' ],
         matches: matchesFromHostnames(hostnames),
         runAt: 'document_start',
     };
