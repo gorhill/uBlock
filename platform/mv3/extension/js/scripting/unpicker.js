@@ -30,52 +30,31 @@ const unpicker = self.ubolUnpicker = self.ubolUnpicker || {};
 if ( unpicker.injected ) { return; }
 unpicker.injected = true;
 
-const docURL = new URL(document.baseURI);
-
-/******************************************************************************/
-
-function startPicker() {
-    ubolOverlay.start();
-}
-
-function quitPicker() {
-    ubolOverlay.stop();
-    unpicker.injected = false;
-}
-
 /******************************************************************************/
 
 function onMessage(msg) {
     switch ( msg.what ) {
-    case 'startTool':
-        startPicker();
-        break;
     case 'quitTool':
-        quitPicker();
+        unpicker.injected = false;
         break;
     case 'highlightFromSelector': {
         const { elems, error } = ubolOverlay.elementsFromSelector(msg.selector);
         ubolOverlay.highlightElements(elems);
-        ubolOverlay.postMessage({
-            what: 'countFromSelector',
-            count: elems.length,
-            error,
-        });
-        break;
+        return { count: elems.length, error };
     }
     case 'injectCustomFilters':
         ubolOverlay.sendMessage({ what: 'injectCustomFilters',
-            hostname: docURL.hostname,
+            hostname: ubolOverlay.url.hostname,
         });
         break;
     case 'uninjectCustomFilters':
         ubolOverlay.sendMessage({ what: 'uninjectCustomFilters',
-            hostname: docURL.hostname,
+            hostname: ubolOverlay.url.hostname,
         });
         break;
     case 'removeCustomFilter':
         ubolOverlay.sendMessage({ what: 'removeCustomFilter',
-            hostname: docURL.hostname,
+            hostname: ubolOverlay.url.hostname,
             selector: msg.selector,
         });
         break;
@@ -86,10 +65,7 @@ function onMessage(msg) {
 
 /******************************************************************************/
 
-const success = await ubolOverlay.install('/unpicker-ui.html', onMessage);
-if ( success !== true ) {
-    quitPicker();
-}
+await ubolOverlay.install('/unpicker-ui.html', onMessage);
 
 /******************************************************************************/
 

@@ -222,12 +222,11 @@ function candidatesAtPoint(x, y) {
         }
         return b[1].length - a[1].length;
     }).map(a => a[1]);
-
-    showDialog({
+    return {
         partsDB: Array.from(partsDB),
         listParts,
         sliderParts,
-    });
+    };
 }
 
 const excludedAttributeExpansion = [
@@ -241,49 +240,28 @@ const excludedSelectors = [
 
 /******************************************************************************/
 
-function showDialog(details) {
-    ubolOverlay.postMessage({
-        what: 'showDialog',
-        url: document.baseURI,
-        details,
-    });
-};
-
-/******************************************************************************/
-
-function startPicker() {
-    ubolOverlay.start();
-}
-
-function quitPicker() {
-    ubolOverlay.stop();
-    picker.injected = false;
-}
-
-/******************************************************************************/
-
 function onMessage(msg) {
     switch ( msg.what ) {
-    case 'startTool':
-        startPicker();
-        ubolOverlay.unhighlight();
-        break;
     case 'quitTool':
-        quitPicker();
+        picker.injected = false;
         break;
     case 'highlightFromSelector': {
         const { elems, error } = ubolOverlay.elementsFromSelector(msg.selector);
         ubolOverlay.highlightElements(elems);
-        ubolOverlay.postMessage({
-            what: 'countFromSelector',
-            count: elems.length,
-            error,
+        return { count: elems.length, error };
+    }
+    case 'injectCustomFilters':
+        ubolOverlay.sendMessage({ what: 'injectCustomFilters',
+            hostname: ubolOverlay.url.hostname,
         });
         break;
-    }
-    case 'candidatesAtPoint':
-        candidatesAtPoint(msg.mx, msg.my, msg.broad);
+    case 'uninjectCustomFilters':
+        ubolOverlay.sendMessage({ what: 'uninjectCustomFilters',
+            hostname: ubolOverlay.url.hostname,
+        });
         break;
+    case 'candidatesAtPoint':
+        return candidatesAtPoint(msg.mx, msg.my, msg.broad);
     case 'insertCSS':
         ubolOverlay.sendMessage(msg);
         break;
@@ -297,10 +275,7 @@ function onMessage(msg) {
 
 /******************************************************************************/
 
-const success = await ubolOverlay.install('/picker-ui.html', onMessage);
-if ( success !== true ) {
-    quitPicker();
-}
+await ubolOverlay.install('/picker-ui.html', onMessage);
 
 /******************************************************************************/
 

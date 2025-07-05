@@ -25,7 +25,6 @@ import { toolOverlay } from './tool-overlay-ui.js';
 
 /******************************************************************************/
 
-const docURL = new URL('about:blank');
 let previewCSS = '';
 
 /******************************************************************************/
@@ -44,20 +43,20 @@ function onFilterClicked(ev) {
     const trashElem = qs$(containerElem, ':scope > span:last-of-type');
     const selector = filterElem.textContent;
     if ( target === filterElem ) {
+        dom.cl.remove('.customFilter.on', 'on');
         dom.cl.add(containerElem, 'on');
-        toolOverlay.postMessage({ what: 'highlightFromSelector',
-            selector,
-        });
+        toolOverlay.postMessage({ what: 'highlightFromSelector', selector });
         return;
     }
     if ( target === trashElem ) {
         dom.cl.add(containerElem, 'removed');
         dom.cl.remove(containerElem, 'on');
         toolOverlay.sendMessage({ what: 'removeCustomFilter',
-            hostname: docURL.hostname,
+            hostname: toolOverlay.url.hostname,
             selector,
-        }).then(( ) => {
-            toolOverlay.postMessage({ what: 'unhighlight' });
+        }).then(( ) =>
+            toolOverlay.postMessage({ what: 'unhighlight' })
+        ).then(( ) => {
             autoSelectFilter();
         });
         return;
@@ -92,7 +91,9 @@ function autoSelectFilter() {
     }
     dom.cl.add(containerElem, 'on');
     const filterElem = qs$(containerElem, ':scope > span:first-of-type');
-    toolOverlay.postMessage({ what: 'highlightFromSelector', selector: filterElem.textContent });
+    toolOverlay.postMessage({ what: 'highlightFromSelector',
+        selector: filterElem.textContent,
+    });
 }
 
 /******************************************************************************/
@@ -111,11 +112,10 @@ function populateFilters(selectors) {
 
 /******************************************************************************/
 
-function startUnpicker(url) {
-    docURL.href = url;
+function startUnpicker() {
     toolOverlay.sendMessage({
         what: 'selectorsFromCustomFilters',
-        hostname: docURL.hostname,
+        hostname: toolOverlay.url.hostname,
     }).then(selectors => {
         if ( selectors.length === 0 ) { quitUnpicker(); }
         populateFilters(selectors);
@@ -140,10 +140,7 @@ function quitUnpicker() {
 function onMessage(msg) {
     switch ( msg.what ) {
     case 'startTool':
-        startUnpicker(msg.url);
-        break;
-    case 'countFromSelector':
-        //updateElementCount(msg);
+        startUnpicker();
         break;
     default:
         break;

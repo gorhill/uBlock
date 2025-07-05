@@ -102,12 +102,10 @@ function onKeyPressed(ev) {
 
 function startZapper() {
     self.addEventListener('keydown', onKeyPressed, true);
-    ubolOverlay.start();
 }
 
 function quitZapper() {
     self.removeEventListener('keydown', onKeyPressed, true);
-    ubolOverlay.stop();
     zapper.injected = false;
 }
 
@@ -117,7 +115,6 @@ function onMessage(msg) {
     switch ( msg.what ) {
     case 'startTool':
         startZapper();
-        ubolOverlay.unhighlight();
         break;
     case 'quitTool':
         quitZapper();
@@ -135,10 +132,7 @@ function onMessage(msg) {
 
 /******************************************************************************/
 
-const success = await ubolOverlay.install('/zapper-ui.html', onMessage);
-if ( success !== true ) {
-    quitZapper();
-}
+await ubolOverlay.install('/zapper-ui.html', onMessage);
 
 /******************************************************************************/
 

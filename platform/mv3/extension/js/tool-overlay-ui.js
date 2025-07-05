@@ -25,14 +25,15 @@ import { sendMessage } from './ext.js';
 /******************************************************************************/
 
 export const toolOverlay = {
+    url: new URL('about:blank'),
     svgRoot: qs$('svg#overlay'),
     svgOcean: qs$('svg#overlay > path'),
     svgIslands: qs$('svg#overlay > path + path'),
     emptyPath: 'M0 0',
     port: null,
 
-    start(listener) {
-        this.listener = listener;
+    start(onmessage) {
+        this.onmessage = onmessage;
         globalThis.addEventListener('message', ev => {
             const msg = ev.data || {};
             if ( msg.what !== 'startOverlay' ) { return; }
@@ -43,7 +44,7 @@ export const toolOverlay = {
                 this.onMessage(ev.data || {});
             };
             toolOverlay.port.onmessageerror = ( ) => {
-                this.listener({ what: 'about'});
+                this.onmessage({ what: 'stopTool' });
             };
             this.moveable = qs$('aside:has(#move)');
             if ( this.moveable !== null ) {
@@ -69,9 +70,20 @@ export const toolOverlay = {
         }
     },
 
-    onMessage(msg) {
+    onMessage(wrapped) {
+        // Response from frame-initiated message?
+        if ( typeof wrapped?.fromFrameId === 'number' ) {
+            const resolve = this.pendingMessages.get(wrapped.fromFrameId);
+            if ( resolve ) {
+                this.pendingMessages.delete(wrapped.fromFrameId);
+                resolve(wrapped.msg);
+            }
+            return;
+        }
+        const msg = wrapped.msg || wrapped;
         switch ( msg.what ) {
         case 'startTool': {
+            this.url.href = msg.url;
             const ow = msg.width;
             const oh = msg.height;
             this.svgOcean.setAttribute('d', `M0 0h${ow}v${oh}h-${ow}z`);
@@ -84,13 +96,26 @@ export const toolOverlay = {
         default:
             break;
         }
-        this.listener(msg);
+        const response = this.onmessage && this.onmessage(msg) || undefined;
+        // Send response if this is script-initiated message
+        if ( wrapped?.fromScriptId && this.port ) {
+            wrapped.msg = response;
+            this.port.postMessage(wrapped);
+        }
     },
-
     postMessage(msg) {
         if ( Boolean(this.port) === false ) { return; }
-        this.port.postMessage(msg);
+        const wrapped = {
+            fromFrameId: this.messageId++,
+            msg,
+        };
+        return new Promise(resolve => {
+            this.pendingMessages.set(wrapped.fromFrameId, resolve);
+            this.port.postMessage(wrapped);
+        });
     },
+    messageId: 1,
+    pendingMessages: new Map(),
 
     sendMessage(msg) {
         return sendMessage(msg);

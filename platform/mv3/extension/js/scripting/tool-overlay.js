@@ -27,6 +27,7 @@ if ( self.ubolOverlay !== undefined ) { return; }
 
 self.ubolOverlay = {
     webext: typeof browser === 'object' ? browser : chrome,
+    url: new URL(document.baseURI),
     highlightedElements: [],
     secretAttr: (( ) => {
         let secret = String.fromCharCode((Math.random() * 26) + 97);
@@ -117,12 +118,26 @@ self.ubolOverlay = {
         }
     },
 
-    postMessage(msg) {
-        this.port.postMessage(msg);
-    },
-
-    onMessage(msg) {
+    onMessage(wrapped) {
+        // Response from script-initiated message?
+        if ( typeof wrapped?.fromScriptId === 'number' ) {
+            const resolve = this.pendingMessages.get(wrapped.fromScriptId);
+            if ( resolve ) {
+                this.pendingMessages.delete(wrapped.fromScriptId);
+                resolve(wrapped.msg);
+            }
+            return;
+        }
+        const onmessage = this.onmessage;
+        const msg = wrapped.msg || wrapped;
         switch ( msg.what ) {
+        case 'startTool':
+            this.start();
+            this.unhighlight();
+            break;
+        case 'quitTool':
+            this.stop();
+            break;
         case 'highlightElementAtPoint':
             this.highlightElementAtPoint(msg.mx, msg.my);
             break;
@@ -130,9 +145,26 @@ self.ubolOverlay = {
             this.unhighlight();
             break;
         }
-        if ( Boolean(this.onmessage) === false ) { return; }
-        this.onmessage(msg);
+        const response = onmessage && onmessage(msg);
+        // Send response if this is frame-initiated message
+        if ( wrapped?.fromFrameId && this.port ) {
+            wrapped.msg = response;
+            this.port.postMessage(wrapped);
+        }
     },
+    postMessage(msg) {
+        if ( Boolean(this.port) === false ) { return; }
+        const wrapped = {
+            fromScriptId: this.messageId++,
+            msg,
+        };
+        return new Promise(resolve => {
+            this.pendingMessages.set(wrapped.fromScriptId, resolve);
+            this.port.postMessage(wrapped);
+        });
+    },
+    messageId: 1,
+    pendingMessages: new Map(),
 
     getElementBoundingClientRect(elem) {
         let rect = typeof elem.getBoundingClientRect === 'function'

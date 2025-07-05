@@ -1,5 +1,5 @@
 :root {
-    --ubol-overlay-fill: rgba(255,255,255,0.20);
+    --ubol-overlay-fill: rgba(255,255,255,0.2);
     --ubol-overlay-border: #FFF;
 }
 
@@ -27,7 +27,7 @@ svg#overlay {
     width: 100%;
 }
 svg#overlay > path:first-child {
-    fill: rgba(0,0,0,0.5);
+    fill: rgba(0,0,0,0.3);
     fill-rule: evenodd;
 }
 svg#overlay > path + path {

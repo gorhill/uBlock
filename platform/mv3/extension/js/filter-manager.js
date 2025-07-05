@@ -52,7 +52,7 @@ export async function selectorsFromCustomFilters(hostname) {
         if ( selectors === undefined ) { continue; }
         selectors.forEach(selector => { out.push(selector.slice(1)); });
     }
-    return out;
+    return out.sort();
 }
 
 /******************************************************************************/
@@ -133,7 +133,10 @@ export async function registerCustomFilters(context) {
 export async function addCustomFilter(hostname, selector) {
     const key = `site.${hostname}`;
     const selectors = await localRead(key) || [];
-    selectors.push(`0${selector}`);
+    const filter = `0${selector}`;
+    if ( selectors.includes(filter) ) { return false; }
+    selectors.push(filter);
+    selectors.sort();
     await localWrite(key, selectors);
     return true;
 }

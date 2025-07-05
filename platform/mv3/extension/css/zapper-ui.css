@@ -1,6 +1,6 @@
 :root#ubol-zapper {
     --quit-button-size: max(4em, min(6em, calc(100vw / 8), calc(100vh / 8)));
-    --ubol-overlay-fill: rgba(255,255,63,0.20);
+    --ubol-overlay-fill: rgba(255,255,63,0.10);
     --ubol-overlay-border: #FF0;
 }
 

@@ -25,8 +25,6 @@ import { toolOverlay } from './tool-overlay-ui.js';
 
 /******************************************************************************/
 
-const filterURL = new URL('about:blank');
-
 let selectorPartsDB = new Map();
 let sliderParts = [];
 let previewCSS = '';
@@ -84,9 +82,10 @@ function onSvgClicked(ev) {
     // - click outside dialog AND
     // - not in preview mode
     if ( dom.cl.has(dom.root, 'paused') ) {
-        if ( dom.cl.has(dom.root, 'preview') === false ) {
-            unpausePicker();
+        if ( dom.cl.has(dom.root, 'preview') ) {
+            updatePreview(false);
         }
+        unpausePicker();
         return;
     }
     // Force dialog to always be visible when using a touch-driven device.
@@ -98,6 +97,8 @@ function onSvgClicked(ev) {
         mx: ev.clientX,
         my: ev.clientY,
         broad: ev.ctrlKey,
+    }).then(details => {
+        showDialog(details);
     });
 }
 
@@ -221,7 +222,9 @@ function updatePreview(state) {
         previewCSS = '';
     }
     if ( state === false ) { return; }
-    previewCSS = `${qs$('textarea').value}{display:none!important;}`;
+    const selector = qs$('textarea').value;
+    if ( isValidSelector(selector) === false ) { return; }
+    previewCSS = `${selector}{display:none!important;}`;
     toolOverlay.postMessage({ what: 'insertCSS', css: previewCSS });
 }
 
@@ -230,13 +233,15 @@ function updatePreview(state) {
 function onCreateClicked() {
     const selector = qs$('textarea').value;
     if ( isValidSelector(selector) === false ) { return; }
-    const css = `${selector}{display:none!important;}`;
-    toolOverlay.postMessage({ what: 'insertCSS', css });
-    toolOverlay.sendMessage({
-        what: 'addCustomFilter',
-        hostname: filterURL.hostname,
-        selector: selector,
-    });
+    toolOverlay.postMessage({ what: 'uninjectCustomFilters' }).then(( ) =>
+        toolOverlay.sendMessage({
+            what: 'addCustomFilter',
+            hostname: toolOverlay.url.hostname,
+            selector,
+        })
+    ).then(( ) =>
+        toolOverlay.postMessage({ what: 'injectCustomFilters' })
+    );
     qs$('textarea').value = '';
     dom.cl.remove(dom.root, 'preview');
     updatePreview();
@@ -286,11 +291,8 @@ function onCandidateClicked(ev) {
 function showDialog(msg) {
     pausePicker();
 
-    filterURL.href = msg.url;
-
-    /* global */selectorPartsDB = new Map(msg.details.partsDB);
-
-    const { listParts } = msg.details;
+    /* global */selectorPartsDB = new Map(msg.partsDB);
+    const { listParts } = msg;
     const root = qs$('#candidateFilters');
     const ul = qs$(root, 'ul');
     while ( ul.firstChild !== null ) {
@@ -312,7 +314,7 @@ function showDialog(msg) {
         ul.appendChild(li);
     }
 
-    /* global */sliderParts = msg.details.sliderParts;
+    /* global */sliderParts = msg.sliderParts;
     const slider = qs$('#slider');
     const last = sliderParts.length - 1;
     dom.attr(slider, 'max', last);
@@ -332,6 +334,8 @@ function highlightCandidate() {
     toolOverlay.postMessage({
         what: 'highlightFromSelector',
         selector,
+    }).then(result => {
+        updateElementCount(result);
     });
 }
 
@@ -412,12 +416,6 @@ function onMessage(msg) {
     switch ( msg.what ) {
     case 'startTool':
         startPicker();
-        break;
-    case 'countFromSelector':
-        updateElementCount(msg);
-        break;
-    case 'showDialog':
-        showDialog(msg);
         break;
     default:
         break;

@@ -1,5 +1,5 @@
 :root#ubol-unpicker {
-    --ubol-overlay-fill: rgba(64,255,64,0.20);
+    --ubol-overlay-fill: rgba(64,255,64,0.10);
     --ubol-overlay-border: #0F0;
 }
 
@@ -9,7 +9,6 @@
     max-height: 40vh;
     max-width: min(32rem, 100vw - 4px);
     min-width: min(24rem, 100vw - 4px);
-    row-gap: 1em;
     width: min(32rem, 100vw - 4px);
 }
 #ubol-unpicker.minimized aside {
@@ -27,14 +26,18 @@
 
 #ubol-unpicker #customFilters {
     font-family: monospace;
-    padding: 0 var(--default-gap-xsmall)
+    padding: var(--default-gap-xsmall) 0
         var(--default-gap-xsmall) var(--default-gap-xsmall);
 }
 #ubol-unpicker .customFilter {
     display: flex;
 }
+#ubol-unpicker .customFilter:nth-of-type(2n+1) {
+    background-color: var(--surface-2);
+}
 #ubol-unpicker .customFilter > span:first-of-type {
     flex-grow: 1;
+    padding: var(--default-gap-xxsmall) 0;
 }
 #ubol-unpicker .customFilter.on >  span:first-of-type {
     background-color: var(--ink-1);
@@ -46,8 +49,11 @@
 #ubol-unpicker .customFilter.removed >  span:last-of-type {
     visibility: hidden;
 }
+#ubol-unpicker .customFilter.removed {
+    pointer-events: none;
+}
 #ubol-unpicker .customFilter > span:last-of-type {
     flex-shrink: 0;
-    font-size: 1.25em;
+    font-size: 1.4em;
     padding: 0 0.5em;
 }

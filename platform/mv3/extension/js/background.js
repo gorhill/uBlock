@@ -445,7 +445,8 @@ function onMessage(request, sender, callback) {
         return true;
 
     case 'addCustomFilter':
-        addCustomFilter(request.hostname, request.selector).then(( ) =>
+        addCustomFilter(request.hostname, request.selector).then(modified =>
+            if ( modified !== true ) { return; }
             registerInjectables()
         ).then(( ) => {
             callback();
@@ -453,7 +454,8 @@ function onMessage(request, sender, callback) {
         return true;
 
     case 'removeCustomFilter':
-        removeCustomFilter(request.hostname, request.selector).then(( ) =>
+        removeCustomFilter(request.hostname, request.selector).then(modified =>
+            if ( modified !== true ) { return; }
             registerInjectables()
         ).then(( ) => {
             callback();

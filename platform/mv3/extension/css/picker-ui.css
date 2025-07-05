@@ -1,6 +1,10 @@
 :root#ubol-picker {
-    --ubol-overlay-fill: rgba(255,64,64,0.20);
+    --ubol-overlay-fill: rgba(255,64,64,0.10);
     --ubol-overlay-border: #F00;
+}
+
+#ubol-picker.paused svg#overlay {
+    cursor: not-allowed;
 }
 
 #ubol-picker aside {
