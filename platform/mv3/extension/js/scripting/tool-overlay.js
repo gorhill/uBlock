@@ -113,7 +113,7 @@ self.ubolOverlay = {
 
     sendMessage(msg) {
         try {
-            this.webext.runtime.sendMessage(msg).catch(( ) => { });
+            return this.webext.runtime.sendMessage(msg).catch(( ) => { });
         } catch {
         }
     },
@@ -133,7 +133,6 @@ self.ubolOverlay = {
         switch ( msg.what ) {
         case 'startTool':
             this.start();
-            this.unhighlight();
             break;
         case 'quitTool':
             this.stop();
@@ -145,11 +144,17 @@ self.ubolOverlay = {
             this.unhighlight();
             break;
         }
-        const response = onmessage && onmessage(msg);
+        const response = onmessage && onmessage(msg) || undefined;
         // Send response if this is frame-initiated message
         if ( wrapped?.fromFrameId && this.port ) {
-            wrapped.msg = response;
-            this.port.postMessage(wrapped);
+            const { fromFrameId } = wrapped;
+            if ( response instanceof Promise ) {
+                response.then(response => {
+                    this.port.postMessage({ fromFrameId, msg: response });
+                });
+            } else {
+                this.port.postMessage({ fromFrameId, msg: response });
+            }
         }
     },
     postMessage(msg) {

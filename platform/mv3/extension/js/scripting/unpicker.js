@@ -43,21 +43,18 @@ function onMessage(msg) {
         return { count: elems.length, error };
     }
     case 'injectCustomFilters':
-        ubolOverlay.sendMessage({ what: 'injectCustomFilters',
+        return ubolOverlay.sendMessage({ what: 'injectCustomFilters',
             hostname: ubolOverlay.url.hostname,
         });
-        break;
     case 'uninjectCustomFilters':
-        ubolOverlay.sendMessage({ what: 'uninjectCustomFilters',
+        return ubolOverlay.sendMessage({ what: 'uninjectCustomFilters',
             hostname: ubolOverlay.url.hostname,
         });
-        break;
     case 'removeCustomFilter':
-        ubolOverlay.sendMessage({ what: 'removeCustomFilter',
+        return ubolOverlay.sendMessage({ what: 'removeCustomFilter',
             hostname: ubolOverlay.url.hostname,
             selector: msg.selector,
         });
-        break;
     default:
         break;
     }

@@ -208,8 +208,10 @@ function onMessage(request, sender, callback) {
 
     case 'uninjectCustomFilters':
         if ( frameId === false ) { return false; }
-        uninjectCustomFilters(tabId, frameId, request.hostname);
-        return false;
+        uninjectCustomFilters(tabId, frameId, request.hostname).then(( ) => {
+            callback();
+        });
+        return true;
 
     default:
         break;

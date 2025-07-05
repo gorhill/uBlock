@@ -99,8 +99,14 @@ export const toolOverlay = {
         const response = this.onmessage && this.onmessage(msg) || undefined;
         // Send response if this is script-initiated message
         if ( wrapped?.fromScriptId && this.port ) {
-            wrapped.msg = response;
-            this.port.postMessage(wrapped);
+            const { fromScriptId } = wrapped;
+            if ( response instanceof Promise ) {
+                response.then(response => {
+                    this.port.postMessage({ fromScriptId, msg: response });
+                });
+            } else {
+                this.port.postMessage({ fromScriptId, msg: response });
+            }
         }
     },
     postMessage(msg) {

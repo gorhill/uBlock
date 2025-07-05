@@ -251,23 +251,19 @@ function onMessage(msg) {
         return { count: elems.length, error };
     }
     case 'injectCustomFilters':
-        ubolOverlay.sendMessage({ what: 'injectCustomFilters',
+        return ubolOverlay.sendMessage({ what: 'injectCustomFilters',
             hostname: ubolOverlay.url.hostname,
         });
-        break;
     case 'uninjectCustomFilters':
-        ubolOverlay.sendMessage({ what: 'uninjectCustomFilters',
+        return ubolOverlay.sendMessage({ what: 'uninjectCustomFilters',
             hostname: ubolOverlay.url.hostname,
         });
-        break;
     case 'candidatesAtPoint':
         return candidatesAtPoint(msg.mx, msg.my, msg.broad);
     case 'insertCSS':
-        ubolOverlay.sendMessage(msg);
-        break;
+        return ubolOverlay.sendMessage(msg);
     case 'removeCSS':
-        ubolOverlay.sendMessage(msg);
-        break;
+        return ubolOverlay.sendMessage(msg);
     default:
         break;
     }

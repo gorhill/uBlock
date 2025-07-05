@@ -88,23 +88,22 @@ function populateFilters(selectors) {
         container.append(row);
     }
     faIconsInit(container);
+    autoSelectFilter();
 }
 
 /******************************************************************************/
 
-function startUnpicker() {
-    toolOverlay.sendMessage({
+async function startUnpicker() {
+    const selectors = await toolOverlay.sendMessage({
         what: 'selectorsFromCustomFilters',
         hostname: toolOverlay.url.hostname,
-    }).then(selectors => {
-        if ( selectors.length === 0 ) {
-            return quitUnpicker();
-        }
-        populateFilters(selectors);
-        autoSelectFilter();
-    });
-    toolOverlay.postMessage({ what: 'startTool' });
-    toolOverlay.postMessage({ what: 'uninjectCustomFilters' });
+    })
+    if ( selectors.length === 0 ) {
+        return quitUnpicker();
+    }
+    await toolOverlay.postMessage({ what: 'startTool' });
+    await toolOverlay.postMessage({ what: 'uninjectCustomFilters' });
+    populateFilters(selectors);
     dom.on('#minimize', 'click', onMinimizeClicked);
     dom.on('#customFilters', 'click', onFilterClicked);
     dom.on('#quit', 'click', quitUnpicker);
@@ -112,10 +111,9 @@ function startUnpicker() {
 
 /******************************************************************************/
 
-function quitUnpicker() {
-    toolOverlay.postMessage({ what: 'injectCustomFilters' }).then(( ) => {
-        toolOverlay.stop();
-    });
+async function quitUnpicker() {
+    await toolOverlay.postMessage({ what: 'injectCustomFilters' });
+    toolOverlay.stop();
 }
 
 /******************************************************************************/
