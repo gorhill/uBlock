@@ -23,10 +23,10 @@
 
 /******************************************************************************/
 
-const ubolOverlay = self.uBOLOverlay;
+const ubolOverlay = self.ubolOverlay;
 if ( ubolOverlay === undefined ) { return; }
 
-const zapper = self.uBOLZapper = self.uBOLZapper || {};
+const zapper = self.ubolZapper = self.ubolZapper || {};
 if ( zapper.injected ) { return; }
 zapper.injected = true;
 
@@ -113,9 +113,9 @@ function quitZapper() {
 
 /******************************************************************************/
 
-function onFrameMessage(msg) {
+function onMessage(msg) {
     switch ( msg.what ) {
-    case 'startZapper':
+    case 'startTool':
         startZapper();
         ubolOverlay.unhighlight();
         break;
@@ -135,7 +135,7 @@ function onFrameMessage(msg) {
 
 /******************************************************************************/
 
-const success = await ubolOverlay.bootstrap('/zapper-ui.html', onFrameMessage);
+const success = await ubolOverlay.install('/zapper-ui.html', onMessage);
 if ( success !== true ) {
     quitZapper();
 }

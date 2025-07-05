@@ -25,8 +25,10 @@
 
 const docURL = new URL(document.baseURI);
 chrome.runtime.sendMessage({
-    what: 'injectCSSFilters',
+    what: 'injectCustomFilters',
     hostname: docURL.hostname,
+}).then(selectors => {
+    self.ubolInjectedCustomFilters = selectors;
 }).catch(( ) => {
 });
 

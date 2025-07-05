@@ -32,8 +32,12 @@ import {
 } from './mode-manager.js';
 
 import {
-    addCSSFilter,
-    removeCSSFilter,
+    addCustomFilter,
+    hasCustomFilters,
+    injectCustomFilters,
+    removeCustomFilter,
+    selectorsFromCustomFilters,
+    uninjectCustomFilters,
 } from './filter-manager.js';
 
 import {
@@ -75,11 +79,6 @@ import {
     toggleDeveloperMode,
     ubolLog,
 } from './debug.js';
-
-import {
-    injectCSSFilters,
-    uninjectCSSFilters,
-} from './filter-manager.js';
 
 import {
     loadRulesetConfig,
@@ -200,14 +199,16 @@ function onMessage(request, sender, callback) {
         return false;
     }
 
-    case 'injectCSSFilters':
+    case 'injectCustomFilters':
         if ( frameId === false ) { return false; }
-        injectCSSFilters(tabId, frameId, request.hostname);
-        return false;
+        injectCustomFilters(tabId, frameId, request.hostname).then(selectors => {
+            callback(selectors);
+        });
+        return true;
 
-    case 'uninjectCSSFilters':
+    case 'uninjectCustomFilters':
         if ( frameId === false ) { return false; }
-        uninjectCSSFilters(tabId, frameId, request.hostname);
+        uninjectCustomFilters(tabId, frameId, request.hostname);
         return false;
 
     default:
@@ -320,19 +321,16 @@ function onMessage(request, sender, callback) {
             hasBroadHostPermissions(),
             getFilteringMode(request.hostname),
             adminReadEx('disabledFeatures'),
+            hasCustomFilters(request.hostname),
         ]).then(results => {
-            const [
-                hasOmnipotence,
-                level,
-                disabledFeatures,
-            ] = results;
             callback({
-                hasOmnipotence,
-                level,
+                hasOmnipotence: results[0],
+                level: results[1],
                 autoReload: rulesetConfig.autoReload,
                 isSideloaded,
                 developerMode: rulesetConfig.developerMode,
-                disabledFeatures,
+                disabledFeatures: results[2],
+                hasCustomFilters: results[3],
             });
         });
         return true;
@@ -446,19 +444,25 @@ function onMessage(request, sender, callback) {
         });
         return true;
 
-    case 'addCSSFilter':
-        addCSSFilter(request.hostname, request.selector).then(( ) =>
+    case 'addCustomFilter':
+        addCustomFilter(request.hostname, request.selector).then(( ) =>
             registerInjectables()
         ).then(( ) => {
             callback();
         })
         return true;
 
-    case 'removeCSSFilter':
-        removeCSSFilter(request.hostname, request.selector).then(( ) =>
+    case 'removeCustomFilter':
+        removeCustomFilter(request.hostname, request.selector).then(( ) =>
             registerInjectables()
         ).then(( ) => {
             callback();
+        });
+        return true;
+
+    case 'selectorsFromCustomFilters':
+        selectorsFromCustomFilters(request.hostname).then(selectors => {
+            callback(selectors);
         });
         return true;
 

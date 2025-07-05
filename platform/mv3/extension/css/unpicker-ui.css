@@ -1,0 +1,53 @@
+:root#ubol-unpicker {
+    --ubol-overlay-fill: rgba(64,255,64,0.20);
+    --ubol-overlay-border: #0F0;
+}
+
+#ubol-unpicker aside {
+    background-color: var(--surface-1);
+    border: 1px solid var(--border-2);
+    max-height: 40vh;
+    max-width: min(32rem, 100vw - 4px);
+    min-width: min(24rem, 100vw - 4px);
+    row-gap: 1em;
+    width: min(32rem, 100vw - 4px);
+}
+#ubol-unpicker.minimized aside {
+    min-width: min(8rem, 100vw - 4px);
+    width: min(8rem, 100vw - 4px);
+}
+
+#ubol-unpicker.preview #toolbar #preview {
+    color: var(--accent-ink-1);
+    background-color: var(--accent-surface-1);
+}
+#ubol-unpicker.preview #overlay path {
+    display: none;
+}
+
+#ubol-unpicker #customFilters {
+    font-family: monospace;
+    padding: 0 var(--default-gap-xsmall)
+        var(--default-gap-xsmall) var(--default-gap-xsmall);
+}
+#ubol-unpicker .customFilter {
+    display: flex;
+}
+#ubol-unpicker .customFilter > span:first-of-type {
+    flex-grow: 1;
+}
+#ubol-unpicker .customFilter.on >  span:first-of-type {
+    background-color: var(--ink-1);
+    color: var(--surface-1);
+}
+#ubol-unpicker .customFilter.removed >  span:first-of-type {
+    text-decoration-line: line-through;
+}
+#ubol-unpicker .customFilter.removed >  span:last-of-type {
+    visibility: hidden;
+}
+#ubol-unpicker .customFilter > span:last-of-type {
+    flex-shrink: 0;
+    font-size: 1.25em;
+    padding: 0 0.5em;
+}

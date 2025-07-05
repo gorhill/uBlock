@@ -23,9 +23,9 @@
 
 /******************************************************************************/
 
-if ( self.uBOLOverlay !== undefined ) { return; }
+if ( self.ubolOverlay !== undefined ) { return; }
 
-self.uBOLOverlay = {
+self.ubolOverlay = {
     webext: typeof browser === 'object' ? browser : chrome,
     highlightedElements: [],
     secretAttr: (( ) => {
@@ -72,14 +72,14 @@ self.uBOLOverlay = {
             `:root > [${this.secretAttr}-loaded] { visibility: visible !important; }`,
             `:root > [${this.secretAttr}-click] { pointer-events: none !important; }`,
         ].join('\n');
-        this.ubolMessage({ what: 'insertCSS', css: this.pickerCSS });
+        this.sendMessage({ what: 'insertCSS', css: this.pickerCSS });
         self.addEventListener('scroll', this.onViewportChanged, { passive: true });
         self.addEventListener('resize', this.onViewportChanged, { passive: true });
         self.addEventListener('keydown', this.onKeyPressed, true);
     },
 
     stop() {
-        this.ubolMessage({ what: 'removeCSS', css: this.pickerCSS });
+        this.sendMessage({ what: 'removeCSS', css: this.pickerCSS });
         self.removeEventListener('scroll', this.onViewportChanged, { passive: true });
         self.removeEventListener('resize', this.onViewportChanged, { passive: true });
         self.removeEventListener('keydown', this.onKeyPressed, true);
@@ -94,34 +94,34 @@ self.uBOLOverlay = {
             this.port = null;
         }
         this.onmessage = null;
-        self.uBOLOverlay = undefined;
+        self.ubolOverlay = undefined;
     },
 
     onViewportChanged() {
-        self.uBOLOverlay.highlightUpdate();
+        self.ubolOverlay.highlightUpdate();
     },
 
     onKeyPressed(ev) {
         if ( ev.key !== 'Escape' && ev.which !== 27 ) { return; }
         ev.stopPropagation();
         ev.preventDefault();
-        if ( self.uBOLOverlay.onmessage ) {
-            self.uBOLOverlay.onmessage({ what: 'quitTool' });
+        if ( self.ubolOverlay.onmessage ) {
+            self.ubolOverlay.onmessage({ what: 'quitTool' });
         }
     },
 
-    ubolMessage(msg) {
+    sendMessage(msg) {
         try {
             this.webext.runtime.sendMessage(msg).catch(( ) => { });
         } catch {
         }
     },
 
-    frameMessage(msg) {
+    postMessage(msg) {
         this.port.postMessage(msg);
     },
 
-    onFrameMessage(msg) {
+    onMessage(msg) {
         switch ( msg.what ) {
         case 'highlightElementAtPoint':
             this.highlightElementAtPoint(msg.mx, msg.my);
@@ -235,7 +235,7 @@ self.uBOLOverlay = {
     },
 
     highlightElementAtPoint(x, y) {
-        const elem = self.uBOLOverlay.elementFromPoint(x, y);
+        const elem = self.ubolOverlay.elementFromPoint(x, y);
         this.highlightElements([ elem ]);
     },
 
@@ -243,7 +243,7 @@ self.uBOLOverlay = {
         this.highlightElements([]);
     },
 
-    async bootstrap(file, onmessage) {
+    async install(file, onmessage) {
         const dynamicURL = new URL(this.webext.runtime.getURL(file));
         return new Promise(resolve => {
             const frame = document.createElement('iframe');
@@ -255,23 +255,28 @@ self.uBOLOverlay = {
                 const channel = new MessageChannel();
                 const port = channel.port1;
                 port.onmessage = ev => {
-                    self.uBOLOverlay.onFrameMessage(ev.data || {})
+                    self.ubolOverlay.onMessage(ev.data || {})
                 };
                 port.onmessageerror = ( ) => {
-                    self.uBOLOverlay.onFrameMessage({ what: 'quitTool' })
+                    self.ubolOverlay.onMessage({ what: 'quitTool' })
                 };
                 const realURL = new URL(dynamicURL);
                 realURL.hostname =
-                    self.uBOLOverlay.webext.i18n.getMessage('@@extension_id');
+                    self.ubolOverlay.webext.i18n.getMessage('@@extension_id');
                 frame.contentWindow.postMessage(
-                    { what: 'startOverlay' },
+                    {
+                        what: 'startOverlay',
+                        url: document.baseURI,
+                        width: self.innerWidth,
+                        height: self.innerHeight,
+                    },
                     realURL.origin,
                     [ channel.port2 ]
                 );
                 frame.contentWindow.focus();
-                self.uBOLOverlay.onmessage = onmessage;
-                self.uBOLOverlay.port = port;
-                self.uBOLOverlay.frame = frame;
+                self.ubolOverlay.onmessage = onmessage;
+                self.ubolOverlay.port = port;
+                self.ubolOverlay.frame = frame;
                 resolve(true);
             };
             if ( dynamicURL.protocol !== 'safari-web-extension:' ) {

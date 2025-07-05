@@ -73,6 +73,14 @@
       "matches": [
         "<all_urls>"
       ]
+    },
+    {
+      "resources": [
+        "unpicker-ui.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
     }
   ]
 }

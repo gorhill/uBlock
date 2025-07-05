@@ -23,10 +23,10 @@
 
 /******************************************************************************/
 
-const ubolOverlay = self.uBOLOverlay;
+const ubolOverlay = self.ubolOverlay;
 if ( ubolOverlay === undefined ) { return; }
 
-const picker = self.uBOLPicker = self.uBOLPicker || {};
+const picker = self.ubolPicker = self.ubolPicker || {};
 if ( picker.injected ) { return; }
 picker.injected = true;
 
@@ -242,7 +242,7 @@ const excludedSelectors = [
 /******************************************************************************/
 
 function showDialog(details) {
-    ubolOverlay.frameMessage({
+    ubolOverlay.postMessage({
         what: 'showDialog',
         url: document.baseURI,
         details,
@@ -262,9 +262,9 @@ function quitPicker() {
 
 /******************************************************************************/
 
-function onFrameMessage(msg) {
+function onMessage(msg) {
     switch ( msg.what ) {
-    case 'startPicker':
+    case 'startTool':
         startPicker();
         ubolOverlay.unhighlight();
         break;
@@ -274,7 +274,7 @@ function onFrameMessage(msg) {
     case 'highlightFromSelector': {
         const { elems, error } = ubolOverlay.elementsFromSelector(msg.selector);
         ubolOverlay.highlightElements(elems);
-        ubolOverlay.frameMessage({
+        ubolOverlay.postMessage({
             what: 'countFromSelector',
             count: elems.length,
             error,
@@ -285,10 +285,10 @@ function onFrameMessage(msg) {
         candidatesAtPoint(msg.mx, msg.my, msg.broad);
         break;
     case 'insertCSS':
-        ubolOverlay.ubolMessage(msg);
+        ubolOverlay.sendMessage(msg);
         break;
     case 'removeCSS':
-        ubolOverlay.ubolMessage(msg);
+        ubolOverlay.sendMessage(msg);
         break;
     default:
         break;
@@ -297,7 +297,7 @@ function onFrameMessage(msg) {
 
 /******************************************************************************/
 
-const success = await ubolOverlay.bootstrap('/picker-ui.html', onFrameMessage);
+const success = await ubolOverlay.install('/picker-ui.html', onMessage);
 if ( success !== true ) {
     quitPicker();
 }

@@ -36,7 +36,7 @@ import {
 
 /******************************************************************************/
 
-export async function selectorsFromCSSFilters(hostname) {
+export async function selectorsFromCustomFilters(hostname) {
     const promises = [];
     let hn = hostname;
     while ( hn !== '' ) {
@@ -57,22 +57,30 @@ export async function selectorsFromCSSFilters(hostname) {
 
 /******************************************************************************/
 
-export async function injectCSSFilters(tabId, frameId, hostname) {
-    const selectors = await selectorsFromCSSFilters(hostname);
+export async function hasCustomFilters(hostname) {
+    const selectors = await selectorsFromCustomFilters(hostname);
+    return selectors?.length ?? 0;
+}
+
+/******************************************************************************/
+
+export async function injectCustomFilters(tabId, frameId, hostname) {
+    const selectors = await selectorsFromCustomFilters(hostname);
     if ( selectors.length === 0 ) { return; }
-    return browser.scripting.insertCSS({
+    await browser.scripting.insertCSS({
         css: `${selectors.join(',\n')}{display:none!important;}`,
         origin: 'USER',
         target: { tabId, frameIds: [ frameId ] },
     }).catch(reason => {
         console.log(reason);
     });
+    return selectors;
 }
 
 /******************************************************************************/
 
-export async function uninjectCSSFilters(tabId, frameId, hostname) {
-    const selectors = await selectorsFromCSSFilters(hostname);
+export async function uninjectCustomFilters(tabId, frameId, hostname) {
+    const selectors = await selectorsFromCustomFilters(hostname);
     if ( selectors.length === 0 ) { return; }
     return browser.scripting.removeCSS({
         css: `${selectors.join(',\n')}{display:none!important;}`,
@@ -85,7 +93,7 @@ export async function uninjectCSSFilters(tabId, frameId, hostname) {
 
 /******************************************************************************/
 
-export async function registerCSSFilters(context) {
+export async function registerCustomFilters(context) {
     const storageKeys = await localKeys() || [];
     const siteKeys = storageKeys.filter(a => a.startsWith('site.'));
     if ( siteKeys.length === 0 ) { return; }
@@ -122,7 +130,7 @@ export async function registerCSSFilters(context) {
 
 /******************************************************************************/
 
-export async function addCSSFilter(hostname, selector) {
+export async function addCustomFilter(hostname, selector) {
     const key = `site.${hostname}`;
     const selectors = await localRead(key) || [];
     selectors.push(`0${selector}`);
@@ -132,7 +140,7 @@ export async function addCSSFilter(hostname, selector) {
 
 /******************************************************************************/
 
-export async function removeCSSFilter(hostname, selector) {
+export async function removeCustomFilter(hostname, selector) {
     const key = `site.${hostname}`;
     const selectors = await localRead(key);
     if ( selectors === undefined ) { return false; }

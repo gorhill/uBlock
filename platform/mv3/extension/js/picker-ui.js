@@ -20,19 +20,12 @@
 */
 
 import { dom, qs$, qsa$ } from './dom.js';
-import { localRead, localWrite, sendMessage } from './ext.js';
+import { localRead, localWrite } from './ext.js';
 import { toolOverlay } from './tool-overlay-ui.js';
 
 /******************************************************************************/
 
-const svgRoot = qs$('svg#overlay');
-const svgOcean = svgRoot.children[0];
-const svgIslands = svgRoot.children[1];
-const NoPaths = 'M0 0';
 const filterURL = new URL('about:blank');
-
-const pickerRoot = document.documentElement;
-const dialog = qs$('aside');
 
 let selectorPartsDB = new Map();
 let sliderParts = [];
@@ -86,94 +79,19 @@ onSvgTouch.t0 = 0;
 
 /******************************************************************************/
 
-function moveDialog(ev) {
-    const target = ev.target;
-    if ( target.matches('#move') === false ) { return; }
-    if ( dom.cl.has(dialog, 'moving') ) { return; }
-    target.setPointerCapture(ev.pointerId);
-    moveDialog.isTouch = ev.type.startsWith('touch');
-    if ( moveDialog.isTouch ) {
-        const touch = ev.touches[0];
-        moveDialog.mx0 = touch.pageX;
-        moveDialog.my0 = touch.pageY;
-    } else {
-        moveDialog.mx0 = ev.pageX;
-        moveDialog.my0 = ev.pageY;
-    }
-    const rect = dialog.getBoundingClientRect();
-    moveDialog.dw = rect.width;
-    moveDialog.dh = rect.height;
-    moveDialog.cx0 = rect.x + moveDialog.dw / 2;
-    moveDialog.cy0 = rect.y + moveDialog.dh / 2;
-    moveDialog.pw = pickerRoot.clientWidth;
-    moveDialog.ph = pickerRoot.clientHeight;
-    dom.cl.add(dialog, 'moving');
-    self.addEventListener('pointermove', moveDialog.moveAsync, { capture: true });
-    self.addEventListener('pointerup', moveDialog.stop, { capture: true, once: true });
-    ev.stopPropagation();
-    ev.preventDefault();
-}
-moveDialog.isTouch = false;
-moveDialog.mx0 = moveDialog.my0 = 0;
-moveDialog.mx1 = moveDialog.my1 = 0;
-moveDialog.pw = moveDialog.ph = 0;
-moveDialog.dw = moveDialog.dh = 0;
-moveDialog.cx0 = moveDialog.cy0 = 0;
-moveDialog.move = ( ) => {
-    moveDialog.timer = undefined;
-    const cx1 = moveDialog.cx0 + moveDialog.mx1 - moveDialog.mx0;
-    const cy1 = moveDialog.cy0 + moveDialog.my1 - moveDialog.my0;
-    if ( cx1 < moveDialog.pw / 2 ) {
-        dialog.style.setProperty('left', `${Math.max(cx1-moveDialog.dw/2,2)}px`);
-        dialog.style.removeProperty('right');
-    } else {
-        dialog.style.removeProperty('left');
-        dialog.style.setProperty('right', `${Math.max(moveDialog.pw-cx1-moveDialog.dw/2,2)}px`);
-    }
-    if ( cy1 < moveDialog.ph / 2 ) {
-        dialog.style.setProperty('top', `${Math.max(cy1-moveDialog.dh/2,2)}px`);
-        dialog.style.removeProperty('bottom');
-    } else {
-        dialog.style.removeProperty('top');
-        dialog.style.setProperty('bottom', `${Math.max(moveDialog.ph-cy1-moveDialog.dh/2,2)}px`);
-    }
-};
-moveDialog.moveAsync = ev => {
-    if ( moveDialog.timer !== undefined ) { return; }
-    if ( moveDialog.isTouch ) {
-        const touch = ev.touches[0];
-        moveDialog.mx1 = touch.pageX;
-        moveDialog.my1 = touch.pageY;
-    } else {
-        moveDialog.mx1 = ev.pageX;
-        moveDialog.my1 = ev.pageY;
-    }
-    moveDialog.timer = self.requestAnimationFrame(moveDialog.move);
-};
-moveDialog.stop = ev => {
-    if ( dom.cl.has(dialog, 'moving') === false ) { return; }
-    dom.cl.remove(dialog, 'moving');
-    self.removeEventListener('pointermove', moveDialog.moveAsync, { capture: true });
-    ev.target.releasePointerCapture(ev.pointerId);
-    ev.stopPropagation();
-    ev.preventDefault();
-};
-
-/******************************************************************************/
-
 function onSvgClicked(ev) {
     // Unpause picker if:
     // - click outside dialog AND
     // - not in preview mode
-    if ( dom.cl.has(pickerRoot, 'paused') ) {
-        if ( dom.cl.has(pickerRoot, 'preview') === false ) {
+    if ( dom.cl.has(dom.root, 'paused') ) {
+        if ( dom.cl.has(dom.root, 'preview') === false ) {
             unpausePicker();
         }
         return;
     }
     // Force dialog to always be visible when using a touch-driven device.
     if ( ev.type === 'touch' ) {
-        dom.cl.add(pickerRoot, 'show');
+        dom.cl.add(dom.root, 'show');
     }
     toolOverlay.postMessage({
         what: 'candidatesAtPoint',
@@ -314,8 +232,8 @@ function onCreateClicked() {
     if ( isValidSelector(selector) === false ) { return; }
     const css = `${selector}{display:none!important;}`;
     toolOverlay.postMessage({ what: 'insertCSS', css });
-    sendMessage({
-        what: 'addCSSFilter',
+    toolOverlay.sendMessage({
+        what: 'addCustomFilter',
         hostname: filterURL.hostname,
         selector: selector,
     });
@@ -432,13 +350,13 @@ function highlightCandidate() {
  * */
 
 function pausePicker() {
-    dom.cl.add(pickerRoot, 'paused');
-    dom.cl.remove(pickerRoot, 'minimized');
+    dom.cl.add(dom.root, 'paused');
+    dom.cl.remove(dom.root, 'minimized');
     toolOverlay.highlightElementUnderMouse(false);
 }
 
 function unpausePicker() {
-    dom.cl.remove(pickerRoot, 'paused', 'preview');
+    dom.cl.remove(dom.root, 'paused', 'preview');
     updatePreview();
     toolOverlay.postMessage({
         what: 'togglePreview',
@@ -450,7 +368,7 @@ function unpausePicker() {
 /******************************************************************************/
 
 function startPicker() {
-    toolOverlay.postMessage({ what: 'startPicker' });
+    toolOverlay.postMessage({ what: 'startTool' });
 
     localRead('picker.view').then(value => {
         if ( Boolean(value) === false ) { return; }
@@ -462,7 +380,6 @@ function startPicker() {
     dom.on('svg#overlay', 'touchstart', onSvgTouch, { passive: true });
     dom.on('svg#overlay', 'touchend', onSvgTouch);
     dom.on('#minimize', 'click', onMinimizeClicked);
-    dom.on('#move', 'pointerdown', moveDialog);
     dom.on('textarea', 'input', onFilterTextChanged);
     dom.on('#quit', 'click', quitPicker);
     dom.on('#slider', 'input', onSliderChanged);
@@ -479,7 +396,6 @@ function startPicker() {
 
 function quitPicker() {
     updatePreview(false);
-    toolOverlay.highlightElementUnderMouse(false);
     toolOverlay.stop();
 }
 
@@ -503,13 +419,6 @@ function onMessage(msg) {
     case 'showDialog':
         showDialog(msg);
         break;
-    case 'svgPaths': {
-        let { ocean, islands } = msg;
-        ocean += islands;
-        svgOcean.setAttribute('d', ocean);
-        svgIslands.setAttribute('d', islands || NoPaths);
-        break;
-    }
     default:
         break;
     }

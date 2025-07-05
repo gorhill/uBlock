@@ -20,6 +20,7 @@
 */
 
 import { dom, qs$ } from './dom.js';
+import { sendMessage } from './ext.js';
 
 /******************************************************************************/
 
@@ -29,9 +30,6 @@ export const toolOverlay = {
     svgIslands: qs$('svg#overlay > path + path'),
     emptyPath: 'M0 0',
     port: null,
-    mstrackerOn: false,
-    mstrackerTimer: undefined,
-    mstrackerX: 0, mstrackerY: 0,
 
     start(listener) {
         this.listener = listener;
@@ -47,11 +45,22 @@ export const toolOverlay = {
             toolOverlay.port.onmessageerror = ( ) => {
                 this.listener({ what: 'about'});
             };
-            listener({ what: 'startTool' });
+            this.moveable = qs$('aside:has(#move)');
+            if ( this.moveable !== null ) {
+                dom.on('aside #move', 'pointerdown', ev => {
+                    this.mover(ev);
+                });
+            }
+            this.onMessage({ what: 'startTool',
+                url: msg.url,
+                width: msg.width,
+                height: msg.height,
+            });
         }, { once: true });
     },
 
     stop() {
+        this.highlightElementUnderMouse(false);
         if ( this.port ) {
             this.port.postMessage({ what: 'quitTool' });
             this.port.onmessage = null;
@@ -62,13 +71,16 @@ export const toolOverlay = {
 
     onMessage(msg) {
         switch ( msg.what ) {
-        case 'svgPaths': {
-            let { ocean, islands } = msg;
-            ocean += islands;
-            this.svgOcean.setAttribute('d', ocean);
-            this.svgIslands.setAttribute('d', islands || this.emptyPath);
+        case 'startTool': {
+            const ow = msg.width;
+            const oh = msg.height;
+            this.svgOcean.setAttribute('d', `M0 0h${ow}v${oh}h-${ow}z`);
             break;
         }
+        case 'svgPaths':
+            this.svgOcean.setAttribute('d', msg.ocean + msg.islands);
+            this.svgIslands.setAttribute('d', msg.islands || this.emptyPath);
+            break;
         default:
             break;
         }
@@ -78,6 +90,10 @@ export const toolOverlay = {
     postMessage(msg) {
         if ( Boolean(this.port) === false ) { return; }
         this.port.postMessage(msg);
+    },
+
+    sendMessage(msg) {
+        return sendMessage(msg);
     },
 
     highlightElementUnderMouse(state) {
@@ -93,7 +109,6 @@ export const toolOverlay = {
         self.cancelAnimationFrame(this.mstrackerTimer);
         this.mstrackerTimer = undefined;
     },
-
     onTimer() {
         toolOverlay.mstrackerTimer = undefined;
         toolOverlay.port.postMessage({
@@ -102,7 +117,6 @@ export const toolOverlay = {
             my: toolOverlay.mstrackerY,
         });
     },
-
     onHover(ev) {
         toolOverlay.mstrackerX = ev.clientX;
         toolOverlay.mstrackerY = ev.clientY;
@@ -110,6 +124,84 @@ export const toolOverlay = {
         toolOverlay.mstrackerTimer =
             self.requestAnimationFrame(toolOverlay.onTimer);
     },
+    mstrackerOn: false,
+    mstrackerX: 0, mstrackerY: 0,
+    mstrackerTimer: undefined,
+
+    mover(ev) {
+        const target = ev.target;
+        if ( target.matches('#move') === false ) { return; }
+        if ( dom.cl.has(this.moveable, 'moving') ) { return; }
+        target.setPointerCapture(ev.pointerId);
+        this.moverIsTouch = ev.type.startsWith('touch');
+        if ( this.moverIsTouch ) {
+            const touch = ev.touches[0];
+            this.moverX0 = touch.pageX;
+            this.moverY0 = touch.pageY;
+        } else {
+            this.moverX0 = ev.pageX;
+            this.moverY0 = ev.pageY;
+        }
+        const rect = this.moveable.getBoundingClientRect();
+        this.moverCX0 = rect.x + rect.width / 2;
+        this.moverCY0 = rect.y + rect.height / 2;
+        dom.cl.add(this.moveable, 'moving');
+        self.addEventListener('pointermove', this.moverMoveAsync, { capture: true });
+        self.addEventListener('pointerup', this.moverStop, { capture: true, once: true });
+        ev.stopPropagation();
+        ev.preventDefault();
+    },
+    moverMove() {
+        this.moverTimer = undefined;
+        const cx1 = this.moverCX0 + this.moverX1 - this.moverX0;
+        const cy1 = this.moverCY0 + this.moverY1 - this.moverY0;
+        const rootW = dom.root.clientWidth;
+        const rootH = dom.root.clientHeight;
+        const moveableW = this.moveable.clientWidth;
+        const moveableH = this.moveable.clientHeight;
+        if ( cx1 < rootW / 2 ) {
+            this.moveable.style.setProperty('left', `${Math.max(cx1-moveableW/2,2)}px`);
+            this.moveable.style.removeProperty('right');
+        } else {
+            this.moveable.style.removeProperty('left');
+            this.moveable.style.setProperty('right', `${Math.max(rootW-cx1-moveableW/2,2)}px`);
+        }
+        if ( cy1 < rootH / 2 ) {
+            this.moveable.style.setProperty('top', `${Math.max(cy1-moveableH/2,2)}px`);
+            this.moveable.style.removeProperty('bottom');
+        } else {
+            this.moveable.style.removeProperty('top');
+            this.moveable.style.setProperty('bottom', `${Math.max(rootH-cy1-moveableH/2,2)}px`);
+        }
+    },
+    moverMoveAsync(ev) {
+        if ( toolOverlay.moverTimer !== undefined ) { return; }
+        if ( toolOverlay.moverIsTouch ) {
+            const touch = ev.touches[0];
+            toolOverlay.moverX1 = touch.pageX;
+            toolOverlay.moverY1 = touch.pageY;
+        } else {
+            toolOverlay.moverX1 = ev.pageX;
+            toolOverlay.moverY1 = ev.pageY;
+        }
+        toolOverlay.moverTimer = self.requestAnimationFrame(( ) => {
+            toolOverlay.moverMove();
+        });
+    },
+    moverStop(ev) {
+        if ( dom.cl.has(toolOverlay.moveable, 'moving') === false ) { return; }
+        dom.cl.remove(toolOverlay.moveable, 'moving');
+        self.removeEventListener('pointermove', toolOverlay.moverMoveAsync, { capture: true });
+        ev.target.releasePointerCapture(ev.pointerId);
+        ev.stopPropagation();
+        ev.preventDefault();
+    },
+    moveable: null,
+    moverIsTouch: false,
+    moverX0: 0, moverY0: 0,
+    moverX1: 0, moverY1: 0,
+    moverCX0: 0, moverCY0: 0,
+    moverTimer: undefined,
 };
 
 /******************************************************************************/

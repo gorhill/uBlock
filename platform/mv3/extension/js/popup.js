@@ -279,6 +279,17 @@ dom.on('#gotoPicker', 'click', ( ) => {
 
 /******************************************************************************/
 
+dom.on('#gotoUnpicker', 'click', ( ) => {
+    if ( browser.scripting === undefined ) { return; }
+    browser.scripting.executeScript({
+        files: [ '/js/scripting/tool-overlay.js', '/js/scripting/unpicker.js' ],
+        target: { tabId: currentTab.id },
+    });
+    self.close();
+});
+
+/******************************************************************************/
+
 async function init() {
     const [ tab ] = await browser.tabs.query({
         active: true,
@@ -327,6 +338,7 @@ async function init() {
 
     dom.cl.toggle('#gotoZapper', 'enabled', isNetworkPage);
     dom.cl.toggle('#gotoPicker', 'enabled', isNetworkPage);
+    dom.cl.toggle('#gotoUnpicker', 'enabled', popupPanelData.hasCustomFilters);
     dom.cl.toggle('#gotoReport', 'enabled', isNetworkPage);
 
     dom.cl.remove(dom.body, 'loading');

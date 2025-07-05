@@ -93,7 +93,7 @@ function onKeyPressed(ev) {
 /******************************************************************************/
 
 function startZapper() {
-    toolOverlay.postMessage({ what: 'startZapper' });
+    toolOverlay.postMessage({ what: 'startTool' });
     self.addEventListener('keydown', onKeyPressed, true);
     dom.on('svg#overlay', 'click', onSvgClicked);
     dom.on('svg#overlay', 'touchstart', onSvgTouch, { passive: true });
@@ -105,7 +105,6 @@ function startZapper() {
 
 function quitZapper() {
     self.removeEventListener('keydown', onKeyPressed, true);
-    toolOverlay.highlightElementUnderMouse(false);
     toolOverlay.stop();
 }
 

@@ -30,7 +30,7 @@ import {
 import { fetchJSON } from './fetch.js';
 import { getEnabledRulesetsDetails } from './ruleset-manager.js';
 import { getFilteringModeDetails } from './mode-manager.js';
-import { registerCSSFilters } from './filter-manager.js';
+import { registerCustomFilters } from './filter-manager.js';
 import { registerToolbarIconToggler } from './action.js';
 import { ubolLog } from './debug.js';
 
@@ -608,7 +608,7 @@ async function registerInjectables() {
         registerSpecific(context),
         registerGeneric(context, genericDetails),
         registerHighGeneric(context, genericDetails),
-        registerCSSFilters(context),
+        registerCustomFilters(context),
         registerToolbarIconToggler(context),
     ]);
 
