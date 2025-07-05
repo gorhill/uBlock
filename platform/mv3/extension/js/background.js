@@ -319,7 +319,7 @@ function onMessage(request, sender, callback) {
     case 'popupPanelData': {
         Promise.all([
             hasBroadHostPermissions(),
-            getFilteringMode(request.hostname),
+            getFilteringMode(request.normalHostname),
             adminReadEx('disabledFeatures'),
             hasCustomFilters(request.hostname),
         ]).then(results => {

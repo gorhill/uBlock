@@ -314,7 +314,8 @@ async function init() {
         const response = await sendMessage({
             what: 'popupPanelData',
             origin: url.origin,
-            hostname: normalizedHostname(tabURL.hostname),
+            normalHostname: normalizedHostname(tabURL.hostname),
+            hostname: tabURL.hostname,
         });
         if ( response instanceof Object ) {
             Object.assign(popupPanelData, response);
