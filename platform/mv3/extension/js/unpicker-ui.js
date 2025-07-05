@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import { dom, qs$ } from './dom.js';
+import { dom, qs$, qsa$ } from './dom.js';
 import { faIconsInit } from './fa-icons.js';
 import { toolOverlay } from './tool-overlay-ui.js';
 
@@ -31,29 +31,61 @@ function onMinimizeClicked() {
 
 /******************************************************************************/
 
+function highlight() {
+    const selectors = [];
+    for ( const selectorElem of qsa$('#customFilters .customFilter.on > span.selector') ) {
+        selectors.push(selectorElem.textContent);
+    }
+    if ( selectors.length !== 0 ) {
+        toolOverlay.postMessage({
+            what: 'highlightFromSelector',
+            selector: selectors.join(','),
+        });
+    } else {
+        toolOverlay.postMessage({ what: 'unhighlight' });
+    }
+}
+
+/******************************************************************************/
+
 function onFilterClicked(ev) {
     const target = ev.target;
-    const containerElem = target.closest('.customFilter');
-    if ( containerElem === null ) { return; }
-    const filterElem = qs$(containerElem, ':scope > span:first-of-type');
-    const trashElem = qs$(containerElem, ':scope > span:last-of-type');
-    const selector = filterElem.textContent;
-    if ( target === filterElem ) {
-        dom.cl.remove('.customFilter.on', 'on');
-        dom.cl.add(containerElem, 'on');
-        toolOverlay.postMessage({ what: 'highlightFromSelector', selector });
+    const filterElem = target.closest('.customFilter');
+    if ( filterElem === null ) { return; }
+    const selectorElem = qs$(filterElem, ':scope > span.selector');
+    if ( target === selectorElem ) {
+        if ( dom.cl.has(filterElem, 'on') ) {
+            dom.cl.remove(filterElem, 'on');
+        } else {
+            dom.cl.remove('.customFilter.on', 'on');
+            dom.cl.add(filterElem, 'on');
+        }
+        highlight();
         return;
     }
+    const selector = selectorElem.textContent;
+    const trashElem = qs$(filterElem, ':scope > span.remove');
     if ( target === trashElem ) {
-        dom.cl.add(containerElem, 'removed');
-        dom.cl.remove(containerElem, 'on');
+        dom.cl.add(filterElem, 'removed');
+        dom.cl.remove(filterElem, 'on');
         toolOverlay.sendMessage({ what: 'removeCustomFilter',
             hostname: toolOverlay.url.hostname,
             selector,
-        }).then(( ) =>
-            toolOverlay.postMessage({ what: 'unhighlight' })
-        ).then(( ) => {
+        }).then(( ) => {
             autoSelectFilter();
+        });
+        return;
+    }
+    const undoElem = qs$(filterElem, ':scope > span.undo');
+    if ( target === undoElem ) {
+        dom.cl.remove(filterElem, 'removed');
+        toolOverlay.sendMessage({ what: 'addCustomFilter',
+            hostname: toolOverlay.url.hostname,
+            selector,
+        }).then(( ) => {
+            dom.cl.remove('.customFilter.on', 'on');
+            dom.cl.add(filterElem, 'on');
+            highlight();
         });
         return;
     }
@@ -62,18 +94,13 @@ function onFilterClicked(ev) {
 /******************************************************************************/
 
 function autoSelectFilter() {
-    let containerElem = qs$('.customFilter.on');
-    if ( containerElem !== null ) { return; }
-    containerElem = qs$('.customFilter:not(.removed)');
-    if ( containerElem === null ) {
-        quitUnpicker();
-        return;
+    let filterElem = qs$('.customFilter.on');
+    if ( filterElem !== null ) { return; }
+    filterElem = qs$('.customFilter:not(.removed)');
+    if ( filterElem !== null ) {
+        dom.cl.add(filterElem, 'on');
     }
-    dom.cl.add(containerElem, 'on');
-    const filterElem = qs$(containerElem, ':scope > span:first-of-type');
-    toolOverlay.postMessage({ what: 'highlightFromSelector',
-        selector: filterElem.textContent,
-    });
+    highlight();
 }
 
 /******************************************************************************/
@@ -84,7 +111,7 @@ function populateFilters(selectors) {
     const rowTemplate = qs$('template#customFilterRow');
     for ( const selector of selectors ) {
         const row = rowTemplate.content.cloneNode(true);
-        qs$(row, '.customFilter > span:first-of-type').textContent = selector;
+        qs$(row, '.customFilter > span.selector').textContent = selector;
         container.append(row);
     }
     faIconsInit(container);

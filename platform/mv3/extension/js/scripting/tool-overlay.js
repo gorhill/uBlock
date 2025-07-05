@@ -23,11 +23,16 @@
 
 /******************************************************************************/
 
-if ( self.ubolOverlay !== undefined ) { return; }
+if ( self.ubolOverlay ) {
+    self.ubolOverlay.stop();
+    self.ubolOverlay = undefined;
+}
 
 self.ubolOverlay = {
+    file: '',
     webext: typeof browser === 'object' ? browser : chrome,
     url: new URL(document.baseURI),
+    port: null,
     highlightedElements: [],
     secretAttr: (( ) => {
         let secret = String.fromCharCode((Math.random() * 26) + 97);
@@ -80,7 +85,10 @@ self.ubolOverlay = {
     },
 
     stop() {
-        this.sendMessage({ what: 'removeCSS', css: this.pickerCSS });
+        if ( this.pickerCSS ) {
+            this.sendMessage({ what: 'removeCSS', css: this.pickerCSS });
+            this.pickerCSS = undefined;
+        }
         self.removeEventListener('scroll', this.onViewportChanged, { passive: true });
         self.removeEventListener('resize', this.onViewportChanged, { passive: true });
         self.removeEventListener('keydown', this.onKeyPressed, true);
@@ -150,6 +158,7 @@ self.ubolOverlay = {
             const { fromFrameId } = wrapped;
             if ( response instanceof Promise ) {
                 response.then(response => {
+                    if ( this.port === null ) { return; }
                     this.port.postMessage({ fromFrameId, msg: response });
                 });
             } else {
@@ -158,7 +167,7 @@ self.ubolOverlay = {
         }
     },
     postMessage(msg) {
-        if ( Boolean(this.port) === false ) { return; }
+        if ( this.port === null ) { return; }
         const wrapped = {
             fromScriptId: this.messageId++,
             msg,
@@ -281,6 +290,7 @@ self.ubolOverlay = {
     },
 
     async install(file, onmessage) {
+        this.file = file;
         const dynamicURL = new URL(this.webext.runtime.getURL(file));
         return new Promise(resolve => {
             const frame = document.createElement('iframe');
@@ -292,10 +302,12 @@ self.ubolOverlay = {
                 const channel = new MessageChannel();
                 const port = channel.port1;
                 port.onmessage = ev => {
-                    self.ubolOverlay.onMessage(ev.data || {})
+                    self.ubolOverlay &&
+                        self.ubolOverlay.onMessage(ev.data || {})
                 };
                 port.onmessageerror = ( ) => {
-                    self.ubolOverlay.onMessage({ what: 'quitTool' })
+                    self.ubolOverlay &&
+                        self.ubolOverlay.onMessage({ what: 'quitTool' })
                 };
                 const realURL = new URL(dynamicURL);
                 realURL.hostname =

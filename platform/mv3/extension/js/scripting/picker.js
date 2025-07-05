@@ -25,10 +25,7 @@
 
 const ubolOverlay = self.ubolOverlay;
 if ( ubolOverlay === undefined ) { return; }
-
-const picker = self.ubolPicker = self.ubolPicker || {};
-if ( picker.injected ) { return; }
-picker.injected = true;
+if ( ubolOverlay.file === '/picker-ui.html' ) { return; }
 
 /******************************************************************************/
 
@@ -242,9 +239,6 @@ const excludedSelectors = [
 
 function onMessage(msg) {
     switch ( msg.what ) {
-    case 'quitTool':
-        picker.injected = false;
-        break;
     case 'highlightFromSelector': {
         const { elems, error } = ubolOverlay.elementsFromSelector(msg.selector);
         ubolOverlay.highlightElements(elems);

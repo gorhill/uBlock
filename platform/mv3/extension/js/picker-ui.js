@@ -319,6 +319,7 @@ function showDialog(msg) {
     const last = sliderParts.length - 1;
     dom.attr(slider, 'max', last);
     dom.attr(slider, 'value', last);
+    dom.attr(slider, 'disabled', last !== 0 ? null : '');
     updateSlider(last);
 }
 

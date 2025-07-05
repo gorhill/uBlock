@@ -3,6 +3,10 @@
     --ubol-overlay-border: #0F0;
 }
 
+#ubol-unpicker svg#overlay {
+    cursor: not-allowed;
+}
+
 #ubol-unpicker aside {
     background-color: var(--surface-1);
     border: 1px solid var(--border-2);
@@ -26,8 +30,8 @@
 
 #ubol-unpicker #customFilters {
     font-family: monospace;
-    padding: var(--default-gap-xsmall) 0
-        var(--default-gap-xsmall) var(--default-gap-xsmall);
+    padding: var(--default-gap-xxsmall) 0
+        var(--default-gap-xxsmall) var(--default-gap-xxsmall);
 }
 #ubol-unpicker .customFilter {
     display: flex;
@@ -35,25 +39,29 @@
 #ubol-unpicker .customFilter:nth-of-type(2n+1) {
     background-color: var(--surface-2);
 }
-#ubol-unpicker .customFilter > span:first-of-type {
+#ubol-unpicker .customFilter > span.selector {
     flex-grow: 1;
-    padding: var(--default-gap-xxsmall) 0;
+    font-size: small;
+    padding: var(--default-gap-xxsmall);
 }
-#ubol-unpicker .customFilter.on >  span:first-of-type {
+#ubol-unpicker .customFilter.on >  span.selector {
     background-color: var(--ink-1);
     color: var(--surface-1);
 }
-#ubol-unpicker .customFilter.removed >  span:first-of-type {
+#ubol-unpicker .customFilter.removed >  span.selector {
     text-decoration-line: line-through;
 }
-#ubol-unpicker .customFilter.removed >  span:last-of-type {
-    visibility: hidden;
+#ubol-unpicker .customFilter.removed >  span.remove {
+    display: none;
 }
-#ubol-unpicker .customFilter.removed {
+#ubol-unpicker .customFilter.removed span.selector {
     pointer-events: none;
 }
-#ubol-unpicker .customFilter > span:last-of-type {
+#ubol-unpicker .customFilter > span.fa-icon {
     flex-shrink: 0;
-    font-size: 1.4em;
+    font-size: 1.25em;
     padding: 0 0.5em;
+}
+#ubol-unpicker .customFilter:not(.removed) >  span.undo {
+    display: none;
 }

@@ -102,6 +102,7 @@ export const toolOverlay = {
             const { fromScriptId } = wrapped;
             if ( response instanceof Promise ) {
                 response.then(response => {
+                    if ( this.port === null ) { return; }
                     this.port.postMessage({ fromScriptId, msg: response });
                 });
             } else {
@@ -110,7 +111,7 @@ export const toolOverlay = {
         }
     },
     postMessage(msg) {
-        if ( Boolean(this.port) === false ) { return; }
+        if ( this.port === null ) { return; }
         const wrapped = {
             fromFrameId: this.messageId++,
             msg,
@@ -142,6 +143,7 @@ export const toolOverlay = {
     },
     onTimer() {
         toolOverlay.mstrackerTimer = undefined;
+        if ( toolOverlay.port === null ) { return; }
         toolOverlay.port.postMessage({
             what: 'highlightElementAtPoint',
             mx: toolOverlay.mstrackerX,

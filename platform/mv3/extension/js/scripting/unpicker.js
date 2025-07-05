@@ -25,18 +25,12 @@
 
 const ubolOverlay = self.ubolOverlay;
 if ( ubolOverlay === undefined ) { return; }
-
-const unpicker = self.ubolUnpicker = self.ubolUnpicker || {};
-if ( unpicker.injected ) { return; }
-unpicker.injected = true;
+if ( ubolOverlay.file === '/unpicker-ui.html' ) { return; }
 
 /******************************************************************************/
 
 function onMessage(msg) {
     switch ( msg.what ) {
-    case 'quitTool':
-        unpicker.injected = false;
-        break;
     case 'highlightFromSelector': {
         const { elems, error } = ubolOverlay.elementsFromSelector(msg.selector);
         ubolOverlay.highlightElements(elems);

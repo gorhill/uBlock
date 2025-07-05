@@ -59,9 +59,6 @@
 #ubol-picker .resultsetWidgets input {
     flex-grow: 1;
 }
-#ubol-picker .resultsetWidgets input[max="0"] {
-    display: none;
-}
 #ubol-picker .resultsetWidgets #resultsetCount {
     display: inline-block;
     text-align: right;

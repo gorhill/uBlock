@@ -25,10 +25,7 @@
 
 const ubolOverlay = self.ubolOverlay;
 if ( ubolOverlay === undefined ) { return; }
-
-const zapper = self.ubolZapper = self.ubolZapper || {};
-if ( zapper.injected ) { return; }
-zapper.injected = true;
+if ( ubolOverlay.file === '/zapper-ui.html' ) { return; }
 
 /******************************************************************************/
 
@@ -106,7 +103,6 @@ function startZapper() {
 
 function quitZapper() {
     self.removeEventListener('keydown', onKeyPressed, true);
-    zapper.injected = false;
 }
 
 /******************************************************************************/
