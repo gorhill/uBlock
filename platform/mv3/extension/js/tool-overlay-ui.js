@@ -71,7 +71,7 @@ export const toolOverlay = {
     },
 
     onMessage(wrapped) {
-        // Response from frame-initiated message?
+        // Response to frame-initiated message?
         if ( typeof wrapped?.fromFrameId === 'number' ) {
             const resolve = this.pendingMessages.get(wrapped.fromFrameId);
             if ( resolve ) {

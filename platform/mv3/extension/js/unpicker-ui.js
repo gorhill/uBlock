@@ -25,10 +25,6 @@ import { toolOverlay } from './tool-overlay-ui.js';
 
 /******************************************************************************/
 
-let previewCSS = '';
-
-/******************************************************************************/
-
 function onMinimizeClicked() {
     dom.cl.toggle(dom.root, 'minimized');
 }
@@ -61,22 +57,6 @@ function onFilterClicked(ev) {
         });
         return;
     }
-}
-
-/******************************************************************************/
-
-function updateElementCount(details) {
-    const { count, error } = details;
-    const span = qs$('#resultsetCount');
-    if ( error ) {
-        span.textContent = 'Error';
-        span.setAttribute('title', error);
-    } else {
-        span.textContent = count;
-        span.removeAttribute('title');
-    }
-    const disabled = Boolean(count) === false ? '' : null;
-    dom.attr('#create', 'disabled', disabled);
 }
 
 /******************************************************************************/
@@ -117,7 +97,9 @@ function startUnpicker() {
         what: 'selectorsFromCustomFilters',
         hostname: toolOverlay.url.hostname,
     }).then(selectors => {
-        if ( selectors.length === 0 ) { quitUnpicker(); }
+        if ( selectors.length === 0 ) {
+            return quitUnpicker();
+        }
         populateFilters(selectors);
         autoSelectFilter();
     });
@@ -131,8 +113,9 @@ function startUnpicker() {
 /******************************************************************************/
 
 function quitUnpicker() {
-    toolOverlay.postMessage({ what: 'injectCustomFilters' });
-    toolOverlay.stop();
+    toolOverlay.postMessage({ what: 'injectCustomFilters' }).then(( ) => {
+        toolOverlay.stop();
+    });
 }
 
 /******************************************************************************/

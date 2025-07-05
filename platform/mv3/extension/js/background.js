@@ -445,19 +445,19 @@ function onMessage(request, sender, callback) {
         return true;
 
     case 'addCustomFilter':
-        addCustomFilter(request.hostname, request.selector).then(modified =>
+        addCustomFilter(request.hostname, request.selector).then(modified => {
             if ( modified !== true ) { return; }
-            registerInjectables()
-        ).then(( ) => {
+            return registerInjectables();
+        }).then(( ) => {
             callback();
         })
         return true;
 
     case 'removeCustomFilter':
-        removeCustomFilter(request.hostname, request.selector).then(modified =>
+        removeCustomFilter(request.hostname, request.selector).then(modified => {
             if ( modified !== true ) { return; }
-            registerInjectables()
-        ).then(( ) => {
+            return registerInjectables();
+        }).then(( ) => {
             callback();
         });
         return true;

@@ -119,7 +119,7 @@ self.ubolOverlay = {
     },
 
     onMessage(wrapped) {
-        // Response from script-initiated message?
+        // Response to script-initiated message?
         if ( typeof wrapped?.fromScriptId === 'number' ) {
             const resolve = this.pendingMessages.get(wrapped.fromScriptId);
             if ( resolve ) {
