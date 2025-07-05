@@ -300,9 +300,8 @@ const $httpHeaders = {
     },
     lookup(name) {
         if ( this.parsed.size === 0 ) {
-            for ( let i = 0, n = this.headers.length; i < n; i++ ) {
-                const { name, value } = this.headers[i];
-                this.parsed.set(name, value);
+            for ( const { name, value } of this.headers ) {
+                this.parsed.set(name.toLowerCase(), value);
             }
         }
         return this.parsed.get(name);
