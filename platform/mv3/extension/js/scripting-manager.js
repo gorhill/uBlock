@@ -30,6 +30,7 @@ import {
 import { fetchJSON } from './fetch.js';
 import { getEnabledRulesetsDetails } from './ruleset-manager.js';
 import { getFilteringModeDetails } from './mode-manager.js';
+import { registerCustomFilters } from './filter-manager.js';
 import { registerToolbarIconToggler } from './action.js';
 import { ubolLog } from './debug.js';
 
@@ -600,13 +601,16 @@ async function registerInjectables() {
         toRemove,
     };
 
-    registerDeclarative(context);
-    registerProcedural(context);
-    registerScriptlet(context, scriptletDetails);
-    registerSpecific(context);
-    registerGeneric(context, genericDetails);
-    registerHighGeneric(context, genericDetails);
-    registerToolbarIconToggler(context);
+    await Promise.all([
+        registerDeclarative(context),
+        registerProcedural(context),
+        registerScriptlet(context, scriptletDetails),
+        registerSpecific(context),
+        registerGeneric(context, genericDetails),
+        registerHighGeneric(context, genericDetails),
+        registerCustomFilters(context),
+        registerToolbarIconToggler(context),
+    ]);
 
     toRemove.push(...Array.from(before.keys()));
 

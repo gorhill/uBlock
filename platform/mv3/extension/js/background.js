@@ -32,6 +32,15 @@ import {
 } from './mode-manager.js';
 
 import {
+    addCustomFilter,
+    hasCustomFilters,
+    injectCustomFilters,
+    removeCustomFilter,
+    selectorsFromCustomFilters,
+    uninjectCustomFilters,
+} from './filter-manager.js';
+
+import {
     adminReadEx,
     getAdminRulesets,
     loadAdminConfig,
@@ -56,7 +65,6 @@ import {
     getEffectiveDynamicRules,
     getEffectiveSessionRules,
     getEffectiveUserRules,
-    getEnabledRulesetsDetails,
     getRulesetDetails,
     patchDefaultRulesets,
     setStrictBlockMode,
@@ -153,14 +161,15 @@ function setDeveloperMode(state) {
 
 function onMessage(request, sender, callback) {
 
+    const tabId = sender?.tab?.id ?? false;
+    const frameId = tabId && (sender?.frameId ?? false);
+
     // Does not require trusted origin.
 
     switch ( request.what ) {
 
     case 'insertCSS': {
-        const tabId = sender?.tab?.id ?? false;
-        const frameId = sender?.frameId ?? false;
-        if ( tabId === false || frameId === false ) { return; }
+        if ( frameId === false ) { return false; }
         browser.scripting.insertCSS({
             css: request.css,
             origin: 'USER',
@@ -172,9 +181,7 @@ function onMessage(request, sender, callback) {
     }
 
     case 'removeCSS': {
-        const tabId = sender?.tab?.id ?? false;
-        const frameId = sender?.frameId ?? false;
-        if ( tabId === false || frameId === false ) { return; }
+        if ( frameId === false ) { return false; }
         browser.scripting.removeCSS({
             css: request.css,
             origin: 'USER',
@@ -186,12 +193,25 @@ function onMessage(request, sender, callback) {
     }
 
     case 'toggleToolbarIcon': {
-        const tabId = sender?.tab?.id ?? false;
         if ( tabId ) {
             toggleToolbarIcon(tabId);
         }
         return false;
     }
+
+    case 'injectCustomFilters':
+        if ( frameId === false ) { return false; }
+        injectCustomFilters(tabId, frameId, request.hostname).then(selectors => {
+            callback(selectors);
+        });
+        return true;
+
+    case 'uninjectCustomFilters':
+        if ( frameId === false ) { return false; }
+        uninjectCustomFilters(tabId, frameId, request.hostname).then(( ) => {
+            callback();
+        });
+        return true;
 
     default:
         break;
@@ -301,24 +321,18 @@ function onMessage(request, sender, callback) {
     case 'popupPanelData': {
         Promise.all([
             hasBroadHostPermissions(),
-            getFilteringMode(request.hostname),
-            getEnabledRulesetsDetails(),
+            getFilteringMode(request.normalHostname),
             adminReadEx('disabledFeatures'),
+            hasCustomFilters(request.hostname),
         ]).then(results => {
-            const [
-                hasOmnipotence,
-                level,
-                rulesetDetails,
-                disabledFeatures,
-            ] = results;
             callback({
-                hasOmnipotence,
-                level,
+                hasOmnipotence: results[0],
+                level: results[1],
                 autoReload: rulesetConfig.autoReload,
-                rulesetDetails,
                 isSideloaded,
                 developerMode: rulesetConfig.developerMode,
-                disabledFeatures,
+                disabledFeatures: results[2],
+                hasCustomFilters: results[3],
             });
         });
         return true;
@@ -432,6 +446,30 @@ function onMessage(request, sender, callback) {
         });
         return true;
 
+    case 'addCustomFilter':
+        addCustomFilter(request.hostname, request.selector).then(modified => {
+            if ( modified !== true ) { return; }
+            return registerInjectables();
+        }).then(( ) => {
+            callback();
+        })
+        return true;
+
+    case 'removeCustomFilter':
+        removeCustomFilter(request.hostname, request.selector).then(modified => {
+            if ( modified !== true ) { return; }
+            return registerInjectables();
+        }).then(( ) => {
+            callback();
+        });
+        return true;
+
+    case 'selectorsFromCustomFilters':
+        selectorsFromCustomFilters(request.hostname).then(selectors => {
+            callback(selectors);
+        });
+        return true;
+
     default:
         break;
     }
@@ -446,7 +484,7 @@ function onCommand(command, tab) {
     case 'enter-zapper-mode': {
         if ( browser.scripting === undefined ) { return; }
         browser.scripting.executeScript({
-            files: [ '/js/scripting/zapper.js' ],
+            files: [ '/js/scripting/tool-overlay.js', '/js/scripting/zapper.js' ],
             target: { tabId: tab.id },
         });
         break;

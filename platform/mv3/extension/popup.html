@@ -28,29 +28,38 @@
     <!-- -------- -->
     <div id="filteringModeText"><label data-i18n="popupFilteringModeLabel">_</label><br><span>_</span><span></span></div>
     <!-- -------- -->
-    <div class="toolRibbon pageTools">
-        <span id="gotoZapper" class="fa-icon tool enabled" data-i18n-title="zapperTipEnter">bolt<span class="caption" data-i18n="zapperTipEnter"></span></span>
-        <span id="showMatchedRules" class="fa-icon tool" tabindex="0" title="Show matched rules">list-alt<span class="caption">Show matched rules</span></span>
-        <span id="reportFilterIssue" class="fa-icon tool enabled" data-i18n-title="popupTipReport">comment-alt<span class="caption" data-i18n="popupTipReport"></span></span>
-        <span id="gotoDashboard" class="fa-icon tool enabled" tabindex="0" data-i18n-title="popupTipDashboard">cogs<span class="caption" data-i18n="popupTipDashboard"></span></span>
+    <hr class="needHTTP">
+    <div class="toolRibbon localTools needHTTP">
+        <label>On this website</label>
+        <span id="gotoZapper" class="tool enabled" tabindex="0">
+            <span class="fa-icon">bolt</span>
+            <span data-i18n="zapperTipEnter">_</span>
+        </span>
+        <span id="gotoPicker" class="tool enabled" tabindex="0">
+            <span class="fa-icon">eye-slash</span>
+            <span data-i18n="pickerTipEnter">_</span>
+        </span>
+        <span id="gotoUnpicker" class="tool" tabindex="0">
+            <span class="fa-icon">eye-open</span>
+            <span data-i18n="unpickerTipEnter">_</span>
+        </span>
+        <span id="gotoReport" class="tool enabled" tabindex="0">
+            <span class="fa-icon">comment-alt</span>
+            <span data-i18n="popupTipReport">_</span>
+        </span>
+        <span id="gotoMatchedRules" class="tool" tabindex="0">
+            <span class="fa-icon">list-alt</span>
+            <span>Show matched rules</span>
+        </span>
     </div>
     <!-- -------- -->
-    <div id="rulesetStats" data-section="a">
-    </div>
-    <hr data-section="a">
-    <!-- -------- -->
-    <div id="moreOrLess">
-        <span id="moreButton">
-            <span data-i18n="popupMoreButton">_</span>&emsp;<span class="fa-icon">angle-up</span>
-        </span>
-        <span id="lessButton">
-            <span class="fa-icon">angle-up</span>&emsp;<span data-i18n="popupLessButton">_</span>
+    <hr>
+    <div class="toolRibbon globalTools">
+        <span id="gotoDashboard" class="tool enabled" tabindex="0">
+            <span class="fa-icon">cogs</span>
+            <span data-i18n="popupTipDashboard">_</span>
         </span>
     </div>
-</div>
-
-<div id="templates">
-    <div class="rulesetDetails"><h1></h1><p data-section="b"></p></div>
 </div>
 
 <script src="js/theme.js" type="module"></script>

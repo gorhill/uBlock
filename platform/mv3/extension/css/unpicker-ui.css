@@ -1,0 +1,64 @@
+:root#ubol-unpicker {
+    --ubol-overlay-fill: rgba(64,255,64,0.10);
+    --ubol-overlay-border: #0F0;
+}
+
+#ubol-unpicker svg#overlay {
+    cursor: not-allowed;
+}
+
+:root aside {
+    background-color: var(--surface-1);
+    border: 1px solid var(--border-2);
+    max-height: 40vh;
+    max-width: min(32rem, 100vw - 4px);
+    min-width: min(24rem, 100vw - 4px);
+    width: min(32rem, 100vw - 4px);
+}
+
+#ubol-unpicker aside > section:not(#windowbar) {
+    margin: 1em 1em 0 1em;
+}
+#ubol-unpicker aside > section:not(#windowbar):last-of-type {
+    margin-bottom: 1em;
+}
+#ubol-unpicker aside > section [data-i18n="unpickerUsage"] {
+    color: var(--ink-2);
+    font-size: small;
+}
+
+#ubol-unpicker #customFilters {
+    font-family: monospace;
+}
+#ubol-unpicker .customFilter {
+    display: flex;
+}
+#ubol-unpicker .customFilter:nth-of-type(2n+1) {
+    background-color: var(--surface-2);
+}
+#ubol-unpicker .customFilter > span.selector {
+    flex-grow: 1;
+    font-size: small;
+    padding: 0.5em;
+}
+#ubol-unpicker .customFilter.on >  span.selector {
+    background-color: var(--ink-1);
+    color: var(--surface-1);
+}
+#ubol-unpicker .customFilter.removed >  span.selector {
+    text-decoration-line: line-through;
+}
+#ubol-unpicker .customFilter.removed >  span.remove {
+    display: none;
+}
+#ubol-unpicker .customFilter.removed span.selector {
+    pointer-events: none;
+}
+#ubol-unpicker .customFilter > span.fa-icon {
+    flex-shrink: 0;
+    font-size: 1.25em;
+    padding: 0 0.5em;
+}
+#ubol-unpicker .customFilter:not(.removed) >  span.undo {
+    display: none;
+}

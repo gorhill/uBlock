@@ -74,7 +74,7 @@ else
 fi
 
 echo "*** uBOLite.mv3: Copying common files"
-cp -R "$UBO_DIR"/src/css/fonts/* "$UBOL_DIR"/css/fonts/
+cp -R "$UBO_DIR"/src/css/fonts/Inter "$UBOL_DIR"/css/fonts/
 cp "$UBO_DIR"/src/css/themes/default.css "$UBOL_DIR"/css/
 cp "$UBO_DIR"/src/css/common.css "$UBOL_DIR"/css/
 cp "$UBO_DIR"/src/css/dashboard-common.css "$UBOL_DIR"/css/

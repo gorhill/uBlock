@@ -1,0 +1,146 @@
+:root#ubol-picker {
+    --ubol-overlay-fill: rgba(255,64,64,0.10);
+    --ubol-overlay-border: #F00;
+}
+
+#ubol-picker.paused svg#overlay {
+    cursor: not-allowed;
+}
+
+:root aside {
+    background-color: var(--surface-1);
+    border: 1px solid var(--border-2);
+    max-height: 40vh;
+    max-width: min(32rem, 100vw - 4px);
+    min-width: min(24rem, 100vw - 4px);
+    row-gap: 1em;
+    width: min(32rem, 100vw - 4px);
+}
+
+#ubol-picker aside > section:last-of-type {
+    margin-block-end: 0;
+}
+#ubol-picker aside > section:not(#windowbar,#moreOrLess) {
+    padding: 0 4px;
+}
+
+#ubol-picker[data-view="0"] aside section[data-view="1"],
+#ubol-picker[data-view="0"] aside section[data-view="2"] {
+    display: none;
+}
+#ubol-picker[data-view="1"] aside section[data-view="2"] {
+    display: none;
+}
+
+#ubol-picker:not(.paused) aside > section:not(#windowbar) {
+    display: none;
+}
+
+#ubol-picker textarea {
+    border: 0;
+    box-sizing: border-box;
+    height: 6em;
+    min-height: 3em;
+    resize: none;
+    width: 100%;
+}
+#ubol-picker.mobile textarea {
+    height: unset;
+}
+#ubol-picker .resultsetWidgets {
+    color: var(--ink-2);
+    display: flex;
+    flex-direction: column;
+    font-size: smaller;
+    gap: 0.25em;
+}
+#ubol-picker .resultsetWidgets > span:first-of-type {
+    display: flex;
+    margin: 0 1em;
+}
+#ubol-picker .resultsetWidgets label {
+    flex-grow: 1;
+}
+#ubol-picker .resultsetWidgets #resultsetCount {
+    display: inline-block;
+    text-align: right;
+    width: 8ch;
+}
+
+#ubol-picker #toolbar {
+    display: flex;
+    justify-content: space-between;
+}
+#ubol-picker #toolbar button {
+    min-width: 5em;
+}
+
+#ubol-picker #candidateFilters {
+    font-family: monospace;
+    font-size: small;
+    min-height: 6em;
+    overflow-y: auto;
+    word-break: break-all;
+}
+#ubol-picker #candidateFilters ul {
+    margin: 0;
+    padding-inline-start: calc(2ch + 4px);
+    user-select: none;
+        -webkit-user-select: none;
+}
+#ubol-picker #candidateFilters ul > li {
+    list-style-type: '\25A0\00A0';
+}
+#ubol-picker #candidateFilters ul >li:has(:not(span.on)) {
+    list-style-type: '\25A1\00A0';
+}
+#ubol-picker #candidateFilters ul > li:nth-of-type(2n+1) {
+    background-color: var(--surface-2);
+}
+#ubol-picker #candidateFilters ul > li > span {
+    border: 1px solid transparent;
+    padding: 1px 2px;
+}
+#ubol-picker #candidateFilters ul > li > span.on {
+    background-color: var(--ink-1);
+    color: var(--surface-1);
+}
+#ubol-picker #candidateFilters ul > li > span:hover {
+    border: 1px solid var(--ink-1);
+}
+
+#ubol-picker #moreOrLess {
+    color: var(--ink-2);
+    column-gap: 0;
+    display: grid;
+    font-size: small;
+    grid-template: auto / 1fr 1fr;
+    justify-items: stretch;
+    user-select: none;
+        -webkit-user-select: none;
+    white-space: nowrap;
+    }
+#ubol-picker #moreOrLess > span {
+    cursor: pointer;
+    padding: var(--default-gap-xxsmall) var(--default-gap-xsmall);
+    }
+#ubol-picker #moreOrLess > span:last-of-type {
+    text-align: end;
+    }
+#ubol-picker[data-view="2"] aside #moreOrLess > span:first-of-type {
+    visibility: hidden;
+}
+#ubol-picker[data-view="0"] aside #moreOrLess > span:last-of-type {
+    visibility: hidden;
+}
+#ubol-picker.desktop aside #moreOrLess > span:hover {
+    background-color: var(--surface-2);
+}
+
+#ubol-picker.preview #toolbar #preview {
+    color: var(--accent-ink-1);
+    background-color: var(--accent-surface-1);
+}
+#ubol-picker.preview #overlay path {
+    display: none;
+}

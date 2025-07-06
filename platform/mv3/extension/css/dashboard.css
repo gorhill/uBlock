@@ -58,7 +58,6 @@ body[data-pane="about"] > section[data-pane="about"] {
 
 /* high dpi devices */
 :root.hidpi .tabButton {
-    font-family: Metropolis, sans-serif;
     font-weight: 600;
     letter-spacing: 0.5px;
     }

@@ -20,7 +20,7 @@
 */
 
 export const webext = self.browser || self.chrome;
-export const dnr = webext.declarativeNetRequest;
+export const dnr = webext.declarativeNetRequest || {};
 export const INITIATOR_DOMAINS = 'initiatorDomains';
 export const EXCLUDED_INITIATOR_DOMAINS = 'excludedInitiatorDomains';
 

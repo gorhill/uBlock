@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html id="ubol-unpicker">
+
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light dark">
+<title>uBO Lite Zapper</title>
+<link rel="stylesheet" href="/css/default.css">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/fa-icons.css">
+<link rel="stylesheet" href="/css/tool-overlay-ui.css">
+<link rel="stylesheet" href="/css/unpicker-ui.css">
+</head>
+
+<body class="loading">
+<aside style="right: 2px; bottom: 2px;">
+<section id="windowbar">
+    <div id="minimize"><svg viewBox="0 0 64 64"><path d="M 16,48 H 48" /><rect x="16" y="16" height="32" width="32" /></svg></div>
+    <div id="move"></div>
+    <div id="quit" data-i18n-title="pickerQuit"><svg viewBox="0 0 64 64"><path d="M16 16L48 48M16 48L48 16" /></svg></div>
+</section>
+<section>
+    <span data-i18n="unpickerUsage">_</span>
+</section>
+<section id="customFilters"></section>
+</aside>
+
+<svg id="overlay"><path d></path><path d="M0 0"></path></svg>
+
+<template id="customFilterRow">
+    <div class="customFilter"><span class="selector"></span><span class="remove fa-icon">trash-o</span><span class="undo fa-icon">undo</span></div>
+</template>
+
+<script src="js/theme.js" type="module"></script>
+<script src="js/fa-icons.js" type="module"></script>
+<script src="js/i18n.js" type="module"></script>
+<script src="js/unpicker-ui.js" type="module"></script>
+
+</body>
+</html>

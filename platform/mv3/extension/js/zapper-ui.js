@@ -19,40 +19,26 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/******************************************************************************/
-
-const $id = id => document.getElementById(id);
-const $stor = selector => document.querySelector(selector);
-
-const svgRoot = $stor('svg#sea');
-const svgOcean = svgRoot.children[0];
-const svgIslands = svgRoot.children[1];
-const NoPaths = 'M0 0';
-
-let zapperScriptPort;
+import { dom } from './dom.js';
+import { toolOverlay } from './tool-overlay-ui.js';
 
 /******************************************************************************/
 
-const onSvgClicked = function(ev) {
+function onSvgClicked(ev) {
     // If zap mode, highlight element under mouse, this makes the zapper usable
     // on touch screens.
-    zapperScriptPort.postMessage({
+    toolOverlay.postMessage({
         what: 'zapElementAtPoint',
         mx: ev.clientX,
         my: ev.clientY,
         options: {
             stay: true,
-            highlight: ev.target !== svgIslands,
+            highlight: ev.target !== toolOverlay.svgIslands,
         },
     });
-};
+}
 
-/*******************************************************************************
-
-    Swipe right:
-        Remove current highlight
-
-*/
+/******************************************************************************/
 
 const onSvgTouch = (( ) => {
     let startX = 0, startY = 0;
@@ -67,7 +53,6 @@ const onSvgTouch = (( ) => {
         if ( startX === undefined ) { return; }
         const stopX = ev.changedTouches[0].screenX;
         const stopY = ev.changedTouches[0].screenY;
-        const angle = Math.abs(Math.atan2(stopY - startY, stopX - startX));
         const distance = Math.sqrt(
             Math.pow(stopX - startX, 2) +
             Math.pow(stopY - startY, 2)
@@ -76,77 +61,23 @@ const onSvgTouch = (( ) => {
         // - Swipe is not valid; and
         // - The time between start and stop was less than 200ms.
         const duration = ev.timeStamp - t0;
-        if ( distance < 32 && duration < 200 ) {
-            onSvgClicked({
-                type: 'touch',
-                target: ev.target,
-                clientX: ev.changedTouches[0].pageX,
-                clientY: ev.changedTouches[0].pageY,
-            });
-            ev.preventDefault();
-            return;
-        }
-        if ( distance < 64 ) { return; }
-        const angleUpperBound = Math.PI * 0.25 * 0.5;
-        const swipeRight = angle < angleUpperBound;
-        if ( swipeRight === false ) { return; }
-        if ( ev.cancelable ) {
-            ev.preventDefault();
-        }
-        // Swipe right.
-        if ( svgIslands.getAttribute('d') === NoPaths ) { return; }
-        zapperScriptPort.postMessage({
-            what: 'unhighlight'
+        if ( distance >= 32 || duration >= 200 ) { return; }
+        onSvgClicked({
+            type: 'touch',
+            target: ev.target,
+            clientX: ev.changedTouches[0].pageX,
+            clientY: ev.changedTouches[0].pageY,
         });
+        ev.preventDefault();
     };
 })();
 
 /******************************************************************************/
 
-const svgListening = (( ) => {
-    let on = false;
-    let timer;
-    let mx = 0, my = 0;
-
-    const onTimer = ( ) => {
-        timer = undefined;
-        zapperScriptPort.postMessage({
-            what: 'highlightElementAtPoint',
-            mx,
-            my,
-        });
-    };
-
-    const onHover = ev => {
-        mx = ev.clientX;
-        my = ev.clientY;
-        if ( timer === undefined ) {
-            timer = self.requestAnimationFrame(onTimer);
-        }
-    };
-
-    return state => {
-        if ( $stor(':root.mobile') !== null ) { return; }
-        if ( state === on ) { return; }
-        on = state;
-        if ( on ) {
-            document.addEventListener('mousemove', onHover, { passive: true });
-            return;
-        }
-        document.removeEventListener('mousemove', onHover, { passive: true });
-        if ( timer !== undefined ) {
-            self.cancelAnimationFrame(timer);
-            timer = undefined;
-        }
-    };
-})();
-
-/******************************************************************************/
-
-const onKeyPressed = function(ev) {
+function onKeyPressed(ev) {
     // Delete
     if ( ev.key === 'Delete' || ev.key === 'Backspace' ) {
-        zapperScriptPort.postMessage({
+        toolOverlay.postMessage({
             what: 'zapElementAtPoint',
             options: { stay: true },
         });
@@ -157,81 +88,45 @@ const onKeyPressed = function(ev) {
         quitZapper();
         return;
     }
-};
+}
 
 /******************************************************************************/
 
-const onScriptMessage = function(msg) {
+function startZapper() {
+    toolOverlay.postMessage({ what: 'startTool' });
+    self.addEventListener('keydown', onKeyPressed, true);
+    dom.on('svg#overlay', 'click', onSvgClicked);
+    dom.on('svg#overlay', 'touchstart', onSvgTouch, { passive: true });
+    dom.on('svg#overlay', 'touchend', onSvgTouch);
+    dom.on('#quit', 'click', quitZapper );
+    dom.on('#pick', 'click', resetZapper );
+    toolOverlay.highlightElementUnderMouse(true);
+}
+
+function quitZapper() {
+    self.removeEventListener('keydown', onKeyPressed, true);
+    toolOverlay.stop();
+}
+
+function resetZapper() {
+    toolOverlay.postMessage({ what: 'unhighlight' });
+}
+
+/******************************************************************************/
+
+function onMessage(msg) {
     switch ( msg.what ) {
-    case 'svgPaths': {
-        let { ocean, islands } = msg;
-        ocean += islands;
-        svgOcean.setAttribute('d', ocean);
-        svgIslands.setAttribute('d', islands || NoPaths);
+    case 'startTool':
+        startZapper();
         break;
-    }
     default:
         break;
     }
-};
-
-/******************************************************************************/
-
-const startZapper = function(port) {
-    zapperScriptPort = port;
-    zapperScriptPort.onmessage = ev => {
-        onScriptMessage(ev.data || {});
-    };
-    zapperScriptPort.onmessageerror = ( ) => {
-        quitZapper();
-    };
-    zapperScriptPort.postMessage({ what: 'start' });
-    self.addEventListener('keydown', onKeyPressed, true);
-    $stor('svg#sea').addEventListener('click', onSvgClicked);
-    $stor('svg#sea').addEventListener('touchstart', onSvgTouch, { passive: true });
-    $stor('svg#sea').addEventListener('touchend', onSvgTouch);
-    $id('quit').addEventListener('click', quitZapper );
-    $id('pick').addEventListener('click', resetZapper );
-    svgListening(true);
-};
-
-/******************************************************************************/
-
-const quitZapper = function() {
-    self.removeEventListener('keydown', onKeyPressed, true);
-    $stor('svg#sea').removeEventListener('click', onSvgClicked);
-    $stor('svg#sea').removeEventListener('touchstart', onSvgTouch, { passive: true });
-    $stor('svg#sea').removeEventListener('touchend', onSvgTouch);
-    $id('quit').removeEventListener('click', quitZapper );
-    $id('pick').removeEventListener('click', resetZapper );
-    svgListening(false);
-    if ( zapperScriptPort ) {
-        zapperScriptPort.postMessage({ what: 'quitZapper' });
-        zapperScriptPort.close();
-        zapperScriptPort.onmessage = null;
-        zapperScriptPort.onmessageerror = null;
-        zapperScriptPort = null;
-    }
-};
-
-/******************************************************************************/
-
-const resetZapper = function() {
-    zapperScriptPort.postMessage({
-        what: 'unhighlight'
-    });
-};
+}
 
 /******************************************************************************/
 
 // Wait for the content script to establish communication
-
-globalThis.addEventListener('message', ev => {
-    const msg = ev.data || {};
-    if ( msg.what !== 'zapperStart' ) { return; }
-    if ( Array.isArray(ev.ports) === false ) { return; }
-    if ( ev.ports.length === 0 ) { return; }
-    startZapper(ev.ports[0]);
-}, { once: true });
+toolOverlay.start(onMessage);
 
 /******************************************************************************/

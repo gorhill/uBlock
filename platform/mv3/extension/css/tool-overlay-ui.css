@@ -1,0 +1,99 @@
+:root {
+    --ubol-overlay-fill: rgba(255,255,255,0.2);
+    --ubol-overlay-border: #FFF;
+    --ubol-overlay-canvas: rgba(128,128,128,0.3);
+}
+:root.dark aside {
+    color-scheme: dark;
+}
+
+:root,
+:root > body {
+    background: transparent;
+    height: 100vh;
+        height: 100svh;
+    margin: 0;
+    overflow: hidden;
+    width: 100vw;
+}
+:root > body.loading {
+    visibility: hidden;
+}
+
+:root :focus {
+    outline: none;
+}
+
+svg#overlay {
+    cursor: crosshair;
+    box-sizing: border-box;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+svg#overlay > path:first-child {
+    fill: var(--ubol-overlay-canvas);
+    fill-rule: evenodd;
+}
+svg#overlay > path + path {
+    stroke: var(--ubol-overlay-border);
+    stroke-width: 1.5px;
+    fill: var(--ubol-overlay-fill);
+}
+
+:root aside {
+    box-sizing: border-box;
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    z-index: 100;
+}
+:root body[dir="rtl"] aside {
+    left: 2px;
+    right: unset;
+}
+
+:root.minimized aside > section:not(#windowbar) {
+    display: none !important;
+}
+:root.minimized aside {
+    min-width: min(12em, 100vw - 4px);
+    width: min(12em, 100vw - 4px);
+}
+
+:root aside #windowbar {
+    border-bottom: 1px solid var(--border-1);
+    display: flex;
+}
+:root aside #windowbar > div {
+    fill: none;
+    height: 2em;
+    stroke: var(--ink-1);
+    stroke-width: 2px;
+    width: 2em;
+}
+:root.minimized aside #windowbar > div {
+    height: 3em;
+    width: 3em;
+}
+:root.minimized aside #windowbar > #minimize svg > path,
+#windowbar #minimize svg > rect {
+    display: none;
+}
+:root.minimized aside #windowbar > #minimize svg > rect {
+    display: initial;
+}
+:root #windowbar > #move {
+    align-items: center;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAFElEQVQI12NgwAfKy8v/M5ANYLoBshgEyQo6H9UAAAAASUVORK5CYII=');
+    cursor: grab;
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+}
+:root #windowbar > div:hover {
+    background-color: var(--surface-2)
+}

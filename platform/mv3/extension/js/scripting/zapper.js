@@ -23,187 +23,9 @@
 
 /******************************************************************************/
 
-const zapper = self.uBOLZapper = self.uBOLZapper || {};
-
-if ( zapper.injected ) { return; }
-zapper.injected = true;
-
-const webext = typeof browser === 'object' ? browser : chrome;
-
-/******************************************************************************/
-
-const sendMessage = msg => {
-    try {
-        webext.runtime.sendMessage(msg).catch(( ) => { });
-    } catch {
-    }
-};
-
-/******************************************************************************/
-
-const zapperSecret = (( ) => {
-    let secret = String.fromCharCode((Math.random() * 26) + 97);
-    do {
-        secret += (Math.floor(Math.random() * 2147483647) + 2147483647)
-            .toString(36)
-            .slice(2);
-    } while ( secret.length < 8 );
-    return secret;
-})();
-
-const zapperCSSStyle = [
-    'background: transparent',
-    'border: 0',
-    'border-radius: 0',
-    'box-shadow: none',
-    'color-scheme: light dark',
-    'display: block',
-    'filter: none',
-    'height: 100vh',
-    '    height: 100svh',
-    'left: 0',
-    'margin: 0',
-    'max-height: none',
-    'max-width: none',
-    'min-height: unset',
-    'min-width: unset',
-    'opacity: 1',
-    'outline: 0',
-    'padding: 0',
-    'pointer-events: auto',
-    'position: fixed',
-    'top: 0',
-    'transform: none',
-    'visibility: hidden',
-    'width: 100%',
-    'z-index: 2147483647',
-    ''
-].join(' !important;\n');
-
-const zapperCSS = `
-:root > [${zapperSecret}] {
-    ${zapperCSSStyle}
-}
-:root > [${zapperSecret}-loaded] {
-    visibility: visible !important;
-}
-:root [${zapperSecret}-click] {
-    pointer-events: none !important;
-}
-`;
-
-sendMessage({ what: 'insertCSS', css: zapperCSS });
-
-/******************************************************************************/
-
-const getElementBoundingClientRect = function(elem) {
-    let rect = typeof elem.getBoundingClientRect === 'function'
-        ? elem.getBoundingClientRect()
-        : { height: 0, left: 0, top: 0, width: 0 };
-
-    // https://github.com/gorhill/uBlock/issues/1024
-    // Try not returning an empty bounding rect.
-    if ( rect.width !== 0 && rect.height !== 0 ) {
-        return rect;
-    }
-    if ( elem.shadowRoot instanceof DocumentFragment ) {
-        return getElementBoundingClientRect(elem.shadowRoot);
-    }
-
-    let left = rect.left,
-        right = left + rect.width,
-        top = rect.top,
-        bottom = top + rect.height;
-
-    for ( const child of elem.children ) {
-        rect = getElementBoundingClientRect(child);
-        if ( rect.width === 0 || rect.height === 0 ) { continue; }
-        if ( rect.left < left ) { left = rect.left; }
-        if ( rect.right > right ) { right = rect.right; }
-        if ( rect.top < top ) { top = rect.top; }
-        if ( rect.bottom > bottom ) { bottom = rect.bottom; }
-    }
-
-    return {
-        bottom,
-        height: bottom - top,
-        left,
-        right,
-        top,
-        width: right - left
-    };
-};
-
-/******************************************************************************/
-
-const highlightElement = function(elem) {
-    if ( elem !== true ) {
-        if ( elem !== undefined ) {
-            if ( elem === highlightElement.current ) { return; }
-            if ( elem !== zapperFrame ) {
-                highlightElement.current = elem;
-            }
-        }
-    }
-    elem = highlightElement.current;
-
-    const ow = self.innerWidth;
-    const oh = self.innerHeight;
-    const islands = [];
-
-    if ( elem !== null ) {
-        const rect = getElementBoundingClientRect(elem);
-        // Ignore offscreen areas
-        if (
-            rect.left <= ow && rect.top <= oh &&
-            rect.left + rect.width >= 0 && rect.top + rect.height >= 0
-        ) {
-            islands.push(
-                `M${rect.left} ${rect.top}h${rect.width}v${rect.height}h-${rect.width}z`
-            );
-        }
-    }
-
-    zapperFramePort.postMessage({
-        what: 'svgPaths',
-        ocean: `M0 0h${ow}v${oh}h-${ow}z`,
-        islands: islands.join(''),
-    });
-};
-highlightElement.current = null;
-
-/******************************************************************************/
-
-const elementFromPoint = (( ) => {
-    let lastX, lastY;
-
-    return (x, y) => {
-        if ( x !== undefined ) {
-            lastX = x; lastY = y;
-        } else if ( lastX !== undefined ) {
-            x = lastX; y = lastY;
-        } else {
-            return null;
-        }
-        if ( !zapperFrame ) { return null; }
-        const magicAttr = `${zapperSecret}-click`;
-        zapperFrame.setAttribute(magicAttr, '');
-        let elem = document.elementFromPoint(x, y);
-        if ( elem === document.body || elem === document.documentElement ) {
-            elem = null;
-        }
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/380
-        zapperFrame.removeAttribute(magicAttr);
-        return elem;
-    };
-})();
-
-/******************************************************************************/
-
-const highlightElementAtPoint = function(mx, my) {
-    const elem = elementFromPoint(mx, my);
-    highlightElement(elem);
-};
+const ubolOverlay = self.ubolOverlay;
+if ( ubolOverlay === undefined ) { return; }
+if ( ubolOverlay.file === '/zapper-ui.html' ) { return; }
 
 /******************************************************************************/
 
@@ -213,18 +35,18 @@ const highlightElementAtPoint = function(mx, my) {
 // With touch-driven devices, first highlight the element and remove only
 // when tapping again the highlighted area.
 
-const zapElementAtPoint = function(mx, my, options) {
+function zapElementAtPoint(mx, my, options) {
     if ( options.highlight ) {
-        const elem = elementFromPoint(mx, my);
+        const elem = ubolOverlay.elementFromPoint(mx, my);
         if ( elem ) {
-            highlightElement(elem);
+            ubolOverlay.highlightElements([ elem ]);
         }
         return;
     }
 
-    let elemToRemove = highlightElement.current;
+    let elemToRemove = ubolOverlay.highlightedElements?.[0] ?? null;
     if ( elemToRemove === null && mx !== undefined ) {
-        elemToRemove = elementFromPoint(mx, my);
+        elemToRemove = ubolOverlay.elementFromPoint(mx, my);
     }
 
     if ( elemToRemove instanceof Element === false ) { return; }
@@ -261,85 +83,37 @@ const zapElementAtPoint = function(mx, my, options) {
         }
     }
     elemToRemove.remove();
-    highlightElementAtPoint(mx, my);
-};
+    ubolOverlay.highlightElementAtPoint(mx, my);
+}
 
 /******************************************************************************/
 
-const onKeyPressed = function(ev) {
-    // Delete
-    if (
-        (ev.key === 'Delete' || ev.key === 'Backspace') ) {
-        ev.stopPropagation();
-        ev.preventDefault();
-        zapElementAtPoint();
-        return;
-    }
-    // Esc
-    if ( ev.key === 'Escape' || ev.which === 27 ) {
-        ev.stopPropagation();
-        ev.preventDefault();
-        quitZapper();
-        return;
-    }
-};
+function onKeyPressed(ev) {
+    if ( ev.key !== 'Delete' && ev.key !== 'Backspace' ) { return; }
+    ev.stopPropagation();
+    ev.preventDefault();
+    zapElementAtPoint();
+}
 
 /******************************************************************************/
 
-// https://github.com/chrisaljoudi/uBlock/issues/190
-//   May need to dynamically adjust the height of the overlay + new position
-//   of highlighted elements.
-
-const onViewportChanged = function() {
-    highlightElement(true);
-};
-
-/******************************************************************************/
-
-const startZapper = function() {
-    zapperFrame.focus();
-    self.addEventListener('scroll', onViewportChanged, { passive: true });
-    self.addEventListener('resize', onViewportChanged, { passive: true });
+function startZapper() {
     self.addEventListener('keydown', onKeyPressed, true);
-};
+}
 
-/******************************************************************************/
-
-const quitZapper = function() {
-    self.removeEventListener('scroll', onViewportChanged, { passive: true });
-    self.removeEventListener('resize', onViewportChanged, { passive: true });
+function quitZapper() {
     self.removeEventListener('keydown', onKeyPressed, true);
-    if ( zapperFramePort ) {
-        zapperFramePort.close();
-        zapperFramePort.onmessage = null;
-        zapperFramePort.onmessageerror = null;
-        zapperFramePort = null;
-    }
-    if ( zapperFrame ) {
-        zapperFrame.remove();
-        zapperFrame = null;
-    }
-    sendMessage({ what: 'removeCSS', css: zapperCSS });
-    zapper.injected = false;
-};
+}
 
 /******************************************************************************/
 
-const onFrameMessage = function(msg) {
+function onMessage(msg) {
     switch ( msg.what ) {
-    case 'start':
+    case 'startTool':
         startZapper();
-        if ( Boolean(zapperFramePort) === false ) { break; }
-        highlightElement(true);
         break;
-    case 'quitZapper':
+    case 'quitTool':
         quitZapper();
-        break;
-    case 'highlightElementAtPoint':
-        highlightElementAtPoint(msg.mx, msg.my);
-        break;
-    case 'unhighlight':
-        highlightElement(null);
         break;
     case 'zapElementAtPoint':
         zapElementAtPoint(msg.mx, msg.my, msg.options);
@@ -350,68 +124,11 @@ const onFrameMessage = function(msg) {
     default:
         break;
     }
-};
+}
 
 /******************************************************************************/
 
-// zapper-ui.html will be injected in the page through an iframe, and
-// is a sandboxed so as to prevent the page from interfering with its
-// content and behavior.
-//
-// The purpose of zapper.js is to install the zapper UI, and wait for the
-// component to establish a direct communication channel.
-//
-// When the zapper is installed on a page, the only change the page sees is an
-// iframe with a random attribute. The page can't see the content of the
-// iframe, and cannot interfere with its style properties. However the page
-// can remove the iframe.
-
-const bootstrap = async ( ) => {
-    const dynamicURL = new URL(webext.runtime.getURL('/zapper-ui.html'));
-    return new Promise(resolve => {
-        const frame = document.createElement('iframe');
-        frame.setAttribute(zapperSecret, '');
-        const onZapperLoad = ( ) => {
-            frame.onload = null;
-            frame.setAttribute(`${zapperSecret}-loaded`, '');
-            const channel = new MessageChannel();
-            const port = channel.port1;
-            port.onmessage = ev => {
-                onFrameMessage(ev.data || {});
-            };
-            port.onmessageerror = ( ) => {
-                quitZapper();
-            };
-            const realURL = new URL(dynamicURL);
-            realURL.hostname = webext.i18n.getMessage('@@extension_id');
-            frame.contentWindow.postMessage(
-                { what: 'zapperStart' },
-                realURL.origin,
-                [ channel.port2 ]
-            );
-            frame.contentWindow.focus();
-            resolve({
-                zapperFrame: frame,
-                zapperFramePort: port,
-            });
-        };
-        if ( dynamicURL.protocol !== 'safari-web-extension:' ) {
-            frame.onload = ( ) => {
-                frame.onload = onZapperLoad;
-                frame.contentWindow.location = dynamicURL.href;
-            };
-        } else {
-            frame.onload = onZapperLoad;
-            frame.setAttribute('src', dynamicURL.href);
-        }
-        document.documentElement.append(frame);
-    });
-};
-
-let { zapperFrame, zapperFramePort } = await bootstrap();
-if ( zapperFrame && zapperFramePort ) { return; }
-
-quitZapper();
+await ubolOverlay.install('/zapper-ui.html', onMessage);
 
 /******************************************************************************/
 

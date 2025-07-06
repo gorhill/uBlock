@@ -1,54 +1,16 @@
-:root {
+:root#ubol-zapper {
     --quit-button-size: max(4em, min(6em, calc(100vw / 8), calc(100vh / 8)));
+    --ubol-overlay-fill: rgba(255,255,63,0.10);
+    --ubol-overlay-border: #FF0;
 }
 
-html#ubol-zapper,
-#ubol-zapper body {
-    background: transparent;
-    cursor: not-allowed;
-    height: 100vh;
-        height: 100svh;
-    margin: 0;
-    overflow: hidden;
-    width: 100vw;
-}
-#ubol-zapper :focus {
-    outline: none;
-}
 #ubol-zapper aside {
-    box-sizing: border-box;
-    cursor: default;
-    display: flex;
-    flex-direction: column;
     gap: 2px;
-    position: fixed;
     right: 2px;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 100;
 }
-#ubol-zapper body[dir="rtl"] aside {
-    left: 2px;
-    right: unset;
-}
-#ubol-zapper svg#sea {
-    cursor: crosshair;
-    box-sizing: border-box;
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-}
-#ubol-zapper svg#sea > path:first-child {
-    fill: rgba(0,0,0,0.5);
-    fill-rule: evenodd;
-}
-#ubol-zapper svg#sea > path + path {
-    stroke: #FF0;
-    stroke-width: 0.5px;
-    fill: rgba(255,255,63,0.20);
-}
+
 #ubol-zapper aside > div {
     background-color: var(--surface-1);
     border: 1px solid rgba(0,0,0,0.5);
