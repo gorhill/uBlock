@@ -41,18 +41,16 @@
     font-size: small;
     padding: 0.5em;
 }
-#ubol-unpicker .customFilter.on >  span.selector {
+#ubol-unpicker .customFilter.on > span.selector {
     background-color: var(--accent-surface-1);
-    color: var(--accent-ink-1);}
+    color: var(--accent-ink-1);
 }
-#ubol-unpicker .customFilter.removed >  span.selector {
-    text-decoration-line: line-through;
-}
-#ubol-unpicker .customFilter.removed >  span.remove {
+#ubol-unpicker .customFilter.removed > span.remove {
     display: none;
 }
-#ubol-unpicker .customFilter.removed span.selector {
+#ubol-unpicker .customFilter.removed > span.selector {
     pointer-events: none;
+    text-decoration-line: line-through;
 }
 #ubol-unpicker .customFilter > span.fa-icon {
     flex-shrink: 0;
