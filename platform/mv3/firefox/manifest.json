@@ -25,6 +25,9 @@
   "commands": {
     "enter-zapper-mode": {
       "description": "__MSG_zapperTipEnter__"
+    },
+    "enter-picker-mode": {
+      "description": "__MSG_pickerTipEnter__"
     }
   },
   "declarative_net_request": {

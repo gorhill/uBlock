@@ -489,6 +489,14 @@ function onCommand(command, tab) {
         });
         break;
     }
+    case 'enter-picker-mode': {
+        if ( browser.scripting === undefined ) { return; }
+        browser.scripting.executeScript({
+            files: [ '/js/scripting/tool-overlay.js', '/js/scripting/picker.js' ],
+            target: { tabId: tab.id },
+        });
+        break;
+    }
     default:
         break;
     }
