@@ -117,14 +117,14 @@
     user-select: none;
         -webkit-user-select: none;
     white-space: nowrap;
-    }
+}
 #ubol-picker #moreOrLess > span {
     cursor: pointer;
     padding: var(--default-gap-xxsmall) var(--default-gap-xsmall);
-    }
+}
 #ubol-picker #moreOrLess > span:last-of-type {
     text-align: end;
-    }
+}
 #ubol-picker[data-view="2"] aside #moreOrLess > span:first-of-type {
     visibility: hidden;
 }
