@@ -35,6 +35,10 @@
     "message": "フィルタリングモード",
     "description": "Label in the popup panel for the current filtering mode"
   },
+  "popupLocalToolsLabel": {
+    "message": "On this website",
+    "description": "Label in the popup panel got the local tools section"
+  },
   "popupTipReport": {
     "message": "このサイト上での問題を報告",
     "description": "Tooltip used for the 'chat' icon in the panel"
@@ -295,6 +299,14 @@
     "message": "要素抹消モードを終了",
     "description": "Tooltip for the button used to exit zapper mode"
   },
+  "pickerTipEnter": {
+    "message": "Create a custom filter",
+    "description": "Label for the menu entry to create cosmetic filters"
+  },
+  "unpickerTipEnter": {
+    "message": "Remove a custom filter",
+    "description": "Label for the menu entry to delete cosmetic filters"
+  },
   "developDropdownLabel": {
     "message": "View:",
     "description": "A label of a dropdown list"
@@ -342,5 +354,25 @@
   "dnrRulesCountInfo": {
     "message": "Number of registered rules: {count}",
     "description": "Short sentence to report the number of currently registered DNR rules"
+  },
+  "pickerSliderLabel": {
+    "message": "Move the slider to select the best match",
+    "description": "Label to describe the purpose of the slider"
+  },
+  "pickerPick": {
+    "message": "Pick",
+    "description": "Text for the button to re-enter element-picking mode"
+  },
+  "pickerPreview": {
+    "message": "Preview",
+    "description": "Text for the button to activate preview mode"
+  },
+  "pickerCreate": {
+    "message": "Create",
+    "description": "Text for the button to create the filter"
+  },
+  "unpickerUsage": {
+    "message": "Select a filter below to highlight matching elements in the webpage. Click the trash can to remove a filter.",
+    "description": "Summary description on how to use the tool to remove custom filters"
   }
 }
