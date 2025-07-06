@@ -102,9 +102,8 @@
     padding: 1px 2px;
 }
 #ubol-picker #candidateFilters ul > li > span.on {
-    background-color: var(--ink-1);
-    color: var(--surface-1);
-}
+    background-color: var(--accent-surface-1);
+    color: var(--accent-ink-1);}
 #ubol-picker #candidateFilters ul > li > span:hover {
     border: 1px solid var(--ink-1);
 }
