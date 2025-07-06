@@ -37,7 +37,7 @@
   },
   "popupLocalToolsLabel": {
     "message": "On this website",
-    "description": "Label in the popup panel got the local tools section"
+    "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
     "message": "Ilmoita ongelmasta tällä verkkosivustolla",
