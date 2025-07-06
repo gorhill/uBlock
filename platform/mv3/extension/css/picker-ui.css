@@ -10,7 +10,6 @@
 :root aside {
     background-color: var(--surface-1);
     border: 1px solid var(--border-2);
-    max-height: 40vh;
     max-width: min(32rem, 100vw - 4px);
     min-width: min(24rem, 100vw - 4px);
     row-gap: 1em;
@@ -39,8 +38,7 @@
 #ubol-picker textarea {
     border: 0;
     box-sizing: border-box;
-    height: 6em;
-    min-height: 3em;
+    min-height: 5em;
     resize: none;
     width: 100%;
 }
@@ -78,6 +76,7 @@
 #ubol-picker #candidateFilters {
     font-family: monospace;
     font-size: small;
+    max-height: 40vh;
     min-height: 6em;
     overflow-y: auto;
     word-break: break-all;
