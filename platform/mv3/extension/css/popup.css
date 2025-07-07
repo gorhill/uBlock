@@ -99,31 +99,6 @@ body[data-forbid~="picker"] #gotoPicker {
     margin-top: var(--popup-gap);
     }
 
-.rulesetTools {
-    background-color: transparent;
-    border: 0;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    width: 25%;
-    }
-.rulesetTools [id] {
-    background-color: var(--popup-ruleset-tool-surface);
-    border-radius: 4px;
-    cursor: pointer;
-    fill: var(--popup-ruleset-tool-ink);
-    flex-grow: 1;
-    font-size: 2.2em;
-    padding: 0;
-    visibility: hidden;
-    }
-.rulesetTools [id]:not(:first-of-type) {
-    margin-block-start: 1px;
-    }
-.rulesetTools [id] > svg {
-    fill: var(--ink-4);
-    }
 body.needReload #refresh {
     visibility: visible;
     }
@@ -143,7 +118,6 @@ body.needReload #refresh {
     font-size: small;
     color: var(--ink-2);
     line-height: calc(var(--font-size) * 1.8);
-    margin-inline-start: 0.5em;
     }
 .toolRibbon .tool {
     cursor: pointer;
@@ -161,11 +135,8 @@ body.needReload #refresh {
 .toolRibbon .tool:not(.enabled) {
     display: none;
     }
-body.mobile.no-tooltips .toolRibbon .tool {
-    font-size: 1.6em;
-    }
-.toolRibbon.genericTools {
-    margin-bottom: 0;       
+.toolRibbon.localTools > * {
+    padding: 0 0.5em;
     }
 
 body:not([data-section~="a"]) [data-section="a"] {
@@ -186,12 +157,6 @@ body:not([data-section~="b"]) [data-section="b"] {
 /* mouse-driven devices */
 :root.desktop {
     display: flex;
-    }
-:root.desktop .rulesetTools [id]:hover {
-    background-color: var(--popup-ruleset-tool-surface-hover);
-    }
-:root.desktop .rulesetTools [id]:hover > svg {
-    fill: var(--ink-2);
     }
 :root.desktop .tool:hover {
     background-color: var(--popup-toolbar-surface-hover);
