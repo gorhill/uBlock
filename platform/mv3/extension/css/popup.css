@@ -64,9 +64,14 @@ hr {
 body[data-forbid~="filteringMode"] .filteringModeSlider {
     pointer-events: none;
     }
-body[data-forbid~="dashboard"] #gotoDashboard,
 body[data-forbid~="zapper"] #gotoZapper,
-body[data-forbid~="picker"] #gotoPicker {
+body[data-forbid~="picker"] #gotoPicker,
+body[data-forbid~="picker"] #gotoUnpicker,
+body[data-forbid~="report"] #gotoReport,
+body[data-forbid~="zapper"][data-forbid~="picker"][data-forbid~="report"] .localTools {
+    display: none;
+    }
+body[data-forbid~="dashboard"] .globalTools {
     display: none;
     }
 
@@ -137,13 +142,6 @@ body.needReload #refresh {
     }
 .toolRibbon.localTools > * {
     padding: 0 0.5em;
-    }
-
-body:not([data-section~="a"]) [data-section="a"] {
-    display: none;
-    }
-body:not([data-section~="b"]) [data-section="b"] {
-    display: none;
     }
 
 /* horizontally-constrained viewport */
