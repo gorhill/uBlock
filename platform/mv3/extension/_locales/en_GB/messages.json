@@ -372,7 +372,7 @@
     "description": "Text for the button to create the filter"
   },
   "unpickerUsage": {
-    "message": "Select a filter below to highlight matching elements in the webpage. Click the trash can to remove a filter.",
+    "message": "Select a filter below to highlight matching elements in the webpage. Click the dustbin to remove a filter.",
     "description": "Summary description on how to use the tool to remove custom filters"
   }
 }

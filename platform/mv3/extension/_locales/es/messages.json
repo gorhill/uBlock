@@ -36,7 +36,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupLocalToolsLabel": {
-    "message": "On this website",
+    "message": "En este sitio web",
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
@@ -300,11 +300,11 @@
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {
-    "message": "Create a custom filter",
+    "message": "Crear un filtro personalizado",
     "description": "Label for the menu entry to create cosmetic filters"
   },
   "unpickerTipEnter": {
-    "message": "Remove a custom filter",
+    "message": "Remover un filtro personalizado",
     "description": "Label for the menu entry to delete cosmetic filters"
   },
   "developDropdownLabel": {
@@ -356,23 +356,23 @@
     "description": "Short sentence to report the number of currently registered DNR rules"
   },
   "pickerSliderLabel": {
-    "message": "Move the slider to select the best match",
+    "message": "Mueve el deslizador para seleccionar la mejor coincidencia",
     "description": "Label to describe the purpose of the slider"
   },
   "pickerPick": {
-    "message": "Pick",
+    "message": "Elegir",
     "description": "Text for the button to re-enter element-picking mode"
   },
   "pickerPreview": {
-    "message": "Preview",
+    "message": "Vista previa",
     "description": "Text for the button to activate preview mode"
   },
   "pickerCreate": {
-    "message": "Create",
+    "message": "Crear",
     "description": "Text for the button to create the filter"
   },
   "unpickerUsage": {
-    "message": "Select a filter below to highlight matching elements in the webpage. Click the trash can to remove a filter.",
+    "message": "Selecciona un filtro abajo para resaltar los elementos coincidentes en la página web. Cliquea la papelera para remover un filtro.",
     "description": "Summary description on how to use the tool to remove custom filters"
   }
 }

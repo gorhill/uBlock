@@ -36,11 +36,11 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupLocalToolsLabel": {
-    "message": "On this website",
+    "message": "På denna webbplats",
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
-    "message": "Rapportera ett problem på denna webbplats",
+    "message": "Rapportera ett problem",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -292,7 +292,7 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Gå in i elementzapperläge",
+    "message": "Ta bort ett element",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
@@ -300,11 +300,11 @@
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {
-    "message": "Create a custom filter",
+    "message": "Skapa ett anpassat filter",
     "description": "Label for the menu entry to create cosmetic filters"
   },
   "unpickerTipEnter": {
-    "message": "Remove a custom filter",
+    "message": "Ta bort ett anpassat filter",
     "description": "Label for the menu entry to delete cosmetic filters"
   },
   "developDropdownLabel": {
@@ -356,23 +356,23 @@
     "description": "Short sentence to report the number of currently registered DNR rules"
   },
   "pickerSliderLabel": {
-    "message": "Move the slider to select the best match",
+    "message": "Flytta reglaget för att välja den bästa matchningen",
     "description": "Label to describe the purpose of the slider"
   },
   "pickerPick": {
-    "message": "Pick",
+    "message": "Välj",
     "description": "Text for the button to re-enter element-picking mode"
   },
   "pickerPreview": {
-    "message": "Preview",
+    "message": "Förhandsgranska",
     "description": "Text for the button to activate preview mode"
   },
   "pickerCreate": {
-    "message": "Create",
+    "message": "Skapa",
     "description": "Text for the button to create the filter"
   },
   "unpickerUsage": {
-    "message": "Select a filter below to highlight matching elements in the webpage. Click the trash can to remove a filter.",
+    "message": "Välj ett filter nedan för att markera matchande element på webbsidan. Klicka på papperskorgen för att ta bort ett filter.",
     "description": "Summary description on how to use the tool to remove custom filters"
   }
 }
