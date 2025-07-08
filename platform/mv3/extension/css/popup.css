@@ -13,11 +13,9 @@
 
 :root body,
 :root.mobile body {
-    --font-size: 15px;
     --popup-gap: var(--font-size);
     --popup-gap-thin: calc(0.5 * var(--popup-gap));
     --popup-gap-extra-thin: calc(0.25 * var(--popup-gap));
-    font-size: var(--font-size);
     min-width: var(--popup-min-width);
     }
 :root body.loading {
@@ -109,7 +107,6 @@ body.needReload #refresh {
 .toolRibbon {
     display: flex;
     flex-direction: column;
-    font-size: calc(var(--font-size) - 1px);
     line-height: normal;
     }
 :root:not(.isHTTP) .needHTTP {
@@ -117,7 +114,7 @@ body.needReload #refresh {
     }
 
 .toolRibbon > label {
-    font-size: small;
+    font-size: 90%;
     color: var(--ink-2);
     line-height: calc(var(--font-size) * 1.8);
     }
