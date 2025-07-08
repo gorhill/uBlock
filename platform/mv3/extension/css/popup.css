@@ -77,8 +77,7 @@ body[data-forbid~="dashboard"] .globalTools {
 
 #filteringModeText {
     color: var(--ink-3);
-    margin-bottom: var(--default-gap-small);
-    margin-top: 0;
+    margin-bottom: var(--popup-gap-thin);
     text-align: center;
     text-transform: lowercase;
     }
@@ -100,8 +99,7 @@ body[data-forbid~="dashboard"] .globalTools {
 
 .filteringModeSlider {
     align-self: center;
-    margin-bottom: var(--popup-gap);
-    margin-top: var(--popup-gap);
+    margin: var(--popup-gap) 0;
     }
 
 body.needReload #refresh {
@@ -112,8 +110,7 @@ body.needReload #refresh {
     display: flex;
     flex-direction: column;
     font-size: calc(var(--font-size) - 1px);
-    line-height: calc(var(--font-size) * 2.2);
-    white-space: nowrap;
+    line-height: normal;
     }
 :root:not(.isHTTP) .needHTTP {
     display: none;
@@ -124,24 +121,29 @@ body.needReload #refresh {
     color: var(--ink-2);
     line-height: calc(var(--font-size) * 1.8);
     }
-.toolRibbon .tool {
+.toolRibbon > .tool {
     cursor: pointer;
     display: flex;
+    padding: 0.5em 0.5em 0.5em 0;
     unicode-bidi: embed;
     }
-.toolRibbon .tool:hover {
+.toolRibbon > .tool:hover {
     color: var(--ink-1);
         fill: var(--ink-1);
     }
-.toolRibbon .tool .fa-icon {
+.toolRibbon > .tool:not(.enabled) {
+    display: none;
+    }
+.toolRibbon > .tool .fa-icon {
+    flex-shrink: 0;
     font-size: 1.4em;
     min-width: 1.4em;
     }
-.toolRibbon .tool:not(.enabled) {
-    display: none;
+.toolRibbon > .tool [data-i18n] {
+    flex-grow: 1;
     }
 .toolRibbon.localTools > * {
-    padding: 0 0.5em;
+    padding-left: 0.5em;
     }
 
 /* horizontally-constrained viewport */
