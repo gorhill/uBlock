@@ -40,7 +40,7 @@
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
-    "message": "Reportar un problema en este sitio web\n",
+    "message": "Reportar un problema",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -292,7 +292,7 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Entrar al modo eliminación de elementos",
+    "message": "Eliminar un elemento",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
@@ -304,7 +304,7 @@
     "description": "Label for the menu entry to create cosmetic filters"
   },
   "unpickerTipEnter": {
-    "message": "Remover un filtro personalizado",
+    "message": "Eliminar un filtro personalizado",
     "description": "Label for the menu entry to delete cosmetic filters"
   },
   "developDropdownLabel": {
@@ -356,7 +356,7 @@
     "description": "Short sentence to report the number of currently registered DNR rules"
   },
   "pickerSliderLabel": {
-    "message": "Mueve el deslizador para seleccionar la mejor coincidencia",
+    "message": "Mueve el control deslizante para seleccionar la mejor coincidencia",
     "description": "Label to describe the purpose of the slider"
   },
   "pickerPick": {
@@ -372,7 +372,7 @@
     "description": "Text for the button to create the filter"
   },
   "unpickerUsage": {
-    "message": "Selecciona un filtro abajo para resaltar los elementos coincidentes en la página web. Cliquea la papelera para remover un filtro.",
+    "message": "Selecciona un filtro abajo para resaltar los elementos coincidentes en la página web. Haz clic en la papelera para eliminar un filtro.",
     "description": "Summary description on how to use the tool to remove custom filters"
   }
 }

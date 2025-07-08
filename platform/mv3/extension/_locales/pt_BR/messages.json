@@ -40,7 +40,7 @@
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
-    "message": "Relatar um problema neste site",
+    "message": "Relatar um problema",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -292,7 +292,7 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Entrar no modo de remoção de elementos",
+    "message": "Remover um elemento",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
@@ -300,11 +300,11 @@
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {
-    "message": "Criar filtro personalizado",
+    "message": "Criar um filtro personalizado",
     "description": "Label for the menu entry to create cosmetic filters"
   },
   "unpickerTipEnter": {
-    "message": "Remover filtro personalizado",
+    "message": "Remover um filtro personalizado",
     "description": "Label for the menu entry to delete cosmetic filters"
   },
   "developDropdownLabel": {

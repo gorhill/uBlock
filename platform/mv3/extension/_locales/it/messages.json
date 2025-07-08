@@ -360,7 +360,7 @@
     "description": "Label to describe the purpose of the slider"
   },
   "pickerPick": {
-    "message": "Seleziona",
+    "message": "Scegli",
     "description": "Text for the button to re-enter element-picking mode"
   },
   "pickerPreview": {
@@ -372,7 +372,7 @@
     "description": "Text for the button to create the filter"
   },
   "unpickerUsage": {
-    "message": "Seleziona un filtro per evidenziare gli elementi corrispondenti nella pagina web. Fare clic sul cestino per rimuovere un filtro.",
+    "message": "Seleziona un filtro per evidenziare gli elementi corrispondenti nella pagina web. Clicca il cestino per rimuovere un filtro.",
     "description": "Summary description on how to use the tool to remove custom filters"
   }
 }

@@ -40,7 +40,7 @@
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
-    "message": "Сообщить о проблеме на этом сайте",
+    "message": "Сообщить о проблеме",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -292,7 +292,7 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Войти в режим временного скрытия элемента",
+    "message": "Убрать элемент",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
@@ -356,11 +356,11 @@
     "description": "Short sentence to report the number of currently registered DNR rules"
   },
   "pickerSliderLabel": {
-    "message": "Передвиньте ползунок для выбора подходящего варианта",
+    "message": "Перемещайте ползунок для выбора лучшего варианта",
     "description": "Label to describe the purpose of the slider"
   },
   "pickerPick": {
-    "message": "Выбрать",
+    "message": "Выбрать элемент",
     "description": "Text for the button to re-enter element-picking mode"
   },
   "pickerPreview": {
@@ -372,7 +372,7 @@
     "description": "Text for the button to create the filter"
   },
   "unpickerUsage": {
-    "message": "Выберите фильтр ниже, чтобы выделить соответствующие элементы на странице. Щелчок по корзине для удаления фильтра.",
+    "message": "Выберите фильтр ниже, чтобы подсветить соответствующие элементы на странице. Нажмите на корзину для удаления фильтра.",
     "description": "Summary description on how to use the tool to remove custom filters"
   }
 }
