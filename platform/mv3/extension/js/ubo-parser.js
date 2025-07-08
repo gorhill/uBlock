@@ -448,9 +448,13 @@ function parseNetworkFilter(parser) {
 /******************************************************************************/
 
 export function parseFilters(text) {
+    if ( text.startsWith('---') ) { return; }
+    if ( text.endsWith('---') ) { return; }
+    const lines = text.split(/\n/);
+    if ( lines.some(a => a.startsWith(' ')) ) { return; }
     const rules = [];
     const parser = new sfp.AstFilterParser({ trustedSource: true });
-    for ( const line of text.split(/\n/) ) {
+    for ( const line of lines ) {
         parser.parse(line);
         if ( parser.isNetworkFilter() === false ) { continue; }
         const rule = parseNetworkFilter(parser);
