@@ -49,7 +49,7 @@
     color: var(--ink-2);
     display: flex;
     flex-direction: column;
-    font-size: smaller;
+    font-size: small;
     gap: 0.25em;
 }
 #ubol-picker .resultsetWidgets > span:first-of-type {
