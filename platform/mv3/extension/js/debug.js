@@ -48,9 +48,8 @@ matchedRules.fill(null);
 let writePtr = 0;
 
 const pruneLongLists = list => {
-    if ( list.length <= 21 ) { return list; }
-    return [ ...list.slice(0, 10), '...', ...list.slice(-10) ];
-    
+    if ( list.length <= 11 ) { return list; }
+    return [ ...list.slice(0, 5), '...', ...list.slice(-5) ];
 };
 
 const getRuleset = async rulesetId => {
@@ -95,8 +94,9 @@ const getRuleDetails = async ruleInfo => {
 /******************************************************************************/
 
 export const getMatchedRules = (( ) => {
-    const noopFn = ( ) => Promise.resolve([]);
-    if ( isSideloaded !== true ) { return noopFn; }
+    if ( isSideloaded !== true ) {
+        return ( ) => Promise.resolve([]);
+    }
 
     if ( isModern ) {
         return async tabId => {
@@ -120,11 +120,11 @@ export const getMatchedRules = (( ) => {
         if ( typeof dnr.getMatchedRules !== 'function' ) { return []; }
         const matchedRules = await dnr.getMatchedRules({ tabId });
         if ( matchedRules instanceof Object === false ) { return []; }
-        const out = [];
-        for ( const ruleInfo of matchedRules.rulesMatchedInfo ) {
-            out.push({ request: ruleInfo.request });
+        const promises = [];
+        for ( const { tabId, rule } of matchedRules.rulesMatchedInfo ) {
+            promises.push(getRuleDetails({ request: { tabId }, rule }));
         }
-        return out;
+        return Promise.all(promises);
     };
 })();
 
