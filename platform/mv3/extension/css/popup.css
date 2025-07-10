@@ -2,7 +2,7 @@
 .fa-icon.fa-icon-badged > .fa-icon-badge {
     bottom: auto;
     top: -20%;
-    }
+}
 
 :root {
     --popup-min-width: calc(
@@ -17,30 +17,30 @@
     --popup-gap-thin: calc(0.5 * var(--popup-gap));
     --popup-gap-extra-thin: calc(0.25 * var(--popup-gap));
     min-width: var(--popup-min-width);
-    }
+}
 :root body.loading {
     visibility: hidden;
-    }
+}
 a {
     color: var(--ink-1);
         fill: var(--ink-1);
     text-decoration: none;
-    }
+}
 :focus {
     outline: 0;
-    }
+}
 
 #main {
     align-self: flex-start;
     display: flex;
     flex-direction: column;
-    }
+}
 :root.portrait #main {
     align-self: inherit;
-    }
+}
 hr {
     margin: 0.5em 0;
-    }
+}
 
 #hostname {
     align-items: center;
@@ -51,110 +51,147 @@ hr {
     padding: 0 var(--popup-gap-extra-thin);
     text-align: center;
     word-break: break-all;
-    }
+}
 #hostname > span {
     word-break: break-all;
-    }
+}
 #hostname > span + span {
     font-weight: 600;
-    }
+}
 
 body[data-forbid~="filteringMode"] .filteringModeSlider {
     pointer-events: none;
-    }
+}
 body[data-forbid~="zapper"] #gotoZapper,
 body[data-forbid~="picker"] #gotoPicker,
 body[data-forbid~="picker"] #gotoUnpicker,
 body[data-forbid~="report"] #gotoReport,
 body[data-forbid~="zapper"][data-forbid~="picker"][data-forbid~="report"] .localTools {
     display: none;
-    }
+}
 body[data-forbid~="dashboard"] .globalTools {
     display: none;
-    }
+}
 
 #filteringModeText {
     color: var(--ink-3);
     margin-bottom: var(--popup-gap-thin);
     text-align: center;
     text-transform: lowercase;
-    }
+}
 #filteringModeText > span {
     color: var(--accent-surface-1);
-    }
+}
 #filteringModeText > span:nth-of-type(2) {
     display: none;
-    }
+}
 #filteringModeText > span:nth-of-type(2):not(:empty) {
     display: inline;
-    }
+}
 #filteringModeText > span:nth-of-type(2):not(:empty)::before {
     content: '\2002\2192\2002';
-    }
+}
 [dir="rtl"] #filteringModeText > span:nth-of-type(2):not(:empty)::before {
     content: '\2002\2190\2002';
-    }
+}
 
 .filteringModeSlider {
     align-self: center;
     margin: var(--popup-gap) 0;
-    }
+}
 
 body.needReload #refresh {
     visibility: visible;
-    }
+}
 
-.toolRibbon {
+.toolMenu {
+    border-top: 1px solid var(--surface-2);
     display: flex;
     flex-direction: column;
     line-height: normal;
-    }
+    margin: 0.5em 0;
+    padding-top: 0.5em;
+}
 :root:not(.isHTTP) .needHTTP {
     display: none;
-    }
-
-.toolRibbon > label {
+}
+.toolMenu > label {
     font-size: 90%;
     color: var(--ink-2);
     line-height: calc(var(--font-size) * 1.8);
-    }
-.toolRibbon > .tool {
+}
+.toolMenu > .tool {
     cursor: pointer;
     display: flex;
     padding: 0.5em 0.5em 0.5em 0;
     unicode-bidi: embed;
-    }
-.toolRibbon > .tool:hover {
+}
+.toolMenu > .tool:hover {
     color: var(--ink-1);
-        fill: var(--ink-1);
-    }
-.toolRibbon > .tool:not(.enabled) {
+      fill: var(--ink-1);
+}
+.toolMenu > .tool:not(.enabled) {
     display: none;
-    }
-.toolRibbon > .tool .fa-icon {
-    flex-shrink: 0;
+}
+.toolMenu > .tool .fa-icon {
     font-size: 1.4em;
     min-width: 1.4em;
-    }
-.toolRibbon > .tool [data-i18n] {
+}
+.toolMenu > .tool [data-i18n] {
     flex-grow: 1;
-    }
-.toolRibbon.localTools > * {
-    padding-left: 0.5em;
-    }
+}
+
+.toolRibbon {
+    background-color: var(--popup-toolbar-surface);
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    margin: 0;
+    white-space: normal;
+}
+.toolRibbon .tool {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    min-width: 32px;
+    padding: var(--default-gap-small);
+    unicode-bidi: embed;
+    visibility: hidden;
+}
+.toolRibbon .tool:hover {
+    color: var(--ink-1);
+        fill: var(--ink-1);
+}
+.toolRibbon .tool.enabled {
+    visibility: visible;
+}
+.toolRibbon .tool.fa-icon {
+    font-size: 1.4em;
+}
+:root.mobile .toolRibbon .tool.fa-icon {
+    font-size: 1.6em;
+}
+.toolRibbon .tool .caption {
+    font: 10px/12px sans-serif;
+    margin-top: 6px;
+    text-align: center;
+}
+:root:not(.mobile) .toolRibbon .caption {
+    display: none;
+}
 
 /* horizontally-constrained viewport */
 :root.portrait body {
     overflow-y: auto;
     width: 100%;
-    }
+}
 :root.portrait #main {
     max-width: unset;
-    }
+}
 /* mouse-driven devices */
 :root.desktop {
     display: flex;
-    }
+}
 :root.desktop .tool:hover {
     background-color: var(--popup-toolbar-surface-hover);
-    }
+}
