@@ -356,11 +356,11 @@
     "description": "Short sentence to report the number of currently registered DNR rules"
   },
   "pickerSliderLabel": {
-    "message": "Moveu el control lliscant per seleccionar la millor coincidència",
+    "message": "Moveu el control lliscant per a seleccionar la millor coincidència",
     "description": "Label to describe the purpose of the slider"
   },
   "pickerPick": {
-    "message": "Escull",
+    "message": "Selecciona",
     "description": "Text for the button to re-enter element-picking mode"
   },
   "pickerPreview": {
@@ -372,7 +372,7 @@
     "description": "Text for the button to create the filter"
   },
   "unpickerUsage": {
-    "message": "Seleccioneu un filtre a continuació per ressaltar els elements coincidents de la pàgina web. Feu clic a la paperera per eliminar un filtre.",
+    "message": "Seleccioneu un filtre a continuació per a ressaltar els elements coincidents de la pàgina web. Feu clic a la paperera per a eliminar un filtre.",
     "description": "Summary description on how to use the tool to remove custom filters"
   }
 }

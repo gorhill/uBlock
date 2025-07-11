@@ -64,7 +64,7 @@
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
-    "message": "উন্নত সেটিংস",
+    "message": "অ্যাডভান্সড সেটিংস",
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
@@ -1196,19 +1196,19 @@
     "description": "Text warning about an incoming redirect"
   },
   "docblockedReasonLabel": {
-    "message": "Reason:",
+    "message": "কারণ:",
     "description": "The label which prepend the actual reason why a page was blocked"
   },
   "docblockedReasonMalicious": {
-    "message": "Malicious",
+    "message": "ক্ষতিকারক",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonTracker": {
-    "message": "Tracker",
+    "message": "ট্র্যাকার",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonDisreputable": {
-    "message": "Disreputable",
+    "message": "অখ্যাতিপূর্ণ",
     "description": "An actual reason why a page was blocked"
   },
   "cloudPush": {

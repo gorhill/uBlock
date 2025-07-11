@@ -280,7 +280,7 @@
     "description": "A button to go back to the previous webpage"
   },
   "strictblockClose": {
-    "message": "Zavřít toto okno",
+    "message": "Zavřít okno",
     "description": "A button to close the current tab"
   },
   "strictblockDontWarn": {
@@ -304,7 +304,7 @@
     "description": "Label for the menu entry to create cosmetic filters"
   },
   "unpickerTipEnter": {
-    "message": "Odstranit vlastní filtr",
+    "message": "Odebrat vlastní filtr",
     "description": "Label for the menu entry to delete cosmetic filters"
   },
   "developDropdownLabel": {
