@@ -1,3 +1,5 @@
+- [Improve `prevent-innerHTML` scriptlet](https://github.com/gorhill/uBlock/commit/b0396029bd)
+
 ----------
 
 # 1.65.0
