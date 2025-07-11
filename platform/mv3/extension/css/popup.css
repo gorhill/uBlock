@@ -108,7 +108,6 @@ body.needReload #refresh {
     border-top: 1px solid var(--surface-2);
     display: flex;
     flex-direction: column;
-    line-height: normal;
     margin: 0.5em 0;
     padding-top: 0.5em;
 }
@@ -119,6 +118,7 @@ body.needReload #refresh {
     font-size: 90%;
     color: var(--ink-2);
     line-height: calc(var(--font-size) * 1.8);
+    margin-inline-start: 0.5em;
 }
 .toolMenu > .tool {
     cursor: pointer;
