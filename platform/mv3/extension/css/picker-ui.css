@@ -76,7 +76,7 @@
 #ubol-picker #candidateFilters {
     font-family: monospace;
     font-size: small;
-    max-height: min(20em, 40vh);
+    max-height: min(20em, 30vh);
     min-height: 6em;
     overflow-y: auto;
     word-break: break-all;
