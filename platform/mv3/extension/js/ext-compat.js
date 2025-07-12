@@ -21,8 +21,6 @@
 
 export const webext = self.browser || self.chrome;
 export const dnr = webext.declarativeNetRequest || {};
-export const INITIATOR_DOMAINS = 'initiatorDomains';
-export const EXCLUDED_INITIATOR_DOMAINS = 'excludedInitiatorDomains';
 
 /******************************************************************************/
 
@@ -33,6 +31,15 @@ const isSameRules = (a, b) => {
     b.sort(ruleCompare);
     return JSON.stringify(a) === JSON.stringify(b);
 };
+
+/******************************************************************************/
+
+export function normalizeDNRRules(rules, ruleIds) {
+    if ( Array.isArray(rules) === false ) { return rules; }
+    return Array.isArray(ruleIds)
+        ? rules.filter(rule => ruleIds.includes(rule.id))
+        : rules;
+}
 
 /******************************************************************************/
 

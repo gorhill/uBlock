@@ -21,6 +21,7 @@
 
 import { DNREditor } from './dnr-editor.js';
 import { i18n$ } from './i18n.js';
+import { normalizeDNRRules } from './ext-compat.js';
 import { sendMessage } from './ext.js';
 import { textFromRules } from './dnr-parser.js';
 
@@ -59,7 +60,11 @@ export class ReadOnlyDNREditor extends DNREditor {
         for ( const [ realm, dir ] of Object.entries(realms) ) {
             if ( Boolean(rulesetDetails.rules?.[realm]) === false ) { continue; }
             promises.push(
-                fetch(`./rulesets/${dir}/${this.id}.json`).then(response => response.json())
+                fetch(`./rulesets/${dir}/${this.id}.json`).then(response =>
+                    response.json()
+                ).then(rules =>
+                    normalizeDNRRules(rules)
+                )
             );
         }
         const parts = await Promise.all(promises);

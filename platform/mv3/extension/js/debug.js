@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import { INITIATOR_DOMAINS, dnr } from './ext-compat.js';
+import { dnr, normalizeDNRRules } from './ext-compat.js';
 import { browser } from './ext.js';
 
 /******************************************************************************/
@@ -62,7 +62,11 @@ const getRuleset = async rulesetId => {
     } else {
         const response = await fetch(`/rulesets/main/${rulesetId}.json`).catch(( ) => undefined);
         if ( response === undefined ) { return; }
-        rules = await response.json().catch(( ) => undefined);
+        rules = await response.json().catch(( ) =>
+            undefined
+        ).then(rules =>
+            normalizeDNRRules(rules)
+        );
     }
     if ( Array.isArray(rules) === false ) { return; }
     const ruleset = new Map();
@@ -72,8 +76,8 @@ const getRuleset = async rulesetId => {
             if ( condition.requestDomains ) {
                 condition.requestDomains = pruneLongLists(condition.requestDomains);
             }
-            if ( condition[INITIATOR_DOMAINS] ) {
-                condition[INITIATOR_DOMAINS] = pruneLongLists(condition[INITIATOR_DOMAINS]);
+            if ( condition.initiatorDomains ) {
+                condition.initiatorDomains = pruneLongLists(condition.initiatorDomains);
             }
         }
         const ruleId = rule.id;
