@@ -213,6 +213,17 @@ function onMessage(request, sender, callback) {
         });
         return true;
 
+    case 'injectCSSProceduralAPI':
+        browser.scripting.executeScript({
+            files: [ '/js/scripting/css-procedural-api.js' ],
+            target: { tabId, frameIds: [ frameId ] },
+        }).catch(reason => {
+            console.log(reason);
+        }).then(( ) => {
+            callback();
+        });
+        return true;
+
     default:
         break;
     }
