@@ -90,13 +90,14 @@ export function normalizeDNRRules(rules, ruleIds) {
         ? rules.filter(rule => ruleIds.includes(rule.id))
         : rules;
     selectedRules.forEach(rule => {
-        if ( Array.isArray(rule.domains) ) {
-            rules.initiatorDomains = rule.domains;
-            delete rule.domains;
+        const { condition } = rule;
+        if ( Array.isArray(condition.domains) ) {
+            condition.initiatorDomains = condition.domains;
+            delete condition.domains;
         }
-        if ( Array.isArray(rule.excludedDomains) ) {
-            rules.excludedInitiatorDomains = rule.excludedDomains;
-            delete rule.excludedDomains;
+        if ( Array.isArray(condition.excludedDomains) ) {
+            condition.excludedInitiatorDomains = condition.excludedDomains;
+            delete condition.excludedDomains;
         }
     });
     return selectedRules;
