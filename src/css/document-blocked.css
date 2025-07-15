@@ -73,7 +73,7 @@ a {
     }
 #theURL > p > span:first-of-type {
     display: block;
-    max-height: 6lh;
+    max-height: 3lh;
     overflow-y: auto;
     }
 :root.mobile #theURL > p > span:first-of-type {
@@ -146,6 +146,7 @@ details > *:not(summary) {
 
 #urlskip a {
     display: block;
+    max-height: 3lh;
     overflow-y: auto;
     word-break: break-all;
     }

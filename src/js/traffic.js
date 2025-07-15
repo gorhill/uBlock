@@ -221,8 +221,15 @@ const onBeforeRootFrameRequest = function(fctxt) {
 
     // Blocked
 
+    let reason = logData.reason;
+
     // Find out the URL navigated to should the document not be strict-blocked
     pageStore.skipMainDocument(fctxt, false);
+
+    if ( reason === undefined && Array.isArray(fctxt.filter) ) {
+        const filter = fctxt.filter.find(a => a.reason !== undefined);
+        reason = filter?.reason;
+    }
 
     const query = {
         url: requestURL,
@@ -231,8 +238,8 @@ const onBeforeRootFrameRequest = function(fctxt) {
         hn: requestHostname,
         to: fctxt.redirectURL || '',
     };
-    if ( logData.reason ) {
-        query.reason = logData.reason;
+    if ( reason ) {
+        query.reason = reason;
     }
 
     vAPI.tabs.replace(

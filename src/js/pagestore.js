@@ -976,14 +976,12 @@ const PageStore = class {
     skipMainDocument(fctxt, blocked) {
         const directives = staticNetFilteringEngine.urlSkip(fctxt, blocked);
         if ( directives === undefined ) { return; }
-        if ( logger.enabled !== true ) { return; }
         fctxt.pushFilters(directives.map(a => a.logData()));
-        if ( fctxt.redirectURL !== undefined ) {
-            fctxt.pushFilter({
-                source: 'redirect',
-                raw: fctxt.redirectURL
-            });
-        }
+        if ( fctxt.redirectURL === undefined ) { return; }
+        fctxt.pushFilter({
+            source: 'redirect',
+            raw: fctxt.redirectURL
+        });
     }
 
     filterCSPReport(fctxt) {
