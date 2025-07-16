@@ -1,3 +1,4 @@
+- [Improve reporting of `reason` option in strict-blocked pages](https://github.com/gorhill/uBlock/commit/b7510eee61)
 - [Improve `prevent-innerHTML` scriptlet](https://github.com/gorhill/uBlock/commit/b0396029bd)
 
 ----------
