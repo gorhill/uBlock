@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Finalmente, um bloqueador eficiente. Com baixo uso de CPU e memória.",
+    "message": "Até que enfim, um bloqueador eficiente. Com baixo uso da CPU e da memória.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
@@ -100,11 +100,11 @@
     "description": "English: or"
   },
   "popupBlockedOnThisPage_v2": {
-    "message": "Bloqueado(s) nesta página",
+    "message": "Bloqueios nesta página",
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "Bloqueado(s) desde a instalação",
+    "message": "Bloqueios desde a instalação",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
@@ -128,7 +128,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipReport": {
-    "message": "Relatar um problema neste site",
+    "message": "Reportar um problema com este site",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipNoPopups": {
@@ -144,7 +144,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Alternar o bloqueio de grandes elementos de mídia neste site",
+    "message": "Habilitar o bloqueio de grandes elementos de mídia neste site",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
@@ -156,7 +156,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Alternar a filtragem cosmética neste site",
+    "message": "Habilitar a filtragem cosmética neste site",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
@@ -168,7 +168,7 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Alternar o bloqueio de fontes remotas neste site",
+    "message": "Habilitar o bloqueio de fontes remotas neste site",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
@@ -180,7 +180,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Clique pra desativar o JavaScript neste site",
+    "message": "Clique para desativar o JavaScript neste site",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
@@ -356,11 +356,11 @@
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Desativar pré-busca (pra impedir quaisquer requisições de redes bloqueadas)",
+    "message": "Desativar pré-solicitações (para impedir qualquer solicitação de rede a recursos bloqueados)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
-    "message": "Desativar auditoria dos hyperlinks",
+    "message": "Desativar auditoria de hyperlinks",
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
@@ -424,7 +424,7 @@
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
-    "message": "{{used}} usados de {{total}}",
+    "message": "{{used}} usados dos {{total}}",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
@@ -608,7 +608,7 @@
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
-    "message": "Regras de sintaxe: <code>origem destino tipo ação</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>documentação completa</a>).",
+    "message": "Regras de sintaxe: <code>fonte destino tipo ação</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>documentação completa</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
@@ -632,7 +632,7 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Importar e anexar",
+    "message": "Importar e anexar…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
@@ -680,7 +680,7 @@
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
-    "message": "Alternar o inspetor do DOM",
+    "message": "Habilitar o inspetor de DOM",
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
@@ -696,7 +696,7 @@
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
-    "message": "Pausar coletor (descartar todos os dados que entram)",
+    "message": "Pausar coletor (descartar todos os dados futuros)",
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {
@@ -768,7 +768,7 @@
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
-    "message": "Grupos",
+    "message": "Originário/de terceiros",
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
@@ -796,7 +796,7 @@
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "{{action}} solicitações de rede do tipo {{type}} {{br}}onde o endereço da URL corresponde a {{url}} {{br}}e que origina de {{origin}},{{br}}{{importance}} há um filtro de exceção correspondente.",
+    "message": "{{action}} solicitações de rede do tipo {{type}} {{br}}onde o endereço da URL corresponde a {{url}} {{br}} e que origina de {{origin}},{{br}}{{importance}} há um filtro de exceção correspondente.",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
@@ -840,7 +840,7 @@
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
-    "message": "As entradas do coletor que não preencherem todas as três condições abaixo serão descartadas automaticamente:",
+    "message": "Os registros que não preencherem todas as três condições abaixo serão descartados automaticamente:",
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
@@ -852,11 +852,11 @@
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
-    "message": "Preservar no máximo {{input}} entradas por aba",
+    "message": "Preservar no máximo {{input}} registros por aba",
     "description": "A logger setting"
   },
   "loggerSettingPerEntryLineCount": {
-    "message": "Usar {{input}} linhas por entrada no modo expandido verticalmente",
+    "message": "Usar {{input}} linhas por registro no modo expandido verticalmente",
     "description": "A logger setting"
   },
   "loggerSettingHideColumnsPrompt": {
@@ -876,7 +876,7 @@
     "description": "A label for the context column"
   },
   "loggerSettingHideColumnPartyness": {
-    "message": "{{input}} Grupos",
+    "message": "{{input}} Originário/de terceiros",
     "description": "A label for the partyness column"
   },
   "loggerExportFormatList": {
@@ -928,7 +928,7 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Reporte problemas com os filtros em sites específicos da web no <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">rastreador de problemas do <code>uBlockOrigin/uAssets</code></span>. <u>Requer uma conta no GitHub.</u>",
+    "message": "Reporte problemas com os filtros em sites específicos no <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\">rastreador de problemas do <code>uBlockOrigin/uAssets</code></span>. <u>Uma conta do GitHub é necessária.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
@@ -936,7 +936,7 @@
     "description": "Second paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P3": {
-    "message": "<b>Dicas:</b> Certifique-se que sua lista de filtros está atualizada. <span data-url=\"logger-ui.html#_\">O coletor</span> é a ferramenta primária pra diagnosticar problemas relacionados com os filtros.",
+    "message": "<b>Dicas:</b> Certifique-se que suas listas de filtros estão atualizadas. <span data-url=\"logger-ui.html#_\">O coletor</span> é a ferramenta principal para diagnosticar problemas relacionados aos filtros.",
     "description": "Third paragraph of 'Filter issues' section in Support pane"
   },
   "supportS4H": {
@@ -944,7 +944,7 @@
     "description": "Header of 'Bug report' section in Support pane"
   },
   "supportS4P1": {
-    "message": "Relate problemas com o próprio uBlock Origin no rastreador de problemas do <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code></span>. <u>Uma conta do GitHub é necessária.</u>",
+    "message": "Reporte problemas com o próprio uBlock Origin no rastreador de problemas do <span data-url=\"https://github.com/uBlockOrigin/uBlock-issues/issues?q=is%3Aissue\"><code>uBlockOrigin/uBlock-issue</code></span>. <u>Uma conta do GitHub é necessária.</u>",
     "description": "First paragraph of 'Bug report' section in Support pane"
   },
   "supportS5H": {
@@ -964,7 +964,7 @@
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS6P1S1": {
-    "message": "Para evitar sobrecarregar os voluntários com relatórios duplicados por favor verifique se o problema já não foi relatado. <b>Observação:</b> clicar no botão fará com que a origem da página seja enviada ao GitHub.",
+    "message": "Para evitar sobrecarregar os voluntários com relatórios duplicados por favor verifique se o problema já não foi reportado. <b>Observação:</b> clicar no botão fará com que a origem da página seja enviada ao GitHub.",
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportS6P2S1": {
@@ -988,7 +988,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Mostra os anúncios ou restos de anúncios",
+    "message": "Mostra anúncios ou restos de anúncios",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
@@ -1080,7 +1080,7 @@
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Resetar para as configurações padrão…",
+    "message": "Redefinir pras configurações padrão…",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
@@ -1136,7 +1136,7 @@
     "description": "Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
-    "message": "Mostrar Coletor",
+    "message": "Mostrar coletor",
     "description": "Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
@@ -1276,7 +1276,7 @@
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
-    "message": "Copiar para a área de transferência",
+    "message": "Copiar pra área de transferência",
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "genericSelectAll": {
@@ -1288,7 +1288,7 @@
     "description": "Label for keyboard shortcut used to toggle cosmetic filtering"
   },
   "toggleJavascript": {
-    "message": "Alternar JavaScript",
+    "message": "Habilitar JavaScript",
     "description": "Label for keyboard shortcut used to toggle no-scripting switch"
   },
   "relaxBlockingMode": {

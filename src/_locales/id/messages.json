@@ -900,11 +900,11 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportReportSpecificButton": {
-    "message": "Buat laporan baru",
+    "message": "Buat laporan baru di Github",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "Temukan laporan serupa",
+    "message": "Temukan laporan serupa di Github",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
@@ -1060,7 +1060,7 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNs": {
-    "message": "Daftar filter uBO sendiri dihosting secara gratis di <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a> berikut:",
+    "message": "Daftar filter bawaan uBO dihosting secara gratis di <a href=\"https://wikipedia.org/wiki/Content_delivery_network\">CDN</a> berikut:",
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
@@ -1196,19 +1196,19 @@
     "description": "Text warning about an incoming redirect"
   },
   "docblockedReasonLabel": {
-    "message": "Reason:",
+    "message": "Penyebab",
     "description": "The label which prepend the actual reason why a page was blocked"
   },
   "docblockedReasonMalicious": {
-    "message": "Malicious",
+    "message": "Berbahaya",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonTracker": {
-    "message": "Tracker",
+    "message": "Pelacak",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonDisreputable": {
-    "message": "Disreputable",
+    "message": "Tidak bisa dipercaya",
     "description": "An actual reason why a page was blocked"
   },
   "cloudPush": {

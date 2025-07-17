@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Um bloqueador eficiente de conteúdo. Bloqueia anúncios, rastreadores e muito mais, imediatamente após a instalação.",
+    "message": "Um bloqueador de conteúdo eficiente. Bloqueia anúncios, rastreadores e muito mais, imediatamente após a instalação. ",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -84,7 +84,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "aboutChangelog": {
-    "message": "Changelog",
+    "message": "Notas de lançamento",
     "description": ""
   },
   "aboutCode": {
@@ -112,11 +112,11 @@
     "description": "Shown in the About pane"
   },
   "supportS6H": {
-    "message": "Relatar um problema com o filtro",
+    "message": "Reportar um problema com o filtro",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Relate problemas dos filtros em sites específicos no rastreador de problemas do<span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code></span>. <u>Uma conta do GitHub é necessária.</u>",
+    "message": "Reporte problemas com os filtros em sites específicos no rastreador de problemas do<span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code></span>. <u>Uma conta do GitHub é necessária.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS5H": {
@@ -144,7 +144,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Mostra os anúncios ou restos de anúncios",
+    "message": "Mostra anúncios ou restos de anúncios",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
@@ -184,7 +184,7 @@
     "description": "The header text for the default filtering mode section"
   },
   "defaultFilteringModeDescription": {
-    "message": "O modo de filtragem padrão será substituído pelos modos de filtragem por site. Você pode ajustar o modo de filtragem em qualquer site dado da web de acordo com qualquer modo que funcionar melhor nesse site da web. Cada modo tem suas vantagens e desvantagens.",
+    "message": "O modo de filtragem padrão será substituído pelos modos de filtragem por site. Você pode ajustar o modo de filtragem em qualquer site de acordo com qual modo funcionar melhor nesse site. Cada modo tem suas vantagens e desvantagens.",
     "description": "This describes the default filtering mode setting"
   },
   "filteringMode0Name": {
@@ -208,19 +208,19 @@
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
-    "message": "Filtragem avançada da rede mais filtragem estendida específica das listas de filtros selecionadas.\n\nRequer ampla permissão pra ler e modificar os dados em todos os sites da web.",
+    "message": "Filtragem avançada de rede, com a filtragem estendida específica de listas de filtros selecionadas.\n\nRequer a permissão mais extensa de ler e modificar os dados em todos os sites.",
     "description": "This describes the 'optimal' filtering mode"
   },
   "completeFilteringModeDescription": {
-    "message": "Filtragem avançada da rede mais filtragem estendida específica e genérica das listas de filtros selecionadas.\n\nRequer ampla permissão pra ler e modificar os dados em todos os sites da web.\n\nA filtragem estendida genérica pode causar maior uso de recursos da página da web.",
+    "message": "Filtragem avançada da rede, com filtragem estendida específica e genérica de listas de filtros selecionadas.\n\nRequer a permissão mais extensa para ler e modificar os dados em todos os sites.\n\nA filtragem estendida genérica pode causar maior uso de recursos da página.",
     "description": "This describes the 'complete' filtering mode"
   },
   "noFilteringModeDescription": {
-    "message": "Lista de nomes dos hospedeiros para os quais nenhuma filtragem acontecerá.",
+    "message": "Lista de sites que não serão filtrados.",
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
-    "message": "[só nomes de hospedeiros]\nexemplo.com\njogos.exemplo",
+    "message": "[somente domínios]\nexemplo.com\njogos.exemplo",
     "description": "Default text for in edit field"
   },
   "behaviorSectionLabel": {
