@@ -119,6 +119,7 @@ class PSelectorMatchesAttrTask extends PSelectorTask {
         this.reValue = regexFromString(task[1].value, true);
     }
     transpose(node, output) {
+        if ( typeof node.getAttributeNames !== 'function' ) { return; }
         const attrs = node.getAttributeNames();
         for ( const attr of attrs ) {
             if ( this.reAttr.test(attr) === false ) { continue; }
