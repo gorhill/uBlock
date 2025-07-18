@@ -720,7 +720,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinEventful": {
-    "message": "afwisselend",
+    "message": "belangrijk",
     "description": "A keyword in the built-in row filtering expression: all items corresponding to uBO doing something (blocked, allowed, redirected, etc.)"
   },
   "loggerRowFiltererBuiltinBlocked": {
@@ -1252,7 +1252,7 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "Element in frame blokkeren…",
+    "message": "Element in deelvenster blokkeren…",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {

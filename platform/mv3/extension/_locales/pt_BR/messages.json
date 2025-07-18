@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Um bloqueador de conteúdo eficiente. Bloqueia anúncios, rastreadores e muito mais, imediatamente após a instalação. ",
+    "message": "Um bloqueador de conteúdo eficiente. Bloqueia anúncios, rastreadores e muito mais, imediatamente após a instalação.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "perRulesetStats": {
@@ -220,7 +220,7 @@
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
-    "message": "[somente domínios]\nexemplo.com\njogos.exemplo",
+    "message": "[somente nomes de servidores]\nexemplo.com\njogos.exemplo\n...",
     "description": "Default text for in edit field"
   },
   "behaviorSectionLabel": {
