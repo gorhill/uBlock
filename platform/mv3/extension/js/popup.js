@@ -32,12 +32,6 @@ const tabURL = new URL(runtime.getURL('/'));
 
 /******************************************************************************/
 
-function normalizedHostname(hn) {
-    return hn.replace(/^www\./, '');
-}
-
-/******************************************************************************/
-
 function renderAdminRules() {
     const { disabledFeatures: forbid = [] } = popupPanelData;
     if ( forbid.length === 0 ) { return; }
@@ -63,7 +57,7 @@ function setFilteringMode(level, commit = false) {
 
 async function commitFilteringMode() {
     if ( tabURL.hostname === '' ) { return; }
-    const targetHostname = normalizedHostname(tabURL.hostname);
+    const targetHostname = tabURL.hostname;
     const modeSlider = qs$('.filteringModeSlider');
     const afterLevel = parseInt(modeSlider.dataset.level, 10);
     const beforeLevel = parseInt(modeSlider.dataset.levelBefore, 10);
@@ -314,7 +308,6 @@ async function init() {
         const response = await sendMessage({
             what: 'popupPanelData',
             origin: url.origin,
-            normalHostname: normalizedHostname(tabURL.hostname),
             hostname: tabURL.hostname,
         });
         if ( response instanceof Object ) {
