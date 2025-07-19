@@ -577,8 +577,7 @@ class ProceduralFilterer {
     }
 
     addSelectors(selectors) {
-        for ( const json of selectors ) {
-            const selector = JSON.parse(json);
+        for ( const selector of selectors ) {
             const pselector = new PSelectorRoot(selector);
             this.primeProceduralSelector(pselector);
             this.selectors.push(pselector);

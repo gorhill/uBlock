@@ -354,70 +354,6 @@ function registerProcedural(context) {
 
 /******************************************************************************/
 
-function registerDeclarative(context) {
-    const { before, filteringModeDetails, rulesetsDetails } = context;
-
-    const js = [];
-    for ( const rulesetDetails of rulesetsDetails ) {
-        const count = rulesetDetails.css?.declarative || 0;
-        if ( count === 0 ) { continue; }
-        js.push(`/rulesets/scripting/declarative/${rulesetDetails.id}.js`);
-    }
-    if ( js.length === 0 ) { return; }
-
-    const { none, basic, optimal, complete } = filteringModeDetails;
-    const matches = [
-        ...ut.matchesFromHostnames(optimal),
-        ...ut.matchesFromHostnames(complete),
-    ];
-    if ( matches.length === 0 ) { return; }
-
-    normalizeMatches(matches);
-
-    js.unshift('/js/scripting/isolated-api.js');
-    js.push('/js/scripting/css-declarative.js');
-
-    const excludeMatches = [];
-    if ( none.has('all-urls') === false ) {
-        excludeMatches.push(...ut.matchesFromHostnames(none));
-    }
-    if ( basic.has('all-urls') === false ) {
-        excludeMatches.push(...ut.matchesFromHostnames(basic));
-    }
-
-    const registered = before.get('css-declarative');
-    before.delete('css-declarative'); // Important!
-
-    const directive = {
-        id: 'css-declarative',
-        js,
-        matches,
-        allFrames: true,
-        runAt: 'document_start',
-    };
-    if ( excludeMatches.length !== 0 ) {
-        directive.excludeMatches = excludeMatches;
-    }
-
-    // register
-    if ( registered === undefined ) {
-        context.toAdd.push(directive);
-        return;
-    }
-
-    // update
-    if (
-        ut.strArrayEq(registered.js, js, false) === false ||
-        ut.strArrayEq(registered.matches, matches) === false ||
-        ut.strArrayEq(registered.excludeMatches, excludeMatches) === false
-    ) {
-        context.toRemove.push('css-declarative');
-        context.toAdd.push(directive);
-    }
-}
-
-/******************************************************************************/
-
 function registerSpecific(context) {
     const { before, filteringModeDetails, rulesetsDetails } = context;
 
@@ -602,7 +538,6 @@ async function registerInjectables() {
     };
 
     await Promise.all([
-        registerDeclarative(context),
         registerProcedural(context),
         registerScriptlet(context, scriptletDetails),
         registerSpecific(context),

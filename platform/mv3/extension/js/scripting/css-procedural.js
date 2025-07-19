@@ -21,7 +21,7 @@
 
 // Important!
 // Isolate from global scope
-(async function uBOL_cssProcedural() {
+(function uBOL_cssProcedural() {
 
 /******************************************************************************/
 
@@ -40,7 +40,7 @@ const lookupHostname = (hostname, details, out) => {
     for (;;) {
         const argi = argsSeqs[seqi++];
         const done = argi > 0;
-        out.push(...argsList[done ? argi : -argi]);
+        out.push(...JSON.parse(argsList[done ? argi : -argi]));
         if ( done ) { break; }
     }
 };
@@ -48,38 +48,88 @@ const lookupHostname = (hostname, details, out) => {
 const lookupAll = hostname => {
     for ( const details of proceduralImports ) {
         lookupHostname(hostname, details, selectors);
-        lookupHostname(`~${hostname}`, details, exceptions);
+        const matches = [];
+        lookupHostname(`~${hostname}`, details, matches);
+        if ( matches.length === 0 ) { continue; }
+        exceptions.push(...matches.map(a => JSON.stringify(a)));
     }
 };
 
 self.isolatedAPI.forEachHostname(lookupAll, {
     hasEntities: proceduralImports.some(a => a.hasEntities)
 });
-
 proceduralImports.length = 0;
 
 const exceptedSelectors = exceptions.length !== 0
-    ? selectors.filter(a => exceptions.includes(a) === false)
+    ? selectors.filter(a => exceptions.includes(JSON.stringify(a)) === false)
     : selectors;
 if ( exceptedSelectors.length === 0 ) { return; }
 
-if ( self.cssProceduralAPI === undefined ) {
-    self.cssProceduralAPI = chrome.runtime.sendMessage({
-        what: 'injectCSSProceduralAPI'
-    }).catch(( ) => {
-    });
+const declaratives = exceptedSelectors.filter(a => a.cssable);
+if ( declaratives.length !== 0 ) {
+    const cssRuleFromProcedural = details => {
+        const { tasks, action } = details;
+        let mq, selector;
+        if ( Array.isArray(tasks) ) {
+            if ( tasks[0][0] !== 'matches-media' ) { return; }
+            mq = tasks[0][1];
+            if ( tasks.length > 2 ) { return; }
+            if ( tasks.length === 2 ) {
+                if ( tasks[1][0] !== 'spath' ) { return; }
+                selector = tasks[1][1];
+            }
+        }
+        let style;
+        if ( Array.isArray(action) ) {
+            if ( action[0] !== 'style' ) { return; }
+            selector = selector || details.selector;
+            style = action[1];
+        }
+        if ( mq === undefined && style === undefined && selector === undefined ) { return; }
+        if ( mq === undefined ) {
+            return `${selector}\n{${style}}`;
+        }
+        if ( style === undefined ) {
+            return `@media ${mq} {\n${selector}\n{display:none!important;}\n}`;
+        }
+        return `@media ${mq} {\n${selector}\n{${style}}\n}`;
+    };
+    const sheetText = [];
+    for ( const details of declaratives ) {
+        const ruleText = cssRuleFromProcedural(details);
+        if ( ruleText === undefined ) { continue; }
+        sheetText.push(ruleText);
+    }
+    if ( sheetText.length !== 0 ) {
+        chrome.runtime.sendMessage({
+            what: 'insertCSS',
+            css: sheetText.join('\n'),
+        }).catch(( ) => {
+        });
+    }
 }
-if ( self.cssProceduralAPI instanceof Promise ) {
-    await self.cssProceduralAPI;
-}
-if ( self.cssProceduralAPI instanceof Object === false ) { return; }
 
-self.cssProceduralAPI.addSelectors(exceptedSelectors);
+const procedurals = exceptedSelectors.filter(a => a.cssable === undefined);
+if ( procedurals.length !== 0 ) {
+    const addSelectors = selectors => {
+        if ( self.cssProceduralAPI instanceof Object === false ) { return; }
+        self.cssProceduralAPI.addSelectors(selectors);
+    };
+    if ( self.cssProceduralAPI === undefined ) {
+        self.cssProceduralAPI = chrome.runtime.sendMessage({
+            what: 'injectCSSProceduralAPI'
+        }).catch(( ) => {
+        });
+    }
+    if ( self.cssProceduralAPI instanceof Promise ) {
+        self.cssProceduralAPI.then(( ) => { addSelectors(procedurals); });
+    } else {
+        addSelectors(procedurals);
+    }
+}
 
 /******************************************************************************/
 
 })();
-
-/******************************************************************************/
 
 void 0;

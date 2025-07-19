@@ -1059,84 +1059,12 @@ async function processCosmeticFilters(assetDetails, mapin) {
 
 /******************************************************************************/
 
-async function processDeclarativeCosmeticFilters(assetDetails, mapin) {
-    if ( mapin === undefined ) { return 0; }
-    if ( mapin.size === 0 ) { return 0; }
-
-    // Distinguish declarative-compiled-as-procedural from actual procedural.
-    const declaratives = new Map();
-    mapin.forEach((details, jsonSelector) => {
-        const selector = JSON.parse(jsonSelector);
-        if ( selector.cssable !== true ) { return; }
-        selector.cssable = undefined;
-        declaratives.set(JSON.stringify(selector), details);
-    });
-    if ( declaratives.size === 0 ) { return 0; }
-
-    const contentArray = groupHostnamesBySelectors(
-        groupSelectorsByHostnames(declaratives)
-    );
-
-    const argsMap = contentArray.map(entry => [
-        entry[0],
-        entry[1].a ? entry[1].a.join('\n') : undefined,
-    ]);
-    const hostnamesMap = new Map();
-    let hasEntities = false;
-    for ( const [ id, details ] of contentArray ) {
-        if ( details.y ) {
-            scriptletHostnameToIdMap(details.y, id, hostnamesMap);
-            hasEntities ||= details.y.some(a => a.endsWith('.*'));
-        }
-        if ( details.n ) {
-            scriptletHostnameToIdMap(details.n.map(a => `~${a}`), id, hostnamesMap);
-            hasEntities ||= details.n.some(a => a.endsWith('.*'));
-        }
-    }
-    const { argsList, argsSeqs } = argsMap2List(argsMap, hostnamesMap);
-
-    const originalScriptletMap = await loadAllSourceScriptlets();
-    let patchedScriptlet = originalScriptletMap.get('css-declarative').replace(
-        '$rulesetId$',
-        assetDetails.id
-    );
-    patchedScriptlet = safeReplace(patchedScriptlet,
-        /\bself\.\$argsList\$/,
-        `${JSON.stringify(argsList, scriptletJsonReplacer)}`
-    );
-    patchedScriptlet = safeReplace(patchedScriptlet,
-        /\bself\.\$argsSeqs\$/,
-        `${JSON.stringify(argsSeqs, scriptletJsonReplacer)}`
-    );
-    patchedScriptlet = safeReplace(patchedScriptlet,
-        /\bself\.\$hostnamesMap\$/,
-        `${JSON.stringify(hostnamesMap, scriptletJsonReplacer)}`
-    );
-    patchedScriptlet = safeReplace(patchedScriptlet,
-        'self.$hasEntities$',
-        JSON.stringify(hasEntities)
-    );
-    writeFile(`${scriptletDir}/declarative/${assetDetails.id}.js`, patchedScriptlet);
-
-    if ( contentArray.length !== 0 ) {
-        log(`CSS-declarative: ${declaratives.size} distinct filters`);
-        log(`\tCombined into ${hostnamesMap.size} distinct hostnames`);
-    }
-
-    return hostnamesMap.size;
-}
-
-/******************************************************************************/
-
 async function processProceduralCosmeticFilters(assetDetails, mapin) {
     if ( mapin === undefined ) { return 0; }
     if ( mapin.size === 0 ) { return 0; }
 
-    // Distinguish declarative-compiled-as-procedural from actual procedural.
     const procedurals = new Map();
     mapin.forEach((details, jsonSelector) => {
-        const selector = JSON.parse(jsonSelector);
-        if ( selector.cssable ) { return; }
         procedurals.set(jsonSelector, details);
     });
     if ( procedurals.size === 0 ) { return 0; }
@@ -1162,6 +1090,14 @@ async function processProceduralCosmeticFilters(assetDetails, mapin) {
         }
     }
     const { argsList, argsSeqs } = argsMap2List(argsMap, hostnamesMap);
+    const argsListAfter = [];
+    for ( const a of argsList ) {
+        const aAfter = [];
+        for ( let b of a ) {
+            aAfter.push(JSON.parse(b));
+        }
+        argsListAfter.push(JSON.stringify(aAfter));
+    }
     const originalScriptletMap = await loadAllSourceScriptlets();
     let patchedScriptlet = originalScriptletMap.get('css-procedural').replace(
         '$rulesetId$',
@@ -1169,7 +1105,7 @@ async function processProceduralCosmeticFilters(assetDetails, mapin) {
     );
     patchedScriptlet = safeReplace(patchedScriptlet,
         /\bself\.\$argsList\$/,
-        `${JSON.stringify(argsList, scriptletJsonReplacer)}`
+        `${JSON.stringify(argsListAfter, scriptletJsonReplacer)}`
     );
     patchedScriptlet = safeReplace(patchedScriptlet,
         /\bself\.\$argsSeqs\$/,
@@ -1333,10 +1269,6 @@ async function rulesetFromURLs(assetDetails) {
         assetDetails,
         declarativeCosmetic
     );
-    const declarativeStats = await processDeclarativeCosmeticFilters(
-        assetDetails,
-        proceduralCosmetic
-    );
     const proceduralStats = await processProceduralCosmeticFilters(
         assetDetails,
         proceduralCosmetic
@@ -1376,7 +1308,6 @@ async function rulesetFromURLs(assetDetails) {
             generic: genericCosmeticStats,
             generichigh: genericHighCosmeticStats,
             specific: specificCosmeticStats,
-            declarative: declarativeStats,
             procedural: proceduralStats,
         },
         scriptlets: scriptletStats,
