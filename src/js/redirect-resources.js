@@ -94,6 +94,7 @@ export default new Map([
     } ],
     [ 'google-ima.js', {
         alias: 'google-ima3',                       /* adguard compatibility */
+        data: 'text',
     } ],
     [ 'googlesyndication_adsbygoogle.js', {
         alias: [

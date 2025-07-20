@@ -210,6 +210,7 @@ class RedirectEngine {
         const entry = this.resources.get(this.aliases.get(name) || name);
         if ( entry === undefined ) { return; }
         if ( entry.mime.startsWith(mime) === false ) { return; }
+        if ( entry.data === undefined ) { return; }
         return {
             js: entry.toContent(),
             world: entry.world,
