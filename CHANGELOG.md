@@ -1,3 +1,4 @@
+- [Make `google-ima` a valid injectable scriptlet](https://github.com/gorhill/uBlock/commit/47cbb43a0e)
 - [Improve `abort-current-script` scriptlet](https://github.com/gorhill/uBlock/commit/fef50e59f2)
 - [Fix potential exception in procedural operator `:matches-attr`](https://github.com/gorhill/uBlock/commit/e07e7bbd09)
 - [Improve reporting of `reason` option in strict-blocked pages](https://github.com/gorhill/uBlock/commit/b7510eee61)
