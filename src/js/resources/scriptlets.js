@@ -77,8 +77,8 @@ function shouldDebug(details) {
 /******************************************************************************/
 
 builtinScriptlets.push({
-    name: 'abort-current-script-core.fn',
-    fn: abortCurrentScriptCore,
+    name: 'abort-current-script.fn',
+    fn: abortCurrentScriptFn,
     dependencies: [
         'get-exception-token.fn',
         'safe-self.fn',
@@ -87,7 +87,7 @@ builtinScriptlets.push({
 });
 // Issues to mind before changing anything:
 //  https://github.com/uBlockOrigin/uBlock-issues/issues/2154
-function abortCurrentScriptCore(
+function abortCurrentScriptFn(
     target = '',
     needle = '',
     context = ''
@@ -122,8 +122,9 @@ function abortCurrentScriptCore(
     const debug = shouldDebug(extraArgs);
     const exceptionToken = getExceptionTokenFn();
     const scriptTexts = new WeakMap();
+    const textContentGetter = Object.getOwnPropertyDescriptor(Node.prototype, 'textContent').get;
     const getScriptText = elem => {
-        let text = elem.textContent;
+        let text = textContentGetter.call(elem);
         if ( text.trim() !== '' ) { return text; }
         if ( scriptTexts.has(elem) ) { return scriptTexts.get(elem); }
         const [ , mime, content ] =
@@ -596,7 +597,7 @@ builtinScriptlets.push({
     ],
     fn: abortCurrentScript,
     dependencies: [
-        'abort-current-script-core.fn',
+        'abort-current-script.fn',
         'run-at-html-element.fn',
     ],
 });
@@ -604,7 +605,7 @@ builtinScriptlets.push({
 //  https://github.com/uBlockOrigin/uBlock-issues/issues/2154
 function abortCurrentScript(...args) {
     runAtHtmlElementFn(( ) => {
-        abortCurrentScriptCore(...args);
+        abortCurrentScriptFn(...args);
     });
 }
 
