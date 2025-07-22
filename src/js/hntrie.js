@@ -586,6 +586,7 @@ class HNTrieContainer {
     dumpInfo() {
         return [
             `Buffer size (Uint8Array): ${this.buf32[CHAR1_SLOT].toLocaleString('en')}`,
+            `  Char segment size: ${(this.buf32[CHAR1_SLOT] - this.buf32[CHAR0_SLOT]).toLocaleString('en')}`,
             `WASM: ${this.wasmMemory === null ? 'disabled' : 'enabled'}`,
         ].join('\n');
     }
