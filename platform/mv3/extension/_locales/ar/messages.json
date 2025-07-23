@@ -300,11 +300,11 @@
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {
-    "message": "Create a custom filter",
+    "message": "أنشئ تصفية مخصّصة",
     "description": "Label for the menu entry to create cosmetic filters"
   },
   "unpickerTipEnter": {
-    "message": "Remove a custom filter",
+    "message": "أزِل التصفية المخصّصة",
     "description": "Label for the menu entry to delete cosmetic filters"
   },
   "developDropdownLabel": {
@@ -372,7 +372,7 @@
     "description": "Text for the button to create the filter"
   },
   "unpickerUsage": {
-    "message": "Select a filter below to highlight matching elements in the webpage. Click the trash can to remove a filter.",
+    "message": "اختر تصفية أدناه لتمييز العناصر المطابقة في صفحة الويب. انقر على سلة المهملات لإزالة التصفية.",
     "description": "Summary description on how to use the tool to remove custom filters"
   }
 }

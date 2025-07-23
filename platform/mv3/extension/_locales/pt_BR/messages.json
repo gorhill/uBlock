@@ -40,7 +40,7 @@
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
-    "message": "Relatar um problema",
+    "message": "Reportar um problema",
     "description": "Tooltip used for the 'chat' icon in the panel"
   },
   "popupTipDashboard": {
@@ -76,7 +76,7 @@
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupMisc": {
-    "message": "Miscelãnea",
+    "message": "Outras",
     "description": "Header for a ruleset section in 'Filter lists pane'"
   },
   "3pGroupRegions": {
@@ -128,7 +128,7 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Achar relatórios similares no GitHub",
+    "message": "Procurar relatórios similares no GitHub",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
@@ -204,7 +204,7 @@
     "description": "Name of blocking mode 3"
   },
   "basicFilteringModeDescription": {
-    "message": "Filtragem básica da rede de listas de filtros selecionadas.\n\nNão requer permissão pra ler e modificar os dados nos sites da web.",
+    "message": "Filtragem básica de rede por listas de filtros selecionadas.\n\nNão requer permissão para ler e modificar os dados nos sites.",
     "description": "This describes the 'basic' filtering mode"
   },
   "optimalFilteringModeDescription": {
@@ -220,7 +220,7 @@
     "description": "A short description for the editable field which lists trusted sites"
   },
   "noFilteringModePlaceholder": {
-    "message": "[somente nomes de servidores]\nexemplo.com\njogos.exemplo\n...",
+    "message": "[somente nomes de servidor]\nexemplo.com\njogos.exemplo\n...",
     "description": "Default text for in edit field"
   },
   "behaviorSectionLabel": {
@@ -252,7 +252,7 @@
     "description": "Short description for a checkbox in the options page"
   },
   "findListsPlaceholder": {
-    "message": "Achar listas",
+    "message": "Procurar listas",
     "description": "Placeholder for the input field used to find lists"
   },
   "strictblockTitle": {
