@@ -144,11 +144,10 @@ export function renderFilterLists(rulesetData) {
             .replace('{{filterCount}}', renderNumber(stats.filterCount));
         const fromAdmin = isAdminRuleset(ruleset.id);
         dom.cl.toggle(listEntry, 'fromAdmin', fromAdmin);
-        const disabled = stats.ruleCount === 0 || fromAdmin;
         dom.attr(
             qs$(listEntry, '.input.checkbox input'),
             'disabled',
-            disabled ? '' : null
+            fromAdmin ? '' : null
         );
     };
 
