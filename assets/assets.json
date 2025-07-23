@@ -149,6 +149,24 @@
 		],
 		"supportURL": "https://github.com/uBlockOrigin/uAssets"
 	},
+	"ublock-experimental": {
+		"content": "filters",
+		"group": "default",
+		"off": true,
+		"title": "uBlock filters – Experimental",
+		"contentURL": "https://ublockorigin.github.io/uAssets/filters/experimental.txt",
+		"cdnURLs": [
+			"https://ublockorigin.github.io/uAssetsCDN/filters/experimental.min.txt",
+			"https://ublockorigin.pages.dev/filters/experimental.min.txt",
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssetsCDN@main/filters/experimental.min.txt",
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssetsCDN/main/filters/experimental.min.txt"
+		],
+		"patchURLs": [
+			"https://ublockorigin.github.io/uAssetsCDN/filters/",
+			"https://ublockorigin.pages.dev/filters/"
+		],
+		"supportURL": "https://github.com/uBlockOrigin/uAssets"
+	},
 	"adguard-generic": {
 		"content": "filters",
 		"group": "ads",
