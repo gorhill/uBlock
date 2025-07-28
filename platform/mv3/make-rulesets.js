@@ -263,7 +263,7 @@ async function fetchList(assetDetails) {
                     const { url, error } = details;
                     if ( error !== undefined ) { return details; }
                     const content = details.content.trim();
-                    if ( content === '' || /^<.*>$/.test(content) ) {
+                    if ( /* content === '' || */ /^<.*>$/.test(content) ) {
                         return { url, error: `Bad content: ${url}` };
                     }
                     return { url, content };
