@@ -36,7 +36,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupLocalToolsLabel": {
-    "message": "On this website",
+    "message": "На гэтым сайце",
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
@@ -356,15 +356,15 @@
     "description": "Short sentence to report the number of currently registered DNR rules"
   },
   "pickerSliderLabel": {
-    "message": "Move the slider to select the best match",
+    "message": "Перасуньце паўзунок, каб выбраць найлепшы варыянт",
     "description": "Label to describe the purpose of the slider"
   },
   "pickerPick": {
-    "message": "Pick",
+    "message": "Выбраць",
     "description": "Text for the button to re-enter element-picking mode"
   },
   "pickerPreview": {
-    "message": "Preview",
+    "message": "Папярэдні прагляд",
     "description": "Text for the button to activate preview mode"
   },
   "pickerCreate": {
@@ -372,7 +372,7 @@
     "description": "Text for the button to create the filter"
   },
   "unpickerUsage": {
-    "message": "Select a filter below to highlight matching elements in the webpage. Click the trash can to remove a filter.",
+    "message": "Выберыце фільтр ніжэй, каб вылучыць адпаведныя элементы на старонцы. Націсніце на кошык, каб выдаліць фільтр.",
     "description": "Summary description on how to use the tool to remove custom filters"
   }
 }
