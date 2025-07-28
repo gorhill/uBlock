@@ -508,7 +508,7 @@ class Editor {
             }
         }
         view.dispatch({
-            selection: { anchor: from, head: to+1 }
+            selection: { anchor: from, head: Math.min(to+1, doc.length) }
         });
         view.focus();
         return true;
