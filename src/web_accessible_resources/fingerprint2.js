@@ -51,5 +51,5 @@
             setTimeout(( ) => { cb(browserId, []); }, 1);
         },
     };
-    self.Fingerprint2 = fp2;
+    self.Fingerprint2 = self.Fingerprint = fp2;
 })();
