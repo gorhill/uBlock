@@ -147,23 +147,22 @@ echo "*** uBOLite.$PLATFORM: extension ready"
 echo "Extension location: $UBOL_DIR/"
 
 # Local build
+tmp_manifest=$(mktemp)
+chmod '=rw' "$tmp_manifest"
 if [ -z "$TAGNAME" ]; then
     TAGNAME="uBOLite_$(jq -r .version "$UBOL_DIR"/manifest.json)"
     # Enable DNR rule debugging
-    tmp=$(mktemp)
     jq '.permissions += ["declarativeNetRequestFeedback"]' \
-        "$UBOL_DIR/manifest.json" > "$tmp" \
-        && mv "$tmp" "$UBOL_DIR/manifest.json"
+        "$UBOL_DIR/manifest.json" > "$tmp_manifest" \
+        && mv "$tmp_manifest" "$UBOL_DIR/manifest.json"
     # Use a different extension id than the official one
     if [ "$PLATFORM" = "firefox" ]; then
-        tmp=$(mktemp)
-        jq '.browser_specific_settings.gecko.id = "uBOLite.dev@raymondhill.net"' "$UBOL_DIR/manifest.json"  > "$tmp" \
-            && mv "$tmp" "$UBOL_DIR/manifest.json"
+        jq '.browser_specific_settings.gecko.id = "uBOLite.dev@raymondhill.net"' "$UBOL_DIR/manifest.json"  > "$tmp_manifest" \
+            && mv "$tmp_manifest" "$UBOL_DIR/manifest.json"
     fi
 else
-    tmp=$(mktemp)
-    jq --arg version "${TAGNAME:8}" '.version = $version' "$UBOL_DIR/manifest.json"  > "$tmp" \
-        && mv "$tmp" "$UBOL_DIR/manifest.json"
+    jq --arg version "${TAGNAME:8}" '.version = $version' "$UBOL_DIR/manifest.json"  > "$tmp_manifest" \
+        && mv "$tmp_manifest" "$UBOL_DIR/manifest.json"
 fi
 
 # Platform-specific steps
