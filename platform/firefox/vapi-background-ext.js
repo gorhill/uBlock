@@ -287,7 +287,7 @@ vAPI.Net = class extends vAPI.Net {
             if ( domainFromHostname(cn) === domainFromHostname(hn) ) { return; }
         }
         if ( this.cnameIgnoreList !== null ) {
-            if ( this.cnameIgnoreList.test(cn) === false ) { return; }
+            if ( this.cnameIgnoreList.test(cn) ) { return; }
         }
         if ( this.cnameIgnoreRootDocument ) {
             const origin = hostnameFromNetworkURL(details.documentUrl || details.url);
