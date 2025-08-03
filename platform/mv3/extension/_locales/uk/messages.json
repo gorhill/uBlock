@@ -304,7 +304,7 @@
     "description": "Label for the menu entry to create cosmetic filters"
   },
   "unpickerTipEnter": {
-    "message": "Видалити власний фільтр",
+    "message": "Вилучити власний фільтр",
     "description": "Label for the menu entry to delete cosmetic filters"
   },
   "developDropdownLabel": {

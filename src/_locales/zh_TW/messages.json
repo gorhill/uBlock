@@ -184,7 +184,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "點擊以重新啟用這個網站的 JavaScript ",
+    "message": "點擊以重新啟用此網站的 JavaScript",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
@@ -356,7 +356,7 @@
     "description": "Checkbox to let user access advanced, technical features"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "停用「預先取回連結」（避免連接至已阻擋的網路請求）",
+    "message": "停用預先擷取功能（以避免對被封鎖的網路請求產生任何連線）",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {

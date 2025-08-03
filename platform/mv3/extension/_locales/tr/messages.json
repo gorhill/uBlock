@@ -364,7 +364,7 @@
     "description": "Text for the button to re-enter element-picking mode"
   },
   "pickerPreview": {
-    "message": "Önizle",
+    "message": "Ön İzle",
     "description": "Text for the button to activate preview mode"
   },
   "pickerCreate": {

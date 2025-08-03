@@ -36,7 +36,7 @@
     "description": "Label in the popup panel for the current filtering mode"
   },
   "popupLocalToolsLabel": {
-    "message": "On this website",
+    "message": "इस वेबसाइट पर",
     "description": "Label in the popup panel for the local tools section"
   },
   "popupTipReport": {
@@ -112,15 +112,15 @@
     "description": "Shown in the About pane"
   },
   "supportS6H": {
-    "message": "Report a filter issue",
+    "message": "फ़िल्टर समस्या को रिपोर्ट करें",
     "description": "Header of 'Report a filter issue' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Report filter issues with specific websites to the <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> issue tracker</span>. <u>Requires a GitHub account.</u>",
+    "message": "विशिष्ट वेबसाइट पर फ़िल्टर समस्या को <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> समस्या ट्रैकर</span> पर रिपोर्ट करें. <u>इसके लिए एक GitHub खाते की आवश्यकता होगी.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS5H": {
-    "message": "Troubleshooting information",
+    "message": "समस्या निवारक जानकारी",
     "description": "Label of 'Troubleshooting information' section in 'Report a filter issue' page"
   },
   "supportS6P1S1": {
@@ -128,47 +128,47 @@
     "description": "A paragraph in the filter issue reporter section"
   },
   "supportFindSpecificButton": {
-    "message": "Find similar reports on GitHub",
+    "message": "GitHub पर मिलती-जुलती रिपोर्ट खोजें",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS6URL": {
-    "message": "Address of the webpage:",
+    "message": "वेब पेज का पता:",
     "description": "Label for the URL of the page"
   },
   "supportS6Select1": {
-    "message": "The webpage…",
+    "message": "वेब पेज…",
     "description": "Label for widget to select type of issue"
   },
   "supportS6Select1Option0": {
-    "message": "-- Pick an entry --",
+    "message": "-- एक प्रविष्टि चुनें --",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option1": {
-    "message": "Shows ads or ad leftovers",
+    "message": "विज्ञापनों को या शेष बचे विज्ञापन को दिखाता है",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option2": {
-    "message": "Has overlays or other nuisances",
+    "message": "ओवरले या कोई अन्य दिक्कतें हैं",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option3": {
-    "message": "Detects uBO Lite",
+    "message": "यह uBO Lite की पहचान करता है",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option4": {
-    "message": "Has privacy-related issues",
+    "message": "गोपनीयता से संबंधित समस्याएं हैं",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option5": {
-    "message": "Malfunctions when uBO Lite is enabled",
+    "message": "यह uBO Lite सक्षम होने पर ठीक से काम नहीं करता",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option6": {
-    "message": "Opens unwanted tabs or windows",
+    "message": "अवांछित टैब या विंडो खोलता है",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leads to badware, phishing",
+    "message": "बैडवेयर, फ़िशिंग की ओर ले जाता है",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
@@ -308,7 +308,7 @@
     "description": "Label for the menu entry to delete cosmetic filters"
   },
   "developDropdownLabel": {
-    "message": "View:",
+    "message": "देखें:",
     "description": "A label of a dropdown list"
   },
   "developOptionFilteringModeDetails": {
@@ -332,23 +332,23 @@
     "description": "An option in a dropdown list"
   },
   "saveButton": {
-    "message": "Save",
+    "message": "सहेजें",
     "description": "Text for buttons used to save changes"
   },
   "revertButton": {
-    "message": "Revert",
+    "message": "पूर्ववत",
     "description": "Text for buttons used to revert changes"
   },
   "importAndAppendButton": {
-    "message": "Import and append…",
+    "message": "इम्पोर्ट करें और जोड़ें…",
     "description": "Text for buttons used to import and append content"
   },
   "exportButton": {
-    "message": "Export…",
+    "message": "निर्यात…",
     "description": "Text for buttons used to export content"
   },
   "dnrRulesWarning": {
-    "message": "Do not add content from untrusted sources",
+    "message": "अविश्वसनीय स्रोतों से सामग्री न जोड़ें",
     "description": "Short description of the DNR rules editor pane"
   },
   "dnrRulesCountInfo": {

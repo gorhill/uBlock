@@ -1196,19 +1196,19 @@
     "description": "Text warning about an incoming redirect"
   },
   "docblockedReasonLabel": {
-    "message": "Reason:",
+    "message": "कारण:",
     "description": "The label which prepend the actual reason why a page was blocked"
   },
   "docblockedReasonMalicious": {
-    "message": "Malicious",
+    "message": "दुर्भावनापूर्ण",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonTracker": {
-    "message": "Tracker",
+    "message": "ट्रैकर",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonDisreputable": {
-    "message": "Disreputable",
+    "message": "जर्जर",
     "description": "An actual reason why a page was blocked"
   },
   "cloudPush": {
