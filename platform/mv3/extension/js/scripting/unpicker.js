@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    uBlock Origin - a comprehensive, efficient content blocker
+    uBlock Origin Lite - a comprehensive, MV3-compliant content blocker
     Copyright (C) 2025-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
@@ -31,14 +31,10 @@ if ( ubolOverlay.file === '/unpicker-ui.html' ) { return; }
 
 function onMessage(msg) {
     switch ( msg.what ) {
-    case 'injectCustomFilters':
-        return ubolOverlay.sendMessage({ what: 'injectCustomFilters',
-            hostname: ubolOverlay.url.hostname,
-        });
-    case 'uninjectCustomFilters':
-        return ubolOverlay.sendMessage({ what: 'uninjectCustomFilters',
-            hostname: ubolOverlay.url.hostname,
-        });
+    case 'startCustomFilters':
+        return ubolOverlay.sendMessage({ what: 'startCustomFilters' });
+    case 'terminateCustomFilters':
+        return ubolOverlay.sendMessage({ what: 'terminateCustomFilters' });
     case 'removeCustomFilter':
         return ubolOverlay.sendMessage({ what: 'removeCustomFilter',
             hostname: ubolOverlay.url.hostname,

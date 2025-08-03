@@ -50,7 +50,9 @@ export async function selectorsFromCustomFilters(hostname) {
     for ( let i = 0; i < promises.length; i++ ) {
         const selectors = results[i];
         if ( selectors === undefined ) { continue; }
-        selectors.forEach(selector => { out.push(selector.slice(1)); });
+        selectors.forEach(selector => {
+            out.push(selector.startsWith('0') ? selector.slice(1) : selector);
+        });
     }
     return out.sort();
 }
@@ -64,38 +66,71 @@ export async function hasCustomFilters(hostname) {
 
 /******************************************************************************/
 
-export async function injectCustomFilters(tabId, frameId, hostname) {
-    const selectors = await selectorsFromCustomFilters(hostname);
-    if ( selectors.length === 0 ) { return; }
-    await browser.scripting.insertCSS({
-        css: `${selectors.join(',\n')}{display:none!important;}`,
-        origin: 'USER',
-        target: { tabId, frameIds: [ frameId ] },
-    }).catch(reason => {
-        console.log(reason);
-    });
-    return selectors;
+async function getAllCustomFilterKeys() {
+    const storageKeys = await localKeys() || [];
+    return storageKeys.filter(a => a.startsWith('site.'));
 }
 
 /******************************************************************************/
 
-export async function uninjectCustomFilters(tabId, frameId, hostname) {
-    const selectors = await selectorsFromCustomFilters(hostname);
-    if ( selectors.length === 0 ) { return; }
-    return browser.scripting.removeCSS({
-        css: `${selectors.join(',\n')}{display:none!important;}`,
-        origin: 'USER',
+export function startCustomFilters(tabId, frameId) {
+    return browser.scripting.executeScript({
+        files: [ '/js/scripting/css-user.js' ],
         target: { tabId, frameIds: [ frameId ] },
+        injectImmediately: true,
     }).catch(reason => {
         console.log(reason);
-    });
+    })
+}
+
+export function terminateCustomFilters(tabId, frameId) {
+    return browser.scripting.executeScript({
+        files: [ '/js/scripting/css-user-terminate.js' ],
+        target: { tabId, frameIds: [ frameId ] },
+        injectImmediately: true,
+    }).catch(reason => {
+        console.log(reason);
+    })
+}
+
+/******************************************************************************/
+
+export async function injectCustomFilters(tabId, frameId, hostname) {
+    const selectors = await selectorsFromCustomFilters(hostname);
+    if ( selectors.length === 0 ) { return; }
+    const promises = [];
+    const plainSelectors = selectors.filter(a => a.startsWith('{') === false);
+    if ( plainSelectors.length !== 0 ) {
+        promises.push(
+            browser.scripting.insertCSS({
+                css: `${plainSelectors.join(',\n')}{display:none!important;}`,
+                origin: 'USER',
+                target: { tabId, frameIds: [ frameId ] },
+            }).catch(reason => {
+                console.log(reason);
+            })
+        );
+    }
+    const proceduralSelectors = selectors.filter(a => a.startsWith('{'));
+    if ( proceduralSelectors.length !== 0 ) {
+        promises.push(
+            browser.scripting.executeScript({
+                files: [ '/js/scripting/css-procedural-api.js' ],
+                target: { tabId, frameIds: [ frameId ] },
+                injectImmediately: true,
+            }).catch(reason => {
+                console.log(reason);
+            })
+        );
+    }
+    await Promise.all(promises);
+    return { plainSelectors, proceduralSelectors };
 }
 
 /******************************************************************************/
 
 export async function registerCustomFilters(context) {
-    const storageKeys = await localKeys() || [];
-    const siteKeys = storageKeys.filter(a => a.startsWith('site.'));
+    const siteKeys = await getAllCustomFilterKeys();
     if ( siteKeys.length === 0 ) { return; }
 
     const { none } = context.filteringModeDetails;
@@ -133,9 +168,8 @@ export async function registerCustomFilters(context) {
 export async function addCustomFilter(hostname, selector) {
     const key = `site.${hostname}`;
     const selectors = await localRead(key) || [];
-    const filter = `0${selector}`;
-    if ( selectors.includes(filter) ) { return false; }
-    selectors.push(filter);
+    if ( selectors.includes(selector) ) { return false; }
+    selectors.push(selector);
     selectors.sort();
     await localWrite(key, selectors);
     return true;
@@ -147,7 +181,7 @@ export async function removeCustomFilter(hostname, selector) {
     const key = `site.${hostname}`;
     const selectors = await localRead(key);
     if ( selectors === undefined ) { return false; }
-    const i = selectors.indexOf(`0${selector}`);
+    const i = selectors.indexOf(selector);
     if ( i === -1 ) { return false; }
     selectors.splice(i, 1);
     await selectors.length !== 0

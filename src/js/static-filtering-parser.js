@@ -3199,8 +3199,8 @@ export const netOptionTokenDescriptors = new Map([
 // https://github.com/uBlockOrigin/uBlock-issues/issues/89
 //   Do not discard unknown pseudo-elements.
 
-class ExtSelectorCompiler {
-    constructor(instanceOptions) {
+export class ExtSelectorCompiler {
+    constructor(instanceOptions = {}) {
         this.reParseRegexLiteral = /^\/(.+)\/([imu]+)?$/;
 
         // Use a regex for most common CSS selectors known to be valid in any

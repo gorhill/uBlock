@@ -265,7 +265,11 @@ dom.on('#gotoZapper', 'click', ( ) => {
 dom.on('#gotoPicker', 'click', ( ) => {
     if ( browser.scripting === undefined ) { return; }
     browser.scripting.executeScript({
-        files: [ '/js/scripting/tool-overlay.js', '/js/scripting/picker.js' ],
+        files: [
+            '/js/scripting/css-procedural-api.js',
+            '/js/scripting/tool-overlay.js',
+            '/js/scripting/picker.js',
+        ],
         target: { tabId: currentTab.id },
     });
     self.close();
@@ -276,7 +280,10 @@ dom.on('#gotoPicker', 'click', ( ) => {
 dom.on('#gotoUnpicker', 'click', ( ) => {
     if ( browser.scripting === undefined ) { return; }
     browser.scripting.executeScript({
-        files: [ '/js/scripting/tool-overlay.js', '/js/scripting/unpicker.js' ],
+        files: [
+            '/js/scripting/tool-overlay.js',
+            '/js/scripting/unpicker.js',
+        ],
         target: { tabId: currentTab.id },
     });
     self.close();

@@ -112,17 +112,20 @@ if ( declaratives.length !== 0 ) {
 const procedurals = exceptedSelectors.filter(a => a.cssable === undefined);
 if ( procedurals.length !== 0 ) {
     const addSelectors = selectors => {
-        if ( self.cssProceduralAPI instanceof Object === false ) { return; }
-        self.cssProceduralAPI.addSelectors(selectors);
+        if ( self.listsProceduralFiltererAPI instanceof Object === false ) { return; }
+        self.listsProceduralFiltererAPI.addSelectors(selectors);
     };
-    if ( self.cssProceduralAPI === undefined ) {
-        self.cssProceduralAPI = chrome.runtime.sendMessage({
+    if ( self.ProceduralFiltererAPI === undefined ) {
+        self.ProceduralFiltererAPI = chrome.runtime.sendMessage({
             what: 'injectCSSProceduralAPI'
         }).catch(( ) => {
         });
     }
-    if ( self.cssProceduralAPI instanceof Promise ) {
-        self.cssProceduralAPI.then(( ) => { addSelectors(procedurals); });
+    if ( self.ProceduralFiltererAPI instanceof Promise ) {
+        self.ProceduralFiltererAPI.then(( ) => {
+            self.listsProceduralFiltererAPI = new self.ProceduralFiltererAPI();
+            addSelectors(procedurals);
+        });
     } else {
         addSelectors(procedurals);
     }

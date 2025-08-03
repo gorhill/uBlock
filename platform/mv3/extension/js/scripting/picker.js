@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    uBlock Origin - a comprehensive, efficient content blocker
+    uBlock Origin Lite - a comprehensive, MV3-compliant content blocker
     Copyright (C) 2025-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
@@ -237,22 +237,55 @@ const excludedSelectors = [
 
 /******************************************************************************/
 
+async function previewSelector(selector) {
+    if ( selector === previewedSelector ) { return; }
+    if ( previewedSelector !== '' ) {
+        if ( previewedSelector.startsWith('{') ) {
+            if ( self.pickerProceduralFilteringAPI ) {
+                await self.pickerProceduralFilteringAPI.reset();
+            }
+        }
+        if ( previewedCSS !== '' ) {
+            await ubolOverlay.sendMessage({ what: 'removeCSS', css: previewedCSS });
+            previewedCSS = '';
+        }
+    }
+    previewedSelector = selector || '';
+    if ( selector === '' ) { return; }
+    if ( selector.startsWith('{') ) {
+        if ( self.ProceduralFiltererAPI === undefined ) { return; }
+        if ( self.pickerProceduralFilteringAPI === undefined ) {
+            self.pickerProceduralFilteringAPI = new self.ProceduralFiltererAPI();
+        }
+        self.pickerProceduralFilteringAPI.addSelectors([ JSON.parse(selector) ]);
+        return;
+    }
+    previewedCSS = `${selector}{display:none!important;}`;
+    await ubolOverlay.sendMessage({ what: 'insertCSS', css: previewedCSS });
+}
+
+let previewedSelector = '';
+let previewedCSS = '';
+
+/******************************************************************************/
+
+const previewProceduralFiltererAPI = new self.ProceduralFiltererAPI(); 
+
+/******************************************************************************/
+
 function onMessage(msg) {
     switch ( msg.what ) {
-    case 'injectCustomFilters':
-        return ubolOverlay.sendMessage({ what: 'injectCustomFilters',
-            hostname: ubolOverlay.url.hostname,
-        });
-    case 'uninjectCustomFilters':
-        return ubolOverlay.sendMessage({ what: 'uninjectCustomFilters',
-            hostname: ubolOverlay.url.hostname,
-        });
+    case 'quitTool':
+        previewProceduralFiltererAPI.reset();
+        break;
+    case 'startCustomFilters':
+        return ubolOverlay.sendMessage({ what: 'startCustomFilters' });
+    case 'terminateCustomFilters':
+        return ubolOverlay.sendMessage({ what: 'terminateCustomFilters' });
     case 'candidatesAtPoint':
         return candidatesAtPoint(msg.mx, msg.my, msg.broad);
-    case 'insertCSS':
-        return ubolOverlay.sendMessage(msg);
-    case 'removeCSS':
-        return ubolOverlay.sendMessage(msg);
+    case 'previewSelector':
+        return previewSelector(msg.selector);
     default:
         break;
     }

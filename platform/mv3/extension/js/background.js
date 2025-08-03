@@ -37,7 +37,8 @@ import {
     injectCustomFilters,
     removeCustomFilter,
     selectorsFromCustomFilters,
-    uninjectCustomFilters,
+    startCustomFilters,
+    terminateCustomFilters,
 } from './filter-manager.js';
 
 import {
@@ -199,6 +200,20 @@ function onMessage(request, sender, callback) {
         return false;
     }
 
+    case 'startCustomFilters':
+        if ( frameId === false ) { return false; }
+        startCustomFilters(tabId, frameId).then(( ) => {
+            callback();
+        });
+        return true;
+
+    case 'terminateCustomFilters':
+        if ( frameId === false ) { return false; }
+        terminateCustomFilters(tabId, frameId).then(( ) => {
+            callback();
+        });
+        return true;
+
     case 'injectCustomFilters':
         if ( frameId === false ) { return false; }
         injectCustomFilters(tabId, frameId, request.hostname).then(selectors => {
@@ -206,17 +221,11 @@ function onMessage(request, sender, callback) {
         });
         return true;
 
-    case 'uninjectCustomFilters':
-        if ( frameId === false ) { return false; }
-        uninjectCustomFilters(tabId, frameId, request.hostname).then(( ) => {
-            callback();
-        });
-        return true;
-
     case 'injectCSSProceduralAPI':
         browser.scripting.executeScript({
             files: [ '/js/scripting/css-procedural-api.js' ],
             target: { tabId, frameIds: [ frameId ] },
+            injectImmediately: true,
         }).catch(reason => {
             console.log(reason);
         }).then(( ) => {
@@ -503,7 +512,11 @@ function onCommand(command, tab) {
     case 'enter-picker-mode': {
         if ( browser.scripting === undefined ) { return; }
         browser.scripting.executeScript({
-            files: [ '/js/scripting/tool-overlay.js', '/js/scripting/picker.js' ],
+            files: [
+                '/js/scripting/css-procedural-api.js',
+                '/js/scripting/tool-overlay.js',
+                '/js/scripting/picker.js',
+            ],
             target: { tabId: tab.id },
         });
         break;

@@ -19,27 +19,24 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-(async function uBOL_cssUser() {
+(function uBOL_cssUserTerminate() {
 
 /******************************************************************************/
 
-const docURL = new URL(document.baseURI);
-const details = await chrome.runtime.sendMessage({
-    what: 'injectCustomFilters',
-    hostname: docURL.hostname,
-}).catch(( ) => {
-});
-
-if ( details?.proceduralSelectors?.length ) {
-    if ( self.ProceduralFiltererAPI ) {
-        self.customProceduralFiltererAPI = new self.ProceduralFiltererAPI();
-        self.customProceduralFiltererAPI.addSelectors(
-            details.proceduralSelectors.map(a => JSON.parse(a))
-        );
-    }
+const plainSelectors = self.customFilters?.plainSelectors;
+if ( plainSelectors ) {
+    chrome.runtime.sendMessage({
+        what: 'removeCSS',
+        css: `${plainSelectors.join(',\n')}{display:none!important;}`,
+    }).catch(( ) => {
+    });
 }
 
-self.customFilters = details;
+if ( self.customProceduralFiltererAPI instanceof Object ) {
+    self.customProceduralFiltererAPI.reset();
+}
+
+self.customFilters = undefined;
 
 /******************************************************************************/
 

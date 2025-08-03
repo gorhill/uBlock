@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    uBlock Origin - a comprehensive, efficient content blocker
+    uBlock Origin Lite - a comprehensive, MV3-compliant content blocker
     Copyright (C) 2025-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
@@ -33,7 +33,8 @@ function onSvgClicked(ev) {
         my: ev.clientY,
         options: {
             stay: true,
-            highlight: ev.target !== toolOverlay.svgIslands,
+            highlight: dom.cl.has(dom.root, 'mobile') &&
+                ev.target !== toolOverlay.svgIslands,
         },
     });
 }

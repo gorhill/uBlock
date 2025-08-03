@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    uBlock Origin - a comprehensive, efficient content blocker
+    uBlock Origin Lite - a comprehensive, MV3-compliant content blocker
     Copyright (C) 2025-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
@@ -254,14 +254,20 @@ self.ubolOverlay = {
     },
 
     qsa(node, selector) {
-        if ( node !== null ) {
-            try {
-                const elems = node.querySelectorAll(selector);
-                this.qsa.error = undefined;
-                return elems;
-            } catch (reason) {
-                this.qsa.error = `${reason}`;
+        if ( node === null ) { return []; }
+        if ( selector.startsWith('{') ) {
+            if ( this.proceduralFiltererAPI === undefined ) {
+                if ( self.ProceduralFiltererAPI === undefined ) { return []; }
+                this.proceduralFiltererAPI = new self.ProceduralFiltererAPI();
             }
+            return this.proceduralFiltererAPI.qsa(selector);
+        }
+        try {
+            const elems = node.querySelectorAll(selector);
+            this.qsa.error = undefined;
+            return elems;
+        } catch (reason) {
+            this.qsa.error = `${reason}`;
         }
         return [];
     },
