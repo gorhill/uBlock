@@ -11,7 +11,7 @@
   },
   "browser_specific_settings": {
     "safari": {
-      "strict_min_version": "18.4"
+      "strict_min_version": "18.6"
     }
   },
   "commands": {
