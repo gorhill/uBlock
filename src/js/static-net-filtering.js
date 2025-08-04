@@ -4595,9 +4595,14 @@ StaticNetFilteringEngine.prototype.dnrFromCompiled = function(op, context, ...ar
     seen.clear();
 
     // Adjust `important` priority
+    // Mind:
+    // - https://github.com/uBlockOrigin/uAssets/issues/29451#issuecomment-3150181993
     for ( const rule of ruleset ) {
         if ( rule.__important !== true ) { continue; }
-        if ( rule.priority === undefined ) { continue; }
+        if ( rule.priority === undefined ) {
+            if ( rule.__modifierType !== 'removeparam' ) { continue; }
+            rule.priority ||= 0;
+        }
         rule.priority += 30;
     }
 
