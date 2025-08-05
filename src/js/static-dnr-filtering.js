@@ -221,42 +221,48 @@ function addExtendedToDNR(context, parser) {
         });
         return;
     }
-    let details = context.specificCosmeticFilters.get(compiled);
-    let isGeneric = true;
+    const matches = [];
+    const excludeMatches = [];
     for ( const { hn, not, bad } of parser.getExtFilterDomainIterator() ) {
         if ( bad ) { continue; }
         if ( not && exception ) { continue; }
-        isGeneric = false;
         // TODO: Support regex- and path-based entries
         if ( isRegexOrPath(hn) ) { continue; }
-        if ( details === undefined ) {
-            context.specificCosmeticFilters.set(compiled, details = {});
+        if ( not || exception ) {
+            excludeMatches.push(hn);
+        } else if ( hn !== '*' ) {
+            matches.push(hn);
         }
-        if ( compiled.startsWith('{') === false ) {
-            details.key = keyFromSelector(compiled);
+    }
+    // This should not happen
+    if ( matches.length === 0 && excludeMatches.length === 0 ) { return; }
+    // Only negated hostnames => generic cosmetic filter
+    if ( exception === false && matches.length === 0 && excludeMatches.length !== 0 ) {
+        addGenericCosmeticFilter(context, compiled, false);
+    }
+    const key = compiled.startsWith('{') === false && keyFromSelector(compiled);
+    let details = context.specificCosmeticFilters.get(compiled);
+    if ( details === undefined ) {
+        context.specificCosmeticFilters.set(compiled, details = {});
+        if ( key ) {
+            details.key = key;
         }
-        if ( exception || not ) {
-            if ( details.excludeMatches === undefined ) {
-                details.excludeMatches = [];
-            }
-            details.excludeMatches.push(hn);
-            continue;
-        }
+    }
+    if ( matches.length ) {
         if ( details.matches === undefined ) {
             details.matches = [];
         }
-        if ( details.matches.includes('*') ) { continue; }
-        if ( hn === '*' ) {
+        if ( matches.includes('*') ) {
             details.matches = [ '*' ];
-            continue;
+        } else if ( details.matches.includes('*') === false ) {
+            details.matches.push(...matches);
         }
-        details.matches.push(hn);
     }
-    if ( details === undefined ) { return; }
-    if ( exception ) { return; }
-    if ( compiled.startsWith('{') ) { return; }
-    if ( isGeneric ) {
-        addGenericCosmeticFilter(context, compiled, false);
+    if ( excludeMatches.length ) {
+        if ( details.excludeMatches === undefined ) {
+            details.excludeMatches = [];
+        }
+        details.excludeMatches.push(...excludeMatches);
     }
 }
 
