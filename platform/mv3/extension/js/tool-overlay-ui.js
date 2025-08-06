@@ -166,15 +166,8 @@ export const toolOverlay = {
         if ( target.matches('#move') === false ) { return; }
         if ( dom.cl.has(this.moveable, 'moving') ) { return; }
         target.setPointerCapture(ev.pointerId);
-        this.moverIsTouch = ev.type.startsWith('touch');
-        if ( this.moverIsTouch ) {
-            const touch = ev.touches[0];
-            this.moverX0 = touch.pageX;
-            this.moverY0 = touch.pageY;
-        } else {
-            this.moverX0 = ev.pageX;
-            this.moverY0 = ev.pageY;
-        }
+        this.moverX0 = ev.pageX;
+        this.moverY0 = ev.pageY;
         const rect = this.moveable.getBoundingClientRect();
         this.moverCX0 = rect.x + rect.width / 2;
         this.moverCY0 = rect.y + rect.height / 2;
@@ -211,14 +204,8 @@ export const toolOverlay = {
         }
     },
     moverMoveAsync(ev) {
-        if ( toolOverlay.moverIsTouch ) {
-            const touch = ev.touches[0];
-            toolOverlay.moverX1 = touch.pageX;
-            toolOverlay.moverY1 = touch.pageY;
-        } else {
-            toolOverlay.moverX1 = ev.pageX;
-            toolOverlay.moverY1 = ev.pageY;
-        }
+        toolOverlay.moverX1 = ev.pageX;
+        toolOverlay.moverY1 = ev.pageY;
         if ( toolOverlay.moverTimer !== undefined ) { return; }
         toolOverlay.moverTimer = self.requestAnimationFrame(( ) => {
             toolOverlay.moverMove();
@@ -241,7 +228,6 @@ export const toolOverlay = {
         ev.preventDefault();
     },
     moveable: null,
-    moverIsTouch: false,
     moverX0: 0, moverY0: 0,
     moverX1: 0, moverY1: 0,
     moverCX0: 0, moverCY0: 0,
