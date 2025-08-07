@@ -361,16 +361,20 @@ export async function syncWithBrowserPermissions() {
         const { optimal, complete } = filteringModes;
         for ( const hn of optimal ) {
             if ( allowedHostnames.has(hn) ) { continue; }
+            if ( isDescendantHostnameOfIter(hn, allowedHostnames) ) { continue; }
             optimal.delete(hn);
             modified = true;
         }
         for ( const hn of complete ) {
             if ( allowedHostnames.has(hn) ) { continue; }
+            if ( isDescendantHostnameOfIter(hn, allowedHostnames) ) { continue; }
             complete.delete(hn);
             modified = true;
         }
+        if ( modified ) {
+            await writeFilteringModeDetails(filteringModes);
+        }
     }
-    await writeFilteringModeDetails(filteringModes);
     return modified;
 }
 
