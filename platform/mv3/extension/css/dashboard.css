@@ -1,5 +1,10 @@
-nav {
+header {
     background-color: var(--surface-1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    }
+nav {
     border: 0;
     border-bottom: 1px solid var(--border-1);
     display: flex;
@@ -7,9 +12,6 @@ nav {
     flex-wrap: wrap;
     overflow-x: hidden;
     padding: 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
     }
 nav > .tabButton {
     background-color: transparent;
@@ -42,6 +44,9 @@ body[data-pane="about"] #dashboard-nav .tabButton[data-pane="about"] {
         fill: var(--dashboard-tab-active-ink);
     }
 body:not([data-develop="true"]) #dashboard-nav .tabButton[data-pane="develop"] {
+    display: none;
+    }
+body:not([data-pane="rulesets"]) header [data-pane-related="rulesets"] {
     display: none;
     }
 

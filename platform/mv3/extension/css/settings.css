@@ -1,3 +1,8 @@
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+    }
+
 :root {
     --filtering-mode-button-size: 32px;
     }
@@ -80,20 +85,12 @@ label:has(input[type="checkbox"][disabled]) + legend {
 h3[data-i18n="filteringMode0Name"]::first-letter {
     text-transform: capitalize;
     }
-#trustedSites  {
-    background-color: var(--surface-0);
-    border: 1px solid var(--surface-3);
-    font-size: var(--monospace-size);
-    min-height: 8rem;
-    }
 
-section[data-pane="rulesets"] > div:first-of-type {
-    background-color: var(--surface-1);
-    flex-shrink: 0;
-    padding: 1em 0;
-    position: sticky;
-    top: 0;
-    z-index: 10;
+body:not(.committing) #commit-spinner {
+    display: none;
+    }
+body.committing #commit-spinner {
+    animation: spin 1s steps(8) infinite;
     }
 section[data-pane="rulesets"] > div:first-of-type > p:first-of-type {
     margin-top: 0;

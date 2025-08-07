@@ -397,6 +397,8 @@ dom.on('#findInLists', 'input', searchFilterLists);
 
 const applyEnabledRulesets = (( ) => {
     const apply = async ( ) => {
+        dom.cl.add(dom.body, 'committing');
+
         const enabledRulesets = [];
         for ( const liEntry of qsa$('#lists .listEntry[data-role="leaf"][data-rulesetid]') ) {
             const checked = qs$(liEntry, 'input[type="checkbox"]:checked') !== null;
@@ -408,14 +410,16 @@ const applyEnabledRulesets = (( ) => {
 
         dom.cl.remove('#lists .listEntry.toggled', 'toggled');
 
-        const unmodified = hashFromIterable(enabledRulesets) ===
+        const modified = hashFromIterable(enabledRulesets) !==
             hashFromIterable(cachedRulesetData.enabledRulesets);
-        if ( unmodified ) { return; }
+        if ( modified ) {
+            await sendMessage({
+                what: 'applyRulesets',
+                enabledRulesets,
+            });
+        }
 
-        await sendMessage({
-            what: 'applyRulesets',
-            enabledRulesets,
-        });
+        dom.cl.remove(dom.body, 'committing');
     };
 
     let timer;
@@ -433,7 +437,11 @@ const applyEnabledRulesets = (( ) => {
         }
         timer = self.setTimeout(( ) => {
             timer = undefined;
-            apply();
+            if ( dom.cl.has(dom.body, 'committing') ) {
+                applyEnabledRulesets();
+            } else {
+                apply();
+            }
         }, 997);
     }
 })();

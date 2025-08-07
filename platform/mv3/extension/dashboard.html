@@ -20,13 +20,20 @@
 
 <body data-pane="settings" class="loading">
     <!-- -------- -->
-    <nav id="dashboard-nav">
-        <span class="logo"><img data-i18n-title="extName" src="img/ublock.svg" alt="uBO Lite"></span><!--
-     --><button class="tabButton" type="button" data-pane="settings" data-i18n="settingsPageName" tabindex="0"></button><!--
-     --><button class="tabButton" type="button" data-pane="rulesets" data-i18n="aboutFilterLists" tabindex="0"></button><!--
-     --><button class="tabButton" type="button" data-pane="develop" data-i18n="developPageName"tabindex="0"></button><!--
-     --><button class="tabButton" type="button" data-pane="about" data-i18n="aboutPageName" tabindex="0"></button>
-    </nav>
+    <header>
+        <nav id="dashboard-nav">
+            <span class="logo"><img data-i18n-title="extName" src="img/ublock.svg" alt="uBO Lite"></span><!--
+         --><button class="tabButton" type="button" data-pane="settings" data-i18n="settingsPageName" tabindex="0"></button><!--
+         --><button class="tabButton" type="button" data-pane="rulesets" data-i18n="aboutFilterLists" tabindex="0"></button><!--
+         --><button class="tabButton" type="button" data-pane="develop" data-i18n="developPageName"tabindex="0"></button><!--
+         --><button class="tabButton" type="button" data-pane="about" data-i18n="aboutPageName" tabindex="0"></button>
+        </nav>
+        <!-- -------- -->
+        <div data-pane-related="rulesets">
+            <p><span id="listsOfBlockedHostsPrompt"></span> <span id="commit-spinner" class="fa-icon">spinner</span></p>
+            <p><input id="findInLists" type="search" spellcheck="false" placeholder="findListsPlaceholder" /></p>
+        </div>
+    </header>
     <!-- -------- -->
     <section data-pane="settings">
         <div>
@@ -92,10 +99,6 @@
     </section>
     <!-- -------- -->
     <section data-pane="rulesets">
-        <div>
-            <p id="listsOfBlockedHostsPrompt"></p>
-            <p><input id="findInLists" type="search" spellcheck="false" placeholder="findListsPlaceholder" /></p>
-        </div>
         <div id="lists"></div>
     </section>
     <!-- -------- -->
