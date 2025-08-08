@@ -233,7 +233,6 @@ const stopAll = reason => {
     domMutationObserver.takeRecords();
     domMutationObserver = undefined;
     genericSelectorMap.clear();
-    console.info(`uBOL: Generic cosmetic filtering stopped because ${reason}`);
 };
 
 /******************************************************************************/
