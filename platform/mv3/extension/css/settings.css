@@ -91,6 +91,7 @@ body:not(.committing) #commit-spinner {
     }
 body.committing #commit-spinner {
     animation: spin 1s steps(8) infinite;
+    fill: var(--accent-surface-1);
     }
 #dnrError {
     color: var(--info3-ink);
