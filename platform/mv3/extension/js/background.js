@@ -248,15 +248,18 @@ function onMessage(request, sender, callback) {
     switch ( request.what ) {
 
     case 'applyRulesets': {
-        enableRulesets(request.enabledRulesets).then(( ) => {
-            rulesetConfig.enabledRulesets = request.enabledRulesets;
-            return saveRulesetConfig();
-        }).then(( ) => {
-            registerInjectables();
-            callback();
-            return dnr.getEnabledRulesets();
-        }).then(enabledRulesets => {
-            broadcastMessage({ enabledRulesets });
+        enableRulesets(request.enabledRulesets).then(result => {
+            if ( result === undefined || result.error ) {
+                callback(result);
+                return;
+            }
+            rulesetConfig.enabledRulesets = result.enabledRulesets;
+            return saveRulesetConfig().then(( ) => {
+                return registerInjectables();
+            }).then(( ) => {
+                callback(result);
+                broadcastMessage({ enabledRulesets: result.enabledRulesets });
+            });
         });
         return true;
     }
@@ -547,7 +550,7 @@ async function startSession() {
     const rulesetsUpdated = await enableRulesets(rulesetConfig.enabledRulesets);
 
     // We need to update the regex rules only when ruleset version changes.
-    if ( rulesetsUpdated === false ) {
+    if ( rulesetsUpdated === undefined ) {
         if ( isNewVersion ) {
             updateDynamicRules();
         } else {

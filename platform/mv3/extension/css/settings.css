@@ -92,6 +92,12 @@ body:not(.committing) #commit-spinner {
 body.committing #commit-spinner {
     animation: spin 1s steps(8) infinite;
     }
+#dnrError {
+    color: var(--info3-ink);
+    }
+#dnrError:empty {
+    display: none;
+    }
 section[data-pane="rulesets"] > div:first-of-type > p:first-of-type {
     margin-top: 0;
     }

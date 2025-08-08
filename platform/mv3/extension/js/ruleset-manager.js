@@ -306,6 +306,9 @@ async function updateDynamicRules() {
     if ( dynamicRegexCount !== 0 ) {
         ubolLog(`Using ${dynamicRegexCount}/${dnr.MAX_NUMBER_OF_REGEX_RULES} dynamic regex-based DNR rules`);
     }
+
+    const response = {};
+
     try {
         await dnr.updateDynamicRules({ addRules, removeRuleIds });
         if ( removeRuleIds.length !== 0 ) {
@@ -316,8 +319,15 @@ async function updateDynamicRules() {
         }
     } catch(reason) {
         console.error(`updateDynamicRules() / ${reason}`);
+        response.error = `${reason}`;
     }
-    await updateSessionRules();
+
+    const result = await updateSessionRules();
+    if ( result?.error ) {
+        response.error ||= result.error;
+    }
+
+    return response;
 }
 
 /******************************************************************************/
@@ -452,6 +462,7 @@ async function updateSessionRules() {
     if ( sessionRegexCount !== 0 ) {
         ubolLog(`Using ${sessionRegexCount}/${dnr.MAX_NUMBER_OF_REGEX_RULES} session regex-based DNR rules`);
     }
+    const response = {};
     try {
         await dnr.updateSessionRules({ addRules, removeRuleIds });
         if ( removeRuleIds.length !== 0 ) {
@@ -462,7 +473,9 @@ async function updateSessionRules() {
         }
     } catch(reason) {
         console.error(`updateSessionRules() / ${reason}`);
+        response.error = `${reason}`;
     }
+    return response;
 }
 
 /******************************************************************************/
@@ -636,9 +649,7 @@ async function enableRulesets(ids) {
         disableRulesetSet.delete(id);
     }
 
-    if ( enableRulesetSet.size === 0 && disableRulesetSet.size === 0 ) {
-        return false;
-    }
+    if ( enableRulesetSet.size === 0 && disableRulesetSet.size === 0 ) { return; }
 
     const enableRulesetIds = Array.from(enableRulesetSet);
     const disableRulesetIds = Array.from(disableRulesetSet);
@@ -649,20 +660,34 @@ async function enableRulesets(ids) {
     if ( disableRulesetIds.length !== 0 ) {
         ubolLog(`Disable ruleset: ${disableRulesetIds}`);
     }
-    await dnr.updateEnabledRulesets({ enableRulesetIds, disableRulesetIds }).catch(reason => {
+
+    const response = {};
+
+    await dnr.updateEnabledRulesets({
+        enableRulesetIds,
+        disableRulesetIds,
+    }).catch(reason => {
         ubolLog(reason);
+        response.error = `${reason}`;
     });
 
-    await updateDynamicRules();
+    const result = await updateDynamicRules();
+    if ( result?.error ) {
+        response.error ||= result.error;
+    }
 
-    dnr.getEnabledRulesets().then(enabledRulesets => {
+    await dnr.getEnabledRulesets().then(enabledRulesets => {
         ubolLog(`Enabled rulesets: ${enabledRulesets}`);
+        response.enabledRulesets = enabledRulesets;
         return dnr.getAvailableStaticRuleCount();
     }).then(count => {
         ubolLog(`Available static rule count: ${count}`);
+        response.staticRuleCount = count;
+    }).catch(reason => {
+        ubolLog(reason);
     });
 
-    return true;
+    return response;
 }
 
 /******************************************************************************/

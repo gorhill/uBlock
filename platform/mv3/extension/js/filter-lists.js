@@ -413,10 +413,11 @@ const applyEnabledRulesets = (( ) => {
         const modified = hashFromIterable(enabledRulesets) !==
             hashFromIterable(cachedRulesetData.enabledRulesets);
         if ( modified ) {
-            await sendMessage({
+            const result = await sendMessage({
                 what: 'applyRulesets',
                 enabledRulesets,
             });
+            dom.text('#dnrError', result?.error || '');
         }
 
         dom.cl.remove(dom.body, 'committing');
