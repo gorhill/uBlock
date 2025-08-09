@@ -51,12 +51,13 @@ function editOutboundObjectFn(
     }
     proxyApplyFn(propChain, function(context) {
         const obj = context.reflect();
-        if ( jsonp.apply(obj) === 0 ) { return obj; }
+        const objAfter = jsonp.apply(obj);
+        if ( objAfter === undefined ) { return obj; }
         safe.uboLog(logPrefix, 'Edited');
         if ( safe.logLevel > 1 ) {
-            safe.uboLog(logPrefix, `After edit:\n${safe.JSON_stringify(obj, null, 2)}`);
+            safe.uboLog(logPrefix, `After edit:\n${safe.JSON_stringify(objAfter, null, 2)}`);
         }
-        return obj;
+        return objAfter;
     });
 }
 registerScriptlet(editOutboundObjectFn, {
@@ -206,12 +207,13 @@ function editInboundObjectFn(
         } catch {
         }
         if ( typeof clone !== 'object' || clone === null ) { return; }
-        if ( jsonp.apply(clone) === 0 ) { return; }
+        const objAfter = jsonp.apply(clone);
+        if ( objAfter === undefined ) { return; }
         safe.uboLog(logPrefix, 'Edited');
         if ( safe.logLevel > 1 ) {
-            safe.uboLog(logPrefix, `After edit:\n${safe.JSON_stringify(clone, null, 2)}`);
+            safe.uboLog(logPrefix, `After edit:\n${safe.JSON_stringify(objAfter, null, 2)}`);
         }
-        return clone;
+        return objAfter;
     };
     proxyApplyFn(propChain, function(context) {
         const i = getArgPos(context.args);
@@ -343,13 +345,17 @@ function jsonEditXhrResponseFn(trusted, jsonq = '') {
             } else if ( typeof innerResponse === 'string' ) {
                 try { obj = safe.JSON_parse(innerResponse); } catch { }
             }
-            if ( typeof obj !== 'object' || obj === null || jsonp.apply(obj) === 0 ) {
+            if ( typeof obj !== 'object' || obj === null ) {
+                return (xhrDetails.response = innerResponse);
+            }
+            const objAfter = jsonp.apply(obj);
+            if ( objAfter === undefined ) {
                 return (xhrDetails.response = innerResponse);
             }
             safe.uboLog(logPrefix, 'Edited');
             const outerResponse = typeof innerResponse === 'string'
-                ? JSONPath.toJSON(obj, safe.JSON_stringify)
-                : obj;
+                ? JSONPath.toJSON(objAfter, safe.JSON_stringify)
+                : objAfter;
             return (xhrDetails.response = outerResponse);
         }
         get responseText() {
@@ -467,9 +473,9 @@ function jsonEditXhrRequestFn(trusted, jsonq = '') {
             try { data = safe.JSON_parse(body); }
             catch { }
             if ( data instanceof Object === false ) { return; }
-            const n = jsonp.apply(data);
-            if ( n === 0 ) { return; }
-            body = safe.JSON_stringify(data);
+            const objAfter = jsonp.apply(data);
+            if ( objAfter === undefined ) { return; }
+            body = safe.JSON_stringify(objAfter);
             safe.uboLog(logPrefix, 'Edited');
             if ( safe.logLevel > 1 ) {
                 safe.uboLog(logPrefix, `After edit:\n${body}`);
@@ -583,9 +589,10 @@ function jsonEditFetchResponseFn(trusted, jsonq = '') {
             const response = responseBefore.clone();
             return response.json().then(obj => {
                 if ( typeof obj !== 'object' ) { return responseBefore; }
-                if ( jsonp.apply(obj) === 0 ) { return responseBefore; }
+                const objAfter = jsonp.apply(obj);
+                if ( objAfter === undefined ) { return responseBefore; }
                 safe.uboLog(logPrefix, 'Edited');
-                const responseAfter = Response.json(obj, {
+                const responseAfter = Response.json(objAfter, {
                     status: responseBefore.status,
                     statusText: responseBefore.statusText,
                     headers: responseBefore.headers,
@@ -694,9 +701,9 @@ function jsonEditFetchRequestFn(trusted, jsonq = '') {
         try { data = safe.JSON_parse(body); }
         catch { }
         if ( data instanceof Object === false ) { return; }
-        const n = jsonp.apply(data);
-        if ( n === 0 ) { return; }
-        return safe.JSON_stringify(data);
+        const objAfter = jsonp.apply(data);
+        if ( objAfter === undefined ) { return; }
+        return safe.JSON_stringify(objAfter);
     }
     const proxyHandler = context => {
         const args = context.callArgs;
@@ -813,11 +820,12 @@ function jsonlEditFn(jsonp, text = '') {
             linesAfter.push(lineBefore);
             continue;
         }
-        if ( jsonp.apply(obj) === 0 ) {
+        const objAfter = jsonp.apply(obj);
+        if ( objAfter === undefined ) {
             linesAfter.push(lineBefore);
             continue;
         }
-        const lineAfter = safe.JSON_stringify(obj);
+        const lineAfter = safe.JSON_stringify(objAfter);
         linesAfter.push(lineAfter);
     }
     return linesAfter.join(lineSeparator);

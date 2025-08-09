@@ -124,12 +124,12 @@ export class JSONPath {
         return paths;
     }
     apply(root) {
-        if ( this.valid === false ) { return 0; }
+        if ( this.valid === false ) { return; }
         const { rval } = this.#compiled;
-        this.#root = root;
+        this.#root = { '$': root };
         const paths = this.#evaluate(this.#compiled.steps, []);
-        const n = paths.length;
-        let i = n;
+        let i = paths.length
+        if ( i === 0 ) { this.#root = null; return; }
         while ( i-- ) {
             const { obj, key } = this.#resolvePath(paths[i]);
             if ( rval !== undefined ) {
@@ -140,8 +140,9 @@ export class JSONPath {
                 delete obj[key];
             }
         }
+        const result = this.#root['$'] ?? null;
         this.#root = null;
-        return n;
+        return result;
     }
     dump() {
         return JSON.stringify(this.#compiled);
@@ -166,8 +167,15 @@ export class JSONPath {
         if ( query.length === 0 ) { return; }
         const steps = [];
         let c = query.charCodeAt(i);
-        steps.push({ mv: c === 0x24 /* $ */ ? this.#ROOT : this.#CURRENT });
-        if ( c === 0x24 /* $ */ || c === 0x40 /* @ */ ) { i += 1; }
+        if ( c === 0x24 /* $ */ ) {
+            steps.push({ mv: this.#ROOT });
+            i += 1;
+        } else if ( c === 0x40 /* @ */ ) {
+            steps.push({ mv: this.#CURRENT });
+            i += 1;
+        } else {
+            steps.push({ mv: i === 0 ? this.#ROOT : this.#CURRENT });
+        }
         let mv = this.#UNDEFINED;
         for (;;) {
             if ( i === query.length ) { break; }
@@ -229,7 +237,8 @@ export class JSONPath {
             i = r.i + 1;
             mv = this.#UNDEFINED;
         }
-        if ( steps.length <= 1 ) { return; }
+        if ( steps.length === 0 ) { return; }
+        if ( mv !== this.#UNDEFINED ) { return; }
         return { steps, i };
     }
     #evaluate(steps, pathin) {
@@ -238,7 +247,7 @@ export class JSONPath {
         for ( const step of steps ) {
             switch ( step.mv ) {
             case this.#ROOT:
-                resultset = [ [] ];
+                resultset = [ [ '$' ] ];
                 break;
             case this.#CURRENT:
                 resultset = [ pathin ];

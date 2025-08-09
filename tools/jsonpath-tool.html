@@ -150,12 +150,12 @@ section .cm-lineWrapping {
         const jsonpath = input.value;
         jsonp.compile(jsonpath);
         const jsonDataIn = readJSON();
-        const result = formatResult(jsonp.evaluate(jsonDataIn));
+        const left = formatResult(jsonp.evaluate(jsonDataIn));
         const pathsDiv = document.querySelector('#jsonpath-result');
-        pathsDiv.textContent = result;
+        pathsDiv.textContent = left;
         const jsonDataOut = readJSON();
-        jsonp.apply(jsonDataOut);
-        const bText = JSON.stringify(jsonDataOut, null, 2);
+        const objAfter = jsonp.apply(jsonDataOut);
+        const bText = JSON.stringify(objAfter !== undefined ? objAfter : jsonDataOut, null, 2);
         cmMergeView.b.dispatch({
             changes: {
                 from: 0, to: cmMergeView.b.state.doc.length,
