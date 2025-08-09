@@ -160,6 +160,16 @@
     "homeURL": "https://github.com/easylist/easylist#fanboy-lists"
   },
   {
+    "id": "annoyances-notifications",
+    "name": "EasyList – Notifications",
+    "group": "annoyances",
+    "enabled": false,
+    "urls": [
+      "https://ublockorigin.github.io/uAssets/thirdparties/easylist-notifications.txt"
+    ],
+    "homeURL": "https://github.com/easylist/easylist#fanboy-lists"
+  },
+  {
     "id": "ublock-experimental",
     "name": "uBlock filters – Experimental",
     "enabled": false,
