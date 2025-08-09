@@ -314,7 +314,7 @@ function parseNetworkFilter(parser) {
             break;
         case sfp.NODE_TYPE_NET_OPTION_NAME_METHOD: {
             const value = parser.getNetOptionValue(type);
-            for ( const method of value.toUpperCase().split('|') ) {
+            for ( const method of value.toLowerCase().split('|') ) {
                 const not = method.charCodeAt(0) === 0x7E /* '~' */;
                 if ( not ) {
                     excludedRequestMethods.add(method.slice(1));
