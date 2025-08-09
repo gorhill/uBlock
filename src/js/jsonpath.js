@@ -99,12 +99,19 @@ export class JSONPath {
         const r = this.#compile(query, 0);
         if ( r === undefined ) { return; }
         if ( r.i !== query.length ) {
-            if ( query.startsWith('+=', r.i) ) {
+            let val;
+            if ( query.startsWith('=', r.i) ) {
+                if ( /^=repl\(.+\)$/.test(query.slice(r.i)) ) {
+                    r.modify = 'repl';
+                    val = query.slice(r.i+6, -1);
+                } else {
+                    val = query.slice(r.i+1);
+                }
+            } else if ( query.startsWith('+=', r.i) ) {
                 r.modify = '+';
-                r.i += 1;
+                val = query.slice(r.i+2);
             }
-            if ( query.startsWith('=', r.i) === false ) { return; }
-            try { r.rval = JSON.parse(query.slice(r.i+1)); }
+            try { r.rval = JSON.parse(val); }
             catch { return; }
         }
         this.#compiled = r;
@@ -118,7 +125,7 @@ export class JSONPath {
     }
     apply(root) {
         if ( this.valid === false ) { return 0; }
-        const { modify, rval } = this.#compiled;
+        const { rval } = this.#compiled;
         this.#root = root;
         const paths = this.#evaluate(this.#compiled.steps, []);
         const n = paths.length;
@@ -126,11 +133,7 @@ export class JSONPath {
         while ( i-- ) {
             const { obj, key } = this.#resolvePath(paths[i]);
             if ( rval !== undefined ) {
-                if ( modify === '+' ) {
-                    this.#modifyVal(obj, key, rval);
-                } else {
-                    obj[key] = rval;
-                }
+                this.#modifyVal(obj, key);
             } else if ( Array.isArray(obj) && typeof key === 'number' ) {
                 obj.splice(key, 1);
             } else {
@@ -458,13 +461,40 @@ export class JSONPath {
         }
         if ( outcome ) { return k; }
     }
-    #modifyVal(obj, key, rval) {
-        const lval = obj[key];
-        if ( rval instanceof Object === false ) { return; }
-        if ( lval instanceof Object === false ) { return; }
-        if ( Array.isArray(lval) ) { return; }
-        for ( const [ k, v ] of Object.entries(rval) ) {
-            lval[k] = v;
+    #modifyVal(obj, key) {
+        const { modify, rval } = this.#compiled;
+        switch ( modify ) {
+        case undefined:
+            obj[key] = rval;
+            break;
+        case '+': {
+            if ( rval instanceof Object === false ) { return; }
+            const lval = obj[key];
+            if ( lval instanceof Object === false ) { return; }
+            if ( Array.isArray(lval) ) { return; }
+            for ( const [ k, v ] of Object.entries(rval) ) {
+                lval[k] = v;
+            }
+            break;
+        }
+        case 'repl': {
+            const lval = obj[key];
+            if ( typeof lval !== 'string' ) { return; }
+            if ( this.#compiled.re === undefined ) {
+                this.#compiled.re = null;
+                try {
+                    this.#compiled.re = rval.regex !== undefined
+                        ? new RegExp(rval.regex, rval.flags)
+                        : new RegExp(rval.pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+                } catch {
+                }
+            }
+            if ( this.#compiled.re === null ) { return; }
+            obj[key] = lval.replace(this.#compiled.re, rval.replacement);
+            break;
+        }
+        default:
+            break;
         }
     }
 }
