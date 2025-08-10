@@ -1273,7 +1273,6 @@ export class AstFilterParser {
             case NODE_TYPE_NET_OPTION_NAME_FONT:
             case NODE_TYPE_NET_OPTION_NAME_IMAGE:
             case NODE_TYPE_NET_OPTION_NAME_MEDIA:
-            case NODE_TYPE_NET_OPTION_NAME_OBJECT:
             case NODE_TYPE_NET_OPTION_NAME_OTHER:
             case NODE_TYPE_NET_OPTION_NAME_SCRIPT:
             case NODE_TYPE_NET_OPTION_NAME_XHR:
@@ -1301,6 +1300,7 @@ export class AstFilterParser {
                 break;
             case NODE_TYPE_NET_OPTION_NAME_DOC:
             case NODE_TYPE_NET_OPTION_NAME_FRAME:
+            case NODE_TYPE_NET_OPTION_NAME_OBJECT:
                 realBad = hasValue;
                 if ( realBad ) { break; }
                 docTypeCount += 1;
