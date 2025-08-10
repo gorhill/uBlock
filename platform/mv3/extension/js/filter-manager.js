@@ -178,14 +178,30 @@ export async function addCustomFilter(hostname, selector) {
 /******************************************************************************/
 
 export async function removeCustomFilter(hostname, selector) {
-    const key = `site.${hostname}`;
+    const promises = [];
+    let hn = hostname;
+    while ( hn !== '' ) {
+        promises.push(
+            removeCustomFilterByKey(`site.${hn}`, selector).catch(( ) => false)
+        );
+        const pos = hn.indexOf('.');
+        if ( pos === -1 ) { break; }
+        hn = hn.slice(pos + 1);
+    }
+    const results = await Promise.all(promises);
+    return results.some(a => a);
+}
+
+async function removeCustomFilterByKey(key, selector) {
     const selectors = await localRead(key);
     if ( selectors === undefined ) { return false; }
     const i = selectors.indexOf(selector);
     if ( i === -1 ) { return false; }
     selectors.splice(i, 1);
-    await selectors.length !== 0
-        ? localWrite(key, selectors)
-        : localRemove(key);
+    if ( selectors.length !== 0 ) {
+        await localWrite(key, selectors);
+    } else {
+        await localRemove(key);
+    }
     return true;
 }
