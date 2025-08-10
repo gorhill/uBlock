@@ -27,6 +27,12 @@ export const browser = webext;
 export const i18n = browser.i18n;
 export const runtime = browser.runtime;
 
+export const webextFlavor = (( ) => {
+    const extURL = runtime.getURL('');
+    if ( extURL.startsWith('safari-web-extension:') ) { return 'safari'; }
+    return extURL.startsWith('moz-extension:') ? 'firefox' : 'chromium';
+})();
+
 /******************************************************************************/
 
 // The extension's service worker can be evicted at any time, so when we

@@ -22,6 +22,7 @@
 import {
     localRead, localWrite,
     sessionRead, sessionWrite,
+    webextFlavor,
 } from './ext.js';
 
 /******************************************************************************/
@@ -31,7 +32,7 @@ export const rulesetConfig = {
     enabledRulesets: [],
     autoReload: true,
     showBlockedCount: true,
-    strictBlockMode: true,
+    strictBlockMode: webextFlavor !== 'safari',
     developerMode: false,
     hasBroadHostPermissions: true,
 };
