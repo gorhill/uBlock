@@ -24,10 +24,9 @@ import {
     localRead,
     localRemove,
     localWrite,
+    runtime,
+    sendMessage,
 } from './ext.js';
-
-import { getTroubleshootingInfo } from './troubleshooting.js';
-import { runtime } from './ext.js';
 
 /******************************************************************************/
 
@@ -53,9 +52,14 @@ localRead('dashboard.activePane').then(pane => {
     dom.body.dataset.pane = pane;
 });
 
-getTroubleshootingInfo().then(config => {
-    qs$('[data-i18n="supportS5H"] + pre').textContent = config;
+// Update troubleshooting on-demand
+const tsinfoObserver = new IntersectionObserver(entries => {
+    if ( entries.every(a => a.isIntersecting === false) ) { return; }
+    sendMessage({ what: 'getTroubleshootingInfo' }).then(config => {
+        qs$('[data-i18n="supportS5H"] + pre').textContent = config;
+    });
 });
+tsinfoObserver.observe(qs$('[data-i18n="supportS5H"] + pre'));
 
 /******************************************************************************/
 

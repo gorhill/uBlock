@@ -19,14 +19,11 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-import {
-    localRead,
-    runtime,
-    sendMessage,
-} from './ext.js';
-
 import { dnr } from './ext-compat.js';
-import { dom } from './dom.js';
+import { getConsoleOutput } from './debug.js';
+import { getDefaultFilteringMode } from './mode-manager.js';
+import { getEffectiveUserRules } from './ruleset-manager.js';
+import { runtime } from './ext.js';
 
 /******************************************************************************/
 
@@ -63,15 +60,11 @@ export async function getTroubleshootingInfo(siteMode) {
         rulesets,
         defaultMode,
         userRules,
-        registerContentScriptsReason,
-        unregisterContentScriptsReason,
     ] = await Promise.all([
         runtime.getPlatformInfo(),
         dnr.getEnabledRulesets(),
-        sendMessage({ what: 'getDefaultFilteringMode' }),
-        sendMessage({ what: 'getEffectiveUserRules' }),
-        localRead('$scripting.registerContentScripts'),
-        localRead('$scripting.unregisterContentScripts'),
+        getDefaultFilteringMode(),
+        getEffectiveUserRules(),
     ]);
     const browser = (( ) => {
         const extURL = runtime.getURL('');
@@ -85,7 +78,6 @@ export async function getTroubleshootingInfo(siteMode) {
         } else {
             agent = 'Chrome';
         }
-        dom.cl.add('html', agent.toLowerCase());
         if ( /\bMobile\b/.test(navigator.userAgent) ) {
             agent += ' Mobile';
         }
@@ -113,11 +105,11 @@ export async function getTroubleshootingInfo(siteMode) {
         config['user rules'] = userRules.length;
     }
     config.rulesets = rulesets;
-    if ( registerContentScriptsReason !== undefined ) {
-        config.registerContentScripts = registerContentScriptsReason;
-    }
-    if ( unregisterContentScriptsReason !== undefined ) {
-        config.unregisterContentScripts = unregisterContentScriptsReason;
+    const consoleOutput = getConsoleOutput();
+    if ( consoleOutput.length !== 0 ) {
+        config.console = siteMode
+            ? consoleOutput.slice(-8)
+            : consoleOutput;
     }
     return renderData(config);
 }

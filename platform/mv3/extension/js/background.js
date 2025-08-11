@@ -79,6 +79,7 @@ import {
     getMatchedRules,
     isSideloaded,
     toggleDeveloperMode,
+    ubolErr,
     ubolLog,
 } from './debug.js';
 
@@ -90,6 +91,7 @@ import {
 } from './config.js';
 
 import { dnr } from './ext-compat.js';
+import { getTroubleshootingInfo } from './troubleshooting.js';
 import { registerInjectables } from './scripting-manager.js';
 import { toggleToolbarIcon } from './action.js';
 
@@ -189,7 +191,7 @@ function onMessage(request, sender, callback) {
             origin: 'USER',
             target: { tabId, frameIds: [ frameId ] },
         }).catch(reason => {
-            console.log(reason);
+            ubolErr(reason);
         });
         return false;
     }
@@ -201,7 +203,7 @@ function onMessage(request, sender, callback) {
             origin: 'USER',
             target: { tabId, frameIds: [ frameId ] },
         }).catch(reason => {
-            console.log(reason);
+            ubolErr(reason);
         });
         return false;
     }
@@ -240,7 +242,7 @@ function onMessage(request, sender, callback) {
             target: { tabId, frameIds: [ frameId ] },
             injectImmediately: true,
         }).catch(reason => {
-            console.log(reason);
+            ubolErr(reason);
         }).then(( ) => {
             callback();
         });
@@ -271,8 +273,9 @@ function onMessage(request, sender, callback) {
                 return registerInjectables();
             }).then(( ) => {
                 callback(result);
-                broadcastMessage({ enabledRulesets: result.enabledRulesets });
             });
+        }).finally(( ) => {
+            broadcastMessage({ enabledRulesets: rulesetConfig.enabledRulesets });
         });
         return true;
     }
@@ -506,6 +509,12 @@ function onMessage(request, sender, callback) {
         });
         return true;
 
+    case 'getTroubleshootingInfo':
+        getTroubleshootingInfo(request.siteMode).then(info => {
+            callback(info);
+        });
+        return true;
+
     default:
         break;
     }
@@ -639,7 +648,7 @@ const isFullyInitialized = start().then(( ) => {
     localRemove('goodStart');
     return false;
 }).catch(reason => {
-    console.trace(reason);
+    ubolErr(reason);
     if ( process.wakeupRun ) { return; }
     return localRead('goodStart').then(goodStart => {
         if ( goodStart === false ) {

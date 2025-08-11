@@ -222,10 +222,8 @@ listen.onmessage = ev => {
     }
 
     if ( message.enabledRulesets !== undefined ) {
-        if ( hashFromIterable(message.enabledRulesets) !== hashFromIterable(local.enabledRulesets) ) {
-            local.enabledRulesets = message.enabledRulesets;
-            render = true;
-        }
+        local.enabledRulesets = message.enabledRulesets;
+        render = true;
     }
 
     if ( render === false ) { return; }
@@ -250,7 +248,7 @@ sendMessage({
     }
     listen();
 }).catch(reason => {
-    console.trace(reason);
+    console.error(reason);
 });
 
 /******************************************************************************/

@@ -21,18 +21,14 @@
 
 import * as ut from './utils.js';
 
-import {
-    browser,
-    localRemove,
-    localWrite,
-} from './ext.js';
+import { browser, localRemove } from './ext.js';
+import { ubolErr, ubolLog } from './debug.js';
 
 import { fetchJSON } from './fetch.js';
 import { getEnabledRulesetsDetails } from './ruleset-manager.js';
 import { getFilteringModeDetails } from './mode-manager.js';
 import { registerCustomFilters } from './filter-manager.js';
 import { registerToolbarIconToggler } from './action.js';
-import { ubolLog } from './debug.js';
 
 /******************************************************************************/
 
@@ -555,8 +551,7 @@ async function registerInjectables() {
             await browser.scripting.unregisterContentScripts({ ids: toRemove });
             localRemove('$scripting.unregisterContentScripts');
         } catch(reason) {
-            localWrite('$scripting.unregisterContentScripts', `${reason}`);
-            console.info(reason);
+            ubolErr(reason);
         }
     }
 
@@ -566,8 +561,7 @@ async function registerInjectables() {
             await browser.scripting.registerContentScripts(toAdd);
             localRemove('$scripting.registerContentScripts');
         } catch(reason) {
-            localWrite('$scripting.registerContentScripts', `${reason}`);
-            console.info(reason);
+            ubolErr(reason);
         }
     }
 

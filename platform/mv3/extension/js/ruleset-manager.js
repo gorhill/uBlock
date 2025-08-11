@@ -36,7 +36,7 @@ import { fetchJSON } from './fetch.js';
 import { getAdminRulesets } from './admin.js';
 import { hasBroadHostPermissions } from './utils.js';
 import { rulesFromText } from './dnr-parser.js';
-import { ubolLog } from './debug.js';
+import { ubolErr, ubolLog } from './debug.js';
 
 /******************************************************************************/
 
@@ -318,7 +318,7 @@ async function updateDynamicRules() {
             ubolLog(`Add ${addRules.length} dynamic DNR rules`);
         }
     } catch(reason) {
-        console.error(`updateDynamicRules() / ${reason}`);
+        ubolErr(`updateDynamicRules() / ${reason}`);
         response.error = `${reason}`;
     }
 
@@ -472,7 +472,7 @@ async function updateSessionRules() {
             ubolLog(`Add ${addRules.length} session DNR rules`);
         }
     } catch(reason) {
-        console.error(`updateSessionRules() / ${reason}`);
+        ubolErr(`updateSessionRules() / ${reason}`);
         response.error = `${reason}`;
     }
     return response;
@@ -667,7 +667,7 @@ async function enableRulesets(ids) {
         enableRulesetIds,
         disableRulesetIds,
     }).catch(reason => {
-        ubolLog(reason);
+        ubolErr(reason);
         response.error = `${reason}`;
     });
 
@@ -684,7 +684,7 @@ async function enableRulesets(ids) {
         ubolLog(`Available static rule count: ${count}`);
         response.staticRuleCount = count;
     }).catch(reason => {
-        ubolLog(reason);
+        ubolErr(reason);
     });
 
     return response;
@@ -781,7 +781,7 @@ async function updateUserRules() {
         out.added = addRules.length;
         out.removed = removeRuleIds.length;
     } catch(reason) {
-        console.info(`updateUserRules() / ${reason}`);
+        ubolErr(`updateUserRules() / ${reason}`);
         out.errors.push(`${reason}`);
     } finally {
         const userRules = await getEffectiveUserRules();

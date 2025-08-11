@@ -34,6 +34,8 @@ import {
     subtractHostnameIters,
 } from './utils.js';
 
+import { ubolErr } from './debug.js';
+
 /******************************************************************************/
 
 export async function selectorsFromCustomFilters(hostname) {
@@ -79,7 +81,7 @@ export function startCustomFilters(tabId, frameId) {
         target: { tabId, frameIds: [ frameId ] },
         injectImmediately: true,
     }).catch(reason => {
-        console.log(reason);
+        ubolErr(reason);
     })
 }
 
@@ -89,7 +91,7 @@ export function terminateCustomFilters(tabId, frameId) {
         target: { tabId, frameIds: [ frameId ] },
         injectImmediately: true,
     }).catch(reason => {
-        console.log(reason);
+        ubolErr(reason);
     })
 }
 
@@ -107,7 +109,7 @@ export async function injectCustomFilters(tabId, frameId, hostname) {
                 origin: 'USER',
                 target: { tabId, frameIds: [ frameId ] },
             }).catch(reason => {
-                console.log(reason);
+                ubolErr(reason);
             })
         );
     }
@@ -119,7 +121,7 @@ export async function injectCustomFilters(tabId, frameId, hostname) {
                 target: { tabId, frameIds: [ frameId ] },
                 injectImmediately: true,
             }).catch(reason => {
-                console.log(reason);
+                ubolErr(reason);
             })
         );
     }
