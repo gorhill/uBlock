@@ -43,17 +43,20 @@ export const isSideloaded = (( ) => {
 
 const CONSOLE_MAX_LINES = 32;
 const consoleOutput = [];
-let consoleWritePtr = 0;
 
 sessionRead('console').then(before => {
     if ( Array.isArray(before) === false ) { return; }
-    const current = getConsoleOutput();
-    const merged = [ ...before, ...current ].slice(-CONSOLE_MAX_LINES);
-    for ( let i = 0; i < merged.length; i++ ) {
-        consoleOutput[i] = merged[i];
+    for ( const s of before.reverse() ) {
+        consoleOutput.unshift(s);
     }
-    consoleWritePtr = merged.length % CONSOLE_MAX_LINES;
+    consoleTruncate();
 });
+
+const consoleTruncate = ( ) => {
+    if ( consoleOutput.length <= CONSOLE_MAX_LINES ) { return; }
+    consoleOutput.copyWithin(0, -CONSOLE_MAX_LINES);
+    consoleOutput.length = CONSOLE_MAX_LINES;
+};
 
 const consoleAdd = (...args) => {
     if ( args.length === 0 ) { return; }
@@ -68,9 +71,10 @@ const consoleAdd = (...args) => {
     for ( let i = 0; i < args.length; i++ ) {
         const s = `[${time}]${args[i]}`;
         if ( Boolean(s) === false ) { continue; }
-        consoleOutput[consoleWritePtr++] = s;
-        consoleWritePtr %= CONSOLE_MAX_LINES;
+        if ( s === consoleOutput.at(-1) ) { continue; }
+        consoleOutput.push(s);
     }
+    consoleTruncate();
     sessionWrite('console', getConsoleOutput());
 }
 
@@ -91,15 +95,7 @@ export const ubolErr = (...args) => {
 };
 
 export const getConsoleOutput = ( ) => {
-    return [
-        ...consoleOutput.slice(consoleWritePtr),
-        ...consoleOutput.slice(0, consoleWritePtr),
-    ].reduce((acc, val) => {
-        if ( val !== acc.at(-1) ) {
-            acc.push(val);
-        }
-        return acc;
-    }, []);
+    return consoleOutput.slice();
 };
 
 /******************************************************************************/
