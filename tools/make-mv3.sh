@@ -102,6 +102,7 @@ cp platform/mv3/extension/css/* "$UBOL_DIR"/css/
 cp -R platform/mv3/extension/js/* "$UBOL_DIR"/js/
 cp platform/mv3/"$PLATFORM"/ext-compat.js "$UBOL_DIR"/js/ 2>/dev/null || :
 cp platform/mv3/extension/img/* "$UBOL_DIR"/img/
+cp platform/mv3/"$PLATFORM"/img/* "$UBOL_DIR"/img/ 2>/dev/null || :
 cp -R platform/mv3/extension/_locales "$UBOL_DIR"/
 cp platform/mv3/README.md "$UBOL_DIR/"
 
