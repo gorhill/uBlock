@@ -34,7 +34,7 @@ jobs:
         run: |
           > release.body.txt
           grep -m1 -B10000 -- "----------" CHANGELOG.md >> release.body.txt
-          sed -e 's/%version%/${{ env.VERSION }}/g' RELEASE.HEAD.md >> release.body.txt
+          sed -e 's/%version%/${{ env.VERSION }}/g' .github/workflows/RELEASE.HEAD.md >> release.body.txt
       - name: Create GitHub release
         id: create_release
         uses: softprops/action-gh-release@v2
