@@ -29,6 +29,7 @@
 
 #ubol-unpicker #customFilters {
     font-family: monospace;
+    overflow: auto;
 }
 #ubol-unpicker .customFilter {
     display: flex;
