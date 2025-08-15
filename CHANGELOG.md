@@ -1,3 +1,4 @@
+- [Improve compatibility of `uritransform=` with DNR syntax](https://github.com/gorhill/uBlock/commit/aaf35d9d71
 - [JSONPath: Add ability to select root node for appending/modifying](https://github.com/gorhill/uBlock/commit/faff035203)
 - [Allow usage of `csp=`/`permissions=` with resource type object](https://github.com/gorhill/uBlock/commit/07e9f805bb)
 - [JSONPath: Add ability to substitute a pattern within a string value](https://github.com/gorhill/uBlock/commit/38ca6d41ff)
