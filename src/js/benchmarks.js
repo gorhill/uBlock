@@ -183,7 +183,7 @@ export async function benchmarkStaticNetFiltering(options = {}) {
         if ( r === 1 ) { blockCount += 1; }
         else if ( r === 2 ) { allowCount += 1; }
         if ( r !== 1 ) {
-            if ( sfne.transformRequest(fctxt) ) {
+            if ( sfne.transformURL(fctxt) ) {
                 redirectCount += 1;
             }
             if ( sfne.hasQuery(fctxt) ) {

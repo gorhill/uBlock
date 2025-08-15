@@ -956,7 +956,7 @@ const PageStore = class {
 
     redirectNonBlockedRequest(fctxt) {
         const directives = [];
-        staticNetFilteringEngine.transformRequest(fctxt, directives);
+        staticNetFilteringEngine.transformURL(fctxt, directives);
         if ( staticNetFilteringEngine.hasQuery(fctxt) ) {
             staticNetFilteringEngine.filterQuery(fctxt, directives);
         }

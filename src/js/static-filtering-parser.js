@@ -841,6 +841,11 @@ export class AstFilterParser {
         this.netOptionValueParser = new ArglistParser(',');
         this.scriptletArgListParser = new ArglistParser(',');
         this.domainRegexValueParser = new ArglistParser('/');
+        this.reNetOptionTokens = new RegExp(
+            `^(${Array.from(netOptionTokenDescriptors.keys())
+                .map(s => escapeForRegex(s))
+                .join('|')})\\b`
+        );
     }
 
     finish() {
@@ -1512,12 +1517,7 @@ export class AstFilterParser {
         for (;;) {
             const before = s.charAt(j-1);
             if ( before === '$' ) { return -1; }
-            const after = s.charAt(j+1);
-            if ( ')/|'.includes(after) === false ) {
-                if ( before === '' || '"\'\\`'.includes(before) === false ) {
-                    return j;
-                }
-            }
+            if ( this.reNetOptionTokens.test(s.slice(j+1)) ) { return j; }
             if ( j === start ) { break; }
             j = s.lastIndexOf('$', j-1);
             if ( j === -1 ) { break; }
@@ -3080,9 +3080,10 @@ export function parseReplaceByRegexValue(s) {
     if ( parser.transform ) {
         pattern = parser.normalizeArg(pattern);
     }
-    if ( pattern === '' ) { return; }
-    pattern = parser.normalizeArg(pattern, '$');
-    pattern = parser.normalizeArg(pattern, ',');
+    if ( pattern !== '' ) {
+        pattern = parser.normalizeArg(pattern, '$');
+        pattern = parser.normalizeArg(pattern, ',');
+    }
     parser.nextArg(s, parser.separatorEnd);
     let replacement = s.slice(parser.argBeg, parser.argEnd);
     if ( parser.separatorEnd === parser.separatorBeg ) { return; }
@@ -3092,6 +3093,9 @@ export function parseReplaceByRegexValue(s) {
     replacement = parser.normalizeArg(replacement, '$');
     replacement = parser.normalizeArg(replacement, ',');
     const flags = s.slice(parser.separatorEnd);
+    if ( pattern === '' ) {
+        return { flags, replacement }
+    }
     try {
         return { re: new RegExp(pattern, flags), replacement };
     } catch {
@@ -3101,7 +3105,10 @@ export function parseReplaceByRegexValue(s) {
 export function parseReplaceValue(s) {
     if ( s.startsWith('/') ) {
         const r = parseReplaceByRegexValue(s);
-        if ( r ) { r.type = 'text'; }
+        if ( r ) {
+            if ( r.re === undefined ) { return; }
+            r.type = 'text';
+        }
         return r;
     }
     const pos = s.indexOf(':');
