@@ -27,7 +27,7 @@ function fetchJSON(path) {
     return fetch(`${path}.json`).then(response =>
         response.json()
     ).catch(reason => {
-        ubolErr(reason);
+        ubolErr(`fetchJSON/${reason}`);
     });
 }
 

@@ -85,7 +85,7 @@ export function startCustomFilters(tabId, frameId) {
         target: { tabId, frameIds: [ frameId ] },
         injectImmediately: true,
     }).catch(reason => {
-        ubolErr(reason);
+        ubolErr(`startCustomFilters/${reason}`);
     })
 }
 
@@ -95,7 +95,7 @@ export function terminateCustomFilters(tabId, frameId) {
         target: { tabId, frameIds: [ frameId ] },
         injectImmediately: true,
     }).catch(reason => {
-        ubolErr(reason);
+        ubolErr(`terminateCustomFilters/${reason}`);
     })
 }
 
@@ -113,7 +113,7 @@ export async function injectCustomFilters(tabId, frameId, hostname) {
                 origin: 'USER',
                 target: { tabId, frameIds: [ frameId ] },
             }).catch(reason => {
-                ubolErr(reason);
+                ubolErr(`injectCustomFilters/insertCSS/${reason}`);
             })
         );
     }
@@ -125,7 +125,7 @@ export async function injectCustomFilters(tabId, frameId, hostname) {
                 target: { tabId, frameIds: [ frameId ] },
                 injectImmediately: true,
             }).catch(reason => {
-                ubolErr(reason);
+                ubolErr(`injectCustomFilters/executeScript/${reason}`);
             })
         );
     }

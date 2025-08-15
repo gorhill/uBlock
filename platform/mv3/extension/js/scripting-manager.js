@@ -551,7 +551,7 @@ async function registerInjectables() {
             await browser.scripting.unregisterContentScripts({ ids: toRemove });
             localRemove('$scripting.unregisterContentScripts');
         } catch(reason) {
-            ubolErr(reason);
+            ubolErr(`unregisterContentScripts/${reason}`);
         }
     }
 
@@ -561,7 +561,7 @@ async function registerInjectables() {
             await browser.scripting.registerContentScripts(toAdd);
             localRemove('$scripting.registerContentScripts');
         } catch(reason) {
-            ubolErr(reason);
+            ubolErr(`registerContentScripts/${reason}`);
         }
     }
 
