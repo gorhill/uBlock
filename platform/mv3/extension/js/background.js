@@ -186,6 +186,8 @@ function onMessage(request, sender, callback) {
 
     case 'insertCSS': {
         if ( frameId === false ) { return false; }
+        // https://bugs.webkit.org/show_bug.cgi?id=262491
+        if ( frameId !== 0 && webextFlavor === 'safari' ) { return false; }
         browser.scripting.insertCSS({
             css: request.css,
             origin: 'USER',
