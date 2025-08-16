@@ -152,7 +152,7 @@ const domLayout = (( ) => {
                 continue;
             }
             // sibling
-            if ( node instanceof Element ) {
+            if ( node.nodeType === 1 ) {
                 if ( node.nextElementSibling === null ) {
                     do {
                         node = stack.pop();
