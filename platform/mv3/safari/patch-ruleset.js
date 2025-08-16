@@ -19,16 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-function patchRuleWithRequestDomains(rule, out) {
-    const requestDomains = rule.condition.requestDomains;
-    delete rule.condition.requestDomains;
-    for ( const domain of requestDomains ) {
-        const newRule = structuredClone(rule);
-        newRule.condition.urlFilter = `||${domain}^`;
-        out.push(newRule);
-    }
-}
-
 export function patchRuleset(ruleset) {
     const out = [];
     for ( const rule of ruleset ) {
@@ -44,6 +34,21 @@ export function patchRuleset(ruleset) {
         if ( Array.isArray(condition.excludedInitiatorDomains) ) {
             condition.excludedDomains = condition.excludedInitiatorDomains;
             delete condition.excludedInitiatorDomains;
+        }
+        // https://github.com/uBlockOrigin/uBOL-home/issues/434
+        let { urlFilter } = condition;
+        if ( urlFilter?.endsWith('^') ) {
+            urlFilter = urlFilter.slice(0, -1);
+            const match = /^(.*?\/\/|\|\|)/.exec(urlFilter);
+            const pattern = match
+                ? urlFilter.slice(match[0].length)
+                : urlFilter;
+            if ( /[^\w.%*-]/.test(pattern) ) {
+                const extra = structuredClone(rule);
+                extra.condition.urlFilter = `${urlFilter}|`;
+                out.push(extra);
+                console.log(`Patching to ${extra.condition.urlFilter}`);
+            }
         }
         out.push(rule);
     }
