@@ -1,6 +1,6 @@
-- [Improve compatibility of `uritransform=` with DNR syntax](https://github.com/gorhill/uBlock/commit/aaf35d9d71
-- [JSONPath: Add ability to select root node for appending/modifying](https://github.com/gorhill/uBlock/commit/faff035203)
+- [Improve compatibility of `uritransform=` with DNR syntax](https://github.com/gorhill/uBlock/commit/aaf35d9d71)
 - [Allow usage of `csp=`/`permissions=` with resource type object](https://github.com/gorhill/uBlock/commit/07e9f805bb)
+- [JSONPath: Add ability to select root node for appending/modifying](https://github.com/gorhill/uBlock/commit/faff035203)
 - [JSONPath: Add ability to substitute a pattern within a string value](https://github.com/gorhill/uBlock/commit/38ca6d41ff)
 - [Remove "CERT.PL's Warning List" from stock lists](https://github.com/gorhill/uBlock/commit/e713e133eb)
 - [Fix incorrect CNAME-related test in advanced settings](https://github.com/gorhill/uBlock/commit/171ddd3e06)
