@@ -842,7 +842,7 @@ export class AstFilterParser {
         this.scriptletArgListParser = new ArglistParser(',');
         this.domainRegexValueParser = new ArglistParser('/');
         this.reNetOptionTokens = new RegExp(
-            `^(${Array.from(netOptionTokenDescriptors.keys())
+            `^~?(${Array.from(netOptionTokenDescriptors.keys())
                 .map(s => escapeForRegex(s))
                 .join('|')})\\b`
         );
