@@ -297,6 +297,7 @@ const isRedirect = rule => {
     if ( rule.action.type !== 'redirect' ) { return false; }
     if ( rule.action.redirect?.extensionPath !== undefined ) { return true; }
     if ( rule.action.redirect?.transform?.path !== undefined ) { return true; }
+    if ( rule.action.redirect?.regexSubstitution !== undefined ) { return true; }
     return false;
 };
 
