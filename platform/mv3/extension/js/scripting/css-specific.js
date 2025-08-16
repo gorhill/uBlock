@@ -58,6 +58,8 @@ self.isolatedAPI.forEachHostname(lookupAll, {
 
 specificImports.length = 0;
 
+if ( selectors.length === 0 ) { return; }
+
 const exceptedSelectors = exceptions.length !== 0
     ? selectors.filter(a => exceptions.includes(a) === false)
     : selectors;

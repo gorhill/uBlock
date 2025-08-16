@@ -60,6 +60,8 @@ self.isolatedAPI.forEachHostname(lookupAll, {
 });
 proceduralImports.length = 0;
 
+if ( selectors.length === 0 ) { return; }
+
 const exceptedSelectors = exceptions.length !== 0
     ? selectors.filter(a => exceptions.includes(JSON.stringify(a)) === false)
     : selectors;
