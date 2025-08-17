@@ -909,6 +909,13 @@ assets.get = async function(assetKey, options = {}) {
         return readUserAsset(assetKey);
     }
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/3761
+    if ( µb.readyToFilter !== true ) {
+        if ( options.favorLocal === undefined ) {
+            options.favorLocal = true;
+        }
+    }
+
     let assetDetails = {};
 
     const reportBack = (content, url = '', err = undefined) => {
