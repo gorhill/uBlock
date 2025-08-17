@@ -548,11 +548,11 @@
     "description": "Label for the checkbox use to trust the content of 'My filters' list"
   },
   "1pImport": {
-    "message": "Uvezi i dodaj",
+    "message": "Uvezi i dodaj…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExport": {
-    "message": "Izvezi",
+    "message": "Izvoz…",
     "description": "Button in the 'My filters' pane"
   },
   "1pExportFilename": {
@@ -596,7 +596,7 @@
     "description": ""
   },
   "rulesExport": {
-    "message": "Izvezi u datoteku",
+    "message": "Izvoz u datoteku…",
     "description": "Button in the 'My rules' pane"
   },
   "rulesDefaultFileName": {
@@ -632,11 +632,11 @@
     "description": "A concise description of the 'Trusted sites' pane."
   },
   "whitelistImport": {
-    "message": "Uvezi i dodaj",
+    "message": "Uvezi i dodaj…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExport": {
-    "message": "Izvezi",
+    "message": "Izvoz…",
     "description": "Button in the 'Trusted sites' pane"
   },
   "whitelistExportFilename": {
@@ -928,7 +928,7 @@
     "description": "Header of 'Filter issues' section in Support pane"
   },
   "supportS3P1": {
-    "message": "Prijavite probleme s filtriranjem određenih web stranica na <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> stranici za praćenje problema</span>. <u>Potreban će vam biti GitHub račun.</u>\n\n",
+    "message": "Prijavite probleme s filterima na određenim web stranicama <span data-url=\"https://github.com/uBlockOrigin/uAssets/issues?q=is%3Aissue\"><code>uBlockOrigin/uAssets</code> sistemu za praćenje problema</span> . <u>Potreban je GitHub račun.</u>",
     "description": "First paragraph of 'Filter issues' section in Support pane"
   },
   "supportS3P2": {
@@ -1012,7 +1012,7 @@
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Select1Option7": {
-    "message": "Leads to badware, phishing",
+    "message": "Vodi do zlonamjernog softvera i phishinga",
     "description": "An entry in the widget used to select the type of issue"
   },
   "supportS6Checkbox1": {
@@ -1064,11 +1064,11 @@
     "description": "Shown in the About pane"
   },
   "aboutCDNsInfo": {
-    "message": "Slučajno odabrani CDN će biti korišten kada zapis filtera treba biti ažuriran",
+    "message": "Nasumično odabrana CDN mreža se koristi kada je potrebno ažurirati listu filtera.",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "Sačuvaj rezervnu kopiju u datoteku",
+    "message": "Sačuvaj rezervnu kopiju u datoteku…",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
@@ -1192,23 +1192,23 @@
     "description": "Button text to navigate to the blocked page"
   },
   "docblockedRedirectPrompt": {
-    "message": "The blocked page wants to redirect to another site. If you choose to proceed, you will navigate directly to: {{url}}",
+    "message": "Blokirana stranica želi preusmjeriti na drugu stranicu. Ako odlučite nastaviti, bit ćete direktno na: {{url}}",
     "description": "Text warning about an incoming redirect"
   },
   "docblockedReasonLabel": {
-    "message": "Reason:",
+    "message": "Razlog:",
     "description": "The label which prepend the actual reason why a page was blocked"
   },
   "docblockedReasonMalicious": {
-    "message": "Malicious",
+    "message": "Zlonamjerno",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonTracker": {
-    "message": "Tracker",
+    "message": "Praćenje",
     "description": "An actual reason why a page was blocked"
   },
   "docblockedReasonDisreputable": {
-    "message": "Disreputable",
+    "message": "Neugledno",
     "description": "An actual reason why a page was blocked"
   },
   "cloudPush": {

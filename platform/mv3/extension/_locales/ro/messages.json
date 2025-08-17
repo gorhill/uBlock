@@ -372,7 +372,7 @@
     "description": "Text for the button to create the filter"
   },
   "unpickerUsage": {
-    "message": "Select a filter below to highlight matching elements in the webpage. Click the trash can to remove a filter.",
+    "message": "Alege un filtru de mai jos pentru a evidenția elementele cu potriviri în pagina web. Clic pe [Coș de gunoi] pentru a îndepărta un filtru.",
     "description": "Summary description on how to use the tool to remove custom filters"
   }
 }
