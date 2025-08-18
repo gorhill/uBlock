@@ -1,6 +1,6 @@
 {
   "action": {
-    "default_icon": "/img/icon_safari.svg",
+    "default_icon": "/img/icon_64.png",
     "default_popup": "popup.html"
   },
   "author": "Raymond Hill",
