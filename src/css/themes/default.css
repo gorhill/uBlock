@@ -460,6 +460,12 @@
     --popup-ruleset-tool-shadow: transparent;
 }
 
+@media (prefers-contrast: more) {
+    :root {
+        --checkbox-checked-ink: var(--ink-1);
+    }
+}
+
 /*
  * Rule colors
  * */
