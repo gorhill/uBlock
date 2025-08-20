@@ -80,7 +80,7 @@ button {
     appearance: none;
     -moz-appearance: none;
     -webkit-appearance: none;
-    border: 0;
+    border: var(--button-border-size) solid var(--ink-1);
     border-radius: var(--button-border-radius);
     background-color: var(--button-surface);
     color: var(--button-ink);
@@ -193,7 +193,7 @@ label:hover .checkbox:not([disabled]) {
     height: 100%;
     margin: 0;
     min-width: var(--checkbox-size);
-    opacity: 0;
+    opacity: var(--native-control-opacity);
     position: absolute;
     width: 100%;
     }
@@ -204,6 +204,7 @@ label:hover .checkbox:not([disabled]) {
     box-sizing: border-box;
     fill: none;
     height: 100%;
+    opacity: calc(1 - var(--native-control-opacity));
     pointer-events: none;
     position: absolute;
     stroke: none;
@@ -242,7 +243,7 @@ label:hover .checkbox:not([disabled]) {
     height: 100%;
     margin: 0;
     min-width: var(--checkbox-size);
-    opacity: 0;
+    opacity: var(--native-control-opacity);
     position: absolute;
     width: 100%;
     }
@@ -250,6 +251,7 @@ label:hover .checkbox:not([disabled]) {
     background-color: transparent;
     box-sizing: border-box;
     height: 100%;
+    opacity: calc(1 - var(--native-control-opacity));
     pointer-events: none;
     position: absolute;
     width: 100%;

@@ -408,8 +408,11 @@
     --fieldset-header-surface: transparent;
     --fieldset-header-ink: var(--ink-2);
 
+    --native-control-opacity: 0;
+
     --button-ink: var(--ink-1);
     --button-surface: rgb(var(--button-surface-rgb));
+    --button-border-size: 0;
     --button-border-radius: 5px;
     --button-preferred-ink: var(--accent-ink-1);
     --button-preferred-surface: var(--accent-surface-1);
@@ -462,7 +465,8 @@
 
 @media (prefers-contrast: more) {
     :root {
-        --checkbox-checked-ink: var(--ink-1);
+        --native-control-opacity: 1;
+        --button-border-size: 1px;
     }
 }
 
