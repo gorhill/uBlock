@@ -262,6 +262,7 @@ self.ubolOverlay = {
             }
             return this.proceduralFiltererAPI.qsa(selector);
         }
+        selector = selector.replace(/::[^:]+$/, '');
         try {
             const elems = node.querySelectorAll(selector);
             this.qsa.error = undefined;
