@@ -376,17 +376,21 @@ export class ReadWriteDNREditor extends DNREditor {
             separatorBefore = true;
         }
         const pastedText = newDoc.sliceString(from, to);
-        let prepend;
+        let linesToPrepend;
         let rules = this.rulesFromJSON(pastedText);
         if ( Boolean(rules?.length) === false ) {
             rules = parseFilters(pastedText);
             if ( Boolean(rules?.length) === false ) { return; }
-            prepend = pastedText.trim().split(/\n/).map(a => `# ${a}`).join('\n');
+            const lines = pastedText.trim().split(/\n/);
+            linesToPrepend = lines.slice(0, 10).map(a => `# ${a}`);
+            if ( lines.length > linesToPrepend.length ) {
+                linesToPrepend.push('# ...');
+            }
         }
         let yamlText = textFromRules(rules);
         if ( yamlText === undefined ) { return; }
-        if ( prepend ) {
-            yamlText = yamlText.replace('---\n', `---\n${prepend}\n`);
+        if ( linesToPrepend ) {
+            yamlText = yamlText.replace('---\n', `---\n${linesToPrepend.join('\n')}\n`);
         }
         if ( separatorBefore && yamlText.startsWith('---\n') ) {
             yamlText = yamlText.slice(4);

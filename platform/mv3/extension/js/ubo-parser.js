@@ -63,6 +63,16 @@ const validRedirectResources = (( ) => {
     return out;
 })();
 
+const isNotEntity = hn => hn.endsWith('.*') === false;
+
+/******************************************************************************/
+
+function toSuperDomain(hn) {
+    const pos = hn.indexOf('.');
+    if ( pos === -1 ) { return; }
+    return hn.slice(pos+1);
+}
+
 /******************************************************************************/
 
 function parseHostnameList(iter) {
@@ -93,64 +103,145 @@ function parseHostnameList(iter) {
 
 /******************************************************************************/
 
-export function mergeIncludeExclude(rules) {
-    const includeExcludes = [
-        { includeName: 'requestDomains', excludeName: 'excludedRequestDomains' },
-        { includeName: 'initiatorDomains', excludeName: 'excludedInitiatorDomains' },
-        { includeName: 'resourceTypes', excludeName: 'excludedResourceTypes' },
-        { includeName: 'requestMethods', excludeName: 'excludedRequestMethods' },
+function ownerFromPropertyPath(root, path) {
+    let owner = root;
+    let prop = path;
+    for (;;) {
+        if ( owner instanceof Object === false ) { break; }
+        const pos = prop.indexOf('.');
+        if ( pos === -1 ) { break; }
+        owner = owner[prop.slice(0, pos)];
+        prop = prop.slice(pos+1)
+    }
+    return { owner: owner ?? undefined, prop };
+}
+
+/******************************************************************************/
+
+function mergeArrays(rules, propertyPath) {
+    const out = [];
+    const distinctRules = new Map();
+    for ( const rule of rules ) {
+        const { id } = rule;
+        const { owner, prop } = ownerFromPropertyPath(rule, propertyPath);
+        if ( owner === undefined || Array.isArray(owner[prop]) === false ) {
+            out.push(rule);
+            continue;
+        }
+        const collection = owner[prop] || [];
+        owner[prop] = undefined;
+        rule.id = undefined;
+        const hash = JSON.stringify(rule);
+        const details = distinctRules.get(hash) ||
+            { id, collection: new Set() };
+        if ( details.collection.size === 0 ) {
+            distinctRules.set(hash, details);
+        }
+        for ( const hn of collection ) {
+            details.collection.add(hn);
+        }
+    }
+    for ( const [ hash, { id, collection } ] of distinctRules ) {
+        const rule = JSON.parse(hash);
+        if ( id ) {
+            rule.id = id;
+        }
+        if ( collection.size !== 0 ) {
+            const { owner, prop } = ownerFromPropertyPath(rule, propertyPath);
+            owner[prop] = Array.from(collection).sort();
+        }
+        out.push(rule);
+    }
+    return out;
+}
+
+/******************************************************************************/
+
+function minimizeRuleset(rules) {
+    rules = mergeArrays(rules, 'condition.requestDomains');
+    rules = mergeArrays(rules, 'condition.excludedRequestDomains');
+    rules = mergeArrays(rules, 'condition.initiatorDomains');
+    rules = mergeArrays(rules, 'condition.excludedInitiatorDomains');
+    rules = mergeArrays(rules, 'condition.resourceTypes');
+    rules = mergeArrays(rules, 'condition.excludedRequestMethods');
+    rules = mergeArrays(rules, 'condition.requestMethods');
+    rules = mergeArrays(rules, 'condition.excludedResourceTypes');
+    rules = mergeArrays(rules, 'action.redirect.transform.queryTransform.removeParams');
+    return rules;
+}
+
+/******************************************************************************/
+
+function minimizeRules(rules) {
+    const hostnameListProp = [
+        'requestDomains',
+        'excludedRequestDomains',
+        'initiatorDomains',
+        'excludedInitiatorDomains',
     ];
-    for ( const { includeName, excludeName } of includeExcludes ) {
-        const out = [];
-        const distinctRules = new Map();
-        for ( const rule of rules ) {
-            const { id, condition } = rule;
-            if ( Boolean(condition[includeName]?.length) === false ) {
-                if ( Boolean(condition[excludeName]?.length) === false ) {
-                    out.push(rule);
-                    continue;
+    for ( const rule of rules ) {
+        for ( const prop of hostnameListProp ) {
+            const hostnames = rule.condition[prop];
+            if ( hostnames === undefined ) { continue; }
+            if ( hostnames.length === 1 ) { continue; }
+            const hnSet = new Set(hostnames);
+            for ( let hn of hnSet ) {
+                for (;;) {
+                    const hnup = toSuperDomain(hn);
+                    if ( hnup === undefined ) { break; }
+                    if ( hnSet.has(hnup) ) { hnSet.delete(hn); }
+                    hn = hnup;
                 }
             }
-            const included = condition[includeName] || [];
-            condition[includeName] = undefined;
-            const excluded = condition[excludeName] || [];
-            condition[excludeName] = undefined;
-            rule.id = undefined;
-            const hash = JSON.stringify(rule);
-            const details = distinctRules.get(hash) ||
-                { id, included: new Set(), excluded: new Set() };
-            if ( details.included.size === 0 && details.excluded.size === 0 ) {
-                distinctRules.set(hash, details);
-            }
-            for ( const hn of included ) {
-                details.included.add(hn);
-            }
-            for ( const hn of excluded ) {
-                if ( details.included.has(hn) ) { continue; }
-                details.excluded.add(hn);
-            }
+            if ( hnSet.size === hostnames.length ) { continue; }
+            rule.condition[prop] = Array.from(hnSet).sort();
         }
-        for ( const [ hash, { id, included, excluded } ] of distinctRules ) {
-            const rule = JSON.parse(hash);
-            if ( id ) {
-                rule.id = id;
-            }
-            if ( included.size !== 0 ) {
-                rule.condition[includeName] = Array.from(included);
-            }
-            if ( excluded.size !== 0 ) {
-                rule.condition[excludeName] = Array.from(excluded);
-            }
-            out.push(rule);
-        }
-        rules = out;
     }
     return rules;
 }
 
 /******************************************************************************/
 
-function parseNetworkFilter(parser) {
+function dropEntities(rule, prop) {
+    const { condition } = rule;
+    if ( condition[prop] === undefined ) { return; }
+    const sanitized = condition[prop].filter(a => isNotEntity(a));
+    if ( sanitized.length === condition[prop].length ) { return; }
+    if ( sanitized.length === 0 ) { return 0; }
+    condition.requestDomains = sanitized;
+}
+
+/******************************************************************************/
+
+function validateRules(rules) {
+    const out = [];
+    for ( const rule of rules ) {
+        const { condition } = rule;
+        // "Only one of resourceTypes and excludedResourceTypes should be specified"
+        if ( condition.resourceTypes ) {
+            if ( condition.excludedResourceTypes ) { continue; }
+        }
+        // "Only one of requestMethods and excludedRequestMethods should be specified"
+        if ( condition.requestMethods ) {
+            if ( condition.excludedRequestMethods ) { continue; }
+        }
+        // Drop entity-based hostnames
+        if ( dropEntities(rule, 'requestDomains') === 0 ) { continue; }
+        if ( dropEntities(rule, 'excludedRequestDomains') === 0 ) { continue; }
+        if ( dropEntities(rule, 'initiatorDomains') === 0 ) { continue; }
+        if ( dropEntities(rule, 'excludedInitiatorDomains') === 0 ) { continue; }
+        // regexSubstitution requires regexFilter
+        if ( rule.action?.redirect?.regexSubstitution ) {
+            if ( rule.condition.regexFilter === undefined ) { continue; }
+        }
+        out.push(rule);
+    }
+    return out;
+}
+
+/******************************************************************************/
+
+export function parseNetworkFilter(parser) {
     if ( parser.isNetworkFilter() === false ) { return; }
     if ( parser.hasError() ) { return; }
 
@@ -180,6 +271,9 @@ function parseNetworkFilter(parser) {
     } else if ( parser.isAnyPattern() === false ) {
         rule.condition.urlFilter = pattern;
     }
+
+    const defaultResourceTypes = new Set();
+    let defaultUrlFilter = '';
 
     const initiatorDomains = new Set();
     const excludedInitiatorDomains = new Set();
@@ -247,6 +341,9 @@ function parseNetworkFilter(parser) {
                 operation: 'append',
                 value: parser.getNetOptionValue(type),
             } ];
+            defaultResourceTypes.add('main_frame');
+            defaultResourceTypes.add('sub_frame');
+            defaultResourceTypes.add('object');
             break;
         case sfp.NODE_TYPE_NET_OPTION_NAME_CSS:
             processResourceType('stylesheet', type);
@@ -338,6 +435,9 @@ function parseNetworkFilter(parser) {
                 operation: 'append',
                 value: parser.getNetOptionValue(type),
             } ];
+            defaultResourceTypes.add('main_frame');
+            defaultResourceTypes.add('sub_frame');
+            defaultResourceTypes.add('object');
             break;
         case sfp.NODE_TYPE_NET_OPTION_NAME_PING:
             processResourceType('ping', type);
@@ -374,6 +474,10 @@ function parseNetworkFilter(parser) {
             rule.action.redirect = {
                 transform: { queryTransform: { removeParams } }
             };
+            defaultResourceTypes.add('main_frame');
+            defaultResourceTypes.add('sub_frame');
+            defaultResourceTypes.add('xmlhttprequest');
+            defaultUrlFilter = '?';
             break;
         }
         case sfp.NODE_TYPE_NET_OPTION_NAME_SCRIPT:
@@ -395,11 +499,16 @@ function parseNetworkFilter(parser) {
             }
             break;
         }
-        case sfp.NODE_TYPE_NET_OPTION_NAME_URLTRANSFORM:
-            if ( this.processOptionWithValue(parser, type) === false ) {
-                return this.FILTER_INVALID;
-            }
+        case sfp.NODE_TYPE_NET_OPTION_NAME_URLTRANSFORM: {
+            const parsed = sfp.parseReplaceByRegexValue(parser.getNetOptionValue(type));
+            if ( parsed === undefined ) { return; }
+            if ( parsed.re ) { return; }
+            rule.action.type = 'redirect';
+            rule.action.redirect = {
+                regexSubstitution: parsed.replacement,
+            };
             break;
+        }
         case sfp.NODE_TYPE_NET_OPTION_NAME_XHR:
             processResourceType('xmlhttprequest', type);
             break;
@@ -410,34 +519,38 @@ function parseNetworkFilter(parser) {
             break;
         }
     }
+    if ( pattern === '*' && defaultUrlFilter !== '' ) {
+        rule.condition.urlFilter = defaultUrlFilter;
+    }
     if ( initiatorDomains.size !== 0 ) {
-        rule.condition.initiatorDomains = Array.from(initiatorDomains);
+        rule.condition.initiatorDomains = Array.from(initiatorDomains).sort();
     }
     if ( excludedInitiatorDomains.size !== 0 ) {
-        rule.condition.excludedInitiatorDomains = Array.from(excludedInitiatorDomains);
+        rule.condition.excludedInitiatorDomains = Array.from(excludedInitiatorDomains).sort();
     }
     if ( requestDomains.size !== 0 ) {
-        rule.condition.requestDomains = Array.from(requestDomains);
+        rule.condition.requestDomains = Array.from(requestDomains).sort();
     }
     if ( excludedRequestDomains.size !== 0 ) {
-        rule.condition.excludedRequestDomains = Array.from(excludedRequestDomains);
+        rule.condition.excludedRequestDomains = Array.from(excludedRequestDomains).sort();
     }
     if ( requestMethods.size !== 0 ) {
-        rule.condition.requestMethods = Array.from(requestMethods);
+        rule.condition.requestMethods = Array.from(requestMethods).sort();
     }
     if ( excludedRequestMethods.size !== 0 ) {
-        rule.condition.excludedRequestMethods = Array.from(excludedRequestMethods);
+        rule.condition.excludedRequestMethods = Array.from(excludedRequestMethods).sort();
+    }
+    if ( resourceTypes.size === 0 && excludedResourceTypes.size === 0 ) {
+        defaultResourceTypes.forEach(a => resourceTypes.add(a));
     }
     if ( resourceTypes.size !== 0 ) {
-        const types = Array.from(resourceTypes).filter(a => a !== '');
+        const types = Array.from(resourceTypes).filter(a => a !== '').sort();
         if ( types.length === 0 ) { return; }
         rule.condition.resourceTypes = types;
     }
     if ( excludedResourceTypes.size !== 0 ) {
-        if ( resourceTypes.size !== 0 ) {
-            if ( excludedResourceTypes.size !== 0 ) { return; }
-        }
-        rule.condition.excludedResourceTypes = Array.from(excludedResourceTypes);
+        if ( resourceTypes.size !== 0 ) { return; }
+        rule.condition.excludedResourceTypes = Array.from(excludedResourceTypes).sort();
     }
     if ( priority !== 0 ) {
         rule.priority = priority;
@@ -452,7 +565,7 @@ export function parseFilters(text) {
     if ( text.endsWith('---') ) { return; }
     const lines = text.split(/\n/);
     if ( lines.some(a => a.startsWith(' ')) ) { return; }
-    const rules = [];
+    let rules = [];
     const parser = new sfp.AstFilterParser({ trustedSource: true });
     for ( const line of lines ) {
         parser.parse(line);
@@ -461,5 +574,8 @@ export function parseFilters(text) {
         if ( rule === undefined ) { continue; }
         rules.push(rule);
     }
-    return mergeIncludeExclude(rules);
+    rules = minimizeRuleset(rules);
+    rules = minimizeRules(rules);
+    rules = validateRules(rules);
+    return rules;
 }
