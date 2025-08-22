@@ -505,7 +505,7 @@ export function parseNetworkFilter(parser) {
             if ( parsed.re ) { return; }
             rule.action.type = 'redirect';
             rule.action.redirect = {
-                regexSubstitution: parsed.replacement,
+                regexSubstitution: parsed.replacement.replace(/\$(\d+)/g, '\\$1'),
             };
             break;
         }
