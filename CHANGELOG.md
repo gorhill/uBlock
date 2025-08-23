@@ -1,4 +1,4 @@
-- [Improve rendering with high-contrast theme](https://github.com/gorhill/uBlock/commit/5d7e5ee3a0)
+- [Improve rendering with high-contrast theme](https://github.com/gorhill/uBlock/commit/5d7e5ee3a0) (fix suggested by @emv33)
 - [Fix undue fetch from remote server at first install](https://github.com/gorhill/uBlock/commit/9327e19233)
 - [Improve compatibility of `uritransform=` with DNR syntax](https://github.com/gorhill/uBlock/commit/aaf35d9d71)
 - [Allow usage of `csp=`/`permissions=` with resource type object](https://github.com/gorhill/uBlock/commit/07e9f805bb)
