@@ -2,6 +2,7 @@
   "name": "uBlock",
   "version": "1.0.0",
   "description": "npm dev tools",
+  "type": "module",
   "scripts": {
     "lint": "eslint --no-warn-ignored --ignore-pattern \"**/lib/\" --ignore-pattern \"**/npm/\" -- \"./src/js/*.js\" \"./src/js/**/*.js\" \"./**/*.json\" \"./platform/**/*.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"

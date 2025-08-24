@@ -32,6 +32,12 @@ function voidFunc() {
 
 /******************************************************************************/
 
+function reportFetchError(response) {
+    console.log(response.statusText);
+}
+
+/******************************************************************************/
+
 let githubOwner = '';
 let githubRepo = '';
 let githubTag = '';
@@ -42,37 +48,6 @@ export function setGithubContext(owner, repo, tag, auth) {
     githubRepo = repo;
     githubTag = tag;
     githubAuth = auth;
-}
-
-/******************************************************************************/
-
-let pathToSecrets = '';
-
-export async function getSecrets() {
-    const homeDir = os.homedir();
-    let currentDir = process.cwd();
-    let fileName = '';
-    for (;;) {
-        fileName = `${currentDir}/ubo_secrets`;
-        const stat = await fs.stat(fileName).catch(voidFunc);
-        if ( stat !== undefined ) { break; }
-        currentDir = path.resolve(currentDir, '..');
-        if ( currentDir.startsWith(homeDir) === false ) {
-            pathToSecrets = homeDir;
-            return;
-        }
-    }
-    console.log(`Found secrets in ${fileName}`);
-    const text = await fs.readFile(fileName, { encoding: 'utf8' }).catch(voidFunc);
-    if ( text === undefined ) { return {}; }
-    const secrets = JSON.parse(text);
-    pathToSecrets = fileName;
-    return secrets;
-}
-
-export async function saveSecrets(secrets) {
-    if ( pathToSecrets === '' ) { return; }
-    return fs.writeFile(pathToSecrets, JSON.stringify(secrets, null, 2));
 }
 
 /******************************************************************************/
@@ -101,7 +76,7 @@ export async function getReleaseInfo() {
     });
     const response = await fetch(request).catch(voidFunc);
     if ( response === undefined ) { return; }
-    if ( response.ok !== true ) { return; }
+    if ( response.ok !== true ) { return reportFetchError(response); }
     const releaseInfo = await response.json().catch(voidFunc);
     if ( releaseInfo === undefined ) { return; }
     return releaseInfo;

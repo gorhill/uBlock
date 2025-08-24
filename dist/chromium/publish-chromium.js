@@ -26,8 +26,7 @@ import process from 'node:process';
 
 /******************************************************************************/
 
-const secrets = await ghapi.getSecrets();
-const githubAuth = `Bearer ${secrets.github_token}`;
+const githubAuth = `Bearer ${process.env.GITHUB_TOKEN}`;
 const commandLineArgs = ghapi.commandLineArgs;
 const githubOwner = commandLineArgs.ghowner;
 const githubRepo = commandLineArgs.ghrepo;
@@ -42,10 +41,10 @@ async function publishToCWS(filePath) {
     const authURL = 'https://accounts.google.com/o/oauth2/token';
     const authRequest = new Request(authURL, {
         body: JSON.stringify({
-            client_id: secrets.cs_id,
-            client_secret: secrets.cs_secret,
+            client_id: process.env.CWS_ID,
+            client_secret: process.env.CWS_SECRET,
             grant_type: 'refresh_token',
-            refresh_token: secrets.cs_refresh,
+            refresh_token: process.env.CWS_REFRESH,
         }),
         method: 'POST',
     });
@@ -61,9 +60,6 @@ async function publishToCWS(filePath) {
         process.exit(1);
     }
     const cwsAuth = `Bearer ${responseDict.access_token}`;
-    if ( responseDict.refresh_token ) {
-        secrets.cs_refresh = responseDict.refresh_token
-    }
 
     // Read package
     const data = await fs.readFile(filePath);
@@ -86,7 +82,7 @@ async function publishToCWS(filePath) {
     }
     const uploadDict = await uploadResponse.json();
     if ( uploadDict.uploadState !== 'SUCCESS' ) {
-        console.error(`Upload failed -- server error ${uploadDict['uploadState']}`);
+        console.error(`Upload failed -- server error ${JSON.stringify(uploadDict)}`);
         process.exit(1);
     }
     console.log('Upload succeeded.')
@@ -121,7 +117,6 @@ async function publishToCWS(filePath) {
 /******************************************************************************/
 
 async function main() {
-    if ( secrets === undefined ) { return 'Need secrets'; }
     if ( githubOwner === '' ) { return 'Need GitHub owner'; }
     if ( githubRepo === '' ) { return 'Need GitHub repo'; }
 
