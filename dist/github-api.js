@@ -20,6 +20,7 @@
 */
 
 import * as fs from 'node:fs/promises';
+import * as readline from 'node:readline/promises';
 import { execSync } from 'node:child_process';
 import os from 'node:os';
 import path from 'node:path';
@@ -28,6 +29,29 @@ import process from 'node:process';
 /******************************************************************************/
 
 function voidFunc() {
+}
+
+/******************************************************************************/
+
+export async function sleep(seconds) {
+    return new Promise(resolve => {
+        setTimeout(resolve, seconds * 1000);
+    });
+}
+
+/******************************************************************************/
+
+export async function prompt(message) {
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout,
+    });
+    const answer = await rl.question(message);
+    if ( answer !== 'yes' ) {
+        console.log('Aborted');
+        process.exit(1);
+    }
+    return true;
 }
 
 /******************************************************************************/

@@ -3,7 +3,8 @@ run_options := $(filter-out $@,$(MAKECMDGOALS))
 
 .PHONY: all clean cleanassets test lint chromium opera firefox npm dig \
 	mv3-chromium mv3-firefox mv3-edge mv3-safari ubol-codemirror \
-	compare maxcost medcost mincost modifiers record wasm
+	compare maxcost medcost mincost modifiers record wasm \
+	publish-chromium publish-edge
 
 sources := ./dist/version $(shell find ./assets -type f) $(shell find ./src -type f)
 platform := $(wildcard platform/*/*)
@@ -104,6 +105,12 @@ clean:
 
 cleanassets:
 	rm -rf dist/build/mv3-data dist/build/uAssets
+
+publish-chromium:
+	node dist/chromium/publish-chromium.js ghowner=gorhill ghrepo=uBlock ghtag=$(version) cwsid=cjpalhdlnbpafiamejdnhcphjbkeiagm
+
+publish-edge:
+	node dist/edge/publish-edge.js ghowner=gorhill ghrepo=uBlock ghtag=$(version) edgeid=$(UBO_EDGE_ID)
 
 # Not real targets, just convenient for auto-completion at shell prompt
 compare:

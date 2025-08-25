@@ -119,15 +119,24 @@ async function publishToCWS(filePath) {
 async function main() {
     if ( githubOwner === '' ) { return 'Need GitHub owner'; }
     if ( githubRepo === '' ) { return 'Need GitHub repo'; }
+    if ( githubTag === '' ) { return 'Need GitHub tag'; }
 
     ghapi.setGithubContext(githubOwner, githubRepo, githubTag, githubAuth);
 
     const assetInfo = await ghapi.getAssetInfo('chromium');
+    if ( assetInfo === undefined ) {
+        process.exit(1);
+    }
 
-    console.log(`GitHub owner: "${githubOwner}"`);
-    console.log(`GitHub repo: "${githubRepo}"`);
-    console.log(`Release tag: "${githubTag}"`);
-    console.log(`Release asset: "${assetInfo.name}"`);
+    await ghapi.prompt([
+        'Publish to Chrome store:',
+        `  GitHub owner: "${githubOwner}"`,
+        `  GitHub repo: "${githubRepo}"`,
+        `  Release tag: "${githubTag}"`,
+        `  Asset name: "${assetInfo.name}"`,
+        `  Extension id: ${cwsId}`,
+        `  Publish? (enter "yes"): `,
+    ].join('\n'));
 
     // Fetch asset from GitHub repo
     const filePath = await ghapi.downloadAssetFromRelease(assetInfo);

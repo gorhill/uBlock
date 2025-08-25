@@ -35,17 +35,9 @@ const edgeId = commandLineArgs.edgeid;
 
 /******************************************************************************/
 
-async function sleep(seconds) {
-    return new Promise(resolve => {
-        setTimeout(resolve, seconds * 1000);
-    });
-}
-
-/******************************************************************************/
-
 async function publishToEdgeStore(filePath) {
-    const edgeApiKey = process.env.EDGE_APIKEY;
-    const edgeClientId = process.env.EDGE_CLIENTID;
+    const edgeApiKey = process.env.EDGE_API_KEY;
+    const edgeClientId = process.env.EDGE_CLIENT_ID;
     const uploadURL = `https://api.addons.microsoftedge.microsoft.com/v1/products/${edgeId}/submissions/draft/package`;
 
     // Read package
@@ -79,7 +71,7 @@ async function publishToEdgeStore(filePath) {
     const interval = 60; //  check every 60 seconds
     let countdown = 60 * 60 / interval; // for at most 60 minutes
     for (;;) {
-        await sleep(interval);
+        await ghapi.sleep(interval);
         countdown -= 1
         if ( countdown <= 0 ) {
             console.log('Error: Microsoft store timed out')
@@ -139,15 +131,24 @@ async function publishToEdgeStore(filePath) {
 async function main() {
     if ( githubOwner === '' ) { return 'Need GitHub owner'; }
     if ( githubRepo === '' ) { return 'Need GitHub repo'; }
+    if ( githubTag === '' ) { return 'Need GitHub tag'; }
 
     ghapi.setGithubContext(githubOwner, githubRepo, githubTag, githubAuth);
 
-    const assetInfo = await ghapi.getAssetInfo('edge');
+    const assetInfo = await ghapi.getAssetInfo('chromium');
+    if ( assetInfo === undefined ) {
+        process.exit(1);
+    }
 
-    console.log(`GitHub owner: "${githubOwner}"`);
-    console.log(`GitHub repo: "${githubRepo}"`);
-    console.log(`Release tag: "${githubTag}"`);
-    console.log(`Release asset: "${assetInfo.name}"`);
+    await ghapi.prompt([
+        'Publish to Edge store:',
+        `GitHub owner: "${githubOwner}"`,
+        `GitHub repo: "${githubRepo}"`,
+        `Release tag: "${githubTag}"`,
+        `Asset name: "${assetInfo.name}"`,
+        `Product id: ${edgeId}`,
+        `Publish? (enter "yes"): `,
+    ].join('\n'));
 
     // Fetch asset from GitHub repo
     const filePath = await ghapi.downloadAssetFromRelease(assetInfo);
