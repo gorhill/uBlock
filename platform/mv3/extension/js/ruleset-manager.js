@@ -209,7 +209,9 @@ async function updateRedirectRules(currentRules, addRules, removeRuleIds) {
     for ( const rule of currentRules ) {
         if ( rule.id >= SPECIAL_RULES_REALM ) { continue; }
         if ( rule.action.type !== 'redirect' ) { continue; }
-        if ( rule.action.redirect.extensionPath === undefined ) { continue; }
+        if ( rule.action.redirect.extensionPath === undefined ) {
+            if ( rule.action.redirect.regexSubstitution === undefined ) { continue; }
+        }
         removeRuleIds.push(rule.id);
     }
 
