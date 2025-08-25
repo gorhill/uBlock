@@ -107,10 +107,10 @@ cleanassets:
 	rm -rf dist/build/mv3-data dist/build/uAssets
 
 publish-chromium:
-	node dist/chromium/publish-chromium.js ghowner=gorhill ghrepo=uBlock ghtag=$(version) cwsid=cjpalhdlnbpafiamejdnhcphjbkeiagm
+	node publish-extension/publish-chromium.js ghowner=gorhill ghrepo=uBlock ghtag=$(version) cwsid=cjpalhdlnbpafiamejdnhcphjbkeiagm
 
 publish-edge:
-	node dist/edge/publish-edge.js ghowner=gorhill ghrepo=uBlock ghtag=$(version) edgeid=$(UBO_EDGE_ID)
+	node publish-extension/publish-edge.js ghowner=gorhill ghrepo=uBlock ghtag=$(version) edgeid=$(UBO_EDGE_ID)
 
 # Not real targets, just convenient for auto-completion at shell prompt
 compare:
