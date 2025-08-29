@@ -242,9 +242,10 @@ sendMessage({
         renderAdminRules();
         renderFilterLists(cachedRulesetData);
         renderWidgets();
-        dom.cl.remove(dom.body, 'loading');
     } catch(reason) {
         console.error(reason);
+    } finally {
+        dom.cl.remove(dom.body, 'loading');
     }
     listen();
 }).catch(reason => {

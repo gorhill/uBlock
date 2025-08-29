@@ -340,8 +340,6 @@ async function init() {
 
     dom.cl.toggle('#gotoUnpicker', 'enabled', popupPanelData.hasCustomFilters);
 
-    dom.cl.remove(dom.body, 'loading');
-
     return true;
 }
 
@@ -350,6 +348,8 @@ async function tryInit() {
         await init();
     } catch {
         setTimeout(tryInit, 100);
+    } finally {
+        dom.cl.remove(dom.body, 'loading');
     }
 }
 
