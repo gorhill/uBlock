@@ -68,11 +68,12 @@
   },
   {
     "id": "adguard-mobile",
-    "name": "AdGuard – Mobile Ads",
+    "name": "AdGuard/uBO – Mobile Ads",
     "group": "ads",
     "enabled": false,
     "tags": "mobile",
     "urls": [
+      "https://ublockorigin.github.io/uAssets/filters/filters-mobile.txt",
       "https://filters.adtidy.org/extension/ublock/filters/11.txt"
     ],
     "homeURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters"
