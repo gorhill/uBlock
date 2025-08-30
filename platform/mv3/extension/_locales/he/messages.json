@@ -292,11 +292,11 @@
     "description": "A button to navigate to the blocked page"
   },
   "zapperTipEnter": {
-    "message": "Remove an element",
+    "message": "הסר אלמנט",
     "description": "Tooltip for the button used to enter zapper mode"
   },
   "zapperTipQuit": {
-    "message": "Exit element zapper mode",
+    "message": "צא ממצב מחיקת אלמנטים",
     "description": "Tooltip for the button used to exit zapper mode"
   },
   "pickerTipEnter": {

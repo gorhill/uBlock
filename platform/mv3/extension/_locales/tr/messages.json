@@ -248,7 +248,7 @@
     "description": "Label for a checkbox in the options page"
   },
   "developerModeLegend": {
-    "message": "Teknik kullanıcılara uygun özelliklere erişime izin ver",
+    "message": "Teknik kullanıcılara uygun özelliklere erişime izin ver.",
     "description": "Short description for a checkbox in the options page"
   },
   "findListsPlaceholder": {

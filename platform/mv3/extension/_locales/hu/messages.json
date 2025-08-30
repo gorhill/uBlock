@@ -176,7 +176,7 @@
     "description": "A checkbox to use for NSFW sites"
   },
   "supportReportSpecificButton": {
-    "message": "Új jelentés létrehozása",
+    "message": "Új jelentés létrehozása GitHub-ra",
     "description": "Text for button which open an external webpage in Support pane"
   },
   "defaultFilteringModeSectionLabel": {

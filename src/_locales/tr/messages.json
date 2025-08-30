@@ -904,7 +904,7 @@
     "description": "Text for button which open an external webpage in Support pane"
   },
   "supportFindSpecificButton": {
-    "message": "GitHub'da benzer raporları bul.",
+    "message": "GitHub'da benzer raporları bul",
     "description": "A clickable link in the filter issue reporter section"
   },
   "supportS1H": {
