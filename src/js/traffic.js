@@ -117,7 +117,7 @@ function onBeforeRequest(details) {
 
 /******************************************************************************/
 
-const onBeforeRootFrameRequest = function(fctxt) {
+function onBeforeRootFrameRequest(fctxt) {
     const requestURL = fctxt.url;
 
     // Special handling for root document.
