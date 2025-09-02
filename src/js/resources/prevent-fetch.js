@@ -34,6 +34,7 @@ function preventFetchFn(
     responseType = ''
 ) {
     const safe = safeSelf();
+    const setTimeout = self.setTimeout;
     const scriptletName = `${trusted ? 'trusted-' : ''}prevent-fetch`;
     const logPrefix = safe.makeLogPrefix(
         scriptletName,
@@ -41,6 +42,7 @@ function preventFetchFn(
         responseBody,
         responseType
     );
+    const extraArgs = safe.getExtraArgs(Array.from(arguments), 4);
     const needles = [];
     for ( const condition of safe.String_split.call(propsToMatch, /\s+/) ) {
         if ( condition === '' ) { continue; }
@@ -128,6 +130,11 @@ function preventFetchFn(
                 responseProps
             );
             safe.Object_defineProperties(response, props);
+            if ( extraArgs.throttle ) {
+                return new Promise(resolve => {
+                    setTimeout(( ) => { resolve(response); }, extraArgs.throttle);
+                });
+            }
             return response;
         });
     });
@@ -159,6 +166,9 @@ registerScriptlet(preventFetchFn, {
  * Optional. The response type to use when emitting a dummy response as a
  * result of the prevention.
  * 
+ * @param [...varargs]
+ * ["throttle", n]: the time to wait in ms before returning a result.
+ *
  * */
 
 function preventFetch(...args) {
@@ -192,6 +202,9 @@ registerScriptlet(preventFetch, {
  * Optional. The response type to use when emitting a dummy response as a
  * result of the prevention.
  * 
+ * @param [...varargs]
+ * ["throttle", n]: the time to wait in ms before returning a result.
+ *
  * */
 
 function trustedPreventFetch(...args) {
