@@ -1,3 +1,4 @@
+- [Improve `prevent-fetch` scriptlet](https://github.com/gorhill/uBlock/commit/d2bce26e7d)
 - [Add support to strict-block from `ipaddress=` option](https://github.com/gorhill/uBlock/commit/6327aae56c)
 - [Improve rendering with high-contrast theme](https://github.com/gorhill/uBlock/commit/5d7e5ee3a0) (fix suggested by @emv33)
 - [Fix undue fetch from remote server at first install](https://github.com/gorhill/uBlock/commit/9327e19233)
