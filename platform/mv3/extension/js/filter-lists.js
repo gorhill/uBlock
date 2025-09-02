@@ -94,10 +94,7 @@ function rulesetStats(rulesetId) {
     const rulesetDetails = rulesetMap.get(rulesetId);
     if ( rulesetDetails === undefined ) { return; }
     const { rules, filters } = rulesetDetails;
-    let ruleCount = rules.plain + rules.regex;
-    if ( cachedRulesetData.hasOmnipotence ) {
-        ruleCount += rules.removeparam + rules.redirect + rules.modifyHeaders;
-    }
+    const ruleCount = rules.plain + rules.regex;
     const filterCount = filters.accepted;
     return { ruleCount, filterCount };
 }

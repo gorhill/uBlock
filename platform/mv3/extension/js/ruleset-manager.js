@@ -30,13 +30,13 @@ import {
     rulesetConfig,
     saveRulesetConfig,
 } from './config.js';
+import { ubolErr, ubolLog } from './debug.js';
 
 import { dnr } from './ext-compat.js';
 import { fetchJSON } from './fetch.js';
 import { getAdminRulesets } from './admin.js';
 import { hasBroadHostPermissions } from './utils.js';
 import { rulesFromText } from './dnr-parser.js';
-import { ubolErr, ubolLog } from './debug.js';
 
 /******************************************************************************/
 
@@ -131,9 +131,8 @@ pruneInvalidRegexRules.validated = new Map();
 async function updateRegexRules(currentRules, addRules, removeRuleIds) {
     // Remove existing regex-related block rules
     for ( const rule of currentRules ) {
+        if ( rule.id === 0 ) { continue; }
         if ( rule.id >= SPECIAL_RULES_REALM ) { continue; }
-        const { type } = rule.action;
-        if ( type !== 'block' && type !== 'allow' ) { continue; }
         if ( rule.condition.regexFilter === undefined ) { continue; }
         removeRuleIds.push(rule.id);
     }
@@ -167,136 +166,19 @@ async function updateRegexRules(currentRules, addRules, removeRuleIds) {
 
 /******************************************************************************/
 
-async function updateRemoveparamRules(currentRules, addRules, removeRuleIds) {
-    // Remove existing removeparam-related rules
-    for ( const rule of currentRules ) {
-        if ( rule.id >= SPECIAL_RULES_REALM ) { continue; }
-        if ( rule.action.type !== 'redirect' ) { continue; }
-        if ( rule.action.redirect.transform === undefined ) { continue; }
-        removeRuleIds.push(rule.id);
-    }
-
-    const rulesetDetails = await getEnabledRulesetsDetails();
-
-    // Fetch removeparam rules for all enabled rulesets
-    const toFetch = [];
-    for ( const details of rulesetDetails ) {
-        if ( details.rules.removeparam === 0 ) { continue; }
-        toFetch.push(fetchJSON(`/rulesets/removeparam/${details.id}`));
-    }
-    const removeparamRulesets = await Promise.all(toFetch);
-
-    const allRules = [];
-    for ( const rules of removeparamRulesets ) {
-        if ( Array.isArray(rules) === false ) { continue; }
-        for ( const rule of rules ) {
-            allRules.push(rule);
-        }
-    }
-    if ( allRules.length === 0 ) { return; }
-
-    const validRules = await pruneInvalidRegexRules('removeparam', allRules);
-    if ( validRules.length === 0 ) { return; }
-
-    ubolLog(`Add ${validRules.length} DNR removeparam rules`);
-    addRules.push(...validRules);
-}
-
-/******************************************************************************/
-
-async function updateRedirectRules(currentRules, addRules, removeRuleIds) {
-    // Remove existing redirect-related rules
-    for ( const rule of currentRules ) {
-        if ( rule.id >= SPECIAL_RULES_REALM ) { continue; }
-        if ( rule.action.type !== 'redirect' ) { continue; }
-        if ( rule.action.redirect.extensionPath === undefined ) {
-            if ( rule.action.redirect.regexSubstitution === undefined ) { continue; }
-        }
-        removeRuleIds.push(rule.id);
-    }
-
-    const rulesetDetails = await getEnabledRulesetsDetails();
-
-    // Fetch redirect rules for all enabled rulesets
-    const toFetch = [];
-    for ( const details of rulesetDetails ) {
-        if ( details.rules.redirect === 0 ) { continue; }
-        toFetch.push(fetchJSON(`/rulesets/redirect/${details.id}`));
-    }
-    const redirectRulesets = await Promise.all(toFetch);
-
-    const allRules = [];
-    for ( const rules of redirectRulesets ) {
-        if ( Array.isArray(rules) === false ) { continue; }
-        for ( const rule of rules ) {
-            allRules.push(rule);
-        }
-    }
-    if ( allRules.length === 0 ) { return; }
-
-    const validRules = await pruneInvalidRegexRules('redirect', allRules);
-    if ( validRules.length === 0 ) { return; }
-
-    ubolLog(`Add ${validRules.length} DNR redirect rules`);
-    addRules.push(...validRules);
-}
-
-/******************************************************************************/
-
-async function updateModifyHeadersRules(currentRules, addRules, removeRuleIds) {
-    // Remove existing header modification-related rules
-    for ( const rule of currentRules ) {
-        if ( rule.id >= SPECIAL_RULES_REALM ) { continue; }
-        if ( rule.action.type !== 'modifyHeaders' ) { continue; }
-        removeRuleIds.push(rule.id);
-    }
-
-    const rulesetDetails = await getEnabledRulesetsDetails();
-
-    // Fetch modifyHeaders rules for all enabled rulesets
-    const toFetch = [];
-    for ( const details of rulesetDetails ) {
-        if ( details.rules.modifyHeaders === 0 ) { continue; }
-        toFetch.push(fetchJSON(`/rulesets/modify-headers/${details.id}`));
-    }
-    const rulesets = await Promise.all(toFetch);
-
-    const allRules = [];
-    for ( const rules of rulesets ) {
-        if ( Array.isArray(rules) === false ) { continue; }
-        for ( const rule of rules ) {
-            allRules.push(rule);
-        }
-    }
-    if ( allRules.length === 0 ) { return; }
-
-    const validRules = await pruneInvalidRegexRules('modify-headers', allRules);
-    if ( validRules.length === 0 ) { return; }
-
-    ubolLog(`Add ${validRules.length} DNR modify-headers rules`);
-    addRules.push(...validRules);
-}
-
-/******************************************************************************/
-
 async function updateDynamicRules() {
     const currentRules = await dnr.getDynamicRules();
     const addRules = [];
     const removeRuleIds = [];
 
-    // Remove potentially left-over strict-block rules from previous version
+    // Remove potentially left-over rules from previous version
     for ( const rule of currentRules ) {
         if ( rule.id >= SPECIAL_RULES_REALM ) { continue; }
-        if ( isStrictBlockRule(rule) === false ) { continue; }
         removeRuleIds.push(rule.id);
+        rule.id = 0;
     }
 
-    await Promise.all([
-        updateRegexRules(currentRules, addRules, removeRuleIds),
-        updateRemoveparamRules(currentRules, addRules, removeRuleIds),
-        updateRedirectRules(currentRules, addRules, removeRuleIds),
-        updateModifyHeadersRules(currentRules, addRules, removeRuleIds),
-    ]);
+    await updateRegexRules(currentRules, addRules, removeRuleIds);
     if ( addRules.length === 0 && removeRuleIds.length === 0 ) { return; }
 
     dynamicRegexCount = 0;

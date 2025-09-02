@@ -62,6 +62,10 @@ const outputDir = commandLineArgs.get('output') || '.';
 const cacheDir = `${outputDir}/../mv3-data`;
 const rulesetDir = `${outputDir}/rulesets`;
 const scriptletDir = `${rulesetDir}/scripting`;
+const envExtra = (( ) => {
+    const env = commandLineArgs.get('env');
+    return env ? env.split('|') : [];
+})();
 const env = [
     platform,
     'native_css_has',
@@ -69,6 +73,7 @@ const env = [
     'ublock',
     'ubol',
     'user_stylesheet',
+    ...envExtra,
 ];
 
 if ( platform === 'edge' ) {
@@ -292,31 +297,9 @@ const isRegex = rule =>
     rule.condition !== undefined &&
     rule.condition.regexFilter !== undefined;
 
-const isRedirect = rule => {
-    if ( isUnsupported(rule) ) { return false; }
-    if ( rule.action.type !== 'redirect' ) { return false; }
-    if ( rule.action.redirect?.extensionPath !== undefined ) { return true; }
-    if ( rule.action.redirect?.transform?.path !== undefined ) { return true; }
-    if ( rule.action.redirect?.regexSubstitution !== undefined ) { return true; }
-    return false;
-};
-
-const isModifyHeaders = rule =>
+const isGood = rule =>
     isUnsupported(rule) === false &&
-    rule.action.type === 'modifyHeaders';
-
-const isRemoveparam = rule =>
-    isUnsupported(rule) === false &&
-    rule.action.type === 'redirect' &&
-    rule.action.redirect.transform !== undefined;
-
-const isSafe = rule =>
-    isUnsupported(rule) === false &&
-    rule.action !== undefined && (
-        rule.action.type === 'block' ||
-        rule.action.type === 'allow' ||
-        rule.action.type === 'allowAllRequests'
-    );
+    /^(allow|block|redirect|modifyHeaders|allowAllRequests)$/.test(rule.action?.type);
 
 const isURLSkip = rule =>
     isUnsupported(rule) === false &&
@@ -525,54 +508,27 @@ async function processNetworkFilters(assetDetails, network) {
         }
     }
 
-    const plainGood = await patchRuleset(
-        rules.filter(rule => isSafe(rule) && isRegex(rule) === false)
+    const staticRules = await patchRuleset(
+        rules.filter(rule => isGood(rule) && isRegex(rule) === false)
     );
-    log(`\tPlain good: ${plainGood.length}`);
-    log(plainGood
+    log(`\tStatic rules: ${staticRules.length}`);
+    log(staticRules
         .filter(rule => Array.isArray(rule._warning))
         .map(rule => rule._warning.map(v => `\t\t${v}`))
         .join('\n'), true
     );
 
-    const regexes = await patchRuleset(
-        rules.filter(rule => isSafe(rule) && isRegex(rule))
+    const regexRules = await patchRuleset(
+        rules.filter(rule => isGood(rule) && isRegex(rule))
     );
-    log(`\tMaybe good (regexes): ${regexes.length}`);
+    log(`\tMaybe good (regexes): ${regexRules.length}`);
 
-    const redirects = await patchRuleset(
-        rules.filter(rule =>
-            isUnsupported(rule) === false &&
-            isRedirect(rule)
-        )
-    );
-    redirects.forEach(rule => {
-        if ( rule.action.redirect.extensionPath === undefined ) { return; }
+    staticRules.forEach(rule => {
+        if ( rule.action.redirect?.extensionPath === undefined ) { return; }
         requiredRedirectResources.add(
             rule.action.redirect.extensionPath.replace(/^\/+/, '')
         );
     });
-    log(`\tredirect=: ${redirects.length}`);
-
-    const removeparamsGood = await patchRuleset(
-        rules.filter(rule =>
-            isUnsupported(rule) === false && isRemoveparam(rule)
-        )
-    );
-    const removeparamsBad = await patchRuleset(
-        rules.filter(rule =>
-            isUnsupported(rule) && isRemoveparam(rule)
-        )
-    );
-    log(`\tremoveparams= (accepted/discarded): ${removeparamsGood.length}/${removeparamsBad.length}`);
-
-    const modifyHeaders = await patchRuleset(
-        rules.filter(rule =>
-            isUnsupported(rule) === false &&
-            isModifyHeaders(rule)
-        )
-    );
-    log(`\tmodifyHeaders=: ${modifyHeaders.length}`);
 
     const urlskips = new Map();
     for ( const rule of rules ) {
@@ -622,35 +578,17 @@ async function processNetworkFilters(assetDetails, network) {
     log(bad.map(rule => rule._error.map(v => `\t\t${v}`)).join('\n'), true);
 
     writeFile(`${rulesetDir}/main/${assetDetails.id}.json`,
-        toJSONRuleset(plainGood)
+        toJSONRuleset(staticRules)
     );
 
-    if ( regexes.length !== 0 ) {
+    if ( regexRules.length !== 0 ) {
         writeFile(`${rulesetDir}/regex/${assetDetails.id}.json`,
-            toJSONRuleset(regexes)
-        );
-    }
-
-    if ( removeparamsGood.length !== 0 ) {
-        writeFile(`${rulesetDir}/removeparam/${assetDetails.id}.json`,
-            toJSONRuleset(removeparamsGood)
-        );
-    }
-
-    if ( redirects.length !== 0 ) {
-        writeFile(`${rulesetDir}/redirect/${assetDetails.id}.json`,
-            toJSONRuleset(redirects)
-        );
-    }
-
-    if ( modifyHeaders.length !== 0 ) {
-        writeFile(`${rulesetDir}/modify-headers/${assetDetails.id}.json`,
-            toJSONRuleset(modifyHeaders)
+            toJSONRuleset(regexRules)
         );
     }
 
     const strictBlocked = new Map();
-    for ( const rule of plainGood ) {
+    for ( const rule of staticRules ) {
         toStrictBlockRule(rule, strictBlocked);
     }
     if ( strictBlocked.size !== 0 ) {
@@ -668,13 +606,9 @@ async function processNetworkFilters(assetDetails, network) {
 
     return {
         total: rules.length,
-        plain: plainGood.length,
-        discarded: removeparamsBad.length,
+        plain: staticRules.length,
         rejected: bad.length,
-        regex: regexes.length,
-        removeparam: removeparamsGood.length,
-        redirect: redirects.length,
-        modifyHeaders: modifyHeaders.length,
+        regex: regexRules.length,
         strictblock: strictBlocked.size,
         urlskip: urlskips.size,
     };
