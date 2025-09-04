@@ -26,7 +26,7 @@ for i in "$@"; do
     safari)
       PLATFORM="safari"
       ;;
-    uBOLite_+([0-9]).+([0-9]).+([0-9]))
+    +([0-9]).+([0-9]).+([0-9]))
       TAGNAME="$i"
       FULL="yes"
       ;;
@@ -151,7 +151,7 @@ echo "Extension location: $UBOL_DIR/"
 tmp_manifest=$(mktemp)
 chmod '=rw' "$tmp_manifest"
 if [ -z "$TAGNAME" ]; then
-    TAGNAME="uBOLite_$(jq -r .version "$UBOL_DIR"/manifest.json)"
+    TAGNAME="$(jq -r .version "$UBOL_DIR"/manifest.json)"
     # Enable DNR rule debugging
     jq '.permissions += ["declarativeNetRequestFeedback"]' \
         "$UBOL_DIR/manifest.json" > "$tmp_manifest" \
@@ -162,7 +162,7 @@ if [ -z "$TAGNAME" ]; then
             && mv "$tmp_manifest" "$UBOL_DIR/manifest.json"
     fi
 else
-    jq --arg version "${TAGNAME:8}" '.version = $version' "$UBOL_DIR/manifest.json"  > "$tmp_manifest" \
+    jq --arg version "${TAGNAME}" '.version = $version' "$UBOL_DIR/manifest.json"  > "$tmp_manifest" \
         && mv "$tmp_manifest" "$UBOL_DIR/manifest.json"
 fi
 
@@ -184,7 +184,7 @@ if [ "$FULL" = "yes" ]; then
         EXTENSION="xpi"
     fi
     echo "*** uBOLite.mv3: Creating publishable package..."
-    UBOL_PACKAGE_NAME="$TAGNAME.$PLATFORM.mv3.$EXTENSION"
+    UBOL_PACKAGE_NAME="uBOLite_$TAGNAME.$PLATFORM.$EXTENSION"
     UBOL_PACKAGE_DIR=$(mktemp -d)
     mkdir -p "$UBOL_PACKAGE_DIR"
     cp -R "$UBOL_DIR"/* "$UBOL_PACKAGE_DIR"/

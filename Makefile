@@ -4,7 +4,9 @@ run_options := $(filter-out $@,$(MAKECMDGOALS))
 .PHONY: all clean cleanassets test lint chromium opera firefox npm dig \
 	mv3-chromium mv3-firefox mv3-edge mv3-safari ubol-codemirror \
 	compare maxcost medcost mincost modifiers record wasm \
-	publish-chromium publish-edge
+	publish-chromium publish-edge publish-firefox \
+	publish-dev-chromium publish-dev-firefox \
+	upload-firefox upload-dev-firefox
 
 sources := ./dist/version $(shell find ./assets -type f) $(shell find ./src -type f)
 platform := $(wildcard platform/*/*)
@@ -106,11 +108,76 @@ clean:
 cleanassets:
 	rm -rf dist/build/mv3-data dist/build/uAssets
 
+# Usage: make publish-publish version=?
 publish-chromium:
-	node publish-extension/publish-chromium.js ghowner=gorhill ghrepo=uBlock ghtag=$(version) cwsid=cjpalhdlnbpafiamejdnhcphjbkeiagm
+	node publish-extension/publish-chromium.js \
+		ghowner=gorhill \
+		ghrepo=uBlock \
+		ghtag=$(version) \
+		ghasset=chromium \
+		storeid=cjpalhdlnbpafiamejdnhcphjbkeiagm
 
+# Usage: make publish-edge version=?
 publish-edge:
-	node publish-extension/publish-edge.js ghowner=gorhill ghrepo=uBlock ghtag=$(version) edgeid=$(UBO_EDGE_ID)
+	node publish-extension/publish-edge.js \
+		ghowner=gorhill \
+		ghrepo=uBlock \
+		ghtag=$(version) \
+		ghasset=chromium \
+		datebasedmajor=1 \
+		storeid=odfafepnkmbhccpbejgmiehpchacaeak \
+		productid=$(UBO_EDGE_ID)
+
+# Usage: make publish-firefox version=?
+publish-firefox:
+	node publish-extension/publish-firefox.js \
+		ghowner=gorhill \
+		ghrepo=uBlock \
+		ghtag=$(version) \
+		ghasset=firefox \
+		storeid=uBlock0@raymondhill.net \
+		channel=listed
+
+# Usage: make publish-dev-chromium version=?
+publish-dev-chromium:
+	node publish-extension/publish-chromium.js \
+		ghowner=gorhill \
+		ghrepo=uBlock \
+		ghtag=$(version) \
+		ghasset=chromium \
+		storeid=cgbcahbpdhpcegmbfconppldiemgcoii
+
+# Usage: make publish-dev-firefox version=?
+publish-dev-firefox:
+	node publish-extension/publish-firefox.js \
+		ghowner=gorhill \
+		ghrepo=uBlock \
+		ghtag=$(version) \
+		ghasset=firefox \
+		storeid=uBlock0@raymondhill.net \
+		channel=unlisted \
+		updatepath=./dist/firefox.updates.json
+
+# Usage: make upload-firefox version=?
+upload-firefox:
+	node publish-extension/upload-firefox.js \
+		ghowner=gorhill \
+		ghrepo=uBlock \
+		ghtag=$(version) \
+		ghasset=firefox \
+		storeid=uBlock0@raymondhill.net \
+		channel=listed
+
+# Usage: make upload-dev-firefox version=?
+upload-dev-firefox:
+	node publish-extension/upload-firefox.js \
+		ghowner=gorhill \
+		ghrepo=uBlock \
+		ghtag=$(version) \
+		ghasset=firefox \
+		storeid=uBlock0@raymondhill.net \
+		channel=unlisted \
+		updatepath=./dist/firefox.updates.json
 
 # Not real targets, just convenient for auto-completion at shell prompt
 compare:
